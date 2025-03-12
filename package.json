@@ -1,0 +1,34 @@
+{
+  "name": "waldur-js-client",
+  "version": "1.0.0",
+  "description": "JavaScript client for Waldur MasterMind generated from OpenAPI schema",
+  "author": "Waldur Platform",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/waldur/js-client.git"
+  },
+  "bugs": {
+    "url": "https://github.com/waldur/js-client/issues"
+  },
+  "homepage": "https://github.com/waldur/js-client",
+  "keywords": [
+    "waldur",
+    "client"
+  ],
+  "dependencies": {
+    "@hey-api/client-fetch": "^0.8.3"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.2"
+  },
+  "files": [
+    "dist/**/*"
+  ],
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build"
+  }
+}
