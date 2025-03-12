@@ -3083,6 +3083,10 @@ export type MergedPluginOptions = {
      */
     auto_approve_remote_orders?: boolean;
     /**
+     * Service provider can create offering user
+     */
+    service_provider_can_create_offering_user?: boolean;
+    /**
      * Maximum resource termination offset in days
      */
     max_resource_termination_offset_in_days?: number;
@@ -3202,6 +3206,10 @@ export type MergedPluginOptionsRequest = {
      * If set to True, an order can be processed without approval
      */
     auto_approve_remote_orders?: boolean;
+    /**
+     * Service provider can create offering user
+     */
+    service_provider_can_create_offering_user?: boolean;
     /**
      * Maximum resource termination offset in days
      */
@@ -9628,7 +9636,7 @@ export type User = {
      * Designates whether the user is a global support user.
      */
     is_support?: boolean;
-    readonly token?: string;
+    readonly token: string;
     /**
      * Token lifetime in seconds.
      */
@@ -10417,6 +10425,7 @@ export type AccessSubnetsListData = {
     query?: {
         customer?: string;
         customer_uuid?: string;
+        description?: string;
         inet?: string;
         /**
          * A page number within the paginated result set.
@@ -33543,5 +33552,5 @@ export type VmwareVirtualMachineWebConsoleRetrieveResponses = {
 export type VmwareVirtualMachineWebConsoleRetrieveResponse = VmwareVirtualMachineWebConsoleRetrieveResponses[keyof VmwareVirtualMachineWebConsoleRetrieveResponses];
 
 export type ClientOptions = {
-    baseUrl: `${string}://schema.yaml` | (string & {});
+    baseUrl: `${string}://waldur-openapi-schema.yaml` | (string & {});
 };
