@@ -30,5 +30,11 @@
   "scripts": {
     "build": "tsc",
     "prepublishOnly": "npm run build"
+  },
+  "exports": {
+    ".": "./dist/index.js",
+    "./client.gen": "./dist/client.gen.js",
+    "./sdk.gen": "./dist/sdk.gen.js",
+    "./types.gen": "./dist/types.gen.js"
   }
 }
