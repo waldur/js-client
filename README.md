@@ -11,7 +11,7 @@ const querySerializer = (params) =>
     Qs.stringify(params, { arrayFormat: 'repeat' });
 
 client.setConfig({
-    auth: () => (API_TOKEN ? 'Token ' + API_TOKEN : undefined),
+    auth: () => API_TOKEN,
     baseUrl: API_URL,
     throwOnError: true,
     querySerializer,
