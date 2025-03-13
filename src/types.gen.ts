@@ -1099,10 +1099,6 @@ export type CategoryColumn = {
     attribute?: string;
     /**
      * Widget field allows to customise table cell rendering.
-     *
-     * * `csv` - csv
-     * * `filesize` - filesize
-     * * `attached_instance` - attached_instance
      */
     widget?: WidgetEnum | BlankEnum | NullEnum | null;
     category: string;
@@ -1123,10 +1119,6 @@ export type CategoryColumnRequest = {
     attribute?: string;
     /**
      * Widget field allows to customise table cell rendering.
-     *
-     * * `csv` - csv
-     * * `filesize` - filesize
-     * * `attached_instance` - attached_instance
      */
     widget?: WidgetEnum | BlankEnum | NullEnum | null;
     category: string;
@@ -3128,9 +3120,6 @@ export type MergedPluginOptions = {
     max_volumes?: number;
     /**
      * Storage mode for OpenStack offering
-     *
-     * * `fixed` - fixed
-     * * `dynamic` - dynamic
      */
     storage_mode?: StorageModeEnum;
     /**
@@ -3175,13 +3164,6 @@ export type MergedPluginOptions = {
     username_anonymized_prefix?: string;
     /**
      * GLAuth username generation policy
-     *
-     * * `service_provider` - service_provider
-     * * `anonymized` - anonymized
-     * * `full_name` - full_name
-     * * `waldur_username` - waldur_username
-     * * `freeipa` - freeipa
-     * * `identity_claim` - identity_claim
      */
     username_generation_policy?: UsernameGenerationPolicyEnum;
     /**
@@ -3194,9 +3176,6 @@ export type MergedPluginOptions = {
     flavors_regex?: string;
     /**
      * Slurm account name generation policy
-     *
-     * * `None` - None
-     * * `project_slug` - project_slug
      */
     account_name_generation_policy?: AccountNameGenerationPolicyEnum | NullEnum | null;
 };
@@ -3252,9 +3231,6 @@ export type MergedPluginOptionsRequest = {
     max_volumes?: number;
     /**
      * Storage mode for OpenStack offering
-     *
-     * * `fixed` - fixed
-     * * `dynamic` - dynamic
      */
     storage_mode?: StorageModeEnum;
     /**
@@ -3299,13 +3275,6 @@ export type MergedPluginOptionsRequest = {
     username_anonymized_prefix?: string;
     /**
      * GLAuth username generation policy
-     *
-     * * `service_provider` - service_provider
-     * * `anonymized` - anonymized
-     * * `full_name` - full_name
-     * * `waldur_username` - waldur_username
-     * * `freeipa` - freeipa
-     * * `identity_claim` - identity_claim
      */
     username_generation_policy?: UsernameGenerationPolicyEnum;
     /**
@@ -3318,9 +3287,6 @@ export type MergedPluginOptionsRequest = {
     flavors_regex?: string;
     /**
      * Slurm account name generation policy
-     *
-     * * `None` - None
-     * * `project_slug` - project_slug
      */
     account_name_generation_policy?: AccountNameGenerationPolicyEnum | NullEnum | null;
 };
@@ -3581,10 +3547,6 @@ export type NestedColumn = {
     attribute?: string;
     /**
      * Widget field allows to customise table cell rendering.
-     *
-     * * `csv` - csv
-     * * `filesize` - filesize
-     * * `attached_instance` - attached_instance
      */
     widget?: WidgetEnum | BlankEnum | NullEnum | null;
 };
@@ -3604,10 +3566,6 @@ export type NestedColumnRequest = {
     attribute?: string;
     /**
      * Widget field allows to customise table cell rendering.
-     *
-     * * `csv` - csv
-     * * `filesize` - filesize
-     * * `attached_instance` - attached_instance
      */
     widget?: WidgetEnum | BlankEnum | NullEnum | null;
 };
@@ -5836,402 +5794,6 @@ export type OrganizationGroupsRequest = {
     organization_groups?: Array<string>;
 };
 
-export type PaginatedAccessSubnetList = Array<AccessSubnet>;
-
-export type PaginatedAdminAnnouncementList = Array<AdminAnnouncement>;
-
-export type PaginatedAnswerListList = Array<AnswerList>;
-
-export type PaginatedAnswerSubmitList = Array<AnswerSubmit>;
-
-export type PaginatedAttachmentList = Array<Attachment>;
-
-export type PaginatedAuthTokenList = Array<AuthToken>;
-
-export type PaginatedAwsImageList = Array<AwsImage>;
-
-export type PaginatedAwsInstanceList = Array<AwsInstance>;
-
-export type PaginatedAwsRegionList = Array<AwsRegion>;
-
-export type PaginatedAwsSizeList = Array<AwsSize>;
-
-export type PaginatedAwsVolumeList = Array<AwsVolume>;
-
-export type PaginatedAzureImageList = Array<AzureImage>;
-
-export type PaginatedAzureLocationList = Array<AzureLocation>;
-
-export type PaginatedAzurePublicIpList = Array<AzurePublicIp>;
-
-export type PaginatedAzureResourceGroupList = Array<AzureResourceGroup>;
-
-export type PaginatedAzureSizeList = Array<AzureSize>;
-
-export type PaginatedAzureSqlDatabaseList = Array<AzureSqlDatabase>;
-
-export type PaginatedAzureSqlServerList = Array<AzureSqlServer>;
-
-export type PaginatedAzureVirtualMachineList = Array<AzureVirtualMachine>;
-
-export type PaginatedBasicCustomerList = Array<BasicCustomer>;
-
-export type PaginatedBookingResourceList = Array<BookingResource>;
-
-export type PaginatedBroadcastMessageList = Array<BroadcastMessage>;
-
-export type PaginatedCallManagingOrganisationList = Array<CallManagingOrganisation>;
-
-export type PaginatedCallRoundList = Array<CallRound>;
-
-export type PaginatedCampaignList = Array<Campaign>;
-
-export type PaginatedCategoryColumnList = Array<CategoryColumn>;
-
-export type PaginatedCategoryComponentUsageList = Array<CategoryComponentUsage>;
-
-export type PaginatedCategoryComponentsList = Array<CategoryComponents>;
-
-export type PaginatedCategoryGroupList = Array<CategoryGroup>;
-
-export type PaginatedCategoryHelpArticlesList = Array<CategoryHelpArticles>;
-
-export type PaginatedChecklistCategoryList = Array<ChecklistCategory>;
-
-export type PaginatedChecklistList = Array<Checklist>;
-
-export type PaginatedChecklistQuestionList = Array<ChecklistQuestion>;
-
-export type PaginatedCommentList = Array<Comment>;
-
-export type PaginatedComponentUsageList = Array<ComponentUsage>;
-
-export type PaginatedComponentUserUsageLimitList = Array<ComponentUserUsageLimit>;
-
-export type PaginatedComponentUserUsageList = Array<ComponentUserUsage>;
-
-export type PaginatedCountStatsList = Array<CountStats>;
-
-export type PaginatedCountryList = Array<Country>;
-
-export type PaginatedCustomerCreditList = Array<CustomerCredit>;
-
-export type PaginatedCustomerEstimatedCostPolicyList = Array<CustomerEstimatedCostPolicy>;
-
-export type PaginatedCustomerIndustryFlagStatsList = Array<CustomerIndustryFlagStats>;
-
-export type PaginatedCustomerList = Array<Customer>;
-
-export type PaginatedCustomerMemberCountList = Array<CustomerMemberCount>;
-
-export type PaginatedCustomerOecdCodeStatsList = Array<CustomerOecdCodeStats>;
-
-export type PaginatedCustomerPermissionReviewList = Array<CustomerPermissionReview>;
-
-export type PaginatedCustomerQuotasList = Array<CustomerQuotas>;
-
-export type PaginatedCustomerUserList = Array<CustomerUser>;
-
-export type PaginatedDetailedProviderUserList = Array<DetailedProviderUser>;
-
-export type PaginatedDigitalOceanDropletList = Array<DigitalOceanDroplet>;
-
-export type PaginatedDigitalOceanImageList = Array<DigitalOceanImage>;
-
-export type PaginatedDigitalOceanRegionList = Array<DigitalOceanRegion>;
-
-export type PaginatedDigitalOceanSizeList = Array<DigitalOceanSize>;
-
-export type PaginatedDryRunList = Array<DryRun>;
-
-export type PaginatedEmailHookList = Array<EmailHook>;
-
-export type PaginatedEmailLogList = Array<EmailLog>;
-
-export type PaginatedEventList = Array<Event>;
-
-export type PaginatedEventStatsList = Array<EventStats>;
-
-export type PaginatedEventSubscriptionList = Array<EventSubscription>;
-
-export type PaginatedFeedbackList = Array<Feedback>;
-
-export type PaginatedFinancialReportList = Array<FinancialReport>;
-
-export type PaginatedFirecrestJobList = Array<FirecrestJob>;
-
-export type PaginatedFreeipaProfileList = Array<FreeipaProfile>;
-
-export type PaginatedGoogleCredentialsList = Array<GoogleCredentials>;
-
-export type PaginatedGroupInvitationList = Array<GroupInvitation>;
-
-export type PaginatedIdentityProviderList = Array<IdentityProvider>;
-
-export type PaginatedImportableResourceList = Array<ImportableResource>;
-
-export type PaginatedIntegrationStatusDetailsList = Array<IntegrationStatusDetails>;
-
-export type PaginatedInvitationList = Array<Invitation>;
-
-export type PaginatedInvoiceCostList = Array<InvoiceCost>;
-
-export type PaginatedInvoiceItemDetailList = Array<InvoiceItemDetail>;
-
-export type PaginatedInvoiceItemList = Array<InvoiceItem>;
-
-export type PaginatedInvoiceList = Array<Invoice>;
-
-export type PaginatedInvoiceStatsOfferingList = Array<InvoiceStatsOffering>;
-
-export type PaginatedIssueList = Array<Issue>;
-
-export type PaginatedLexisLinkList = Array<LexisLink>;
-
-export type PaginatedMarketplaceCategoryList = Array<MarketplaceCategory>;
-
-export type PaginatedMarketplaceCustomerStatsList = Array<MarketplaceCustomerStats>;
-
-export type PaginatedMessageTemplateList = Array<MessageTemplate>;
-
-export type PaginatedMigrationDetailsList = Array<MigrationDetails>;
-
-export type PaginatedNameUuidList = Array<NameUuid>;
-
-export type PaginatedNestedProjectList = Array<NestedProject>;
-
-export type PaginatedNotificationList = Array<Notification>;
-
-export type PaginatedNotificationTemplateDetailSerializersList = Array<NotificationTemplateDetailSerializers>;
-
-export type PaginatedOfferingComponentStatList = Array<OfferingComponentStat>;
-
-export type PaginatedOfferingCountryStatsList = Array<OfferingCountryStats>;
-
-export type PaginatedOfferingEstimatedCostPolicyList = Array<OfferingEstimatedCostPolicy>;
-
-export type PaginatedOfferingFileList = Array<OfferingFile>;
-
-export type PaginatedOfferingList = Array<Offering>;
-
-export type PaginatedOfferingPermissionList = Array<OfferingPermission>;
-
-export type PaginatedOfferingReferralList = Array<OfferingReferral>;
-
-export type PaginatedOfferingStatsCounterList = Array<OfferingStatsCounter>;
-
-export type PaginatedOfferingStatsList = Array<OfferingStats>;
-
-export type PaginatedOfferingUsagePolicyList = Array<OfferingUsagePolicy>;
-
-export type PaginatedOfferingUserList = Array<OfferingUser>;
-
-export type PaginatedOfferingUserRoleList = Array<OfferingUserRole>;
-
-export type PaginatedOpenStackBackendInstanceList = Array<OpenStackBackendInstance>;
-
-export type PaginatedOpenStackBackendVolumesList = Array<OpenStackBackendVolumes>;
-
-export type PaginatedOpenStackBackupList = Array<OpenStackBackup>;
-
-export type PaginatedOpenStackFlavorList = Array<OpenStackFlavor>;
-
-export type PaginatedOpenStackFloatingIpList = Array<OpenStackFloatingIp>;
-
-export type PaginatedOpenStackImageList = Array<OpenStackImage>;
-
-export type PaginatedOpenStackInstanceAvailabilityZoneList = Array<OpenStackInstanceAvailabilityZone>;
-
-export type PaginatedOpenStackInstanceList = Array<OpenStackInstance>;
-
-export type PaginatedOpenStackNestedFloatingIpList = Array<OpenStackNestedFloatingIp>;
-
-export type PaginatedOpenStackNestedPortList = Array<OpenStackNestedPort>;
-
-export type PaginatedOpenStackNetworkList = Array<OpenStackNetwork>;
-
-export type PaginatedOpenStackPortList = Array<OpenStackPort>;
-
-export type PaginatedOpenStackRouterList = Array<OpenStackRouter>;
-
-export type PaginatedOpenStackSecurityGroupList = Array<OpenStackSecurityGroup>;
-
-export type PaginatedOpenStackServerGroupList = Array<OpenStackServerGroup>;
-
-export type PaginatedOpenStackSnapshotList = Array<OpenStackSnapshot>;
-
-export type PaginatedOpenStackSnapshotRestorationList = Array<OpenStackSnapshotRestoration>;
-
-export type PaginatedOpenStackSubNetList = Array<OpenStackSubNet>;
-
-export type PaginatedOpenStackTenantList = Array<OpenStackTenant>;
-
-export type PaginatedOpenStackVolumeAvailabilityZoneList = Array<OpenStackVolumeAvailabilityZone>;
-
-export type PaginatedOpenStackVolumeList = Array<OpenStackVolume>;
-
-export type PaginatedOpenStackVolumeTypeList = Array<OpenStackVolumeType>;
-
-export type PaginatedOrderDetailsList = Array<OrderDetails>;
-
-export type PaginatedOrganizationGroupList = Array<OrganizationGroup>;
-
-export type PaginatedPaymentList = Array<Payment>;
-
-export type PaginatedPaymentProfileList = Array<PaymentProfile>;
-
-export type PaginatedPermissionList = Array<Permission>;
-
-export type PaginatedPermissionRequestList = Array<PermissionRequest>;
-
-export type PaginatedPlanComponentList = Array<PlanComponent>;
-
-export type PaginatedPlanUsageResponseList = Array<PlanUsageResponse>;
-
-export type PaginatedPriorityList = Array<Priority>;
-
-export type PaginatedProjectCreditList = Array<ProjectCredit>;
-
-export type PaginatedProjectEstimatedCostPolicyList = Array<ProjectEstimatedCostPolicy>;
-
-export type PaginatedProjectList = Array<Project>;
-
-export type PaginatedProjectPermissionLogList = Array<ProjectPermissionLog>;
-
-export type PaginatedProjectQuotasList = Array<ProjectQuotas>;
-
-export type PaginatedProjectTypeList = Array<ProjectType>;
-
-export type PaginatedProposalList = Array<Proposal>;
-
-export type PaginatedProposalReviewList = Array<ProposalReview>;
-
-export type PaginatedProtectedCallList = Array<ProtectedCall>;
-
-export type PaginatedProtectedRoundList = Array<ProtectedRound>;
-
-export type PaginatedProviderCustomerList = Array<ProviderCustomer>;
-
-export type PaginatedProviderCustomerProjectList = Array<ProviderCustomerProject>;
-
-export type PaginatedProviderOfferingCostsList = Array<ProviderOfferingCosts>;
-
-export type PaginatedProviderOfferingCustomerList = Array<ProviderOfferingCustomer>;
-
-export type PaginatedProviderOfferingDetailsList = Array<ProviderOfferingDetails>;
-
-export type PaginatedProviderOfferingList = Array<ProviderOffering>;
-
-export type PaginatedProviderPlanDetailsList = Array<ProviderPlanDetails>;
-
-export type PaginatedProviderRequestedOfferingList = Array<ProviderRequestedOffering>;
-
-export type PaginatedProviderRequestedResourceList = Array<ProviderRequestedResource>;
-
-export type PaginatedPublicCallList = Array<PublicCall>;
-
-export type PaginatedPublicOfferingDetailsList = Array<PublicOfferingDetails>;
-
-export type PaginatedRancherApplicationList = Array<RancherApplication>;
-
-export type PaginatedRancherCatalogList = Array<RancherCatalog>;
-
-export type PaginatedRancherClusterList = Array<RancherCluster>;
-
-export type PaginatedRancherClusterTemplateList = Array<RancherClusterTemplate>;
-
-export type PaginatedRancherHpaList = Array<RancherHpa>;
-
-export type PaginatedRancherIngressList = Array<RancherIngress>;
-
-export type PaginatedRancherNamespaceList = Array<RancherNamespace>;
-
-export type PaginatedRancherNodeList = Array<RancherNode>;
-
-export type PaginatedRancherProjectList = Array<RancherProject>;
-
-export type PaginatedRancherServiceList = Array<RancherService>;
-
-export type PaginatedRancherTemplateList = Array<RancherTemplate>;
-
-export type PaginatedRancherUserList = Array<RancherUser>;
-
-export type PaginatedRancherWorkloadList = Array<RancherWorkload>;
-
-export type PaginatedRemoteCustomerList = Array<RemoteCustomer>;
-
-export type PaginatedRemoteOfferingList = Array<RemoteOffering>;
-
-export type PaginatedRemoteProjectUpdateRequestList = Array<RemoteProjectUpdateRequest>;
-
-export type PaginatedRemoteSynchronisationList = Array<RemoteSynchronisation>;
-
-export type PaginatedRequestedOfferingList = Array<RequestedOffering>;
-
-export type PaginatedRequestedResourceList = Array<RequestedResource>;
-
-export type PaginatedResourceList = Array<Resource>;
-
-export type PaginatedResourceOfferingList = Array<ResourceOffering>;
-
-export type PaginatedResourceUserList = Array<ResourceUser>;
-
-export type PaginatedRmqUserStatsItemList = Array<RmqUserStatsItem>;
-
-export type PaginatedRobotAccountDetailsList = Array<RobotAccountDetails>;
-
-export type PaginatedRoleDetailsList = Array<RoleDetails>;
-
-export type PaginatedRoundReviewerList = Array<RoundReviewer>;
-
-export type PaginatedSaml2ProviderList = Array<Saml2Provider>;
-
-export type PaginatedScreenshotList = Array<Screenshot>;
-
-export type PaginatedSectionList = Array<Section>;
-
-export type PaginatedServiceProviderList = Array<ServiceProvider>;
-
-export type PaginatedServiceProviderRevenuesList = Array<ServiceProviderRevenues>;
-
-export type PaginatedServiceSettingsList = Array<ServiceSettings>;
-
-export type PaginatedSlurmAllocationList = Array<SlurmAllocation>;
-
-export type PaginatedSlurmAllocationUserUsageList = Array<SlurmAllocationUserUsage>;
-
-export type PaginatedSlurmAssociationList = Array<SlurmAssociation>;
-
-export type PaginatedSshKeyList = Array<SshKey>;
-
-export type PaginatedSupportUserList = Array<SupportUser>;
-
-export type PaginatedTemplateList = Array<Template>;
-
-export type PaginatedUserAgreementList = Array<UserAgreement>;
-
-export type PaginatedUserList = Array<User>;
-
-export type PaginatedUserRoleDetailsList = Array<UserRoleDetails>;
-
-export type PaginatedVmwareClusterList = Array<VmwareCluster>;
-
-export type PaginatedVmwareDatastoreList = Array<VmwareDatastore>;
-
-export type PaginatedVmwareDiskList = Array<VmwareDisk>;
-
-export type PaginatedVmwareFolderList = Array<VmwareFolder>;
-
-export type PaginatedVmwareNetworkList = Array<VmwareNetwork>;
-
-export type PaginatedVmwarePortList = Array<VmwarePort>;
-
-export type PaginatedVmwareTemplateList = Array<VmwareTemplate>;
-
-export type PaginatedVmwareVirtualMachineList = Array<VmwareVirtualMachine>;
-
-export type PaginatedWebHookList = Array<WebHook>;
-
 export type PaidRequest = {
     date: string;
     proof?: Blob | File;
@@ -6309,10 +5871,6 @@ export type PatchedCategoryColumnRequest = {
     attribute?: string;
     /**
      * Widget field allows to customise table cell rendering.
-     *
-     * * `csv` - csv
-     * * `filesize` - filesize
-     * * `attached_instance` - attached_instance
      */
     widget?: WidgetEnum | BlankEnum | NullEnum | null;
     category?: string;
@@ -10200,6 +9758,16 @@ export type WebhookEventEnum = 'jira:issue_updated' | 'jira:issue_deleted' | 'co
 
 export type WidgetEnum = 'csv' | 'filesize' | 'attached_instance';
 
+/**
+ * A page number within the paginated result set.
+ */
+export type Page = number;
+
+/**
+ * Number of results to return per page.
+ */
+export type PageSize = number;
+
 export type ApiAuthEduteamsCompleteRetrieveData = {
     body?: never;
     path?: never;
@@ -10383,7 +9951,7 @@ export type ApiAuthSaml2ProvidersListData = {
 };
 
 export type ApiAuthSaml2ProvidersListResponses = {
-    200: PaginatedSaml2ProviderList;
+    200: Array<Saml2Provider>;
 };
 
 export type ApiAuthSaml2ProvidersListResponse = ApiAuthSaml2ProvidersListResponses[keyof ApiAuthSaml2ProvidersListResponses];
@@ -10440,7 +10008,7 @@ export type AccessSubnetsListData = {
 };
 
 export type AccessSubnetsListResponses = {
-    200: PaginatedAccessSubnetList;
+    200: Array<AccessSubnet>;
 };
 
 export type AccessSubnetsListResponse = AccessSubnetsListResponses[keyof AccessSubnetsListResponses];
@@ -10531,16 +10099,7 @@ export type AdminAnnouncementsListData = {
         /**
          * Ordering
          *
-         * * `created` - Created
-         * * `-created` - Created (descending)
-         * * `name` - Name
-         * * `-name` - Name (descending)
-         * * `type` - Type
-         * * `-type` - Type (descending)
-         * * `active_from` - Active from
-         * * `-active_from` - Active from (descending)
-         * * `active_to` - Active to
-         * * `-active_to` - Active to (descending)
+         *
          */
         o?: Array<'-active_from' | '-active_to' | '-created' | '-name' | '-type' | 'active_from' | 'active_to' | 'created' | 'name' | 'type'>;
         /**
@@ -10551,18 +10110,13 @@ export type AdminAnnouncementsListData = {
          * Number of results to return per page.
          */
         page_size?: number;
-        /**
-         * * `information` - Information
-         * * `warning` - Warning
-         * * `danger` - Danger
-         */
         type?: Array<'danger' | 'information' | 'warning'>;
     };
     url: '/api/admin-announcements/';
 };
 
 export type AdminAnnouncementsListResponses = {
-    200: PaginatedAdminAnnouncementList;
+    200: Array<AdminAnnouncement>;
 };
 
 export type AdminAnnouncementsListResponse = AdminAnnouncementsListResponses[keyof AdminAnnouncementsListResponses];
@@ -10662,7 +10216,7 @@ export type AuthTokensListData = {
 };
 
 export type AuthTokensListResponses = {
-    200: PaginatedAuthTokenList;
+    200: Array<AuthToken>;
 };
 
 export type AuthTokensListResponse = AuthTokensListResponses[keyof AuthTokensListResponses];
@@ -10746,7 +10300,7 @@ export type AwsImagesListData = {
 };
 
 export type AwsImagesListResponses = {
-    200: PaginatedAwsImageList;
+    200: Array<AwsImage>;
 };
 
 export type AwsImagesListResponse = AwsImagesListResponses[keyof AwsImagesListResponses];
@@ -10794,16 +10348,6 @@ export type AwsInstancesListData = {
         project_uuid?: string;
         service_settings_name?: string;
         service_settings_uuid?: string;
-        /**
-         * * `CREATION_SCHEDULED` - CREATION_SCHEDULED
-         * * `CREATING` - CREATING
-         * * `UPDATE_SCHEDULED` - UPDATE_SCHEDULED
-         * * `UPDATING` - UPDATING
-         * * `DELETION_SCHEDULED` - DELETION_SCHEDULED
-         * * `DELETING` - DELETING
-         * * `OK` - OK
-         * * `ERRED` - ERRED
-         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
         uuid?: string;
     };
@@ -10811,7 +10355,7 @@ export type AwsInstancesListData = {
 };
 
 export type AwsInstancesListResponses = {
-    200: PaginatedAwsInstanceList;
+    200: Array<AwsInstance>;
 };
 
 export type AwsInstancesListResponse = AwsInstancesListResponses[keyof AwsInstancesListResponses];
@@ -11008,7 +10552,7 @@ export type AwsRegionsListData = {
 };
 
 export type AwsRegionsListResponses = {
-    200: PaginatedAwsRegionList;
+    200: Array<AwsRegion>;
 };
 
 export type AwsRegionsListResponse = AwsRegionsListResponses[keyof AwsRegionsListResponses];
@@ -11048,7 +10592,7 @@ export type AwsSizesListData = {
 };
 
 export type AwsSizesListResponses = {
-    200: PaginatedAwsSizeList;
+    200: Array<AwsSize>;
 };
 
 export type AwsSizesListResponse = AwsSizesListResponses[keyof AwsSizesListResponses];
@@ -11086,7 +10630,7 @@ export type AwsVolumesListData = {
 };
 
 export type AwsVolumesListResponses = {
-    200: PaginatedAwsVolumeList;
+    200: Array<AwsVolume>;
 };
 
 export type AwsVolumesListResponse = AwsVolumesListResponses[keyof AwsVolumesListResponses];
@@ -11255,7 +10799,7 @@ export type AzureImagesListData = {
 };
 
 export type AzureImagesListResponses = {
-    200: PaginatedAzureImageList;
+    200: Array<AzureImage>;
 };
 
 export type AzureImagesListResponse = AzureImagesListResponses[keyof AzureImagesListResponses];
@@ -11297,7 +10841,7 @@ export type AzureLocationsListData = {
 };
 
 export type AzureLocationsListResponses = {
-    200: PaginatedAzureLocationList;
+    200: Array<AzureLocation>;
 };
 
 export type AzureLocationsListResponse = AzureLocationsListResponses[keyof AzureLocationsListResponses];
@@ -11347,16 +10891,6 @@ export type AzurePublicIpsListData = {
         resource_group_uuid?: string;
         service_settings_name?: string;
         service_settings_uuid?: string;
-        /**
-         * * `CREATION_SCHEDULED` - CREATION_SCHEDULED
-         * * `CREATING` - CREATING
-         * * `UPDATE_SCHEDULED` - UPDATE_SCHEDULED
-         * * `UPDATING` - UPDATING
-         * * `DELETION_SCHEDULED` - DELETION_SCHEDULED
-         * * `DELETING` - DELETING
-         * * `OK` - OK
-         * * `ERRED` - ERRED
-         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
         uuid?: string;
     };
@@ -11364,7 +10898,7 @@ export type AzurePublicIpsListData = {
 };
 
 export type AzurePublicIpsListResponses = {
-    200: PaginatedAzurePublicIpList;
+    200: Array<AzurePublicIp>;
 };
 
 export type AzurePublicIpsListResponse = AzurePublicIpsListResponses[keyof AzurePublicIpsListResponses];
@@ -11497,7 +11031,7 @@ export type AzureResourceGroupsListData = {
 };
 
 export type AzureResourceGroupsListResponses = {
-    200: PaginatedAzureResourceGroupList;
+    200: Array<AzureResourceGroup>;
 };
 
 export type AzureResourceGroupsListResponse = AzureResourceGroupsListResponses[keyof AzureResourceGroupsListResponses];
@@ -11543,7 +11077,7 @@ export type AzureSizesListData = {
 };
 
 export type AzureSizesListResponses = {
-    200: PaginatedAzureSizeList;
+    200: Array<AzureSize>;
 };
 
 export type AzureSizesListResponse = AzureSizesListResponses[keyof AzureSizesListResponses];
@@ -11595,16 +11129,6 @@ export type AzureSqlDatabasesListData = {
         server_uuid?: string;
         service_settings_name?: string;
         service_settings_uuid?: string;
-        /**
-         * * `CREATION_SCHEDULED` - CREATION_SCHEDULED
-         * * `CREATING` - CREATING
-         * * `UPDATE_SCHEDULED` - UPDATE_SCHEDULED
-         * * `UPDATING` - UPDATING
-         * * `DELETION_SCHEDULED` - DELETION_SCHEDULED
-         * * `DELETING` - DELETING
-         * * `OK` - OK
-         * * `ERRED` - ERRED
-         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
         uuid?: string;
     };
@@ -11612,7 +11136,7 @@ export type AzureSqlDatabasesListData = {
 };
 
 export type AzureSqlDatabasesListResponses = {
-    200: PaginatedAzureSqlDatabaseList;
+    200: Array<AzureSqlDatabase>;
 };
 
 export type AzureSqlDatabasesListResponse = AzureSqlDatabasesListResponses[keyof AzureSqlDatabasesListResponses];
@@ -11757,16 +11281,6 @@ export type AzureSqlServersListData = {
         resource_group_uuid?: string;
         service_settings_name?: string;
         service_settings_uuid?: string;
-        /**
-         * * `CREATION_SCHEDULED` - CREATION_SCHEDULED
-         * * `CREATING` - CREATING
-         * * `UPDATE_SCHEDULED` - UPDATE_SCHEDULED
-         * * `UPDATING` - UPDATING
-         * * `DELETION_SCHEDULED` - DELETION_SCHEDULED
-         * * `DELETING` - DELETING
-         * * `OK` - OK
-         * * `ERRED` - ERRED
-         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
         uuid?: string;
     };
@@ -11774,7 +11288,7 @@ export type AzureSqlServersListData = {
 };
 
 export type AzureSqlServersListResponses = {
-    200: PaginatedAzureSqlServerList;
+    200: Array<AzureSqlServer>;
 };
 
 export type AzureSqlServersListResponse = AzureSqlServersListResponses[keyof AzureSqlServersListResponses];
@@ -11934,16 +11448,6 @@ export type AzureVirtualmachinesListData = {
         resource_group_uuid?: string;
         service_settings_name?: string;
         service_settings_uuid?: string;
-        /**
-         * * `CREATION_SCHEDULED` - CREATION_SCHEDULED
-         * * `CREATING` - CREATING
-         * * `UPDATE_SCHEDULED` - UPDATE_SCHEDULED
-         * * `UPDATING` - UPDATING
-         * * `DELETION_SCHEDULED` - DELETION_SCHEDULED
-         * * `DELETING` - DELETING
-         * * `OK` - OK
-         * * `ERRED` - ERRED
-         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
         uuid?: string;
     };
@@ -11951,7 +11455,7 @@ export type AzureVirtualmachinesListData = {
 };
 
 export type AzureVirtualmachinesListResponses = {
-    200: PaginatedAzureVirtualMachineList;
+    200: Array<AzureVirtualMachine>;
 };
 
 export type AzureVirtualmachinesListResponse = AzureVirtualmachinesListResponses[keyof AzureVirtualmachinesListResponses];
@@ -12151,7 +11655,7 @@ export type BookingOfferingsListData = {
 };
 
 export type BookingOfferingsListResponses = {
-    200: PaginatedOfferingList;
+    200: Array<Offering>;
 };
 
 export type BookingOfferingsListResponse = BookingOfferingsListResponses[keyof BookingOfferingsListResponses];
@@ -12252,14 +11756,7 @@ export type BookingResourcesListData = {
         /**
          * Ordering
          *
-         * * `name` - Name
-         * * `-name` - Name (descending)
-         * * `created` - Created
-         * * `-created` - Created (descending)
-         * * `type` - Type
-         * * `-type` - Type (descending)
-         * * `schedules` - Schedules
-         * * `-schedules` - Schedules (descending)
+         *
          */
         o?: Array<'-created' | '-name' | '-schedules' | '-type' | 'created' | 'name' | 'schedules' | 'type'>;
         offering?: string;
@@ -12292,14 +11789,6 @@ export type BookingResourcesListData = {
          * Service Manager UUID
          */
         service_manager_uuid?: string;
-        /**
-         * * `Creating` - Creating
-         * * `OK` - OK
-         * * `Erred` - Erred
-         * * `Updating` - Updating
-         * * `Terminating` - Terminating
-         * * `Terminated` - Terminated
-         */
         state?: Array<'Creating' | 'Erred' | 'OK' | 'Terminated' | 'Terminating' | 'Updating'>;
         /**
          * Visible to username
@@ -12310,7 +11799,7 @@ export type BookingResourcesListData = {
 };
 
 export type BookingResourcesListResponses = {
-    200: PaginatedBookingResourceList;
+    200: Array<BookingResource>;
 };
 
 export type BookingResourcesListResponse = BookingResourcesListResponses[keyof BookingResourcesListResponses];
@@ -12382,7 +11871,7 @@ export type BroadcastMessageTemplatesListData = {
 };
 
 export type BroadcastMessageTemplatesListResponses = {
-    200: PaginatedMessageTemplateList;
+    200: Array<MessageTemplate>;
 };
 
 export type BroadcastMessageTemplatesListResponse = BroadcastMessageTemplatesListResponses[keyof BroadcastMessageTemplatesListResponses];
@@ -12471,12 +11960,7 @@ export type BroadcastMessagesListData = {
         /**
          * Ordering
          *
-         * * `created` - Created
-         * * `-created` - Created (descending)
-         * * `subject` - Subject
-         * * `-subject` - Subject (descending)
-         * * `author_full_name` - Author full name
-         * * `-author_full_name` - Author full name (descending)
+         *
          */
         o?: Array<'-author_full_name' | '-created' | '-subject' | 'author_full_name' | 'created' | 'subject'>;
         /**
@@ -12487,11 +11971,6 @@ export type BroadcastMessagesListData = {
          * Number of results to return per page.
          */
         page_size?: number;
-        /**
-         * * `DRAFT` - Draft
-         * * `SCHEDULED` - Scheduled
-         * * `SENT` - Sent
-         */
         state?: 'DRAFT' | 'SCHEDULED' | 'SENT';
         subject?: string;
     };
@@ -12499,7 +11978,7 @@ export type BroadcastMessagesListData = {
 };
 
 export type BroadcastMessagesListResponses = {
-    200: PaginatedBroadcastMessageList;
+    200: Array<BroadcastMessage>;
 };
 
 export type BroadcastMessagesListResponse = BroadcastMessagesListResponses[keyof BroadcastMessagesListResponses];
@@ -12623,8 +12102,7 @@ export type CallManagingOrganisationsListData = {
         /**
          * Ordering
          *
-         * * `customer_name` - Customer name
-         * * `-customer_name` - Customer name (descending)
+         *
          */
         o?: Array<'-customer_name' | 'customer_name'>;
         /**
@@ -12640,7 +12118,7 @@ export type CallManagingOrganisationsListData = {
 };
 
 export type CallManagingOrganisationsListResponses = {
-    200: PaginatedCallManagingOrganisationList;
+    200: Array<CallManagingOrganisation>;
 };
 
 export type CallManagingOrganisationsListResponse = CallManagingOrganisationsListResponses[keyof CallManagingOrganisationsListResponses];
@@ -12815,7 +12293,7 @@ export type CallManagingOrganisationsListUsersListData = {
 };
 
 export type CallManagingOrganisationsListUsersListResponses = {
-    200: PaginatedUserRoleDetailsList;
+    200: Array<UserRoleDetails>;
 };
 
 export type CallManagingOrganisationsListUsersListResponse = CallManagingOrganisationsListUsersListResponses[keyof CallManagingOrganisationsListUsersListResponses];
@@ -12868,7 +12346,7 @@ export type CallRoundsListData = {
 };
 
 export type CallRoundsListResponses = {
-    200: PaginatedCallRoundList;
+    200: Array<CallRound>;
 };
 
 export type CallRoundsListResponse = CallRoundsListResponses[keyof CallRoundsListResponses];
@@ -12907,7 +12385,7 @@ export type CallRoundsReviewersListData = {
 };
 
 export type CallRoundsReviewersListResponses = {
-    200: PaginatedRoundReviewerList;
+    200: Array<RoundReviewer>;
 };
 
 export type CallRoundsReviewersListResponse = CallRoundsReviewersListResponses[keyof CallRoundsReviewersListResponses];
@@ -12951,7 +12429,7 @@ export type ComponentUserUsageLimitsListData = {
 };
 
 export type ComponentUserUsageLimitsListResponses = {
-    200: PaginatedComponentUserUsageLimitList;
+    200: Array<ComponentUserUsageLimit>;
 };
 
 export type ComponentUserUsageLimitsListResponse = ComponentUserUsageLimitsListResponses[keyof ComponentUserUsageLimitsListResponses];
@@ -13055,14 +12533,7 @@ export type CustomerCreditsListData = {
         /**
          * Ordering
          *
-         * * `customer_name` - Customer name
-         * * `-customer_name` - Customer name (descending)
-         * * `value` - Value
-         * * `-value` - Value (descending)
-         * * `end_date` - End date
-         * * `-end_date` - End date (descending)
-         * * `expected_consumption` - Expected consumption
-         * * `-expected_consumption` - Expected consumption (descending)
+         *
          */
         o?: Array<'-customer_name' | '-end_date' | '-expected_consumption' | '-value' | 'customer_name' | 'end_date' | 'expected_consumption' | 'value'>;
         /**
@@ -13078,7 +12549,7 @@ export type CustomerCreditsListData = {
 };
 
 export type CustomerCreditsListResponses = {
-    200: PaginatedCustomerCreditList;
+    200: Array<CustomerCredit>;
 };
 
 export type CustomerCreditsListResponse = CustomerCreditsListResponses[keyof CustomerCreditsListResponses];
@@ -13198,10 +12669,7 @@ export type CustomerPermissionsReviewsListData = {
         /**
          * Ordering
          *
-         * * `created` - Created
-         * * `-created` - Created (descending)
-         * * `closed` - Closed
-         * * `-closed` - Closed (descending)
+         *
          */
         o?: Array<'-closed' | '-created' | 'closed' | 'created'>;
         /**
@@ -13218,7 +12686,7 @@ export type CustomerPermissionsReviewsListData = {
 };
 
 export type CustomerPermissionsReviewsListResponses = {
-    200: PaginatedCustomerPermissionReviewList;
+    200: Array<CustomerPermissionReview>;
 };
 
 export type CustomerPermissionsReviewsListResponse = CustomerPermissionsReviewsListResponses[keyof CustomerPermissionsReviewsListResponses];
@@ -13271,7 +12739,7 @@ export type CustomerQuotasListData = {
 };
 
 export type CustomerQuotasListResponses = {
-    200: PaginatedCustomerQuotasList;
+    200: Array<CustomerQuotas>;
 };
 
 export type CustomerQuotasListResponse = CustomerQuotasListResponses[keyof CustomerQuotasListResponses];
@@ -13313,7 +12781,7 @@ export type CustomersListData = {
 };
 
 export type CustomersListResponses = {
-    200: PaginatedCustomerList;
+    200: Array<Customer>;
 };
 
 export type CustomersListResponse = CustomersListResponses[keyof CustomersListResponses];
@@ -13547,7 +13015,7 @@ export type CustomersListUsersListData = {
 };
 
 export type CustomersListUsersListResponses = {
-    200: PaginatedUserRoleDetailsList;
+    200: Array<UserRoleDetails>;
 };
 
 export type CustomersListUsersListResponse = CustomersListUsersListResponses[keyof CustomersListUsersListResponses];
@@ -13634,7 +13102,7 @@ export type CustomersUsersListData = {
 };
 
 export type CustomersUsersListResponses = {
-    200: PaginatedCustomerUserList;
+    200: Array<CustomerUser>;
 };
 
 export type CustomersUsersListResponse = CustomersUsersListResponses[keyof CustomersUsersListResponses];
@@ -13675,7 +13143,7 @@ export type CustomersCountriesListData = {
 };
 
 export type CustomersCountriesListResponses = {
-    200: PaginatedCountryList;
+    200: Array<Country>;
 };
 
 export type CustomersCountriesListResponse = CustomersCountriesListResponses[keyof CustomersCountriesListResponses];
@@ -13753,16 +13221,6 @@ export type DigitaloceanDropletsListData = {
         project_uuid?: string;
         service_settings_name?: string;
         service_settings_uuid?: string;
-        /**
-         * * `CREATION_SCHEDULED` - CREATION_SCHEDULED
-         * * `CREATING` - CREATING
-         * * `UPDATE_SCHEDULED` - UPDATE_SCHEDULED
-         * * `UPDATING` - UPDATING
-         * * `DELETION_SCHEDULED` - DELETION_SCHEDULED
-         * * `DELETING` - DELETING
-         * * `OK` - OK
-         * * `ERRED` - ERRED
-         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
         uuid?: string;
     };
@@ -13770,7 +13228,7 @@ export type DigitaloceanDropletsListData = {
 };
 
 export type DigitaloceanDropletsListResponses = {
-    200: PaginatedDigitalOceanDropletList;
+    200: Array<DigitalOceanDroplet>;
 };
 
 export type DigitaloceanDropletsListResponse = DigitaloceanDropletsListResponses[keyof DigitaloceanDropletsListResponses];
@@ -13958,10 +13416,7 @@ export type DigitaloceanImagesListData = {
         /**
          * Ordering
          *
-         * * `distribution` - Distribution
-         * * `-distribution` - Distribution (descending)
-         * * `type` - Type
-         * * `-type` - Type (descending)
+         *
          */
         o?: Array<'-distribution' | '-type' | 'distribution' | 'type'>;
         /**
@@ -13978,7 +13433,7 @@ export type DigitaloceanImagesListData = {
 };
 
 export type DigitaloceanImagesListResponses = {
-    200: PaginatedDigitalOceanImageList;
+    200: Array<DigitalOceanImage>;
 };
 
 export type DigitaloceanImagesListResponse = DigitaloceanImagesListResponses[keyof DigitaloceanImagesListResponses];
@@ -14017,7 +13472,7 @@ export type DigitaloceanRegionsListData = {
 };
 
 export type DigitaloceanRegionsListResponses = {
-    200: PaginatedDigitalOceanRegionList;
+    200: Array<DigitalOceanRegion>;
 };
 
 export type DigitaloceanRegionsListResponse = DigitaloceanRegionsListResponses[keyof DigitaloceanRegionsListResponses];
@@ -14059,7 +13514,7 @@ export type DigitaloceanSizesListData = {
 };
 
 export type DigitaloceanSizesListResponses = {
-    200: PaginatedDigitalOceanSizeList;
+    200: Array<DigitalOceanSize>;
 };
 
 export type DigitaloceanSizesListResponse = DigitaloceanSizesListResponses[keyof DigitaloceanSizesListResponses];
@@ -14088,10 +13543,7 @@ export type EmailLogsListData = {
         /**
          * Ordering
          *
-         * * `sent_at` - Sent at
-         * * `-sent_at` - Sent at (descending)
-         * * `subject` - Subject
-         * * `-subject` - Subject (descending)
+         *
          */
         o?: Array<'-sent_at' | '-subject' | 'sent_at' | 'subject'>;
         /**
@@ -14109,7 +13561,7 @@ export type EmailLogsListData = {
 };
 
 export type EmailLogsListResponses = {
-    200: PaginatedEmailLogList;
+    200: Array<EmailLog>;
 };
 
 export type EmailLogsListResponse = EmailLogsListResponses[keyof EmailLogsListResponses];
@@ -14136,8 +13588,7 @@ export type EventSubscriptionsListData = {
         /**
          * Ordering
          *
-         * * `created` - Created
-         * * `-created` - Created (descending)
+         *
          */
         o?: Array<'-created' | 'created'>;
         /**
@@ -14155,7 +13606,7 @@ export type EventSubscriptionsListData = {
 };
 
 export type EventSubscriptionsListResponses = {
-    200: PaginatedEventSubscriptionList;
+    200: Array<EventSubscription>;
 };
 
 export type EventSubscriptionsListResponse = EventSubscriptionsListResponses[keyof EventSubscriptionsListResponses];
@@ -14221,8 +13672,7 @@ export type EventsListData = {
         /**
          * Ordering
          *
-         * * `created` - Created
-         * * `-created` - Created (descending)
+         *
          */
         o?: Array<'-created' | 'created'>;
         /**
@@ -14246,7 +13696,7 @@ export type EventsListData = {
 };
 
 export type EventsListResponses = {
-    200: PaginatedEventList;
+    200: Array<Event>;
 };
 
 export type EventsListResponse = EventsListResponses[keyof EventsListResponses];
@@ -14268,7 +13718,7 @@ export type EventsStatsListData = {
 };
 
 export type EventsStatsListResponses = {
-    200: PaginatedEventStatsList;
+    200: Array<EventStats>;
 };
 
 export type EventsStatsListResponse = EventsStatsListResponses[keyof EventsStatsListResponses];
@@ -14387,7 +13837,7 @@ export type FinancialReportsListData = {
 };
 
 export type FinancialReportsListResponses = {
-    200: PaginatedFinancialReportList;
+    200: Array<FinancialReport>;
 };
 
 export type FinancialReportsListResponse = FinancialReportsListResponses[keyof FinancialReportsListResponses];
@@ -14426,7 +13876,7 @@ export type FreeipaProfilesListData = {
 };
 
 export type FreeipaProfilesListResponses = {
-    200: PaginatedFreeipaProfileList;
+    200: Array<FreeipaProfile>;
 };
 
 export type FreeipaProfilesListResponse = FreeipaProfilesListResponses[keyof FreeipaProfilesListResponses];
@@ -14527,7 +13977,7 @@ export type GoogleAuthListData = {
 };
 
 export type GoogleAuthListResponses = {
-    200: PaginatedGoogleCredentialsList;
+    200: Array<GoogleCredentials>;
 };
 
 export type GoogleAuthListResponse = GoogleAuthListResponses[keyof GoogleAuthListResponses];
@@ -14640,7 +14090,7 @@ export type HooksEmailListData = {
 };
 
 export type HooksEmailListResponses = {
-    200: PaginatedEmailHookList;
+    200: Array<EmailHook>;
 };
 
 export type HooksEmailListResponse = HooksEmailListResponses[keyof HooksEmailListResponses];
@@ -14732,10 +14182,6 @@ export type HooksWebListData = {
         author_fullname?: string;
         author_username?: string;
         author_uuid?: string;
-        /**
-         * * `1` - json
-         * * `2` - form
-         */
         content_type?: 1 | 2;
         destination_url?: string;
         is_active?: boolean;
@@ -14754,7 +14200,7 @@ export type HooksWebListData = {
 };
 
 export type HooksWebListResponses = {
-    200: PaginatedWebHookList;
+    200: Array<WebHook>;
 };
 
 export type HooksWebListResponse = HooksWebListResponses[keyof HooksWebListResponses];
@@ -15052,7 +14498,7 @@ export type IdentityProvidersListData = {
 };
 
 export type IdentityProvidersListResponses = {
-    200: PaginatedIdentityProviderList;
+    200: Array<IdentityProvider>;
 };
 
 export type IdentityProvidersListResponse = IdentityProvidersListResponses[keyof IdentityProvidersListResponses];
@@ -15165,7 +14611,7 @@ export type InvoiceItemsListData = {
 };
 
 export type InvoiceItemsListResponses = {
-    200: PaginatedInvoiceItemDetailList;
+    200: Array<InvoiceItemDetail>;
 };
 
 export type InvoiceItemsListResponse = InvoiceItemsListResponses[keyof InvoiceItemsListResponses];
@@ -15271,7 +14717,13 @@ export type InvoiceItemsCostsListData = {
         customer_uuid?: string;
         month?: number;
         offering_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
         page?: number;
+        /**
+         * Number of results to return per page.
+         */
         page_size?: number;
         project_uuid?: string;
         resource_uuid?: string;
@@ -15289,7 +14741,7 @@ export type InvoiceItemsCostsListData = {
 };
 
 export type InvoiceItemsCostsListResponses = {
-    200: PaginatedInvoiceCostList;
+    200: Array<InvoiceCost>;
 };
 
 export type InvoiceItemsCostsListResponse = InvoiceItemsCostsListResponses[keyof InvoiceItemsCostsListResponses];
@@ -15373,12 +14825,7 @@ export type InvoicesListData = {
         /**
          * Ordering
          *
-         * * `created` - Created
-         * * `-created` - Created (descending)
-         * * `year` - Year
-         * * `-year` - Year (descending)
-         * * `month` - Month
-         * * `-month` - Month (descending)
+         *
          */
         o?: Array<'-created' | '-month' | '-year' | 'created' | 'month' | 'year'>;
         /**
@@ -15390,12 +14837,6 @@ export type InvoicesListData = {
          */
         page_size?: number;
         start_date?: string;
-        /**
-         * * `pending` - Pending
-         * * `created` - Created
-         * * `paid` - Paid
-         * * `canceled` - Canceled
-         */
         state?: Array<'canceled' | 'created' | 'paid' | 'pending'>;
         year?: number;
     };
@@ -15403,7 +14844,7 @@ export type InvoicesListData = {
 };
 
 export type InvoicesListResponses = {
-    200: PaginatedInvoiceList;
+    200: Array<Invoice>;
 };
 
 export type InvoicesListResponse = InvoicesListResponses[keyof InvoicesListResponses];
@@ -15525,12 +14966,7 @@ export type InvoicesStatsListData = {
         /**
          * Ordering
          *
-         * * `created` - Created
-         * * `-created` - Created (descending)
-         * * `year` - Year
-         * * `-year` - Year (descending)
-         * * `month` - Month
-         * * `-month` - Month (descending)
+         *
          */
         o?: Array<'-created' | '-month' | '-year' | 'created' | 'month' | 'year'>;
         /**
@@ -15543,12 +14979,6 @@ export type InvoicesStatsListData = {
         page_size?: number;
         provider_uuid?: string;
         start_date?: string;
-        /**
-         * * `pending` - Pending
-         * * `created` - Created
-         * * `paid` - Paid
-         * * `canceled` - Canceled
-         */
         state?: Array<'canceled' | 'created' | 'paid' | 'pending'>;
         year?: number;
     };
@@ -15556,7 +14986,7 @@ export type InvoicesStatsListData = {
 };
 
 export type InvoicesStatsListResponses = {
-    200: PaginatedInvoiceStatsOfferingList;
+    200: Array<InvoiceStatsOffering>;
 };
 
 export type InvoicesStatsListResponse = InvoicesStatsListResponses[keyof InvoicesStatsListResponses];
@@ -15592,8 +15022,7 @@ export type KeysListData = {
         /**
          * Ordering
          *
-         * * `name` - Name
-         * * `-name` - Name (descending)
+         *
          */
         o?: Array<'-name' | 'name'>;
         /**
@@ -15611,7 +15040,7 @@ export type KeysListData = {
 };
 
 export type KeysListResponses = {
-    200: PaginatedSshKeyList;
+    200: Array<SshKey>;
 };
 
 export type KeysListResponse = KeysListResponses[keyof KeysListResponses];
@@ -15686,7 +15115,7 @@ export type LexisLinksListData = {
 };
 
 export type LexisLinksListResponses = {
-    200: PaginatedLexisLinkList;
+    200: Array<LexisLink>;
 };
 
 export type LexisLinksListResponse = LexisLinksListResponses[keyof LexisLinksListResponses];
@@ -15794,10 +15223,7 @@ export type MarketplaceCategoriesListData = {
         /**
          * Customers offerings state
          *
-         * * `1` - Draft
-         * * `2` - Active
-         * * `3` - Paused
-         * * `4` - Archived
+         *
          */
         customers_offerings_state?: Array<1 | 2 | 3 | 4>;
         field?: Array<'articles' | 'available_offerings_count' | 'columns' | 'components' | 'default_tenant_category' | 'default_vm_category' | 'default_volume_category' | 'description' | 'group' | 'icon' | 'offering_count' | 'sections' | 'title' | 'url' | 'uuid'>;
@@ -15823,7 +15249,7 @@ export type MarketplaceCategoriesListData = {
 };
 
 export type MarketplaceCategoriesListResponses = {
-    200: PaginatedMarketplaceCategoryList;
+    200: Array<MarketplaceCategory>;
 };
 
 export type MarketplaceCategoriesListResponse = MarketplaceCategoriesListResponses[keyof MarketplaceCategoriesListResponses];
@@ -15925,7 +15351,7 @@ export type MarketplaceCategoryColumnsListData = {
 };
 
 export type MarketplaceCategoryColumnsListResponses = {
-    200: PaginatedCategoryColumnList;
+    200: Array<CategoryColumn>;
 };
 
 export type MarketplaceCategoryColumnsListResponse = MarketplaceCategoryColumnsListResponses[keyof MarketplaceCategoryColumnsListResponses];
@@ -16026,7 +15452,7 @@ export type MarketplaceCategoryComponentUsagesListData = {
 };
 
 export type MarketplaceCategoryComponentUsagesListResponses = {
-    200: PaginatedCategoryComponentUsageList;
+    200: Array<CategoryComponentUsage>;
 };
 
 export type MarketplaceCategoryComponentUsagesListResponse = MarketplaceCategoryComponentUsagesListResponses[keyof MarketplaceCategoryComponentUsagesListResponses];
@@ -16068,7 +15494,7 @@ export type MarketplaceCategoryComponentsListData = {
 };
 
 export type MarketplaceCategoryComponentsListResponses = {
-    200: PaginatedCategoryComponentsList;
+    200: Array<CategoryComponents>;
 };
 
 export type MarketplaceCategoryComponentsListResponse = MarketplaceCategoryComponentsListResponses[keyof MarketplaceCategoryComponentsListResponses];
@@ -16180,7 +15606,7 @@ export type MarketplaceCategoryGroupsListData = {
 };
 
 export type MarketplaceCategoryGroupsListResponses = {
-    200: PaginatedCategoryGroupList;
+    200: Array<CategoryGroup>;
 };
 
 export type MarketplaceCategoryGroupsListResponse = MarketplaceCategoryGroupsListResponses[keyof MarketplaceCategoryGroupsListResponses];
@@ -16280,7 +15706,7 @@ export type MarketplaceCategoryHelpArticlesListData = {
 };
 
 export type MarketplaceCategoryHelpArticlesListResponses = {
-    200: PaginatedCategoryHelpArticlesList;
+    200: Array<CategoryHelpArticles>;
 };
 
 export type MarketplaceCategoryHelpArticlesListResponse = MarketplaceCategoryHelpArticlesListResponses[keyof MarketplaceCategoryHelpArticlesListResponses];
@@ -16390,7 +15816,7 @@ export type MarketplaceChecklistsListData = {
 };
 
 export type MarketplaceChecklistsListResponses = {
-    200: PaginatedChecklistList;
+    200: Array<Checklist>;
 };
 
 export type MarketplaceChecklistsListResponse = MarketplaceChecklistsListResponses[keyof MarketplaceChecklistsListResponses];
@@ -16412,7 +15838,7 @@ export type MarketplaceChecklistsCategoriesListData = {
 };
 
 export type MarketplaceChecklistsCategoriesListResponses = {
-    200: PaginatedChecklistCategoryList;
+    200: Array<ChecklistCategory>;
 };
 
 export type MarketplaceChecklistsCategoriesListResponse = MarketplaceChecklistsCategoriesListResponses[keyof MarketplaceChecklistsCategoriesListResponses];
@@ -16436,7 +15862,7 @@ export type MarketplaceChecklistsCategoriesChecklistsListData = {
 };
 
 export type MarketplaceChecklistsCategoriesChecklistsListResponses = {
-    200: PaginatedChecklistList;
+    200: Array<Checklist>;
 };
 
 export type MarketplaceChecklistsCategoriesChecklistsListResponse = MarketplaceChecklistsCategoriesChecklistsListResponses[keyof MarketplaceChecklistsCategoriesChecklistsListResponses];
@@ -16490,7 +15916,7 @@ export type MarketplaceChecklistsAnswersListData = {
 };
 
 export type MarketplaceChecklistsAnswersListResponses = {
-    200: PaginatedAnswerListList;
+    200: Array<AnswerList>;
 };
 
 export type MarketplaceChecklistsAnswersListResponse = MarketplaceChecklistsAnswersListResponses[keyof MarketplaceChecklistsAnswersListResponses];
@@ -16518,7 +15944,7 @@ export type MarketplaceChecklistsAnswersSubmitCreateData = {
 };
 
 export type MarketplaceChecklistsAnswersSubmitCreateResponses = {
-    201: PaginatedAnswerSubmitList;
+    201: Array<AnswerSubmit>;
 };
 
 export type MarketplaceChecklistsAnswersSubmitCreateResponse = MarketplaceChecklistsAnswersSubmitCreateResponses[keyof MarketplaceChecklistsAnswersSubmitCreateResponses];
@@ -16542,7 +15968,7 @@ export type MarketplaceChecklistsQuestionsListData = {
 };
 
 export type MarketplaceChecklistsQuestionsListResponses = {
-    200: PaginatedChecklistQuestionList;
+    200: Array<ChecklistQuestion>;
 };
 
 export type MarketplaceChecklistsQuestionsListResponse = MarketplaceChecklistsQuestionsListResponses[keyof MarketplaceChecklistsQuestionsListResponses];
@@ -16582,7 +16008,7 @@ export type MarketplaceChecklistsUserAnswersListData = {
 };
 
 export type MarketplaceChecklistsUserAnswersListResponses = {
-    200: PaginatedAnswerListList;
+    200: Array<AnswerList>;
 };
 
 export type MarketplaceChecklistsUserAnswersListResponse = MarketplaceChecklistsUserAnswersListResponses[keyof MarketplaceChecklistsUserAnswersListResponses];
@@ -16614,7 +16040,7 @@ export type MarketplaceComponentUsagesListData = {
 };
 
 export type MarketplaceComponentUsagesListResponses = {
-    200: PaginatedComponentUsageList;
+    200: Array<ComponentUsage>;
 };
 
 export type MarketplaceComponentUsagesListResponse = MarketplaceComponentUsagesListResponses[keyof MarketplaceComponentUsagesListResponses];
@@ -16694,7 +16120,7 @@ export type MarketplaceComponentUserUsagesListData = {
 };
 
 export type MarketplaceComponentUserUsagesListResponses = {
-    200: PaginatedComponentUserUsageList;
+    200: Array<ComponentUserUsage>;
 };
 
 export type MarketplaceComponentUserUsagesListResponse = MarketplaceComponentUserUsagesListResponses[keyof MarketplaceComponentUserUsagesListResponses];
@@ -16737,7 +16163,7 @@ export type MarketplaceCustomerEstimatedCostPoliciesListData = {
 };
 
 export type MarketplaceCustomerEstimatedCostPoliciesListResponses = {
-    200: PaginatedCustomerEstimatedCostPolicyList;
+    200: Array<CustomerEstimatedCostPolicy>;
 };
 
 export type MarketplaceCustomerEstimatedCostPoliciesListResponse = MarketplaceCustomerEstimatedCostPoliciesListResponses[keyof MarketplaceCustomerEstimatedCostPoliciesListResponses];
@@ -16864,8 +16290,7 @@ export type MarketplaceIntegrationStatusesListData = {
         /**
          * Ordering
          *
-         * * `last_request_timestamp` - Last request timestamp
-         * * `-last_request_timestamp` - Last request timestamp (descending)
+         *
          */
         o?: Array<'-last_request_timestamp' | 'last_request_timestamp'>;
         offering?: string;
@@ -16879,18 +16304,13 @@ export type MarketplaceIntegrationStatusesListData = {
          */
         page_size?: number;
         parent_offering_uuid?: string;
-        /**
-         * * `Unknown` - Unknown
-         * * `Active` - Active
-         * * `Disconnected` - Disconnected
-         */
         status?: Array<'Active' | 'Disconnected' | 'Unknown'>;
     };
     url: '/api/marketplace-integration-statuses/';
 };
 
 export type MarketplaceIntegrationStatusesListResponses = {
-    200: PaginatedIntegrationStatusDetailsList;
+    200: Array<IntegrationStatusDetails>;
 };
 
 export type MarketplaceIntegrationStatusesListResponse = MarketplaceIntegrationStatusesListResponses[keyof MarketplaceIntegrationStatusesListResponses];
@@ -16929,7 +16349,7 @@ export type MarketplaceOfferingEstimatedCostPoliciesListData = {
 };
 
 export type MarketplaceOfferingEstimatedCostPoliciesListResponses = {
-    200: PaginatedOfferingEstimatedCostPolicyList;
+    200: Array<OfferingEstimatedCostPolicy>;
 };
 
 export type MarketplaceOfferingEstimatedCostPoliciesListResponse = MarketplaceOfferingEstimatedCostPoliciesListResponses[keyof MarketplaceOfferingEstimatedCostPoliciesListResponses];
@@ -17031,10 +16451,7 @@ export type MarketplaceOfferingFilesListData = {
         /**
          * Ordering
          *
-         * * `name` - Name
-         * * `-name` - Name (descending)
-         * * `created` - Created
-         * * `-created` - Created (descending)
+         *
          */
         o?: Array<'-created' | '-name' | 'created' | 'name'>;
         offering?: string;
@@ -17053,7 +16470,7 @@ export type MarketplaceOfferingFilesListData = {
 };
 
 export type MarketplaceOfferingFilesListResponses = {
-    200: PaginatedOfferingFileList;
+    200: Array<OfferingFile>;
 };
 
 export type MarketplaceOfferingFilesListResponse = MarketplaceOfferingFilesListResponses[keyof MarketplaceOfferingFilesListResponses];
@@ -17119,20 +16536,7 @@ export type MarketplaceOfferingPermissionsListData = {
         /**
          * Ordering
          *
-         * * `username` - Username
-         * * `-username` - Username (descending)
-         * * `full_name` - Full name
-         * * `-full_name` - Full name (descending)
-         * * `native_name` - Native name
-         * * `-native_name` - Native name (descending)
-         * * `email` - Email
-         * * `-email` - Email (descending)
-         * * `expiration_time` - Expiration time
-         * * `-expiration_time` - Expiration time (descending)
-         * * `created` - Created
-         * * `-created` - Created (descending)
-         * * `role` - Role
-         * * `-role` - Role (descending)
+         *
          */
         o?: Array<'-created' | '-email' | '-expiration_time' | '-full_name' | '-native_name' | '-role' | '-username' | 'created' | 'email' | 'expiration_time' | 'full_name' | 'native_name' | 'role' | 'username'>;
         offering?: string;
@@ -17156,7 +16560,7 @@ export type MarketplaceOfferingPermissionsListData = {
 };
 
 export type MarketplaceOfferingPermissionsListResponses = {
-    200: PaginatedOfferingPermissionList;
+    200: Array<OfferingPermission>;
 };
 
 export type MarketplaceOfferingPermissionsListResponse = MarketplaceOfferingPermissionsListResponses[keyof MarketplaceOfferingPermissionsListResponses];
@@ -17174,20 +16578,7 @@ export type MarketplaceOfferingPermissionsLogListData = {
         /**
          * Ordering
          *
-         * * `username` - Username
-         * * `-username` - Username (descending)
-         * * `full_name` - Full name
-         * * `-full_name` - Full name (descending)
-         * * `native_name` - Native name
-         * * `-native_name` - Native name (descending)
-         * * `email` - Email
-         * * `-email` - Email (descending)
-         * * `expiration_time` - Expiration time
-         * * `-expiration_time` - Expiration time (descending)
-         * * `created` - Created
-         * * `-created` - Created (descending)
-         * * `role` - Role
-         * * `-role` - Role (descending)
+         *
          */
         o?: Array<'-created' | '-email' | '-expiration_time' | '-full_name' | '-native_name' | '-role' | '-username' | 'created' | 'email' | 'expiration_time' | 'full_name' | 'native_name' | 'role' | 'username'>;
         offering?: string;
@@ -17211,7 +16602,7 @@ export type MarketplaceOfferingPermissionsLogListData = {
 };
 
 export type MarketplaceOfferingPermissionsLogListResponses = {
-    200: PaginatedOfferingPermissionList;
+    200: Array<OfferingPermission>;
 };
 
 export type MarketplaceOfferingPermissionsLogListResponse = MarketplaceOfferingPermissionsLogListResponses[keyof MarketplaceOfferingPermissionsLogListResponses];
@@ -17259,12 +16650,7 @@ export type MarketplaceOfferingReferralsListData = {
         /**
          * Ordering
          *
-         * * `published` - Published
-         * * `-published` - Published (descending)
-         * * `relation_type` - Relation type
-         * * `-relation_type` - Relation type (descending)
-         * * `resource_type` - Resource type
-         * * `-resource_type` - Resource type (descending)
+         *
          */
         o?: Array<'-published' | '-relation_type' | '-resource_type' | 'published' | 'relation_type' | 'resource_type'>;
         /**
@@ -17280,7 +16666,7 @@ export type MarketplaceOfferingReferralsListData = {
 };
 
 export type MarketplaceOfferingReferralsListResponses = {
-    200: PaginatedOfferingReferralList;
+    200: Array<OfferingReferral>;
 };
 
 export type MarketplaceOfferingReferralsListResponse = MarketplaceOfferingReferralsListResponses[keyof MarketplaceOfferingReferralsListResponses];
@@ -17319,7 +16705,7 @@ export type MarketplaceOfferingUsagePoliciesListData = {
 };
 
 export type MarketplaceOfferingUsagePoliciesListResponses = {
-    200: PaginatedOfferingUsagePolicyList;
+    200: Array<OfferingUsagePolicy>;
 };
 
 export type MarketplaceOfferingUsagePoliciesListResponse = MarketplaceOfferingUsagePoliciesListResponses[keyof MarketplaceOfferingUsagePoliciesListResponses];
@@ -17433,7 +16819,7 @@ export type MarketplaceOfferingUserRolesListData = {
 };
 
 export type MarketplaceOfferingUserRolesListResponses = {
-    200: PaginatedOfferingUserRoleList;
+    200: Array<OfferingUserRole>;
 };
 
 export type MarketplaceOfferingUserRolesListResponse = MarketplaceOfferingUserRolesListResponses[keyof MarketplaceOfferingUserRolesListResponses];
@@ -17532,14 +16918,7 @@ export type MarketplaceOfferingUsersListData = {
         /**
          * Ordering
          *
-         * * `created` - Created
-         * * `-created` - Created (descending)
-         * * `modified` - Modified
-         * * `-modified` - Modified (descending)
-         * * `username` - Username
-         * * `-username` - Username (descending)
-         * * `propagation_date` - Propagation date
-         * * `-propagation_date` - Propagation date (descending)
+         *
          */
         o?: Array<'-created' | '-modified' | '-propagation_date' | '-username' | 'created' | 'modified' | 'propagation_date' | 'username'>;
         offering?: string;
@@ -17564,7 +16943,7 @@ export type MarketplaceOfferingUsersListData = {
 };
 
 export type MarketplaceOfferingUsersListResponses = {
-    200: PaginatedOfferingUserList;
+    200: Array<OfferingUser>;
 };
 
 export type MarketplaceOfferingUsersListResponse = MarketplaceOfferingUsersListResponses[keyof MarketplaceOfferingUsersListResponses];
@@ -17683,14 +17062,7 @@ export type MarketplaceOrdersListData = {
         /**
          * Ordering
          *
-         * * `created` - Created
-         * * `-created` - Created (descending)
-         * * `consumer_reviewed_at` - Consumer reviewed at
-         * * `-consumer_reviewed_at` - Consumer reviewed at (descending)
-         * * `cost` - Cost
-         * * `-cost` - Cost (descending)
-         * * `state` - State
-         * * `-state` - State (descending)
+         *
          */
         o?: Array<'-consumer_reviewed_at' | '-cost' | '-created' | '-state' | 'consumer_reviewed_at' | 'cost' | 'created' | 'state'>;
         offering?: string;
@@ -17711,29 +17083,14 @@ export type MarketplaceOrdersListData = {
         resource?: string;
         resource_uuid?: string;
         service_manager_uuid?: string;
-        /**
-         * * `pending-consumer` - pending-consumer
-         * * `pending-provider` - pending-provider
-         * * `pending-project` - pending-project
-         * * `executing` - executing
-         * * `done` - done
-         * * `erred` - erred
-         * * `canceled` - canceled
-         * * `rejected` - rejected
-         */
         state?: Array<'canceled' | 'done' | 'erred' | 'executing' | 'pending-consumer' | 'pending-project' | 'pending-provider' | 'rejected'>;
-        /**
-         * * `Create` - Create
-         * * `Update` - Update
-         * * `Terminate` - Terminate
-         */
         type?: Array<'Create' | 'Terminate' | 'Update'>;
     };
     url: '/api/marketplace-orders/';
 };
 
 export type MarketplaceOrdersListResponses = {
-    200: PaginatedOrderDetailsList;
+    200: Array<OrderDetails>;
 };
 
 export type MarketplaceOrdersListResponse = MarketplaceOrdersListResponses[keyof MarketplaceOrdersListResponses];
@@ -17981,7 +17338,7 @@ export type MarketplacePlanComponentsListData = {
 };
 
 export type MarketplacePlanComponentsListResponses = {
-    200: PaginatedPlanComponentList;
+    200: Array<PlanComponent>;
 };
 
 export type MarketplacePlanComponentsListResponse = MarketplacePlanComponentsListResponses[keyof MarketplacePlanComponentsListResponses];
@@ -18024,7 +17381,7 @@ export type MarketplacePlansListData = {
 };
 
 export type MarketplacePlansListResponses = {
-    200: PaginatedProviderPlanDetailsList;
+    200: Array<ProviderPlanDetails>;
 };
 
 export type MarketplacePlansListResponse = MarketplacePlansListResponses[keyof MarketplacePlansListResponses];
@@ -18189,7 +17546,7 @@ export type MarketplacePlansUsageStatsListData = {
 };
 
 export type MarketplacePlansUsageStatsListResponses = {
-    200: PaginatedPlanUsageResponseList;
+    200: Array<PlanUsageResponse>;
 };
 
 export type MarketplacePlansUsageStatsListResponse = MarketplacePlansUsageStatsListResponses[keyof MarketplacePlansUsageStatsListResponses];
@@ -18230,7 +17587,7 @@ export type MarketplaceProjectEstimatedCostPoliciesListData = {
 };
 
 export type MarketplaceProjectEstimatedCostPoliciesListResponses = {
-    200: PaginatedProjectEstimatedCostPolicyList;
+    200: Array<ProjectEstimatedCostPolicy>;
 };
 
 export type MarketplaceProjectEstimatedCostPoliciesListResponse = MarketplaceProjectEstimatedCostPoliciesListResponses[keyof MarketplaceProjectEstimatedCostPoliciesListResponses];
@@ -18340,20 +17697,13 @@ export type MarketplaceProjectUpdateRequestsListData = {
          */
         page_size?: number;
         project_uuid?: string;
-        /**
-         * * `draft` - draft
-         * * `pending` - pending
-         * * `approved` - approved
-         * * `rejected` - rejected
-         * * `canceled` - canceled
-         */
         state?: Array<'approved' | 'canceled' | 'draft' | 'pending' | 'rejected'>;
     };
     url: '/api/marketplace-project-update-requests/';
 };
 
 export type MarketplaceProjectUpdateRequestsListResponses = {
-    200: PaginatedRemoteProjectUpdateRequestList;
+    200: Array<RemoteProjectUpdateRequest>;
 };
 
 export type MarketplaceProjectUpdateRequestsListResponse = MarketplaceProjectUpdateRequestsListResponses[keyof MarketplaceProjectUpdateRequestsListResponses];
@@ -18434,20 +17784,7 @@ export type MarketplaceProviderOfferingsListData = {
         /**
          * Ordering
          *
-         * * `name` - Name
-         * * `-name` - Name (descending)
-         * * `created` - Created
-         * * `-created` - Created (descending)
-         * * `type` - Type
-         * * `-type` - Type (descending)
-         * * `total_customers` - Total customers
-         * * `-total_customers` - Total customers (descending)
-         * * `total_cost` - Total cost
-         * * `-total_cost` - Total cost (descending)
-         * * `total_cost_estimated` - Total cost estimated
-         * * `-total_cost_estimated` - Total cost estimated (descending)
-         * * `state` - State
-         * * `-state` - State (descending)
+         *
          */
         o?: Array<'-created' | '-name' | '-state' | '-total_cost' | '-total_cost_estimated' | '-total_customers' | '-type' | 'created' | 'name' | 'state' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type'>;
         organization_group_uuid?: Array<string>;
@@ -18473,12 +17810,6 @@ export type MarketplaceProviderOfferingsListData = {
          */
         service_manager_uuid?: string;
         shared?: boolean;
-        /**
-         * * `Draft` - Draft
-         * * `Active` - Active
-         * * `Paused` - Paused
-         * * `Archived` - Archived
-         */
         state?: Array<'Active' | 'Archived' | 'Draft' | 'Paused'>;
         type?: Array<string>;
     };
@@ -18486,7 +17817,7 @@ export type MarketplaceProviderOfferingsListData = {
 };
 
 export type MarketplaceProviderOfferingsListResponses = {
-    200: PaginatedProviderOfferingDetailsList;
+    200: Array<ProviderOfferingDetails>;
 };
 
 export type MarketplaceProviderOfferingsListResponse = MarketplaceProviderOfferingsListResponses[keyof MarketplaceProviderOfferingsListResponses];
@@ -18634,20 +17965,7 @@ export type MarketplaceProviderOfferingsComponentStatsListData = {
         /**
          * Ordering
          *
-         * * `name` - Name
-         * * `-name` - Name (descending)
-         * * `created` - Created
-         * * `-created` - Created (descending)
-         * * `type` - Type
-         * * `-type` - Type (descending)
-         * * `total_customers` - Total customers
-         * * `-total_customers` - Total customers (descending)
-         * * `total_cost` - Total cost
-         * * `-total_cost` - Total cost (descending)
-         * * `total_cost_estimated` - Total cost estimated
-         * * `-total_cost_estimated` - Total cost estimated (descending)
-         * * `state` - State
-         * * `-state` - State (descending)
+         *
          */
         o?: Array<'-created' | '-name' | '-state' | '-total_cost' | '-total_cost_estimated' | '-total_customers' | '-type' | 'created' | 'name' | 'state' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type'>;
         organization_group_uuid?: Array<string>;
@@ -18677,12 +17995,6 @@ export type MarketplaceProviderOfferingsComponentStatsListData = {
          * Start date in format YYYY-MM.
          */
         start?: string;
-        /**
-         * * `Draft` - Draft
-         * * `Active` - Active
-         * * `Paused` - Paused
-         * * `Archived` - Archived
-         */
         state?: Array<'Active' | 'Archived' | 'Draft' | 'Paused'>;
         type?: Array<string>;
     };
@@ -18690,7 +18002,7 @@ export type MarketplaceProviderOfferingsComponentStatsListData = {
 };
 
 export type MarketplaceProviderOfferingsComponentStatsListResponses = {
-    200: PaginatedOfferingComponentStatList;
+    200: Array<OfferingComponentStat>;
 };
 
 export type MarketplaceProviderOfferingsComponentStatsListResponse = MarketplaceProviderOfferingsComponentStatsListResponses[keyof MarketplaceProviderOfferingsComponentStatsListResponses];
@@ -18730,20 +18042,7 @@ export type MarketplaceProviderOfferingsCostsListData = {
         /**
          * Ordering
          *
-         * * `name` - Name
-         * * `-name` - Name (descending)
-         * * `created` - Created
-         * * `-created` - Created (descending)
-         * * `type` - Type
-         * * `-type` - Type (descending)
-         * * `total_customers` - Total customers
-         * * `-total_customers` - Total customers (descending)
-         * * `total_cost` - Total cost
-         * * `-total_cost` - Total cost (descending)
-         * * `total_cost_estimated` - Total cost estimated
-         * * `-total_cost_estimated` - Total cost estimated (descending)
-         * * `state` - State
-         * * `-state` - State (descending)
+         *
          */
         o?: Array<'-created' | '-name' | '-state' | '-total_cost' | '-total_cost_estimated' | '-total_customers' | '-type' | 'created' | 'name' | 'state' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type'>;
         organization_group_uuid?: Array<string>;
@@ -18773,12 +18072,6 @@ export type MarketplaceProviderOfferingsCostsListData = {
          * Start date in format YYYY-MM.
          */
         start?: string;
-        /**
-         * * `Draft` - Draft
-         * * `Active` - Active
-         * * `Paused` - Paused
-         * * `Archived` - Archived
-         */
         state?: Array<'Active' | 'Archived' | 'Draft' | 'Paused'>;
         type?: Array<string>;
     };
@@ -18786,7 +18079,7 @@ export type MarketplaceProviderOfferingsCostsListData = {
 };
 
 export type MarketplaceProviderOfferingsCostsListResponses = {
-    200: PaginatedProviderOfferingCostsList;
+    200: Array<ProviderOfferingCosts>;
 };
 
 export type MarketplaceProviderOfferingsCostsListResponse = MarketplaceProviderOfferingsCostsListResponses[keyof MarketplaceProviderOfferingsCostsListResponses];
@@ -18837,20 +18130,7 @@ export type MarketplaceProviderOfferingsCustomersListData = {
         /**
          * Ordering
          *
-         * * `name` - Name
-         * * `-name` - Name (descending)
-         * * `created` - Created
-         * * `-created` - Created (descending)
-         * * `type` - Type
-         * * `-type` - Type (descending)
-         * * `total_customers` - Total customers
-         * * `-total_customers` - Total customers (descending)
-         * * `total_cost` - Total cost
-         * * `-total_cost` - Total cost (descending)
-         * * `total_cost_estimated` - Total cost estimated
-         * * `-total_cost_estimated` - Total cost estimated (descending)
-         * * `state` - State
-         * * `-state` - State (descending)
+         *
          */
         o?: Array<'-created' | '-name' | '-state' | '-total_cost' | '-total_cost_estimated' | '-total_customers' | '-type' | 'created' | 'name' | 'state' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type'>;
         organization_group_uuid?: Array<string>;
@@ -18876,12 +18156,6 @@ export type MarketplaceProviderOfferingsCustomersListData = {
          */
         service_manager_uuid?: string;
         shared?: boolean;
-        /**
-         * * `Draft` - Draft
-         * * `Active` - Active
-         * * `Paused` - Paused
-         * * `Archived` - Archived
-         */
         state?: Array<'Active' | 'Archived' | 'Draft' | 'Paused'>;
         type?: Array<string>;
     };
@@ -18889,7 +18163,7 @@ export type MarketplaceProviderOfferingsCustomersListData = {
 };
 
 export type MarketplaceProviderOfferingsCustomersListResponses = {
-    200: PaginatedProviderOfferingCustomerList;
+    200: Array<ProviderOfferingCustomer>;
 };
 
 export type MarketplaceProviderOfferingsCustomersListResponse = MarketplaceProviderOfferingsCustomersListResponses[keyof MarketplaceProviderOfferingsCustomersListResponses];
@@ -19051,20 +18325,7 @@ export type MarketplaceProviderOfferingsImportableResourcesListData = {
         /**
          * Ordering
          *
-         * * `name` - Name
-         * * `-name` - Name (descending)
-         * * `created` - Created
-         * * `-created` - Created (descending)
-         * * `type` - Type
-         * * `-type` - Type (descending)
-         * * `total_customers` - Total customers
-         * * `-total_customers` - Total customers (descending)
-         * * `total_cost` - Total cost
-         * * `-total_cost` - Total cost (descending)
-         * * `total_cost_estimated` - Total cost estimated
-         * * `-total_cost_estimated` - Total cost estimated (descending)
-         * * `state` - State
-         * * `-state` - State (descending)
+         *
          */
         o?: Array<'-created' | '-name' | '-state' | '-total_cost' | '-total_cost_estimated' | '-total_customers' | '-type' | 'created' | 'name' | 'state' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type'>;
         organization_group_uuid?: Array<string>;
@@ -19090,12 +18351,6 @@ export type MarketplaceProviderOfferingsImportableResourcesListData = {
          */
         service_manager_uuid?: string;
         shared?: boolean;
-        /**
-         * * `Draft` - Draft
-         * * `Active` - Active
-         * * `Paused` - Paused
-         * * `Archived` - Archived
-         */
         state?: Array<'Active' | 'Archived' | 'Draft' | 'Paused'>;
         type?: Array<string>;
     };
@@ -19103,7 +18358,7 @@ export type MarketplaceProviderOfferingsImportableResourcesListData = {
 };
 
 export type MarketplaceProviderOfferingsImportableResourcesListResponses = {
-    200: PaginatedImportableResourceList;
+    200: Array<ImportableResource>;
 };
 
 export type MarketplaceProviderOfferingsImportableResourcesListResponse = MarketplaceProviderOfferingsImportableResourcesListResponses[keyof MarketplaceProviderOfferingsImportableResourcesListResponses];
@@ -19138,20 +18393,7 @@ export type MarketplaceProviderOfferingsListCustomerProjectsListData = {
         /**
          * Ordering
          *
-         * * `name` - Name
-         * * `-name` - Name (descending)
-         * * `created` - Created
-         * * `-created` - Created (descending)
-         * * `type` - Type
-         * * `-type` - Type (descending)
-         * * `total_customers` - Total customers
-         * * `-total_customers` - Total customers (descending)
-         * * `total_cost` - Total cost
-         * * `-total_cost` - Total cost (descending)
-         * * `total_cost_estimated` - Total cost estimated
-         * * `-total_cost_estimated` - Total cost estimated (descending)
-         * * `state` - State
-         * * `-state` - State (descending)
+         *
          */
         o?: Array<'-created' | '-name' | '-state' | '-total_cost' | '-total_cost_estimated' | '-total_customers' | '-type' | 'created' | 'name' | 'state' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type'>;
         organization_group_uuid?: Array<string>;
@@ -19177,12 +18419,6 @@ export type MarketplaceProviderOfferingsListCustomerProjectsListData = {
          */
         service_manager_uuid?: string;
         shared?: boolean;
-        /**
-         * * `Draft` - Draft
-         * * `Active` - Active
-         * * `Paused` - Paused
-         * * `Archived` - Archived
-         */
         state?: Array<'Active' | 'Archived' | 'Draft' | 'Paused'>;
         type?: Array<string>;
     };
@@ -19190,7 +18426,7 @@ export type MarketplaceProviderOfferingsListCustomerProjectsListData = {
 };
 
 export type MarketplaceProviderOfferingsListCustomerProjectsListResponses = {
-    200: PaginatedProjectList;
+    200: Array<Project>;
 };
 
 export type MarketplaceProviderOfferingsListCustomerProjectsListResponse = MarketplaceProviderOfferingsListCustomerProjectsListResponses[keyof MarketplaceProviderOfferingsListCustomerProjectsListResponses];
@@ -19225,20 +18461,7 @@ export type MarketplaceProviderOfferingsListCustomerUsersListData = {
         /**
          * Ordering
          *
-         * * `name` - Name
-         * * `-name` - Name (descending)
-         * * `created` - Created
-         * * `-created` - Created (descending)
-         * * `type` - Type
-         * * `-type` - Type (descending)
-         * * `total_customers` - Total customers
-         * * `-total_customers` - Total customers (descending)
-         * * `total_cost` - Total cost
-         * * `-total_cost` - Total cost (descending)
-         * * `total_cost_estimated` - Total cost estimated
-         * * `-total_cost_estimated` - Total cost estimated (descending)
-         * * `state` - State
-         * * `-state` - State (descending)
+         *
          */
         o?: Array<'-created' | '-name' | '-state' | '-total_cost' | '-total_cost_estimated' | '-total_customers' | '-type' | 'created' | 'name' | 'state' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type'>;
         organization_group_uuid?: Array<string>;
@@ -19264,12 +18487,6 @@ export type MarketplaceProviderOfferingsListCustomerUsersListData = {
          */
         service_manager_uuid?: string;
         shared?: boolean;
-        /**
-         * * `Draft` - Draft
-         * * `Active` - Active
-         * * `Paused` - Paused
-         * * `Archived` - Archived
-         */
         state?: Array<'Active' | 'Archived' | 'Draft' | 'Paused'>;
         type?: Array<string>;
     };
@@ -19277,7 +18494,7 @@ export type MarketplaceProviderOfferingsListCustomerUsersListData = {
 };
 
 export type MarketplaceProviderOfferingsListCustomerUsersListResponses = {
-    200: PaginatedUserList;
+    200: Array<User>;
 };
 
 export type MarketplaceProviderOfferingsListCustomerUsersListResponse = MarketplaceProviderOfferingsListCustomerUsersListResponses[keyof MarketplaceProviderOfferingsListCustomerUsersListResponses];
@@ -19356,12 +18573,6 @@ export type MarketplaceProviderOfferingsListUsersListData = {
          */
         service_manager_uuid?: string;
         shared?: boolean;
-        /**
-         * * `Draft` - Draft
-         * * `Active` - Active
-         * * `Paused` - Paused
-         * * `Archived` - Archived
-         */
         state?: Array<'Active' | 'Archived' | 'Draft' | 'Paused'>;
         type?: Array<string>;
         /**
@@ -19385,7 +18596,7 @@ export type MarketplaceProviderOfferingsListUsersListData = {
 };
 
 export type MarketplaceProviderOfferingsListUsersListResponses = {
-    200: PaginatedUserRoleDetailsList;
+    200: Array<UserRoleDetails>;
 };
 
 export type MarketplaceProviderOfferingsListUsersListResponse = MarketplaceProviderOfferingsListUsersListResponses[keyof MarketplaceProviderOfferingsListUsersListResponses];
@@ -19749,14 +18960,7 @@ export type MarketplaceProviderResourcesListData = {
         /**
          * Ordering
          *
-         * * `name` - Name
-         * * `-name` - Name (descending)
-         * * `created` - Created
-         * * `-created` - Created (descending)
-         * * `project_name` - Project name
-         * * `-project_name` - Project name (descending)
-         * * `state` - State
-         * * `-state` - State (descending)
+         *
          */
         o?: Array<'-created' | '-name' | '-project_name' | '-state' | 'created' | 'name' | 'project_name' | 'state'>;
         offering?: string;
@@ -19789,14 +18993,6 @@ export type MarketplaceProviderResourcesListData = {
          * Service Manager UUID
          */
         service_manager_uuid?: string;
-        /**
-         * * `Creating` - Creating
-         * * `OK` - OK
-         * * `Erred` - Erred
-         * * `Updating` - Updating
-         * * `Terminating` - Terminating
-         * * `Terminated` - Terminated
-         */
         state?: Array<'Creating' | 'Erred' | 'OK' | 'Terminated' | 'Terminating' | 'Updating'>;
         /**
          * Visible to username
@@ -19807,7 +19003,7 @@ export type MarketplaceProviderResourcesListData = {
 };
 
 export type MarketplaceProviderResourcesListResponses = {
-    200: PaginatedResourceList;
+    200: Array<Resource>;
 };
 
 export type MarketplaceProviderResourcesListResponse = MarketplaceProviderResourcesListResponses[keyof MarketplaceProviderResourcesListResponses];
@@ -19952,14 +19148,7 @@ export type MarketplaceProviderResourcesOfferingForSubresourcesListData = {
         /**
          * Ordering
          *
-         * * `name` - Name
-         * * `-name` - Name (descending)
-         * * `created` - Created
-         * * `-created` - Created (descending)
-         * * `project_name` - Project name
-         * * `-project_name` - Project name (descending)
-         * * `state` - State
-         * * `-state` - State (descending)
+         *
          */
         o?: Array<'-created' | '-name' | '-project_name' | '-state' | 'created' | 'name' | 'project_name' | 'state'>;
         offering?: string;
@@ -19984,14 +19173,6 @@ export type MarketplaceProviderResourcesOfferingForSubresourcesListData = {
          * Service Manager UUID
          */
         service_manager_uuid?: string;
-        /**
-         * * `Creating` - Creating
-         * * `OK` - OK
-         * * `Erred` - Erred
-         * * `Updating` - Updating
-         * * `Terminating` - Terminating
-         * * `Terminated` - Terminated
-         */
         state?: Array<'Creating' | 'Erred' | 'OK' | 'Terminated' | 'Terminating' | 'Updating'>;
         /**
          * Visible to username
@@ -20038,14 +19219,7 @@ export type MarketplaceProviderResourcesPlanPeriodsListData = {
         /**
          * Ordering
          *
-         * * `name` - Name
-         * * `-name` - Name (descending)
-         * * `created` - Created
-         * * `-created` - Created (descending)
-         * * `project_name` - Project name
-         * * `-project_name` - Project name (descending)
-         * * `state` - State
-         * * `-state` - State (descending)
+         *
          */
         o?: Array<'-created' | '-name' | '-project_name' | '-state' | 'created' | 'name' | 'project_name' | 'state'>;
         offering?: string;
@@ -20070,14 +19244,6 @@ export type MarketplaceProviderResourcesPlanPeriodsListData = {
          * Service Manager UUID
          */
         service_manager_uuid?: string;
-        /**
-         * * `Creating` - Creating
-         * * `OK` - OK
-         * * `Erred` - Erred
-         * * `Updating` - Updating
-         * * `Terminating` - Terminating
-         * * `Terminated` - Terminated
-         */
         state?: Array<'Creating' | 'Erred' | 'OK' | 'Terminated' | 'Terminating' | 'Updating'>;
         /**
          * Visible to username
@@ -20346,20 +19512,7 @@ export type MarketplacePublicOfferingsListData = {
         /**
          * Ordering
          *
-         * * `name` - Name
-         * * `-name` - Name (descending)
-         * * `created` - Created
-         * * `-created` - Created (descending)
-         * * `type` - Type
-         * * `-type` - Type (descending)
-         * * `total_customers` - Total customers
-         * * `-total_customers` - Total customers (descending)
-         * * `total_cost` - Total cost
-         * * `-total_cost` - Total cost (descending)
-         * * `total_cost_estimated` - Total cost estimated
-         * * `-total_cost_estimated` - Total cost estimated (descending)
-         * * `state` - State
-         * * `-state` - State (descending)
+         *
          */
         o?: Array<'-created' | '-name' | '-state' | '-total_cost' | '-total_cost_estimated' | '-total_customers' | '-type' | 'created' | 'name' | 'state' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type'>;
         organization_group_uuid?: Array<string>;
@@ -20385,12 +19538,6 @@ export type MarketplacePublicOfferingsListData = {
          */
         service_manager_uuid?: string;
         shared?: boolean;
-        /**
-         * * `Draft` - Draft
-         * * `Active` - Active
-         * * `Paused` - Paused
-         * * `Archived` - Archived
-         */
         state?: Array<'Active' | 'Archived' | 'Draft' | 'Paused'>;
         type?: Array<string>;
     };
@@ -20398,7 +19545,7 @@ export type MarketplacePublicOfferingsListData = {
 };
 
 export type MarketplacePublicOfferingsListResponses = {
-    200: PaginatedPublicOfferingDetailsList;
+    200: Array<PublicOfferingDetails>;
 };
 
 export type MarketplacePublicOfferingsListResponse = MarketplacePublicOfferingsListResponses[keyof MarketplacePublicOfferingsListResponses];
@@ -20472,7 +19619,7 @@ export type MarketplaceRelatedCustomersListData = {
 };
 
 export type MarketplaceRelatedCustomersListResponses = {
-    200: PaginatedBasicCustomerList;
+    200: Array<BasicCustomer>;
 };
 
 export type MarketplaceRelatedCustomersListResponse = MarketplaceRelatedCustomersListResponses[keyof MarketplaceRelatedCustomersListResponses];
@@ -20494,7 +19641,7 @@ export type MarketplaceRemoteSynchronisationsListData = {
 };
 
 export type MarketplaceRemoteSynchronisationsListResponses = {
-    200: PaginatedRemoteSynchronisationList;
+    200: Array<RemoteSynchronisation>;
 };
 
 export type MarketplaceRemoteSynchronisationsListResponse = MarketplaceRemoteSynchronisationsListResponses[keyof MarketplaceRemoteSynchronisationsListResponses];
@@ -20611,7 +19758,7 @@ export type MarketplaceResourceOfferingsListData = {
 };
 
 export type MarketplaceResourceOfferingsListResponses = {
-    200: PaginatedResourceOfferingList;
+    200: Array<ResourceOffering>;
 };
 
 export type MarketplaceResourceOfferingsListResponse = MarketplaceResourceOfferingsListResponses[keyof MarketplaceResourceOfferingsListResponses];
@@ -20638,7 +19785,7 @@ export type MarketplaceResourceUsersListData = {
 };
 
 export type MarketplaceResourceUsersListResponses = {
-    200: PaginatedResourceUserList;
+    200: Array<ResourceUser>;
 };
 
 export type MarketplaceResourceUsersListResponse = MarketplaceResourceUsersListResponses[keyof MarketplaceResourceUsersListResponses];
@@ -20719,14 +19866,7 @@ export type MarketplaceResourcesListData = {
         /**
          * Ordering
          *
-         * * `name` - Name
-         * * `-name` - Name (descending)
-         * * `created` - Created
-         * * `-created` - Created (descending)
-         * * `project_name` - Project name
-         * * `-project_name` - Project name (descending)
-         * * `state` - State
-         * * `-state` - State (descending)
+         *
          */
         o?: Array<'-created' | '-name' | '-project_name' | '-state' | 'created' | 'name' | 'project_name' | 'state'>;
         offering?: string;
@@ -20759,14 +19899,6 @@ export type MarketplaceResourcesListData = {
          * Service Manager UUID
          */
         service_manager_uuid?: string;
-        /**
-         * * `Creating` - Creating
-         * * `OK` - OK
-         * * `Erred` - Erred
-         * * `Updating` - Updating
-         * * `Terminating` - Terminating
-         * * `Terminated` - Terminated
-         */
         state?: Array<'Creating' | 'Erred' | 'OK' | 'Terminated' | 'Terminating' | 'Updating'>;
         /**
          * Visible to username
@@ -20777,7 +19909,7 @@ export type MarketplaceResourcesListData = {
 };
 
 export type MarketplaceResourcesListResponses = {
-    200: PaginatedResourceList;
+    200: Array<Resource>;
 };
 
 export type MarketplaceResourcesListResponse = MarketplaceResourcesListResponses[keyof MarketplaceResourcesListResponses];
@@ -20922,14 +20054,7 @@ export type MarketplaceResourcesOfferingForSubresourcesListData = {
         /**
          * Ordering
          *
-         * * `name` - Name
-         * * `-name` - Name (descending)
-         * * `created` - Created
-         * * `-created` - Created (descending)
-         * * `project_name` - Project name
-         * * `-project_name` - Project name (descending)
-         * * `state` - State
-         * * `-state` - State (descending)
+         *
          */
         o?: Array<'-created' | '-name' | '-project_name' | '-state' | 'created' | 'name' | 'project_name' | 'state'>;
         offering?: string;
@@ -20954,14 +20079,6 @@ export type MarketplaceResourcesOfferingForSubresourcesListData = {
          * Service Manager UUID
          */
         service_manager_uuid?: string;
-        /**
-         * * `Creating` - Creating
-         * * `OK` - OK
-         * * `Erred` - Erred
-         * * `Updating` - Updating
-         * * `Terminating` - Terminating
-         * * `Terminated` - Terminated
-         */
         state?: Array<'Creating' | 'Erred' | 'OK' | 'Terminated' | 'Terminating' | 'Updating'>;
         /**
          * Visible to username
@@ -21008,14 +20125,7 @@ export type MarketplaceResourcesPlanPeriodsListData = {
         /**
          * Ordering
          *
-         * * `name` - Name
-         * * `-name` - Name (descending)
-         * * `created` - Created
-         * * `-created` - Created (descending)
-         * * `project_name` - Project name
-         * * `-project_name` - Project name (descending)
-         * * `state` - State
-         * * `-state` - State (descending)
+         *
          */
         o?: Array<'-created' | '-name' | '-project_name' | '-state' | 'created' | 'name' | 'project_name' | 'state'>;
         offering?: string;
@@ -21040,14 +20150,6 @@ export type MarketplaceResourcesPlanPeriodsListData = {
          * Service Manager UUID
          */
         service_manager_uuid?: string;
-        /**
-         * * `Creating` - Creating
-         * * `OK` - OK
-         * * `Erred` - Erred
-         * * `Updating` - Updating
-         * * `Terminating` - Terminating
-         * * `Terminated` - Terminated
-         */
         state?: Array<'Creating' | 'Erred' | 'OK' | 'Terminated' | 'Terminating' | 'Updating'>;
         /**
          * Visible to username
@@ -21222,7 +20324,7 @@ export type MarketplaceRobotAccountsListData = {
 };
 
 export type MarketplaceRobotAccountsListResponses = {
-    200: PaginatedRobotAccountDetailsList;
+    200: Array<RobotAccountDetails>;
 };
 
 export type MarketplaceRobotAccountsListResponse = MarketplaceRobotAccountsListResponses[keyof MarketplaceRobotAccountsListResponses];
@@ -21332,10 +20434,7 @@ export type MarketplaceScreenshotsListData = {
         /**
          * Ordering
          *
-         * * `name` - Name
-         * * `-name` - Name (descending)
-         * * `created` - Created
-         * * `-created` - Created (descending)
+         *
          */
         o?: Array<'-created' | '-name' | 'created' | 'name'>;
         offering?: string;
@@ -21354,7 +20453,7 @@ export type MarketplaceScreenshotsListData = {
 };
 
 export type MarketplaceScreenshotsListResponses = {
-    200: PaginatedScreenshotList;
+    200: Array<Screenshot>;
 };
 
 export type MarketplaceScreenshotsListResponse = MarketplaceScreenshotsListResponses[keyof MarketplaceScreenshotsListResponses];
@@ -21452,7 +20551,7 @@ export type MarketplaceScriptAsyncDryRunListData = {
 };
 
 export type MarketplaceScriptAsyncDryRunListResponses = {
-    200: PaginatedDryRunList;
+    200: Array<DryRun>;
 };
 
 export type MarketplaceScriptAsyncDryRunListResponse = MarketplaceScriptAsyncDryRunListResponses[keyof MarketplaceScriptAsyncDryRunListResponses];
@@ -21540,7 +20639,7 @@ export type MarketplaceSectionsListData = {
 };
 
 export type MarketplaceSectionsListResponses = {
-    200: PaginatedSectionList;
+    200: Array<Section>;
 };
 
 export type MarketplaceSectionsListResponse = MarketplaceSectionsListResponses[keyof MarketplaceSectionsListResponses];
@@ -21644,8 +20743,7 @@ export type MarketplaceServiceProvidersListData = {
         /**
          * Ordering
          *
-         * * `customer_name` - Customer name
-         * * `-customer_name` - Customer name (descending)
+         *
          */
         o?: Array<'-customer_name' | 'customer_name'>;
         /**
@@ -21661,7 +20759,7 @@ export type MarketplaceServiceProvidersListData = {
 };
 
 export type MarketplaceServiceProvidersListResponses = {
-    200: PaginatedServiceProviderList;
+    200: Array<ServiceProvider>;
 };
 
 export type MarketplaceServiceProvidersListResponse = MarketplaceServiceProvidersListResponses[keyof MarketplaceServiceProvidersListResponses];
@@ -21802,8 +20900,7 @@ export type MarketplaceServiceProvidersCustomerProjectsListData = {
         /**
          * Ordering
          *
-         * * `customer_name` - Customer name
-         * * `-customer_name` - Customer name (descending)
+         *
          */
         o?: Array<'-customer_name' | 'customer_name'>;
         /**
@@ -21819,7 +20916,7 @@ export type MarketplaceServiceProvidersCustomerProjectsListData = {
 };
 
 export type MarketplaceServiceProvidersCustomerProjectsListResponses = {
-    200: PaginatedProviderCustomerProjectList;
+    200: Array<ProviderCustomerProject>;
 };
 
 export type MarketplaceServiceProvidersCustomerProjectsListResponse = MarketplaceServiceProvidersCustomerProjectsListResponses[keyof MarketplaceServiceProvidersCustomerProjectsListResponses];
@@ -21836,8 +20933,7 @@ export type MarketplaceServiceProvidersCustomersListData = {
         /**
          * Ordering
          *
-         * * `customer_name` - Customer name
-         * * `-customer_name` - Customer name (descending)
+         *
          */
         o?: Array<'-customer_name' | 'customer_name'>;
         /**
@@ -21853,7 +20949,7 @@ export type MarketplaceServiceProvidersCustomersListData = {
 };
 
 export type MarketplaceServiceProvidersCustomersListResponses = {
-    200: PaginatedProviderCustomerList;
+    200: Array<ProviderCustomer>;
 };
 
 export type MarketplaceServiceProvidersCustomersListResponse = MarketplaceServiceProvidersCustomersListResponses[keyof MarketplaceServiceProvidersCustomersListResponses];
@@ -21886,8 +20982,7 @@ export type MarketplaceServiceProvidersKeysListData = {
         /**
          * Ordering
          *
-         * * `customer_name` - Customer name
-         * * `-customer_name` - Customer name (descending)
+         *
          */
         o?: Array<'-customer_name' | 'customer_name'>;
         /**
@@ -21903,7 +20998,7 @@ export type MarketplaceServiceProvidersKeysListData = {
 };
 
 export type MarketplaceServiceProvidersKeysListResponses = {
-    200: PaginatedSshKeyList;
+    200: Array<SshKey>;
 };
 
 export type MarketplaceServiceProvidersKeysListResponse = MarketplaceServiceProvidersKeysListResponses[keyof MarketplaceServiceProvidersKeysListResponses];
@@ -21970,7 +21065,7 @@ export type MarketplaceServiceProvidersListUsersListData = {
 };
 
 export type MarketplaceServiceProvidersListUsersListResponses = {
-    200: PaginatedUserRoleDetailsList;
+    200: Array<UserRoleDetails>;
 };
 
 export type MarketplaceServiceProvidersListUsersListResponse = MarketplaceServiceProvidersListUsersListResponses[keyof MarketplaceServiceProvidersListUsersListResponses];
@@ -22071,7 +21166,7 @@ export type MarketplaceServiceProvidersOfferingsListData = {
 };
 
 export type MarketplaceServiceProvidersOfferingsListResponses = {
-    200: PaginatedProviderOfferingList;
+    200: Array<ProviderOffering>;
 };
 
 export type MarketplaceServiceProvidersOfferingsListResponse = MarketplaceServiceProvidersOfferingsListResponses[keyof MarketplaceServiceProvidersOfferingsListResponses];
@@ -22088,8 +21183,7 @@ export type MarketplaceServiceProvidersProjectPermissionsListData = {
         /**
          * Ordering
          *
-         * * `customer_name` - Customer name
-         * * `-customer_name` - Customer name (descending)
+         *
          */
         o?: Array<'-customer_name' | 'customer_name'>;
         /**
@@ -22105,7 +21199,7 @@ export type MarketplaceServiceProvidersProjectPermissionsListData = {
 };
 
 export type MarketplaceServiceProvidersProjectPermissionsListResponses = {
-    200: PaginatedProjectPermissionLogList;
+    200: Array<ProjectPermissionLog>;
 };
 
 export type MarketplaceServiceProvidersProjectPermissionsListResponse = MarketplaceServiceProvidersProjectPermissionsListResponses[keyof MarketplaceServiceProvidersProjectPermissionsListResponses];
@@ -22122,8 +21216,7 @@ export type MarketplaceServiceProvidersProjectsListData = {
         /**
          * Ordering
          *
-         * * `customer_name` - Customer name
-         * * `-customer_name` - Customer name (descending)
+         *
          */
         o?: Array<'-customer_name' | 'customer_name'>;
         /**
@@ -22139,7 +21232,7 @@ export type MarketplaceServiceProvidersProjectsListData = {
 };
 
 export type MarketplaceServiceProvidersProjectsListResponses = {
-    200: PaginatedProjectList;
+    200: Array<Project>;
 };
 
 export type MarketplaceServiceProvidersProjectsListResponse = MarketplaceServiceProvidersProjectsListResponses[keyof MarketplaceServiceProvidersProjectsListResponses];
@@ -22156,8 +21249,7 @@ export type MarketplaceServiceProvidersRevenueListData = {
         /**
          * Ordering
          *
-         * * `customer_name` - Customer name
-         * * `-customer_name` - Customer name (descending)
+         *
          */
         o?: Array<'-customer_name' | 'customer_name'>;
         /**
@@ -22173,7 +21265,7 @@ export type MarketplaceServiceProvidersRevenueListData = {
 };
 
 export type MarketplaceServiceProvidersRevenueListResponses = {
-    200: PaginatedServiceProviderRevenuesList;
+    200: Array<ServiceProviderRevenues>;
 };
 
 export type MarketplaceServiceProvidersRevenueListResponse = MarketplaceServiceProvidersRevenueListResponses[keyof MarketplaceServiceProvidersRevenueListResponses];
@@ -22191,8 +21283,7 @@ export type MarketplaceServiceProvidersRobotAccountCustomersListData = {
         /**
          * Ordering
          *
-         * * `customer_name` - Customer name
-         * * `-customer_name` - Customer name (descending)
+         *
          */
         o?: Array<'-customer_name' | 'customer_name'>;
         /**
@@ -22208,7 +21299,7 @@ export type MarketplaceServiceProvidersRobotAccountCustomersListData = {
 };
 
 export type MarketplaceServiceProvidersRobotAccountCustomersListResponses = {
-    200: PaginatedNameUuidList;
+    200: Array<NameUuid>;
 };
 
 export type MarketplaceServiceProvidersRobotAccountCustomersListResponse = MarketplaceServiceProvidersRobotAccountCustomersListResponses[keyof MarketplaceServiceProvidersRobotAccountCustomersListResponses];
@@ -22225,8 +21316,7 @@ export type MarketplaceServiceProvidersRobotAccountProjectsListData = {
         /**
          * Ordering
          *
-         * * `customer_name` - Customer name
-         * * `-customer_name` - Customer name (descending)
+         *
          */
         o?: Array<'-customer_name' | 'customer_name'>;
         /**
@@ -22243,7 +21333,7 @@ export type MarketplaceServiceProvidersRobotAccountProjectsListData = {
 };
 
 export type MarketplaceServiceProvidersRobotAccountProjectsListResponses = {
-    200: PaginatedNameUuidList;
+    200: Array<NameUuid>;
 };
 
 export type MarketplaceServiceProvidersRobotAccountProjectsListResponse = MarketplaceServiceProvidersRobotAccountProjectsListResponses[keyof MarketplaceServiceProvidersRobotAccountProjectsListResponses];
@@ -22306,8 +21396,7 @@ export type MarketplaceServiceProvidersUserCustomersListData = {
         /**
          * Ordering
          *
-         * * `customer_name` - Customer name
-         * * `-customer_name` - Customer name (descending)
+         *
          */
         o?: Array<'-customer_name' | 'customer_name'>;
         /**
@@ -22323,7 +21412,7 @@ export type MarketplaceServiceProvidersUserCustomersListData = {
 };
 
 export type MarketplaceServiceProvidersUserCustomersListResponses = {
-    200: PaginatedProviderCustomerList;
+    200: Array<ProviderCustomer>;
 };
 
 export type MarketplaceServiceProvidersUserCustomersListResponse = MarketplaceServiceProvidersUserCustomersListResponses[keyof MarketplaceServiceProvidersUserCustomersListResponses];
@@ -22340,8 +21429,7 @@ export type MarketplaceServiceProvidersUsersListData = {
         /**
          * Ordering
          *
-         * * `customer_name` - Customer name
-         * * `-customer_name` - Customer name (descending)
+         *
          */
         o?: Array<'-customer_name' | 'customer_name'>;
         /**
@@ -22357,7 +21445,7 @@ export type MarketplaceServiceProvidersUsersListData = {
 };
 
 export type MarketplaceServiceProvidersUsersListResponses = {
-    200: PaginatedDetailedProviderUserList;
+    200: Array<DetailedProviderUser>;
 };
 
 export type MarketplaceServiceProvidersUsersListResponse = MarketplaceServiceProvidersUsersListResponses[keyof MarketplaceServiceProvidersUsersListResponses];
@@ -22421,7 +21509,7 @@ export type MarketplaceStatsCountActiveResourcesGroupedByOfferingListData = {
 };
 
 export type MarketplaceStatsCountActiveResourcesGroupedByOfferingListResponses = {
-    200: PaginatedOfferingStatsList;
+    200: Array<OfferingStats>;
 };
 
 export type MarketplaceStatsCountActiveResourcesGroupedByOfferingListResponse = MarketplaceStatsCountActiveResourcesGroupedByOfferingListResponses[keyof MarketplaceStatsCountActiveResourcesGroupedByOfferingListResponses];
@@ -22443,7 +21531,7 @@ export type MarketplaceStatsCountActiveResourcesGroupedByOfferingCountryListData
 };
 
 export type MarketplaceStatsCountActiveResourcesGroupedByOfferingCountryListResponses = {
-    200: PaginatedOfferingCountryStatsList;
+    200: Array<OfferingCountryStats>;
 };
 
 export type MarketplaceStatsCountActiveResourcesGroupedByOfferingCountryListResponse = MarketplaceStatsCountActiveResourcesGroupedByOfferingCountryListResponses[keyof MarketplaceStatsCountActiveResourcesGroupedByOfferingCountryListResponses];
@@ -22465,7 +21553,7 @@ export type MarketplaceStatsCountActiveResourcesGroupedByOrganizationGroupListDa
 };
 
 export type MarketplaceStatsCountActiveResourcesGroupedByOrganizationGroupListResponses = {
-    200: PaginatedCountStatsList;
+    200: Array<CountStats>;
 };
 
 export type MarketplaceStatsCountActiveResourcesGroupedByOrganizationGroupListResponse = MarketplaceStatsCountActiveResourcesGroupedByOrganizationGroupListResponses[keyof MarketplaceStatsCountActiveResourcesGroupedByOrganizationGroupListResponses];
@@ -22487,7 +21575,7 @@ export type MarketplaceStatsCountProjectsGroupedByProviderAndIndustryFlagListDat
 };
 
 export type MarketplaceStatsCountProjectsGroupedByProviderAndIndustryFlagListResponses = {
-    200: PaginatedCustomerIndustryFlagStatsList;
+    200: Array<CustomerIndustryFlagStats>;
 };
 
 export type MarketplaceStatsCountProjectsGroupedByProviderAndIndustryFlagListResponse = MarketplaceStatsCountProjectsGroupedByProviderAndIndustryFlagListResponses[keyof MarketplaceStatsCountProjectsGroupedByProviderAndIndustryFlagListResponses];
@@ -22509,7 +21597,7 @@ export type MarketplaceStatsCountProjectsGroupedByProviderAndOecdListData = {
 };
 
 export type MarketplaceStatsCountProjectsGroupedByProviderAndOecdListResponses = {
-    200: PaginatedCustomerOecdCodeStatsList;
+    200: Array<CustomerOecdCodeStats>;
 };
 
 export type MarketplaceStatsCountProjectsGroupedByProviderAndOecdListResponse = MarketplaceStatsCountProjectsGroupedByProviderAndOecdListResponses[keyof MarketplaceStatsCountProjectsGroupedByProviderAndOecdListResponses];
@@ -22587,7 +21675,7 @@ export type MarketplaceStatsCustomerMemberCountListData = {
 };
 
 export type MarketplaceStatsCustomerMemberCountListResponses = {
-    200: PaginatedCustomerMemberCountList;
+    200: Array<CustomerMemberCount>;
 };
 
 export type MarketplaceStatsCustomerMemberCountListResponse = MarketplaceStatsCustomerMemberCountListResponses[keyof MarketplaceStatsCustomerMemberCountListResponses];
@@ -22609,7 +21697,7 @@ export type MarketplaceStatsOfferingsCounterStatsListData = {
 };
 
 export type MarketplaceStatsOfferingsCounterStatsListResponses = {
-    200: PaginatedOfferingStatsCounterList;
+    200: Array<OfferingStatsCounter>;
 };
 
 export type MarketplaceStatsOfferingsCounterStatsListResponse = MarketplaceStatsOfferingsCounterStatsListResponses[keyof MarketplaceStatsOfferingsCounterStatsListResponses];
@@ -22631,7 +21719,7 @@ export type MarketplaceStatsOrganizationProjectCountListData = {
 };
 
 export type MarketplaceStatsOrganizationProjectCountListResponses = {
-    200: PaginatedMarketplaceCustomerStatsList;
+    200: Array<MarketplaceCustomerStats>;
 };
 
 export type MarketplaceStatsOrganizationProjectCountListResponse = MarketplaceStatsOrganizationProjectCountListResponses[keyof MarketplaceStatsOrganizationProjectCountListResponses];
@@ -22653,7 +21741,7 @@ export type MarketplaceStatsOrganizationResourceCountListData = {
 };
 
 export type MarketplaceStatsOrganizationResourceCountListResponses = {
-    200: PaginatedMarketplaceCustomerStatsList;
+    200: Array<MarketplaceCustomerStats>;
 };
 
 export type MarketplaceStatsOrganizationResourceCountListResponse = MarketplaceStatsOrganizationResourceCountListResponses[keyof MarketplaceStatsOrganizationResourceCountListResponses];
@@ -22780,7 +21868,7 @@ export type NotificationMessagesListData = {
 };
 
 export type NotificationMessagesListResponses = {
-    200: PaginatedNotificationList;
+    200: Array<Notification>;
 };
 
 export type NotificationMessagesListResponse = NotificationMessagesListResponses[keyof NotificationMessagesListResponses];
@@ -22820,7 +21908,7 @@ export type NotificationMessagesTemplatesListData = {
 };
 
 export type NotificationMessagesTemplatesListResponses = {
-    200: PaginatedNotificationTemplateDetailSerializersList;
+    200: Array<NotificationTemplateDetailSerializers>;
 };
 
 export type NotificationMessagesTemplatesListResponse = NotificationMessagesTemplatesListResponses[keyof NotificationMessagesTemplatesListResponses];
@@ -23042,16 +22130,6 @@ export type OpenstackBackupsListData = {
         project_uuid?: string;
         service_settings_name?: string;
         service_settings_uuid?: string;
-        /**
-         * * `CREATION_SCHEDULED` - CREATION_SCHEDULED
-         * * `CREATING` - CREATING
-         * * `UPDATE_SCHEDULED` - UPDATE_SCHEDULED
-         * * `UPDATING` - UPDATING
-         * * `DELETION_SCHEDULED` - DELETION_SCHEDULED
-         * * `DELETING` - DELETING
-         * * `OK` - OK
-         * * `ERRED` - ERRED
-         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
         tenant?: string;
         tenant_uuid?: string;
@@ -23061,7 +22139,7 @@ export type OpenstackBackupsListData = {
 };
 
 export type OpenstackBackupsListResponses = {
-    200: PaginatedOpenStackBackupList;
+    200: Array<OpenStackBackup>;
 };
 
 export type OpenstackBackupsListResponse = OpenstackBackupsListResponses[keyof OpenstackBackupsListResponses];
@@ -23195,12 +22273,7 @@ export type OpenstackFlavorsListData = {
         /**
          * Ordering
          *
-         * * `cores` - Cores
-         * * `-cores` - Cores (descending)
-         * * `ram` - Ram
-         * * `-ram` - Ram (descending)
-         * * `disk` - Disk
-         * * `-disk` - Disk (descending)
+         *
          */
         o?: Array<'-cores' | '-disk' | '-ram' | 'cores' | 'disk' | 'ram'>;
         /**
@@ -23223,7 +22296,7 @@ export type OpenstackFlavorsListData = {
 };
 
 export type OpenstackFlavorsListResponses = {
-    200: PaginatedOpenStackFlavorList;
+    200: Array<OpenStackFlavor>;
 };
 
 export type OpenstackFlavorsListResponse = OpenstackFlavorsListResponses[keyof OpenstackFlavorsListResponses];
@@ -23291,16 +22364,6 @@ export type OpenstackFloatingIpsListData = {
         runtime_state?: string;
         service_settings_name?: string;
         service_settings_uuid?: string;
-        /**
-         * * `CREATION_SCHEDULED` - CREATION_SCHEDULED
-         * * `CREATING` - CREATING
-         * * `UPDATE_SCHEDULED` - UPDATE_SCHEDULED
-         * * `UPDATING` - UPDATING
-         * * `DELETION_SCHEDULED` - DELETION_SCHEDULED
-         * * `DELETING` - DELETING
-         * * `OK` - OK
-         * * `ERRED` - ERRED
-         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
         tenant?: string;
         tenant_uuid?: string;
@@ -23310,7 +22373,7 @@ export type OpenstackFloatingIpsListData = {
 };
 
 export type OpenstackFloatingIpsListResponses = {
-    200: PaginatedOpenStackFloatingIpList;
+    200: Array<OpenStackFloatingIp>;
 };
 
 export type OpenstackFloatingIpsListResponse = OpenstackFloatingIpsListResponses[keyof OpenstackFloatingIpsListResponses];
@@ -23453,7 +22516,7 @@ export type OpenstackImagesListData = {
 };
 
 export type OpenstackImagesListResponses = {
-    200: PaginatedOpenStackImageList;
+    200: Array<OpenStackImage>;
 };
 
 export type OpenstackImagesListResponse = OpenstackImagesListResponses[keyof OpenstackImagesListResponses];
@@ -23509,7 +22572,7 @@ export type OpenstackInstanceAvailabilityZonesListData = {
 };
 
 export type OpenstackInstanceAvailabilityZonesListResponses = {
-    200: PaginatedOpenStackInstanceAvailabilityZoneList;
+    200: Array<OpenStackInstanceAvailabilityZone>;
 };
 
 export type OpenstackInstanceAvailabilityZonesListResponse = OpenstackInstanceAvailabilityZonesListResponses[keyof OpenstackInstanceAvailabilityZonesListResponses];
@@ -23560,16 +22623,6 @@ export type OpenstackInstancesListData = {
         runtime_state?: string;
         service_settings_name?: string;
         service_settings_uuid?: string;
-        /**
-         * * `CREATION_SCHEDULED` - CREATION_SCHEDULED
-         * * `CREATING` - CREATING
-         * * `UPDATE_SCHEDULED` - UPDATE_SCHEDULED
-         * * `UPDATING` - UPDATING
-         * * `DELETION_SCHEDULED` - DELETION_SCHEDULED
-         * * `DELETING` - DELETING
-         * * `OK` - OK
-         * * `ERRED` - ERRED
-         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
         tenant?: string;
         tenant_uuid?: string;
@@ -23579,7 +22632,7 @@ export type OpenstackInstancesListData = {
 };
 
 export type OpenstackInstancesListResponses = {
-    200: PaginatedOpenStackInstanceList;
+    200: Array<OpenStackInstance>;
 };
 
 export type OpenstackInstancesListResponse = OpenstackInstancesListResponses[keyof OpenstackInstancesListResponses];
@@ -23726,16 +22779,6 @@ export type OpenstackInstancesFloatingIpsListData = {
         runtime_state?: string;
         service_settings_name?: string;
         service_settings_uuid?: string;
-        /**
-         * * `CREATION_SCHEDULED` - CREATION_SCHEDULED
-         * * `CREATING` - CREATING
-         * * `UPDATE_SCHEDULED` - UPDATE_SCHEDULED
-         * * `UPDATING` - UPDATING
-         * * `DELETION_SCHEDULED` - DELETION_SCHEDULED
-         * * `DELETING` - DELETING
-         * * `OK` - OK
-         * * `ERRED` - ERRED
-         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
         tenant?: string;
         tenant_uuid?: string;
@@ -23745,7 +22788,7 @@ export type OpenstackInstancesFloatingIpsListData = {
 };
 
 export type OpenstackInstancesFloatingIpsListResponses = {
-    200: PaginatedOpenStackNestedFloatingIpList;
+    200: Array<OpenStackNestedFloatingIp>;
 };
 
 export type OpenstackInstancesFloatingIpsListResponse = OpenstackInstancesFloatingIpsListResponses[keyof OpenstackInstancesFloatingIpsListResponses];
@@ -23782,16 +22825,6 @@ export type OpenstackInstancesPortsListData = {
         runtime_state?: string;
         service_settings_name?: string;
         service_settings_uuid?: string;
-        /**
-         * * `CREATION_SCHEDULED` - CREATION_SCHEDULED
-         * * `CREATING` - CREATING
-         * * `UPDATE_SCHEDULED` - UPDATE_SCHEDULED
-         * * `UPDATING` - UPDATING
-         * * `DELETION_SCHEDULED` - DELETION_SCHEDULED
-         * * `DELETING` - DELETING
-         * * `OK` - OK
-         * * `ERRED` - ERRED
-         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
         tenant?: string;
         tenant_uuid?: string;
@@ -23801,7 +22834,7 @@ export type OpenstackInstancesPortsListData = {
 };
 
 export type OpenstackInstancesPortsListResponses = {
-    200: PaginatedOpenStackNestedPortList;
+    200: Array<OpenStackNestedPort>;
 };
 
 export type OpenstackInstancesPortsListResponse = OpenstackInstancesPortsListResponses[keyof OpenstackInstancesPortsListResponses];
@@ -23969,7 +23002,7 @@ export type OpenstackMigrationsListData = {
 };
 
 export type OpenstackMigrationsListResponses = {
-    200: PaginatedMigrationDetailsList;
+    200: Array<MigrationDetails>;
 };
 
 export type OpenstackMigrationsListResponse = OpenstackMigrationsListResponses[keyof OpenstackMigrationsListResponses];
@@ -24095,16 +23128,6 @@ export type OpenstackNetworksListData = {
         project_uuid?: string;
         service_settings_name?: string;
         service_settings_uuid?: string;
-        /**
-         * * `CREATION_SCHEDULED` - CREATION_SCHEDULED
-         * * `CREATING` - CREATING
-         * * `UPDATE_SCHEDULED` - UPDATE_SCHEDULED
-         * * `UPDATING` - UPDATING
-         * * `DELETION_SCHEDULED` - DELETION_SCHEDULED
-         * * `DELETING` - DELETING
-         * * `OK` - OK
-         * * `ERRED` - ERRED
-         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
         tenant?: string;
         tenant_uuid?: string;
@@ -24115,7 +23138,7 @@ export type OpenstackNetworksListData = {
 };
 
 export type OpenstackNetworksListResponses = {
-    200: PaginatedOpenStackNetworkList;
+    200: Array<OpenStackNetwork>;
 };
 
 export type OpenstackNetworksListResponse = OpenstackNetworksListResponses[keyof OpenstackNetworksListResponses];
@@ -24272,8 +23295,7 @@ export type OpenstackPortsListData = {
         /**
          * Ordering
          *
-         * * `network_name` - Network name
-         * * `-network_name` - Network name (descending)
+         *
          */
         o?: Array<'-network_name' | 'network_name'>;
         /**
@@ -24291,7 +23313,7 @@ export type OpenstackPortsListData = {
 };
 
 export type OpenstackPortsListResponses = {
-    200: PaginatedOpenStackPortList;
+    200: Array<OpenStackPort>;
 };
 
 export type OpenstackPortsListResponse = OpenstackPortsListResponses[keyof OpenstackPortsListResponses];
@@ -24385,7 +23407,7 @@ export type OpenstackRoutersListData = {
 };
 
 export type OpenstackRoutersListResponses = {
-    200: PaginatedOpenStackRouterList;
+    200: Array<OpenStackRouter>;
 };
 
 export type OpenstackRoutersListResponse = OpenstackRoutersListResponses[keyof OpenstackRoutersListResponses];
@@ -24451,16 +23473,6 @@ export type OpenstackSecurityGroupsListData = {
         query?: string;
         service_settings_name?: string;
         service_settings_uuid?: string;
-        /**
-         * * `CREATION_SCHEDULED` - CREATION_SCHEDULED
-         * * `CREATING` - CREATING
-         * * `UPDATE_SCHEDULED` - UPDATE_SCHEDULED
-         * * `UPDATING` - UPDATING
-         * * `DELETION_SCHEDULED` - DELETION_SCHEDULED
-         * * `DELETING` - DELETING
-         * * `OK` - OK
-         * * `ERRED` - ERRED
-         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
         tenant?: string;
         tenant_uuid?: string;
@@ -24470,7 +23482,7 @@ export type OpenstackSecurityGroupsListData = {
 };
 
 export type OpenstackSecurityGroupsListResponses = {
-    200: PaginatedOpenStackSecurityGroupList;
+    200: Array<OpenStackSecurityGroup>;
 };
 
 export type OpenstackSecurityGroupsListResponse = OpenstackSecurityGroupsListResponses[keyof OpenstackSecurityGroupsListResponses];
@@ -24616,16 +23628,6 @@ export type OpenstackServerGroupsListData = {
         project_uuid?: string;
         service_settings_name?: string;
         service_settings_uuid?: string;
-        /**
-         * * `CREATION_SCHEDULED` - CREATION_SCHEDULED
-         * * `CREATING` - CREATING
-         * * `UPDATE_SCHEDULED` - UPDATE_SCHEDULED
-         * * `UPDATING` - UPDATING
-         * * `DELETION_SCHEDULED` - DELETION_SCHEDULED
-         * * `DELETING` - DELETING
-         * * `OK` - OK
-         * * `ERRED` - ERRED
-         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
         tenant?: string;
         tenant_uuid?: string;
@@ -24635,7 +23637,7 @@ export type OpenstackServerGroupsListData = {
 };
 
 export type OpenstackServerGroupsListResponses = {
-    200: PaginatedOpenStackServerGroupList;
+    200: Array<OpenStackServerGroup>;
 };
 
 export type OpenstackServerGroupsListResponse = OpenstackServerGroupsListResponses[keyof OpenstackServerGroupsListResponses];
@@ -24783,16 +23785,6 @@ export type OpenstackSnapshotsListData = {
         service_settings_uuid?: string;
         source_volume?: string;
         source_volume_uuid?: string;
-        /**
-         * * `CREATION_SCHEDULED` - CREATION_SCHEDULED
-         * * `CREATING` - CREATING
-         * * `UPDATE_SCHEDULED` - UPDATE_SCHEDULED
-         * * `UPDATING` - UPDATING
-         * * `DELETION_SCHEDULED` - DELETION_SCHEDULED
-         * * `DELETING` - DELETING
-         * * `OK` - OK
-         * * `ERRED` - ERRED
-         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
         tenant?: string;
         tenant_uuid?: string;
@@ -24802,7 +23794,7 @@ export type OpenstackSnapshotsListData = {
 };
 
 export type OpenstackSnapshotsListResponses = {
-    200: PaginatedOpenStackSnapshotList;
+    200: Array<OpenStackSnapshot>;
 };
 
 export type OpenstackSnapshotsListResponse = OpenstackSnapshotsListResponses[keyof OpenstackSnapshotsListResponses];
@@ -24922,16 +23914,6 @@ export type OpenstackSnapshotsRestorationsListData = {
         service_settings_uuid?: string;
         source_volume?: string;
         source_volume_uuid?: string;
-        /**
-         * * `CREATION_SCHEDULED` - CREATION_SCHEDULED
-         * * `CREATING` - CREATING
-         * * `UPDATE_SCHEDULED` - UPDATE_SCHEDULED
-         * * `UPDATING` - UPDATING
-         * * `DELETION_SCHEDULED` - DELETION_SCHEDULED
-         * * `DELETING` - DELETING
-         * * `OK` - OK
-         * * `ERRED` - ERRED
-         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
         tenant?: string;
         tenant_uuid?: string;
@@ -24941,7 +23923,7 @@ export type OpenstackSnapshotsRestorationsListData = {
 };
 
 export type OpenstackSnapshotsRestorationsListResponses = {
-    200: PaginatedOpenStackSnapshotRestorationList;
+    200: Array<OpenStackSnapshotRestoration>;
 };
 
 export type OpenstackSnapshotsRestorationsListResponse = OpenstackSnapshotsRestorationsListResponses[keyof OpenstackSnapshotsRestorationsListResponses];
@@ -25009,16 +23991,6 @@ export type OpenstackSubnetsListData = {
         project_uuid?: string;
         service_settings_name?: string;
         service_settings_uuid?: string;
-        /**
-         * * `CREATION_SCHEDULED` - CREATION_SCHEDULED
-         * * `CREATING` - CREATING
-         * * `UPDATE_SCHEDULED` - UPDATE_SCHEDULED
-         * * `UPDATING` - UPDATING
-         * * `DELETION_SCHEDULED` - DELETION_SCHEDULED
-         * * `DELETING` - DELETING
-         * * `OK` - OK
-         * * `ERRED` - ERRED
-         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
         tenant?: string;
         tenant_uuid?: string;
@@ -25028,7 +24000,7 @@ export type OpenstackSubnetsListData = {
 };
 
 export type OpenstackSubnetsListResponses = {
-    200: PaginatedOpenStackSubNetList;
+    200: Array<OpenStackSubNet>;
 };
 
 export type OpenstackSubnetsListResponse = OpenstackSubnetsListResponses[keyof OpenstackSubnetsListResponses];
@@ -25190,16 +24162,6 @@ export type OpenstackTenantsListData = {
         project_uuid?: string;
         service_settings_name?: string;
         service_settings_uuid?: string;
-        /**
-         * * `CREATION_SCHEDULED` - CREATION_SCHEDULED
-         * * `CREATING` - CREATING
-         * * `UPDATE_SCHEDULED` - UPDATE_SCHEDULED
-         * * `UPDATING` - UPDATING
-         * * `DELETION_SCHEDULED` - DELETION_SCHEDULED
-         * * `DELETING` - DELETING
-         * * `OK` - OK
-         * * `ERRED` - ERRED
-         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
         uuid?: string;
     };
@@ -25207,7 +24169,7 @@ export type OpenstackTenantsListData = {
 };
 
 export type OpenstackTenantsListResponses = {
-    200: PaginatedOpenStackTenantList;
+    200: Array<OpenStackTenant>;
 };
 
 export type OpenstackTenantsListResponse = OpenstackTenantsListResponses[keyof OpenstackTenantsListResponses];
@@ -25319,16 +24281,6 @@ export type OpenstackTenantsBackendInstancesListData = {
         project_uuid?: string;
         service_settings_name?: string;
         service_settings_uuid?: string;
-        /**
-         * * `CREATION_SCHEDULED` - CREATION_SCHEDULED
-         * * `CREATING` - CREATING
-         * * `UPDATE_SCHEDULED` - UPDATE_SCHEDULED
-         * * `UPDATING` - UPDATING
-         * * `DELETION_SCHEDULED` - DELETION_SCHEDULED
-         * * `DELETING` - DELETING
-         * * `OK` - OK
-         * * `ERRED` - ERRED
-         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
         uuid?: string;
     };
@@ -25336,7 +24288,7 @@ export type OpenstackTenantsBackendInstancesListData = {
 };
 
 export type OpenstackTenantsBackendInstancesListResponses = {
-    200: PaginatedOpenStackBackendInstanceList;
+    200: Array<OpenStackBackendInstance>;
 };
 
 export type OpenstackTenantsBackendInstancesListResponse = OpenstackTenantsBackendInstancesListResponses[keyof OpenstackTenantsBackendInstancesListResponses];
@@ -25370,16 +24322,6 @@ export type OpenstackTenantsBackendVolumesListData = {
         project_uuid?: string;
         service_settings_name?: string;
         service_settings_uuid?: string;
-        /**
-         * * `CREATION_SCHEDULED` - CREATION_SCHEDULED
-         * * `CREATING` - CREATING
-         * * `UPDATE_SCHEDULED` - UPDATE_SCHEDULED
-         * * `UPDATING` - UPDATING
-         * * `DELETION_SCHEDULED` - DELETION_SCHEDULED
-         * * `DELETING` - DELETING
-         * * `OK` - OK
-         * * `ERRED` - ERRED
-         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
         uuid?: string;
     };
@@ -25387,7 +24329,7 @@ export type OpenstackTenantsBackendVolumesListData = {
 };
 
 export type OpenstackTenantsBackendVolumesListResponses = {
-    200: PaginatedOpenStackBackendVolumesList;
+    200: Array<OpenStackBackendVolumes>;
 };
 
 export type OpenstackTenantsBackendVolumesListResponse = OpenstackTenantsBackendVolumesListResponses[keyof OpenstackTenantsBackendVolumesListResponses];
@@ -25600,7 +24542,7 @@ export type OpenstackVolumeAvailabilityZonesListData = {
 };
 
 export type OpenstackVolumeAvailabilityZonesListResponses = {
-    200: PaginatedOpenStackVolumeAvailabilityZoneList;
+    200: Array<OpenStackVolumeAvailabilityZone>;
 };
 
 export type OpenstackVolumeAvailabilityZonesListResponse = OpenstackVolumeAvailabilityZonesListResponses[keyof OpenstackVolumeAvailabilityZonesListResponses];
@@ -25643,7 +24585,7 @@ export type OpenstackVolumeTypesListData = {
 };
 
 export type OpenstackVolumeTypesListResponses = {
-    200: PaginatedOpenStackVolumeTypeList;
+    200: Array<OpenStackVolumeType>;
 };
 
 export type OpenstackVolumeTypesListResponse = OpenstackVolumeTypesListResponses[keyof OpenstackVolumeTypesListResponses];
@@ -25698,16 +24640,6 @@ export type OpenstackVolumesListData = {
         service_settings_uuid?: string;
         snapshot?: string;
         snapshot_uuid?: string;
-        /**
-         * * `CREATION_SCHEDULED` - CREATION_SCHEDULED
-         * * `CREATING` - CREATING
-         * * `UPDATE_SCHEDULED` - UPDATE_SCHEDULED
-         * * `UPDATING` - UPDATING
-         * * `DELETION_SCHEDULED` - DELETION_SCHEDULED
-         * * `DELETING` - DELETING
-         * * `OK` - OK
-         * * `ERRED` - ERRED
-         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
         tenant?: string;
         tenant_uuid?: string;
@@ -25717,7 +24649,7 @@ export type OpenstackVolumesListData = {
 };
 
 export type OpenstackVolumesListResponses = {
-    200: PaginatedOpenStackVolumeList;
+    200: Array<OpenStackVolume>;
 };
 
 export type OpenstackVolumesListResponse = OpenstackVolumesListResponses[keyof OpenstackVolumesListResponses];
@@ -25904,7 +24836,7 @@ export type OrganizationGroupsListData = {
 };
 
 export type OrganizationGroupsListResponses = {
-    200: PaginatedOrganizationGroupList;
+    200: Array<OrganizationGroup>;
 };
 
 export type OrganizationGroupsListResponse = OrganizationGroupsListResponses[keyof OrganizationGroupsListResponses];
@@ -26020,12 +24952,7 @@ export type PaymentProfilesListData = {
         /**
          * Ordering
          *
-         * * `name` - Name
-         * * `-name` - Name (descending)
-         * * `payment_type` - Payment type
-         * * `-payment_type` - Payment type (descending)
-         * * `is_active` - Is active
-         * * `-is_active` - Is active (descending)
+         *
          */
         o?: Array<'-is_active' | '-name' | '-payment_type' | 'is_active' | 'name' | 'payment_type'>;
         organization?: string;
@@ -26038,18 +24965,13 @@ export type PaymentProfilesListData = {
          * Number of results to return per page.
          */
         page_size?: number;
-        /**
-         * * `fixed_price` - Fixed-price contract
-         * * `invoices` - Monthly invoices
-         * * `payment_gw_monthly` -  Payment gateways (monthly)
-         */
         payment_type?: Array<'fixed_price' | 'invoices' | 'payment_gw_monthly'>;
     };
     url: '/api/payment-profiles/';
 };
 
 export type PaymentProfilesListResponses = {
-    200: PaginatedPaymentProfileList;
+    200: Array<PaymentProfile>;
 };
 
 export type PaymentProfilesListResponse = PaymentProfilesListResponses[keyof PaymentProfilesListResponses];
@@ -26166,7 +25088,7 @@ export type PaymentsListData = {
 };
 
 export type PaymentsListResponses = {
-    200: PaginatedPaymentList;
+    200: Array<Payment>;
 };
 
 export type PaymentsListResponse = PaymentsListResponses[keyof PaymentsListResponses];
@@ -26288,14 +25210,7 @@ export type ProjectCreditsListData = {
         /**
          * Ordering
          *
-         * * `project_name` - Project name
-         * * `-project_name` - Project name (descending)
-         * * `value` - Value
-         * * `-value` - Value (descending)
-         * * `end_date` - End date
-         * * `-end_date` - End date (descending)
-         * * `expected_consumption` - Expected consumption
-         * * `-expected_consumption` - Expected consumption (descending)
+         *
          */
         o?: Array<'-end_date' | '-expected_consumption' | '-project_name' | '-value' | 'end_date' | 'expected_consumption' | 'project_name' | 'value'>;
         /**
@@ -26313,7 +25228,7 @@ export type ProjectCreditsListData = {
 };
 
 export type ProjectCreditsListResponses = {
-    200: PaginatedProjectCreditList;
+    200: Array<ProjectCredit>;
 };
 
 export type ProjectCreditsListResponse = ProjectCreditsListResponses[keyof ProjectCreditsListResponses];
@@ -26411,7 +25326,7 @@ export type ProjectQuotasListData = {
 };
 
 export type ProjectQuotasListResponses = {
-    200: PaginatedProjectQuotasList;
+    200: Array<ProjectQuotas>;
 };
 
 export type ProjectQuotasListResponse = ProjectQuotasListResponses[keyof ProjectQuotasListResponses];
@@ -26435,7 +25350,7 @@ export type ProjectTypesListData = {
 };
 
 export type ProjectTypesListResponses = {
-    200: PaginatedProjectTypeList;
+    200: Array<ProjectType>;
 };
 
 export type ProjectTypesListResponse = ProjectTypesListResponses[keyof ProjectTypesListResponses];
@@ -26483,22 +25398,7 @@ export type ProjectsListData = {
         /**
          * Ordering
          *
-         * * `name` - Name
-         * * `-name` - Name (descending)
-         * * `created` - Created
-         * * `-created` - Created (descending)
-         * * `customer_name` - Customer name
-         * * `-customer_name` - Customer name (descending)
-         * * `customer_native_name` - Customer native name
-         * * `-customer_native_name` - Customer native name (descending)
-         * * `customer_abbreviation` - Customer abbreviation
-         * * `-customer_abbreviation` - Customer abbreviation (descending)
-         * * `estimated_cost` - Estimated cost
-         * * `-estimated_cost` - Estimated cost (descending)
-         * * `end_date` - End date
-         * * `-end_date` - End date (descending)
-         * * `start_date` - Start date
-         * * `-start_date` - Start date (descending)
+         *
          */
         o?: Array<'-created' | '-customer_abbreviation' | '-customer_name' | '-customer_native_name' | '-end_date' | '-estimated_cost' | '-name' | '-start_date' | 'created' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'end_date' | 'estimated_cost' | 'name' | 'start_date'>;
         /**
@@ -26515,7 +25415,7 @@ export type ProjectsListData = {
 };
 
 export type ProjectsListResponses = {
-    200: PaginatedProjectList;
+    200: Array<Project>;
 };
 
 export type ProjectsListResponse = ProjectsListResponses[keyof ProjectsListResponses];
@@ -26725,7 +25625,7 @@ export type ProjectsListUsersListData = {
 };
 
 export type ProjectsListUsersListResponses = {
-    200: PaginatedUserRoleDetailsList;
+    200: Array<UserRoleDetails>;
 };
 
 export type ProjectsListUsersListResponse = ProjectsListUsersListResponses[keyof ProjectsListUsersListResponses];
@@ -26785,10 +25685,7 @@ export type PromotionsCampaignsListData = {
         /**
          * Ordering
          *
-         * * `start_date` - Start date
-         * * `-start_date` - Start date (descending)
-         * * `end_date` - End date
-         * * `-end_date` - End date (descending)
+         *
          */
         o?: Array<'-end_date' | '-start_date' | 'end_date' | 'start_date'>;
         /**
@@ -26807,18 +25704,13 @@ export type PromotionsCampaignsListData = {
         query?: string;
         service_provider_uuid?: string;
         start_date?: string;
-        /**
-         * * `Draft` - Draft
-         * * `Active` - Active
-         * * `Terminated` - Terminated
-         */
         state?: Array<'Active' | 'Draft' | 'Terminated'>;
     };
     url: '/api/promotions-campaigns/';
 };
 
 export type PromotionsCampaignsListResponses = {
-    200: PaginatedCampaignList;
+    200: Array<Campaign>;
 };
 
 export type PromotionsCampaignsListResponse = PromotionsCampaignsListResponses[keyof PromotionsCampaignsListResponses];
@@ -26918,10 +25810,7 @@ export type PromotionsCampaignsOrdersListData = {
         /**
          * Ordering
          *
-         * * `start_date` - Start date
-         * * `-start_date` - Start date (descending)
-         * * `end_date` - End date
-         * * `-end_date` - End date (descending)
+         *
          */
         o?: Array<'-end_date' | '-start_date' | 'end_date' | 'start_date'>;
         /**
@@ -26940,18 +25829,13 @@ export type PromotionsCampaignsOrdersListData = {
         query?: string;
         service_provider_uuid?: string;
         start_date?: string;
-        /**
-         * * `Draft` - Draft
-         * * `Active` - Active
-         * * `Terminated` - Terminated
-         */
         state?: Array<'Active' | 'Draft' | 'Terminated'>;
     };
     url: '/api/promotions-campaigns/{uuid}/orders/';
 };
 
 export type PromotionsCampaignsOrdersListResponses = {
-    200: PaginatedOrderDetailsList;
+    200: Array<OrderDetails>;
 };
 
 export type PromotionsCampaignsOrdersListResponse = PromotionsCampaignsOrdersListResponses[keyof PromotionsCampaignsOrdersListResponses];
@@ -26967,10 +25851,7 @@ export type PromotionsCampaignsResourcesListData = {
         /**
          * Ordering
          *
-         * * `start_date` - Start date
-         * * `-start_date` - Start date (descending)
-         * * `end_date` - End date
-         * * `-end_date` - End date (descending)
+         *
          */
         o?: Array<'-end_date' | '-start_date' | 'end_date' | 'start_date'>;
         /**
@@ -26989,18 +25870,13 @@ export type PromotionsCampaignsResourcesListData = {
         query?: string;
         service_provider_uuid?: string;
         start_date?: string;
-        /**
-         * * `Draft` - Draft
-         * * `Active` - Active
-         * * `Terminated` - Terminated
-         */
         state?: Array<'Active' | 'Draft' | 'Terminated'>;
     };
     url: '/api/promotions-campaigns/{uuid}/resources/';
 };
 
 export type PromotionsCampaignsResourcesListResponses = {
-    200: PaginatedResourceList;
+    200: Array<Resource>;
 };
 
 export type PromotionsCampaignsResourcesListResponse = PromotionsCampaignsResourcesListResponses[keyof PromotionsCampaignsResourcesListResponses];
@@ -27037,16 +25913,7 @@ export type ProposalProposalsListData = {
         /**
          * Ordering
          *
-         * * `round__call__name` - Round  call  name
-         * * `-round__call__name` - Round  call  name (descending)
-         * * `round__start_time` - Round  start time
-         * * `-round__start_time` - Round  start time (descending)
-         * * `round__cutoff_time` - Round  cutoff time
-         * * `-round__cutoff_time` - Round  cutoff time (descending)
-         * * `state` - State
-         * * `-state` - State (descending)
-         * * `created` - Created
-         * * `-created` - Created (descending)
+         *
          */
         o?: Array<'-created' | '-round__call__name' | '-round__cutoff_time' | '-round__start_time' | '-state' | 'created' | 'round__call__name' | 'round__cutoff_time' | 'round__start_time' | 'state'>;
         organization_uuid?: string;
@@ -27059,21 +25926,13 @@ export type ProposalProposalsListData = {
          */
         page_size?: number;
         round?: string;
-        /**
-         * * `draft` - Draft
-         * * `submitted` - Submitted
-         * * `in_review` - In review
-         * * `accepted` - Accepted
-         * * `rejected` - Rejected
-         * * `canceled` - Canceled
-         */
         state?: Array<'accepted' | 'canceled' | 'draft' | 'in_review' | 'rejected' | 'submitted'>;
     };
     url: '/api/proposal-proposals/';
 };
 
 export type ProposalProposalsListResponses = {
-    200: PaginatedProposalList;
+    200: Array<Proposal>;
 };
 
 export type ProposalProposalsListResponse = ProposalProposalsListResponses[keyof ProposalProposalsListResponses];
@@ -27230,14 +26089,6 @@ export type ProposalProposalsListUsersListData = {
          * Search string for user
          */
         search_string?: string;
-        /**
-         * * `draft` - Draft
-         * * `submitted` - Submitted
-         * * `in_review` - In review
-         * * `accepted` - Accepted
-         * * `rejected` - Rejected
-         * * `canceled` - Canceled
-         */
         state?: Array<'accepted' | 'canceled' | 'draft' | 'in_review' | 'rejected' | 'submitted'>;
         /**
          * User UUID
@@ -27260,7 +26111,7 @@ export type ProposalProposalsListUsersListData = {
 };
 
 export type ProposalProposalsListUsersListResponses = {
-    200: PaginatedUserRoleDetailsList;
+    200: Array<UserRoleDetails>;
 };
 
 export type ProposalProposalsListUsersListResponse = ProposalProposalsListUsersListResponses[keyof ProposalProposalsListUsersListResponses];
@@ -27292,16 +26143,7 @@ export type ProposalProposalsResourcesListData = {
         /**
          * Ordering
          *
-         * * `round__call__name` - Round  call  name
-         * * `-round__call__name` - Round  call  name (descending)
-         * * `round__start_time` - Round  start time
-         * * `-round__start_time` - Round  start time (descending)
-         * * `round__cutoff_time` - Round  cutoff time
-         * * `-round__cutoff_time` - Round  cutoff time (descending)
-         * * `state` - State
-         * * `-state` - State (descending)
-         * * `created` - Created
-         * * `-created` - Created (descending)
+         *
          */
         o?: Array<'-created' | '-round__call__name' | '-round__cutoff_time' | '-round__start_time' | '-state' | 'created' | 'round__call__name' | 'round__cutoff_time' | 'round__start_time' | 'state'>;
         organization_uuid?: string;
@@ -27314,21 +26156,13 @@ export type ProposalProposalsResourcesListData = {
          */
         page_size?: number;
         round?: string;
-        /**
-         * * `draft` - Draft
-         * * `submitted` - Submitted
-         * * `in_review` - In review
-         * * `accepted` - Accepted
-         * * `rejected` - Rejected
-         * * `canceled` - Canceled
-         */
         state?: Array<'accepted' | 'canceled' | 'draft' | 'in_review' | 'rejected' | 'submitted'>;
     };
     url: '/api/proposal-proposals/{uuid}/resources/';
 };
 
 export type ProposalProposalsResourcesListResponses = {
-    200: PaginatedRequestedResourceList;
+    200: Array<RequestedResource>;
 };
 
 export type ProposalProposalsResourcesListResponse = ProposalProposalsResourcesListResponses[keyof ProposalProposalsResourcesListResponses];
@@ -27476,12 +26310,7 @@ export type ProposalProtectedCallsListData = {
         /**
          * Ordering
          *
-         * * `manager__customer__name` - Manager  customer  name
-         * * `-manager__customer__name` - Manager  customer  name (descending)
-         * * `created` - Created
-         * * `-created` - Created (descending)
-         * * `name` - Name
-         * * `-name` - Name (descending)
+         *
          */
         o?: Array<'-created' | '-manager__customer__name' | '-name' | 'created' | 'manager__customer__name' | 'name'>;
         offering_uuid?: string;
@@ -27494,18 +26323,13 @@ export type ProposalProtectedCallsListData = {
          * Number of results to return per page.
          */
         page_size?: number;
-        /**
-         * * `draft` - Draft
-         * * `active` - Active
-         * * `archived` - Archived
-         */
         state?: Array<'active' | 'archived' | 'draft'>;
     };
     url: '/api/proposal-protected-calls/';
 };
 
 export type ProposalProtectedCallsListResponses = {
-    200: PaginatedProtectedCallList;
+    200: Array<ProtectedCall>;
 };
 
 export type ProposalProtectedCallsListResponse = ProposalProtectedCallsListResponses[keyof ProposalProtectedCallsListResponses];
@@ -27729,11 +26553,6 @@ export type ProposalProtectedCallsListUsersListData = {
          * Search string for user
          */
         search_string?: string;
-        /**
-         * * `draft` - Draft
-         * * `active` - Active
-         * * `archived` - Archived
-         */
         state?: Array<'active' | 'archived' | 'draft'>;
         /**
          * User UUID
@@ -27756,7 +26575,7 @@ export type ProposalProtectedCallsListUsersListData = {
 };
 
 export type ProposalProtectedCallsListUsersListResponses = {
-    200: PaginatedUserRoleDetailsList;
+    200: Array<UserRoleDetails>;
 };
 
 export type ProposalProtectedCallsListUsersListResponse = ProposalProtectedCallsListUsersListResponses[keyof ProposalProtectedCallsListUsersListResponses];
@@ -27775,12 +26594,7 @@ export type ProposalProtectedCallsOfferingsListData = {
         /**
          * Ordering
          *
-         * * `manager__customer__name` - Manager  customer  name
-         * * `-manager__customer__name` - Manager  customer  name (descending)
-         * * `created` - Created
-         * * `-created` - Created (descending)
-         * * `name` - Name
-         * * `-name` - Name (descending)
+         *
          */
         o?: Array<'-created' | '-manager__customer__name' | '-name' | 'created' | 'manager__customer__name' | 'name'>;
         offering_uuid?: string;
@@ -27793,18 +26607,13 @@ export type ProposalProtectedCallsOfferingsListData = {
          * Number of results to return per page.
          */
         page_size?: number;
-        /**
-         * * `draft` - Draft
-         * * `active` - Active
-         * * `archived` - Archived
-         */
         state?: Array<'active' | 'archived' | 'draft'>;
     };
     url: '/api/proposal-protected-calls/{uuid}/offerings/';
 };
 
 export type ProposalProtectedCallsOfferingsListResponses = {
-    200: PaginatedRequestedOfferingList;
+    200: Array<RequestedOffering>;
 };
 
 export type ProposalProtectedCallsOfferingsListResponse = ProposalProtectedCallsOfferingsListResponses[keyof ProposalProtectedCallsOfferingsListResponses];
@@ -27905,12 +26714,7 @@ export type ProposalProtectedCallsRoundsListData = {
         /**
          * Ordering
          *
-         * * `manager__customer__name` - Manager  customer  name
-         * * `-manager__customer__name` - Manager  customer  name (descending)
-         * * `created` - Created
-         * * `-created` - Created (descending)
-         * * `name` - Name
-         * * `-name` - Name (descending)
+         *
          */
         o?: Array<'-created' | '-manager__customer__name' | '-name' | 'created' | 'manager__customer__name' | 'name'>;
         offering_uuid?: string;
@@ -27923,18 +26727,13 @@ export type ProposalProtectedCallsRoundsListData = {
          * Number of results to return per page.
          */
         page_size?: number;
-        /**
-         * * `draft` - Draft
-         * * `active` - Active
-         * * `archived` - Archived
-         */
         state?: Array<'active' | 'archived' | 'draft'>;
     };
     url: '/api/proposal-protected-calls/{uuid}/rounds/';
 };
 
 export type ProposalProtectedCallsRoundsListResponses = {
-    200: PaginatedProtectedRoundList;
+    200: Array<ProtectedRound>;
 };
 
 export type ProposalProtectedCallsRoundsListResponse = ProposalProtectedCallsRoundsListResponses[keyof ProposalProtectedCallsRoundsListResponses];
@@ -28066,12 +26865,7 @@ export type ProposalPublicCallsListData = {
         /**
          * Ordering
          *
-         * * `manager__customer__name` - Manager  customer  name
-         * * `-manager__customer__name` - Manager  customer  name (descending)
-         * * `created` - Created
-         * * `-created` - Created (descending)
-         * * `name` - Name
-         * * `-name` - Name (descending)
+         *
          */
         o?: Array<'-created' | '-manager__customer__name' | '-name' | 'created' | 'manager__customer__name' | 'name'>;
         offering_uuid?: string;
@@ -28084,18 +26878,13 @@ export type ProposalPublicCallsListData = {
          * Number of results to return per page.
          */
         page_size?: number;
-        /**
-         * * `draft` - Draft
-         * * `active` - Active
-         * * `archived` - Archived
-         */
         state?: Array<'active' | 'archived' | 'draft'>;
     };
     url: '/api/proposal-public-calls/';
 };
 
 export type ProposalPublicCallsListResponses = {
-    200: PaginatedPublicCallList;
+    200: Array<PublicCall>;
 };
 
 export type ProposalPublicCallsListResponse = ProposalPublicCallsListResponses[keyof ProposalPublicCallsListResponses];
@@ -28129,14 +26918,7 @@ export type ProposalRequestedOfferingsListData = {
         /**
          * Ordering
          *
-         * * `created` - Created
-         * * `-created` - Created (descending)
-         * * `state` - State
-         * * `-state` - State (descending)
-         * * `offering__name` - Offering  name
-         * * `-offering__name` - Offering  name (descending)
-         * * `call__name` - Call  name
-         * * `-call__name` - Call  name (descending)
+         *
          */
         o?: Array<'-call__name' | '-created' | '-offering__name' | '-state' | 'call__name' | 'created' | 'offering__name' | 'state'>;
         /**
@@ -28157,18 +26939,13 @@ export type ProposalRequestedOfferingsListData = {
          * Provider
          */
         provider_uuid?: string;
-        /**
-         * * `requested` - Requested
-         * * `accepted` - Accepted
-         * * `canceled` - Canceled
-         */
         state?: Array<'accepted' | 'canceled' | 'requested'>;
     };
     url: '/api/proposal-requested-offerings/';
 };
 
 export type ProposalRequestedOfferingsListResponses = {
-    200: PaginatedProviderRequestedOfferingList;
+    200: Array<ProviderRequestedOffering>;
 };
 
 export type ProposalRequestedOfferingsListResponse = ProposalRequestedOfferingsListResponses[keyof ProposalRequestedOfferingsListResponses];
@@ -28228,14 +27005,7 @@ export type ProposalRequestedResourcesListData = {
         /**
          * Ordering
          *
-         * * `created` - Created
-         * * `-created` - Created (descending)
-         * * `offering__name` - Offering  name
-         * * `-offering__name` - Offering  name (descending)
-         * * `resource__name` - Resource  name
-         * * `-resource__name` - Resource  name (descending)
-         * * `proposal__name` - Proposal  name
-         * * `-proposal__name` - Proposal  name (descending)
+         *
          */
         o?: Array<'-created' | '-offering__name' | '-proposal__name' | '-resource__name' | 'created' | 'offering__name' | 'proposal__name' | 'resource__name'>;
         /**
@@ -28266,7 +27036,7 @@ export type ProposalRequestedResourcesListData = {
 };
 
 export type ProposalRequestedResourcesListResponses = {
-    200: PaginatedProviderRequestedResourceList;
+    200: Array<ProviderRequestedResource>;
 };
 
 export type ProposalRequestedResourcesListResponse = ProposalRequestedResourcesListResponses[keyof ProposalRequestedResourcesListResponses];
@@ -28294,10 +27064,7 @@ export type ProposalReviewsListData = {
         /**
          * Ordering
          *
-         * * `created` - Created
-         * * `-created` - Created (descending)
-         * * `state` - State
-         * * `-state` - State (descending)
+         *
          */
         o?: Array<'-created' | '-state' | 'created' | 'state'>;
         organization_uuid?: string;
@@ -28312,19 +27079,13 @@ export type ProposalReviewsListData = {
         proposal?: string;
         proposal_uuid?: string;
         reviewer_uuid?: string;
-        /**
-         * * `created` - Created
-         * * `in_review` - In review
-         * * `submitted` - Submitted
-         * * `rejected` - Rejected
-         */
         state?: Array<'created' | 'in_review' | 'rejected' | 'submitted'>;
     };
     url: '/api/proposal-reviews/';
 };
 
 export type ProposalReviewsListResponses = {
-    200: PaginatedProposalReviewList;
+    200: Array<ProposalReview>;
 };
 
 export type ProposalReviewsListResponse = ProposalReviewsListResponses[keyof ProposalReviewsListResponses];
@@ -28463,14 +27224,7 @@ export type ProviderInvoiceItemsListData = {
         /**
          * Ordering
          *
-         * * `unit_price` - Unit price
-         * * `-unit_price` - Unit price (descending)
-         * * `resource_offering_name` - Resource offering name
-         * * `-resource_offering_name` - Resource offering name (descending)
-         * * `invoice_customer_name` - Invoice customer name
-         * * `-invoice_customer_name` - Invoice customer name (descending)
-         * * `project_name` - Project name
-         * * `-project_name` - Project name (descending)
+         *
          */
         o?: Array<'-invoice_customer_name' | '-project_name' | '-resource_offering_name' | '-unit_price' | 'invoice_customer_name' | 'project_name' | 'resource_offering_name' | 'unit_price'>;
         offering_uuid?: string;
@@ -28488,7 +27242,7 @@ export type ProviderInvoiceItemsListData = {
 };
 
 export type ProviderInvoiceItemsListResponses = {
-    200: PaginatedInvoiceItemList;
+    200: Array<InvoiceItem>;
 };
 
 export type ProviderInvoiceItemsListResponse = ProviderInvoiceItemsListResponses[keyof ProviderInvoiceItemsListResponses];
@@ -28541,7 +27295,7 @@ export type RabbitmqUserStatsListData = {
 };
 
 export type RabbitmqUserStatsListResponses = {
-    200: PaginatedRmqUserStatsItemList;
+    200: Array<RmqUserStatsItem>;
 };
 
 export type RabbitmqUserStatsListResponse = RabbitmqUserStatsListResponses[keyof RabbitmqUserStatsListResponses];
@@ -28589,16 +27343,6 @@ export type RancherAppsListData = {
         project_uuid?: string;
         service_settings_name?: string;
         service_settings_uuid?: string;
-        /**
-         * * `CREATION_SCHEDULED` - CREATION_SCHEDULED
-         * * `CREATING` - CREATING
-         * * `UPDATE_SCHEDULED` - UPDATE_SCHEDULED
-         * * `UPDATING` - UPDATING
-         * * `DELETION_SCHEDULED` - DELETION_SCHEDULED
-         * * `DELETING` - DELETING
-         * * `OK` - OK
-         * * `ERRED` - ERRED
-         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
         template_uuid?: string;
         uuid?: string;
@@ -28607,7 +27351,7 @@ export type RancherAppsListData = {
 };
 
 export type RancherAppsListResponses = {
-    200: PaginatedRancherApplicationList;
+    200: Array<RancherApplication>;
 };
 
 export type RancherAppsListResponse = RancherAppsListResponses[keyof RancherAppsListResponses];
@@ -28739,7 +27483,7 @@ export type RancherCatalogsListData = {
 };
 
 export type RancherCatalogsListResponses = {
-    200: PaginatedRancherCatalogList;
+    200: Array<RancherCatalog>;
 };
 
 export type RancherCatalogsListResponse = RancherCatalogsListResponses[keyof RancherCatalogsListResponses];
@@ -28852,7 +27596,7 @@ export type RancherClusterTemplatesListData = {
 };
 
 export type RancherClusterTemplatesListResponses = {
-    200: PaginatedRancherClusterTemplateList;
+    200: Array<RancherClusterTemplate>;
 };
 
 export type RancherClusterTemplatesListResponse = RancherClusterTemplatesListResponses[keyof RancherClusterTemplatesListResponses];
@@ -28900,16 +27644,6 @@ export type RancherClustersListData = {
         project_uuid?: string;
         service_settings_name?: string;
         service_settings_uuid?: string;
-        /**
-         * * `CREATION_SCHEDULED` - CREATION_SCHEDULED
-         * * `CREATING` - CREATING
-         * * `UPDATE_SCHEDULED` - UPDATE_SCHEDULED
-         * * `UPDATING` - UPDATING
-         * * `DELETION_SCHEDULED` - DELETION_SCHEDULED
-         * * `DELETING` - DELETING
-         * * `OK` - OK
-         * * `ERRED` - ERRED
-         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
         uuid?: string;
     };
@@ -28917,7 +27651,7 @@ export type RancherClustersListData = {
 };
 
 export type RancherClustersListResponses = {
-    200: PaginatedRancherClusterList;
+    200: Array<RancherCluster>;
 };
 
 export type RancherClustersListResponse = RancherClustersListResponses[keyof RancherClustersListResponses];
@@ -29104,7 +27838,7 @@ export type RancherHpasListData = {
 };
 
 export type RancherHpasListResponses = {
-    200: PaginatedRancherHpaList;
+    200: Array<RancherHpa>;
 };
 
 export type RancherHpasListResponse = RancherHpasListResponses[keyof RancherHpasListResponses];
@@ -29278,16 +28012,6 @@ export type RancherIngressesListData = {
         rancher_project_uuid?: string;
         service_settings_name?: string;
         service_settings_uuid?: string;
-        /**
-         * * `CREATION_SCHEDULED` - CREATION_SCHEDULED
-         * * `CREATING` - CREATING
-         * * `UPDATE_SCHEDULED` - UPDATE_SCHEDULED
-         * * `UPDATING` - UPDATING
-         * * `DELETION_SCHEDULED` - DELETION_SCHEDULED
-         * * `DELETING` - DELETING
-         * * `OK` - OK
-         * * `ERRED` - ERRED
-         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
         uuid?: string;
     };
@@ -29295,7 +28019,7 @@ export type RancherIngressesListData = {
 };
 
 export type RancherIngressesListResponses = {
-    200: PaginatedRancherIngressList;
+    200: Array<RancherIngress>;
 };
 
 export type RancherIngressesListResponse = RancherIngressesListResponses[keyof RancherIngressesListResponses];
@@ -29452,12 +28176,7 @@ export type RancherNamespacesListData = {
         /**
          * Ordering
          *
-         * * `name` - Name
-         * * `-name` - Name (descending)
-         * * `cluster_name` - Cluster name
-         * * `-cluster_name` - Cluster name (descending)
-         * * `project_name` - Project name
-         * * `-project_name` - Project name (descending)
+         *
          */
         o?: Array<'-cluster_name' | '-name' | '-project_name' | 'cluster_name' | 'name' | 'project_name'>;
         /**
@@ -29476,7 +28195,7 @@ export type RancherNamespacesListData = {
 };
 
 export type RancherNamespacesListResponses = {
-    200: PaginatedRancherNamespaceList;
+    200: Array<RancherNamespace>;
 };
 
 export type RancherNamespacesListResponse = RancherNamespacesListResponses[keyof RancherNamespacesListResponses];
@@ -29514,7 +28233,7 @@ export type RancherNodesListData = {
 };
 
 export type RancherNodesListResponses = {
-    200: PaginatedRancherNodeList;
+    200: Array<RancherNode>;
 };
 
 export type RancherNodesListResponse = RancherNodesListResponses[keyof RancherNodesListResponses];
@@ -29690,7 +28409,7 @@ export type RancherProjectsListData = {
 };
 
 export type RancherProjectsListResponses = {
-    200: PaginatedRancherProjectList;
+    200: Array<RancherProject>;
 };
 
 export type RancherProjectsListResponse = RancherProjectsListResponses[keyof RancherProjectsListResponses];
@@ -29756,16 +28475,6 @@ export type RancherServicesListData = {
         rancher_project_uuid?: string;
         service_settings_name?: string;
         service_settings_uuid?: string;
-        /**
-         * * `CREATION_SCHEDULED` - CREATION_SCHEDULED
-         * * `CREATING` - CREATING
-         * * `UPDATE_SCHEDULED` - UPDATE_SCHEDULED
-         * * `UPDATING` - UPDATING
-         * * `DELETION_SCHEDULED` - DELETION_SCHEDULED
-         * * `DELETING` - DELETING
-         * * `OK` - OK
-         * * `ERRED` - ERRED
-         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
         uuid?: string;
     };
@@ -29773,7 +28482,7 @@ export type RancherServicesListData = {
 };
 
 export type RancherServicesListResponses = {
-    200: PaginatedRancherServiceList;
+    200: Array<RancherService>;
 };
 
 export type RancherServicesListResponse = RancherServicesListResponses[keyof RancherServicesListResponses];
@@ -29947,10 +28656,7 @@ export type RancherTemplatesListData = {
         /**
          * Ordering
          *
-         * * `name` - Name
-         * * `-name` - Name (descending)
-         * * `catalog_name` - Catalog name
-         * * `-catalog_name` - Catalog name (descending)
+         *
          */
         o?: Array<'-catalog_name' | '-name' | 'catalog_name' | 'name'>;
         /**
@@ -29969,7 +28675,7 @@ export type RancherTemplatesListData = {
 };
 
 export type RancherTemplatesListResponses = {
-    200: PaginatedRancherTemplateList;
+    200: Array<RancherTemplate>;
 };
 
 export type RancherTemplatesListResponse = RancherTemplatesListResponses[keyof RancherTemplatesListResponses];
@@ -30018,7 +28724,7 @@ export type RancherUsersListData = {
 };
 
 export type RancherUsersListResponses = {
-    200: PaginatedRancherUserList;
+    200: Array<RancherUser>;
 };
 
 export type RancherUsersListResponse = RancherUsersListResponses[keyof RancherUsersListResponses];
@@ -30049,14 +28755,7 @@ export type RancherWorkloadsListData = {
         /**
          * Ordering
          *
-         * * `name` - Name
-         * * `-name` - Name (descending)
-         * * `project_name` - Project name
-         * * `-project_name` - Project name (descending)
-         * * `cluster_name` - Cluster name
-         * * `-cluster_name` - Cluster name (descending)
-         * * `namespace_name` - Namespace name
-         * * `-namespace_name` - Namespace name (descending)
+         *
          */
         o?: Array<'-cluster_name' | '-name' | '-namespace_name' | '-project_name' | 'cluster_name' | 'name' | 'namespace_name' | 'project_name'>;
         /**
@@ -30075,7 +28774,7 @@ export type RancherWorkloadsListData = {
 };
 
 export type RancherWorkloadsListResponses = {
-    200: PaginatedRancherWorkloadList;
+    200: Array<RancherWorkload>;
 };
 
 export type RancherWorkloadsListResponse = RancherWorkloadsListResponses[keyof RancherWorkloadsListResponses];
@@ -30405,7 +29104,7 @@ export type RemoteWaldurApiRemoteCategoriesData = {
 };
 
 export type RemoteWaldurApiRemoteCategoriesResponses = {
-    200: PaginatedMarketplaceCategoryList;
+    200: Array<MarketplaceCategory>;
 };
 
 export type RemoteWaldurApiRemoteCategoriesResponse = RemoteWaldurApiRemoteCategoriesResponses[keyof RemoteWaldurApiRemoteCategoriesResponses];
@@ -30427,7 +29126,7 @@ export type RemoteWaldurApiRemoteCustomersData = {
 };
 
 export type RemoteWaldurApiRemoteCustomersResponses = {
-    200: PaginatedRemoteCustomerList;
+    200: Array<RemoteCustomer>;
 };
 
 export type RemoteWaldurApiRemoteCustomersResponse = RemoteWaldurApiRemoteCustomersResponses[keyof RemoteWaldurApiRemoteCustomersResponses];
@@ -30450,7 +29149,7 @@ export type RemoteWaldurApiSharedOfferingsData = {
 };
 
 export type RemoteWaldurApiSharedOfferingsResponses = {
-    200: PaginatedRemoteOfferingList;
+    200: Array<RemoteOffering>;
 };
 
 export type RemoteWaldurApiSharedOfferingsResponse = RemoteWaldurApiSharedOfferingsResponses[keyof RemoteWaldurApiSharedOfferingsResponses];
@@ -30508,7 +29207,7 @@ export type RolesListData = {
 };
 
 export type RolesListResponses = {
-    200: PaginatedRoleDetailsList;
+    200: Array<RoleDetails>;
 };
 
 export type RolesListResponse = RolesListResponses[keyof RolesListResponses];
@@ -30664,16 +29363,6 @@ export type ServiceSettingsListData = {
          */
         scope_uuid?: string;
         shared?: boolean;
-        /**
-         * * `CREATION_SCHEDULED` - CREATION_SCHEDULED
-         * * `CREATING` - CREATING
-         * * `UPDATE_SCHEDULED` - UPDATE_SCHEDULED
-         * * `UPDATING` - UPDATING
-         * * `DELETION_SCHEDULED` - DELETION_SCHEDULED
-         * * `DELETING` - DELETING
-         * * `OK` - OK
-         * * `ERRED` - ERRED
-         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
         type?: string;
     };
@@ -30681,7 +29370,7 @@ export type ServiceSettingsListData = {
 };
 
 export type ServiceSettingsListResponses = {
-    200: PaginatedServiceSettingsList;
+    200: Array<ServiceSettings>;
 };
 
 export type ServiceSettingsListResponse = ServiceSettingsListResponses[keyof ServiceSettingsListResponses];
@@ -30726,7 +29415,7 @@ export type SlurmAllocationUserUsageListData = {
 };
 
 export type SlurmAllocationUserUsageListResponses = {
-    200: PaginatedSlurmAllocationUserUsageList;
+    200: Array<SlurmAllocationUserUsage>;
 };
 
 export type SlurmAllocationUserUsageListResponse = SlurmAllocationUserUsageListResponses[keyof SlurmAllocationUserUsageListResponses];
@@ -30778,16 +29467,6 @@ export type SlurmAllocationsListData = {
         project_uuid?: string;
         service_settings_name?: string;
         service_settings_uuid?: string;
-        /**
-         * * `CREATION_SCHEDULED` - CREATION_SCHEDULED
-         * * `CREATING` - CREATING
-         * * `UPDATE_SCHEDULED` - UPDATE_SCHEDULED
-         * * `UPDATING` - UPDATING
-         * * `DELETION_SCHEDULED` - DELETION_SCHEDULED
-         * * `DELETING` - DELETING
-         * * `OK` - OK
-         * * `ERRED` - ERRED
-         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
         uuid?: string;
     };
@@ -30795,7 +29474,7 @@ export type SlurmAllocationsListData = {
 };
 
 export type SlurmAllocationsListResponses = {
-    200: PaginatedSlurmAllocationList;
+    200: Array<SlurmAllocation>;
 };
 
 export type SlurmAllocationsListResponse = SlurmAllocationsListResponses[keyof SlurmAllocationsListResponses];
@@ -30944,7 +29623,7 @@ export type SlurmAssociationsListData = {
 };
 
 export type SlurmAssociationsListResponses = {
-    200: PaginatedSlurmAssociationList;
+    200: Array<SlurmAssociation>;
 };
 
 export type SlurmAssociationsListResponse = SlurmAssociationsListResponses[keyof SlurmAssociationsListResponses];
@@ -30982,7 +29661,7 @@ export type SlurmJobsListData = {
 };
 
 export type SlurmJobsListResponses = {
-    200: PaginatedFirecrestJobList;
+    200: Array<FirecrestJob>;
 };
 
 export type SlurmJobsListResponse = SlurmJobsListResponses[keyof SlurmJobsListResponses];
@@ -31117,7 +29796,7 @@ export type SupportAttachmentsListData = {
 };
 
 export type SupportAttachmentsListResponses = {
-    200: PaginatedAttachmentList;
+    200: Array<Attachment>;
 };
 
 export type SupportAttachmentsListResponse = SupportAttachmentsListResponses[keyof SupportAttachmentsListResponses];
@@ -31183,10 +29862,7 @@ export type SupportCommentsListData = {
         /**
          * Ordering
          *
-         * * `created` - Created
-         * * `-created` - Created (descending)
-         * * `modified` - Modified
-         * * `-modified` - Modified (descending)
+         *
          */
         o?: Array<'-created' | '-modified' | 'created' | 'modified'>;
         /**
@@ -31206,7 +29882,7 @@ export type SupportCommentsListData = {
 };
 
 export type SupportCommentsListResponses = {
-    200: PaginatedCommentList;
+    200: Array<Comment>;
 };
 
 export type SupportCommentsListResponse = SupportCommentsListResponses[keyof SupportCommentsListResponses];
@@ -31331,7 +30007,7 @@ export type SupportFeedbacksListData = {
 };
 
 export type SupportFeedbacksListResponses = {
-    200: PaginatedFeedbackList;
+    200: Array<Feedback>;
 };
 
 export type SupportFeedbacksListResponse = SupportFeedbacksListResponses[keyof SupportFeedbacksListResponses];
@@ -31381,34 +30057,7 @@ export type SupportIssuesListData = {
         /**
          * Ordering
          *
-         * * `created` - Created
-         * * `-created` - Created (descending)
-         * * `modified` - Modified
-         * * `-modified` - Modified (descending)
-         * * `type` - Type
-         * * `-type` - Type (descending)
-         * * `status` - Status
-         * * `-status` - Status (descending)
-         * * `priority` - Priority
-         * * `-priority` - Priority (descending)
-         * * `summary` - Summary
-         * * `-summary` - Summary (descending)
-         * * `customer_name` - Customer name
-         * * `-customer_name` - Customer name (descending)
-         * * `project_name` - Project name
-         * * `-project_name` - Project name (descending)
-         * * `caller_first_name` - Caller first name
-         * * `-caller_first_name` - Caller first name (descending)
-         * * `caller_last_name` - Caller last name
-         * * `-caller_last_name` - Caller last name (descending)
-         * * `reporter_name` - Reporter name
-         * * `-reporter_name` - Reporter name (descending)
-         * * `assignee_name` - Assignee name
-         * * `-assignee_name` - Assignee name (descending)
-         * * `remote_id` - Remote id
-         * * `-remote_id` - Remote id (descending)
-         * * `key` - Key
-         * * `-key` - Key (descending)
+         *
          */
         o?: Array<'-assignee_name' | '-caller_first_name' | '-caller_last_name' | '-created' | '-customer_name' | '-key' | '-modified' | '-priority' | '-project_name' | '-remote_id' | '-reporter_name' | '-status' | '-summary' | '-type' | 'assignee_name' | 'caller_first_name' | 'caller_last_name' | 'created' | 'customer_name' | 'key' | 'modified' | 'priority' | 'project_name' | 'remote_id' | 'reporter_name' | 'status' | 'summary' | 'type'>;
         /**
@@ -31449,7 +30098,7 @@ export type SupportIssuesListData = {
 };
 
 export type SupportIssuesListResponses = {
-    200: PaginatedIssueList;
+    200: Array<Issue>;
 };
 
 export type SupportIssuesListResponse = SupportIssuesListResponses[keyof SupportIssuesListResponses];
@@ -31592,7 +30241,7 @@ export type SupportPrioritiesListData = {
 };
 
 export type SupportPrioritiesListResponses = {
-    200: PaginatedPriorityList;
+    200: Array<Priority>;
 };
 
 export type SupportPrioritiesListResponse = SupportPrioritiesListResponses[keyof SupportPrioritiesListResponses];
@@ -31655,7 +30304,7 @@ export type SupportTemplatesListData = {
 };
 
 export type SupportTemplatesListResponses = {
-    200: PaginatedTemplateList;
+    200: Array<Template>;
 };
 
 export type SupportTemplatesListResponse = SupportTemplatesListResponses[keyof SupportTemplatesListResponses];
@@ -31795,7 +30444,7 @@ export type SupportUsersListData = {
 };
 
 export type SupportUsersListResponses = {
-    200: PaginatedSupportUserList;
+    200: Array<SupportUser>;
 };
 
 export type SupportUsersListResponse = SupportUsersListResponses[keyof SupportUsersListResponses];
@@ -31875,10 +30524,6 @@ export type UserAgreementsListData = {
     body?: never;
     path?: never;
     query?: {
-        /**
-         * * `TOS` - Terms of services
-         * * `PP` - Privacy policy
-         */
         agreement_type?: 'PP' | 'TOS';
         /**
          * A page number within the paginated result set.
@@ -31893,7 +30538,7 @@ export type UserAgreementsListData = {
 };
 
 export type UserAgreementsListResponses = {
-    200: PaginatedUserAgreementList;
+    200: Array<UserAgreement>;
 };
 
 export type UserAgreementsListResponse = UserAgreementsListResponses[keyof UserAgreementsListResponses];
@@ -31983,8 +30628,7 @@ export type UserGroupInvitationsListData = {
         /**
          * Ordering
          *
-         * * `created` - Created
-         * * `-created` - Created (descending)
+         *
          */
         o?: Array<'-created' | 'created'>;
         /**
@@ -32003,7 +30647,7 @@ export type UserGroupInvitationsListData = {
 };
 
 export type UserGroupInvitationsListResponses = {
-    200: PaginatedGroupInvitationList;
+    200: Array<GroupInvitation>;
 };
 
 export type UserGroupInvitationsListResponse = UserGroupInvitationsListResponses[keyof UserGroupInvitationsListResponses];
@@ -32071,7 +30715,7 @@ export type UserGroupInvitationsProjectsListData = {
 };
 
 export type UserGroupInvitationsProjectsListResponses = {
-    200: PaginatedNestedProjectList;
+    200: Array<NestedProject>;
 };
 
 export type UserGroupInvitationsProjectsListResponse = UserGroupInvitationsProjectsListResponses[keyof UserGroupInvitationsProjectsListResponses];
@@ -32101,12 +30745,7 @@ export type UserInvitationsListData = {
         /**
          * Ordering
          *
-         * * `email` - Email
-         * * `-email` - Email (descending)
-         * * `state` - State
-         * * `-state` - State (descending)
-         * * `created` - Created
-         * * `-created` - Created (descending)
+         *
          */
         o?: Array<'-created' | '-email' | '-state' | 'created' | 'email' | 'state'>;
         /**
@@ -32120,22 +30759,13 @@ export type UserInvitationsListData = {
         role_name?: string;
         role_uuid?: string;
         scope_type?: string;
-        /**
-         * * `project` - Pending project
-         * * `requested` - Requested
-         * * `rejected` - Rejected
-         * * `pending` - Pending
-         * * `accepted` - Accepted
-         * * `canceled` - Canceled
-         * * `expired` - Expired
-         */
         state?: Array<'accepted' | 'canceled' | 'expired' | 'pending' | 'project' | 'rejected' | 'requested'>;
     };
     url: '/api/user-invitations/';
 };
 
 export type UserInvitationsListResponses = {
-    200: PaginatedInvitationList;
+    200: Array<Invitation>;
 };
 
 export type UserInvitationsListResponse = UserInvitationsListResponses[keyof UserInvitationsListResponses];
@@ -32300,10 +30930,7 @@ export type UserPermissionRequestsListData = {
         /**
          * Ordering
          *
-         * * `state` - State
-         * * `-state` - State (descending)
-         * * `created` - Created
-         * * `-created` - Created (descending)
+         *
          */
         o?: Array<'-created' | '-state' | 'created' | 'state'>;
         /**
@@ -32314,20 +30941,13 @@ export type UserPermissionRequestsListData = {
          * Number of results to return per page.
          */
         page_size?: number;
-        /**
-         * * `draft` - draft
-         * * `pending` - pending
-         * * `approved` - approved
-         * * `rejected` - rejected
-         * * `canceled` - canceled
-         */
         state?: Array<'approved' | 'canceled' | 'draft' | 'pending' | 'rejected'>;
     };
     url: '/api/user-permission-requests/';
 };
 
 export type UserPermissionRequestsListResponses = {
-    200: PaginatedPermissionRequestList;
+    200: Array<PermissionRequest>;
 };
 
 export type UserPermissionRequestsListResponse = UserPermissionRequestsListResponses[keyof UserPermissionRequestsListResponses];
@@ -32389,20 +31009,7 @@ export type UserPermissionsListData = {
         /**
          * Ordering
          *
-         * * `username` - Username
-         * * `-username` - Username (descending)
-         * * `full_name` - Full name
-         * * `-full_name` - Full name (descending)
-         * * `native_name` - Native name
-         * * `-native_name` - Native name (descending)
-         * * `email` - Email
-         * * `-email` - Email (descending)
-         * * `expiration_time` - Expiration time
-         * * `-expiration_time` - Expiration time (descending)
-         * * `created` - Created
-         * * `-created` - Created (descending)
-         * * `role` - Role
-         * * `-role` - Role (descending)
+         *
          */
         o?: Array<'-created' | '-email' | '-expiration_time' | '-full_name' | '-native_name' | '-role' | '-username' | 'created' | 'email' | 'expiration_time' | 'full_name' | 'native_name' | 'role' | 'username'>;
         /**
@@ -32425,7 +31032,7 @@ export type UserPermissionsListData = {
 };
 
 export type UserPermissionsListResponses = {
-    200: PaginatedPermissionList;
+    200: Array<Permission>;
 };
 
 export type UserPermissionsListResponse = UserPermissionsListResponses[keyof UserPermissionsListResponses];
@@ -32466,30 +31073,7 @@ export type UsersListData = {
         /**
          * Ordering
          *
-         * * `full_name` - Full name
-         * * `-full_name` - Full name (descending)
-         * * `native_name` - Native name
-         * * `-native_name` - Native name (descending)
-         * * `email` - Email
-         * * `-email` - Email (descending)
-         * * `phone_number` - Phone number
-         * * `-phone_number` - Phone number (descending)
-         * * `description` - Description
-         * * `-description` - Description (descending)
-         * * `organization` - Organization
-         * * `-organization` - Organization (descending)
-         * * `job_title` - Job title
-         * * `-job_title` - Job title (descending)
-         * * `username` - Username
-         * * `-username` - Username (descending)
-         * * `is_active` - Is active
-         * * `-is_active` - Is active (descending)
-         * * `registration_method` - Registration method
-         * * `-registration_method` - Registration method (descending)
-         * * `is_staff` - Is staff
-         * * `-is_staff` - Is staff (descending)
-         * * `is_support` - Is support
-         * * `-is_support` - Is support (descending)
+         *
          */
         o?: Array<'-description' | '-email' | '-full_name' | '-is_active' | '-is_staff' | '-is_support' | '-job_title' | '-native_name' | '-organization' | '-phone_number' | '-registration_method' | '-username' | 'description' | 'email' | 'full_name' | 'is_active' | 'is_staff' | 'is_support' | 'job_title' | 'native_name' | 'organization' | 'phone_number' | 'registration_method' | 'username'>;
         organization?: string;
@@ -32523,7 +31107,7 @@ export type UsersListData = {
 };
 
 export type UsersListResponses = {
-    200: PaginatedUserList;
+    200: Array<User>;
 };
 
 export type UsersListResponse = UsersListResponses[keyof UsersListResponses];
@@ -32782,7 +31366,7 @@ export type VmwareClustersListData = {
 };
 
 export type VmwareClustersListResponses = {
-    200: PaginatedVmwareClusterList;
+    200: Array<VmwareCluster>;
 };
 
 export type VmwareClustersListResponse = VmwareClustersListResponses[keyof VmwareClustersListResponses];
@@ -32827,7 +31411,7 @@ export type VmwareDatastoresListData = {
 };
 
 export type VmwareDatastoresListResponses = {
-    200: PaginatedVmwareDatastoreList;
+    200: Array<VmwareDatastore>;
 };
 
 export type VmwareDatastoresListResponse = VmwareDatastoresListResponses[keyof VmwareDatastoresListResponses];
@@ -32875,16 +31459,6 @@ export type VmwareDisksListData = {
         project_uuid?: string;
         service_settings_name?: string;
         service_settings_uuid?: string;
-        /**
-         * * `CREATION_SCHEDULED` - CREATION_SCHEDULED
-         * * `CREATING` - CREATING
-         * * `UPDATE_SCHEDULED` - UPDATE_SCHEDULED
-         * * `UPDATING` - UPDATING
-         * * `DELETION_SCHEDULED` - DELETION_SCHEDULED
-         * * `DELETING` - DELETING
-         * * `OK` - OK
-         * * `ERRED` - ERRED
-         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
         uuid?: string;
         vm?: string;
@@ -32894,7 +31468,7 @@ export type VmwareDisksListData = {
 };
 
 export type VmwareDisksListResponses = {
-    200: PaginatedVmwareDiskList;
+    200: Array<VmwareDisk>;
 };
 
 export type VmwareDisksListResponse = VmwareDisksListResponses[keyof VmwareDisksListResponses];
@@ -33006,7 +31580,7 @@ export type VmwareFoldersListData = {
 };
 
 export type VmwareFoldersListResponses = {
-    200: PaginatedVmwareFolderList;
+    200: Array<VmwareFolder>;
 };
 
 export type VmwareFoldersListResponse = VmwareFoldersListResponses[keyof VmwareFoldersListResponses];
@@ -33070,7 +31644,7 @@ export type VmwareNetworksListData = {
 };
 
 export type VmwareNetworksListResponses = {
-    200: PaginatedVmwareNetworkList;
+    200: Array<VmwareNetwork>;
 };
 
 export type VmwareNetworksListResponse = VmwareNetworksListResponses[keyof VmwareNetworksListResponses];
@@ -33120,16 +31694,6 @@ export type VmwarePortsListData = {
         project_uuid?: string;
         service_settings_name?: string;
         service_settings_uuid?: string;
-        /**
-         * * `CREATION_SCHEDULED` - CREATION_SCHEDULED
-         * * `CREATING` - CREATING
-         * * `UPDATE_SCHEDULED` - UPDATE_SCHEDULED
-         * * `UPDATING` - UPDATING
-         * * `DELETION_SCHEDULED` - DELETION_SCHEDULED
-         * * `DELETING` - DELETING
-         * * `OK` - OK
-         * * `ERRED` - ERRED
-         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
         uuid?: string;
         vm?: string;
@@ -33139,7 +31703,7 @@ export type VmwarePortsListData = {
 };
 
 export type VmwarePortsListResponses = {
-    200: PaginatedVmwarePortList;
+    200: Array<VmwarePort>;
 };
 
 export type VmwarePortsListResponse = VmwarePortsListResponses[keyof VmwarePortsListResponses];
@@ -33232,7 +31796,7 @@ export type VmwareTemplatesListData = {
 };
 
 export type VmwareTemplatesListResponses = {
-    200: PaginatedVmwareTemplateList;
+    200: Array<VmwareTemplate>;
 };
 
 export type VmwareTemplatesListResponse = VmwareTemplatesListResponses[keyof VmwareTemplatesListResponses];
@@ -33281,16 +31845,6 @@ export type VmwareVirtualMachineListData = {
         runtime_state?: string;
         service_settings_name?: string;
         service_settings_uuid?: string;
-        /**
-         * * `CREATION_SCHEDULED` - CREATION_SCHEDULED
-         * * `CREATING` - CREATING
-         * * `UPDATE_SCHEDULED` - UPDATE_SCHEDULED
-         * * `UPDATING` - UPDATING
-         * * `DELETION_SCHEDULED` - DELETION_SCHEDULED
-         * * `DELETING` - DELETING
-         * * `OK` - OK
-         * * `ERRED` - ERRED
-         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
         uuid?: string;
     };
@@ -33298,7 +31852,7 @@ export type VmwareVirtualMachineListData = {
 };
 
 export type VmwareVirtualMachineListResponses = {
-    200: PaginatedVmwareVirtualMachineList;
+    200: Array<VmwareVirtualMachine>;
 };
 
 export type VmwareVirtualMachineListResponse = VmwareVirtualMachineListResponses[keyof VmwareVirtualMachineListResponses];
