@@ -15140,6 +15140,7 @@ export type InvoiceItemsListData = {
         credit_uuid?: string;
         customer_uuid?: string;
         month?: number;
+        offering_uuid?: string;
         /**
          * A page number within the paginated result set.
          */
@@ -15150,6 +15151,14 @@ export type InvoiceItemsListData = {
         page_size?: number;
         project_uuid?: string;
         resource_uuid?: string;
+        /**
+         * Start month
+         */
+        start_month?: number;
+        /**
+         * Start year
+         */
+        start_year?: number;
         year?: number;
     };
     url: '/api/invoice-items/';
@@ -15261,10 +15270,19 @@ export type InvoiceItemsCostsListData = {
         credit_uuid?: string;
         customer_uuid?: string;
         month?: number;
+        offering_uuid?: string;
         page?: number;
         page_size?: number;
         project_uuid?: string;
         resource_uuid?: string;
+        /**
+         * Start month
+         */
+        start_month?: number;
+        /**
+         * Start year
+         */
+        start_year?: number;
         year?: number;
     };
     url: '/api/invoice-items/costs/';
