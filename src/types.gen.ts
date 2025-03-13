@@ -1738,6 +1738,10 @@ export type Country = {
 
 export type CountryEnum = 'AL' | 'AT' | 'BE' | 'BG' | 'BA' | 'CH' | 'CY' | 'CZ' | 'DE' | 'DK' | 'ES' | 'EE' | 'FI' | 'FR' | 'GB' | 'GE' | 'GR' | 'HR' | 'HU' | 'IE' | 'IS' | 'IT' | 'LT' | 'LU' | 'LV' | 'MC' | 'MK' | 'MT' | 'NL' | 'NO' | 'PL' | 'PT' | 'RO' | 'RS' | 'SK' | 'SI' | 'SE' | 'UA' | 'EU';
 
+export type CreateAttachmentsRequest = {
+    attachments: Array<Blob | File>;
+};
+
 export type CreateCustomerCredit = {
     readonly uuid: string;
     readonly url: string;
@@ -17871,7 +17875,7 @@ export type MarketplaceProviderOfferingsRetrieveResponses = {
 export type MarketplaceProviderOfferingsRetrieveResponse = MarketplaceProviderOfferingsRetrieveResponses[keyof MarketplaceProviderOfferingsRetrieveResponses];
 
 export type MarketplaceProviderOfferingsActivateData = {
-    body: ProviderOfferingDetailsRequest;
+    body?: never;
     path: {
         uuid: string;
     };
@@ -17917,7 +17921,7 @@ export type MarketplaceProviderOfferingsAddUserResponses = {
 };
 
 export type MarketplaceProviderOfferingsArchiveData = {
-    body: ProviderOfferingDetailsRequest;
+    body?: never;
     path: {
         uuid: string;
     };
@@ -18251,7 +18255,7 @@ export type MarketplaceProviderOfferingsDeleteUserResponses = {
 };
 
 export type MarketplaceProviderOfferingsDraftData = {
-    body: ProviderOfferingDetailsRequest;
+    body?: never;
     path: {
         uuid: string;
     };
@@ -18697,7 +18701,7 @@ export type MarketplaceProviderOfferingsSyncResponses = {
 };
 
 export type MarketplaceProviderOfferingsUnpauseData = {
-    body: ProviderOfferingDetailsRequest;
+    body?: never;
     path: {
         uuid: string;
     };
@@ -30386,7 +30390,7 @@ export type SupportTemplatesUpdateResponses = {
 export type SupportTemplatesUpdateResponse = SupportTemplatesUpdateResponses[keyof SupportTemplatesUpdateResponses];
 
 export type SupportTemplatesCreateAttachmentsData = {
-    body: TemplateAttachmentRequest;
+    body: CreateAttachmentsRequest;
     path: {
         uuid: string;
     };

@@ -6203,11 +6203,7 @@ export const marketplaceProviderOfferingsActivate = <ThrowOnError extends boolea
             }
         ],
         url: '/api/marketplace-provider-offerings/{uuid}/activate/',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options?.headers
-        }
+        ...options
     });
 };
 
@@ -6257,11 +6253,7 @@ export const marketplaceProviderOfferingsArchive = <ThrowOnError extends boolean
             }
         ],
         url: '/api/marketplace-provider-offerings/{uuid}/archive/',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options?.headers
-        }
+        ...options
     });
 };
 
@@ -6424,11 +6416,7 @@ export const marketplaceProviderOfferingsDraft = <ThrowOnError extends boolean =
             }
         ],
         url: '/api/marketplace-provider-offerings/{uuid}/draft/',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options?.headers
-        }
+        ...options
     });
 };
 
@@ -6626,11 +6614,7 @@ export const marketplaceProviderOfferingsUnpause = <ThrowOnError extends boolean
             }
         ],
         url: '/api/marketplace-provider-offerings/{uuid}/unpause/',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options?.headers
-        }
+        ...options
     });
 };
 
