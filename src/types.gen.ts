@@ -885,7 +885,7 @@ export type BookingResource = {
         [key: string]: number;
     };
     readonly can_terminate: boolean;
-    readonly report: unknown;
+    readonly report: Array<ReportSection>;
     /**
      * The date is inclusive. Once reached, a resource will be scheduled for termination.
      */
@@ -2801,6 +2801,10 @@ export type InvoiceItemMigrateToRequest = {
     invoice: string;
 };
 
+export type InvoiceItemTotalPrice = {
+    total_price: string;
+};
+
 export type InvoiceItemUpdate = {
     article_code?: string;
     quantity?: string;
@@ -3688,7 +3692,7 @@ export type NestedRequestedOffering = {
     attributes?: unknown;
     plan?: string | null;
     plan_details: BasePublicPlan;
-    readonly options: unknown;
+    options: OfferingOptions;
     readonly components: Array<OfferingComponent>;
 };
 
@@ -4793,7 +4797,7 @@ export type OpenStackNestedFloatingIp = {
     readonly url: string;
     readonly uuid: string;
     readonly address: string | null;
-    readonly port_fixed_ips: unknown;
+    readonly port_fixed_ips: Array<OpenStackFixedIp>;
     readonly port_mac_address: string;
     subnet: string;
     readonly subnet_uuid: string;
@@ -4849,7 +4853,7 @@ export type OpenStackNestedSubNet = {
     description?: string;
     cidr?: string;
     gateway_ip?: string | null;
-    readonly allocation_pools: unknown;
+    readonly allocation_pools: Array<OpenStackSubNetAllocationPool>;
     ip_version?: number;
     enable_dhcp?: boolean;
 };
@@ -5348,10 +5352,10 @@ export type OpenStackSubNet = {
     cidr?: string;
     gateway_ip?: string | null;
     disable_gateway?: boolean;
-    readonly allocation_pools: unknown;
+    readonly allocation_pools: Array<OpenStackSubNetAllocationPool>;
     readonly ip_version: number;
     readonly enable_dhcp: boolean;
-    dns_nameservers?: unknown;
+    dns_nameservers?: Array<string>;
     host_routes?: Array<OpenStackStaticRoute>;
     /**
      * Is subnet connected to the default tenant router.
@@ -5369,13 +5373,23 @@ export type OpenStackSubNet = {
     readonly is_limit_based: boolean;
 };
 
+export type OpenStackSubNetAllocationPool = {
+    start: string;
+    end: string;
+};
+
+export type OpenStackSubNetAllocationPoolRequest = {
+    start: string;
+    end: string;
+};
+
 export type OpenStackSubNetRequest = {
     name: string;
     description?: string;
     cidr?: string;
     gateway_ip?: string | null;
     disable_gateway?: boolean;
-    dns_nameservers?: unknown;
+    dns_nameservers?: Array<string>;
     host_routes?: Array<OpenStackStaticRouteRequest>;
 };
 
@@ -6166,7 +6180,7 @@ export type PatchedOpenStackSubNetRequest = {
     description?: string;
     gateway_ip?: string | null;
     disable_gateway?: boolean;
-    dns_nameservers?: unknown;
+    dns_nameservers?: Array<string>;
     host_routes?: Array<OpenStackStaticRouteRequest>;
 };
 
@@ -6590,13 +6604,6 @@ export type PaymentRequest = {
 };
 
 export type PaymentTypeEnum = 'fixed_price' | 'invoices' | 'payment_gw_monthly';
-
-export type PaymentUrl = {
-    /**
-     * URL for initiating payment via payment gateway.
-     */
-    payment_url?: string;
-};
 
 export type PaymentUrlRequest = {
     /**
@@ -7366,7 +7373,7 @@ export type ProviderRequestedOffering = {
     attributes?: unknown;
     readonly plan: string | null;
     plan_details: BasePublicPlan;
-    readonly options: unknown;
+    options: OfferingOptions;
     readonly components: Array<OfferingComponent>;
     readonly url: string;
     readonly call_name: string;
@@ -8301,7 +8308,7 @@ export type RequestedOffering = {
     attributes?: unknown;
     plan?: string | null;
     plan_details: BasePublicPlan;
-    readonly options: unknown;
+    options: OfferingOptions;
     readonly components: Array<OfferingComponent>;
     readonly url: string;
     readonly approved_by: string | null;
@@ -8410,7 +8417,7 @@ export type Resource = {
         [key: string]: number;
     };
     readonly can_terminate: boolean;
-    readonly report: unknown;
+    readonly report: Array<ReportSection>;
     /**
      * The date is inclusive. Once reached, a resource will be scheduled for termination.
      */
@@ -14717,10 +14724,6 @@ export type InvoiceItemsCostsListData = {
     body?: never;
     path?: never;
     query?: {
-        credit_uuid?: string;
-        customer_uuid?: string;
-        month?: number;
-        offering_uuid?: string;
         /**
          * A page number within the paginated result set.
          */
@@ -14729,17 +14732,10 @@ export type InvoiceItemsCostsListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * UUID of the project for which statistics should be calculated.
+         */
         project_uuid?: string;
-        resource_uuid?: string;
-        /**
-         * Start month
-         */
-        start_month?: number;
-        /**
-         * Start year
-         */
-        start_year?: number;
-        year?: number;
     };
     url: '/api/invoice-items/costs/';
 };
@@ -14777,7 +14773,7 @@ export type InvoiceItemsProjectCostsForPeriodRetrieveData = {
     path?: never;
     query?: {
         /**
-         * Period for which statistics should be calculated.
+         * Period for which statistics should be calculated (1, 3 or 12 months).
          */
         period?: number;
         /**
@@ -14793,6 +14789,19 @@ export type InvoiceItemsProjectCostsForPeriodRetrieveResponses = {
 };
 
 export type InvoiceItemsProjectCostsForPeriodRetrieveResponse = InvoiceItemsProjectCostsForPeriodRetrieveResponses[keyof InvoiceItemsProjectCostsForPeriodRetrieveResponses];
+
+export type InvoiceItemsTotalPriceRetrieveData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/invoice-items/total_price/';
+};
+
+export type InvoiceItemsTotalPriceRetrieveResponses = {
+    200: InvoiceItemTotalPrice;
+};
+
+export type InvoiceItemsTotalPriceRetrieveResponse = InvoiceItemsTotalPriceRetrieveResponses[keyof InvoiceItemsTotalPriceRetrieveResponses];
 
 export type InvoiceSendFinancialReportByMailData = {
     body: FinancialReportEmailRequest;
@@ -14927,10 +14936,11 @@ export type InvoicesSetPaymentUrlData = {
 };
 
 export type InvoicesSetPaymentUrlResponses = {
-    200: PaymentUrl;
+    /**
+     * No response body
+     */
+    200: unknown;
 };
-
-export type InvoicesSetPaymentUrlResponse = InvoicesSetPaymentUrlResponses[keyof InvoicesSetPaymentUrlResponses];
 
 export type InvoicesSetReferenceNumberData = {
     body?: ReferenceNumberRequest;
