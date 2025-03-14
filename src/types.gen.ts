@@ -14793,7 +14793,23 @@ export type InvoiceItemsProjectCostsForPeriodRetrieveResponse = InvoiceItemsProj
 export type InvoiceItemsTotalPriceRetrieveData = {
     body?: never;
     path?: never;
-    query?: never;
+    query?: {
+        credit_uuid?: string;
+        customer_uuid?: string;
+        month?: number;
+        offering_uuid?: string;
+        project_uuid?: string;
+        resource_uuid?: string;
+        /**
+         * Start month
+         */
+        start_month?: number;
+        /**
+         * Start year
+         */
+        start_year?: number;
+        year?: number;
+    };
     url: '/api/invoice-items/total_price/';
 };
 
