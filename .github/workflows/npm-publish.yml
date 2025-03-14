@@ -1,8 +1,11 @@
-name: Node.js Package
+name: Publish NPM package (Dev)
 
 on:
-  release:
-    types: [created]
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - '**.md'
 
 jobs:
   publish-npm:
@@ -13,6 +16,16 @@ jobs:
         with:
           node-version: 20
           registry-url: https://registry.npmjs.org/
-      - run: npm publish
+
+      - name: Build package
+        run: npm run build
+
+      - name: Configure Git
+        run: |
+          git config --global user.name 'GitHub Actions'
+          git config --global user.email 'github-actions@github.com'
+
+      - run: npm version prerelease --preid=dev
+      - run: npm publish --tag dev
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
