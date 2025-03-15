@@ -33,6 +33,12 @@ jobs:
       - name: Generate version
         run: npm version prerelease --preid=dev
 
+      - name: Commit changes
+        run: |
+          git add package.json package-lock.json
+          git commit -m "Bump version"
+          git push
+
       - name: Publish package
         run: npm publish --tag dev
         env:
