@@ -3312,6 +3312,7 @@ export type MergedSecretOptions = {
      * OpenStack IPv4 external IP mapping
      */
     ipv4_external_ip_mapping?: Array<IpMapping>;
+    openstack_api_tls_certificate?: string;
     /**
      * GLAuth shared user password
      */
@@ -3371,6 +3372,7 @@ export type MergedSecretOptionsRequest = {
      * OpenStack IPv4 external IP mapping
      */
     ipv4_external_ip_mapping?: Array<IpMappingRequest>;
+    openstack_api_tls_certificate?: string;
     /**
      * GLAuth shared user password
      */
