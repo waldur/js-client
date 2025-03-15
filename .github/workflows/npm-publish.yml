@@ -31,12 +31,8 @@ jobs:
           git config --global user.email 'github-actions@github.com'
 
       - name: Generate version
-        run: npm version prerelease --preid=dev
-
-      - name: Commit changes
         run: |
-          git add package.json package-lock.json
-          git commit -m "Bump version"
+          npm version prerelease --preid=dev
           git push
 
       - name: Publish package
