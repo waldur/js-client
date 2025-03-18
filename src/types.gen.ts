@@ -14897,6 +14897,30 @@ export type InvoicesRetrieveResponses = {
 
 export type InvoicesRetrieveResponse = InvoicesRetrieveResponses[keyof InvoicesRetrieveResponses];
 
+export type InvoicesItemsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * Conceal compensation items
+         */
+        conceal_compensation_items?: boolean;
+        offering_uuid?: string;
+        project_uuid?: string;
+        provider_uuid?: string;
+        query?: string;
+    };
+    url: '/api/invoices/{uuid}/items/';
+};
+
+export type InvoicesItemsRetrieveResponses = {
+    200: InvoiceItem;
+};
+
+export type InvoicesItemsRetrieveResponse = InvoicesItemsRetrieveResponses[keyof InvoicesItemsRetrieveResponses];
+
 export type InvoicesPaidData = {
     body: PaidRequest;
     path: {
