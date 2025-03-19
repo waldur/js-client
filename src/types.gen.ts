@@ -25439,6 +25439,10 @@ export type ProjectsListData = {
          * Return a list of projects where current user is manager or a customer owner.
          */
         can_manage?: boolean;
+        /**
+         * Conceal ended projects
+         */
+        conceal_ended_projects?: boolean;
         created?: string;
         /**
          * Multiple values may be separated by commas.
@@ -25616,6 +25620,10 @@ export type ProjectsListUsersListData = {
          * Return a list of projects where current user is manager or a customer owner.
          */
         can_manage?: boolean;
+        /**
+         * Conceal ended projects
+         */
+        conceal_ended_projects?: boolean;
         created?: string;
         /**
          * Multiple values may be separated by commas.
