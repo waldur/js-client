@@ -14191,6 +14191,9 @@ export const rancherProjectsRetrieve = <ThrowOnError extends boolean = false>(op
     });
 };
 
+/**
+ * Returns project's secrets.
+ */
 export const rancherProjectsSecretsRetrieve = <ThrowOnError extends boolean = false>(options: Options<RancherProjectsSecretsRetrieveData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).get<RancherProjectsSecretsRetrieveResponse, unknown, ThrowOnError>({
         security: [
