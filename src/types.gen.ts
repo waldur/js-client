@@ -6923,6 +6923,8 @@ export type Proposal = {
     state: ProposalStates;
     readonly approved_by: string | null;
     readonly created_by: string | null;
+    readonly created_by_name: string;
+    readonly created_by_uuid: string;
     /**
      * Duration in days after provisioning of resources.
      */
