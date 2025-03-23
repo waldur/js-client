@@ -16589,6 +16589,26 @@ export type MarketplaceOfferingPermissionsListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Role name contains
+         */
+        role_name?: string;
+        /**
+         * Role UUID
+         */
+        role_uuid?: string;
+        /**
+         * Scope name
+         */
+        scope_name?: string;
+        /**
+         * Scope type
+         */
+        scope_type?: string;
+        /**
+         * Scope UUID
+         */
+        scope_uuid?: string;
         user?: string;
         /**
          * User slug contains
@@ -16631,6 +16651,26 @@ export type MarketplaceOfferingPermissionsLogListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Role name contains
+         */
+        role_name?: string;
+        /**
+         * Role UUID
+         */
+        role_uuid?: string;
+        /**
+         * Scope name
+         */
+        scope_name?: string;
+        /**
+         * Scope type
+         */
+        scope_type?: string;
+        /**
+         * Scope UUID
+         */
+        scope_uuid?: string;
         user?: string;
         /**
          * User slug contains
@@ -30402,6 +30442,26 @@ export type UserPermissionsListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Role name contains
+         */
+        role_name?: string;
+        /**
+         * Role UUID
+         */
+        role_uuid?: string;
+        /**
+         * Scope name
+         */
+        scope_name?: string;
+        /**
+         * Scope type
+         */
+        scope_type?: string;
+        /**
+         * Scope UUID
+         */
+        scope_uuid?: string;
         user?: string;
         /**
          * User slug contains
