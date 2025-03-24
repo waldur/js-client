@@ -16,13 +16,13 @@ export type AccessSubnetRequest = {
 export type AccountNameGenerationPolicyEnum = 'project_slug';
 
 export type AdminAnnouncement = {
-    readonly uuid: string;
+    readonly uuid?: string;
     description?: string;
-    active_from: string;
-    active_to: string;
-    readonly is_active: boolean;
+    active_from?: string;
+    active_to?: string;
+    readonly is_active?: boolean;
     type?: AdminAnnouncementTypeEnum;
-    readonly created: string;
+    readonly created?: string;
 };
 
 export type AdminAnnouncementRequest = {
@@ -54,17 +54,17 @@ export type AnswerSubmitRequest = {
 };
 
 export type Attachment = {
-    readonly url: string;
-    readonly uuid: string;
-    issue: string;
-    readonly issue_key: string;
-    readonly created: string;
-    file: string;
-    readonly mime_type: string;
-    readonly file_size: number;
-    readonly file_name: string;
-    readonly backend_id: string;
-    readonly destroy_is_available: boolean;
+    readonly url?: string;
+    readonly uuid?: string;
+    issue?: string;
+    readonly issue_key?: string;
+    readonly created?: string;
+    file?: string;
+    readonly mime_type?: string;
+    readonly file_size?: number;
+    readonly file_name?: string;
+    readonly backend_id?: string;
+    readonly destroy_is_available?: boolean;
 };
 
 export type AttachmentRequest = {
@@ -129,72 +129,72 @@ export type AwsImage = {
 };
 
 export type AwsInstance = {
-    readonly url: string;
-    readonly uuid: string;
-    name: string;
+    readonly url?: string;
+    readonly uuid?: string;
+    name?: string;
     description?: string;
-    readonly service_name: string;
-    service_settings: string;
-    readonly service_settings_uuid: string;
-    readonly service_settings_state: string;
-    readonly service_settings_error_message: string;
-    project: string;
-    readonly project_name: string;
-    readonly project_uuid: string;
-    readonly customer: string;
-    readonly customer_name: string;
-    readonly customer_native_name: string;
-    readonly customer_abbreviation: string;
-    readonly error_message: string;
-    readonly error_traceback: string;
-    readonly resource_type: string;
-    state: CoreStates;
-    readonly created: string;
-    readonly modified: string;
-    readonly backend_id: string;
-    readonly access_url: string | null;
-    readonly start_time: string | null;
+    readonly service_name?: string;
+    service_settings?: string;
+    readonly service_settings_uuid?: string;
+    readonly service_settings_state?: string;
+    readonly service_settings_error_message?: string;
+    project?: string;
+    readonly project_name?: string;
+    readonly project_uuid?: string;
+    readonly customer?: string;
+    readonly customer_name?: string;
+    readonly customer_native_name?: string;
+    readonly customer_abbreviation?: string;
+    readonly error_message?: string;
+    readonly error_traceback?: string;
+    readonly resource_type?: string;
+    state?: CoreStates;
+    readonly created?: string;
+    readonly modified?: string;
+    readonly backend_id?: string;
+    readonly access_url?: string | null;
+    readonly start_time?: string | null;
     /**
      * Number of cores in a VM
      */
-    readonly cores: number;
+    readonly cores?: number;
     /**
      * Memory size in MiB
      */
-    readonly ram: number;
+    readonly ram?: number;
     /**
      * Disk size in MiB
      */
-    readonly disk: number;
+    readonly disk?: number;
     /**
      * Minimum memory size in MiB
      */
-    readonly min_ram: number;
+    readonly min_ram?: number;
     /**
      * Minimum disk size in MiB
      */
-    readonly min_disk: number;
+    readonly min_disk?: number;
     /**
      * Additional data that will be added to instance on provisioning
      */
     user_data?: string;
-    readonly external_ips: Array<string>;
-    readonly internal_ips: Array<string>;
-    readonly latitude: number | null;
-    readonly longitude: number | null;
-    readonly key_name: string;
-    readonly key_fingerprint: string;
-    readonly image_name: string;
-    readonly marketplace_offering_uuid: string;
-    readonly marketplace_offering_name: string;
-    readonly marketplace_offering_plugin_options: {};
-    readonly marketplace_category_uuid: string;
-    readonly marketplace_category_name: string;
-    readonly marketplace_resource_uuid: string;
-    readonly marketplace_plan_uuid: string;
-    readonly marketplace_resource_state: string;
-    readonly is_usage_based: boolean;
-    readonly is_limit_based: boolean;
+    readonly external_ips?: Array<string>;
+    readonly internal_ips?: Array<string>;
+    readonly latitude?: number | null;
+    readonly longitude?: number | null;
+    readonly key_name?: string;
+    readonly key_fingerprint?: string;
+    readonly image_name?: string;
+    readonly marketplace_offering_uuid?: string;
+    readonly marketplace_offering_name?: string;
+    readonly marketplace_offering_plugin_options?: {};
+    readonly marketplace_category_uuid?: string;
+    readonly marketplace_category_name?: string;
+    readonly marketplace_resource_uuid?: string;
+    readonly marketplace_plan_uuid?: string;
+    readonly marketplace_resource_state?: string;
+    readonly is_usage_based?: boolean;
+    readonly is_limit_based?: boolean;
 };
 
 export type AwsInstanceRequest = {
@@ -247,48 +247,48 @@ export type AwsSize = {
 };
 
 export type AwsVolume = {
-    readonly url: string;
-    readonly uuid: string;
-    name: string;
+    readonly url?: string;
+    readonly uuid?: string;
+    name?: string;
     description?: string;
-    readonly service_name: string;
-    service_settings: string;
-    readonly service_settings_uuid: string;
-    readonly service_settings_state: string;
-    readonly service_settings_error_message: string;
-    project: string;
-    readonly project_name: string;
-    readonly project_uuid: string;
-    readonly customer: string;
-    readonly customer_name: string;
-    readonly customer_native_name: string;
-    readonly customer_abbreviation: string;
-    readonly error_message: string;
-    readonly error_traceback: string;
-    readonly resource_type: string;
-    state: CoreStates;
-    readonly created: string;
-    readonly modified: string;
-    readonly backend_id: string;
-    readonly access_url: string | null;
+    readonly service_name?: string;
+    service_settings?: string;
+    readonly service_settings_uuid?: string;
+    readonly service_settings_state?: string;
+    readonly service_settings_error_message?: string;
+    project?: string;
+    readonly project_name?: string;
+    readonly project_uuid?: string;
+    readonly customer?: string;
+    readonly customer_name?: string;
+    readonly customer_native_name?: string;
+    readonly customer_abbreviation?: string;
+    readonly error_message?: string;
+    readonly error_traceback?: string;
+    readonly resource_type?: string;
+    state?: CoreStates;
+    readonly created?: string;
+    readonly modified?: string;
+    readonly backend_id?: string;
+    readonly access_url?: string | null;
     /**
      * Size of volume in gigabytes
      */
-    size: number;
-    volume_type: VolumeTypeEnum;
-    readonly device: string | null;
-    readonly instance: string | null;
-    readonly runtime_state: string;
-    readonly marketplace_offering_uuid: string;
-    readonly marketplace_offering_name: string;
-    readonly marketplace_offering_plugin_options: {};
-    readonly marketplace_category_uuid: string;
-    readonly marketplace_category_name: string;
-    readonly marketplace_resource_uuid: string;
-    readonly marketplace_plan_uuid: string;
-    readonly marketplace_resource_state: string;
-    readonly is_usage_based: boolean;
-    readonly is_limit_based: boolean;
+    size?: number;
+    volume_type?: VolumeTypeEnum;
+    readonly device?: string | null;
+    readonly instance?: string | null;
+    readonly runtime_state?: string;
+    readonly marketplace_offering_uuid?: string;
+    readonly marketplace_offering_name?: string;
+    readonly marketplace_offering_plugin_options?: {};
+    readonly marketplace_category_uuid?: string;
+    readonly marketplace_category_name?: string;
+    readonly marketplace_resource_uuid?: string;
+    readonly marketplace_plan_uuid?: string;
+    readonly marketplace_resource_state?: string;
+    readonly is_usage_based?: boolean;
+    readonly is_limit_based?: boolean;
 };
 
 export type AwsVolumeAttach = {
@@ -338,42 +338,42 @@ export type AzureLocation = {
 };
 
 export type AzurePublicIp = {
-    readonly url: string;
-    readonly uuid: string;
-    name: string;
+    readonly url?: string;
+    readonly uuid?: string;
+    name?: string;
     description?: string;
-    readonly service_name: string;
-    service_settings: string;
-    readonly service_settings_uuid: string;
-    readonly service_settings_state: string;
-    readonly service_settings_error_message: string;
-    project: string;
-    readonly project_name: string;
-    readonly project_uuid: string;
-    readonly customer: string;
-    readonly customer_name: string;
-    readonly customer_native_name: string;
-    readonly customer_abbreviation: string;
-    readonly error_message: string;
-    readonly error_traceback: string;
-    readonly resource_type: string;
-    state: CoreStates;
-    readonly created: string;
-    readonly modified: string;
-    readonly backend_id: string;
-    readonly access_url: string | null;
-    location: string;
-    resource_group: string;
-    readonly marketplace_offering_uuid: string;
-    readonly marketplace_offering_name: string;
-    readonly marketplace_offering_plugin_options: {};
-    readonly marketplace_category_uuid: string;
-    readonly marketplace_category_name: string;
-    readonly marketplace_resource_uuid: string;
-    readonly marketplace_plan_uuid: string;
-    readonly marketplace_resource_state: string;
-    readonly is_usage_based: boolean;
-    readonly is_limit_based: boolean;
+    readonly service_name?: string;
+    service_settings?: string;
+    readonly service_settings_uuid?: string;
+    readonly service_settings_state?: string;
+    readonly service_settings_error_message?: string;
+    project?: string;
+    readonly project_name?: string;
+    readonly project_uuid?: string;
+    readonly customer?: string;
+    readonly customer_name?: string;
+    readonly customer_native_name?: string;
+    readonly customer_abbreviation?: string;
+    readonly error_message?: string;
+    readonly error_traceback?: string;
+    readonly resource_type?: string;
+    state?: CoreStates;
+    readonly created?: string;
+    readonly modified?: string;
+    readonly backend_id?: string;
+    readonly access_url?: string | null;
+    location?: string;
+    resource_group?: string;
+    readonly marketplace_offering_uuid?: string;
+    readonly marketplace_offering_name?: string;
+    readonly marketplace_offering_plugin_options?: {};
+    readonly marketplace_category_uuid?: string;
+    readonly marketplace_category_name?: string;
+    readonly marketplace_resource_uuid?: string;
+    readonly marketplace_plan_uuid?: string;
+    readonly marketplace_resource_state?: string;
+    readonly is_usage_based?: boolean;
+    readonly is_limit_based?: boolean;
 };
 
 export type AzurePublicIpRequest = {
@@ -386,41 +386,41 @@ export type AzurePublicIpRequest = {
 };
 
 export type AzureResourceGroup = {
-    readonly url: string;
-    readonly uuid: string;
-    name: string;
+    readonly url?: string;
+    readonly uuid?: string;
+    name?: string;
     description?: string;
-    readonly service_name: string;
-    service_settings: string;
-    readonly service_settings_uuid: string;
-    readonly service_settings_state: string;
-    readonly service_settings_error_message: string;
-    project: string;
-    readonly project_name: string;
-    readonly project_uuid: string;
-    readonly customer: string;
-    readonly customer_name: string;
-    readonly customer_native_name: string;
-    readonly customer_abbreviation: string;
-    readonly error_message: string;
-    readonly error_traceback: string;
-    readonly resource_type: string;
-    state: CoreStates;
-    readonly created: string;
-    readonly modified: string;
-    readonly backend_id: string;
-    readonly access_url: string | null;
-    location: string;
-    readonly marketplace_offering_uuid: string;
-    readonly marketplace_offering_name: string;
-    readonly marketplace_offering_plugin_options: {};
-    readonly marketplace_category_uuid: string;
-    readonly marketplace_category_name: string;
-    readonly marketplace_resource_uuid: string;
-    readonly marketplace_plan_uuid: string;
-    readonly marketplace_resource_state: string;
-    readonly is_usage_based: boolean;
-    readonly is_limit_based: boolean;
+    readonly service_name?: string;
+    service_settings?: string;
+    readonly service_settings_uuid?: string;
+    readonly service_settings_state?: string;
+    readonly service_settings_error_message?: string;
+    project?: string;
+    readonly project_name?: string;
+    readonly project_uuid?: string;
+    readonly customer?: string;
+    readonly customer_name?: string;
+    readonly customer_native_name?: string;
+    readonly customer_abbreviation?: string;
+    readonly error_message?: string;
+    readonly error_traceback?: string;
+    readonly resource_type?: string;
+    state?: CoreStates;
+    readonly created?: string;
+    readonly modified?: string;
+    readonly backend_id?: string;
+    readonly access_url?: string | null;
+    location?: string;
+    readonly marketplace_offering_uuid?: string;
+    readonly marketplace_offering_name?: string;
+    readonly marketplace_offering_plugin_options?: {};
+    readonly marketplace_category_uuid?: string;
+    readonly marketplace_category_name?: string;
+    readonly marketplace_resource_uuid?: string;
+    readonly marketplace_plan_uuid?: string;
+    readonly marketplace_resource_state?: string;
+    readonly is_usage_based?: boolean;
+    readonly is_limit_based?: boolean;
 };
 
 export type AzureSize = {
@@ -435,48 +435,48 @@ export type AzureSize = {
 };
 
 export type AzureSqlDatabase = {
-    readonly url: string;
-    readonly uuid: string;
-    name: string;
+    readonly url?: string;
+    readonly uuid?: string;
+    name?: string;
     description?: string;
-    readonly service_name: string;
-    service_settings: string;
-    readonly service_settings_uuid: string;
-    readonly service_settings_state: string;
-    readonly service_settings_error_message: string;
-    project: string;
-    readonly project_name: string;
-    readonly project_uuid: string;
-    readonly customer: string;
-    readonly customer_name: string;
-    readonly customer_native_name: string;
-    readonly customer_abbreviation: string;
-    readonly error_message: string;
-    readonly error_traceback: string;
-    readonly resource_type: string;
-    state: CoreStates;
-    readonly created: string;
-    readonly modified: string;
-    readonly backend_id: string;
-    readonly access_url: string | null;
-    server: string;
+    readonly service_name?: string;
+    service_settings?: string;
+    readonly service_settings_uuid?: string;
+    readonly service_settings_state?: string;
+    readonly service_settings_error_message?: string;
+    project?: string;
+    readonly project_name?: string;
+    readonly project_uuid?: string;
+    readonly customer?: string;
+    readonly customer_name?: string;
+    readonly customer_native_name?: string;
+    readonly customer_abbreviation?: string;
+    readonly error_message?: string;
+    readonly error_traceback?: string;
+    readonly resource_type?: string;
+    state?: CoreStates;
+    readonly created?: string;
+    readonly modified?: string;
+    readonly backend_id?: string;
+    readonly access_url?: string | null;
+    server?: string;
     charset?: string | null;
     collation?: string | null;
-    readonly resource_group_name: string;
-    readonly location_name: string;
-    readonly server_name: string;
-    readonly server_uuid: string;
-    readonly server_marketplace_uuid: string;
-    readonly marketplace_offering_uuid: string;
-    readonly marketplace_offering_name: string;
-    readonly marketplace_offering_plugin_options: {};
-    readonly marketplace_category_uuid: string;
-    readonly marketplace_category_name: string;
-    readonly marketplace_resource_uuid: string;
-    readonly marketplace_plan_uuid: string;
-    readonly marketplace_resource_state: string;
-    readonly is_usage_based: boolean;
-    readonly is_limit_based: boolean;
+    readonly resource_group_name?: string;
+    readonly location_name?: string;
+    readonly server_name?: string;
+    readonly server_uuid?: string;
+    readonly server_marketplace_uuid?: string;
+    readonly marketplace_offering_uuid?: string;
+    readonly marketplace_offering_name?: string;
+    readonly marketplace_offering_plugin_options?: {};
+    readonly marketplace_category_uuid?: string;
+    readonly marketplace_category_name?: string;
+    readonly marketplace_resource_uuid?: string;
+    readonly marketplace_plan_uuid?: string;
+    readonly marketplace_resource_state?: string;
+    readonly is_usage_based?: boolean;
+    readonly is_limit_based?: boolean;
 };
 
 export type AzureSqlDatabaseCreate = {
@@ -500,47 +500,47 @@ export type AzureSqlDatabaseRequest = {
 };
 
 export type AzureSqlServer = {
-    readonly url: string;
-    readonly uuid: string;
-    name: string;
+    readonly url?: string;
+    readonly uuid?: string;
+    name?: string;
     description?: string;
-    readonly service_name: string;
-    service_settings: string;
-    readonly service_settings_uuid: string;
-    readonly service_settings_state: string;
-    readonly service_settings_error_message: string;
-    project: string;
-    readonly project_name: string;
-    readonly project_uuid: string;
-    readonly customer: string;
-    readonly customer_name: string;
-    readonly customer_native_name: string;
-    readonly customer_abbreviation: string;
-    readonly error_message: string;
-    readonly error_traceback: string;
-    readonly resource_type: string;
-    state: CoreStates;
-    readonly created: string;
-    readonly modified: string;
-    readonly backend_id: string;
-    readonly access_url: string | null;
-    readonly resource_group: string;
-    readonly username: string;
-    readonly password: string;
+    readonly service_name?: string;
+    service_settings?: string;
+    readonly service_settings_uuid?: string;
+    readonly service_settings_state?: string;
+    readonly service_settings_error_message?: string;
+    project?: string;
+    readonly project_name?: string;
+    readonly project_uuid?: string;
+    readonly customer?: string;
+    readonly customer_name?: string;
+    readonly customer_native_name?: string;
+    readonly customer_abbreviation?: string;
+    readonly error_message?: string;
+    readonly error_traceback?: string;
+    readonly resource_type?: string;
+    state?: CoreStates;
+    readonly created?: string;
+    readonly modified?: string;
+    readonly backend_id?: string;
+    readonly access_url?: string | null;
+    readonly resource_group?: string;
+    readonly username?: string;
+    readonly password?: string;
     storage_mb?: number | null;
-    readonly fqdn: string | null;
-    readonly resource_group_name: string;
-    readonly location_name: string;
-    readonly marketplace_offering_uuid: string;
-    readonly marketplace_offering_name: string;
-    readonly marketplace_offering_plugin_options: {};
-    readonly marketplace_category_uuid: string;
-    readonly marketplace_category_name: string;
-    readonly marketplace_resource_uuid: string;
-    readonly marketplace_plan_uuid: string;
-    readonly marketplace_resource_state: string;
-    readonly is_usage_based: boolean;
-    readonly is_limit_based: boolean;
+    readonly fqdn?: string | null;
+    readonly resource_group_name?: string;
+    readonly location_name?: string;
+    readonly marketplace_offering_uuid?: string;
+    readonly marketplace_offering_name?: string;
+    readonly marketplace_offering_plugin_options?: {};
+    readonly marketplace_category_uuid?: string;
+    readonly marketplace_category_name?: string;
+    readonly marketplace_resource_uuid?: string;
+    readonly marketplace_plan_uuid?: string;
+    readonly marketplace_resource_state?: string;
+    readonly is_usage_based?: boolean;
+    readonly is_limit_based?: boolean;
 };
 
 export type AzureSqlServerRequest = {
@@ -553,81 +553,81 @@ export type AzureSqlServerRequest = {
 };
 
 export type AzureVirtualMachine = {
-    readonly url: string;
-    readonly uuid: string;
-    name: string;
+    readonly url?: string;
+    readonly uuid?: string;
+    name?: string;
     description?: string;
-    readonly service_name: string;
-    service_settings: string;
-    readonly service_settings_uuid: string;
-    readonly service_settings_state: string;
-    readonly service_settings_error_message: string;
-    project: string;
-    readonly project_name: string;
-    readonly project_uuid: string;
-    readonly customer: string;
-    readonly customer_name: string;
-    readonly customer_native_name: string;
-    readonly customer_abbreviation: string;
-    readonly error_message: string;
-    readonly error_traceback: string;
-    readonly resource_type: string;
-    state: CoreStates;
-    readonly created: string;
-    readonly modified: string;
-    readonly backend_id: string;
-    readonly access_url: string | null;
-    readonly start_time: string | null;
+    readonly service_name?: string;
+    service_settings?: string;
+    readonly service_settings_uuid?: string;
+    readonly service_settings_state?: string;
+    readonly service_settings_error_message?: string;
+    project?: string;
+    readonly project_name?: string;
+    readonly project_uuid?: string;
+    readonly customer?: string;
+    readonly customer_name?: string;
+    readonly customer_native_name?: string;
+    readonly customer_abbreviation?: string;
+    readonly error_message?: string;
+    readonly error_traceback?: string;
+    readonly resource_type?: string;
+    state?: CoreStates;
+    readonly created?: string;
+    readonly modified?: string;
+    readonly backend_id?: string;
+    readonly access_url?: string | null;
+    readonly start_time?: string | null;
     /**
      * Number of cores in a VM
      */
-    readonly cores: number;
+    readonly cores?: number;
     /**
      * Memory size in MiB
      */
-    readonly ram: number;
+    readonly ram?: number;
     /**
      * Disk size in MiB
      */
-    readonly disk: number;
+    readonly disk?: number;
     /**
      * Minimum memory size in MiB
      */
-    readonly min_ram: number;
+    readonly min_ram?: number;
     /**
      * Minimum disk size in MiB
      */
-    readonly min_disk: number;
+    readonly min_disk?: number;
     /**
      * Additional data that will be added to instance on provisioning
      */
     user_data?: string;
-    readonly external_ips: Array<string>;
-    readonly internal_ips: Array<string>;
-    readonly latitude: number | null;
-    readonly longitude: number | null;
-    readonly key_name: string;
-    readonly key_fingerprint: string;
-    readonly image_name: string;
-    image: string;
-    size: string;
-    readonly runtime_state: string;
-    readonly resource_group: string;
-    readonly username: string;
-    readonly password: string;
-    readonly resource_group_name: string;
-    readonly location_name: string;
-    readonly size_name: string;
-    readonly marketplace_offering_uuid: string;
-    readonly marketplace_offering_name: string;
-    readonly marketplace_offering_plugin_options: {};
-    readonly marketplace_category_uuid: string;
-    readonly marketplace_category_name: string;
-    readonly marketplace_resource_uuid: string;
-    readonly marketplace_plan_uuid: string;
-    readonly marketplace_resource_state: string;
-    readonly is_usage_based: boolean;
-    readonly is_limit_based: boolean;
+    readonly external_ips?: Array<string>;
+    readonly internal_ips?: Array<string>;
+    readonly latitude?: number | null;
+    readonly longitude?: number | null;
+    readonly key_name?: string;
+    readonly key_fingerprint?: string;
+    readonly image_name?: string;
+    image?: string;
+    size?: string;
+    readonly runtime_state?: string;
+    readonly resource_group?: string;
+    readonly username?: string;
+    readonly password?: string;
+    readonly resource_group_name?: string;
+    readonly location_name?: string;
+    readonly size_name?: string;
+    readonly marketplace_offering_uuid?: string;
+    readonly marketplace_offering_name?: string;
+    readonly marketplace_offering_plugin_options?: {};
+    readonly marketplace_category_uuid?: string;
+    readonly marketplace_category_name?: string;
+    readonly marketplace_resource_uuid?: string;
+    readonly marketplace_plan_uuid?: string;
+    readonly marketplace_resource_state?: string;
+    readonly is_usage_based?: boolean;
+    readonly is_limit_based?: boolean;
 };
 
 export type AzureVirtualMachineRequest = {
@@ -650,10 +650,10 @@ export type BackendIdRequest = {
 };
 
 export type BackendMetadata = {
-    readonly state: string;
-    readonly runtime_state: string;
-    readonly action: string;
-    readonly instance_name: string | null;
+    readonly state?: string;
+    readonly runtime_state?: string;
+    readonly action?: string;
+    readonly instance_name?: string | null;
 };
 
 export type BaseComponentUsage = {
@@ -681,9 +681,9 @@ export type BaseComponentUsage = {
 };
 
 export type BaseProviderPlan = {
-    readonly url: string;
-    readonly uuid: string;
-    name: string;
+    readonly url?: string;
+    readonly uuid?: string;
+    name?: string;
     description?: string;
     article_code?: string;
     /**
@@ -694,25 +694,25 @@ export type BaseProviderPlan = {
      * Forbids creation of new resources.
      */
     archived?: boolean;
-    readonly is_active: boolean;
+    readonly is_active?: boolean;
     unit_price?: string;
     unit?: BillingUnit;
-    readonly init_price: number;
-    readonly switch_price: number;
+    readonly init_price?: number;
+    readonly switch_price?: number;
     backend_id?: string;
-    readonly organization_groups: Array<OrganizationGroup>;
-    readonly prices: {
+    readonly organization_groups?: Array<OrganizationGroup>;
+    readonly prices?: {
         [key: string]: number;
     };
-    readonly future_prices: {
+    readonly future_prices?: {
         [key: string]: number;
     };
-    readonly quotas: {
+    readonly quotas?: {
         [key: string]: number;
     };
-    readonly resources_count: number;
-    readonly plan_type: string;
-    readonly minimal_price: number;
+    readonly resources_count?: number;
+    readonly plan_type?: string;
+    readonly minimal_price?: number;
 };
 
 export type BaseProviderPlanRequest = {
@@ -733,9 +733,9 @@ export type BaseProviderPlanRequest = {
 };
 
 export type BasePublicPlan = {
-    url: string;
-    readonly uuid: string;
-    name: string;
+    url?: string;
+    readonly uuid?: string;
+    name?: string;
     description?: string;
     article_code?: string;
     /**
@@ -746,25 +746,25 @@ export type BasePublicPlan = {
      * Forbids creation of new resources.
      */
     archived?: boolean;
-    readonly is_active: boolean;
+    readonly is_active?: boolean;
     unit_price?: string;
     unit?: BillingUnit;
-    readonly init_price: number;
-    readonly switch_price: number;
+    readonly init_price?: number;
+    readonly switch_price?: number;
     backend_id?: string;
-    readonly organization_groups: Array<OrganizationGroup>;
-    readonly prices: {
+    readonly organization_groups?: Array<OrganizationGroup>;
+    readonly prices?: {
         [key: string]: number;
     };
-    readonly future_prices: {
+    readonly future_prices?: {
         [key: string]: number;
     };
-    readonly quotas: {
+    readonly quotas?: {
         [key: string]: number;
     };
-    readonly resources_count: number;
-    readonly plan_type: string;
-    readonly minimal_price: number;
+    readonly resources_count?: number;
+    readonly plan_type?: string;
+    readonly minimal_price?: number;
 };
 
 export type BasePublicPlanRequest = {
@@ -816,125 +816,125 @@ export type Booking = {
 };
 
 export type BookingResource = {
-    offering: string;
-    readonly offering_name: string;
-    readonly offering_uuid: string;
-    readonly offering_description: string;
-    readonly offering_image: string;
-    readonly offering_thumbnail: string;
-    readonly offering_type: string;
-    readonly offering_terms_of_service: string;
+    offering?: string;
+    readonly offering_name?: string;
+    readonly offering_uuid?: string;
+    readonly offering_description?: string;
+    readonly offering_image?: string;
+    readonly offering_thumbnail?: string;
+    readonly offering_type?: string;
+    readonly offering_terms_of_service?: string;
     /**
      * Accessible to all customers.
      */
-    readonly offering_shared: boolean;
+    readonly offering_shared?: boolean;
     /**
      * Purchase and usage is invoiced.
      */
-    readonly offering_billable: boolean;
+    readonly offering_billable?: boolean;
     /**
      * Public data used by specific plugin, such as storage mode for OpenStack.
      */
-    readonly offering_plugin_options: unknown;
-    readonly provider_name: string;
-    readonly provider_uuid: string;
-    readonly category_title: string;
-    readonly category_uuid: string;
-    readonly category_icon: string;
+    readonly offering_plugin_options?: unknown;
+    readonly provider_name?: string;
+    readonly provider_uuid?: string;
+    readonly category_title?: string;
+    readonly category_uuid?: string;
+    readonly category_icon?: string;
     plan?: string;
-    plan_unit: BillingUnit;
-    readonly plan_name: string;
-    readonly plan_uuid: string;
-    readonly plan_description: string;
-    readonly attributes: {};
-    readonly limits: {
+    plan_unit?: BillingUnit;
+    readonly plan_name?: string;
+    readonly plan_uuid?: string;
+    readonly plan_description?: string;
+    readonly attributes?: {};
+    readonly limits?: {
         [key: string]: number;
     };
-    readonly uuid: string;
-    readonly created: string;
-    readonly modified: string;
-    readonly url: string;
-    readonly scope: string;
-    readonly description: string;
-    state: ResourceState;
-    readonly resource_uuid: string;
-    readonly backend_id: string;
-    readonly effective_id: string;
-    readonly resource_type: string | null;
-    readonly project: string;
-    readonly project_uuid: string;
-    readonly project_name: string;
-    readonly project_description: string;
+    readonly uuid?: string;
+    readonly created?: string;
+    readonly modified?: string;
+    readonly url?: string;
+    readonly scope?: string;
+    readonly description?: string;
+    state?: ResourceState;
+    readonly resource_uuid?: string | null;
+    readonly backend_id?: string;
+    readonly effective_id?: string;
+    readonly resource_type?: string | null;
+    readonly project?: string;
+    readonly project_uuid?: string;
+    readonly project_name?: string;
+    readonly project_description?: string;
     /**
      * The date is inclusive. Once reached, all project resource will be scheduled for termination.
      */
-    readonly project_end_date: string | null;
-    readonly project_end_date_requested_by: string;
-    readonly customer_uuid: string;
-    readonly customer_name: string;
-    readonly parent_offering_uuid: string;
-    readonly parent_offering_name: string;
-    readonly parent_uuid: string;
-    readonly parent_name: string;
-    backend_metadata: BackendMetadata;
-    readonly is_usage_based: boolean;
-    readonly is_limit_based: boolean;
-    name: string;
-    readonly slug: string;
-    readonly current_usages: {
+    readonly project_end_date?: string | null;
+    readonly project_end_date_requested_by?: string;
+    readonly customer_uuid?: string;
+    readonly customer_name?: string;
+    readonly parent_offering_uuid?: string;
+    readonly parent_offering_name?: string;
+    readonly parent_uuid?: string;
+    readonly parent_name?: string;
+    backend_metadata?: BackendMetadata;
+    readonly is_usage_based?: boolean;
+    readonly is_limit_based?: boolean;
+    name?: string;
+    readonly slug?: string;
+    readonly current_usages?: {
         [key: string]: number;
     };
-    readonly can_terminate: boolean;
-    readonly report: Array<ReportSection>;
+    readonly can_terminate?: boolean;
+    readonly report?: Array<ReportSection>;
     /**
      * The date is inclusive. Once reached, a resource will be scheduled for termination.
      */
     end_date?: string | null;
-    readonly end_date_requested_by: string | null;
-    readonly username: string | null;
-    readonly limit_usage: number | null;
+    readonly end_date_requested_by?: string | null;
+    readonly username?: string | null;
+    readonly limit_usage?: number | null;
     downscaled?: boolean;
-    readonly restrict_member_access: boolean;
+    readonly restrict_member_access?: boolean;
     paused?: boolean;
-    readonly endpoints: Array<NestedEndpoint>;
-    readonly error_message: string;
-    readonly error_traceback: string;
-    readonly offering_customer_uuid: string;
-    readonly options: unknown;
-    readonly available_actions: Array<string>;
-    readonly last_sync: string;
-    order_in_progress: OrderDetails | null;
-    creation_order: OrderDetails | null;
-    readonly created_by: string;
+    readonly endpoints?: Array<NestedEndpoint>;
+    readonly error_message?: string;
+    readonly error_traceback?: string;
+    readonly offering_customer_uuid?: string;
+    readonly options?: unknown;
+    readonly available_actions?: Array<string>;
+    readonly last_sync?: string;
+    order_in_progress?: OrderDetails | null;
+    creation_order?: OrderDetails | null;
+    readonly created_by?: string;
     /**
      * Required. 128 characters or fewer. Lowercase letters, numbers and @/./+/-/_ characters
      */
-    readonly created_by_username: string;
-    readonly created_by_full_name: string;
-    readonly consumer_reviewed_by: string;
+    readonly created_by_username?: string;
+    readonly created_by_full_name?: string;
+    readonly consumer_reviewed_by?: string;
     /**
      * Required. 128 characters or fewer. Lowercase letters, numbers and @/./+/-/_ characters
      */
-    readonly consumer_reviewed_by_username: string;
-    readonly consumer_reviewed_by_full_name: string;
-    readonly slots: Array<BookingSlot>;
+    readonly consumer_reviewed_by_username?: string;
+    readonly consumer_reviewed_by_full_name?: string;
+    readonly slots?: Array<BookingSlot>;
 };
 
 export type BookingSlot = {
-    start: string;
-    end: string;
-    backend_id: string;
+    start?: string;
+    end?: string;
+    backend_id?: string;
 };
 
 export type BroadcastMessage = {
-    readonly uuid: string;
-    readonly created: string;
-    subject: string;
-    body: string;
-    query: unknown;
-    readonly author_full_name: string;
-    readonly emails: unknown;
-    state: BroadcastMessageStateEnum;
+    readonly uuid?: string;
+    readonly created?: string;
+    subject?: string;
+    body?: string;
+    query?: unknown;
+    readonly author_full_name?: string;
+    readonly emails?: unknown;
+    state?: BroadcastMessageStateEnum;
     send_at?: string | null;
 };
 
@@ -957,14 +957,14 @@ export type CallDetachDocumentsRequest = {
 };
 
 export type CallDocument = {
-    readonly uuid: string;
+    readonly uuid?: string;
     /**
      * Documentation for call for proposals.
      */
     file?: string | null;
-    readonly file_name: string;
+    readonly file_name?: string;
     description?: string;
-    readonly created: string;
+    readonly created?: string;
 };
 
 export type CallDocumentRequest = {
@@ -1128,11 +1128,11 @@ export type CategoryComponent = {
     /**
      * Unique internal name of the measured unit, for example floating_ip.
      */
-    type: string;
+    type?: string;
     /**
      * Display name for the measured unit, for example, Floating IP.
      */
-    name: string;
+    name?: string;
     description?: string;
     /**
      * Unit of measurement, for example, GB.
@@ -1160,21 +1160,21 @@ export type CategoryComponentUsage = {
     /**
      * Display name for the measured unit, for example, Floating IP.
      */
-    readonly name: string;
+    readonly name?: string;
     /**
      * Unique internal name of the measured unit, for example floating_ip.
      */
-    readonly type: string;
+    readonly type?: string;
     /**
      * Unit of measurement, for example, GB.
      */
-    readonly measured_unit: string;
-    readonly category_title: string;
-    readonly category_uuid: string;
-    date: string;
+    readonly measured_unit?: string;
+    readonly category_title?: string;
+    readonly category_uuid?: string;
+    date?: string;
     reported_usage?: number | null;
     fixed_usage?: number | null;
-    scope: string;
+    scope?: string;
 };
 
 export type CategoryComponents = {
@@ -1213,9 +1213,9 @@ export type CategoryComponentsRequest = {
 };
 
 export type CategoryGroup = {
-    readonly url: string;
-    readonly uuid: string;
-    title: string;
+    readonly url?: string;
+    readonly uuid?: string;
+    title?: string;
     description?: string;
     icon?: string | null;
 };
@@ -1228,7 +1228,7 @@ export type CategoryGroupRequest = {
 
 export type CategoryHelpArticle = {
     title?: string | null;
-    url: string;
+    url?: string;
 };
 
 export type CategoryHelpArticleRequest = {
@@ -1334,36 +1334,36 @@ export type ComponentStats = {
 };
 
 export type ComponentUsage = {
-    readonly uuid: string;
-    readonly created: string;
+    readonly uuid?: string;
+    readonly created?: string;
     description?: string;
     /**
      * Unique internal name of the measured unit, for example floating_ip.
      */
-    readonly type: string;
+    readonly type?: string;
     /**
      * Display name for the measured unit, for example, Floating IP.
      */
-    readonly name: string;
+    readonly name?: string;
     /**
      * Unit of measurement, for example, GB.
      */
-    readonly measured_unit: string;
-    readonly usage: number;
-    date: string;
+    readonly measured_unit?: string;
+    readonly usage?: number;
+    date?: string;
     /**
      * Reported value is reused every month until changed.
      */
     recurring?: boolean;
-    readonly resource_name: string;
-    readonly resource_uuid: string;
-    readonly offering_name: string;
-    readonly offering_uuid: string;
-    readonly project_name: string;
-    readonly project_uuid: string;
-    readonly customer_name: string;
-    readonly customer_uuid: string;
-    billing_period: string;
+    readonly resource_name?: string;
+    readonly resource_uuid?: string;
+    readonly offering_name?: string;
+    readonly offering_uuid?: string;
+    readonly project_name?: string;
+    readonly project_uuid?: string;
+    readonly customer_name?: string;
+    readonly customer_uuid?: string;
+    billing_period?: string;
     modified_by?: number | null;
 };
 
@@ -1394,33 +1394,33 @@ export type ComponentUsageItemRequest = {
 };
 
 export type ComponentUserUsage = {
-    readonly uuid: string;
-    user: string;
-    username: string;
-    component_usage: string;
-    readonly usage: number;
+    readonly uuid?: string;
+    user?: string;
+    username?: string;
+    component_usage?: string;
+    readonly usage?: number;
     /**
      * Unit of measurement, for example, GB.
      */
-    readonly measured_unit: string;
+    readonly measured_unit?: string;
     description?: string;
-    readonly created: string;
-    readonly modified: string;
+    readonly created?: string;
+    readonly modified?: string;
     backend_id?: string;
-    readonly resource_name: string;
-    readonly resource_uuid: string;
-    readonly offering_name: string;
-    readonly offering_uuid: string;
-    readonly project_name: string;
-    readonly project_uuid: string;
-    readonly customer_name: string;
-    readonly customer_uuid: string;
+    readonly resource_name?: string;
+    readonly resource_uuid?: string;
+    readonly offering_name?: string;
+    readonly offering_uuid?: string;
+    readonly project_name?: string;
+    readonly project_uuid?: string;
+    readonly customer_name?: string;
+    readonly customer_uuid?: string;
     /**
      * Unique internal name of the measured unit, for example floating_ip.
      */
-    readonly component_type: string;
-    readonly date: string;
-    readonly billing_period: string;
+    readonly component_type?: string;
+    readonly date?: string;
+    readonly billing_period?: string;
 };
 
 export type ComponentUserUsageCreate = {
@@ -1786,43 +1786,43 @@ export type CreateFeedbackRequest = {
 };
 
 export type Customer = {
-    readonly url: string;
-    readonly uuid: string;
-    readonly created: string;
-    readonly organization_groups: Array<OrganizationGroup>;
-    readonly display_name: string;
-    readonly projects: Array<PermissionProject>;
+    readonly url?: string;
+    readonly uuid?: string;
+    readonly created?: string;
+    readonly organization_groups?: Array<OrganizationGroup>;
+    readonly display_name?: string;
+    readonly projects?: Array<PermissionProject>;
     /**
      * Organization identifier in another application.
      */
     backend_id?: string;
     image?: string | null;
-    readonly blocked: boolean;
-    readonly archived: boolean;
-    readonly default_tax_percent: string;
-    readonly accounting_start_date: string;
-    readonly projects_count: number;
-    readonly users_count: number;
+    readonly blocked?: boolean;
+    readonly archived?: boolean;
+    readonly default_tax_percent?: string;
+    readonly accounting_start_date?: string;
+    readonly projects_count?: number;
+    readonly users_count?: number;
     /**
      * External ID of the sponsor covering the costs
      */
-    readonly sponsor_number: number | null;
-    readonly country_name: string;
-    name: string;
-    readonly slug: string;
+    readonly sponsor_number?: number | null;
+    readonly country_name?: string;
+    name?: string;
+    readonly slug?: string;
     native_name?: string;
     abbreviation?: string;
     contact_details?: string;
-    readonly agreement_number: string;
+    readonly agreement_number?: string;
     email?: string;
     phone_number?: string;
     /**
      * Enter a comma separated list of IPv4 or IPv6 CIDR addresses from where connection to self-service is allowed.
      */
-    readonly access_subnets: string;
+    readonly access_subnets?: string;
     registration_code?: string;
     homepage?: string;
-    readonly domain: string;
+    readonly domain?: string;
     /**
      * VAT number
      */
@@ -1834,13 +1834,13 @@ export type Customer = {
     longitude?: number | null;
     bank_account?: string;
     country?: CountryEnum | BlankEnum;
-    readonly payment_profiles: Array<PaymentProfile>;
-    readonly customer_credit: number | null;
-    readonly is_service_provider: boolean;
-    readonly service_provider: string;
-    readonly service_provider_uuid: string;
-    readonly call_managing_organization_uuid: string;
-    billing_price_estimate: NestedPriceEstimate;
+    readonly payment_profiles?: Array<PaymentProfile>;
+    readonly customer_credit?: number | null;
+    readonly is_service_provider?: boolean;
+    readonly service_provider?: string;
+    readonly service_provider_uuid?: string;
+    readonly call_managing_organization_uuid?: string;
+    billing_price_estimate?: NestedPriceEstimate;
 };
 
 export type CustomerChecklistStat = {
@@ -1879,10 +1879,10 @@ export type CustomerCreditRequest = {
 };
 
 export type CustomerDetails = {
-    name: string;
+    name?: string;
     address?: string;
     country?: string;
-    readonly country_name: string;
+    readonly country_name?: string;
     email?: string;
     postal?: string;
     phone_number?: string;
@@ -1998,18 +1998,18 @@ export type CustomerRequest = {
 };
 
 export type CustomerUser = {
-    readonly url: string;
-    readonly uuid: string;
+    readonly url?: string;
+    readonly uuid?: string;
     /**
      * Required. 128 characters or fewer. Lowercase letters, numbers and @/./+/-/_ characters
      */
-    username: string;
-    readonly full_name: string;
+    username?: string;
+    readonly full_name?: string;
     email?: string;
-    readonly role: string;
-    readonly role_name: string;
-    readonly projects: Array<NestedProjectPermission>;
-    readonly expiration_time: string;
+    readonly role?: string;
+    readonly role_name?: string;
+    readonly projects?: Array<NestedProjectPermission>;
+    readonly expiration_time?: string;
     image?: string | null;
 };
 
@@ -2036,102 +2036,75 @@ export type DetailState = {
     readonly state: string;
 };
 
-export type DetailedProviderUser = {
-    readonly uuid: string;
-    /**
-     * Required. 128 characters or fewer. Lowercase letters, numbers and @/./+/-/_ characters
-     */
-    username: string;
-    readonly full_name: string;
-    first_name?: string;
-    last_name?: string;
-    organization?: string;
-    email?: string;
-    phone_number?: string;
-    readonly projects_count: number;
-    /**
-     * Indicates what registration method was used.
-     */
-    registration_method?: string;
-    /**
-     * Person's affiliation within organization such as student, faculty, staff.
-     */
-    affiliations?: unknown;
-    /**
-     * Designates whether this user should be treated as active. Unselect this instead of deleting accounts.
-     */
-    is_active?: boolean;
-};
-
 export type DigitalOceanDroplet = {
-    readonly url: string;
-    readonly uuid: string;
-    name: string;
+    readonly url?: string;
+    readonly uuid?: string;
+    name?: string;
     description?: string;
-    readonly service_name: string;
-    service_settings: string;
-    readonly service_settings_uuid: string;
-    readonly service_settings_state: string;
-    readonly service_settings_error_message: string;
-    project: string;
-    readonly project_name: string;
-    readonly project_uuid: string;
-    readonly customer: string;
-    readonly customer_name: string;
-    readonly customer_native_name: string;
-    readonly customer_abbreviation: string;
-    readonly error_message: string;
-    readonly error_traceback: string;
-    readonly resource_type: string;
-    state: CoreStates;
-    readonly created: string;
-    readonly modified: string;
-    readonly backend_id: string;
-    readonly access_url: string | null;
-    readonly start_time: string | null;
+    readonly service_name?: string;
+    service_settings?: string;
+    readonly service_settings_uuid?: string;
+    readonly service_settings_state?: string;
+    readonly service_settings_error_message?: string;
+    project?: string;
+    readonly project_name?: string;
+    readonly project_uuid?: string;
+    readonly customer?: string;
+    readonly customer_name?: string;
+    readonly customer_native_name?: string;
+    readonly customer_abbreviation?: string;
+    readonly error_message?: string;
+    readonly error_traceback?: string;
+    readonly resource_type?: string;
+    state?: CoreStates;
+    readonly created?: string;
+    readonly modified?: string;
+    readonly backend_id?: string;
+    readonly access_url?: string | null;
+    readonly start_time?: string | null;
     /**
      * Number of cores in a VM
      */
-    readonly cores: number;
+    readonly cores?: number;
     /**
      * Memory size in MiB
      */
-    readonly ram: number;
+    readonly ram?: number;
     /**
      * Disk size in MiB
      */
-    readonly disk: number;
+    readonly disk?: number;
     /**
      * Minimum memory size in MiB
      */
-    readonly min_ram: number;
+    readonly min_ram?: number;
     /**
      * Minimum disk size in MiB
      */
-    readonly min_disk: number;
+    readonly min_disk?: number;
     /**
      * Additional data that will be added to instance on provisioning
      */
     user_data?: string;
-    readonly external_ips: Array<string>;
-    readonly internal_ips: Array<string>;
-    readonly latitude: number | null;
-    readonly longitude: number | null;
-    readonly key_name: string;
-    readonly key_fingerprint: string;
-    readonly image_name: string;
-    readonly runtime_state: string;
-    readonly region_name: string;
-    readonly marketplace_offering_uuid: string;
-    readonly marketplace_offering_name: string;
-    readonly marketplace_offering_plugin_options: {};
-    readonly marketplace_category_uuid: string;
-    readonly marketplace_category_name: string;
-    readonly marketplace_resource_uuid: string;
-    readonly marketplace_plan_uuid: string;
-    readonly marketplace_resource_state: string;
-    readonly is_usage_based: boolean;
-    readonly is_limit_based: boolean;
+    readonly external_ips?: Array<string>;
+    readonly internal_ips?: Array<string>;
+    readonly latitude?: number | null;
+    readonly longitude?: number | null;
+    readonly key_name?: string;
+    readonly key_fingerprint?: string;
+    readonly image_name?: string;
+    readonly runtime_state?: string;
+    readonly region_name?: string;
+    readonly marketplace_offering_uuid?: string;
+    readonly marketplace_offering_name?: string;
+    readonly marketplace_offering_plugin_options?: {};
+    readonly marketplace_category_uuid?: string;
+    readonly marketplace_category_name?: string;
+    readonly marketplace_resource_uuid?: string;
+    readonly marketplace_plan_uuid?: string;
+    readonly marketplace_resource_state?: string;
+    readonly is_usage_based?: boolean;
+    readonly is_limit_based?: boolean;
 };
 
 export type DigitalOceanDropletRequest = {
@@ -2271,11 +2244,11 @@ export type EndpointDeleteRequest = {
 export type EthertypeEnum = 'IPv4' | 'IPv6';
 
 export type Event = {
-    readonly uuid: string;
-    readonly created: string;
-    event_type: string;
-    message: string;
-    readonly context: unknown;
+    readonly uuid?: string;
+    readonly created?: string;
+    event_type?: string;
+    message?: string;
+    readonly context?: unknown;
 };
 
 export type EventGroupsEnum = 'access_subnets' | 'auth' | 'call' | 'credits' | 'customers' | 'invoices' | 'permissions' | 'projects' | 'proposal' | 'providers' | 'resources' | 'review' | 'ssh' | 'support' | 'users';
@@ -2350,42 +2323,42 @@ export type Fingerprint = {
 };
 
 export type FirecrestJob = {
-    readonly url: string;
-    readonly uuid: string;
-    name: string;
+    readonly url?: string;
+    readonly uuid?: string;
+    name?: string;
     description?: string;
-    readonly service_name: string;
-    service_settings: string;
-    readonly service_settings_uuid: string;
-    readonly service_settings_state: string;
-    readonly service_settings_error_message: string;
-    project: string;
-    readonly project_name: string;
-    readonly project_uuid: string;
-    readonly customer: string;
-    readonly customer_name: string;
-    readonly customer_native_name: string;
-    readonly customer_abbreviation: string;
-    readonly error_message: string;
-    readonly error_traceback: string;
-    readonly resource_type: string;
-    state: CoreStates;
-    readonly created: string;
-    readonly modified: string;
-    readonly backend_id: string;
-    readonly access_url: string | null;
+    readonly service_name?: string;
+    service_settings?: string;
+    readonly service_settings_uuid?: string;
+    readonly service_settings_state?: string;
+    readonly service_settings_error_message?: string;
+    project?: string;
+    readonly project_name?: string;
+    readonly project_uuid?: string;
+    readonly customer?: string;
+    readonly customer_name?: string;
+    readonly customer_native_name?: string;
+    readonly customer_abbreviation?: string;
+    readonly error_message?: string;
+    readonly error_traceback?: string;
+    readonly resource_type?: string;
+    state?: CoreStates;
+    readonly created?: string;
+    readonly modified?: string;
+    readonly backend_id?: string;
+    readonly access_url?: string | null;
     runtime_state?: string;
-    file: string;
+    file?: string;
     /**
      * Reference to user which submitted job
      */
-    readonly user: string | null;
-    readonly user_uuid: string;
+    readonly user?: string | null;
+    readonly user_uuid?: string;
     /**
      * Required. 128 characters or fewer. Lowercase letters, numbers and @/./+/-/_ characters
      */
-    readonly user_username: string;
-    readonly report: unknown;
+    readonly user_username?: string;
+    readonly report?: unknown;
 };
 
 export type FirecrestJobRequest = {
@@ -2431,28 +2404,28 @@ export type FreeipaProfileRequest = {
 export type GoogleCalendar = {
     backend_id?: string | null;
     public?: boolean;
-    readonly http_link: string;
+    readonly http_link?: string;
 };
 
 export type GoogleCredentials = {
-    readonly url: string;
-    readonly uuid: string;
-    readonly created: string;
+    readonly url?: string;
+    readonly uuid?: string;
+    readonly created?: string;
     description?: string;
-    customer: string;
-    readonly customer_name: string;
-    readonly customer_uuid: string;
-    readonly customer_image: string;
-    readonly customer_abbreviation: string;
-    readonly customer_slug: string;
-    readonly customer_native_name: string;
-    readonly customer_country: string;
+    customer?: string;
+    readonly customer_name?: string;
+    readonly customer_uuid?: string;
+    readonly customer_image?: string;
+    readonly customer_abbreviation?: string;
+    readonly customer_slug?: string;
+    readonly customer_native_name?: string;
+    readonly customer_country?: string;
     image?: string | null;
-    readonly organization_groups: Array<OrganizationGroup>;
-    readonly offering_count: number;
-    readonly calendar_token: string;
-    readonly calendar_refresh_token: string;
-    readonly google_auth_url: string;
+    readonly organization_groups?: Array<OrganizationGroup>;
+    readonly offering_count?: number;
+    readonly calendar_token?: string;
+    readonly calendar_refresh_token?: string;
+    readonly google_auth_url?: string;
 };
 
 export type GroupInvitation = {
@@ -2486,11 +2459,11 @@ export type IpMapping = {
     /**
      * Floating IP
      */
-    floating_ip: string;
+    floating_ip?: string;
     /**
      * External IP
      */
-    external_ip: string;
+    external_ip?: string;
 };
 
 export type IpMappingRequest = {
@@ -2588,9 +2561,9 @@ export type InstanceFlavorChangeRequest = {
 };
 
 export type IntegrationStatus = {
-    readonly agent_type: string;
-    readonly status: string;
-    readonly last_request_timestamp: string | null;
+    readonly agent_type?: string;
+    readonly status?: string;
+    readonly last_request_timestamp?: string | null;
 };
 
 export type IntegrationStatusDetails = {
@@ -2663,24 +2636,24 @@ export type InvitationState = 'project' | 'requested' | 'rejected' | 'pending' |
 export type InvitationStateEnum = 'project' | 'requested' | 'rejected' | 'pending' | 'accepted' | 'canceled' | 'expired';
 
 export type Invoice = {
-    readonly url: string;
-    readonly uuid: string;
-    readonly number: number;
-    customer: string;
-    price: string;
-    tax: string;
-    total: string;
+    readonly url?: string;
+    readonly uuid?: string;
+    readonly number?: number;
+    customer?: string;
+    price?: string;
+    tax?: string;
+    total?: string;
     state?: InvoiceStateEnum;
     year?: number;
     month?: number;
-    issuer_details: CustomerDetails;
+    issuer_details?: CustomerDetails;
     /**
      * Date then invoice moved from state pending to created.
      */
     invoice_date?: string | null;
-    due_date: string;
-    customer_details: CustomerDetails;
-    readonly items: Array<InvoiceItem>;
+    due_date?: string;
+    customer_details?: CustomerDetails;
+    readonly items?: Array<InvoiceItem>;
     backend_id?: string;
     /**
      * URL for initiating payment via payment gateway.
@@ -2711,16 +2684,16 @@ export type InvoiceGrowthCustomerPeriod = {
 };
 
 export type InvoiceItem = {
-    readonly uuid: string;
-    readonly url: string;
+    readonly uuid?: string;
+    readonly url?: string;
     name?: string;
-    readonly price: number;
-    tax: string;
-    total: string;
+    readonly price?: number;
+    tax?: string;
+    total?: string;
     unit_price?: string;
     unit?: BillingUnit;
-    readonly factor: number;
-    readonly measured_unit: string;
+    readonly factor?: number;
+    readonly measured_unit?: string;
     /**
      * Date and time when item usage has started.
      */
@@ -2730,16 +2703,16 @@ export type InvoiceItem = {
      */
     end?: string;
     article_code?: string;
-    readonly project_name: string;
-    readonly project_uuid: string;
+    readonly project_name?: string;
+    readonly project_uuid?: string;
     quantity?: string;
-    details: InvoiceItemDetails;
+    details?: InvoiceItemDetails;
     resource?: string | null;
-    readonly resource_uuid: string;
-    readonly resource_name: string;
-    readonly billing_type: string;
-    readonly backend_uuid: string | null;
-    readonly credit: boolean;
+    readonly resource_uuid?: string;
+    readonly resource_name?: string;
+    readonly billing_type?: string;
+    readonly backend_uuid?: string | null;
+    readonly credit?: boolean;
 };
 
 export type InvoiceItemCompensation = {
@@ -2778,19 +2751,19 @@ export type InvoiceItemDetail = {
 };
 
 export type InvoiceItemDetails = {
-    resource_name: string;
-    resource_uuid: string;
-    plan_name: string;
-    plan_uuid: string;
-    offering_type: string;
-    offering_name: string;
-    offering_uuid: string;
-    service_provider_name: string;
-    service_provider_uuid: string;
-    plan_component_id: number;
-    offering_component_type: string;
-    offering_component_name: string;
-    resource_limit_periods: Array<ResourceLimitPeriod>;
+    resource_name?: string;
+    resource_uuid?: string;
+    plan_name?: string;
+    plan_uuid?: string;
+    offering_type?: string;
+    offering_name?: string;
+    offering_uuid?: string;
+    service_provider_name?: string;
+    service_provider_uuid?: string;
+    plan_component_id?: number;
+    offering_component_type?: string;
+    offering_component_name?: string;
+    resource_limit_periods?: Array<ResourceLimitPeriod>;
 };
 
 export type InvoiceItemMigrateTo = {
@@ -2891,8 +2864,8 @@ export type Issue = {
 };
 
 export type IssueReference = {
-    readonly key: string;
-    readonly uuid: string;
+    readonly key?: string;
+    readonly uuid?: string;
 };
 
 export type IssueRequest = {
@@ -3025,9 +2998,9 @@ export type MappingRequest = {
 };
 
 export type MarketplaceCategory = {
-    readonly url: string;
-    readonly uuid: string;
-    title: string;
+    readonly url?: string;
+    readonly uuid?: string;
+    title?: string;
     description?: string;
     icon?: string | null;
     /**
@@ -3042,12 +3015,12 @@ export type MarketplaceCategory = {
      * Set to true if this category is for OpenStack Tenant. Only one category can have "true" value.
      */
     default_tenant_category?: boolean;
-    readonly offering_count: number;
-    readonly available_offerings_count: number;
-    readonly sections: Array<NestedSection>;
-    readonly columns: Array<NestedColumn>;
-    readonly components: Array<CategoryComponent>;
-    readonly articles: Array<CategoryHelpArticle>;
+    readonly offering_count?: number;
+    readonly available_offerings_count?: number;
+    readonly sections?: Array<NestedSection>;
+    readonly columns?: Array<NestedColumn>;
+    readonly components?: Array<CategoryComponent>;
+    readonly articles?: Array<CategoryHelpArticle>;
     group?: string | null;
 };
 
@@ -3075,6 +3048,61 @@ export type MarketplaceCustomerStats = {
     readonly uuid: string;
     readonly count: number;
     readonly abbreviation: string;
+};
+
+export type MarketplaceProviderCustomer = {
+    readonly uuid?: string;
+    name?: string;
+    slug?: string;
+    abbreviation?: string;
+    phone_number?: string;
+    email?: string;
+    readonly payment_profiles?: Array<PaymentProfile>;
+    billing_price_estimate?: NestedPriceEstimate;
+    readonly projects_count?: number;
+    readonly users_count?: number;
+    readonly projects?: Array<ProviderProject>;
+    readonly users?: Array<ProviderUser>;
+};
+
+export type MarketplaceProviderCustomerProject = {
+    readonly uuid?: string;
+    name?: string;
+    description?: string;
+    /**
+     * The date is inclusive. Once reached, all project resource will be scheduled for termination.
+     */
+    end_date?: string | null;
+    readonly resources_count?: number;
+    readonly users_count?: number;
+    billing_price_estimate?: NestedPriceEstimate;
+};
+
+export type MarketplaceServiceProviderUser = {
+    readonly uuid?: string;
+    /**
+     * Required. 128 characters or fewer. Lowercase letters, numbers and @/./+/-/_ characters
+     */
+    username?: string;
+    readonly full_name?: string;
+    first_name?: string;
+    last_name?: string;
+    organization?: string;
+    email?: string;
+    phone_number?: string;
+    readonly projects_count?: number;
+    /**
+     * Indicates what registration method was used.
+     */
+    registration_method?: string;
+    /**
+     * Person's affiliation within organization such as student, faculty, staff.
+     */
+    affiliations?: unknown;
+    /**
+     * Designates whether this user should be treated as active. Unselect this instead of deleting accounts.
+     */
+    is_active?: boolean;
 };
 
 export type MergedPluginOptions = {
@@ -3484,10 +3512,10 @@ export type NameUuid = {
 };
 
 export type NestedAttribute = {
-    key: string;
-    title: string;
-    type: NestedAttributeTypeEnum;
-    options: Array<NestedAttributeOption>;
+    key?: string;
+    title?: string;
+    type?: NestedAttributeTypeEnum;
+    options?: Array<NestedAttributeOption>;
     /**
      * A value must be provided for the attribute.
      */
@@ -3496,8 +3524,8 @@ export type NestedAttribute = {
 };
 
 export type NestedAttributeOption = {
-    key: string;
-    title: string;
+    key?: string;
+    title?: string;
 };
 
 export type NestedAttributeOptionRequest = {
@@ -3520,37 +3548,37 @@ export type NestedAttributeRequest = {
 export type NestedAttributeTypeEnum = 'boolean' | 'string' | 'text' | 'integer' | 'choice' | 'list';
 
 export type NestedCampaign = {
-    readonly uuid: string;
-    name: string;
+    readonly uuid?: string;
+    name?: string;
     /**
      * Starting from this date, the campaign is active.
      */
-    start_date: string;
+    start_date?: string;
     /**
      * The last day the campaign is active.
      */
-    end_date: string;
-    discount_type: DiscountTypeEnum;
-    discount: number;
+    end_date?: string;
+    discount_type?: DiscountTypeEnum;
+    discount?: number;
     stock?: number | null;
     description?: string;
     /**
      * How many months in a row should the related service (when activated) get special deal (0 for indefinitely until active)
      */
     months?: number;
-    service_provider: string;
+    service_provider?: string;
 };
 
 export type NestedColumn = {
-    readonly uuid: string;
+    readonly uuid?: string;
     /**
      * Index allows to reorder columns.
      */
-    index: number;
+    index?: number;
     /**
      * Title is rendered as column header.
      */
-    title: string;
+    title?: string;
     /**
      * Resource attribute is rendered as table cell.
      */
@@ -3581,9 +3609,9 @@ export type NestedColumnRequest = {
 };
 
 export type NestedEndpoint = {
-    readonly uuid: string;
-    name: string;
-    url: string;
+    readonly uuid?: string;
+    name?: string;
+    url?: string;
 };
 
 export type NestedEndpointRequest = {
@@ -3613,9 +3641,9 @@ export type NestedOfferingComponentLimitRequest = {
 };
 
 export type NestedOfferingFile = {
-    name: string;
-    readonly created: string;
-    file: string;
+    name?: string;
+    readonly created?: string;
+    file?: string;
 };
 
 export type NestedOfferingFileRequest = {
@@ -3624,10 +3652,10 @@ export type NestedOfferingFileRequest = {
 };
 
 export type NestedPriceEstimate = {
-    readonly total: string;
-    readonly current: string;
-    readonly tax: string;
-    readonly tax_current: string;
+    readonly total?: string;
+    readonly current?: string;
+    readonly tax?: string;
+    readonly tax_current?: string;
 };
 
 export type NestedProject = {
@@ -3636,10 +3664,10 @@ export type NestedProject = {
 };
 
 export type NestedProjectPermission = {
-    readonly url: string;
-    readonly uuid: string;
-    readonly name: string;
-    readonly role_name: string;
+    readonly url?: string;
+    readonly uuid?: string;
+    readonly name?: string;
+    readonly role_name?: string;
     expiration_time?: string | null;
 };
 
@@ -3682,20 +3710,20 @@ export type NestedRemoteLocalCategoryRequest = {
 };
 
 export type NestedRequestedOffering = {
-    readonly uuid: string;
-    state: RequestedOfferingStates;
-    offering: string;
-    readonly offering_name: string;
-    readonly offering_uuid: string;
-    readonly provider_name: string;
-    readonly category_uuid: string;
-    readonly category_name: string;
-    readonly call_managing_organisation: string;
+    readonly uuid?: string;
+    state?: RequestedOfferingStates;
+    offering?: string;
+    readonly offering_name?: string;
+    readonly offering_uuid?: string;
+    readonly provider_name?: string;
+    readonly category_uuid?: string;
+    readonly category_name?: string;
+    readonly call_managing_organisation?: string;
     attributes?: unknown;
     plan?: string | null;
-    plan_details: BasePublicPlan;
-    options: OfferingOptions;
-    readonly components: Array<OfferingComponent>;
+    plan_details?: BasePublicPlan;
+    options?: OfferingOptions;
+    readonly components?: Array<OfferingComponent>;
 };
 
 export type NestedRequestedOfferingRequest = {
@@ -3705,9 +3733,9 @@ export type NestedRequestedOfferingRequest = {
 };
 
 export type NestedRole = {
-    readonly uuid: string;
-    name: string;
-    readonly url: string;
+    readonly uuid?: string;
+    name?: string;
+    readonly url?: string;
 };
 
 export type NestedRoleRequest = {
@@ -3715,11 +3743,11 @@ export type NestedRoleRequest = {
 };
 
 export type NestedRound = {
-    readonly uuid: string;
-    readonly name: string;
-    start_time: string;
-    cutoff_time: string;
-    status: StatusEnum;
+    readonly uuid?: string;
+    readonly name?: string;
+    start_time?: string;
+    cutoff_time?: string;
+    status?: StatusEnum;
     review_strategy?: ReviewStrategyEnum;
     deciding_entity?: DecidingEntityEnum;
     allocation_time?: AllocationTimeEnum;
@@ -3742,12 +3770,12 @@ export type NestedRoundRequest = {
 };
 
 export type NestedScreenshot = {
-    name: string;
-    readonly uuid: string;
+    name?: string;
+    readonly uuid?: string;
     description?: string;
-    image: string;
-    readonly thumbnail: string | null;
-    readonly created: string;
+    image?: string;
+    readonly thumbnail?: string | null;
+    readonly created?: string;
 };
 
 export type NestedScreenshotRequest = {
@@ -3757,9 +3785,9 @@ export type NestedScreenshotRequest = {
 };
 
 export type NestedSection = {
-    key: string;
-    title: string;
-    readonly attributes: Array<NestedAttribute>;
+    key?: string;
+    title?: string;
+    readonly attributes?: Array<NestedAttribute>;
     /**
      * Whether section is rendered as a separate tab.
      */
@@ -3783,9 +3811,9 @@ export type NestedSecurityGroupRule = {
     to_port?: number | null;
     cidr?: string | null;
     description?: string;
-    readonly remote_group_name: string;
-    readonly remote_group_uuid: string;
-    readonly id: number;
+    readonly remote_group_name?: string;
+    readonly remote_group_uuid?: string;
+    readonly id?: number;
 };
 
 export type NestedSecurityGroupRuleRequest = {
@@ -3851,11 +3879,11 @@ export type ObtainAuthTokenRequest = {
 export type OecdFos2007CodeEnum = '1.1' | '1.2' | '1.3' | '1.4' | '1.5' | '1.6' | '1.7' | '2.1' | '2.2' | '2.3' | '2.4' | '2.5' | '2.6' | '2.7' | '2.8' | '2.9' | '2.10' | '2.11' | '2.12' | '3.1' | '3.2' | '3.3' | '3.4' | '3.5' | '4.1' | '4.2' | '4.3' | '4.4' | '4.5' | '5.1' | '5.2' | '5.3' | '5.4' | '5.5' | '5.6' | '5.7' | '5.8' | '5.9' | '6.1' | '6.2' | '6.3' | '6.4' | '6.5';
 
 export type Offering = {
-    readonly url: string;
-    readonly uuid: string;
-    readonly created: string;
-    name: string;
-    readonly slug: string;
+    readonly url?: string;
+    readonly uuid?: string;
+    readonly created?: string;
+    name?: string;
+    readonly slug?: string;
     description?: string;
     full_description?: string;
     terms_of_service?: string;
@@ -3865,32 +3893,32 @@ export type Offering = {
      * Publicly accessible offering access URL
      */
     access_url?: string;
-    readonly endpoints: Array<NestedEndpoint>;
-    readonly roles: Array<NestedRole>;
+    readonly endpoints?: Array<NestedEndpoint>;
+    readonly roles?: Array<NestedRole>;
     customer?: string | null;
-    readonly customer_uuid: string;
-    readonly customer_name: string;
-    readonly project: string | null;
-    readonly project_uuid: string;
-    readonly project_name: string;
-    category: string;
-    readonly category_uuid: string;
-    readonly category_title: string;
-    readonly attributes: {};
-    options: OfferingOptions;
-    resource_options: OfferingOptions;
-    readonly components: Array<OfferingComponent>;
-    plugin_options: MergedPluginOptions;
-    state: OfferingState;
-    state_code: StateCodeEnum;
+    readonly customer_uuid?: string;
+    readonly customer_name?: string;
+    readonly project?: string | null;
+    readonly project_uuid?: string;
+    readonly project_name?: string;
+    category?: string;
+    readonly category_uuid?: string;
+    readonly category_title?: string;
+    readonly attributes?: {};
+    options?: OfferingOptions;
+    resource_options?: OfferingOptions;
+    readonly components?: Array<OfferingComponent>;
+    plugin_options?: MergedPluginOptions;
+    state?: OfferingState;
+    state_code?: StateCodeEnum;
     vendor_details?: string;
     getting_started?: string;
     integration_guide?: string;
     thumbnail?: string | null;
-    readonly order_count: number;
-    readonly plans: Array<BasePublicPlan>;
-    readonly screenshots: Array<NestedScreenshot>;
-    type: string;
+    readonly order_count?: number;
+    readonly plans?: Array<BasePublicPlan>;
+    readonly screenshots?: Array<NestedScreenshot>;
+    type?: string;
     /**
      * Accessible to all customers.
      */
@@ -3899,30 +3927,30 @@ export type Offering = {
      * Purchase and usage is invoiced.
      */
     billable?: boolean;
-    readonly scope: string;
-    readonly scope_uuid: string;
-    readonly scope_name: string;
-    scope_state: CoreStates;
-    readonly files: Array<NestedOfferingFile>;
-    readonly quotas: Array<Quota>;
-    readonly paused_reason: string;
+    readonly scope?: string;
+    readonly scope_uuid?: string | null;
+    readonly scope_name?: string | null;
+    scope_state?: CoreStates | null;
+    readonly files?: Array<NestedOfferingFile>;
+    readonly quotas?: Array<Quota>;
+    readonly paused_reason?: string;
     datacite_doi?: string;
     /**
      * Number of citations of a DOI
      */
-    readonly citation_count: number;
+    readonly citation_count?: number;
     latitude?: number | null;
     longitude?: number | null;
     country?: CountryEnum | BlankEnum;
     backend_id?: string;
-    readonly organization_groups: Array<OrganizationGroup>;
+    readonly organization_groups?: Array<OrganizationGroup>;
     image?: string | null;
-    readonly total_customers: number;
-    readonly total_cost: number;
-    readonly total_cost_estimated: number;
-    readonly parent_description: string;
-    readonly parent_uuid: string;
-    readonly parent_name: string;
+    readonly total_customers?: number | null;
+    readonly total_cost?: number | null;
+    readonly total_cost_estimated?: number | null;
+    readonly parent_description?: string;
+    readonly parent_uuid?: string;
+    readonly parent_name?: string;
     backend_metadata?: unknown;
     googlecalendar?: GoogleCalendar;
 };
@@ -3932,16 +3960,16 @@ export type OfferingBackendMetadataRequest = {
 };
 
 export type OfferingComponent = {
-    readonly uuid: string;
-    billing_type: BillingTypeEnum;
+    readonly uuid?: string;
+    billing_type?: BillingTypeEnum;
     /**
      * Unique internal name of the measured unit, for example floating_ip.
      */
-    type: string;
+    type?: string;
     /**
      * Display name for the measured unit, for example, Floating IP.
      */
-    name: string;
+    name?: string;
     description?: string;
     /**
      * Unit of measurement, for example, GB.
@@ -3959,8 +3987,8 @@ export type OfferingComponent = {
     max_available_limit?: number | null;
     is_boolean?: boolean;
     default_limit?: number | null;
-    readonly factor: number;
-    readonly is_builtin: boolean;
+    readonly factor?: number;
+    readonly is_builtin?: boolean;
 };
 
 export type OfferingComponentLimit = {
@@ -4072,9 +4100,9 @@ export type OfferingCreate = {
      */
     billable?: boolean;
     readonly scope: string;
-    readonly scope_uuid: string;
-    readonly scope_name: string;
-    scope_state: CoreStates;
+    readonly scope_uuid: string | null;
+    readonly scope_name: string | null;
+    scope_state: CoreStates | null;
     readonly files: Array<NestedOfferingFile>;
     readonly quotas: Array<Quota>;
     readonly paused_reason: string;
@@ -4089,9 +4117,9 @@ export type OfferingCreate = {
     backend_id?: string;
     readonly organization_groups: Array<OrganizationGroup>;
     image?: string | null;
-    readonly total_customers: number;
-    readonly total_cost: number;
-    readonly total_cost_estimated: number;
+    readonly total_customers: number | null;
+    readonly total_cost: number | null;
+    readonly total_cost_estimated: number | null;
     readonly parent_description: string;
     readonly parent_uuid: string;
     readonly parent_name: string;
@@ -4184,12 +4212,12 @@ export type OfferingEstimatedCostPolicyRequest = {
 };
 
 export type OfferingFile = {
-    readonly url: string;
-    readonly uuid: string;
-    name: string;
-    offering: string;
-    readonly created: string;
-    file: string;
+    readonly url?: string;
+    readonly uuid?: string;
+    name?: string;
+    offering?: string;
+    readonly created?: string;
+    file?: string;
 };
 
 export type OfferingFileRequest = {
@@ -4227,8 +4255,8 @@ export type OfferingLocationUpdateRequest = {
 };
 
 export type OfferingOptions = {
-    order: Array<string>;
-    options: {
+    order?: Array<string>;
+    options?: {
         [key: string]: OptionField;
     };
 };
@@ -4385,28 +4413,28 @@ export type OfferingUsagePolicyRequest = {
 };
 
 export type OfferingUser = {
-    readonly url: string;
-    readonly uuid: string;
-    user: string;
-    offering: string;
+    readonly url?: string;
+    readonly uuid?: string;
+    user?: string;
+    offering?: string;
     username?: string | null;
-    readonly offering_uuid: string;
-    readonly offering_name: string;
-    readonly user_uuid: string;
+    readonly offering_uuid?: string;
+    readonly offering_name?: string;
+    readonly user_uuid?: string;
     /**
      * Required. 128 characters or fewer. Lowercase letters, numbers and @/./+/-/_ characters
      */
-    readonly user_username: string;
-    readonly user_full_name: string;
-    readonly created: string;
-    readonly modified: string;
+    readonly user_username?: string;
+    readonly user_full_name?: string;
+    readonly created?: string;
+    readonly modified?: string;
     propagation_date?: string | null;
-    readonly customer_uuid: string;
-    readonly customer_name: string;
+    readonly customer_uuid?: string;
+    readonly customer_name?: string;
     /**
      * Signal to service if the user account is restricted or not
      */
-    readonly is_restricted: boolean;
+    readonly is_restricted?: boolean;
 };
 
 export type OfferingUserRequest = {
@@ -4471,53 +4499,53 @@ export type OpenStackBackendVolumes = {
 };
 
 export type OpenStackBackup = {
-    readonly url: string;
-    readonly uuid: string;
-    name: string;
+    readonly url?: string;
+    readonly uuid?: string;
+    name?: string;
     description?: string;
-    readonly service_name: string;
-    readonly service_settings: string;
-    readonly service_settings_uuid: string;
-    readonly service_settings_state: string;
-    readonly service_settings_error_message: string;
-    readonly project: string;
-    readonly project_name: string;
-    readonly project_uuid: string;
-    readonly customer: string;
-    readonly customer_name: string;
-    readonly customer_native_name: string;
-    readonly customer_abbreviation: string;
-    readonly error_message: string;
-    readonly error_traceback: string;
-    readonly resource_type: string;
-    state: CoreStates;
-    readonly created: string;
-    readonly modified: string;
-    readonly backend_id: string;
-    readonly access_url: string | null;
+    readonly service_name?: string;
+    readonly service_settings?: string;
+    readonly service_settings_uuid?: string;
+    readonly service_settings_state?: string;
+    readonly service_settings_error_message?: string;
+    readonly project?: string;
+    readonly project_name?: string;
+    readonly project_uuid?: string;
+    readonly customer?: string;
+    readonly customer_name?: string;
+    readonly customer_native_name?: string;
+    readonly customer_abbreviation?: string;
+    readonly error_message?: string;
+    readonly error_traceback?: string;
+    readonly resource_type?: string;
+    state?: CoreStates;
+    readonly created?: string;
+    readonly modified?: string;
+    readonly backend_id?: string;
+    readonly access_url?: string | null;
     /**
      * Guaranteed time of backup retention. If null - keep forever.
      */
     kept_until?: string | null;
-    readonly metadata: unknown;
-    readonly instance: string;
-    readonly instance_name: string;
-    readonly instance_marketplace_uuid: string;
-    readonly restorations: Array<OpenStackBackupRestoration>;
-    readonly instance_security_groups: Array<OpenStackNestedSecurityGroup>;
-    readonly instance_ports: Array<OpenStackNestedPort>;
-    readonly instance_floating_ips: Array<OpenStackNestedFloatingIp>;
-    readonly tenant_uuid: string;
-    readonly marketplace_offering_uuid: string;
-    readonly marketplace_offering_name: string;
-    readonly marketplace_offering_plugin_options: {};
-    readonly marketplace_category_uuid: string;
-    readonly marketplace_category_name: string;
-    readonly marketplace_resource_uuid: string;
-    readonly marketplace_plan_uuid: string;
-    readonly marketplace_resource_state: string;
-    readonly is_usage_based: boolean;
-    readonly is_limit_based: boolean;
+    readonly metadata?: unknown;
+    readonly instance?: string;
+    readonly instance_name?: string;
+    readonly instance_marketplace_uuid?: string;
+    readonly restorations?: Array<OpenStackBackupRestoration>;
+    readonly instance_security_groups?: Array<OpenStackNestedSecurityGroup>;
+    readonly instance_ports?: Array<OpenStackNestedPort>;
+    readonly instance_floating_ips?: Array<OpenStackNestedFloatingIp>;
+    readonly tenant_uuid?: string;
+    readonly marketplace_offering_uuid?: string;
+    readonly marketplace_offering_name?: string;
+    readonly marketplace_offering_plugin_options?: {};
+    readonly marketplace_category_uuid?: string;
+    readonly marketplace_category_name?: string;
+    readonly marketplace_resource_uuid?: string;
+    readonly marketplace_plan_uuid?: string;
+    readonly marketplace_resource_state?: string;
+    readonly is_usage_based?: boolean;
+    readonly is_limit_based?: boolean;
 };
 
 export type OpenStackBackupRequest = {
@@ -4530,10 +4558,10 @@ export type OpenStackBackupRequest = {
 };
 
 export type OpenStackBackupRestoration = {
-    readonly uuid: string;
-    readonly instance: string;
-    readonly created: string;
-    flavor: string;
+    readonly uuid?: string;
+    readonly instance?: string;
+    readonly created?: string;
+    flavor?: string;
     /**
      * New instance name. Leave blank to use source instance name.
      */
@@ -4564,8 +4592,8 @@ export type OpenStackDataVolumeRequest = {
 };
 
 export type OpenStackFixedIp = {
-    ip_address: string;
-    subnet_id: string;
+    ip_address?: string;
+    subnet_id?: string;
 };
 
 export type OpenStackFixedIpRequest = {
@@ -4574,75 +4602,75 @@ export type OpenStackFixedIpRequest = {
 };
 
 export type OpenStackFlavor = {
-    readonly url: string;
-    readonly uuid: string;
-    name: string;
-    settings: string;
+    readonly url?: string;
+    readonly uuid?: string;
+    name?: string;
+    settings?: string;
     /**
      * Number of cores in a VM
      */
-    cores: number;
+    cores?: number;
     /**
      * Memory size in MiB
      */
-    ram: number;
+    ram?: number;
     /**
      * Root disk size in MiB
      */
-    disk: number;
-    backend_id: string;
-    readonly display_name: string;
+    disk?: number;
+    backend_id?: string;
+    readonly display_name?: string;
 };
 
 export type OpenStackFloatingIp = {
-    readonly url: string;
-    readonly uuid: string;
-    readonly name: string;
-    readonly description: string;
-    readonly service_name: string;
-    readonly service_settings: string;
-    readonly service_settings_uuid: string;
-    readonly service_settings_state: string;
-    readonly service_settings_error_message: string;
-    readonly project: string;
-    readonly project_name: string;
-    readonly project_uuid: string;
-    readonly customer: string;
-    readonly customer_name: string;
-    readonly customer_native_name: string;
-    readonly customer_abbreviation: string;
-    readonly error_message: string;
-    readonly error_traceback: string;
-    readonly resource_type: string;
-    state: CoreStates;
-    readonly created: string;
-    readonly modified: string;
-    readonly backend_id: string;
-    readonly access_url: string | null;
-    readonly runtime_state: string;
-    readonly address: string | null;
-    readonly backend_network_id: string;
-    readonly tenant: string;
-    readonly tenant_name: string;
-    readonly tenant_uuid: string;
-    readonly port: string;
+    readonly url?: string;
+    readonly uuid?: string;
+    readonly name?: string;
+    readonly description?: string;
+    readonly service_name?: string;
+    readonly service_settings?: string;
+    readonly service_settings_uuid?: string;
+    readonly service_settings_state?: string;
+    readonly service_settings_error_message?: string;
+    readonly project?: string;
+    readonly project_name?: string;
+    readonly project_uuid?: string;
+    readonly customer?: string;
+    readonly customer_name?: string;
+    readonly customer_native_name?: string;
+    readonly customer_abbreviation?: string;
+    readonly error_message?: string;
+    readonly error_traceback?: string;
+    readonly resource_type?: string;
+    state?: CoreStates;
+    readonly created?: string;
+    readonly modified?: string;
+    readonly backend_id?: string;
+    readonly access_url?: string | null;
+    readonly runtime_state?: string;
+    readonly address?: string | null;
+    readonly backend_network_id?: string;
+    readonly tenant?: string;
+    readonly tenant_name?: string;
+    readonly tenant_uuid?: string;
+    readonly port?: string;
     /**
      * An optional address that maps to floating IP's address
      */
-    readonly external_address: string | null;
-    readonly instance_uuid: string;
-    readonly instance_name: string;
-    readonly instance_url: string;
-    readonly marketplace_offering_uuid: string;
-    readonly marketplace_offering_name: string;
-    readonly marketplace_offering_plugin_options: {};
-    readonly marketplace_category_uuid: string;
-    readonly marketplace_category_name: string;
-    readonly marketplace_resource_uuid: string;
-    readonly marketplace_plan_uuid: string;
-    readonly marketplace_resource_state: string;
-    readonly is_usage_based: boolean;
-    readonly is_limit_based: boolean;
+    readonly external_address?: string | null;
+    readonly instance_uuid?: string;
+    readonly instance_name?: string;
+    readonly instance_url?: string;
+    readonly marketplace_offering_uuid?: string;
+    readonly marketplace_offering_name?: string;
+    readonly marketplace_offering_plugin_options?: {};
+    readonly marketplace_category_uuid?: string;
+    readonly marketplace_category_name?: string;
+    readonly marketplace_resource_uuid?: string;
+    readonly marketplace_plan_uuid?: string;
+    readonly marketplace_resource_state?: string;
+    readonly is_usage_based?: boolean;
+    readonly is_limit_based?: boolean;
 };
 
 export type OpenStackFloatingIpAttachRequest = {
@@ -4673,93 +4701,93 @@ export type OpenStackImage = {
 };
 
 export type OpenStackInstance = {
-    readonly url: string;
-    readonly uuid: string;
-    name: string;
+    readonly url?: string;
+    readonly uuid?: string;
+    name?: string;
     description?: string;
-    readonly service_name: string;
-    readonly service_settings: string;
-    readonly service_settings_uuid: string;
-    readonly service_settings_state: string;
-    readonly service_settings_error_message: string;
-    project: string;
-    readonly project_name: string;
-    readonly project_uuid: string;
-    readonly customer: string;
-    readonly customer_name: string;
-    readonly customer_native_name: string;
-    readonly customer_abbreviation: string;
-    readonly error_message: string;
-    readonly error_traceback: string;
-    readonly resource_type: string;
-    state: CoreStates;
-    readonly created: string;
-    readonly modified: string;
-    readonly backend_id: string | null;
-    readonly access_url: string | null;
-    readonly start_time: string | null;
+    readonly service_name?: string;
+    readonly service_settings?: string;
+    readonly service_settings_uuid?: string;
+    readonly service_settings_state?: string;
+    readonly service_settings_error_message?: string;
+    project?: string;
+    readonly project_name?: string;
+    readonly project_uuid?: string;
+    readonly customer?: string;
+    readonly customer_name?: string;
+    readonly customer_native_name?: string;
+    readonly customer_abbreviation?: string;
+    readonly error_message?: string;
+    readonly error_traceback?: string;
+    readonly resource_type?: string;
+    state?: CoreStates;
+    readonly created?: string;
+    readonly modified?: string;
+    readonly backend_id?: string | null;
+    readonly access_url?: string | null;
+    readonly start_time?: string | null;
     /**
      * Number of cores in a VM
      */
-    readonly cores: number;
+    readonly cores?: number;
     /**
      * Memory size in MiB
      */
-    readonly ram: number;
+    readonly ram?: number;
     /**
      * Disk size in MiB
      */
-    readonly disk: number;
+    readonly disk?: number;
     /**
      * Minimum memory size in MiB
      */
-    readonly min_ram: number;
+    readonly min_ram?: number;
     /**
      * Minimum disk size in MiB
      */
-    readonly min_disk: number;
+    readonly min_disk?: number;
     /**
      * Additional data that will be added to instance on provisioning
      */
     user_data?: string;
-    readonly external_ips: Array<string>;
-    readonly internal_ips: Array<string>;
-    readonly latitude: number | null;
-    readonly longitude: number | null;
-    readonly key_name: string;
-    readonly key_fingerprint: string;
-    readonly image_name: string;
+    readonly external_ips?: Array<string>;
+    readonly internal_ips?: Array<string>;
+    readonly latitude?: number | null;
+    readonly longitude?: number | null;
+    readonly key_name?: string;
+    readonly key_fingerprint?: string;
+    readonly image_name?: string;
     /**
      * Flavor disk size in MiB
      */
-    readonly flavor_disk: number;
-    readonly flavor_name: string;
-    readonly volumes: Array<OpenStackNestedVolume>;
+    readonly flavor_disk?: number;
+    readonly flavor_name?: string;
+    readonly volumes?: Array<OpenStackNestedVolume>;
     security_groups?: Array<OpenStackNestedSecurityGroup>;
     server_group?: OpenStackNestedServerGroup;
     floating_ips?: Array<OpenStackNestedFloatingIp>;
-    ports: Array<OpenStackNestedPort>;
+    ports?: Array<OpenStackNestedPort>;
     availability_zone?: string | null;
-    readonly availability_zone_name: string;
+    readonly availability_zone_name?: string;
     connect_directly_to_external_network?: boolean;
-    readonly runtime_state: string;
-    readonly action: string;
-    readonly action_details: unknown;
-    readonly tenant_uuid: string;
-    readonly hypervisor_hostname: string;
-    tenant: string;
-    readonly external_address: Array<string>;
-    rancher_cluster: RancherClusterReference;
-    readonly marketplace_offering_uuid: string;
-    readonly marketplace_offering_name: string;
-    readonly marketplace_offering_plugin_options: {};
-    readonly marketplace_category_uuid: string;
-    readonly marketplace_category_name: string;
-    readonly marketplace_resource_uuid: string;
-    readonly marketplace_plan_uuid: string;
-    readonly marketplace_resource_state: string;
-    readonly is_usage_based: boolean;
-    readonly is_limit_based: boolean;
+    readonly runtime_state?: string;
+    readonly action?: string;
+    readonly action_details?: unknown;
+    readonly tenant_uuid?: string;
+    readonly hypervisor_hostname?: string;
+    tenant?: string;
+    readonly external_address?: Array<string>;
+    rancher_cluster?: RancherClusterReference | null;
+    readonly marketplace_offering_uuid?: string;
+    readonly marketplace_offering_name?: string;
+    readonly marketplace_offering_plugin_options?: {};
+    readonly marketplace_category_uuid?: string;
+    readonly marketplace_category_name?: string;
+    readonly marketplace_resource_uuid?: string;
+    readonly marketplace_plan_uuid?: string;
+    readonly marketplace_resource_state?: string;
+    readonly is_usage_based?: boolean;
+    readonly is_limit_based?: boolean;
 };
 
 export type OpenStackInstanceAllowedAddressPairsUpdateRequest = {
@@ -4796,16 +4824,16 @@ export type OpenStackInstanceSecurityGroupsUpdateRequest = {
 };
 
 export type OpenStackNestedFloatingIp = {
-    readonly url: string;
-    readonly uuid: string;
-    readonly address: string | null;
-    readonly port_fixed_ips: Array<OpenStackFixedIp>;
-    readonly port_mac_address: string;
-    subnet: string;
-    readonly subnet_uuid: string;
-    readonly subnet_name: string;
-    readonly subnet_description: string;
-    readonly subnet_cidr: string;
+    readonly url?: string;
+    readonly uuid?: string;
+    readonly address?: string | null;
+    readonly port_fixed_ips?: Array<OpenStackFixedIp>;
+    readonly port_mac_address?: string;
+    subnet?: string;
+    readonly subnet_uuid?: string;
+    readonly subnet_name?: string;
+    readonly subnet_description?: string;
+    readonly subnet_cidr?: string;
 };
 
 export type OpenStackNestedFloatingIpRequest = {
@@ -4814,21 +4842,21 @@ export type OpenStackNestedFloatingIpRequest = {
 
 export type OpenStackNestedInstance = {
     backend_id?: string | null;
-    name: string;
-    readonly uuid: string;
+    name?: string;
+    readonly uuid?: string;
 };
 
 export type OpenStackNestedPort = {
-    readonly fixed_ips: Array<OpenStackFixedIp>;
-    readonly mac_address: string;
+    readonly fixed_ips?: Array<OpenStackFixedIp>;
+    readonly mac_address?: string;
     subnet?: string | null;
-    readonly subnet_uuid: string;
-    readonly subnet_name: string;
-    readonly subnet_description: string;
-    readonly subnet_cidr: string;
-    readonly allowed_address_pairs: Array<OpenStackAllowedAddressPair>;
-    readonly device_id: string | null;
-    readonly device_owner: string | null;
+    readonly subnet_uuid?: string;
+    readonly subnet_name?: string;
+    readonly subnet_description?: string;
+    readonly subnet_cidr?: string;
+    readonly allowed_address_pairs?: Array<OpenStackAllowedAddressPair>;
+    readonly device_id?: string | null;
+    readonly device_owner?: string | null;
 };
 
 export type OpenStackNestedPortRequest = {
@@ -4836,26 +4864,26 @@ export type OpenStackNestedPortRequest = {
 };
 
 export type OpenStackNestedSecurityGroup = {
-    readonly url: string;
-    readonly name: string;
-    readonly rules: Array<NestedSecurityGroupRule>;
-    readonly description: string;
-    readonly state: string;
+    readonly url?: string;
+    readonly name?: string;
+    readonly rules?: Array<NestedSecurityGroupRule>;
+    readonly description?: string;
+    readonly state?: string;
 };
 
 export type OpenStackNestedServerGroup = {
-    readonly url: string;
-    readonly name: string;
-    policy: PolicyEnum;
-    readonly state: string;
+    readonly url?: string;
+    readonly name?: string;
+    policy?: PolicyEnum;
+    readonly state?: string;
 };
 
 export type OpenStackNestedSubNet = {
-    name: string;
+    name?: string;
     description?: string;
     cidr?: string;
     gateway_ip?: string | null;
-    readonly allocation_pools: Array<OpenStackSubNetAllocationPool>;
+    readonly allocation_pools?: Array<OpenStackSubNetAllocationPool>;
     ip_version?: number;
     enable_dhcp?: boolean;
 };
@@ -4870,24 +4898,24 @@ export type OpenStackNestedSubNetRequest = {
 };
 
 export type OpenStackNestedVolume = {
-    readonly url: string;
-    readonly uuid: string;
-    readonly name: string;
+    readonly url?: string;
+    readonly uuid?: string;
+    readonly name?: string;
     image_name?: string;
-    readonly state: string;
+    readonly state?: string;
     bootable?: boolean;
     /**
      * Size in MiB
      */
-    size: number;
+    size?: number;
     /**
      * Name of volume as instance device e.g. /dev/vdb.
      */
     device?: string;
-    readonly resource_type: string;
+    readonly resource_type?: string;
     type?: string | null;
-    readonly type_name: string;
-    readonly marketplace_resource_uuid: string;
+    readonly type_name?: string;
+    readonly marketplace_resource_uuid?: string;
 };
 
 export type OpenStackNestedVolumeRequest = {
@@ -4905,50 +4933,50 @@ export type OpenStackNestedVolumeRequest = {
 };
 
 export type OpenStackNetwork = {
-    readonly url: string;
-    readonly uuid: string;
-    name: string;
+    readonly url?: string;
+    readonly uuid?: string;
+    name?: string;
     description?: string;
-    readonly service_name: string;
-    readonly service_settings: string;
-    readonly service_settings_uuid: string;
-    readonly service_settings_state: string;
-    readonly service_settings_error_message: string;
-    readonly project: string;
-    readonly project_name: string;
-    readonly project_uuid: string;
-    readonly customer: string;
-    readonly customer_name: string;
-    readonly customer_native_name: string;
-    readonly customer_abbreviation: string;
-    readonly error_message: string;
-    readonly error_traceback: string;
-    readonly resource_type: string;
-    state: CoreStates;
-    readonly created: string;
-    readonly modified: string;
-    readonly backend_id: string;
-    readonly access_url: string | null;
-    readonly tenant: string;
-    readonly tenant_name: string;
-    readonly tenant_uuid: string;
-    readonly is_external: boolean;
-    readonly type: string;
-    readonly subnets: Array<OpenStackNestedSubNet>;
+    readonly service_name?: string;
+    readonly service_settings?: string;
+    readonly service_settings_uuid?: string;
+    readonly service_settings_state?: string;
+    readonly service_settings_error_message?: string;
+    readonly project?: string;
+    readonly project_name?: string;
+    readonly project_uuid?: string;
+    readonly customer?: string;
+    readonly customer_name?: string;
+    readonly customer_native_name?: string;
+    readonly customer_abbreviation?: string;
+    readonly error_message?: string;
+    readonly error_traceback?: string;
+    readonly resource_type?: string;
+    state?: CoreStates;
+    readonly created?: string;
+    readonly modified?: string;
+    readonly backend_id?: string;
+    readonly access_url?: string | null;
+    readonly tenant?: string;
+    readonly tenant_name?: string;
+    readonly tenant_uuid?: string;
+    readonly is_external?: boolean;
+    readonly type?: string;
+    readonly subnets?: Array<OpenStackNestedSubNet>;
     /**
      * The maximum transmission unit (MTU) value to address fragmentation.
      */
-    readonly mtu: number | null;
-    readonly marketplace_offering_uuid: string;
-    readonly marketplace_offering_name: string;
-    readonly marketplace_offering_plugin_options: {};
-    readonly marketplace_category_uuid: string;
-    readonly marketplace_category_name: string;
-    readonly marketplace_resource_uuid: string;
-    readonly marketplace_plan_uuid: string;
-    readonly marketplace_resource_state: string;
-    readonly is_usage_based: boolean;
-    readonly is_limit_based: boolean;
+    readonly mtu?: number | null;
+    readonly marketplace_offering_uuid?: string;
+    readonly marketplace_offering_name?: string;
+    readonly marketplace_offering_plugin_options?: {};
+    readonly marketplace_category_uuid?: string;
+    readonly marketplace_category_name?: string;
+    readonly marketplace_resource_uuid?: string;
+    readonly marketplace_plan_uuid?: string;
+    readonly marketplace_resource_state?: string;
+    readonly is_usage_based?: boolean;
+    readonly is_limit_based?: boolean;
 };
 
 export type OpenStackNetworkRequest = {
@@ -4957,59 +4985,59 @@ export type OpenStackNetworkRequest = {
 };
 
 export type OpenStackPort = {
-    readonly url: string;
-    readonly uuid: string;
-    name: string;
+    readonly url?: string;
+    readonly uuid?: string;
+    name?: string;
     description?: string;
-    readonly service_name: string;
-    readonly service_settings: string;
-    readonly service_settings_uuid: string;
-    readonly service_settings_state: string;
-    readonly service_settings_error_message: string;
-    readonly project: string;
-    readonly project_name: string;
-    readonly project_uuid: string;
-    readonly customer: string;
-    readonly customer_name: string;
-    readonly customer_native_name: string;
-    readonly customer_abbreviation: string;
-    readonly error_message: string;
-    readonly error_traceback: string;
-    readonly resource_type: string;
-    state: CoreStates;
-    readonly created: string;
-    readonly modified: string;
-    readonly backend_id: string;
-    readonly access_url: string | null;
+    readonly service_name?: string;
+    readonly service_settings?: string;
+    readonly service_settings_uuid?: string;
+    readonly service_settings_state?: string;
+    readonly service_settings_error_message?: string;
+    readonly project?: string;
+    readonly project_name?: string;
+    readonly project_uuid?: string;
+    readonly customer?: string;
+    readonly customer_name?: string;
+    readonly customer_native_name?: string;
+    readonly customer_abbreviation?: string;
+    readonly error_message?: string;
+    readonly error_traceback?: string;
+    readonly resource_type?: string;
+    state?: CoreStates;
+    readonly created?: string;
+    readonly modified?: string;
+    readonly backend_id?: string;
+    readonly access_url?: string | null;
     fixed_ips?: Array<OpenStackFixedIp>;
     mac_address?: string;
-    readonly allowed_address_pairs: Array<OpenStackAllowedAddressPair>;
-    readonly tenant: string;
-    readonly tenant_name: string;
-    readonly tenant_uuid: string;
+    readonly allowed_address_pairs?: Array<OpenStackAllowedAddressPair>;
+    readonly tenant?: string;
+    readonly tenant_name?: string;
+    readonly tenant_uuid?: string;
     network?: string | null;
-    readonly network_name: string;
-    readonly network_uuid: string;
-    readonly floating_ips: Array<string>;
-    readonly device_id: string | null;
-    readonly device_owner: string | null;
-    readonly port_security_enabled: boolean;
-    readonly security_groups: Array<OpenStackPortNestedSecurityGroup>;
-    readonly marketplace_offering_uuid: string;
-    readonly marketplace_offering_name: string;
-    readonly marketplace_offering_plugin_options: {};
-    readonly marketplace_category_uuid: string;
-    readonly marketplace_category_name: string;
-    readonly marketplace_resource_uuid: string;
-    readonly marketplace_plan_uuid: string;
-    readonly marketplace_resource_state: string;
-    readonly is_usage_based: boolean;
-    readonly is_limit_based: boolean;
+    readonly network_name?: string;
+    readonly network_uuid?: string;
+    readonly floating_ips?: Array<string>;
+    readonly device_id?: string | null;
+    readonly device_owner?: string | null;
+    readonly port_security_enabled?: boolean;
+    readonly security_groups?: Array<OpenStackPortNestedSecurityGroup>;
+    readonly marketplace_offering_uuid?: string;
+    readonly marketplace_offering_name?: string;
+    readonly marketplace_offering_plugin_options?: {};
+    readonly marketplace_category_uuid?: string;
+    readonly marketplace_category_name?: string;
+    readonly marketplace_resource_uuid?: string;
+    readonly marketplace_plan_uuid?: string;
+    readonly marketplace_resource_state?: string;
+    readonly is_usage_based?: boolean;
+    readonly is_limit_based?: boolean;
 };
 
 export type OpenStackPortNestedSecurityGroup = {
-    readonly uuid: string;
-    name: string;
+    readonly uuid?: string;
+    name?: string;
 };
 
 export type OpenStackPortNestedSecurityGroupRequest = {
@@ -5025,46 +5053,46 @@ export type OpenStackPortRequest = {
 };
 
 export type OpenStackRouter = {
-    readonly url: string;
-    readonly uuid: string;
-    name: string;
+    readonly url?: string;
+    readonly uuid?: string;
+    name?: string;
     description?: string;
-    readonly service_name: string;
-    service_settings: string;
-    readonly service_settings_uuid: string;
-    readonly service_settings_state: string;
-    readonly service_settings_error_message: string;
-    project: string;
-    readonly project_name: string;
-    readonly project_uuid: string;
-    readonly customer: string;
-    readonly customer_name: string;
-    readonly customer_native_name: string;
-    readonly customer_abbreviation: string;
+    readonly service_name?: string;
+    service_settings?: string;
+    readonly service_settings_uuid?: string;
+    readonly service_settings_state?: string;
+    readonly service_settings_error_message?: string;
+    project?: string;
+    readonly project_name?: string;
+    readonly project_uuid?: string;
+    readonly customer?: string;
+    readonly customer_name?: string;
+    readonly customer_native_name?: string;
+    readonly customer_abbreviation?: string;
     error_message?: string;
     error_traceback?: string;
-    readonly resource_type: string;
-    state: CoreStates;
-    readonly created: string;
-    readonly modified: string;
+    readonly resource_type?: string;
+    state?: CoreStates;
+    readonly created?: string;
+    readonly modified?: string;
     backend_id?: string;
-    readonly access_url: string | null;
-    tenant: string;
-    readonly tenant_name: string;
-    readonly tenant_uuid: string;
-    routes: Array<OpenStackStaticRoute>;
-    readonly fixed_ips: Array<OpenStackFixedIp>;
-    readonly marketplace_offering_uuid: string;
-    readonly marketplace_offering_name: string;
-    readonly marketplace_offering_plugin_options: {};
-    readonly marketplace_category_uuid: string;
-    readonly marketplace_category_name: string;
-    readonly marketplace_resource_uuid: string;
-    readonly marketplace_plan_uuid: string;
-    readonly marketplace_resource_state: string;
-    readonly is_usage_based: boolean;
-    readonly is_limit_based: boolean;
-    readonly offering_external_ips: Array<string> | null;
+    readonly access_url?: string | null;
+    tenant?: string;
+    readonly tenant_name?: string;
+    readonly tenant_uuid?: string;
+    routes?: Array<OpenStackStaticRoute>;
+    readonly fixed_ips?: Array<OpenStackFixedIp>;
+    readonly marketplace_offering_uuid?: string;
+    readonly marketplace_offering_name?: string;
+    readonly marketplace_offering_plugin_options?: {};
+    readonly marketplace_category_uuid?: string;
+    readonly marketplace_category_name?: string;
+    readonly marketplace_resource_uuid?: string;
+    readonly marketplace_plan_uuid?: string;
+    readonly marketplace_resource_state?: string;
+    readonly is_usage_based?: boolean;
+    readonly is_limit_based?: boolean;
+    readonly offering_external_ips?: Array<string> | null;
 };
 
 export type OpenStackRouterSetRoutes = {
@@ -5076,44 +5104,44 @@ export type OpenStackRouterSetRoutesRequest = {
 };
 
 export type OpenStackSecurityGroup = {
-    readonly url: string;
-    readonly uuid: string;
-    name: string;
+    readonly url?: string;
+    readonly uuid?: string;
+    name?: string;
     description?: string;
-    readonly service_name: string;
-    readonly service_settings: string;
-    readonly service_settings_uuid: string;
-    readonly service_settings_state: string;
-    readonly service_settings_error_message: string;
-    readonly project: string;
-    readonly project_name: string;
-    readonly project_uuid: string;
-    readonly customer: string;
-    readonly customer_name: string;
-    readonly customer_native_name: string;
-    readonly customer_abbreviation: string;
-    readonly error_message: string;
-    readonly error_traceback: string;
-    readonly resource_type: string;
-    state: CoreStates;
-    readonly created: string;
-    readonly modified: string;
-    readonly backend_id: string;
-    readonly access_url: string | null;
-    readonly tenant: string;
-    readonly tenant_name: string;
-    readonly tenant_uuid: string;
-    rules: Array<OpenStackSecurityGroupRuleCreate>;
-    readonly marketplace_offering_uuid: string;
-    readonly marketplace_offering_name: string;
-    readonly marketplace_offering_plugin_options: {};
-    readonly marketplace_category_uuid: string;
-    readonly marketplace_category_name: string;
-    readonly marketplace_resource_uuid: string;
-    readonly marketplace_plan_uuid: string;
-    readonly marketplace_resource_state: string;
-    readonly is_usage_based: boolean;
-    readonly is_limit_based: boolean;
+    readonly service_name?: string;
+    readonly service_settings?: string;
+    readonly service_settings_uuid?: string;
+    readonly service_settings_state?: string;
+    readonly service_settings_error_message?: string;
+    readonly project?: string;
+    readonly project_name?: string;
+    readonly project_uuid?: string;
+    readonly customer?: string;
+    readonly customer_name?: string;
+    readonly customer_native_name?: string;
+    readonly customer_abbreviation?: string;
+    readonly error_message?: string;
+    readonly error_traceback?: string;
+    readonly resource_type?: string;
+    state?: CoreStates;
+    readonly created?: string;
+    readonly modified?: string;
+    readonly backend_id?: string;
+    readonly access_url?: string | null;
+    readonly tenant?: string;
+    readonly tenant_name?: string;
+    readonly tenant_uuid?: string;
+    rules?: Array<OpenStackSecurityGroupRuleCreate>;
+    readonly marketplace_offering_uuid?: string;
+    readonly marketplace_offering_name?: string;
+    readonly marketplace_offering_plugin_options?: {};
+    readonly marketplace_category_uuid?: string;
+    readonly marketplace_category_name?: string;
+    readonly marketplace_resource_uuid?: string;
+    readonly marketplace_plan_uuid?: string;
+    readonly marketplace_resource_state?: string;
+    readonly is_usage_based?: boolean;
+    readonly is_limit_based?: boolean;
 };
 
 export type OpenStackSecurityGroupRequest = {
@@ -5130,9 +5158,9 @@ export type OpenStackSecurityGroupRuleCreate = {
     to_port?: number | null;
     cidr?: string | null;
     description?: string;
-    readonly remote_group_name: string;
-    readonly remote_group_uuid: string;
-    readonly id: number;
+    readonly remote_group_name?: string;
+    readonly remote_group_uuid?: string;
+    readonly id?: number;
     remote_group?: string | null;
 };
 
@@ -5169,46 +5197,46 @@ export type OpenStackSecurityGroupUpdateRequest = {
 };
 
 export type OpenStackServerGroup = {
-    readonly url: string;
-    readonly uuid: string;
-    name: string;
+    readonly url?: string;
+    readonly uuid?: string;
+    name?: string;
     description?: string;
-    readonly service_name: string;
-    readonly service_settings: string;
-    readonly service_settings_uuid: string;
-    readonly service_settings_state: string;
-    readonly service_settings_error_message: string;
-    readonly project: string;
-    readonly project_name: string;
-    readonly project_uuid: string;
-    readonly customer: string;
-    readonly customer_name: string;
-    readonly customer_native_name: string;
-    readonly customer_abbreviation: string;
-    readonly error_message: string;
-    readonly error_traceback: string;
-    readonly resource_type: string;
-    state: CoreStates;
-    readonly created: string;
-    readonly modified: string;
-    readonly backend_id: string;
-    readonly access_url: string | null;
-    readonly tenant: string;
-    readonly tenant_name: string;
-    readonly tenant_uuid: string;
+    readonly service_name?: string;
+    readonly service_settings?: string;
+    readonly service_settings_uuid?: string;
+    readonly service_settings_state?: string;
+    readonly service_settings_error_message?: string;
+    readonly project?: string;
+    readonly project_name?: string;
+    readonly project_uuid?: string;
+    readonly customer?: string;
+    readonly customer_name?: string;
+    readonly customer_native_name?: string;
+    readonly customer_abbreviation?: string;
+    readonly error_message?: string;
+    readonly error_traceback?: string;
+    readonly resource_type?: string;
+    state?: CoreStates;
+    readonly created?: string;
+    readonly modified?: string;
+    readonly backend_id?: string;
+    readonly access_url?: string | null;
+    readonly tenant?: string;
+    readonly tenant_name?: string;
+    readonly tenant_uuid?: string;
     policy?: PolicyEnum | BlankEnum;
-    readonly display_name: string;
-    readonly instances: Array<OpenStackNestedInstance>;
-    readonly marketplace_offering_uuid: string;
-    readonly marketplace_offering_name: string;
-    readonly marketplace_offering_plugin_options: {};
-    readonly marketplace_category_uuid: string;
-    readonly marketplace_category_name: string;
-    readonly marketplace_resource_uuid: string;
-    readonly marketplace_plan_uuid: string;
-    readonly marketplace_resource_state: string;
-    readonly is_usage_based: boolean;
-    readonly is_limit_based: boolean;
+    readonly display_name?: string;
+    readonly instances?: Array<OpenStackNestedInstance>;
+    readonly marketplace_offering_uuid?: string;
+    readonly marketplace_offering_name?: string;
+    readonly marketplace_offering_plugin_options?: {};
+    readonly marketplace_category_uuid?: string;
+    readonly marketplace_category_name?: string;
+    readonly marketplace_resource_uuid?: string;
+    readonly marketplace_plan_uuid?: string;
+    readonly marketplace_resource_state?: string;
+    readonly is_usage_based?: boolean;
+    readonly is_limit_based?: boolean;
 };
 
 export type OpenStackServerGroupRequest = {
@@ -5218,56 +5246,56 @@ export type OpenStackServerGroupRequest = {
 };
 
 export type OpenStackSnapshot = {
-    readonly url: string;
-    readonly uuid: string;
-    name: string;
+    readonly url?: string;
+    readonly uuid?: string;
+    name?: string;
     description?: string;
-    readonly service_name: string;
-    readonly service_settings: string;
-    readonly service_settings_uuid: string;
-    readonly service_settings_state: string;
-    readonly service_settings_error_message: string;
-    readonly project: string;
-    readonly project_name: string;
-    readonly project_uuid: string;
-    readonly customer: string;
-    readonly customer_name: string;
-    readonly customer_native_name: string;
-    readonly customer_abbreviation: string;
-    readonly error_message: string;
-    readonly error_traceback: string;
-    readonly resource_type: string;
-    state: CoreStates;
-    readonly created: string;
-    readonly modified: string;
-    readonly backend_id: string | null;
-    readonly access_url: string | null;
-    readonly source_volume: string | null;
+    readonly service_name?: string;
+    readonly service_settings?: string;
+    readonly service_settings_uuid?: string;
+    readonly service_settings_state?: string;
+    readonly service_settings_error_message?: string;
+    readonly project?: string;
+    readonly project_name?: string;
+    readonly project_uuid?: string;
+    readonly customer?: string;
+    readonly customer_name?: string;
+    readonly customer_native_name?: string;
+    readonly customer_abbreviation?: string;
+    readonly error_message?: string;
+    readonly error_traceback?: string;
+    readonly resource_type?: string;
+    state?: CoreStates;
+    readonly created?: string;
+    readonly modified?: string;
+    readonly backend_id?: string | null;
+    readonly access_url?: string | null;
+    readonly source_volume?: string | null;
     /**
      * Size in MiB
      */
-    readonly size: number;
+    readonly size?: number;
     metadata?: unknown;
-    readonly runtime_state: string;
-    readonly source_volume_name: string;
-    readonly source_volume_marketplace_uuid: string;
-    readonly action: string;
-    readonly action_details: unknown;
-    readonly restorations: Array<OpenStackSnapshotRestoration>;
+    readonly runtime_state?: string;
+    readonly source_volume_name?: string;
+    readonly source_volume_marketplace_uuid?: string;
+    readonly action?: string;
+    readonly action_details?: unknown;
+    readonly restorations?: Array<OpenStackSnapshotRestoration>;
     /**
      * Guaranteed time of snapshot retention. If null - keep forever.
      */
     kept_until?: string | null;
-    readonly marketplace_offering_uuid: string;
-    readonly marketplace_offering_name: string;
-    readonly marketplace_offering_plugin_options: {};
-    readonly marketplace_category_uuid: string;
-    readonly marketplace_category_name: string;
-    readonly marketplace_resource_uuid: string;
-    readonly marketplace_plan_uuid: string;
-    readonly marketplace_resource_state: string;
-    readonly is_usage_based: boolean;
-    readonly is_limit_based: boolean;
+    readonly marketplace_offering_uuid?: string;
+    readonly marketplace_offering_name?: string;
+    readonly marketplace_offering_plugin_options?: {};
+    readonly marketplace_category_uuid?: string;
+    readonly marketplace_category_name?: string;
+    readonly marketplace_resource_uuid?: string;
+    readonly marketplace_plan_uuid?: string;
+    readonly marketplace_resource_state?: string;
+    readonly is_usage_based?: boolean;
+    readonly is_limit_based?: boolean;
 };
 
 export type OpenStackSnapshotRequest = {
@@ -5281,24 +5309,24 @@ export type OpenStackSnapshotRequest = {
 };
 
 export type OpenStackSnapshotRestoration = {
-    readonly uuid: string;
-    readonly created: string;
+    readonly uuid?: string;
+    readonly created?: string;
     /**
      * New volume description.
      */
     description?: string;
-    readonly volume: string;
-    readonly volume_name: string;
-    readonly volume_state: string;
-    readonly volume_runtime_state: string;
+    readonly volume?: string;
+    readonly volume_name?: string;
+    readonly volume_state?: string;
+    readonly volume_runtime_state?: string;
     /**
      * Size in MiB
      */
-    readonly volume_size: number;
+    readonly volume_size?: number;
     /**
      * Name of volume as instance device e.g. /dev/vdb.
      */
-    readonly volume_device: string;
+    readonly volume_device?: string;
 };
 
 export type OpenStackSnapshotRestorationRequest = {
@@ -5313,8 +5341,8 @@ export type OpenStackSnapshotRestorationRequest = {
 };
 
 export type OpenStackStaticRoute = {
-    destination: string;
-    nexthop: string;
+    destination?: string;
+    nexthop?: string;
 };
 
 export type OpenStackStaticRouteRequest = {
@@ -5323,61 +5351,61 @@ export type OpenStackStaticRouteRequest = {
 };
 
 export type OpenStackSubNet = {
-    readonly url: string;
-    readonly uuid: string;
-    name: string;
+    readonly url?: string;
+    readonly uuid?: string;
+    name?: string;
     description?: string;
-    readonly service_name: string;
-    readonly service_settings: string;
-    readonly service_settings_uuid: string;
-    readonly service_settings_state: string;
-    readonly service_settings_error_message: string;
-    readonly project: string;
-    readonly project_name: string;
-    readonly project_uuid: string;
-    readonly customer: string;
-    readonly customer_name: string;
-    readonly customer_native_name: string;
-    readonly customer_abbreviation: string;
-    readonly error_message: string;
-    readonly error_traceback: string;
-    readonly resource_type: string;
-    state: CoreStates;
-    readonly created: string;
-    readonly modified: string;
-    readonly backend_id: string;
-    readonly access_url: string | null;
-    readonly tenant: string;
-    readonly tenant_name: string;
-    readonly network: string;
-    readonly network_name: string;
+    readonly service_name?: string;
+    readonly service_settings?: string;
+    readonly service_settings_uuid?: string;
+    readonly service_settings_state?: string;
+    readonly service_settings_error_message?: string;
+    readonly project?: string;
+    readonly project_name?: string;
+    readonly project_uuid?: string;
+    readonly customer?: string;
+    readonly customer_name?: string;
+    readonly customer_native_name?: string;
+    readonly customer_abbreviation?: string;
+    readonly error_message?: string;
+    readonly error_traceback?: string;
+    readonly resource_type?: string;
+    state?: CoreStates;
+    readonly created?: string;
+    readonly modified?: string;
+    readonly backend_id?: string;
+    readonly access_url?: string | null;
+    readonly tenant?: string;
+    readonly tenant_name?: string;
+    readonly network?: string;
+    readonly network_name?: string;
     cidr?: string;
     gateway_ip?: string | null;
     disable_gateway?: boolean;
-    readonly allocation_pools: Array<OpenStackSubNetAllocationPool>;
-    readonly ip_version: number;
-    readonly enable_dhcp: boolean;
+    readonly allocation_pools?: Array<OpenStackSubNetAllocationPool>;
+    readonly ip_version?: number;
+    readonly enable_dhcp?: boolean;
     dns_nameservers?: Array<string>;
     host_routes?: Array<OpenStackStaticRoute>;
     /**
      * Is subnet connected to the default tenant router.
      */
-    readonly is_connected: boolean;
-    readonly marketplace_offering_uuid: string;
-    readonly marketplace_offering_name: string;
-    readonly marketplace_offering_plugin_options: {};
-    readonly marketplace_category_uuid: string;
-    readonly marketplace_category_name: string;
-    readonly marketplace_resource_uuid: string;
-    readonly marketplace_plan_uuid: string;
-    readonly marketplace_resource_state: string;
-    readonly is_usage_based: boolean;
-    readonly is_limit_based: boolean;
+    readonly is_connected?: boolean;
+    readonly marketplace_offering_uuid?: string;
+    readonly marketplace_offering_name?: string;
+    readonly marketplace_offering_plugin_options?: {};
+    readonly marketplace_category_uuid?: string;
+    readonly marketplace_category_name?: string;
+    readonly marketplace_resource_uuid?: string;
+    readonly marketplace_plan_uuid?: string;
+    readonly marketplace_resource_state?: string;
+    readonly is_usage_based?: boolean;
+    readonly is_limit_based?: boolean;
 };
 
 export type OpenStackSubNetAllocationPool = {
-    start: string;
-    end: string;
+    start?: string;
+    end?: string;
 };
 
 export type OpenStackSubNetAllocationPoolRequest = {
@@ -5396,50 +5424,50 @@ export type OpenStackSubNetRequest = {
 };
 
 export type OpenStackTenant = {
-    readonly url: string;
-    readonly uuid: string;
-    name: string;
+    readonly url?: string;
+    readonly uuid?: string;
+    name?: string;
     description?: string;
-    readonly service_name: string;
-    service_settings: string;
-    readonly service_settings_uuid: string;
-    readonly service_settings_state: string;
-    readonly service_settings_error_message: string;
-    project: string;
-    readonly project_name: string;
-    readonly project_uuid: string;
-    readonly customer: string;
-    readonly customer_name: string;
-    readonly customer_native_name: string;
-    readonly customer_abbreviation: string;
-    readonly error_message: string;
-    readonly error_traceback: string;
-    readonly resource_type: string;
-    state: CoreStates;
-    readonly created: string;
-    readonly modified: string;
-    readonly backend_id: string | null;
+    readonly service_name?: string;
+    service_settings?: string;
+    readonly service_settings_uuid?: string;
+    readonly service_settings_state?: string;
+    readonly service_settings_error_message?: string;
+    project?: string;
+    readonly project_name?: string;
+    readonly project_uuid?: string;
+    readonly customer?: string;
+    readonly customer_name?: string;
+    readonly customer_native_name?: string;
+    readonly customer_abbreviation?: string;
+    readonly error_message?: string;
+    readonly error_traceback?: string;
+    readonly resource_type?: string;
+    state?: CoreStates;
+    readonly created?: string;
+    readonly modified?: string;
+    readonly backend_id?: string | null;
     /**
      * Optional availability group. Will be used for all instances provisioned in this tenant
      */
     availability_zone?: string;
-    readonly internal_network_id: string;
-    readonly external_network_id: string;
-    readonly quotas: Array<Quota>;
+    readonly internal_network_id?: string;
+    readonly external_network_id?: string;
+    readonly quotas?: Array<Quota>;
     /**
      * Volume type name to use when creating volumes.
      */
     default_volume_type_name?: string;
-    readonly marketplace_offering_uuid: string;
-    readonly marketplace_offering_name: string;
-    readonly marketplace_offering_plugin_options: {};
-    readonly marketplace_category_uuid: string;
-    readonly marketplace_category_name: string;
-    readonly marketplace_resource_uuid: string;
-    readonly marketplace_plan_uuid: string;
-    readonly marketplace_resource_state: string;
-    readonly is_usage_based: boolean;
-    readonly is_limit_based: boolean;
+    readonly marketplace_offering_uuid?: string;
+    readonly marketplace_offering_name?: string;
+    readonly marketplace_offering_plugin_options?: {};
+    readonly marketplace_category_uuid?: string;
+    readonly marketplace_category_name?: string;
+    readonly marketplace_resource_uuid?: string;
+    readonly marketplace_plan_uuid?: string;
+    readonly marketplace_resource_state?: string;
+    readonly is_usage_based?: boolean;
+    readonly is_limit_based?: boolean;
 };
 
 export type OpenStackTenantChangePasswordRequest = {
@@ -5488,66 +5516,66 @@ export type OpenStackTenantRequest = {
 };
 
 export type OpenStackVolume = {
-    readonly url: string;
-    readonly uuid: string;
-    name: string;
+    readonly url?: string;
+    readonly uuid?: string;
+    name?: string;
     description?: string;
-    readonly service_name: string;
-    readonly service_settings: string;
-    readonly service_settings_uuid: string;
-    readonly service_settings_state: string;
-    readonly service_settings_error_message: string;
-    project: string;
-    readonly project_name: string;
-    readonly project_uuid: string;
-    readonly customer: string;
-    readonly customer_name: string;
-    readonly customer_native_name: string;
-    readonly customer_abbreviation: string;
-    readonly error_message: string;
-    readonly error_traceback: string;
-    readonly resource_type: string;
-    state: CoreStates;
-    readonly created: string;
-    readonly modified: string;
-    readonly backend_id: string | null;
-    readonly access_url: string | null;
-    readonly source_snapshot: string | null;
+    readonly service_name?: string;
+    readonly service_settings?: string;
+    readonly service_settings_uuid?: string;
+    readonly service_settings_state?: string;
+    readonly service_settings_error_message?: string;
+    project?: string;
+    readonly project_name?: string;
+    readonly project_uuid?: string;
+    readonly customer?: string;
+    readonly customer_name?: string;
+    readonly customer_native_name?: string;
+    readonly customer_abbreviation?: string;
+    readonly error_message?: string;
+    readonly error_traceback?: string;
+    readonly resource_type?: string;
+    state?: CoreStates;
+    readonly created?: string;
+    readonly modified?: string;
+    readonly backend_id?: string | null;
+    readonly access_url?: string | null;
+    readonly source_snapshot?: string | null;
     /**
      * Size in MiB
      */
     size?: number | null;
     bootable?: boolean;
-    readonly metadata: unknown;
+    readonly metadata?: unknown;
     image?: string | null;
-    readonly image_metadata: string;
-    readonly image_name: string;
+    readonly image_metadata?: string;
+    readonly image_name?: string;
     type?: string | null;
-    readonly type_name: string;
-    readonly runtime_state: string;
+    readonly type_name?: string;
+    readonly runtime_state?: string;
     availability_zone?: string | null;
-    readonly availability_zone_name: string;
+    readonly availability_zone_name?: string;
     /**
      * Name of volume as instance device e.g. /dev/vdb.
      */
-    readonly device: string;
-    readonly action: string;
-    readonly action_details: unknown;
-    readonly instance: string | null;
-    readonly instance_name: string;
-    readonly instance_marketplace_uuid: string;
-    tenant: string;
-    readonly tenant_uuid: string;
-    readonly marketplace_offering_uuid: string;
-    readonly marketplace_offering_name: string;
-    readonly marketplace_offering_plugin_options: {};
-    readonly marketplace_category_uuid: string;
-    readonly marketplace_category_name: string;
-    readonly marketplace_resource_uuid: string;
-    readonly marketplace_plan_uuid: string;
-    readonly marketplace_resource_state: string;
-    readonly is_usage_based: boolean;
-    readonly is_limit_based: boolean;
+    readonly device?: string;
+    readonly action?: string;
+    readonly action_details?: unknown;
+    readonly instance?: string | null;
+    readonly instance_name?: string;
+    readonly instance_marketplace_uuid?: string;
+    tenant?: string;
+    readonly tenant_uuid?: string;
+    readonly marketplace_offering_uuid?: string;
+    readonly marketplace_offering_name?: string;
+    readonly marketplace_offering_plugin_options?: {};
+    readonly marketplace_category_uuid?: string;
+    readonly marketplace_category_name?: string;
+    readonly marketplace_resource_uuid?: string;
+    readonly marketplace_plan_uuid?: string;
+    readonly marketplace_resource_state?: string;
+    readonly is_usage_based?: boolean;
+    readonly is_limit_based?: boolean;
 };
 
 export type OpenStackVolumeAvailabilityZone = {
@@ -5643,8 +5671,8 @@ export type OrderCreate = {
     readonly created: string;
     readonly modified: string;
     type?: RequestTypes;
-    readonly resource_uuid: string;
-    readonly resource_type: string;
+    readonly resource_uuid: string | null;
+    readonly resource_type: string | null;
     readonly resource_name: string;
     readonly cost: string | null;
     state: OrderState;
@@ -5690,102 +5718,102 @@ export type OrderCreateRequest = {
 };
 
 export type OrderDetails = {
-    offering: string;
-    readonly offering_name: string;
-    readonly offering_uuid: string;
-    readonly offering_description: string;
-    readonly offering_image: string;
-    readonly offering_thumbnail: string;
-    readonly offering_type: string;
-    readonly offering_terms_of_service: string;
+    offering?: string;
+    readonly offering_name?: string;
+    readonly offering_uuid?: string;
+    readonly offering_description?: string;
+    readonly offering_image?: string;
+    readonly offering_thumbnail?: string;
+    readonly offering_type?: string;
+    readonly offering_terms_of_service?: string;
     /**
      * Accessible to all customers.
      */
-    readonly offering_shared: boolean;
+    readonly offering_shared?: boolean;
     /**
      * Purchase and usage is invoiced.
      */
-    readonly offering_billable: boolean;
+    readonly offering_billable?: boolean;
     /**
      * Public data used by specific plugin, such as storage mode for OpenStack.
      */
-    readonly offering_plugin_options: unknown;
-    readonly provider_name: string;
-    readonly provider_uuid: string;
-    readonly category_title: string;
-    readonly category_uuid: string;
-    readonly category_icon: string;
+    readonly offering_plugin_options?: unknown;
+    readonly provider_name?: string;
+    readonly provider_uuid?: string;
+    readonly category_title?: string;
+    readonly category_uuid?: string;
+    readonly category_icon?: string;
     plan?: string;
-    plan_unit: BillingUnit;
-    readonly plan_name: string;
-    readonly plan_uuid: string;
-    readonly plan_description: string;
+    plan_unit?: BillingUnit;
+    readonly plan_name?: string;
+    readonly plan_uuid?: string;
+    readonly plan_description?: string;
     /**
      * Get attributes excluding secret attributes, such as username and password.
      */
-    readonly attributes: {};
+    readonly attributes?: {};
     limits?: {
         [key: string]: number;
     };
-    readonly uuid: string;
-    readonly created: string;
-    readonly modified: string;
+    readonly uuid?: string;
+    readonly created?: string;
+    readonly modified?: string;
     type?: RequestTypes;
-    readonly resource_uuid: string;
-    readonly resource_type: string;
-    readonly resource_name: string;
-    readonly cost: string | null;
-    state: OrderState;
-    readonly output: string;
-    readonly marketplace_resource_uuid: string;
-    readonly error_message: string;
+    readonly resource_uuid?: string | null;
+    readonly resource_type?: string | null;
+    readonly resource_name?: string;
+    readonly cost?: string | null;
+    state?: OrderState;
+    readonly output?: string;
+    readonly marketplace_resource_uuid?: string;
+    readonly error_message?: string;
     callback_url?: string | null;
-    readonly completed_at: string | null;
+    readonly completed_at?: string | null;
     /**
      * Required. 128 characters or fewer. Lowercase letters, numbers and @/./+/-/_ characters
      */
-    readonly consumer_reviewed_by: string;
-    readonly consumer_reviewed_by_full_name: string;
+    readonly consumer_reviewed_by?: string;
+    readonly consumer_reviewed_by_full_name?: string;
     /**
      * Required. 128 characters or fewer. Lowercase letters, numbers and @/./+/-/_ characters
      */
-    readonly consumer_reviewed_by_username: string;
-    readonly consumer_reviewed_at: string | null;
+    readonly consumer_reviewed_by_username?: string;
+    readonly consumer_reviewed_at?: string | null;
     /**
      * Required. 128 characters or fewer. Lowercase letters, numbers and @/./+/-/_ characters
      */
-    readonly provider_reviewed_by: string;
-    readonly provider_reviewed_by_full_name: string;
+    readonly provider_reviewed_by?: string;
+    readonly provider_reviewed_by_full_name?: string;
     /**
      * Required. 128 characters or fewer. Lowercase letters, numbers and @/./+/-/_ characters
      */
-    readonly provider_reviewed_by_username: string;
-    readonly provider_reviewed_at: string | null;
+    readonly provider_reviewed_by_username?: string;
+    readonly provider_reviewed_at?: string | null;
     /**
      * Required. 128 characters or fewer. Lowercase letters, numbers and @/./+/-/_ characters
      */
-    readonly created_by_username: string;
-    readonly created_by_full_name: string;
-    readonly created_by_civil_number: string | null;
-    readonly customer_name: string;
-    readonly customer_uuid: string;
-    readonly customer_slug: string;
-    readonly project_name: string;
-    readonly project_uuid: string;
-    readonly project_description: string;
-    readonly project_slug: string;
-    readonly old_plan_name: string;
-    readonly new_plan_name: string;
-    readonly old_plan_uuid: string;
-    readonly new_plan_uuid: string;
-    readonly old_cost_estimate: string | null;
-    readonly new_cost_estimate: string | null;
-    readonly can_terminate: boolean;
-    readonly fixed_price: number;
-    readonly activation_price: number;
-    readonly termination_comment: string | null;
+    readonly created_by_username?: string;
+    readonly created_by_full_name?: string;
+    readonly created_by_civil_number?: string | null;
+    readonly customer_name?: string;
+    readonly customer_uuid?: string;
+    readonly customer_slug?: string;
+    readonly project_name?: string;
+    readonly project_uuid?: string;
+    readonly project_description?: string;
+    readonly project_slug?: string;
+    readonly old_plan_name?: string;
+    readonly new_plan_name?: string;
+    readonly old_plan_uuid?: string;
+    readonly new_plan_uuid?: string;
+    readonly old_cost_estimate?: string | null;
+    readonly new_cost_estimate?: string | null;
+    readonly can_terminate?: boolean;
+    readonly fixed_price?: number;
+    readonly activation_price?: number;
+    readonly termination_comment?: string | null;
     backend_id?: string;
-    issue: IssueReference;
+    issue?: IssueReference | null;
 };
 
 export type OrderSetStateErredRequest = {
@@ -5796,13 +5824,13 @@ export type OrderSetStateErredRequest = {
 export type OrderState = 'pending-consumer' | 'pending-provider' | 'pending-project' | 'executing' | 'done' | 'erred' | 'canceled' | 'rejected';
 
 export type OrganizationGroup = {
-    readonly uuid: string;
-    readonly url: string;
-    name: string;
-    readonly parent_uuid: string;
-    readonly parent_name: string;
+    readonly uuid?: string;
+    readonly url?: string;
+    name?: string;
+    readonly parent_uuid?: string;
+    readonly parent_name?: string;
     parent?: string | null;
-    readonly customers_count: number;
+    readonly customers_count?: number;
 };
 
 export type OrganizationGroupRequest = {
@@ -6567,14 +6595,14 @@ export type Payment = {
 };
 
 export type PaymentProfile = {
-    readonly uuid: string;
-    readonly url: string;
-    name: string;
-    readonly organization_uuid: string;
-    organization: string;
+    readonly uuid?: string;
+    readonly url?: string;
+    name?: string;
+    readonly organization_uuid?: string;
+    organization?: string;
     attributes?: PaymentProfileAttributes;
-    payment_type: PaymentTypeEnum;
-    readonly payment_type_display: string;
+    payment_type?: PaymentTypeEnum;
+    readonly payment_type_display?: string;
     is_active?: boolean | null;
 };
 
@@ -6617,29 +6645,29 @@ export type PaymentUrlRequest = {
 export type PeriodEnum = 1 | 2 | 3 | 4;
 
 export type Permission = {
-    readonly user_uuid: string;
-    readonly user_name: string;
-    readonly user_slug: string;
-    readonly created: string;
+    readonly user_uuid?: string;
+    readonly user_name?: string;
+    readonly user_slug?: string;
+    readonly created?: string;
     expiration_time?: string | null;
-    readonly created_by_full_name: string;
-    readonly created_by_username: string;
-    readonly role_name: string;
-    readonly role_description: string;
-    readonly role_uuid: string;
-    readonly scope_type: string;
-    readonly scope_uuid: string;
-    readonly scope_name: string;
-    readonly customer_uuid: string;
-    readonly customer_name: string;
+    readonly created_by_full_name?: string;
+    readonly created_by_username?: string;
+    readonly role_name?: string;
+    readonly role_description?: string;
+    readonly role_uuid?: string;
+    readonly scope_type?: string;
+    readonly scope_uuid?: string;
+    readonly scope_name?: string;
+    readonly customer_uuid?: string;
+    readonly customer_name?: string;
 };
 
 export type PermissionProject = {
-    readonly url: string;
-    readonly uuid: string;
-    name: string;
+    readonly url?: string;
+    readonly uuid?: string;
+    name?: string;
     image?: string | null;
-    readonly resource_count: number;
+    readonly resource_count?: number;
     /**
      * The date is inclusive. Once reached, all project resource will be scheduled for termination.
      */
@@ -6726,21 +6754,21 @@ export type Priority = {
 };
 
 export type Project = {
-    readonly url: string;
-    readonly uuid: string;
-    name: string;
-    readonly slug: string;
-    customer: string;
-    readonly customer_uuid: string;
-    readonly customer_name: string;
-    readonly customer_slug: string;
-    readonly customer_native_name: string;
-    readonly customer_abbreviation: string;
+    readonly url?: string;
+    readonly uuid?: string;
+    name?: string;
+    readonly slug?: string;
+    customer?: string;
+    readonly customer_uuid?: string;
+    readonly customer_name?: string;
+    readonly customer_slug?: string;
+    readonly customer_native_name?: string;
+    readonly customer_abbreviation?: string;
     description?: string;
-    readonly created: string;
+    readonly created?: string;
     type?: string | null;
-    readonly type_name: string;
-    readonly type_uuid: string;
+    readonly type_name?: string;
+    readonly type_uuid?: string;
     backend_id?: string;
     start_date?: string | null;
     /**
@@ -6749,15 +6777,15 @@ export type Project = {
     end_date?: string | null;
     end_date_requested_by?: string | null;
     oecd_fos_2007_code?: OecdFos2007CodeEnum | BlankEnum | NullEnum | null;
-    readonly oecd_fos_2007_label: string;
+    readonly oecd_fos_2007_label?: string;
     is_industry?: boolean;
     image?: string | null;
-    readonly resources_count: number;
-    readonly project_credit: number | null;
-    readonly marketplace_resource_count: {
+    readonly resources_count?: number;
+    readonly project_credit?: number | null;
+    readonly marketplace_resource_count?: {
         [key: string]: number;
     };
-    billing_price_estimate: NestedPriceEstimate;
+    billing_price_estimate?: NestedPriceEstimate;
 };
 
 export type ProjectCredit = {
@@ -6829,32 +6857,32 @@ export type ProjectEstimatedCostPolicyRequest = {
 };
 
 export type ProjectPermissionLog = {
-    readonly created: string;
+    readonly created?: string;
     expiration_time?: string | null;
-    readonly created_by: string | null;
-    readonly created_by_full_name: string;
+    readonly created_by?: string | null;
+    readonly created_by_full_name?: string;
     /**
      * Required. 128 characters or fewer. Lowercase letters, numbers and @/./+/-/_ characters
      */
-    readonly created_by_username: string;
-    readonly project: string;
-    readonly project_uuid: string;
-    readonly project_name: string;
-    readonly project_created: string;
-    readonly project_end_date: string;
-    readonly customer_uuid: string;
-    readonly customer_name: string;
-    readonly role: string;
-    readonly role_name: string;
-    user: string;
-    readonly user_full_name: string;
-    readonly user_native_name: string;
+    readonly created_by_username?: string;
+    readonly project?: string;
+    readonly project_uuid?: string;
+    readonly project_name?: string;
+    readonly project_created?: string;
+    readonly project_end_date?: string;
+    readonly customer_uuid?: string;
+    readonly customer_name?: string;
+    readonly role?: string;
+    readonly role_name?: string;
+    user?: string;
+    readonly user_full_name?: string;
+    readonly user_native_name?: string;
     /**
      * Required. 128 characters or fewer. Lowercase letters, numbers and @/./+/-/_ characters
      */
-    readonly user_username: string;
-    readonly user_uuid: string;
-    readonly user_email: string;
+    readonly user_username?: string;
+    readonly user_uuid?: string;
+    readonly user_email?: string;
 };
 
 export type ProjectQuotas = {
@@ -7038,28 +7066,28 @@ export type ProposalUpdateProjectDetailsRequest = {
 };
 
 export type ProtectedCall = {
-    readonly url: string;
-    readonly uuid: string;
-    readonly created: string;
-    readonly start_date: string;
-    readonly end_date: string;
-    readonly slug: string;
-    name: string;
+    readonly url?: string;
+    readonly uuid?: string;
+    readonly created?: string;
+    readonly start_date?: string;
+    readonly end_date?: string;
+    readonly slug?: string;
+    name?: string;
     description?: string;
-    state: CallStates;
-    manager: string;
-    readonly customer_name: string;
-    readonly customer_uuid: string;
-    readonly offerings: Array<NestedRequestedOffering>;
-    readonly rounds: Array<NestedRound>;
-    readonly documents: Array<CallDocument>;
+    state?: CallStates;
+    manager?: string;
+    readonly customer_name?: string;
+    readonly customer_uuid?: string;
+    readonly offerings?: Array<NestedRequestedOffering>;
+    readonly rounds?: Array<NestedRound>;
+    readonly documents?: Array<CallDocument>;
     backend_id?: string;
     external_url?: string | null;
     created_by?: string | null;
     reference_code?: string;
     default_project_role?: string;
-    readonly default_project_role_name: string;
-    readonly default_project_role_description: string;
+    readonly default_project_role_name?: string;
+    readonly default_project_role_description?: string;
 };
 
 export type ProtectedCallRequest = {
@@ -7118,44 +7146,16 @@ export type ProtectedRoundRequest = {
 
 export type ProtocolEnum = 'tcp' | 'udp' | 'icmp';
 
-export type ProviderCustomer = {
-    readonly uuid: string;
-    name: string;
-    slug: string;
-    abbreviation?: string;
-    phone_number?: string;
-    email?: string;
-    readonly payment_profiles: Array<PaymentProfile>;
-    billing_price_estimate: NestedPriceEstimate;
-    readonly projects_count: number;
-    readonly users_count: number;
-    readonly projects: Array<ProviderProject>;
-    readonly users: Array<ProviderUser>;
-};
-
-export type ProviderCustomerProject = {
-    readonly uuid: string;
-    name: string;
-    description?: string;
-    /**
-     * The date is inclusive. Once reached, all project resource will be scheduled for termination.
-     */
-    end_date?: string | null;
-    readonly resources_count: number;
-    readonly users_count: number;
-    billing_price_estimate: NestedPriceEstimate;
-};
-
 export type ProviderOffering = {
-    readonly uuid: string;
-    readonly customer_uuid: string;
-    name: string;
-    readonly slug: string;
-    readonly category_title: string;
-    type: string;
-    state: OfferingState;
-    readonly resources_count: number;
-    billing_price_estimate: NestedPriceEstimate;
+    readonly uuid?: string;
+    readonly customer_uuid?: string;
+    name?: string;
+    readonly slug?: string;
+    readonly category_title?: string;
+    type?: string;
+    state?: OfferingState;
+    readonly resources_count?: number;
+    billing_price_estimate?: NestedPriceEstimate;
     components?: Array<OfferingComponent>;
     plans?: Array<BaseProviderPlan>;
     /**
@@ -7166,7 +7166,7 @@ export type ProviderOffering = {
      * Fields describing resource report form.
      */
     resource_options?: unknown;
-    secret_options: MergedSecretOptions;
+    secret_options?: MergedSecretOptions;
 };
 
 export type ProviderOfferingCosts = {
@@ -7186,11 +7186,11 @@ export type ProviderOfferingCustomer = {
 };
 
 export type ProviderOfferingDetails = {
-    readonly url: string;
-    readonly uuid: string;
-    readonly created: string;
-    name: string;
-    readonly slug: string;
+    readonly url?: string;
+    readonly uuid?: string;
+    readonly created?: string;
+    name?: string;
+    readonly slug?: string;
     description?: string;
     full_description?: string;
     terms_of_service?: string;
@@ -7200,34 +7200,34 @@ export type ProviderOfferingDetails = {
      * Publicly accessible offering access URL
      */
     access_url?: string;
-    readonly endpoints: Array<NestedEndpoint>;
-    readonly roles: Array<NestedRole>;
+    readonly endpoints?: Array<NestedEndpoint>;
+    readonly roles?: Array<NestedRole>;
     customer?: string | null;
-    readonly customer_uuid: string;
-    readonly customer_name: string;
-    readonly project: string | null;
-    readonly project_uuid: string;
-    readonly project_name: string;
-    category: string;
-    readonly category_uuid: string;
-    readonly category_title: string;
-    readonly attributes: {};
-    options: OfferingOptions;
-    resource_options: OfferingOptions;
-    readonly components: Array<OfferingComponent>;
-    plugin_options: MergedPluginOptions;
-    secret_options: MergedSecretOptions;
-    readonly service_attributes: {};
-    state: OfferingState;
-    state_code: StateCodeEnum;
+    readonly customer_uuid?: string;
+    readonly customer_name?: string;
+    readonly project?: string | null;
+    readonly project_uuid?: string;
+    readonly project_name?: string;
+    category?: string;
+    readonly category_uuid?: string;
+    readonly category_title?: string;
+    readonly attributes?: {};
+    options?: OfferingOptions;
+    resource_options?: OfferingOptions;
+    readonly components?: Array<OfferingComponent>;
+    plugin_options?: MergedPluginOptions;
+    secret_options?: MergedSecretOptions;
+    readonly service_attributes?: {};
+    state?: OfferingState;
+    state_code?: StateCodeEnum;
     vendor_details?: string;
     getting_started?: string;
     integration_guide?: string;
     thumbnail?: string | null;
-    readonly order_count: number;
-    readonly plans: Array<BaseProviderPlan>;
-    readonly screenshots: Array<NestedScreenshot>;
-    type: string;
+    readonly order_count?: number;
+    readonly plans?: Array<BaseProviderPlan>;
+    readonly screenshots?: Array<NestedScreenshot>;
+    type?: string;
     /**
      * Accessible to all customers.
      */
@@ -7236,34 +7236,34 @@ export type ProviderOfferingDetails = {
      * Purchase and usage is invoiced.
      */
     billable?: boolean;
-    readonly scope: string;
-    readonly scope_uuid: string;
-    readonly scope_name: string;
-    scope_state: CoreStates;
-    readonly files: Array<NestedOfferingFile>;
-    readonly quotas: Array<Quota>;
-    readonly paused_reason: string;
+    readonly scope?: string;
+    readonly scope_uuid?: string | null;
+    readonly scope_name?: string | null;
+    scope_state?: CoreStates | null;
+    readonly files?: Array<NestedOfferingFile>;
+    readonly quotas?: Array<Quota>;
+    readonly paused_reason?: string;
     datacite_doi?: string;
     /**
      * Number of citations of a DOI
      */
-    readonly citation_count: number;
+    readonly citation_count?: number;
     latitude?: number | null;
     longitude?: number | null;
     country?: CountryEnum | BlankEnum;
     backend_id?: string;
-    readonly organization_groups: Array<OrganizationGroup>;
+    readonly organization_groups?: Array<OrganizationGroup>;
     image?: string | null;
-    readonly total_customers: number;
-    readonly total_cost: number;
-    readonly total_cost_estimated: number;
-    readonly parent_description: string;
-    readonly parent_uuid: string;
-    readonly parent_name: string;
+    readonly total_customers?: number | null;
+    readonly total_cost?: number | null;
+    readonly total_cost_estimated?: number | null;
+    readonly parent_description?: string;
+    readonly parent_uuid?: string;
+    readonly parent_name?: string;
     backend_metadata?: unknown;
-    readonly integration_status: Array<IntegrationStatus>;
-    readonly google_calendar_is_public: boolean;
-    readonly google_calendar_link: string | null;
+    readonly integration_status?: Array<IntegrationStatus>;
+    readonly google_calendar_is_public?: boolean;
+    readonly google_calendar_link?: string | null;
 };
 
 export type ProviderOfferingDetailsRequest = {
@@ -7359,8 +7359,8 @@ export type ProviderPlanDetailsRequest = {
 };
 
 export type ProviderProject = {
-    readonly uuid: string;
-    name: string;
+    readonly uuid?: string;
+    name?: string;
     image?: string | null;
 };
 
@@ -7403,38 +7403,38 @@ export type ProviderRequestedResource = {
 };
 
 export type ProviderUser = {
-    readonly uuid: string;
-    readonly full_name: string;
+    readonly uuid?: string;
+    readonly full_name?: string;
     email?: string;
     image?: string | null;
 };
 
 export type PublicCall = {
-    readonly url: string;
-    readonly uuid: string;
-    readonly created: string;
-    readonly start_date: string;
-    readonly end_date: string;
-    readonly slug: string;
-    name: string;
+    readonly url?: string;
+    readonly uuid?: string;
+    readonly created?: string;
+    readonly start_date?: string;
+    readonly end_date?: string;
+    readonly slug?: string;
+    name?: string;
     description?: string;
-    state: CallStates;
-    manager: string;
-    readonly customer_name: string;
-    readonly customer_uuid: string;
-    readonly offerings: Array<NestedRequestedOffering>;
-    readonly rounds: Array<NestedRound>;
-    readonly documents: Array<CallDocument>;
+    state?: CallStates;
+    manager?: string;
+    readonly customer_name?: string;
+    readonly customer_uuid?: string;
+    readonly offerings?: Array<NestedRequestedOffering>;
+    readonly rounds?: Array<NestedRound>;
+    readonly documents?: Array<CallDocument>;
     backend_id?: string;
     external_url?: string | null;
 };
 
 export type PublicOfferingDetails = {
-    readonly url: string;
-    readonly uuid: string;
-    readonly created: string;
-    name: string;
-    readonly slug: string;
+    readonly url?: string;
+    readonly uuid?: string;
+    readonly created?: string;
+    name?: string;
+    readonly slug?: string;
     description?: string;
     full_description?: string;
     terms_of_service?: string;
@@ -7444,32 +7444,32 @@ export type PublicOfferingDetails = {
      * Publicly accessible offering access URL
      */
     access_url?: string;
-    readonly endpoints: Array<NestedEndpoint>;
-    readonly roles: Array<NestedRole>;
+    readonly endpoints?: Array<NestedEndpoint>;
+    readonly roles?: Array<NestedRole>;
     customer?: string | null;
-    readonly customer_uuid: string;
-    readonly customer_name: string;
-    readonly project: string | null;
-    readonly project_uuid: string;
-    readonly project_name: string;
-    category: string;
-    readonly category_uuid: string;
-    readonly category_title: string;
-    readonly attributes: {};
-    options: OfferingOptions;
-    resource_options: OfferingOptions;
-    readonly components: Array<OfferingComponent>;
-    plugin_options: MergedPluginOptions;
-    state: OfferingState;
-    state_code: StateCodeEnum;
+    readonly customer_uuid?: string;
+    readonly customer_name?: string;
+    readonly project?: string | null;
+    readonly project_uuid?: string;
+    readonly project_name?: string;
+    category?: string;
+    readonly category_uuid?: string;
+    readonly category_title?: string;
+    readonly attributes?: {};
+    options?: OfferingOptions;
+    resource_options?: OfferingOptions;
+    readonly components?: Array<OfferingComponent>;
+    plugin_options?: MergedPluginOptions;
+    state?: OfferingState;
+    state_code?: StateCodeEnum;
     vendor_details?: string;
     getting_started?: string;
     integration_guide?: string;
     thumbnail?: string | null;
-    readonly order_count: number;
-    readonly plans: Array<BasePublicPlan>;
-    readonly screenshots: Array<NestedScreenshot>;
-    type: string;
+    readonly order_count?: number;
+    readonly plans?: Array<BasePublicPlan>;
+    readonly screenshots?: Array<NestedScreenshot>;
+    type?: string;
     /**
      * Accessible to all customers.
      */
@@ -7478,34 +7478,34 @@ export type PublicOfferingDetails = {
      * Purchase and usage is invoiced.
      */
     billable?: boolean;
-    readonly scope: string;
-    readonly scope_uuid: string;
-    readonly scope_name: string;
-    scope_state: CoreStates;
-    readonly files: Array<NestedOfferingFile>;
-    readonly quotas: Array<Quota>;
-    readonly paused_reason: string;
+    readonly scope?: string;
+    readonly scope_uuid?: string | null;
+    readonly scope_name?: string | null;
+    scope_state?: CoreStates | null;
+    readonly files?: Array<NestedOfferingFile>;
+    readonly quotas?: Array<Quota>;
+    readonly paused_reason?: string;
     datacite_doi?: string;
     /**
      * Number of citations of a DOI
      */
-    readonly citation_count: number;
+    readonly citation_count?: number;
     latitude?: number | null;
     longitude?: number | null;
     country?: CountryEnum | BlankEnum;
     backend_id?: string;
-    readonly organization_groups: Array<OrganizationGroup>;
+    readonly organization_groups?: Array<OrganizationGroup>;
     image?: string | null;
-    readonly total_customers: number;
-    readonly total_cost: number;
-    readonly total_cost_estimated: number;
-    readonly parent_description: string;
-    readonly parent_uuid: string;
-    readonly parent_name: string;
+    readonly total_customers?: number | null;
+    readonly total_cost?: number | null;
+    readonly total_cost_estimated?: number | null;
+    readonly parent_description?: string;
+    readonly parent_uuid?: string;
+    readonly parent_name?: string;
     backend_metadata?: unknown;
-    readonly google_calendar_is_public: boolean;
-    readonly google_calendar_link: string | null;
-    promotion_campaigns: NestedCampaign;
+    readonly google_calendar_is_public?: boolean;
+    readonly google_calendar_link?: string | null;
+    readonly promotion_campaigns?: Array<NestedCampaign>;
 };
 
 export type PullMarketplaceScriptResourceRequest = {
@@ -7521,9 +7521,9 @@ export type QueryRequest = {
 };
 
 export type Quota = {
-    name: string;
-    usage: number;
-    limit: number;
+    name?: string;
+    usage?: number;
+    limit?: number;
 };
 
 export type QuotaRequest = {
@@ -7539,50 +7539,50 @@ export type QuotasUpdateRequest = {
 };
 
 export type RancherApplication = {
-    readonly url: string;
-    readonly uuid: string;
-    name: string;
+    readonly url?: string;
+    readonly uuid?: string;
+    name?: string;
     description?: string;
-    readonly service_name: string;
-    service_settings: string;
-    readonly service_settings_uuid: string;
-    readonly service_settings_state: string;
-    readonly service_settings_error_message: string;
-    project: string;
-    readonly project_name: string;
-    readonly project_uuid: string;
-    readonly customer: string;
-    readonly customer_name: string;
-    readonly customer_native_name: string;
-    readonly customer_abbreviation: string;
+    readonly service_name?: string;
+    service_settings?: string;
+    readonly service_settings_uuid?: string;
+    readonly service_settings_state?: string;
+    readonly service_settings_error_message?: string;
+    project?: string;
+    readonly project_name?: string;
+    readonly project_uuid?: string;
+    readonly customer?: string;
+    readonly customer_name?: string;
+    readonly customer_native_name?: string;
+    readonly customer_abbreviation?: string;
     error_message?: string;
     error_traceback?: string;
-    readonly resource_type: string;
-    state: CoreStates;
-    readonly created: string;
-    readonly modified: string;
+    readonly resource_type?: string;
+    state?: CoreStates;
+    readonly created?: string;
+    readonly modified?: string;
     backend_id?: string;
-    readonly access_url: string | null;
+    readonly access_url?: string | null;
     runtime_state?: string;
-    template: string;
-    rancher_project: string;
+    template?: string;
+    rancher_project?: string;
     namespace?: string;
-    version: string;
+    version?: string;
     answers?: {};
-    readonly rancher_project_name: string;
-    readonly catalog_name: string;
-    readonly template_name: string;
-    readonly external_url: string;
-    readonly marketplace_offering_uuid: string;
-    readonly marketplace_offering_name: string;
-    readonly marketplace_offering_plugin_options: {};
-    readonly marketplace_category_uuid: string;
-    readonly marketplace_category_name: string;
-    readonly marketplace_resource_uuid: string;
-    readonly marketplace_plan_uuid: string;
-    readonly marketplace_resource_state: string;
-    readonly is_usage_based: boolean;
-    readonly is_limit_based: boolean;
+    readonly rancher_project_name?: string;
+    readonly catalog_name?: string;
+    readonly template_name?: string;
+    readonly external_url?: string;
+    readonly marketplace_offering_uuid?: string;
+    readonly marketplace_offering_name?: string;
+    readonly marketplace_offering_plugin_options?: {};
+    readonly marketplace_category_uuid?: string;
+    readonly marketplace_category_name?: string;
+    readonly marketplace_resource_uuid?: string;
+    readonly marketplace_plan_uuid?: string;
+    readonly marketplace_resource_state?: string;
+    readonly is_usage_based?: boolean;
+    readonly is_limit_based?: boolean;
 };
 
 export type RancherApplicationRequest = {
@@ -7676,59 +7676,59 @@ export type RancherCatalogUpdateRequest = {
 };
 
 export type RancherCluster = {
-    readonly url: string;
-    readonly uuid: string;
-    name: string;
+    readonly url?: string;
+    readonly uuid?: string;
+    name?: string;
     description?: string;
-    readonly service_name: string;
-    service_settings: string;
-    readonly service_settings_uuid: string;
-    readonly service_settings_state: string;
-    readonly service_settings_error_message: string;
-    project: string;
-    readonly project_name: string;
-    readonly project_uuid: string;
-    readonly customer: string;
-    readonly customer_name: string;
-    readonly customer_native_name: string;
-    readonly customer_abbreviation: string;
-    readonly error_message: string;
-    readonly error_traceback: string;
-    readonly resource_type: string;
-    state: CoreStates;
-    readonly created: string;
-    readonly modified: string;
-    readonly backend_id: string;
-    readonly access_url: string | null;
+    readonly service_name?: string;
+    service_settings?: string;
+    readonly service_settings_uuid?: string;
+    readonly service_settings_state?: string;
+    readonly service_settings_error_message?: string;
+    project?: string;
+    readonly project_name?: string;
+    readonly project_uuid?: string;
+    readonly customer?: string;
+    readonly customer_name?: string;
+    readonly customer_native_name?: string;
+    readonly customer_abbreviation?: string;
+    readonly error_message?: string;
+    readonly error_traceback?: string;
+    readonly resource_type?: string;
+    state?: CoreStates;
+    readonly created?: string;
+    readonly modified?: string;
+    readonly backend_id?: string;
+    readonly access_url?: string | null;
     /**
      * Rancher generated node installation command base.
      */
-    readonly node_command: string;
-    nodes: Array<RancherNestedNode>;
-    tenant: string;
-    readonly tenant_uuid: string;
-    readonly runtime_state: string;
+    readonly node_command?: string;
+    nodes?: Array<RancherNestedNode>;
+    tenant?: string;
+    readonly tenant_uuid?: string;
+    readonly runtime_state?: string;
     /**
      * Longhorn is a distributed block storage deployed on top of Kubernetes cluster
      */
     install_longhorn?: boolean;
-    readonly management_security_group: string;
-    readonly marketplace_offering_uuid: string;
-    readonly marketplace_offering_name: string;
-    readonly marketplace_offering_plugin_options: {};
-    readonly marketplace_category_uuid: string;
-    readonly marketplace_category_name: string;
-    readonly marketplace_resource_uuid: string;
-    readonly marketplace_plan_uuid: string;
-    readonly marketplace_resource_state: string;
-    readonly is_usage_based: boolean;
-    readonly is_limit_based: boolean;
+    readonly management_security_group?: string;
+    readonly marketplace_offering_uuid?: string;
+    readonly marketplace_offering_name?: string;
+    readonly marketplace_offering_plugin_options?: {};
+    readonly marketplace_category_uuid?: string;
+    readonly marketplace_category_name?: string;
+    readonly marketplace_resource_uuid?: string;
+    readonly marketplace_plan_uuid?: string;
+    readonly marketplace_resource_state?: string;
+    readonly is_usage_based?: boolean;
+    readonly is_limit_based?: boolean;
 };
 
 export type RancherClusterReference = {
-    readonly uuid: string;
-    name: string;
-    readonly marketplace_uuid: string;
+    readonly uuid?: string;
+    name?: string;
+    readonly marketplace_uuid?: string;
 };
 
 export type RancherClusterRequest = {
@@ -7828,46 +7828,46 @@ export type RancherImportYamlRequest = {
 };
 
 export type RancherIngress = {
-    readonly url: string;
-    readonly uuid: string;
-    name: string;
+    readonly url?: string;
+    readonly uuid?: string;
+    name?: string;
     description?: string;
-    readonly service_name: string;
-    service_settings: string;
-    readonly service_settings_uuid: string;
-    readonly service_settings_state: string;
-    readonly service_settings_error_message: string;
-    project: string;
-    readonly project_name: string;
-    readonly project_uuid: string;
-    readonly customer: string;
-    readonly customer_name: string;
-    readonly customer_native_name: string;
-    readonly customer_abbreviation: string;
+    readonly service_name?: string;
+    service_settings?: string;
+    readonly service_settings_uuid?: string;
+    readonly service_settings_state?: string;
+    readonly service_settings_error_message?: string;
+    project?: string;
+    readonly project_name?: string;
+    readonly project_uuid?: string;
+    readonly customer?: string;
+    readonly customer_name?: string;
+    readonly customer_native_name?: string;
+    readonly customer_abbreviation?: string;
     error_message?: string;
     error_traceback?: string;
-    readonly resource_type: string;
-    state: CoreStates;
-    readonly created: string;
-    readonly modified: string;
+    readonly resource_type?: string;
+    state?: CoreStates;
+    readonly created?: string;
+    readonly modified?: string;
     backend_id?: string;
-    readonly access_url: string | null;
+    readonly access_url?: string | null;
     runtime_state?: string;
-    rancher_project: string;
-    readonly rancher_project_name: string;
+    rancher_project?: string;
+    readonly rancher_project_name?: string;
     namespace?: string;
-    readonly namespace_name: string;
+    readonly namespace_name?: string;
     rules?: unknown;
-    readonly marketplace_offering_uuid: string;
-    readonly marketplace_offering_name: string;
-    readonly marketplace_offering_plugin_options: {};
-    readonly marketplace_category_uuid: string;
-    readonly marketplace_category_name: string;
-    readonly marketplace_resource_uuid: string;
-    readonly marketplace_plan_uuid: string;
-    readonly marketplace_resource_state: string;
-    readonly is_usage_based: boolean;
-    readonly is_limit_based: boolean;
+    readonly marketplace_offering_uuid?: string;
+    readonly marketplace_offering_name?: string;
+    readonly marketplace_offering_plugin_options?: {};
+    readonly marketplace_category_uuid?: string;
+    readonly marketplace_category_name?: string;
+    readonly marketplace_resource_uuid?: string;
+    readonly marketplace_plan_uuid?: string;
+    readonly marketplace_resource_state?: string;
+    readonly is_usage_based?: boolean;
+    readonly is_limit_based?: boolean;
 };
 
 export type RancherIngressRequest = {
@@ -7901,38 +7901,38 @@ export type RancherNestedNamespace = {
 };
 
 export type RancherNestedNode = {
-    readonly url: string;
-    readonly instance: string;
-    readonly created: string;
-    readonly modified: string;
-    readonly uuid: string;
-    readonly error_message: string;
+    readonly url?: string;
+    readonly instance?: string;
+    readonly created?: string;
+    readonly modified?: string;
+    readonly uuid?: string;
+    readonly error_message?: string;
     error_traceback?: string;
     backend_id?: string;
     controlplane_role?: boolean;
-    readonly etcd_role: boolean;
-    readonly worker_role: boolean;
+    readonly etcd_role?: boolean;
+    readonly worker_role?: boolean;
     /**
      * Initial data for instance creating.
      */
-    readonly initial_data: unknown;
-    readonly runtime_state: string;
-    readonly k8s_version: string;
-    readonly docker_version: string;
-    readonly cpu_allocated: number | null;
-    readonly cpu_total: number | null;
+    readonly initial_data?: unknown;
+    readonly runtime_state?: string;
+    readonly k8s_version?: string;
+    readonly docker_version?: string;
+    readonly cpu_allocated?: number | null;
+    readonly cpu_total?: number | null;
     /**
      * Allocated RAM in Mi.
      */
-    readonly ram_allocated: number | null;
+    readonly ram_allocated?: number | null;
     /**
      * Total RAM in Mi.
      */
-    readonly ram_total: number | null;
-    readonly pods_allocated: number | null;
-    readonly pods_total: number | null;
-    readonly labels: unknown;
-    readonly annotations: unknown;
+    readonly ram_total?: number | null;
+    readonly pods_allocated?: number | null;
+    readonly pods_total?: number | null;
+    readonly labels?: unknown;
+    readonly annotations?: unknown;
 };
 
 export type RancherNestedNodeRequest = {
@@ -7954,9 +7954,9 @@ export type RancherNestedSecurityGroup = {
 };
 
 export type RancherNestedWorkload = {
-    readonly uuid: string;
-    readonly url: string;
-    name: string;
+    readonly uuid?: string;
+    readonly url?: string;
+    name?: string;
 };
 
 export type RancherNestedWorkloadRequest = {
@@ -8018,46 +8018,46 @@ export type RancherProject = {
 };
 
 export type RancherService = {
-    readonly url: string;
-    readonly uuid: string;
-    name: string;
+    readonly url?: string;
+    readonly uuid?: string;
+    name?: string;
     description?: string;
-    readonly service_name: string;
-    service_settings: string;
-    readonly service_settings_uuid: string;
-    readonly service_settings_state: string;
-    readonly service_settings_error_message: string;
-    project: string;
-    readonly project_name: string;
-    readonly project_uuid: string;
-    readonly customer: string;
-    readonly customer_name: string;
-    readonly customer_native_name: string;
-    readonly customer_abbreviation: string;
+    readonly service_name?: string;
+    service_settings?: string;
+    readonly service_settings_uuid?: string;
+    readonly service_settings_state?: string;
+    readonly service_settings_error_message?: string;
+    project?: string;
+    readonly project_name?: string;
+    readonly project_uuid?: string;
+    readonly customer?: string;
+    readonly customer_name?: string;
+    readonly customer_native_name?: string;
+    readonly customer_abbreviation?: string;
     error_message?: string;
     error_traceback?: string;
-    readonly resource_type: string;
-    state: CoreStates;
-    readonly created: string;
-    readonly modified: string;
+    readonly resource_type?: string;
+    state?: CoreStates;
+    readonly created?: string;
+    readonly modified?: string;
     backend_id?: string;
-    readonly access_url: string | null;
+    readonly access_url?: string | null;
     runtime_state?: string;
     namespace?: string;
-    readonly namespace_name: string;
+    readonly namespace_name?: string;
     cluster_ip?: string | null;
     selector?: unknown;
     target_workloads?: Array<RancherNestedWorkload>;
-    readonly marketplace_offering_uuid: string;
-    readonly marketplace_offering_name: string;
-    readonly marketplace_offering_plugin_options: {};
-    readonly marketplace_category_uuid: string;
-    readonly marketplace_category_name: string;
-    readonly marketplace_resource_uuid: string;
-    readonly marketplace_plan_uuid: string;
-    readonly marketplace_resource_state: string;
-    readonly is_usage_based: boolean;
-    readonly is_limit_based: boolean;
+    readonly marketplace_offering_uuid?: string;
+    readonly marketplace_offering_name?: string;
+    readonly marketplace_offering_plugin_options?: {};
+    readonly marketplace_category_uuid?: string;
+    readonly marketplace_category_name?: string;
+    readonly marketplace_resource_uuid?: string;
+    readonly marketplace_plan_uuid?: string;
+    readonly marketplace_resource_state?: string;
+    readonly is_usage_based?: boolean;
+    readonly is_limit_based?: boolean;
 };
 
 export type RancherServiceRequest = {
@@ -8288,8 +8288,8 @@ export type RemoveOfferingComponentRequest = {
 };
 
 export type ReportSection = {
-    header: string;
-    body: string;
+    header?: string;
+    body?: string;
 };
 
 export type ReportSectionRequest = {
@@ -8352,95 +8352,95 @@ export type RequestedResourceRequest = {
 };
 
 export type Resource = {
-    offering: string;
-    readonly offering_name: string;
-    readonly offering_uuid: string;
-    readonly offering_description: string;
-    readonly offering_image: string;
-    readonly offering_thumbnail: string;
-    readonly offering_type: string;
-    readonly offering_terms_of_service: string;
+    offering?: string;
+    readonly offering_name?: string;
+    readonly offering_uuid?: string;
+    readonly offering_description?: string;
+    readonly offering_image?: string;
+    readonly offering_thumbnail?: string;
+    readonly offering_type?: string;
+    readonly offering_terms_of_service?: string;
     /**
      * Accessible to all customers.
      */
-    readonly offering_shared: boolean;
+    readonly offering_shared?: boolean;
     /**
      * Purchase and usage is invoiced.
      */
-    readonly offering_billable: boolean;
+    readonly offering_billable?: boolean;
     /**
      * Public data used by specific plugin, such as storage mode for OpenStack.
      */
-    readonly offering_plugin_options: unknown;
-    readonly provider_name: string;
-    readonly provider_uuid: string;
-    readonly category_title: string;
-    readonly category_uuid: string;
-    readonly category_icon: string;
+    readonly offering_plugin_options?: unknown;
+    readonly provider_name?: string;
+    readonly provider_uuid?: string;
+    readonly category_title?: string;
+    readonly category_uuid?: string;
+    readonly category_icon?: string;
     plan?: string;
-    plan_unit: BillingUnit;
-    readonly plan_name: string;
-    readonly plan_uuid: string;
-    readonly plan_description: string;
-    readonly attributes: {};
-    readonly limits: {
+    plan_unit?: BillingUnit;
+    readonly plan_name?: string;
+    readonly plan_uuid?: string;
+    readonly plan_description?: string;
+    readonly attributes?: {};
+    readonly limits?: {
         [key: string]: number;
     };
-    readonly uuid: string;
-    readonly created: string;
-    readonly modified: string;
-    readonly url: string;
-    readonly scope: string;
-    readonly description: string;
-    state: ResourceState;
-    readonly resource_uuid: string;
-    readonly backend_id: string;
-    readonly effective_id: string;
-    readonly resource_type: string | null;
-    readonly project: string;
-    readonly project_uuid: string;
-    readonly project_name: string;
-    readonly project_description: string;
+    readonly uuid?: string;
+    readonly created?: string;
+    readonly modified?: string;
+    readonly url?: string;
+    readonly scope?: string;
+    readonly description?: string;
+    state?: ResourceState;
+    readonly resource_uuid?: string | null;
+    readonly backend_id?: string;
+    readonly effective_id?: string;
+    readonly resource_type?: string | null;
+    readonly project?: string;
+    readonly project_uuid?: string;
+    readonly project_name?: string;
+    readonly project_description?: string;
     /**
      * The date is inclusive. Once reached, all project resource will be scheduled for termination.
      */
-    readonly project_end_date: string | null;
-    readonly project_end_date_requested_by: string;
-    readonly customer_uuid: string;
-    readonly customer_name: string;
-    readonly parent_offering_uuid: string;
-    readonly parent_offering_name: string;
-    readonly parent_uuid: string;
-    readonly parent_name: string;
-    backend_metadata: BackendMetadata;
-    readonly is_usage_based: boolean;
-    readonly is_limit_based: boolean;
-    name: string;
-    readonly slug: string;
-    readonly current_usages: {
+    readonly project_end_date?: string | null;
+    readonly project_end_date_requested_by?: string;
+    readonly customer_uuid?: string;
+    readonly customer_name?: string;
+    readonly parent_offering_uuid?: string;
+    readonly parent_offering_name?: string;
+    readonly parent_uuid?: string;
+    readonly parent_name?: string;
+    backend_metadata?: BackendMetadata;
+    readonly is_usage_based?: boolean;
+    readonly is_limit_based?: boolean;
+    name?: string;
+    readonly slug?: string;
+    readonly current_usages?: {
         [key: string]: number;
     };
-    readonly can_terminate: boolean;
-    readonly report: Array<ReportSection>;
+    readonly can_terminate?: boolean;
+    readonly report?: Array<ReportSection>;
     /**
      * The date is inclusive. Once reached, a resource will be scheduled for termination.
      */
     end_date?: string | null;
-    readonly end_date_requested_by: string | null;
-    readonly username: string | null;
-    readonly limit_usage: number | null;
+    readonly end_date_requested_by?: string | null;
+    readonly username?: string | null;
+    readonly limit_usage?: number | null;
     downscaled?: boolean;
-    readonly restrict_member_access: boolean;
+    readonly restrict_member_access?: boolean;
     paused?: boolean;
-    readonly endpoints: Array<NestedEndpoint>;
-    readonly error_message: string;
-    readonly error_traceback: string;
-    readonly offering_customer_uuid: string;
-    readonly options: unknown;
-    readonly available_actions: Array<string>;
-    readonly last_sync: string;
-    order_in_progress: OrderDetails | null;
-    creation_order: OrderDetails | null;
+    readonly endpoints?: Array<NestedEndpoint>;
+    readonly error_message?: string;
+    readonly error_traceback?: string;
+    readonly offering_customer_uuid?: string;
+    readonly options?: unknown;
+    readonly available_actions?: Array<string>;
+    readonly last_sync?: string;
+    order_in_progress?: OrderDetails | null;
+    creation_order?: OrderDetails | null;
 };
 
 export type ResourceBackendId = {
@@ -8467,11 +8467,11 @@ export type ResourceEndDateByProviderRequest = {
 };
 
 export type ResourceLimitPeriod = {
-    start: string;
-    end: string;
-    quantity: number;
-    billing_periods: number;
-    total: string;
+    start?: string;
+    end?: string;
+    quantity?: number;
+    billing_periods?: number;
+    total?: string;
 };
 
 export type ResourceOffering = {
@@ -8748,8 +8748,8 @@ export type RoleDescriptionRequest = {
 };
 
 export type RoleDetails = {
-    readonly uuid: string;
-    name: string;
+    readonly uuid?: string;
+    name?: string;
     description?: string;
     description_en?: string | null;
     description_et?: string | null;
@@ -8765,10 +8765,10 @@ export type RoleDetails = {
     description_nb?: string | null;
     description_ar?: string | null;
     description_cs?: string | null;
-    readonly permissions: Array<string>;
-    readonly is_system_role: boolean;
+    readonly permissions?: Array<string>;
+    readonly is_system_role?: boolean;
     is_active?: boolean;
-    content_type: RoleType;
+    content_type?: RoleType;
 };
 
 export type RoleEnum = 'owner' | 'member';
@@ -8888,21 +8888,21 @@ export type SectionRequest = {
 };
 
 export type ServiceProvider = {
-    readonly url: string;
-    readonly uuid: string;
-    readonly created: string;
+    readonly url?: string;
+    readonly uuid?: string;
+    readonly created?: string;
     description?: string;
-    customer: string;
-    readonly customer_name: string;
-    readonly customer_uuid: string;
-    readonly customer_image: string;
-    readonly customer_abbreviation: string;
-    readonly customer_slug: string;
-    readonly customer_native_name: string;
-    readonly customer_country: string;
+    customer?: string;
+    readonly customer_name?: string;
+    readonly customer_uuid?: string;
+    readonly customer_image?: string;
+    readonly customer_abbreviation?: string;
+    readonly customer_slug?: string;
+    readonly customer_native_name?: string;
+    readonly customer_country?: string;
     image?: string | null;
-    readonly organization_groups: Array<OrganizationGroup>;
-    readonly offering_count: number;
+    readonly organization_groups?: Array<OrganizationGroup>;
+    readonly offering_count?: number;
 };
 
 export type ServiceProviderApiSecretCode = {
@@ -8946,23 +8946,23 @@ export type ServiceProviderStatistics = {
 };
 
 export type ServiceSettings = {
-    readonly url: string;
-    readonly uuid: string;
-    name: string;
-    type: string;
-    state: ServiceSettingsStateEnum;
-    readonly error_message: string;
+    readonly url?: string;
+    readonly uuid?: string;
+    name?: string;
+    type?: string;
+    state?: ServiceSettingsStateEnum;
+    readonly error_message?: string;
     /**
      * Anybody can use it
      */
     shared?: boolean;
     customer?: string | null;
-    readonly customer_name: string;
-    readonly customer_native_name: string;
+    readonly customer_name?: string;
+    readonly customer_native_name?: string;
     terms_of_services?: string;
     scope?: string | null;
-    readonly scope_uuid: string;
-    readonly options: {};
+    readonly scope_uuid?: string;
+    readonly options?: {};
 };
 
 export type ServiceSettingsStateEnum = 'CREATION_SCHEDULED' | 'CREATING' | 'UPDATE_SCHEDULED' | 'UPDATING' | 'DELETION_SCHEDULED' | 'DELETING' | 'OK' | 'ERRED';
@@ -8986,49 +8986,49 @@ export type SetOfferingsUsernameRequest = {
 };
 
 export type SlurmAllocation = {
-    readonly url: string;
-    readonly uuid: string;
-    name: string;
+    readonly url?: string;
+    readonly uuid?: string;
+    name?: string;
     description?: string;
-    readonly service_name: string;
-    service_settings: string;
-    readonly service_settings_uuid: string;
-    readonly service_settings_state: string;
-    readonly service_settings_error_message: string;
-    project: string;
-    readonly project_name: string;
-    readonly project_uuid: string;
-    readonly customer: string;
-    readonly customer_name: string;
-    readonly customer_native_name: string;
-    readonly customer_abbreviation: string;
-    readonly error_message: string;
-    readonly error_traceback: string;
-    readonly resource_type: string;
-    state: CoreStates;
-    readonly created: string;
-    readonly modified: string;
-    readonly backend_id: string;
-    readonly access_url: string | null;
-    readonly cpu_limit: number;
-    readonly cpu_usage: number;
-    readonly gpu_limit: number;
-    readonly gpu_usage: number;
-    readonly ram_limit: number;
-    readonly ram_usage: number;
-    readonly username: string | null;
-    readonly gateway: string | null;
-    readonly is_active: boolean;
-    readonly marketplace_offering_uuid: string;
-    readonly marketplace_offering_name: string;
-    readonly marketplace_offering_plugin_options: {};
-    readonly marketplace_category_uuid: string;
-    readonly marketplace_category_name: string;
-    readonly marketplace_resource_uuid: string;
-    readonly marketplace_plan_uuid: string;
-    readonly marketplace_resource_state: string;
-    readonly is_usage_based: boolean;
-    readonly is_limit_based: boolean;
+    readonly service_name?: string;
+    service_settings?: string;
+    readonly service_settings_uuid?: string;
+    readonly service_settings_state?: string;
+    readonly service_settings_error_message?: string;
+    project?: string;
+    readonly project_name?: string;
+    readonly project_uuid?: string;
+    readonly customer?: string;
+    readonly customer_name?: string;
+    readonly customer_native_name?: string;
+    readonly customer_abbreviation?: string;
+    readonly error_message?: string;
+    readonly error_traceback?: string;
+    readonly resource_type?: string;
+    state?: CoreStates;
+    readonly created?: string;
+    readonly modified?: string;
+    readonly backend_id?: string;
+    readonly access_url?: string | null;
+    readonly cpu_limit?: number;
+    readonly cpu_usage?: number;
+    readonly gpu_limit?: number;
+    readonly gpu_usage?: number;
+    readonly ram_limit?: number;
+    readonly ram_usage?: number;
+    readonly username?: string | null;
+    readonly gateway?: string | null;
+    readonly is_active?: boolean;
+    readonly marketplace_offering_uuid?: string;
+    readonly marketplace_offering_name?: string;
+    readonly marketplace_offering_plugin_options?: {};
+    readonly marketplace_category_uuid?: string;
+    readonly marketplace_category_name?: string;
+    readonly marketplace_resource_uuid?: string;
+    readonly marketplace_plan_uuid?: string;
+    readonly marketplace_resource_state?: string;
+    readonly is_usage_based?: boolean;
+    readonly is_limit_based?: boolean;
 };
 
 export type SlurmAllocationRequest = {
@@ -9077,16 +9077,16 @@ export type SmaxWebHookReceiverRequest = {
 };
 
 export type SshKey = {
-    readonly url: string;
-    readonly uuid: string;
+    readonly url?: string;
+    readonly uuid?: string;
     name?: string;
-    public_key: string;
-    readonly fingerprint_md5: string;
-    readonly fingerprint_sha256: string;
-    readonly fingerprint_sha512: string;
-    readonly user_uuid: string;
-    readonly is_shared: boolean;
-    readonly type: string;
+    public_key?: string;
+    readonly fingerprint_md5?: string;
+    readonly fingerprint_sha256?: string;
+    readonly fingerprint_sha512?: string;
+    readonly user_uuid?: string;
+    readonly is_shared?: boolean;
+    readonly type?: string;
 };
 
 export type SshKeyRequest = {
@@ -9182,20 +9182,20 @@ export type TotalCustomerCost = {
 };
 
 export type User = {
-    readonly url: string;
-    readonly uuid: string;
+    readonly url?: string;
+    readonly uuid?: string;
     /**
      * Required. 128 characters or fewer. Lowercase letters, numbers and @/./+/-/_ characters
      */
-    username: string;
-    readonly slug: string;
-    readonly full_name: string;
+    username?: string;
+    readonly slug?: string;
+    readonly full_name?: string;
     native_name?: string;
     job_title?: string;
-    email: string;
+    email?: string;
     phone_number?: string;
     organization?: string;
-    readonly civil_number: string | null;
+    readonly civil_number?: string | null;
     description?: string;
     /**
      * Designates whether the user can log into this admin site.
@@ -9209,7 +9209,7 @@ export type User = {
      * Designates whether the user is a global support user.
      */
     is_support?: boolean;
-    readonly token: string;
+    readonly token?: string;
     /**
      * Token lifetime in seconds.
      */
@@ -9217,31 +9217,31 @@ export type User = {
     /**
      * Indicates what registration method was used.
      */
-    readonly registration_method: string;
-    readonly date_joined: string;
+    readonly registration_method?: string;
+    readonly date_joined?: string;
     /**
      * Indicates when the user has agreed with the policy.
      */
-    readonly agreement_date: string | null;
+    readonly agreement_date?: string | null;
     preferred_language?: string;
-    readonly permissions: Array<Permission>;
-    readonly requested_email: string | null;
+    readonly permissions?: Array<Permission>;
+    readonly requested_email?: string | null;
     /**
      * Person's affiliation within organization such as student, faculty, staff.
      */
-    readonly affiliations: unknown;
+    readonly affiliations?: unknown;
     first_name?: string;
     last_name?: string;
-    readonly identity_provider_name: string;
-    readonly identity_provider_label: string;
-    readonly identity_provider_management_url: string;
-    readonly identity_provider_fields: Array<string>;
+    readonly identity_provider_name?: string;
+    readonly identity_provider_label?: string;
+    readonly identity_provider_management_url?: string;
+    readonly identity_provider_fields?: Array<string>;
     image?: string | null;
     /**
      * Indicates what identity provider was used.
      */
-    readonly identity_source: string;
-    readonly has_active_session: boolean;
+    readonly identity_source?: string;
+    readonly has_active_session?: boolean;
 };
 
 export type UserAgreement = {
@@ -9331,21 +9331,21 @@ export type UserRoleDeleteRequest = {
 };
 
 export type UserRoleDetails = {
-    readonly uuid: string;
-    readonly created: string;
+    readonly uuid?: string;
+    readonly created?: string;
     expiration_time?: string | null;
-    readonly role_name: string;
-    readonly role_uuid: string;
-    readonly user_email: string;
-    readonly user_full_name: string;
+    readonly role_name?: string;
+    readonly role_uuid?: string;
+    readonly user_email?: string;
+    readonly user_full_name?: string;
     /**
      * Required. 128 characters or fewer. Lowercase letters, numbers and @/./+/-/_ characters
      */
-    readonly user_username: string;
-    readonly user_uuid: string;
-    readonly user_image: string;
-    readonly created_by_full_name: string;
-    readonly created_by_uuid: string;
+    readonly user_username?: string;
+    readonly user_uuid?: string;
+    readonly user_image?: string;
+    readonly created_by_full_name?: string;
+    readonly created_by_uuid?: string;
 };
 
 export type UserRoleUpdateRequest = {
@@ -9412,47 +9412,47 @@ export type VmwareDatastore = {
 };
 
 export type VmwareDisk = {
-    readonly url: string;
-    readonly uuid: string;
-    readonly name: string;
+    readonly url?: string;
+    readonly uuid?: string;
+    readonly name?: string;
     description?: string;
-    readonly service_name: string;
-    readonly service_settings: string;
-    readonly service_settings_uuid: string;
-    readonly service_settings_state: string;
-    readonly service_settings_error_message: string;
-    readonly project: string;
-    readonly project_name: string;
-    readonly project_uuid: string;
-    readonly customer: string;
-    readonly customer_name: string;
-    readonly customer_native_name: string;
-    readonly customer_abbreviation: string;
-    readonly error_message: string;
-    readonly error_traceback: string;
-    readonly resource_type: string;
-    state: CoreStates;
-    readonly created: string;
-    readonly modified: string;
-    readonly backend_id: string;
-    readonly access_url: string | null;
+    readonly service_name?: string;
+    readonly service_settings?: string;
+    readonly service_settings_uuid?: string;
+    readonly service_settings_state?: string;
+    readonly service_settings_error_message?: string;
+    readonly project?: string;
+    readonly project_name?: string;
+    readonly project_uuid?: string;
+    readonly customer?: string;
+    readonly customer_name?: string;
+    readonly customer_native_name?: string;
+    readonly customer_abbreviation?: string;
+    readonly error_message?: string;
+    readonly error_traceback?: string;
+    readonly resource_type?: string;
+    state?: CoreStates;
+    readonly created?: string;
+    readonly modified?: string;
+    readonly backend_id?: string;
+    readonly access_url?: string | null;
     /**
      * Size in MiB
      */
-    size: number;
-    readonly vm: string;
-    readonly vm_uuid: string;
-    readonly vm_name: string;
-    readonly marketplace_offering_uuid: string;
-    readonly marketplace_offering_name: string;
-    readonly marketplace_offering_plugin_options: {};
-    readonly marketplace_category_uuid: string;
-    readonly marketplace_category_name: string;
-    readonly marketplace_resource_uuid: string;
-    readonly marketplace_plan_uuid: string;
-    readonly marketplace_resource_state: string;
-    readonly is_usage_based: boolean;
-    readonly is_limit_based: boolean;
+    size?: number;
+    readonly vm?: string;
+    readonly vm_uuid?: string;
+    readonly vm_name?: string;
+    readonly marketplace_offering_uuid?: string;
+    readonly marketplace_offering_name?: string;
+    readonly marketplace_offering_plugin_options?: {};
+    readonly marketplace_category_uuid?: string;
+    readonly marketplace_category_name?: string;
+    readonly marketplace_resource_uuid?: string;
+    readonly marketplace_plan_uuid?: string;
+    readonly marketplace_resource_state?: string;
+    readonly is_usage_based?: boolean;
+    readonly is_limit_based?: boolean;
 };
 
 export type VmwareDiskExtend = {
@@ -9492,12 +9492,12 @@ export type VmwareLimit = {
 };
 
 export type VmwareNestedDisk = {
-    readonly url: string;
-    readonly uuid: string;
+    readonly url?: string;
+    readonly uuid?: string;
     /**
      * Size in MiB
      */
-    size: number;
+    size?: number;
 };
 
 export type VmwareNestedDiskRequest = {
@@ -9520,11 +9520,11 @@ export type VmwareNestedNetworkRequest = {
 };
 
 export type VmwareNestedPort = {
-    readonly url: string;
-    readonly uuid: string;
-    name: string;
-    readonly mac_address: string;
-    network: string;
+    readonly url?: string;
+    readonly uuid?: string;
+    name?: string;
+    readonly mac_address?: string;
+    network?: string;
 };
 
 export type VmwareNestedPortRequest = {
@@ -9540,46 +9540,46 @@ export type VmwareNetwork = {
 };
 
 export type VmwarePort = {
-    readonly url: string;
-    readonly uuid: string;
-    readonly name: string;
+    readonly url?: string;
+    readonly uuid?: string;
+    readonly name?: string;
     description?: string;
-    readonly service_name: string;
-    readonly service_settings: string;
-    readonly service_settings_uuid: string;
-    readonly service_settings_state: string;
-    readonly service_settings_error_message: string;
-    readonly project: string;
-    readonly project_name: string;
-    readonly project_uuid: string;
-    readonly customer: string;
-    readonly customer_name: string;
-    readonly customer_native_name: string;
-    readonly customer_abbreviation: string;
-    readonly error_message: string;
-    readonly error_traceback: string;
-    readonly resource_type: string;
-    state: CoreStates;
-    readonly created: string;
-    readonly modified: string;
-    readonly backend_id: string;
-    readonly access_url: string | null;
-    readonly mac_address: string;
-    readonly vm: string;
-    readonly vm_uuid: string;
-    readonly vm_name: string;
-    network: string;
-    readonly network_name: string;
-    readonly marketplace_offering_uuid: string;
-    readonly marketplace_offering_name: string;
-    readonly marketplace_offering_plugin_options: {};
-    readonly marketplace_category_uuid: string;
-    readonly marketplace_category_name: string;
-    readonly marketplace_resource_uuid: string;
-    readonly marketplace_plan_uuid: string;
-    readonly marketplace_resource_state: string;
-    readonly is_usage_based: boolean;
-    readonly is_limit_based: boolean;
+    readonly service_name?: string;
+    readonly service_settings?: string;
+    readonly service_settings_uuid?: string;
+    readonly service_settings_state?: string;
+    readonly service_settings_error_message?: string;
+    readonly project?: string;
+    readonly project_name?: string;
+    readonly project_uuid?: string;
+    readonly customer?: string;
+    readonly customer_name?: string;
+    readonly customer_native_name?: string;
+    readonly customer_abbreviation?: string;
+    readonly error_message?: string;
+    readonly error_traceback?: string;
+    readonly resource_type?: string;
+    state?: CoreStates;
+    readonly created?: string;
+    readonly modified?: string;
+    readonly backend_id?: string;
+    readonly access_url?: string | null;
+    readonly mac_address?: string;
+    readonly vm?: string;
+    readonly vm_uuid?: string;
+    readonly vm_name?: string;
+    network?: string;
+    readonly network_name?: string;
+    readonly marketplace_offering_uuid?: string;
+    readonly marketplace_offering_name?: string;
+    readonly marketplace_offering_plugin_options?: {};
+    readonly marketplace_category_uuid?: string;
+    readonly marketplace_category_name?: string;
+    readonly marketplace_resource_uuid?: string;
+    readonly marketplace_plan_uuid?: string;
+    readonly marketplace_resource_state?: string;
+    readonly is_usage_based?: boolean;
+    readonly is_limit_based?: boolean;
 };
 
 export type VmwarePortRequest = {
@@ -9618,32 +9618,32 @@ export type VmwareTemplate = {
 };
 
 export type VmwareVirtualMachine = {
-    readonly url: string;
-    readonly uuid: string;
-    name: string;
+    readonly url?: string;
+    readonly uuid?: string;
+    name?: string;
     description?: string;
-    readonly service_name: string;
-    service_settings: string;
-    readonly service_settings_uuid: string;
-    readonly service_settings_state: string;
-    readonly service_settings_error_message: string;
-    project: string;
-    readonly project_name: string;
-    readonly project_uuid: string;
-    readonly customer: string;
-    readonly customer_name: string;
-    readonly customer_native_name: string;
-    readonly customer_abbreviation: string;
-    readonly error_message: string;
-    readonly error_traceback: string;
-    readonly resource_type: string;
-    state: CoreStates;
-    readonly created: string;
-    readonly modified: string;
-    readonly backend_id: string;
-    readonly access_url: string | null;
+    readonly service_name?: string;
+    service_settings?: string;
+    readonly service_settings_uuid?: string;
+    readonly service_settings_state?: string;
+    readonly service_settings_error_message?: string;
+    project?: string;
+    readonly project_name?: string;
+    readonly project_uuid?: string;
+    readonly customer?: string;
+    readonly customer_name?: string;
+    readonly customer_native_name?: string;
+    readonly customer_abbreviation?: string;
+    readonly error_message?: string;
+    readonly error_traceback?: string;
+    readonly resource_type?: string;
+    state?: CoreStates;
+    readonly created?: string;
+    readonly modified?: string;
+    readonly backend_id?: string;
+    readonly access_url?: string | null;
     guest_os?: GuestOsEnum | NullEnum | null;
-    readonly guest_os_name: string;
+    readonly guest_os_name?: string;
     /**
      * Number of cores in a VM
      */
@@ -9659,30 +9659,30 @@ export type VmwareVirtualMachine = {
     /**
      * Disk size in MiB
      */
-    readonly disk: number;
-    readonly disks: Array<VmwareNestedDisk>;
-    readonly runtime_state: string;
+    readonly disk?: number;
+    readonly disks?: Array<VmwareNestedDisk>;
+    readonly runtime_state?: string;
     cluster?: string | null;
     datastore?: string | null;
     folder?: string | null;
-    readonly template_name: string;
-    readonly cluster_name: string;
-    readonly datastore_name: string;
-    readonly folder_name: string;
-    readonly ports: Array<VmwareNestedPort>;
-    guest_power_state: GuestPowerStateEnum;
-    readonly tools_state: string;
-    readonly tools_installed: boolean;
-    readonly marketplace_offering_uuid: string;
-    readonly marketplace_offering_name: string;
-    readonly marketplace_offering_plugin_options: {};
-    readonly marketplace_category_uuid: string;
-    readonly marketplace_category_name: string;
-    readonly marketplace_resource_uuid: string;
-    readonly marketplace_plan_uuid: string;
-    readonly marketplace_resource_state: string;
-    readonly is_usage_based: boolean;
-    readonly is_limit_based: boolean;
+    readonly template_name?: string;
+    readonly cluster_name?: string;
+    readonly datastore_name?: string;
+    readonly folder_name?: string;
+    readonly ports?: Array<VmwareNestedPort>;
+    guest_power_state?: GuestPowerStateEnum;
+    readonly tools_state?: string;
+    readonly tools_installed?: boolean;
+    readonly marketplace_offering_uuid?: string;
+    readonly marketplace_offering_name?: string;
+    readonly marketplace_offering_plugin_options?: {};
+    readonly marketplace_category_uuid?: string;
+    readonly marketplace_category_name?: string;
+    readonly marketplace_resource_uuid?: string;
+    readonly marketplace_plan_uuid?: string;
+    readonly marketplace_resource_state?: string;
+    readonly is_usage_based?: boolean;
+    readonly is_limit_based?: boolean;
 };
 
 export type VmwareVirtualMachineRequest = {
@@ -15053,11 +15053,19 @@ export type KeysListData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Created after
+         */
+        created?: string;
         field?: Array<'fingerprint_md5' | 'fingerprint_sha256' | 'fingerprint_sha512' | 'is_shared' | 'name' | 'public_key' | 'type' | 'url' | 'user_uuid' | 'uuid'>;
         fingerprint_md5?: string;
         fingerprint_sha256?: string;
         fingerprint_sha512?: string;
         is_shared?: boolean;
+        /**
+         * Modified after
+         */
+        modified?: string;
         name?: string;
         name_exact?: string;
         /**
@@ -17852,6 +17860,10 @@ export type MarketplaceProviderOfferingsListData = {
         billable?: boolean;
         category_group_uuid?: string;
         category_uuid?: string;
+        /**
+         * Created after
+         */
+        created?: string;
         customer?: string;
         customer_uuid?: string;
         description?: string;
@@ -17860,6 +17872,10 @@ export type MarketplaceProviderOfferingsListData = {
          * Keyword
          */
         keyword?: string;
+        /**
+         * Modified after
+         */
+        modified?: string;
         name?: string;
         name_exact?: string;
         /**
@@ -18030,6 +18046,10 @@ export type MarketplaceProviderOfferingsComponentStatsListData = {
         billable?: boolean;
         category_group_uuid?: string;
         category_uuid?: string;
+        /**
+         * Created after
+         */
+        created?: string;
         customer?: string;
         customer_uuid?: string;
         description?: string;
@@ -18041,6 +18061,10 @@ export type MarketplaceProviderOfferingsComponentStatsListData = {
          * Keyword
          */
         keyword?: string;
+        /**
+         * Modified after
+         */
+        modified?: string;
         name?: string;
         name_exact?: string;
         /**
@@ -18107,6 +18131,10 @@ export type MarketplaceProviderOfferingsCostsListData = {
         billable?: boolean;
         category_group_uuid?: string;
         category_uuid?: string;
+        /**
+         * Created after
+         */
+        created?: string;
         customer?: string;
         customer_uuid?: string;
         description?: string;
@@ -18118,6 +18146,10 @@ export type MarketplaceProviderOfferingsCostsListData = {
          * Keyword
          */
         keyword?: string;
+        /**
+         * Modified after
+         */
+        modified?: string;
         name?: string;
         name_exact?: string;
         /**
@@ -18199,6 +18231,10 @@ export type MarketplaceProviderOfferingsCustomersListData = {
         billable?: boolean;
         category_group_uuid?: string;
         category_uuid?: string;
+        /**
+         * Created after
+         */
+        created?: string;
         customer?: string;
         customer_uuid?: string;
         description?: string;
@@ -18206,6 +18242,10 @@ export type MarketplaceProviderOfferingsCustomersListData = {
          * Keyword
          */
         keyword?: string;
+        /**
+         * Modified after
+         */
+        modified?: string;
         name?: string;
         name_exact?: string;
         /**
@@ -19298,6 +19338,10 @@ export type MarketplacePublicOfferingsListData = {
         billable?: boolean;
         category_group_uuid?: string;
         category_uuid?: string;
+        /**
+         * Created after
+         */
+        created?: string;
         customer?: string;
         customer_uuid?: string;
         description?: string;
@@ -19306,6 +19350,10 @@ export type MarketplacePublicOfferingsListData = {
          * Keyword
          */
         keyword?: string;
+        /**
+         * Modified after
+         */
+        modified?: string;
         name?: string;
         name_exact?: string;
         /**
@@ -19992,7 +20040,15 @@ export type MarketplaceRobotAccountsListData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Created after
+         */
+        created?: string;
         customer_uuid?: string;
+        /**
+         * Modified after
+         */
+        modified?: string;
         /**
          * A page number within the paginated result set.
          */
@@ -20464,6 +20520,475 @@ export type MarketplaceServiceProvidersCreateResponses = {
 
 export type MarketplaceServiceProvidersCreateResponse = MarketplaceServiceProvidersCreateResponses[keyof MarketplaceServiceProvidersCreateResponses];
 
+export type MarketplaceServiceProvidersCustomerProjectsListData = {
+    body?: never;
+    path: {
+        service_provider_uuid: string;
+    };
+    query?: {
+        backend_id?: string;
+        /**
+         * Return a list of projects where current user is admin.
+         */
+        can_admin?: boolean;
+        /**
+         * Return a list of projects where current user is manager or a customer owner.
+         */
+        can_manage?: boolean;
+        /**
+         * Conceal finished projects
+         */
+        conceal_finished_projects?: boolean;
+        /**
+         * Created after
+         */
+        created?: string;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        customer?: Array<string>;
+        customer_abbreviation?: string;
+        customer_name?: string;
+        customer_native_name?: string;
+        description?: string;
+        field?: Array<'billing_price_estimate' | 'description' | 'end_date' | 'name' | 'resources_count' | 'users_count' | 'uuid'>;
+        /**
+         * Modified after
+         */
+        modified?: string;
+        name?: string;
+        name_exact?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-customer_abbreviation' | '-customer_name' | '-customer_native_name' | '-end_date' | '-estimated_cost' | '-name' | '-start_date' | 'created' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'end_date' | 'estimated_cost' | 'name' | 'start_date'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        query?: string;
+    };
+    url: '/api/marketplace-service-providers/{service_provider_uuid}/customer_projects/';
+};
+
+export type MarketplaceServiceProvidersCustomerProjectsListResponses = {
+    200: Array<MarketplaceProviderCustomerProject>;
+};
+
+export type MarketplaceServiceProvidersCustomerProjectsListResponse = MarketplaceServiceProvidersCustomerProjectsListResponses[keyof MarketplaceServiceProvidersCustomerProjectsListResponses];
+
+export type MarketplaceServiceProvidersCustomersListData = {
+    body?: never;
+    path: {
+        service_provider_uuid: string;
+    };
+    query?: {
+        abbreviation?: string;
+        agreement_number?: string;
+        archived?: boolean;
+        backend_id?: string;
+        contact_details?: string;
+        field?: Array<'abbreviation' | 'billing_price_estimate' | 'email' | 'name' | 'payment_profiles' | 'phone_number' | 'projects' | 'projects_count' | 'slug' | 'users' | 'users_count' | 'uuid'>;
+        name?: string;
+        name_exact?: string;
+        native_name?: string;
+        organization_group_name?: string;
+        /**
+         * organization_group_uuid
+         */
+        organization_group_uuid?: Array<string>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        query?: string;
+        registration_code?: string;
+    };
+    url: '/api/marketplace-service-providers/{service_provider_uuid}/customers/';
+};
+
+export type MarketplaceServiceProvidersCustomersListResponses = {
+    200: Array<MarketplaceProviderCustomer>;
+};
+
+export type MarketplaceServiceProvidersCustomersListResponse = MarketplaceServiceProvidersCustomersListResponses[keyof MarketplaceServiceProvidersCustomersListResponses];
+
+export type MarketplaceServiceProvidersKeysListData = {
+    body?: never;
+    path: {
+        service_provider_uuid: string;
+    };
+    query?: {
+        /**
+         * Created after
+         */
+        created?: string;
+        field?: Array<'fingerprint_md5' | 'fingerprint_sha256' | 'fingerprint_sha512' | 'is_shared' | 'name' | 'public_key' | 'type' | 'url' | 'user_uuid' | 'uuid'>;
+        fingerprint_md5?: string;
+        fingerprint_sha256?: string;
+        fingerprint_sha512?: string;
+        is_shared?: boolean;
+        /**
+         * Modified after
+         */
+        modified?: string;
+        name?: string;
+        name_exact?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-name' | 'name'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        user_uuid?: string;
+        uuid?: string;
+    };
+    url: '/api/marketplace-service-providers/{service_provider_uuid}/keys/';
+};
+
+export type MarketplaceServiceProvidersKeysListResponses = {
+    200: Array<SshKey>;
+};
+
+export type MarketplaceServiceProvidersKeysListResponse = MarketplaceServiceProvidersKeysListResponses[keyof MarketplaceServiceProvidersKeysListResponses];
+
+export type MarketplaceServiceProvidersOfferingsListData = {
+    body?: never;
+    path: {
+        service_provider_uuid: string;
+    };
+    query?: {
+        /**
+         * Accessible via calls
+         */
+        accessible_via_calls?: boolean;
+        /**
+         * Allowed customer UUID
+         */
+        allowed_customer_uuid?: string;
+        attributes?: string;
+        billable?: boolean;
+        category_group_uuid?: string;
+        category_uuid?: string;
+        /**
+         * Created after
+         */
+        created?: string;
+        customer?: string;
+        customer_uuid?: string;
+        description?: string;
+        field?: Array<'billing_price_estimate' | 'category_title' | 'components' | 'customer_uuid' | 'name' | 'options' | 'plans' | 'resource_options' | 'resources_count' | 'secret_options' | 'slug' | 'state' | 'type' | 'uuid'>;
+        /**
+         * Keyword
+         */
+        keyword?: string;
+        /**
+         * Modified after
+         */
+        modified?: string;
+        name?: string;
+        name_exact?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-name' | '-state' | '-total_cost' | '-total_cost_estimated' | '-total_customers' | '-type' | 'created' | 'name' | 'state' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type'>;
+        organization_group_uuid?: Array<string>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        parent_uuid?: string;
+        /**
+         * Project UUID
+         */
+        project_uuid?: string;
+        /**
+         * Scope UUID
+         */
+        scope_uuid?: string;
+        /**
+         * Service manager UUID
+         */
+        service_manager_uuid?: string;
+        shared?: boolean;
+        state?: Array<'Active' | 'Archived' | 'Draft' | 'Paused'>;
+        type?: Array<string>;
+    };
+    url: '/api/marketplace-service-providers/{service_provider_uuid}/offerings/';
+};
+
+export type MarketplaceServiceProvidersOfferingsListResponses = {
+    200: Array<ProviderOffering>;
+};
+
+export type MarketplaceServiceProvidersOfferingsListResponse = MarketplaceServiceProvidersOfferingsListResponses[keyof MarketplaceServiceProvidersOfferingsListResponses];
+
+export type MarketplaceServiceProvidersProjectPermissionsListData = {
+    body?: never;
+    path: {
+        service_provider_uuid: string;
+    };
+    query?: {
+        created?: string;
+        expiration_time?: string;
+        field?: Array<'created' | 'created_by' | 'created_by_full_name' | 'created_by_username' | 'customer_name' | 'customer_uuid' | 'expiration_time' | 'project' | 'project_created' | 'project_end_date' | 'project_name' | 'project_uuid' | 'role' | 'role_name' | 'user' | 'user_email' | 'user_full_name' | 'user_native_name' | 'user_username' | 'user_uuid'>;
+        /**
+         * User full name contains
+         */
+        full_name?: string;
+        native_name?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-email' | '-expiration_time' | '-full_name' | '-native_name' | '-role' | '-username' | 'created' | 'email' | 'expiration_time' | 'full_name' | 'native_name' | 'role' | 'username'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Role name contains
+         */
+        role_name?: string;
+        /**
+         * Role UUID
+         */
+        role_uuid?: string;
+        /**
+         * Scope name
+         */
+        scope_name?: string;
+        /**
+         * Scope type
+         */
+        scope_type?: string;
+        /**
+         * Scope UUID
+         */
+        scope_uuid?: string;
+        user?: string;
+        /**
+         * User slug contains
+         */
+        user_slug?: string;
+        user_url?: string;
+        username?: string;
+    };
+    url: '/api/marketplace-service-providers/{service_provider_uuid}/project_permissions/';
+};
+
+export type MarketplaceServiceProvidersProjectPermissionsListResponses = {
+    200: Array<ProjectPermissionLog>;
+};
+
+export type MarketplaceServiceProvidersProjectPermissionsListResponse = MarketplaceServiceProvidersProjectPermissionsListResponses[keyof MarketplaceServiceProvidersProjectPermissionsListResponses];
+
+export type MarketplaceServiceProvidersProjectsListData = {
+    body?: never;
+    path: {
+        service_provider_uuid: string;
+    };
+    query?: {
+        backend_id?: string;
+        /**
+         * Return a list of projects where current user is admin.
+         */
+        can_admin?: boolean;
+        /**
+         * Return a list of projects where current user is manager or a customer owner.
+         */
+        can_manage?: boolean;
+        /**
+         * Conceal finished projects
+         */
+        conceal_finished_projects?: boolean;
+        /**
+         * Created after
+         */
+        created?: string;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        customer?: Array<string>;
+        customer_abbreviation?: string;
+        customer_name?: string;
+        customer_native_name?: string;
+        description?: string;
+        field?: Array<'backend_id' | 'billing_price_estimate' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'end_date' | 'end_date_requested_by' | 'image' | 'is_industry' | 'marketplace_resource_count' | 'name' | 'oecd_fos_2007_code' | 'oecd_fos_2007_label' | 'project_credit' | 'resources_count' | 'slug' | 'start_date' | 'type' | 'type_name' | 'type_uuid' | 'url' | 'uuid'>;
+        /**
+         * Modified after
+         */
+        modified?: string;
+        name?: string;
+        name_exact?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-customer_abbreviation' | '-customer_name' | '-customer_native_name' | '-end_date' | '-estimated_cost' | '-name' | '-start_date' | 'created' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'end_date' | 'estimated_cost' | 'name' | 'start_date'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        query?: string;
+    };
+    url: '/api/marketplace-service-providers/{service_provider_uuid}/projects/';
+};
+
+export type MarketplaceServiceProvidersProjectsListResponses = {
+    200: Array<Project>;
+};
+
+export type MarketplaceServiceProvidersProjectsListResponse = MarketplaceServiceProvidersProjectsListResponses[keyof MarketplaceServiceProvidersProjectsListResponses];
+
+export type MarketplaceServiceProvidersUserCustomersListData = {
+    body?: never;
+    path: {
+        service_provider_uuid: string;
+    };
+    query: {
+        abbreviation?: string;
+        agreement_number?: string;
+        archived?: boolean;
+        backend_id?: string;
+        contact_details?: string;
+        field?: Array<'abbreviation' | 'billing_price_estimate' | 'email' | 'name' | 'payment_profiles' | 'phone_number' | 'projects' | 'projects_count' | 'slug' | 'users' | 'users_count' | 'uuid'>;
+        name?: string;
+        name_exact?: string;
+        native_name?: string;
+        organization_group_name?: string;
+        /**
+         * organization_group_uuid
+         */
+        organization_group_uuid?: Array<string>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        query?: string;
+        registration_code?: string;
+        /**
+         * UUID of user to get related customers for
+         */
+        user_uuid: string;
+    };
+    url: '/api/marketplace-service-providers/{service_provider_uuid}/user_customers/';
+};
+
+export type MarketplaceServiceProvidersUserCustomersListResponses = {
+    200: Array<MarketplaceProviderCustomer>;
+};
+
+export type MarketplaceServiceProvidersUserCustomersListResponse = MarketplaceServiceProvidersUserCustomersListResponses[keyof MarketplaceServiceProvidersUserCustomersListResponses];
+
+export type MarketplaceServiceProvidersUsersListData = {
+    body?: never;
+    path: {
+        service_provider_uuid: string;
+    };
+    query?: {
+        /**
+         * Agreement date after
+         */
+        agreement_date?: string;
+        civil_number?: string;
+        customer_uuid?: string;
+        /**
+         * Date joined after
+         */
+        date_joined?: string;
+        description?: string;
+        email?: string;
+        field?: Array<'affiliations' | 'email' | 'first_name' | 'full_name' | 'is_active' | 'last_name' | 'organization' | 'phone_number' | 'projects_count' | 'registration_method' | 'username' | 'uuid'>;
+        /**
+         * Full name
+         */
+        full_name?: string;
+        is_active?: boolean;
+        is_staff?: boolean;
+        is_support?: boolean;
+        job_title?: string;
+        native_name?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-description' | '-email' | '-full_name' | '-is_active' | '-is_staff' | '-is_support' | '-job_title' | '-native_name' | '-organization' | '-phone_number' | '-registration_method' | '-username' | 'description' | 'email' | 'full_name' | 'is_active' | 'is_staff' | 'is_support' | 'job_title' | 'native_name' | 'organization' | 'phone_number' | 'registration_method' | 'username'>;
+        organization?: string;
+        /**
+         * Organization roles
+         */
+        organization_roles?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        phone_number?: string;
+        /**
+         * Project roles
+         */
+        project_roles?: string;
+        project_uuid?: string;
+        query?: string;
+        registration_method?: string;
+        /**
+         * User keyword
+         */
+        user_keyword?: string;
+        username?: string;
+    };
+    url: '/api/marketplace-service-providers/{service_provider_uuid}/users/';
+};
+
+export type MarketplaceServiceProvidersUsersListResponses = {
+    200: Array<MarketplaceServiceProviderUser>;
+};
+
+export type MarketplaceServiceProvidersUsersListResponse = MarketplaceServiceProvidersUsersListResponses[keyof MarketplaceServiceProvidersUsersListResponses];
+
 export type MarketplaceServiceProvidersDestroyData = {
     body?: never;
     path: {
@@ -20575,54 +21100,6 @@ export type ServiceProviderApiSecretCodeGenerateResponses = {
 
 export type ServiceProviderApiSecretCodeGenerateResponse = ServiceProviderApiSecretCodeGenerateResponses[keyof ServiceProviderApiSecretCodeGenerateResponses];
 
-export type MarketplaceServiceProvidersCustomerProjectsListData = {
-    body?: never;
-    path: {
-        uuid: string;
-    };
-    query?: {
-        /**
-         * A page number within the paginated result set.
-         */
-        page?: number;
-        /**
-         * Number of results to return per page.
-         */
-        page_size?: number;
-    };
-    url: '/api/marketplace-service-providers/{uuid}/customer_projects/';
-};
-
-export type MarketplaceServiceProvidersCustomerProjectsListResponses = {
-    200: Array<ProviderCustomerProject>;
-};
-
-export type MarketplaceServiceProvidersCustomerProjectsListResponse = MarketplaceServiceProvidersCustomerProjectsListResponses[keyof MarketplaceServiceProvidersCustomerProjectsListResponses];
-
-export type MarketplaceServiceProvidersCustomersListData = {
-    body?: never;
-    path: {
-        uuid: string;
-    };
-    query?: {
-        /**
-         * A page number within the paginated result set.
-         */
-        page?: number;
-        /**
-         * Number of results to return per page.
-         */
-        page_size?: number;
-    };
-    url: '/api/marketplace-service-providers/{uuid}/customers/';
-};
-
-export type MarketplaceServiceProvidersCustomersListResponses = {
-    200: Array<ProviderCustomer>;
-};
-
-export type MarketplaceServiceProvidersCustomersListResponse = MarketplaceServiceProvidersCustomersListResponses[keyof MarketplaceServiceProvidersCustomersListResponses];
-
 export type MarketplaceServiceProvidersDeleteUserData = {
     body: UserRoleDeleteRequest;
     path: {
@@ -20638,30 +21115,6 @@ export type MarketplaceServiceProvidersDeleteUserResponses = {
      */
     200: unknown;
 };
-
-export type MarketplaceServiceProvidersKeysListData = {
-    body?: never;
-    path: {
-        uuid: string;
-    };
-    query?: {
-        /**
-         * A page number within the paginated result set.
-         */
-        page?: number;
-        /**
-         * Number of results to return per page.
-         */
-        page_size?: number;
-    };
-    url: '/api/marketplace-service-providers/{uuid}/keys/';
-};
-
-export type MarketplaceServiceProvidersKeysListResponses = {
-    200: Array<SshKey>;
-};
-
-export type MarketplaceServiceProvidersKeysListResponse = MarketplaceServiceProvidersKeysListResponses[keyof MarketplaceServiceProvidersKeysListResponses];
 
 export type MarketplaceServiceProvidersListUsersListData = {
     body?: never;
@@ -20726,154 +21179,6 @@ export type MarketplaceServiceProvidersListUsersListResponses = {
 };
 
 export type MarketplaceServiceProvidersListUsersListResponse = MarketplaceServiceProvidersListUsersListResponses[keyof MarketplaceServiceProvidersListUsersListResponses];
-
-export type MarketplaceServiceProvidersOfferingsListData = {
-    body?: never;
-    path: {
-        uuid: string;
-    };
-    query?: {
-        /**
-         * Filter by accessibility via calls
-         */
-        accessible_via_calls?: boolean;
-        /**
-         * Allowed customer UUID
-         */
-        allowed_customer_uuid?: string;
-        /**
-         * Filter by attributes
-         */
-        attributes?: string;
-        /**
-         * Filter by billable status
-         */
-        billable?: boolean;
-        /**
-         * Filter by category group UUID
-         */
-        category_group_uuid?: string;
-        /**
-         * Filter by category UUID
-         */
-        category_uuid?: string;
-        /**
-         * Filter by customer URL
-         */
-        customer?: string;
-        /**
-         * Filter by customer UUID
-         */
-        customer_uuid?: string;
-        /**
-         * Filter by description (case-insensitive contains)
-         */
-        description?: string;
-        /**
-         * Filter by keyword
-         */
-        keyword?: string;
-        /**
-         * Ordering field
-         */
-        o?: '-created' | '-name' | '-state' | '-total_cost' | '-total_cost_estimated' | '-total_customers' | '-type' | 'created' | 'name' | 'state' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type';
-        /**
-         * Filter by organization group UUID
-         */
-        organization_group_uuid?: Array<string>;
-        /**
-         * A page number within the paginated result set.
-         */
-        page?: number;
-        /**
-         * Number of results to return per page.
-         */
-        page_size?: number;
-        /**
-         * Filter by parent UUID
-         */
-        parent_uuid?: string;
-        /**
-         * Project UUID
-         */
-        project_uuid?: string;
-        /**
-         * Scope UUID
-         */
-        scope_uuid?: string;
-        /**
-         * Service manager UUID
-         */
-        service_manager_uuid?: string;
-        /**
-         * Filter by shared status
-         */
-        shared?: boolean;
-        /**
-         * Filter by state
-         */
-        state?: Array<'Active' | 'Archived' | 'Draft' | 'Paused'>;
-        /**
-         * Filter by type
-         */
-        type?: Array<string>;
-    };
-    url: '/api/marketplace-service-providers/{uuid}/offerings/';
-};
-
-export type MarketplaceServiceProvidersOfferingsListResponses = {
-    200: Array<ProviderOffering>;
-};
-
-export type MarketplaceServiceProvidersOfferingsListResponse = MarketplaceServiceProvidersOfferingsListResponses[keyof MarketplaceServiceProvidersOfferingsListResponses];
-
-export type MarketplaceServiceProvidersProjectPermissionsListData = {
-    body?: never;
-    path: {
-        uuid: string;
-    };
-    query?: {
-        /**
-         * A page number within the paginated result set.
-         */
-        page?: number;
-        /**
-         * Number of results to return per page.
-         */
-        page_size?: number;
-    };
-    url: '/api/marketplace-service-providers/{uuid}/project_permissions/';
-};
-
-export type MarketplaceServiceProvidersProjectPermissionsListResponses = {
-    200: Array<ProjectPermissionLog>;
-};
-
-export type MarketplaceServiceProvidersProjectPermissionsListResponse = MarketplaceServiceProvidersProjectPermissionsListResponses[keyof MarketplaceServiceProvidersProjectPermissionsListResponses];
-
-export type MarketplaceServiceProvidersProjectsListData = {
-    body?: never;
-    path: {
-        uuid: string;
-    };
-    query?: {
-        /**
-         * A page number within the paginated result set.
-         */
-        page?: number;
-        /**
-         * Number of results to return per page.
-         */
-        page_size?: number;
-    };
-    url: '/api/marketplace-service-providers/{uuid}/projects/';
-};
-
-export type MarketplaceServiceProvidersProjectsListResponses = {
-    200: Array<Project>;
-};
-
-export type MarketplaceServiceProvidersProjectsListResponse = MarketplaceServiceProvidersProjectsListResponses[keyof MarketplaceServiceProvidersProjectsListResponses];
 
 export type MarketplaceServiceProvidersRevenueListData = {
     body?: never;
@@ -20994,54 +21299,6 @@ export type MarketplaceServiceProvidersUpdateUserResponses = {
      */
     200: unknown;
 };
-
-export type MarketplaceServiceProvidersUserCustomersListData = {
-    body?: never;
-    path: {
-        uuid: string;
-    };
-    query?: {
-        /**
-         * A page number within the paginated result set.
-         */
-        page?: number;
-        /**
-         * Number of results to return per page.
-         */
-        page_size?: number;
-    };
-    url: '/api/marketplace-service-providers/{uuid}/user_customers/';
-};
-
-export type MarketplaceServiceProvidersUserCustomersListResponses = {
-    200: Array<ProviderCustomer>;
-};
-
-export type MarketplaceServiceProvidersUserCustomersListResponse = MarketplaceServiceProvidersUserCustomersListResponses[keyof MarketplaceServiceProvidersUserCustomersListResponses];
-
-export type MarketplaceServiceProvidersUsersListData = {
-    body?: never;
-    path: {
-        uuid: string;
-    };
-    query?: {
-        /**
-         * A page number within the paginated result set.
-         */
-        page?: number;
-        /**
-         * Number of results to return per page.
-         */
-        page_size?: number;
-    };
-    url: '/api/marketplace-service-providers/{uuid}/users/';
-};
-
-export type MarketplaceServiceProvidersUsersListResponses = {
-    200: Array<DetailedProviderUser>;
-};
-
-export type MarketplaceServiceProvidersUsersListResponse = MarketplaceServiceProvidersUsersListResponses[keyof MarketplaceServiceProvidersUsersListResponses];
 
 export type MarketplaceStatsComponentUsagesRetrieveData = {
     body?: never;
@@ -24912,6 +25169,9 @@ export type ProjectsListData = {
          * Conceal finished projects
          */
         conceal_finished_projects?: boolean;
+        /**
+         * Created after
+         */
         created?: string;
         /**
          * Multiple values may be separated by commas.
@@ -24922,6 +25182,10 @@ export type ProjectsListData = {
         customer_native_name?: string;
         description?: string;
         field?: Array<'backend_id' | 'billing_price_estimate' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'end_date' | 'end_date_requested_by' | 'image' | 'is_industry' | 'marketplace_resource_count' | 'name' | 'oecd_fos_2007_code' | 'oecd_fos_2007_label' | 'project_credit' | 'resources_count' | 'slug' | 'start_date' | 'type' | 'type_name' | 'type_uuid' | 'url' | 'uuid'>;
+        /**
+         * Modified after
+         */
+        modified?: string;
         name?: string;
         name_exact?: string;
         /**
@@ -30423,6 +30687,8 @@ export type UserPermissionsListData = {
     body?: never;
     path?: never;
     query?: {
+        created?: string;
+        expiration_time?: string;
         /**
          * User full name contains
          */
@@ -30498,8 +30764,16 @@ export type UsersListData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Agreement date after
+         */
+        agreement_date?: string;
         civil_number?: string;
         customer_uuid?: string;
+        /**
+         * Date joined after
+         */
+        date_joined?: string;
         description?: string;
         email?: string;
         field?: Array<'affiliations' | 'agree_with_policy' | 'agreement_date' | 'civil_number' | 'date_joined' | 'description' | 'email' | 'first_name' | 'full_name' | 'has_active_session' | 'identity_provider_fields' | 'identity_provider_label' | 'identity_provider_management_url' | 'identity_provider_name' | 'identity_source' | 'image' | 'is_active' | 'is_staff' | 'is_support' | 'job_title' | 'last_name' | 'native_name' | 'organization' | 'permissions' | 'phone_number' | 'preferred_language' | 'registration_method' | 'requested_email' | 'slug' | 'token' | 'token_lifetime' | 'url' | 'username' | 'uuid'>;
