@@ -4428,7 +4428,6 @@ export type OfferingUser = {
     readonly user_full_name?: string;
     readonly created?: string;
     readonly modified?: string;
-    propagation_date?: string | null;
     readonly customer_uuid?: string;
     readonly customer_name?: string;
     /**
@@ -4441,7 +4440,6 @@ export type OfferingUserRequest = {
     user: string;
     offering: string;
     username?: string | null;
-    propagation_date?: string | null;
 };
 
 export type OfferingUserRole = {
@@ -5382,7 +5380,7 @@ export type OpenStackSubNet = {
     cidr?: string;
     gateway_ip?: string | null;
     disable_gateway?: boolean;
-    readonly allocation_pools?: Array<OpenStackSubNetAllocationPool>;
+    allocation_pools?: Array<OpenStackSubNetAllocationPool>;
     readonly ip_version?: number;
     readonly enable_dhcp?: boolean;
     dns_nameservers?: Array<string>;
@@ -5419,6 +5417,7 @@ export type OpenStackSubNetRequest = {
     cidr?: string;
     gateway_ip?: string | null;
     disable_gateway?: boolean;
+    allocation_pools?: Array<OpenStackSubNetAllocationPoolRequest>;
     dns_nameservers?: Array<string>;
     host_routes?: Array<OpenStackStaticRouteRequest>;
 };
@@ -6154,7 +6153,6 @@ export type PatchedOfferingUserRequest = {
     user?: string;
     offering?: string;
     username?: string | null;
-    propagation_date?: string | null;
 };
 
 export type PatchedOfferingUserRoleRequest = {
@@ -6208,8 +6206,10 @@ export type PatchedOpenStackSnapshotRequest = {
 export type PatchedOpenStackSubNetRequest = {
     name?: string;
     description?: string;
+    cidr?: string;
     gateway_ip?: string | null;
     disable_gateway?: boolean;
+    allocation_pools?: Array<OpenStackSubNetAllocationPoolRequest>;
     dns_nameservers?: Array<string>;
     host_routes?: Array<OpenStackStaticRouteRequest>;
 };
@@ -16997,8 +16997,7 @@ export type MarketplaceOfferingUsersListData = {
          * Created after
          */
         created?: string;
-        field?: Array<'created' | 'customer_name' | 'customer_uuid' | 'is_restricted' | 'modified' | 'offering' | 'offering_name' | 'offering_uuid' | 'propagation_date' | 'url' | 'user' | 'user_full_name' | 'user_username' | 'user_uuid' | 'username' | 'uuid'>;
-        is_not_propagated?: boolean;
+        field?: Array<'created' | 'customer_name' | 'customer_uuid' | 'is_restricted' | 'modified' | 'offering' | 'offering_name' | 'offering_uuid' | 'url' | 'user' | 'user_full_name' | 'user_username' | 'user_uuid' | 'username' | 'uuid'>;
         is_restricted?: boolean;
         /**
          * Modified after
@@ -17009,7 +17008,7 @@ export type MarketplaceOfferingUsersListData = {
          *
          *
          */
-        o?: Array<'-created' | '-modified' | '-propagation_date' | '-username' | 'created' | 'modified' | 'propagation_date' | 'username'>;
+        o?: Array<'-created' | '-modified' | '-username' | 'created' | 'modified' | 'username'>;
         offering?: string;
         offering_uuid?: string;
         /**
@@ -17021,8 +17020,6 @@ export type MarketplaceOfferingUsersListData = {
          */
         page_size?: number;
         parent_offering_uuid?: string;
-        propagated_after?: string;
-        propagated_before?: string;
         provider_uuid?: string;
         query?: string;
         user_username?: string;
@@ -17074,7 +17071,7 @@ export type MarketplaceOfferingUsersRetrieveData = {
         uuid: string;
     };
     query?: {
-        field?: Array<'created' | 'customer_name' | 'customer_uuid' | 'is_restricted' | 'modified' | 'offering' | 'offering_name' | 'offering_uuid' | 'propagation_date' | 'url' | 'user' | 'user_full_name' | 'user_username' | 'user_uuid' | 'username' | 'uuid'>;
+        field?: Array<'created' | 'customer_name' | 'customer_uuid' | 'is_restricted' | 'modified' | 'offering' | 'offering_name' | 'offering_uuid' | 'url' | 'user' | 'user_full_name' | 'user_username' | 'user_uuid' | 'username' | 'uuid'>;
     };
     url: '/api/marketplace-offering-users/{uuid}/';
 };
@@ -18551,6 +18548,46 @@ export type MarketplaceProviderOfferingsListUsersListResponses = {
 };
 
 export type MarketplaceProviderOfferingsListUsersListResponse = MarketplaceProviderOfferingsListUsersListResponses[keyof MarketplaceProviderOfferingsListUsersListResponses];
+
+export type MarketplaceProviderOfferingsOrdersListData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-provider-offerings/{uuid}/orders/';
+};
+
+export type MarketplaceProviderOfferingsOrdersListResponses = {
+    200: Array<OrderDetails>;
+};
+
+export type MarketplaceProviderOfferingsOrdersListResponse = MarketplaceProviderOfferingsOrdersListResponses[keyof MarketplaceProviderOfferingsOrdersListResponses];
+
+export type MarketplaceProviderOfferingsOrdersRetrieveData = {
+    body?: never;
+    path: {
+        order_uuid: string;
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-provider-offerings/{uuid}/orders/{order_uuid}/';
+};
+
+export type MarketplaceProviderOfferingsOrdersRetrieveResponses = {
+    200: OrderDetails;
+};
+
+export type MarketplaceProviderOfferingsOrdersRetrieveResponse = MarketplaceProviderOfferingsOrdersRetrieveResponses[keyof MarketplaceProviderOfferingsOrdersRetrieveResponses];
 
 export type MarketplaceProviderOfferingsPauseData = {
     body?: OfferingPauseRequest;
@@ -20946,6 +20983,10 @@ export type MarketplaceServiceProvidersUsersListData = {
         is_staff?: boolean;
         is_support?: boolean;
         job_title?: string;
+        /**
+         * Date modified after
+         */
+        modified?: string;
         native_name?: string;
         /**
          * Ordering
@@ -30785,6 +30826,10 @@ export type UsersListData = {
         is_staff?: boolean;
         is_support?: boolean;
         job_title?: string;
+        /**
+         * Date modified after
+         */
+        modified?: string;
         native_name?: string;
         /**
          * Ordering
