@@ -16576,11 +16576,19 @@ export type MarketplaceOfferingPermissionsListData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Created after
+         */
+        created?: string;
         customer?: string;
         /**
          * User full name contains
          */
         full_name?: string;
+        /**
+         * Modified after
+         */
+        modified?: string;
         native_name?: string;
         /**
          * Ordering
@@ -16638,11 +16646,19 @@ export type MarketplaceOfferingPermissionsLogListData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Created after
+         */
+        created?: string;
         customer?: string;
         /**
          * User full name contains
          */
         full_name?: string;
+        /**
+         * Modified after
+         */
+        modified?: string;
         native_name?: string;
         /**
          * Ordering
@@ -20790,6 +20806,9 @@ export type MarketplaceServiceProvidersProjectPermissionsListData = {
         service_provider_uuid: string;
     };
     query?: {
+        /**
+         * Created after
+         */
         created?: string;
         expiration_time?: string;
         field?: Array<'created' | 'created_by' | 'created_by_full_name' | 'created_by_username' | 'customer_name' | 'customer_uuid' | 'expiration_time' | 'project' | 'project_created' | 'project_end_date' | 'project_name' | 'project_uuid' | 'role' | 'role_name' | 'user' | 'user_email' | 'user_full_name' | 'user_native_name' | 'user_username' | 'user_uuid'>;
@@ -20797,6 +20816,10 @@ export type MarketplaceServiceProvidersProjectPermissionsListData = {
          * User full name contains
          */
         full_name?: string;
+        /**
+         * Modified after
+         */
+        modified?: string;
         native_name?: string;
         /**
          * Ordering
@@ -30728,12 +30751,19 @@ export type UserPermissionsListData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Created after
+         */
         created?: string;
         expiration_time?: string;
         /**
          * User full name contains
          */
         full_name?: string;
+        /**
+         * Modified after
+         */
+        modified?: string;
         native_name?: string;
         /**
          * Ordering
