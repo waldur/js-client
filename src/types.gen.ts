@@ -4877,6 +4877,7 @@ export type OpenStackNestedServerGroup = {
 };
 
 export type OpenStackNestedSubNet = {
+    readonly uuid?: string;
     name?: string;
     description?: string;
     cidr?: string;
