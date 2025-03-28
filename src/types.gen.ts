@@ -7515,10 +7515,6 @@ export type PullMarketplaceScriptResourceRequest = {
     resource_uuid: string;
 };
 
-export type Query = {
-    query: string;
-};
-
 export type QueryRequest = {
     query: string;
 };
@@ -27025,8 +27021,15 @@ export type QueryData = {
     url: '/api/query/';
 };
 
+export type QueryErrors = {
+    /**
+     * No response body
+     */
+    400: unknown;
+};
+
 export type QueryResponses = {
-    200: Query;
+    200: Array<unknown>;
 };
 
 export type QueryResponse = QueryResponses[keyof QueryResponses];

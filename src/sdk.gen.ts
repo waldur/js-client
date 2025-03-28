@@ -13265,6 +13265,9 @@ export const providerInvoiceItemsRetrieve = <ThrowOnError extends boolean = fals
     });
 };
 
+/**
+ * Execute SQL query against readonly database
+ */
 export const query = <ThrowOnError extends boolean = false>(options: Options<QueryData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).post<QueryResponse, unknown, ThrowOnError>({
         security: [
