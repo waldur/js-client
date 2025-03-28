@@ -1837,9 +1837,9 @@ export type Customer = {
     readonly payment_profiles?: Array<PaymentProfile>;
     readonly customer_credit?: number | null;
     readonly is_service_provider?: boolean;
-    readonly service_provider?: string;
-    readonly service_provider_uuid?: string;
-    readonly call_managing_organization_uuid?: string;
+    readonly service_provider?: string | null;
+    readonly service_provider_uuid?: string | null;
+    readonly call_managing_organization_uuid?: string | null;
     billing_price_estimate?: NestedPriceEstimate;
 };
 
@@ -4656,9 +4656,9 @@ export type OpenStackFloatingIp = {
      * An optional address that maps to floating IP's address
      */
     readonly external_address?: string | null;
-    readonly instance_uuid?: string;
-    readonly instance_name?: string;
-    readonly instance_url?: string;
+    readonly instance_uuid?: string | null;
+    readonly instance_name?: string | null;
+    readonly instance_url?: string | null;
     readonly marketplace_offering_uuid?: string;
     readonly marketplace_offering_name?: string;
     readonly marketplace_offering_plugin_options?: {};
@@ -4914,7 +4914,7 @@ export type OpenStackNestedVolume = {
     readonly resource_type?: string;
     type?: string | null;
     readonly type_name?: string;
-    readonly marketplace_resource_uuid?: string;
+    readonly marketplace_resource_uuid?: string | null;
 };
 
 export type OpenStackNestedVolumeRequest = {
@@ -7262,8 +7262,8 @@ export type ProviderOfferingDetails = {
     readonly parent_uuid?: string;
     readonly parent_name?: string;
     backend_metadata?: unknown;
-    readonly integration_status?: Array<IntegrationStatus>;
-    readonly google_calendar_is_public?: boolean;
+    readonly integration_status?: Array<IntegrationStatus> | null;
+    readonly google_calendar_is_public?: boolean | null;
     readonly google_calendar_link?: string | null;
 };
 
@@ -7504,7 +7504,7 @@ export type PublicOfferingDetails = {
     readonly parent_uuid?: string;
     readonly parent_name?: string;
     backend_metadata?: unknown;
-    readonly google_calendar_is_public?: boolean;
+    readonly google_calendar_is_public?: boolean | null;
     readonly google_calendar_link?: string | null;
     readonly promotion_campaigns?: Array<NestedCampaign>;
 };
