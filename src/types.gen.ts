@@ -2663,6 +2663,8 @@ export type Invoice = {
      * Reference number associated with the invoice.
      */
     reference_number?: string;
+    readonly compensations?: number;
+    readonly incurred_costs?: number;
 };
 
 export type InvoiceCost = {
@@ -14829,7 +14831,7 @@ export type InvoicesListData = {
         customer?: string;
         customer_uuid?: string;
         end_date?: string;
-        field?: Array<'backend_id' | 'customer' | 'customer_details' | 'due_date' | 'invoice_date' | 'issuer_details' | 'items' | 'month' | 'number' | 'payment_url' | 'price' | 'reference_number' | 'state' | 'tax' | 'total' | 'url' | 'uuid' | 'year'>;
+        field?: Array<'backend_id' | 'compensations' | 'customer' | 'customer_details' | 'due_date' | 'incurred_costs' | 'invoice_date' | 'issuer_details' | 'items' | 'month' | 'number' | 'payment_url' | 'price' | 'reference_number' | 'state' | 'tax' | 'total' | 'url' | 'uuid' | 'year'>;
         /**
          * Max sum
          */
@@ -14872,7 +14874,7 @@ export type InvoicesRetrieveData = {
         uuid: string;
     };
     query?: {
-        field?: Array<'backend_id' | 'customer' | 'customer_details' | 'due_date' | 'invoice_date' | 'issuer_details' | 'items' | 'month' | 'number' | 'payment_url' | 'price' | 'reference_number' | 'state' | 'tax' | 'total' | 'url' | 'uuid' | 'year'>;
+        field?: Array<'backend_id' | 'compensations' | 'customer' | 'customer_details' | 'due_date' | 'incurred_costs' | 'invoice_date' | 'issuer_details' | 'items' | 'month' | 'number' | 'payment_url' | 'price' | 'reference_number' | 'state' | 'tax' | 'total' | 'url' | 'uuid' | 'year'>;
     };
     url: '/api/invoices/{uuid}/';
 };
