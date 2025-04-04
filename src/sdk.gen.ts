@@ -12073,6 +12073,9 @@ export const projectsMoveProject = <ThrowOnError extends boolean = false>(option
     });
 };
 
+/**
+ * Return statistics about project resources usage
+ */
 export const projectsStatsRetrieve = <ThrowOnError extends boolean = false>(options: Options<ProjectsStatsRetrieveData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).get<ProjectsStatsRetrieveResponse, unknown, ThrowOnError>({
         security: [

@@ -3213,6 +3213,10 @@ export type MergedPluginOptions = {
      */
     flavors_regex?: string;
     /**
+     * List of UUID of OpenStack offerings where tenant can be created
+     */
+    openstack_offering_uuid_list?: Array<string>;
+    /**
      * Slurm account name generation policy
      */
     account_name_generation_policy?: AccountNameGenerationPolicyEnum | NullEnum | null;
@@ -3324,6 +3328,10 @@ export type MergedPluginOptionsRequest = {
      */
     flavors_regex?: string;
     /**
+     * List of UUID of OpenStack offerings where tenant can be created
+     */
+    openstack_offering_uuid_list?: Array<string>;
+    /**
      * Slurm account name generation policy
      */
     account_name_generation_policy?: AccountNameGenerationPolicyEnum | NullEnum | null;
@@ -3387,6 +3395,10 @@ export type MergedSecretOptions = {
      * Organization UUID
      */
     customer_uuid?: string;
+    /**
+     * UUID of Rancher offering where cluster can be created
+     */
+    rancher_offering_uuid?: string;
 };
 
 export type MergedSecretOptionsRequest = {
@@ -3447,6 +3459,10 @@ export type MergedSecretOptionsRequest = {
      * Organization UUID
      */
     customer_uuid?: string;
+    /**
+     * UUID of Rancher offering where cluster can be created
+     */
+    rancher_offering_uuid?: string;
 };
 
 export type MessageTemplate = {
@@ -13022,7 +13038,9 @@ export type CustomersStatsRetrieveData = {
     path: {
         uuid: string;
     };
-    query?: never;
+    query?: {
+        for_current_month?: boolean;
+    };
     url: '/api/customers/{uuid}/stats/';
 };
 
@@ -25485,7 +25503,9 @@ export type ProjectsStatsRetrieveData = {
     path: {
         uuid: string;
     };
-    query?: never;
+    query?: {
+        for_current_month?: boolean;
+    };
     url: '/api/projects/{uuid}/stats/';
 };
 
