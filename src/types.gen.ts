@@ -2237,6 +2237,14 @@ export type EmailLog = {
     emails: Array<string>;
 };
 
+export type EndpointUuid = {
+    uuid: string;
+};
+
+export type EndpointUuidRequest = {
+    uuid: string;
+};
+
 export type EthertypeEnum = 'IPv4' | 'IPv6';
 
 export type Event = {
@@ -9174,14 +9182,6 @@ export type TokenRequest = {
 export type TotalCustomerCost = {
     readonly total: number;
     readonly price: number;
-};
-
-export type Uuid = {
-    uuid: string;
-};
-
-export type UuidRequest = {
-    uuid: string;
 };
 
 export type User = {
@@ -18010,7 +18010,7 @@ export type MarketplaceProviderOfferingsAddEndpointData = {
 };
 
 export type MarketplaceProviderOfferingsAddEndpointResponses = {
-    201: Uuid;
+    201: EndpointUuid;
 };
 
 export type MarketplaceProviderOfferingsAddEndpointResponse = MarketplaceProviderOfferingsAddEndpointResponses[keyof MarketplaceProviderOfferingsAddEndpointResponses];
@@ -18307,7 +18307,7 @@ export type MarketplaceProviderOfferingsCustomersListResponses = {
 export type MarketplaceProviderOfferingsCustomersListResponse = MarketplaceProviderOfferingsCustomersListResponses[keyof MarketplaceProviderOfferingsCustomersListResponses];
 
 export type MarketplaceProviderOfferingsDeleteEndpointData = {
-    body: UuidRequest;
+    body: EndpointUuidRequest;
     path: {
         uuid: string;
     };
