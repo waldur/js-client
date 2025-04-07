@@ -2237,10 +2237,6 @@ export type EmailLog = {
     emails: Array<string>;
 };
 
-export type EndpointDeleteRequest = {
-    uuid: string;
-};
-
 export type EthertypeEnum = 'IPv4' | 'IPv6';
 
 export type Event = {
@@ -4189,10 +4185,6 @@ export type OfferingCreateRequest = {
     };
 };
 
-export type OfferingDescriptionUpdate = {
-    category: string;
-};
-
 export type OfferingDescriptionUpdateRequest = {
     category: string;
 };
@@ -4250,23 +4242,11 @@ export type OfferingImageRequest = {
     image: Blob | File;
 };
 
-export type OfferingIntegrationUpdate = {
-    secret_options?: MergedSecretOptions;
-    plugin_options?: MergedPluginOptions;
-    service_attributes?: unknown;
-    backend_id?: string;
-};
-
 export type OfferingIntegrationUpdateRequest = {
     secret_options?: MergedSecretOptionsRequest;
     plugin_options?: MergedPluginOptionsRequest;
     service_attributes?: unknown;
     backend_id?: string;
-};
-
-export type OfferingLocationUpdate = {
-    latitude: number;
-    longitude: number;
 };
 
 export type OfferingLocationUpdateRequest = {
@@ -4288,28 +4268,8 @@ export type OfferingOptionsRequest = {
     };
 };
 
-export type OfferingOptionsUpdate = {
-    options: OfferingOptions;
-};
-
 export type OfferingOptionsUpdateRequest = {
     options: OfferingOptionsRequest;
-};
-
-export type OfferingOverviewUpdate = {
-    name: string;
-    description?: string;
-    full_description?: string;
-    terms_of_service?: string;
-    terms_of_service_link?: string;
-    privacy_policy_link?: string;
-    /**
-     * Publicly accessible offering access URL
-     */
-    access_url?: string;
-    getting_started?: string;
-    integration_guide?: string;
-    readonly slug: string;
 };
 
 export type OfferingOverviewUpdateRequest = {
@@ -4367,10 +4327,6 @@ export type OfferingReferral = {
     published?: string;
     title?: string;
     referral_url?: string;
-};
-
-export type OfferingResourceOptionsUpdate = {
-    resource_options: OfferingOptions;
 };
 
 export type OfferingResourceOptionsUpdateRequest = {
@@ -9218,6 +9174,14 @@ export type TokenRequest = {
 export type TotalCustomerCost = {
     readonly total: number;
     readonly price: number;
+};
+
+export type Uuid = {
+    uuid: string;
+};
+
+export type UuidRequest = {
+    uuid: string;
 };
 
 export type User = {
@@ -18046,7 +18010,7 @@ export type MarketplaceProviderOfferingsAddEndpointData = {
 };
 
 export type MarketplaceProviderOfferingsAddEndpointResponses = {
-    200: NestedEndpoint;
+    201: Uuid;
 };
 
 export type MarketplaceProviderOfferingsAddEndpointResponse = MarketplaceProviderOfferingsAddEndpointResponses[keyof MarketplaceProviderOfferingsAddEndpointResponses];
@@ -18343,7 +18307,7 @@ export type MarketplaceProviderOfferingsCustomersListResponses = {
 export type MarketplaceProviderOfferingsCustomersListResponse = MarketplaceProviderOfferingsCustomersListResponses[keyof MarketplaceProviderOfferingsCustomersListResponses];
 
 export type MarketplaceProviderOfferingsDeleteEndpointData = {
-    body: EndpointDeleteRequest;
+    body: UuidRequest;
     path: {
         uuid: string;
     };
@@ -18405,8 +18369,10 @@ export type MarketplaceProviderOfferingsDeleteThumbnailResponses = {
     /**
      * No response body
      */
-    200: unknown;
+    204: void;
 };
+
+export type MarketplaceProviderOfferingsDeleteThumbnailResponse = MarketplaceProviderOfferingsDeleteThumbnailResponses[keyof MarketplaceProviderOfferingsDeleteThumbnailResponses];
 
 export type MarketplaceProviderOfferingsDeleteUserData = {
     body: UserRoleDeleteRequest;
@@ -18781,10 +18747,11 @@ export type MarketplaceProviderOfferingsUpdateDescriptionData = {
 };
 
 export type MarketplaceProviderOfferingsUpdateDescriptionResponses = {
-    200: OfferingDescriptionUpdate;
+    /**
+     * No response body
+     */
+    200: unknown;
 };
-
-export type MarketplaceProviderOfferingsUpdateDescriptionResponse = MarketplaceProviderOfferingsUpdateDescriptionResponses[keyof MarketplaceProviderOfferingsUpdateDescriptionResponses];
 
 export type MarketplaceProviderOfferingsUpdateImageData = {
     body: OfferingImageRequest;
@@ -18811,10 +18778,11 @@ export type MarketplaceProviderOfferingsUpdateIntegrationData = {
 };
 
 export type MarketplaceProviderOfferingsUpdateIntegrationResponses = {
-    200: OfferingIntegrationUpdate;
+    /**
+     * No response body
+     */
+    200: unknown;
 };
-
-export type MarketplaceProviderOfferingsUpdateIntegrationResponse = MarketplaceProviderOfferingsUpdateIntegrationResponses[keyof MarketplaceProviderOfferingsUpdateIntegrationResponses];
 
 export type MarketplaceProviderOfferingsUpdateLocationData = {
     body: OfferingLocationUpdateRequest;
@@ -18826,10 +18794,11 @@ export type MarketplaceProviderOfferingsUpdateLocationData = {
 };
 
 export type MarketplaceProviderOfferingsUpdateLocationResponses = {
-    200: OfferingLocationUpdate;
+    /**
+     * No response body
+     */
+    200: unknown;
 };
-
-export type MarketplaceProviderOfferingsUpdateLocationResponse = MarketplaceProviderOfferingsUpdateLocationResponses[keyof MarketplaceProviderOfferingsUpdateLocationResponses];
 
 export type MarketplaceProviderOfferingsUpdateOfferingComponentData = {
     body: OfferingComponentRequest;
@@ -18857,10 +18826,11 @@ export type MarketplaceProviderOfferingsUpdateOptionsData = {
 };
 
 export type MarketplaceProviderOfferingsUpdateOptionsResponses = {
-    200: OfferingOptionsUpdate;
+    /**
+     * No response body
+     */
+    200: unknown;
 };
-
-export type MarketplaceProviderOfferingsUpdateOptionsResponse = MarketplaceProviderOfferingsUpdateOptionsResponses[keyof MarketplaceProviderOfferingsUpdateOptionsResponses];
 
 export type MarketplaceProviderOfferingsUpdateOrganizationGroupsData = {
     body?: OrganizationGroupsRequest;
@@ -18872,10 +18842,11 @@ export type MarketplaceProviderOfferingsUpdateOrganizationGroupsData = {
 };
 
 export type MarketplaceProviderOfferingsUpdateOrganizationGroupsResponses = {
-    200: ProviderOfferingDetails;
+    /**
+     * No response body
+     */
+    200: unknown;
 };
-
-export type MarketplaceProviderOfferingsUpdateOrganizationGroupsResponse = MarketplaceProviderOfferingsUpdateOrganizationGroupsResponses[keyof MarketplaceProviderOfferingsUpdateOrganizationGroupsResponses];
 
 export type MarketplaceProviderOfferingsUpdateOverviewData = {
     body: OfferingOverviewUpdateRequest;
@@ -18887,10 +18858,11 @@ export type MarketplaceProviderOfferingsUpdateOverviewData = {
 };
 
 export type MarketplaceProviderOfferingsUpdateOverviewResponses = {
-    200: OfferingOverviewUpdate;
+    /**
+     * No response body
+     */
+    200: unknown;
 };
-
-export type MarketplaceProviderOfferingsUpdateOverviewResponse = MarketplaceProviderOfferingsUpdateOverviewResponses[keyof MarketplaceProviderOfferingsUpdateOverviewResponses];
 
 export type MarketplaceProviderOfferingsUpdateResourceOptionsData = {
     body: OfferingResourceOptionsUpdateRequest;
@@ -18902,10 +18874,11 @@ export type MarketplaceProviderOfferingsUpdateResourceOptionsData = {
 };
 
 export type MarketplaceProviderOfferingsUpdateResourceOptionsResponses = {
-    200: OfferingResourceOptionsUpdate;
+    /**
+     * No response body
+     */
+    200: unknown;
 };
-
-export type MarketplaceProviderOfferingsUpdateResourceOptionsResponse = MarketplaceProviderOfferingsUpdateResourceOptionsResponses[keyof MarketplaceProviderOfferingsUpdateResourceOptionsResponses];
 
 export type MarketplaceProviderOfferingsUpdateThumbnailData = {
     body: OfferingThumbnailRequest;
@@ -18917,10 +18890,11 @@ export type MarketplaceProviderOfferingsUpdateThumbnailData = {
 };
 
 export type MarketplaceProviderOfferingsUpdateThumbnailResponses = {
-    200: ProviderOfferingDetails;
+    /**
+     * No response body
+     */
+    200: unknown;
 };
-
-export type MarketplaceProviderOfferingsUpdateThumbnailResponse = MarketplaceProviderOfferingsUpdateThumbnailResponses[keyof MarketplaceProviderOfferingsUpdateThumbnailResponses];
 
 export type MarketplaceProviderOfferingsUpdateUserData = {
     body: UserRoleUpdateRequest;
