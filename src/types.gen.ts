@@ -9387,6 +9387,10 @@ export type UserRoleDetails = {
     readonly created_by_uuid?: string;
 };
 
+export type UserRoleExpirationTime = {
+    expiration_time: string | null;
+};
+
 export type UserRoleUpdateRequest = {
     role: string;
     user: string;
@@ -12263,11 +12267,10 @@ export type CallManagingOrganisationsAddUserData = {
 };
 
 export type CallManagingOrganisationsAddUserResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    201: UserRoleExpirationTime;
 };
+
+export type CallManagingOrganisationsAddUserResponse = CallManagingOrganisationsAddUserResponses[keyof CallManagingOrganisationsAddUserResponses];
 
 export type CallManagingOrganisationsDeleteUserData = {
     body: UserRoleDeleteRequest;
@@ -12374,11 +12377,10 @@ export type CallManagingOrganisationsUpdateUserData = {
 };
 
 export type CallManagingOrganisationsUpdateUserResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    200: UserRoleExpirationTime;
 };
+
+export type CallManagingOrganisationsUpdateUserResponse = CallManagingOrganisationsUpdateUserResponses[keyof CallManagingOrganisationsUpdateUserResponses];
 
 export type CallRoundsListData = {
     body?: never;
@@ -12971,11 +12973,10 @@ export type CustomersAddUserData = {
 };
 
 export type CustomersAddUserResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    201: UserRoleExpirationTime;
 };
+
+export type CustomersAddUserResponse = CustomersAddUserResponses[keyof CustomersAddUserResponses];
 
 export type CustomersDeleteUserData = {
     body: UserRoleDeleteRequest;
@@ -13100,11 +13101,10 @@ export type CustomersUpdateUserData = {
 };
 
 export type CustomersUpdateUserResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    200: UserRoleExpirationTime;
 };
+
+export type CustomersUpdateUserResponse = CustomersUpdateUserResponses[keyof CustomersUpdateUserResponses];
 
 export type CustomersUsersListData = {
     body?: never;
@@ -18061,11 +18061,10 @@ export type MarketplaceProviderOfferingsAddUserData = {
 };
 
 export type MarketplaceProviderOfferingsAddUserResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    201: UserRoleExpirationTime;
 };
+
+export type MarketplaceProviderOfferingsAddUserResponse = MarketplaceProviderOfferingsAddUserResponses[keyof MarketplaceProviderOfferingsAddUserResponses];
 
 export type MarketplaceProviderOfferingsArchiveData = {
     body?: never;
@@ -18933,11 +18932,10 @@ export type MarketplaceProviderOfferingsUpdateUserData = {
 };
 
 export type MarketplaceProviderOfferingsUpdateUserResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    200: UserRoleExpirationTime;
 };
+
+export type MarketplaceProviderOfferingsUpdateUserResponse = MarketplaceProviderOfferingsUpdateUserResponses[keyof MarketplaceProviderOfferingsUpdateUserResponses];
 
 export type MarketplaceProviderOfferingsUserHasResourceAccessRetrieveData = {
     body?: never;
@@ -21251,11 +21249,10 @@ export type MarketplaceServiceProvidersAddUserData = {
 };
 
 export type MarketplaceServiceProvidersAddUserResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    201: UserRoleExpirationTime;
 };
+
+export type MarketplaceServiceProvidersAddUserResponse = MarketplaceServiceProvidersAddUserResponses[keyof MarketplaceServiceProvidersAddUserResponses];
 
 export type ServiceProviderApiSecretCodeRetrieveData = {
     body?: never;
@@ -21481,11 +21478,10 @@ export type MarketplaceServiceProvidersUpdateUserData = {
 };
 
 export type MarketplaceServiceProvidersUpdateUserResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    200: UserRoleExpirationTime;
 };
+
+export type MarketplaceServiceProvidersUpdateUserResponse = MarketplaceServiceProvidersUpdateUserResponses[keyof MarketplaceServiceProvidersUpdateUserResponses];
 
 export type MarketplaceStatsComponentUsagesRetrieveData = {
     body?: never;
@@ -25503,11 +25499,10 @@ export type ProjectsAddUserData = {
 };
 
 export type ProjectsAddUserResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    201: UserRoleExpirationTime;
 };
+
+export type ProjectsAddUserResponse = ProjectsAddUserResponses[keyof ProjectsAddUserResponses];
 
 export type ProjectsDeleteUserData = {
     body: UserRoleDeleteRequest;
@@ -25631,11 +25626,10 @@ export type ProjectsUpdateUserData = {
 };
 
 export type ProjectsUpdateUserResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    200: UserRoleExpirationTime;
 };
+
+export type ProjectsUpdateUserResponse = ProjectsUpdateUserResponses[keyof ProjectsUpdateUserResponses];
 
 export type PromotionsCampaignsListData = {
     body?: never;
@@ -25920,11 +25914,10 @@ export type ProposalProposalsAddUserData = {
 };
 
 export type ProposalProposalsAddUserResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    201: UserRoleExpirationTime;
 };
+
+export type ProposalProposalsAddUserResponse = ProposalProposalsAddUserResponses[keyof ProposalProposalsAddUserResponses];
 
 export type ProposalProposalsApproveData = {
     body?: ProposalApproveRequest;
@@ -26202,11 +26195,10 @@ export type ProposalProposalsUpdateUserData = {
 };
 
 export type ProposalProposalsUpdateUserResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    200: UserRoleExpirationTime;
 };
+
+export type ProposalProposalsUpdateUserResponse = ProposalProposalsUpdateUserResponses[keyof ProposalProposalsUpdateUserResponses];
 
 export type ProposalProtectedCallsListData = {
     body?: never;
@@ -26349,11 +26341,10 @@ export type ProposalProtectedCallsAddUserData = {
 };
 
 export type ProposalProtectedCallsAddUserResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    201: UserRoleExpirationTime;
 };
+
+export type ProposalProtectedCallsAddUserResponse = ProposalProtectedCallsAddUserResponses[keyof ProposalProtectedCallsAddUserResponses];
 
 export type ProposalProtectedCallsArchiveData = {
     body?: never;
@@ -26721,11 +26712,10 @@ export type ProposalProtectedCallsUpdateUserData = {
 };
 
 export type ProposalProtectedCallsUpdateUserResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    200: UserRoleExpirationTime;
 };
+
+export type ProposalProtectedCallsUpdateUserResponse = ProposalProtectedCallsUpdateUserResponses[keyof ProposalProtectedCallsUpdateUserResponses];
 
 export type ProposalPublicCallsListData = {
     body?: never;
