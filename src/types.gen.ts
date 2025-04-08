@@ -3399,10 +3399,9 @@ export type MergedSecretOptions = {
      * Organization UUID
      */
     customer_uuid?: string;
-    /**
-     * UUID of Rancher offering where cluster can be created
-     */
-    rancher_offering_uuid?: string;
+    backend_url?: string;
+    username?: string;
+    password?: string;
 };
 
 export type MergedSecretOptionsRequest = {
@@ -3463,10 +3462,9 @@ export type MergedSecretOptionsRequest = {
      * Organization UUID
      */
     customer_uuid?: string;
-    /**
-     * UUID of Rancher offering where cluster can be created
-     */
-    rancher_offering_uuid?: string;
+    backend_url?: string;
+    username?: string;
+    password?: string;
 };
 
 export type MessageTemplate = {
