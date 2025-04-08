@@ -5807,6 +5807,10 @@ export type OrderSetStateErredRequest = {
 
 export type OrderState = 'pending-consumer' | 'pending-provider' | 'pending-project' | 'executing' | 'done' | 'erred' | 'canceled' | 'rejected';
 
+export type OrderUuid = {
+    readonly order_uuid: string;
+};
+
 export type OrganizationGroup = {
     readonly uuid?: string;
     readonly url?: string;
@@ -8533,16 +8537,8 @@ export type ResourceSuggestNameRequest = {
     offering: string;
 };
 
-export type ResourceSwitchPlan = {
-    plan: string;
-};
-
 export type ResourceSwitchPlanRequest = {
     plan: string;
-};
-
-export type ResourceTerminate = {
-    attributes?: unknown;
 };
 
 export type ResourceTerminateRequest = {
@@ -8556,12 +8552,6 @@ export type ResourceUpdate = {
      * The date is inclusive. Once reached, a resource will be scheduled for termination.
      */
     end_date?: string | null;
-};
-
-export type ResourceUpdateLimits = {
-    limits: {
-        [key: string]: number;
-    };
 };
 
 export type ResourceUpdateLimitsRequest = {
@@ -11783,6 +11773,10 @@ export type BookingResourcesListData = {
         o?: Array<'-created' | '-name' | '-schedules' | '-type' | 'created' | 'name' | 'schedules' | 'type'>;
         offering?: string;
         offering_billable?: string;
+        /**
+         * Offering shared
+         */
+        offering_shared?: boolean;
         offering_type?: string;
         offering_uuid?: string;
         /**
@@ -18982,6 +18976,10 @@ export type MarketplaceProviderResourcesListData = {
         o?: Array<'-created' | '-name' | '-project_name' | '-state' | 'created' | 'name' | 'project_name' | 'state'>;
         offering?: string;
         offering_billable?: string;
+        /**
+         * Offering shared
+         */
+        offering_shared?: boolean;
         offering_type?: string;
         offering_uuid?: string;
         /**
@@ -19341,7 +19339,7 @@ export type MarketplaceProviderResourcesTerminateData = {
 };
 
 export type MarketplaceProviderResourcesTerminateResponses = {
-    200: ResourceTerminate;
+    200: OrderUuid;
 };
 
 export type MarketplaceProviderResourcesTerminateResponse = MarketplaceProviderResourcesTerminateResponses[keyof MarketplaceProviderResourcesTerminateResponses];
@@ -19784,6 +19782,10 @@ export type MarketplaceResourcesListData = {
         o?: Array<'-created' | '-name' | '-project_name' | '-state' | 'created' | 'name' | 'project_name' | 'state'>;
         offering?: string;
         offering_billable?: string;
+        /**
+         * Offering shared
+         */
+        offering_shared?: boolean;
         offering_type?: string;
         offering_uuid?: string;
         /**
@@ -20008,7 +20010,7 @@ export type MarketplaceResourcesSwitchPlanData = {
 };
 
 export type MarketplaceResourcesSwitchPlanResponses = {
-    200: ResourceSwitchPlan;
+    200: OrderUuid;
 };
 
 export type MarketplaceResourcesSwitchPlanResponse = MarketplaceResourcesSwitchPlanResponses[keyof MarketplaceResourcesSwitchPlanResponses];
@@ -20038,7 +20040,7 @@ export type MarketplaceResourcesTerminateData = {
 };
 
 export type MarketplaceResourcesTerminateResponses = {
-    200: ResourceTerminate;
+    200: OrderUuid;
 };
 
 export type MarketplaceResourcesTerminateResponse = MarketplaceResourcesTerminateResponses[keyof MarketplaceResourcesTerminateResponses];
@@ -20069,7 +20071,7 @@ export type MarketplaceResourcesUpdateLimitsData = {
 };
 
 export type MarketplaceResourcesUpdateLimitsResponses = {
-    200: ResourceUpdateLimits;
+    200: OrderUuid;
 };
 
 export type MarketplaceResourcesUpdateLimitsResponse = MarketplaceResourcesUpdateLimitsResponses[keyof MarketplaceResourcesUpdateLimitsResponses];

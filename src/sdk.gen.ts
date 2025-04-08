@@ -7297,6 +7297,9 @@ export const marketplaceProviderResourcesTeamList = <ThrowOnError extends boolea
     });
 };
 
+/**
+ * Create marketplace order for resource termination.
+ */
 export const marketplaceProviderResourcesTerminate = <ThrowOnError extends boolean = false>(options: Options<MarketplaceProviderResourcesTerminateData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).post<MarketplaceProviderResourcesTerminateResponse, unknown, ThrowOnError>({
         security: [
@@ -7792,6 +7795,9 @@ export const marketplaceResourcesSetSlug = <ThrowOnError extends boolean = false
     });
 };
 
+/**
+ * Create marketplace order for resource plan switch.
+ */
 export const marketplaceResourcesSwitchPlan = <ThrowOnError extends boolean = false>(options: Options<MarketplaceResourcesSwitchPlanData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).post<MarketplaceResourcesSwitchPlanResponse, unknown, ThrowOnError>({
         security: [
@@ -7825,6 +7831,9 @@ export const marketplaceResourcesTeamList = <ThrowOnError extends boolean = fals
     });
 };
 
+/**
+ * Create marketplace order for resource termination.
+ */
 export const marketplaceResourcesTerminate = <ThrowOnError extends boolean = false>(options: Options<MarketplaceResourcesTerminateData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).post<MarketplaceResourcesTerminateResponse, unknown, ThrowOnError>({
         security: [
@@ -7860,6 +7869,9 @@ export const marketplaceResourcesUnlink = <ThrowOnError extends boolean = false>
     });
 };
 
+/**
+ * Create marketplace order for resource limits update.
+ */
 export const marketplaceResourcesUpdateLimits = <ThrowOnError extends boolean = false>(options: Options<MarketplaceResourcesUpdateLimitsData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).post<MarketplaceResourcesUpdateLimitsResponse, unknown, ThrowOnError>({
         security: [
