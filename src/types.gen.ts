@@ -5755,22 +5755,22 @@ export type OrderDetails = {
     /**
      * Required. 128 characters or fewer. Lowercase letters, numbers and @/./+/-/_ characters
      */
-    readonly consumer_reviewed_by?: string;
-    readonly consumer_reviewed_by_full_name?: string;
+    readonly consumer_reviewed_by?: string | null;
+    readonly consumer_reviewed_by_full_name?: string | null;
     /**
      * Required. 128 characters or fewer. Lowercase letters, numbers and @/./+/-/_ characters
      */
-    readonly consumer_reviewed_by_username?: string;
+    readonly consumer_reviewed_by_username?: string | null;
     readonly consumer_reviewed_at?: string | null;
     /**
      * Required. 128 characters or fewer. Lowercase letters, numbers and @/./+/-/_ characters
      */
-    readonly provider_reviewed_by?: string;
-    readonly provider_reviewed_by_full_name?: string;
+    readonly provider_reviewed_by?: string | null;
+    readonly provider_reviewed_by_full_name?: string | null;
     /**
      * Required. 128 characters or fewer. Lowercase letters, numbers and @/./+/-/_ characters
      */
-    readonly provider_reviewed_by_username?: string;
+    readonly provider_reviewed_by_username?: string | null;
     readonly provider_reviewed_at?: string | null;
     /**
      * Required. 128 characters or fewer. Lowercase letters, numbers and @/./+/-/_ characters
@@ -5785,10 +5785,10 @@ export type OrderDetails = {
     readonly project_uuid?: string;
     readonly project_description?: string;
     readonly project_slug?: string;
-    readonly old_plan_name?: string;
-    readonly new_plan_name?: string;
-    readonly old_plan_uuid?: string;
-    readonly new_plan_uuid?: string;
+    readonly old_plan_name?: string | null;
+    readonly new_plan_name?: string | null;
+    readonly old_plan_uuid?: string | null;
+    readonly new_plan_uuid?: string | null;
     readonly old_cost_estimate?: string | null;
     readonly new_cost_estimate?: string | null;
     readonly can_terminate?: boolean;
