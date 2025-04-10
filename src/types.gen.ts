@@ -5676,8 +5676,8 @@ export type OrderCreate = {
     /**
      * Required. 128 characters or fewer. Lowercase letters, numbers and @/./+/-/_ characters
      */
-    readonly consumer_reviewed_by_username: string;
-    readonly consumer_reviewed_by_full_name: string;
+    readonly consumer_reviewed_by_username: string | null;
+    readonly consumer_reviewed_by_full_name: string | null;
     project: string;
     readonly project_uuid: string;
     readonly project_name: string;
