@@ -2942,6 +2942,71 @@ export type JiraIssueRequest = {
     fields: JiraIssueFieldsRequest;
 };
 
+export type KeycloakGroup = {
+    readonly uuid: string;
+    readonly url: string;
+    readonly name: string;
+    readonly backend_id: string;
+    scope_type: RancherKeycloakGroupScopeType;
+    /**
+     * UUID of the cluster or project
+     */
+    scope_uuid: string;
+    /**
+     * Get the name of the cluster or project
+     */
+    readonly scope_name: string;
+    role: string;
+    readonly created: string;
+    readonly modified: string;
+};
+
+export type KeycloakGroupRequest = {
+    scope_type: RancherKeycloakGroupScopeType;
+    /**
+     * UUID of the cluster or project
+     */
+    scope_uuid: string;
+    role: string;
+};
+
+export type KeycloakUserGroupMembership = {
+    readonly uuid: string;
+    readonly url: string;
+    /**
+     * Keycloak user username
+     */
+    username: string;
+    /**
+     * User's email for notifications
+     */
+    email: string;
+    group: string;
+    readonly group_name: string;
+    readonly group_role: string;
+    group_scope_type: RancherCatalogScopeType;
+    state: KeycloakUserGroupMembershipState;
+    readonly created: string;
+    readonly modified: string;
+    readonly last_checked: string;
+    readonly error_message: string;
+    readonly error_traceback: string;
+};
+
+export type KeycloakUserGroupMembershipRequest = {
+    /**
+     * Keycloak user username
+     */
+    username: string;
+    /**
+     * User's email for notifications
+     */
+    email: string;
+    group: string;
+};
+
+export type KeycloakUserGroupMembershipState = 'pending' | 'active';
+
 export type LexisLink = {
     readonly url: string;
     readonly uuid: string;
@@ -4840,7 +4905,7 @@ export type OpenStackNestedInstance = {
 };
 
 export type OpenStackNestedPort = {
-    readonly fixed_ips?: Array<OpenStackFixedIp>;
+    fixed_ips?: Array<OpenStackFixedIp>;
     readonly mac_address?: string;
     subnet?: string | null;
     readonly subnet_uuid?: string;
@@ -4853,6 +4918,7 @@ export type OpenStackNestedPort = {
 };
 
 export type OpenStackNestedPortRequest = {
+    fixed_ips?: Array<OpenStackFixedIpRequest>;
     subnet?: string | null;
 };
 
@@ -6078,6 +6144,27 @@ export type PatchedIssueRequest = {
      * Set true if issue is created by regular user via portal.
      */
     is_reported_manually?: boolean;
+};
+
+export type PatchedKeycloakGroupRequest = {
+    scope_type?: RancherKeycloakGroupScopeType;
+    /**
+     * UUID of the cluster or project
+     */
+    scope_uuid?: string;
+    role?: string;
+};
+
+export type PatchedKeycloakUserGroupMembershipRequest = {
+    /**
+     * Keycloak user username
+     */
+    username?: string;
+    /**
+     * User's email for notifications
+     */
+    email?: string;
+    group?: string;
 };
 
 export type PatchedLexisLinkRequest = {
@@ -7613,7 +7700,7 @@ export type RancherCatalog = {
     readonly commit: string;
     readonly runtime_state: string;
     scope: string;
-    scope_type: ScopeTypeEnum;
+    scope_type: RancherCatalogScopeType;
 };
 
 export type RancherCatalogCreate = {
@@ -7628,7 +7715,7 @@ export type RancherCatalogCreate = {
     readonly commit: string;
     readonly runtime_state: string;
     scope: string;
-    scope_type: ScopeTypeEnum;
+    scope_type: RancherCatalogScopeType;
     username?: string;
     password?: string;
 };
@@ -7651,6 +7738,8 @@ export type RancherCatalogRequest = {
     scope: string;
 };
 
+export type RancherCatalogScopeType = 'global' | 'cluster' | 'project';
+
 export type RancherCatalogUpdate = {
     readonly uuid: string;
     readonly url: string;
@@ -7663,7 +7752,7 @@ export type RancherCatalogUpdate = {
     readonly commit: string;
     readonly runtime_state: string;
     scope: string;
-    scope_type: ScopeTypeEnum;
+    scope_type: RancherCatalogScopeType;
 };
 
 export type RancherCatalogUpdateRequest = {
@@ -7878,6 +7967,8 @@ export type RancherIngressRequest = {
     namespace?: string;
     rules?: unknown;
 };
+
+export type RancherKeycloakGroupScopeType = 'cluster' | 'project';
 
 export type RancherNamespace = {
     readonly url: string;
@@ -8835,8 +8926,6 @@ export type Saml2Provider = {
     name: string;
     url: string;
 };
-
-export type ScopeTypeEnum = 'global' | 'cluster' | 'project';
 
 export type Screenshot = {
     readonly url: string;
@@ -15088,6 +15177,206 @@ export type InvoicesGrowthRetrieveResponses = {
 };
 
 export type InvoicesGrowthRetrieveResponse = InvoicesGrowthRetrieveResponses[keyof InvoicesGrowthRetrieveResponses];
+
+export type KeycloakGroupsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        role?: string;
+        scope_type?: string;
+        scope_uuid?: string;
+    };
+    url: '/api/keycloak-groups/';
+};
+
+export type KeycloakGroupsListResponses = {
+    200: Array<KeycloakGroup>;
+};
+
+export type KeycloakGroupsListResponse = KeycloakGroupsListResponses[keyof KeycloakGroupsListResponses];
+
+export type KeycloakGroupsCreateData = {
+    body: KeycloakGroupRequest;
+    path?: never;
+    query?: never;
+    url: '/api/keycloak-groups/';
+};
+
+export type KeycloakGroupsCreateResponses = {
+    201: KeycloakGroup;
+};
+
+export type KeycloakGroupsCreateResponse = KeycloakGroupsCreateResponses[keyof KeycloakGroupsCreateResponses];
+
+export type KeycloakGroupsDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/keycloak-groups/{uuid}/';
+};
+
+export type KeycloakGroupsDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type KeycloakGroupsDestroyResponse = KeycloakGroupsDestroyResponses[keyof KeycloakGroupsDestroyResponses];
+
+export type KeycloakGroupsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/keycloak-groups/{uuid}/';
+};
+
+export type KeycloakGroupsRetrieveResponses = {
+    200: KeycloakGroup;
+};
+
+export type KeycloakGroupsRetrieveResponse = KeycloakGroupsRetrieveResponses[keyof KeycloakGroupsRetrieveResponses];
+
+export type KeycloakGroupsPartialUpdateData = {
+    body?: PatchedKeycloakGroupRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/keycloak-groups/{uuid}/';
+};
+
+export type KeycloakGroupsPartialUpdateResponses = {
+    200: KeycloakGroup;
+};
+
+export type KeycloakGroupsPartialUpdateResponse = KeycloakGroupsPartialUpdateResponses[keyof KeycloakGroupsPartialUpdateResponses];
+
+export type KeycloakGroupsUpdateData = {
+    body: KeycloakGroupRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/keycloak-groups/{uuid}/';
+};
+
+export type KeycloakGroupsUpdateResponses = {
+    200: KeycloakGroup;
+};
+
+export type KeycloakGroupsUpdateResponse = KeycloakGroupsUpdateResponses[keyof KeycloakGroupsUpdateResponses];
+
+export type KeycloakUserGroupMembershipsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        group_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/keycloak-user-group-memberships/';
+};
+
+export type KeycloakUserGroupMembershipsListResponses = {
+    200: Array<KeycloakUserGroupMembership>;
+};
+
+export type KeycloakUserGroupMembershipsListResponse = KeycloakUserGroupMembershipsListResponses[keyof KeycloakUserGroupMembershipsListResponses];
+
+export type KeycloakUserGroupMembershipsCreateData = {
+    body: KeycloakUserGroupMembershipRequest;
+    path?: never;
+    query?: never;
+    url: '/api/keycloak-user-group-memberships/';
+};
+
+export type KeycloakUserGroupMembershipsCreateResponses = {
+    201: KeycloakUserGroupMembership;
+};
+
+export type KeycloakUserGroupMembershipsCreateResponse = KeycloakUserGroupMembershipsCreateResponses[keyof KeycloakUserGroupMembershipsCreateResponses];
+
+export type KeycloakUserGroupMembershipsDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/keycloak-user-group-memberships/{uuid}/';
+};
+
+export type KeycloakUserGroupMembershipsDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type KeycloakUserGroupMembershipsDestroyResponse = KeycloakUserGroupMembershipsDestroyResponses[keyof KeycloakUserGroupMembershipsDestroyResponses];
+
+export type KeycloakUserGroupMembershipsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/keycloak-user-group-memberships/{uuid}/';
+};
+
+export type KeycloakUserGroupMembershipsRetrieveResponses = {
+    200: KeycloakUserGroupMembership;
+};
+
+export type KeycloakUserGroupMembershipsRetrieveResponse = KeycloakUserGroupMembershipsRetrieveResponses[keyof KeycloakUserGroupMembershipsRetrieveResponses];
+
+export type KeycloakUserGroupMembershipsPartialUpdateData = {
+    body?: PatchedKeycloakUserGroupMembershipRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/keycloak-user-group-memberships/{uuid}/';
+};
+
+export type KeycloakUserGroupMembershipsPartialUpdateResponses = {
+    200: KeycloakUserGroupMembership;
+};
+
+export type KeycloakUserGroupMembershipsPartialUpdateResponse = KeycloakUserGroupMembershipsPartialUpdateResponses[keyof KeycloakUserGroupMembershipsPartialUpdateResponses];
+
+export type KeycloakUserGroupMembershipsUpdateData = {
+    body: KeycloakUserGroupMembershipRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/keycloak-user-group-memberships/{uuid}/';
+};
+
+export type KeycloakUserGroupMembershipsUpdateResponses = {
+    200: KeycloakUserGroupMembership;
+};
+
+export type KeycloakUserGroupMembershipsUpdateResponse = KeycloakUserGroupMembershipsUpdateResponses[keyof KeycloakUserGroupMembershipsUpdateResponses];
 
 export type KeysListData = {
     body?: never;
