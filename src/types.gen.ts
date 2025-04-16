@@ -2947,7 +2947,7 @@ export type KeycloakGroup = {
     readonly url: string;
     readonly name: string;
     readonly backend_id: string;
-    scope_type: RancherKeycloakGroupScopeType;
+    readonly scope_type: string;
     /**
      * UUID of the cluster or project
      */
@@ -2962,7 +2962,6 @@ export type KeycloakGroup = {
 };
 
 export type KeycloakGroupRequest = {
-    scope_type: RancherKeycloakGroupScopeType;
     /**
      * UUID of the cluster or project
      */
@@ -2984,7 +2983,7 @@ export type KeycloakUserGroupMembership = {
     group: string;
     readonly group_name: string;
     readonly group_role: string;
-    group_scope_type: RancherCatalogScopeType;
+    readonly group_scope_type: string;
     state: KeycloakUserGroupMembershipState;
     readonly created: string;
     readonly modified: string;
@@ -3285,6 +3284,9 @@ export type MergedPluginOptions = {
      * List of UUID of OpenStack offerings where tenant can be created
      */
     openstack_offering_uuid_list?: Array<string>;
+    managed_rancher_server_flavor_name?: string;
+    managed_rancher_system_volume_size_gb?: number;
+    managed_rancher_system_volume_type_name?: string;
     /**
      * Slurm account name generation policy
      */
@@ -3400,6 +3402,9 @@ export type MergedPluginOptionsRequest = {
      * List of UUID of OpenStack offerings where tenant can be created
      */
     openstack_offering_uuid_list?: Array<string>;
+    managed_rancher_server_flavor_name?: string;
+    managed_rancher_system_volume_size_gb?: number;
+    managed_rancher_system_volume_type_name?: string;
     /**
      * Slurm account name generation policy
      */
@@ -3467,6 +3472,7 @@ export type MergedSecretOptions = {
     backend_url?: string;
     username?: string;
     password?: string;
+    cloud_init_template?: string;
 };
 
 export type MergedSecretOptionsRequest = {
@@ -3530,6 +3536,7 @@ export type MergedSecretOptionsRequest = {
     backend_url?: string;
     username?: string;
     password?: string;
+    cloud_init_template?: string;
 };
 
 export type MessageTemplate = {
@@ -6147,7 +6154,6 @@ export type PatchedIssueRequest = {
 };
 
 export type PatchedKeycloakGroupRequest = {
-    scope_type?: RancherKeycloakGroupScopeType;
     /**
      * UUID of the cluster or project
      */
@@ -7968,8 +7974,6 @@ export type RancherIngressRequest = {
     rules?: unknown;
 };
 
-export type RancherKeycloakGroupScopeType = 'cluster' | 'project';
-
 export type RancherNamespace = {
     readonly url: string;
     readonly uuid: string;
@@ -8102,6 +8106,8 @@ export type RancherProject = {
     namespaces: Array<RancherNestedNamespace>;
 };
 
+export type RancherRoleScopeType = 'cluster' | 'project';
+
 export type RancherService = {
     readonly url?: string;
     readonly uuid?: string;
@@ -8223,7 +8229,7 @@ export type RancherUser = {
 
 export type RancherUserClusterLink = {
     cluster: string;
-    role: RoleEnum;
+    role: string;
     readonly cluster_name: string;
     readonly cluster_uuid: string;
 };
@@ -8855,8 +8861,6 @@ export type RoleDetails = {
     content_type?: RoleType;
 };
 
-export type RoleEnum = 'owner' | 'member';
-
 export type RoleModifyRequest = {
     name: string;
     description?: string;
@@ -8877,6 +8881,21 @@ export type RoleModifyRequest = {
     permissions: unknown;
     is_active?: boolean;
     content_type: string;
+};
+
+export type RoleTemplate = {
+    readonly url: string;
+    readonly uuid: string;
+    /**
+     * Role internal name
+     */
+    readonly name: string;
+    scope_type: RancherRoleScopeType;
+    /**
+     * Role public name
+     */
+    readonly display_name: string;
+    readonly settings: string;
 };
 
 export type RoleType = 'customer' | 'service_provider' | 'call_organizer' | 'project' | 'offering' | 'call' | 'proposal';
@@ -28738,6 +28757,43 @@ export type RancherProjectsSecretsRetrieveResponses = {
 };
 
 export type RancherProjectsSecretsRetrieveResponse = RancherProjectsSecretsRetrieveResponses[keyof RancherProjectsSecretsRetrieveResponses];
+
+export type RancherRoleTemplatesListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/rancher-role-templates/';
+};
+
+export type RancherRoleTemplatesListResponses = {
+    200: Array<RoleTemplate>;
+};
+
+export type RancherRoleTemplatesListResponse = RancherRoleTemplatesListResponses[keyof RancherRoleTemplatesListResponses];
+
+export type RancherRoleTemplatesRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/rancher-role-templates/{uuid}/';
+};
+
+export type RancherRoleTemplatesRetrieveResponses = {
+    200: RoleTemplate;
+};
+
+export type RancherRoleTemplatesRetrieveResponse = RancherRoleTemplatesRetrieveResponses[keyof RancherRoleTemplatesRetrieveResponses];
 
 export type RancherServicesListData = {
     body?: never;
