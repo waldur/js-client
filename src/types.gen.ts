@@ -2961,14 +2961,6 @@ export type KeycloakGroup = {
     readonly modified: string;
 };
 
-export type KeycloakGroupRequest = {
-    /**
-     * UUID of the cluster or project
-     */
-    scope_uuid: string;
-    role: string;
-};
-
 export type KeycloakUserGroupMembership = {
     readonly uuid: string;
     readonly url: string;
@@ -2980,7 +2972,9 @@ export type KeycloakUserGroupMembership = {
      * User's email for notifications
      */
     email: string;
-    group: string;
+    readonly first_name: string;
+    readonly last_name: string;
+    readonly group: string;
     readonly group_name: string;
     readonly group_role: string;
     readonly group_scope_type: string;
@@ -3001,7 +2995,11 @@ export type KeycloakUserGroupMembershipRequest = {
      * User's email for notifications
      */
     email: string;
-    group: string;
+    /**
+     * UUID of a cluster or a project in Rancher
+     */
+    scope_uuid: string;
+    role: string;
 };
 
 export type KeycloakUserGroupMembershipState = 'pending' | 'active';
@@ -6153,14 +6151,6 @@ export type PatchedIssueRequest = {
     is_reported_manually?: boolean;
 };
 
-export type PatchedKeycloakGroupRequest = {
-    /**
-     * UUID of the cluster or project
-     */
-    scope_uuid?: string;
-    role?: string;
-};
-
 export type PatchedKeycloakUserGroupMembershipRequest = {
     /**
      * Keycloak user username
@@ -6170,7 +6160,11 @@ export type PatchedKeycloakUserGroupMembershipRequest = {
      * User's email for notifications
      */
     email?: string;
-    group?: string;
+    /**
+     * UUID of a cluster or a project in Rancher
+     */
+    scope_uuid?: string;
+    role?: string;
 };
 
 export type PatchedLexisLinkRequest = {
@@ -15222,37 +15216,6 @@ export type KeycloakGroupsListResponses = {
 
 export type KeycloakGroupsListResponse = KeycloakGroupsListResponses[keyof KeycloakGroupsListResponses];
 
-export type KeycloakGroupsCreateData = {
-    body: KeycloakGroupRequest;
-    path?: never;
-    query?: never;
-    url: '/api/keycloak-groups/';
-};
-
-export type KeycloakGroupsCreateResponses = {
-    201: KeycloakGroup;
-};
-
-export type KeycloakGroupsCreateResponse = KeycloakGroupsCreateResponses[keyof KeycloakGroupsCreateResponses];
-
-export type KeycloakGroupsDestroyData = {
-    body?: never;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/keycloak-groups/{uuid}/';
-};
-
-export type KeycloakGroupsDestroyResponses = {
-    /**
-     * No response body
-     */
-    204: void;
-};
-
-export type KeycloakGroupsDestroyResponse = KeycloakGroupsDestroyResponses[keyof KeycloakGroupsDestroyResponses];
-
 export type KeycloakGroupsRetrieveData = {
     body?: never;
     path: {
@@ -15268,41 +15231,14 @@ export type KeycloakGroupsRetrieveResponses = {
 
 export type KeycloakGroupsRetrieveResponse = KeycloakGroupsRetrieveResponses[keyof KeycloakGroupsRetrieveResponses];
 
-export type KeycloakGroupsPartialUpdateData = {
-    body?: PatchedKeycloakGroupRequest;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/keycloak-groups/{uuid}/';
-};
-
-export type KeycloakGroupsPartialUpdateResponses = {
-    200: KeycloakGroup;
-};
-
-export type KeycloakGroupsPartialUpdateResponse = KeycloakGroupsPartialUpdateResponses[keyof KeycloakGroupsPartialUpdateResponses];
-
-export type KeycloakGroupsUpdateData = {
-    body: KeycloakGroupRequest;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/keycloak-groups/{uuid}/';
-};
-
-export type KeycloakGroupsUpdateResponses = {
-    200: KeycloakGroup;
-};
-
-export type KeycloakGroupsUpdateResponse = KeycloakGroupsUpdateResponses[keyof KeycloakGroupsUpdateResponses];
-
 export type KeycloakUserGroupMembershipsListData = {
     body?: never;
     path?: never;
     query?: {
+        email?: string;
+        first_name?: string;
         group_uuid?: string;
+        last_name?: string;
         /**
          * A page number within the paginated result set.
          */
@@ -15311,6 +15247,10 @@ export type KeycloakUserGroupMembershipsListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        role_uuid?: string;
+        scope_type?: string;
+        scope_uuid?: string;
+        username?: string;
     };
     url: '/api/keycloak-user-group-memberships/';
 };
