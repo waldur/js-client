@@ -3055,6 +3055,7 @@ export type Mapping = {
     volume_types?: Array<VolumeTypeMapping>;
     subnets?: Array<SubNetMapping>;
     skip_connection_extnet?: boolean;
+    sync_instance_ports?: boolean;
     networks?: Array<string>;
 };
 
@@ -3062,6 +3063,7 @@ export type MappingRequest = {
     volume_types?: Array<VolumeTypeMappingRequest>;
     subnets?: Array<SubNetMappingRequest>;
     skip_connection_extnet?: boolean;
+    sync_instance_ports?: boolean;
     networks?: Array<string>;
 };
 
