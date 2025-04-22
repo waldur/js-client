@@ -3285,8 +3285,8 @@ export type MergedPluginOptions = {
      */
     openstack_offering_uuid_list?: Array<string>;
     managed_rancher_server_flavor_name?: string;
-    managed_rancher_system_volume_size_gb?: number;
-    managed_rancher_system_volume_type_name?: string;
+    managed_rancher_server_system_volume_size_gb?: number;
+    managed_rancher_server_system_volume_type_name?: string;
     /**
      * Slurm account name generation policy
      */
@@ -3403,8 +3403,8 @@ export type MergedPluginOptionsRequest = {
      */
     openstack_offering_uuid_list?: Array<string>;
     managed_rancher_server_flavor_name?: string;
-    managed_rancher_system_volume_size_gb?: number;
-    managed_rancher_system_volume_type_name?: string;
+    managed_rancher_server_system_volume_size_gb?: number;
+    managed_rancher_server_system_volume_type_name?: string;
     /**
      * Slurm account name generation policy
      */
