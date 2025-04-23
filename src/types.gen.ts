@@ -8755,7 +8755,7 @@ export type RobotAccount = {
     readonly backend_id: string;
     responsible_user?: string | null;
     readonly fingerprints: Array<Fingerprint>;
-    readonly state: string | null;
+    readonly state: string;
     readonly error_message: string;
     readonly error_traceback: string;
 };
@@ -8773,7 +8773,7 @@ export type RobotAccountDetails = {
     readonly backend_id: string;
     responsible_user: BasicUser | null;
     readonly fingerprints: Array<Fingerprint>;
-    readonly state: string | null;
+    readonly state?: string;
     readonly error_message: string;
     readonly error_traceback: string;
     readonly user_keys: Array<SshKey>;
