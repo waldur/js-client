@@ -3921,9 +3921,12 @@ export type NestedSecurityGroupRuleRequest = {
 };
 
 export type NetworkRbacPolicy = {
+    readonly url?: string;
     readonly uuid?: string;
     readonly network?: string;
+    readonly network_name?: string;
     target_tenant?: string;
+    readonly target_tenant_name?: string;
     readonly backend_id?: string;
     policy_type?: PolicyTypeEnum;
     readonly created?: string;
@@ -7037,6 +7040,7 @@ export type Proposal = {
     readonly url: string;
     name: string;
     description?: string;
+    readonly project_name: string;
     project_summary?: string;
     project_is_confidential?: boolean;
     project_has_civilian_purpose?: boolean;
@@ -7098,6 +7102,8 @@ export type ProposalReview = {
     readonly url: string;
     readonly uuid: string;
     proposal: string;
+    readonly proposal_name: string;
+    readonly proposal_uuid: string;
     reviewer: string;
     readonly reviewer_full_name: string;
     readonly reviewer_uuid: string;
@@ -7106,7 +7112,6 @@ export type ProposalReview = {
     summary_score?: number;
     summary_public_comment?: string;
     summary_private_comment?: string;
-    readonly proposal_name: string;
     readonly round_uuid: string;
     readonly round_name: string;
     readonly round_cutoff_time: string;
@@ -23175,6 +23180,48 @@ export type OpenstackMigrationsRunResponses = {
      */
     200: unknown;
 };
+
+export type OpenstackNetworkRbacPoliciesListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        network?: string;
+        network_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        policy_type?: 'access_as_external' | 'access_as_shared';
+        target_tenant?: string;
+        target_tenant_uuid?: string;
+    };
+    url: '/api/openstack-network-rbac-policies/';
+};
+
+export type OpenstackNetworkRbacPoliciesListResponses = {
+    200: Array<NetworkRbacPolicy>;
+};
+
+export type OpenstackNetworkRbacPoliciesListResponse = OpenstackNetworkRbacPoliciesListResponses[keyof OpenstackNetworkRbacPoliciesListResponses];
+
+export type OpenstackNetworkRbacPoliciesRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openstack-network-rbac-policies/{uuid}/';
+};
+
+export type OpenstackNetworkRbacPoliciesRetrieveResponses = {
+    200: NetworkRbacPolicy;
+};
+
+export type OpenstackNetworkRbacPoliciesRetrieveResponse = OpenstackNetworkRbacPoliciesRetrieveResponses[keyof OpenstackNetworkRbacPoliciesRetrieveResponses];
 
 export type OpenstackNetworksListData = {
     body?: never;
