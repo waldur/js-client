@@ -7666,7 +7666,7 @@ export type RancherApplication = {
     readonly rancher_project_name?: string;
     readonly catalog_name?: string;
     readonly template_name?: string;
-    readonly external_url?: string;
+    readonly external_url?: string | null;
     readonly marketplace_offering_uuid?: string;
     readonly marketplace_offering_name?: string;
     readonly marketplace_offering_plugin_options?: {};
@@ -8756,8 +8756,8 @@ export type RobotAccount = {
     responsible_user?: string | null;
     readonly fingerprints: Array<Fingerprint>;
     readonly state?: string;
-    readonly error_message: string;
-    readonly error_traceback: string;
+    readonly error_message?: string;
+    readonly error_traceback?: string;
 };
 
 export type RobotAccountDetails = {
@@ -8774,8 +8774,8 @@ export type RobotAccountDetails = {
     responsible_user: BasicUser | null;
     readonly fingerprints: Array<Fingerprint>;
     readonly state?: string;
-    readonly error_message: string;
-    readonly error_traceback: string;
+    readonly error_message?: string;
+    readonly error_traceback?: string;
     readonly user_keys: Array<SshKey>;
     readonly resource_name: string;
     readonly resource_uuid: string;
@@ -15058,6 +15058,7 @@ export type KeycloakUserGroupMembershipsListData = {
         role_uuid?: string;
         scope_type?: string;
         scope_uuid?: string;
+        state?: Array<'active' | 'pending'>;
         username?: string;
     };
     url: '/api/keycloak-user-group-memberships/';
@@ -18008,6 +18009,14 @@ export type MarketplaceProviderOfferingsListData = {
          */
         project_uuid?: string;
         /**
+         * Resource customer UUID
+         */
+        resource_customer_uuid?: string;
+        /**
+         * Resource project UUID
+         */
+        resource_project_uuid?: string;
+        /**
          * Scope UUID
          */
         scope_uuid?: string;
@@ -18196,6 +18205,14 @@ export type MarketplaceProviderOfferingsComponentStatsListData = {
          */
         project_uuid?: string;
         /**
+         * Resource customer UUID
+         */
+        resource_customer_uuid?: string;
+        /**
+         * Resource project UUID
+         */
+        resource_project_uuid?: string;
+        /**
          * Scope UUID
          */
         scope_uuid?: string;
@@ -18280,6 +18297,14 @@ export type MarketplaceProviderOfferingsCostsListData = {
          * Project UUID
          */
         project_uuid?: string;
+        /**
+         * Resource customer UUID
+         */
+        resource_customer_uuid?: string;
+        /**
+         * Resource project UUID
+         */
+        resource_project_uuid?: string;
         /**
          * Scope UUID
          */
@@ -18376,6 +18401,14 @@ export type MarketplaceProviderOfferingsCustomersListData = {
          * Project UUID
          */
         project_uuid?: string;
+        /**
+         * Resource customer UUID
+         */
+        resource_customer_uuid?: string;
+        /**
+         * Resource project UUID
+         */
+        resource_project_uuid?: string;
         /**
          * Scope UUID
          */
@@ -19537,6 +19570,14 @@ export type MarketplacePublicOfferingsListData = {
          * Project UUID
          */
         project_uuid?: string;
+        /**
+         * Resource customer UUID
+         */
+        resource_customer_uuid?: string;
+        /**
+         * Resource project UUID
+         */
+        resource_project_uuid?: string;
         /**
          * Scope UUID
          */
@@ -20977,6 +21018,14 @@ export type MarketplaceServiceProvidersOfferingsListData = {
          * Project UUID
          */
         project_uuid?: string;
+        /**
+         * Resource customer UUID
+         */
+        resource_customer_uuid?: string;
+        /**
+         * Resource project UUID
+         */
+        resource_project_uuid?: string;
         /**
          * Scope UUID
          */
@@ -28552,6 +28601,7 @@ export type RancherRoleTemplatesListData = {
     body?: never;
     path?: never;
     query?: {
+        name?: string;
         /**
          * A page number within the paginated result set.
          */
@@ -28560,6 +28610,8 @@ export type RancherRoleTemplatesListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        scope_type?: string;
+        settings_uuid?: string;
     };
     url: '/api/rancher-role-templates/';
 };
