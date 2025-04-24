@@ -8755,7 +8755,7 @@ export type RobotAccount = {
     readonly backend_id: string;
     responsible_user?: string | null;
     readonly fingerprints: Array<Fingerprint>;
-    readonly state: string;
+    readonly state?: string;
     readonly error_message: string;
     readonly error_traceback: string;
 };
