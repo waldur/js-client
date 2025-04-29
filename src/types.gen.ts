@@ -2009,6 +2009,7 @@ export type CustomerServiceAccount = {
     error_traceback?: string;
     readonly token: string | null;
     email?: string;
+    readonly expiresAt: string | null;
     customer: string;
 };
 
@@ -5221,6 +5222,7 @@ export type OpenStackPort = {
     readonly device_owner?: string | null;
     port_security_enabled?: boolean;
     security_groups?: Array<OpenStackPortNestedSecurityGroup>;
+    readonly admin_state_up?: string | null;
     readonly marketplace_offering_uuid?: string;
     readonly marketplace_offering_name?: string;
     readonly marketplace_offering_plugin_options?: {};
@@ -7175,6 +7177,7 @@ export type ProjectServiceAccount = {
     error_traceback?: string;
     readonly token: string | null;
     email?: string;
+    readonly expiresAt: string | null;
     project: string;
 };
 
@@ -16706,6 +16709,21 @@ export type MarketplaceCustomerServiceAccountsUpdateResponses = {
 
 export type MarketplaceCustomerServiceAccountsUpdateResponse = MarketplaceCustomerServiceAccountsUpdateResponses[keyof MarketplaceCustomerServiceAccountsUpdateResponses];
 
+export type MarketplaceCustomerServiceAccountsRotateApiKeyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-customer-service-accounts/{uuid}/rotate_api_key/';
+};
+
+export type MarketplaceCustomerServiceAccountsRotateApiKeyResponses = {
+    200: CustomerServiceAccount;
+};
+
+export type MarketplaceCustomerServiceAccountsRotateApiKeyResponse = MarketplaceCustomerServiceAccountsRotateApiKeyResponses[keyof MarketplaceCustomerServiceAccountsRotateApiKeyResponses];
+
 export type MarketplaceGlobalCategoriesRetrieveData = {
     body?: never;
     path?: never;
@@ -18284,6 +18302,21 @@ export type MarketplaceProjectServiceAccountsUpdateResponses = {
 };
 
 export type MarketplaceProjectServiceAccountsUpdateResponse = MarketplaceProjectServiceAccountsUpdateResponses[keyof MarketplaceProjectServiceAccountsUpdateResponses];
+
+export type MarketplaceProjectServiceAccountsRotateApiKeyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-project-service-accounts/{uuid}/rotate_api_key/';
+};
+
+export type MarketplaceProjectServiceAccountsRotateApiKeyResponses = {
+    200: ProjectServiceAccount;
+};
+
+export type MarketplaceProjectServiceAccountsRotateApiKeyResponse = MarketplaceProjectServiceAccountsRotateApiKeyResponses[keyof MarketplaceProjectServiceAccountsRotateApiKeyResponses];
 
 export type MarketplaceProjectUpdateRequestsListData = {
     body?: never;
@@ -23899,7 +23932,7 @@ export type OpenstackPortsListData = {
     body?: never;
     path?: never;
     query?: {
-        field?: Array<'access_url' | 'allowed_address_pairs' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'description' | 'device_id' | 'device_owner' | 'error_message' | 'error_traceback' | 'fixed_ips' | 'floating_ips' | 'is_limit_based' | 'is_usage_based' | 'mac_address' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'network' | 'network_name' | 'network_uuid' | 'port_security_enabled' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'security_groups' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'tenant' | 'tenant_name' | 'tenant_uuid' | 'url' | 'uuid'>;
+        field?: Array<'access_url' | 'admin_state_up' | 'allowed_address_pairs' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'description' | 'device_id' | 'device_owner' | 'error_message' | 'error_traceback' | 'fixed_ips' | 'floating_ips' | 'is_limit_based' | 'is_usage_based' | 'mac_address' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'network' | 'network_name' | 'network_uuid' | 'port_security_enabled' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'security_groups' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'tenant' | 'tenant_name' | 'tenant_uuid' | 'url' | 'uuid'>;
         name?: string;
         name_exact?: string;
         /**
@@ -23965,7 +23998,7 @@ export type OpenstackPortsRetrieveData = {
         uuid: string;
     };
     query?: {
-        field?: Array<'access_url' | 'allowed_address_pairs' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'description' | 'device_id' | 'device_owner' | 'error_message' | 'error_traceback' | 'fixed_ips' | 'floating_ips' | 'is_limit_based' | 'is_usage_based' | 'mac_address' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'network' | 'network_name' | 'network_uuid' | 'port_security_enabled' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'security_groups' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'tenant' | 'tenant_name' | 'tenant_uuid' | 'url' | 'uuid'>;
+        field?: Array<'access_url' | 'admin_state_up' | 'allowed_address_pairs' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'description' | 'device_id' | 'device_owner' | 'error_message' | 'error_traceback' | 'fixed_ips' | 'floating_ips' | 'is_limit_based' | 'is_usage_based' | 'mac_address' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'network' | 'network_name' | 'network_uuid' | 'port_security_enabled' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'security_groups' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'tenant' | 'tenant_name' | 'tenant_uuid' | 'url' | 'uuid'>;
     };
     url: '/api/openstack-ports/{uuid}/';
 };
@@ -24005,6 +24038,70 @@ export type OpenstackPortsUpdateResponses = {
 };
 
 export type OpenstackPortsUpdateResponse = OpenstackPortsUpdateResponses[keyof OpenstackPortsUpdateResponses];
+
+export type OpenstackPortsDisablePortData = {
+    body: OpenStackPortRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openstack-ports/{uuid}/disable_port/';
+};
+
+export type OpenstackPortsDisablePortResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type OpenstackPortsDisablePortSecurityData = {
+    body: OpenStackPortRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openstack-ports/{uuid}/disable_port_security/';
+};
+
+export type OpenstackPortsDisablePortSecurityResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type OpenstackPortsEnablePortData = {
+    body: OpenStackPortRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openstack-ports/{uuid}/enable_port/';
+};
+
+export type OpenstackPortsEnablePortResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type OpenstackPortsEnablePortSecurityData = {
+    body: OpenStackPortRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openstack-ports/{uuid}/enable_port_security/';
+};
+
+export type OpenstackPortsEnablePortSecurityResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type OpenstackPortsPullData = {
     body?: never;
