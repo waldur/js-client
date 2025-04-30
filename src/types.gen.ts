@@ -5235,6 +5235,11 @@ export type OpenStackPort = {
     readonly is_limit_based?: boolean;
 };
 
+export type OpenStackPortIpUpdateRequest = {
+    subnet: string;
+    ip_address: string;
+};
+
 export type OpenStackPortNestedSecurityGroup = {
     readonly uuid?: string;
     name?: string;
@@ -24128,6 +24133,22 @@ export type OpenstackPortsUnlinkData = {
 };
 
 export type OpenstackPortsUnlinkResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type OpenstackPortsUpdatePortIpData = {
+    body: OpenStackPortIpUpdateRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openstack-ports/{uuid}/update_port_ip/';
+};
+
+export type OpenstackPortsUpdatePortIpResponses = {
     /**
      * No response body
      */
