@@ -8185,7 +8185,7 @@ export type RancherNestedNode = {
     readonly error_message?: string;
     error_traceback?: string;
     backend_id?: string;
-    controlplane_role?: boolean;
+    readonly controlplane_role?: boolean;
     readonly etcd_role?: boolean;
     readonly worker_role?: boolean;
     /**
@@ -8222,7 +8222,6 @@ export type RancherNestedNodeRequest = {
     roles: Array<RolesEnum>;
     error_traceback?: string;
     backend_id?: string;
-    controlplane_role?: boolean;
 };
 
 export type RancherNestedSecurityGroup = {
