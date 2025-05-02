@@ -2979,7 +2979,7 @@ export type KeycloakGroup = {
     /**
      * Get the name of the cluster or project
      */
-    readonly scope_name: string;
+    readonly scope_name: string | null;
     role: string;
     readonly created: string;
     readonly modified: string;
@@ -8040,16 +8040,17 @@ export type RancherClusterTemplateNode = {
     min_ram: number;
     system_volume_size: number;
     preferred_volume_type?: string;
-    readonly roles: Array<RolesEnum>;
+    role: RoleEnum;
 };
 
 export type RancherCreateNode = {
     cluster: string;
+    role: RoleEnum;
 };
 
 export type RancherCreateNodeRequest = {
     cluster: string;
-    roles: Array<RolesEnum>;
+    role: RoleEnum;
     system_volume_size?: number;
     system_volume_type?: string | null;
     memory?: number;
@@ -8183,6 +8184,7 @@ export type RancherNestedNamespace = {
 
 export type RancherNestedNode = {
     readonly url?: string;
+    role?: RoleEnum;
     readonly instance?: string;
     readonly created?: string;
     readonly modified?: string;
@@ -8190,9 +8192,6 @@ export type RancherNestedNode = {
     readonly error_message?: string;
     error_traceback?: string;
     backend_id?: string;
-    readonly controlplane_role?: boolean;
-    readonly etcd_role?: boolean;
-    readonly worker_role?: boolean;
     /**
      * Initial data for instance creating.
      */
@@ -8224,7 +8223,7 @@ export type RancherNestedNodeRequest = {
     data_volumes?: Array<DataVolumeRequest>;
     memory?: number;
     cpu?: number;
-    roles: Array<RolesEnum>;
+    role: RoleEnum;
     error_traceback?: string;
     backend_id?: string;
 };
@@ -8262,9 +8261,7 @@ export type RancherNode = {
     readonly instance_name: string;
     readonly instance_uuid: string;
     readonly instance_marketplace_uuid: string;
-    controlplane_role?: boolean;
-    etcd_role?: boolean;
-    worker_role?: boolean;
+    role: RoleEnum;
     readonly k8s_version: string;
     readonly docker_version: string;
     readonly cpu_allocated: number | null;
@@ -8379,7 +8376,7 @@ export type RancherTemplateBaseQuestion = {
     description?: string;
     variable: string;
     required?: boolean;
-    validate?: unknown;
+    validate_?: unknown;
     type: RancherTemplateQuestionType;
     default?: string | null;
     group?: string;
@@ -8391,7 +8388,7 @@ export type RancherTemplateQuestion = {
     description?: string;
     variable: string;
     required?: boolean;
-    validate?: unknown;
+    validate_?: unknown;
     type: RancherTemplateQuestionType;
     default?: string | null;
     group?: string;
@@ -9071,6 +9068,8 @@ export type RoleDetails = {
     content_type?: RoleType;
 };
 
+export type RoleEnum = 'agent' | 'server';
+
 export type RoleModifyRequest = {
     name: string;
     description?: string;
@@ -9109,8 +9108,6 @@ export type RoleTemplate = {
 };
 
 export type RoleType = 'customer' | 'service_provider' | 'call_organizer' | 'project' | 'offering' | 'call' | 'proposal';
-
-export type RolesEnum = 'controlplane' | 'etcd' | 'worker';
 
 export type RoundReviewer = {
     readonly full_name: string;
