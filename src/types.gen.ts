@@ -842,10 +842,10 @@ export type BookingResource = {
     readonly category_uuid?: string;
     readonly category_icon?: string;
     plan?: string;
-    plan_unit?: BillingUnit;
-    readonly plan_name?: string;
-    readonly plan_uuid?: string;
-    readonly plan_description?: string;
+    plan_unit?: BillingUnit | null;
+    readonly plan_name?: string | null;
+    readonly plan_uuid?: string | null;
+    readonly plan_description?: string | null;
     readonly attributes?: {};
     readonly limits?: {
         [key: string]: number;
@@ -1956,8 +1956,8 @@ export type CustomerOecdCodeStats = {
 export type CustomerPermissionReview = {
     readonly url: string;
     readonly uuid: string;
-    readonly reviewer_full_name: string;
-    readonly reviewer_uuid: string;
+    readonly reviewer_full_name: string | null;
+    readonly reviewer_uuid: string | null;
     readonly customer_uuid: string;
     readonly customer_name: string;
     readonly is_pending: boolean;
@@ -2381,11 +2381,11 @@ export type FirecrestJob = {
      * Reference to user which submitted job
      */
     readonly user?: string | null;
-    readonly user_uuid?: string;
+    readonly user_uuid?: string | null;
     /**
      * Required. 128 characters or fewer. Lowercase letters, numbers and @/./+/-/_ characters
      */
-    readonly user_username?: string;
+    readonly user_username?: string | null;
     readonly report?: unknown;
 };
 
@@ -2864,20 +2864,20 @@ export type Issue = {
     readonly resolution: string;
     priority?: string;
     caller?: string | null;
-    readonly caller_uuid: string;
-    readonly caller_full_name: string;
+    readonly caller_uuid: string | null;
+    readonly caller_full_name: string | null;
     readonly reporter: string;
-    readonly reporter_uuid: string;
-    readonly reporter_name: string;
+    readonly reporter_uuid: string | null;
+    readonly reporter_name: string | null;
     assignee?: string | null;
-    readonly assignee_uuid: string;
-    readonly assignee_name: string;
+    readonly assignee_uuid: string | null;
+    readonly assignee_name: string | null;
     customer?: string | null;
-    readonly customer_uuid: string;
-    readonly customer_name: string;
+    readonly customer_uuid: string | null;
+    readonly customer_name: string | null;
     project?: string | null;
-    readonly project_uuid: string;
-    readonly project_name: string;
+    readonly project_uuid: string | null;
+    readonly project_name: string | null;
     resource?: string;
     readonly resource_type: string;
     readonly resource_name: string;
@@ -5024,7 +5024,7 @@ export type OpenStackNestedFloatingIp = {
     readonly uuid?: string;
     readonly address?: string | null;
     readonly port_fixed_ips?: Array<OpenStackFixedIp>;
-    readonly port_mac_address?: string;
+    readonly port_mac_address?: string | null;
     subnet?: string;
     readonly subnet_uuid?: string;
     readonly subnet_name?: string;
@@ -5046,10 +5046,10 @@ export type OpenStackNestedPort = {
     fixed_ips?: Array<OpenStackFixedIp>;
     readonly mac_address?: string;
     subnet?: string | null;
-    readonly subnet_uuid?: string;
-    readonly subnet_name?: string;
-    readonly subnet_description?: string;
-    readonly subnet_cidr?: string;
+    readonly subnet_uuid?: string | null;
+    readonly subnet_name?: string | null;
+    readonly subnet_description?: string | null;
+    readonly subnet_cidr?: string | null;
     readonly allowed_address_pairs?: Array<OpenStackAllowedAddressPair>;
     readonly device_id?: string | null;
     readonly device_owner?: string | null;
@@ -5868,10 +5868,10 @@ export type OrderCreate = {
     readonly category_uuid: string;
     readonly category_icon: string;
     plan?: string;
-    plan_unit: BillingUnit;
-    readonly plan_name: string;
-    readonly plan_uuid: string;
-    readonly plan_description: string;
+    plan_unit: BillingUnit | null;
+    readonly plan_name: string | null;
+    readonly plan_uuid: string | null;
+    readonly plan_description: string | null;
     attributes?: unknown;
     limits?: {
         [key: string]: number;
@@ -5953,10 +5953,10 @@ export type OrderDetails = {
     readonly category_uuid?: string;
     readonly category_icon?: string;
     plan?: string;
-    plan_unit?: BillingUnit;
-    readonly plan_name?: string;
-    readonly plan_uuid?: string;
-    readonly plan_description?: string;
+    plan_unit?: BillingUnit | null;
+    readonly plan_name?: string | null;
+    readonly plan_uuid?: string | null;
+    readonly plan_description?: string | null;
     /**
      * Get attributes excluding secret attributes, such as username and password.
      */
@@ -7029,8 +7029,8 @@ export type Project = {
     description?: string;
     readonly created?: string;
     type?: string | null;
-    readonly type_name?: string;
-    readonly type_uuid?: string;
+    readonly type_name?: string | null;
+    readonly type_uuid?: string | null;
     backend_id?: string;
     start_date?: string | null;
     /**
@@ -7122,11 +7122,11 @@ export type ProjectPermissionLog = {
     readonly created?: string;
     expiration_time?: string | null;
     readonly created_by?: string | null;
-    readonly created_by_full_name?: string;
+    readonly created_by_full_name?: string | null;
     /**
      * Required. 128 characters or fewer. Lowercase letters, numbers and @/./+/-/_ characters
      */
-    readonly created_by_username?: string;
+    readonly created_by_username?: string | null;
     readonly project?: string;
     readonly project_uuid?: string;
     readonly project_name?: string;
@@ -8656,10 +8656,10 @@ export type Resource = {
     readonly category_uuid?: string;
     readonly category_icon?: string;
     plan?: string;
-    plan_unit?: BillingUnit;
-    readonly plan_name?: string;
-    readonly plan_uuid?: string;
-    readonly plan_description?: string;
+    plan_unit?: BillingUnit | null;
+    readonly plan_name?: string | null;
+    readonly plan_uuid?: string | null;
+    readonly plan_description?: string | null;
     readonly attributes?: {};
     readonly limits?: {
         [key: string]: number;
@@ -9265,7 +9265,7 @@ export type ServiceSettings = {
      */
     shared?: boolean;
     customer?: string | null;
-    readonly customer_name?: string;
+    readonly customer_name?: string | null;
     readonly customer_native_name?: string;
     terms_of_services?: string;
     scope?: string | null;
