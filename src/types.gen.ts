@@ -3450,6 +3450,10 @@ export type MergedSecretOptions = {
     ipv4_external_ip_mapping?: Array<IpMapping>;
     openstack_api_tls_certificate?: string;
     /**
+     * Default value for new subnets DNS name servers. Should be defined as list.
+     */
+    dns_nameservers?: Array<string>;
+    /**
      * GLAuth shared user password
      */
     shared_user_password?: string;
@@ -3549,6 +3553,10 @@ export type MergedSecretOptions = {
      * Kubeconfig with access to namespace where ArgoCD is deployed
      */
     argocd_k8s_kubeconfig?: string;
+    /**
+     * Base image name
+     */
+    base_image_name?: string;
 };
 
 export type MergedSecretOptionsRequest = {
@@ -3566,6 +3574,10 @@ export type MergedSecretOptionsRequest = {
     ipv4_external_ip_mapping?: Array<IpMappingRequest>;
     openstack_api_tls_certificate?: string;
     /**
+     * Default value for new subnets DNS name servers. Should be defined as list.
+     */
+    dns_nameservers?: Array<string>;
+    /**
      * GLAuth shared user password
      */
     shared_user_password?: string;
@@ -3665,6 +3677,10 @@ export type MergedSecretOptionsRequest = {
      * Kubeconfig with access to namespace where ArgoCD is deployed
      */
     argocd_k8s_kubeconfig?: string;
+    /**
+     * Base image name
+     */
+    base_image_name?: string;
 };
 
 export type MessageTemplate = {
@@ -27758,6 +27774,7 @@ export type ProposalReviewsListData = {
          */
         page_size?: number;
         proposal?: string;
+        proposal_name?: string;
         proposal_uuid?: string;
         reviewer_uuid?: string;
         state?: Array<'created' | 'in_review' | 'rejected' | 'submitted'>;
