@@ -24085,7 +24085,7 @@ export type OpenstackPortsUpdateResponses = {
 export type OpenstackPortsUpdateResponse = OpenstackPortsUpdateResponses[keyof OpenstackPortsUpdateResponses];
 
 export type OpenstackPortsDisablePortData = {
-    body: OpenStackPortRequest;
+    body?: never;
     path: {
         uuid: string;
     };
@@ -24101,7 +24101,7 @@ export type OpenstackPortsDisablePortResponses = {
 };
 
 export type OpenstackPortsDisablePortSecurityData = {
-    body: OpenStackPortRequest;
+    body?: never;
     path: {
         uuid: string;
     };
@@ -24117,7 +24117,7 @@ export type OpenstackPortsDisablePortSecurityResponses = {
 };
 
 export type OpenstackPortsEnablePortData = {
-    body: OpenStackPortRequest;
+    body?: never;
     path: {
         uuid: string;
     };
@@ -24133,7 +24133,7 @@ export type OpenstackPortsEnablePortResponses = {
 };
 
 export type OpenstackPortsEnablePortSecurityData = {
-    body: OpenStackPortRequest;
+    body?: never;
     path: {
         uuid: string;
     };

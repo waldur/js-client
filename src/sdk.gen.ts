@@ -10589,11 +10589,7 @@ export const openstackPortsDisablePort = <ThrowOnError extends boolean = false>(
             }
         ],
         url: '/api/openstack-ports/{uuid}/disable_port/',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options?.headers
-        }
+        ...options
     });
 };
 
@@ -10609,11 +10605,7 @@ export const openstackPortsDisablePortSecurity = <ThrowOnError extends boolean =
             }
         ],
         url: '/api/openstack-ports/{uuid}/disable_port_security/',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options?.headers
-        }
+        ...options
     });
 };
 
@@ -10629,11 +10621,7 @@ export const openstackPortsEnablePort = <ThrowOnError extends boolean = false>(o
             }
         ],
         url: '/api/openstack-ports/{uuid}/enable_port/',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options?.headers
-        }
+        ...options
     });
 };
 
@@ -10649,11 +10637,7 @@ export const openstackPortsEnablePortSecurity = <ThrowOnError extends boolean = 
             }
         ],
         url: '/api/openstack-ports/{uuid}/enable_port_security/',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options?.headers
-        }
+        ...options
     });
 };
 
