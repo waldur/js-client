@@ -8061,7 +8061,7 @@ export type RancherClusterRequest = {
     service_settings: string;
     project: string;
     nodes: Array<RancherNestedNodeRequest>;
-    tenant: string;
+    tenant?: string;
     vm_project?: string | null;
     ssh_public_key?: string;
     /**
@@ -8090,6 +8090,7 @@ export type RancherClusterTemplateNode = {
 export type RancherCreateNode = {
     cluster: string;
     role: RoleEnum;
+    readonly uuid: string;
 };
 
 export type RancherCreateNodeRequest = {
@@ -8103,6 +8104,7 @@ export type RancherCreateNodeRequest = {
     flavor?: string | null;
     data_volumes?: Array<DataVolumeRequest>;
     ssh_public_key?: string;
+    tenant?: string;
 };
 
 export type RancherHpa = {
@@ -8268,6 +8270,7 @@ export type RancherNestedNodeRequest = {
     memory?: number;
     cpu?: number;
     role: RoleEnum;
+    tenant?: string;
     error_traceback?: string;
     backend_id?: string;
 };
