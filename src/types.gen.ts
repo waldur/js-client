@@ -3753,10 +3753,14 @@ export type MigrationDetails = {
     readonly dst_resource_name: string;
     readonly dst_resource_state: string;
     readonly state: string;
+    error_message?: string;
+    error_traceback?: string;
 };
 
 export type MigrationDetailsRequest = {
     mappings: MappingRequest;
+    error_message?: string;
+    error_traceback?: string;
 };
 
 export type MinimalConsumptionLogicEnum = 'fixed' | 'linear';
@@ -6390,6 +6394,8 @@ export type PatchedMessageTemplateRequest = {
 
 export type PatchedMigrationDetailsRequest = {
     mappings?: MappingRequest;
+    error_message?: string;
+    error_traceback?: string;
 };
 
 export type PatchedNotificationRequest = {
