@@ -3003,6 +3003,10 @@ export type KeycloakUserGroupMembership = {
     readonly group_name: string;
     readonly group_role: string;
     readonly group_scope_type: string;
+    /**
+     * Get the name of the cluster or project
+     */
+    readonly group_scope_name: string | null;
     state: KeycloakUserGroupMembershipState;
     readonly created: string;
     readonly modified: string;
