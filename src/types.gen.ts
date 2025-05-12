@@ -23771,6 +23771,10 @@ export type OpenstackNetworksListData = {
         customer_native_name?: string;
         customer_uuid?: string;
         description?: string;
+        /**
+         * Direct only
+         */
+        direct_only?: boolean;
         external_ip?: string;
         field?: Array<'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'description' | 'error_message' | 'error_traceback' | 'is_external' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'mtu' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'rbac_policies' | 'resource_type' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'subnets' | 'tenant' | 'tenant_name' | 'tenant_uuid' | 'type' | 'url' | 'uuid'>;
         is_external?: boolean;
@@ -23787,6 +23791,10 @@ export type OpenstackNetworksListData = {
         project?: string;
         project_name?: string;
         project_uuid?: string;
+        /**
+         * RBAC only
+         */
+        rbac_only?: boolean;
         service_settings_name?: string;
         service_settings_uuid?: string;
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
@@ -24775,6 +24783,10 @@ export type OpenstackSubnetsListData = {
         customer_native_name?: string;
         customer_uuid?: string;
         description?: string;
+        /**
+         * Direct only
+         */
+        direct_only?: boolean;
         enable_dhcp?: boolean;
         external_ip?: string;
         field?: Array<'access_url' | 'allocation_pools' | 'backend_id' | 'cidr' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'description' | 'disable_gateway' | 'dns_nameservers' | 'enable_dhcp' | 'error_message' | 'error_traceback' | 'gateway_ip' | 'host_routes' | 'ip_version' | 'is_connected' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'network' | 'network_name' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'tenant' | 'tenant_name' | 'url' | 'uuid'>;
@@ -24794,6 +24806,10 @@ export type OpenstackSubnetsListData = {
         project?: string;
         project_name?: string;
         project_uuid?: string;
+        /**
+         * RBAC only
+         */
+        rbac_only?: boolean;
         service_settings_name?: string;
         service_settings_uuid?: string;
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
