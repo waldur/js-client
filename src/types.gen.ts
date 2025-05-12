@@ -1484,7 +1484,6 @@ export type ConstanceSettings = {
     DISABLE_SENDING_NOTIFICATIONS_ABOUT_RESOURCE_UPDATE?: boolean;
     MARKETPLACE_LANDING_PAGE?: string;
     ENABLE_STALE_RESOURCE_NOTIFICATIONS?: boolean;
-    ENABLE_RESOURCE_END_DATE?: boolean;
     TELEMETRY_URL?: string;
     TELEMETRY_VERSION?: number;
     SCRIPT_RUN_MODE?: string;
@@ -1607,7 +1606,6 @@ export type ConstanceSettingsRequest = {
     DISABLE_SENDING_NOTIFICATIONS_ABOUT_RESOURCE_UPDATE?: boolean;
     MARKETPLACE_LANDING_PAGE?: string;
     ENABLE_STALE_RESOURCE_NOTIFICATIONS?: boolean;
-    ENABLE_RESOURCE_END_DATE?: boolean;
     TELEMETRY_URL?: string;
     TELEMETRY_VERSION?: number;
     SCRIPT_RUN_MODE?: string;
