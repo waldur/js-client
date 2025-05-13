@@ -2010,6 +2010,8 @@ export type CustomerServiceAccount = {
     email?: string;
     readonly expiresAt: string | null;
     customer: string;
+    readonly customer_uuid: string;
+    readonly customer_name: string;
 };
 
 export type CustomerServiceAccountRequest = {
@@ -7254,6 +7256,11 @@ export type ProjectServiceAccount = {
     email?: string;
     readonly expiresAt: string | null;
     project: string;
+    readonly project_uuid: string;
+    readonly project_name: string;
+    readonly customer_uuid: string;
+    readonly customer_name: string;
+    readonly customer_abbreviation: string;
 };
 
 export type ProjectServiceAccountRequest = {
