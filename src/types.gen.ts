@@ -3582,6 +3582,10 @@ export type MergedSecretOptions = {
      * Base image name
      */
     base_image_name?: string;
+    /**
+     * OpenStack disk driver for Rancher nodes
+     */
+    node_disk_driver?: NodeDiskDriverEnum;
 };
 
 export type MergedSecretOptionsRequest = {
@@ -3706,6 +3710,10 @@ export type MergedSecretOptionsRequest = {
      * Base image name
      */
     base_image_name?: string;
+    /**
+     * OpenStack disk driver for Rancher nodes
+     */
+    node_disk_driver?: NodeDiskDriverEnum;
 };
 
 export type MessageTemplate = {
@@ -4108,6 +4116,8 @@ export type NetworkRbacPolicyRequest = {
     target_tenant: string;
     policy_type?: PolicyTypeEnum;
 };
+
+export type NodeDiskDriverEnum = 'sd' | 'vd';
 
 export type Notification = {
     readonly uuid: string;
