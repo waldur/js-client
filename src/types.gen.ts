@@ -4515,6 +4515,12 @@ export type OfferingFileRequest = {
     file: Blob | File;
 };
 
+export type OfferingGroups = {
+    readonly customer_name: string;
+    readonly customer_uuid: string;
+    readonly offerings: Array<OfferingReference>;
+};
+
 export type OfferingImageRequest = {
     image: Blob | File;
 };
@@ -4589,6 +4595,11 @@ export type OfferingPermission = {
     readonly user_username: string;
     readonly user_uuid: string;
     readonly user_email: string;
+};
+
+export type OfferingReference = {
+    readonly offering_name: string;
+    readonly offering_uuid: string;
 };
 
 export type OfferingReferral = {
@@ -19560,20 +19571,87 @@ export type MarketplaceProviderOfferingsUserHasResourceAccessRetrieveResponses =
 
 export type MarketplaceProviderOfferingsUserHasResourceAccessRetrieveResponse = MarketplaceProviderOfferingsUserHasResourceAccessRetrieveResponses[keyof MarketplaceProviderOfferingsUserHasResourceAccessRetrieveResponses];
 
-export type MarketplaceProviderOfferingsGroupsRetrieveData = {
+export type MarketplaceProviderOfferingsGroupsListData = {
     body?: never;
     path?: never;
     query?: {
-        field?: Array<'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'image' | 'integration_guide' | 'integration_status' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_options' | 'roles' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'state' | 'terms_of_service' | 'terms_of_service_link' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'uuid' | 'vendor_details'>;
+        /**
+         * Accessible via calls
+         */
+        accessible_via_calls?: boolean;
+        /**
+         * Allowed customer UUID
+         */
+        allowed_customer_uuid?: string;
+        attributes?: string;
+        billable?: boolean;
+        category_group_uuid?: string;
+        category_uuid?: string;
+        /**
+         * Created after
+         */
+        created?: string;
+        customer?: string;
+        customer_uuid?: string;
+        description?: string;
+        /**
+         * Keyword
+         */
+        keyword?: string;
+        /**
+         * Modified after
+         */
+        modified?: string;
+        name?: string;
+        name_exact?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-name' | '-state' | '-total_cost' | '-total_cost_estimated' | '-total_customers' | '-type' | 'created' | 'name' | 'state' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type'>;
+        organization_group_uuid?: Array<string>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        parent_uuid?: string;
+        /**
+         * Project UUID
+         */
+        project_uuid?: string;
+        /**
+         * Resource customer UUID
+         */
+        resource_customer_uuid?: string;
+        /**
+         * Resource project UUID
+         */
+        resource_project_uuid?: string;
+        /**
+         * Scope UUID
+         */
+        scope_uuid?: string;
+        /**
+         * Service manager UUID
+         */
+        service_manager_uuid?: string;
+        shared?: boolean;
+        state?: Array<'Active' | 'Archived' | 'Draft' | 'Paused'>;
+        type?: Array<string>;
     };
     url: '/api/marketplace-provider-offerings/groups/';
 };
 
-export type MarketplaceProviderOfferingsGroupsRetrieveResponses = {
-    200: ProviderOfferingDetails;
+export type MarketplaceProviderOfferingsGroupsListResponses = {
+    200: Array<OfferingGroups>;
 };
 
-export type MarketplaceProviderOfferingsGroupsRetrieveResponse = MarketplaceProviderOfferingsGroupsRetrieveResponses[keyof MarketplaceProviderOfferingsGroupsRetrieveResponses];
+export type MarketplaceProviderOfferingsGroupsListResponse = MarketplaceProviderOfferingsGroupsListResponses[keyof MarketplaceProviderOfferingsGroupsListResponses];
 
 export type MarketplaceProviderResourcesListData = {
     body?: never;
