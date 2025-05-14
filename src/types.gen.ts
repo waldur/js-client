@@ -2814,6 +2814,7 @@ export type InvoiceItemTotalPrice = {
 export type InvoiceItemUpdate = {
     article_code?: string;
     quantity?: string;
+    unit_price?: string;
     /**
      * Date and time when item usage has started.
      */
@@ -2827,6 +2828,7 @@ export type InvoiceItemUpdate = {
 export type InvoiceItemUpdateRequest = {
     article_code?: string;
     quantity?: string;
+    unit_price?: string;
     /**
      * Date and time when item usage has started.
      */
@@ -6350,6 +6352,7 @@ export type PatchedIdentityProviderRequest = {
 export type PatchedInvoiceItemUpdateRequest = {
     article_code?: string;
     quantity?: string;
+    unit_price?: string;
     /**
      * Date and time when item usage has started.
      */
@@ -12178,6 +12181,10 @@ export type BookingResourcesListData = {
         customer_uuid?: string;
         downscaled?: boolean;
         field?: Array<'attributes' | 'available_actions' | 'backend_id' | 'backend_metadata' | 'can_terminate' | 'category_icon' | 'category_title' | 'category_uuid' | 'consumer_reviewed_by' | 'consumer_reviewed_by_full_name' | 'consumer_reviewed_by_username' | 'created' | 'created_by' | 'created_by_full_name' | 'created_by_username' | 'creation_order' | 'current_usages' | 'customer_name' | 'customer_uuid' | 'description' | 'downscaled' | 'effective_id' | 'end_date' | 'end_date_requested_by' | 'endpoints' | 'error_message' | 'error_traceback' | 'is_limit_based' | 'is_usage_based' | 'last_sync' | 'limit_usage' | 'limits' | 'modified' | 'name' | 'offering' | 'offering_billable' | 'offering_customer_uuid' | 'offering_description' | 'offering_image' | 'offering_name' | 'offering_plugin_options' | 'offering_shared' | 'offering_terms_of_service' | 'offering_thumbnail' | 'offering_type' | 'offering_uuid' | 'options' | 'order_in_progress' | 'parent_name' | 'parent_offering_name' | 'parent_offering_uuid' | 'parent_uuid' | 'paused' | 'plan' | 'plan_description' | 'plan_name' | 'plan_unit' | 'plan_uuid' | 'project' | 'project_description' | 'project_end_date' | 'project_end_date_requested_by' | 'project_name' | 'project_uuid' | 'provider_name' | 'provider_uuid' | 'report' | 'resource_type' | 'resource_uuid' | 'restrict_member_access' | 'scope' | 'slots' | 'slug' | 'state' | 'url' | 'username' | 'uuid'>;
+        /**
+         * Has termination date
+         */
+        has_terminate_date?: boolean;
         /**
          * LEXIS links supported
          */
@@ -19678,6 +19685,10 @@ export type MarketplaceProviderResourcesListData = {
         downscaled?: boolean;
         field?: Array<'attributes' | 'available_actions' | 'backend_id' | 'backend_metadata' | 'can_terminate' | 'category_icon' | 'category_title' | 'category_uuid' | 'created' | 'creation_order' | 'current_usages' | 'customer_name' | 'customer_uuid' | 'description' | 'downscaled' | 'effective_id' | 'end_date' | 'end_date_requested_by' | 'endpoints' | 'error_message' | 'error_traceback' | 'is_limit_based' | 'is_usage_based' | 'last_sync' | 'limit_usage' | 'limits' | 'modified' | 'name' | 'offering' | 'offering_billable' | 'offering_customer_uuid' | 'offering_description' | 'offering_image' | 'offering_name' | 'offering_plugin_options' | 'offering_shared' | 'offering_terms_of_service' | 'offering_thumbnail' | 'offering_type' | 'offering_uuid' | 'options' | 'order_in_progress' | 'parent_name' | 'parent_offering_name' | 'parent_offering_uuid' | 'parent_uuid' | 'paused' | 'plan' | 'plan_description' | 'plan_name' | 'plan_unit' | 'plan_uuid' | 'project' | 'project_description' | 'project_end_date' | 'project_end_date_requested_by' | 'project_name' | 'project_uuid' | 'provider_name' | 'provider_uuid' | 'report' | 'resource_type' | 'resource_uuid' | 'restrict_member_access' | 'scope' | 'slug' | 'state' | 'url' | 'username' | 'uuid'>;
         /**
+         * Has termination date
+         */
+        has_terminate_date?: boolean;
+        /**
          * LEXIS links supported
          */
         lexis_links_supported?: boolean;
@@ -20491,6 +20502,10 @@ export type MarketplaceResourcesListData = {
         customer_uuid?: string;
         downscaled?: boolean;
         field?: Array<'attributes' | 'available_actions' | 'backend_id' | 'backend_metadata' | 'can_terminate' | 'category_icon' | 'category_title' | 'category_uuid' | 'created' | 'creation_order' | 'current_usages' | 'customer_name' | 'customer_uuid' | 'description' | 'downscaled' | 'effective_id' | 'end_date' | 'end_date_requested_by' | 'endpoints' | 'error_message' | 'error_traceback' | 'is_limit_based' | 'is_usage_based' | 'last_sync' | 'limit_usage' | 'limits' | 'modified' | 'name' | 'offering' | 'offering_billable' | 'offering_customer_uuid' | 'offering_description' | 'offering_image' | 'offering_name' | 'offering_plugin_options' | 'offering_shared' | 'offering_terms_of_service' | 'offering_thumbnail' | 'offering_type' | 'offering_uuid' | 'options' | 'order_in_progress' | 'parent_name' | 'parent_offering_name' | 'parent_offering_uuid' | 'parent_uuid' | 'paused' | 'plan' | 'plan_description' | 'plan_name' | 'plan_unit' | 'plan_uuid' | 'project' | 'project_description' | 'project_end_date' | 'project_end_date_requested_by' | 'project_name' | 'project_uuid' | 'provider_name' | 'provider_uuid' | 'report' | 'resource_type' | 'resource_uuid' | 'restrict_member_access' | 'scope' | 'slug' | 'state' | 'url' | 'username' | 'uuid'>;
+        /**
+         * Has termination date
+         */
+        has_terminate_date?: boolean;
         /**
          * LEXIS links supported
          */
