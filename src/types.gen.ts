@@ -5374,6 +5374,11 @@ export type OpenStackRouter = {
     readonly offering_external_ips?: Array<string> | null;
 };
 
+export type OpenStackRouterInterfaceRequest = {
+    subnet?: string;
+    port?: string;
+};
+
 export type OpenStackRouterSetRoutes = {
     routes: Array<OpenStackStaticRoute>;
 };
@@ -24369,6 +24374,38 @@ export type OpenstackRoutersRetrieveResponses = {
 };
 
 export type OpenstackRoutersRetrieveResponse = OpenstackRoutersRetrieveResponses[keyof OpenstackRoutersRetrieveResponses];
+
+export type OpenstackRoutersAddRouterInterfaceData = {
+    body?: OpenStackRouterInterfaceRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openstack-routers/{uuid}/add_router_interface/';
+};
+
+export type OpenstackRoutersAddRouterInterfaceResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type OpenstackRoutersRemoveRouterInterfaceData = {
+    body?: OpenStackRouterInterfaceRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openstack-routers/{uuid}/remove_router_interface/';
+};
+
+export type OpenstackRoutersRemoveRouterInterfaceResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type OpenstackRoutersSetRoutesData = {
     body: OpenStackRouterSetRoutesRequest;
