@@ -26582,6 +26582,42 @@ export type ProjectsMoveProjectResponses = {
 
 export type ProjectsMoveProjectResponse = ProjectsMoveProjectResponses[keyof ProjectsMoveProjectResponses];
 
+export type ProjectsOtherUsersListData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        civil_number?: string;
+        description?: string;
+        email?: string;
+        full_name?: string;
+        is_active?: string;
+        job_title?: string;
+        native_name?: string;
+        organization?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        phone_number?: string;
+        registration_method?: string;
+        user_keyword?: string;
+        username?: string;
+    };
+    url: '/api/projects/{uuid}/other_users/';
+};
+
+export type ProjectsOtherUsersListResponses = {
+    200: Array<BasicUser>;
+};
+
+export type ProjectsOtherUsersListResponse = ProjectsOtherUsersListResponses[keyof ProjectsOtherUsersListResponses];
+
 export type ProjectsStatsRetrieveData = {
     body?: never;
     path: {
