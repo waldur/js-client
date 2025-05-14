@@ -29337,6 +29337,12 @@ export type RancherRoleTemplatesListData = {
     query?: {
         name?: string;
         /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-name' | '-scope_type' | 'name' | 'scope_type'>;
+        /**
          * A page number within the paginated result set.
          */
         page?: number;
