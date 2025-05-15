@@ -1298,6 +1298,13 @@ export type ChecklistQuestion = {
     image?: string | null;
 };
 
+export type ClusterSecurityGroup = {
+    readonly uuid: string;
+    name: string;
+    description?: string;
+    readonly rules: Array<RancherClusterSecurityGroupRule>;
+};
+
 export type Comment = {
     readonly url: string;
     readonly uuid: string;
@@ -5128,6 +5135,7 @@ export type OpenStackNestedPort = {
 export type OpenStackNestedPortRequest = {
     fixed_ips?: Array<OpenStackFixedIpRequest>;
     subnet?: string | null;
+    port?: string;
 };
 
 export type OpenStackNestedSecurityGroup = {
@@ -5292,7 +5300,7 @@ export type OpenStackPort = {
     readonly device_owner?: string | null;
     port_security_enabled?: boolean;
     security_groups?: Array<OpenStackPortNestedSecurityGroup>;
-    readonly admin_state_up?: string | null;
+    readonly admin_state_up?: boolean | null;
     readonly status?: string | null;
     readonly marketplace_offering_uuid?: string | null;
     readonly marketplace_offering_name?: string | null;
@@ -8112,6 +8120,16 @@ export type RancherClusterRequest = {
      * Longhorn is a distributed block storage deployed on top of Kubernetes cluster
      */
     install_longhorn?: boolean;
+};
+
+export type RancherClusterSecurityGroupRule = {
+    ethertype?: EthertypeEnum;
+    direction?: DirectionEnum;
+    protocol?: ProtocolEnum | BlankEnum;
+    from_port?: number | null;
+    to_port?: number | null;
+    cidr?: string | null;
+    description?: string;
 };
 
 export type RancherClusterTemplate = {
@@ -24111,9 +24129,15 @@ export type OpenstackPortsListData = {
     body?: never;
     path?: never;
     query?: {
-        admin_state_up?: string;
+        admin_state_up?: boolean;
         backend_id?: string;
+        device_id?: string;
+        device_owner?: string;
         field?: Array<'access_url' | 'admin_state_up' | 'allowed_address_pairs' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'description' | 'device_id' | 'device_owner' | 'error_message' | 'error_traceback' | 'fixed_ips' | 'floating_ips' | 'is_limit_based' | 'is_usage_based' | 'mac_address' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'network' | 'network_name' | 'network_uuid' | 'port_security_enabled' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'security_groups' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'status' | 'tenant' | 'tenant_name' | 'tenant_uuid' | 'url' | 'uuid'>;
+        /**
+         * Has device owner
+         */
+        has_device_owner?: boolean;
         mac_address?: string;
         name?: string;
         name_exact?: string;
@@ -24131,6 +24155,9 @@ export type OpenstackPortsListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Query
+         */
         query?: string;
         status?: string;
         tenant?: string;
@@ -28624,6 +28651,51 @@ export type RancherClustersCreateResponses = {
 };
 
 export type RancherClustersCreateResponse = RancherClustersCreateResponses[keyof RancherClustersCreateResponses];
+
+export type RancherClustersSecurityGroupsListData = {
+    body?: never;
+    path: {
+        cluster_uuid: string;
+    };
+    query?: {
+        name?: string;
+        name_exact?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/rancher-clusters/{cluster_uuid}/security-groups/';
+};
+
+export type RancherClustersSecurityGroupsListResponses = {
+    200: Array<ClusterSecurityGroup>;
+};
+
+export type RancherClustersSecurityGroupsListResponse = RancherClustersSecurityGroupsListResponses[keyof RancherClustersSecurityGroupsListResponses];
+
+export type RancherClustersSecurityGroupsRetrieveData = {
+    body?: never;
+    path: {
+        cluster_uuid: string;
+        /**
+         * A unique integer value identifying this cluster security group.
+         */
+        id: number;
+    };
+    query?: never;
+    url: '/api/rancher-clusters/{cluster_uuid}/security-groups/{id}/';
+};
+
+export type RancherClustersSecurityGroupsRetrieveResponses = {
+    200: ClusterSecurityGroup;
+};
+
+export type RancherClustersSecurityGroupsRetrieveResponse = RancherClustersSecurityGroupsRetrieveResponses[keyof RancherClustersSecurityGroupsRetrieveResponses];
 
 export type RancherClustersDestroyData = {
     body?: never;
