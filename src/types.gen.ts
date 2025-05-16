@@ -1300,9 +1300,13 @@ export type ChecklistQuestion = {
 
 export type ClusterSecurityGroup = {
     readonly uuid: string;
-    name: string;
-    description?: string;
-    readonly rules: Array<RancherClusterSecurityGroupRule>;
+    readonly name: string;
+    readonly description: string;
+    rules: Array<RancherClusterSecurityGroupRule>;
+};
+
+export type ClusterSecurityGroupRequest = {
+    rules: Array<RancherClusterSecurityGroupRuleRequest>;
 };
 
 export type Comment = {
@@ -6250,6 +6254,10 @@ export type PatchedCategoryHelpArticlesRequest = {
     categories?: Array<CategorySerializerForForNestedFieldsRequest>;
 };
 
+export type PatchedClusterSecurityGroupRequest = {
+    rules?: Array<RancherClusterSecurityGroupRuleRequest>;
+};
+
 export type PatchedCommentRequest = {
     description?: string;
     is_public?: boolean;
@@ -8123,6 +8131,17 @@ export type RancherClusterRequest = {
 };
 
 export type RancherClusterSecurityGroupRule = {
+    readonly uuid: string;
+    ethertype?: EthertypeEnum;
+    direction?: DirectionEnum;
+    protocol?: ProtocolEnum | BlankEnum;
+    from_port?: number | null;
+    to_port?: number | null;
+    cidr?: string | null;
+    description?: string;
+};
+
+export type RancherClusterSecurityGroupRuleRequest = {
     ethertype?: EthertypeEnum;
     direction?: DirectionEnum;
     protocol?: ProtocolEnum | BlankEnum;
@@ -28558,6 +28577,75 @@ export type RancherCatalogsRefreshResponses = {
 
 export type RancherCatalogsRefreshResponse = RancherCatalogsRefreshResponses[keyof RancherCatalogsRefreshResponses];
 
+export type RancherClusterSecurityGroupsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        name?: string;
+        name_exact?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/rancher-cluster-security-groups/';
+};
+
+export type RancherClusterSecurityGroupsListResponses = {
+    200: Array<ClusterSecurityGroup>;
+};
+
+export type RancherClusterSecurityGroupsListResponse = RancherClusterSecurityGroupsListResponses[keyof RancherClusterSecurityGroupsListResponses];
+
+export type RancherClusterSecurityGroupsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/rancher-cluster-security-groups/{uuid}/';
+};
+
+export type RancherClusterSecurityGroupsRetrieveResponses = {
+    200: ClusterSecurityGroup;
+};
+
+export type RancherClusterSecurityGroupsRetrieveResponse = RancherClusterSecurityGroupsRetrieveResponses[keyof RancherClusterSecurityGroupsRetrieveResponses];
+
+export type RancherClusterSecurityGroupsPartialUpdateData = {
+    body?: PatchedClusterSecurityGroupRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/rancher-cluster-security-groups/{uuid}/';
+};
+
+export type RancherClusterSecurityGroupsPartialUpdateResponses = {
+    200: ClusterSecurityGroup;
+};
+
+export type RancherClusterSecurityGroupsPartialUpdateResponse = RancherClusterSecurityGroupsPartialUpdateResponses[keyof RancherClusterSecurityGroupsPartialUpdateResponses];
+
+export type RancherClusterSecurityGroupsUpdateData = {
+    body: ClusterSecurityGroupRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/rancher-cluster-security-groups/{uuid}/';
+};
+
+export type RancherClusterSecurityGroupsUpdateResponses = {
+    200: ClusterSecurityGroup;
+};
+
+export type RancherClusterSecurityGroupsUpdateResponse = RancherClusterSecurityGroupsUpdateResponses[keyof RancherClusterSecurityGroupsUpdateResponses];
+
 export type RancherClusterTemplatesListData = {
     body?: never;
     path?: never;
@@ -28651,51 +28739,6 @@ export type RancherClustersCreateResponses = {
 };
 
 export type RancherClustersCreateResponse = RancherClustersCreateResponses[keyof RancherClustersCreateResponses];
-
-export type RancherClustersSecurityGroupsListData = {
-    body?: never;
-    path: {
-        cluster_uuid: string;
-    };
-    query?: {
-        name?: string;
-        name_exact?: string;
-        /**
-         * A page number within the paginated result set.
-         */
-        page?: number;
-        /**
-         * Number of results to return per page.
-         */
-        page_size?: number;
-    };
-    url: '/api/rancher-clusters/{cluster_uuid}/security-groups/';
-};
-
-export type RancherClustersSecurityGroupsListResponses = {
-    200: Array<ClusterSecurityGroup>;
-};
-
-export type RancherClustersSecurityGroupsListResponse = RancherClustersSecurityGroupsListResponses[keyof RancherClustersSecurityGroupsListResponses];
-
-export type RancherClustersSecurityGroupsRetrieveData = {
-    body?: never;
-    path: {
-        cluster_uuid: string;
-        /**
-         * A unique integer value identifying this cluster security group.
-         */
-        id: number;
-    };
-    query?: never;
-    url: '/api/rancher-clusters/{cluster_uuid}/security-groups/{id}/';
-};
-
-export type RancherClustersSecurityGroupsRetrieveResponses = {
-    200: ClusterSecurityGroup;
-};
-
-export type RancherClustersSecurityGroupsRetrieveResponse = RancherClustersSecurityGroupsRetrieveResponses[keyof RancherClustersSecurityGroupsRetrieveResponses];
 
 export type RancherClustersDestroyData = {
     body?: never;
