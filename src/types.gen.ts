@@ -2053,14 +2053,14 @@ export type DataVolume = {
     size: number;
     volume_type?: string | null;
     filesystem?: string;
-    mount_point?: MountPointEnum;
+    mount_point: string;
 };
 
 export type DataVolumeRequest = {
     size: number;
     volume_type?: string | null;
     filesystem?: string;
-    mount_point?: MountPointEnum;
+    mount_point: string;
 };
 
 export type DecidingEntityEnum = 'by_call_manager' | 'automatic';
@@ -3787,8 +3787,6 @@ export type MigrationDetailsRequest = {
 };
 
 export type MinimalConsumptionLogicEnum = 'fixed' | 'linear';
-
-export type MountPointEnum = '/var/lib/docker' | '/var/lib/etcd' | '/opt/media01' | '/opt/rke2_storage';
 
 export type MoveProjectRequest = {
     customer: string;
