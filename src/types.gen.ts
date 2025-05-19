@@ -16575,11 +16575,19 @@ export type MarketplaceComponentUserUsagesListData = {
     body?: never;
     path?: never;
     query?: {
+        billing_period_month?: number;
+        billing_period_year?: number;
         component_usage__billing_period?: string;
         customer_uuid?: string;
         date_after?: string;
         date_before?: string;
         field?: Array<'backend_id' | 'billing_period' | 'component_type' | 'component_usage' | 'created' | 'customer_name' | 'customer_uuid' | 'date' | 'description' | 'measured_unit' | 'modified' | 'offering_name' | 'offering_uuid' | 'project_name' | 'project_uuid' | 'resource_name' | 'resource_uuid' | 'usage' | 'user' | 'username' | 'uuid'>;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-component_usage__billing_period' | '-usage' | '-username' | 'component_usage__billing_period' | 'usage' | 'username'>;
         offering_uuid?: string;
         /**
          * A page number within the paginated result set.
@@ -16596,6 +16604,7 @@ export type MarketplaceComponentUserUsagesListData = {
         resource?: string;
         resource_uuid?: string;
         type?: string;
+        username?: string;
     };
     url: '/api/marketplace-component-user-usages/';
 };
