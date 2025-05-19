@@ -3598,6 +3598,22 @@ export type MergedSecretOptions = {
      */
     base_image_name?: string;
     /**
+     * URL of a private registry for a cluster
+     */
+    private_registry_url?: string;
+    /**
+     * Username for accessing a private registry
+     */
+    private_registry_user?: string;
+    /**
+     * Password for accessing a private registry
+     */
+    private_registry_password?: string;
+    /**
+     * Kubernetes version
+     */
+    k8s_version?: string;
+    /**
      * OpenStack disk driver for Rancher nodes
      */
     node_disk_driver?: NodeDiskDriverEnum;
@@ -3725,6 +3741,22 @@ export type MergedSecretOptionsRequest = {
      * Base image name
      */
     base_image_name?: string;
+    /**
+     * URL of a private registry for a cluster
+     */
+    private_registry_url?: string;
+    /**
+     * Username for accessing a private registry
+     */
+    private_registry_user?: string;
+    /**
+     * Password for accessing a private registry
+     */
+    private_registry_password?: string;
+    /**
+     * Kubernetes version
+     */
+    k8s_version?: string;
     /**
      * OpenStack disk driver for Rancher nodes
      */
