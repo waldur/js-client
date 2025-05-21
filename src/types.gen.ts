@@ -1483,6 +1483,7 @@ export type ConstanceSettings = {
     SITE_NAME?: string;
     SITE_DESCRIPTION?: string;
     HOMEPORT_URL?: string;
+    RANCHER_USERNAME_INPUT_LABEL?: string;
     SITE_ADDRESS?: string;
     SITE_EMAIL?: string;
     SITE_PHONE?: string;
@@ -1605,6 +1606,7 @@ export type ConstanceSettingsRequest = {
     SITE_NAME?: string;
     SITE_DESCRIPTION?: string;
     HOMEPORT_URL?: string;
+    RANCHER_USERNAME_INPUT_LABEL?: string;
     SITE_ADDRESS?: string;
     SITE_EMAIL?: string;
     SITE_PHONE?: string;
@@ -16537,6 +16539,12 @@ export type MarketplaceComponentUsagesListData = {
         date_after?: string;
         date_before?: string;
         field?: Array<'billing_period' | 'created' | 'customer_name' | 'customer_uuid' | 'date' | 'description' | 'measured_unit' | 'modified_by' | 'name' | 'offering_name' | 'offering_uuid' | 'project_name' | 'project_uuid' | 'recurring' | 'resource_name' | 'resource_uuid' | 'type' | 'usage' | 'uuid'>;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-billing_period' | '-usage' | 'billing_period' | 'usage'>;
         offering_uuid?: string;
         /**
          * A page number within the paginated result set.
@@ -19219,6 +19227,23 @@ export type MarketplaceProviderOfferingsListCustomerProjectsListResponses = {
 
 export type MarketplaceProviderOfferingsListCustomerProjectsListResponse = MarketplaceProviderOfferingsListCustomerProjectsListResponses[keyof MarketplaceProviderOfferingsListCustomerProjectsListResponses];
 
+export type MarketplaceProviderOfferingsListCustomerServiceAccountsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        field?: Array<'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'image' | 'integration_guide' | 'integration_status' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_options' | 'roles' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'state' | 'terms_of_service' | 'terms_of_service_link' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'uuid' | 'vendor_details'>;
+    };
+    url: '/api/marketplace-provider-offerings/{uuid}/list_customer_service_accounts/';
+};
+
+export type MarketplaceProviderOfferingsListCustomerServiceAccountsRetrieveResponses = {
+    200: ProviderOfferingDetails;
+};
+
+export type MarketplaceProviderOfferingsListCustomerServiceAccountsRetrieveResponse = MarketplaceProviderOfferingsListCustomerServiceAccountsRetrieveResponses[keyof MarketplaceProviderOfferingsListCustomerServiceAccountsRetrieveResponses];
+
 export type MarketplaceProviderOfferingsListCustomerUsersListData = {
     body?: never;
     path: {
@@ -19242,6 +19267,23 @@ export type MarketplaceProviderOfferingsListCustomerUsersListResponses = {
 };
 
 export type MarketplaceProviderOfferingsListCustomerUsersListResponse = MarketplaceProviderOfferingsListCustomerUsersListResponses[keyof MarketplaceProviderOfferingsListCustomerUsersListResponses];
+
+export type MarketplaceProviderOfferingsListProjectServiceAccountsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        field?: Array<'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'image' | 'integration_guide' | 'integration_status' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_options' | 'roles' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'state' | 'terms_of_service' | 'terms_of_service_link' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'uuid' | 'vendor_details'>;
+    };
+    url: '/api/marketplace-provider-offerings/{uuid}/list_project_service_accounts/';
+};
+
+export type MarketplaceProviderOfferingsListProjectServiceAccountsRetrieveResponses = {
+    200: ProviderOfferingDetails;
+};
+
+export type MarketplaceProviderOfferingsListProjectServiceAccountsRetrieveResponse = MarketplaceProviderOfferingsListProjectServiceAccountsRetrieveResponses[keyof MarketplaceProviderOfferingsListProjectServiceAccountsRetrieveResponses];
 
 export type MarketplaceProviderOfferingsListUsersListData = {
     body?: never;
@@ -24193,6 +24235,10 @@ export type OpenstackPortsListData = {
         backend_id?: string;
         device_id?: string;
         device_owner?: string;
+        /**
+         * Exclude Subnet UUIDs (comma-separated)
+         */
+        exclude_subnet_uuids?: string;
         field?: Array<'access_url' | 'admin_state_up' | 'allowed_address_pairs' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'description' | 'device_id' | 'device_owner' | 'error_message' | 'error_traceback' | 'fixed_ips' | 'floating_ips' | 'is_limit_based' | 'is_usage_based' | 'mac_address' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'network' | 'network_name' | 'network_uuid' | 'port_security_enabled' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'security_groups' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'status' | 'tenant' | 'tenant_name' | 'tenant_uuid' | 'url' | 'uuid'>;
         /**
          * Has device owner
