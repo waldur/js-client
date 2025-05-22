@@ -1797,6 +1797,17 @@ export type CreateFeedbackRequest = {
     token: string;
 };
 
+export type CreateRouter = {
+    tenant: string;
+    readonly project: string;
+    readonly service_settings: string;
+};
+
+export type CreateRouterRequest = {
+    tenant: string;
+    name: string;
+};
+
 export type Customer = {
     readonly url?: string;
     readonly uuid?: string;
@@ -24494,6 +24505,37 @@ export type OpenstackRoutersListResponses = {
 };
 
 export type OpenstackRoutersListResponse = OpenstackRoutersListResponses[keyof OpenstackRoutersListResponses];
+
+export type OpenstackRoutersCreateData = {
+    body: CreateRouterRequest;
+    path?: never;
+    query?: never;
+    url: '/api/openstack-routers/';
+};
+
+export type OpenstackRoutersCreateResponses = {
+    201: CreateRouter;
+};
+
+export type OpenstackRoutersCreateResponse = OpenstackRoutersCreateResponses[keyof OpenstackRoutersCreateResponses];
+
+export type OpenstackRoutersDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openstack-routers/{uuid}/';
+};
+
+export type OpenstackRoutersDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type OpenstackRoutersDestroyResponse = OpenstackRoutersDestroyResponses[keyof OpenstackRoutersDestroyResponses];
 
 export type OpenstackRoutersRetrieveData = {
     body?: never;
