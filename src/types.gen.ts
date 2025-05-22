@@ -1798,7 +1798,10 @@ export type CreateFeedbackRequest = {
 };
 
 export type CreateRouter = {
+    readonly url: string;
+    readonly uuid: string;
     tenant: string;
+    name: string;
     readonly project: string;
     readonly service_settings: string;
 };
