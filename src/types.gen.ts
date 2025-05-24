@@ -189,7 +189,7 @@ export type AwsInstance = {
     readonly marketplace_offering_name?: string | null;
     readonly marketplace_offering_plugin_options?: {} | null;
     readonly marketplace_category_uuid?: string | null;
-    readonly marketplace_category_name?: string;
+    readonly marketplace_category_name?: string | null;
     readonly marketplace_resource_uuid?: string | null;
     readonly marketplace_plan_uuid?: string | null;
     readonly marketplace_resource_state?: string | null;
@@ -283,7 +283,7 @@ export type AwsVolume = {
     readonly marketplace_offering_name?: string | null;
     readonly marketplace_offering_plugin_options?: {} | null;
     readonly marketplace_category_uuid?: string | null;
-    readonly marketplace_category_name?: string;
+    readonly marketplace_category_name?: string | null;
     readonly marketplace_resource_uuid?: string | null;
     readonly marketplace_plan_uuid?: string | null;
     readonly marketplace_resource_state?: string | null;
@@ -368,7 +368,7 @@ export type AzurePublicIp = {
     readonly marketplace_offering_name?: string | null;
     readonly marketplace_offering_plugin_options?: {} | null;
     readonly marketplace_category_uuid?: string | null;
-    readonly marketplace_category_name?: string;
+    readonly marketplace_category_name?: string | null;
     readonly marketplace_resource_uuid?: string | null;
     readonly marketplace_plan_uuid?: string | null;
     readonly marketplace_resource_state?: string | null;
@@ -415,7 +415,7 @@ export type AzureResourceGroup = {
     readonly marketplace_offering_name?: string | null;
     readonly marketplace_offering_plugin_options?: {} | null;
     readonly marketplace_category_uuid?: string | null;
-    readonly marketplace_category_name?: string;
+    readonly marketplace_category_name?: string | null;
     readonly marketplace_resource_uuid?: string | null;
     readonly marketplace_plan_uuid?: string | null;
     readonly marketplace_resource_state?: string | null;
@@ -471,7 +471,7 @@ export type AzureSqlDatabase = {
     readonly marketplace_offering_name?: string | null;
     readonly marketplace_offering_plugin_options?: {} | null;
     readonly marketplace_category_uuid?: string | null;
-    readonly marketplace_category_name?: string;
+    readonly marketplace_category_name?: string | null;
     readonly marketplace_resource_uuid?: string | null;
     readonly marketplace_plan_uuid?: string | null;
     readonly marketplace_resource_state?: string | null;
@@ -535,7 +535,7 @@ export type AzureSqlServer = {
     readonly marketplace_offering_name?: string | null;
     readonly marketplace_offering_plugin_options?: {} | null;
     readonly marketplace_category_uuid?: string | null;
-    readonly marketplace_category_name?: string;
+    readonly marketplace_category_name?: string | null;
     readonly marketplace_resource_uuid?: string | null;
     readonly marketplace_plan_uuid?: string | null;
     readonly marketplace_resource_state?: string | null;
@@ -622,7 +622,7 @@ export type AzureVirtualMachine = {
     readonly marketplace_offering_name?: string | null;
     readonly marketplace_offering_plugin_options?: {} | null;
     readonly marketplace_category_uuid?: string | null;
-    readonly marketplace_category_name?: string;
+    readonly marketplace_category_name?: string | null;
     readonly marketplace_resource_uuid?: string | null;
     readonly marketplace_plan_uuid?: string | null;
     readonly marketplace_resource_state?: string | null;
@@ -1909,7 +1909,7 @@ export type CustomerDetails = {
     name?: string;
     address?: string;
     country?: string;
-    readonly country_name?: string;
+    readonly country_name?: string | null;
     email?: string;
     postal?: string;
     phone_number?: string;
@@ -2153,7 +2153,7 @@ export type DigitalOceanDroplet = {
     readonly marketplace_offering_name?: string | null;
     readonly marketplace_offering_plugin_options?: {} | null;
     readonly marketplace_category_uuid?: string | null;
-    readonly marketplace_category_name?: string;
+    readonly marketplace_category_name?: string | null;
     readonly marketplace_resource_uuid?: string | null;
     readonly marketplace_plan_uuid?: string | null;
     readonly marketplace_resource_state?: string | null;
@@ -4863,7 +4863,7 @@ export type OpenStackBackup = {
     readonly marketplace_offering_name?: string | null;
     readonly marketplace_offering_plugin_options?: {} | null;
     readonly marketplace_category_uuid?: string | null;
-    readonly marketplace_category_name?: string;
+    readonly marketplace_category_name?: string | null;
     readonly marketplace_resource_uuid?: string | null;
     readonly marketplace_plan_uuid?: string | null;
     readonly marketplace_resource_state?: string | null;
@@ -4988,7 +4988,7 @@ export type OpenStackFloatingIp = {
     readonly marketplace_offering_name?: string | null;
     readonly marketplace_offering_plugin_options?: {} | null;
     readonly marketplace_category_uuid?: string | null;
-    readonly marketplace_category_name?: string;
+    readonly marketplace_category_name?: string | null;
     readonly marketplace_resource_uuid?: string | null;
     readonly marketplace_plan_uuid?: string | null;
     readonly marketplace_resource_state?: string | null;
@@ -5105,7 +5105,7 @@ export type OpenStackInstance = {
     readonly marketplace_offering_name?: string | null;
     readonly marketplace_offering_plugin_options?: {} | null;
     readonly marketplace_category_uuid?: string | null;
-    readonly marketplace_category_name?: string;
+    readonly marketplace_category_name?: string | null;
     readonly marketplace_resource_uuid?: string | null;
     readonly marketplace_plan_uuid?: string | null;
     readonly marketplace_resource_state?: string | null;
@@ -5299,7 +5299,7 @@ export type OpenStackNetwork = {
     readonly marketplace_offering_name?: string | null;
     readonly marketplace_offering_plugin_options?: {} | null;
     readonly marketplace_category_uuid?: string | null;
-    readonly marketplace_category_name?: string;
+    readonly marketplace_category_name?: string | null;
     readonly marketplace_resource_uuid?: string | null;
     readonly marketplace_plan_uuid?: string | null;
     readonly marketplace_resource_state?: string | null;
@@ -5357,7 +5357,7 @@ export type OpenStackPort = {
     readonly marketplace_offering_name?: string | null;
     readonly marketplace_offering_plugin_options?: {} | null;
     readonly marketplace_category_uuid?: string | null;
-    readonly marketplace_category_name?: string;
+    readonly marketplace_category_name?: string | null;
     readonly marketplace_resource_uuid?: string | null;
     readonly marketplace_plan_uuid?: string | null;
     readonly marketplace_resource_state?: string | null;
@@ -5425,7 +5425,7 @@ export type OpenStackRouter = {
     readonly marketplace_offering_name?: string | null;
     readonly marketplace_offering_plugin_options?: {} | null;
     readonly marketplace_category_uuid?: string | null;
-    readonly marketplace_category_name?: string;
+    readonly marketplace_category_name?: string | null;
     readonly marketplace_resource_uuid?: string | null;
     readonly marketplace_plan_uuid?: string | null;
     readonly marketplace_resource_state?: string | null;
@@ -5480,7 +5480,7 @@ export type OpenStackSecurityGroup = {
     readonly marketplace_offering_name?: string | null;
     readonly marketplace_offering_plugin_options?: {} | null;
     readonly marketplace_category_uuid?: string | null;
-    readonly marketplace_category_name?: string;
+    readonly marketplace_category_name?: string | null;
     readonly marketplace_resource_uuid?: string | null;
     readonly marketplace_plan_uuid?: string | null;
     readonly marketplace_resource_state?: string | null;
@@ -5575,7 +5575,7 @@ export type OpenStackServerGroup = {
     readonly marketplace_offering_name?: string | null;
     readonly marketplace_offering_plugin_options?: {} | null;
     readonly marketplace_category_uuid?: string | null;
-    readonly marketplace_category_name?: string;
+    readonly marketplace_category_name?: string | null;
     readonly marketplace_resource_uuid?: string | null;
     readonly marketplace_plan_uuid?: string | null;
     readonly marketplace_resource_state?: string | null;
@@ -5634,7 +5634,7 @@ export type OpenStackSnapshot = {
     readonly marketplace_offering_name?: string | null;
     readonly marketplace_offering_plugin_options?: {} | null;
     readonly marketplace_category_uuid?: string | null;
-    readonly marketplace_category_name?: string;
+    readonly marketplace_category_name?: string | null;
     readonly marketplace_resource_uuid?: string | null;
     readonly marketplace_plan_uuid?: string | null;
     readonly marketplace_resource_state?: string | null;
@@ -5739,7 +5739,7 @@ export type OpenStackSubNet = {
     readonly marketplace_offering_name?: string | null;
     readonly marketplace_offering_plugin_options?: {} | null;
     readonly marketplace_category_uuid?: string | null;
-    readonly marketplace_category_name?: string;
+    readonly marketplace_category_name?: string | null;
     readonly marketplace_resource_uuid?: string | null;
     readonly marketplace_plan_uuid?: string | null;
     readonly marketplace_resource_state?: string | null;
@@ -5807,7 +5807,7 @@ export type OpenStackTenant = {
     readonly marketplace_offering_name?: string | null;
     readonly marketplace_offering_plugin_options?: {} | null;
     readonly marketplace_category_uuid?: string | null;
-    readonly marketplace_category_name?: string;
+    readonly marketplace_category_name?: string | null;
     readonly marketplace_resource_uuid?: string | null;
     readonly marketplace_plan_uuid?: string | null;
     readonly marketplace_resource_state?: string | null;
@@ -5915,7 +5915,7 @@ export type OpenStackVolume = {
     readonly marketplace_offering_name?: string | null;
     readonly marketplace_offering_plugin_options?: {} | null;
     readonly marketplace_category_uuid?: string | null;
-    readonly marketplace_category_name?: string;
+    readonly marketplace_category_name?: string | null;
     readonly marketplace_resource_uuid?: string | null;
     readonly marketplace_plan_uuid?: string | null;
     readonly marketplace_resource_state?: string | null;
@@ -8010,7 +8010,7 @@ export type RancherApplication = {
     readonly marketplace_offering_name?: string | null;
     readonly marketplace_offering_plugin_options?: {} | null;
     readonly marketplace_category_uuid?: string | null;
-    readonly marketplace_category_name?: string;
+    readonly marketplace_category_name?: string | null;
     readonly marketplace_resource_uuid?: string | null;
     readonly marketplace_plan_uuid?: string | null;
     readonly marketplace_resource_state?: string | null;
@@ -8150,7 +8150,7 @@ export type RancherCluster = {
     readonly marketplace_offering_name?: string | null;
     readonly marketplace_offering_plugin_options?: {} | null;
     readonly marketplace_category_uuid?: string | null;
-    readonly marketplace_category_name?: string;
+    readonly marketplace_category_name?: string | null;
     readonly marketplace_resource_uuid?: string | null;
     readonly marketplace_plan_uuid?: string | null;
     readonly marketplace_resource_state?: string | null;
@@ -8161,7 +8161,7 @@ export type RancherCluster = {
 export type RancherClusterReference = {
     readonly uuid?: string;
     name?: string;
-    readonly marketplace_uuid?: string;
+    readonly marketplace_uuid?: string | null;
 };
 
 export type RancherClusterRequest = {
@@ -8320,7 +8320,7 @@ export type RancherIngress = {
     readonly marketplace_offering_name?: string | null;
     readonly marketplace_offering_plugin_options?: {} | null;
     readonly marketplace_category_uuid?: string | null;
-    readonly marketplace_category_name?: string;
+    readonly marketplace_category_name?: string | null;
     readonly marketplace_resource_uuid?: string | null;
     readonly marketplace_plan_uuid?: string | null;
     readonly marketplace_resource_state?: string | null;
@@ -8518,7 +8518,7 @@ export type RancherService = {
     readonly marketplace_offering_name?: string | null;
     readonly marketplace_offering_plugin_options?: {} | null;
     readonly marketplace_category_uuid?: string | null;
-    readonly marketplace_category_name?: string;
+    readonly marketplace_category_name?: string | null;
     readonly marketplace_resource_uuid?: string | null;
     readonly marketplace_plan_uuid?: string | null;
     readonly marketplace_resource_state?: string | null;
@@ -9519,7 +9519,7 @@ export type SlurmAllocation = {
     readonly marketplace_offering_name?: string | null;
     readonly marketplace_offering_plugin_options?: {} | null;
     readonly marketplace_category_uuid?: string | null;
-    readonly marketplace_category_name?: string;
+    readonly marketplace_category_name?: string | null;
     readonly marketplace_resource_uuid?: string | null;
     readonly marketplace_plan_uuid?: string | null;
     readonly marketplace_resource_state?: string | null;
@@ -9952,7 +9952,7 @@ export type VmwareDisk = {
     readonly marketplace_offering_name?: string | null;
     readonly marketplace_offering_plugin_options?: {} | null;
     readonly marketplace_category_uuid?: string | null;
-    readonly marketplace_category_name?: string;
+    readonly marketplace_category_name?: string | null;
     readonly marketplace_resource_uuid?: string | null;
     readonly marketplace_plan_uuid?: string | null;
     readonly marketplace_resource_state?: string | null;
@@ -10079,7 +10079,7 @@ export type VmwarePort = {
     readonly marketplace_offering_name?: string | null;
     readonly marketplace_offering_plugin_options?: {} | null;
     readonly marketplace_category_uuid?: string | null;
-    readonly marketplace_category_name?: string;
+    readonly marketplace_category_name?: string | null;
     readonly marketplace_resource_uuid?: string | null;
     readonly marketplace_plan_uuid?: string | null;
     readonly marketplace_resource_state?: string | null;
@@ -10182,7 +10182,7 @@ export type VmwareVirtualMachine = {
     readonly marketplace_offering_name?: string | null;
     readonly marketplace_offering_plugin_options?: {} | null;
     readonly marketplace_category_uuid?: string | null;
-    readonly marketplace_category_name?: string;
+    readonly marketplace_category_name?: string | null;
     readonly marketplace_resource_uuid?: string | null;
     readonly marketplace_plan_uuid?: string | null;
     readonly marketplace_resource_state?: string | null;
@@ -28725,6 +28725,7 @@ export type RancherClusterSecurityGroupsListData = {
     body?: never;
     path?: never;
     query?: {
+        cluster_uuid?: string;
         name?: string;
         name_exact?: string;
         /**
