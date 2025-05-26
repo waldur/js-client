@@ -2309,7 +2309,7 @@ export type Event = {
     readonly context?: unknown;
 };
 
-export type EventGroupsEnum = 'access_subnets' | 'auth' | 'call' | 'credits' | 'customers' | 'invoices' | 'permissions' | 'projects' | 'proposal' | 'providers' | 'resources' | 'review' | 'ssh' | 'support' | 'users';
+export type EventGroupsEnum = 'access_subnets' | 'auth' | 'call' | 'credits' | 'customers' | 'invoices' | 'offering_accounting' | 'permissions' | 'projects' | 'proposal' | 'providers' | 'resources' | 'review' | 'ssh' | 'support' | 'users';
 
 export type EventStats = {
     readonly year: number;
