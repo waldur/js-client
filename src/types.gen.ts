@@ -2035,7 +2035,8 @@ export type CustomerServiceAccount = {
     error_traceback?: string;
     readonly token: string | null;
     email?: string;
-    readonly expiresAt: string | null;
+    readonly expires_at: string | null;
+    preferred_identifier?: string;
     customer: string;
     readonly customer_uuid: string;
     readonly customer_name: string;
@@ -2046,6 +2047,7 @@ export type CustomerServiceAccountRequest = {
     description?: string;
     error_traceback?: string;
     email?: string;
+    preferred_identifier?: string;
     customer: string;
 };
 
@@ -5911,6 +5913,7 @@ export type OpenStackVolume = {
     readonly instance_marketplace_uuid?: string;
     tenant?: string;
     readonly tenant_uuid?: string;
+    readonly extend_enabled?: boolean;
     readonly marketplace_offering_uuid?: string | null;
     readonly marketplace_offering_name?: string | null;
     readonly marketplace_offering_plugin_options?: {} | null;
@@ -6372,6 +6375,7 @@ export type PatchedCustomerServiceAccountRequest = {
     description?: string;
     error_traceback?: string;
     email?: string;
+    preferred_identifier?: string;
     customer?: string;
 };
 
@@ -6682,6 +6686,7 @@ export type PatchedProjectServiceAccountRequest = {
     description?: string;
     error_traceback?: string;
     email?: string;
+    preferred_identifier?: string;
     project?: string;
 };
 
@@ -7326,7 +7331,8 @@ export type ProjectServiceAccount = {
     error_traceback?: string;
     readonly token: string | null;
     email?: string;
-    readonly expiresAt: string | null;
+    readonly expires_at: string | null;
+    preferred_identifier?: string;
     project: string;
     readonly project_uuid: string;
     readonly project_name: string;
@@ -7340,6 +7346,7 @@ export type ProjectServiceAccountRequest = {
     description?: string;
     error_traceback?: string;
     email?: string;
+    preferred_identifier?: string;
     project: string;
 };
 
@@ -25813,7 +25820,7 @@ export type OpenstackVolumesListData = {
         customer_uuid?: string;
         description?: string;
         external_ip?: string;
-        field?: Array<'access_url' | 'action' | 'action_details' | 'availability_zone' | 'availability_zone_name' | 'backend_id' | 'bootable' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'description' | 'device' | 'error_message' | 'error_traceback' | 'image' | 'image_metadata' | 'image_name' | 'instance' | 'instance_marketplace_uuid' | 'instance_name' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'metadata' | 'modified' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'runtime_state' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'size' | 'source_snapshot' | 'state' | 'tenant' | 'tenant_uuid' | 'type' | 'type_name' | 'url' | 'uuid'>;
+        field?: Array<'access_url' | 'action' | 'action_details' | 'availability_zone' | 'availability_zone_name' | 'backend_id' | 'bootable' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'description' | 'device' | 'error_message' | 'error_traceback' | 'extend_enabled' | 'image' | 'image_metadata' | 'image_name' | 'instance' | 'instance_marketplace_uuid' | 'instance_name' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'metadata' | 'modified' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'runtime_state' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'size' | 'source_snapshot' | 'state' | 'tenant' | 'tenant_uuid' | 'type' | 'type_name' | 'url' | 'uuid'>;
         instance?: string;
         instance_uuid?: string;
         name?: string;
@@ -25854,7 +25861,7 @@ export type OpenstackVolumesRetrieveData = {
         uuid: string;
     };
     query?: {
-        field?: Array<'access_url' | 'action' | 'action_details' | 'availability_zone' | 'availability_zone_name' | 'backend_id' | 'bootable' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'description' | 'device' | 'error_message' | 'error_traceback' | 'image' | 'image_metadata' | 'image_name' | 'instance' | 'instance_marketplace_uuid' | 'instance_name' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'metadata' | 'modified' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'runtime_state' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'size' | 'source_snapshot' | 'state' | 'tenant' | 'tenant_uuid' | 'type' | 'type_name' | 'url' | 'uuid'>;
+        field?: Array<'access_url' | 'action' | 'action_details' | 'availability_zone' | 'availability_zone_name' | 'backend_id' | 'bootable' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'description' | 'device' | 'error_message' | 'error_traceback' | 'extend_enabled' | 'image' | 'image_metadata' | 'image_name' | 'instance' | 'instance_marketplace_uuid' | 'instance_name' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'metadata' | 'modified' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'runtime_state' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'size' | 'source_snapshot' | 'state' | 'tenant' | 'tenant_uuid' | 'type' | 'type_name' | 'url' | 'uuid'>;
     };
     url: '/api/openstack-volumes/{uuid}/';
 };
