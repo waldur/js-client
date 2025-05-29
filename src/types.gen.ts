@@ -1527,6 +1527,8 @@ export type ConstanceSettings = {
     DISABLE_DARK_THEME?: boolean;
     POWERED_BY_LOGO?: string | null;
     HERO_IMAGE?: string | null;
+    MARKETPLACE_HERO_IMAGE?: string | null;
+    CALL_MANAGEMENT_HERO_IMAGE?: string | null;
     SIDEBAR_LOGO?: string | null;
     SIDEBAR_LOGO_DARK?: string | null;
     SIDEBAR_LOGO_MOBILE?: string | null;
@@ -1650,6 +1652,8 @@ export type ConstanceSettingsRequest = {
     DISABLE_DARK_THEME?: boolean;
     POWERED_BY_LOGO?: (Blob | File) | null;
     HERO_IMAGE?: (Blob | File) | null;
+    MARKETPLACE_HERO_IMAGE?: (Blob | File) | null;
+    CALL_MANAGEMENT_HERO_IMAGE?: (Blob | File) | null;
     SIDEBAR_LOGO?: (Blob | File) | null;
     SIDEBAR_LOGO_DARK?: (Blob | File) | null;
     SIDEBAR_LOGO_MOBILE?: (Blob | File) | null;
@@ -1896,6 +1900,11 @@ export type CustomerCredit = {
     apply_as_minimal_consumption?: boolean;
     readonly allocated_to_projects: number;
     readonly consumption_last_month: number;
+};
+
+export type CustomerCreditConsumption = {
+    readonly date: string;
+    readonly price: string;
 };
 
 export type CustomerCreditRequest = {
@@ -13216,6 +13225,39 @@ export type CustomerCreditsClearCompensationsResponses = {
 
 export type CustomerCreditsClearCompensationsResponse = CustomerCreditsClearCompensationsResponses[keyof CustomerCreditsClearCompensationsResponses];
 
+export type CustomerCreditsConsumptionsListData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        customer_name?: string;
+        customer_slug?: string;
+        customer_uuid?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-customer_name' | '-end_date' | '-expected_consumption' | '-value' | 'customer_name' | 'end_date' | 'expected_consumption' | 'value'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/customer-credits/{uuid}/consumptions/';
+};
+
+export type CustomerCreditsConsumptionsListResponses = {
+    200: Array<CustomerCreditConsumption>;
+};
+
+export type CustomerCreditsConsumptionsListResponse = CustomerCreditsConsumptionsListResponses[keyof CustomerCreditsConsumptionsListResponses];
+
 export type CustomerPermissionsReviewsListData = {
     body?: never;
     path?: never;
@@ -15036,6 +15078,21 @@ export type InvoiceItemsUpdateResponses = {
 };
 
 export type InvoiceItemsUpdateResponse = InvoiceItemsUpdateResponses[keyof InvoiceItemsUpdateResponses];
+
+export type InvoiceItemsConsumptionsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/invoice-items/{uuid}/consumptions/';
+};
+
+export type InvoiceItemsConsumptionsRetrieveResponses = {
+    200: InvoiceItemDetail;
+};
+
+export type InvoiceItemsConsumptionsRetrieveResponse = InvoiceItemsConsumptionsRetrieveResponses[keyof InvoiceItemsConsumptionsRetrieveResponses];
 
 export type InvoiceItemsCreateCompensationData = {
     body: InvoiceItemCompensationRequest;
