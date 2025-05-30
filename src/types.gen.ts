@@ -3850,6 +3850,11 @@ export type MigrationDetailsRequest = {
 
 export type MinimalConsumptionLogicEnum = 'fixed' | 'linear';
 
+export type MoveOfferingRequest = {
+    customer: string;
+    preserve_permissions: boolean;
+};
+
 export type MoveProjectRequest = {
     customer: string;
     preserve_permissions: boolean;
@@ -19444,6 +19449,21 @@ export type MarketplaceProviderOfferingsListUsersListResponses = {
 };
 
 export type MarketplaceProviderOfferingsListUsersListResponse = MarketplaceProviderOfferingsListUsersListResponses[keyof MarketplaceProviderOfferingsListUsersListResponses];
+
+export type MarketplaceProviderOfferingsMoveOfferingData = {
+    body: MoveOfferingRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-provider-offerings/{uuid}/move_offering/';
+};
+
+export type MarketplaceProviderOfferingsMoveOfferingResponses = {
+    200: PublicOfferingDetails;
+};
+
+export type MarketplaceProviderOfferingsMoveOfferingResponse = MarketplaceProviderOfferingsMoveOfferingResponses[keyof MarketplaceProviderOfferingsMoveOfferingResponses];
 
 export type MarketplaceProviderOfferingsOrdersListData = {
     body?: never;
