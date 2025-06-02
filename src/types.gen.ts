@@ -6977,6 +6977,10 @@ export type PatchedUserRequest = {
      * User must agree with the policy to register.
      */
     agree_with_policy?: boolean;
+    /**
+     * Designates whether the user is allowed to receive email notifications.
+     */
+    notifications_enabled?: boolean;
     preferred_language?: string;
     first_name?: string;
     last_name?: string;
@@ -9751,6 +9755,10 @@ export type User = {
      * Indicates when the user has agreed with the policy.
      */
     readonly agreement_date?: string | null;
+    /**
+     * Designates whether the user is allowed to receive email notifications.
+     */
+    notifications_enabled?: boolean;
     preferred_language?: string;
     readonly permissions?: Array<Permission>;
     readonly requested_email?: string | null;
@@ -9840,6 +9848,10 @@ export type UserRequest = {
      * User must agree with the policy to register.
      */
     agree_with_policy?: boolean;
+    /**
+     * Designates whether the user is allowed to receive email notifications.
+     */
+    notifications_enabled?: boolean;
     preferred_language?: string;
     first_name?: string;
     last_name?: string;
@@ -32444,7 +32456,7 @@ export type UsersListData = {
         date_joined?: string;
         description?: string;
         email?: string;
-        field?: Array<'affiliations' | 'agree_with_policy' | 'agreement_date' | 'civil_number' | 'date_joined' | 'description' | 'email' | 'first_name' | 'full_name' | 'has_active_session' | 'identity_provider_fields' | 'identity_provider_label' | 'identity_provider_management_url' | 'identity_provider_name' | 'identity_source' | 'image' | 'is_active' | 'is_staff' | 'is_support' | 'job_title' | 'last_name' | 'native_name' | 'organization' | 'permissions' | 'phone_number' | 'preferred_language' | 'registration_method' | 'requested_email' | 'slug' | 'token' | 'token_lifetime' | 'url' | 'username' | 'uuid'>;
+        field?: Array<'affiliations' | 'agree_with_policy' | 'agreement_date' | 'civil_number' | 'date_joined' | 'description' | 'email' | 'first_name' | 'full_name' | 'has_active_session' | 'identity_provider_fields' | 'identity_provider_label' | 'identity_provider_management_url' | 'identity_provider_name' | 'identity_source' | 'image' | 'is_active' | 'is_staff' | 'is_support' | 'job_title' | 'last_name' | 'native_name' | 'notifications_enabled' | 'organization' | 'permissions' | 'phone_number' | 'preferred_language' | 'registration_method' | 'requested_email' | 'slug' | 'token' | 'token_lifetime' | 'url' | 'username' | 'uuid'>;
         /**
          * Full name
          */
@@ -32552,7 +32564,7 @@ export type UsersRetrieveData = {
         uuid: string;
     };
     query?: {
-        field?: Array<'affiliations' | 'agree_with_policy' | 'agreement_date' | 'civil_number' | 'date_joined' | 'description' | 'email' | 'first_name' | 'full_name' | 'has_active_session' | 'identity_provider_fields' | 'identity_provider_label' | 'identity_provider_management_url' | 'identity_provider_name' | 'identity_source' | 'image' | 'is_active' | 'is_staff' | 'is_support' | 'job_title' | 'last_name' | 'native_name' | 'organization' | 'permissions' | 'phone_number' | 'preferred_language' | 'registration_method' | 'requested_email' | 'slug' | 'token' | 'token_lifetime' | 'url' | 'username' | 'uuid'>;
+        field?: Array<'affiliations' | 'agree_with_policy' | 'agreement_date' | 'civil_number' | 'date_joined' | 'description' | 'email' | 'first_name' | 'full_name' | 'has_active_session' | 'identity_provider_fields' | 'identity_provider_label' | 'identity_provider_management_url' | 'identity_provider_name' | 'identity_source' | 'image' | 'is_active' | 'is_staff' | 'is_support' | 'job_title' | 'last_name' | 'native_name' | 'notifications_enabled' | 'organization' | 'permissions' | 'phone_number' | 'preferred_language' | 'registration_method' | 'requested_email' | 'slug' | 'token' | 'token_lifetime' | 'url' | 'username' | 'uuid'>;
     };
     url: '/api/users/{uuid}/';
 };
@@ -32705,7 +32717,7 @@ export type UsersMeRetrieveData = {
     body?: never;
     path?: never;
     query?: {
-        field?: Array<'affiliations' | 'agree_with_policy' | 'agreement_date' | 'civil_number' | 'date_joined' | 'description' | 'email' | 'first_name' | 'full_name' | 'has_active_session' | 'identity_provider_fields' | 'identity_provider_label' | 'identity_provider_management_url' | 'identity_provider_name' | 'identity_source' | 'image' | 'is_active' | 'is_staff' | 'is_support' | 'job_title' | 'last_name' | 'native_name' | 'organization' | 'permissions' | 'phone_number' | 'preferred_language' | 'registration_method' | 'requested_email' | 'slug' | 'token' | 'token_lifetime' | 'url' | 'username' | 'uuid'>;
+        field?: Array<'affiliations' | 'agree_with_policy' | 'agreement_date' | 'civil_number' | 'date_joined' | 'description' | 'email' | 'first_name' | 'full_name' | 'has_active_session' | 'identity_provider_fields' | 'identity_provider_label' | 'identity_provider_management_url' | 'identity_provider_name' | 'identity_source' | 'image' | 'is_active' | 'is_staff' | 'is_support' | 'job_title' | 'last_name' | 'native_name' | 'notifications_enabled' | 'organization' | 'permissions' | 'phone_number' | 'preferred_language' | 'registration_method' | 'requested_email' | 'slug' | 'token' | 'token_lifetime' | 'url' | 'username' | 'uuid'>;
     };
     url: '/api/users/me/';
 };
