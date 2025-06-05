@@ -1591,6 +1591,7 @@ export type ConstanceSettings = {
     SMAX_CREATION_SOURCE_NAME?: string;
     SMAX_REQUESTS_OFFERING?: string;
     SMAX_VERIFY_SSL?: boolean;
+    ENABLE_MOCK_SERVICE_ACCOUNT_BACKEND?: boolean;
     PROPOSAL_REVIEW_DURATION?: number;
     USER_TABLE_COLUMNS?: string;
     AUTO_APPROVE_USER_TOS?: boolean;
@@ -1716,6 +1717,7 @@ export type ConstanceSettingsRequest = {
     SMAX_CREATION_SOURCE_NAME?: string;
     SMAX_REQUESTS_OFFERING?: string;
     SMAX_VERIFY_SSL?: boolean;
+    ENABLE_MOCK_SERVICE_ACCOUNT_BACKEND?: boolean;
     PROPOSAL_REVIEW_DURATION?: number;
     USER_TABLE_COLUMNS?: string;
     AUTO_APPROVE_USER_TOS?: boolean;
