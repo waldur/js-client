@@ -1011,6 +1011,37 @@ export type CallManagingOrganisationStat = {
     readonly offering_requests_pending: number;
 };
 
+export type CallResourceTemplate = {
+    readonly uuid?: string;
+    readonly url?: string;
+    name?: string;
+    description?: string;
+    attributes?: unknown;
+    limits?: unknown;
+    /**
+     * If True, every proposal must include this resource type
+     */
+    is_required?: boolean;
+    requested_offering?: string;
+    readonly requested_offering_name?: string;
+    readonly requested_offering_uuid?: string;
+    readonly created_by?: string | null;
+    readonly created_by_name?: string;
+    readonly created?: string;
+};
+
+export type CallResourceTemplateRequest = {
+    name: string;
+    description?: string;
+    attributes?: unknown;
+    limits?: unknown;
+    /**
+     * If True, every proposal must include this resource type
+     */
+    is_required?: boolean;
+    requested_offering: string;
+};
+
 export type CallRound = {
     readonly url: string;
     readonly uuid: string;
@@ -1382,23 +1413,10 @@ export type ComponentUsage = {
     modified_by?: number | null;
 };
 
-export type ComponentUsageCreate = {
-    usages: Array<ComponentUsageItem>;
-    plan_period?: string;
-    resource?: string;
-};
-
 export type ComponentUsageCreateRequest = {
     usages: Array<ComponentUsageItemRequest>;
     plan_period?: string;
     resource?: string;
-};
-
-export type ComponentUsageItem = {
-    type: string;
-    amount: string;
-    description?: string;
-    recurring?: boolean;
 };
 
 export type ComponentUsageItemRequest = {
@@ -6279,6 +6297,18 @@ export type PatchedCallManagingOrganisationRequest = {
     image?: (Blob | File) | null;
 };
 
+export type PatchedCallResourceTemplateRequest = {
+    name?: string;
+    description?: string;
+    attributes?: unknown;
+    limits?: unknown;
+    /**
+     * If True, every proposal must include this resource type
+     */
+    is_required?: boolean;
+    requested_offering?: string;
+};
+
 export type PatchedCategoryColumnRequest = {
     /**
      * Index allows to reorder columns.
@@ -6731,6 +6761,7 @@ export type PatchedProposalReviewRequest = {
 export type PatchedProtectedCallRequest = {
     name?: string;
     description?: string;
+    fixed_duration_in_days?: number | null;
     backend_id?: string;
     external_url?: string | null;
     created_by?: string | null;
@@ -6870,6 +6901,7 @@ export type PatchedRequestedResourceRequest = {
     limits?: unknown;
     description?: string;
     requested_offering_uuid?: string;
+    call_resource_template_uuid?: string;
 };
 
 export type PatchedResourceUpdateRequest = {
@@ -7556,6 +7588,8 @@ export type ProtectedCall = {
     readonly offerings?: Array<NestedRequestedOffering>;
     readonly rounds?: Array<NestedRound>;
     readonly documents?: Array<CallDocument>;
+    readonly resource_templates?: Array<CallResourceTemplate>;
+    fixed_duration_in_days?: number | null;
     backend_id?: string;
     external_url?: string | null;
     created_by?: string | null;
@@ -7569,6 +7603,7 @@ export type ProtectedCallRequest = {
     name: string;
     description?: string;
     manager: string;
+    fixed_duration_in_days?: number | null;
     backend_id?: string;
     external_url?: string | null;
     created_by?: string | null;
@@ -7868,6 +7903,8 @@ export type ProviderRequestedResource = {
     requested_offering: NestedRequestedOffering;
     resource?: string | null;
     readonly resource_name: string;
+    readonly call_resource_template: string;
+    readonly call_resource_template_name: string;
     attributes?: unknown;
     limits?: unknown;
     description?: string;
@@ -7900,6 +7937,11 @@ export type PublicCall = {
     readonly offerings?: Array<NestedRequestedOffering>;
     readonly rounds?: Array<NestedRound>;
     readonly documents?: Array<CallDocument>;
+    readonly resource_templates?: Array<CallResourceTemplate>;
+    /**
+     * Fixed duration in days that applies to all proposals in this call
+     */
+    readonly fixed_duration_in_days?: number | null;
     backend_id?: string;
     external_url?: string | null;
 };
@@ -8841,6 +8883,8 @@ export type RequestedResource = {
     requested_offering: NestedRequestedOffering;
     readonly resource: string | null;
     readonly resource_name: string;
+    readonly call_resource_template: string;
+    readonly call_resource_template_name: string;
     attributes?: unknown;
     limits?: unknown;
     description?: string;
@@ -8852,7 +8896,8 @@ export type RequestedResourceRequest = {
     attributes?: unknown;
     limits?: unknown;
     description?: string;
-    requested_offering_uuid: string;
+    requested_offering_uuid?: string;
+    call_resource_template_uuid?: string;
 };
 
 export type Resource = {
@@ -16731,10 +16776,11 @@ export type MarketplaceComponentUsagesSetUsageData = {
 };
 
 export type MarketplaceComponentUsagesSetUsageResponses = {
-    200: ComponentUsageCreate;
+    /**
+     * No response body
+     */
+    201: unknown;
 };
-
-export type MarketplaceComponentUsagesSetUsageResponse = MarketplaceComponentUsagesSetUsageResponses[keyof MarketplaceComponentUsagesSetUsageResponses];
 
 export type MarketplaceComponentUserUsagesListData = {
     body?: never;
@@ -24606,6 +24652,22 @@ export type OpenstackPortsUpdatePortIpResponses = {
     200: unknown;
 };
 
+export type OpenstackPortsUpdateSecurityGroupsData = {
+    body: OpenStackInstanceSecurityGroupsUpdateRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openstack-ports/{uuid}/update_security_groups/';
+};
+
+export type OpenstackPortsUpdateSecurityGroupsResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type OpenstackRoutersListData = {
     body?: never;
     path?: never;
@@ -27449,7 +27511,7 @@ export type ProposalProposalsResourcesListResponses = {
 export type ProposalProposalsResourcesListResponse = ProposalProposalsResourcesListResponses[keyof ProposalProposalsResourcesListResponses];
 
 export type ProposalProposalsResourcesSetData = {
-    body: RequestedResourceRequest;
+    body?: RequestedResourceRequest;
     path: {
         uuid: string;
     };
@@ -27515,7 +27577,7 @@ export type ProposalProposalsResourcesPartialUpdateResponses = {
 export type ProposalProposalsResourcesPartialUpdateResponse = ProposalProposalsResourcesPartialUpdateResponses[keyof ProposalProposalsResourcesPartialUpdateResponses];
 
 export type ProposalProposalsResourcesUpdateData = {
-    body: RequestedResourceRequest;
+    body?: RequestedResourceRequest;
     path: {
         obj_uuid: string;
         uuid: string;
@@ -27584,7 +27646,7 @@ export type ProposalProtectedCallsListData = {
         customer?: string;
         customer_keyword?: string;
         customer_uuid?: string;
-        field?: Array<'backend_id' | 'created' | 'created_by' | 'customer_name' | 'customer_uuid' | 'default_project_role' | 'default_project_role_description' | 'default_project_role_name' | 'description' | 'documents' | 'end_date' | 'external_url' | 'manager' | 'name' | 'offerings' | 'reference_code' | 'rounds' | 'slug' | 'start_date' | 'state' | 'url' | 'uuid'>;
+        field?: Array<'backend_id' | 'created' | 'created_by' | 'customer_name' | 'customer_uuid' | 'default_project_role' | 'default_project_role_description' | 'default_project_role_name' | 'description' | 'documents' | 'end_date' | 'external_url' | 'fixed_duration_in_days' | 'manager' | 'name' | 'offerings' | 'reference_code' | 'resource_templates' | 'rounds' | 'slug' | 'start_date' | 'state' | 'url' | 'uuid'>;
         has_active_round?: boolean;
         name?: string;
         /**
@@ -27651,7 +27713,7 @@ export type ProposalProtectedCallsRetrieveData = {
         uuid: string;
     };
     query?: {
-        field?: Array<'backend_id' | 'created' | 'created_by' | 'customer_name' | 'customer_uuid' | 'default_project_role' | 'default_project_role_description' | 'default_project_role_name' | 'description' | 'documents' | 'end_date' | 'external_url' | 'manager' | 'name' | 'offerings' | 'reference_code' | 'rounds' | 'slug' | 'start_date' | 'state' | 'url' | 'uuid'>;
+        field?: Array<'backend_id' | 'created' | 'created_by' | 'customer_name' | 'customer_uuid' | 'default_project_role' | 'default_project_role_description' | 'default_project_role_name' | 'description' | 'documents' | 'end_date' | 'external_url' | 'fixed_duration_in_days' | 'manager' | 'name' | 'offerings' | 'reference_code' | 'resource_templates' | 'rounds' | 'slug' | 'start_date' | 'state' | 'url' | 'uuid'>;
     };
     url: '/api/proposal-protected-calls/{uuid}/';
 };
@@ -27957,6 +28019,112 @@ export type ProposalProtectedCallsOfferingsUpdateResponses = {
 
 export type ProposalProtectedCallsOfferingsUpdateResponse = ProposalProtectedCallsOfferingsUpdateResponses[keyof ProposalProtectedCallsOfferingsUpdateResponses];
 
+export type ProposalProtectedCallsResourceTemplatesListData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/proposal-protected-calls/{uuid}/resource_templates/';
+};
+
+export type ProposalProtectedCallsResourceTemplatesListResponses = {
+    200: Array<CallResourceTemplate>;
+};
+
+export type ProposalProtectedCallsResourceTemplatesListResponse = ProposalProtectedCallsResourceTemplatesListResponses[keyof ProposalProtectedCallsResourceTemplatesListResponses];
+
+export type ProposalProtectedCallsResourceTemplatesSetData = {
+    body: CallResourceTemplateRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-protected-calls/{uuid}/resource_templates/';
+};
+
+export type ProposalProtectedCallsResourceTemplatesSetResponses = {
+    200: CallResourceTemplate;
+};
+
+export type ProposalProtectedCallsResourceTemplatesSetResponse = ProposalProtectedCallsResourceTemplatesSetResponses[keyof ProposalProtectedCallsResourceTemplatesSetResponses];
+
+export type ProposalProtectedCallsResourceTemplatesDestroyData = {
+    body?: never;
+    path: {
+        obj_uuid: string;
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-protected-calls/{uuid}/resource_templates/{obj_uuid}/';
+};
+
+export type ProposalProtectedCallsResourceTemplatesDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type ProposalProtectedCallsResourceTemplatesDestroyResponse = ProposalProtectedCallsResourceTemplatesDestroyResponses[keyof ProposalProtectedCallsResourceTemplatesDestroyResponses];
+
+export type ProposalProtectedCallsResourceTemplatesRetrieveData = {
+    body?: never;
+    path: {
+        obj_uuid: string;
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-protected-calls/{uuid}/resource_templates/{obj_uuid}/';
+};
+
+export type ProposalProtectedCallsResourceTemplatesRetrieveResponses = {
+    200: CallResourceTemplate;
+};
+
+export type ProposalProtectedCallsResourceTemplatesRetrieveResponse = ProposalProtectedCallsResourceTemplatesRetrieveResponses[keyof ProposalProtectedCallsResourceTemplatesRetrieveResponses];
+
+export type ProposalProtectedCallsResourceTemplatesPartialUpdateData = {
+    body?: PatchedCallResourceTemplateRequest;
+    path: {
+        obj_uuid: string;
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-protected-calls/{uuid}/resource_templates/{obj_uuid}/';
+};
+
+export type ProposalProtectedCallsResourceTemplatesPartialUpdateResponses = {
+    200: CallResourceTemplate;
+};
+
+export type ProposalProtectedCallsResourceTemplatesPartialUpdateResponse = ProposalProtectedCallsResourceTemplatesPartialUpdateResponses[keyof ProposalProtectedCallsResourceTemplatesPartialUpdateResponses];
+
+export type ProposalProtectedCallsResourceTemplatesUpdateData = {
+    body: CallResourceTemplateRequest;
+    path: {
+        obj_uuid: string;
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-protected-calls/{uuid}/resource_templates/{obj_uuid}/';
+};
+
+export type ProposalProtectedCallsResourceTemplatesUpdateResponses = {
+    200: CallResourceTemplate;
+};
+
+export type ProposalProtectedCallsResourceTemplatesUpdateResponse = ProposalProtectedCallsResourceTemplatesUpdateResponses[keyof ProposalProtectedCallsResourceTemplatesUpdateResponses];
+
 export type ProposalProtectedCallsRoundsListData = {
     body?: never;
     path: {
@@ -28101,7 +28269,7 @@ export type ProposalPublicCallsListData = {
         customer?: string;
         customer_keyword?: string;
         customer_uuid?: string;
-        field?: Array<'backend_id' | 'created' | 'customer_name' | 'customer_uuid' | 'description' | 'documents' | 'end_date' | 'external_url' | 'manager' | 'name' | 'offerings' | 'rounds' | 'slug' | 'start_date' | 'state' | 'url' | 'uuid'>;
+        field?: Array<'backend_id' | 'created' | 'customer_name' | 'customer_uuid' | 'description' | 'documents' | 'end_date' | 'external_url' | 'fixed_duration_in_days' | 'manager' | 'name' | 'offerings' | 'resource_templates' | 'rounds' | 'slug' | 'start_date' | 'state' | 'url' | 'uuid'>;
         has_active_round?: boolean;
         name?: string;
         /**
@@ -28137,7 +28305,7 @@ export type ProposalPublicCallsRetrieveData = {
         uuid: string;
     };
     query?: {
-        field?: Array<'backend_id' | 'created' | 'customer_name' | 'customer_uuid' | 'description' | 'documents' | 'end_date' | 'external_url' | 'manager' | 'name' | 'offerings' | 'rounds' | 'slug' | 'start_date' | 'state' | 'url' | 'uuid'>;
+        field?: Array<'backend_id' | 'created' | 'customer_name' | 'customer_uuid' | 'description' | 'documents' | 'end_date' | 'external_url' | 'fixed_duration_in_days' | 'manager' | 'name' | 'offerings' | 'resource_templates' | 'rounds' | 'slug' | 'start_date' | 'state' | 'url' | 'uuid'>;
     };
     url: '/api/proposal-public-calls/{uuid}/';
 };
