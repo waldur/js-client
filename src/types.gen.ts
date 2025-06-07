@@ -1456,12 +1456,6 @@ export type ComponentUserUsage = {
     readonly billing_period?: string;
 };
 
-export type ComponentUserUsageCreate = {
-    usage?: string;
-    username: string;
-    user?: string;
-};
-
 export type ComponentUserUsageCreateRequest = {
     usage?: string;
     username: string;
@@ -16763,10 +16757,11 @@ export type MarketplaceComponentUsagesSetUserUsageData = {
 };
 
 export type MarketplaceComponentUsagesSetUserUsageResponses = {
-    200: ComponentUserUsageCreate;
+    /**
+     * No response body
+     */
+    201: unknown;
 };
-
-export type MarketplaceComponentUsagesSetUserUsageResponse = MarketplaceComponentUsagesSetUserUsageResponses[keyof MarketplaceComponentUsagesSetUserUsageResponses];
 
 export type MarketplaceComponentUsagesSetUsageData = {
     body: ComponentUsageCreateRequest;
