@@ -5218,6 +5218,7 @@ export type OpenStackNestedPort = {
     readonly allowed_address_pairs?: Array<OpenStackAllowedAddressPair>;
     readonly device_id?: string | null;
     readonly device_owner?: string | null;
+    readonly security_groups?: Array<OpenStackSecurityGroup>;
 };
 
 export type OpenStackNestedPortRequest = {
@@ -5410,6 +5411,7 @@ export type OpenStackPortIpUpdateRequest = {
 export type OpenStackPortNestedSecurityGroup = {
     readonly uuid?: string;
     name?: string;
+    readonly url?: string;
 };
 
 export type OpenStackPortNestedSecurityGroupRequest = {
@@ -5528,7 +5530,6 @@ export type OpenStackSecurityGroup = {
 export type OpenStackSecurityGroupRequest = {
     name: string;
     description?: string;
-    rules: Array<OpenStackSecurityGroupRuleCreateRequest>;
 };
 
 export type OpenStackSecurityGroupRuleCreate = {
