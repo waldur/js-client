@@ -5530,6 +5530,7 @@ export type OpenStackSecurityGroup = {
 export type OpenStackSecurityGroupRequest = {
     name: string;
     description?: string;
+    rules: Array<OpenStackSecurityGroupRuleCreateRequest>;
 };
 
 export type OpenStackSecurityGroupRuleCreate = {
