@@ -7524,7 +7524,7 @@ export type ProposalReview = {
      * Generate an anonymous reviewer identifier like 'Reviewer 1', 'Reviewer 2'.
      * Returns None if the review is not associated with a proposal.
      */
-    readonly anonymous_reviewer_name: string;
+    readonly anonymous_reviewer_name: string | null;
     state: ProposalReviewStateEnum;
     readonly review_end_date: string;
     summary_score?: number;
