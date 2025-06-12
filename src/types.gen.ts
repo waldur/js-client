@@ -6760,6 +6760,14 @@ export type PatchedProtectedCallRequest = {
     fixed_duration_in_days?: number | null;
     backend_id?: string;
     external_url?: string | null;
+    /**
+     * Whether proposal submitters can see reviewer identities
+     */
+    reviewer_identity_visible_to_submitters?: boolean;
+    /**
+     * Whether proposal submitters can see review comments and scores
+     */
+    reviews_visible_to_submitters?: boolean;
     created_by?: string | null;
     reference_code?: string;
     default_project_role?: string;
@@ -7512,6 +7520,11 @@ export type ProposalReview = {
     reviewer: string;
     readonly reviewer_full_name: string;
     readonly reviewer_uuid: string;
+    /**
+     * Generate an anonymous reviewer identifier like 'Reviewer 1', 'Reviewer 2'.
+     * Returns None if the review is not associated with a proposal.
+     */
+    readonly anonymous_reviewer_name: string;
     state: ProposalReviewStateEnum;
     readonly review_end_date: string;
     summary_score?: number;
@@ -7588,6 +7601,14 @@ export type ProtectedCall = {
     fixed_duration_in_days?: number | null;
     backend_id?: string;
     external_url?: string | null;
+    /**
+     * Whether proposal submitters can see reviewer identities
+     */
+    reviewer_identity_visible_to_submitters?: boolean;
+    /**
+     * Whether proposal submitters can see review comments and scores
+     */
+    reviews_visible_to_submitters?: boolean;
     created_by?: string | null;
     reference_code?: string;
     default_project_role?: string;
@@ -7602,6 +7623,14 @@ export type ProtectedCallRequest = {
     fixed_duration_in_days?: number | null;
     backend_id?: string;
     external_url?: string | null;
+    /**
+     * Whether proposal submitters can see reviewer identities
+     */
+    reviewer_identity_visible_to_submitters?: boolean;
+    /**
+     * Whether proposal submitters can see review comments and scores
+     */
+    reviews_visible_to_submitters?: boolean;
     created_by?: string | null;
     reference_code?: string;
     default_project_role?: string;
@@ -7611,7 +7640,12 @@ export type ProtectedProposalList = {
     readonly uuid: string;
     name: string;
     state: ProposalStates;
-    readonly reviews: Array<ProposalReview>;
+    /**
+     * Return serialized reviews based on user permissions and visibility settings.
+     * - Staff, call managers, and reviewers see all reviews.
+     * - Submitters see submitted reviews if visibility is enabled.
+     */
+    readonly reviews: Array<unknown>;
     readonly approved_by_name: string;
     readonly created_by_name: string;
     readonly created: string;
@@ -7940,6 +7974,14 @@ export type PublicCall = {
     readonly fixed_duration_in_days?: number | null;
     backend_id?: string;
     external_url?: string | null;
+    /**
+     * Whether proposal submitters can see reviewer identities. If False, reviewers appear as 'Reviewer 1', 'Reviewer 2', etc.
+     */
+    reviewer_identity_visible_to_submitters?: boolean;
+    /**
+     * Whether proposal submitters can see review comments and scores. If False, submitters only see final approval/rejection status.
+     */
+    reviews_visible_to_submitters?: boolean;
 };
 
 export type PublicOfferingDetails = {
@@ -27644,7 +27686,7 @@ export type ProposalProtectedCallsListData = {
         customer?: string;
         customer_keyword?: string;
         customer_uuid?: string;
-        field?: Array<'backend_id' | 'created' | 'created_by' | 'customer_name' | 'customer_uuid' | 'default_project_role' | 'default_project_role_description' | 'default_project_role_name' | 'description' | 'documents' | 'end_date' | 'external_url' | 'fixed_duration_in_days' | 'manager' | 'name' | 'offerings' | 'reference_code' | 'resource_templates' | 'rounds' | 'slug' | 'start_date' | 'state' | 'url' | 'uuid'>;
+        field?: Array<'backend_id' | 'created' | 'created_by' | 'customer_name' | 'customer_uuid' | 'default_project_role' | 'default_project_role_description' | 'default_project_role_name' | 'description' | 'documents' | 'end_date' | 'external_url' | 'fixed_duration_in_days' | 'manager' | 'name' | 'offerings' | 'reference_code' | 'resource_templates' | 'reviewer_identity_visible_to_submitters' | 'reviews_visible_to_submitters' | 'rounds' | 'slug' | 'start_date' | 'state' | 'url' | 'uuid'>;
         has_active_round?: boolean;
         name?: string;
         /**
@@ -27711,7 +27753,7 @@ export type ProposalProtectedCallsRetrieveData = {
         uuid: string;
     };
     query?: {
-        field?: Array<'backend_id' | 'created' | 'created_by' | 'customer_name' | 'customer_uuid' | 'default_project_role' | 'default_project_role_description' | 'default_project_role_name' | 'description' | 'documents' | 'end_date' | 'external_url' | 'fixed_duration_in_days' | 'manager' | 'name' | 'offerings' | 'reference_code' | 'resource_templates' | 'rounds' | 'slug' | 'start_date' | 'state' | 'url' | 'uuid'>;
+        field?: Array<'backend_id' | 'created' | 'created_by' | 'customer_name' | 'customer_uuid' | 'default_project_role' | 'default_project_role_description' | 'default_project_role_name' | 'description' | 'documents' | 'end_date' | 'external_url' | 'fixed_duration_in_days' | 'manager' | 'name' | 'offerings' | 'reference_code' | 'resource_templates' | 'reviewer_identity_visible_to_submitters' | 'reviews_visible_to_submitters' | 'rounds' | 'slug' | 'start_date' | 'state' | 'url' | 'uuid'>;
     };
     url: '/api/proposal-protected-calls/{uuid}/';
 };
@@ -28267,7 +28309,7 @@ export type ProposalPublicCallsListData = {
         customer?: string;
         customer_keyword?: string;
         customer_uuid?: string;
-        field?: Array<'backend_id' | 'created' | 'customer_name' | 'customer_uuid' | 'description' | 'documents' | 'end_date' | 'external_url' | 'fixed_duration_in_days' | 'manager' | 'name' | 'offerings' | 'resource_templates' | 'rounds' | 'slug' | 'start_date' | 'state' | 'url' | 'uuid'>;
+        field?: Array<'backend_id' | 'created' | 'customer_name' | 'customer_uuid' | 'description' | 'documents' | 'end_date' | 'external_url' | 'fixed_duration_in_days' | 'manager' | 'name' | 'offerings' | 'resource_templates' | 'reviewer_identity_visible_to_submitters' | 'reviews_visible_to_submitters' | 'rounds' | 'slug' | 'start_date' | 'state' | 'url' | 'uuid'>;
         has_active_round?: boolean;
         name?: string;
         /**
@@ -28303,7 +28345,7 @@ export type ProposalPublicCallsRetrieveData = {
         uuid: string;
     };
     query?: {
-        field?: Array<'backend_id' | 'created' | 'customer_name' | 'customer_uuid' | 'description' | 'documents' | 'end_date' | 'external_url' | 'fixed_duration_in_days' | 'manager' | 'name' | 'offerings' | 'resource_templates' | 'rounds' | 'slug' | 'start_date' | 'state' | 'url' | 'uuid'>;
+        field?: Array<'backend_id' | 'created' | 'customer_name' | 'customer_uuid' | 'description' | 'documents' | 'end_date' | 'external_url' | 'fixed_duration_in_days' | 'manager' | 'name' | 'offerings' | 'resource_templates' | 'reviewer_identity_visible_to_submitters' | 'reviews_visible_to_submitters' | 'rounds' | 'slug' | 'start_date' | 'state' | 'url' | 'uuid'>;
     };
     url: '/api/proposal-public-calls/{uuid}/';
 };
