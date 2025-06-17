@@ -32302,7 +32302,7 @@ export type UserInvitationsListData = {
          *
          *
          */
-        o?: Array<'-created' | '-email' | '-state' | 'created' | 'email' | 'state'>;
+        o?: Array<'-created' | '-created_by' | '-email' | '-state' | 'created' | 'created_by' | 'email' | 'state'>;
         /**
          * A page number within the paginated result set.
          */
