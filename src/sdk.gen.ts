@@ -61,6 +61,10 @@ export const apiAuthLogout = <ThrowOnError extends boolean = false>(options?: Op
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api-auth/logout/',
@@ -74,6 +78,10 @@ export const apiAuthPassword = <ThrowOnError extends boolean = false>(options: O
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api-auth/password/',
@@ -144,6 +152,10 @@ export const apiAuthSaml2ProvidersList = <ThrowOnError extends boolean = false>(
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api-auth/saml2/providers/',
@@ -174,6 +186,10 @@ export const accessSubnetsList = <ThrowOnError extends boolean = false>(options?
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/access-subnets/',
@@ -187,6 +203,10 @@ export const accessSubnetsCreate = <ThrowOnError extends boolean = false>(option
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/access-subnets/',
@@ -204,6 +224,10 @@ export const accessSubnetsDestroy = <ThrowOnError extends boolean = false>(optio
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/access-subnets/{uuid}/',
@@ -217,6 +241,10 @@ export const accessSubnetsRetrieve = <ThrowOnError extends boolean = false>(opti
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/access-subnets/{uuid}/',
@@ -230,6 +258,10 @@ export const accessSubnetsPartialUpdate = <ThrowOnError extends boolean = false>
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/access-subnets/{uuid}/',
@@ -247,6 +279,10 @@ export const accessSubnetsUpdate = <ThrowOnError extends boolean = false>(option
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/access-subnets/{uuid}/',
@@ -264,6 +300,10 @@ export const adminAnnouncementsList = <ThrowOnError extends boolean = false>(opt
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/admin-announcements/',
@@ -277,6 +317,10 @@ export const adminAnnouncementsCreate = <ThrowOnError extends boolean = false>(o
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/admin-announcements/',
@@ -294,6 +338,10 @@ export const adminAnnouncementsDestroy = <ThrowOnError extends boolean = false>(
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/admin-announcements/{uuid}/',
@@ -307,6 +355,10 @@ export const adminAnnouncementsRetrieve = <ThrowOnError extends boolean = false>
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/admin-announcements/{uuid}/',
@@ -320,6 +372,10 @@ export const adminAnnouncementsPartialUpdate = <ThrowOnError extends boolean = f
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/admin-announcements/{uuid}/',
@@ -337,6 +393,10 @@ export const adminAnnouncementsUpdate = <ThrowOnError extends boolean = false>(o
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/admin-announcements/{uuid}/',
@@ -354,6 +414,10 @@ export const authTokensList = <ThrowOnError extends boolean = false>(options?: O
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/auth-tokens/',
@@ -367,6 +431,10 @@ export const authTokensDestroy = <ThrowOnError extends boolean = false>(options:
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/auth-tokens/{user_id}/',
@@ -380,6 +448,10 @@ export const authTokensRetrieve = <ThrowOnError extends boolean = false>(options
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/auth-tokens/{user_id}/',
@@ -393,6 +465,10 @@ export const authValimoCreate = <ThrowOnError extends boolean = false>(options: 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/auth-valimo/',
@@ -423,6 +499,10 @@ export const authValimoResult = <ThrowOnError extends boolean = false>(options: 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/auth-valimo/result/',
@@ -440,6 +520,10 @@ export const awsImagesList = <ThrowOnError extends boolean = false>(options?: Op
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/aws-images/',
@@ -453,6 +537,10 @@ export const awsImagesRetrieve = <ThrowOnError extends boolean = false>(options:
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/aws-images/{uuid}/',
@@ -466,6 +554,10 @@ export const awsInstancesList = <ThrowOnError extends boolean = false>(options?:
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/aws-instances/',
@@ -479,6 +571,10 @@ export const awsInstancesCreate = <ThrowOnError extends boolean = false>(options
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/aws-instances/',
@@ -496,6 +592,10 @@ export const awsInstancesDestroy = <ThrowOnError extends boolean = false>(option
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/aws-instances/{uuid}/',
@@ -509,6 +609,10 @@ export const awsInstancesRetrieve = <ThrowOnError extends boolean = false>(optio
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/aws-instances/{uuid}/',
@@ -522,6 +626,10 @@ export const awsInstancesPartialUpdate = <ThrowOnError extends boolean = false>(
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/aws-instances/{uuid}/',
@@ -539,6 +647,10 @@ export const awsInstancesUpdate = <ThrowOnError extends boolean = false>(options
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/aws-instances/{uuid}/',
@@ -556,6 +668,10 @@ export const awsInstancesPull = <ThrowOnError extends boolean = false>(options: 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/aws-instances/{uuid}/pull/',
@@ -569,6 +685,10 @@ export const awsInstancesResize = <ThrowOnError extends boolean = false>(options
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/aws-instances/{uuid}/resize/',
@@ -586,6 +706,10 @@ export const awsInstancesRestart = <ThrowOnError extends boolean = false>(option
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/aws-instances/{uuid}/restart/',
@@ -599,6 +723,10 @@ export const awsInstancesStart = <ThrowOnError extends boolean = false>(options:
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/aws-instances/{uuid}/start/',
@@ -612,6 +740,10 @@ export const awsInstancesStop = <ThrowOnError extends boolean = false>(options: 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/aws-instances/{uuid}/stop/',
@@ -630,6 +762,10 @@ export const awsInstancesUnlink = <ThrowOnError extends boolean = false>(options
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/aws-instances/{uuid}/unlink/',
@@ -643,6 +779,10 @@ export const awsRegionsList = <ThrowOnError extends boolean = false>(options?: O
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/aws-regions/',
@@ -656,6 +796,10 @@ export const awsRegionsRetrieve = <ThrowOnError extends boolean = false>(options
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/aws-regions/{uuid}/',
@@ -669,6 +813,10 @@ export const awsSizesList = <ThrowOnError extends boolean = false>(options?: Opt
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/aws-sizes/',
@@ -682,6 +830,10 @@ export const awsSizesRetrieve = <ThrowOnError extends boolean = false>(options: 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/aws-sizes/{uuid}/',
@@ -695,6 +847,10 @@ export const awsVolumesList = <ThrowOnError extends boolean = false>(options?: O
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/aws-volumes/',
@@ -708,6 +864,10 @@ export const awsVolumesCreate = <ThrowOnError extends boolean = false>(options: 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/aws-volumes/',
@@ -725,6 +885,10 @@ export const awsVolumesDestroy = <ThrowOnError extends boolean = false>(options:
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/aws-volumes/{uuid}/',
@@ -738,6 +902,10 @@ export const awsVolumesRetrieve = <ThrowOnError extends boolean = false>(options
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/aws-volumes/{uuid}/',
@@ -751,6 +919,10 @@ export const awsVolumesPartialUpdate = <ThrowOnError extends boolean = false>(op
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/aws-volumes/{uuid}/',
@@ -764,6 +936,10 @@ export const awsVolumesUpdate = <ThrowOnError extends boolean = false>(options: 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/aws-volumes/{uuid}/',
@@ -781,6 +957,10 @@ export const awsVolumesAttach = <ThrowOnError extends boolean = false>(options: 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/aws-volumes/{uuid}/attach/',
@@ -798,6 +978,10 @@ export const awsVolumesDetach = <ThrowOnError extends boolean = false>(options: 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/aws-volumes/{uuid}/detach/',
@@ -811,6 +995,10 @@ export const awsVolumesPull = <ThrowOnError extends boolean = false>(options: Op
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/aws-volumes/{uuid}/pull/',
@@ -829,6 +1017,10 @@ export const awsVolumesUnlink = <ThrowOnError extends boolean = false>(options: 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/aws-volumes/{uuid}/unlink/',
@@ -842,6 +1034,10 @@ export const azureImagesList = <ThrowOnError extends boolean = false>(options?: 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/azure-images/',
@@ -855,6 +1051,10 @@ export const azureImagesRetrieve = <ThrowOnError extends boolean = false>(option
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/azure-images/{uuid}/',
@@ -868,6 +1068,10 @@ export const azureLocationsList = <ThrowOnError extends boolean = false>(options
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/azure-locations/',
@@ -881,6 +1085,10 @@ export const azureLocationsRetrieve = <ThrowOnError extends boolean = false>(opt
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/azure-locations/{uuid}/',
@@ -894,6 +1102,10 @@ export const azurePublicIpsList = <ThrowOnError extends boolean = false>(options
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/azure-public-ips/',
@@ -907,6 +1119,10 @@ export const azurePublicIpsCreate = <ThrowOnError extends boolean = false>(optio
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/azure-public-ips/',
@@ -924,6 +1140,10 @@ export const azurePublicIpsDestroy = <ThrowOnError extends boolean = false>(opti
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/azure-public-ips/{uuid}/',
@@ -937,6 +1157,10 @@ export const azurePublicIpsRetrieve = <ThrowOnError extends boolean = false>(opt
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/azure-public-ips/{uuid}/',
@@ -950,6 +1174,10 @@ export const azurePublicIpsPartialUpdate = <ThrowOnError extends boolean = false
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/azure-public-ips/{uuid}/',
@@ -967,6 +1195,10 @@ export const azurePublicIpsUpdate = <ThrowOnError extends boolean = false>(optio
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/azure-public-ips/{uuid}/',
@@ -984,6 +1216,10 @@ export const azurePublicIpsPull = <ThrowOnError extends boolean = false>(options
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/azure-public-ips/{uuid}/pull/',
@@ -1002,6 +1238,10 @@ export const azurePublicIpsUnlink = <ThrowOnError extends boolean = false>(optio
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/azure-public-ips/{uuid}/unlink/',
@@ -1015,6 +1255,10 @@ export const azureResourceGroupsList = <ThrowOnError extends boolean = false>(op
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/azure-resource-groups/',
@@ -1028,6 +1272,10 @@ export const azureResourceGroupsRetrieve = <ThrowOnError extends boolean = false
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/azure-resource-groups/{uuid}/',
@@ -1041,6 +1289,10 @@ export const azureSizesList = <ThrowOnError extends boolean = false>(options?: O
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/azure-sizes/',
@@ -1054,6 +1306,10 @@ export const azureSizesRetrieve = <ThrowOnError extends boolean = false>(options
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/azure-sizes/{uuid}/',
@@ -1067,6 +1323,10 @@ export const azureSqlDatabasesList = <ThrowOnError extends boolean = false>(opti
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/azure-sql-databases/',
@@ -1080,6 +1340,10 @@ export const azureSqlDatabasesCreate = <ThrowOnError extends boolean = false>(op
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/azure-sql-databases/',
@@ -1097,6 +1361,10 @@ export const azureSqlDatabasesDestroy = <ThrowOnError extends boolean = false>(o
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/azure-sql-databases/{uuid}/',
@@ -1110,6 +1378,10 @@ export const azureSqlDatabasesRetrieve = <ThrowOnError extends boolean = false>(
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/azure-sql-databases/{uuid}/',
@@ -1123,6 +1395,10 @@ export const azureSqlDatabasesPartialUpdate = <ThrowOnError extends boolean = fa
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/azure-sql-databases/{uuid}/',
@@ -1140,6 +1416,10 @@ export const azureSqlDatabasesUpdate = <ThrowOnError extends boolean = false>(op
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/azure-sql-databases/{uuid}/',
@@ -1157,6 +1437,10 @@ export const azureSqlDatabasesPull = <ThrowOnError extends boolean = false>(opti
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/azure-sql-databases/{uuid}/pull/',
@@ -1175,6 +1459,10 @@ export const azureSqlDatabasesUnlink = <ThrowOnError extends boolean = false>(op
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/azure-sql-databases/{uuid}/unlink/',
@@ -1188,6 +1476,10 @@ export const azureSqlServersList = <ThrowOnError extends boolean = false>(option
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/azure-sql-servers/',
@@ -1201,6 +1493,10 @@ export const azureSqlServersCreate = <ThrowOnError extends boolean = false>(opti
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/azure-sql-servers/',
@@ -1218,6 +1514,10 @@ export const azureSqlServersDestroy = <ThrowOnError extends boolean = false>(opt
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/azure-sql-servers/{uuid}/',
@@ -1231,6 +1531,10 @@ export const azureSqlServersRetrieve = <ThrowOnError extends boolean = false>(op
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/azure-sql-servers/{uuid}/',
@@ -1244,6 +1548,10 @@ export const azureSqlServersPartialUpdate = <ThrowOnError extends boolean = fals
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/azure-sql-servers/{uuid}/',
@@ -1261,6 +1569,10 @@ export const azureSqlServersUpdate = <ThrowOnError extends boolean = false>(opti
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/azure-sql-servers/{uuid}/',
@@ -1278,6 +1590,10 @@ export const azureSqlServersCreateDatabase = <ThrowOnError extends boolean = fal
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/azure-sql-servers/{uuid}/create_database/',
@@ -1295,6 +1611,10 @@ export const azureSqlServersPull = <ThrowOnError extends boolean = false>(option
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/azure-sql-servers/{uuid}/pull/',
@@ -1313,6 +1633,10 @@ export const azureSqlServersUnlink = <ThrowOnError extends boolean = false>(opti
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/azure-sql-servers/{uuid}/unlink/',
@@ -1326,6 +1650,10 @@ export const azureVirtualmachinesList = <ThrowOnError extends boolean = false>(o
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/azure-virtualmachines/',
@@ -1339,6 +1667,10 @@ export const azureVirtualmachinesCreate = <ThrowOnError extends boolean = false>
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/azure-virtualmachines/',
@@ -1356,6 +1688,10 @@ export const azureVirtualmachinesDestroy = <ThrowOnError extends boolean = false
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/azure-virtualmachines/{uuid}/',
@@ -1369,6 +1705,10 @@ export const azureVirtualmachinesRetrieve = <ThrowOnError extends boolean = fals
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/azure-virtualmachines/{uuid}/',
@@ -1382,6 +1722,10 @@ export const azureVirtualmachinesPartialUpdate = <ThrowOnError extends boolean =
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/azure-virtualmachines/{uuid}/',
@@ -1399,6 +1743,10 @@ export const azureVirtualmachinesUpdate = <ThrowOnError extends boolean = false>
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/azure-virtualmachines/{uuid}/',
@@ -1416,6 +1764,10 @@ export const azureVirtualmachinesPull = <ThrowOnError extends boolean = false>(o
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/azure-virtualmachines/{uuid}/pull/',
@@ -1429,6 +1781,10 @@ export const azureVirtualmachinesRestart = <ThrowOnError extends boolean = false
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/azure-virtualmachines/{uuid}/restart/',
@@ -1442,6 +1798,10 @@ export const azureVirtualmachinesStart = <ThrowOnError extends boolean = false>(
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/azure-virtualmachines/{uuid}/start/',
@@ -1455,6 +1815,10 @@ export const azureVirtualmachinesStop = <ThrowOnError extends boolean = false>(o
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/azure-virtualmachines/{uuid}/stop/',
@@ -1473,6 +1837,10 @@ export const azureVirtualmachinesUnlink = <ThrowOnError extends boolean = false>
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/azure-virtualmachines/{uuid}/unlink/',
@@ -1486,6 +1854,10 @@ export const billingTotalCostRetrieve = <ThrowOnError extends boolean = false>(o
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/billing-total-cost/',
@@ -1499,6 +1871,10 @@ export const bookingOfferingsList = <ThrowOnError extends boolean = false>(optio
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/booking-offerings/',
@@ -1512,6 +1888,10 @@ export const bookingOfferingsRetrieve = <ThrowOnError extends boolean = false>(o
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/booking-offerings/{uuid}/',
@@ -1525,6 +1905,10 @@ export const bookingOfferingsGoogleCalendarSync = <ThrowOnError extends boolean 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/booking-offerings/{uuid}/google_calendar_sync/',
@@ -1538,6 +1922,10 @@ export const bookingOfferingsShareGoogleCalendar = <ThrowOnError extends boolean
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/booking-offerings/{uuid}/share_google_calendar/',
@@ -1551,6 +1939,10 @@ export const bookingOfferingsUnshareGoogleCalendar = <ThrowOnError extends boole
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/booking-offerings/{uuid}/unshare_google_calendar/',
@@ -1564,6 +1956,10 @@ export const bookingResourcesList = <ThrowOnError extends boolean = false>(optio
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/booking-resources/',
@@ -1577,6 +1973,10 @@ export const bookingResourcesRetrieve = <ThrowOnError extends boolean = false>(o
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/booking-resources/{uuid}/',
@@ -1590,6 +1990,10 @@ export const bookingResourcesAccept = <ThrowOnError extends boolean = false>(opt
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/booking-resources/{uuid}/accept/',
@@ -1603,6 +2007,10 @@ export const bookingResourcesReject = <ThrowOnError extends boolean = false>(opt
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/booking-resources/{uuid}/reject/',
@@ -1616,6 +2024,10 @@ export const broadcastMessageTemplatesList = <ThrowOnError extends boolean = fal
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/broadcast-message-templates/',
@@ -1629,6 +2041,10 @@ export const broadcastMessageTemplatesCreate = <ThrowOnError extends boolean = f
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/broadcast-message-templates/',
@@ -1646,6 +2062,10 @@ export const broadcastMessageTemplatesDestroy = <ThrowOnError extends boolean = 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/broadcast-message-templates/{uuid}/',
@@ -1659,6 +2079,10 @@ export const broadcastMessageTemplatesRetrieve = <ThrowOnError extends boolean =
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/broadcast-message-templates/{uuid}/',
@@ -1672,6 +2096,10 @@ export const broadcastMessageTemplatesPartialUpdate = <ThrowOnError extends bool
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/broadcast-message-templates/{uuid}/',
@@ -1689,6 +2117,10 @@ export const broadcastMessageTemplatesUpdate = <ThrowOnError extends boolean = f
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/broadcast-message-templates/{uuid}/',
@@ -1706,6 +2138,10 @@ export const broadcastMessagesList = <ThrowOnError extends boolean = false>(opti
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/broadcast-messages/',
@@ -1719,6 +2155,10 @@ export const broadcastMessagesCreate = <ThrowOnError extends boolean = false>(op
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/broadcast-messages/',
@@ -1736,6 +2176,10 @@ export const broadcastMessagesDestroy = <ThrowOnError extends boolean = false>(o
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/broadcast-messages/{uuid}/',
@@ -1749,6 +2193,10 @@ export const broadcastMessagesRetrieve = <ThrowOnError extends boolean = false>(
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/broadcast-messages/{uuid}/',
@@ -1762,6 +2210,10 @@ export const broadcastMessagesPartialUpdate = <ThrowOnError extends boolean = fa
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/broadcast-messages/{uuid}/',
@@ -1779,6 +2231,10 @@ export const broadcastMessagesUpdate = <ThrowOnError extends boolean = false>(op
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/broadcast-messages/{uuid}/',
@@ -1796,6 +2252,10 @@ export const broadcastMessagesSend = <ThrowOnError extends boolean = false>(opti
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/broadcast-messages/{uuid}/send/',
@@ -1809,6 +2269,10 @@ export const broadcastMessagesRecipientsRetrieve = <ThrowOnError extends boolean
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/broadcast-messages/recipients/',
@@ -1822,6 +2286,10 @@ export const callManagingOrganisationsList = <ThrowOnError extends boolean = fal
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/call-managing-organisations/',
@@ -1835,6 +2303,10 @@ export const callManagingOrganisationsCreate = <ThrowOnError extends boolean = f
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/call-managing-organisations/',
@@ -1852,6 +2324,10 @@ export const callManagingOrganisationsDestroy = <ThrowOnError extends boolean = 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/call-managing-organisations/{uuid}/',
@@ -1865,6 +2341,10 @@ export const callManagingOrganisationsRetrieve = <ThrowOnError extends boolean =
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/call-managing-organisations/{uuid}/',
@@ -1878,6 +2358,10 @@ export const callManagingOrganisationsPartialUpdate = <ThrowOnError extends bool
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/call-managing-organisations/{uuid}/',
@@ -1895,6 +2379,10 @@ export const callManagingOrganisationsUpdate = <ThrowOnError extends boolean = f
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/call-managing-organisations/{uuid}/',
@@ -1912,6 +2400,10 @@ export const callManagingOrganisationsAddUser = <ThrowOnError extends boolean = 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/call-managing-organisations/{uuid}/add_user/',
@@ -1929,6 +2421,10 @@ export const callManagingOrganisationsDeleteUser = <ThrowOnError extends boolean
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/call-managing-organisations/{uuid}/delete_user/',
@@ -1946,6 +2442,10 @@ export const callManagingOrganisationsListUsersList = <ThrowOnError extends bool
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/call-managing-organisations/{uuid}/list_users/',
@@ -1962,6 +2462,10 @@ export const callManagingOrganisationsStatsRetrieve = <ThrowOnError extends bool
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/call-managing-organisations/{uuid}/stats/',
@@ -1975,6 +2479,10 @@ export const callManagingOrganisationsUpdateUser = <ThrowOnError extends boolean
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/call-managing-organisations/{uuid}/update_user/',
@@ -1992,6 +2500,10 @@ export const callRoundsList = <ThrowOnError extends boolean = false>(options?: O
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/call-rounds/',
@@ -2005,6 +2517,10 @@ export const callRoundsRetrieve = <ThrowOnError extends boolean = false>(options
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/call-rounds/{uuid}/',
@@ -2021,6 +2537,10 @@ export const callRoundsReviewersList = <ThrowOnError extends boolean = false>(op
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/call-rounds/{uuid}/reviewers/',
@@ -2034,6 +2554,10 @@ export const celeryStatsRetrieve = <ThrowOnError extends boolean = false>(option
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/celery-stats/',
@@ -2047,6 +2571,10 @@ export const componentUserUsageLimitsList = <ThrowOnError extends boolean = fals
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/component-user-usage-limits/',
@@ -2060,6 +2588,10 @@ export const componentUserUsageLimitsCreate = <ThrowOnError extends boolean = fa
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/component-user-usage-limits/',
@@ -2077,6 +2609,10 @@ export const componentUserUsageLimitsDestroy = <ThrowOnError extends boolean = f
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/component-user-usage-limits/{uuid}/',
@@ -2090,6 +2626,10 @@ export const componentUserUsageLimitsRetrieve = <ThrowOnError extends boolean = 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/component-user-usage-limits/{uuid}/',
@@ -2103,6 +2643,10 @@ export const componentUserUsageLimitsPartialUpdate = <ThrowOnError extends boole
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/component-user-usage-limits/{uuid}/',
@@ -2120,6 +2664,10 @@ export const componentUserUsageLimitsUpdate = <ThrowOnError extends boolean = fa
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/component-user-usage-limits/{uuid}/',
@@ -2140,6 +2688,10 @@ export const configurationRetrieve = <ThrowOnError extends boolean = false>(opti
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/configuration/',
@@ -2153,6 +2705,10 @@ export const customerCreditsList = <ThrowOnError extends boolean = false>(option
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/customer-credits/',
@@ -2166,6 +2722,10 @@ export const customerCreditsCreate = <ThrowOnError extends boolean = false>(opti
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/customer-credits/',
@@ -2183,6 +2743,10 @@ export const customerCreditsDestroy = <ThrowOnError extends boolean = false>(opt
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/customer-credits/{uuid}/',
@@ -2196,6 +2760,10 @@ export const customerCreditsRetrieve = <ThrowOnError extends boolean = false>(op
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/customer-credits/{uuid}/',
@@ -2209,6 +2777,10 @@ export const customerCreditsPartialUpdate = <ThrowOnError extends boolean = fals
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/customer-credits/{uuid}/',
@@ -2226,6 +2798,10 @@ export const customerCreditsUpdate = <ThrowOnError extends boolean = false>(opti
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/customer-credits/{uuid}/',
@@ -2243,6 +2819,10 @@ export const customerCreditsApplyCompensations = <ThrowOnError extends boolean =
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/customer-credits/{uuid}/apply_compensations/',
@@ -2260,6 +2840,10 @@ export const customerCreditsClearCompensations = <ThrowOnError extends boolean =
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/customer-credits/{uuid}/clear_compensations/',
@@ -2280,6 +2864,10 @@ export const customerCreditsConsumptionsList = <ThrowOnError extends boolean = f
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/customer-credits/{uuid}/consumptions/',
@@ -2293,6 +2881,10 @@ export const customerPermissionsReviewsList = <ThrowOnError extends boolean = fa
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/customer-permissions-reviews/',
@@ -2306,6 +2898,10 @@ export const customerPermissionsReviewsRetrieve = <ThrowOnError extends boolean 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/customer-permissions-reviews/{uuid}/',
@@ -2322,6 +2918,10 @@ export const customerPermissionsReviewsClose = <ThrowOnError extends boolean = f
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/customer-permissions-reviews/{uuid}/close/',
@@ -2338,6 +2938,10 @@ export const customerQuotasList = <ThrowOnError extends boolean = false>(options
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/customer-quotas/',
@@ -2370,6 +2974,10 @@ export const customersList = <ThrowOnError extends boolean = false>(options?: Op
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/customers/',
@@ -2386,6 +2994,10 @@ export const customersCreate = <ThrowOnError extends boolean = false>(options: O
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/customers/',
@@ -2403,6 +3015,10 @@ export const marketplaceChecklistsCustomerRetrieve = <ThrowOnError extends boole
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/customers/{customer_uuid}/marketplace-checklists/',
@@ -2416,6 +3032,10 @@ export const marketplaceChecklistsCustomerUpdate = <ThrowOnError extends boolean
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/customers/{customer_uuid}/marketplace-checklists/',
@@ -2433,6 +3053,10 @@ export const marketplaceChecklistsCustomerStats = <ThrowOnError extends boolean 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/customers/{customer_uuid}/marketplace-checklists/{checklist_uuid}/',
@@ -2449,6 +3073,10 @@ export const customersDestroy = <ThrowOnError extends boolean = false>(options: 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/customers/{uuid}/',
@@ -2462,6 +3090,10 @@ export const customersRetrieve = <ThrowOnError extends boolean = false>(options:
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/customers/{uuid}/',
@@ -2475,6 +3107,10 @@ export const customersPartialUpdate = <ThrowOnError extends boolean = false>(opt
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/customers/{uuid}/',
@@ -2492,6 +3128,10 @@ export const customersUpdate = <ThrowOnError extends boolean = false>(options: O
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/customers/{uuid}/',
@@ -2509,6 +3149,10 @@ export const customersAddUser = <ThrowOnError extends boolean = false>(options: 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/customers/{uuid}/add_user/',
@@ -2526,6 +3170,10 @@ export const customersDeleteUser = <ThrowOnError extends boolean = false>(option
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/customers/{uuid}/delete_user/',
@@ -2543,6 +3191,10 @@ export const customersListUsersList = <ThrowOnError extends boolean = false>(opt
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/customers/{uuid}/list_users/',
@@ -2559,6 +3211,10 @@ export const customersStatsRetrieve = <ThrowOnError extends boolean = false>(opt
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/customers/{uuid}/stats/',
@@ -2575,6 +3231,10 @@ export const customersUpdateOrganizationGroups = <ThrowOnError extends boolean =
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/customers/{uuid}/update_organization_groups/',
@@ -2592,6 +3252,10 @@ export const customersUpdateUser = <ThrowOnError extends boolean = false>(option
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/customers/{uuid}/update_user/',
@@ -2612,6 +3276,10 @@ export const customersUsersList = <ThrowOnError extends boolean = false>(options
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/customers/{uuid}/users/',
@@ -2628,6 +3296,10 @@ export const customersCountriesList = <ThrowOnError extends boolean = false>(opt
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/customers/countries/',
@@ -2641,6 +3313,10 @@ export const dailyQuotasRetrieve = <ThrowOnError extends boolean = false>(option
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/daily-quotas/',
@@ -2654,6 +3330,10 @@ export const databaseStatsList = <ThrowOnError extends boolean = false>(options?
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/database-stats/',
@@ -2667,6 +3347,10 @@ export const digitaloceanDropletsList = <ThrowOnError extends boolean = false>(o
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/digitalocean-droplets/',
@@ -2680,6 +3364,10 @@ export const digitaloceanDropletsCreate = <ThrowOnError extends boolean = false>
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/digitalocean-droplets/',
@@ -2697,6 +3385,10 @@ export const digitaloceanDropletsDestroy = <ThrowOnError extends boolean = false
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/digitalocean-droplets/{uuid}/',
@@ -2710,6 +3402,10 @@ export const digitaloceanDropletsRetrieve = <ThrowOnError extends boolean = fals
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/digitalocean-droplets/{uuid}/',
@@ -2723,6 +3419,10 @@ export const digitaloceanDropletsPartialUpdate = <ThrowOnError extends boolean =
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/digitalocean-droplets/{uuid}/',
@@ -2740,6 +3440,10 @@ export const digitaloceanDropletsUpdate = <ThrowOnError extends boolean = false>
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/digitalocean-droplets/{uuid}/',
@@ -2757,6 +3461,10 @@ export const digitaloceanDropletsPull = <ThrowOnError extends boolean = false>(o
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/digitalocean-droplets/{uuid}/pull/',
@@ -2782,6 +3490,10 @@ export const digitaloceanDropletsResize = <ThrowOnError extends boolean = false>
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/digitalocean-droplets/{uuid}/resize/',
@@ -2799,6 +3511,10 @@ export const digitaloceanDropletsRestart = <ThrowOnError extends boolean = false
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/digitalocean-droplets/{uuid}/restart/',
@@ -2812,6 +3528,10 @@ export const digitaloceanDropletsStart = <ThrowOnError extends boolean = false>(
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/digitalocean-droplets/{uuid}/start/',
@@ -2825,6 +3545,10 @@ export const digitaloceanDropletsStop = <ThrowOnError extends boolean = false>(o
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/digitalocean-droplets/{uuid}/stop/',
@@ -2843,6 +3567,10 @@ export const digitaloceanDropletsUnlink = <ThrowOnError extends boolean = false>
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/digitalocean-droplets/{uuid}/unlink/',
@@ -2856,6 +3584,10 @@ export const digitaloceanImagesList = <ThrowOnError extends boolean = false>(opt
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/digitalocean-images/',
@@ -2869,6 +3601,10 @@ export const digitaloceanImagesRetrieve = <ThrowOnError extends boolean = false>
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/digitalocean-images/{uuid}/',
@@ -2882,6 +3618,10 @@ export const digitaloceanRegionsList = <ThrowOnError extends boolean = false>(op
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/digitalocean-regions/',
@@ -2895,6 +3635,10 @@ export const digitaloceanRegionsRetrieve = <ThrowOnError extends boolean = false
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/digitalocean-regions/{uuid}/',
@@ -2908,6 +3652,10 @@ export const digitaloceanSizesList = <ThrowOnError extends boolean = false>(opti
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/digitalocean-sizes/',
@@ -2921,6 +3669,10 @@ export const digitaloceanSizesRetrieve = <ThrowOnError extends boolean = false>(
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/digitalocean-sizes/{uuid}/',
@@ -2934,6 +3686,10 @@ export const emailLogsList = <ThrowOnError extends boolean = false>(options?: Op
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/email-logs/',
@@ -2947,6 +3703,10 @@ export const emailLogsRetrieve = <ThrowOnError extends boolean = false>(options:
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/email-logs/{uuid}/',
@@ -2960,6 +3720,10 @@ export const eventSubscriptionsList = <ThrowOnError extends boolean = false>(opt
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/event-subscriptions/',
@@ -2973,6 +3737,10 @@ export const eventSubscriptionsCreate = <ThrowOnError extends boolean = false>(o
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/event-subscriptions/',
@@ -2990,6 +3758,10 @@ export const eventSubscriptionsDestroy = <ThrowOnError extends boolean = false>(
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/event-subscriptions/{uuid}/',
@@ -3003,6 +3775,10 @@ export const eventSubscriptionsRetrieve = <ThrowOnError extends boolean = false>
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/event-subscriptions/{uuid}/',
@@ -3016,6 +3792,10 @@ export const eventsList = <ThrowOnError extends boolean = false>(options?: Optio
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/events/',
@@ -3029,6 +3809,10 @@ export const eventsStatsList = <ThrowOnError extends boolean = false>(options?: 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/events-stats/',
@@ -3042,6 +3826,10 @@ export const eventsRetrieve = <ThrowOnError extends boolean = false>(options: Op
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/events/{id}/',
@@ -3055,6 +3843,10 @@ export const eventsCountRetrieve = <ThrowOnError extends boolean = false>(option
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/events/count/',
@@ -3072,6 +3864,10 @@ export const eventsEventGroupsRetrieve = <ThrowOnError extends boolean = false>(
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/events/event_groups/',
@@ -3088,6 +3884,10 @@ export const eventsScopeTypesRetrieve = <ThrowOnError extends boolean = false>(o
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/events/scope_types/',
@@ -3104,6 +3904,10 @@ export const featureValues = <ThrowOnError extends boolean = false>(options?: Op
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/feature-values/',
@@ -3121,6 +3925,10 @@ export const financialReportsList = <ThrowOnError extends boolean = false>(optio
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/financial-reports/',
@@ -3134,6 +3942,10 @@ export const financialReportsRetrieve = <ThrowOnError extends boolean = false>(o
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/financial-reports/{uuid}/',
@@ -3147,6 +3959,10 @@ export const freeipaProfilesList = <ThrowOnError extends boolean = false>(option
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/freeipa-profiles/',
@@ -3160,6 +3976,10 @@ export const freeipaProfilesCreate = <ThrowOnError extends boolean = false>(opti
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/freeipa-profiles/',
@@ -3177,6 +3997,10 @@ export const freeipaProfilesRetrieve = <ThrowOnError extends boolean = false>(op
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/freeipa-profiles/{uuid}/',
@@ -3190,6 +4014,10 @@ export const freeipaProfilesPartialUpdate = <ThrowOnError extends boolean = fals
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/freeipa-profiles/{uuid}/',
@@ -3203,6 +4031,10 @@ export const freeipaProfilesUpdate = <ThrowOnError extends boolean = false>(opti
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/freeipa-profiles/{uuid}/',
@@ -3223,6 +4055,10 @@ export const freeipaProfilesUpdateSshKeys = <ThrowOnError extends boolean = fals
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/freeipa-profiles/{uuid}/update_ssh_keys/',
@@ -3236,6 +4072,10 @@ export const googleAuthList = <ThrowOnError extends boolean = false>(options?: O
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/google-auth/',
@@ -3249,6 +4089,10 @@ export const googleAuthRetrieve = <ThrowOnError extends boolean = false>(options
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/google-auth/{uuid}/',
@@ -3262,6 +4106,10 @@ export const googleAuthAuthorizeRetrieve = <ThrowOnError extends boolean = false
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/google-auth/{uuid}/authorize/',
@@ -3278,6 +4126,10 @@ export const googleAuthCallbackRetrieve = <ThrowOnError extends boolean = false>
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/google-auth/callback/',
@@ -3291,6 +4143,10 @@ export const hooksList = <ThrowOnError extends boolean = false>(options?: Option
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/hooks/',
@@ -3304,6 +4160,10 @@ export const hooksEmailList = <ThrowOnError extends boolean = false>(options?: O
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/hooks-email/',
@@ -3317,6 +4177,10 @@ export const hooksEmailCreate = <ThrowOnError extends boolean = false>(options: 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/hooks-email/',
@@ -3334,6 +4198,10 @@ export const hooksEmailDestroy = <ThrowOnError extends boolean = false>(options:
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/hooks-email/{uuid}/',
@@ -3347,6 +4215,10 @@ export const hooksEmailRetrieve = <ThrowOnError extends boolean = false>(options
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/hooks-email/{uuid}/',
@@ -3360,6 +4232,10 @@ export const hooksEmailPartialUpdate = <ThrowOnError extends boolean = false>(op
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/hooks-email/{uuid}/',
@@ -3377,6 +4253,10 @@ export const hooksEmailUpdate = <ThrowOnError extends boolean = false>(options: 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/hooks-email/{uuid}/',
@@ -3394,6 +4274,10 @@ export const hooksWebList = <ThrowOnError extends boolean = false>(options?: Opt
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/hooks-web/',
@@ -3432,6 +4316,10 @@ export const hooksWebCreate = <ThrowOnError extends boolean = false>(options: Op
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/hooks-web/',
@@ -3449,6 +4337,10 @@ export const hooksWebDestroy = <ThrowOnError extends boolean = false>(options: O
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/hooks-web/{uuid}/',
@@ -3462,6 +4354,10 @@ export const hooksWebRetrieve = <ThrowOnError extends boolean = false>(options: 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/hooks-web/{uuid}/',
@@ -3475,6 +4371,10 @@ export const hooksWebPartialUpdate = <ThrowOnError extends boolean = false>(opti
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/hooks-web/{uuid}/',
@@ -3492,6 +4392,10 @@ export const hooksWebUpdate = <ThrowOnError extends boolean = false>(options: Op
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/hooks-web/{uuid}/',
@@ -3509,6 +4413,10 @@ export const identityProvidersList = <ThrowOnError extends boolean = false>(opti
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/identity-providers/',
@@ -3522,6 +4430,10 @@ export const identityProvidersCreate = <ThrowOnError extends boolean = false>(op
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/identity-providers/',
@@ -3539,6 +4451,10 @@ export const identityProvidersDestroy = <ThrowOnError extends boolean = false>(o
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/identity-providers/{provider}/',
@@ -3552,6 +4468,10 @@ export const identityProvidersRetrieve = <ThrowOnError extends boolean = false>(
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/identity-providers/{provider}/',
@@ -3565,6 +4485,10 @@ export const identityProvidersPartialUpdate = <ThrowOnError extends boolean = fa
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/identity-providers/{provider}/',
@@ -3582,6 +4506,10 @@ export const identityProvidersUpdate = <ThrowOnError extends boolean = false>(op
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/identity-providers/{provider}/',
@@ -3599,6 +4527,10 @@ export const invoiceItemsList = <ThrowOnError extends boolean = false>(options?:
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/invoice-items/',
@@ -3612,6 +4544,10 @@ export const invoiceItemsDestroy = <ThrowOnError extends boolean = false>(option
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/invoice-items/{uuid}/',
@@ -3625,6 +4561,10 @@ export const invoiceItemsRetrieve = <ThrowOnError extends boolean = false>(optio
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/invoice-items/{uuid}/',
@@ -3638,6 +4578,10 @@ export const invoiceItemsPartialUpdate = <ThrowOnError extends boolean = false>(
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/invoice-items/{uuid}/',
@@ -3655,6 +4599,10 @@ export const invoiceItemsUpdate = <ThrowOnError extends boolean = false>(options
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/invoice-items/{uuid}/',
@@ -3672,6 +4620,10 @@ export const invoiceItemsConsumptionsRetrieve = <ThrowOnError extends boolean = 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/invoice-items/{uuid}/consumptions/',
@@ -3688,6 +4640,10 @@ export const invoiceItemsCreateCompensation = <ThrowOnError extends boolean = fa
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/invoice-items/{uuid}/create_compensation/',
@@ -3708,6 +4664,10 @@ export const invoiceItemsMigrateTo = <ThrowOnError extends boolean = false>(opti
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/invoice-items/{uuid}/migrate_to/',
@@ -3728,6 +4688,10 @@ export const invoiceItemsCostsList = <ThrowOnError extends boolean = false>(opti
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/invoice-items/costs/',
@@ -3741,6 +4705,10 @@ export const invoiceItemsCustomerCostsForPeriodRetrieve = <ThrowOnError extends 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/invoice-items/customer_costs_for_period/',
@@ -3757,6 +4725,10 @@ export const invoiceItemsProjectCostsForPeriodRetrieve = <ThrowOnError extends b
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/invoice-items/project_costs_for_period/',
@@ -3773,6 +4745,10 @@ export const invoiceItemsTotalPriceRetrieve = <ThrowOnError extends boolean = fa
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/invoice-items/total_price/',
@@ -3786,6 +4762,10 @@ export const invoiceSendFinancialReportByMail = <ThrowOnError extends boolean = 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/invoice/send-financial-report-by-mail/',
@@ -3803,6 +4783,10 @@ export const invoicesList = <ThrowOnError extends boolean = false>(options?: Opt
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/invoices/',
@@ -3816,6 +4800,10 @@ export const invoicesRetrieve = <ThrowOnError extends boolean = false>(options: 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/invoices/{uuid}/',
@@ -3833,6 +4821,10 @@ export const invoicesItemsRetrieve = <ThrowOnError extends boolean = false>(opti
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/invoices/{uuid}/items/',
@@ -3849,6 +4841,10 @@ export const invoicesPaid = <ThrowOnError extends boolean = false>(options: Opti
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/invoices/{uuid}/paid/',
@@ -3870,6 +4866,10 @@ export const invoicesSendNotification = <ThrowOnError extends boolean = false>(o
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/invoices/{uuid}/send_notification/',
@@ -3886,6 +4886,10 @@ export const invoicesSetBackendId = <ThrowOnError extends boolean = false>(optio
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/invoices/{uuid}/set_backend_id/',
@@ -3906,6 +4910,10 @@ export const invoicesSetPaymentUrl = <ThrowOnError extends boolean = false>(opti
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/invoices/{uuid}/set_payment_url/',
@@ -3926,6 +4934,10 @@ export const invoicesSetReferenceNumber = <ThrowOnError extends boolean = false>
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/invoices/{uuid}/set_reference_number/',
@@ -3946,6 +4958,10 @@ export const invoicesStatsList = <ThrowOnError extends boolean = false>(options:
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/invoices/{uuid}/stats/',
@@ -3962,6 +4978,10 @@ export const invoicesGrowthRetrieve = <ThrowOnError extends boolean = false>(opt
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/invoices/growth/',
@@ -3975,6 +4995,10 @@ export const keycloakGroupsList = <ThrowOnError extends boolean = false>(options
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/keycloak-groups/',
@@ -3988,6 +5012,10 @@ export const keycloakGroupsRetrieve = <ThrowOnError extends boolean = false>(opt
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/keycloak-groups/{uuid}/',
@@ -4001,6 +5029,10 @@ export const keycloakUserGroupMembershipsList = <ThrowOnError extends boolean = 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/keycloak-user-group-memberships/',
@@ -4014,6 +5046,10 @@ export const keycloakUserGroupMembershipsCreate = <ThrowOnError extends boolean 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/keycloak-user-group-memberships/',
@@ -4031,6 +5067,10 @@ export const keycloakUserGroupMembershipsDestroy = <ThrowOnError extends boolean
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/keycloak-user-group-memberships/{uuid}/',
@@ -4044,6 +5084,10 @@ export const keycloakUserGroupMembershipsRetrieve = <ThrowOnError extends boolea
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/keycloak-user-group-memberships/{uuid}/',
@@ -4057,6 +5101,10 @@ export const keycloakUserGroupMembershipsPartialUpdate = <ThrowOnError extends b
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/keycloak-user-group-memberships/{uuid}/',
@@ -4074,6 +5122,10 @@ export const keycloakUserGroupMembershipsUpdate = <ThrowOnError extends boolean 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/keycloak-user-group-memberships/{uuid}/',
@@ -4091,6 +5143,10 @@ export const keysList = <ThrowOnError extends boolean = false>(options?: Options
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/keys/',
@@ -4104,6 +5160,10 @@ export const keysCreate = <ThrowOnError extends boolean = false>(options: Option
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/keys/',
@@ -4121,6 +5181,10 @@ export const keysDestroy = <ThrowOnError extends boolean = false>(options: Optio
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/keys/{uuid}/',
@@ -4134,6 +5198,10 @@ export const keysRetrieve = <ThrowOnError extends boolean = false>(options: Opti
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/keys/{uuid}/',
@@ -4147,6 +5215,10 @@ export const lexisLinksList = <ThrowOnError extends boolean = false>(options?: O
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/lexis-links/',
@@ -4160,6 +5232,10 @@ export const lexisLinksCreate = <ThrowOnError extends boolean = false>(options: 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/lexis-links/',
@@ -4177,6 +5253,10 @@ export const lexisLinksDestroy = <ThrowOnError extends boolean = false>(options:
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/lexis-links/{uuid}/',
@@ -4190,6 +5270,10 @@ export const lexisLinksRetrieve = <ThrowOnError extends boolean = false>(options
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/lexis-links/{uuid}/',
@@ -4203,6 +5287,10 @@ export const lexisLinksPartialUpdate = <ThrowOnError extends boolean = false>(op
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/lexis-links/{uuid}/',
@@ -4220,6 +5308,10 @@ export const lexisLinksUpdate = <ThrowOnError extends boolean = false>(options: 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/lexis-links/{uuid}/',
@@ -4237,6 +5329,10 @@ export const marketplaceBookingsList = <ThrowOnError extends boolean = false>(op
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-bookings/{uuid}/',
@@ -4250,6 +5346,10 @@ export const marketplaceCategoriesList = <ThrowOnError extends boolean = false>(
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-categories/',
@@ -4263,6 +5363,10 @@ export const marketplaceCategoriesCreate = <ThrowOnError extends boolean = false
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-categories/',
@@ -4280,6 +5384,10 @@ export const marketplaceCategoriesDestroy = <ThrowOnError extends boolean = fals
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-categories/{uuid}/',
@@ -4293,6 +5401,10 @@ export const marketplaceCategoriesRetrieve = <ThrowOnError extends boolean = fal
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-categories/{uuid}/',
@@ -4306,6 +5418,10 @@ export const marketplaceCategoriesPartialUpdate = <ThrowOnError extends boolean 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-categories/{uuid}/',
@@ -4323,6 +5439,10 @@ export const marketplaceCategoriesUpdate = <ThrowOnError extends boolean = false
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-categories/{uuid}/',
@@ -4340,6 +5460,10 @@ export const marketplaceCategoryColumnsList = <ThrowOnError extends boolean = fa
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-category-columns/',
@@ -4353,6 +5477,10 @@ export const marketplaceCategoryColumnsCreate = <ThrowOnError extends boolean = 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-category-columns/',
@@ -4370,6 +5498,10 @@ export const marketplaceCategoryColumnsDestroy = <ThrowOnError extends boolean =
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-category-columns/{uuid}/',
@@ -4383,6 +5515,10 @@ export const marketplaceCategoryColumnsRetrieve = <ThrowOnError extends boolean 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-category-columns/{uuid}/',
@@ -4396,6 +5532,10 @@ export const marketplaceCategoryColumnsPartialUpdate = <ThrowOnError extends boo
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-category-columns/{uuid}/',
@@ -4413,6 +5553,10 @@ export const marketplaceCategoryColumnsUpdate = <ThrowOnError extends boolean = 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-category-columns/{uuid}/',
@@ -4430,6 +5574,10 @@ export const marketplaceCategoryComponentUsagesList = <ThrowOnError extends bool
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-category-component-usages/',
@@ -4443,6 +5591,10 @@ export const marketplaceCategoryComponentUsagesRetrieve = <ThrowOnError extends 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-category-component-usages/{id}/',
@@ -4456,6 +5608,10 @@ export const marketplaceCategoryComponentsList = <ThrowOnError extends boolean =
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-category-components/',
@@ -4469,6 +5625,10 @@ export const marketplaceCategoryComponentsCreate = <ThrowOnError extends boolean
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-category-components/',
@@ -4486,6 +5646,10 @@ export const marketplaceCategoryComponentsDestroy = <ThrowOnError extends boolea
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-category-components/{id}/',
@@ -4499,6 +5663,10 @@ export const marketplaceCategoryComponentsRetrieve = <ThrowOnError extends boole
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-category-components/{id}/',
@@ -4512,6 +5680,10 @@ export const marketplaceCategoryComponentsPartialUpdate = <ThrowOnError extends 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-category-components/{id}/',
@@ -4529,6 +5701,10 @@ export const marketplaceCategoryComponentsUpdate = <ThrowOnError extends boolean
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-category-components/{id}/',
@@ -4546,6 +5722,10 @@ export const marketplaceCategoryGroupsList = <ThrowOnError extends boolean = fal
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-category-groups/',
@@ -4559,6 +5739,10 @@ export const marketplaceCategoryGroupsCreate = <ThrowOnError extends boolean = f
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-category-groups/',
@@ -4576,6 +5760,10 @@ export const marketplaceCategoryGroupsDestroy = <ThrowOnError extends boolean = 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-category-groups/{uuid}/',
@@ -4589,6 +5777,10 @@ export const marketplaceCategoryGroupsRetrieve = <ThrowOnError extends boolean =
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-category-groups/{uuid}/',
@@ -4602,6 +5794,10 @@ export const marketplaceCategoryGroupsPartialUpdate = <ThrowOnError extends bool
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-category-groups/{uuid}/',
@@ -4619,6 +5815,10 @@ export const marketplaceCategoryGroupsUpdate = <ThrowOnError extends boolean = f
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-category-groups/{uuid}/',
@@ -4636,6 +5836,10 @@ export const marketplaceCategoryHelpArticlesList = <ThrowOnError extends boolean
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-category-help-articles/',
@@ -4649,6 +5853,10 @@ export const marketplaceCategoryHelpArticlesCreate = <ThrowOnError extends boole
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-category-help-articles/',
@@ -4666,6 +5874,10 @@ export const marketplaceCategoryHelpArticlesDestroy = <ThrowOnError extends bool
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-category-help-articles/{id}/',
@@ -4679,6 +5891,10 @@ export const marketplaceCategoryHelpArticlesRetrieve = <ThrowOnError extends boo
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-category-help-articles/{id}/',
@@ -4692,6 +5908,10 @@ export const marketplaceCategoryHelpArticlesPartialUpdate = <ThrowOnError extend
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-category-help-articles/{id}/',
@@ -4709,6 +5929,10 @@ export const marketplaceCategoryHelpArticlesUpdate = <ThrowOnError extends boole
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-category-help-articles/{id}/',
@@ -4726,6 +5950,10 @@ export const marketplaceChecklistsList = <ThrowOnError extends boolean = false>(
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-checklists/',
@@ -4739,6 +5967,10 @@ export const marketplaceChecklistsCategoriesList = <ThrowOnError extends boolean
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-checklists-categories/',
@@ -4752,6 +5984,10 @@ export const marketplaceChecklistsCategoriesChecklistsList = <ThrowOnError exten
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-checklists-categories/{category_uuid}/checklists/',
@@ -4765,6 +6001,10 @@ export const marketplaceChecklistsCategoriesRetrieve = <ThrowOnError extends boo
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-checklists-categories/{uuid}/',
@@ -4778,6 +6018,10 @@ export const marketplaceChecklistsRetrieve = <ThrowOnError extends boolean = fal
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-checklists/{checklist_uuid}/',
@@ -4791,6 +6035,10 @@ export const marketplaceChecklistsAnswersList = <ThrowOnError extends boolean = 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-checklists/{checklist_uuid}/answers/',
@@ -4807,6 +6055,10 @@ export const marketplaceChecklistsAnswersSubmitCreate = <ThrowOnError extends bo
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-checklists/{checklist_uuid}/answers/submit/',
@@ -4824,6 +6076,10 @@ export const marketplaceChecklistsQuestionsList = <ThrowOnError extends boolean 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-checklists/{checklist_uuid}/questions/',
@@ -4840,6 +6096,10 @@ export const marketplaceChecklistsStatsList = <ThrowOnError extends boolean = fa
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-checklists/{checklist_uuid}/stats/',
@@ -4853,6 +6113,10 @@ export const marketplaceChecklistsUserAnswersList = <ThrowOnError extends boolea
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-checklists/{checklist_uuid}/user/{user_uuid}/answers/',
@@ -4866,6 +6130,10 @@ export const marketplaceComponentUsagesList = <ThrowOnError extends boolean = fa
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-component-usages/',
@@ -4879,6 +6147,10 @@ export const marketplaceComponentUsagesRetrieve = <ThrowOnError extends boolean 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-component-usages/{uuid}/',
@@ -4892,6 +6164,10 @@ export const marketplaceComponentUsagesSetUserUsage = <ThrowOnError extends bool
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-component-usages/{uuid}/set_user_usage/',
@@ -4909,6 +6185,10 @@ export const marketplaceComponentUsagesSetUsage = <ThrowOnError extends boolean 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-component-usages/set_usage/',
@@ -4926,6 +6206,10 @@ export const marketplaceComponentUserUsagesList = <ThrowOnError extends boolean 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-component-user-usages/',
@@ -4939,6 +6223,10 @@ export const marketplaceComponentUserUsagesRetrieve = <ThrowOnError extends bool
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-component-user-usages/{uuid}/',
@@ -4952,6 +6240,10 @@ export const marketplaceCustomerEstimatedCostPoliciesList = <ThrowOnError extend
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-customer-estimated-cost-policies/',
@@ -4965,6 +6257,10 @@ export const marketplaceCustomerEstimatedCostPoliciesCreate = <ThrowOnError exte
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-customer-estimated-cost-policies/',
@@ -4982,6 +6278,10 @@ export const marketplaceCustomerEstimatedCostPoliciesDestroy = <ThrowOnError ext
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-customer-estimated-cost-policies/{uuid}/',
@@ -4995,6 +6295,10 @@ export const marketplaceCustomerEstimatedCostPoliciesRetrieve = <ThrowOnError ex
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-customer-estimated-cost-policies/{uuid}/',
@@ -5008,6 +6312,10 @@ export const marketplaceCustomerEstimatedCostPoliciesPartialUpdate = <ThrowOnErr
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-customer-estimated-cost-policies/{uuid}/',
@@ -5025,6 +6333,10 @@ export const marketplaceCustomerEstimatedCostPoliciesUpdate = <ThrowOnError exte
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-customer-estimated-cost-policies/{uuid}/',
@@ -5042,6 +6354,10 @@ export const marketplaceCustomerEstimatedCostPoliciesActionsRetrieve = <ThrowOnE
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-customer-estimated-cost-policies/actions/',
@@ -5055,6 +6371,10 @@ export const marketplaceCustomerServiceAccountsList = <ThrowOnError extends bool
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-customer-service-accounts/',
@@ -5068,6 +6388,10 @@ export const marketplaceCustomerServiceAccountsCreate = <ThrowOnError extends bo
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-customer-service-accounts/',
@@ -5085,6 +6409,10 @@ export const marketplaceCustomerServiceAccountsDestroy = <ThrowOnError extends b
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-customer-service-accounts/{uuid}/',
@@ -5098,6 +6426,10 @@ export const marketplaceCustomerServiceAccountsRetrieve = <ThrowOnError extends 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-customer-service-accounts/{uuid}/',
@@ -5111,6 +6443,10 @@ export const marketplaceCustomerServiceAccountsPartialUpdate = <ThrowOnError ext
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-customer-service-accounts/{uuid}/',
@@ -5128,6 +6464,10 @@ export const marketplaceCustomerServiceAccountsUpdate = <ThrowOnError extends bo
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-customer-service-accounts/{uuid}/',
@@ -5145,6 +6485,10 @@ export const marketplaceCustomerServiceAccountsRotateApiKey = <ThrowOnError exte
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-customer-service-accounts/{uuid}/rotate_api_key/',
@@ -5161,6 +6505,10 @@ export const marketplaceGlobalCategoriesRetrieve = <ThrowOnError extends boolean
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-global-categories/',
@@ -5174,6 +6522,10 @@ export const marketplaceIntegrationStatusesList = <ThrowOnError extends boolean 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-integration-statuses/',
@@ -5187,6 +6539,10 @@ export const marketplaceIntegrationStatusesRetrieve = <ThrowOnError extends bool
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-integration-statuses/{uuid}/',
@@ -5200,6 +6556,10 @@ export const marketplaceOfferingEstimatedCostPoliciesList = <ThrowOnError extend
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-offering-estimated-cost-policies/',
@@ -5213,6 +6573,10 @@ export const marketplaceOfferingEstimatedCostPoliciesCreate = <ThrowOnError exte
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-offering-estimated-cost-policies/',
@@ -5230,6 +6594,10 @@ export const marketplaceOfferingEstimatedCostPoliciesDestroy = <ThrowOnError ext
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-offering-estimated-cost-policies/{uuid}/',
@@ -5243,6 +6611,10 @@ export const marketplaceOfferingEstimatedCostPoliciesRetrieve = <ThrowOnError ex
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-offering-estimated-cost-policies/{uuid}/',
@@ -5256,6 +6628,10 @@ export const marketplaceOfferingEstimatedCostPoliciesPartialUpdate = <ThrowOnErr
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-offering-estimated-cost-policies/{uuid}/',
@@ -5273,6 +6649,10 @@ export const marketplaceOfferingEstimatedCostPoliciesUpdate = <ThrowOnError exte
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-offering-estimated-cost-policies/{uuid}/',
@@ -5293,6 +6673,10 @@ export const marketplaceOfferingEstimatedCostPoliciesActionsRetrieve = <ThrowOnE
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-offering-estimated-cost-policies/actions/',
@@ -5306,6 +6690,10 @@ export const marketplaceOfferingFilesList = <ThrowOnError extends boolean = fals
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-offering-files/',
@@ -5319,6 +6707,10 @@ export const marketplaceOfferingFilesCreate = <ThrowOnError extends boolean = fa
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-offering-files/',
@@ -5336,6 +6728,10 @@ export const marketplaceOfferingFilesDestroy = <ThrowOnError extends boolean = f
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-offering-files/{uuid}/',
@@ -5349,6 +6745,10 @@ export const marketplaceOfferingFilesRetrieve = <ThrowOnError extends boolean = 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-offering-files/{uuid}/',
@@ -5362,6 +6762,10 @@ export const marketplaceOfferingPermissionsList = <ThrowOnError extends boolean 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-offering-permissions/',
@@ -5375,6 +6779,10 @@ export const marketplaceOfferingPermissionsLogList = <ThrowOnError extends boole
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-offering-permissions-log/',
@@ -5388,6 +6796,10 @@ export const marketplaceOfferingPermissionsLogRetrieve = <ThrowOnError extends b
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-offering-permissions-log/{id}/',
@@ -5401,6 +6813,10 @@ export const marketplaceOfferingPermissionsRetrieve = <ThrowOnError extends bool
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-offering-permissions/{id}/',
@@ -5414,6 +6830,10 @@ export const marketplaceOfferingReferralsList = <ThrowOnError extends boolean = 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-offering-referrals/',
@@ -5427,6 +6847,10 @@ export const marketplaceOfferingReferralsRetrieve = <ThrowOnError extends boolea
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-offering-referrals/{uuid}/',
@@ -5440,6 +6864,10 @@ export const marketplaceOfferingUsagePoliciesList = <ThrowOnError extends boolea
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-offering-usage-policies/',
@@ -5453,6 +6881,10 @@ export const marketplaceOfferingUsagePoliciesCreate = <ThrowOnError extends bool
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-offering-usage-policies/',
@@ -5470,6 +6902,10 @@ export const marketplaceOfferingUsagePoliciesDestroy = <ThrowOnError extends boo
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-offering-usage-policies/{uuid}/',
@@ -5483,6 +6919,10 @@ export const marketplaceOfferingUsagePoliciesRetrieve = <ThrowOnError extends bo
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-offering-usage-policies/{uuid}/',
@@ -5496,6 +6936,10 @@ export const marketplaceOfferingUsagePoliciesPartialUpdate = <ThrowOnError exten
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-offering-usage-policies/{uuid}/',
@@ -5513,6 +6957,10 @@ export const marketplaceOfferingUsagePoliciesUpdate = <ThrowOnError extends bool
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-offering-usage-policies/{uuid}/',
@@ -5530,6 +6978,10 @@ export const marketplaceOfferingUsagePoliciesActionsRetrieve = <ThrowOnError ext
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-offering-usage-policies/actions/',
@@ -5543,6 +6995,10 @@ export const marketplaceOfferingUserRolesList = <ThrowOnError extends boolean = 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-offering-user-roles/',
@@ -5556,6 +7012,10 @@ export const marketplaceOfferingUserRolesCreate = <ThrowOnError extends boolean 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-offering-user-roles/',
@@ -5573,6 +7033,10 @@ export const marketplaceOfferingUserRolesDestroy = <ThrowOnError extends boolean
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-offering-user-roles/{uuid}/',
@@ -5586,6 +7050,10 @@ export const marketplaceOfferingUserRolesRetrieve = <ThrowOnError extends boolea
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-offering-user-roles/{uuid}/',
@@ -5599,6 +7067,10 @@ export const marketplaceOfferingUserRolesPartialUpdate = <ThrowOnError extends b
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-offering-user-roles/{uuid}/',
@@ -5616,6 +7088,10 @@ export const marketplaceOfferingUserRolesUpdate = <ThrowOnError extends boolean 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-offering-user-roles/{uuid}/',
@@ -5633,6 +7109,10 @@ export const marketplaceOfferingUsersList = <ThrowOnError extends boolean = fals
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-offering-users/',
@@ -5646,6 +7126,10 @@ export const marketplaceOfferingUsersCreate = <ThrowOnError extends boolean = fa
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-offering-users/',
@@ -5663,6 +7147,10 @@ export const marketplaceOfferingUsersDestroy = <ThrowOnError extends boolean = f
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-offering-users/{uuid}/',
@@ -5676,6 +7164,10 @@ export const marketplaceOfferingUsersRetrieve = <ThrowOnError extends boolean = 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-offering-users/{uuid}/',
@@ -5689,6 +7181,10 @@ export const marketplaceOfferingUsersPartialUpdate = <ThrowOnError extends boole
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-offering-users/{uuid}/',
@@ -5706,6 +7202,10 @@ export const marketplaceOfferingUsersUpdate = <ThrowOnError extends boolean = fa
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-offering-users/{uuid}/',
@@ -5723,6 +7223,10 @@ export const marketplaceOfferingUsersUpdateRestricted = <ThrowOnError extends bo
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-offering-users/{uuid}/update_restricted/',
@@ -5740,6 +7244,10 @@ export const marketplaceOrdersList = <ThrowOnError extends boolean = false>(opti
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-orders/',
@@ -5753,6 +7261,10 @@ export const marketplaceOrdersCreate = <ThrowOnError extends boolean = false>(op
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-orders/',
@@ -5770,6 +7282,10 @@ export const marketplaceOrdersDestroy = <ThrowOnError extends boolean = false>(o
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-orders/{uuid}/',
@@ -5783,6 +7299,10 @@ export const marketplaceOrdersRetrieve = <ThrowOnError extends boolean = false>(
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-orders/{uuid}/',
@@ -5796,6 +7316,10 @@ export const marketplaceOrdersApproveByConsumer = <ThrowOnError extends boolean 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-orders/{uuid}/approve_by_consumer/',
@@ -5809,6 +7333,10 @@ export const marketplaceOrdersApproveByProvider = <ThrowOnError extends boolean 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-orders/{uuid}/approve_by_provider/',
@@ -5822,6 +7350,10 @@ export const marketplaceOrdersCancel = <ThrowOnError extends boolean = false>(op
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-orders/{uuid}/cancel/',
@@ -5835,6 +7367,10 @@ export const marketplaceOrdersOfferingRetrieve = <ThrowOnError extends boolean =
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-orders/{uuid}/offering/',
@@ -5848,6 +7384,10 @@ export const marketplaceOrdersRejectByConsumer = <ThrowOnError extends boolean =
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-orders/{uuid}/reject_by_consumer/',
@@ -5861,6 +7401,10 @@ export const marketplaceOrdersRejectByProvider = <ThrowOnError extends boolean =
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-orders/{uuid}/reject_by_provider/',
@@ -5874,6 +7418,10 @@ export const marketplaceOrdersSetStateDone = <ThrowOnError extends boolean = fal
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-orders/{uuid}/set_state_done/',
@@ -5887,6 +7435,10 @@ export const marketplaceOrdersSetStateErred = <ThrowOnError extends boolean = fa
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-orders/{uuid}/set_state_erred/',
@@ -5904,6 +7456,10 @@ export const marketplaceOrdersSetStateExecuting = <ThrowOnError extends boolean 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-orders/{uuid}/set_state_executing/',
@@ -5917,6 +7473,10 @@ export const marketplaceOrdersUnlink = <ThrowOnError extends boolean = false>(op
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-orders/{uuid}/unlink/',
@@ -5930,6 +7490,10 @@ export const marketplacePlanComponentsList = <ThrowOnError extends boolean = fal
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-plan-components/',
@@ -5943,6 +7507,10 @@ export const marketplacePlanComponentsRetrieve = <ThrowOnError extends boolean =
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-plan-components/{id}/',
@@ -5956,6 +7524,10 @@ export const marketplacePlansList = <ThrowOnError extends boolean = false>(optio
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-plans/',
@@ -5969,6 +7541,10 @@ export const marketplacePlansCreate = <ThrowOnError extends boolean = false>(opt
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-plans/',
@@ -5986,6 +7562,10 @@ export const marketplacePlansRetrieve = <ThrowOnError extends boolean = false>(o
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-plans/{uuid}/',
@@ -5999,6 +7579,10 @@ export const marketplacePlansPartialUpdate = <ThrowOnError extends boolean = fal
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-plans/{uuid}/',
@@ -6016,6 +7600,10 @@ export const marketplacePlansUpdate = <ThrowOnError extends boolean = false>(opt
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-plans/{uuid}/',
@@ -6033,6 +7621,10 @@ export const marketplacePlansArchive = <ThrowOnError extends boolean = false>(op
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-plans/{uuid}/archive/',
@@ -6046,6 +7638,10 @@ export const marketplacePlansDeleteOrganizationGroups = <ThrowOnError extends bo
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-plans/{uuid}/delete_organization_groups/',
@@ -6059,6 +7655,10 @@ export const marketplacePlansUpdateOrganizationGroups = <ThrowOnError extends bo
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-plans/{uuid}/update_organization_groups/',
@@ -6076,6 +7676,10 @@ export const marketplacePlansUpdatePrices = <ThrowOnError extends boolean = fals
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-plans/{uuid}/update_prices/',
@@ -6093,6 +7697,10 @@ export const marketplacePlansUpdateQuotas = <ThrowOnError extends boolean = fals
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-plans/{uuid}/update_quotas/',
@@ -6110,6 +7718,10 @@ export const marketplacePlansUsageStatsList = <ThrowOnError extends boolean = fa
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-plans/usage_stats/',
@@ -6130,6 +7742,10 @@ export const marketplaceProjectEstimatedCostPoliciesList = <ThrowOnError extends
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-project-estimated-cost-policies/',
@@ -6143,6 +7759,10 @@ export const marketplaceProjectEstimatedCostPoliciesCreate = <ThrowOnError exten
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-project-estimated-cost-policies/',
@@ -6160,6 +7780,10 @@ export const marketplaceProjectEstimatedCostPoliciesDestroy = <ThrowOnError exte
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-project-estimated-cost-policies/{uuid}/',
@@ -6173,6 +7797,10 @@ export const marketplaceProjectEstimatedCostPoliciesRetrieve = <ThrowOnError ext
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-project-estimated-cost-policies/{uuid}/',
@@ -6186,6 +7814,10 @@ export const marketplaceProjectEstimatedCostPoliciesPartialUpdate = <ThrowOnErro
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-project-estimated-cost-policies/{uuid}/',
@@ -6203,6 +7835,10 @@ export const marketplaceProjectEstimatedCostPoliciesUpdate = <ThrowOnError exten
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-project-estimated-cost-policies/{uuid}/',
@@ -6220,6 +7856,10 @@ export const marketplaceProjectEstimatedCostPoliciesActionsRetrieve = <ThrowOnEr
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-project-estimated-cost-policies/actions/',
@@ -6233,6 +7873,10 @@ export const marketplaceProjectServiceAccountsList = <ThrowOnError extends boole
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-project-service-accounts/',
@@ -6246,6 +7890,10 @@ export const marketplaceProjectServiceAccountsCreate = <ThrowOnError extends boo
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-project-service-accounts/',
@@ -6263,6 +7911,10 @@ export const marketplaceProjectServiceAccountsDestroy = <ThrowOnError extends bo
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-project-service-accounts/{uuid}/',
@@ -6276,6 +7928,10 @@ export const marketplaceProjectServiceAccountsRetrieve = <ThrowOnError extends b
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-project-service-accounts/{uuid}/',
@@ -6289,6 +7945,10 @@ export const marketplaceProjectServiceAccountsPartialUpdate = <ThrowOnError exte
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-project-service-accounts/{uuid}/',
@@ -6306,6 +7966,10 @@ export const marketplaceProjectServiceAccountsUpdate = <ThrowOnError extends boo
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-project-service-accounts/{uuid}/',
@@ -6323,6 +7987,10 @@ export const marketplaceProjectServiceAccountsRotateApiKey = <ThrowOnError exten
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-project-service-accounts/{uuid}/rotate_api_key/',
@@ -6336,6 +8004,10 @@ export const marketplaceProjectUpdateRequestsList = <ThrowOnError extends boolea
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-project-update-requests/',
@@ -6349,6 +8021,10 @@ export const marketplaceProjectUpdateRequestsRetrieve = <ThrowOnError extends bo
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-project-update-requests/{uuid}/',
@@ -6365,6 +8041,10 @@ export const marketplaceProjectUpdateRequestsApprove = <ThrowOnError extends boo
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-project-update-requests/{uuid}/approve/',
@@ -6385,6 +8065,10 @@ export const marketplaceProjectUpdateRequestsReject = <ThrowOnError extends bool
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-project-update-requests/{uuid}/reject/',
@@ -6402,6 +8086,10 @@ export const marketplaceProviderOfferingsList = <ThrowOnError extends boolean = 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-provider-offerings/',
@@ -6415,6 +8103,10 @@ export const marketplaceProviderOfferingsCreate = <ThrowOnError extends boolean 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-provider-offerings/',
@@ -6432,6 +8124,10 @@ export const marketplaceProviderOfferingsDestroy = <ThrowOnError extends boolean
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-provider-offerings/{uuid}/',
@@ -6445,6 +8141,10 @@ export const marketplaceProviderOfferingsRetrieve = <ThrowOnError extends boolea
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-provider-offerings/{uuid}/',
@@ -6458,6 +8158,10 @@ export const marketplaceProviderOfferingsActivate = <ThrowOnError extends boolea
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-provider-offerings/{uuid}/activate/',
@@ -6474,6 +8178,10 @@ export const marketplaceProviderOfferingsAddEndpoint = <ThrowOnError extends boo
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-provider-offerings/{uuid}/add_endpoint/',
@@ -6491,6 +8199,10 @@ export const marketplaceProviderOfferingsAddUser = <ThrowOnError extends boolean
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-provider-offerings/{uuid}/add_user/',
@@ -6508,6 +8220,10 @@ export const marketplaceProviderOfferingsArchive = <ThrowOnError extends boolean
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-provider-offerings/{uuid}/archive/',
@@ -6524,6 +8240,10 @@ export const marketplaceProviderOfferingsComponentStatsList = <ThrowOnError exte
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-provider-offerings/{uuid}/component_stats/',
@@ -6540,6 +8260,10 @@ export const marketplaceProviderOfferingsCostsList = <ThrowOnError extends boole
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-provider-offerings/{uuid}/costs/',
@@ -6553,6 +8277,10 @@ export const marketplaceProviderOfferingsCreateOfferingComponent = <ThrowOnError
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-provider-offerings/{uuid}/create_offering_component/',
@@ -6573,6 +8301,10 @@ export const marketplaceProviderOfferingsCustomersList = <ThrowOnError extends b
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-provider-offerings/{uuid}/customers/',
@@ -6589,6 +8321,10 @@ export const marketplaceProviderOfferingsDeleteEndpoint = <ThrowOnError extends 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-provider-offerings/{uuid}/delete_endpoint/',
@@ -6609,6 +8345,10 @@ export const marketplaceProviderOfferingsDeleteImage = <ThrowOnError extends boo
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-provider-offerings/{uuid}/delete_image/',
@@ -6625,6 +8365,10 @@ export const marketplaceProviderOfferingsDeleteOrganizationGroups = <ThrowOnErro
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-provider-offerings/{uuid}/delete_organization_groups/',
@@ -6641,6 +8385,10 @@ export const marketplaceProviderOfferingsDeleteThumbnail = <ThrowOnError extends
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-provider-offerings/{uuid}/delete_thumbnail/',
@@ -6654,6 +8402,10 @@ export const marketplaceProviderOfferingsDeleteUser = <ThrowOnError extends bool
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-provider-offerings/{uuid}/delete_user/',
@@ -6671,6 +8423,10 @@ export const marketplaceProviderOfferingsDraft = <ThrowOnError extends boolean =
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-provider-offerings/{uuid}/draft/',
@@ -6690,6 +8446,10 @@ export const marketplaceProviderOfferingsGlauthUsersConfigRetrieve = <ThrowOnErr
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-provider-offerings/{uuid}/glauth_users_config/',
@@ -6703,6 +8463,10 @@ export const marketplaceProviderOfferingsImportResource = <ThrowOnError extends 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-provider-offerings/{uuid}/import_resource/',
@@ -6723,6 +8487,10 @@ export const marketplaceProviderOfferingsImportableResourcesList = <ThrowOnError
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-provider-offerings/{uuid}/importable_resources/',
@@ -6736,6 +8504,10 @@ export const marketplaceProviderOfferingsListCustomerProjectsList = <ThrowOnErro
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-provider-offerings/{uuid}/list_customer_projects/',
@@ -6749,6 +8521,10 @@ export const marketplaceProviderOfferingsListCustomerServiceAccountsRetrieve = <
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-provider-offerings/{uuid}/list_customer_service_accounts/',
@@ -6762,6 +8538,10 @@ export const marketplaceProviderOfferingsListCustomerUsersList = <ThrowOnError e
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-provider-offerings/{uuid}/list_customer_users/',
@@ -6775,6 +8555,10 @@ export const marketplaceProviderOfferingsListProjectServiceAccountsRetrieve = <T
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-provider-offerings/{uuid}/list_project_service_accounts/',
@@ -6788,6 +8572,10 @@ export const marketplaceProviderOfferingsListUsersList = <ThrowOnError extends b
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-provider-offerings/{uuid}/list_users/',
@@ -6801,6 +8589,10 @@ export const marketplaceProviderOfferingsMoveOffering = <ThrowOnError extends bo
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-provider-offerings/{uuid}/move_offering/',
@@ -6818,6 +8610,10 @@ export const marketplaceProviderOfferingsOrdersList = <ThrowOnError extends bool
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-provider-offerings/{uuid}/orders/',
@@ -6831,6 +8627,10 @@ export const marketplaceProviderOfferingsOrdersRetrieve = <ThrowOnError extends 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-provider-offerings/{uuid}/orders/{order_uuid}/',
@@ -6844,6 +8644,10 @@ export const marketplaceProviderOfferingsPause = <ThrowOnError extends boolean =
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-provider-offerings/{uuid}/pause/',
@@ -6861,6 +8665,10 @@ export const marketplaceProviderOfferingsRefreshOfferingUsernames = <ThrowOnErro
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-provider-offerings/{uuid}/refresh_offering_usernames/',
@@ -6878,6 +8686,10 @@ export const marketplaceProviderOfferingsRemoveOfferingComponent = <ThrowOnError
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-provider-offerings/{uuid}/remove_offering_component/',
@@ -6895,6 +8707,10 @@ export const marketplaceProviderOfferingsSetBackendMetadata = <ThrowOnError exte
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-provider-offerings/{uuid}/set_backend_metadata/',
@@ -6912,6 +8728,10 @@ export const marketplaceProviderOfferingsStatsRetrieve = <ThrowOnError extends b
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-provider-offerings/{uuid}/stats/',
@@ -6925,6 +8745,10 @@ export const marketplaceProviderOfferingsSync = <ThrowOnError extends boolean = 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-provider-offerings/{uuid}/sync/',
@@ -6938,6 +8762,10 @@ export const marketplaceProviderOfferingsUnpause = <ThrowOnError extends boolean
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-provider-offerings/{uuid}/unpause/',
@@ -6954,6 +8782,10 @@ export const marketplaceProviderOfferingsUpdateAttributes = <ThrowOnError extend
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-provider-offerings/{uuid}/update_attributes/',
@@ -6971,6 +8803,10 @@ export const marketplaceProviderOfferingsUpdateDescription = <ThrowOnError exten
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-provider-offerings/{uuid}/update_description/',
@@ -6991,6 +8827,10 @@ export const marketplaceProviderOfferingsUpdateImage = <ThrowOnError extends boo
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-provider-offerings/{uuid}/update_image/',
@@ -7008,6 +8848,10 @@ export const marketplaceProviderOfferingsUpdateIntegration = <ThrowOnError exten
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-provider-offerings/{uuid}/update_integration/',
@@ -7025,6 +8869,10 @@ export const marketplaceProviderOfferingsUpdateLocation = <ThrowOnError extends 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-provider-offerings/{uuid}/update_location/',
@@ -7042,6 +8890,10 @@ export const marketplaceProviderOfferingsUpdateOfferingComponent = <ThrowOnError
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-provider-offerings/{uuid}/update_offering_component/',
@@ -7059,6 +8911,10 @@ export const marketplaceProviderOfferingsUpdateOptions = <ThrowOnError extends b
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-provider-offerings/{uuid}/update_options/',
@@ -7079,6 +8935,10 @@ export const marketplaceProviderOfferingsUpdateOrganizationGroups = <ThrowOnErro
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-provider-offerings/{uuid}/update_organization_groups/',
@@ -7096,6 +8956,10 @@ export const marketplaceProviderOfferingsUpdateOverview = <ThrowOnError extends 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-provider-offerings/{uuid}/update_overview/',
@@ -7113,6 +8977,10 @@ export const marketplaceProviderOfferingsUpdateResourceOptions = <ThrowOnError e
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-provider-offerings/{uuid}/update_resource_options/',
@@ -7133,6 +9001,10 @@ export const marketplaceProviderOfferingsUpdateThumbnail = <ThrowOnError extends
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-provider-offerings/{uuid}/update_thumbnail/',
@@ -7150,6 +9022,10 @@ export const marketplaceProviderOfferingsUpdateUser = <ThrowOnError extends bool
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-provider-offerings/{uuid}/update_user/',
@@ -7170,6 +9046,10 @@ export const marketplaceProviderOfferingsUserHasResourceAccessRetrieve = <ThrowO
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-provider-offerings/{uuid}/user_has_resource_access/',
@@ -7183,6 +9063,10 @@ export const marketplaceProviderOfferingsGroupsList = <ThrowOnError extends bool
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-provider-offerings/groups/',
@@ -7196,6 +9080,10 @@ export const marketplaceProviderResourcesList = <ThrowOnError extends boolean = 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-provider-resources/',
@@ -7209,6 +9097,10 @@ export const marketplaceProviderResourcesRetrieve = <ThrowOnError extends boolea
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-provider-resources/{uuid}/',
@@ -7222,6 +9114,10 @@ export const marketplaceProviderResourcesPartialUpdate = <ThrowOnError extends b
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-provider-resources/{uuid}/',
@@ -7239,6 +9135,10 @@ export const marketplaceProviderResourcesUpdate = <ThrowOnError extends boolean 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-provider-resources/{uuid}/',
@@ -7256,6 +9156,10 @@ export const marketplaceProviderResourcesDetailsRetrieve = <ThrowOnError extends
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-provider-resources/{uuid}/details/',
@@ -7277,6 +9181,10 @@ export const marketplaceProviderResourcesGlauthUsersConfigRetrieve = <ThrowOnErr
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-provider-resources/{uuid}/glauth_users_config/',
@@ -7293,6 +9201,10 @@ export const marketplaceProviderResourcesMoveResource = <ThrowOnError extends bo
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-provider-resources/{uuid}/move_resource/',
@@ -7306,6 +9218,10 @@ export const marketplaceProviderResourcesOfferingRetrieve = <ThrowOnError extend
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-provider-resources/{uuid}/offering/',
@@ -7319,6 +9235,10 @@ export const marketplaceProviderResourcesOfferingForSubresourcesList = <ThrowOnE
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-provider-resources/{uuid}/offering_for_subresources/',
@@ -7332,6 +9252,10 @@ export const marketplaceProviderResourcesPlanPeriodsList = <ThrowOnError extends
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-provider-resources/{uuid}/plan_periods/',
@@ -7348,6 +9272,10 @@ export const marketplaceProviderResourcesRefreshLastSync = <ThrowOnError extends
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-provider-resources/{uuid}/refresh_last_sync/',
@@ -7361,6 +9289,10 @@ export const marketplaceProviderResourcesSetAsErred = <ThrowOnError extends bool
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-provider-resources/{uuid}/set_as_erred/',
@@ -7381,6 +9313,10 @@ export const marketplaceProviderResourcesSetAsOk = <ThrowOnError extends boolean
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-provider-resources/{uuid}/set_as_ok/',
@@ -7394,6 +9330,10 @@ export const marketplaceProviderResourcesSetBackendId = <ThrowOnError extends bo
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-provider-resources/{uuid}/set_backend_id/',
@@ -7411,6 +9351,10 @@ export const marketplaceProviderResourcesSetBackendMetadata = <ThrowOnError exte
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-provider-resources/{uuid}/set_backend_metadata/',
@@ -7428,6 +9372,10 @@ export const marketplaceProviderResourcesSetEndDateByProvider = <ThrowOnError ex
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-provider-resources/{uuid}/set_end_date_by_provider/',
@@ -7448,6 +9396,10 @@ export const marketplaceProviderResourcesSetEndDateByStaff = <ThrowOnError exten
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-provider-resources/{uuid}/set_end_date_by_staff/',
@@ -7465,6 +9417,10 @@ export const marketplaceProviderResourcesSetLimits = <ThrowOnError extends boole
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-provider-resources/{uuid}/set_limits/',
@@ -7485,6 +9441,10 @@ export const marketplaceProviderResourcesSetSlug = <ThrowOnError extends boolean
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-provider-resources/{uuid}/set_slug/',
@@ -7502,6 +9462,10 @@ export const marketplaceProviderResourcesSubmitReport = <ThrowOnError extends bo
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-provider-resources/{uuid}/submit_report/',
@@ -7522,6 +9486,10 @@ export const marketplaceProviderResourcesTeamList = <ThrowOnError extends boolea
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-provider-resources/{uuid}/team/',
@@ -7538,6 +9506,10 @@ export const marketplaceProviderResourcesTerminate = <ThrowOnError extends boole
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-provider-resources/{uuid}/terminate/',
@@ -7560,6 +9532,10 @@ export const marketplaceProviderResourcesUnlink = <ThrowOnError extends boolean 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-provider-resources/{uuid}/unlink/',
@@ -7573,6 +9549,10 @@ export const marketplacePublicApiCheckSignature = <ThrowOnError extends boolean 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-public-api/check_signature/',
@@ -7590,6 +9570,10 @@ export const marketplacePublicApiSetUsage = <ThrowOnError extends boolean = fals
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-public-api/set_usage/',
@@ -7607,6 +9591,10 @@ export const marketplacePublicOfferingsList = <ThrowOnError extends boolean = fa
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-public-offerings/',
@@ -7620,6 +9608,10 @@ export const marketplacePublicOfferingsRetrieve = <ThrowOnError extends boolean 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-public-offerings/{uuid}/',
@@ -7633,6 +9625,10 @@ export const marketplacePublicOfferingsPlansList = <ThrowOnError extends boolean
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-public-offerings/{uuid}/plans/',
@@ -7646,6 +9642,10 @@ export const marketplacePublicOfferingsPlansRetrieve = <ThrowOnError extends boo
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-public-offerings/{uuid}/plans/{plan_uuid}/',
@@ -7659,6 +9659,10 @@ export const marketplaceRelatedCustomersList = <ThrowOnError extends boolean = f
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-related-customers/{customer_uuid}/',
@@ -7672,6 +9676,10 @@ export const marketplaceRemoteSynchronisationsList = <ThrowOnError extends boole
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-remote-synchronisations/',
@@ -7685,6 +9693,10 @@ export const marketplaceRemoteSynchronisationsCreate = <ThrowOnError extends boo
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-remote-synchronisations/',
@@ -7702,6 +9714,10 @@ export const marketplaceRemoteSynchronisationsDestroy = <ThrowOnError extends bo
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-remote-synchronisations/{uuid}/',
@@ -7715,6 +9731,10 @@ export const marketplaceRemoteSynchronisationsRetrieve = <ThrowOnError extends b
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-remote-synchronisations/{uuid}/',
@@ -7728,6 +9748,10 @@ export const marketplaceRemoteSynchronisationsPartialUpdate = <ThrowOnError exte
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-remote-synchronisations/{uuid}/',
@@ -7745,6 +9769,10 @@ export const marketplaceRemoteSynchronisationsUpdate = <ThrowOnError extends boo
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-remote-synchronisations/{uuid}/',
@@ -7762,6 +9790,10 @@ export const marketplaceRemoteSynchronisationsRunSynchronisation = <ThrowOnError
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-remote-synchronisations/{uuid}/run_synchronisation/',
@@ -7775,6 +9807,10 @@ export const marketplaceResourceOfferingsList = <ThrowOnError extends boolean = 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-resource-offerings/{category_uuid}/',
@@ -7788,6 +9824,10 @@ export const marketplaceResourceUsersList = <ThrowOnError extends boolean = fals
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-resource-users/',
@@ -7801,6 +9841,10 @@ export const marketplaceResourceUsersCreate = <ThrowOnError extends boolean = fa
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-resource-users/',
@@ -7818,6 +9862,10 @@ export const marketplaceResourceUsersDestroy = <ThrowOnError extends boolean = f
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-resource-users/{uuid}/',
@@ -7831,6 +9879,10 @@ export const marketplaceResourceUsersRetrieve = <ThrowOnError extends boolean = 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-resource-users/{uuid}/',
@@ -7844,6 +9896,10 @@ export const marketplaceResourcesList = <ThrowOnError extends boolean = false>(o
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-resources/',
@@ -7857,6 +9913,10 @@ export const marketplaceResourcesRetrieve = <ThrowOnError extends boolean = fals
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-resources/{uuid}/',
@@ -7870,6 +9930,10 @@ export const marketplaceResourcesPartialUpdate = <ThrowOnError extends boolean =
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-resources/{uuid}/',
@@ -7887,6 +9951,10 @@ export const marketplaceResourcesUpdate = <ThrowOnError extends boolean = false>
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-resources/{uuid}/',
@@ -7904,6 +9972,10 @@ export const marketplaceResourcesDetailsRetrieve = <ThrowOnError extends boolean
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-resources/{uuid}/details/',
@@ -7925,6 +9997,10 @@ export const marketplaceResourcesGlauthUsersConfigRetrieve = <ThrowOnError exten
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-resources/{uuid}/glauth_users_config/',
@@ -7941,6 +10017,10 @@ export const marketplaceResourcesMoveResource = <ThrowOnError extends boolean = 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-resources/{uuid}/move_resource/',
@@ -7954,6 +10034,10 @@ export const marketplaceResourcesOfferingRetrieve = <ThrowOnError extends boolea
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-resources/{uuid}/offering/',
@@ -7967,6 +10051,10 @@ export const marketplaceResourcesOfferingForSubresourcesList = <ThrowOnError ext
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-resources/{uuid}/offering_for_subresources/',
@@ -7980,6 +10068,10 @@ export const marketplaceResourcesPlanPeriodsList = <ThrowOnError extends boolean
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-resources/{uuid}/plan_periods/',
@@ -7996,6 +10088,10 @@ export const marketplaceResourcesSetEndDateByStaff = <ThrowOnError extends boole
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-resources/{uuid}/set_end_date_by_staff/',
@@ -8016,6 +10112,10 @@ export const marketplaceResourcesSetSlug = <ThrowOnError extends boolean = false
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-resources/{uuid}/set_slug/',
@@ -8036,6 +10136,10 @@ export const marketplaceResourcesSwitchPlan = <ThrowOnError extends boolean = fa
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-resources/{uuid}/switch_plan/',
@@ -8056,6 +10160,10 @@ export const marketplaceResourcesTeamList = <ThrowOnError extends boolean = fals
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-resources/{uuid}/team/',
@@ -8072,6 +10180,10 @@ export const marketplaceResourcesTerminate = <ThrowOnError extends boolean = fal
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-resources/{uuid}/terminate/',
@@ -8094,6 +10206,10 @@ export const marketplaceResourcesUnlink = <ThrowOnError extends boolean = false>
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-resources/{uuid}/unlink/',
@@ -8110,6 +10226,10 @@ export const marketplaceResourcesUpdateLimits = <ThrowOnError extends boolean = 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-resources/{uuid}/update_limits/',
@@ -8127,6 +10247,10 @@ export const marketplaceResourcesUpdateOptions = <ThrowOnError extends boolean =
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-resources/{uuid}/update_options/',
@@ -8144,6 +10268,10 @@ export const marketplaceResourcesSuggestName = <ThrowOnError extends boolean = f
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-resources/suggest_name/',
@@ -8161,6 +10289,10 @@ export const marketplaceRobotAccountsList = <ThrowOnError extends boolean = fals
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-robot-accounts/',
@@ -8174,6 +10306,10 @@ export const marketplaceRobotAccountsCreate = <ThrowOnError extends boolean = fa
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-robot-accounts/',
@@ -8191,6 +10327,10 @@ export const marketplaceRobotAccountsDestroy = <ThrowOnError extends boolean = f
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-robot-accounts/{uuid}/',
@@ -8204,6 +10344,10 @@ export const marketplaceRobotAccountsRetrieve = <ThrowOnError extends boolean = 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-robot-accounts/{uuid}/',
@@ -8217,6 +10361,10 @@ export const marketplaceRobotAccountsPartialUpdate = <ThrowOnError extends boole
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-robot-accounts/{uuid}/',
@@ -8234,6 +10382,10 @@ export const marketplaceRobotAccountsUpdate = <ThrowOnError extends boolean = fa
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-robot-accounts/{uuid}/',
@@ -8251,6 +10403,10 @@ export const marketplaceRobotAccountsSetStateCreating = <ThrowOnError extends bo
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-robot-accounts/{uuid}/set_state_creating/',
@@ -8264,6 +10420,10 @@ export const marketplaceRobotAccountsSetStateDeleted = <ThrowOnError extends boo
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-robot-accounts/{uuid}/set_state_deleted/',
@@ -8277,6 +10437,10 @@ export const marketplaceRobotAccountsSetStateErred = <ThrowOnError extends boole
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-robot-accounts/{uuid}/set_state_erred/',
@@ -8294,6 +10458,10 @@ export const marketplaceRobotAccountsSetStateOk = <ThrowOnError extends boolean 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-robot-accounts/{uuid}/set_state_ok/',
@@ -8307,6 +10475,10 @@ export const marketplaceRobotAccountsSetStateRequestDeletion = <ThrowOnError ext
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-robot-accounts/{uuid}/set_state_request_deletion/',
@@ -8323,6 +10495,10 @@ export const marketplaceRuntimeStatesList = <ThrowOnError extends boolean = fals
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-runtime-states/',
@@ -8336,6 +10512,10 @@ export const marketplaceScreenshotsList = <ThrowOnError extends boolean = false>
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-screenshots/',
@@ -8349,6 +10529,10 @@ export const marketplaceScreenshotsCreate = <ThrowOnError extends boolean = fals
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-screenshots/',
@@ -8366,6 +10550,10 @@ export const marketplaceScreenshotsDestroy = <ThrowOnError extends boolean = fal
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-screenshots/{uuid}/',
@@ -8379,6 +10567,10 @@ export const marketplaceScreenshotsRetrieve = <ThrowOnError extends boolean = fa
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-screenshots/{uuid}/',
@@ -8392,6 +10584,10 @@ export const marketplaceScreenshotsPartialUpdate = <ThrowOnError extends boolean
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-screenshots/{uuid}/',
@@ -8409,6 +10605,10 @@ export const marketplaceScreenshotsUpdate = <ThrowOnError extends boolean = fals
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-screenshots/{uuid}/',
@@ -8426,6 +10626,10 @@ export const marketplaceScriptAsyncDryRunList = <ThrowOnError extends boolean = 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-script-async-dry-run/',
@@ -8439,6 +10643,10 @@ export const marketplaceScriptAsyncDryRunRetrieve = <ThrowOnError extends boolea
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-script-async-dry-run/{uuid}/',
@@ -8452,6 +10660,10 @@ export const marketplaceScriptDryRunAsyncRun = <ThrowOnError extends boolean = f
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-script-dry-run/{uuid}/async_run/',
@@ -8469,6 +10681,10 @@ export const marketplaceScriptDryRunRun = <ThrowOnError extends boolean = false>
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-script-dry-run/{uuid}/run/',
@@ -8492,6 +10708,10 @@ export const marketplaceScriptSyncResource = <ThrowOnError extends boolean = fal
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-script-sync-resource/',
@@ -8509,6 +10729,10 @@ export const marketplaceSectionsList = <ThrowOnError extends boolean = false>(op
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-sections/',
@@ -8522,6 +10746,10 @@ export const marketplaceSectionsCreate = <ThrowOnError extends boolean = false>(
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-sections/',
@@ -8539,6 +10767,10 @@ export const marketplaceSectionsDestroy = <ThrowOnError extends boolean = false>
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-sections/{key}/',
@@ -8552,6 +10784,10 @@ export const marketplaceSectionsRetrieve = <ThrowOnError extends boolean = false
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-sections/{key}/',
@@ -8565,6 +10801,10 @@ export const marketplaceSectionsPartialUpdate = <ThrowOnError extends boolean = 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-sections/{key}/',
@@ -8582,6 +10822,10 @@ export const marketplaceSectionsUpdate = <ThrowOnError extends boolean = false>(
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-sections/{key}/',
@@ -8599,6 +10843,10 @@ export const marketplaceServiceProvidersList = <ThrowOnError extends boolean = f
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-service-providers/',
@@ -8612,6 +10860,10 @@ export const marketplaceServiceProvidersCreate = <ThrowOnError extends boolean =
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-service-providers/',
@@ -8632,6 +10884,10 @@ export const marketplaceServiceProvidersCustomerProjectsList = <ThrowOnError ext
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-service-providers/{service_provider_uuid}/customer_projects/',
@@ -8648,6 +10904,10 @@ export const marketplaceServiceProvidersCustomersList = <ThrowOnError extends bo
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-service-providers/{service_provider_uuid}/customers/',
@@ -8664,6 +10924,10 @@ export const marketplaceServiceProvidersKeysList = <ThrowOnError extends boolean
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-service-providers/{service_provider_uuid}/keys/',
@@ -8680,6 +10944,10 @@ export const marketplaceServiceProvidersOfferingsList = <ThrowOnError extends bo
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-service-providers/{service_provider_uuid}/offerings/',
@@ -8696,6 +10964,10 @@ export const marketplaceServiceProvidersProjectPermissionsList = <ThrowOnError e
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-service-providers/{service_provider_uuid}/project_permissions/',
@@ -8712,6 +10984,10 @@ export const marketplaceServiceProvidersProjectsList = <ThrowOnError extends boo
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-service-providers/{service_provider_uuid}/projects/',
@@ -8735,6 +11011,10 @@ export const marketplaceServiceProvidersUserCustomersList = <ThrowOnError extend
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-service-providers/{service_provider_uuid}/user_customers/',
@@ -8751,6 +11031,10 @@ export const marketplaceServiceProvidersUsersList = <ThrowOnError extends boolea
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-service-providers/{service_provider_uuid}/users/',
@@ -8764,6 +11048,10 @@ export const marketplaceServiceProvidersDestroy = <ThrowOnError extends boolean 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-service-providers/{uuid}/',
@@ -8777,6 +11065,10 @@ export const marketplaceServiceProvidersRetrieve = <ThrowOnError extends boolean
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-service-providers/{uuid}/',
@@ -8790,6 +11082,10 @@ export const marketplaceServiceProvidersPartialUpdate = <ThrowOnError extends bo
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-service-providers/{uuid}/',
@@ -8807,6 +11103,10 @@ export const marketplaceServiceProvidersUpdate = <ThrowOnError extends boolean =
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-service-providers/{uuid}/',
@@ -8824,6 +11124,10 @@ export const marketplaceServiceProvidersAddUser = <ThrowOnError extends boolean 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-service-providers/{uuid}/add_user/',
@@ -8844,6 +11148,10 @@ export const serviceProviderApiSecretCodeRetrieve = <ThrowOnError extends boolea
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-service-providers/{uuid}/api_secret_code/',
@@ -8860,6 +11168,10 @@ export const serviceProviderApiSecretCodeGenerate = <ThrowOnError extends boolea
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-service-providers/{uuid}/api_secret_code/',
@@ -8873,6 +11185,10 @@ export const marketplaceServiceProvidersDeleteUser = <ThrowOnError extends boole
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-service-providers/{uuid}/delete_user/',
@@ -8890,6 +11206,10 @@ export const marketplaceServiceProvidersListUsersList = <ThrowOnError extends bo
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-service-providers/{uuid}/list_users/',
@@ -8903,6 +11223,10 @@ export const marketplaceServiceProvidersRevenueList = <ThrowOnError extends bool
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-service-providers/{uuid}/revenue/',
@@ -8916,6 +11240,10 @@ export const marketplaceServiceProvidersRobotAccountCustomersList = <ThrowOnErro
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-service-providers/{uuid}/robot_account_customers/',
@@ -8929,6 +11257,10 @@ export const marketplaceServiceProvidersRobotAccountProjectsList = <ThrowOnError
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-service-providers/{uuid}/robot_account_projects/',
@@ -8942,6 +11274,10 @@ export const marketplaceServiceProvidersSetOfferingsUsername = <ThrowOnError ext
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-service-providers/{uuid}/set_offerings_username/',
@@ -8959,6 +11295,10 @@ export const marketplaceServiceProvidersStatRetrieve = <ThrowOnError extends boo
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-service-providers/{uuid}/stat/',
@@ -8972,6 +11312,10 @@ export const marketplaceServiceProvidersUpdateUser = <ThrowOnError extends boole
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-service-providers/{uuid}/update_user/',
@@ -8992,6 +11336,10 @@ export const marketplaceStatsComponentUsagesRetrieve = <ThrowOnError extends boo
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-stats/component_usages/',
@@ -9008,6 +11356,10 @@ export const marketplaceStatsComponentUsagesPerMonthRetrieve = <ThrowOnError ext
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-stats/component_usages_per_month/',
@@ -9024,6 +11376,10 @@ export const marketplaceStatsComponentUsagesPerProjectRetrieve = <ThrowOnError e
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-stats/component_usages_per_project/',
@@ -9040,6 +11396,10 @@ export const marketplaceStatsCountActiveResourcesGroupedByOfferingList = <ThrowO
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-stats/count_active_resources_grouped_by_offering/',
@@ -9056,6 +11416,10 @@ export const marketplaceStatsCountActiveResourcesGroupedByOfferingCountryList = 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-stats/count_active_resources_grouped_by_offering_country/',
@@ -9072,6 +11436,10 @@ export const marketplaceStatsCountActiveResourcesGroupedByOrganizationGroupList 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-stats/count_active_resources_grouped_by_organization_group/',
@@ -9088,6 +11456,10 @@ export const marketplaceStatsCountProjectsGroupedByProviderAndIndustryFlagList =
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-stats/count_projects_grouped_by_provider_and_industry_flag/',
@@ -9104,6 +11476,10 @@ export const marketplaceStatsCountProjectsGroupedByProviderAndOecdList = <ThrowO
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-stats/count_projects_grouped_by_provider_and_oecd/',
@@ -9120,6 +11496,10 @@ export const marketplaceStatsCountProjectsOfServiceProvidersRetrieve = <ThrowOnE
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-stats/count_projects_of_service_providers/',
@@ -9136,6 +11516,10 @@ export const marketplaceStatsCountProjectsOfServiceProvidersGroupedByOecdRetriev
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-stats/count_projects_of_service_providers_grouped_by_oecd/',
@@ -9152,6 +11536,10 @@ export const marketplaceStatsCountUniqueUsersConnectedWithActiveResourcesOfServi
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-stats/count_unique_users_connected_with_active_resources_of_service_provider/',
@@ -9168,6 +11556,10 @@ export const marketplaceStatsCountUsersOfServiceProvidersRetrieve = <ThrowOnErro
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-stats/count_users_of_service_providers/',
@@ -9184,6 +11576,10 @@ export const marketplaceStatsCustomerMemberCountList = <ThrowOnError extends boo
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-stats/customer_member_count/',
@@ -9200,6 +11596,10 @@ export const marketplaceStatsOfferingsCounterStatsList = <ThrowOnError extends b
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-stats/offerings_counter_stats/',
@@ -9216,6 +11616,10 @@ export const marketplaceStatsOrganizationProjectCountList = <ThrowOnError extend
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-stats/organization_project_count/',
@@ -9232,6 +11636,10 @@ export const marketplaceStatsOrganizationResourceCountList = <ThrowOnError exten
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-stats/organization_resource_count/',
@@ -9248,6 +11656,10 @@ export const marketplaceStatsProjectsLimitsGroupedByIndustryFlagRetrieve = <Thro
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-stats/projects_limits_grouped_by_industry_flag/',
@@ -9264,6 +11676,10 @@ export const marketplaceStatsProjectsLimitsGroupedByOecdRetrieve = <ThrowOnError
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-stats/projects_limits_grouped_by_oecd/',
@@ -9280,6 +11696,10 @@ export const marketplaceStatsProjectsUsagesGroupedByIndustryFlagRetrieve = <Thro
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-stats/projects_usages_grouped_by_industry_flag/',
@@ -9296,6 +11716,10 @@ export const marketplaceStatsProjectsUsagesGroupedByOecdRetrieve = <ThrowOnError
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-stats/projects_usages_grouped_by_oecd/',
@@ -9312,6 +11736,10 @@ export const marketplaceStatsResourcesLimitsRetrieve = <ThrowOnError extends boo
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-stats/resources_limits/',
@@ -9328,6 +11756,10 @@ export const marketplaceStatsTotalCostOfActiveResourcesPerOfferingRetrieve = <Th
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/marketplace-stats/total_cost_of_active_resources_per_offering/',
@@ -9344,6 +11776,10 @@ export const mediaRetrieve = <ThrowOnError extends boolean = false>(options: Opt
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/media/{uuid}/',
@@ -9357,6 +11793,10 @@ export const notificationMessagesList = <ThrowOnError extends boolean = false>(o
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/notification-messages/',
@@ -9370,6 +11810,10 @@ export const notificationMessagesCreate = <ThrowOnError extends boolean = false>
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/notification-messages/',
@@ -9387,6 +11831,10 @@ export const notificationMessagesTemplatesList = <ThrowOnError extends boolean =
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/notification-messages-templates/',
@@ -9400,6 +11848,10 @@ export const notificationMessagesTemplatesCreate = <ThrowOnError extends boolean
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/notification-messages-templates/',
@@ -9417,6 +11869,10 @@ export const notificationMessagesTemplatesDestroy = <ThrowOnError extends boolea
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/notification-messages-templates/{uuid}/',
@@ -9430,6 +11886,10 @@ export const notificationMessagesTemplatesRetrieve = <ThrowOnError extends boole
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/notification-messages-templates/{uuid}/',
@@ -9443,6 +11903,10 @@ export const notificationMessagesTemplatesPartialUpdate = <ThrowOnError extends 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/notification-messages-templates/{uuid}/',
@@ -9460,6 +11924,10 @@ export const notificationMessagesTemplatesUpdate = <ThrowOnError extends boolean
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/notification-messages-templates/{uuid}/',
@@ -9477,6 +11945,10 @@ export const notificationMessagesTemplatesOverride = <ThrowOnError extends boole
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/notification-messages-templates/{uuid}/override/',
@@ -9494,6 +11966,10 @@ export const notificationMessagesDestroy = <ThrowOnError extends boolean = false
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/notification-messages/{uuid}/',
@@ -9507,6 +11983,10 @@ export const notificationMessagesRetrieve = <ThrowOnError extends boolean = fals
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/notification-messages/{uuid}/',
@@ -9520,6 +12000,10 @@ export const notificationMessagesPartialUpdate = <ThrowOnError extends boolean =
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/notification-messages/{uuid}/',
@@ -9537,6 +12021,10 @@ export const notificationMessagesUpdate = <ThrowOnError extends boolean = false>
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/notification-messages/{uuid}/',
@@ -9554,6 +12042,10 @@ export const notificationMessagesDisable = <ThrowOnError extends boolean = false
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/notification-messages/{uuid}/disable/',
@@ -9567,6 +12059,10 @@ export const notificationMessagesEnable = <ThrowOnError extends boolean = false>
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/notification-messages/{uuid}/enable/',
@@ -9580,6 +12076,10 @@ export const openstackBackupsList = <ThrowOnError extends boolean = false>(optio
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-backups/',
@@ -9593,6 +12093,10 @@ export const openstackBackupsDestroy = <ThrowOnError extends boolean = false>(op
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-backups/{uuid}/',
@@ -9606,6 +12110,10 @@ export const openstackBackupsRetrieve = <ThrowOnError extends boolean = false>(o
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-backups/{uuid}/',
@@ -9619,6 +12127,10 @@ export const openstackBackupsPartialUpdate = <ThrowOnError extends boolean = fal
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-backups/{uuid}/',
@@ -9636,6 +12148,10 @@ export const openstackBackupsUpdate = <ThrowOnError extends boolean = false>(opt
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-backups/{uuid}/',
@@ -9653,6 +12169,10 @@ export const openstackBackupsPull = <ThrowOnError extends boolean = false>(optio
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-backups/{uuid}/pull/',
@@ -9669,6 +12189,10 @@ export const openstackBackupsRestore = <ThrowOnError extends boolean = false>(op
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-backups/{uuid}/restore/',
@@ -9691,6 +12215,10 @@ export const openstackBackupsUnlink = <ThrowOnError extends boolean = false>(opt
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-backups/{uuid}/unlink/',
@@ -9704,6 +12232,10 @@ export const openstackFlavorsList = <ThrowOnError extends boolean = false>(optio
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-flavors/',
@@ -9717,6 +12249,10 @@ export const openstackFlavorsRetrieve = <ThrowOnError extends boolean = false>(o
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-flavors/{uuid}/',
@@ -9730,6 +12266,10 @@ export const openstackFlavorsUsageStatsRetrieve = <ThrowOnError extends boolean 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-flavors/usage_stats/',
@@ -9746,6 +12286,10 @@ export const openstackFloatingIpsList = <ThrowOnError extends boolean = false>(o
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-floating-ips/',
@@ -9759,6 +12303,10 @@ export const openstackFloatingIpsDestroy = <ThrowOnError extends boolean = false
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-floating-ips/{uuid}/',
@@ -9772,6 +12320,10 @@ export const openstackFloatingIpsRetrieve = <ThrowOnError extends boolean = fals
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-floating-ips/{uuid}/',
@@ -9788,6 +12340,10 @@ export const openstackFloatingIpsAttachToPort = <ThrowOnError extends boolean = 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-floating-ips/{uuid}/attach_to_port/',
@@ -9808,6 +12364,10 @@ export const openstackFloatingIpsDetachFromPort = <ThrowOnError extends boolean 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-floating-ips/{uuid}/detach_from_port/',
@@ -9821,6 +12381,10 @@ export const openstackFloatingIpsPull = <ThrowOnError extends boolean = false>(o
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-floating-ips/{uuid}/pull/',
@@ -9839,6 +12403,10 @@ export const openstackFloatingIpsUnlink = <ThrowOnError extends boolean = false>
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-floating-ips/{uuid}/unlink/',
@@ -9855,6 +12423,10 @@ export const openstackFloatingIpsUpdateDescription = <ThrowOnError extends boole
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-floating-ips/{uuid}/update_description/',
@@ -9872,6 +12444,10 @@ export const openstackImagesList = <ThrowOnError extends boolean = false>(option
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-images/',
@@ -9885,6 +12461,10 @@ export const openstackImagesRetrieve = <ThrowOnError extends boolean = false>(op
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-images/{uuid}/',
@@ -9898,6 +12478,10 @@ export const openstackImagesUsageStatsRetrieve = <ThrowOnError extends boolean =
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-images/usage_stats/',
@@ -9911,6 +12495,10 @@ export const openstackInstanceAvailabilityZonesList = <ThrowOnError extends bool
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-instance-availability-zones/',
@@ -9924,6 +12512,10 @@ export const openstackInstanceAvailabilityZonesRetrieve = <ThrowOnError extends 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-instance-availability-zones/{uuid}/',
@@ -9937,6 +12529,10 @@ export const openstackInstancesList = <ThrowOnError extends boolean = false>(opt
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-instances/',
@@ -9950,6 +12546,10 @@ export const openstackInstancesRetrieve = <ThrowOnError extends boolean = false>
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-instances/{uuid}/',
@@ -9963,6 +12563,10 @@ export const openstackInstancesPartialUpdate = <ThrowOnError extends boolean = f
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-instances/{uuid}/',
@@ -9980,6 +12584,10 @@ export const openstackInstancesUpdate = <ThrowOnError extends boolean = false>(o
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-instances/{uuid}/',
@@ -10000,6 +12608,10 @@ export const openstackInstancesBackup = <ThrowOnError extends boolean = false>(o
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-instances/{uuid}/backup/',
@@ -10020,6 +12632,10 @@ export const openstackInstancesChangeFlavor = <ThrowOnError extends boolean = fa
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-instances/{uuid}/change_flavor/',
@@ -10040,6 +12656,10 @@ export const openstackInstancesConsoleRetrieve = <ThrowOnError extends boolean =
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-instances/{uuid}/console/',
@@ -10056,6 +12676,10 @@ export const openstackInstancesConsoleLogRetrieve = <ThrowOnError extends boolea
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-instances/{uuid}/console_log/',
@@ -10072,6 +12696,10 @@ export const openstackInstancesFloatingIpsList = <ThrowOnError extends boolean =
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-instances/{uuid}/floating_ips/',
@@ -10088,6 +12716,10 @@ export const openstackInstancesPortsList = <ThrowOnError extends boolean = false
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-instances/{uuid}/ports/',
@@ -10101,6 +12733,10 @@ export const openstackInstancesPull = <ThrowOnError extends boolean = false>(opt
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-instances/{uuid}/pull/',
@@ -10117,6 +12753,10 @@ export const openstackInstancesRestart = <ThrowOnError extends boolean = false>(
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-instances/{uuid}/restart/',
@@ -10133,6 +12773,10 @@ export const openstackInstancesStart = <ThrowOnError extends boolean = false>(op
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-instances/{uuid}/start/',
@@ -10149,6 +12793,10 @@ export const openstackInstancesStop = <ThrowOnError extends boolean = false>(opt
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-instances/{uuid}/stop/',
@@ -10167,6 +12815,10 @@ export const openstackInstancesUnlink = <ThrowOnError extends boolean = false>(o
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-instances/{uuid}/unlink/',
@@ -10183,6 +12835,10 @@ export const openstackInstancesUpdateAllowedAddressPairs = <ThrowOnError extends
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-instances/{uuid}/update_allowed_address_pairs/',
@@ -10203,6 +12859,10 @@ export const openstackInstancesUpdateFloatingIps = <ThrowOnError extends boolean
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-instances/{uuid}/update_floating_ips/',
@@ -10223,6 +12883,10 @@ export const openstackInstancesUpdatePorts = <ThrowOnError extends boolean = fal
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-instances/{uuid}/update_ports/',
@@ -10243,6 +12907,10 @@ export const openstackInstancesUpdateSecurityGroups = <ThrowOnError extends bool
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-instances/{uuid}/update_security_groups/',
@@ -10260,6 +12928,10 @@ export const openstackMigrationsList = <ThrowOnError extends boolean = false>(op
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-migrations/',
@@ -10273,6 +12945,10 @@ export const openstackMigrationsCreate = <ThrowOnError extends boolean = false>(
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-migrations/',
@@ -10290,6 +12966,10 @@ export const openstackMigrationsDestroy = <ThrowOnError extends boolean = false>
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-migrations/{uuid}/',
@@ -10303,6 +12983,10 @@ export const openstackMigrationsRetrieve = <ThrowOnError extends boolean = false
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-migrations/{uuid}/',
@@ -10316,6 +13000,10 @@ export const openstackMigrationsPartialUpdate = <ThrowOnError extends boolean = 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-migrations/{uuid}/',
@@ -10333,6 +13021,10 @@ export const openstackMigrationsUpdate = <ThrowOnError extends boolean = false>(
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-migrations/{uuid}/',
@@ -10350,6 +13042,10 @@ export const openstackNetworkRbacPoliciesList = <ThrowOnError extends boolean = 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-network-rbac-policies/',
@@ -10363,6 +13059,10 @@ export const openstackNetworkRbacPoliciesRetrieve = <ThrowOnError extends boolea
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-network-rbac-policies/{uuid}/',
@@ -10376,6 +13076,10 @@ export const openstackNetworksList = <ThrowOnError extends boolean = false>(opti
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-networks/',
@@ -10389,6 +13093,10 @@ export const openstackNetworksDestroy = <ThrowOnError extends boolean = false>(o
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-networks/{uuid}/',
@@ -10402,6 +13110,10 @@ export const openstackNetworksRetrieve = <ThrowOnError extends boolean = false>(
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-networks/{uuid}/',
@@ -10415,6 +13127,10 @@ export const openstackNetworksPartialUpdate = <ThrowOnError extends boolean = fa
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-networks/{uuid}/',
@@ -10432,6 +13148,10 @@ export const openstackNetworksUpdate = <ThrowOnError extends boolean = false>(op
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-networks/{uuid}/',
@@ -10449,6 +13169,10 @@ export const openstackNetworksCreateSubnet = <ThrowOnError extends boolean = fal
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-networks/{uuid}/create_subnet/',
@@ -10466,6 +13190,10 @@ export const openstackNetworksPull = <ThrowOnError extends boolean = false>(opti
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-networks/{uuid}/pull/',
@@ -10482,6 +13210,10 @@ export const openstackNetworksRbacPolicyCreate = <ThrowOnError extends boolean =
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-networks/{uuid}/rbac_policy_create/',
@@ -10502,6 +13234,10 @@ export const openstackNetworksRbacPolicyDeleteDestroy = <ThrowOnError extends bo
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-networks/{uuid}/rbac_policy_delete/{rbac_policy_uuid}/',
@@ -10515,6 +13251,10 @@ export const openstackNetworksSetMtu = <ThrowOnError extends boolean = false>(op
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-networks/{uuid}/set_mtu/',
@@ -10537,6 +13277,10 @@ export const openstackNetworksUnlink = <ThrowOnError extends boolean = false>(op
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-networks/{uuid}/unlink/',
@@ -10550,6 +13294,10 @@ export const openstackPortsList = <ThrowOnError extends boolean = false>(options
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-ports/',
@@ -10563,6 +13311,10 @@ export const openstackPortsCreate = <ThrowOnError extends boolean = false>(optio
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-ports/',
@@ -10580,6 +13332,10 @@ export const openstackPortsDestroy = <ThrowOnError extends boolean = false>(opti
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-ports/{uuid}/',
@@ -10593,6 +13349,10 @@ export const openstackPortsRetrieve = <ThrowOnError extends boolean = false>(opt
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-ports/{uuid}/',
@@ -10606,6 +13366,10 @@ export const openstackPortsPartialUpdate = <ThrowOnError extends boolean = false
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-ports/{uuid}/',
@@ -10623,6 +13387,10 @@ export const openstackPortsUpdate = <ThrowOnError extends boolean = false>(optio
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-ports/{uuid}/',
@@ -10643,6 +13411,10 @@ export const openstackPortsDisablePort = <ThrowOnError extends boolean = false>(
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-ports/{uuid}/disable_port/',
@@ -10659,6 +13431,10 @@ export const openstackPortsDisablePortSecurity = <ThrowOnError extends boolean =
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-ports/{uuid}/disable_port_security/',
@@ -10675,6 +13451,10 @@ export const openstackPortsEnablePort = <ThrowOnError extends boolean = false>(o
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-ports/{uuid}/enable_port/',
@@ -10691,6 +13471,10 @@ export const openstackPortsEnablePortSecurity = <ThrowOnError extends boolean = 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-ports/{uuid}/enable_port_security/',
@@ -10704,6 +13488,10 @@ export const openstackPortsPull = <ThrowOnError extends boolean = false>(options
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-ports/{uuid}/pull/',
@@ -10722,6 +13510,10 @@ export const openstackPortsUnlink = <ThrowOnError extends boolean = false>(optio
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-ports/{uuid}/unlink/',
@@ -10738,6 +13530,10 @@ export const openstackPortsUpdatePortIp = <ThrowOnError extends boolean = false>
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-ports/{uuid}/update_port_ip/',
@@ -10758,6 +13554,10 @@ export const openstackPortsUpdateSecurityGroups = <ThrowOnError extends boolean 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-ports/{uuid}/update_security_groups/',
@@ -10775,6 +13575,10 @@ export const openstackRoutersList = <ThrowOnError extends boolean = false>(optio
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-routers/',
@@ -10788,6 +13592,10 @@ export const openstackRoutersCreate = <ThrowOnError extends boolean = false>(opt
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-routers/',
@@ -10805,6 +13613,10 @@ export const openstackRoutersDestroy = <ThrowOnError extends boolean = false>(op
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-routers/{uuid}/',
@@ -10818,6 +13630,10 @@ export const openstackRoutersRetrieve = <ThrowOnError extends boolean = false>(o
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-routers/{uuid}/',
@@ -10834,6 +13650,10 @@ export const openstackRoutersAddRouterInterface = <ThrowOnError extends boolean 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-routers/{uuid}/add_router_interface/',
@@ -10854,6 +13674,10 @@ export const openstackRoutersRemoveRouterInterface = <ThrowOnError extends boole
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-routers/{uuid}/remove_router_interface/',
@@ -10871,6 +13695,10 @@ export const openstackRoutersSetRoutes = <ThrowOnError extends boolean = false>(
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-routers/{uuid}/set_routes/',
@@ -10888,6 +13716,10 @@ export const openstackSecurityGroupsList = <ThrowOnError extends boolean = false
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-security-groups/',
@@ -10901,6 +13733,10 @@ export const openstackSecurityGroupsDestroy = <ThrowOnError extends boolean = fa
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-security-groups/{uuid}/',
@@ -10914,6 +13750,10 @@ export const openstackSecurityGroupsRetrieve = <ThrowOnError extends boolean = f
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-security-groups/{uuid}/',
@@ -10927,6 +13767,10 @@ export const openstackSecurityGroupsPartialUpdate = <ThrowOnError extends boolea
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-security-groups/{uuid}/',
@@ -10944,6 +13788,10 @@ export const openstackSecurityGroupsUpdate = <ThrowOnError extends boolean = fal
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-security-groups/{uuid}/',
@@ -10961,6 +13809,10 @@ export const openstackSecurityGroupsPull = <ThrowOnError extends boolean = false
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-security-groups/{uuid}/pull/',
@@ -10977,6 +13829,10 @@ export const openstackSecurityGroupsSetRules = <ThrowOnError extends boolean = f
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-security-groups/{uuid}/set_rules/',
@@ -10999,6 +13855,10 @@ export const openstackSecurityGroupsUnlink = <ThrowOnError extends boolean = fal
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-security-groups/{uuid}/unlink/',
@@ -11012,6 +13872,10 @@ export const openstackServerGroupsList = <ThrowOnError extends boolean = false>(
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-server-groups/',
@@ -11025,6 +13889,10 @@ export const openstackServerGroupsCreate = <ThrowOnError extends boolean = false
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-server-groups/',
@@ -11042,6 +13910,10 @@ export const openstackServerGroupsDestroy = <ThrowOnError extends boolean = fals
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-server-groups/{uuid}/',
@@ -11055,6 +13927,10 @@ export const openstackServerGroupsRetrieve = <ThrowOnError extends boolean = fal
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-server-groups/{uuid}/',
@@ -11068,6 +13944,10 @@ export const openstackServerGroupsPartialUpdate = <ThrowOnError extends boolean 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-server-groups/{uuid}/',
@@ -11085,6 +13965,10 @@ export const openstackServerGroupsUpdate = <ThrowOnError extends boolean = false
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-server-groups/{uuid}/',
@@ -11102,6 +13986,10 @@ export const openstackServerGroupsPull = <ThrowOnError extends boolean = false>(
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-server-groups/{uuid}/pull/',
@@ -11120,6 +14008,10 @@ export const openstackServerGroupsUnlink = <ThrowOnError extends boolean = false
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-server-groups/{uuid}/unlink/',
@@ -11133,6 +14025,10 @@ export const openstackSnapshotsList = <ThrowOnError extends boolean = false>(opt
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-snapshots/',
@@ -11146,6 +14042,10 @@ export const openstackSnapshotsDestroy = <ThrowOnError extends boolean = false>(
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-snapshots/{uuid}/',
@@ -11159,6 +14059,10 @@ export const openstackSnapshotsRetrieve = <ThrowOnError extends boolean = false>
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-snapshots/{uuid}/',
@@ -11172,6 +14076,10 @@ export const openstackSnapshotsPartialUpdate = <ThrowOnError extends boolean = f
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-snapshots/{uuid}/',
@@ -11189,6 +14097,10 @@ export const openstackSnapshotsUpdate = <ThrowOnError extends boolean = false>(o
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-snapshots/{uuid}/',
@@ -11206,6 +14118,10 @@ export const openstackSnapshotsPull = <ThrowOnError extends boolean = false>(opt
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-snapshots/{uuid}/pull/',
@@ -11222,6 +14138,10 @@ export const openstackSnapshotsRestorationsList = <ThrowOnError extends boolean 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-snapshots/{uuid}/restorations/',
@@ -11238,6 +14158,10 @@ export const openstackSnapshotsRestore = <ThrowOnError extends boolean = false>(
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-snapshots/{uuid}/restore/',
@@ -11260,6 +14184,10 @@ export const openstackSnapshotsUnlink = <ThrowOnError extends boolean = false>(o
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-snapshots/{uuid}/unlink/',
@@ -11273,6 +14201,10 @@ export const openstackSubnetsList = <ThrowOnError extends boolean = false>(optio
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-subnets/',
@@ -11286,6 +14218,10 @@ export const openstackSubnetsDestroy = <ThrowOnError extends boolean = false>(op
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-subnets/{uuid}/',
@@ -11299,6 +14235,10 @@ export const openstackSubnetsRetrieve = <ThrowOnError extends boolean = false>(o
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-subnets/{uuid}/',
@@ -11312,6 +14252,10 @@ export const openstackSubnetsPartialUpdate = <ThrowOnError extends boolean = fal
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-subnets/{uuid}/',
@@ -11329,6 +14273,10 @@ export const openstackSubnetsUpdate = <ThrowOnError extends boolean = false>(opt
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-subnets/{uuid}/',
@@ -11346,6 +14294,10 @@ export const openstackSubnetsConnect = <ThrowOnError extends boolean = false>(op
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-subnets/{uuid}/connect/',
@@ -11359,6 +14311,10 @@ export const openstackSubnetsDisconnect = <ThrowOnError extends boolean = false>
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-subnets/{uuid}/disconnect/',
@@ -11372,6 +14328,10 @@ export const openstackSubnetsPull = <ThrowOnError extends boolean = false>(optio
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-subnets/{uuid}/pull/',
@@ -11390,6 +14350,10 @@ export const openstackSubnetsUnlink = <ThrowOnError extends boolean = false>(opt
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-subnets/{uuid}/unlink/',
@@ -11403,6 +14367,10 @@ export const openstackTenantsList = <ThrowOnError extends boolean = false>(optio
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-tenants/',
@@ -11416,6 +14384,10 @@ export const openstackTenantsCreate = <ThrowOnError extends boolean = false>(opt
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-tenants/',
@@ -11433,6 +14405,10 @@ export const openstackTenantsDestroy = <ThrowOnError extends boolean = false>(op
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-tenants/{uuid}/',
@@ -11446,6 +14422,10 @@ export const openstackTenantsRetrieve = <ThrowOnError extends boolean = false>(o
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-tenants/{uuid}/',
@@ -11459,6 +14439,10 @@ export const openstackTenantsPartialUpdate = <ThrowOnError extends boolean = fal
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-tenants/{uuid}/',
@@ -11476,6 +14460,10 @@ export const openstackTenantsUpdate = <ThrowOnError extends boolean = false>(opt
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-tenants/{uuid}/',
@@ -11496,6 +14484,10 @@ export const openstackTenantsBackendInstancesList = <ThrowOnError extends boolea
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-tenants/{uuid}/backend_instances/',
@@ -11512,6 +14504,10 @@ export const openstackTenantsBackendVolumesList = <ThrowOnError extends boolean 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-tenants/{uuid}/backend_volumes/',
@@ -11528,6 +14524,10 @@ export const openstackTenantsChangePassword = <ThrowOnError extends boolean = fa
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-tenants/{uuid}/change_password/',
@@ -11548,6 +14548,10 @@ export const openstackTenantsCreateFloatingIp = <ThrowOnError extends boolean = 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-tenants/{uuid}/create_floating_ip/',
@@ -11564,6 +14568,10 @@ export const openstackTenantsCreateNetwork = <ThrowOnError extends boolean = fal
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-tenants/{uuid}/create_network/',
@@ -11581,6 +14589,10 @@ export const openstackTenantsCreateSecurityGroup = <ThrowOnError extends boolean
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-tenants/{uuid}/create_security_group/',
@@ -11598,6 +14610,10 @@ export const openstackTenantsCreateServerGroup = <ThrowOnError extends boolean =
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-tenants/{uuid}/create_server_group/',
@@ -11615,6 +14631,10 @@ export const openstackTenantsPull = <ThrowOnError extends boolean = false>(optio
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-tenants/{uuid}/pull/',
@@ -11631,6 +14651,10 @@ export const openstackTenantsPullFloatingIps = <ThrowOnError extends boolean = f
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-tenants/{uuid}/pull_floating_ips/',
@@ -11647,6 +14671,10 @@ export const openstackTenantsPullQuotas = <ThrowOnError extends boolean = false>
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-tenants/{uuid}/pull_quotas/',
@@ -11663,6 +14691,10 @@ export const openstackTenantsPullSecurityGroups = <ThrowOnError extends boolean 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-tenants/{uuid}/pull_security_groups/',
@@ -11679,6 +14711,10 @@ export const openstackTenantsPullServerGroups = <ThrowOnError extends boolean = 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-tenants/{uuid}/pull_server_groups/',
@@ -11720,6 +14756,10 @@ export const openstackTenantsSetQuotas = <ThrowOnError extends boolean = false>(
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-tenants/{uuid}/set_quotas/',
@@ -11742,6 +14782,10 @@ export const openstackTenantsUnlink = <ThrowOnError extends boolean = false>(opt
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-tenants/{uuid}/unlink/',
@@ -11755,6 +14799,10 @@ export const openstackVolumeAvailabilityZonesList = <ThrowOnError extends boolea
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-volume-availability-zones/',
@@ -11768,6 +14816,10 @@ export const openstackVolumeAvailabilityZonesRetrieve = <ThrowOnError extends bo
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-volume-availability-zones/{uuid}/',
@@ -11781,6 +14833,10 @@ export const openstackVolumeTypesList = <ThrowOnError extends boolean = false>(o
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-volume-types/',
@@ -11794,6 +14850,10 @@ export const openstackVolumeTypesRetrieve = <ThrowOnError extends boolean = fals
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-volume-types/{uuid}/',
@@ -11807,6 +14867,10 @@ export const openstackVolumesList = <ThrowOnError extends boolean = false>(optio
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-volumes/',
@@ -11820,6 +14884,10 @@ export const openstackVolumesRetrieve = <ThrowOnError extends boolean = false>(o
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-volumes/{uuid}/',
@@ -11833,6 +14901,10 @@ export const openstackVolumesPartialUpdate = <ThrowOnError extends boolean = fal
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-volumes/{uuid}/',
@@ -11850,6 +14922,10 @@ export const openstackVolumesUpdate = <ThrowOnError extends boolean = false>(opt
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-volumes/{uuid}/',
@@ -11870,6 +14946,10 @@ export const openstackVolumesAttach = <ThrowOnError extends boolean = false>(opt
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-volumes/{uuid}/attach/',
@@ -11890,6 +14970,10 @@ export const openstackVolumesDetach = <ThrowOnError extends boolean = false>(opt
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-volumes/{uuid}/detach/',
@@ -11906,6 +14990,10 @@ export const openstackVolumesExtend = <ThrowOnError extends boolean = false>(opt
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-volumes/{uuid}/extend/',
@@ -11923,6 +15011,10 @@ export const openstackVolumesPull = <ThrowOnError extends boolean = false>(optio
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-volumes/{uuid}/pull/',
@@ -11939,6 +15031,10 @@ export const openstackVolumesRetype = <ThrowOnError extends boolean = false>(opt
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-volumes/{uuid}/retype/',
@@ -11959,6 +15055,10 @@ export const openstackVolumesSnapshot = <ThrowOnError extends boolean = false>(o
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-volumes/{uuid}/snapshot/',
@@ -11981,6 +15081,10 @@ export const openstackVolumesUnlink = <ThrowOnError extends boolean = false>(opt
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/openstack-volumes/{uuid}/unlink/',
@@ -11994,6 +15098,10 @@ export const organizationGroupsList = <ThrowOnError extends boolean = false>(opt
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/organization-groups/',
@@ -12007,6 +15115,10 @@ export const organizationGroupsCreate = <ThrowOnError extends boolean = false>(o
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/organization-groups/',
@@ -12024,6 +15136,10 @@ export const organizationGroupsDestroy = <ThrowOnError extends boolean = false>(
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/organization-groups/{uuid}/',
@@ -12037,6 +15153,10 @@ export const organizationGroupsRetrieve = <ThrowOnError extends boolean = false>
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/organization-groups/{uuid}/',
@@ -12050,6 +15170,10 @@ export const organizationGroupsPartialUpdate = <ThrowOnError extends boolean = f
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/organization-groups/{uuid}/',
@@ -12067,6 +15191,10 @@ export const organizationGroupsUpdate = <ThrowOnError extends boolean = false>(o
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/organization-groups/{uuid}/',
@@ -12084,6 +15212,10 @@ export const overrideSettingsRetrieve = <ThrowOnError extends boolean = false>(o
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/override-settings/',
@@ -12097,6 +15229,10 @@ export const overrideSettings = <ThrowOnError extends boolean = false>(options?:
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/override-settings/',
@@ -12114,6 +15250,10 @@ export const paymentProfilesList = <ThrowOnError extends boolean = false>(option
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/payment-profiles/',
@@ -12127,6 +15267,10 @@ export const paymentProfilesCreate = <ThrowOnError extends boolean = false>(opti
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/payment-profiles/',
@@ -12144,6 +15288,10 @@ export const paymentProfilesDestroy = <ThrowOnError extends boolean = false>(opt
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/payment-profiles/{uuid}/',
@@ -12157,6 +15305,10 @@ export const paymentProfilesRetrieve = <ThrowOnError extends boolean = false>(op
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/payment-profiles/{uuid}/',
@@ -12170,6 +15322,10 @@ export const paymentProfilesPartialUpdate = <ThrowOnError extends boolean = fals
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/payment-profiles/{uuid}/',
@@ -12187,6 +15343,10 @@ export const paymentProfilesUpdate = <ThrowOnError extends boolean = false>(opti
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/payment-profiles/{uuid}/',
@@ -12204,6 +15364,10 @@ export const paymentProfilesEnable = <ThrowOnError extends boolean = false>(opti
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/payment-profiles/{uuid}/enable/',
@@ -12217,6 +15381,10 @@ export const paymentsList = <ThrowOnError extends boolean = false>(options?: Opt
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/payments/',
@@ -12230,6 +15398,10 @@ export const paymentsCreate = <ThrowOnError extends boolean = false>(options: Op
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/payments/',
@@ -12247,6 +15419,10 @@ export const paymentsDestroy = <ThrowOnError extends boolean = false>(options: O
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/payments/{uuid}/',
@@ -12260,6 +15436,10 @@ export const paymentsRetrieve = <ThrowOnError extends boolean = false>(options: 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/payments/{uuid}/',
@@ -12273,6 +15453,10 @@ export const paymentsPartialUpdate = <ThrowOnError extends boolean = false>(opti
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/payments/{uuid}/',
@@ -12290,6 +15474,10 @@ export const paymentsUpdate = <ThrowOnError extends boolean = false>(options: Op
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/payments/{uuid}/',
@@ -12310,6 +15498,10 @@ export const paymentsLinkToInvoice = <ThrowOnError extends boolean = false>(opti
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/payments/{uuid}/link_to_invoice/',
@@ -12330,6 +15522,10 @@ export const paymentsUnlinkFromInvoice = <ThrowOnError extends boolean = false>(
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/payments/{uuid}/unlink_from_invoice/',
@@ -12343,6 +15539,10 @@ export const projectCreditsList = <ThrowOnError extends boolean = false>(options
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/project-credits/',
@@ -12356,6 +15556,10 @@ export const projectCreditsCreate = <ThrowOnError extends boolean = false>(optio
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/project-credits/',
@@ -12373,6 +15577,10 @@ export const projectCreditsDestroy = <ThrowOnError extends boolean = false>(opti
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/project-credits/{uuid}/',
@@ -12386,6 +15594,10 @@ export const projectCreditsRetrieve = <ThrowOnError extends boolean = false>(opt
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/project-credits/{uuid}/',
@@ -12399,6 +15611,10 @@ export const projectCreditsPartialUpdate = <ThrowOnError extends boolean = false
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/project-credits/{uuid}/',
@@ -12416,6 +15632,10 @@ export const projectCreditsUpdate = <ThrowOnError extends boolean = false>(optio
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/project-credits/{uuid}/',
@@ -12436,6 +15656,10 @@ export const projectQuotasList = <ThrowOnError extends boolean = false>(options?
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/project-quotas/',
@@ -12449,6 +15673,10 @@ export const projectTypesList = <ThrowOnError extends boolean = false>(options?:
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/project-types/',
@@ -12462,6 +15690,10 @@ export const projectTypesRetrieve = <ThrowOnError extends boolean = false>(optio
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/project-types/{uuid}/',
@@ -12475,6 +15707,10 @@ export const projectsList = <ThrowOnError extends boolean = false>(options?: Opt
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/projects/',
@@ -12492,6 +15728,10 @@ export const projectsCreate = <ThrowOnError extends boolean = false>(options: Op
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/projects/',
@@ -12509,6 +15749,10 @@ export const projectsMarketplaceChecklistsList = <ThrowOnError extends boolean =
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/projects/{project_uuid}/marketplace-checklists/',
@@ -12525,6 +15769,10 @@ export const projectsDestroy = <ThrowOnError extends boolean = false>(options: O
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/projects/{uuid}/',
@@ -12538,6 +15786,10 @@ export const projectsRetrieve = <ThrowOnError extends boolean = false>(options: 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/projects/{uuid}/',
@@ -12551,6 +15803,10 @@ export const projectsPartialUpdate = <ThrowOnError extends boolean = false>(opti
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/projects/{uuid}/',
@@ -12568,6 +15824,10 @@ export const projectsUpdate = <ThrowOnError extends boolean = false>(options: Op
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/projects/{uuid}/',
@@ -12585,6 +15845,10 @@ export const projectsAddUser = <ThrowOnError extends boolean = false>(options: O
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/projects/{uuid}/add_user/',
@@ -12602,6 +15866,10 @@ export const projectsDeleteUser = <ThrowOnError extends boolean = false>(options
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/projects/{uuid}/delete_user/',
@@ -12619,6 +15887,10 @@ export const projectsListUsersList = <ThrowOnError extends boolean = false>(opti
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/projects/{uuid}/list_users/',
@@ -12632,6 +15904,10 @@ export const projectsMoveProject = <ThrowOnError extends boolean = false>(option
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/projects/{uuid}/move_project/',
@@ -12652,6 +15928,10 @@ export const projectsOtherUsersList = <ThrowOnError extends boolean = false>(opt
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/projects/{uuid}/other_users/',
@@ -12668,6 +15948,10 @@ export const projectsStatsRetrieve = <ThrowOnError extends boolean = false>(opti
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/projects/{uuid}/stats/',
@@ -12681,6 +15965,10 @@ export const projectsUpdateUser = <ThrowOnError extends boolean = false>(options
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/projects/{uuid}/update_user/',
@@ -12698,6 +15986,10 @@ export const promotionsCampaignsList = <ThrowOnError extends boolean = false>(op
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/promotions-campaigns/',
@@ -12711,6 +16003,10 @@ export const promotionsCampaignsCreate = <ThrowOnError extends boolean = false>(
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/promotions-campaigns/',
@@ -12728,6 +16024,10 @@ export const promotionsCampaignsDestroy = <ThrowOnError extends boolean = false>
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/promotions-campaigns/{uuid}/',
@@ -12741,6 +16041,10 @@ export const promotionsCampaignsRetrieve = <ThrowOnError extends boolean = false
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/promotions-campaigns/{uuid}/',
@@ -12754,6 +16058,10 @@ export const promotionsCampaignsUpdate = <ThrowOnError extends boolean = false>(
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/promotions-campaigns/{uuid}/',
@@ -12774,6 +16082,10 @@ export const promotionsCampaignsActivate = <ThrowOnError extends boolean = false
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/promotions-campaigns/{uuid}/activate/',
@@ -12790,6 +16102,10 @@ export const promotionsCampaignsOrdersList = <ThrowOnError extends boolean = fal
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/promotions-campaigns/{uuid}/orders/',
@@ -12806,6 +16122,10 @@ export const promotionsCampaignsResourcesList = <ThrowOnError extends boolean = 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/promotions-campaigns/{uuid}/resources/',
@@ -12822,6 +16142,10 @@ export const promotionsCampaignsTerminate = <ThrowOnError extends boolean = fals
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/promotions-campaigns/{uuid}/terminate/',
@@ -12835,6 +16159,10 @@ export const proposalProposalsList = <ThrowOnError extends boolean = false>(opti
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/proposal-proposals/',
@@ -12848,6 +16176,10 @@ export const proposalProposalsCreate = <ThrowOnError extends boolean = false>(op
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/proposal-proposals/',
@@ -12865,6 +16197,10 @@ export const proposalProposalsDestroy = <ThrowOnError extends boolean = false>(o
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/proposal-proposals/{uuid}/',
@@ -12878,6 +16214,10 @@ export const proposalProposalsRetrieve = <ThrowOnError extends boolean = false>(
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/proposal-proposals/{uuid}/',
@@ -12891,6 +16231,10 @@ export const proposalProposalsAddUser = <ThrowOnError extends boolean = false>(o
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/proposal-proposals/{uuid}/add_user/',
@@ -12911,6 +16255,10 @@ export const proposalProposalsApprove = <ThrowOnError extends boolean = false>(o
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/proposal-proposals/{uuid}/approve/',
@@ -12931,6 +16279,10 @@ export const proposalProposalsAttachDocument = <ThrowOnError extends boolean = f
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/proposal-proposals/{uuid}/attach_document/',
@@ -12948,6 +16300,10 @@ export const proposalProposalsDeleteUser = <ThrowOnError extends boolean = false
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/proposal-proposals/{uuid}/delete_user/',
@@ -12965,6 +16321,10 @@ export const proposalProposalsListUsersList = <ThrowOnError extends boolean = fa
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/proposal-proposals/{uuid}/list_users/',
@@ -12981,6 +16341,10 @@ export const proposalProposalsReject = <ThrowOnError extends boolean = false>(op
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/proposal-proposals/{uuid}/reject/',
@@ -13001,6 +16365,10 @@ export const proposalProposalsResourcesList = <ThrowOnError extends boolean = fa
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/proposal-proposals/{uuid}/resources/',
@@ -13017,6 +16385,10 @@ export const proposalProposalsResourcesSet = <ThrowOnError extends boolean = fal
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/proposal-proposals/{uuid}/resources/',
@@ -13034,6 +16406,10 @@ export const proposalProposalsResourcesDestroy = <ThrowOnError extends boolean =
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/proposal-proposals/{uuid}/resources/{obj_uuid}/',
@@ -13047,6 +16423,10 @@ export const proposalProposalsResourcesRetrieve = <ThrowOnError extends boolean 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/proposal-proposals/{uuid}/resources/{obj_uuid}/',
@@ -13060,6 +16440,10 @@ export const proposalProposalsResourcesPartialUpdate = <ThrowOnError extends boo
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/proposal-proposals/{uuid}/resources/{obj_uuid}/',
@@ -13077,6 +16461,10 @@ export const proposalProposalsResourcesUpdate = <ThrowOnError extends boolean = 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/proposal-proposals/{uuid}/resources/{obj_uuid}/',
@@ -13097,6 +16485,10 @@ export const proposalProposalsSubmit = <ThrowOnError extends boolean = false>(op
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/proposal-proposals/{uuid}/submit/',
@@ -13113,6 +16505,10 @@ export const proposalProposalsUpdateProjectDetails = <ThrowOnError extends boole
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/proposal-proposals/{uuid}/update_project_details/',
@@ -13130,6 +16526,10 @@ export const proposalProposalsUpdateUser = <ThrowOnError extends boolean = false
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/proposal-proposals/{uuid}/update_user/',
@@ -13147,6 +16547,10 @@ export const proposalProtectedCallsList = <ThrowOnError extends boolean = false>
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/proposal-protected-calls/',
@@ -13160,6 +16564,10 @@ export const proposalProtectedCallsCreate = <ThrowOnError extends boolean = fals
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/proposal-protected-calls/',
@@ -13177,6 +16585,10 @@ export const proposalProtectedCallsDestroy = <ThrowOnError extends boolean = fal
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/proposal-protected-calls/{uuid}/',
@@ -13190,6 +16602,10 @@ export const proposalProtectedCallsRetrieve = <ThrowOnError extends boolean = fa
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/proposal-protected-calls/{uuid}/',
@@ -13203,6 +16619,10 @@ export const proposalProtectedCallsPartialUpdate = <ThrowOnError extends boolean
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/proposal-protected-calls/{uuid}/',
@@ -13220,6 +16640,10 @@ export const proposalProtectedCallsUpdate = <ThrowOnError extends boolean = fals
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/proposal-protected-calls/{uuid}/',
@@ -13240,6 +16664,10 @@ export const proposalProtectedCallsActivate = <ThrowOnError extends boolean = fa
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/proposal-protected-calls/{uuid}/activate/',
@@ -13253,6 +16681,10 @@ export const proposalProtectedCallsAddUser = <ThrowOnError extends boolean = fal
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/proposal-protected-calls/{uuid}/add_user/',
@@ -13273,6 +16705,10 @@ export const proposalProtectedCallsArchive = <ThrowOnError extends boolean = fal
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/proposal-protected-calls/{uuid}/archive/',
@@ -13289,6 +16725,10 @@ export const proposalProtectedCallsAttachDocuments = <ThrowOnError extends boole
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/proposal-protected-calls/{uuid}/attach_documents/',
@@ -13306,6 +16746,10 @@ export const proposalProtectedCallsDeleteUser = <ThrowOnError extends boolean = 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/proposal-protected-calls/{uuid}/delete_user/',
@@ -13326,6 +16770,10 @@ export const proposalProtectedCallsDetachDocuments = <ThrowOnError extends boole
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/proposal-protected-calls/{uuid}/detach_documents/',
@@ -13343,6 +16791,10 @@ export const proposalProtectedCallsListUsersList = <ThrowOnError extends boolean
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/proposal-protected-calls/{uuid}/list_users/',
@@ -13359,6 +16811,10 @@ export const proposalProtectedCallsOfferingsList = <ThrowOnError extends boolean
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/proposal-protected-calls/{uuid}/offerings/',
@@ -13375,6 +16831,10 @@ export const proposalProtectedCallsOfferingsSet = <ThrowOnError extends boolean 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/proposal-protected-calls/{uuid}/offerings/',
@@ -13392,6 +16852,10 @@ export const proposalProtectedCallsOfferingsDestroy = <ThrowOnError extends bool
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/proposal-protected-calls/{uuid}/offerings/{obj_uuid}/',
@@ -13405,6 +16869,10 @@ export const proposalProtectedCallsOfferingsRetrieve = <ThrowOnError extends boo
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/proposal-protected-calls/{uuid}/offerings/{obj_uuid}/',
@@ -13418,6 +16886,10 @@ export const proposalProtectedCallsOfferingsPartialUpdate = <ThrowOnError extend
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/proposal-protected-calls/{uuid}/offerings/{obj_uuid}/',
@@ -13435,6 +16907,10 @@ export const proposalProtectedCallsOfferingsUpdate = <ThrowOnError extends boole
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/proposal-protected-calls/{uuid}/offerings/{obj_uuid}/',
@@ -13455,6 +16931,10 @@ export const proposalProtectedCallsResourceTemplatesList = <ThrowOnError extends
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/proposal-protected-calls/{uuid}/resource_templates/',
@@ -13471,6 +16951,10 @@ export const proposalProtectedCallsResourceTemplatesSet = <ThrowOnError extends 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/proposal-protected-calls/{uuid}/resource_templates/',
@@ -13488,6 +16972,10 @@ export const proposalProtectedCallsResourceTemplatesDestroy = <ThrowOnError exte
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/proposal-protected-calls/{uuid}/resource_templates/{obj_uuid}/',
@@ -13501,6 +16989,10 @@ export const proposalProtectedCallsResourceTemplatesRetrieve = <ThrowOnError ext
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/proposal-protected-calls/{uuid}/resource_templates/{obj_uuid}/',
@@ -13514,6 +17006,10 @@ export const proposalProtectedCallsResourceTemplatesPartialUpdate = <ThrowOnErro
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/proposal-protected-calls/{uuid}/resource_templates/{obj_uuid}/',
@@ -13531,6 +17027,10 @@ export const proposalProtectedCallsResourceTemplatesUpdate = <ThrowOnError exten
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/proposal-protected-calls/{uuid}/resource_templates/{obj_uuid}/',
@@ -13551,6 +17051,10 @@ export const proposalProtectedCallsRoundsList = <ThrowOnError extends boolean = 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/proposal-protected-calls/{uuid}/rounds/',
@@ -13567,6 +17071,10 @@ export const proposalProtectedCallsRoundsSet = <ThrowOnError extends boolean = f
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/proposal-protected-calls/{uuid}/rounds/',
@@ -13584,6 +17092,10 @@ export const proposalProtectedCallsRoundsDestroy = <ThrowOnError extends boolean
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/proposal-protected-calls/{uuid}/rounds/{obj_uuid}/',
@@ -13597,6 +17109,10 @@ export const proposalProtectedCallsRoundsRetrieve = <ThrowOnError extends boolea
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/proposal-protected-calls/{uuid}/rounds/{obj_uuid}/',
@@ -13610,6 +17126,10 @@ export const proposalProtectedCallsRoundsPartialUpdate = <ThrowOnError extends b
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/proposal-protected-calls/{uuid}/rounds/{obj_uuid}/',
@@ -13627,6 +17147,10 @@ export const proposalProtectedCallsRoundsUpdate = <ThrowOnError extends boolean 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/proposal-protected-calls/{uuid}/rounds/{obj_uuid}/',
@@ -13644,6 +17168,10 @@ export const proposalProtectedCallsRoundsClose = <ThrowOnError extends boolean =
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/proposal-protected-calls/{uuid}/rounds/{obj_uuid}/close/',
@@ -13661,6 +17189,10 @@ export const proposalProtectedCallsUpdateUser = <ThrowOnError extends boolean = 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/proposal-protected-calls/{uuid}/update_user/',
@@ -13678,6 +17210,10 @@ export const proposalPublicCallsList = <ThrowOnError extends boolean = false>(op
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/proposal-public-calls/',
@@ -13691,6 +17227,10 @@ export const proposalPublicCallsRetrieve = <ThrowOnError extends boolean = false
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/proposal-public-calls/{uuid}/',
@@ -13704,6 +17244,10 @@ export const proposalRequestedOfferingsList = <ThrowOnError extends boolean = fa
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/proposal-requested-offerings/',
@@ -13717,6 +17261,10 @@ export const proposalRequestedOfferingsRetrieve = <ThrowOnError extends boolean 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/proposal-requested-offerings/{uuid}/',
@@ -13733,6 +17281,10 @@ export const proposalRequestedOfferingsAccept = <ThrowOnError extends boolean = 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/proposal-requested-offerings/{uuid}/accept/',
@@ -13749,6 +17301,10 @@ export const proposalRequestedOfferingsCancel = <ThrowOnError extends boolean = 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/proposal-requested-offerings/{uuid}/cancel/',
@@ -13762,6 +17318,10 @@ export const proposalRequestedResourcesList = <ThrowOnError extends boolean = fa
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/proposal-requested-resources/',
@@ -13775,6 +17335,10 @@ export const proposalRequestedResourcesRetrieve = <ThrowOnError extends boolean 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/proposal-requested-resources/{uuid}/',
@@ -13788,6 +17352,10 @@ export const proposalReviewsList = <ThrowOnError extends boolean = false>(option
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/proposal-reviews/',
@@ -13801,6 +17369,10 @@ export const proposalReviewsCreate = <ThrowOnError extends boolean = false>(opti
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/proposal-reviews/',
@@ -13818,6 +17390,10 @@ export const proposalReviewsDestroy = <ThrowOnError extends boolean = false>(opt
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/proposal-reviews/{uuid}/',
@@ -13831,6 +17407,10 @@ export const proposalReviewsRetrieve = <ThrowOnError extends boolean = false>(op
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/proposal-reviews/{uuid}/',
@@ -13844,6 +17424,10 @@ export const proposalReviewsPartialUpdate = <ThrowOnError extends boolean = fals
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/proposal-reviews/{uuid}/',
@@ -13861,6 +17445,10 @@ export const proposalReviewsUpdate = <ThrowOnError extends boolean = false>(opti
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/proposal-reviews/{uuid}/',
@@ -13881,6 +17469,10 @@ export const proposalReviewsAccept = <ThrowOnError extends boolean = false>(opti
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/proposal-reviews/{uuid}/accept/',
@@ -13897,6 +17489,10 @@ export const proposalReviewsReject = <ThrowOnError extends boolean = false>(opti
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/proposal-reviews/{uuid}/reject/',
@@ -13913,6 +17509,10 @@ export const proposalReviewsSubmit = <ThrowOnError extends boolean = false>(opti
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/proposal-reviews/{uuid}/submit/',
@@ -13930,6 +17530,10 @@ export const providerInvoiceItemsList = <ThrowOnError extends boolean = false>(o
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/provider-invoice-items/',
@@ -13943,6 +17547,10 @@ export const providerInvoiceItemsRetrieve = <ThrowOnError extends boolean = fals
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/provider-invoice-items/{id}/',
@@ -13959,6 +17567,10 @@ export const query = <ThrowOnError extends boolean = false>(options: Options<Que
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/query/',
@@ -13976,6 +17588,10 @@ export const rabbitmqUserStatsList = <ThrowOnError extends boolean = false>(opti
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rabbitmq-user-stats/',
@@ -13989,6 +17605,10 @@ export const rabbitmqVhostStatsList = <ThrowOnError extends boolean = false>(opt
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rabbitmq-vhost-stats/',
@@ -14002,6 +17622,10 @@ export const rancherAppsList = <ThrowOnError extends boolean = false>(options?: 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-apps/',
@@ -14015,6 +17639,10 @@ export const rancherAppsCreate = <ThrowOnError extends boolean = false>(options:
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-apps/',
@@ -14032,6 +17660,10 @@ export const rancherAppsDestroy = <ThrowOnError extends boolean = false>(options
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-apps/{uuid}/',
@@ -14045,6 +17677,10 @@ export const rancherAppsRetrieve = <ThrowOnError extends boolean = false>(option
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-apps/{uuid}/',
@@ -14058,6 +17694,10 @@ export const rancherAppsPartialUpdate = <ThrowOnError extends boolean = false>(o
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-apps/{uuid}/',
@@ -14075,6 +17715,10 @@ export const rancherAppsUpdate = <ThrowOnError extends boolean = false>(options:
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-apps/{uuid}/',
@@ -14092,6 +17736,10 @@ export const rancherAppsPull = <ThrowOnError extends boolean = false>(options: O
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-apps/{uuid}/pull/',
@@ -14110,6 +17758,10 @@ export const rancherAppsUnlink = <ThrowOnError extends boolean = false>(options:
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-apps/{uuid}/unlink/',
@@ -14123,6 +17775,10 @@ export const rancherCatalogsList = <ThrowOnError extends boolean = false>(option
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-catalogs/',
@@ -14136,6 +17792,10 @@ export const rancherCatalogsCreate = <ThrowOnError extends boolean = false>(opti
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-catalogs/',
@@ -14153,6 +17813,10 @@ export const rancherCatalogsDestroy = <ThrowOnError extends boolean = false>(opt
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-catalogs/{uuid}/',
@@ -14166,6 +17830,10 @@ export const rancherCatalogsRetrieve = <ThrowOnError extends boolean = false>(op
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-catalogs/{uuid}/',
@@ -14179,6 +17847,10 @@ export const rancherCatalogsPartialUpdate = <ThrowOnError extends boolean = fals
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-catalogs/{uuid}/',
@@ -14196,6 +17868,10 @@ export const rancherCatalogsUpdate = <ThrowOnError extends boolean = false>(opti
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-catalogs/{uuid}/',
@@ -14213,6 +17889,10 @@ export const rancherCatalogsRefresh = <ThrowOnError extends boolean = false>(opt
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-catalogs/{uuid}/refresh/',
@@ -14230,6 +17910,10 @@ export const rancherClusterSecurityGroupsList = <ThrowOnError extends boolean = 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-cluster-security-groups/',
@@ -14243,6 +17927,10 @@ export const rancherClusterSecurityGroupsRetrieve = <ThrowOnError extends boolea
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-cluster-security-groups/{uuid}/',
@@ -14256,6 +17944,10 @@ export const rancherClusterSecurityGroupsPartialUpdate = <ThrowOnError extends b
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-cluster-security-groups/{uuid}/',
@@ -14273,6 +17965,10 @@ export const rancherClusterSecurityGroupsUpdate = <ThrowOnError extends boolean 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-cluster-security-groups/{uuid}/',
@@ -14290,6 +17986,10 @@ export const rancherClusterTemplatesList = <ThrowOnError extends boolean = false
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-cluster-templates/',
@@ -14303,6 +18003,10 @@ export const rancherClusterTemplatesRetrieve = <ThrowOnError extends boolean = f
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-cluster-templates/{uuid}/',
@@ -14316,6 +18020,10 @@ export const rancherClustersList = <ThrowOnError extends boolean = false>(option
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-clusters/',
@@ -14329,6 +18037,10 @@ export const rancherClustersCreate = <ThrowOnError extends boolean = false>(opti
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-clusters/',
@@ -14346,6 +18058,10 @@ export const rancherClustersDestroy = <ThrowOnError extends boolean = false>(opt
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-clusters/{uuid}/',
@@ -14359,6 +18075,10 @@ export const rancherClustersRetrieve = <ThrowOnError extends boolean = false>(op
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-clusters/{uuid}/',
@@ -14372,6 +18092,10 @@ export const rancherClustersPartialUpdate = <ThrowOnError extends boolean = fals
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-clusters/{uuid}/',
@@ -14389,6 +18113,10 @@ export const rancherClustersUpdate = <ThrowOnError extends boolean = false>(opti
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-clusters/{uuid}/',
@@ -14406,6 +18134,10 @@ export const rancherClustersCreateManagementSecurityGroup = <ThrowOnError extend
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-clusters/{uuid}/create_management_security_group/',
@@ -14423,6 +18155,10 @@ export const rancherClustersImportYaml = <ThrowOnError extends boolean = false>(
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-clusters/{uuid}/import_yaml/',
@@ -14440,6 +18176,10 @@ export const rancherClustersPull = <ThrowOnError extends boolean = false>(option
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-clusters/{uuid}/pull/',
@@ -14458,6 +18198,10 @@ export const rancherClustersUnlink = <ThrowOnError extends boolean = false>(opti
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-clusters/{uuid}/unlink/',
@@ -14471,6 +18215,10 @@ export const rancherHpasList = <ThrowOnError extends boolean = false>(options?: 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-hpas/',
@@ -14484,6 +18232,10 @@ export const rancherHpasCreate = <ThrowOnError extends boolean = false>(options:
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-hpas/',
@@ -14501,6 +18253,10 @@ export const rancherHpasDestroy = <ThrowOnError extends boolean = false>(options
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-hpas/{uuid}/',
@@ -14514,6 +18270,10 @@ export const rancherHpasRetrieve = <ThrowOnError extends boolean = false>(option
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-hpas/{uuid}/',
@@ -14527,6 +18287,10 @@ export const rancherHpasPartialUpdate = <ThrowOnError extends boolean = false>(o
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-hpas/{uuid}/',
@@ -14544,6 +18308,10 @@ export const rancherHpasUpdate = <ThrowOnError extends boolean = false>(options:
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-hpas/{uuid}/',
@@ -14561,6 +18329,10 @@ export const rancherHpasPull = <ThrowOnError extends boolean = false>(options: O
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-hpas/{uuid}/pull/',
@@ -14579,6 +18351,10 @@ export const rancherHpasUnlink = <ThrowOnError extends boolean = false>(options:
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-hpas/{uuid}/unlink/',
@@ -14592,6 +18368,10 @@ export const rancherHpasYamlRetrieve = <ThrowOnError extends boolean = false>(op
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-hpas/{uuid}/yaml/',
@@ -14605,6 +18385,10 @@ export const rancherHpasYamlUpdate = <ThrowOnError extends boolean = false>(opti
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-hpas/{uuid}/yaml/',
@@ -14622,6 +18406,10 @@ export const rancherIngressesList = <ThrowOnError extends boolean = false>(optio
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-ingresses/',
@@ -14635,6 +18423,10 @@ export const rancherIngressesCreate = <ThrowOnError extends boolean = false>(opt
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-ingresses/',
@@ -14652,6 +18444,10 @@ export const rancherIngressesDestroy = <ThrowOnError extends boolean = false>(op
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-ingresses/{uuid}/',
@@ -14665,6 +18461,10 @@ export const rancherIngressesRetrieve = <ThrowOnError extends boolean = false>(o
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-ingresses/{uuid}/',
@@ -14678,6 +18478,10 @@ export const rancherIngressesPartialUpdate = <ThrowOnError extends boolean = fal
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-ingresses/{uuid}/',
@@ -14695,6 +18499,10 @@ export const rancherIngressesUpdate = <ThrowOnError extends boolean = false>(opt
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-ingresses/{uuid}/',
@@ -14712,6 +18520,10 @@ export const rancherIngressesPull = <ThrowOnError extends boolean = false>(optio
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-ingresses/{uuid}/pull/',
@@ -14730,6 +18542,10 @@ export const rancherIngressesUnlink = <ThrowOnError extends boolean = false>(opt
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-ingresses/{uuid}/unlink/',
@@ -14743,6 +18559,10 @@ export const rancherIngressesYamlRetrieve = <ThrowOnError extends boolean = fals
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-ingresses/{uuid}/yaml/',
@@ -14756,6 +18576,10 @@ export const rancherIngressesYamlUpdate = <ThrowOnError extends boolean = false>
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-ingresses/{uuid}/yaml/',
@@ -14773,6 +18597,10 @@ export const rancherNamespacesList = <ThrowOnError extends boolean = false>(opti
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-namespaces/',
@@ -14786,6 +18614,10 @@ export const rancherNamespacesRetrieve = <ThrowOnError extends boolean = false>(
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-namespaces/{uuid}/',
@@ -14799,6 +18631,10 @@ export const rancherNodesList = <ThrowOnError extends boolean = false>(options?:
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-nodes/',
@@ -14812,6 +18648,10 @@ export const rancherNodesCreate = <ThrowOnError extends boolean = false>(options
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-nodes/',
@@ -14829,6 +18669,10 @@ export const rancherNodesDestroy = <ThrowOnError extends boolean = false>(option
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-nodes/{uuid}/',
@@ -14842,6 +18686,10 @@ export const rancherNodesRetrieve = <ThrowOnError extends boolean = false>(optio
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-nodes/{uuid}/',
@@ -14858,6 +18706,10 @@ export const rancherNodesConsoleRetrieve = <ThrowOnError extends boolean = false
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-nodes/{uuid}/console/',
@@ -14874,6 +18726,10 @@ export const rancherNodesConsoleLogRetrieve = <ThrowOnError extends boolean = fa
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-nodes/{uuid}/console_log/',
@@ -14890,6 +18746,10 @@ export const rancherNodesLinkOpenstack = <ThrowOnError extends boolean = false>(
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-nodes/{uuid}/link_openstack/',
@@ -14907,6 +18767,10 @@ export const rancherNodesPull = <ThrowOnError extends boolean = false>(options: 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-nodes/{uuid}/pull/',
@@ -14925,6 +18789,10 @@ export const rancherNodesUnlink = <ThrowOnError extends boolean = false>(options
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-nodes/{uuid}/unlink/',
@@ -14941,6 +18809,10 @@ export const rancherNodesUnlinkOpenstack = <ThrowOnError extends boolean = false
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-nodes/{uuid}/unlink_openstack/',
@@ -14954,6 +18826,10 @@ export const rancherProjectsList = <ThrowOnError extends boolean = false>(option
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-projects/',
@@ -14967,6 +18843,10 @@ export const rancherProjectsRetrieve = <ThrowOnError extends boolean = false>(op
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-projects/{uuid}/',
@@ -14983,6 +18863,10 @@ export const rancherProjectsSecretsRetrieve = <ThrowOnError extends boolean = fa
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-projects/{uuid}/secrets/',
@@ -14996,6 +18880,10 @@ export const rancherRoleTemplatesList = <ThrowOnError extends boolean = false>(o
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-role-templates/',
@@ -15009,6 +18897,10 @@ export const rancherRoleTemplatesRetrieve = <ThrowOnError extends boolean = fals
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-role-templates/{uuid}/',
@@ -15022,6 +18914,10 @@ export const rancherServicesList = <ThrowOnError extends boolean = false>(option
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-services/',
@@ -15035,6 +18931,10 @@ export const rancherServicesCreate = <ThrowOnError extends boolean = false>(opti
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-services/',
@@ -15052,6 +18952,10 @@ export const rancherServicesDestroy = <ThrowOnError extends boolean = false>(opt
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-services/{uuid}/',
@@ -15065,6 +18969,10 @@ export const rancherServicesRetrieve = <ThrowOnError extends boolean = false>(op
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-services/{uuid}/',
@@ -15078,6 +18986,10 @@ export const rancherServicesPartialUpdate = <ThrowOnError extends boolean = fals
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-services/{uuid}/',
@@ -15095,6 +19007,10 @@ export const rancherServicesUpdate = <ThrowOnError extends boolean = false>(opti
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-services/{uuid}/',
@@ -15112,6 +19028,10 @@ export const rancherServicesPull = <ThrowOnError extends boolean = false>(option
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-services/{uuid}/pull/',
@@ -15130,6 +19050,10 @@ export const rancherServicesUnlink = <ThrowOnError extends boolean = false>(opti
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-services/{uuid}/unlink/',
@@ -15143,6 +19067,10 @@ export const rancherServicesYamlRetrieve = <ThrowOnError extends boolean = false
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-services/{uuid}/yaml/',
@@ -15156,6 +19084,10 @@ export const rancherServicesYamlUpdate = <ThrowOnError extends boolean = false>(
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-services/{uuid}/yaml/',
@@ -15173,6 +19105,10 @@ export const rancherTemplateVersionsRetrieve = <ThrowOnError extends boolean = f
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-template-versions/{template_uuid}/{version}/',
@@ -15186,6 +19122,10 @@ export const rancherTemplatesList = <ThrowOnError extends boolean = false>(optio
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-templates/',
@@ -15199,6 +19139,10 @@ export const rancherTemplatesRetrieve = <ThrowOnError extends boolean = false>(o
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-templates/{uuid}/',
@@ -15212,6 +19156,10 @@ export const rancherUsersList = <ThrowOnError extends boolean = false>(options?:
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-users/',
@@ -15225,6 +19173,10 @@ export const rancherUsersRetrieve = <ThrowOnError extends boolean = false>(optio
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-users/{uuid}/',
@@ -15238,6 +19190,10 @@ export const rancherWorkloadsList = <ThrowOnError extends boolean = false>(optio
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-workloads/',
@@ -15251,6 +19207,10 @@ export const rancherWorkloadsCreate = <ThrowOnError extends boolean = false>(opt
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-workloads/',
@@ -15268,6 +19228,10 @@ export const rancherWorkloadsDestroy = <ThrowOnError extends boolean = false>(op
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-workloads/{uuid}/',
@@ -15281,6 +19245,10 @@ export const rancherWorkloadsRetrieve = <ThrowOnError extends boolean = false>(o
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-workloads/{uuid}/',
@@ -15294,6 +19262,10 @@ export const rancherWorkloadsPartialUpdate = <ThrowOnError extends boolean = fal
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-workloads/{uuid}/',
@@ -15311,6 +19283,10 @@ export const rancherWorkloadsUpdate = <ThrowOnError extends boolean = false>(opt
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-workloads/{uuid}/',
@@ -15328,6 +19304,10 @@ export const rancherWorkloadsRedeploy = <ThrowOnError extends boolean = false>(o
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-workloads/{uuid}/redeploy/',
@@ -15341,6 +19321,10 @@ export const rancherWorkloadsYamlRetrieve = <ThrowOnError extends boolean = fals
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-workloads/{uuid}/yaml/',
@@ -15354,6 +19338,10 @@ export const rancherWorkloadsYamlUpdate = <ThrowOnError extends boolean = false>
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/rancher-workloads/{uuid}/yaml/',
@@ -15374,6 +19362,10 @@ export const remoteEduteams = <ThrowOnError extends boolean = false>(options: Op
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/remote-eduteams/',
@@ -15394,6 +19386,10 @@ export const remoteWaldurApiCancelTermination = <ThrowOnError extends boolean = 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/remote-waldur-api/cancel_termination/{uuid}',
@@ -15410,6 +19406,10 @@ export const remoteWaldurApiImportOffering = <ThrowOnError extends boolean = fal
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/remote-waldur-api/import_offering/',
@@ -15427,6 +19427,10 @@ export const remoteWaldurApiPullOfferingDetails = <ThrowOnError extends boolean 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/remote-waldur-api/pull_offering_details/{uuid}/',
@@ -15440,6 +19444,10 @@ export const remoteWaldurApiPullOfferingInvoices = <ThrowOnError extends boolean
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/remote-waldur-api/pull_offering_invoices/{uuid}/',
@@ -15453,6 +19461,10 @@ export const remoteWaldurApiPullOfferingOrders = <ThrowOnError extends boolean =
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/remote-waldur-api/pull_offering_orders/{uuid}/',
@@ -15466,6 +19478,10 @@ export const remoteWaldurApiPullOfferingResources = <ThrowOnError extends boolea
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/remote-waldur-api/pull_offering_resources/{uuid}/',
@@ -15479,6 +19495,10 @@ export const remoteWaldurApiPullOfferingRobotAccounts = <ThrowOnError extends bo
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/remote-waldur-api/pull_offering_robot_accounts/{uuid}/',
@@ -15492,6 +19512,10 @@ export const remoteWaldurApiPullOfferingUsage = <ThrowOnError extends boolean = 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/remote-waldur-api/pull_offering_usage/{uuid}/',
@@ -15505,6 +19529,10 @@ export const remoteWaldurApiPullOfferingUsers = <ThrowOnError extends boolean = 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/remote-waldur-api/pull_offering_users/{uuid}/',
@@ -15521,6 +19549,10 @@ export const remoteWaldurApiPullOrder = <ThrowOnError extends boolean = false>(o
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/remote-waldur-api/pull_order/{uuid}',
@@ -15534,6 +19566,10 @@ export const remoteWaldurApiPushProjectData = <ThrowOnError extends boolean = fa
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/remote-waldur-api/push_project_data/{uuid}/',
@@ -15550,6 +19586,10 @@ export const remoteWaldurApiRemoteCategories = <ThrowOnError extends boolean = f
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/remote-waldur-api/remote_categories/',
@@ -15570,6 +19610,10 @@ export const remoteWaldurApiRemoteCustomers = <ThrowOnError extends boolean = fa
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/remote-waldur-api/remote_customers/',
@@ -15590,6 +19634,10 @@ export const remoteWaldurApiSharedOfferings = <ThrowOnError extends boolean = fa
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/remote-waldur-api/shared_offerings/',
@@ -15607,6 +19655,10 @@ export const remoteWaldurApiSyncResource = <ThrowOnError extends boolean = false
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/remote-waldur-api/sync_resource/{uuid}/',
@@ -15620,6 +19672,10 @@ export const remoteWaldurApiSyncResourceProjectPermissions = <ThrowOnError exten
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/remote-waldur-api/sync_resource_project_permissions/{uuid}/',
@@ -15633,6 +19689,10 @@ export const rolesList = <ThrowOnError extends boolean = false>(options?: Option
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/roles/',
@@ -15646,6 +19706,10 @@ export const rolesCreate = <ThrowOnError extends boolean = false>(options: Optio
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/roles/',
@@ -15663,6 +19727,10 @@ export const rolesDestroy = <ThrowOnError extends boolean = false>(options: Opti
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/roles/{uuid}/',
@@ -15676,6 +19744,10 @@ export const rolesRetrieve = <ThrowOnError extends boolean = false>(options: Opt
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/roles/{uuid}/',
@@ -15689,6 +19761,10 @@ export const rolesPartialUpdate = <ThrowOnError extends boolean = false>(options
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/roles/{uuid}/',
@@ -15706,6 +19782,10 @@ export const rolesUpdate = <ThrowOnError extends boolean = false>(options: Optio
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/roles/{uuid}/',
@@ -15723,6 +19803,10 @@ export const rolesDisable = <ThrowOnError extends boolean = false>(options: Opti
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/roles/{uuid}/disable/',
@@ -15736,6 +19820,10 @@ export const rolesEnable = <ThrowOnError extends boolean = false>(options: Optio
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/roles/{uuid}/enable/',
@@ -15749,6 +19837,10 @@ export const rolesUpdateDescriptionsUpdate = <ThrowOnError extends boolean = fal
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/roles/{uuid}/update_descriptions/',
@@ -15766,6 +19858,10 @@ export const serviceSettingsList = <ThrowOnError extends boolean = false>(option
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/service-settings/',
@@ -15779,6 +19875,10 @@ export const serviceSettingsRetrieve = <ThrowOnError extends boolean = false>(op
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/service-settings/{uuid}/',
@@ -15792,6 +19892,10 @@ export const slurmAllocationUserUsageList = <ThrowOnError extends boolean = fals
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/slurm-allocation-user-usage/',
@@ -15805,6 +19909,10 @@ export const slurmAllocationUserUsageRetrieve = <ThrowOnError extends boolean = 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/slurm-allocation-user-usage/{id}/',
@@ -15818,6 +19926,10 @@ export const slurmAllocationsList = <ThrowOnError extends boolean = false>(optio
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/slurm-allocations/',
@@ -15831,6 +19943,10 @@ export const slurmAllocationsCreate = <ThrowOnError extends boolean = false>(opt
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/slurm-allocations/',
@@ -15848,6 +19964,10 @@ export const slurmAllocationsDestroy = <ThrowOnError extends boolean = false>(op
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/slurm-allocations/{uuid}/',
@@ -15861,6 +19981,10 @@ export const slurmAllocationsRetrieve = <ThrowOnError extends boolean = false>(o
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/slurm-allocations/{uuid}/',
@@ -15874,6 +19998,10 @@ export const slurmAllocationsPartialUpdate = <ThrowOnError extends boolean = fal
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/slurm-allocations/{uuid}/',
@@ -15891,6 +20019,10 @@ export const slurmAllocationsUpdate = <ThrowOnError extends boolean = false>(opt
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/slurm-allocations/{uuid}/',
@@ -15908,6 +20040,10 @@ export const slurmAllocationsPull = <ThrowOnError extends boolean = false>(optio
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/slurm-allocations/{uuid}/pull/',
@@ -15921,6 +20057,10 @@ export const slurmAllocationsSetLimits = <ThrowOnError extends boolean = false>(
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/slurm-allocations/{uuid}/set_limits/',
@@ -15943,6 +20083,10 @@ export const slurmAllocationsUnlink = <ThrowOnError extends boolean = false>(opt
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/slurm-allocations/{uuid}/unlink/',
@@ -15956,6 +20100,10 @@ export const slurmAssociationsList = <ThrowOnError extends boolean = false>(opti
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/slurm-associations/',
@@ -15969,6 +20117,10 @@ export const slurmAssociationsRetrieve = <ThrowOnError extends boolean = false>(
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/slurm-associations/{uuid}/',
@@ -15982,6 +20134,10 @@ export const slurmJobsList = <ThrowOnError extends boolean = false>(options?: Op
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/slurm-jobs/',
@@ -15995,6 +20151,10 @@ export const slurmJobsCreate = <ThrowOnError extends boolean = false>(options: O
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/slurm-jobs/',
@@ -16012,6 +20172,10 @@ export const slurmJobsDestroy = <ThrowOnError extends boolean = false>(options: 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/slurm-jobs/{uuid}/',
@@ -16025,6 +20189,10 @@ export const slurmJobsRetrieve = <ThrowOnError extends boolean = false>(options:
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/slurm-jobs/{uuid}/',
@@ -16038,6 +20206,10 @@ export const slurmJobsPartialUpdate = <ThrowOnError extends boolean = false>(opt
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/slurm-jobs/{uuid}/',
@@ -16055,6 +20227,10 @@ export const slurmJobsUpdate = <ThrowOnError extends boolean = false>(options: O
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/slurm-jobs/{uuid}/',
@@ -16072,6 +20248,10 @@ export const slurmJobsPull = <ThrowOnError extends boolean = false>(options: Opt
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/slurm-jobs/{uuid}/pull/',
@@ -16090,6 +20270,10 @@ export const slurmJobsUnlink = <ThrowOnError extends boolean = false>(options: O
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/slurm-jobs/{uuid}/unlink/',
@@ -16103,6 +20287,10 @@ export const supportAttachmentsList = <ThrowOnError extends boolean = false>(opt
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/support-attachments/',
@@ -16116,6 +20304,10 @@ export const supportAttachmentsCreate = <ThrowOnError extends boolean = false>(o
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/support-attachments/',
@@ -16133,6 +20325,10 @@ export const supportAttachmentsDestroy = <ThrowOnError extends boolean = false>(
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/support-attachments/{uuid}/',
@@ -16146,6 +20342,10 @@ export const supportAttachmentsRetrieve = <ThrowOnError extends boolean = false>
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/support-attachments/{uuid}/',
@@ -16159,6 +20359,10 @@ export const supportCommentsList = <ThrowOnError extends boolean = false>(option
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/support-comments/',
@@ -16172,6 +20376,10 @@ export const supportCommentsDestroy = <ThrowOnError extends boolean = false>(opt
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/support-comments/{uuid}/',
@@ -16185,6 +20393,10 @@ export const supportCommentsRetrieve = <ThrowOnError extends boolean = false>(op
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/support-comments/{uuid}/',
@@ -16198,6 +20410,10 @@ export const supportCommentsPartialUpdate = <ThrowOnError extends boolean = fals
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/support-comments/{uuid}/',
@@ -16215,6 +20431,10 @@ export const supportCommentsUpdate = <ThrowOnError extends boolean = false>(opti
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/support-comments/{uuid}/',
@@ -16232,6 +20452,10 @@ export const supportFeedbackAverageReportRetrieve = <ThrowOnError extends boolea
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/support-feedback-average-report/',
@@ -16245,6 +20469,10 @@ export const supportFeedbackReportRetrieve = <ThrowOnError extends boolean = fal
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/support-feedback-report/',
@@ -16258,6 +20486,10 @@ export const supportFeedbacksList = <ThrowOnError extends boolean = false>(optio
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/support-feedbacks/',
@@ -16271,6 +20503,10 @@ export const supportFeedbacksCreate = <ThrowOnError extends boolean = false>(opt
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/support-feedbacks/',
@@ -16288,6 +20524,10 @@ export const supportFeedbacksRetrieve = <ThrowOnError extends boolean = false>(o
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/support-feedbacks/{uuid}/',
@@ -16301,6 +20541,10 @@ export const supportIssuesList = <ThrowOnError extends boolean = false>(options?
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/support-issues/',
@@ -16314,6 +20558,10 @@ export const supportIssuesCreate = <ThrowOnError extends boolean = false>(option
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/support-issues/',
@@ -16331,6 +20579,10 @@ export const supportIssuesDestroy = <ThrowOnError extends boolean = false>(optio
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/support-issues/{uuid}/',
@@ -16344,6 +20596,10 @@ export const supportIssuesRetrieve = <ThrowOnError extends boolean = false>(opti
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/support-issues/{uuid}/',
@@ -16357,6 +20613,10 @@ export const supportIssuesPartialUpdate = <ThrowOnError extends boolean = false>
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/support-issues/{uuid}/',
@@ -16374,6 +20634,10 @@ export const supportIssuesUpdate = <ThrowOnError extends boolean = false>(option
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/support-issues/{uuid}/',
@@ -16391,6 +20655,10 @@ export const supportIssuesComment = <ThrowOnError extends boolean = false>(optio
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/support-issues/{uuid}/comment/',
@@ -16408,6 +20676,10 @@ export const supportIssuesSync = <ThrowOnError extends boolean = false>(options:
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/support-issues/{uuid}/sync/',
@@ -16436,6 +20708,10 @@ export const supportPrioritiesList = <ThrowOnError extends boolean = false>(opti
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/support-priorities/',
@@ -16449,6 +20725,10 @@ export const supportPrioritiesRetrieve = <ThrowOnError extends boolean = false>(
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/support-priorities/{uuid}/',
@@ -16473,6 +20753,10 @@ export const supportStatisticsRetrieve = <ThrowOnError extends boolean = false>(
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/support-statistics/',
@@ -16486,6 +20770,10 @@ export const supportTemplatesList = <ThrowOnError extends boolean = false>(optio
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/support-templates/',
@@ -16499,6 +20787,10 @@ export const supportTemplatesCreate = <ThrowOnError extends boolean = false>(opt
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/support-templates/',
@@ -16516,6 +20808,10 @@ export const supportTemplatesDestroy = <ThrowOnError extends boolean = false>(op
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/support-templates/{uuid}/',
@@ -16529,6 +20825,10 @@ export const supportTemplatesRetrieve = <ThrowOnError extends boolean = false>(o
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/support-templates/{uuid}/',
@@ -16542,6 +20842,10 @@ export const supportTemplatesPartialUpdate = <ThrowOnError extends boolean = fal
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/support-templates/{uuid}/',
@@ -16559,6 +20863,10 @@ export const supportTemplatesUpdate = <ThrowOnError extends boolean = false>(opt
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/support-templates/{uuid}/',
@@ -16579,6 +20887,10 @@ export const supportTemplatesCreateAttachments = <ThrowOnError extends boolean =
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/support-templates/{uuid}/create_attachments/',
@@ -16596,6 +20908,10 @@ export const supportTemplatesDeleteAttachments = <ThrowOnError extends boolean =
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/support-templates/{uuid}/delete_attachments/',
@@ -16613,6 +20929,10 @@ export const supportUsersList = <ThrowOnError extends boolean = false>(options?:
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/support-users/',
@@ -16626,6 +20946,10 @@ export const supportUsersRetrieve = <ThrowOnError extends boolean = false>(optio
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/support-users/{uuid}/',
@@ -16649,6 +20973,10 @@ export const syncIssuesRetrieve = <ThrowOnError extends boolean = false>(options
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/sync-issues/',
@@ -16665,6 +20993,10 @@ export const syncIssues = <ThrowOnError extends boolean = false>(options?: Optio
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/sync-issues/',
@@ -16678,6 +21010,10 @@ export const userAgreementsList = <ThrowOnError extends boolean = false>(options
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/user-agreements/',
@@ -16691,6 +21027,10 @@ export const userAgreementsCreate = <ThrowOnError extends boolean = false>(optio
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/user-agreements/',
@@ -16708,6 +21048,10 @@ export const userAgreementsDestroy = <ThrowOnError extends boolean = false>(opti
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/user-agreements/{uuid}/',
@@ -16721,6 +21065,10 @@ export const userAgreementsRetrieve = <ThrowOnError extends boolean = false>(opt
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/user-agreements/{uuid}/',
@@ -16734,6 +21082,10 @@ export const userAgreementsPartialUpdate = <ThrowOnError extends boolean = false
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/user-agreements/{uuid}/',
@@ -16751,6 +21103,10 @@ export const userAgreementsUpdate = <ThrowOnError extends boolean = false>(optio
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/user-agreements/{uuid}/',
@@ -16768,6 +21124,10 @@ export const userGroupInvitationsList = <ThrowOnError extends boolean = false>(o
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/user-group-invitations/',
@@ -16781,6 +21141,10 @@ export const userGroupInvitationsCreate = <ThrowOnError extends boolean = false>
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/user-group-invitations/',
@@ -16798,6 +21162,10 @@ export const userGroupInvitationsRetrieve = <ThrowOnError extends boolean = fals
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/user-group-invitations/{uuid}/',
@@ -16814,6 +21182,10 @@ export const userGroupInvitationsCancel = <ThrowOnError extends boolean = false>
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/user-group-invitations/{uuid}/cancel/',
@@ -16830,6 +21202,10 @@ export const userGroupInvitationsProjectsList = <ThrowOnError extends boolean = 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/user-group-invitations/{uuid}/projects/',
@@ -16843,6 +21219,10 @@ export const userGroupInvitationsSubmitRequest = <ThrowOnError extends boolean =
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/user-group-invitations/{uuid}/submit_request/',
@@ -16856,6 +21236,10 @@ export const userInvitationsList = <ThrowOnError extends boolean = false>(option
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/user-invitations/',
@@ -16869,6 +21253,10 @@ export const userInvitationsCreate = <ThrowOnError extends boolean = false>(opti
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/user-invitations/',
@@ -16886,6 +21274,10 @@ export const userInvitationsRetrieve = <ThrowOnError extends boolean = false>(op
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/user-invitations/{uuid}/',
@@ -16902,6 +21294,10 @@ export const userInvitationsAccept = <ThrowOnError extends boolean = false>(opti
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/user-invitations/{uuid}/accept/',
@@ -16915,6 +21311,10 @@ export const userInvitationsCancel = <ThrowOnError extends boolean = false>(opti
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/user-invitations/{uuid}/cancel/',
@@ -16928,6 +21328,10 @@ export const userInvitationsCheck = <ThrowOnError extends boolean = false>(optio
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/user-invitations/{uuid}/check/',
@@ -16941,6 +21345,10 @@ export const userInvitationsDelete = <ThrowOnError extends boolean = false>(opti
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/user-invitations/{uuid}/delete/',
@@ -16954,6 +21362,10 @@ export const userInvitationsDetailsRetrieve = <ThrowOnError extends boolean = fa
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/user-invitations/{uuid}/details/',
@@ -16967,6 +21379,10 @@ export const userInvitationsSend = <ThrowOnError extends boolean = false>(option
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/user-invitations/{uuid}/send/',
@@ -16984,6 +21400,10 @@ export const userInvitationsApprove = <ThrowOnError extends boolean = false>(opt
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/user-invitations/approve/',
@@ -17005,6 +21425,10 @@ export const userInvitationsReject = <ThrowOnError extends boolean = false>(opti
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/user-invitations/reject/',
@@ -17022,6 +21446,10 @@ export const userPermissionRequestsList = <ThrowOnError extends boolean = false>
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/user-permission-requests/',
@@ -17035,6 +21463,10 @@ export const userPermissionRequestsRetrieve = <ThrowOnError extends boolean = fa
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/user-permission-requests/{uuid}/',
@@ -17048,6 +21480,10 @@ export const userPermissionRequestsApprove = <ThrowOnError extends boolean = fal
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/user-permission-requests/{uuid}/approve/',
@@ -17065,6 +21501,10 @@ export const userPermissionRequestsReject = <ThrowOnError extends boolean = fals
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/user-permission-requests/{uuid}/reject/',
@@ -17082,6 +21522,10 @@ export const userPermissionsList = <ThrowOnError extends boolean = false>(option
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/user-permissions/',
@@ -17095,6 +21539,10 @@ export const userPermissionsRetrieve = <ThrowOnError extends boolean = false>(op
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/user-permissions/{uuid}/',
@@ -17108,6 +21556,10 @@ export const usersList = <ThrowOnError extends boolean = false>(options?: Option
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/users/',
@@ -17121,6 +21573,10 @@ export const usersCreate = <ThrowOnError extends boolean = false>(options: Optio
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/users/',
@@ -17138,6 +21594,10 @@ export const usersMarketplaceChecklistStatsRetrieve = <ThrowOnError extends bool
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/users/{user_uuid}/marketplace-checklist-stats/',
@@ -17151,6 +21611,10 @@ export const usersDestroy = <ThrowOnError extends boolean = false>(options: Opti
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/users/{uuid}/',
@@ -17164,6 +21628,10 @@ export const usersRetrieve = <ThrowOnError extends boolean = false>(options: Opt
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/users/{uuid}/',
@@ -17177,6 +21645,10 @@ export const usersPartialUpdate = <ThrowOnError extends boolean = false>(options
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/users/{uuid}/',
@@ -17194,6 +21666,10 @@ export const usersUpdate = <ThrowOnError extends boolean = false>(options: Optio
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/users/{uuid}/',
@@ -17214,6 +21690,10 @@ export const usersCancelChangeEmail = <ThrowOnError extends boolean = false>(opt
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/users/{uuid}/cancel_change_email/',
@@ -17230,6 +21710,10 @@ export const usersChangeEmail = <ThrowOnError extends boolean = false>(options: 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/users/{uuid}/change_email/',
@@ -17250,6 +21734,10 @@ export const usersChangePassword = <ThrowOnError extends boolean = false>(option
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/users/{uuid}/change_password/',
@@ -17270,6 +21758,10 @@ export const usersPullRemoteUser = <ThrowOnError extends boolean = false>(option
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/users/{uuid}/pull_remote_user/',
@@ -17286,6 +21778,10 @@ export const usersRefreshToken = <ThrowOnError extends boolean = false>(options:
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/users/{uuid}/refresh_token/',
@@ -17299,6 +21795,10 @@ export const usersTokenRetrieve = <ThrowOnError extends boolean = false>(options
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/users/{uuid}/token/',
@@ -17315,6 +21815,10 @@ export const usersConfirmEmail = <ThrowOnError extends boolean = false>(options:
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/users/confirm_email/',
@@ -17335,6 +21839,10 @@ export const usersMeRetrieve = <ThrowOnError extends boolean = false>(options?: 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/users/me/',
@@ -17351,6 +21859,10 @@ export const versionRetrieve = <ThrowOnError extends boolean = false>(options?: 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/version/',
@@ -17364,6 +21876,10 @@ export const vmwareClustersList = <ThrowOnError extends boolean = false>(options
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/vmware-clusters/',
@@ -17377,6 +21893,10 @@ export const vmwareClustersRetrieve = <ThrowOnError extends boolean = false>(opt
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/vmware-clusters/{uuid}/',
@@ -17390,6 +21910,10 @@ export const vmwareDatastoresList = <ThrowOnError extends boolean = false>(optio
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/vmware-datastores/',
@@ -17403,6 +21927,10 @@ export const vmwareDatastoresRetrieve = <ThrowOnError extends boolean = false>(o
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/vmware-datastores/{uuid}/',
@@ -17416,6 +21944,10 @@ export const vmwareDisksList = <ThrowOnError extends boolean = false>(options?: 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/vmware-disks/',
@@ -17429,6 +21961,10 @@ export const vmwareDisksDestroy = <ThrowOnError extends boolean = false>(options
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/vmware-disks/{uuid}/',
@@ -17442,6 +21978,10 @@ export const vmwareDisksRetrieve = <ThrowOnError extends boolean = false>(option
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/vmware-disks/{uuid}/',
@@ -17458,6 +21998,10 @@ export const vmwareDisksExtend = <ThrowOnError extends boolean = false>(options:
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/vmware-disks/{uuid}/extend/',
@@ -17475,6 +22019,10 @@ export const vmwareDisksPull = <ThrowOnError extends boolean = false>(options: O
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/vmware-disks/{uuid}/pull/',
@@ -17493,6 +22041,10 @@ export const vmwareDisksUnlink = <ThrowOnError extends boolean = false>(options:
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/vmware-disks/{uuid}/unlink/',
@@ -17506,6 +22058,10 @@ export const vmwareFoldersList = <ThrowOnError extends boolean = false>(options?
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/vmware-folders/',
@@ -17519,6 +22075,10 @@ export const vmwareFoldersRetrieve = <ThrowOnError extends boolean = false>(opti
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/vmware-folders/{uuid}/',
@@ -17532,6 +22092,10 @@ export const vmwareLimitsRetrieve = <ThrowOnError extends boolean = false>(optio
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/vmware-limits/{uuid}/',
@@ -17545,6 +22109,10 @@ export const vmwareNetworksList = <ThrowOnError extends boolean = false>(options
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/vmware-networks/',
@@ -17558,6 +22126,10 @@ export const vmwareNetworksRetrieve = <ThrowOnError extends boolean = false>(opt
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/vmware-networks/{uuid}/',
@@ -17571,6 +22143,10 @@ export const vmwarePortsList = <ThrowOnError extends boolean = false>(options?: 
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/vmware-ports/',
@@ -17584,6 +22160,10 @@ export const vmwarePortsDestroy = <ThrowOnError extends boolean = false>(options
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/vmware-ports/{uuid}/',
@@ -17597,6 +22177,10 @@ export const vmwarePortsRetrieve = <ThrowOnError extends boolean = false>(option
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/vmware-ports/{uuid}/',
@@ -17610,6 +22194,10 @@ export const vmwarePortsPull = <ThrowOnError extends boolean = false>(options: O
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/vmware-ports/{uuid}/pull/',
@@ -17628,6 +22216,10 @@ export const vmwarePortsUnlink = <ThrowOnError extends boolean = false>(options:
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/vmware-ports/{uuid}/unlink/',
@@ -17641,6 +22233,10 @@ export const vmwareTemplatesList = <ThrowOnError extends boolean = false>(option
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/vmware-templates/',
@@ -17654,6 +22250,10 @@ export const vmwareTemplatesRetrieve = <ThrowOnError extends boolean = false>(op
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/vmware-templates/{uuid}/',
@@ -17667,6 +22267,10 @@ export const vmwareVirtualMachineList = <ThrowOnError extends boolean = false>(o
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/vmware-virtual-machine/',
@@ -17680,6 +22284,10 @@ export const vmwareVirtualMachineCreate = <ThrowOnError extends boolean = false>
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/vmware-virtual-machine/',
@@ -17697,6 +22305,10 @@ export const vmwareVirtualMachineDestroy = <ThrowOnError extends boolean = false
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/vmware-virtual-machine/{uuid}/',
@@ -17710,6 +22322,10 @@ export const vmwareVirtualMachineRetrieve = <ThrowOnError extends boolean = fals
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/vmware-virtual-machine/{uuid}/',
@@ -17723,6 +22339,10 @@ export const vmwareVirtualMachinePartialUpdate = <ThrowOnError extends boolean =
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/vmware-virtual-machine/{uuid}/',
@@ -17740,6 +22360,10 @@ export const vmwareVirtualMachineUpdate = <ThrowOnError extends boolean = false>
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/vmware-virtual-machine/{uuid}/',
@@ -17760,6 +22384,10 @@ export const vmwareVirtualMachineConsoleRetrieve = <ThrowOnError extends boolean
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/vmware-virtual-machine/{uuid}/console/',
@@ -17773,6 +22401,10 @@ export const vmwareVirtualMachineCreateDisk = <ThrowOnError extends boolean = fa
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/vmware-virtual-machine/{uuid}/create_disk/',
@@ -17790,6 +22422,10 @@ export const vmwareVirtualMachineCreatePort = <ThrowOnError extends boolean = fa
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/vmware-virtual-machine/{uuid}/create_port/',
@@ -17807,6 +22443,10 @@ export const vmwareVirtualMachinePull = <ThrowOnError extends boolean = false>(o
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/vmware-virtual-machine/{uuid}/pull/',
@@ -17820,6 +22460,10 @@ export const vmwareVirtualMachineRebootGuest = <ThrowOnError extends boolean = f
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/vmware-virtual-machine/{uuid}/reboot_guest/',
@@ -17833,6 +22477,10 @@ export const vmwareVirtualMachineReset = <ThrowOnError extends boolean = false>(
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/vmware-virtual-machine/{uuid}/reset/',
@@ -17846,6 +22494,10 @@ export const vmwareVirtualMachineShutdownGuest = <ThrowOnError extends boolean =
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/vmware-virtual-machine/{uuid}/shutdown_guest/',
@@ -17859,6 +22511,10 @@ export const vmwareVirtualMachineStart = <ThrowOnError extends boolean = false>(
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/vmware-virtual-machine/{uuid}/start/',
@@ -17872,6 +22528,10 @@ export const vmwareVirtualMachineStop = <ThrowOnError extends boolean = false>(o
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/vmware-virtual-machine/{uuid}/stop/',
@@ -17885,6 +22545,10 @@ export const vmwareVirtualMachineSuspend = <ThrowOnError extends boolean = false
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/vmware-virtual-machine/{uuid}/suspend/',
@@ -17903,6 +22567,10 @@ export const vmwareVirtualMachineUnlink = <ThrowOnError extends boolean = false>
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/vmware-virtual-machine/{uuid}/unlink/',
@@ -17919,6 +22587,10 @@ export const vmwareVirtualMachineWebConsoleRetrieve = <ThrowOnError extends bool
             {
                 name: 'Authorization',
                 type: 'apiKey'
+            },
+            {
+                scheme: 'bearer',
+                type: 'http'
             }
         ],
         url: '/api/vmware-virtual-machine/{uuid}/web_console/',

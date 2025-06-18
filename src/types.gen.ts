@@ -1620,6 +1620,11 @@ export type ConstanceSettings = {
     FREEIPA_GROUP_SYNCHRONIZATION_ENABLED?: boolean;
     KEYCLOAK_ICON?: string | null;
     COUNTRIES?: Array<string>;
+    OIDC_INTROSPECTION_URL?: string;
+    OIDC_CLIENT_ID?: string;
+    OIDC_CLIENT_SECRET?: string;
+    OIDC_USER_FIELD?: string;
+    OIDC_CACHE_TIMEOUT?: number;
 };
 
 export type ConstanceSettingsRequest = {
@@ -1746,6 +1751,11 @@ export type ConstanceSettingsRequest = {
     FREEIPA_GROUP_SYNCHRONIZATION_ENABLED?: boolean;
     KEYCLOAK_ICON?: (Blob | File) | null;
     COUNTRIES?: Array<string>;
+    OIDC_INTROSPECTION_URL?: string;
+    OIDC_CLIENT_ID?: string;
+    OIDC_CLIENT_SECRET?: string;
+    OIDC_USER_FIELD?: string;
+    OIDC_CACHE_TIMEOUT?: number;
 };
 
 export type CoreAuthToken = {
@@ -8266,6 +8276,18 @@ export type RancherCluster = {
     install_longhorn?: boolean;
     readonly management_security_group?: string;
     readonly public_ips?: Array<RancherNestedPublicIp>;
+    /**
+     * Cluster capacity in the format {'cpu': '10', 'ram': '49125240Ki', 'pods': '330'}
+     */
+    readonly capacity?: unknown;
+    /**
+     * Cluster requested resources in the format {'cpu': '1450m', 'memory': '884Mi', 'pods': '13'}
+     */
+    readonly requested?: unknown;
+    /**
+     * Kubernetes version used in the cluster.
+     */
+    readonly kubernetes_version?: string;
     readonly marketplace_offering_uuid?: string | null;
     readonly marketplace_offering_name?: string | null;
     readonly marketplace_offering_plugin_options?: {} | null;
@@ -23742,6 +23764,7 @@ export type OpenstackInstancesListData = {
         project?: string;
         project_name?: string;
         project_uuid?: string;
+        query?: string;
         runtime_state?: string;
         service_settings_name?: string;
         service_settings_uuid?: string;
@@ -29142,7 +29165,7 @@ export type RancherClustersListData = {
         customer_uuid?: string;
         description?: string;
         external_ip?: string;
-        field?: Array<'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'description' | 'error_message' | 'error_traceback' | 'install_longhorn' | 'is_limit_based' | 'is_usage_based' | 'management_security_group' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'nodes' | 'project' | 'project_name' | 'project_uuid' | 'public_ips' | 'resource_type' | 'runtime_state' | 'security_groups' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'ssh_public_key' | 'state' | 'tenant' | 'tenant_uuid' | 'url' | 'uuid' | 'vm_project'>;
+        field?: Array<'access_url' | 'backend_id' | 'capacity' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'description' | 'error_message' | 'error_traceback' | 'install_longhorn' | 'is_limit_based' | 'is_usage_based' | 'kubernetes_version' | 'management_security_group' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'nodes' | 'project' | 'project_name' | 'project_uuid' | 'public_ips' | 'requested' | 'resource_type' | 'runtime_state' | 'security_groups' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'ssh_public_key' | 'state' | 'tenant' | 'tenant_uuid' | 'url' | 'uuid' | 'vm_project'>;
         name?: string;
         name_exact?: string;
         /**
@@ -29207,7 +29230,7 @@ export type RancherClustersRetrieveData = {
         uuid: string;
     };
     query?: {
-        field?: Array<'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'description' | 'error_message' | 'error_traceback' | 'install_longhorn' | 'is_limit_based' | 'is_usage_based' | 'management_security_group' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'nodes' | 'project' | 'project_name' | 'project_uuid' | 'public_ips' | 'resource_type' | 'runtime_state' | 'security_groups' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'ssh_public_key' | 'state' | 'tenant' | 'tenant_uuid' | 'url' | 'uuid' | 'vm_project'>;
+        field?: Array<'access_url' | 'backend_id' | 'capacity' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'description' | 'error_message' | 'error_traceback' | 'install_longhorn' | 'is_limit_based' | 'is_usage_based' | 'kubernetes_version' | 'management_security_group' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'nodes' | 'project' | 'project_name' | 'project_uuid' | 'public_ips' | 'requested' | 'resource_type' | 'runtime_state' | 'security_groups' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'ssh_public_key' | 'state' | 'tenant' | 'tenant_uuid' | 'url' | 'uuid' | 'vm_project'>;
     };
     url: '/api/rancher-clusters/{uuid}/';
 };
