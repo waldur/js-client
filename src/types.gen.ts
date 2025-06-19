@@ -3395,7 +3395,6 @@ export type MergedPluginOptions = {
     managed_rancher_server_data_volume_type_name?: string;
     managed_rancher_worker_system_volume_size_gb?: number;
     managed_rancher_worker_system_volume_type_name?: string;
-    managed_rancher_load_balancer_cloud_init_template?: string;
     managed_rancher_load_balancer_flavor_name?: string;
     managed_rancher_load_balancer_system_volume_size_gb?: number;
     managed_rancher_load_balancer_system_volume_type_name?: string;
@@ -3523,7 +3522,6 @@ export type MergedPluginOptionsRequest = {
     managed_rancher_server_data_volume_type_name?: string;
     managed_rancher_worker_system_volume_size_gb?: number;
     managed_rancher_worker_system_volume_type_name?: string;
-    managed_rancher_load_balancer_cloud_init_template?: string;
     managed_rancher_load_balancer_flavor_name?: string;
     managed_rancher_load_balancer_system_volume_size_gb?: number;
     managed_rancher_load_balancer_system_volume_type_name?: string;
@@ -3601,6 +3599,7 @@ export type MergedSecretOptions = {
     username?: string;
     password?: string;
     cloud_init_template?: string;
+    managed_rancher_load_balancer_cloud_init_template?: string;
     /**
      * Host of the Vault server
      */
@@ -3745,6 +3744,7 @@ export type MergedSecretOptionsRequest = {
     username?: string;
     password?: string;
     cloud_init_template?: string;
+    managed_rancher_load_balancer_cloud_init_template?: string;
     /**
      * Host of the Vault server
      */
@@ -6073,7 +6073,7 @@ export type OrderCreate = {
     readonly resource_name: string;
     readonly cost: string | null;
     state: OrderState;
-    output?: string;
+    readonly output: string;
     readonly marketplace_resource_uuid: string;
     readonly error_message: string;
     callback_url?: string | null;
@@ -6108,7 +6108,6 @@ export type OrderCreateRequest = {
         [key: string]: number;
     };
     type?: RequestTypes;
-    output?: string;
     accepting_terms_of_service?: boolean;
     callback_url?: string | null;
     project: string;
