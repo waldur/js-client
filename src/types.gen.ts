@@ -1428,6 +1428,32 @@ export type ComponentUsageItemRequest = {
     recurring?: boolean;
 };
 
+export type ComponentUsagesPerMonthStats = {
+    usage: string;
+    offering_uuid: string;
+    component_type: string;
+    readonly offering_country: string;
+    readonly organization_group_name: string;
+    readonly organization_group_uuid: string;
+    month: number;
+    year: number;
+};
+
+export type ComponentUsagesPerProject = {
+    project_uuid: string;
+    component_type: string;
+    readonly usage: number;
+};
+
+export type ComponentUsagesStats = {
+    usage: string;
+    offering_uuid: string;
+    component_type: string;
+    readonly offering_country: string;
+    readonly organization_group_name: string;
+    readonly organization_group_uuid: string;
+};
+
 export type ComponentUserUsage = {
     readonly uuid?: string;
     user?: string;
@@ -1770,9 +1796,43 @@ export type CostsForPeriod = {
     readonly end_date: string;
 };
 
+export type CountProjectsOfServiceProviders = {
+    readonly service_provider_uuid: string;
+    readonly customer_uuid: string;
+    readonly customer_name: string;
+    readonly customer_organization_group_uuid: string;
+    readonly customer_organization_group_name: string;
+    readonly count: number;
+};
+
+export type CountProjectsOfServiceProvidersGroupedByOecd = {
+    readonly service_provider_uuid: string;
+    readonly customer_uuid: string;
+    readonly customer_name: string;
+    readonly customer_organization_group_uuid: string;
+    readonly customer_organization_group_name: string;
+    readonly count: number;
+    readonly oecd_fos_2007_name: string;
+};
+
 export type CountStats = {
     readonly name: string;
     readonly uuid: string;
+    readonly count: number;
+};
+
+export type CountUniqueUsersConnectedWithActiveResourcesOfServiceProvider = {
+    readonly customer_uuid: string;
+    readonly customer_name: string;
+    readonly count_users: number;
+};
+
+export type CountUsersOfServiceProviders = {
+    readonly service_provider_uuid: string;
+    readonly customer_uuid: string;
+    readonly customer_name: string;
+    readonly customer_organization_group_uuid: string;
+    readonly customer_organization_group_name: string;
     readonly count: number;
 };
 
@@ -4444,6 +4504,11 @@ export type OfferingComponentStat = {
     readonly measured_unit: string;
     readonly type: string;
     readonly name: string;
+};
+
+export type OfferingCost = {
+    offering_uuid: string;
+    cost: number;
 };
 
 export type OfferingCountryStats = {
@@ -7458,6 +7523,38 @@ export type ProjectUser = {
     readonly offering_user_username: string | null;
 };
 
+export type ProjectsLimitsGroupedByIndustryFlag = {
+    limits: {
+        [key: string]: {
+            [key: string]: string;
+        };
+    };
+};
+
+export type ProjectsLimitsGroupedByOecd = {
+    limits: {
+        [key: string]: {
+            [key: string]: string;
+        };
+    };
+};
+
+export type ProjectsUsagesGroupedByIndustryFlag = {
+    usages: {
+        [key: string]: {
+            [key: string]: string;
+        };
+    };
+};
+
+export type ProjectsUsagesGroupedByOecd = {
+    usages: {
+        [key: string]: {
+            [key: string]: string;
+        };
+    };
+};
+
 export type Proposal = {
     readonly uuid: string;
     readonly url: string;
@@ -8547,14 +8644,10 @@ export type RancherNestedNodeRequest = {
 };
 
 export type RancherNestedPublicIp = {
-    floating_ip?: string | null;
-    cluster?: string;
+    readonly floating_ip?: string;
+    readonly floating_ip_uuid?: string;
     readonly ip_address?: string;
-};
-
-export type RancherNestedPublicIpRequest = {
-    floating_ip: string | null;
-    cluster: string;
+    readonly external_ip_address?: string;
 };
 
 export type RancherNestedSecurityGroup = {
@@ -9208,6 +9301,15 @@ export type ResourceUserRequest = {
     user: string;
 };
 
+export type ResourcesLimits = {
+    readonly offering_uuid: string;
+    readonly name: string;
+    readonly value: number;
+    readonly offering_country: string;
+    readonly organization_group_name: string;
+    readonly organization_group_uuid: string;
+};
+
 export type ReviewComment = {
     comment?: string;
 };
@@ -9390,6 +9492,7 @@ export type RoleDetails = {
     readonly permissions?: Array<string>;
     readonly is_system_role?: boolean;
     is_active?: boolean;
+    readonly users_count?: number;
     content_type?: RoleType;
 };
 
@@ -22581,47 +22684,71 @@ export type MarketplaceServiceProvidersUpdateUserResponses = {
 
 export type MarketplaceServiceProvidersUpdateUserResponse = MarketplaceServiceProvidersUpdateUserResponses[keyof MarketplaceServiceProvidersUpdateUserResponses];
 
-export type MarketplaceStatsComponentUsagesRetrieveData = {
+export type MarketplaceStatsComponentUsagesListData = {
     body?: never;
     path?: never;
-    query?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
     url: '/api/marketplace-stats/component_usages/';
 };
 
-export type MarketplaceStatsComponentUsagesRetrieveResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+export type MarketplaceStatsComponentUsagesListResponses = {
+    200: Array<ComponentUsagesStats>;
 };
 
-export type MarketplaceStatsComponentUsagesPerMonthRetrieveData = {
+export type MarketplaceStatsComponentUsagesListResponse = MarketplaceStatsComponentUsagesListResponses[keyof MarketplaceStatsComponentUsagesListResponses];
+
+export type MarketplaceStatsComponentUsagesPerMonthListData = {
     body?: never;
     path?: never;
-    query?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
     url: '/api/marketplace-stats/component_usages_per_month/';
 };
 
-export type MarketplaceStatsComponentUsagesPerMonthRetrieveResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+export type MarketplaceStatsComponentUsagesPerMonthListResponses = {
+    200: Array<ComponentUsagesPerMonthStats>;
 };
 
-export type MarketplaceStatsComponentUsagesPerProjectRetrieveData = {
+export type MarketplaceStatsComponentUsagesPerMonthListResponse = MarketplaceStatsComponentUsagesPerMonthListResponses[keyof MarketplaceStatsComponentUsagesPerMonthListResponses];
+
+export type MarketplaceStatsComponentUsagesPerProjectListData = {
     body?: never;
     path?: never;
-    query?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
     url: '/api/marketplace-stats/component_usages_per_project/';
 };
 
-export type MarketplaceStatsComponentUsagesPerProjectRetrieveResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+export type MarketplaceStatsComponentUsagesPerProjectListResponses = {
+    200: Array<ComponentUsagesPerProject>;
 };
+
+export type MarketplaceStatsComponentUsagesPerProjectListResponse = MarketplaceStatsComponentUsagesPerProjectListResponses[keyof MarketplaceStatsComponentUsagesPerProjectListResponses];
 
 export type MarketplaceStatsCountActiveResourcesGroupedByOfferingListData = {
     body?: never;
@@ -22733,61 +22860,93 @@ export type MarketplaceStatsCountProjectsGroupedByProviderAndOecdListResponses =
 
 export type MarketplaceStatsCountProjectsGroupedByProviderAndOecdListResponse = MarketplaceStatsCountProjectsGroupedByProviderAndOecdListResponses[keyof MarketplaceStatsCountProjectsGroupedByProviderAndOecdListResponses];
 
-export type MarketplaceStatsCountProjectsOfServiceProvidersRetrieveData = {
+export type MarketplaceStatsCountProjectsOfServiceProvidersListData = {
     body?: never;
     path?: never;
-    query?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
     url: '/api/marketplace-stats/count_projects_of_service_providers/';
 };
 
-export type MarketplaceStatsCountProjectsOfServiceProvidersRetrieveResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+export type MarketplaceStatsCountProjectsOfServiceProvidersListResponses = {
+    200: Array<CountProjectsOfServiceProviders>;
 };
 
-export type MarketplaceStatsCountProjectsOfServiceProvidersGroupedByOecdRetrieveData = {
+export type MarketplaceStatsCountProjectsOfServiceProvidersListResponse = MarketplaceStatsCountProjectsOfServiceProvidersListResponses[keyof MarketplaceStatsCountProjectsOfServiceProvidersListResponses];
+
+export type MarketplaceStatsCountProjectsOfServiceProvidersGroupedByOecdListData = {
     body?: never;
     path?: never;
-    query?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
     url: '/api/marketplace-stats/count_projects_of_service_providers_grouped_by_oecd/';
 };
 
-export type MarketplaceStatsCountProjectsOfServiceProvidersGroupedByOecdRetrieveResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+export type MarketplaceStatsCountProjectsOfServiceProvidersGroupedByOecdListResponses = {
+    200: Array<CountProjectsOfServiceProvidersGroupedByOecd>;
 };
 
-export type MarketplaceStatsCountUniqueUsersConnectedWithActiveResourcesOfServiceProviderRetrieveData = {
+export type MarketplaceStatsCountProjectsOfServiceProvidersGroupedByOecdListResponse = MarketplaceStatsCountProjectsOfServiceProvidersGroupedByOecdListResponses[keyof MarketplaceStatsCountProjectsOfServiceProvidersGroupedByOecdListResponses];
+
+export type MarketplaceStatsCountUniqueUsersConnectedWithActiveResourcesOfServiceProviderListData = {
     body?: never;
     path?: never;
-    query?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
     url: '/api/marketplace-stats/count_unique_users_connected_with_active_resources_of_service_provider/';
 };
 
-export type MarketplaceStatsCountUniqueUsersConnectedWithActiveResourcesOfServiceProviderRetrieveResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+export type MarketplaceStatsCountUniqueUsersConnectedWithActiveResourcesOfServiceProviderListResponses = {
+    200: Array<CountUniqueUsersConnectedWithActiveResourcesOfServiceProvider>;
 };
 
-export type MarketplaceStatsCountUsersOfServiceProvidersRetrieveData = {
+export type MarketplaceStatsCountUniqueUsersConnectedWithActiveResourcesOfServiceProviderListResponse = MarketplaceStatsCountUniqueUsersConnectedWithActiveResourcesOfServiceProviderListResponses[keyof MarketplaceStatsCountUniqueUsersConnectedWithActiveResourcesOfServiceProviderListResponses];
+
+export type MarketplaceStatsCountUsersOfServiceProvidersListData = {
     body?: never;
     path?: never;
-    query?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
     url: '/api/marketplace-stats/count_users_of_service_providers/';
 };
 
-export type MarketplaceStatsCountUsersOfServiceProvidersRetrieveResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+export type MarketplaceStatsCountUsersOfServiceProvidersListResponses = {
+    200: Array<CountUsersOfServiceProviders>;
 };
+
+export type MarketplaceStatsCountUsersOfServiceProvidersListResponse = MarketplaceStatsCountUsersOfServiceProvidersListResponses[keyof MarketplaceStatsCountUsersOfServiceProvidersListResponses];
 
 export type MarketplaceStatsCustomerMemberCountListData = {
     body?: never;
@@ -22885,11 +23044,10 @@ export type MarketplaceStatsProjectsLimitsGroupedByIndustryFlagRetrieveData = {
 };
 
 export type MarketplaceStatsProjectsLimitsGroupedByIndustryFlagRetrieveResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    200: ProjectsLimitsGroupedByIndustryFlag;
 };
+
+export type MarketplaceStatsProjectsLimitsGroupedByIndustryFlagRetrieveResponse = MarketplaceStatsProjectsLimitsGroupedByIndustryFlagRetrieveResponses[keyof MarketplaceStatsProjectsLimitsGroupedByIndustryFlagRetrieveResponses];
 
 export type MarketplaceStatsProjectsLimitsGroupedByOecdRetrieveData = {
     body?: never;
@@ -22899,11 +23057,10 @@ export type MarketplaceStatsProjectsLimitsGroupedByOecdRetrieveData = {
 };
 
 export type MarketplaceStatsProjectsLimitsGroupedByOecdRetrieveResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    200: ProjectsLimitsGroupedByOecd;
 };
+
+export type MarketplaceStatsProjectsLimitsGroupedByOecdRetrieveResponse = MarketplaceStatsProjectsLimitsGroupedByOecdRetrieveResponses[keyof MarketplaceStatsProjectsLimitsGroupedByOecdRetrieveResponses];
 
 export type MarketplaceStatsProjectsUsagesGroupedByIndustryFlagRetrieveData = {
     body?: never;
@@ -22913,11 +23070,10 @@ export type MarketplaceStatsProjectsUsagesGroupedByIndustryFlagRetrieveData = {
 };
 
 export type MarketplaceStatsProjectsUsagesGroupedByIndustryFlagRetrieveResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    200: ProjectsUsagesGroupedByIndustryFlag;
 };
+
+export type MarketplaceStatsProjectsUsagesGroupedByIndustryFlagRetrieveResponse = MarketplaceStatsProjectsUsagesGroupedByIndustryFlagRetrieveResponses[keyof MarketplaceStatsProjectsUsagesGroupedByIndustryFlagRetrieveResponses];
 
 export type MarketplaceStatsProjectsUsagesGroupedByOecdRetrieveData = {
     body?: never;
@@ -22927,39 +23083,54 @@ export type MarketplaceStatsProjectsUsagesGroupedByOecdRetrieveData = {
 };
 
 export type MarketplaceStatsProjectsUsagesGroupedByOecdRetrieveResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    200: ProjectsUsagesGroupedByOecd;
 };
 
-export type MarketplaceStatsResourcesLimitsRetrieveData = {
+export type MarketplaceStatsProjectsUsagesGroupedByOecdRetrieveResponse = MarketplaceStatsProjectsUsagesGroupedByOecdRetrieveResponses[keyof MarketplaceStatsProjectsUsagesGroupedByOecdRetrieveResponses];
+
+export type MarketplaceStatsResourcesLimitsListData = {
     body?: never;
     path?: never;
-    query?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
     url: '/api/marketplace-stats/resources_limits/';
 };
 
-export type MarketplaceStatsResourcesLimitsRetrieveResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+export type MarketplaceStatsResourcesLimitsListResponses = {
+    200: Array<ResourcesLimits>;
 };
 
-export type MarketplaceStatsTotalCostOfActiveResourcesPerOfferingRetrieveData = {
+export type MarketplaceStatsResourcesLimitsListResponse = MarketplaceStatsResourcesLimitsListResponses[keyof MarketplaceStatsResourcesLimitsListResponses];
+
+export type MarketplaceStatsTotalCostOfActiveResourcesPerOfferingListData = {
     body?: never;
     path?: never;
-    query?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
     url: '/api/marketplace-stats/total_cost_of_active_resources_per_offering/';
 };
 
-export type MarketplaceStatsTotalCostOfActiveResourcesPerOfferingRetrieveResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+export type MarketplaceStatsTotalCostOfActiveResourcesPerOfferingListResponses = {
+    200: Array<OfferingCost>;
 };
+
+export type MarketplaceStatsTotalCostOfActiveResourcesPerOfferingListResponse = MarketplaceStatsTotalCostOfActiveResourcesPerOfferingListResponses[keyof MarketplaceStatsTotalCostOfActiveResourcesPerOfferingListResponses];
 
 export type MediaRetrieveData = {
     body?: never;
@@ -30764,7 +30935,7 @@ export type RolesListData = {
     path?: never;
     query?: {
         description?: string;
-        field?: Array<'content_type' | 'description' | 'description_ar' | 'description_cs' | 'description_da' | 'description_de' | 'description_en' | 'description_es' | 'description_et' | 'description_fr' | 'description_it' | 'description_lt' | 'description_lv' | 'description_nb' | 'description_ru' | 'description_sv' | 'is_active' | 'is_system_role' | 'name' | 'permissions' | 'uuid'>;
+        field?: Array<'content_type' | 'description' | 'description_ar' | 'description_cs' | 'description_da' | 'description_de' | 'description_en' | 'description_es' | 'description_et' | 'description_fr' | 'description_it' | 'description_lt' | 'description_lv' | 'description_nb' | 'description_ru' | 'description_sv' | 'is_active' | 'is_system_role' | 'name' | 'permissions' | 'users_count' | 'uuid'>;
         is_active?: boolean;
         name?: string;
         /**
@@ -30822,7 +30993,7 @@ export type RolesRetrieveData = {
         uuid: string;
     };
     query?: {
-        field?: Array<'content_type' | 'description' | 'description_ar' | 'description_cs' | 'description_da' | 'description_de' | 'description_en' | 'description_es' | 'description_et' | 'description_fr' | 'description_it' | 'description_lt' | 'description_lv' | 'description_nb' | 'description_ru' | 'description_sv' | 'is_active' | 'is_system_role' | 'name' | 'permissions' | 'uuid'>;
+        field?: Array<'content_type' | 'description' | 'description_ar' | 'description_cs' | 'description_da' | 'description_de' | 'description_en' | 'description_es' | 'description_et' | 'description_fr' | 'description_it' | 'description_lt' | 'description_lv' | 'description_nb' | 'description_ru' | 'description_sv' | 'is_active' | 'is_system_role' | 'name' | 'permissions' | 'users_count' | 'uuid'>;
     };
     url: '/api/roles/{uuid}/';
 };
