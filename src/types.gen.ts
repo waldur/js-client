@@ -1784,6 +1784,8 @@ export type ConstanceSettingsRequest = {
     OIDC_CACHE_TIMEOUT?: number;
 };
 
+export type ContainerFormatEnum = 'bare' | 'ovf' | 'aki' | 'ami' | 'ari';
+
 export type CoreAuthToken = {
     readonly token: string;
 };
@@ -2340,6 +2342,8 @@ export type DirectionEnum = 'ingress' | 'egress';
 
 export type DiscountTypeEnum = 'discount' | 'special_price';
 
+export type DiskFormatEnum = 'qcow2' | 'raw' | 'vhd' | 'vmdk' | 'vdi' | 'iso' | 'aki' | 'ami' | 'ari';
+
 export type DryRun = {
     readonly url: string;
     readonly uuid: string;
@@ -2721,6 +2725,27 @@ export type IdentityProviderRequest = {
      */
     management_url?: string;
     protected_fields?: unknown;
+};
+
+export type ImageCreateRequest = {
+    name: string;
+    min_ram?: number;
+    min_disk?: number;
+    disk_format?: DiskFormatEnum;
+    container_format?: ContainerFormatEnum;
+    visibility?: VisibilityEnum;
+};
+
+export type ImageCreateResponse = {
+    image_id: string;
+    name: string;
+    status: string;
+    upload_url: string;
+};
+
+export type ImageUploadResponse = {
+    status: string;
+    message: string;
 };
 
 export type ImportResourceRequest = {
@@ -4875,9 +4900,9 @@ export type OfferingUser = {
     user?: string;
     offering?: string;
     username?: string | null;
-    readonly offering_uuid?: string;
+    offering_uuid?: string;
     readonly offering_name?: string;
-    readonly user_uuid?: string;
+    user_uuid?: string;
     /**
      * Required. 128 characters or fewer. Lowercase letters, numbers and @/./+/-/_ characters
      */
@@ -4894,9 +4919,11 @@ export type OfferingUser = {
 };
 
 export type OfferingUserRequest = {
-    user: string;
-    offering: string;
+    user?: string;
+    offering?: string;
     username?: string | null;
+    offering_uuid?: string;
+    user_uuid?: string;
 };
 
 export type OfferingUserRole = {
@@ -6681,6 +6708,8 @@ export type PatchedOfferingUserRequest = {
     user?: string;
     offering?: string;
     username?: string | null;
+    offering_uuid?: string;
+    user_uuid?: string;
 };
 
 export type PatchedOfferingUserRoleRequest = {
@@ -9931,6 +9960,12 @@ export type TemplateVersion = {
     readonly questions: Array<RancherTemplateQuestion>;
 };
 
+export type Tenant = {
+    readonly url: string;
+    readonly uuid: string;
+    name: string;
+};
+
 export type TokenRequest = {
     token: string;
 };
@@ -10142,6 +10177,8 @@ export type Version = {
      */
     latest_version?: string;
 };
+
+export type VisibilityEnum = 'private' | 'public';
 
 export type VisibleInvitationDetails = {
     readonly scope_uuid: string;
@@ -17994,7 +18031,7 @@ export type MarketplaceOfferingUsersListResponses = {
 export type MarketplaceOfferingUsersListResponse = MarketplaceOfferingUsersListResponses[keyof MarketplaceOfferingUsersListResponses];
 
 export type MarketplaceOfferingUsersCreateData = {
-    body: OfferingUserRequest;
+    body?: OfferingUserRequest;
     path?: never;
     query?: never;
     url: '/api/marketplace-offering-users/';
@@ -18057,7 +18094,7 @@ export type MarketplaceOfferingUsersPartialUpdateResponses = {
 export type MarketplaceOfferingUsersPartialUpdateResponse = MarketplaceOfferingUsersPartialUpdateResponses[keyof MarketplaceOfferingUsersPartialUpdateResponses];
 
 export type MarketplaceOfferingUsersUpdateData = {
-    body: OfferingUserRequest;
+    body?: OfferingUserRequest;
     path: {
         uuid: string;
     };
@@ -24272,6 +24309,95 @@ export type OpenstackInstancesUpdateSecurityGroupsResponses = {
     200: unknown;
 };
 
+export type OpenstackMarketplaceTenantsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        backend_id?: string;
+        /**
+         * Can manage
+         */
+        can_manage?: boolean;
+        customer?: string;
+        customer_abbreviation?: string;
+        customer_name?: string;
+        customer_native_name?: string;
+        customer_uuid?: string;
+        description?: string;
+        external_ip?: string;
+        name?: string;
+        name_exact?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        project?: string;
+        project_name?: string;
+        project_uuid?: string;
+        service_settings_name?: string;
+        service_settings_uuid?: string;
+        state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        uuid?: string;
+    };
+    url: '/api/openstack-marketplace-tenants/';
+};
+
+export type OpenstackMarketplaceTenantsListResponses = {
+    200: Array<Tenant>;
+};
+
+export type OpenstackMarketplaceTenantsListResponse = OpenstackMarketplaceTenantsListResponses[keyof OpenstackMarketplaceTenantsListResponses];
+
+export type OpenstackMarketplaceTenantsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openstack-marketplace-tenants/{uuid}/';
+};
+
+export type OpenstackMarketplaceTenantsRetrieveResponses = {
+    200: Tenant;
+};
+
+export type OpenstackMarketplaceTenantsRetrieveResponse = OpenstackMarketplaceTenantsRetrieveResponses[keyof OpenstackMarketplaceTenantsRetrieveResponses];
+
+export type OpenstackMarketplaceTenantsCreateImageData = {
+    body: ImageCreateRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openstack-marketplace-tenants/{uuid}/create_image/';
+};
+
+export type OpenstackMarketplaceTenantsCreateImageResponses = {
+    201: ImageCreateResponse;
+};
+
+export type OpenstackMarketplaceTenantsCreateImageResponse = OpenstackMarketplaceTenantsCreateImageResponses[keyof OpenstackMarketplaceTenantsCreateImageResponses];
+
+export type OpenstackMarketplaceTenantsUploadImageDataData = {
+    body?: Blob | File;
+    path: {
+        image_id: string;
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openstack-marketplace-tenants/{uuid}/upload_image_data/{image_id}/';
+};
+
+export type OpenstackMarketplaceTenantsUploadImageDataResponses = {
+    200: ImageUploadResponse;
+};
+
+export type OpenstackMarketplaceTenantsUploadImageDataResponse = OpenstackMarketplaceTenantsUploadImageDataResponses[keyof OpenstackMarketplaceTenantsUploadImageDataResponses];
+
 export type OpenstackMigrationsListData = {
     body?: never;
     path?: never;
@@ -25983,7 +26109,7 @@ export type OpenstackTenantsCreateSecurityGroupData = {
 };
 
 export type OpenstackTenantsCreateSecurityGroupResponses = {
-    200: OpenStackSecurityGroup;
+    201: OpenStackSecurityGroup;
 };
 
 export type OpenstackTenantsCreateSecurityGroupResponse = OpenstackTenantsCreateSecurityGroupResponses[keyof OpenstackTenantsCreateSecurityGroupResponses];
