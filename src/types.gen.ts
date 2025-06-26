@@ -2703,6 +2703,22 @@ export type IdentityProvider = {
      * Space-separated list of scopes to request during authentication.
      */
     scope?: string | null;
+    /**
+     * The field in Waldur User model to be used for looking up the user
+     */
+    user_field?: string;
+    /**
+     * The OIDC claim from the userinfo endpoint to be used as the value for the lookup field.
+     */
+    user_claim?: string;
+    /**
+     * A JSON object mapping Waldur User model fields to OIDC claims. Example: {"first_name": "given_name", "last_name": "family_name", "email": "email"}
+     */
+    attribute_mapping?: unknown;
+    /**
+     * Space-separated list of extra fields to persist.
+     */
+    extra_fields?: string | null;
 };
 
 export type IdentityProviderRequest = {
@@ -2732,6 +2748,22 @@ export type IdentityProviderRequest = {
      * Space-separated list of scopes to request during authentication.
      */
     scope?: string | null;
+    /**
+     * The field in Waldur User model to be used for looking up the user
+     */
+    user_field?: string;
+    /**
+     * The OIDC claim from the userinfo endpoint to be used as the value for the lookup field.
+     */
+    user_claim?: string;
+    /**
+     * A JSON object mapping Waldur User model fields to OIDC claims. Example: {"first_name": "given_name", "last_name": "family_name", "email": "email"}
+     */
+    attribute_mapping?: unknown;
+    /**
+     * Space-separated list of extra fields to persist.
+     */
+    extra_fields?: string | null;
 };
 
 export type ImageCreateRequest = {
@@ -6601,6 +6633,22 @@ export type PatchedIdentityProviderRequest = {
      * Space-separated list of scopes to request during authentication.
      */
     scope?: string | null;
+    /**
+     * The field in Waldur User model to be used for looking up the user
+     */
+    user_field?: string;
+    /**
+     * The OIDC claim from the userinfo endpoint to be used as the value for the lookup field.
+     */
+    user_claim?: string;
+    /**
+     * A JSON object mapping Waldur User model fields to OIDC claims. Example: {"first_name": "given_name", "last_name": "family_name", "email": "email"}
+     */
+    attribute_mapping?: unknown;
+    /**
+     * Space-separated list of extra fields to persist.
+     */
+    extra_fields?: string | null;
 };
 
 export type PatchedInvoiceItemUpdateRequest = {
