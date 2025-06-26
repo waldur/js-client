@@ -2164,10 +2164,9 @@ export type CustomerUser = {
     username?: string;
     readonly full_name?: string;
     email?: string;
-    readonly role?: string;
-    readonly role_name?: string;
+    readonly role_name?: string | null;
     readonly projects?: Array<NestedProjectPermission>;
-    readonly expiration_time?: string;
+    readonly expiration_time?: string | null;
     image?: string | null;
 };
 
@@ -2700,6 +2699,10 @@ export type IdentityProvider = {
      */
     management_url?: string;
     protected_fields?: unknown;
+    /**
+     * Space-separated list of scopes to request during authentication.
+     */
+    scope?: string | null;
 };
 
 export type IdentityProviderRequest = {
@@ -2725,6 +2728,10 @@ export type IdentityProviderRequest = {
      */
     management_url?: string;
     protected_fields?: unknown;
+    /**
+     * Space-separated list of scopes to request during authentication.
+     */
+    scope?: string | null;
 };
 
 export type ImageCreateRequest = {
@@ -4802,7 +4809,7 @@ export type OfferingPermission = {
     readonly offering_uuid: string;
     readonly offering_slug: string;
     readonly offering_name: string;
-    readonly role: string;
+    role: string;
     readonly role_name: string;
     readonly user: string;
     readonly user_full_name: string;
@@ -6590,6 +6597,10 @@ export type PatchedIdentityProviderRequest = {
      */
     management_url?: string;
     protected_fields?: unknown;
+    /**
+     * Space-separated list of scopes to request during authentication.
+     */
+    scope?: string | null;
 };
 
 export type PatchedInvoiceItemUpdateRequest = {
@@ -13946,7 +13957,7 @@ export type CustomersUsersListData = {
         civil_number?: string;
         description?: string;
         email?: string;
-        field?: Array<'email' | 'expiration_time' | 'full_name' | 'image' | 'projects' | 'role' | 'role_name' | 'url' | 'username' | 'uuid'>;
+        field?: Array<'email' | 'expiration_time' | 'full_name' | 'image' | 'projects' | 'role_name' | 'url' | 'username' | 'uuid'>;
         full_name?: string;
         is_active?: string;
         job_title?: string;
@@ -27409,6 +27420,22 @@ export type ProjectsStatsRetrieveResponses = {
 };
 
 export type ProjectsStatsRetrieveResponse = ProjectsStatsRetrieveResponses[keyof ProjectsStatsRetrieveResponses];
+
+export type ProjectsSyncUserRolesData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/projects/{uuid}/sync_user_roles/';
+};
+
+export type ProjectsSyncUserRolesResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type ProjectsUpdateUserData = {
     body: UserRoleUpdateRequest;
