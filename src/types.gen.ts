@@ -2702,23 +2702,7 @@ export type IdentityProvider = {
     /**
      * Space-separated list of scopes to request during authentication.
      */
-    scope?: string | null;
-    /**
-     * The field in Waldur User model to be used for looking up the user
-     */
-    user_field?: string;
-    /**
-     * The OIDC claim from the userinfo endpoint to be used as the value for the lookup field.
-     */
-    user_claim?: string;
-    /**
-     * A JSON object mapping Waldur User model fields to OIDC claims. Example: {"first_name": "given_name", "last_name": "family_name", "email": "email"}
-     */
-    attribute_mapping?: unknown;
-    /**
-     * Space-separated list of extra fields to persist.
-     */
-    extra_fields?: string | null;
+    extra_scope?: string | null;
 };
 
 export type IdentityProviderRequest = {
@@ -2747,23 +2731,7 @@ export type IdentityProviderRequest = {
     /**
      * Space-separated list of scopes to request during authentication.
      */
-    scope?: string | null;
-    /**
-     * The field in Waldur User model to be used for looking up the user
-     */
-    user_field?: string;
-    /**
-     * The OIDC claim from the userinfo endpoint to be used as the value for the lookup field.
-     */
-    user_claim?: string;
-    /**
-     * A JSON object mapping Waldur User model fields to OIDC claims. Example: {"first_name": "given_name", "last_name": "family_name", "email": "email"}
-     */
-    attribute_mapping?: unknown;
-    /**
-     * Space-separated list of extra fields to persist.
-     */
-    extra_fields?: string | null;
+    extra_scope?: string | null;
 };
 
 export type ImageCreateRequest = {
@@ -3543,6 +3511,18 @@ export type MergedPluginOptions = {
     managed_rancher_load_balancer_data_volume_size_gb?: number;
     managed_rancher_load_balancer_data_volume_type_name?: string;
     /**
+     * Max number of vCPUs for tenants
+     */
+    managed_rancher_tenant_max_cpu?: number;
+    /**
+     * Max number of RAM for tenants
+     */
+    managed_rancher_tenant_max_ram?: number;
+    /**
+     * Max size of disk space for tenants (GB)
+     */
+    managed_rancher_tenant_max_disk?: number;
+    /**
      * Slurm account name generation policy
      */
     account_name_generation_policy?: AccountNameGenerationPolicyEnum | NullEnum | null;
@@ -3669,6 +3649,18 @@ export type MergedPluginOptionsRequest = {
     managed_rancher_load_balancer_system_volume_type_name?: string;
     managed_rancher_load_balancer_data_volume_size_gb?: number;
     managed_rancher_load_balancer_data_volume_type_name?: string;
+    /**
+     * Max number of vCPUs for tenants
+     */
+    managed_rancher_tenant_max_cpu?: number;
+    /**
+     * Max number of RAM for tenants
+     */
+    managed_rancher_tenant_max_ram?: number;
+    /**
+     * Max size of disk space for tenants (GB)
+     */
+    managed_rancher_tenant_max_disk?: number;
     /**
      * Slurm account name generation policy
      */
@@ -6632,23 +6624,7 @@ export type PatchedIdentityProviderRequest = {
     /**
      * Space-separated list of scopes to request during authentication.
      */
-    scope?: string | null;
-    /**
-     * The field in Waldur User model to be used for looking up the user
-     */
-    user_field?: string;
-    /**
-     * The OIDC claim from the userinfo endpoint to be used as the value for the lookup field.
-     */
-    user_claim?: string;
-    /**
-     * A JSON object mapping Waldur User model fields to OIDC claims. Example: {"first_name": "given_name", "last_name": "family_name", "email": "email"}
-     */
-    attribute_mapping?: unknown;
-    /**
-     * Space-separated list of extra fields to persist.
-     */
-    extra_fields?: string | null;
+    extra_scope?: string | null;
 };
 
 export type PatchedInvoiceItemUpdateRequest = {
