@@ -112,6 +112,7 @@ export type AuthToken = {
      */
     readonly user_username: string;
     /**
+     * Active
      * Designates whether this user should be treated as active. Unselect this instead of deleting accounts.
      */
     readonly user_is_active: boolean;
@@ -187,7 +188,9 @@ export type AwsInstance = {
     readonly image_name?: string;
     readonly marketplace_offering_uuid?: string | null;
     readonly marketplace_offering_name?: string | null;
-    readonly marketplace_offering_plugin_options?: {} | null;
+    readonly marketplace_offering_plugin_options?: {
+        [key: string]: unknown;
+    } | null;
     readonly marketplace_category_uuid?: string | null;
     readonly marketplace_category_name?: string | null;
     readonly marketplace_resource_uuid?: string | null;
@@ -281,7 +284,9 @@ export type AwsVolume = {
     readonly runtime_state?: string;
     readonly marketplace_offering_uuid?: string | null;
     readonly marketplace_offering_name?: string | null;
-    readonly marketplace_offering_plugin_options?: {} | null;
+    readonly marketplace_offering_plugin_options?: {
+        [key: string]: unknown;
+    } | null;
     readonly marketplace_category_uuid?: string | null;
     readonly marketplace_category_name?: string | null;
     readonly marketplace_resource_uuid?: string | null;
@@ -366,7 +371,9 @@ export type AzurePublicIp = {
     resource_group?: string;
     readonly marketplace_offering_uuid?: string | null;
     readonly marketplace_offering_name?: string | null;
-    readonly marketplace_offering_plugin_options?: {} | null;
+    readonly marketplace_offering_plugin_options?: {
+        [key: string]: unknown;
+    } | null;
     readonly marketplace_category_uuid?: string | null;
     readonly marketplace_category_name?: string | null;
     readonly marketplace_resource_uuid?: string | null;
@@ -413,7 +420,9 @@ export type AzureResourceGroup = {
     location?: string;
     readonly marketplace_offering_uuid?: string | null;
     readonly marketplace_offering_name?: string | null;
-    readonly marketplace_offering_plugin_options?: {} | null;
+    readonly marketplace_offering_plugin_options?: {
+        [key: string]: unknown;
+    } | null;
     readonly marketplace_category_uuid?: string | null;
     readonly marketplace_category_name?: string | null;
     readonly marketplace_resource_uuid?: string | null;
@@ -469,7 +478,9 @@ export type AzureSqlDatabase = {
     readonly server_marketplace_uuid?: string;
     readonly marketplace_offering_uuid?: string | null;
     readonly marketplace_offering_name?: string | null;
-    readonly marketplace_offering_plugin_options?: {} | null;
+    readonly marketplace_offering_plugin_options?: {
+        [key: string]: unknown;
+    } | null;
     readonly marketplace_category_uuid?: string | null;
     readonly marketplace_category_name?: string | null;
     readonly marketplace_resource_uuid?: string | null;
@@ -533,7 +544,9 @@ export type AzureSqlServer = {
     readonly location_name?: string;
     readonly marketplace_offering_uuid?: string | null;
     readonly marketplace_offering_name?: string | null;
-    readonly marketplace_offering_plugin_options?: {} | null;
+    readonly marketplace_offering_plugin_options?: {
+        [key: string]: unknown;
+    } | null;
     readonly marketplace_category_uuid?: string | null;
     readonly marketplace_category_name?: string | null;
     readonly marketplace_resource_uuid?: string | null;
@@ -620,7 +633,9 @@ export type AzureVirtualMachine = {
     readonly size_name?: string;
     readonly marketplace_offering_uuid?: string | null;
     readonly marketplace_offering_name?: string | null;
-    readonly marketplace_offering_plugin_options?: {} | null;
+    readonly marketplace_offering_plugin_options?: {
+        [key: string]: unknown;
+    } | null;
     readonly marketplace_category_uuid?: string | null;
     readonly marketplace_category_name?: string | null;
     readonly marketplace_resource_uuid?: string | null;
@@ -799,6 +814,9 @@ export type BasicUser = {
     username: string;
     readonly full_name: string;
     native_name?: string;
+    /**
+     * Email address
+     */
     email?: string;
     image?: string | null;
 };
@@ -846,7 +864,9 @@ export type BookingResource = {
     readonly plan_name?: string | null;
     readonly plan_uuid?: string | null;
     readonly plan_description?: string | null;
-    readonly attributes?: {};
+    readonly attributes?: {
+        [key: string]: unknown;
+    };
     readonly limits?: {
         [key: string]: number;
     };
@@ -1355,6 +1375,9 @@ export type Comment = {
     readonly author_name: string;
     readonly author_uuid: string;
     readonly author_user: string;
+    /**
+     * Email address
+     */
     readonly author_email: string;
     readonly backend_id: string | null;
     remote_id?: string | null;
@@ -1921,6 +1944,9 @@ export type Customer = {
     readonly blocked?: boolean;
     readonly archived?: boolean;
     readonly default_tax_percent?: string;
+    /**
+     * Start date of accounting
+     */
     readonly accounting_start_date?: string;
     readonly projects_count?: number;
     readonly users_count?: number;
@@ -1939,6 +1965,9 @@ export type Customer = {
     abbreviation?: string;
     contact_details?: string;
     readonly agreement_number?: string;
+    /**
+     * Email address
+     */
     email?: string;
     phone_number?: string;
     /**
@@ -2014,6 +2043,9 @@ export type CustomerDetails = {
     address?: string;
     country?: string;
     readonly country_name?: string | null;
+    /**
+     * Email address
+     */
     email?: string;
     postal?: string;
     phone_number?: string;
@@ -2111,6 +2143,9 @@ export type CustomerRequest = {
     native_name?: string;
     abbreviation?: string;
     contact_details?: string;
+    /**
+     * Email address
+     */
     email?: string;
     phone_number?: string;
     registration_code?: string;
@@ -2163,6 +2198,9 @@ export type CustomerUser = {
      */
     username?: string;
     readonly full_name?: string;
+    /**
+     * Email address
+     */
     email?: string;
     readonly role_name?: string | null;
     readonly projects?: Array<NestedProjectPermission>;
@@ -2256,7 +2294,9 @@ export type DigitalOceanDroplet = {
     readonly region_name?: string;
     readonly marketplace_offering_uuid?: string | null;
     readonly marketplace_offering_name?: string | null;
-    readonly marketplace_offering_plugin_options?: {} | null;
+    readonly marketplace_offering_plugin_options?: {
+        [key: string]: unknown;
+    } | null;
     readonly marketplace_category_uuid?: string | null;
     readonly marketplace_category_name?: string | null;
     readonly marketplace_resource_uuid?: string | null;
@@ -2468,6 +2508,9 @@ export type FinancialReport = {
     readonly uuid: string;
     abbreviation?: string;
     readonly created: string;
+    /**
+     * Start date of accounting
+     */
     accounting_start_date?: string;
     registration_code?: string;
     agreement_number?: string;
@@ -2513,6 +2556,9 @@ export type FirecrestJob = {
     readonly backend_id?: string;
     readonly access_url?: string | null;
     runtime_state?: string;
+    /**
+     * Batch script file
+     */
     file?: string;
     /**
      * Reference to user which submitted job
@@ -2523,6 +2569,9 @@ export type FirecrestJob = {
      * Required. 128 characters or fewer. Lowercase letters, numbers and @/./+/-/_ characters
      */
     readonly user_username?: string | null;
+    /**
+     * Job output
+     */
     readonly report?: unknown;
 };
 
@@ -2532,6 +2581,9 @@ export type FirecrestJobRequest = {
     service_settings: string;
     project: string;
     runtime_state?: string;
+    /**
+     * Batch script file
+     */
     file: Blob | File;
 };
 
@@ -2545,6 +2597,9 @@ export type FreeipaProfile = {
      * Indicates when the user has agreed with the policy.
      */
     agreement_date?: string;
+    /**
+     * Active
+     */
     readonly is_active: boolean;
     readonly user: string;
     readonly user_uuid: string;
@@ -2775,11 +2830,17 @@ export type InstanceFlavorChangeRequest = {
 export type IntegrationStatus = {
     readonly agent_type?: string;
     readonly status?: string;
+    /**
+     * Time of latest backend request
+     */
     readonly last_request_timestamp?: string | null;
 };
 
 export type IntegrationStatusDetails = {
     readonly status: string;
+    /**
+     * Time of latest backend request
+     */
     readonly last_request_timestamp: string | null;
     offering: string;
     readonly url: string;
@@ -2851,6 +2912,9 @@ export type Invoice = {
     readonly url?: string;
     readonly uuid?: string;
     readonly number?: number;
+    /**
+     * Organization
+     */
     customer?: string;
     price?: string;
     tax?: string;
@@ -3058,6 +3122,9 @@ export type Issue = {
     assignee?: string | null;
     readonly assignee_uuid: string | null;
     readonly assignee_name: string | null;
+    /**
+     * Organization
+     */
     customer?: string | null;
     readonly customer_uuid: string | null;
     readonly customer_name: string | null;
@@ -3092,6 +3159,9 @@ export type IssueRequest = {
     priority?: string;
     caller?: string | null;
     assignee?: string | null;
+    /**
+     * Organization
+     */
     customer?: string | null;
     project?: string | null;
     resource?: string;
@@ -3127,12 +3197,16 @@ export type JiraIssue = {
 
 export type JiraIssueFields = {
     project: JiraIssueProject;
-    comment?: {};
+    comment?: {
+        [key: string]: unknown;
+    };
 };
 
 export type JiraIssueFieldsRequest = {
     project: JiraIssueProjectRequest;
-    comment?: {};
+    comment?: {
+        [key: string]: unknown;
+    };
 };
 
 export type JiraIssueProject = {
@@ -3155,6 +3229,9 @@ export type JiraIssueRequest = {
 export type KeycloakGroup = {
     readonly uuid: string;
     readonly url: string;
+    /**
+     * Group name
+     */
     readonly name: string;
     readonly backend_id: string;
     readonly scope_type: string;
@@ -3340,6 +3417,9 @@ export type MarketplaceProviderCustomer = {
     slug?: string;
     abbreviation?: string;
     phone_number?: string;
+    /**
+     * Email address
+     */
     email?: string;
     readonly payment_profiles?: Array<PaymentProfile>;
     billing_price_estimate?: NestedPriceEstimate;
@@ -3372,6 +3452,9 @@ export type MarketplaceServiceProviderUser = {
     first_name?: string;
     last_name?: string;
     organization?: string;
+    /**
+     * Email address
+     */
     email?: string;
     phone_number?: string;
     readonly projects_count?: number;
@@ -3384,6 +3467,7 @@ export type MarketplaceServiceProviderUser = {
      */
     affiliations?: unknown;
     /**
+     * Active
      * Designates whether this user should be treated as active. Unselect this instead of deleting accounts.
      */
     is_active?: boolean;
@@ -3729,8 +3813,17 @@ export type MergedSecretOptions = {
      * Organization UUID
      */
     customer_uuid?: string;
+    /**
+     * Rancher server URL
+     */
     backend_url?: string;
+    /**
+     * Rancher access key
+     */
     username?: string;
+    /**
+     * Rancher secret key
+     */
     password?: string;
     cloud_init_template?: string;
     managed_rancher_load_balancer_cloud_init_template?: string;
@@ -3874,8 +3967,17 @@ export type MergedSecretOptionsRequest = {
      * Organization UUID
      */
     customer_uuid?: string;
+    /**
+     * Rancher server URL
+     */
     backend_url?: string;
+    /**
+     * Rancher access key
+     */
     username?: string;
+    /**
+     * Rancher secret key
+     */
     password?: string;
     cloud_init_template?: string;
     managed_rancher_load_balancer_cloud_init_template?: string;
@@ -4441,7 +4543,9 @@ export type Offering = {
     category?: string;
     readonly category_uuid?: string;
     readonly category_title?: string;
-    readonly attributes?: {};
+    readonly attributes?: {
+        [key: string]: unknown;
+    };
     options?: OfferingOptions;
     resource_options?: OfferingOptions;
     readonly components?: Array<OfferingComponent>;
@@ -4622,7 +4726,9 @@ export type OfferingCreate = {
     components?: Array<OfferingComponent>;
     plugin_options: MergedPluginOptions;
     secret_options: MergedSecretOptions;
-    readonly service_attributes: {};
+    readonly service_attributes: {
+        [key: string]: unknown;
+    };
     state: OfferingState;
     vendor_details?: string;
     getting_started?: string;
@@ -4825,6 +4931,9 @@ export type OfferingPauseRequest = {
 
 export type OfferingPermission = {
     readonly url: string;
+    /**
+     * ID
+     */
     readonly pk: number;
     readonly created: string;
     expiration_time?: string | null;
@@ -4843,6 +4952,9 @@ export type OfferingPermission = {
      */
     readonly user_username: string;
     readonly user_uuid: string;
+    /**
+     * Email address
+     */
     readonly user_email: string;
 };
 
@@ -5051,7 +5163,9 @@ export type OpenStackBackup = {
     readonly tenant_uuid?: string;
     readonly marketplace_offering_uuid?: string | null;
     readonly marketplace_offering_name?: string | null;
-    readonly marketplace_offering_plugin_options?: {} | null;
+    readonly marketplace_offering_plugin_options?: {
+        [key: string]: unknown;
+    } | null;
     readonly marketplace_category_uuid?: string | null;
     readonly marketplace_category_name?: string | null;
     readonly marketplace_resource_uuid?: string | null;
@@ -5176,7 +5290,9 @@ export type OpenStackFloatingIp = {
     readonly instance_url?: string | null;
     readonly marketplace_offering_uuid?: string | null;
     readonly marketplace_offering_name?: string | null;
-    readonly marketplace_offering_plugin_options?: {} | null;
+    readonly marketplace_offering_plugin_options?: {
+        [key: string]: unknown;
+    } | null;
     readonly marketplace_category_uuid?: string | null;
     readonly marketplace_category_name?: string | null;
     readonly marketplace_resource_uuid?: string | null;
@@ -5293,7 +5409,9 @@ export type OpenStackInstance = {
     rancher_cluster?: RancherClusterReference | null;
     readonly marketplace_offering_uuid?: string | null;
     readonly marketplace_offering_name?: string | null;
-    readonly marketplace_offering_plugin_options?: {} | null;
+    readonly marketplace_offering_plugin_options?: {
+        [key: string]: unknown;
+    } | null;
     readonly marketplace_category_uuid?: string | null;
     readonly marketplace_category_name?: string | null;
     readonly marketplace_resource_uuid?: string | null;
@@ -5488,7 +5606,9 @@ export type OpenStackNetwork = {
     readonly rbac_policies?: Array<NetworkRbacPolicy>;
     readonly marketplace_offering_uuid?: string | null;
     readonly marketplace_offering_name?: string | null;
-    readonly marketplace_offering_plugin_options?: {} | null;
+    readonly marketplace_offering_plugin_options?: {
+        [key: string]: unknown;
+    } | null;
     readonly marketplace_category_uuid?: string | null;
     readonly marketplace_category_name?: string | null;
     readonly marketplace_resource_uuid?: string | null;
@@ -5546,7 +5666,9 @@ export type OpenStackPort = {
     readonly status?: string | null;
     readonly marketplace_offering_uuid?: string | null;
     readonly marketplace_offering_name?: string | null;
-    readonly marketplace_offering_plugin_options?: {} | null;
+    readonly marketplace_offering_plugin_options?: {
+        [key: string]: unknown;
+    } | null;
     readonly marketplace_category_uuid?: string | null;
     readonly marketplace_category_name?: string | null;
     readonly marketplace_resource_uuid?: string | null;
@@ -5615,7 +5737,9 @@ export type OpenStackRouter = {
     readonly ports?: Array<OpenStackNestedPort>;
     readonly marketplace_offering_uuid?: string | null;
     readonly marketplace_offering_name?: string | null;
-    readonly marketplace_offering_plugin_options?: {} | null;
+    readonly marketplace_offering_plugin_options?: {
+        [key: string]: unknown;
+    } | null;
     readonly marketplace_category_uuid?: string | null;
     readonly marketplace_category_name?: string | null;
     readonly marketplace_resource_uuid?: string | null;
@@ -5670,7 +5794,9 @@ export type OpenStackSecurityGroup = {
     rules?: Array<OpenStackSecurityGroupRuleCreate>;
     readonly marketplace_offering_uuid?: string | null;
     readonly marketplace_offering_name?: string | null;
-    readonly marketplace_offering_plugin_options?: {} | null;
+    readonly marketplace_offering_plugin_options?: {
+        [key: string]: unknown;
+    } | null;
     readonly marketplace_category_uuid?: string | null;
     readonly marketplace_category_name?: string | null;
     readonly marketplace_resource_uuid?: string | null;
@@ -5765,7 +5891,9 @@ export type OpenStackServerGroup = {
     readonly instances?: Array<OpenStackNestedInstance>;
     readonly marketplace_offering_uuid?: string | null;
     readonly marketplace_offering_name?: string | null;
-    readonly marketplace_offering_plugin_options?: {} | null;
+    readonly marketplace_offering_plugin_options?: {
+        [key: string]: unknown;
+    } | null;
     readonly marketplace_category_uuid?: string | null;
     readonly marketplace_category_name?: string | null;
     readonly marketplace_resource_uuid?: string | null;
@@ -5824,7 +5952,9 @@ export type OpenStackSnapshot = {
     kept_until?: string | null;
     readonly marketplace_offering_uuid?: string | null;
     readonly marketplace_offering_name?: string | null;
-    readonly marketplace_offering_plugin_options?: {} | null;
+    readonly marketplace_offering_plugin_options?: {
+        [key: string]: unknown;
+    } | null;
     readonly marketplace_category_uuid?: string | null;
     readonly marketplace_category_name?: string | null;
     readonly marketplace_resource_uuid?: string | null;
@@ -5929,7 +6059,9 @@ export type OpenStackSubNet = {
     readonly is_connected?: boolean;
     readonly marketplace_offering_uuid?: string | null;
     readonly marketplace_offering_name?: string | null;
-    readonly marketplace_offering_plugin_options?: {} | null;
+    readonly marketplace_offering_plugin_options?: {
+        [key: string]: unknown;
+    } | null;
     readonly marketplace_category_uuid?: string | null;
     readonly marketplace_category_name?: string | null;
     readonly marketplace_resource_uuid?: string | null;
@@ -5997,7 +6129,9 @@ export type OpenStackTenant = {
     default_volume_type_name?: string;
     readonly marketplace_offering_uuid?: string | null;
     readonly marketplace_offering_name?: string | null;
-    readonly marketplace_offering_plugin_options?: {} | null;
+    readonly marketplace_offering_plugin_options?: {
+        [key: string]: unknown;
+    } | null;
     readonly marketplace_category_uuid?: string | null;
     readonly marketplace_category_name?: string | null;
     readonly marketplace_resource_uuid?: string | null;
@@ -6106,7 +6240,9 @@ export type OpenStackVolume = {
     readonly extend_enabled?: boolean;
     readonly marketplace_offering_uuid?: string | null;
     readonly marketplace_offering_name?: string | null;
-    readonly marketplace_offering_plugin_options?: {} | null;
+    readonly marketplace_offering_plugin_options?: {
+        [key: string]: unknown;
+    } | null;
     readonly marketplace_category_uuid?: string | null;
     readonly marketplace_category_name?: string | null;
     readonly marketplace_resource_uuid?: string | null;
@@ -6218,6 +6354,9 @@ export type OrderCreate = {
     readonly marketplace_resource_uuid: string;
     readonly error_message: string;
     callback_url?: string | null;
+    /**
+     * Completion time
+     */
     readonly completed_at: string | null;
     readonly url: string;
     readonly created_by: string;
@@ -6288,7 +6427,9 @@ export type OrderDetails = {
     /**
      * Get attributes excluding secret attributes, such as username and password.
      */
-    readonly attributes?: {};
+    readonly attributes?: {
+        [key: string]: unknown;
+    };
     limits?: {
         [key: string]: number;
     };
@@ -6305,6 +6446,9 @@ export type OrderDetails = {
     readonly marketplace_resource_uuid?: string;
     readonly error_message?: string;
     callback_url?: string | null;
+    /**
+     * Completion time
+     */
     readonly completed_at?: string | null;
     /**
      * Required. 128 characters or fewer. Lowercase letters, numbers and @/./+/-/_ characters
@@ -6554,6 +6698,9 @@ export type PatchedCustomerRequest = {
     native_name?: string;
     abbreviation?: string;
     contact_details?: string;
+    /**
+     * Email address
+     */
     email?: string;
     phone_number?: string;
     registration_code?: string;
@@ -6874,8 +7021,14 @@ export type PatchedProjectEstimatedCostPolicyRequest = {
 
 export type PatchedProjectRequest = {
     name?: string;
+    /**
+     * Organization
+     */
     customer?: string;
     description?: string;
+    /**
+     * Project type
+     */
     type?: string | null;
     backend_id?: string;
     start_date?: string | null;
@@ -6974,7 +7127,9 @@ export type PatchedRancherApplicationRequest = {
     namespace?: string;
     namespace_name?: string;
     version?: string;
-    answers?: {};
+    answers?: {
+        [key: string]: unknown;
+    };
 };
 
 export type PatchedRancherCatalogRequest = {
@@ -7094,19 +7249,61 @@ export type PatchedRobotAccountRequest = {
 export type PatchedRoleDetailsRequest = {
     name?: string;
     description?: string;
+    /**
+     * Description [en]
+     */
     description_en?: string | null;
+    /**
+     * Description [et]
+     */
     description_et?: string | null;
+    /**
+     * Description [lt]
+     */
     description_lt?: string | null;
+    /**
+     * Description [lv]
+     */
     description_lv?: string | null;
+    /**
+     * Description [ru]
+     */
     description_ru?: string | null;
+    /**
+     * Description [it]
+     */
     description_it?: string | null;
+    /**
+     * Description [de]
+     */
     description_de?: string | null;
+    /**
+     * Description [da]
+     */
     description_da?: string | null;
+    /**
+     * Description [sv]
+     */
     description_sv?: string | null;
+    /**
+     * Description [es]
+     */
     description_es?: string | null;
+    /**
+     * Description [fr]
+     */
     description_fr?: string | null;
+    /**
+     * Description [nb]
+     */
     description_nb?: string | null;
+    /**
+     * Description [ar]
+     */
     description_ar?: string | null;
+    /**
+     * Description [cs]
+     */
     description_cs?: string | null;
     is_active?: boolean;
 };
@@ -7158,14 +7355,17 @@ export type PatchedUserRequest = {
     organization?: string;
     description?: string;
     /**
+     * Staff status
      * Designates whether the user can log into this admin site.
      */
     is_staff?: boolean;
     /**
+     * Active
      * Designates whether this user should be treated as active. Unselect this instead of deleting accounts.
      */
     is_active?: boolean;
     /**
+     * Support status
      * Designates whether the user is a global support user.
      */
     is_support?: boolean;
@@ -7338,7 +7538,13 @@ export type PlanComponent = {
     readonly measured_unit: string;
     billing_type: BillingTypeEnum;
     amount?: number;
+    /**
+     * Price per unit per billing period.
+     */
     price?: string;
+    /**
+     * Price per unit for future month.
+     */
     future_price?: string | null;
 };
 
@@ -7390,6 +7596,9 @@ export type Project = {
     readonly uuid?: string;
     name?: string;
     readonly slug?: string;
+    /**
+     * Organization
+     */
     customer?: string;
     readonly customer_uuid?: string;
     readonly customer_name?: string;
@@ -7398,6 +7607,9 @@ export type Project = {
     readonly customer_abbreviation?: string;
     description?: string;
     readonly created?: string;
+    /**
+     * Project type
+     */
     type?: string | null;
     readonly type_name?: string | null;
     readonly type_uuid?: string | null;
@@ -7518,6 +7730,9 @@ export type ProjectPermissionLog = {
      */
     readonly user_username?: string;
     readonly user_uuid?: string;
+    /**
+     * Email address
+     */
     readonly user_email?: string;
 };
 
@@ -7530,8 +7745,14 @@ export type ProjectQuotas = {
 
 export type ProjectRequest = {
     name: string;
+    /**
+     * Organization
+     */
     customer: string;
     description?: string;
+    /**
+     * Project type
+     */
     type?: string | null;
     backend_id?: string;
     start_date?: string | null;
@@ -7599,6 +7820,9 @@ export type ProjectUser = {
      */
     username: string;
     readonly full_name: string;
+    /**
+     * Email address
+     */
     email?: string;
     readonly role: string;
     readonly expiration_time: string | null;
@@ -7912,6 +8136,9 @@ export type ProviderOfferingCustomer = {
     slug: string;
     abbreviation?: string;
     phone_number?: string;
+    /**
+     * Email address
+     */
     email?: string;
 };
 
@@ -7941,13 +8168,17 @@ export type ProviderOfferingDetails = {
     category?: string;
     readonly category_uuid?: string;
     readonly category_title?: string;
-    readonly attributes?: {};
+    readonly attributes?: {
+        [key: string]: unknown;
+    };
     options?: OfferingOptions;
     resource_options?: OfferingOptions;
     readonly components?: Array<OfferingComponent>;
     plugin_options?: MergedPluginOptions;
     secret_options?: MergedSecretOptions;
-    readonly service_attributes?: {};
+    readonly service_attributes?: {
+        [key: string]: unknown;
+    };
     state?: OfferingState;
     vendor_details?: string;
     getting_started?: string;
@@ -8114,6 +8345,9 @@ export type ProviderRequestedOffering = {
     call: string;
     readonly description: string;
     readonly created_by_name: string;
+    /**
+     * Email address
+     */
     readonly created_by_email: string;
 };
 
@@ -8137,6 +8371,9 @@ export type ProviderRequestedResource = {
 export type ProviderUser = {
     readonly uuid?: string;
     readonly full_name?: string;
+    /**
+     * Email address
+     */
     email?: string;
     image?: string | null;
 };
@@ -8200,7 +8437,9 @@ export type PublicOfferingDetails = {
     category?: string;
     readonly category_uuid?: string;
     readonly category_title?: string;
-    readonly attributes?: {};
+    readonly attributes?: {
+        [key: string]: unknown;
+    };
     options?: OfferingOptions;
     resource_options?: OfferingOptions;
     readonly components?: Array<OfferingComponent>;
@@ -8309,14 +8548,18 @@ export type RancherApplication = {
     rancher_project?: string;
     namespace?: string;
     version?: string;
-    answers?: {};
+    answers?: {
+        [key: string]: unknown;
+    };
     readonly rancher_project_name?: string;
     readonly catalog_name?: string;
     readonly template_name?: string;
     readonly external_url?: string | null;
     readonly marketplace_offering_uuid?: string | null;
     readonly marketplace_offering_name?: string | null;
-    readonly marketplace_offering_plugin_options?: {} | null;
+    readonly marketplace_offering_plugin_options?: {
+        [key: string]: unknown;
+    } | null;
     readonly marketplace_category_uuid?: string | null;
     readonly marketplace_category_name?: string | null;
     readonly marketplace_resource_uuid?: string | null;
@@ -8340,7 +8583,9 @@ export type RancherApplicationRequest = {
     namespace?: string;
     namespace_name?: string;
     version: string;
-    answers?: {};
+    answers?: {
+        [key: string]: unknown;
+    };
 };
 
 export type RancherCatalog = {
@@ -8468,7 +8713,9 @@ export type RancherCluster = {
     readonly kubernetes_version?: string;
     readonly marketplace_offering_uuid?: string | null;
     readonly marketplace_offering_name?: string | null;
-    readonly marketplace_offering_plugin_options?: {} | null;
+    readonly marketplace_offering_plugin_options?: {
+        [key: string]: unknown;
+    } | null;
     readonly marketplace_category_uuid?: string | null;
     readonly marketplace_category_name?: string | null;
     readonly marketplace_resource_uuid?: string | null;
@@ -8530,8 +8777,17 @@ export type RancherClusterTemplate = {
 };
 
 export type RancherClusterTemplateNode = {
+    /**
+     * Min vCPU (cores)
+     */
     min_vcpu: number;
+    /**
+     * Min RAM (GB)
+     */
     min_ram: number;
+    /**
+     * System volume size (GB)
+     */
     system_volume_size: number;
     preferred_volume_type?: string;
     role: RoleEnum;
@@ -8638,7 +8894,9 @@ export type RancherIngress = {
     rules?: unknown;
     readonly marketplace_offering_uuid?: string | null;
     readonly marketplace_offering_name?: string | null;
-    readonly marketplace_offering_plugin_options?: {} | null;
+    readonly marketplace_offering_plugin_options?: {
+        [key: string]: unknown;
+    } | null;
     readonly marketplace_category_uuid?: string | null;
     readonly marketplace_category_name?: string | null;
     readonly marketplace_resource_uuid?: string | null;
@@ -8832,7 +9090,9 @@ export type RancherService = {
     target_workloads?: Array<RancherNestedWorkload>;
     readonly marketplace_offering_uuid?: string | null;
     readonly marketplace_offering_name?: string | null;
-    readonly marketplace_offering_plugin_options?: {} | null;
+    readonly marketplace_offering_plugin_options?: {
+        [key: string]: unknown;
+    } | null;
     readonly marketplace_category_uuid?: string | null;
     readonly marketplace_category_name?: string | null;
     readonly marketplace_resource_uuid?: string | null;
@@ -8880,6 +9140,9 @@ export type RancherTemplateBaseQuestion = {
     description?: string;
     variable: string;
     required?: boolean;
+    /**
+     * Validate
+     */
     validate_?: unknown;
     type: RancherTemplateQuestionType;
     default?: string | null;
@@ -8892,6 +9155,9 @@ export type RancherTemplateQuestion = {
     description?: string;
     variable: string;
     required?: boolean;
+    /**
+     * Validate
+     */
     validate_?: unknown;
     type: RancherTemplateQuestionType;
     default?: string | null;
@@ -9167,7 +9433,9 @@ export type Resource = {
     readonly plan_name?: string | null;
     readonly plan_uuid?: string | null;
     readonly plan_description?: string | null;
-    readonly attributes?: {};
+    readonly attributes?: {
+        [key: string]: unknown;
+    };
     readonly limits?: {
         [key: string]: number;
     };
@@ -9333,6 +9601,9 @@ export type ResourceSwitchPlanRequest = {
 };
 
 export type ResourceTerminateRequest = {
+    /**
+     * Termination attributes
+     */
     attributes?: unknown;
 };
 
@@ -9519,37 +9790,121 @@ export type RobotAccountStates = 1 | 2 | 3 | 4 | 5 | 6;
 
 export type RoleDescription = {
     description?: string;
+    /**
+     * Description [en]
+     */
     description_en?: string | null;
+    /**
+     * Description [et]
+     */
     description_et?: string | null;
+    /**
+     * Description [lt]
+     */
     description_lt?: string | null;
+    /**
+     * Description [lv]
+     */
     description_lv?: string | null;
+    /**
+     * Description [ru]
+     */
     description_ru?: string | null;
+    /**
+     * Description [it]
+     */
     description_it?: string | null;
+    /**
+     * Description [de]
+     */
     description_de?: string | null;
+    /**
+     * Description [da]
+     */
     description_da?: string | null;
+    /**
+     * Description [sv]
+     */
     description_sv?: string | null;
+    /**
+     * Description [es]
+     */
     description_es?: string | null;
+    /**
+     * Description [fr]
+     */
     description_fr?: string | null;
+    /**
+     * Description [nb]
+     */
     description_nb?: string | null;
+    /**
+     * Description [ar]
+     */
     description_ar?: string | null;
+    /**
+     * Description [cs]
+     */
     description_cs?: string | null;
 };
 
 export type RoleDescriptionRequest = {
     description?: string;
+    /**
+     * Description [en]
+     */
     description_en?: string | null;
+    /**
+     * Description [et]
+     */
     description_et?: string | null;
+    /**
+     * Description [lt]
+     */
     description_lt?: string | null;
+    /**
+     * Description [lv]
+     */
     description_lv?: string | null;
+    /**
+     * Description [ru]
+     */
     description_ru?: string | null;
+    /**
+     * Description [it]
+     */
     description_it?: string | null;
+    /**
+     * Description [de]
+     */
     description_de?: string | null;
+    /**
+     * Description [da]
+     */
     description_da?: string | null;
+    /**
+     * Description [sv]
+     */
     description_sv?: string | null;
+    /**
+     * Description [es]
+     */
     description_es?: string | null;
+    /**
+     * Description [fr]
+     */
     description_fr?: string | null;
+    /**
+     * Description [nb]
+     */
     description_nb?: string | null;
+    /**
+     * Description [ar]
+     */
     description_ar?: string | null;
+    /**
+     * Description [cs]
+     */
     description_cs?: string | null;
 };
 
@@ -9557,19 +9912,61 @@ export type RoleDetails = {
     readonly uuid?: string;
     name?: string;
     description?: string;
+    /**
+     * Description [en]
+     */
     description_en?: string | null;
+    /**
+     * Description [et]
+     */
     description_et?: string | null;
+    /**
+     * Description [lt]
+     */
     description_lt?: string | null;
+    /**
+     * Description [lv]
+     */
     description_lv?: string | null;
+    /**
+     * Description [ru]
+     */
     description_ru?: string | null;
+    /**
+     * Description [it]
+     */
     description_it?: string | null;
+    /**
+     * Description [de]
+     */
     description_de?: string | null;
+    /**
+     * Description [da]
+     */
     description_da?: string | null;
+    /**
+     * Description [sv]
+     */
     description_sv?: string | null;
+    /**
+     * Description [es]
+     */
     description_es?: string | null;
+    /**
+     * Description [fr]
+     */
     description_fr?: string | null;
+    /**
+     * Description [nb]
+     */
     description_nb?: string | null;
+    /**
+     * Description [ar]
+     */
     description_ar?: string | null;
+    /**
+     * Description [cs]
+     */
     description_cs?: string | null;
     readonly permissions?: Array<string>;
     readonly is_system_role?: boolean;
@@ -9583,19 +9980,61 @@ export type RoleEnum = 'agent' | 'server';
 export type RoleModifyRequest = {
     name: string;
     description?: string;
+    /**
+     * Description [en]
+     */
     description_en?: string | null;
+    /**
+     * Description [et]
+     */
     description_et?: string | null;
+    /**
+     * Description [lt]
+     */
     description_lt?: string | null;
+    /**
+     * Description [lv]
+     */
     description_lv?: string | null;
+    /**
+     * Description [ru]
+     */
     description_ru?: string | null;
+    /**
+     * Description [it]
+     */
     description_it?: string | null;
+    /**
+     * Description [de]
+     */
     description_de?: string | null;
+    /**
+     * Description [da]
+     */
     description_da?: string | null;
+    /**
+     * Description [sv]
+     */
     description_sv?: string | null;
+    /**
+     * Description [es]
+     */
     description_es?: string | null;
+    /**
+     * Description [fr]
+     */
     description_fr?: string | null;
+    /**
+     * Description [nb]
+     */
     description_nb?: string | null;
+    /**
+     * Description [ar]
+     */
     description_ar?: string | null;
+    /**
+     * Description [cs]
+     */
     description_cs?: string | null;
     permissions: unknown;
     is_active?: boolean;
@@ -9774,13 +10213,18 @@ export type ServiceSettings = {
      * Anybody can use it
      */
     shared?: boolean;
+    /**
+     * Organization
+     */
     customer?: string | null;
     readonly customer_name?: string | null;
     readonly customer_native_name?: string;
     terms_of_services?: string;
     scope?: string | null;
     readonly scope_uuid?: string;
-    readonly options?: {};
+    readonly options?: {
+        [key: string]: unknown;
+    };
 };
 
 export type ServiceSettingsStateEnum = 'CREATION_SCHEDULED' | 'CREATING' | 'UPDATE_SCHEDULED' | 'UPDATING' | 'DELETION_SCHEDULED' | 'DELETING' | 'OK' | 'ERRED';
@@ -9839,7 +10283,9 @@ export type SlurmAllocation = {
     readonly is_active?: boolean;
     readonly marketplace_offering_uuid?: string | null;
     readonly marketplace_offering_name?: string | null;
-    readonly marketplace_offering_plugin_options?: {} | null;
+    readonly marketplace_offering_plugin_options?: {
+        [key: string]: unknown;
+    } | null;
     readonly marketplace_category_uuid?: string | null;
     readonly marketplace_category_name?: string | null;
     readonly marketplace_resource_uuid?: string | null;
@@ -10027,14 +10473,17 @@ export type User = {
     readonly civil_number?: string | null;
     description?: string;
     /**
+     * Staff status
      * Designates whether the user can log into this admin site.
      */
     is_staff?: boolean;
     /**
+     * Active
      * Designates whether this user should be treated as active. Unselect this instead of deleting accounts.
      */
     is_active?: boolean;
     /**
+     * Support status
      * Designates whether the user is a global support user.
      */
     is_support?: boolean;
@@ -10072,6 +10521,7 @@ export type User = {
     readonly identity_provider_fields?: Array<string>;
     image?: string | null;
     /**
+     * Source of identity
      * Indicates what identity provider was used.
      */
     readonly identity_source?: string;
@@ -10101,6 +10551,7 @@ export type UserAuthToken = {
      */
     readonly user_username: string;
     /**
+     * Active
      * Designates whether this user should be treated as active. Unselect this instead of deleting accounts.
      */
     readonly user_is_active: boolean;
@@ -10127,14 +10578,17 @@ export type UserRequest = {
     organization?: string;
     description?: string;
     /**
+     * Staff status
      * Designates whether the user can log into this admin site.
      */
     is_staff?: boolean;
     /**
+     * Active
      * Designates whether this user should be treated as active. Unselect this instead of deleting accounts.
      */
     is_active?: boolean;
     /**
+     * Support status
      * Designates whether the user is a global support user.
      */
     is_support?: boolean;
@@ -10174,6 +10628,9 @@ export type UserRoleDetails = {
     expiration_time?: string | null;
     readonly role_name?: string;
     readonly role_uuid?: string;
+    /**
+     * Email address
+     */
     readonly user_email?: string;
     readonly user_full_name?: string;
     /**
@@ -10289,7 +10746,9 @@ export type VmwareDisk = {
     readonly vm_name?: string;
     readonly marketplace_offering_uuid?: string | null;
     readonly marketplace_offering_name?: string | null;
-    readonly marketplace_offering_plugin_options?: {} | null;
+    readonly marketplace_offering_plugin_options?: {
+        [key: string]: unknown;
+    } | null;
     readonly marketplace_category_uuid?: string | null;
     readonly marketplace_category_name?: string | null;
     readonly marketplace_resource_uuid?: string | null;
@@ -10416,7 +10875,9 @@ export type VmwarePort = {
     readonly network_name?: string;
     readonly marketplace_offering_uuid?: string | null;
     readonly marketplace_offering_name?: string | null;
-    readonly marketplace_offering_plugin_options?: {} | null;
+    readonly marketplace_offering_plugin_options?: {
+        [key: string]: unknown;
+    } | null;
     readonly marketplace_category_uuid?: string | null;
     readonly marketplace_category_name?: string | null;
     readonly marketplace_resource_uuid?: string | null;
@@ -10514,12 +10975,17 @@ export type VmwareVirtualMachine = {
     readonly datastore_name?: string;
     readonly folder_name?: string;
     readonly ports?: Array<VmwareNestedPort>;
+    /**
+     * The power state of the guest operating system.
+     */
     guest_power_state?: GuestPowerStateEnum;
     readonly tools_state?: string;
     readonly tools_installed?: boolean;
     readonly marketplace_offering_uuid?: string | null;
     readonly marketplace_offering_name?: string | null;
-    readonly marketplace_offering_plugin_options?: {} | null;
+    readonly marketplace_offering_plugin_options?: {
+        [key: string]: unknown;
+    } | null;
     readonly marketplace_category_uuid?: string | null;
     readonly marketplace_category_name?: string | null;
     readonly marketplace_resource_uuid?: string | null;
@@ -13400,7 +13866,9 @@ export type ConfigurationRetrieveData = {
 };
 
 export type ConfigurationRetrieveResponses = {
-    200: {};
+    200: {
+        [key: string]: unknown;
+    };
 };
 
 export type ConfigurationRetrieveResponse = ConfigurationRetrieveResponses[keyof ConfigurationRetrieveResponses];
@@ -14702,7 +15170,9 @@ export type EventsScopeTypesRetrieveResponses = {
 export type EventsScopeTypesRetrieveResponse = EventsScopeTypesRetrieveResponses[keyof EventsScopeTypesRetrieveResponses];
 
 export type FeatureValuesData = {
-    body?: {};
+    body?: {
+        [key: string]: unknown;
+    };
     path?: never;
     query?: never;
     url: '/api/feature-values/';
@@ -19930,7 +20400,9 @@ export type MarketplaceProviderOfferingsUnpauseResponses = {
 export type MarketplaceProviderOfferingsUnpauseResponse = MarketplaceProviderOfferingsUnpauseResponses[keyof MarketplaceProviderOfferingsUnpauseResponses];
 
 export type MarketplaceProviderOfferingsUpdateAttributesData = {
-    body?: {};
+    body?: {
+        [key: string]: unknown;
+    };
     path: {
         uuid: string;
     };

@@ -16,9 +16,6 @@
     "waldur",
     "client"
   ],
-  "dependencies": {
-    "@hey-api/client-fetch": "^0.8.3"
-  },
   "devDependencies": {
     "typescript": "^5.8.2"
   },
