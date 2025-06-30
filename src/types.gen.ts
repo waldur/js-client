@@ -7308,6 +7308,24 @@ export type PatchedRoleDetailsRequest = {
     is_active?: boolean;
 };
 
+export type PatchedRulePlansRequest = {
+    rule?: string;
+    plan?: string;
+    attributes?: {
+        [key: string]: unknown;
+    };
+    limits?: {
+        [key: string]: unknown;
+    };
+};
+
+export type PatchedRuleRequest = {
+    user_affiliations?: Array<string>;
+    user_email_patterns?: Array<string>;
+    customer?: string;
+    project_role?: string | null;
+};
+
 export type PatchedScreenshotRequest = {
     name?: string;
     description?: string;
@@ -10066,6 +10084,47 @@ export type RoundReviewer = {
     in_review_proposals: number;
 };
 
+export type Rule = {
+    readonly uuid: string;
+    readonly url: string;
+    user_affiliations?: Array<string>;
+    user_email_patterns?: Array<string>;
+    customer: string;
+    project_role?: string | null;
+    readonly plans: Array<string>;
+};
+
+export type RulePlans = {
+    readonly uuid: string;
+    readonly url: string;
+    rule: string;
+    plan: string;
+    attributes?: {
+        [key: string]: unknown;
+    };
+    limits?: {
+        [key: string]: unknown;
+    };
+};
+
+export type RulePlansRequest = {
+    rule: string;
+    plan: string;
+    attributes?: {
+        [key: string]: unknown;
+    };
+    limits?: {
+        [key: string]: unknown;
+    };
+};
+
+export type RuleRequest = {
+    user_affiliations?: Array<string>;
+    user_email_patterns?: Array<string>;
+    customer: string;
+    project_role?: string | null;
+};
+
 export type RuntimeStates = {
     readonly value: string;
     readonly label: string;
@@ -11604,6 +11663,202 @@ export type AuthValimoResultResponses = {
 };
 
 export type AuthValimoResultResponse = AuthValimoResultResponses[keyof AuthValimoResultResponses];
+
+export type AutoprovisioningRulePlansListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/autoprovisioning-rule-plans/';
+};
+
+export type AutoprovisioningRulePlansListResponses = {
+    200: Array<RulePlans>;
+};
+
+export type AutoprovisioningRulePlansListResponse = AutoprovisioningRulePlansListResponses[keyof AutoprovisioningRulePlansListResponses];
+
+export type AutoprovisioningRulePlansCreateData = {
+    body: RulePlansRequest;
+    path?: never;
+    query?: never;
+    url: '/api/autoprovisioning-rule-plans/';
+};
+
+export type AutoprovisioningRulePlansCreateResponses = {
+    201: RulePlans;
+};
+
+export type AutoprovisioningRulePlansCreateResponse = AutoprovisioningRulePlansCreateResponses[keyof AutoprovisioningRulePlansCreateResponses];
+
+export type AutoprovisioningRulePlansDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/autoprovisioning-rule-plans/{uuid}/';
+};
+
+export type AutoprovisioningRulePlansDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type AutoprovisioningRulePlansDestroyResponse = AutoprovisioningRulePlansDestroyResponses[keyof AutoprovisioningRulePlansDestroyResponses];
+
+export type AutoprovisioningRulePlansRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/autoprovisioning-rule-plans/{uuid}/';
+};
+
+export type AutoprovisioningRulePlansRetrieveResponses = {
+    200: RulePlans;
+};
+
+export type AutoprovisioningRulePlansRetrieveResponse = AutoprovisioningRulePlansRetrieveResponses[keyof AutoprovisioningRulePlansRetrieveResponses];
+
+export type AutoprovisioningRulePlansPartialUpdateData = {
+    body?: PatchedRulePlansRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/autoprovisioning-rule-plans/{uuid}/';
+};
+
+export type AutoprovisioningRulePlansPartialUpdateResponses = {
+    200: RulePlans;
+};
+
+export type AutoprovisioningRulePlansPartialUpdateResponse = AutoprovisioningRulePlansPartialUpdateResponses[keyof AutoprovisioningRulePlansPartialUpdateResponses];
+
+export type AutoprovisioningRulePlansUpdateData = {
+    body: RulePlansRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/autoprovisioning-rule-plans/{uuid}/';
+};
+
+export type AutoprovisioningRulePlansUpdateResponses = {
+    200: RulePlans;
+};
+
+export type AutoprovisioningRulePlansUpdateResponse = AutoprovisioningRulePlansUpdateResponses[keyof AutoprovisioningRulePlansUpdateResponses];
+
+export type AutoprovisioningRulesListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/autoprovisioning-rules/';
+};
+
+export type AutoprovisioningRulesListResponses = {
+    200: Array<Rule>;
+};
+
+export type AutoprovisioningRulesListResponse = AutoprovisioningRulesListResponses[keyof AutoprovisioningRulesListResponses];
+
+export type AutoprovisioningRulesCreateData = {
+    body: RuleRequest;
+    path?: never;
+    query?: never;
+    url: '/api/autoprovisioning-rules/';
+};
+
+export type AutoprovisioningRulesCreateResponses = {
+    201: Rule;
+};
+
+export type AutoprovisioningRulesCreateResponse = AutoprovisioningRulesCreateResponses[keyof AutoprovisioningRulesCreateResponses];
+
+export type AutoprovisioningRulesDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/autoprovisioning-rules/{uuid}/';
+};
+
+export type AutoprovisioningRulesDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type AutoprovisioningRulesDestroyResponse = AutoprovisioningRulesDestroyResponses[keyof AutoprovisioningRulesDestroyResponses];
+
+export type AutoprovisioningRulesRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/autoprovisioning-rules/{uuid}/';
+};
+
+export type AutoprovisioningRulesRetrieveResponses = {
+    200: Rule;
+};
+
+export type AutoprovisioningRulesRetrieveResponse = AutoprovisioningRulesRetrieveResponses[keyof AutoprovisioningRulesRetrieveResponses];
+
+export type AutoprovisioningRulesPartialUpdateData = {
+    body?: PatchedRuleRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/autoprovisioning-rules/{uuid}/';
+};
+
+export type AutoprovisioningRulesPartialUpdateResponses = {
+    200: Rule;
+};
+
+export type AutoprovisioningRulesPartialUpdateResponse = AutoprovisioningRulesPartialUpdateResponses[keyof AutoprovisioningRulesPartialUpdateResponses];
+
+export type AutoprovisioningRulesUpdateData = {
+    body: RuleRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/autoprovisioning-rules/{uuid}/';
+};
+
+export type AutoprovisioningRulesUpdateResponses = {
+    200: Rule;
+};
+
+export type AutoprovisioningRulesUpdateResponse = AutoprovisioningRulesUpdateResponses[keyof AutoprovisioningRulesUpdateResponses];
 
 export type AwsImagesListData = {
     body?: never;
@@ -19532,6 +19787,10 @@ export type MarketplaceProviderOfferingsListData = {
         shared?: boolean;
         state?: Array<'Active' | 'Archived' | 'Draft' | 'Paused'>;
         type?: Array<string>;
+        /**
+         * Comma-separated offering UUIDs
+         */
+        uuid_list?: string;
     };
     url: '/api/marketplace-provider-offerings/';
 };
@@ -19732,6 +19991,10 @@ export type MarketplaceProviderOfferingsComponentStatsListData = {
         start?: string;
         state?: Array<'Active' | 'Archived' | 'Draft' | 'Paused'>;
         type?: Array<string>;
+        /**
+         * Comma-separated offering UUIDs
+         */
+        uuid_list?: string;
     };
     url: '/api/marketplace-provider-offerings/{uuid}/component_stats/';
 };
@@ -19825,6 +20088,10 @@ export type MarketplaceProviderOfferingsCostsListData = {
         start?: string;
         state?: Array<'Active' | 'Archived' | 'Draft' | 'Paused'>;
         type?: Array<string>;
+        /**
+         * Comma-separated offering UUIDs
+         */
+        uuid_list?: string;
     };
     url: '/api/marketplace-provider-offerings/{uuid}/costs/';
 };
@@ -19925,6 +20192,10 @@ export type MarketplaceProviderOfferingsCustomersListData = {
         shared?: boolean;
         state?: Array<'Active' | 'Archived' | 'Draft' | 'Paused'>;
         type?: Array<string>;
+        /**
+         * Comma-separated offering UUIDs
+         */
+        uuid_list?: string;
     };
     url: '/api/marketplace-provider-offerings/{uuid}/customers/';
 };
@@ -20684,6 +20955,10 @@ export type MarketplaceProviderOfferingsGroupsListData = {
         shared?: boolean;
         state?: Array<'Active' | 'Archived' | 'Draft' | 'Paused'>;
         type?: Array<string>;
+        /**
+         * Comma-separated offering UUIDs
+         */
+        uuid_list?: string;
     };
     url: '/api/marketplace-provider-offerings/groups/';
 };
@@ -21218,6 +21493,10 @@ export type MarketplacePublicOfferingsListData = {
         shared?: boolean;
         state?: Array<'Active' | 'Archived' | 'Draft' | 'Paused'>;
         type?: Array<string>;
+        /**
+         * Comma-separated offering UUIDs
+         */
+        uuid_list?: string;
     };
     url: '/api/marketplace-public-offerings/';
 };
@@ -22670,6 +22949,10 @@ export type MarketplaceServiceProvidersOfferingsListData = {
         shared?: boolean;
         state?: Array<'Active' | 'Archived' | 'Draft' | 'Paused'>;
         type?: Array<string>;
+        /**
+         * Comma-separated offering UUIDs
+         */
+        uuid_list?: string;
     };
     url: '/api/marketplace-service-providers/{service_provider_uuid}/offerings/';
 };
@@ -22927,6 +23210,10 @@ export type MarketplaceServiceProvidersUsersListData = {
          */
         user_keyword?: string;
         username?: string;
+        /**
+         * Comma-separated usernames
+         */
+        username_list?: string;
     };
     url: '/api/marketplace-service-providers/{service_provider_uuid}/users/';
 };
@@ -33558,6 +33845,10 @@ export type UsersListData = {
          */
         user_keyword?: string;
         username?: string;
+        /**
+         * Comma-separated usernames
+         */
+        username_list?: string;
     };
     url: '/api/users/';
 };
