@@ -1669,6 +1669,7 @@ export type ConstanceSettings = {
     FREEIPA_GROUP_SYNCHRONIZATION_ENABLED?: boolean;
     KEYCLOAK_ICON?: string | null;
     COUNTRIES?: Array<string>;
+    OIDC_AUTH_URL?: string;
     OIDC_INTROSPECTION_URL?: string;
     OIDC_CLIENT_ID?: string;
     OIDC_CLIENT_SECRET?: string;
@@ -1800,6 +1801,7 @@ export type ConstanceSettingsRequest = {
     FREEIPA_GROUP_SYNCHRONIZATION_ENABLED?: boolean;
     KEYCLOAK_ICON?: (Blob | File) | null;
     COUNTRIES?: Array<string>;
+    OIDC_AUTH_URL?: string;
     OIDC_INTROSPECTION_URL?: string;
     OIDC_CLIENT_ID?: string;
     OIDC_CLIENT_SECRET?: string;
