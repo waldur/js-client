@@ -4347,6 +4347,7 @@ export type NestedRequestedOffering = {
     plan_details?: BasePublicPlan;
     options?: OfferingOptions;
     readonly components?: Array<OfferingComponent>;
+    readonly created?: string;
 };
 
 export type NestedRequestedOfferingRequest = {
@@ -8349,6 +8350,7 @@ export type ProviderRequestedOffering = {
     plan_details: BasePublicPlan;
     options: OfferingOptions;
     readonly components: Array<OfferingComponent>;
+    readonly created: string;
     readonly url: string;
     readonly call_name: string;
     call: string;
@@ -9372,6 +9374,7 @@ export type RequestedOffering = {
     plan_details: BasePublicPlan;
     options: OfferingOptions;
     readonly components: Array<OfferingComponent>;
+    readonly created: string;
     readonly url: string;
     readonly approved_by: string | null;
     readonly created_by: string | null;
