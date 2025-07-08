@@ -9127,6 +9127,9 @@ export const marketplaceProviderOfferingsPause = <ThrowOnError extends boolean =
     });
 };
 
+/**
+ * Refresh offering user usernames.
+ */
 export const marketplaceProviderOfferingsRefreshOfferingUsernames = <ThrowOnError extends boolean = false>(options: Options<MarketplaceProviderOfferingsRefreshOfferingUsernamesData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).post<MarketplaceProviderOfferingsRefreshOfferingUsernamesResponses, unknown, ThrowOnError>({
         security: [
@@ -9754,6 +9757,9 @@ export const marketplaceProviderResourcesRefreshLastSync = <ThrowOnError extends
     });
 };
 
+/**
+ * Set the resource as erred.
+ */
 export const marketplaceProviderResourcesSetAsErred = <ThrowOnError extends boolean = false>(options: Options<MarketplaceProviderResourcesSetAsErredData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).post<MarketplaceProviderResourcesSetAsErredResponses, unknown, ThrowOnError>({
         security: [
@@ -9795,6 +9801,9 @@ export const marketplaceProviderResourcesSetAsOk = <ThrowOnError extends boolean
     });
 };
 
+/**
+ * Set resource backend ID.
+ */
 export const marketplaceProviderResourcesSetBackendId = <ThrowOnError extends boolean = false>(options: Options<MarketplaceProviderResourcesSetBackendIdData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).post<MarketplaceProviderResourcesSetBackendIdResponses, unknown, ThrowOnError>({
         security: [
@@ -9927,6 +9936,9 @@ export const marketplaceProviderResourcesSetSlug = <ThrowOnError extends boolean
     });
 };
 
+/**
+ * Submit resource report.
+ */
 export const marketplaceProviderResourcesSubmitReport = <ThrowOnError extends boolean = false>(options: Options<MarketplaceProviderResourcesSubmitReportData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).post<MarketplaceProviderResourcesSubmitReportResponses, unknown, ThrowOnError>({
         security: [
@@ -10724,6 +10736,9 @@ export const marketplaceResourcesUpdateLimits = <ThrowOnError extends boolean = 
     });
 };
 
+/**
+ * Update resource options.
+ */
 export const marketplaceResourcesUpdateOptions = <ThrowOnError extends boolean = false>(options: Options<MarketplaceResourcesUpdateOptionsData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).post<MarketplaceResourcesUpdateOptionsResponses, unknown, ThrowOnError>({
         security: [

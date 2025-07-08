@@ -9514,20 +9514,12 @@ export type Resource = {
     readonly customer_slug?: string;
 };
 
-export type ResourceBackendId = {
-    backend_id?: string;
-};
-
 export type ResourceBackendIdRequest = {
     backend_id?: string;
 };
 
 export type ResourceBackendMetadataRequest = {
     backend_metadata: unknown;
-};
-
-export type ResourceBackendMetadataResponse = {
-    readonly status: string;
 };
 
 export type ResourceEndDateByProviderRequest = {
@@ -9550,10 +9542,6 @@ export type ResourceOffering = {
     readonly uuid: string;
 };
 
-export type ResourceOptions = {
-    options?: unknown;
-};
-
 export type ResourceOptionsRequest = {
     options?: unknown;
 };
@@ -9567,25 +9555,16 @@ export type ResourcePlanPeriod = {
     components: Array<BaseComponentUsage>;
 };
 
-export type ResourceReport = {
-    report: Array<ReportSection>;
-};
-
 export type ResourceReportRequest = {
     report: Array<ReportSectionRequest>;
 };
 
-export type ResourceSetLimits = {
-    limits: unknown;
+export type ResourceResponseStatus = {
+    readonly status: string;
 };
 
 export type ResourceSetLimitsRequest = {
     limits: unknown;
-};
-
-export type ResourceSetStateErred = {
-    error_message?: string;
-    error_traceback?: string;
 };
 
 export type ResourceSetStateErredRequest = {
@@ -20580,7 +20559,7 @@ export type MarketplaceProviderOfferingsRefreshOfferingUsernamesData = {
 };
 
 export type MarketplaceProviderOfferingsRefreshOfferingUsernamesResponses = {
-    200: ProviderOfferingDetails;
+    200: ResourceResponseStatus;
 };
 
 export type MarketplaceProviderOfferingsRefreshOfferingUsernamesResponse = MarketplaceProviderOfferingsRefreshOfferingUsernamesResponses[keyof MarketplaceProviderOfferingsRefreshOfferingUsernamesResponses];
@@ -21215,10 +21194,11 @@ export type MarketplaceProviderResourcesSetAsErredData = {
 };
 
 export type MarketplaceProviderResourcesSetAsErredResponses = {
-    200: ResourceSetStateErred;
+    /**
+     * No response body
+     */
+    200: unknown;
 };
-
-export type MarketplaceProviderResourcesSetAsErredResponse = MarketplaceProviderResourcesSetAsErredResponses[keyof MarketplaceProviderResourcesSetAsErredResponses];
 
 export type MarketplaceProviderResourcesSetAsOkData = {
     body?: never;
@@ -21246,7 +21226,7 @@ export type MarketplaceProviderResourcesSetBackendIdData = {
 };
 
 export type MarketplaceProviderResourcesSetBackendIdResponses = {
-    200: ResourceBackendId;
+    200: ResourceResponseStatus;
 };
 
 export type MarketplaceProviderResourcesSetBackendIdResponse = MarketplaceProviderResourcesSetBackendIdResponses[keyof MarketplaceProviderResourcesSetBackendIdResponses];
@@ -21261,7 +21241,7 @@ export type MarketplaceProviderResourcesSetBackendMetadataData = {
 };
 
 export type MarketplaceProviderResourcesSetBackendMetadataResponses = {
-    200: ResourceBackendMetadataResponse;
+    200: ResourceResponseStatus;
 };
 
 export type MarketplaceProviderResourcesSetBackendMetadataResponse = MarketplaceProviderResourcesSetBackendMetadataResponses[keyof MarketplaceProviderResourcesSetBackendMetadataResponses];
@@ -21307,7 +21287,7 @@ export type MarketplaceProviderResourcesSetLimitsData = {
 };
 
 export type MarketplaceProviderResourcesSetLimitsResponses = {
-    200: ResourceSetLimits;
+    200: ResourceResponseStatus;
 };
 
 export type MarketplaceProviderResourcesSetLimitsResponse = MarketplaceProviderResourcesSetLimitsResponses[keyof MarketplaceProviderResourcesSetLimitsResponses];
@@ -21338,7 +21318,7 @@ export type MarketplaceProviderResourcesSubmitReportData = {
 };
 
 export type MarketplaceProviderResourcesSubmitReportResponses = {
-    200: ResourceReport;
+    200: ResourceResponseStatus;
 };
 
 export type MarketplaceProviderResourcesSubmitReportResponse = MarketplaceProviderResourcesSubmitReportResponses[keyof MarketplaceProviderResourcesSubmitReportResponses];
@@ -22131,7 +22111,7 @@ export type MarketplaceResourcesUpdateOptionsData = {
 };
 
 export type MarketplaceResourcesUpdateOptionsResponses = {
-    200: ResourceOptions;
+    200: ResourceResponseStatus;
 };
 
 export type MarketplaceResourcesUpdateOptionsResponse = MarketplaceResourcesUpdateOptionsResponses[keyof MarketplaceResourcesUpdateOptionsResponses];
