@@ -9522,12 +9522,12 @@ export type ResourceBackendIdRequest = {
     backend_id?: string;
 };
 
-export type ResourceBackendMetadata = {
+export type ResourceBackendMetadataRequest = {
     backend_metadata: unknown;
 };
 
-export type ResourceBackendMetadataRequest = {
-    backend_metadata: unknown;
+export type ResourceBackendMetadataResponse = {
+    readonly status: string;
 };
 
 export type ResourceEndDateByProviderRequest = {
@@ -21261,7 +21261,7 @@ export type MarketplaceProviderResourcesSetBackendMetadataData = {
 };
 
 export type MarketplaceProviderResourcesSetBackendMetadataResponses = {
-    200: ResourceBackendMetadata;
+    200: ResourceBackendMetadataResponse;
 };
 
 export type MarketplaceProviderResourcesSetBackendMetadataResponse = MarketplaceProviderResourcesSetBackendMetadataResponses[keyof MarketplaceProviderResourcesSetBackendMetadataResponses];
@@ -24426,6 +24426,7 @@ export type OpenstackFlavorsListData = {
          *
          */
         o?: Array<'-cores' | '-disk' | '-ram' | 'cores' | 'disk' | 'ram'>;
+        offering_uuid?: string;
         /**
          * A page number within the paginated result set.
          */
@@ -24653,6 +24654,7 @@ export type OpenstackImagesListData = {
     query?: {
         name?: string;
         name_exact?: string;
+        offering_uuid?: string;
         /**
          * A page number within the paginated result set.
          */
@@ -27076,6 +27078,7 @@ export type OpenstackVolumeTypesListData = {
     query?: {
         name?: string;
         name_exact?: string;
+        offering_uuid?: string;
         /**
          * A page number within the paginated result set.
          */
