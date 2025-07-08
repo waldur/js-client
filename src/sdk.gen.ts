@@ -180,6 +180,9 @@ export const apiAuthTaraInitRetrieve = <ThrowOnError extends boolean = false>(op
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const accessSubnetsList = <ThrowOnError extends boolean = false>(options?: Options<AccessSubnetsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<AccessSubnetsListResponses, unknown, ThrowOnError>({
         security: [
@@ -294,6 +297,9 @@ export const accessSubnetsUpdate = <ThrowOnError extends boolean = false>(option
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const adminAnnouncementsList = <ThrowOnError extends boolean = false>(options?: Options<AdminAnnouncementsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<AdminAnnouncementsListResponses, unknown, ThrowOnError>({
         security: [
@@ -408,6 +414,9 @@ export const adminAnnouncementsUpdate = <ThrowOnError extends boolean = false>(o
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const authTokensList = <ThrowOnError extends boolean = false>(options?: Options<AuthTokensListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<AuthTokensListResponses, unknown, ThrowOnError>({
         security: [
@@ -514,6 +523,9 @@ export const authValimoResult = <ThrowOnError extends boolean = false>(options: 
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const autoprovisioningRulePlansList = <ThrowOnError extends boolean = false>(options?: Options<AutoprovisioningRulePlansListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<AutoprovisioningRulePlansListResponses, unknown, ThrowOnError>({
         security: [
@@ -628,6 +640,9 @@ export const autoprovisioningRulePlansUpdate = <ThrowOnError extends boolean = f
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const autoprovisioningRulesList = <ThrowOnError extends boolean = false>(options?: Options<AutoprovisioningRulesListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<AutoprovisioningRulesListResponses, unknown, ThrowOnError>({
         security: [
@@ -742,6 +757,9 @@ export const autoprovisioningRulesUpdate = <ThrowOnError extends boolean = false
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const awsImagesList = <ThrowOnError extends boolean = false>(options?: Options<AwsImagesListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<AwsImagesListResponses, unknown, ThrowOnError>({
         security: [
@@ -776,6 +794,9 @@ export const awsImagesRetrieve = <ThrowOnError extends boolean = false>(options:
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const awsInstancesList = <ThrowOnError extends boolean = false>(options?: Options<AwsInstancesListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<AwsInstancesListResponses, unknown, ThrowOnError>({
         security: [
@@ -1001,6 +1022,9 @@ export const awsInstancesUnlink = <ThrowOnError extends boolean = false>(options
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const awsRegionsList = <ThrowOnError extends boolean = false>(options?: Options<AwsRegionsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<AwsRegionsListResponses, unknown, ThrowOnError>({
         security: [
@@ -1035,6 +1059,9 @@ export const awsRegionsRetrieve = <ThrowOnError extends boolean = false>(options
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const awsSizesList = <ThrowOnError extends boolean = false>(options?: Options<AwsSizesListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<AwsSizesListResponses, unknown, ThrowOnError>({
         security: [
@@ -1069,6 +1096,9 @@ export const awsSizesRetrieve = <ThrowOnError extends boolean = false>(options: 
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const awsVolumesList = <ThrowOnError extends boolean = false>(options?: Options<AwsVolumesListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<AwsVolumesListResponses, unknown, ThrowOnError>({
         security: [
@@ -1256,6 +1286,9 @@ export const awsVolumesUnlink = <ThrowOnError extends boolean = false>(options: 
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const azureImagesList = <ThrowOnError extends boolean = false>(options?: Options<AzureImagesListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<AzureImagesListResponses, unknown, ThrowOnError>({
         security: [
@@ -1290,6 +1323,9 @@ export const azureImagesRetrieve = <ThrowOnError extends boolean = false>(option
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const azureLocationsList = <ThrowOnError extends boolean = false>(options?: Options<AzureLocationsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<AzureLocationsListResponses, unknown, ThrowOnError>({
         security: [
@@ -1324,6 +1360,9 @@ export const azureLocationsRetrieve = <ThrowOnError extends boolean = false>(opt
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const azurePublicIpsList = <ThrowOnError extends boolean = false>(options?: Options<AzurePublicIpsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<AzurePublicIpsListResponses, unknown, ThrowOnError>({
         security: [
@@ -1477,6 +1516,9 @@ export const azurePublicIpsUnlink = <ThrowOnError extends boolean = false>(optio
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const azureResourceGroupsList = <ThrowOnError extends boolean = false>(options?: Options<AzureResourceGroupsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<AzureResourceGroupsListResponses, unknown, ThrowOnError>({
         security: [
@@ -1511,6 +1553,9 @@ export const azureResourceGroupsRetrieve = <ThrowOnError extends boolean = false
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const azureSizesList = <ThrowOnError extends boolean = false>(options?: Options<AzureSizesListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<AzureSizesListResponses, unknown, ThrowOnError>({
         security: [
@@ -1545,6 +1590,9 @@ export const azureSizesRetrieve = <ThrowOnError extends boolean = false>(options
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const azureSqlDatabasesList = <ThrowOnError extends boolean = false>(options?: Options<AzureSqlDatabasesListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<AzureSqlDatabasesListResponses, unknown, ThrowOnError>({
         security: [
@@ -1698,6 +1746,9 @@ export const azureSqlDatabasesUnlink = <ThrowOnError extends boolean = false>(op
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const azureSqlServersList = <ThrowOnError extends boolean = false>(options?: Options<AzureSqlServersListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<AzureSqlServersListResponses, unknown, ThrowOnError>({
         security: [
@@ -1872,6 +1923,9 @@ export const azureSqlServersUnlink = <ThrowOnError extends boolean = false>(opti
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const azureVirtualmachinesList = <ThrowOnError extends boolean = false>(options?: Options<AzureVirtualmachinesListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<AzureVirtualmachinesListResponses, unknown, ThrowOnError>({
         security: [
@@ -2093,6 +2147,9 @@ export const billingTotalCostRetrieve = <ThrowOnError extends boolean = false>(o
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const bookingOfferingsList = <ThrowOnError extends boolean = false>(options?: Options<BookingOfferingsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<BookingOfferingsListResponses, unknown, ThrowOnError>({
         security: [
@@ -2178,6 +2235,9 @@ export const bookingOfferingsUnshareGoogleCalendar = <ThrowOnError extends boole
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const bookingResourcesList = <ThrowOnError extends boolean = false>(options?: Options<BookingResourcesListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<BookingResourcesListResponses, unknown, ThrowOnError>({
         security: [
@@ -2246,6 +2306,9 @@ export const bookingResourcesReject = <ThrowOnError extends boolean = false>(opt
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const broadcastMessageTemplatesList = <ThrowOnError extends boolean = false>(options?: Options<BroadcastMessageTemplatesListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<BroadcastMessageTemplatesListResponses, unknown, ThrowOnError>({
         security: [
@@ -2360,6 +2423,9 @@ export const broadcastMessageTemplatesUpdate = <ThrowOnError extends boolean = f
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const broadcastMessagesList = <ThrowOnError extends boolean = false>(options?: Options<BroadcastMessagesListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<BroadcastMessagesListResponses, unknown, ThrowOnError>({
         security: [
@@ -2508,6 +2574,9 @@ export const broadcastMessagesRecipientsRetrieve = <ThrowOnError extends boolean
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const callManagingOrganisationsList = <ThrowOnError extends boolean = false>(options?: Options<CallManagingOrganisationsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<CallManagingOrganisationsListResponses, unknown, ThrowOnError>({
         security: [
@@ -2722,6 +2791,9 @@ export const callManagingOrganisationsUpdateUser = <ThrowOnError extends boolean
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const callRoundsList = <ThrowOnError extends boolean = false>(options?: Options<CallRoundsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<CallRoundsListResponses, unknown, ThrowOnError>({
         security: [
@@ -2793,6 +2865,9 @@ export const celeryStatsRetrieve = <ThrowOnError extends boolean = false>(option
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const componentUserUsageLimitsList = <ThrowOnError extends boolean = false>(options?: Options<ComponentUserUsageLimitsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<ComponentUserUsageLimitsListResponses, unknown, ThrowOnError>({
         security: [
@@ -2927,6 +3002,9 @@ export const configurationRetrieve = <ThrowOnError extends boolean = false>(opti
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const customerCreditsList = <ThrowOnError extends boolean = false>(options?: Options<CustomerCreditsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<CustomerCreditsListResponses, unknown, ThrowOnError>({
         security: [
@@ -3103,6 +3181,9 @@ export const customerCreditsConsumptionsList = <ThrowOnError extends boolean = f
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const customerPermissionsReviewsList = <ThrowOnError extends boolean = false>(options?: Options<CustomerPermissionsReviewsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<CustomerPermissionsReviewsListResponses, unknown, ThrowOnError>({
         security: [
@@ -3569,6 +3650,9 @@ export const databaseStatsList = <ThrowOnError extends boolean = false>(options?
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const digitaloceanDropletsList = <ThrowOnError extends boolean = false>(options?: Options<DigitaloceanDropletsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<DigitaloceanDropletsListResponses, unknown, ThrowOnError>({
         security: [
@@ -3806,6 +3890,9 @@ export const digitaloceanDropletsUnlink = <ThrowOnError extends boolean = false>
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const digitaloceanImagesList = <ThrowOnError extends boolean = false>(options?: Options<DigitaloceanImagesListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<DigitaloceanImagesListResponses, unknown, ThrowOnError>({
         security: [
@@ -3840,6 +3927,9 @@ export const digitaloceanImagesRetrieve = <ThrowOnError extends boolean = false>
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const digitaloceanRegionsList = <ThrowOnError extends boolean = false>(options?: Options<DigitaloceanRegionsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<DigitaloceanRegionsListResponses, unknown, ThrowOnError>({
         security: [
@@ -3874,6 +3964,9 @@ export const digitaloceanRegionsRetrieve = <ThrowOnError extends boolean = false
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const digitaloceanSizesList = <ThrowOnError extends boolean = false>(options?: Options<DigitaloceanSizesListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<DigitaloceanSizesListResponses, unknown, ThrowOnError>({
         security: [
@@ -3908,6 +4001,9 @@ export const digitaloceanSizesRetrieve = <ThrowOnError extends boolean = false>(
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const emailLogsList = <ThrowOnError extends boolean = false>(options?: Options<EmailLogsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<EmailLogsListResponses, unknown, ThrowOnError>({
         security: [
@@ -3942,6 +4038,9 @@ export const emailLogsRetrieve = <ThrowOnError extends boolean = false>(options:
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const eventSubscriptionsList = <ThrowOnError extends boolean = false>(options?: Options<EventSubscriptionsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<EventSubscriptionsListResponses, unknown, ThrowOnError>({
         security: [
@@ -4014,6 +4113,9 @@ export const eventSubscriptionsRetrieve = <ThrowOnError extends boolean = false>
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const eventsList = <ThrowOnError extends boolean = false>(options?: Options<EventsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<EventsListResponses, unknown, ThrowOnError>({
         security: [
@@ -4031,6 +4133,9 @@ export const eventsList = <ThrowOnError extends boolean = false>(options?: Optio
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const eventsStatsList = <ThrowOnError extends boolean = false>(options?: Options<EventsStatsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<EventsStatsListResponses, unknown, ThrowOnError>({
         security: [
@@ -4147,6 +4252,9 @@ export const featureValues = <ThrowOnError extends boolean = false>(options?: Op
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const financialReportsList = <ThrowOnError extends boolean = false>(options?: Options<FinancialReportsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<FinancialReportsListResponses, unknown, ThrowOnError>({
         security: [
@@ -4181,6 +4289,9 @@ export const financialReportsRetrieve = <ThrowOnError extends boolean = false>(o
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const freeipaProfilesList = <ThrowOnError extends boolean = false>(options?: Options<FreeipaProfilesListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<FreeipaProfilesListResponses, unknown, ThrowOnError>({
         security: [
@@ -4294,6 +4405,9 @@ export const freeipaProfilesUpdateSshKeys = <ThrowOnError extends boolean = fals
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const googleAuthList = <ThrowOnError extends boolean = false>(options?: Options<GoogleAuthListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<GoogleAuthListResponses, unknown, ThrowOnError>({
         security: [
@@ -4365,6 +4479,9 @@ export const googleAuthCallbackRetrieve = <ThrowOnError extends boolean = false>
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const hooksList = <ThrowOnError extends boolean = false>(options?: Options<HooksListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<HooksListResponses, unknown, ThrowOnError>({
         security: [
@@ -4382,6 +4499,9 @@ export const hooksList = <ThrowOnError extends boolean = false>(options?: Option
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const hooksEmailList = <ThrowOnError extends boolean = false>(options?: Options<HooksEmailListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<HooksEmailListResponses, unknown, ThrowOnError>({
         security: [
@@ -4496,6 +4616,9 @@ export const hooksEmailUpdate = <ThrowOnError extends boolean = false>(options: 
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const hooksWebList = <ThrowOnError extends boolean = false>(options?: Options<HooksWebListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<HooksWebListResponses, unknown, ThrowOnError>({
         security: [
@@ -4635,6 +4758,9 @@ export const hooksWebUpdate = <ThrowOnError extends boolean = false>(options: Op
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const identityProvidersList = <ThrowOnError extends boolean = false>(options?: Options<IdentityProvidersListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<IdentityProvidersListResponses, unknown, ThrowOnError>({
         security: [
@@ -4749,6 +4875,9 @@ export const identityProvidersUpdate = <ThrowOnError extends boolean = false>(op
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const invoiceItemsList = <ThrowOnError extends boolean = false>(options?: Options<InvoiceItemsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<InvoiceItemsListResponses, unknown, ThrowOnError>({
         security: [
@@ -5005,6 +5134,9 @@ export const invoiceSendFinancialReportByMail = <ThrowOnError extends boolean = 
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const invoicesList = <ThrowOnError extends boolean = false>(options?: Options<InvoicesListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<InvoicesListResponses, unknown, ThrowOnError>({
         security: [
@@ -5217,6 +5349,9 @@ export const invoicesGrowthRetrieve = <ThrowOnError extends boolean = false>(opt
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const keycloakGroupsList = <ThrowOnError extends boolean = false>(options?: Options<KeycloakGroupsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<KeycloakGroupsListResponses, unknown, ThrowOnError>({
         security: [
@@ -5251,6 +5386,9 @@ export const keycloakGroupsRetrieve = <ThrowOnError extends boolean = false>(opt
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const keycloakUserGroupMembershipsList = <ThrowOnError extends boolean = false>(options?: Options<KeycloakUserGroupMembershipsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<KeycloakUserGroupMembershipsListResponses, unknown, ThrowOnError>({
         security: [
@@ -5365,6 +5503,9 @@ export const keycloakUserGroupMembershipsUpdate = <ThrowOnError extends boolean 
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const keysList = <ThrowOnError extends boolean = false>(options?: Options<KeysListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<KeysListResponses, unknown, ThrowOnError>({
         security: [
@@ -5437,6 +5578,9 @@ export const keysRetrieve = <ThrowOnError extends boolean = false>(options: Opti
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const lexisLinksList = <ThrowOnError extends boolean = false>(options?: Options<LexisLinksListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<LexisLinksListResponses, unknown, ThrowOnError>({
         security: [
@@ -5568,6 +5712,9 @@ export const marketplaceBookingsList = <ThrowOnError extends boolean = false>(op
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const marketplaceCategoriesList = <ThrowOnError extends boolean = false>(options?: Options<MarketplaceCategoriesListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<MarketplaceCategoriesListResponses, unknown, ThrowOnError>({
         security: [
@@ -5682,6 +5829,9 @@ export const marketplaceCategoriesUpdate = <ThrowOnError extends boolean = false
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const marketplaceCategoryColumnsList = <ThrowOnError extends boolean = false>(options?: Options<MarketplaceCategoryColumnsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<MarketplaceCategoryColumnsListResponses, unknown, ThrowOnError>({
         security: [
@@ -5796,6 +5946,9 @@ export const marketplaceCategoryColumnsUpdate = <ThrowOnError extends boolean = 
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const marketplaceCategoryComponentUsagesList = <ThrowOnError extends boolean = false>(options?: Options<MarketplaceCategoryComponentUsagesListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<MarketplaceCategoryComponentUsagesListResponses, unknown, ThrowOnError>({
         security: [
@@ -5830,6 +5983,9 @@ export const marketplaceCategoryComponentUsagesRetrieve = <ThrowOnError extends 
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const marketplaceCategoryComponentsList = <ThrowOnError extends boolean = false>(options?: Options<MarketplaceCategoryComponentsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<MarketplaceCategoryComponentsListResponses, unknown, ThrowOnError>({
         security: [
@@ -5944,6 +6100,9 @@ export const marketplaceCategoryComponentsUpdate = <ThrowOnError extends boolean
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const marketplaceCategoryGroupsList = <ThrowOnError extends boolean = false>(options?: Options<MarketplaceCategoryGroupsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<MarketplaceCategoryGroupsListResponses, unknown, ThrowOnError>({
         security: [
@@ -6058,6 +6217,9 @@ export const marketplaceCategoryGroupsUpdate = <ThrowOnError extends boolean = f
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const marketplaceCategoryHelpArticlesList = <ThrowOnError extends boolean = false>(options?: Options<MarketplaceCategoryHelpArticlesListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<MarketplaceCategoryHelpArticlesListResponses, unknown, ThrowOnError>({
         security: [
@@ -6172,6 +6334,9 @@ export const marketplaceCategoryHelpArticlesUpdate = <ThrowOnError extends boole
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const marketplaceChecklistsList = <ThrowOnError extends boolean = false>(options?: Options<MarketplaceChecklistsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<MarketplaceChecklistsListResponses, unknown, ThrowOnError>({
         security: [
@@ -6189,6 +6354,9 @@ export const marketplaceChecklistsList = <ThrowOnError extends boolean = false>(
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const marketplaceChecklistsCategoriesList = <ThrowOnError extends boolean = false>(options?: Options<MarketplaceChecklistsCategoriesListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<MarketplaceChecklistsCategoriesListResponses, unknown, ThrowOnError>({
         security: [
@@ -6206,6 +6374,9 @@ export const marketplaceChecklistsCategoriesList = <ThrowOnError extends boolean
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const marketplaceChecklistsCategoriesChecklistsList = <ThrowOnError extends boolean = false>(options: Options<MarketplaceChecklistsCategoriesChecklistsListData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).get<MarketplaceChecklistsCategoriesChecklistsListResponses, unknown, ThrowOnError>({
         security: [
@@ -6257,6 +6428,9 @@ export const marketplaceChecklistsRetrieve = <ThrowOnError extends boolean = fal
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const marketplaceChecklistsAnswersList = <ThrowOnError extends boolean = false>(options: Options<MarketplaceChecklistsAnswersListData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).get<MarketplaceChecklistsAnswersListResponses, unknown, ThrowOnError>({
         security: [
@@ -6298,6 +6472,9 @@ export const marketplaceChecklistsAnswersSubmitCreate = <ThrowOnError extends bo
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const marketplaceChecklistsQuestionsList = <ThrowOnError extends boolean = false>(options: Options<MarketplaceChecklistsQuestionsListData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).get<MarketplaceChecklistsQuestionsListResponses, unknown, ThrowOnError>({
         security: [
@@ -6335,6 +6512,9 @@ export const marketplaceChecklistsStatsList = <ThrowOnError extends boolean = fa
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const marketplaceChecklistsUserAnswersList = <ThrowOnError extends boolean = false>(options: Options<MarketplaceChecklistsUserAnswersListData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).get<MarketplaceChecklistsUserAnswersListResponses, unknown, ThrowOnError>({
         security: [
@@ -6352,6 +6532,9 @@ export const marketplaceChecklistsUserAnswersList = <ThrowOnError extends boolea
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const marketplaceComponentUsagesList = <ThrowOnError extends boolean = false>(options?: Options<MarketplaceComponentUsagesListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<MarketplaceComponentUsagesListResponses, unknown, ThrowOnError>({
         security: [
@@ -6428,6 +6611,9 @@ export const marketplaceComponentUsagesSetUsage = <ThrowOnError extends boolean 
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const marketplaceComponentUserUsagesList = <ThrowOnError extends boolean = false>(options?: Options<MarketplaceComponentUserUsagesListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<MarketplaceComponentUserUsagesListResponses, unknown, ThrowOnError>({
         security: [
@@ -6462,6 +6648,9 @@ export const marketplaceComponentUserUsagesRetrieve = <ThrowOnError extends bool
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const marketplaceCustomerEstimatedCostPoliciesList = <ThrowOnError extends boolean = false>(options?: Options<MarketplaceCustomerEstimatedCostPoliciesListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<MarketplaceCustomerEstimatedCostPoliciesListResponses, unknown, ThrowOnError>({
         security: [
@@ -6593,6 +6782,9 @@ export const marketplaceCustomerEstimatedCostPoliciesActionsRetrieve = <ThrowOnE
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const marketplaceCustomerServiceAccountsList = <ThrowOnError extends boolean = false>(options?: Options<MarketplaceCustomerServiceAccountsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<MarketplaceCustomerServiceAccountsListResponses, unknown, ThrowOnError>({
         security: [
@@ -6744,6 +6936,9 @@ export const marketplaceGlobalCategoriesRetrieve = <ThrowOnError extends boolean
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const marketplaceIntegrationStatusesList = <ThrowOnError extends boolean = false>(options?: Options<MarketplaceIntegrationStatusesListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<MarketplaceIntegrationStatusesListResponses, unknown, ThrowOnError>({
         security: [
@@ -6778,6 +6973,9 @@ export const marketplaceIntegrationStatusesRetrieve = <ThrowOnError extends bool
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const marketplaceOfferingEstimatedCostPoliciesList = <ThrowOnError extends boolean = false>(options?: Options<MarketplaceOfferingEstimatedCostPoliciesListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<MarketplaceOfferingEstimatedCostPoliciesListResponses, unknown, ThrowOnError>({
         security: [
@@ -6912,6 +7110,9 @@ export const marketplaceOfferingEstimatedCostPoliciesActionsRetrieve = <ThrowOnE
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const marketplaceOfferingFilesList = <ThrowOnError extends boolean = false>(options?: Options<MarketplaceOfferingFilesListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<MarketplaceOfferingFilesListResponses, unknown, ThrowOnError>({
         security: [
@@ -6984,6 +7185,9 @@ export const marketplaceOfferingFilesRetrieve = <ThrowOnError extends boolean = 
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const marketplaceOfferingPermissionsList = <ThrowOnError extends boolean = false>(options?: Options<MarketplaceOfferingPermissionsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<MarketplaceOfferingPermissionsListResponses, unknown, ThrowOnError>({
         security: [
@@ -7001,6 +7205,9 @@ export const marketplaceOfferingPermissionsList = <ThrowOnError extends boolean 
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const marketplaceOfferingPermissionsLogList = <ThrowOnError extends boolean = false>(options?: Options<MarketplaceOfferingPermissionsLogListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<MarketplaceOfferingPermissionsLogListResponses, unknown, ThrowOnError>({
         security: [
@@ -7052,6 +7259,9 @@ export const marketplaceOfferingPermissionsRetrieve = <ThrowOnError extends bool
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const marketplaceOfferingReferralsList = <ThrowOnError extends boolean = false>(options?: Options<MarketplaceOfferingReferralsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<MarketplaceOfferingReferralsListResponses, unknown, ThrowOnError>({
         security: [
@@ -7086,6 +7296,9 @@ export const marketplaceOfferingReferralsRetrieve = <ThrowOnError extends boolea
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const marketplaceOfferingUsagePoliciesList = <ThrowOnError extends boolean = false>(options?: Options<MarketplaceOfferingUsagePoliciesListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<MarketplaceOfferingUsagePoliciesListResponses, unknown, ThrowOnError>({
         security: [
@@ -7217,6 +7430,9 @@ export const marketplaceOfferingUsagePoliciesActionsRetrieve = <ThrowOnError ext
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const marketplaceOfferingUserRolesList = <ThrowOnError extends boolean = false>(options?: Options<MarketplaceOfferingUserRolesListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<MarketplaceOfferingUserRolesListResponses, unknown, ThrowOnError>({
         security: [
@@ -7331,6 +7547,9 @@ export const marketplaceOfferingUserRolesUpdate = <ThrowOnError extends boolean 
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const marketplaceOfferingUsersList = <ThrowOnError extends boolean = false>(options?: Options<MarketplaceOfferingUsersListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<MarketplaceOfferingUsersListResponses, unknown, ThrowOnError>({
         security: [
@@ -7466,6 +7685,9 @@ export const marketplaceOfferingUsersUpdateRestricted = <ThrowOnError extends bo
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const marketplaceOrdersList = <ThrowOnError extends boolean = false>(options?: Options<MarketplaceOrdersListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<MarketplaceOrdersListResponses, unknown, ThrowOnError>({
         security: [
@@ -7712,6 +7934,9 @@ export const marketplaceOrdersUnlink = <ThrowOnError extends boolean = false>(op
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const marketplacePlanComponentsList = <ThrowOnError extends boolean = false>(options?: Options<MarketplacePlanComponentsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<MarketplacePlanComponentsListResponses, unknown, ThrowOnError>({
         security: [
@@ -7746,6 +7971,9 @@ export const marketplacePlanComponentsRetrieve = <ThrowOnError extends boolean =
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const marketplacePlansList = <ThrowOnError extends boolean = false>(options?: Options<MarketplacePlansListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<MarketplacePlansListResponses, unknown, ThrowOnError>({
         security: [
@@ -7964,6 +8192,9 @@ export const marketplacePluginsList = <ThrowOnError extends boolean = false>(opt
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const marketplaceProjectEstimatedCostPoliciesList = <ThrowOnError extends boolean = false>(options?: Options<MarketplaceProjectEstimatedCostPoliciesListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<MarketplaceProjectEstimatedCostPoliciesListResponses, unknown, ThrowOnError>({
         security: [
@@ -8095,6 +8326,9 @@ export const marketplaceProjectEstimatedCostPoliciesActionsRetrieve = <ThrowOnEr
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const marketplaceProjectServiceAccountsList = <ThrowOnError extends boolean = false>(options?: Options<MarketplaceProjectServiceAccountsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<MarketplaceProjectServiceAccountsListResponses, unknown, ThrowOnError>({
         security: [
@@ -8226,6 +8460,9 @@ export const marketplaceProjectServiceAccountsRotateApiKey = <ThrowOnError exten
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const marketplaceProjectUpdateRequestsList = <ThrowOnError extends boolean = false>(options?: Options<MarketplaceProjectUpdateRequestsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<MarketplaceProjectUpdateRequestsListResponses, unknown, ThrowOnError>({
         security: [
@@ -8308,6 +8545,9 @@ export const marketplaceProjectUpdateRequestsReject = <ThrowOnError extends bool
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const marketplaceProviderOfferingsList = <ThrowOnError extends boolean = false>(options?: Options<MarketplaceProviderOfferingsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<MarketplaceProviderOfferingsListResponses, unknown, ThrowOnError>({
         security: [
@@ -9302,6 +9542,9 @@ export const marketplaceProviderOfferingsGroupsList = <ThrowOnError extends bool
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const marketplaceProviderResourcesList = <ThrowOnError extends boolean = false>(options?: Options<MarketplaceProviderResourcesListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<MarketplaceProviderResourcesListResponses, unknown, ThrowOnError>({
         security: [
@@ -9813,6 +10056,9 @@ export const marketplacePublicApiSetUsage = <ThrowOnError extends boolean = fals
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const marketplacePublicOfferingsList = <ThrowOnError extends boolean = false>(options?: Options<MarketplacePublicOfferingsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<MarketplacePublicOfferingsListResponses, unknown, ThrowOnError>({
         security: [
@@ -9898,6 +10144,9 @@ export const marketplaceRelatedCustomersList = <ThrowOnError extends boolean = f
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const marketplaceRemoteSynchronisationsList = <ThrowOnError extends boolean = false>(options?: Options<MarketplaceRemoteSynchronisationsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<MarketplaceRemoteSynchronisationsListResponses, unknown, ThrowOnError>({
         security: [
@@ -10046,6 +10295,9 @@ export const marketplaceResourceOfferingsList = <ThrowOnError extends boolean = 
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const marketplaceResourceUsersList = <ThrowOnError extends boolean = false>(options?: Options<MarketplaceResourceUsersListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<MarketplaceResourceUsersListResponses, unknown, ThrowOnError>({
         security: [
@@ -10118,6 +10370,9 @@ export const marketplaceResourceUsersRetrieve = <ThrowOnError extends boolean = 
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const marketplaceResourcesList = <ThrowOnError extends boolean = false>(options?: Options<MarketplaceResourcesListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<MarketplaceResourcesListResponses, unknown, ThrowOnError>({
         security: [
@@ -10511,6 +10766,9 @@ export const marketplaceResourcesSuggestName = <ThrowOnError extends boolean = f
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const marketplaceRobotAccountsList = <ThrowOnError extends boolean = false>(options?: Options<MarketplaceRobotAccountsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<MarketplaceRobotAccountsListResponses, unknown, ThrowOnError>({
         security: [
@@ -10734,6 +10992,9 @@ export const marketplaceRuntimeStatesList = <ThrowOnError extends boolean = fals
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const marketplaceScreenshotsList = <ThrowOnError extends boolean = false>(options?: Options<MarketplaceScreenshotsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<MarketplaceScreenshotsListResponses, unknown, ThrowOnError>({
         security: [
@@ -10848,6 +11109,9 @@ export const marketplaceScreenshotsUpdate = <ThrowOnError extends boolean = fals
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const marketplaceScriptAsyncDryRunList = <ThrowOnError extends boolean = false>(options?: Options<MarketplaceScriptAsyncDryRunListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<MarketplaceScriptAsyncDryRunListResponses, unknown, ThrowOnError>({
         security: [
@@ -10951,6 +11215,9 @@ export const marketplaceScriptSyncResource = <ThrowOnError extends boolean = fal
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const marketplaceSectionsList = <ThrowOnError extends boolean = false>(options?: Options<MarketplaceSectionsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<MarketplaceSectionsListResponses, unknown, ThrowOnError>({
         security: [
@@ -11065,6 +11332,9 @@ export const marketplaceSectionsUpdate = <ThrowOnError extends boolean = false>(
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const marketplaceServiceProvidersList = <ThrowOnError extends boolean = false>(options?: Options<MarketplaceServiceProvidersListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<MarketplaceServiceProvidersListResponses, unknown, ThrowOnError>({
         security: [
@@ -12015,6 +12285,9 @@ export const mediaRetrieve = <ThrowOnError extends boolean = false>(options: Opt
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const notificationMessagesList = <ThrowOnError extends boolean = false>(options?: Options<NotificationMessagesListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<NotificationMessagesListResponses, unknown, ThrowOnError>({
         security: [
@@ -12053,6 +12326,9 @@ export const notificationMessagesCreate = <ThrowOnError extends boolean = false>
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const notificationMessagesTemplatesList = <ThrowOnError extends boolean = false>(options?: Options<NotificationMessagesTemplatesListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<NotificationMessagesTemplatesListResponses, unknown, ThrowOnError>({
         security: [
@@ -12298,6 +12574,9 @@ export const notificationMessagesEnable = <ThrowOnError extends boolean = false>
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const openstackBackupsList = <ThrowOnError extends boolean = false>(options?: Options<OpenstackBackupsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<OpenstackBackupsListResponses, unknown, ThrowOnError>({
         security: [
@@ -12454,6 +12733,9 @@ export const openstackBackupsUnlink = <ThrowOnError extends boolean = false>(opt
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const openstackFlavorsList = <ThrowOnError extends boolean = false>(options?: Options<OpenstackFlavorsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<OpenstackFlavorsListResponses, unknown, ThrowOnError>({
         security: [
@@ -12666,6 +12948,9 @@ export const openstackFloatingIpsUpdateDescription = <ThrowOnError extends boole
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const openstackImagesList = <ThrowOnError extends boolean = false>(options?: Options<OpenstackImagesListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<OpenstackImagesListResponses, unknown, ThrowOnError>({
         security: [
@@ -12717,6 +13002,9 @@ export const openstackImagesUsageStatsRetrieve = <ThrowOnError extends boolean =
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const openstackInstanceAvailabilityZonesList = <ThrowOnError extends boolean = false>(options?: Options<OpenstackInstanceAvailabilityZonesListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<OpenstackInstanceAvailabilityZonesListResponses, unknown, ThrowOnError>({
         security: [
@@ -12751,6 +13039,9 @@ export const openstackInstanceAvailabilityZonesRetrieve = <ThrowOnError extends 
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const openstackInstancesList = <ThrowOnError extends boolean = false>(options?: Options<OpenstackInstancesListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<OpenstackInstancesListResponses, unknown, ThrowOnError>({
         security: [
@@ -13150,6 +13441,9 @@ export const openstackInstancesUpdateSecurityGroups = <ThrowOnError extends bool
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const openstackMarketplaceTenantsList = <ThrowOnError extends boolean = false>(options?: Options<OpenstackMarketplaceTenantsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<OpenstackMarketplaceTenantsListResponses, unknown, ThrowOnError>({
         security: [
@@ -13226,6 +13520,9 @@ export const openstackMarketplaceTenantsUploadImageData = <ThrowOnError extends 
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const openstackMigrationsList = <ThrowOnError extends boolean = false>(options?: Options<OpenstackMigrationsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<OpenstackMigrationsListResponses, unknown, ThrowOnError>({
         security: [
@@ -13340,6 +13637,9 @@ export const openstackMigrationsUpdate = <ThrowOnError extends boolean = false>(
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const openstackNetworkRbacPoliciesList = <ThrowOnError extends boolean = false>(options?: Options<OpenstackNetworkRbacPoliciesListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<OpenstackNetworkRbacPoliciesListResponses, unknown, ThrowOnError>({
         security: [
@@ -13374,6 +13674,9 @@ export const openstackNetworkRbacPoliciesRetrieve = <ThrowOnError extends boolea
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const openstackNetworksList = <ThrowOnError extends boolean = false>(options?: Options<OpenstackNetworksListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<OpenstackNetworksListResponses, unknown, ThrowOnError>({
         security: [
@@ -13592,6 +13895,9 @@ export const openstackNetworksUnlink = <ThrowOnError extends boolean = false>(op
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const openstackPortsList = <ThrowOnError extends boolean = false>(options?: Options<OpenstackPortsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<OpenstackPortsListResponses, unknown, ThrowOnError>({
         security: [
@@ -13873,6 +14179,9 @@ export const openstackPortsUpdateSecurityGroups = <ThrowOnError extends boolean 
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const openstackRoutersList = <ThrowOnError extends boolean = false>(options?: Options<OpenstackRoutersListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<OpenstackRoutersListResponses, unknown, ThrowOnError>({
         security: [
@@ -14014,6 +14323,9 @@ export const openstackRoutersSetRoutes = <ThrowOnError extends boolean = false>(
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const openstackSecurityGroupsList = <ThrowOnError extends boolean = false>(options?: Options<OpenstackSecurityGroupsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<OpenstackSecurityGroupsListResponses, unknown, ThrowOnError>({
         security: [
@@ -14170,6 +14482,9 @@ export const openstackSecurityGroupsUnlink = <ThrowOnError extends boolean = fal
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const openstackServerGroupsList = <ThrowOnError extends boolean = false>(options?: Options<OpenstackServerGroupsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<OpenstackServerGroupsListResponses, unknown, ThrowOnError>({
         security: [
@@ -14323,6 +14638,9 @@ export const openstackServerGroupsUnlink = <ThrowOnError extends boolean = false
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const openstackSnapshotsList = <ThrowOnError extends boolean = false>(options?: Options<OpenstackSnapshotsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<OpenstackSnapshotsListResponses, unknown, ThrowOnError>({
         security: [
@@ -14499,6 +14817,9 @@ export const openstackSnapshotsUnlink = <ThrowOnError extends boolean = false>(o
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const openstackSubnetsList = <ThrowOnError extends boolean = false>(options?: Options<OpenstackSubnetsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<OpenstackSubnetsListResponses, unknown, ThrowOnError>({
         security: [
@@ -14665,6 +14986,9 @@ export const openstackSubnetsUnlink = <ThrowOnError extends boolean = false>(opt
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const openstackTenantsList = <ThrowOnError extends boolean = false>(options?: Options<OpenstackTenantsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<OpenstackTenantsListResponses, unknown, ThrowOnError>({
         security: [
@@ -15097,6 +15421,9 @@ export const openstackTenantsUnlink = <ThrowOnError extends boolean = false>(opt
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const openstackVolumeAvailabilityZonesList = <ThrowOnError extends boolean = false>(options?: Options<OpenstackVolumeAvailabilityZonesListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<OpenstackVolumeAvailabilityZonesListResponses, unknown, ThrowOnError>({
         security: [
@@ -15131,6 +15458,9 @@ export const openstackVolumeAvailabilityZonesRetrieve = <ThrowOnError extends bo
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const openstackVolumeTypesList = <ThrowOnError extends boolean = false>(options?: Options<OpenstackVolumeTypesListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<OpenstackVolumeTypesListResponses, unknown, ThrowOnError>({
         security: [
@@ -15165,6 +15495,9 @@ export const openstackVolumeTypesRetrieve = <ThrowOnError extends boolean = fals
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const openstackVolumesList = <ThrowOnError extends boolean = false>(options?: Options<OpenstackVolumesListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<OpenstackVolumesListResponses, unknown, ThrowOnError>({
         security: [
@@ -15396,6 +15729,9 @@ export const openstackVolumesUnlink = <ThrowOnError extends boolean = false>(opt
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const organizationGroupsList = <ThrowOnError extends boolean = false>(options?: Options<OrganizationGroupsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<OrganizationGroupsListResponses, unknown, ThrowOnError>({
         security: [
@@ -15548,6 +15884,9 @@ export const overrideSettings = <ThrowOnError extends boolean = false>(options?:
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const paymentProfilesList = <ThrowOnError extends boolean = false>(options?: Options<PaymentProfilesListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<PaymentProfilesListResponses, unknown, ThrowOnError>({
         security: [
@@ -15679,6 +16018,9 @@ export const paymentProfilesEnable = <ThrowOnError extends boolean = false>(opti
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const paymentsList = <ThrowOnError extends boolean = false>(options?: Options<PaymentsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<PaymentsListResponses, unknown, ThrowOnError>({
         security: [
@@ -15837,6 +16179,9 @@ export const paymentsUnlinkFromInvoice = <ThrowOnError extends boolean = false>(
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const projectCreditsList = <ThrowOnError extends boolean = false>(options?: Options<ProjectCreditsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<ProjectCreditsListResponses, unknown, ThrowOnError>({
         security: [
@@ -15971,6 +16316,9 @@ export const projectQuotasList = <ThrowOnError extends boolean = false>(options?
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const projectTypesList = <ThrowOnError extends boolean = false>(options?: Options<ProjectTypesListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<ProjectTypesListResponses, unknown, ThrowOnError>({
         security: [
@@ -16005,6 +16353,9 @@ export const projectTypesRetrieve = <ThrowOnError extends boolean = false>(optio
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const projectsList = <ThrowOnError extends boolean = false>(options?: Options<ProjectsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<ProjectsListResponses, unknown, ThrowOnError>({
         security: [
@@ -16304,6 +16655,9 @@ export const projectsUpdateUser = <ThrowOnError extends boolean = false>(options
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const promotionsCampaignsList = <ThrowOnError extends boolean = false>(options?: Options<PromotionsCampaignsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<PromotionsCampaignsListResponses, unknown, ThrowOnError>({
         security: [
@@ -16477,6 +16831,9 @@ export const promotionsCampaignsTerminate = <ThrowOnError extends boolean = fals
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const proposalProposalsList = <ThrowOnError extends boolean = false>(options?: Options<ProposalProposalsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<ProposalProposalsListResponses, unknown, ThrowOnError>({
         security: [
@@ -16865,6 +17222,9 @@ export const proposalProposalsUpdateUser = <ThrowOnError extends boolean = false
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const proposalProtectedCallsList = <ThrowOnError extends boolean = false>(options?: Options<ProposalProtectedCallsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<ProposalProtectedCallsListResponses, unknown, ThrowOnError>({
         security: [
@@ -17528,6 +17888,9 @@ export const proposalProtectedCallsUpdateUser = <ThrowOnError extends boolean = 
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const proposalPublicCallsList = <ThrowOnError extends boolean = false>(options?: Options<ProposalPublicCallsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<ProposalPublicCallsListResponses, unknown, ThrowOnError>({
         security: [
@@ -17562,6 +17925,9 @@ export const proposalPublicCallsRetrieve = <ThrowOnError extends boolean = false
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const proposalRequestedOfferingsList = <ThrowOnError extends boolean = false>(options?: Options<ProposalRequestedOfferingsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<ProposalRequestedOfferingsListResponses, unknown, ThrowOnError>({
         security: [
@@ -17636,6 +18002,9 @@ export const proposalRequestedOfferingsCancel = <ThrowOnError extends boolean = 
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const proposalRequestedResourcesList = <ThrowOnError extends boolean = false>(options?: Options<ProposalRequestedResourcesListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<ProposalRequestedResourcesListResponses, unknown, ThrowOnError>({
         security: [
@@ -17670,6 +18039,9 @@ export const proposalRequestedResourcesRetrieve = <ThrowOnError extends boolean 
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const proposalReviewsList = <ThrowOnError extends boolean = false>(options?: Options<ProposalReviewsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<ProposalReviewsListResponses, unknown, ThrowOnError>({
         security: [
@@ -17848,6 +18220,9 @@ export const proposalReviewsSubmit = <ThrowOnError extends boolean = false>(opti
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const providerInvoiceItemsList = <ThrowOnError extends boolean = false>(options?: Options<ProviderInvoiceItemsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<ProviderInvoiceItemsListResponses, unknown, ThrowOnError>({
         security: [
@@ -17940,6 +18315,9 @@ export const rabbitmqVhostStatsList = <ThrowOnError extends boolean = false>(opt
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const rancherAppsList = <ThrowOnError extends boolean = false>(options?: Options<RancherAppsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<RancherAppsListResponses, unknown, ThrowOnError>({
         security: [
@@ -18093,6 +18471,9 @@ export const rancherAppsUnlink = <ThrowOnError extends boolean = false>(options:
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const rancherCatalogsList = <ThrowOnError extends boolean = false>(options?: Options<RancherCatalogsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<RancherCatalogsListResponses, unknown, ThrowOnError>({
         security: [
@@ -18228,6 +18609,9 @@ export const rancherCatalogsRefresh = <ThrowOnError extends boolean = false>(opt
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const rancherClusterSecurityGroupsList = <ThrowOnError extends boolean = false>(options?: Options<RancherClusterSecurityGroupsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<RancherClusterSecurityGroupsListResponses, unknown, ThrowOnError>({
         security: [
@@ -18304,6 +18688,9 @@ export const rancherClusterSecurityGroupsUpdate = <ThrowOnError extends boolean 
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const rancherClusterTemplatesList = <ThrowOnError extends boolean = false>(options?: Options<RancherClusterTemplatesListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<RancherClusterTemplatesListResponses, unknown, ThrowOnError>({
         security: [
@@ -18338,6 +18725,9 @@ export const rancherClusterTemplatesRetrieve = <ThrowOnError extends boolean = f
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const rancherClustersList = <ThrowOnError extends boolean = false>(options?: Options<RancherClustersListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<RancherClustersListResponses, unknown, ThrowOnError>({
         security: [
@@ -18533,6 +18923,9 @@ export const rancherClustersUnlink = <ThrowOnError extends boolean = false>(opti
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const rancherHpasList = <ThrowOnError extends boolean = false>(options?: Options<RancherHpasListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<RancherHpasListResponses, unknown, ThrowOnError>({
         security: [
@@ -18724,6 +19117,9 @@ export const rancherHpasYamlUpdate = <ThrowOnError extends boolean = false>(opti
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const rancherIngressesList = <ThrowOnError extends boolean = false>(options?: Options<RancherIngressesListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<RancherIngressesListResponses, unknown, ThrowOnError>({
         security: [
@@ -18915,6 +19311,9 @@ export const rancherIngressesYamlUpdate = <ThrowOnError extends boolean = false>
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const rancherNamespacesList = <ThrowOnError extends boolean = false>(options?: Options<RancherNamespacesListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<RancherNamespacesListResponses, unknown, ThrowOnError>({
         security: [
@@ -18949,6 +19348,9 @@ export const rancherNamespacesRetrieve = <ThrowOnError extends boolean = false>(
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const rancherNodesList = <ThrowOnError extends boolean = false>(options?: Options<RancherNodesListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<RancherNodesListResponses, unknown, ThrowOnError>({
         security: [
@@ -19144,6 +19546,9 @@ export const rancherNodesUnlinkOpenstack = <ThrowOnError extends boolean = false
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const rancherProjectsList = <ThrowOnError extends boolean = false>(options?: Options<RancherProjectsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<RancherProjectsListResponses, unknown, ThrowOnError>({
         security: [
@@ -19198,6 +19603,9 @@ export const rancherProjectsSecretsRetrieve = <ThrowOnError extends boolean = fa
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const rancherRoleTemplatesList = <ThrowOnError extends boolean = false>(options?: Options<RancherRoleTemplatesListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<RancherRoleTemplatesListResponses, unknown, ThrowOnError>({
         security: [
@@ -19232,6 +19640,9 @@ export const rancherRoleTemplatesRetrieve = <ThrowOnError extends boolean = fals
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const rancherServicesList = <ThrowOnError extends boolean = false>(options?: Options<RancherServicesListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<RancherServicesListResponses, unknown, ThrowOnError>({
         security: [
@@ -19440,6 +19851,9 @@ export const rancherTemplateVersionsRetrieve = <ThrowOnError extends boolean = f
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const rancherTemplatesList = <ThrowOnError extends boolean = false>(options?: Options<RancherTemplatesListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<RancherTemplatesListResponses, unknown, ThrowOnError>({
         security: [
@@ -19474,6 +19888,9 @@ export const rancherTemplatesRetrieve = <ThrowOnError extends boolean = false>(o
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const rancherUsersList = <ThrowOnError extends boolean = false>(options?: Options<RancherUsersListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<RancherUsersListResponses, unknown, ThrowOnError>({
         security: [
@@ -19508,6 +19925,9 @@ export const rancherUsersRetrieve = <ThrowOnError extends boolean = false>(optio
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const rancherWorkloadsList = <ThrowOnError extends boolean = false>(options?: Options<RancherWorkloadsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<RancherWorkloadsListResponses, unknown, ThrowOnError>({
         security: [
@@ -20007,6 +20427,9 @@ export const remoteWaldurApiSyncResourceProjectPermissions = <ThrowOnError exten
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const rolesList = <ThrowOnError extends boolean = false>(options?: Options<RolesListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<RolesListResponses, unknown, ThrowOnError>({
         security: [
@@ -20176,6 +20599,9 @@ export const rolesUpdateDescriptionsUpdate = <ThrowOnError extends boolean = fal
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const serviceSettingsList = <ThrowOnError extends boolean = false>(options?: Options<ServiceSettingsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<ServiceSettingsListResponses, unknown, ThrowOnError>({
         security: [
@@ -20210,6 +20636,9 @@ export const serviceSettingsRetrieve = <ThrowOnError extends boolean = false>(op
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const slurmAllocationUserUsageList = <ThrowOnError extends boolean = false>(options?: Options<SlurmAllocationUserUsageListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<SlurmAllocationUserUsageListResponses, unknown, ThrowOnError>({
         security: [
@@ -20244,6 +20673,9 @@ export const slurmAllocationUserUsageRetrieve = <ThrowOnError extends boolean = 
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const slurmAllocationsList = <ThrowOnError extends boolean = false>(options?: Options<SlurmAllocationsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<SlurmAllocationsListResponses, unknown, ThrowOnError>({
         security: [
@@ -20418,6 +20850,9 @@ export const slurmAllocationsUnlink = <ThrowOnError extends boolean = false>(opt
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const slurmAssociationsList = <ThrowOnError extends boolean = false>(options?: Options<SlurmAssociationsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<SlurmAssociationsListResponses, unknown, ThrowOnError>({
         security: [
@@ -20452,6 +20887,9 @@ export const slurmAssociationsRetrieve = <ThrowOnError extends boolean = false>(
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const slurmJobsList = <ThrowOnError extends boolean = false>(options?: Options<SlurmJobsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<SlurmJobsListResponses, unknown, ThrowOnError>({
         security: [
@@ -20605,6 +21043,9 @@ export const slurmJobsUnlink = <ThrowOnError extends boolean = false>(options: O
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const supportAttachmentsList = <ThrowOnError extends boolean = false>(options?: Options<SupportAttachmentsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<SupportAttachmentsListResponses, unknown, ThrowOnError>({
         security: [
@@ -20677,6 +21118,9 @@ export const supportAttachmentsRetrieve = <ThrowOnError extends boolean = false>
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const supportCommentsList = <ThrowOnError extends boolean = false>(options?: Options<SupportCommentsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<SupportCommentsListResponses, unknown, ThrowOnError>({
         security: [
@@ -20804,6 +21248,9 @@ export const supportFeedbackReportRetrieve = <ThrowOnError extends boolean = fal
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const supportFeedbacksList = <ThrowOnError extends boolean = false>(options?: Options<SupportFeedbacksListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<SupportFeedbacksListResponses, unknown, ThrowOnError>({
         security: [
@@ -20859,6 +21306,9 @@ export const supportFeedbacksRetrieve = <ThrowOnError extends boolean = false>(o
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const supportIssuesList = <ThrowOnError extends boolean = false>(options?: Options<SupportIssuesListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<SupportIssuesListResponses, unknown, ThrowOnError>({
         security: [
@@ -21026,6 +21476,9 @@ export const supportJiraWebhook = <ThrowOnError extends boolean = false>(options
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const supportPrioritiesList = <ThrowOnError extends boolean = false>(options?: Options<SupportPrioritiesListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<SupportPrioritiesListResponses, unknown, ThrowOnError>({
         security: [
@@ -21088,6 +21541,9 @@ export const supportStatisticsRetrieve = <ThrowOnError extends boolean = false>(
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const supportTemplatesList = <ThrowOnError extends boolean = false>(options?: Options<SupportTemplatesListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<SupportTemplatesListResponses, unknown, ThrowOnError>({
         security: [
@@ -21247,6 +21703,9 @@ export const supportTemplatesDeleteAttachments = <ThrowOnError extends boolean =
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const supportUsersList = <ThrowOnError extends boolean = false>(options?: Options<SupportUsersListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<SupportUsersListResponses, unknown, ThrowOnError>({
         security: [
@@ -21328,6 +21787,9 @@ export const syncIssues = <ThrowOnError extends boolean = false>(options?: Optio
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const userAgreementsList = <ThrowOnError extends boolean = false>(options?: Options<UserAgreementsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<UserAgreementsListResponses, unknown, ThrowOnError>({
         security: [
@@ -21442,6 +21904,9 @@ export const userAgreementsUpdate = <ThrowOnError extends boolean = false>(optio
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const userGroupInvitationsList = <ThrowOnError extends boolean = false>(options?: Options<UserGroupInvitationsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<UserGroupInvitationsListResponses, unknown, ThrowOnError>({
         security: [
@@ -21554,6 +22019,9 @@ export const userGroupInvitationsSubmitRequest = <ThrowOnError extends boolean =
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const userInvitationsList = <ThrowOnError extends boolean = false>(options?: Options<UserInvitationsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<UserInvitationsListResponses, unknown, ThrowOnError>({
         security: [
@@ -21764,6 +22232,9 @@ export const userInvitationsReject = <ThrowOnError extends boolean = false>(opti
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const userPermissionRequestsList = <ThrowOnError extends boolean = false>(options?: Options<UserPermissionRequestsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<UserPermissionRequestsListResponses, unknown, ThrowOnError>({
         security: [
@@ -21840,6 +22311,9 @@ export const userPermissionRequestsReject = <ThrowOnError extends boolean = fals
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const userPermissionsList = <ThrowOnError extends boolean = false>(options?: Options<UserPermissionsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<UserPermissionsListResponses, unknown, ThrowOnError>({
         security: [
@@ -21874,6 +22348,9 @@ export const userPermissionsRetrieve = <ThrowOnError extends boolean = false>(op
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const usersList = <ThrowOnError extends boolean = false>(options?: Options<UsersListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<UsersListResponses, unknown, ThrowOnError>({
         security: [
@@ -22194,6 +22671,9 @@ export const versionRetrieve = <ThrowOnError extends boolean = false>(options?: 
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const vmwareClustersList = <ThrowOnError extends boolean = false>(options?: Options<VmwareClustersListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<VmwareClustersListResponses, unknown, ThrowOnError>({
         security: [
@@ -22228,6 +22708,9 @@ export const vmwareClustersRetrieve = <ThrowOnError extends boolean = false>(opt
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const vmwareDatastoresList = <ThrowOnError extends boolean = false>(options?: Options<VmwareDatastoresListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<VmwareDatastoresListResponses, unknown, ThrowOnError>({
         security: [
@@ -22262,6 +22745,9 @@ export const vmwareDatastoresRetrieve = <ThrowOnError extends boolean = false>(o
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const vmwareDisksList = <ThrowOnError extends boolean = false>(options?: Options<VmwareDisksListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<VmwareDisksListResponses, unknown, ThrowOnError>({
         security: [
@@ -22376,6 +22862,9 @@ export const vmwareDisksUnlink = <ThrowOnError extends boolean = false>(options:
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const vmwareFoldersList = <ThrowOnError extends boolean = false>(options?: Options<VmwareFoldersListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<VmwareFoldersListResponses, unknown, ThrowOnError>({
         security: [
@@ -22427,6 +22916,9 @@ export const vmwareLimitsRetrieve = <ThrowOnError extends boolean = false>(optio
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const vmwareNetworksList = <ThrowOnError extends boolean = false>(options?: Options<VmwareNetworksListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<VmwareNetworksListResponses, unknown, ThrowOnError>({
         security: [
@@ -22461,6 +22953,9 @@ export const vmwareNetworksRetrieve = <ThrowOnError extends boolean = false>(opt
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const vmwarePortsList = <ThrowOnError extends boolean = false>(options?: Options<VmwarePortsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<VmwarePortsListResponses, unknown, ThrowOnError>({
         security: [
@@ -22551,6 +23046,9 @@ export const vmwarePortsUnlink = <ThrowOnError extends boolean = false>(options:
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const vmwareTemplatesList = <ThrowOnError extends boolean = false>(options?: Options<VmwareTemplatesListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<VmwareTemplatesListResponses, unknown, ThrowOnError>({
         security: [
@@ -22585,6 +23083,9 @@ export const vmwareTemplatesRetrieve = <ThrowOnError extends boolean = false>(op
     });
 };
 
+/**
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ */
 export const vmwareVirtualMachineList = <ThrowOnError extends boolean = false>(options?: Options<VmwareVirtualMachineListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<VmwareVirtualMachineListResponses, unknown, ThrowOnError>({
         security: [
