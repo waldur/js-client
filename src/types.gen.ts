@@ -3817,7 +3817,7 @@ export type MergedPluginOptions = {
      */
     managed_rancher_tenant_max_cpu?: number;
     /**
-     * Max number of RAM for tenants
+     * Max number of RAM for tenants (GB)
      */
     managed_rancher_tenant_max_ram?: number;
     /**
@@ -3964,7 +3964,7 @@ export type MergedPluginOptionsRequest = {
      */
     managed_rancher_tenant_max_cpu?: number;
     /**
-     * Max number of RAM for tenants
+     * Max number of RAM for tenants (GB)
      */
     managed_rancher_tenant_max_ram?: number;
     /**
@@ -16800,14 +16800,6 @@ export type InvoicesListData = {
         customer_uuid?: string;
         end_date?: string;
         field?: Array<'backend_id' | 'compensations' | 'customer' | 'customer_details' | 'due_date' | 'incurred_costs' | 'invoice_date' | 'issuer_details' | 'items' | 'month' | 'number' | 'payment_url' | 'price' | 'reference_number' | 'state' | 'tax' | 'total' | 'url' | 'uuid' | 'year'>;
-        /**
-         * Max sum
-         */
-        max_sum?: number;
-        /**
-         * Min sum
-         */
-        min_sum?: number;
         month?: number;
         /**
          * Ordering
@@ -16966,14 +16958,6 @@ export type InvoicesStatsListData = {
         customer?: string;
         customer_uuid?: string;
         end_date?: string;
-        /**
-         * Max sum
-         */
-        max_sum?: number;
-        /**
-         * Min sum
-         */
-        min_sum?: number;
         month?: number;
         /**
          * Ordering
@@ -28027,6 +28011,19 @@ export type OpenstackVolumeTypesRetrieveResponses = {
 };
 
 export type OpenstackVolumeTypesRetrieveResponse = OpenstackVolumeTypesRetrieveResponses[keyof OpenstackVolumeTypesRetrieveResponses];
+
+export type OpenstackVolumeTypesNamesRetrieveData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/openstack-volume-types/names/';
+};
+
+export type OpenstackVolumeTypesNamesRetrieveResponses = {
+    200: OpenStackVolumeType;
+};
+
+export type OpenstackVolumeTypesNamesRetrieveResponse = OpenstackVolumeTypesNamesRetrieveResponses[keyof OpenstackVolumeTypesNamesRetrieveResponses];
 
 export type OpenstackVolumesListData = {
     body?: never;
