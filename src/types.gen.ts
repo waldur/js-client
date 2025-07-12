@@ -28020,7 +28020,7 @@ export type OpenstackVolumeTypesNamesRetrieveData = {
 };
 
 export type OpenstackVolumeTypesNamesRetrieveResponses = {
-    200: OpenStackVolumeType;
+    200: Array<string>;
 };
 
 export type OpenstackVolumeTypesNamesRetrieveResponse = OpenstackVolumeTypesNamesRetrieveResponses[keyof OpenstackVolumeTypesNamesRetrieveResponses];
