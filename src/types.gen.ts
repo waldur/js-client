@@ -8512,6 +8512,9 @@ export type ProviderOfferingDetails = {
     backend_metadata?: unknown;
     readonly integration_status?: Array<IntegrationStatus> | null;
     readonly google_calendar_is_public?: boolean | null;
+    /**
+     * Get the Google Calendar link for an offering.
+     */
     readonly google_calendar_link?: string | null;
 };
 
@@ -8777,6 +8780,9 @@ export type PublicOfferingDetails = {
     readonly parent_name?: string | null;
     backend_metadata?: unknown;
     readonly google_calendar_is_public?: boolean | null;
+    /**
+     * Get the Google Calendar link for an offering.
+     */
     readonly google_calendar_link?: string | null;
     readonly promotion_campaigns?: Array<NestedCampaign>;
 };
