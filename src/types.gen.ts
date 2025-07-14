@@ -14528,6 +14528,24 @@ export type CallProposalProjectRoleMappingsCreateResponses = {
 
 export type CallProposalProjectRoleMappingsCreateResponse = CallProposalProjectRoleMappingsCreateResponses[keyof CallProposalProjectRoleMappingsCreateResponses];
 
+export type CallProposalProjectRoleMappingsDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/call-proposal-project-role-mappings/{uuid}/';
+};
+
+export type CallProposalProjectRoleMappingsDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type CallProposalProjectRoleMappingsDestroyResponse = CallProposalProjectRoleMappingsDestroyResponses[keyof CallProposalProjectRoleMappingsDestroyResponses];
+
 export type CallProposalProjectRoleMappingsRetrieveData = {
     body?: never;
     path: {
