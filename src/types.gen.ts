@@ -14213,6 +14213,22 @@ export type BroadcastMessagesUpdateResponses = {
 
 export type BroadcastMessagesUpdateResponse = BroadcastMessagesUpdateResponses[keyof BroadcastMessagesUpdateResponses];
 
+export type BroadcastMessagesScheduleData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/broadcast-messages/{uuid}/schedule/';
+};
+
+export type BroadcastMessagesScheduleResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type BroadcastMessagesSendData = {
     body?: never;
     path: {
