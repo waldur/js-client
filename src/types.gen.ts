@@ -7602,10 +7602,12 @@ export type PatchedRulePlansRequest = {
 };
 
 export type PatchedRuleRequest = {
+    name?: string;
     user_affiliations?: Array<string>;
     user_email_patterns?: Array<string>;
     customer?: string;
     project_role?: string | null;
+    project_role_name?: string | null;
 };
 
 export type PatchedScreenshotRequest = {
@@ -10343,12 +10345,17 @@ export type RoundReviewer = {
 };
 
 export type Rule = {
+    name: string;
     readonly uuid: string;
     readonly url: string;
     user_affiliations?: Array<string>;
     user_email_patterns?: Array<string>;
     customer: string;
+    readonly customer_name: string;
+    readonly customer_uuid: string;
     project_role?: string | null;
+    project_role_name?: string | null;
+    readonly project_role_description: string;
     readonly plans: Array<string>;
 };
 
@@ -10377,10 +10384,12 @@ export type RulePlansRequest = {
 };
 
 export type RuleRequest = {
+    name: string;
     user_affiliations?: Array<string>;
     user_email_patterns?: Array<string>;
     customer: string;
     project_role?: string | null;
+    project_role_name?: string | null;
 };
 
 export type RuntimeStates = {
