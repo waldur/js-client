@@ -7332,6 +7332,12 @@ export type PatchedProjectServiceAccountRequest = {
     project?: string;
 };
 
+export type PatchedProposalProjectRoleMappingRequest = {
+    call?: string;
+    proposal_role?: string;
+    project_role?: string | null;
+};
+
 export type PatchedProposalReviewRequest = {
     summary_score?: number;
     summary_public_comment?: string;
@@ -7363,7 +7369,6 @@ export type PatchedProtectedCallRequest = {
     reviews_visible_to_submitters?: boolean;
     created_by?: string | null;
     reference_code?: string;
-    default_project_role?: string;
 };
 
 export type PatchedProtectedRoundRequest = {
@@ -8201,6 +8206,22 @@ export type ProposalDocumentationRequest = {
     file?: (Blob | File) | null;
 };
 
+export type ProposalProjectRoleMapping = {
+    readonly url: string;
+    readonly uuid: string;
+    call: string;
+    readonly call_uuid: string;
+    readonly call_name: string;
+    proposal_role: string;
+    project_role?: string | null;
+};
+
+export type ProposalProjectRoleMappingRequest = {
+    call: string;
+    proposal_role: string;
+    project_role?: string | null;
+};
+
 export type ProposalRequest = {
     name: string;
     description?: string;
@@ -8315,9 +8336,6 @@ export type ProtectedCall = {
     reviews_visible_to_submitters?: boolean;
     created_by?: string | null;
     reference_code?: string;
-    default_project_role?: string;
-    readonly default_project_role_name?: string;
-    readonly default_project_role_description?: string;
 };
 
 export type ProtectedCallRequest = {
@@ -8337,7 +8355,6 @@ export type ProtectedCallRequest = {
     reviews_visible_to_submitters?: boolean;
     created_by?: string | null;
     reference_code?: string;
-    default_project_role?: string;
 };
 
 export type ProtectedProposalList = {
@@ -14458,6 +14475,87 @@ export type CallManagingOrganisationsUpdateUserResponses = {
 };
 
 export type CallManagingOrganisationsUpdateUserResponse = CallManagingOrganisationsUpdateUserResponses[keyof CallManagingOrganisationsUpdateUserResponses];
+
+export type CallProposalProjectRoleMappingsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        call_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/call-proposal-project-role-mappings/';
+};
+
+export type CallProposalProjectRoleMappingsListResponses = {
+    200: Array<ProposalProjectRoleMapping>;
+};
+
+export type CallProposalProjectRoleMappingsListResponse = CallProposalProjectRoleMappingsListResponses[keyof CallProposalProjectRoleMappingsListResponses];
+
+export type CallProposalProjectRoleMappingsCreateData = {
+    body: ProposalProjectRoleMappingRequest;
+    path?: never;
+    query?: never;
+    url: '/api/call-proposal-project-role-mappings/';
+};
+
+export type CallProposalProjectRoleMappingsCreateResponses = {
+    201: ProposalProjectRoleMapping;
+};
+
+export type CallProposalProjectRoleMappingsCreateResponse = CallProposalProjectRoleMappingsCreateResponses[keyof CallProposalProjectRoleMappingsCreateResponses];
+
+export type CallProposalProjectRoleMappingsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/call-proposal-project-role-mappings/{uuid}/';
+};
+
+export type CallProposalProjectRoleMappingsRetrieveResponses = {
+    200: ProposalProjectRoleMapping;
+};
+
+export type CallProposalProjectRoleMappingsRetrieveResponse = CallProposalProjectRoleMappingsRetrieveResponses[keyof CallProposalProjectRoleMappingsRetrieveResponses];
+
+export type CallProposalProjectRoleMappingsPartialUpdateData = {
+    body?: PatchedProposalProjectRoleMappingRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/call-proposal-project-role-mappings/{uuid}/';
+};
+
+export type CallProposalProjectRoleMappingsPartialUpdateResponses = {
+    200: ProposalProjectRoleMapping;
+};
+
+export type CallProposalProjectRoleMappingsPartialUpdateResponse = CallProposalProjectRoleMappingsPartialUpdateResponses[keyof CallProposalProjectRoleMappingsPartialUpdateResponses];
+
+export type CallProposalProjectRoleMappingsUpdateData = {
+    body: ProposalProjectRoleMappingRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/call-proposal-project-role-mappings/{uuid}/';
+};
+
+export type CallProposalProjectRoleMappingsUpdateResponses = {
+    200: ProposalProjectRoleMapping;
+};
+
+export type CallProposalProjectRoleMappingsUpdateResponse = CallProposalProjectRoleMappingsUpdateResponses[keyof CallProposalProjectRoleMappingsUpdateResponses];
 
 export type CallRoundsListData = {
     body?: never;
@@ -29734,7 +29832,7 @@ export type ProposalProtectedCallsListData = {
         customer?: string;
         customer_keyword?: string;
         customer_uuid?: string;
-        field?: Array<'backend_id' | 'created' | 'created_by' | 'customer_name' | 'customer_uuid' | 'default_project_role' | 'default_project_role_description' | 'default_project_role_name' | 'description' | 'documents' | 'end_date' | 'external_url' | 'fixed_duration_in_days' | 'manager' | 'name' | 'offerings' | 'reference_code' | 'resource_templates' | 'reviewer_identity_visible_to_submitters' | 'reviews_visible_to_submitters' | 'rounds' | 'slug' | 'start_date' | 'state' | 'url' | 'uuid'>;
+        field?: Array<'backend_id' | 'created' | 'created_by' | 'customer_name' | 'customer_uuid' | 'description' | 'documents' | 'end_date' | 'external_url' | 'fixed_duration_in_days' | 'manager' | 'name' | 'offerings' | 'reference_code' | 'resource_templates' | 'reviewer_identity_visible_to_submitters' | 'reviews_visible_to_submitters' | 'rounds' | 'slug' | 'start_date' | 'state' | 'url' | 'uuid'>;
         has_active_round?: boolean;
         name?: string;
         /**
@@ -29801,7 +29899,7 @@ export type ProposalProtectedCallsRetrieveData = {
         uuid: string;
     };
     query?: {
-        field?: Array<'backend_id' | 'created' | 'created_by' | 'customer_name' | 'customer_uuid' | 'default_project_role' | 'default_project_role_description' | 'default_project_role_name' | 'description' | 'documents' | 'end_date' | 'external_url' | 'fixed_duration_in_days' | 'manager' | 'name' | 'offerings' | 'reference_code' | 'resource_templates' | 'reviewer_identity_visible_to_submitters' | 'reviews_visible_to_submitters' | 'rounds' | 'slug' | 'start_date' | 'state' | 'url' | 'uuid'>;
+        field?: Array<'backend_id' | 'created' | 'created_by' | 'customer_name' | 'customer_uuid' | 'description' | 'documents' | 'end_date' | 'external_url' | 'fixed_duration_in_days' | 'manager' | 'name' | 'offerings' | 'reference_code' | 'resource_templates' | 'reviewer_identity_visible_to_submitters' | 'reviews_visible_to_submitters' | 'rounds' | 'slug' | 'start_date' | 'state' | 'url' | 'uuid'>;
     };
     url: '/api/proposal-protected-calls/{uuid}/';
 };
