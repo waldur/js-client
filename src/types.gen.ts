@@ -7595,17 +7595,6 @@ export type PatchedRoleDetailsRequest = {
     is_active?: boolean;
 };
 
-export type PatchedRulePlansRequest = {
-    rule?: string;
-    plan?: string;
-    attributes?: {
-        [key: string]: unknown;
-    };
-    limits?: {
-        [key: string]: unknown;
-    };
-};
-
 export type PatchedRuleRequest = {
     name?: string;
     user_affiliations?: Array<string>;
@@ -7613,6 +7602,13 @@ export type PatchedRuleRequest = {
     customer?: string;
     project_role?: string | null;
     project_role_name?: string | null;
+    plan?: string | null;
+    plan_attributes?: {
+        [key: string]: unknown;
+    };
+    plan_limits?: {
+        [key: string]: unknown;
+    };
 };
 
 export type PatchedScreenshotRequest = {
@@ -10371,31 +10367,13 @@ export type Rule = {
     readonly customer_name: string;
     readonly customer_uuid: string;
     project_role?: string | null;
-    project_role_name?: string | null;
+    readonly project_role_dispay_name: string;
     readonly project_role_description: string;
-    readonly plans: Array<string>;
-};
-
-export type RulePlans = {
-    readonly uuid: string;
-    readonly url: string;
-    rule: string;
-    plan: string;
-    attributes?: {
+    plan?: string | null;
+    plan_attributes?: {
         [key: string]: unknown;
     };
-    limits?: {
-        [key: string]: unknown;
-    };
-};
-
-export type RulePlansRequest = {
-    rule: string;
-    plan: string;
-    attributes?: {
-        [key: string]: unknown;
-    };
-    limits?: {
+    plan_limits?: {
         [key: string]: unknown;
     };
 };
@@ -10407,6 +10385,13 @@ export type RuleRequest = {
     customer: string;
     project_role?: string | null;
     project_role_name?: string | null;
+    plan?: string | null;
+    plan_attributes?: {
+        [key: string]: unknown;
+    };
+    plan_limits?: {
+        [key: string]: unknown;
+    };
 };
 
 export type RuntimeStates = {
@@ -11977,104 +11962,6 @@ export type AuthValimoResultResponses = {
 };
 
 export type AuthValimoResultResponse = AuthValimoResultResponses[keyof AuthValimoResultResponses];
-
-export type AutoprovisioningRulePlansListData = {
-    body?: never;
-    path?: never;
-    query?: {
-        /**
-         * A page number within the paginated result set.
-         */
-        page?: number;
-        /**
-         * Number of results to return per page.
-         */
-        page_size?: number;
-    };
-    url: '/api/autoprovisioning-rule-plans/';
-};
-
-export type AutoprovisioningRulePlansListResponses = {
-    200: Array<RulePlans>;
-};
-
-export type AutoprovisioningRulePlansListResponse = AutoprovisioningRulePlansListResponses[keyof AutoprovisioningRulePlansListResponses];
-
-export type AutoprovisioningRulePlansCreateData = {
-    body: RulePlansRequest;
-    path?: never;
-    query?: never;
-    url: '/api/autoprovisioning-rule-plans/';
-};
-
-export type AutoprovisioningRulePlansCreateResponses = {
-    201: RulePlans;
-};
-
-export type AutoprovisioningRulePlansCreateResponse = AutoprovisioningRulePlansCreateResponses[keyof AutoprovisioningRulePlansCreateResponses];
-
-export type AutoprovisioningRulePlansDestroyData = {
-    body?: never;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/autoprovisioning-rule-plans/{uuid}/';
-};
-
-export type AutoprovisioningRulePlansDestroyResponses = {
-    /**
-     * No response body
-     */
-    204: void;
-};
-
-export type AutoprovisioningRulePlansDestroyResponse = AutoprovisioningRulePlansDestroyResponses[keyof AutoprovisioningRulePlansDestroyResponses];
-
-export type AutoprovisioningRulePlansRetrieveData = {
-    body?: never;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/autoprovisioning-rule-plans/{uuid}/';
-};
-
-export type AutoprovisioningRulePlansRetrieveResponses = {
-    200: RulePlans;
-};
-
-export type AutoprovisioningRulePlansRetrieveResponse = AutoprovisioningRulePlansRetrieveResponses[keyof AutoprovisioningRulePlansRetrieveResponses];
-
-export type AutoprovisioningRulePlansPartialUpdateData = {
-    body?: PatchedRulePlansRequest;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/autoprovisioning-rule-plans/{uuid}/';
-};
-
-export type AutoprovisioningRulePlansPartialUpdateResponses = {
-    200: RulePlans;
-};
-
-export type AutoprovisioningRulePlansPartialUpdateResponse = AutoprovisioningRulePlansPartialUpdateResponses[keyof AutoprovisioningRulePlansPartialUpdateResponses];
-
-export type AutoprovisioningRulePlansUpdateData = {
-    body: RulePlansRequest;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/autoprovisioning-rule-plans/{uuid}/';
-};
-
-export type AutoprovisioningRulePlansUpdateResponses = {
-    200: RulePlans;
-};
-
-export type AutoprovisioningRulePlansUpdateResponse = AutoprovisioningRulePlansUpdateResponses[keyof AutoprovisioningRulePlansUpdateResponses];
 
 export type AutoprovisioningRulesListData = {
     body?: never;
