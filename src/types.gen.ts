@@ -10368,7 +10368,7 @@ export type Rule = {
     readonly customer_name: string;
     readonly customer_uuid: string;
     project_role?: string | null;
-    readonly project_role_dispay_name: string;
+    readonly project_role_display_name: string;
     readonly project_role_description: string;
     plan?: string | null;
     plan_attributes?: {
@@ -10377,6 +10377,11 @@ export type Rule = {
     plan_limits?: {
         [key: string]: unknown;
     };
+    readonly plan_name: string;
+    readonly offering_name: string;
+    readonly offering_uuid: string;
+    readonly category_title: string;
+    readonly category_url: string;
 };
 
 export type RuleRequest = {
