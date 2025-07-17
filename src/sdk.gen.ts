@@ -524,7 +524,7 @@ export const authValimoResult = <ThrowOnError extends boolean = false>(options: 
 };
 
 /**
- * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
+ * Manage autoprovisioning rules.
  */
 export const autoprovisioningRulesList = <ThrowOnError extends boolean = false>(options?: Options<AutoprovisioningRulesListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<AutoprovisioningRulesListResponses, unknown, ThrowOnError>({
@@ -543,6 +543,9 @@ export const autoprovisioningRulesList = <ThrowOnError extends boolean = false>(
     });
 };
 
+/**
+ * Manage autoprovisioning rules.
+ */
 export const autoprovisioningRulesCreate = <ThrowOnError extends boolean = false>(options: Options<AutoprovisioningRulesCreateData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).post<AutoprovisioningRulesCreateResponses, unknown, ThrowOnError>({
         security: [
@@ -564,6 +567,9 @@ export const autoprovisioningRulesCreate = <ThrowOnError extends boolean = false
     });
 };
 
+/**
+ * Manage autoprovisioning rules.
+ */
 export const autoprovisioningRulesDestroy = <ThrowOnError extends boolean = false>(options: Options<AutoprovisioningRulesDestroyData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).delete<AutoprovisioningRulesDestroyResponses, unknown, ThrowOnError>({
         security: [
@@ -581,6 +587,9 @@ export const autoprovisioningRulesDestroy = <ThrowOnError extends boolean = fals
     });
 };
 
+/**
+ * Manage autoprovisioning rules.
+ */
 export const autoprovisioningRulesRetrieve = <ThrowOnError extends boolean = false>(options: Options<AutoprovisioningRulesRetrieveData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).get<AutoprovisioningRulesRetrieveResponses, unknown, ThrowOnError>({
         security: [
@@ -598,6 +607,9 @@ export const autoprovisioningRulesRetrieve = <ThrowOnError extends boolean = fal
     });
 };
 
+/**
+ * Manage autoprovisioning rules.
+ */
 export const autoprovisioningRulesPartialUpdate = <ThrowOnError extends boolean = false>(options: Options<AutoprovisioningRulesPartialUpdateData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).patch<AutoprovisioningRulesPartialUpdateResponses, unknown, ThrowOnError>({
         security: [
@@ -619,6 +631,9 @@ export const autoprovisioningRulesPartialUpdate = <ThrowOnError extends boolean 
     });
 };
 
+/**
+ * Manage autoprovisioning rules.
+ */
 export const autoprovisioningRulesUpdate = <ThrowOnError extends boolean = false>(options: Options<AutoprovisioningRulesUpdateData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).put<AutoprovisioningRulesUpdateResponses, unknown, ThrowOnError>({
         security: [
