@@ -2735,7 +2735,7 @@ export type GroupInvitation = {
     /**
      * Template for project name. Supports {username}, {email}, {full_name} variables
      */
-    project_name_template?: string;
+    project_name_template?: string | null;
     project_role?: string | null;
 };
 
@@ -2749,7 +2749,7 @@ export type GroupInvitationRequest = {
     /**
      * Template for project name. Supports {username}, {email}, {full_name} variables
      */
-    project_name_template?: string;
+    project_name_template?: string | null;
     project_role?: string | null;
 };
 
