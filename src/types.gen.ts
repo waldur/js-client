@@ -5876,7 +5876,7 @@ export type OpenStackPort = {
     state?: CoreStates;
     readonly created?: string;
     readonly modified?: string;
-    readonly backend_id?: string;
+    readonly backend_id?: string | null;
     readonly access_url?: string | null;
     fixed_ips?: Array<OpenStackFixedIp>;
     mac_address?: string;
@@ -5957,7 +5957,7 @@ export type OpenStackRouter = {
     state?: CoreStates;
     readonly created?: string;
     readonly modified?: string;
-    backend_id?: string;
+    backend_id?: string | null;
     readonly access_url?: string | null;
     tenant?: string;
     readonly tenant_name?: string;
