@@ -7891,7 +7891,7 @@ export type Permission = {
     readonly role_name?: string;
     readonly role_description?: string;
     readonly role_uuid?: string;
-    readonly scope_type?: string;
+    readonly scope_type?: string | null;
     readonly scope_uuid?: string;
     readonly scope_name?: string;
     readonly customer_uuid?: string;
