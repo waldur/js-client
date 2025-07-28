@@ -696,6 +696,7 @@ export type BackendResourceImportRequest = {
 
 export type BackendResourceReq = {
     readonly url: string;
+    readonly uuid: string;
     readonly created: string;
     readonly modified: string;
     /**
@@ -5315,6 +5316,10 @@ export type OfferingUser = {
      */
     readonly user_username?: string;
     readonly user_full_name?: string;
+    /**
+     * Email address
+     */
+    readonly user_email?: string;
     readonly created?: string;
     readonly modified?: string;
     readonly customer_uuid?: string;
@@ -20315,7 +20320,7 @@ export type MarketplaceOfferingUsersListData = {
          * Created after
          */
         created?: string;
-        field?: Array<'created' | 'customer_name' | 'customer_uuid' | 'is_restricted' | 'modified' | 'offering' | 'offering_name' | 'offering_uuid' | 'service_provider_comment' | 'state' | 'url' | 'user' | 'user_full_name' | 'user_username' | 'user_uuid' | 'username' | 'uuid'>;
+        field?: Array<'created' | 'customer_name' | 'customer_uuid' | 'is_restricted' | 'modified' | 'offering' | 'offering_name' | 'offering_uuid' | 'service_provider_comment' | 'state' | 'url' | 'user' | 'user_email' | 'user_full_name' | 'user_username' | 'user_uuid' | 'username' | 'uuid'>;
         is_restricted?: boolean;
         /**
          * Modified after
@@ -20390,7 +20395,7 @@ export type MarketplaceOfferingUsersRetrieveData = {
         uuid: string;
     };
     query?: {
-        field?: Array<'created' | 'customer_name' | 'customer_uuid' | 'is_restricted' | 'modified' | 'offering' | 'offering_name' | 'offering_uuid' | 'service_provider_comment' | 'state' | 'url' | 'user' | 'user_full_name' | 'user_username' | 'user_uuid' | 'username' | 'uuid'>;
+        field?: Array<'created' | 'customer_name' | 'customer_uuid' | 'is_restricted' | 'modified' | 'offering' | 'offering_name' | 'offering_uuid' | 'service_provider_comment' | 'state' | 'url' | 'user' | 'user_email' | 'user_full_name' | 'user_username' | 'user_uuid' | 'username' | 'uuid'>;
     };
     url: '/api/marketplace-offering-users/{uuid}/';
 };
@@ -20431,6 +20436,38 @@ export type MarketplaceOfferingUsersUpdateResponses = {
 
 export type MarketplaceOfferingUsersUpdateResponse = MarketplaceOfferingUsersUpdateResponses[keyof MarketplaceOfferingUsersUpdateResponses];
 
+export type MarketplaceOfferingUsersBeginCreatingData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-offering-users/{uuid}/begin_creating/';
+};
+
+export type MarketplaceOfferingUsersBeginCreatingResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type MarketplaceOfferingUsersSetOkData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-offering-users/{uuid}/set_ok/';
+};
+
+export type MarketplaceOfferingUsersSetOkResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type MarketplaceOfferingUsersSetPendingAccountLinkingData = {
     body?: OfferingUserStateTransitionRequest;
     path: {
@@ -20464,7 +20501,7 @@ export type MarketplaceOfferingUsersSetPendingAdditionalValidationResponses = {
 };
 
 export type MarketplaceOfferingUsersSetValidationCompleteData = {
-    body?: OfferingUserRequest;
+    body?: never;
     path: {
         uuid: string;
     };
