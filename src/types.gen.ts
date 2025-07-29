@@ -11921,6 +11921,33 @@ export type AccessSubnetsListResponses = {
 
 export type AccessSubnetsListResponse = AccessSubnetsListResponses[keyof AccessSubnetsListResponses];
 
+export type AccessSubnetsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        customer?: string;
+        customer_uuid?: string;
+        description?: string;
+        inet?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/access-subnets/';
+};
+
+export type AccessSubnetsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type AccessSubnetsCreateData = {
     body: AccessSubnetRequest;
     path?: never;
@@ -12029,6 +12056,38 @@ export type AdminAnnouncementsListResponses = {
 
 export type AdminAnnouncementsListResponse = AdminAnnouncementsListResponses[keyof AdminAnnouncementsListResponses];
 
+export type AdminAnnouncementsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        description?: string;
+        is_active?: boolean;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-active_from' | '-active_to' | '-created' | '-name' | '-type' | 'active_from' | 'active_to' | 'created' | 'name' | 'type'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        type?: Array<'danger' | 'information' | 'warning'>;
+    };
+    url: '/api/admin-announcements/';
+};
+
+export type AdminAnnouncementsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type AdminAnnouncementsCreateData = {
     body: AdminAnnouncementRequest;
     path?: never;
@@ -12129,6 +12188,29 @@ export type AuthTokensListResponses = {
 
 export type AuthTokensListResponse = AuthTokensListResponses[keyof AuthTokensListResponses];
 
+export type AuthTokensHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/auth-tokens/';
+};
+
+export type AuthTokensHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type AuthTokensDestroyData = {
     body?: never;
     path: {
@@ -12209,6 +12291,29 @@ export type AutoprovisioningRulesListResponses = {
 };
 
 export type AutoprovisioningRulesListResponse = AutoprovisioningRulesListResponses[keyof AutoprovisioningRulesListResponses];
+
+export type AutoprovisioningRulesHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/autoprovisioning-rules/';
+};
+
+export type AutoprovisioningRulesHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type AutoprovisioningRulesCreateData = {
     body: RuleRequest;
@@ -12311,6 +12416,32 @@ export type AwsImagesListResponses = {
 
 export type AwsImagesListResponse = AwsImagesListResponses[keyof AwsImagesListResponses];
 
+export type AwsImagesHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        name?: string;
+        name_exact?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        region?: string;
+    };
+    url: '/api/aws-images/';
+};
+
+export type AwsImagesHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type AwsImagesRetrieveData = {
     body?: never;
     path: {
@@ -12369,6 +12500,50 @@ export type AwsInstancesListResponses = {
 };
 
 export type AwsInstancesListResponse = AwsInstancesListResponses[keyof AwsInstancesListResponses];
+
+export type AwsInstancesHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        backend_id?: string;
+        /**
+         * Can manage
+         */
+        can_manage?: boolean;
+        customer?: string;
+        customer_abbreviation?: string;
+        customer_name?: string;
+        customer_native_name?: string;
+        customer_uuid?: string;
+        description?: string;
+        external_ip?: string;
+        name?: string;
+        name_exact?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        project?: string;
+        project_name?: string;
+        project_uuid?: string;
+        service_settings_name?: string;
+        service_settings_uuid?: string;
+        state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        uuid?: string;
+    };
+    url: '/api/aws-instances/';
+};
+
+export type AwsInstancesHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type AwsInstancesCreateData = {
     body: AwsInstanceRequest;
@@ -12567,6 +12742,31 @@ export type AwsRegionsListResponses = {
 
 export type AwsRegionsListResponse = AwsRegionsListResponses[keyof AwsRegionsListResponses];
 
+export type AwsRegionsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        name?: string;
+        name_exact?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/aws-regions/';
+};
+
+export type AwsRegionsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type AwsRegionsRetrieveData = {
     body?: never;
     path: {
@@ -12607,6 +12807,32 @@ export type AwsSizesListResponses = {
 
 export type AwsSizesListResponse = AwsSizesListResponses[keyof AwsSizesListResponses];
 
+export type AwsSizesHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        name?: string;
+        name_exact?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        region?: string;
+    };
+    url: '/api/aws-sizes/';
+};
+
+export type AwsSizesHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type AwsSizesRetrieveData = {
     body?: never;
     path: {
@@ -12644,6 +12870,29 @@ export type AwsVolumesListResponses = {
 };
 
 export type AwsVolumesListResponse = AwsVolumesListResponses[keyof AwsVolumesListResponses];
+
+export type AwsVolumesHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/aws-volumes/';
+};
+
+export type AwsVolumesHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type AwsVolumesCreateData = {
     body: AwsVolumeRequest;
@@ -12814,6 +13063,35 @@ export type AzureImagesListResponses = {
 
 export type AzureImagesListResponse = AzureImagesListResponses[keyof AzureImagesListResponses];
 
+export type AzureImagesHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        location?: string;
+        location_uuid?: string;
+        name?: string;
+        name_exact?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        settings?: string;
+        settings_uuid?: string;
+    };
+    url: '/api/azure-images/';
+};
+
+export type AzureImagesHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type AzureImagesRetrieveData = {
     body?: never;
     path: {
@@ -12855,6 +13133,34 @@ export type AzureLocationsListResponses = {
 };
 
 export type AzureLocationsListResponse = AzureLocationsListResponses[keyof AzureLocationsListResponses];
+
+export type AzureLocationsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        has_sizes?: boolean;
+        name?: string;
+        name_exact?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        settings?: string;
+        settings_uuid?: string;
+    };
+    url: '/api/azure-locations/';
+};
+
+export type AzureLocationsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type AzureLocationsRetrieveData = {
     body?: never;
@@ -12916,6 +13222,52 @@ export type AzurePublicIpsListResponses = {
 };
 
 export type AzurePublicIpsListResponse = AzurePublicIpsListResponses[keyof AzurePublicIpsListResponses];
+
+export type AzurePublicIpsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        backend_id?: string;
+        /**
+         * Can manage
+         */
+        can_manage?: boolean;
+        customer?: string;
+        customer_abbreviation?: string;
+        customer_name?: string;
+        customer_native_name?: string;
+        customer_uuid?: string;
+        description?: string;
+        external_ip?: string;
+        name?: string;
+        name_exact?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        project?: string;
+        project_name?: string;
+        project_uuid?: string;
+        resource_group?: string;
+        resource_group_uuid?: string;
+        service_settings_name?: string;
+        service_settings_uuid?: string;
+        state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        uuid?: string;
+    };
+    url: '/api/azure-public-ips/';
+};
+
+export type AzurePublicIpsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type AzurePublicIpsCreateData = {
     body: AzurePublicIpRequest;
@@ -13050,6 +13402,29 @@ export type AzureResourceGroupsListResponses = {
 
 export type AzureResourceGroupsListResponse = AzureResourceGroupsListResponses[keyof AzureResourceGroupsListResponses];
 
+export type AzureResourceGroupsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/azure-resource-groups/';
+};
+
+export type AzureResourceGroupsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type AzureResourceGroupsRetrieveData = {
     body?: never;
     path: {
@@ -13095,6 +13470,36 @@ export type AzureSizesListResponses = {
 };
 
 export type AzureSizesListResponse = AzureSizesListResponses[keyof AzureSizesListResponses];
+
+export type AzureSizesHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        location?: string;
+        location_uuid?: string;
+        name?: string;
+        name_exact?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        settings?: string;
+        settings_uuid?: string;
+        zone?: number;
+    };
+    url: '/api/azure-sizes/';
+};
+
+export type AzureSizesHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type AzureSizesRetrieveData = {
     body?: never;
@@ -13158,6 +13563,54 @@ export type AzureSqlDatabasesListResponses = {
 };
 
 export type AzureSqlDatabasesListResponse = AzureSqlDatabasesListResponses[keyof AzureSqlDatabasesListResponses];
+
+export type AzureSqlDatabasesHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        backend_id?: string;
+        /**
+         * Can manage
+         */
+        can_manage?: boolean;
+        customer?: string;
+        customer_abbreviation?: string;
+        customer_name?: string;
+        customer_native_name?: string;
+        customer_uuid?: string;
+        description?: string;
+        external_ip?: string;
+        name?: string;
+        name_exact?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        project?: string;
+        project_name?: string;
+        project_uuid?: string;
+        resource_group?: string;
+        resource_group_uuid?: string;
+        server?: string;
+        server_uuid?: string;
+        service_settings_name?: string;
+        service_settings_uuid?: string;
+        state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        uuid?: string;
+    };
+    url: '/api/azure-sql-databases/';
+};
+
+export type AzureSqlDatabasesHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type AzureSqlDatabasesCreateData = {
     body: AzureSqlDatabaseRequest;
@@ -13314,6 +13767,52 @@ export type AzureSqlServersListResponses = {
 };
 
 export type AzureSqlServersListResponse = AzureSqlServersListResponses[keyof AzureSqlServersListResponses];
+
+export type AzureSqlServersHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        backend_id?: string;
+        /**
+         * Can manage
+         */
+        can_manage?: boolean;
+        customer?: string;
+        customer_abbreviation?: string;
+        customer_name?: string;
+        customer_native_name?: string;
+        customer_uuid?: string;
+        description?: string;
+        external_ip?: string;
+        name?: string;
+        name_exact?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        project?: string;
+        project_name?: string;
+        project_uuid?: string;
+        resource_group?: string;
+        resource_group_uuid?: string;
+        service_settings_name?: string;
+        service_settings_uuid?: string;
+        state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        uuid?: string;
+    };
+    url: '/api/azure-sql-servers/';
+};
+
+export type AzureSqlServersHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type AzureSqlServersCreateData = {
     body: AzureSqlServerRequest;
@@ -13485,6 +13984,52 @@ export type AzureVirtualmachinesListResponses = {
 };
 
 export type AzureVirtualmachinesListResponse = AzureVirtualmachinesListResponses[keyof AzureVirtualmachinesListResponses];
+
+export type AzureVirtualmachinesHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        backend_id?: string;
+        /**
+         * Can manage
+         */
+        can_manage?: boolean;
+        customer?: string;
+        customer_abbreviation?: string;
+        customer_name?: string;
+        customer_native_name?: string;
+        customer_uuid?: string;
+        description?: string;
+        external_ip?: string;
+        name?: string;
+        name_exact?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        project?: string;
+        project_name?: string;
+        project_uuid?: string;
+        resource_group?: string;
+        resource_group_uuid?: string;
+        service_settings_name?: string;
+        service_settings_uuid?: string;
+        state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        uuid?: string;
+    };
+    url: '/api/azure-virtualmachines/';
+};
+
+export type AzureVirtualmachinesHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type AzureVirtualmachinesCreateData = {
     body: AzureVirtualMachineRequest;
@@ -13690,6 +14235,53 @@ export type BackendResourceRequestsListResponses = {
 
 export type BackendResourceRequestsListResponse = BackendResourceRequestsListResponses[keyof BackendResourceRequestsListResponses];
 
+export type BackendResourceRequestsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Created after
+         */
+        created?: string;
+        /**
+         * Modified after
+         */
+        finished?: string;
+        /**
+         * Modified after
+         */
+        modified?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | 'created'>;
+        offering_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Created after
+         */
+        started?: string;
+        state?: Array<'Done' | 'Erred' | 'Processing' | 'Sent'>;
+    };
+    url: '/api/backend-resource-requests/';
+};
+
+export type BackendResourceRequestsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type BackendResourceRequestsCreateData = {
     body: BackendResourceReqRequest;
     path?: never;
@@ -13813,6 +14405,51 @@ export type BackendResourcesListResponses = {
 
 export type BackendResourcesListResponse = BackendResourcesListResponses[keyof BackendResourcesListResponses];
 
+export type BackendResourcesHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Backend ID
+         */
+        backend_id?: string;
+        /**
+         * Created after
+         */
+        created?: string;
+        /**
+         * Modified after
+         */
+        modified?: string;
+        name?: string;
+        name_exact?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | 'created'>;
+        offering_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        project_uuid?: string;
+    };
+    url: '/api/backend-resources/';
+};
+
+export type BackendResourcesHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type BackendResourcesCreateData = {
     body: BackendResourceRequest;
     path?: never;
@@ -13915,6 +14552,29 @@ export type BookingOfferingsListResponses = {
 };
 
 export type BookingOfferingsListResponse = BookingOfferingsListResponses[keyof BookingOfferingsListResponses];
+
+export type BookingOfferingsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/booking-offerings/';
+};
+
+export type BookingOfferingsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type BookingOfferingsRetrieveData = {
     body?: never;
@@ -14068,6 +14728,93 @@ export type BookingResourcesListResponses = {
 
 export type BookingResourcesListResponse = BookingResourcesListResponses[keyof BookingResourcesListResponses];
 
+export type BookingResourcesHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Backend ID
+         */
+        backend_id?: string;
+        category_uuid?: string;
+        connected_customer_uuid?: string;
+        /**
+         * Created after
+         */
+        created?: string;
+        customer?: string;
+        customer_uuid?: string;
+        downscaled?: boolean;
+        /**
+         * Has termination date
+         */
+        has_terminate_date?: boolean;
+        /**
+         * LEXIS links supported
+         */
+        lexis_links_supported?: boolean;
+        /**
+         * Modified after
+         */
+        modified?: string;
+        name?: string;
+        name_exact?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-name' | '-schedules' | '-type' | 'created' | 'name' | 'schedules' | 'type'>;
+        offering?: string;
+        offering_billable?: string;
+        /**
+         * Offering shared
+         */
+        offering_shared?: boolean;
+        offering_type?: string;
+        offering_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        parent_offering_uuid?: string;
+        paused?: boolean;
+        project_name?: string;
+        project_uuid?: string;
+        provider_uuid?: string;
+        /**
+         * Query
+         */
+        query?: string;
+        restrict_member_access?: boolean;
+        /**
+         * Runtime state
+         */
+        runtime_state?: string;
+        /**
+         * Service Manager UUID
+         */
+        service_manager_uuid?: string;
+        state?: Array<'Creating' | 'Erred' | 'OK' | 'Terminated' | 'Terminating' | 'Updating'>;
+        /**
+         * Visible to username
+         */
+        visible_to_username?: string;
+    };
+    url: '/api/booking-resources/';
+};
+
+export type BookingResourcesHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type BookingResourcesRetrieveData = {
     body?: never;
     path: {
@@ -14139,6 +14886,30 @@ export type BroadcastMessageTemplatesListResponses = {
 };
 
 export type BroadcastMessageTemplatesListResponse = BroadcastMessageTemplatesListResponses[keyof BroadcastMessageTemplatesListResponses];
+
+export type BroadcastMessageTemplatesHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        name?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/broadcast-message-templates/';
+};
+
+export type BroadcastMessageTemplatesHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type BroadcastMessageTemplatesCreateData = {
     body: MessageTemplateRequest;
@@ -14246,6 +15017,37 @@ export type BroadcastMessagesListResponses = {
 };
 
 export type BroadcastMessagesListResponse = BroadcastMessagesListResponses[keyof BroadcastMessagesListResponses];
+
+export type BroadcastMessagesHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-author_full_name' | '-created' | '-subject' | 'author_full_name' | 'created' | 'subject'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        state?: 'DRAFT' | 'SCHEDULED' | 'SENT';
+        subject?: string;
+    };
+    url: '/api/broadcast-messages/';
+};
+
+export type BroadcastMessagesHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type BroadcastMessagesCreateData = {
     body: BroadcastMessageRequest;
@@ -14372,6 +15174,20 @@ export type BroadcastMessagesRecipientsRetrieveResponses = {
 
 export type BroadcastMessagesRecipientsRetrieveResponse = BroadcastMessagesRecipientsRetrieveResponses[keyof BroadcastMessagesRecipientsRetrieveResponses];
 
+export type BroadcastMessagesRecipientsHeadData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/broadcast-messages/recipients/';
+};
+
+export type BroadcastMessagesRecipientsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type CallManagingOrganisationsListData = {
     body?: never;
     path?: never;
@@ -14402,6 +15218,38 @@ export type CallManagingOrganisationsListResponses = {
 };
 
 export type CallManagingOrganisationsListResponse = CallManagingOrganisationsListResponses[keyof CallManagingOrganisationsListResponses];
+
+export type CallManagingOrganisationsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        customer?: string;
+        customer_keyword?: string;
+        customer_uuid?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-customer_name' | 'customer_name'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/call-managing-organisations/';
+};
+
+export type CallManagingOrganisationsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type CallManagingOrganisationsCreateData = {
     body: CallManagingOrganisationRequest;
@@ -14627,6 +15475,30 @@ export type CallProposalProjectRoleMappingsListResponses = {
 
 export type CallProposalProjectRoleMappingsListResponse = CallProposalProjectRoleMappingsListResponses[keyof CallProposalProjectRoleMappingsListResponses];
 
+export type CallProposalProjectRoleMappingsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        call_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/call-proposal-project-role-mappings/';
+};
+
+export type CallProposalProjectRoleMappingsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type CallProposalProjectRoleMappingsCreateData = {
     body: ProposalProjectRoleMappingRequest;
     path?: never;
@@ -14725,6 +15597,29 @@ export type CallRoundsListResponses = {
 
 export type CallRoundsListResponse = CallRoundsListResponses[keyof CallRoundsListResponses];
 
+export type CallRoundsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/call-rounds/';
+};
+
+export type CallRoundsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type CallRoundsRetrieveData = {
     body?: never;
     path: {
@@ -14807,6 +15702,37 @@ export type ComponentUserUsageLimitsListResponses = {
 };
 
 export type ComponentUserUsageLimitsListResponse = ComponentUserUsageLimitsListResponses[keyof ComponentUserUsageLimitsListResponses];
+
+export type ComponentUserUsageLimitsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        component_type?: string;
+        offering_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Resource URL
+         */
+        resource?: string;
+        resource_uuid?: string;
+        username?: string;
+    };
+    url: '/api/component-user-usage-limits/';
+};
+
+export type ComponentUserUsageLimitsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type ComponentUserUsageLimitsCreateData = {
     body: ComponentUserUsageLimitRequest;
@@ -14929,6 +15855,38 @@ export type CustomerCreditsListResponses = {
 };
 
 export type CustomerCreditsListResponse = CustomerCreditsListResponses[keyof CustomerCreditsListResponses];
+
+export type CustomerCreditsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        customer_name?: string;
+        customer_slug?: string;
+        customer_uuid?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-customer_name' | '-end_date' | '-expected_consumption' | '-value' | 'customer_name' | 'end_date' | 'expected_consumption' | 'value'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/customer-credits/';
+};
+
+export type CustomerCreditsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type CustomerCreditsCreateData = {
     body: CreateCustomerCreditRequest;
@@ -15100,6 +16058,38 @@ export type CustomerPermissionsReviewsListResponses = {
 
 export type CustomerPermissionsReviewsListResponse = CustomerPermissionsReviewsListResponses[keyof CustomerPermissionsReviewsListResponses];
 
+export type CustomerPermissionsReviewsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        customer_uuid?: string;
+        is_pending?: boolean;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-closed' | '-created' | 'closed' | 'created'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        reviewer_uuid?: string;
+    };
+    url: '/api/customer-permissions-reviews/';
+};
+
+export type CustomerPermissionsReviewsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type CustomerPermissionsReviewsRetrieveData = {
     body?: never;
     path: {
@@ -15153,6 +16143,29 @@ export type CustomerQuotasListResponses = {
 
 export type CustomerQuotasListResponse = CustomerQuotasListResponses[keyof CustomerQuotasListResponses];
 
+export type CustomerQuotasHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/customer-quotas/';
+};
+
+export type CustomerQuotasHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type CustomersListData = {
     body?: never;
     path?: never;
@@ -15198,6 +16211,52 @@ export type CustomersListResponses = {
 };
 
 export type CustomersListResponse = CustomersListResponses[keyof CustomersListResponses];
+
+export type CustomersHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        abbreviation?: string;
+        agreement_number?: string;
+        archived?: boolean;
+        backend_id?: string;
+        contact_details?: string;
+        name?: string;
+        name_exact?: string;
+        native_name?: string;
+        /**
+         * Which field to use when ordering the results.
+         */
+        o?: string;
+        organization_group_name?: string;
+        /**
+         * organization_group_uuid
+         */
+        organization_group_uuid?: Array<string>;
+        /**
+         * Return a list of customers where current user is owner.
+         */
+        owned_by_current_user?: boolean;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        query?: string;
+        registration_code?: string;
+    };
+    url: '/api/customers/';
+};
+
+export type CustomersHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type CustomersCreateData = {
     body: CustomerRequest;
@@ -15551,6 +16610,52 @@ export type CustomersCountriesListResponses = {
 
 export type CustomersCountriesListResponse = CustomersCountriesListResponses[keyof CustomersCountriesListResponses];
 
+export type CustomersCountriesHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        abbreviation?: string;
+        agreement_number?: string;
+        archived?: boolean;
+        backend_id?: string;
+        contact_details?: string;
+        name?: string;
+        name_exact?: string;
+        native_name?: string;
+        /**
+         * Which field to use when ordering the results.
+         */
+        o?: string;
+        organization_group_name?: string;
+        /**
+         * organization_group_uuid
+         */
+        organization_group_uuid?: Array<string>;
+        /**
+         * Return a list of customers where current user is owner.
+         */
+        owned_by_current_user?: boolean;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        query?: string;
+        registration_code?: string;
+    };
+    url: '/api/customers/countries/';
+};
+
+export type CustomersCountriesHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type DailyQuotasRetrieveData = {
     body?: never;
     path?: never;
@@ -15639,6 +16744,50 @@ export type DigitaloceanDropletsListResponses = {
 };
 
 export type DigitaloceanDropletsListResponse = DigitaloceanDropletsListResponses[keyof DigitaloceanDropletsListResponses];
+
+export type DigitaloceanDropletsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        backend_id?: string;
+        /**
+         * Can manage
+         */
+        can_manage?: boolean;
+        customer?: string;
+        customer_abbreviation?: string;
+        customer_name?: string;
+        customer_native_name?: string;
+        customer_uuid?: string;
+        description?: string;
+        external_ip?: string;
+        name?: string;
+        name_exact?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        project?: string;
+        project_name?: string;
+        project_uuid?: string;
+        service_settings_name?: string;
+        service_settings_uuid?: string;
+        state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        uuid?: string;
+    };
+    url: '/api/digitalocean-droplets/';
+};
+
+export type DigitaloceanDropletsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type DigitaloceanDropletsCreateData = {
     body: DigitalOceanDropletRequest;
@@ -15845,6 +16994,39 @@ export type DigitaloceanImagesListResponses = {
 
 export type DigitaloceanImagesListResponse = DigitaloceanImagesListResponses[keyof DigitaloceanImagesListResponses];
 
+export type DigitaloceanImagesHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        distribution?: string;
+        name?: string;
+        name_exact?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-distribution' | '-type' | 'distribution' | 'type'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        type?: string;
+    };
+    url: '/api/digitalocean-images/';
+};
+
+export type DigitaloceanImagesHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type DigitaloceanImagesRetrieveData = {
     body?: never;
     path: {
@@ -15883,6 +17065,31 @@ export type DigitaloceanRegionsListResponses = {
 };
 
 export type DigitaloceanRegionsListResponse = DigitaloceanRegionsListResponses[keyof DigitaloceanRegionsListResponses];
+
+export type DigitaloceanRegionsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        name?: string;
+        name_exact?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/digitalocean-regions/';
+};
+
+export type DigitaloceanRegionsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type DigitaloceanRegionsRetrieveData = {
     body?: never;
@@ -15925,6 +17132,34 @@ export type DigitaloceanSizesListResponses = {
 };
 
 export type DigitaloceanSizesListResponse = DigitaloceanSizesListResponses[keyof DigitaloceanSizesListResponses];
+
+export type DigitaloceanSizesHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        cores?: number;
+        disk?: number;
+        name?: string;
+        name_exact?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        ram?: number;
+    };
+    url: '/api/digitalocean-sizes/';
+};
+
+export type DigitaloceanSizesHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type DigitaloceanSizesRetrieveData = {
     body?: never;
@@ -15973,6 +17208,39 @@ export type EmailLogsListResponses = {
 
 export type EmailLogsListResponse = EmailLogsListResponses[keyof EmailLogsListResponses];
 
+export type EmailLogsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        body?: string;
+        emails?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-sent_at' | '-subject' | 'sent_at' | 'subject'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        sent_at?: string;
+        subject?: string;
+    };
+    url: '/api/email-logs/';
+};
+
+export type EmailLogsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type EmailLogsRetrieveData = {
     body?: never;
     path: {
@@ -16017,6 +17285,37 @@ export type EventSubscriptionsListResponses = {
 };
 
 export type EventSubscriptionsListResponse = EventSubscriptionsListResponses[keyof EventSubscriptionsListResponses];
+
+export type EventSubscriptionsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | 'created'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        user_username?: string;
+        user_uuid?: string;
+    };
+    url: '/api/event-subscriptions/';
+};
+
+export type EventSubscriptionsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type EventSubscriptionsCreateData = {
     body?: EventSubscriptionRequest;
@@ -16108,6 +17407,50 @@ export type EventsListResponses = {
 
 export type EventsListResponse = EventsListResponses[keyof EventsListResponses];
 
+export type EventsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        created_from?: number;
+        created_to?: number;
+        /**
+         * Customer UUID
+         */
+        customer_uuid?: string;
+        message?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | 'created'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Project UUID
+         */
+        project_uuid?: string;
+        /**
+         * User UUID
+         */
+        user_uuid?: string;
+    };
+    url: '/api/events/';
+};
+
+export type EventsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type EventsStatsListData = {
     body?: never;
     path?: never;
@@ -16129,6 +17472,29 @@ export type EventsStatsListResponses = {
 };
 
 export type EventsStatsListResponse = EventsStatsListResponses[keyof EventsStatsListResponses];
+
+export type EventsStatsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/events-stats/';
+};
+
+export type EventsStatsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type EventsRetrieveData = {
     body?: never;
@@ -16165,6 +17531,20 @@ export type EventsCountRetrieveResponses = {
 
 export type EventsCountRetrieveResponse = EventsCountRetrieveResponses[keyof EventsCountRetrieveResponses];
 
+export type EventsCountHeadData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/events/count/';
+};
+
+export type EventsCountHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type EventsEventGroupsRetrieveData = {
     body?: never;
     path?: never;
@@ -16180,6 +17560,20 @@ export type EventsEventGroupsRetrieveResponses = {
 
 export type EventsEventGroupsRetrieveResponse = EventsEventGroupsRetrieveResponses[keyof EventsEventGroupsRetrieveResponses];
 
+export type EventsEventGroupsHeadData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/events/event_groups/';
+};
+
+export type EventsEventGroupsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type EventsScopeTypesRetrieveData = {
     body?: never;
     path?: never;
@@ -16194,6 +17588,20 @@ export type EventsScopeTypesRetrieveResponses = {
 };
 
 export type EventsScopeTypesRetrieveResponse = EventsScopeTypesRetrieveResponses[keyof EventsScopeTypesRetrieveResponses];
+
+export type EventsScopeTypesHeadData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/events/scope_types/';
+};
+
+export type EventsScopeTypesHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type FeatureValuesData = {
     body?: {
@@ -16255,6 +17663,52 @@ export type FinancialReportsListResponses = {
 
 export type FinancialReportsListResponse = FinancialReportsListResponses[keyof FinancialReportsListResponses];
 
+export type FinancialReportsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        abbreviation?: string;
+        agreement_number?: string;
+        archived?: boolean;
+        backend_id?: string;
+        contact_details?: string;
+        name?: string;
+        name_exact?: string;
+        native_name?: string;
+        /**
+         * Which field to use when ordering the results.
+         */
+        o?: string;
+        organization_group_name?: string;
+        /**
+         * organization_group_uuid
+         */
+        organization_group_uuid?: Array<string>;
+        /**
+         * Return a list of customers where current user is owner.
+         */
+        owned_by_current_user?: boolean;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        query?: string;
+        registration_code?: string;
+    };
+    url: '/api/financial-reports/';
+};
+
+export type FinancialReportsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type FinancialReportsRetrieveData = {
     body?: never;
     path: {
@@ -16293,6 +17747,31 @@ export type FreeipaProfilesListResponses = {
 };
 
 export type FreeipaProfilesListResponse = FreeipaProfilesListResponses[keyof FreeipaProfilesListResponses];
+
+export type FreeipaProfilesHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        query?: string;
+        user?: string;
+    };
+    url: '/api/freeipa-profiles/';
+};
+
+export type FreeipaProfilesHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type FreeipaProfilesCreateData = {
     body: FreeipaProfileRequest;
@@ -16395,6 +17874,33 @@ export type GoogleAuthListResponses = {
 
 export type GoogleAuthListResponse = GoogleAuthListResponses[keyof GoogleAuthListResponses];
 
+export type GoogleAuthHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * has_credentials
+         */
+        has_credentials?: boolean;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/google-auth/';
+};
+
+export type GoogleAuthHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type GoogleAuthRetrieveData = {
     body?: never;
     path: {
@@ -16452,6 +17958,29 @@ export type GoogleAuthCallbackRetrieveResponses = {
     200: unknown;
 };
 
+export type GoogleAuthCallbackHeadData = {
+    body?: never;
+    path?: never;
+    query: {
+        /**
+         * Authorization code
+         */
+        code: string;
+        /**
+         * Service provider UUID
+         */
+        state: string;
+    };
+    url: '/api/google-auth/callback/';
+};
+
+export type GoogleAuthCallbackHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type HooksListData = {
     body?: never;
     path?: never;
@@ -16469,6 +17998,29 @@ export type HooksListData = {
 };
 
 export type HooksListResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type HooksHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/hooks/';
+};
+
+export type HooksHeadResponses = {
     /**
      * No response body
      */
@@ -16507,6 +18059,40 @@ export type HooksEmailListResponses = {
 };
 
 export type HooksEmailListResponse = HooksEmailListResponses[keyof HooksEmailListResponses];
+
+export type HooksEmailHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        author_email?: string;
+        /**
+         * User full name contains
+         */
+        author_fullname?: string;
+        author_username?: string;
+        author_uuid?: string;
+        email?: string;
+        is_active?: boolean;
+        last_published?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        query?: string;
+    };
+    url: '/api/hooks-email/';
+};
+
+export type HooksEmailHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type HooksEmailCreateData = {
     body: EmailHookRequest;
@@ -16618,6 +18204,41 @@ export type HooksWebListResponses = {
 
 export type HooksWebListResponse = HooksWebListResponses[keyof HooksWebListResponses];
 
+export type HooksWebHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        author_email?: string;
+        /**
+         * User full name contains
+         */
+        author_fullname?: string;
+        author_username?: string;
+        author_uuid?: string;
+        content_type?: 1 | 2;
+        destination_url?: string;
+        is_active?: boolean;
+        last_published?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        query?: string;
+    };
+    url: '/api/hooks-web/';
+};
+
+export type HooksWebHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type HooksWebCreateData = {
     body: WebHookRequest;
     path?: never;
@@ -16715,6 +18336,29 @@ export type IdentityProvidersListResponses = {
 };
 
 export type IdentityProvidersListResponse = IdentityProvidersListResponses[keyof IdentityProvidersListResponses];
+
+export type IdentityProvidersHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/identity-providers/';
+};
+
+export type IdentityProvidersHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type IdentityProvidersCreateData = {
     body: IdentityProviderRequest;
@@ -16828,6 +18472,44 @@ export type InvoiceItemsListResponses = {
 };
 
 export type InvoiceItemsListResponse = InvoiceItemsListResponses[keyof InvoiceItemsListResponses];
+
+export type InvoiceItemsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        credit_uuid?: string;
+        customer_uuid?: string;
+        month?: number;
+        offering_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        project_uuid?: string;
+        resource_uuid?: string;
+        /**
+         * Start month
+         */
+        start_month?: number;
+        /**
+         * Start year
+         */
+        start_year?: number;
+        year?: number;
+    };
+    url: '/api/invoice-items/';
+};
+
+export type InvoiceItemsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type InvoiceItemsDestroyData = {
     body?: never;
@@ -16963,6 +18645,33 @@ export type InvoiceItemsCostsListResponses = {
 
 export type InvoiceItemsCostsListResponse = InvoiceItemsCostsListResponses[keyof InvoiceItemsCostsListResponses];
 
+export type InvoiceItemsCostsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * UUID of the project for which statistics should be calculated.
+         */
+        project_uuid?: string;
+    };
+    url: '/api/invoice-items/costs/';
+};
+
+export type InvoiceItemsCostsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type InvoiceItemsCustomerCostsForPeriodRetrieveData = {
     body?: never;
     path?: never;
@@ -16985,6 +18694,29 @@ export type InvoiceItemsCustomerCostsForPeriodRetrieveResponses = {
 
 export type InvoiceItemsCustomerCostsForPeriodRetrieveResponse = InvoiceItemsCustomerCostsForPeriodRetrieveResponses[keyof InvoiceItemsCustomerCostsForPeriodRetrieveResponses];
 
+export type InvoiceItemsCustomerCostsForPeriodHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * UUID of the project for which statistics should be calculated.
+         */
+        customer_uuid?: string;
+        /**
+         * Period for which statistics should be calculated.
+         */
+        period?: number;
+    };
+    url: '/api/invoice-items/customer_costs_for_period/';
+};
+
+export type InvoiceItemsCustomerCostsForPeriodHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type InvoiceItemsProjectCostsForPeriodRetrieveData = {
     body?: never;
     path?: never;
@@ -17006,6 +18738,29 @@ export type InvoiceItemsProjectCostsForPeriodRetrieveResponses = {
 };
 
 export type InvoiceItemsProjectCostsForPeriodRetrieveResponse = InvoiceItemsProjectCostsForPeriodRetrieveResponses[keyof InvoiceItemsProjectCostsForPeriodRetrieveResponses];
+
+export type InvoiceItemsProjectCostsForPeriodHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Period for which statistics should be calculated (1, 3 or 12 months).
+         */
+        period?: number;
+        /**
+         * UUID of the project for which statistics should be calculated.
+         */
+        project_uuid?: string;
+    };
+    url: '/api/invoice-items/project_costs_for_period/';
+};
+
+export type InvoiceItemsProjectCostsForPeriodHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type InvoiceItemsTotalPriceRetrieveData = {
     body?: never;
@@ -17035,6 +18790,36 @@ export type InvoiceItemsTotalPriceRetrieveResponses = {
 };
 
 export type InvoiceItemsTotalPriceRetrieveResponse = InvoiceItemsTotalPriceRetrieveResponses[keyof InvoiceItemsTotalPriceRetrieveResponses];
+
+export type InvoiceItemsTotalPriceHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        credit_uuid?: string;
+        customer_uuid?: string;
+        month?: number;
+        offering_uuid?: string;
+        project_uuid?: string;
+        resource_uuid?: string;
+        /**
+         * Start month
+         */
+        start_month?: number;
+        /**
+         * Start year
+         */
+        start_year?: number;
+        year?: number;
+    };
+    url: '/api/invoice-items/total_price/';
+};
+
+export type InvoiceItemsTotalPriceHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type InvoiceSendFinancialReportByMailData = {
     body: FinancialReportEmailRequest;
@@ -17086,6 +18871,43 @@ export type InvoicesListResponses = {
 };
 
 export type InvoicesListResponse = InvoicesListResponses[keyof InvoicesListResponses];
+
+export type InvoicesHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        created?: string;
+        customer?: string;
+        customer_uuid?: string;
+        end_date?: string;
+        month?: number;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-month' | '-year' | 'created' | 'month' | 'year'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        start_date?: string;
+        state?: Array<'canceled' | 'created' | 'paid' | 'pending'>;
+        year?: number;
+    };
+    url: '/api/invoices/';
+};
+
+export type InvoicesHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type InvoicesRetrieveData = {
     body?: never;
@@ -17263,6 +19085,24 @@ export type InvoicesGrowthRetrieveResponses = {
 
 export type InvoicesGrowthRetrieveResponse = InvoicesGrowthRetrieveResponses[keyof InvoicesGrowthRetrieveResponses];
 
+export type InvoicesGrowthHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        accounting_is_running?: boolean;
+        accounting_mode?: string;
+        customers_count?: number;
+    };
+    url: '/api/invoices/growth/';
+};
+
+export type InvoicesGrowthHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type KeycloakGroupsListData = {
     body?: never;
     path?: never;
@@ -17287,6 +19127,32 @@ export type KeycloakGroupsListResponses = {
 };
 
 export type KeycloakGroupsListResponse = KeycloakGroupsListResponses[keyof KeycloakGroupsListResponses];
+
+export type KeycloakGroupsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        role?: string;
+        scope_type?: string;
+        scope_uuid?: string;
+    };
+    url: '/api/keycloak-groups/';
+};
+
+export type KeycloakGroupsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type KeycloakGroupsRetrieveData = {
     body?: never;
@@ -17333,6 +19199,38 @@ export type KeycloakUserGroupMembershipsListResponses = {
 };
 
 export type KeycloakUserGroupMembershipsListResponse = KeycloakUserGroupMembershipsListResponses[keyof KeycloakUserGroupMembershipsListResponses];
+
+export type KeycloakUserGroupMembershipsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        email?: string;
+        first_name?: string;
+        group_uuid?: string;
+        last_name?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        role_uuid?: string;
+        scope_type?: string;
+        scope_uuid?: string;
+        state?: Array<'active' | 'pending'>;
+        username?: string;
+    };
+    url: '/api/keycloak-user-group-memberships/';
+};
+
+export type KeycloakUserGroupMembershipsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type KeycloakUserGroupMembershipsCreateData = {
     body: KeycloakUserGroupMembershipRequest;
@@ -17455,6 +19353,51 @@ export type KeysListResponses = {
 
 export type KeysListResponse = KeysListResponses[keyof KeysListResponses];
 
+export type KeysHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Created after
+         */
+        created?: string;
+        fingerprint_md5?: string;
+        fingerprint_sha256?: string;
+        fingerprint_sha512?: string;
+        is_shared?: boolean;
+        /**
+         * Modified after
+         */
+        modified?: string;
+        name?: string;
+        name_exact?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-name' | 'name'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        user_uuid?: string;
+        uuid?: string;
+    };
+    url: '/api/keys/';
+};
+
+export type KeysHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type KeysCreateData = {
     body: SshKeyRequest;
     path?: never;
@@ -17529,6 +19472,34 @@ export type LexisLinksListResponses = {
 };
 
 export type LexisLinksListResponse = LexisLinksListResponses[keyof LexisLinksListResponses];
+
+export type LexisLinksHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        customer_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        project_uuid?: string;
+        query?: string;
+        resource_uuid?: string;
+        uuid?: string;
+    };
+    url: '/api/lexis-links/';
+};
+
+export type LexisLinksHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type LexisLinksCreateData = {
     body: LexisLinkCreateRequest;
@@ -17664,6 +19635,48 @@ export type MarketplaceCategoriesListResponses = {
 
 export type MarketplaceCategoriesListResponse = MarketplaceCategoriesListResponses[keyof MarketplaceCategoriesListResponses];
 
+export type MarketplaceCategoriesHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Customer UUID
+         */
+        customer_uuid?: string;
+        /**
+         * Customers offerings state
+         *
+         *
+         */
+        customers_offerings_state?: Array<1 | 2 | 3 | 4>;
+        group_uuid?: string;
+        /**
+         * Has shared
+         */
+        has_shared?: boolean;
+        offering_name?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        resource_customer_uuid?: string;
+        resource_project_uuid?: string;
+        title?: string;
+    };
+    url: '/api/marketplace-categories/';
+};
+
+export type MarketplaceCategoriesHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type MarketplaceCategoriesCreateData = {
     body: MarketplaceCategoryRequest;
     path?: never;
@@ -17766,6 +19779,31 @@ export type MarketplaceCategoryColumnsListResponses = {
 
 export type MarketplaceCategoryColumnsListResponse = MarketplaceCategoryColumnsListResponses[keyof MarketplaceCategoryColumnsListResponses];
 
+export type MarketplaceCategoryColumnsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        category_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        title?: string;
+    };
+    url: '/api/marketplace-category-columns/';
+};
+
+export type MarketplaceCategoryColumnsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type MarketplaceCategoryColumnsCreateData = {
     body: CategoryColumnRequest;
     path?: never;
@@ -17867,6 +19905,31 @@ export type MarketplaceCategoryComponentUsagesListResponses = {
 
 export type MarketplaceCategoryComponentUsagesListResponse = MarketplaceCategoryComponentUsagesListResponses[keyof MarketplaceCategoryComponentUsagesListResponses];
 
+export type MarketplaceCategoryComponentUsagesHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        date_after?: string;
+        date_before?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-category-component-usages/';
+};
+
+export type MarketplaceCategoryComponentUsagesHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type MarketplaceCategoryComponentUsagesRetrieveData = {
     body?: never;
     path: {
@@ -17908,6 +19971,29 @@ export type MarketplaceCategoryComponentsListResponses = {
 };
 
 export type MarketplaceCategoryComponentsListResponse = MarketplaceCategoryComponentsListResponses[keyof MarketplaceCategoryComponentsListResponses];
+
+export type MarketplaceCategoryComponentsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-category-components/';
+};
+
+export type MarketplaceCategoryComponentsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type MarketplaceCategoryComponentsCreateData = {
     body: CategoryComponentsRequest;
@@ -18021,6 +20107,30 @@ export type MarketplaceCategoryGroupsListResponses = {
 
 export type MarketplaceCategoryGroupsListResponse = MarketplaceCategoryGroupsListResponses[keyof MarketplaceCategoryGroupsListResponses];
 
+export type MarketplaceCategoryGroupsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        title?: string;
+    };
+    url: '/api/marketplace-category-groups/';
+};
+
+export type MarketplaceCategoryGroupsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type MarketplaceCategoryGroupsCreateData = {
     body: CategoryGroupRequest;
     path?: never;
@@ -18120,6 +20230,29 @@ export type MarketplaceCategoryHelpArticlesListResponses = {
 };
 
 export type MarketplaceCategoryHelpArticlesListResponse = MarketplaceCategoryHelpArticlesListResponses[keyof MarketplaceCategoryHelpArticlesListResponses];
+
+export type MarketplaceCategoryHelpArticlesHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-category-help-articles/';
+};
+
+export type MarketplaceCategoryHelpArticlesHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type MarketplaceCategoryHelpArticlesCreateData = {
     body: CategoryHelpArticlesRequest;
@@ -18231,6 +20364,29 @@ export type MarketplaceChecklistsListResponses = {
 
 export type MarketplaceChecklistsListResponse = MarketplaceChecklistsListResponses[keyof MarketplaceChecklistsListResponses];
 
+export type MarketplaceChecklistsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-checklists/';
+};
+
+export type MarketplaceChecklistsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type MarketplaceChecklistsAdminListData = {
     body?: never;
     path?: never;
@@ -18252,6 +20408,29 @@ export type MarketplaceChecklistsAdminListResponses = {
 };
 
 export type MarketplaceChecklistsAdminListResponse = MarketplaceChecklistsAdminListResponses[keyof MarketplaceChecklistsAdminListResponses];
+
+export type MarketplaceChecklistsAdminHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-checklists-admin/';
+};
+
+export type MarketplaceChecklistsAdminHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type MarketplaceChecklistsAdminCreateData = {
     body: CreateChecklistRequest;
@@ -18289,6 +20468,31 @@ export type MarketplaceChecklistsAdminQuestionDependenciesListResponses = {
 };
 
 export type MarketplaceChecklistsAdminQuestionDependenciesListResponse = MarketplaceChecklistsAdminQuestionDependenciesListResponses[keyof MarketplaceChecklistsAdminQuestionDependenciesListResponses];
+
+export type MarketplaceChecklistsAdminQuestionDependenciesHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        depends_on_question_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        question_uuid?: string;
+    };
+    url: '/api/marketplace-checklists-admin-question-dependencies/';
+};
+
+export type MarketplaceChecklistsAdminQuestionDependenciesHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type MarketplaceChecklistsAdminQuestionDependenciesCreateData = {
     body: QuestionDependencyRequest;
@@ -18389,6 +20593,30 @@ export type MarketplaceChecklistsAdminQuestionOptionsListResponses = {
 
 export type MarketplaceChecklistsAdminQuestionOptionsListResponse = MarketplaceChecklistsAdminQuestionOptionsListResponses[keyof MarketplaceChecklistsAdminQuestionOptionsListResponses];
 
+export type MarketplaceChecklistsAdminQuestionOptionsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        question_uuid?: string;
+    };
+    url: '/api/marketplace-checklists-admin-question-options/';
+};
+
+export type MarketplaceChecklistsAdminQuestionOptionsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type MarketplaceChecklistsAdminQuestionOptionsCreateData = {
     body: QuestionOptionsAdminRequest;
     path?: never;
@@ -18487,6 +20715,30 @@ export type MarketplaceChecklistsAdminQuestionsListResponses = {
 };
 
 export type MarketplaceChecklistsAdminQuestionsListResponse = MarketplaceChecklistsAdminQuestionsListResponses[keyof MarketplaceChecklistsAdminQuestionsListResponses];
+
+export type MarketplaceChecklistsAdminQuestionsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        checklist_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-checklists-admin-questions/';
+};
+
+export type MarketplaceChecklistsAdminQuestionsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type MarketplaceChecklistsAdminQuestionsCreateData = {
     body: QuestionAdminRequest;
@@ -18881,6 +21133,44 @@ export type MarketplaceComponentUsagesListResponses = {
 
 export type MarketplaceComponentUsagesListResponse = MarketplaceComponentUsagesListResponses[keyof MarketplaceComponentUsagesListResponses];
 
+export type MarketplaceComponentUsagesHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        billing_period?: string;
+        customer_uuid?: string;
+        date_after?: string;
+        date_before?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-billing_period' | '-usage' | 'billing_period' | 'usage'>;
+        offering_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        project_uuid?: string;
+        resource?: string;
+        resource_uuid?: string;
+        type?: string;
+    };
+    url: '/api/marketplace-component-usages/';
+};
+
+export type MarketplaceComponentUsagesHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type MarketplaceComponentUsagesRetrieveData = {
     body?: never;
     path: {
@@ -18972,6 +21262,50 @@ export type MarketplaceComponentUserUsagesListResponses = {
 
 export type MarketplaceComponentUserUsagesListResponse = MarketplaceComponentUserUsagesListResponses[keyof MarketplaceComponentUserUsagesListResponses];
 
+export type MarketplaceComponentUserUsagesHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        billing_period_month?: number;
+        billing_period_year?: number;
+        component_usage__billing_period?: string;
+        customer_uuid?: string;
+        date_after?: string;
+        date_before?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-component_usage__billing_period' | '-usage' | '-username' | 'component_usage__billing_period' | 'usage' | 'username'>;
+        offering_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        project_uuid?: string;
+        /**
+         * Resource URL
+         */
+        resource?: string;
+        resource_uuid?: string;
+        type?: string;
+        username?: string;
+    };
+    url: '/api/marketplace-component-user-usages/';
+};
+
+export type MarketplaceComponentUserUsagesHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type MarketplaceComponentUserUsagesRetrieveData = {
     body?: never;
     path: {
@@ -19014,6 +21348,33 @@ export type MarketplaceCustomerEstimatedCostPoliciesListResponses = {
 };
 
 export type MarketplaceCustomerEstimatedCostPoliciesListResponse = MarketplaceCustomerEstimatedCostPoliciesListResponses[keyof MarketplaceCustomerEstimatedCostPoliciesListResponses];
+
+export type MarketplaceCustomerEstimatedCostPoliciesHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        customer?: string;
+        customer_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        scope?: string;
+        scope_uuid?: string;
+    };
+    url: '/api/marketplace-customer-estimated-cost-policies/';
+};
+
+export type MarketplaceCustomerEstimatedCostPoliciesHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type MarketplaceCustomerEstimatedCostPoliciesCreateData = {
     body: CustomerEstimatedCostPolicyRequest;
@@ -19104,6 +21465,20 @@ export type MarketplaceCustomerEstimatedCostPoliciesActionsRetrieveResponses = {
 
 export type MarketplaceCustomerEstimatedCostPoliciesActionsRetrieveResponse = MarketplaceCustomerEstimatedCostPoliciesActionsRetrieveResponses[keyof MarketplaceCustomerEstimatedCostPoliciesActionsRetrieveResponses];
 
+export type MarketplaceCustomerEstimatedCostPoliciesActionsHeadData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/marketplace-customer-estimated-cost-policies/actions/';
+};
+
+export type MarketplaceCustomerEstimatedCostPoliciesActionsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type MarketplaceCustomerServiceAccountsListData = {
     body?: never;
     path?: never;
@@ -19129,6 +21504,33 @@ export type MarketplaceCustomerServiceAccountsListResponses = {
 };
 
 export type MarketplaceCustomerServiceAccountsListResponse = MarketplaceCustomerServiceAccountsListResponses[keyof MarketplaceCustomerServiceAccountsListResponses];
+
+export type MarketplaceCustomerServiceAccountsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        customer?: string;
+        customer_uuid?: string;
+        email?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        username?: string;
+    };
+    url: '/api/marketplace-customer-service-accounts/';
+};
+
+export type MarketplaceCustomerServiceAccountsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type MarketplaceCustomerServiceAccountsCreateData = {
     body: CustomerServiceAccountRequest;
@@ -19279,6 +21681,41 @@ export type MarketplaceIntegrationStatusesListResponses = {
 
 export type MarketplaceIntegrationStatusesListResponse = MarketplaceIntegrationStatusesListResponses[keyof MarketplaceIntegrationStatusesListResponses];
 
+export type MarketplaceIntegrationStatusesHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        agent_type?: string;
+        customer_uuid?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-last_request_timestamp' | 'last_request_timestamp'>;
+        offering?: string;
+        offering_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        parent_offering_uuid?: string;
+        status?: Array<'Active' | 'Disconnected' | 'Unknown'>;
+    };
+    url: '/api/marketplace-integration-statuses/';
+};
+
+export type MarketplaceIntegrationStatusesHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type MarketplaceIntegrationStatusesRetrieveData = {
     body?: never;
     path: {
@@ -19315,6 +21752,29 @@ export type MarketplaceMaintenanceAnnouncementOfferingsListResponses = {
 };
 
 export type MarketplaceMaintenanceAnnouncementOfferingsListResponse = MarketplaceMaintenanceAnnouncementOfferingsListResponses[keyof MarketplaceMaintenanceAnnouncementOfferingsListResponses];
+
+export type MarketplaceMaintenanceAnnouncementOfferingsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-maintenance-announcement-offerings/';
+};
+
+export type MarketplaceMaintenanceAnnouncementOfferingsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type MarketplaceMaintenanceAnnouncementOfferingsCreateData = {
     body: MaintenanceAnnouncementOfferingRequest;
@@ -19414,6 +21874,29 @@ export type MarketplaceMaintenanceAnnouncementTemplateOfferingsListResponses = {
 
 export type MarketplaceMaintenanceAnnouncementTemplateOfferingsListResponse = MarketplaceMaintenanceAnnouncementTemplateOfferingsListResponses[keyof MarketplaceMaintenanceAnnouncementTemplateOfferingsListResponses];
 
+export type MarketplaceMaintenanceAnnouncementTemplateOfferingsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-maintenance-announcement-template-offerings/';
+};
+
+export type MarketplaceMaintenanceAnnouncementTemplateOfferingsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type MarketplaceMaintenanceAnnouncementTemplateOfferingsCreateData = {
     body: MaintenanceAnnouncementOfferingTemplateRequest;
     path?: never;
@@ -19512,6 +21995,29 @@ export type MarketplaceMaintenanceAnnouncementsListResponses = {
 
 export type MarketplaceMaintenanceAnnouncementsListResponse = MarketplaceMaintenanceAnnouncementsListResponses[keyof MarketplaceMaintenanceAnnouncementsListResponses];
 
+export type MarketplaceMaintenanceAnnouncementsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-maintenance-announcements/';
+};
+
+export type MarketplaceMaintenanceAnnouncementsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type MarketplaceMaintenanceAnnouncementsCreateData = {
     body: MaintenanceAnnouncementRequest;
     path?: never;
@@ -19546,6 +22052,29 @@ export type MarketplaceMaintenanceAnnouncementsTemplateListResponses = {
 };
 
 export type MarketplaceMaintenanceAnnouncementsTemplateListResponse = MarketplaceMaintenanceAnnouncementsTemplateListResponses[keyof MarketplaceMaintenanceAnnouncementsTemplateListResponses];
+
+export type MarketplaceMaintenanceAnnouncementsTemplateHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-maintenance-announcements-template/';
+};
+
+export type MarketplaceMaintenanceAnnouncementsTemplateHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type MarketplaceMaintenanceAnnouncementsTemplateCreateData = {
     body: MaintenanceAnnouncementTemplateRequest;
@@ -19710,6 +22239,31 @@ export type MarketplaceOfferingEstimatedCostPoliciesListResponses = {
 
 export type MarketplaceOfferingEstimatedCostPoliciesListResponse = MarketplaceOfferingEstimatedCostPoliciesListResponses[keyof MarketplaceOfferingEstimatedCostPoliciesListResponses];
 
+export type MarketplaceOfferingEstimatedCostPoliciesHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        scope?: string;
+        scope_uuid?: string;
+    };
+    url: '/api/marketplace-offering-estimated-cost-policies/';
+};
+
+export type MarketplaceOfferingEstimatedCostPoliciesHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type MarketplaceOfferingEstimatedCostPoliciesCreateData = {
     body: OfferingEstimatedCostPolicyRequest;
     path?: never;
@@ -19799,6 +22353,20 @@ export type MarketplaceOfferingEstimatedCostPoliciesActionsRetrieveResponses = {
 
 export type MarketplaceOfferingEstimatedCostPoliciesActionsRetrieveResponse = MarketplaceOfferingEstimatedCostPoliciesActionsRetrieveResponses[keyof MarketplaceOfferingEstimatedCostPoliciesActionsRetrieveResponses];
 
+export type MarketplaceOfferingEstimatedCostPoliciesActionsHeadData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/marketplace-offering-estimated-cost-policies/actions/';
+};
+
+export type MarketplaceOfferingEstimatedCostPoliciesActionsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type MarketplaceOfferingFilesListData = {
     body?: never;
     path?: never;
@@ -19830,6 +22398,38 @@ export type MarketplaceOfferingFilesListResponses = {
 };
 
 export type MarketplaceOfferingFilesListResponse = MarketplaceOfferingFilesListResponses[keyof MarketplaceOfferingFilesListResponses];
+
+export type MarketplaceOfferingFilesHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-name' | 'created' | 'name'>;
+        offering?: string;
+        offering_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        parent_offering_uuid?: string;
+    };
+    url: '/api/marketplace-offering-files/';
+};
+
+export type MarketplaceOfferingFilesHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type MarketplaceOfferingFilesCreateData = {
     body: OfferingFileRequest;
@@ -19949,6 +22549,77 @@ export type MarketplaceOfferingPermissionsListResponses = {
 
 export type MarketplaceOfferingPermissionsListResponse = MarketplaceOfferingPermissionsListResponses[keyof MarketplaceOfferingPermissionsListResponses];
 
+export type MarketplaceOfferingPermissionsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Created after
+         */
+        created?: string;
+        customer?: string;
+        /**
+         * User full name contains
+         */
+        full_name?: string;
+        /**
+         * Modified after
+         */
+        modified?: string;
+        native_name?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-email' | '-expiration_time' | '-full_name' | '-native_name' | '-role' | '-username' | 'created' | 'email' | 'expiration_time' | 'full_name' | 'native_name' | 'role' | 'username'>;
+        offering?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Role name contains
+         */
+        role_name?: string;
+        /**
+         * Role UUID
+         */
+        role_uuid?: string;
+        /**
+         * Scope name
+         */
+        scope_name?: string;
+        /**
+         * Scope type
+         */
+        scope_type?: string;
+        /**
+         * Scope UUID
+         */
+        scope_uuid?: string;
+        user?: string;
+        /**
+         * User slug contains
+         */
+        user_slug?: string;
+        user_url?: string;
+        username?: string;
+    };
+    url: '/api/marketplace-offering-permissions/';
+};
+
+export type MarketplaceOfferingPermissionsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type MarketplaceOfferingPermissionsLogListData = {
     body?: never;
     path?: never;
@@ -20019,6 +22690,77 @@ export type MarketplaceOfferingPermissionsLogListResponses = {
 
 export type MarketplaceOfferingPermissionsLogListResponse = MarketplaceOfferingPermissionsLogListResponses[keyof MarketplaceOfferingPermissionsLogListResponses];
 
+export type MarketplaceOfferingPermissionsLogHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Created after
+         */
+        created?: string;
+        customer?: string;
+        /**
+         * User full name contains
+         */
+        full_name?: string;
+        /**
+         * Modified after
+         */
+        modified?: string;
+        native_name?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-email' | '-expiration_time' | '-full_name' | '-native_name' | '-role' | '-username' | 'created' | 'email' | 'expiration_time' | 'full_name' | 'native_name' | 'role' | 'username'>;
+        offering?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Role name contains
+         */
+        role_name?: string;
+        /**
+         * Role UUID
+         */
+        role_uuid?: string;
+        /**
+         * Scope name
+         */
+        scope_name?: string;
+        /**
+         * Scope type
+         */
+        scope_type?: string;
+        /**
+         * Scope UUID
+         */
+        scope_uuid?: string;
+        user?: string;
+        /**
+         * User slug contains
+         */
+        user_slug?: string;
+        user_url?: string;
+        username?: string;
+    };
+    url: '/api/marketplace-offering-permissions-log/';
+};
+
+export type MarketplaceOfferingPermissionsLogHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type MarketplaceOfferingPermissionsLogRetrieveData = {
     body?: never;
     path: {
@@ -20083,6 +22825,35 @@ export type MarketplaceOfferingReferralsListResponses = {
 
 export type MarketplaceOfferingReferralsListResponse = MarketplaceOfferingReferralsListResponses[keyof MarketplaceOfferingReferralsListResponses];
 
+export type MarketplaceOfferingReferralsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-published' | '-relation_type' | '-resource_type' | 'published' | 'relation_type' | 'resource_type'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-offering-referrals/';
+};
+
+export type MarketplaceOfferingReferralsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type MarketplaceOfferingReferralsRetrieveData = {
     body?: never;
     path: {
@@ -20121,6 +22892,31 @@ export type MarketplaceOfferingUsagePoliciesListResponses = {
 };
 
 export type MarketplaceOfferingUsagePoliciesListResponse = MarketplaceOfferingUsagePoliciesListResponses[keyof MarketplaceOfferingUsagePoliciesListResponses];
+
+export type MarketplaceOfferingUsagePoliciesHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        scope?: string;
+        scope_uuid?: string;
+    };
+    url: '/api/marketplace-offering-usage-policies/';
+};
+
+export type MarketplaceOfferingUsagePoliciesHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type MarketplaceOfferingUsagePoliciesCreateData = {
     body: OfferingUsagePolicyRequest;
@@ -20211,6 +23007,20 @@ export type MarketplaceOfferingUsagePoliciesActionsRetrieveResponses = {
 
 export type MarketplaceOfferingUsagePoliciesActionsRetrieveResponse = MarketplaceOfferingUsagePoliciesActionsRetrieveResponses[keyof MarketplaceOfferingUsagePoliciesActionsRetrieveResponses];
 
+export type MarketplaceOfferingUsagePoliciesActionsHeadData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/marketplace-offering-usage-policies/actions/';
+};
+
+export type MarketplaceOfferingUsagePoliciesActionsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type MarketplaceOfferingUserRolesListData = {
     body?: never;
     path?: never;
@@ -20235,6 +23045,32 @@ export type MarketplaceOfferingUserRolesListResponses = {
 };
 
 export type MarketplaceOfferingUserRolesListResponse = MarketplaceOfferingUserRolesListResponses[keyof MarketplaceOfferingUserRolesListResponses];
+
+export type MarketplaceOfferingUserRolesHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        offering?: string;
+        offering_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        parent_offering_uuid?: string;
+    };
+    url: '/api/marketplace-offering-user-roles/';
+};
+
+export type MarketplaceOfferingUserRolesHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type MarketplaceOfferingUserRolesCreateData = {
     body: OfferingUserRoleRequest;
@@ -20357,6 +23193,52 @@ export type MarketplaceOfferingUsersListResponses = {
 };
 
 export type MarketplaceOfferingUsersListResponse = MarketplaceOfferingUsersListResponses[keyof MarketplaceOfferingUsersListResponses];
+
+export type MarketplaceOfferingUsersHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Created after
+         */
+        created?: string;
+        is_restricted?: boolean;
+        /**
+         * Modified after
+         */
+        modified?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-modified' | '-username' | 'created' | 'modified' | 'username'>;
+        offering?: string;
+        offering_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        parent_offering_uuid?: string;
+        provider_uuid?: string;
+        query?: string;
+        state?: Array<'Creating' | 'Deleted' | 'Deleting' | 'Error' | 'OK' | 'Pending account linking' | 'Pending additional validation' | 'Requested' | 'Requested deletion'>;
+        user_username?: string;
+        user_uuid?: string;
+    };
+    url: '/api/marketplace-offering-users/';
+};
+
+export type MarketplaceOfferingUsersHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type MarketplaceOfferingUsersCreateData = {
     body?: OfferingUserRequest;
@@ -20584,6 +23466,59 @@ export type MarketplaceOrdersListResponses = {
 };
 
 export type MarketplaceOrdersListResponse = MarketplaceOrdersListResponses[keyof MarketplaceOrdersListResponses];
+
+export type MarketplaceOrdersHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        can_approve_as_consumer?: boolean;
+        can_approve_as_provider?: boolean;
+        category_uuid?: string;
+        /**
+         * Created after
+         */
+        created?: string;
+        customer_uuid?: string;
+        /**
+         * Modified after
+         */
+        modified?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-consumer_reviewed_at' | '-cost' | '-created' | '-state' | 'consumer_reviewed_at' | 'cost' | 'created' | 'state'>;
+        offering?: string;
+        offering_type?: Array<string>;
+        offering_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        parent_offering_uuid?: string;
+        project_uuid?: string;
+        provider_uuid?: string;
+        query?: string;
+        resource?: string;
+        resource_uuid?: string;
+        service_manager_uuid?: string;
+        state?: Array<'canceled' | 'done' | 'erred' | 'executing' | 'pending-consumer' | 'pending-project' | 'pending-provider' | 'rejected'>;
+        type?: Array<'Create' | 'Terminate' | 'Update'>;
+    };
+    url: '/api/marketplace-orders/';
+};
+
+export type MarketplaceOrdersHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type MarketplaceOrdersCreateData = {
     body: OrderCreateRequest;
@@ -20833,6 +23768,39 @@ export type MarketplacePlanComponentsListResponses = {
 
 export type MarketplacePlanComponentsListResponse = MarketplacePlanComponentsListResponses[keyof MarketplacePlanComponentsListResponses];
 
+export type MarketplacePlanComponentsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        archived?: boolean;
+        /**
+         * Offering UUID
+         */
+        offering_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Plan UUID
+         */
+        plan_uuid?: string;
+        shared?: boolean;
+    };
+    url: '/api/marketplace-plan-components/';
+};
+
+export type MarketplacePlanComponentsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type MarketplacePlanComponentsRetrieveData = {
     body?: never;
     path: {
@@ -20875,6 +23843,32 @@ export type MarketplacePlansListResponses = {
 };
 
 export type MarketplacePlansListResponse = MarketplacePlansListResponses[keyof MarketplacePlansListResponses];
+
+export type MarketplacePlansHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        offering?: string;
+        offering_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        parent_offering_uuid?: string;
+    };
+    url: '/api/marketplace-plans/';
+};
+
+export type MarketplacePlansHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type MarketplacePlansCreateData = {
     body: ProviderPlanDetailsRequest;
@@ -21059,6 +24053,34 @@ export type MarketplacePlansUsageStatsListResponses = {
 
 export type MarketplacePlansUsageStatsListResponse = MarketplacePlansUsageStatsListResponses[keyof MarketplacePlansUsageStatsListResponses];
 
+export type MarketplacePlansUsageStatsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        customer_provider_uuid?: string;
+        o?: string;
+        offering?: string;
+        offering_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        parent_offering_uuid?: string;
+    };
+    url: '/api/marketplace-plans/usage_stats/';
+};
+
+export type MarketplacePlansUsageStatsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type MarketplacePluginsListData = {
     body?: never;
     path?: never;
@@ -21099,6 +24121,35 @@ export type MarketplaceProjectEstimatedCostPoliciesListResponses = {
 };
 
 export type MarketplaceProjectEstimatedCostPoliciesListResponse = MarketplaceProjectEstimatedCostPoliciesListResponses[keyof MarketplaceProjectEstimatedCostPoliciesListResponses];
+
+export type MarketplaceProjectEstimatedCostPoliciesHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        customer?: string;
+        customer_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        project?: string;
+        project_uuid?: string;
+        scope?: string;
+        scope_uuid?: string;
+    };
+    url: '/api/marketplace-project-estimated-cost-policies/';
+};
+
+export type MarketplaceProjectEstimatedCostPoliciesHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type MarketplaceProjectEstimatedCostPoliciesCreateData = {
     body: ProjectEstimatedCostPolicyRequest;
@@ -21189,6 +24240,20 @@ export type MarketplaceProjectEstimatedCostPoliciesActionsRetrieveResponses = {
 
 export type MarketplaceProjectEstimatedCostPoliciesActionsRetrieveResponse = MarketplaceProjectEstimatedCostPoliciesActionsRetrieveResponses[keyof MarketplaceProjectEstimatedCostPoliciesActionsRetrieveResponses];
 
+export type MarketplaceProjectEstimatedCostPoliciesActionsHeadData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/marketplace-project-estimated-cost-policies/actions/';
+};
+
+export type MarketplaceProjectEstimatedCostPoliciesActionsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type MarketplaceProjectServiceAccountsListData = {
     body?: never;
     path?: never;
@@ -21214,6 +24279,33 @@ export type MarketplaceProjectServiceAccountsListResponses = {
 };
 
 export type MarketplaceProjectServiceAccountsListResponse = MarketplaceProjectServiceAccountsListResponses[keyof MarketplaceProjectServiceAccountsListResponses];
+
+export type MarketplaceProjectServiceAccountsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        email?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        project?: string;
+        project_uuid?: string;
+        username?: string;
+    };
+    url: '/api/marketplace-project-service-accounts/';
+};
+
+export type MarketplaceProjectServiceAccountsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type MarketplaceProjectServiceAccountsCreateData = {
     body: ProjectServiceAccountRequest;
@@ -21332,6 +24424,34 @@ export type MarketplaceProjectUpdateRequestsListResponses = {
 };
 
 export type MarketplaceProjectUpdateRequestsListResponse = MarketplaceProjectUpdateRequestsListResponses[keyof MarketplaceProjectUpdateRequestsListResponses];
+
+export type MarketplaceProjectUpdateRequestsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        customer_uuid?: string;
+        offering_customer_uuid?: string;
+        offering_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        project_uuid?: string;
+        state?: Array<'approved' | 'canceled' | 'draft' | 'pending' | 'rejected'>;
+    };
+    url: '/api/marketplace-project-update-requests/';
+};
+
+export type MarketplaceProjectUpdateRequestsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type MarketplaceProjectUpdateRequestsRetrieveData = {
     body?: never;
@@ -21466,6 +24586,93 @@ export type MarketplaceProviderOfferingsListResponses = {
 };
 
 export type MarketplaceProviderOfferingsListResponse = MarketplaceProviderOfferingsListResponses[keyof MarketplaceProviderOfferingsListResponses];
+
+export type MarketplaceProviderOfferingsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Accessible via calls
+         */
+        accessible_via_calls?: boolean;
+        /**
+         * Allowed customer UUID
+         */
+        allowed_customer_uuid?: string;
+        attributes?: string;
+        billable?: boolean;
+        category_group_uuid?: string;
+        category_uuid?: string;
+        /**
+         * Created after
+         */
+        created?: string;
+        customer?: string;
+        customer_uuid?: string;
+        description?: string;
+        /**
+         * Keyword
+         */
+        keyword?: string;
+        /**
+         * Modified after
+         */
+        modified?: string;
+        name?: string;
+        name_exact?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-name' | '-state' | '-total_cost' | '-total_cost_estimated' | '-total_customers' | '-type' | 'created' | 'name' | 'state' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type'>;
+        organization_group_uuid?: Array<string>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        parent_uuid?: string;
+        /**
+         * Project UUID
+         */
+        project_uuid?: string;
+        /**
+         * Resource customer UUID
+         */
+        resource_customer_uuid?: string;
+        /**
+         * Resource project UUID
+         */
+        resource_project_uuid?: string;
+        /**
+         * Scope UUID
+         */
+        scope_uuid?: string;
+        /**
+         * Service manager UUID
+         */
+        service_manager_uuid?: string;
+        shared?: boolean;
+        state?: Array<'Active' | 'Archived' | 'Draft' | 'Paused'>;
+        type?: Array<string>;
+        /**
+         * Comma-separated offering UUIDs
+         */
+        uuid_list?: string;
+    };
+    url: '/api/marketplace-provider-offerings/';
+};
+
+export type MarketplaceProviderOfferingsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type MarketplaceProviderOfferingsCreateData = {
     body: OfferingCreateRequest;
@@ -22635,6 +25842,93 @@ export type MarketplaceProviderOfferingsGroupsListResponses = {
 
 export type MarketplaceProviderOfferingsGroupsListResponse = MarketplaceProviderOfferingsGroupsListResponses[keyof MarketplaceProviderOfferingsGroupsListResponses];
 
+export type MarketplaceProviderOfferingsGroupsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Accessible via calls
+         */
+        accessible_via_calls?: boolean;
+        /**
+         * Allowed customer UUID
+         */
+        allowed_customer_uuid?: string;
+        attributes?: string;
+        billable?: boolean;
+        category_group_uuid?: string;
+        category_uuid?: string;
+        /**
+         * Created after
+         */
+        created?: string;
+        customer?: string;
+        customer_uuid?: string;
+        description?: string;
+        /**
+         * Keyword
+         */
+        keyword?: string;
+        /**
+         * Modified after
+         */
+        modified?: string;
+        name?: string;
+        name_exact?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-name' | '-state' | '-total_cost' | '-total_cost_estimated' | '-total_customers' | '-type' | 'created' | 'name' | 'state' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type'>;
+        organization_group_uuid?: Array<string>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        parent_uuid?: string;
+        /**
+         * Project UUID
+         */
+        project_uuid?: string;
+        /**
+         * Resource customer UUID
+         */
+        resource_customer_uuid?: string;
+        /**
+         * Resource project UUID
+         */
+        resource_project_uuid?: string;
+        /**
+         * Scope UUID
+         */
+        scope_uuid?: string;
+        /**
+         * Service manager UUID
+         */
+        service_manager_uuid?: string;
+        shared?: boolean;
+        state?: Array<'Active' | 'Archived' | 'Draft' | 'Paused'>;
+        type?: Array<string>;
+        /**
+         * Comma-separated offering UUIDs
+         */
+        uuid_list?: string;
+    };
+    url: '/api/marketplace-provider-offerings/groups/';
+};
+
+export type MarketplaceProviderOfferingsGroupsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type MarketplaceProviderResourcesListData = {
     body?: never;
     path?: never;
@@ -22720,6 +26014,92 @@ export type MarketplaceProviderResourcesListResponses = {
 };
 
 export type MarketplaceProviderResourcesListResponse = MarketplaceProviderResourcesListResponses[keyof MarketplaceProviderResourcesListResponses];
+
+export type MarketplaceProviderResourcesHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Backend ID
+         */
+        backend_id?: string;
+        category_uuid?: string;
+        /**
+         * Created after
+         */
+        created?: string;
+        customer?: string;
+        customer_uuid?: string;
+        downscaled?: boolean;
+        /**
+         * Has termination date
+         */
+        has_terminate_date?: boolean;
+        /**
+         * LEXIS links supported
+         */
+        lexis_links_supported?: boolean;
+        /**
+         * Modified after
+         */
+        modified?: string;
+        name?: string;
+        name_exact?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-name' | '-project_name' | '-state' | 'created' | 'name' | 'project_name' | 'state'>;
+        offering?: string;
+        offering_billable?: string;
+        /**
+         * Offering shared
+         */
+        offering_shared?: boolean;
+        offering_type?: string;
+        offering_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        parent_offering_uuid?: string;
+        paused?: boolean;
+        project_name?: string;
+        project_uuid?: string;
+        provider_uuid?: string;
+        /**
+         * Query
+         */
+        query?: string;
+        restrict_member_access?: boolean;
+        /**
+         * Runtime state
+         */
+        runtime_state?: string;
+        /**
+         * Service Manager UUID
+         */
+        service_manager_uuid?: string;
+        state?: Array<'Creating' | 'Erred' | 'OK' | 'Terminated' | 'Terminating' | 'Updating'>;
+        /**
+         * Visible to username
+         */
+        visible_to_username?: string;
+    };
+    url: '/api/marketplace-provider-resources/';
+};
+
+export type MarketplaceProviderResourcesHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type MarketplaceProviderResourcesRetrieveData = {
     body?: never;
@@ -23174,6 +26554,93 @@ export type MarketplacePublicOfferingsListResponses = {
 
 export type MarketplacePublicOfferingsListResponse = MarketplacePublicOfferingsListResponses[keyof MarketplacePublicOfferingsListResponses];
 
+export type MarketplacePublicOfferingsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Accessible via calls
+         */
+        accessible_via_calls?: boolean;
+        /**
+         * Allowed customer UUID
+         */
+        allowed_customer_uuid?: string;
+        attributes?: string;
+        billable?: boolean;
+        category_group_uuid?: string;
+        category_uuid?: string;
+        /**
+         * Created after
+         */
+        created?: string;
+        customer?: string;
+        customer_uuid?: string;
+        description?: string;
+        /**
+         * Keyword
+         */
+        keyword?: string;
+        /**
+         * Modified after
+         */
+        modified?: string;
+        name?: string;
+        name_exact?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-name' | '-state' | '-total_cost' | '-total_cost_estimated' | '-total_customers' | '-type' | 'created' | 'name' | 'state' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type'>;
+        organization_group_uuid?: Array<string>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        parent_uuid?: string;
+        /**
+         * Project UUID
+         */
+        project_uuid?: string;
+        /**
+         * Resource customer UUID
+         */
+        resource_customer_uuid?: string;
+        /**
+         * Resource project UUID
+         */
+        resource_project_uuid?: string;
+        /**
+         * Scope UUID
+         */
+        scope_uuid?: string;
+        /**
+         * Service manager UUID
+         */
+        service_manager_uuid?: string;
+        shared?: boolean;
+        state?: Array<'Active' | 'Archived' | 'Draft' | 'Paused'>;
+        type?: Array<string>;
+        /**
+         * Comma-separated offering UUIDs
+         */
+        uuid_list?: string;
+    };
+    url: '/api/marketplace-public-offerings/';
+};
+
+export type MarketplacePublicOfferingsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type MarketplacePublicOfferingsRetrieveData = {
     body?: never;
     path: {
@@ -23269,6 +26736,29 @@ export type MarketplaceRemoteSynchronisationsListResponses = {
 };
 
 export type MarketplaceRemoteSynchronisationsListResponse = MarketplaceRemoteSynchronisationsListResponses[keyof MarketplaceRemoteSynchronisationsListResponses];
+
+export type MarketplaceRemoteSynchronisationsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-remote-synchronisations/';
+};
+
+export type MarketplaceRemoteSynchronisationsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type MarketplaceRemoteSynchronisationsCreateData = {
     body: RemoteSynchronisationRequest;
@@ -23414,6 +26904,34 @@ export type MarketplaceResourceUsersListResponses = {
 
 export type MarketplaceResourceUsersListResponse = MarketplaceResourceUsersListResponses[keyof MarketplaceResourceUsersListResponses];
 
+export type MarketplaceResourceUsersHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        resource?: string;
+        resource_uuid?: string;
+        role_name?: string;
+        role_uuid?: string;
+        user_uuid?: string;
+    };
+    url: '/api/marketplace-resource-users/';
+};
+
+export type MarketplaceResourceUsersHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type MarketplaceResourceUsersCreateData = {
     body: ResourceUserRequest;
     path?: never;
@@ -23545,6 +27063,92 @@ export type MarketplaceResourcesListResponses = {
 };
 
 export type MarketplaceResourcesListResponse = MarketplaceResourcesListResponses[keyof MarketplaceResourcesListResponses];
+
+export type MarketplaceResourcesHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Backend ID
+         */
+        backend_id?: string;
+        category_uuid?: string;
+        /**
+         * Created after
+         */
+        created?: string;
+        customer?: string;
+        customer_uuid?: string;
+        downscaled?: boolean;
+        /**
+         * Has termination date
+         */
+        has_terminate_date?: boolean;
+        /**
+         * LEXIS links supported
+         */
+        lexis_links_supported?: boolean;
+        /**
+         * Modified after
+         */
+        modified?: string;
+        name?: string;
+        name_exact?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-name' | '-project_name' | '-state' | 'created' | 'name' | 'project_name' | 'state'>;
+        offering?: string;
+        offering_billable?: string;
+        /**
+         * Offering shared
+         */
+        offering_shared?: boolean;
+        offering_type?: string;
+        offering_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        parent_offering_uuid?: string;
+        paused?: boolean;
+        project_name?: string;
+        project_uuid?: string;
+        provider_uuid?: string;
+        /**
+         * Query
+         */
+        query?: string;
+        restrict_member_access?: boolean;
+        /**
+         * Runtime state
+         */
+        runtime_state?: string;
+        /**
+         * Service Manager UUID
+         */
+        service_manager_uuid?: string;
+        state?: Array<'Creating' | 'Erred' | 'OK' | 'Terminated' | 'Terminating' | 'Updating'>;
+        /**
+         * Visible to username
+         */
+        visible_to_username?: string;
+    };
+    url: '/api/marketplace-resources/';
+};
+
+export type MarketplaceResourcesHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type MarketplaceResourcesRetrieveData = {
     body?: never;
@@ -23858,6 +27462,44 @@ export type MarketplaceRobotAccountsListResponses = {
 
 export type MarketplaceRobotAccountsListResponse = MarketplaceRobotAccountsListResponses[keyof MarketplaceRobotAccountsListResponses];
 
+export type MarketplaceRobotAccountsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Created after
+         */
+        created?: string;
+        customer_uuid?: string;
+        /**
+         * Modified after
+         */
+        modified?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        project_uuid?: string;
+        provider_uuid?: string;
+        resource?: string;
+        resource_uuid?: string;
+        state?: 1 | 2 | 3 | 4 | 5 | 6;
+        type?: string;
+    };
+    url: '/api/marketplace-robot-accounts/';
+};
+
+export type MarketplaceRobotAccountsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type MarketplaceRobotAccountsCreateData = {
     body: RobotAccountRequest;
     path?: never;
@@ -24068,6 +27710,38 @@ export type MarketplaceScreenshotsListResponses = {
 
 export type MarketplaceScreenshotsListResponse = MarketplaceScreenshotsListResponses[keyof MarketplaceScreenshotsListResponses];
 
+export type MarketplaceScreenshotsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-name' | 'created' | 'name'>;
+        offering?: string;
+        offering_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        parent_offering_uuid?: string;
+    };
+    url: '/api/marketplace-screenshots/';
+};
+
+export type MarketplaceScreenshotsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type MarketplaceScreenshotsCreateData = {
     body: ScreenshotRequest;
     path?: never;
@@ -24166,6 +27840,29 @@ export type MarketplaceScriptAsyncDryRunListResponses = {
 
 export type MarketplaceScriptAsyncDryRunListResponse = MarketplaceScriptAsyncDryRunListResponses[keyof MarketplaceScriptAsyncDryRunListResponses];
 
+export type MarketplaceScriptAsyncDryRunHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-script-async-dry-run/';
+};
+
+export type MarketplaceScriptAsyncDryRunHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type MarketplaceScriptAsyncDryRunRetrieveData = {
     body?: never;
     path: {
@@ -24253,6 +27950,29 @@ export type MarketplaceSectionsListResponses = {
 };
 
 export type MarketplaceSectionsListResponse = MarketplaceSectionsListResponses[keyof MarketplaceSectionsListResponses];
+
+export type MarketplaceSectionsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-sections/';
+};
+
+export type MarketplaceSectionsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type MarketplaceSectionsCreateData = {
     body: SectionRequest;
@@ -24373,6 +28093,38 @@ export type MarketplaceServiceProvidersListResponses = {
 };
 
 export type MarketplaceServiceProvidersListResponse = MarketplaceServiceProvidersListResponses[keyof MarketplaceServiceProvidersListResponses];
+
+export type MarketplaceServiceProvidersHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        customer?: string;
+        customer_keyword?: string;
+        customer_uuid?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-customer_name' | 'customer_name'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-service-providers/';
+};
+
+export type MarketplaceServiceProvidersHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type MarketplaceServiceProvidersCreateData = {
     body: ServiceProviderRequest;
@@ -25224,6 +28976,29 @@ export type MarketplaceStatsComponentUsagesListResponses = {
 
 export type MarketplaceStatsComponentUsagesListResponse = MarketplaceStatsComponentUsagesListResponses[keyof MarketplaceStatsComponentUsagesListResponses];
 
+export type MarketplaceStatsComponentUsagesHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-stats/component_usages/';
+};
+
+export type MarketplaceStatsComponentUsagesHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type MarketplaceStatsComponentUsagesPerMonthListData = {
     body?: never;
     path?: never;
@@ -25245,6 +29020,29 @@ export type MarketplaceStatsComponentUsagesPerMonthListResponses = {
 };
 
 export type MarketplaceStatsComponentUsagesPerMonthListResponse = MarketplaceStatsComponentUsagesPerMonthListResponses[keyof MarketplaceStatsComponentUsagesPerMonthListResponses];
+
+export type MarketplaceStatsComponentUsagesPerMonthHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-stats/component_usages_per_month/';
+};
+
+export type MarketplaceStatsComponentUsagesPerMonthHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type MarketplaceStatsComponentUsagesPerProjectListData = {
     body?: never;
@@ -25268,6 +29066,29 @@ export type MarketplaceStatsComponentUsagesPerProjectListResponses = {
 
 export type MarketplaceStatsComponentUsagesPerProjectListResponse = MarketplaceStatsComponentUsagesPerProjectListResponses[keyof MarketplaceStatsComponentUsagesPerProjectListResponses];
 
+export type MarketplaceStatsComponentUsagesPerProjectHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-stats/component_usages_per_project/';
+};
+
+export type MarketplaceStatsComponentUsagesPerProjectHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type MarketplaceStatsCountActiveResourcesGroupedByOfferingListData = {
     body?: never;
     path?: never;
@@ -25289,6 +29110,29 @@ export type MarketplaceStatsCountActiveResourcesGroupedByOfferingListResponses =
 };
 
 export type MarketplaceStatsCountActiveResourcesGroupedByOfferingListResponse = MarketplaceStatsCountActiveResourcesGroupedByOfferingListResponses[keyof MarketplaceStatsCountActiveResourcesGroupedByOfferingListResponses];
+
+export type MarketplaceStatsCountActiveResourcesGroupedByOfferingHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-stats/count_active_resources_grouped_by_offering/';
+};
+
+export type MarketplaceStatsCountActiveResourcesGroupedByOfferingHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type MarketplaceStatsCountActiveResourcesGroupedByOfferingCountryListData = {
     body?: never;
@@ -25312,6 +29156,29 @@ export type MarketplaceStatsCountActiveResourcesGroupedByOfferingCountryListResp
 
 export type MarketplaceStatsCountActiveResourcesGroupedByOfferingCountryListResponse = MarketplaceStatsCountActiveResourcesGroupedByOfferingCountryListResponses[keyof MarketplaceStatsCountActiveResourcesGroupedByOfferingCountryListResponses];
 
+export type MarketplaceStatsCountActiveResourcesGroupedByOfferingCountryHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-stats/count_active_resources_grouped_by_offering_country/';
+};
+
+export type MarketplaceStatsCountActiveResourcesGroupedByOfferingCountryHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type MarketplaceStatsCountActiveResourcesGroupedByOrganizationGroupListData = {
     body?: never;
     path?: never;
@@ -25333,6 +29200,29 @@ export type MarketplaceStatsCountActiveResourcesGroupedByOrganizationGroupListRe
 };
 
 export type MarketplaceStatsCountActiveResourcesGroupedByOrganizationGroupListResponse = MarketplaceStatsCountActiveResourcesGroupedByOrganizationGroupListResponses[keyof MarketplaceStatsCountActiveResourcesGroupedByOrganizationGroupListResponses];
+
+export type MarketplaceStatsCountActiveResourcesGroupedByOrganizationGroupHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-stats/count_active_resources_grouped_by_organization_group/';
+};
+
+export type MarketplaceStatsCountActiveResourcesGroupedByOrganizationGroupHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type MarketplaceStatsCountProjectsGroupedByProviderAndIndustryFlagListData = {
     body?: never;
@@ -25356,6 +29246,29 @@ export type MarketplaceStatsCountProjectsGroupedByProviderAndIndustryFlagListRes
 
 export type MarketplaceStatsCountProjectsGroupedByProviderAndIndustryFlagListResponse = MarketplaceStatsCountProjectsGroupedByProviderAndIndustryFlagListResponses[keyof MarketplaceStatsCountProjectsGroupedByProviderAndIndustryFlagListResponses];
 
+export type MarketplaceStatsCountProjectsGroupedByProviderAndIndustryFlagHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-stats/count_projects_grouped_by_provider_and_industry_flag/';
+};
+
+export type MarketplaceStatsCountProjectsGroupedByProviderAndIndustryFlagHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type MarketplaceStatsCountProjectsGroupedByProviderAndOecdListData = {
     body?: never;
     path?: never;
@@ -25377,6 +29290,29 @@ export type MarketplaceStatsCountProjectsGroupedByProviderAndOecdListResponses =
 };
 
 export type MarketplaceStatsCountProjectsGroupedByProviderAndOecdListResponse = MarketplaceStatsCountProjectsGroupedByProviderAndOecdListResponses[keyof MarketplaceStatsCountProjectsGroupedByProviderAndOecdListResponses];
+
+export type MarketplaceStatsCountProjectsGroupedByProviderAndOecdHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-stats/count_projects_grouped_by_provider_and_oecd/';
+};
+
+export type MarketplaceStatsCountProjectsGroupedByProviderAndOecdHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type MarketplaceStatsCountProjectsOfServiceProvidersListData = {
     body?: never;
@@ -25400,6 +29336,29 @@ export type MarketplaceStatsCountProjectsOfServiceProvidersListResponses = {
 
 export type MarketplaceStatsCountProjectsOfServiceProvidersListResponse = MarketplaceStatsCountProjectsOfServiceProvidersListResponses[keyof MarketplaceStatsCountProjectsOfServiceProvidersListResponses];
 
+export type MarketplaceStatsCountProjectsOfServiceProvidersHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-stats/count_projects_of_service_providers/';
+};
+
+export type MarketplaceStatsCountProjectsOfServiceProvidersHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type MarketplaceStatsCountProjectsOfServiceProvidersGroupedByOecdListData = {
     body?: never;
     path?: never;
@@ -25421,6 +29380,29 @@ export type MarketplaceStatsCountProjectsOfServiceProvidersGroupedByOecdListResp
 };
 
 export type MarketplaceStatsCountProjectsOfServiceProvidersGroupedByOecdListResponse = MarketplaceStatsCountProjectsOfServiceProvidersGroupedByOecdListResponses[keyof MarketplaceStatsCountProjectsOfServiceProvidersGroupedByOecdListResponses];
+
+export type MarketplaceStatsCountProjectsOfServiceProvidersGroupedByOecdHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-stats/count_projects_of_service_providers_grouped_by_oecd/';
+};
+
+export type MarketplaceStatsCountProjectsOfServiceProvidersGroupedByOecdHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type MarketplaceStatsCountUniqueUsersConnectedWithActiveResourcesOfServiceProviderListData = {
     body?: never;
@@ -25444,6 +29426,29 @@ export type MarketplaceStatsCountUniqueUsersConnectedWithActiveResourcesOfServic
 
 export type MarketplaceStatsCountUniqueUsersConnectedWithActiveResourcesOfServiceProviderListResponse = MarketplaceStatsCountUniqueUsersConnectedWithActiveResourcesOfServiceProviderListResponses[keyof MarketplaceStatsCountUniqueUsersConnectedWithActiveResourcesOfServiceProviderListResponses];
 
+export type MarketplaceStatsCountUniqueUsersConnectedWithActiveResourcesOfServiceProviderHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-stats/count_unique_users_connected_with_active_resources_of_service_provider/';
+};
+
+export type MarketplaceStatsCountUniqueUsersConnectedWithActiveResourcesOfServiceProviderHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type MarketplaceStatsCountUsersOfServiceProvidersListData = {
     body?: never;
     path?: never;
@@ -25465,6 +29470,29 @@ export type MarketplaceStatsCountUsersOfServiceProvidersListResponses = {
 };
 
 export type MarketplaceStatsCountUsersOfServiceProvidersListResponse = MarketplaceStatsCountUsersOfServiceProvidersListResponses[keyof MarketplaceStatsCountUsersOfServiceProvidersListResponses];
+
+export type MarketplaceStatsCountUsersOfServiceProvidersHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-stats/count_users_of_service_providers/';
+};
+
+export type MarketplaceStatsCountUsersOfServiceProvidersHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type MarketplaceStatsCustomerMemberCountListData = {
     body?: never;
@@ -25488,6 +29516,29 @@ export type MarketplaceStatsCustomerMemberCountListResponses = {
 
 export type MarketplaceStatsCustomerMemberCountListResponse = MarketplaceStatsCustomerMemberCountListResponses[keyof MarketplaceStatsCustomerMemberCountListResponses];
 
+export type MarketplaceStatsCustomerMemberCountHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-stats/customer_member_count/';
+};
+
+export type MarketplaceStatsCustomerMemberCountHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type MarketplaceStatsOfferingsCounterStatsListData = {
     body?: never;
     path?: never;
@@ -25509,6 +29560,29 @@ export type MarketplaceStatsOfferingsCounterStatsListResponses = {
 };
 
 export type MarketplaceStatsOfferingsCounterStatsListResponse = MarketplaceStatsOfferingsCounterStatsListResponses[keyof MarketplaceStatsOfferingsCounterStatsListResponses];
+
+export type MarketplaceStatsOfferingsCounterStatsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-stats/offerings_counter_stats/';
+};
+
+export type MarketplaceStatsOfferingsCounterStatsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type MarketplaceStatsOrganizationProjectCountListData = {
     body?: never;
@@ -25532,6 +29606,29 @@ export type MarketplaceStatsOrganizationProjectCountListResponses = {
 
 export type MarketplaceStatsOrganizationProjectCountListResponse = MarketplaceStatsOrganizationProjectCountListResponses[keyof MarketplaceStatsOrganizationProjectCountListResponses];
 
+export type MarketplaceStatsOrganizationProjectCountHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-stats/organization_project_count/';
+};
+
+export type MarketplaceStatsOrganizationProjectCountHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type MarketplaceStatsOrganizationResourceCountListData = {
     body?: never;
     path?: never;
@@ -25554,6 +29651,29 @@ export type MarketplaceStatsOrganizationResourceCountListResponses = {
 
 export type MarketplaceStatsOrganizationResourceCountListResponse = MarketplaceStatsOrganizationResourceCountListResponses[keyof MarketplaceStatsOrganizationResourceCountListResponses];
 
+export type MarketplaceStatsOrganizationResourceCountHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-stats/organization_resource_count/';
+};
+
+export type MarketplaceStatsOrganizationResourceCountHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type MarketplaceStatsProjectsLimitsGroupedByIndustryFlagRetrieveData = {
     body?: never;
     path?: never;
@@ -25566,6 +29686,20 @@ export type MarketplaceStatsProjectsLimitsGroupedByIndustryFlagRetrieveResponses
 };
 
 export type MarketplaceStatsProjectsLimitsGroupedByIndustryFlagRetrieveResponse = MarketplaceStatsProjectsLimitsGroupedByIndustryFlagRetrieveResponses[keyof MarketplaceStatsProjectsLimitsGroupedByIndustryFlagRetrieveResponses];
+
+export type MarketplaceStatsProjectsLimitsGroupedByIndustryFlagHeadData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/marketplace-stats/projects_limits_grouped_by_industry_flag/';
+};
+
+export type MarketplaceStatsProjectsLimitsGroupedByIndustryFlagHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type MarketplaceStatsProjectsLimitsGroupedByOecdRetrieveData = {
     body?: never;
@@ -25580,6 +29714,20 @@ export type MarketplaceStatsProjectsLimitsGroupedByOecdRetrieveResponses = {
 
 export type MarketplaceStatsProjectsLimitsGroupedByOecdRetrieveResponse = MarketplaceStatsProjectsLimitsGroupedByOecdRetrieveResponses[keyof MarketplaceStatsProjectsLimitsGroupedByOecdRetrieveResponses];
 
+export type MarketplaceStatsProjectsLimitsGroupedByOecdHeadData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/marketplace-stats/projects_limits_grouped_by_oecd/';
+};
+
+export type MarketplaceStatsProjectsLimitsGroupedByOecdHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type MarketplaceStatsProjectsUsagesGroupedByIndustryFlagRetrieveData = {
     body?: never;
     path?: never;
@@ -25593,6 +29741,20 @@ export type MarketplaceStatsProjectsUsagesGroupedByIndustryFlagRetrieveResponses
 
 export type MarketplaceStatsProjectsUsagesGroupedByIndustryFlagRetrieveResponse = MarketplaceStatsProjectsUsagesGroupedByIndustryFlagRetrieveResponses[keyof MarketplaceStatsProjectsUsagesGroupedByIndustryFlagRetrieveResponses];
 
+export type MarketplaceStatsProjectsUsagesGroupedByIndustryFlagHeadData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/marketplace-stats/projects_usages_grouped_by_industry_flag/';
+};
+
+export type MarketplaceStatsProjectsUsagesGroupedByIndustryFlagHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type MarketplaceStatsProjectsUsagesGroupedByOecdRetrieveData = {
     body?: never;
     path?: never;
@@ -25605,6 +29767,20 @@ export type MarketplaceStatsProjectsUsagesGroupedByOecdRetrieveResponses = {
 };
 
 export type MarketplaceStatsProjectsUsagesGroupedByOecdRetrieveResponse = MarketplaceStatsProjectsUsagesGroupedByOecdRetrieveResponses[keyof MarketplaceStatsProjectsUsagesGroupedByOecdRetrieveResponses];
+
+export type MarketplaceStatsProjectsUsagesGroupedByOecdHeadData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/marketplace-stats/projects_usages_grouped_by_oecd/';
+};
+
+export type MarketplaceStatsProjectsUsagesGroupedByOecdHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type MarketplaceStatsResourcesLimitsListData = {
     body?: never;
@@ -25628,6 +29804,29 @@ export type MarketplaceStatsResourcesLimitsListResponses = {
 
 export type MarketplaceStatsResourcesLimitsListResponse = MarketplaceStatsResourcesLimitsListResponses[keyof MarketplaceStatsResourcesLimitsListResponses];
 
+export type MarketplaceStatsResourcesLimitsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-stats/resources_limits/';
+};
+
+export type MarketplaceStatsResourcesLimitsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type MarketplaceStatsTotalCostOfActiveResourcesPerOfferingListData = {
     body?: never;
     path?: never;
@@ -25649,6 +29848,29 @@ export type MarketplaceStatsTotalCostOfActiveResourcesPerOfferingListResponses =
 };
 
 export type MarketplaceStatsTotalCostOfActiveResourcesPerOfferingListResponse = MarketplaceStatsTotalCostOfActiveResourcesPerOfferingListResponses[keyof MarketplaceStatsTotalCostOfActiveResourcesPerOfferingListResponses];
+
+export type MarketplaceStatsTotalCostOfActiveResourcesPerOfferingHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-stats/total_cost_of_active_resources_per_offering/';
+};
+
+export type MarketplaceStatsTotalCostOfActiveResourcesPerOfferingHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type MediaRetrieveData = {
     body?: never;
@@ -25693,6 +29915,35 @@ export type NotificationMessagesListResponses = {
 
 export type NotificationMessagesListResponse = NotificationMessagesListResponses[keyof NotificationMessagesListResponses];
 
+export type NotificationMessagesHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        description?: string;
+        is_overridden?: boolean;
+        key?: string;
+        name?: string;
+        name_exact?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        query?: string;
+    };
+    url: '/api/notification-messages/';
+};
+
+export type NotificationMessagesHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type NotificationMessagesCreateData = {
     body: NotificationRequest;
     path?: never;
@@ -25732,6 +29983,34 @@ export type NotificationMessagesTemplatesListResponses = {
 };
 
 export type NotificationMessagesTemplatesListResponse = NotificationMessagesTemplatesListResponses[keyof NotificationMessagesTemplatesListResponses];
+
+export type NotificationMessagesTemplatesHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        is_overridden?: boolean;
+        name?: string;
+        name_exact?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        path?: string;
+        path_exact?: string;
+    };
+    url: '/api/notification-messages-templates/';
+};
+
+export type NotificationMessagesTemplatesHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type NotificationMessagesTemplatesCreateData = {
     body: NotificationTemplateDetailSerializersRequest;
@@ -25968,6 +30247,54 @@ export type OpenstackBackupsListResponses = {
 
 export type OpenstackBackupsListResponse = OpenstackBackupsListResponses[keyof OpenstackBackupsListResponses];
 
+export type OpenstackBackupsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        backend_id?: string;
+        /**
+         * Can manage
+         */
+        can_manage?: boolean;
+        customer?: string;
+        customer_abbreviation?: string;
+        customer_name?: string;
+        customer_native_name?: string;
+        customer_uuid?: string;
+        description?: string;
+        external_ip?: string;
+        instance?: string;
+        instance_uuid?: string;
+        name?: string;
+        name_exact?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        project?: string;
+        project_name?: string;
+        project_uuid?: string;
+        service_settings_name?: string;
+        service_settings_uuid?: string;
+        state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        tenant?: string;
+        tenant_uuid?: string;
+        uuid?: string;
+    };
+    url: '/api/openstack-backups/';
+};
+
+export type OpenstackBackupsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type OpenstackBackupsDestroyData = {
     body?: never;
     path: {
@@ -26126,6 +30453,52 @@ export type OpenstackFlavorsListResponses = {
 
 export type OpenstackFlavorsListResponse = OpenstackFlavorsListResponses[keyof OpenstackFlavorsListResponses];
 
+export type OpenstackFlavorsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        cores?: number;
+        cores__gte?: number;
+        cores__lte?: number;
+        disk?: number;
+        disk__gte?: number;
+        disk__lte?: number;
+        name?: string;
+        name_exact?: string;
+        name_iregex?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-cores' | '-disk' | '-ram' | 'cores' | 'disk' | 'ram'>;
+        offering_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        ram?: number;
+        ram__gte?: number;
+        ram__lte?: number;
+        settings?: string;
+        settings_uuid?: string;
+        tenant?: string;
+        tenant_uuid?: string;
+    };
+    url: '/api/openstack-flavors/';
+};
+
+export type OpenstackFlavorsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type OpenstackFlavorsRetrieveData = {
     body?: never;
     path: {
@@ -26157,6 +30530,20 @@ export type OpenstackFlavorsUsageStatsRetrieveResponses = {
 };
 
 export type OpenstackFlavorsUsageStatsRetrieveResponse = OpenstackFlavorsUsageStatsRetrieveResponses[keyof OpenstackFlavorsUsageStatsRetrieveResponses];
+
+export type OpenstackFlavorsUsageStatsHeadData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/openstack-flavors/usage_stats/';
+};
+
+export type OpenstackFlavorsUsageStatsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type OpenstackFloatingIpsListData = {
     body?: never;
@@ -26206,6 +30593,55 @@ export type OpenstackFloatingIpsListResponses = {
 };
 
 export type OpenstackFloatingIpsListResponse = OpenstackFloatingIpsListResponses[keyof OpenstackFloatingIpsListResponses];
+
+export type OpenstackFloatingIpsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        address?: string;
+        backend_id?: string;
+        /**
+         * Can manage
+         */
+        can_manage?: boolean;
+        customer?: string;
+        customer_abbreviation?: string;
+        customer_name?: string;
+        customer_native_name?: string;
+        customer_uuid?: string;
+        description?: string;
+        external_ip?: string;
+        free?: boolean;
+        name?: string;
+        name_exact?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        project?: string;
+        project_name?: string;
+        project_uuid?: string;
+        runtime_state?: string;
+        service_settings_name?: string;
+        service_settings_uuid?: string;
+        state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        tenant?: string;
+        tenant_uuid?: string;
+        uuid?: string;
+    };
+    url: '/api/openstack-floating-ips/';
+};
+
+export type OpenstackFloatingIpsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type OpenstackFloatingIpsDestroyData = {
     body?: never;
@@ -26351,6 +30787,36 @@ export type OpenstackImagesListResponses = {
 
 export type OpenstackImagesListResponse = OpenstackImagesListResponses[keyof OpenstackImagesListResponses];
 
+export type OpenstackImagesHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        name?: string;
+        name_exact?: string;
+        offering_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        settings?: string;
+        settings_uuid?: string;
+        tenant?: string;
+        tenant_uuid?: string;
+    };
+    url: '/api/openstack-images/';
+};
+
+export type OpenstackImagesHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type OpenstackImagesRetrieveData = {
     body?: never;
     path: {
@@ -26379,6 +30845,20 @@ export type OpenstackImagesUsageStatsRetrieveResponses = {
 
 export type OpenstackImagesUsageStatsRetrieveResponse = OpenstackImagesUsageStatsRetrieveResponses[keyof OpenstackImagesUsageStatsRetrieveResponses];
 
+export type OpenstackImagesUsageStatsHeadData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/openstack-images/usage_stats/';
+};
+
+export type OpenstackImagesUsageStatsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type OpenstackInstanceAvailabilityZonesListData = {
     body?: never;
     path?: never;
@@ -26406,6 +30886,35 @@ export type OpenstackInstanceAvailabilityZonesListResponses = {
 };
 
 export type OpenstackInstanceAvailabilityZonesListResponse = OpenstackInstanceAvailabilityZonesListResponses[keyof OpenstackInstanceAvailabilityZonesListResponses];
+
+export type OpenstackInstanceAvailabilityZonesHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        name?: string;
+        name_exact?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        settings?: string;
+        settings_uuid?: string;
+        tenant?: string;
+        tenant_uuid?: string;
+    };
+    url: '/api/openstack-instance-availability-zones/';
+};
+
+export type OpenstackInstanceAvailabilityZonesHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type OpenstackInstanceAvailabilityZonesRetrieveData = {
     body?: never;
@@ -26471,6 +30980,56 @@ export type OpenstackInstancesListResponses = {
 };
 
 export type OpenstackInstancesListResponse = OpenstackInstancesListResponses[keyof OpenstackInstancesListResponses];
+
+export type OpenstackInstancesHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        attach_volume_uuid?: string;
+        availability_zone_name?: string;
+        backend_id?: string;
+        /**
+         * Can manage
+         */
+        can_manage?: boolean;
+        customer?: string;
+        customer_abbreviation?: string;
+        customer_name?: string;
+        customer_native_name?: string;
+        customer_uuid?: string;
+        description?: string;
+        external_ip?: string;
+        name?: string;
+        name_exact?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        project?: string;
+        project_name?: string;
+        project_uuid?: string;
+        query?: string;
+        runtime_state?: string;
+        service_settings_name?: string;
+        service_settings_uuid?: string;
+        state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        tenant?: string;
+        tenant_uuid?: string;
+        uuid?: string;
+    };
+    url: '/api/openstack-instances/';
+};
+
+export type OpenstackInstancesHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type OpenstackInstancesRetrieveData = {
     body?: never;
@@ -26817,6 +31376,50 @@ export type OpenstackMarketplaceTenantsListResponses = {
 
 export type OpenstackMarketplaceTenantsListResponse = OpenstackMarketplaceTenantsListResponses[keyof OpenstackMarketplaceTenantsListResponses];
 
+export type OpenstackMarketplaceTenantsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        backend_id?: string;
+        /**
+         * Can manage
+         */
+        can_manage?: boolean;
+        customer?: string;
+        customer_abbreviation?: string;
+        customer_name?: string;
+        customer_native_name?: string;
+        customer_uuid?: string;
+        description?: string;
+        external_ip?: string;
+        name?: string;
+        name_exact?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        project?: string;
+        project_name?: string;
+        project_uuid?: string;
+        service_settings_name?: string;
+        service_settings_uuid?: string;
+        state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        uuid?: string;
+    };
+    url: '/api/openstack-marketplace-tenants/';
+};
+
+export type OpenstackMarketplaceTenantsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type OpenstackMarketplaceTenantsRetrieveData = {
     body?: never;
     path: {
@@ -26886,6 +31489,31 @@ export type OpenstackMigrationsListResponses = {
 };
 
 export type OpenstackMigrationsListResponse = OpenstackMigrationsListResponses[keyof OpenstackMigrationsListResponses];
+
+export type OpenstackMigrationsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        dst_resource_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        src_resource_uuid?: string;
+    };
+    url: '/api/openstack-migrations/';
+};
+
+export type OpenstackMigrationsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type OpenstackMigrationsCreateData = {
     body: MigrationCreateRequest;
@@ -26990,6 +31618,34 @@ export type OpenstackNetworkRbacPoliciesListResponses = {
 
 export type OpenstackNetworkRbacPoliciesListResponse = OpenstackNetworkRbacPoliciesListResponses[keyof OpenstackNetworkRbacPoliciesListResponses];
 
+export type OpenstackNetworkRbacPoliciesHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        network?: string;
+        network_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        policy_type?: 'access_as_external' | 'access_as_shared';
+        target_tenant?: string;
+        target_tenant_uuid?: string;
+    };
+    url: '/api/openstack-network-rbac-policies/';
+};
+
+export type OpenstackNetworkRbacPoliciesHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type OpenstackNetworkRbacPoliciesRetrieveData = {
     body?: never;
     path: {
@@ -27066,6 +31722,68 @@ export type OpenstackNetworksListResponses = {
 };
 
 export type OpenstackNetworksListResponse = OpenstackNetworksListResponses[keyof OpenstackNetworksListResponses];
+
+export type OpenstackNetworksHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        backend_id?: string;
+        /**
+         * Can manage
+         */
+        can_manage?: boolean;
+        customer?: string;
+        customer_abbreviation?: string;
+        customer_name?: string;
+        customer_native_name?: string;
+        customer_uuid?: string;
+        description?: string;
+        /**
+         * Direct only
+         */
+        direct_only?: boolean;
+        external_ip?: string;
+        is_external?: boolean;
+        name?: string;
+        name_exact?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        project?: string;
+        project_name?: string;
+        project_uuid?: string;
+        /**
+         * RBAC only
+         */
+        rbac_only?: boolean;
+        service_settings_name?: string;
+        service_settings_uuid?: string;
+        state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        /**
+         * Tenant URL
+         */
+        tenant?: string;
+        /**
+         * Tenant UUID
+         */
+        tenant_uuid?: string;
+        type?: string;
+        uuid?: string;
+    };
+    url: '/api/openstack-networks/';
+};
+
+export type OpenstackNetworksHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type OpenstackNetworksDestroyData = {
     body?: never;
@@ -27281,6 +31999,57 @@ export type OpenstackPortsListResponses = {
 };
 
 export type OpenstackPortsListResponse = OpenstackPortsListResponses[keyof OpenstackPortsListResponses];
+
+export type OpenstackPortsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        admin_state_up?: boolean;
+        backend_id?: string;
+        device_id?: string;
+        device_owner?: string;
+        /**
+         * Exclude Subnet UUIDs (comma-separated)
+         */
+        exclude_subnet_uuids?: string;
+        /**
+         * Has device owner
+         */
+        has_device_owner?: boolean;
+        mac_address?: string;
+        name?: string;
+        name_exact?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-network_name' | 'network_name'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Query
+         */
+        query?: string;
+        status?: string;
+        tenant?: string;
+        tenant_uuid?: string;
+    };
+    url: '/api/openstack-ports/';
+};
+
+export type OpenstackPortsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type OpenstackPortsCreateData = {
     body: OpenStackPortRequest;
@@ -27515,6 +32284,33 @@ export type OpenstackRoutersListResponses = {
 
 export type OpenstackRoutersListResponse = OpenstackRoutersListResponses[keyof OpenstackRoutersListResponses];
 
+export type OpenstackRoutersHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        name?: string;
+        name_exact?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        tenant?: string;
+        tenant_uuid?: string;
+    };
+    url: '/api/openstack-routers/';
+};
+
+export type OpenstackRoutersHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type OpenstackRoutersCreateData = {
     body: CreateRouterRequest;
     path?: never;
@@ -27656,6 +32452,53 @@ export type OpenstackSecurityGroupsListResponses = {
 };
 
 export type OpenstackSecurityGroupsListResponse = OpenstackSecurityGroupsListResponses[keyof OpenstackSecurityGroupsListResponses];
+
+export type OpenstackSecurityGroupsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        backend_id?: string;
+        /**
+         * Can manage
+         */
+        can_manage?: boolean;
+        customer?: string;
+        customer_abbreviation?: string;
+        customer_name?: string;
+        customer_native_name?: string;
+        customer_uuid?: string;
+        description?: string;
+        external_ip?: string;
+        name?: string;
+        name_exact?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        project?: string;
+        project_name?: string;
+        project_uuid?: string;
+        query?: string;
+        service_settings_name?: string;
+        service_settings_uuid?: string;
+        state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        tenant?: string;
+        tenant_uuid?: string;
+        uuid?: string;
+    };
+    url: '/api/openstack-security-groups/';
+};
+
+export type OpenstackSecurityGroupsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type OpenstackSecurityGroupsDestroyData = {
     body?: never;
@@ -27815,6 +32658,52 @@ export type OpenstackServerGroupsListResponses = {
 };
 
 export type OpenstackServerGroupsListResponse = OpenstackServerGroupsListResponses[keyof OpenstackServerGroupsListResponses];
+
+export type OpenstackServerGroupsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        backend_id?: string;
+        /**
+         * Can manage
+         */
+        can_manage?: boolean;
+        customer?: string;
+        customer_abbreviation?: string;
+        customer_name?: string;
+        customer_native_name?: string;
+        customer_uuid?: string;
+        description?: string;
+        external_ip?: string;
+        name?: string;
+        name_exact?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        project?: string;
+        project_name?: string;
+        project_uuid?: string;
+        service_settings_name?: string;
+        service_settings_uuid?: string;
+        state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        tenant?: string;
+        tenant_uuid?: string;
+        uuid?: string;
+    };
+    url: '/api/openstack-server-groups/';
+};
+
+export type OpenstackServerGroupsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type OpenstackServerGroupsCreateData = {
     body: OpenStackServerGroupRequest;
@@ -27976,6 +32865,57 @@ export type OpenstackSnapshotsListResponses = {
 };
 
 export type OpenstackSnapshotsListResponse = OpenstackSnapshotsListResponses[keyof OpenstackSnapshotsListResponses];
+
+export type OpenstackSnapshotsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        backend_id?: string;
+        backup?: string;
+        backup_uuid?: string;
+        /**
+         * Can manage
+         */
+        can_manage?: boolean;
+        customer?: string;
+        customer_abbreviation?: string;
+        customer_name?: string;
+        customer_native_name?: string;
+        customer_uuid?: string;
+        description?: string;
+        external_ip?: string;
+        name?: string;
+        name_exact?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        project?: string;
+        project_name?: string;
+        project_uuid?: string;
+        runtime_state?: string;
+        service_settings_name?: string;
+        service_settings_uuid?: string;
+        source_volume?: string;
+        source_volume_uuid?: string;
+        state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        tenant?: string;
+        tenant_uuid?: string;
+        uuid?: string;
+    };
+    url: '/api/openstack-snapshots/';
+};
+
+export type OpenstackSnapshotsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type OpenstackSnapshotsDestroyData = {
     body?: never;
@@ -28177,6 +33117,70 @@ export type OpenstackSubnetsListResponses = {
 
 export type OpenstackSubnetsListResponse = OpenstackSubnetsListResponses[keyof OpenstackSubnetsListResponses];
 
+export type OpenstackSubnetsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        backend_id?: string;
+        /**
+         * Can manage
+         */
+        can_manage?: boolean;
+        customer?: string;
+        customer_abbreviation?: string;
+        customer_name?: string;
+        customer_native_name?: string;
+        customer_uuid?: string;
+        description?: string;
+        /**
+         * Direct only
+         */
+        direct_only?: boolean;
+        enable_dhcp?: boolean;
+        external_ip?: string;
+        ip_version?: number;
+        name?: string;
+        name_exact?: string;
+        network?: string;
+        network_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        project?: string;
+        project_name?: string;
+        project_uuid?: string;
+        /**
+         * RBAC only
+         */
+        rbac_only?: boolean;
+        service_settings_name?: string;
+        service_settings_uuid?: string;
+        state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        /**
+         * Tenant URL
+         */
+        tenant?: string;
+        /**
+         * Tenant UUID
+         */
+        tenant_uuid?: string;
+        uuid?: string;
+    };
+    url: '/api/openstack-subnets/';
+};
+
+export type OpenstackSubnetsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type OpenstackSubnetsDestroyData = {
     body?: never;
     path: {
@@ -28349,6 +33353,50 @@ export type OpenstackTenantsListResponses = {
 };
 
 export type OpenstackTenantsListResponse = OpenstackTenantsListResponses[keyof OpenstackTenantsListResponses];
+
+export type OpenstackTenantsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        backend_id?: string;
+        /**
+         * Can manage
+         */
+        can_manage?: boolean;
+        customer?: string;
+        customer_abbreviation?: string;
+        customer_name?: string;
+        customer_native_name?: string;
+        customer_uuid?: string;
+        description?: string;
+        external_ip?: string;
+        name?: string;
+        name_exact?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        project?: string;
+        project_name?: string;
+        project_uuid?: string;
+        service_settings_name?: string;
+        service_settings_uuid?: string;
+        state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        uuid?: string;
+    };
+    url: '/api/openstack-tenants/';
+};
+
+export type OpenstackTenantsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type OpenstackTenantsCreateData = {
     body: OpenStackTenantRequest;
@@ -28731,6 +33779,35 @@ export type OpenstackVolumeAvailabilityZonesListResponses = {
 
 export type OpenstackVolumeAvailabilityZonesListResponse = OpenstackVolumeAvailabilityZonesListResponses[keyof OpenstackVolumeAvailabilityZonesListResponses];
 
+export type OpenstackVolumeAvailabilityZonesHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        name?: string;
+        name_exact?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        settings?: string;
+        settings_uuid?: string;
+        tenant?: string;
+        tenant_uuid?: string;
+    };
+    url: '/api/openstack-volume-availability-zones/';
+};
+
+export type OpenstackVolumeAvailabilityZonesHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type OpenstackVolumeAvailabilityZonesRetrieveData = {
     body?: never;
     path: {
@@ -28775,6 +33852,36 @@ export type OpenstackVolumeTypesListResponses = {
 
 export type OpenstackVolumeTypesListResponse = OpenstackVolumeTypesListResponses[keyof OpenstackVolumeTypesListResponses];
 
+export type OpenstackVolumeTypesHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        name?: string;
+        name_exact?: string;
+        offering_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        settings?: string;
+        settings_uuid?: string;
+        tenant?: string;
+        tenant_uuid?: string;
+    };
+    url: '/api/openstack-volume-types/';
+};
+
+export type OpenstackVolumeTypesHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type OpenstackVolumeTypesRetrieveData = {
     body?: never;
     path: {
@@ -28802,6 +33909,20 @@ export type OpenstackVolumeTypesNamesRetrieveResponses = {
 };
 
 export type OpenstackVolumeTypesNamesRetrieveResponse = OpenstackVolumeTypesNamesRetrieveResponses[keyof OpenstackVolumeTypesNamesRetrieveResponses];
+
+export type OpenstackVolumeTypesNamesHeadData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/openstack-volume-types/names/';
+};
+
+export type OpenstackVolumeTypesNamesHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type OpenstackVolumesListData = {
     body?: never;
@@ -28855,6 +33976,59 @@ export type OpenstackVolumesListResponses = {
 };
 
 export type OpenstackVolumesListResponse = OpenstackVolumesListResponses[keyof OpenstackVolumesListResponses];
+
+export type OpenstackVolumesHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        attach_instance_uuid?: string;
+        availability_zone_name?: string;
+        backend_id?: string;
+        /**
+         * Can manage
+         */
+        can_manage?: boolean;
+        customer?: string;
+        customer_abbreviation?: string;
+        customer_name?: string;
+        customer_native_name?: string;
+        customer_uuid?: string;
+        description?: string;
+        external_ip?: string;
+        instance?: string;
+        instance_uuid?: string;
+        name?: string;
+        name_exact?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        project?: string;
+        project_name?: string;
+        project_uuid?: string;
+        runtime_state?: string;
+        service_settings_name?: string;
+        service_settings_uuid?: string;
+        snapshot?: string;
+        snapshot_uuid?: string;
+        state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        tenant?: string;
+        tenant_uuid?: string;
+        uuid?: string;
+    };
+    url: '/api/openstack-volumes/';
+};
+
+export type OpenstackVolumesHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type OpenstackVolumesRetrieveData = {
     body?: never;
@@ -29043,6 +34217,36 @@ export type OrganizationGroupsListResponses = {
 
 export type OrganizationGroupsListResponse = OrganizationGroupsListResponses[keyof OrganizationGroupsListResponses];
 
+export type OrganizationGroupsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        name?: string;
+        name_exact?: string;
+        /**
+         * Which field to use when ordering the results.
+         */
+        o?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        parent?: string;
+    };
+    url: '/api/organization-groups/';
+};
+
+export type OrganizationGroupsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type OrganizationGroupsCreateData = {
     body: OrganizationGroupRequest;
     path?: never;
@@ -29178,6 +34382,39 @@ export type PaymentProfilesListResponses = {
 
 export type PaymentProfilesListResponse = PaymentProfilesListResponses[keyof PaymentProfilesListResponses];
 
+export type PaymentProfilesHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        is_active?: boolean;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-is_active' | '-name' | '-payment_type' | 'is_active' | 'name' | 'payment_type'>;
+        organization?: string;
+        organization_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        payment_type?: Array<'fixed_price' | 'invoices' | 'payment_gw_monthly'>;
+    };
+    url: '/api/payment-profiles/';
+};
+
+export type PaymentProfilesHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type PaymentProfilesCreateData = {
     body: PaymentProfileRequest;
     path?: never;
@@ -29294,6 +34531,32 @@ export type PaymentsListResponses = {
 };
 
 export type PaymentsListResponse = PaymentsListResponses[keyof PaymentsListResponses];
+
+export type PaymentsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        date_of_payment?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        profile?: string;
+        profile_uuid?: string;
+    };
+    url: '/api/payments/';
+};
+
+export type PaymentsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type PaymentsCreateData = {
     body: PaymentRequest;
@@ -29435,6 +34698,40 @@ export type ProjectCreditsListResponses = {
 
 export type ProjectCreditsListResponse = ProjectCreditsListResponses[keyof ProjectCreditsListResponses];
 
+export type ProjectCreditsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        customer_name?: string;
+        customer_slug?: string;
+        customer_uuid?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-end_date' | '-expected_consumption' | '-project_name' | '-value' | 'end_date' | 'expected_consumption' | 'project_name' | 'value'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        project_name?: string;
+        project_uuid?: string;
+    };
+    url: '/api/project-credits/';
+};
+
+export type ProjectCreditsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type ProjectCreditsCreateData = {
     body: ProjectCreditRequest;
     path?: never;
@@ -29533,6 +34830,29 @@ export type ProjectQuotasListResponses = {
 
 export type ProjectQuotasListResponse = ProjectQuotasListResponses[keyof ProjectQuotasListResponses];
 
+export type ProjectQuotasHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/project-quotas/';
+};
+
+export type ProjectQuotasHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type ProjectTypesListData = {
     body?: never;
     path?: never;
@@ -29556,6 +34876,31 @@ export type ProjectTypesListResponses = {
 };
 
 export type ProjectTypesListResponse = ProjectTypesListResponses[keyof ProjectTypesListResponses];
+
+export type ProjectTypesHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        name?: string;
+        name_exact?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/project-types/';
+};
+
+export type ProjectTypesHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type ProjectTypesRetrieveData = {
     body?: never;
@@ -29633,6 +34978,68 @@ export type ProjectsListResponses = {
 };
 
 export type ProjectsListResponse = ProjectsListResponses[keyof ProjectsListResponses];
+
+export type ProjectsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        backend_id?: string;
+        /**
+         * Return a list of projects where current user is admin.
+         */
+        can_admin?: boolean;
+        /**
+         * Return a list of projects where current user is manager or a customer owner.
+         */
+        can_manage?: boolean;
+        /**
+         * Conceal finished projects
+         */
+        conceal_finished_projects?: boolean;
+        /**
+         * Created after
+         */
+        created?: string;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        customer?: Array<string>;
+        customer_abbreviation?: string;
+        customer_name?: string;
+        customer_native_name?: string;
+        description?: string;
+        /**
+         * Modified after
+         */
+        modified?: string;
+        name?: string;
+        name_exact?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-customer_abbreviation' | '-customer_name' | '-customer_native_name' | '-end_date' | '-estimated_cost' | '-name' | '-start_date' | 'created' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'end_date' | 'estimated_cost' | 'name' | 'start_date'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        query?: string;
+        slug?: string;
+    };
+    url: '/api/projects/';
+};
+
+export type ProjectsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type ProjectsCreateData = {
     body: ProjectRequest;
@@ -29960,6 +35367,46 @@ export type PromotionsCampaignsListResponses = {
 
 export type PromotionsCampaignsListResponse = PromotionsCampaignsListResponses[keyof PromotionsCampaignsListResponses];
 
+export type PromotionsCampaignsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        discount_type?: string;
+        end_date?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-end_date' | '-start_date' | 'end_date' | 'start_date'>;
+        /**
+         * Offering
+         */
+        offering?: string;
+        offering_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        query?: string;
+        service_provider_uuid?: string;
+        start_date?: string;
+        state?: Array<'Active' | 'Draft' | 'Terminated'>;
+    };
+    url: '/api/promotions-campaigns/';
+};
+
+export type PromotionsCampaignsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type PromotionsCampaignsCreateData = {
     body: CampaignRequest;
     path?: never;
@@ -30147,6 +35594,40 @@ export type ProposalProposalsListResponses = {
 };
 
 export type ProposalProposalsListResponse = ProposalProposalsListResponses[keyof ProposalProposalsListResponses];
+
+export type ProposalProposalsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        call_uuid?: string;
+        name?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-round__call__name' | '-round__cutoff_time' | '-round__start_time' | '-state' | 'created' | 'round__call__name' | 'round__cutoff_time' | 'round__start_time' | 'state'>;
+        organization_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        round?: string;
+        state?: Array<'accepted' | 'canceled' | 'draft' | 'in_review' | 'rejected' | 'submitted'>;
+    };
+    url: '/api/proposal-proposals/';
+};
+
+export type ProposalProposalsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type ProposalProposalsCreateData = {
     body: ProposalRequest;
@@ -30526,6 +36007,43 @@ export type ProposalProtectedCallsListResponses = {
 };
 
 export type ProposalProtectedCallsListResponse = ProposalProtectedCallsListResponses[keyof ProposalProtectedCallsListResponses];
+
+export type ProposalProtectedCallsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        customer?: string;
+        customer_keyword?: string;
+        customer_uuid?: string;
+        has_active_round?: boolean;
+        name?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-manager__customer__name' | '-name' | 'created' | 'manager__customer__name' | 'name'>;
+        offering_uuid?: string;
+        offerings_provider_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        state?: Array<'active' | 'archived' | 'draft'>;
+    };
+    url: '/api/proposal-protected-calls/';
+};
+
+export type ProposalProtectedCallsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type ProposalProtectedCallsCreateData = {
     body: ProtectedCallRequest;
@@ -31150,6 +36668,43 @@ export type ProposalPublicCallsListResponses = {
 
 export type ProposalPublicCallsListResponse = ProposalPublicCallsListResponses[keyof ProposalPublicCallsListResponses];
 
+export type ProposalPublicCallsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        customer?: string;
+        customer_keyword?: string;
+        customer_uuid?: string;
+        has_active_round?: boolean;
+        name?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-manager__customer__name' | '-name' | 'created' | 'manager__customer__name' | 'name'>;
+        offering_uuid?: string;
+        offerings_provider_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        state?: Array<'active' | 'archived' | 'draft'>;
+    };
+    url: '/api/proposal-public-calls/';
+};
+
+export type ProposalPublicCallsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type ProposalPublicCallsRetrieveData = {
     body?: never;
     path: {
@@ -31210,6 +36765,51 @@ export type ProposalRequestedOfferingsListResponses = {
 };
 
 export type ProposalRequestedOfferingsListResponse = ProposalRequestedOfferingsListResponses[keyof ProposalRequestedOfferingsListResponses];
+
+export type ProposalRequestedOfferingsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Call
+         */
+        call?: string;
+        call_uuid?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-call__name' | '-created' | '-offering__name' | '-state' | 'call__name' | 'created' | 'offering__name' | 'state'>;
+        /**
+         * Offering
+         */
+        offering?: string;
+        offering_uuid?: string;
+        organization_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Provider
+         */
+        provider_uuid?: string;
+        state?: Array<'accepted' | 'canceled' | 'requested'>;
+    };
+    url: '/api/proposal-requested-offerings/';
+};
+
+export type ProposalRequestedOfferingsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type ProposalRequestedOfferingsRetrieveData = {
     body?: never;
@@ -31302,6 +36902,51 @@ export type ProposalRequestedResourcesListResponses = {
 
 export type ProposalRequestedResourcesListResponse = ProposalRequestedResourcesListResponses[keyof ProposalRequestedResourcesListResponses];
 
+export type ProposalRequestedResourcesHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        created?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-offering__name' | '-proposal__name' | '-resource__name' | 'created' | 'offering__name' | 'proposal__name' | 'resource__name'>;
+        /**
+         * Offering
+         */
+        offering?: string;
+        offering_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Proposal
+         */
+        proposal?: string;
+        proposal_uuid?: string;
+        /**
+         * Resource
+         */
+        resource?: string;
+        resource_uuid?: string;
+    };
+    url: '/api/proposal-requested-resources/';
+};
+
+export type ProposalRequestedResourcesHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type ProposalRequestedResourcesRetrieveData = {
     body?: never;
     path: {
@@ -31351,6 +36996,42 @@ export type ProposalReviewsListResponses = {
 };
 
 export type ProposalReviewsListResponse = ProposalReviewsListResponses[keyof ProposalReviewsListResponses];
+
+export type ProposalReviewsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        call_uuid?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-state' | 'created' | 'state'>;
+        organization_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        proposal?: string;
+        proposal_name?: string;
+        proposal_uuid?: string;
+        reviewer_uuid?: string;
+        state?: Array<'created' | 'in_review' | 'rejected' | 'submitted'>;
+    };
+    url: '/api/proposal-reviews/';
+};
+
+export type ProposalReviewsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type ProposalReviewsCreateData = {
     body: ProposalReviewRequest;
@@ -31509,6 +37190,40 @@ export type ProviderInvoiceItemsListResponses = {
 
 export type ProviderInvoiceItemsListResponse = ProviderInvoiceItemsListResponses[keyof ProviderInvoiceItemsListResponses];
 
+export type ProviderInvoiceItemsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        customer_uuid?: string;
+        invoice_month?: number;
+        invoice_year?: number;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-invoice_customer_name' | '-project_name' | '-resource_offering_name' | '-unit_price' | 'invoice_customer_name' | 'project_name' | 'resource_offering_name' | 'unit_price'>;
+        offering_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        project_uuid?: string;
+    };
+    url: '/api/provider-invoice-items/';
+};
+
+export type ProviderInvoiceItemsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type ProviderInvoiceItemsRetrieveData = {
     body?: never;
     path: {
@@ -31628,6 +37343,53 @@ export type RancherAppsListResponses = {
 };
 
 export type RancherAppsListResponse = RancherAppsListResponses[keyof RancherAppsListResponses];
+
+export type RancherAppsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        backend_id?: string;
+        /**
+         * Can manage
+         */
+        can_manage?: boolean;
+        cluster_uuid?: string;
+        customer?: string;
+        customer_abbreviation?: string;
+        customer_name?: string;
+        customer_native_name?: string;
+        customer_uuid?: string;
+        description?: string;
+        external_ip?: string;
+        name?: string;
+        name_exact?: string;
+        namespace_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        project?: string;
+        project_name?: string;
+        project_uuid?: string;
+        service_settings_name?: string;
+        service_settings_uuid?: string;
+        state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        template_uuid?: string;
+        uuid?: string;
+    };
+    url: '/api/rancher-apps/';
+};
+
+export type RancherAppsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type RancherAppsCreateData = {
     body: RancherApplicationRequest;
@@ -31761,6 +37523,29 @@ export type RancherCatalogsListResponses = {
 
 export type RancherCatalogsListResponse = RancherCatalogsListResponses[keyof RancherCatalogsListResponses];
 
+export type RancherCatalogsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/rancher-catalogs/';
+};
+
+export type RancherCatalogsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type RancherCatalogsCreateData = {
     body: RancherCatalogCreateRequest;
     path?: never;
@@ -31877,6 +37662,32 @@ export type RancherClusterSecurityGroupsListResponses = {
 
 export type RancherClusterSecurityGroupsListResponse = RancherClusterSecurityGroupsListResponses[keyof RancherClusterSecurityGroupsListResponses];
 
+export type RancherClusterSecurityGroupsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        cluster_uuid?: string;
+        name?: string;
+        name_exact?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/rancher-cluster-security-groups/';
+};
+
+export type RancherClusterSecurityGroupsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type RancherClusterSecurityGroupsRetrieveData = {
     body?: never;
     path: {
@@ -31944,6 +37755,29 @@ export type RancherClusterTemplatesListResponses = {
 
 export type RancherClusterTemplatesListResponse = RancherClusterTemplatesListResponses[keyof RancherClusterTemplatesListResponses];
 
+export type RancherClusterTemplatesHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/rancher-cluster-templates/';
+};
+
+export type RancherClusterTemplatesHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type RancherClusterTemplatesRetrieveData = {
     body?: never;
     path: {
@@ -32002,6 +37836,50 @@ export type RancherClustersListResponses = {
 };
 
 export type RancherClustersListResponse = RancherClustersListResponses[keyof RancherClustersListResponses];
+
+export type RancherClustersHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        backend_id?: string;
+        /**
+         * Can manage
+         */
+        can_manage?: boolean;
+        customer?: string;
+        customer_abbreviation?: string;
+        customer_name?: string;
+        customer_native_name?: string;
+        customer_uuid?: string;
+        description?: string;
+        external_ip?: string;
+        name?: string;
+        name_exact?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        project?: string;
+        project_name?: string;
+        project_uuid?: string;
+        service_settings_name?: string;
+        service_settings_uuid?: string;
+        state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        uuid?: string;
+    };
+    url: '/api/rancher-clusters/';
+};
+
+export type RancherClustersHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type RancherClustersCreateData = {
     body: RancherClusterRequest;
@@ -32172,6 +38050,37 @@ export type RancherHpasListResponses = {
 };
 
 export type RancherHpasListResponse = RancherHpasListResponses[keyof RancherHpasListResponses];
+
+export type RancherHpasHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        cluster_uuid?: string;
+        name?: string;
+        name_exact?: string;
+        namespace_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        project_uuid?: string;
+        settings?: string;
+        settings_uuid?: string;
+        workload_uuid?: string;
+    };
+    url: '/api/rancher-hpas/';
+};
+
+export type RancherHpasHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type RancherHpasCreateData = {
     body: RancherHpaRequest;
@@ -32358,6 +38267,53 @@ export type RancherIngressesListResponses = {
 
 export type RancherIngressesListResponse = RancherIngressesListResponses[keyof RancherIngressesListResponses];
 
+export type RancherIngressesHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        backend_id?: string;
+        /**
+         * Can manage
+         */
+        can_manage?: boolean;
+        cluster_uuid?: string;
+        customer?: string;
+        customer_abbreviation?: string;
+        customer_name?: string;
+        customer_native_name?: string;
+        customer_uuid?: string;
+        description?: string;
+        external_ip?: string;
+        name?: string;
+        name_exact?: string;
+        namespace_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        project?: string;
+        project_name?: string;
+        project_uuid?: string;
+        rancher_project_uuid?: string;
+        service_settings_name?: string;
+        service_settings_uuid?: string;
+        state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        uuid?: string;
+    };
+    url: '/api/rancher-ingresses/';
+};
+
+export type RancherIngressesHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type RancherIngressesCreateData = {
     body: RancherIngressRequest;
     path?: never;
@@ -32534,6 +38490,41 @@ export type RancherNamespacesListResponses = {
 
 export type RancherNamespacesListResponse = RancherNamespacesListResponses[keyof RancherNamespacesListResponses];
 
+export type RancherNamespacesHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        cluster_uuid?: string;
+        name?: string;
+        name_exact?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-cluster_name' | '-name' | '-project_name' | 'cluster_name' | 'name' | 'project_name'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        project_uuid?: string;
+        settings?: string;
+        settings_uuid?: string;
+    };
+    url: '/api/rancher-namespaces/';
+};
+
+export type RancherNamespacesHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type RancherNamespacesRetrieveData = {
     body?: never;
     path: {
@@ -32571,6 +38562,30 @@ export type RancherNodesListResponses = {
 };
 
 export type RancherNodesListResponse = RancherNodesListResponses[keyof RancherNodesListResponses];
+
+export type RancherNodesHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        cluster_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/rancher-nodes/';
+};
+
+export type RancherNodesHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type RancherNodesCreateData = {
     body: RancherCreateNodeRequest;
@@ -32748,6 +38763,34 @@ export type RancherProjectsListResponses = {
 
 export type RancherProjectsListResponse = RancherProjectsListResponses[keyof RancherProjectsListResponses];
 
+export type RancherProjectsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        cluster_uuid?: string;
+        name?: string;
+        name_exact?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        settings?: string;
+        settings_uuid?: string;
+    };
+    url: '/api/rancher-projects/';
+};
+
+export type RancherProjectsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type RancherProjectsRetrieveData = {
     body?: never;
     path: {
@@ -32808,6 +38851,38 @@ export type RancherRoleTemplatesListResponses = {
 };
 
 export type RancherRoleTemplatesListResponse = RancherRoleTemplatesListResponses[keyof RancherRoleTemplatesListResponses];
+
+export type RancherRoleTemplatesHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        name?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-name' | '-scope_type' | 'name' | 'scope_type'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        scope_type?: string;
+        settings_uuid?: string;
+    };
+    url: '/api/rancher-role-templates/';
+};
+
+export type RancherRoleTemplatesHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type RancherRoleTemplatesRetrieveData = {
     body?: never;
@@ -32870,6 +38945,53 @@ export type RancherServicesListResponses = {
 };
 
 export type RancherServicesListResponse = RancherServicesListResponses[keyof RancherServicesListResponses];
+
+export type RancherServicesHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        backend_id?: string;
+        /**
+         * Can manage
+         */
+        can_manage?: boolean;
+        cluster_uuid?: string;
+        customer?: string;
+        customer_abbreviation?: string;
+        customer_name?: string;
+        customer_native_name?: string;
+        customer_uuid?: string;
+        description?: string;
+        external_ip?: string;
+        name?: string;
+        name_exact?: string;
+        namespace_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        project?: string;
+        project_name?: string;
+        project_uuid?: string;
+        rancher_project_uuid?: string;
+        service_settings_name?: string;
+        service_settings_uuid?: string;
+        state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        uuid?: string;
+    };
+    url: '/api/rancher-services/';
+};
+
+export type RancherServicesHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type RancherServicesCreateData = {
     body: RancherServiceRequest;
@@ -33064,6 +39186,42 @@ export type RancherTemplatesListResponses = {
 
 export type RancherTemplatesListResponse = RancherTemplatesListResponses[keyof RancherTemplatesListResponses];
 
+export type RancherTemplatesHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        catalog_uuid?: string;
+        cluster_uuid?: string;
+        name?: string;
+        name_exact?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-catalog_name' | '-name' | 'catalog_name' | 'name'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        project_uuid?: string;
+        settings?: string;
+        settings_uuid?: string;
+    };
+    url: '/api/rancher-templates/';
+};
+
+export type RancherTemplatesHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type RancherTemplatesRetrieveData = {
     body?: never;
     path: {
@@ -33112,6 +39270,41 @@ export type RancherUsersListResponses = {
 };
 
 export type RancherUsersListResponse = RancherUsersListResponses[keyof RancherUsersListResponses];
+
+export type RancherUsersHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Cluster UUID
+         */
+        cluster_uuid?: string;
+        is_active?: boolean;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        settings_uuid?: string;
+        /**
+         * User full name contains
+         */
+        user_full_name?: string;
+        user_username?: string;
+        user_uuid?: string;
+    };
+    url: '/api/rancher-users/';
+};
+
+export type RancherUsersHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type RancherUsersRetrieveData = {
     body?: never;
@@ -33162,6 +39355,42 @@ export type RancherWorkloadsListResponses = {
 };
 
 export type RancherWorkloadsListResponse = RancherWorkloadsListResponses[keyof RancherWorkloadsListResponses];
+
+export type RancherWorkloadsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        cluster_uuid?: string;
+        name?: string;
+        name_exact?: string;
+        namespace_uuid?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-cluster_name' | '-name' | '-namespace_name' | '-project_name' | 'cluster_name' | 'name' | 'namespace_name' | 'project_name'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        project_uuid?: string;
+        settings?: string;
+        settings_uuid?: string;
+    };
+    url: '/api/rancher-workloads/';
+};
+
+export type RancherWorkloadsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type RancherWorkloadsCreateData = {
     body: RancherWorkloadRequest;
@@ -33596,6 +39825,32 @@ export type RolesListResponses = {
 
 export type RolesListResponse = RolesListResponses[keyof RolesListResponses];
 
+export type RolesHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        description?: string;
+        is_active?: boolean;
+        name?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/roles/';
+};
+
+export type RolesHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type RolesCreateData = {
     body: RoleModifyRequest;
     path?: never;
@@ -33759,6 +40014,44 @@ export type ServiceSettingsListResponses = {
 
 export type ServiceSettingsListResponse = ServiceSettingsListResponses[keyof ServiceSettingsListResponses];
 
+export type ServiceSettingsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        customer?: string;
+        customer_uuid?: string;
+        name?: string;
+        name_exact?: string;
+        /**
+         * Which field to use when ordering the results.
+         */
+        o?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Scope UUID
+         */
+        scope_uuid?: string;
+        shared?: boolean;
+        state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        type?: string;
+    };
+    url: '/api/service-settings/';
+};
+
+export type ServiceSettingsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type ServiceSettingsRetrieveData = {
     body?: never;
     path: {
@@ -33803,6 +40096,35 @@ export type SlurmAllocationUserUsageListResponses = {
 };
 
 export type SlurmAllocationUserUsageListResponse = SlurmAllocationUserUsageListResponses[keyof SlurmAllocationUserUsageListResponses];
+
+export type SlurmAllocationUserUsageHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        allocation?: string;
+        allocation_uuid?: string;
+        month?: number;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        user?: string;
+        user_uuid?: string;
+        year?: number;
+    };
+    url: '/api/slurm-allocation-user-usage/';
+};
+
+export type SlurmAllocationUserUsageHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type SlurmAllocationUserUsageRetrieveData = {
     body?: never;
@@ -33866,6 +40188,51 @@ export type SlurmAllocationsListResponses = {
 };
 
 export type SlurmAllocationsListResponse = SlurmAllocationsListResponses[keyof SlurmAllocationsListResponses];
+
+export type SlurmAllocationsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        backend_id?: string;
+        /**
+         * Can manage
+         */
+        can_manage?: boolean;
+        customer?: string;
+        customer_abbreviation?: string;
+        customer_name?: string;
+        customer_native_name?: string;
+        customer_uuid?: string;
+        description?: string;
+        external_ip?: string;
+        is_active?: boolean;
+        name?: string;
+        name_exact?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        project?: string;
+        project_name?: string;
+        project_uuid?: string;
+        service_settings_name?: string;
+        service_settings_uuid?: string;
+        state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        uuid?: string;
+    };
+    url: '/api/slurm-allocations/';
+};
+
+export type SlurmAllocationsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type SlurmAllocationsCreateData = {
     body: SlurmAllocationRequest;
@@ -34016,6 +40383,31 @@ export type SlurmAssociationsListResponses = {
 
 export type SlurmAssociationsListResponse = SlurmAssociationsListResponses[keyof SlurmAssociationsListResponses];
 
+export type SlurmAssociationsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        allocation?: string;
+        allocation_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/slurm-associations/';
+};
+
+export type SlurmAssociationsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type SlurmAssociationsRetrieveData = {
     body?: never;
     path: {
@@ -34053,6 +40445,29 @@ export type SlurmJobsListResponses = {
 };
 
 export type SlurmJobsListResponse = SlurmJobsListResponses[keyof SlurmJobsListResponses];
+
+export type SlurmJobsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/slurm-jobs/';
+};
+
+export type SlurmJobsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type SlurmJobsCreateData = {
     body: FirecrestJobRequest;
@@ -34189,6 +40604,31 @@ export type SupportAttachmentsListResponses = {
 
 export type SupportAttachmentsListResponse = SupportAttachmentsListResponses[keyof SupportAttachmentsListResponses];
 
+export type SupportAttachmentsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        issue?: string;
+        issue_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/support-attachments/';
+};
+
+export type SupportAttachmentsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type SupportAttachmentsCreateData = {
     body: AttachmentRequest;
     path?: never;
@@ -34274,6 +40714,45 @@ export type SupportCommentsListResponses = {
 };
 
 export type SupportCommentsListResponse = SupportCommentsListResponses[keyof SupportCommentsListResponses];
+
+export type SupportCommentsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        author_name?: string;
+        author_user?: string;
+        description?: string;
+        is_public?: boolean;
+        issue?: string;
+        issue_uuid?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-modified' | 'created' | 'modified'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Remote ID is set.
+         */
+        remote_id_is_set?: boolean;
+    };
+    url: '/api/support-comments/';
+};
+
+export type SupportCommentsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type SupportCommentsDestroyData = {
     body?: never;
@@ -34400,6 +40879,41 @@ export type SupportFeedbacksListResponses = {
 
 export type SupportFeedbacksListResponse = SupportFeedbacksListResponses[keyof SupportFeedbacksListResponses];
 
+export type SupportFeedbacksHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        created_after?: string;
+        created_before?: string;
+        evaluation?: number;
+        issue?: string;
+        issue_key?: string;
+        issue_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        user?: string;
+        /**
+         * User full name contains
+         */
+        user_full_name?: string;
+        user_uuid?: string;
+    };
+    url: '/api/support-feedbacks/';
+};
+
+export type SupportFeedbacksHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type SupportFeedbacksCreateData = {
     body: CreateFeedbackRequest;
     path?: never;
@@ -34490,6 +41004,70 @@ export type SupportIssuesListResponses = {
 };
 
 export type SupportIssuesListResponse = SupportIssuesListResponses[keyof SupportIssuesListResponses];
+
+export type SupportIssuesHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        assignee?: string;
+        assignee_name?: string;
+        caller?: string;
+        /**
+         * Caller full name contains
+         */
+        caller_full_name?: string;
+        customer?: string;
+        customer_uuid?: string;
+        key?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-assignee_name' | '-caller_first_name' | '-caller_last_name' | '-created' | '-customer_name' | '-key' | '-modified' | '-priority' | '-project_name' | '-remote_id' | '-reporter_name' | '-status' | '-summary' | '-type' | 'assignee_name' | 'caller_first_name' | 'caller_last_name' | 'created' | 'customer_name' | 'key' | 'modified' | 'priority' | 'project_name' | 'remote_id' | 'reporter_name' | 'status' | 'summary' | 'type'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        project?: string;
+        project_uuid?: string;
+        /**
+         * Summary or key contains
+         */
+        query?: string;
+        remote_id?: string;
+        reporter?: string;
+        reporter_name?: string;
+        resolution_year_month?: string;
+        /**
+         * Resource external IP
+         */
+        resource_external_ip?: string;
+        /**
+         * Resource internal IP
+         */
+        resource_internal_ip?: string;
+        /**
+         * Resource UUID
+         */
+        resource_uuid?: string;
+        status?: string;
+        summary?: string;
+        type?: string;
+    };
+    url: '/api/support-issues/';
+};
+
+export type SupportIssuesHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type SupportIssuesCreateData = {
     body: IssueRequest;
@@ -34634,6 +41212,31 @@ export type SupportPrioritiesListResponses = {
 
 export type SupportPrioritiesListResponse = SupportPrioritiesListResponses[keyof SupportPrioritiesListResponses];
 
+export type SupportPrioritiesHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        name?: string;
+        name_exact?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/support-priorities/';
+};
+
+export type SupportPrioritiesHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type SupportPrioritiesRetrieveData = {
     body?: never;
     path: {
@@ -34696,6 +41299,29 @@ export type SupportTemplatesListResponses = {
 };
 
 export type SupportTemplatesListResponse = SupportTemplatesListResponses[keyof SupportTemplatesListResponses];
+
+export type SupportTemplatesHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/support-templates/';
+};
+
+export type SupportTemplatesHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type SupportTemplatesCreateData = {
     body: TemplateRequest;
@@ -34837,6 +41463,32 @@ export type SupportUsersListResponses = {
 
 export type SupportUsersListResponse = SupportUsersListResponses[keyof SupportUsersListResponses];
 
+export type SupportUsersHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        backend_id?: string;
+        name?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        user?: number;
+    };
+    url: '/api/support-users/';
+};
+
+export type SupportUsersHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type SupportUsersRetrieveData = {
     body?: never;
     path: {
@@ -34930,6 +41582,30 @@ export type UserAgreementsListResponses = {
 };
 
 export type UserAgreementsListResponse = UserAgreementsListResponses[keyof UserAgreementsListResponses];
+
+export type UserAgreementsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        agreement_type?: 'PP' | 'TOS';
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/user-agreements/';
+};
+
+export type UserAgreementsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type UserAgreementsCreateData = {
     body: UserAgreementRequest;
@@ -35039,6 +41715,40 @@ export type UserGroupInvitationsListResponses = {
 };
 
 export type UserGroupInvitationsListResponse = UserGroupInvitationsListResponses[keyof UserGroupInvitationsListResponses];
+
+export type UserGroupInvitationsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        customer_uuid?: string;
+        is_active?: boolean;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | 'created'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        role_name?: string;
+        role_uuid?: string;
+        scope_type?: string;
+    };
+    url: '/api/user-group-invitations/';
+};
+
+export type UserGroupInvitationsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type UserGroupInvitationsCreateData = {
     body: GroupInvitationRequest;
@@ -35157,6 +41867,42 @@ export type UserInvitationsListResponses = {
 };
 
 export type UserInvitationsListResponse = UserInvitationsListResponses[keyof UserInvitationsListResponses];
+
+export type UserInvitationsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        civil_number?: string;
+        customer_uuid?: string;
+        email?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-created_by' | '-email' | '-state' | 'created' | 'created_by' | 'email' | 'state'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        role_name?: string;
+        role_uuid?: string;
+        scope_type?: string;
+        state?: Array<'accepted' | 'canceled' | 'expired' | 'pending' | 'project' | 'rejected' | 'requested'>;
+    };
+    url: '/api/user-invitations/';
+};
+
+export type UserInvitationsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type UserInvitationsCreateData = {
     body: InvitationRequest;
@@ -35340,6 +42086,39 @@ export type UserPermissionRequestsListResponses = {
 
 export type UserPermissionRequestsListResponse = UserPermissionRequestsListResponses[keyof UserPermissionRequestsListResponses];
 
+export type UserPermissionRequestsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        created_by?: string;
+        customer_uuid?: string;
+        invitation?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-state' | 'created' | 'state'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        state?: Array<'approved' | 'canceled' | 'draft' | 'pending' | 'rejected'>;
+    };
+    url: '/api/user-permission-requests/';
+};
+
+export type UserPermissionRequestsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type UserPermissionRequestsRetrieveData = {
     body?: never;
     path: {
@@ -35454,6 +42233,76 @@ export type UserPermissionsListResponses = {
 
 export type UserPermissionsListResponse = UserPermissionsListResponses[keyof UserPermissionsListResponses];
 
+export type UserPermissionsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Created after
+         */
+        created?: string;
+        expiration_time?: string;
+        /**
+         * User full name contains
+         */
+        full_name?: string;
+        /**
+         * Modified after
+         */
+        modified?: string;
+        native_name?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-email' | '-expiration_time' | '-full_name' | '-native_name' | '-role' | '-username' | 'created' | 'email' | 'expiration_time' | 'full_name' | 'native_name' | 'role' | 'username'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Role name contains
+         */
+        role_name?: string;
+        /**
+         * Role UUID
+         */
+        role_uuid?: string;
+        /**
+         * Scope name
+         */
+        scope_name?: string;
+        /**
+         * Scope type
+         */
+        scope_type?: string;
+        /**
+         * Scope UUID
+         */
+        scope_uuid?: string;
+        user?: string;
+        /**
+         * User slug contains
+         */
+        user_slug?: string;
+        user_url?: string;
+        username?: string;
+    };
+    url: '/api/user-permissions/';
+};
+
+export type UserPermissionsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type UserPermissionsRetrieveData = {
     body?: never;
     path: {
@@ -35544,6 +42393,82 @@ export type UsersListResponses = {
 };
 
 export type UsersListResponse = UsersListResponses[keyof UsersListResponses];
+
+export type UsersHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Agreement date after
+         */
+        agreement_date?: string;
+        civil_number?: string;
+        customer_uuid?: string;
+        /**
+         * Date joined after
+         */
+        date_joined?: string;
+        description?: string;
+        email?: string;
+        /**
+         * Full name
+         */
+        full_name?: string;
+        is_active?: boolean;
+        is_staff?: boolean;
+        is_support?: boolean;
+        job_title?: string;
+        /**
+         * Date modified after
+         */
+        modified?: string;
+        native_name?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-description' | '-email' | '-full_name' | '-is_active' | '-is_staff' | '-is_support' | '-job_title' | '-native_name' | '-organization' | '-phone_number' | '-registration_method' | '-username' | 'description' | 'email' | 'full_name' | 'is_active' | 'is_staff' | 'is_support' | 'job_title' | 'native_name' | 'organization' | 'phone_number' | 'registration_method' | 'username'>;
+        organization?: string;
+        /**
+         * Organization roles
+         */
+        organization_roles?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        phone_number?: string;
+        /**
+         * Project roles
+         */
+        project_roles?: string;
+        project_uuid?: string;
+        query?: string;
+        registration_method?: string;
+        /**
+         * User keyword
+         */
+        user_keyword?: string;
+        username?: string;
+        /**
+         * Comma-separated usernames
+         */
+        username_list?: string;
+    };
+    url: '/api/users/';
+};
+
+export type UsersHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type UsersCreateData = {
     body: UserRequest;
@@ -35761,6 +42686,20 @@ export type UsersMeRetrieveResponses = {
 
 export type UsersMeRetrieveResponse = UsersMeRetrieveResponses[keyof UsersMeRetrieveResponses];
 
+export type UsersMeHeadData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/users/me/';
+};
+
+export type UsersMeHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type VersionRetrieveData = {
     body?: never;
     path?: never;
@@ -35803,6 +42742,37 @@ export type VmwareClustersListResponses = {
 };
 
 export type VmwareClustersListResponse = VmwareClustersListResponses[keyof VmwareClustersListResponses];
+
+export type VmwareClustersHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Customer UUID
+         */
+        customer_uuid?: string;
+        name?: string;
+        name_exact?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        settings?: string;
+        settings_uuid?: string;
+    };
+    url: '/api/vmware-clusters/';
+};
+
+export type VmwareClustersHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type VmwareClustersRetrieveData = {
     body?: never;
@@ -35848,6 +42818,37 @@ export type VmwareDatastoresListResponses = {
 };
 
 export type VmwareDatastoresListResponse = VmwareDatastoresListResponses[keyof VmwareDatastoresListResponses];
+
+export type VmwareDatastoresHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Customer UUID
+         */
+        customer_uuid?: string;
+        name?: string;
+        name_exact?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        settings?: string;
+        settings_uuid?: string;
+    };
+    url: '/api/vmware-datastores/';
+};
+
+export type VmwareDatastoresHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type VmwareDatastoresRetrieveData = {
     body?: never;
@@ -35909,6 +42910,52 @@ export type VmwareDisksListResponses = {
 };
 
 export type VmwareDisksListResponse = VmwareDisksListResponses[keyof VmwareDisksListResponses];
+
+export type VmwareDisksHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        backend_id?: string;
+        /**
+         * Can manage
+         */
+        can_manage?: boolean;
+        customer?: string;
+        customer_abbreviation?: string;
+        customer_name?: string;
+        customer_native_name?: string;
+        customer_uuid?: string;
+        description?: string;
+        external_ip?: string;
+        name?: string;
+        name_exact?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        project?: string;
+        project_name?: string;
+        project_uuid?: string;
+        service_settings_name?: string;
+        service_settings_uuid?: string;
+        state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        uuid?: string;
+        vm?: string;
+        vm_uuid?: string;
+    };
+    url: '/api/vmware-disks/';
+};
+
+export type VmwareDisksHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type VmwareDisksDestroyData = {
     body?: never;
@@ -36022,6 +43069,37 @@ export type VmwareFoldersListResponses = {
 
 export type VmwareFoldersListResponse = VmwareFoldersListResponses[keyof VmwareFoldersListResponses];
 
+export type VmwareFoldersHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Customer UUID
+         */
+        customer_uuid?: string;
+        name?: string;
+        name_exact?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        settings?: string;
+        settings_uuid?: string;
+    };
+    url: '/api/vmware-folders/';
+};
+
+export type VmwareFoldersHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type VmwareFoldersRetrieveData = {
     body?: never;
     path: {
@@ -36086,6 +43164,41 @@ export type VmwareNetworksListResponses = {
 
 export type VmwareNetworksListResponse = VmwareNetworksListResponses[keyof VmwareNetworksListResponses];
 
+export type VmwareNetworksHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Customer UUID
+         */
+        customer_pair_uuid?: string;
+        /**
+         * Customer UUID
+         */
+        customer_uuid?: string;
+        name?: string;
+        name_exact?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        settings?: string;
+        settings_uuid?: string;
+    };
+    url: '/api/vmware-networks/';
+};
+
+export type VmwareNetworksHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type VmwareNetworksRetrieveData = {
     body?: never;
     path: {
@@ -36148,6 +43261,54 @@ export type VmwarePortsListResponses = {
 };
 
 export type VmwarePortsListResponse = VmwarePortsListResponses[keyof VmwarePortsListResponses];
+
+export type VmwarePortsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        backend_id?: string;
+        /**
+         * Can manage
+         */
+        can_manage?: boolean;
+        customer?: string;
+        customer_abbreviation?: string;
+        customer_name?: string;
+        customer_native_name?: string;
+        customer_uuid?: string;
+        description?: string;
+        external_ip?: string;
+        name?: string;
+        name_exact?: string;
+        network?: string;
+        network_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        project?: string;
+        project_name?: string;
+        project_uuid?: string;
+        service_settings_name?: string;
+        service_settings_uuid?: string;
+        state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        uuid?: string;
+        vm?: string;
+        vm_uuid?: string;
+    };
+    url: '/api/vmware-ports/';
+};
+
+export type VmwarePortsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type VmwarePortsDestroyData = {
     body?: never;
@@ -36242,6 +43403,33 @@ export type VmwareTemplatesListResponses = {
 
 export type VmwareTemplatesListResponse = VmwareTemplatesListResponses[keyof VmwareTemplatesListResponses];
 
+export type VmwareTemplatesHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        name?: string;
+        name_exact?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        settings?: string;
+        settings_uuid?: string;
+    };
+    url: '/api/vmware-templates/';
+};
+
+export type VmwareTemplatesHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type VmwareTemplatesRetrieveData = {
     body?: never;
     path: {
@@ -36301,6 +43489,51 @@ export type VmwareVirtualMachineListResponses = {
 };
 
 export type VmwareVirtualMachineListResponse = VmwareVirtualMachineListResponses[keyof VmwareVirtualMachineListResponses];
+
+export type VmwareVirtualMachineHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        backend_id?: string;
+        /**
+         * Can manage
+         */
+        can_manage?: boolean;
+        customer?: string;
+        customer_abbreviation?: string;
+        customer_name?: string;
+        customer_native_name?: string;
+        customer_uuid?: string;
+        description?: string;
+        external_ip?: string;
+        name?: string;
+        name_exact?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        project?: string;
+        project_name?: string;
+        project_uuid?: string;
+        runtime_state?: string;
+        service_settings_name?: string;
+        service_settings_uuid?: string;
+        state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        uuid?: string;
+    };
+    url: '/api/vmware-virtual-machine/';
+};
+
+export type VmwareVirtualMachineHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type VmwareVirtualMachineCreateData = {
     body: VmwareVirtualMachineRequest;
