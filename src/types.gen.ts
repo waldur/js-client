@@ -8416,6 +8416,7 @@ export type ProtectedCall = {
     description?: string;
     state?: CallStates;
     manager?: string;
+    readonly manager_uuid?: string;
     readonly customer_name?: string;
     readonly customer_uuid?: string;
     readonly offerings?: Array<NestedRequestedOffering>;
@@ -8799,6 +8800,7 @@ export type PublicCall = {
     description?: string;
     state?: CallStates;
     manager?: string;
+    readonly manager_uuid?: string;
     readonly customer_name?: string;
     readonly customer_uuid?: string;
     readonly offerings?: Array<NestedRequestedOffering>;
@@ -35978,7 +35980,7 @@ export type ProposalProtectedCallsListData = {
         customer?: string;
         customer_keyword?: string;
         customer_uuid?: string;
-        field?: Array<'backend_id' | 'created' | 'created_by' | 'customer_name' | 'customer_uuid' | 'description' | 'documents' | 'end_date' | 'external_url' | 'fixed_duration_in_days' | 'manager' | 'name' | 'offerings' | 'reference_code' | 'resource_templates' | 'reviewer_identity_visible_to_submitters' | 'reviews_visible_to_submitters' | 'rounds' | 'slug' | 'start_date' | 'state' | 'url' | 'uuid'>;
+        field?: Array<'backend_id' | 'created' | 'created_by' | 'customer_name' | 'customer_uuid' | 'description' | 'documents' | 'end_date' | 'external_url' | 'fixed_duration_in_days' | 'manager' | 'manager_uuid' | 'name' | 'offerings' | 'reference_code' | 'resource_templates' | 'reviewer_identity_visible_to_submitters' | 'reviews_visible_to_submitters' | 'rounds' | 'slug' | 'start_date' | 'state' | 'url' | 'uuid'>;
         has_active_round?: boolean;
         name?: string;
         /**
@@ -36082,7 +36084,7 @@ export type ProposalProtectedCallsRetrieveData = {
         uuid: string;
     };
     query?: {
-        field?: Array<'backend_id' | 'created' | 'created_by' | 'customer_name' | 'customer_uuid' | 'description' | 'documents' | 'end_date' | 'external_url' | 'fixed_duration_in_days' | 'manager' | 'name' | 'offerings' | 'reference_code' | 'resource_templates' | 'reviewer_identity_visible_to_submitters' | 'reviews_visible_to_submitters' | 'rounds' | 'slug' | 'start_date' | 'state' | 'url' | 'uuid'>;
+        field?: Array<'backend_id' | 'created' | 'created_by' | 'customer_name' | 'customer_uuid' | 'description' | 'documents' | 'end_date' | 'external_url' | 'fixed_duration_in_days' | 'manager' | 'manager_uuid' | 'name' | 'offerings' | 'reference_code' | 'resource_templates' | 'reviewer_identity_visible_to_submitters' | 'reviews_visible_to_submitters' | 'rounds' | 'slug' | 'start_date' | 'state' | 'url' | 'uuid'>;
     };
     url: '/api/proposal-protected-calls/{uuid}/';
 };
@@ -36638,7 +36640,7 @@ export type ProposalPublicCallsListData = {
         customer?: string;
         customer_keyword?: string;
         customer_uuid?: string;
-        field?: Array<'backend_id' | 'created' | 'customer_name' | 'customer_uuid' | 'description' | 'documents' | 'end_date' | 'external_url' | 'fixed_duration_in_days' | 'manager' | 'name' | 'offerings' | 'resource_templates' | 'reviewer_identity_visible_to_submitters' | 'reviews_visible_to_submitters' | 'rounds' | 'slug' | 'start_date' | 'state' | 'url' | 'uuid'>;
+        field?: Array<'backend_id' | 'created' | 'customer_name' | 'customer_uuid' | 'description' | 'documents' | 'end_date' | 'external_url' | 'fixed_duration_in_days' | 'manager' | 'manager_uuid' | 'name' | 'offerings' | 'resource_templates' | 'reviewer_identity_visible_to_submitters' | 'reviews_visible_to_submitters' | 'rounds' | 'slug' | 'start_date' | 'state' | 'url' | 'uuid'>;
         has_active_round?: boolean;
         name?: string;
         /**
@@ -36711,7 +36713,7 @@ export type ProposalPublicCallsRetrieveData = {
         uuid: string;
     };
     query?: {
-        field?: Array<'backend_id' | 'created' | 'customer_name' | 'customer_uuid' | 'description' | 'documents' | 'end_date' | 'external_url' | 'fixed_duration_in_days' | 'manager' | 'name' | 'offerings' | 'resource_templates' | 'reviewer_identity_visible_to_submitters' | 'reviews_visible_to_submitters' | 'rounds' | 'slug' | 'start_date' | 'state' | 'url' | 'uuid'>;
+        field?: Array<'backend_id' | 'created' | 'customer_name' | 'customer_uuid' | 'description' | 'documents' | 'end_date' | 'external_url' | 'fixed_duration_in_days' | 'manager' | 'manager_uuid' | 'name' | 'offerings' | 'resource_templates' | 'reviewer_identity_visible_to_submitters' | 'reviews_visible_to_submitters' | 'rounds' | 'slug' | 'start_date' | 'state' | 'url' | 'uuid'>;
     };
     url: '/api/proposal-public-calls/{uuid}/';
 };
