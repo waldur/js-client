@@ -1040,6 +1040,18 @@ export type CallAttachDocumentsRequest = {
     description?: string;
 };
 
+export type CallComplianceOverview = {
+    readonly checklist: {
+        [key: string]: unknown;
+    } | null;
+    readonly proposals: Array<unknown>;
+};
+
+export type CallComplianceReviewRequest = {
+    proposal_uuid: string;
+    review_notes?: string;
+};
+
 export type CallDetachDocumentsRequest = {
     documents: Array<string>;
 };
@@ -2915,6 +2927,7 @@ export type ImportResourceRequest = {
     backend_id: string;
     project: string;
     plan?: string;
+    additional_details?: unknown;
 };
 
 export type ImportableResource = {
@@ -7432,6 +7445,10 @@ export type PatchedProtectedCallRequest = {
     reviews_visible_to_submitters?: boolean;
     created_by?: string | null;
     reference_code?: string;
+    /**
+     * Compliance checklist that proposals must complete before submission
+     */
+    compliance_checklist?: string | null;
 };
 
 export type PatchedProtectedRoundRequest = {
@@ -8282,10 +8299,102 @@ export type Proposal = {
     readonly oecd_fos_2007_label: string;
     readonly allocation_comment: string | null;
     readonly created: string;
+    readonly compliance_status: {
+        [key: string]: unknown;
+    } | null;
+    readonly can_submit: {
+        [key: string]: unknown;
+    };
 };
 
 export type ProposalApproveRequest = {
     allocation_comment?: string;
+};
+
+export type ProposalChecklistAnswer = {
+    readonly uuid: string;
+    readonly question_description: string;
+    readonly question_type: string;
+    readonly question_required: boolean;
+    readonly question_solution: string;
+    /**
+     * Flexible answer storage for different question types
+     */
+    answer_data?: unknown;
+    /**
+     * Internal flag - this answer requires additional review
+     */
+    readonly requires_review: boolean;
+    readonly user: number;
+    readonly user_name: string;
+    readonly created: string;
+    readonly modified: string;
+};
+
+export type ProposalChecklistAnswerSubmitRequest = {
+    question_uuid: string;
+    answer_data: unknown;
+};
+
+export type ProposalChecklistAnswerSubmitResponse = {
+    detail: string;
+    completion: ProposalChecklistCompletion;
+};
+
+export type ProposalChecklistCompletion = {
+    readonly uuid: string;
+    /**
+     * Whether all required questions have been answered
+     */
+    readonly is_completed: boolean;
+    /**
+     * Whether any answers triggered review requirements
+     */
+    readonly requires_review: boolean;
+    /**
+     * User who reviewed the checklist completion
+     */
+    reviewed_by?: number | null;
+    readonly reviewed_by_name: string;
+    reviewed_at?: string | null;
+    /**
+     * Notes from the reviewer
+     */
+    review_notes?: string;
+    readonly completion_percentage: number;
+    readonly review_trigger_summary: Array<unknown>;
+    readonly unanswered_required_questions: Array<unknown>;
+    readonly checklist_name: string;
+    readonly checklist_description: string;
+    readonly created: string;
+    readonly modified: string;
+};
+
+export type ProposalChecklistQuestion = {
+    readonly uuid: string;
+    readonly description: string;
+    /**
+     * Type of question and expected answer format
+     */
+    question_type: QuestionTypeEnum;
+    readonly required: boolean;
+    /**
+     * Guidance shown when answer needs clarification
+     */
+    readonly solution: string | null;
+    readonly order: number;
+    readonly existing_answer: {
+        [key: string]: unknown;
+    } | null;
+    readonly question_options: Array<unknown> | null;
+};
+
+export type ProposalComplianceChecklistResponse = {
+    readonly checklist: {
+        [key: string]: unknown;
+    };
+    completion: ProposalChecklistCompletion;
+    questions: Array<ProposalChecklistQuestion>;
 };
 
 export type ProposalDocumentation = {
@@ -8436,6 +8545,11 @@ export type ProtectedCall = {
     reviews_visible_to_submitters?: boolean;
     created_by?: string | null;
     reference_code?: string;
+    /**
+     * Compliance checklist that proposals must complete before submission
+     */
+    compliance_checklist?: string | null;
+    readonly compliance_checklist_name?: string;
 };
 
 export type ProtectedCallRequest = {
@@ -8455,6 +8569,10 @@ export type ProtectedCallRequest = {
     reviews_visible_to_submitters?: boolean;
     created_by?: string | null;
     reference_code?: string;
+    /**
+     * Compliance checklist that proposals must complete before submission
+     */
+    compliance_checklist?: string | null;
 };
 
 export type ProtectedProposalList = {
@@ -35724,6 +35842,36 @@ export type ProposalProposalsAttachDocumentResponses = {
     200: unknown;
 };
 
+export type ProposalProposalsComplianceChecklistRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-proposals/{uuid}/compliance_checklist/';
+};
+
+export type ProposalProposalsComplianceChecklistRetrieveResponses = {
+    200: ProposalComplianceChecklistResponse;
+};
+
+export type ProposalProposalsComplianceChecklistRetrieveResponse = ProposalProposalsComplianceChecklistRetrieveResponses[keyof ProposalProposalsComplianceChecklistRetrieveResponses];
+
+export type ProposalProposalsComplianceStatusRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-proposals/{uuid}/compliance_status/';
+};
+
+export type ProposalProposalsComplianceStatusRetrieveResponses = {
+    200: ProposalChecklistCompletion;
+};
+
+export type ProposalProposalsComplianceStatusRetrieveResponse = ProposalProposalsComplianceStatusRetrieveResponses[keyof ProposalProposalsComplianceStatusRetrieveResponses];
+
 export type ProposalProposalsDeleteUserData = {
     body: UserRoleDeleteRequest;
     path: {
@@ -35942,6 +36090,21 @@ export type ProposalProposalsSubmitResponses = {
     200: unknown;
 };
 
+export type ProposalProposalsSubmitComplianceAnswersData = {
+    body: Array<ProposalChecklistAnswerSubmitRequest>;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-proposals/{uuid}/submit_compliance_answers/';
+};
+
+export type ProposalProposalsSubmitComplianceAnswersResponses = {
+    200: ProposalChecklistAnswerSubmitResponse;
+};
+
+export type ProposalProposalsSubmitComplianceAnswersResponse = ProposalProposalsSubmitComplianceAnswersResponses[keyof ProposalProposalsSubmitComplianceAnswersResponses];
+
 export type ProposalProposalsUpdateProjectDetailsData = {
     body: ProposalUpdateProjectDetailsRequest;
     path: {
@@ -35980,7 +36143,7 @@ export type ProposalProtectedCallsListData = {
         customer?: string;
         customer_keyword?: string;
         customer_uuid?: string;
-        field?: Array<'backend_id' | 'created' | 'created_by' | 'customer_name' | 'customer_uuid' | 'description' | 'documents' | 'end_date' | 'external_url' | 'fixed_duration_in_days' | 'manager' | 'manager_uuid' | 'name' | 'offerings' | 'reference_code' | 'resource_templates' | 'reviewer_identity_visible_to_submitters' | 'reviews_visible_to_submitters' | 'rounds' | 'slug' | 'start_date' | 'state' | 'url' | 'uuid'>;
+        field?: Array<'backend_id' | 'compliance_checklist' | 'compliance_checklist_name' | 'created' | 'created_by' | 'customer_name' | 'customer_uuid' | 'description' | 'documents' | 'end_date' | 'external_url' | 'fixed_duration_in_days' | 'manager' | 'manager_uuid' | 'name' | 'offerings' | 'reference_code' | 'resource_templates' | 'reviewer_identity_visible_to_submitters' | 'reviews_visible_to_submitters' | 'rounds' | 'slug' | 'start_date' | 'state' | 'url' | 'uuid'>;
         has_active_round?: boolean;
         name?: string;
         /**
@@ -36084,7 +36247,7 @@ export type ProposalProtectedCallsRetrieveData = {
         uuid: string;
     };
     query?: {
-        field?: Array<'backend_id' | 'created' | 'created_by' | 'customer_name' | 'customer_uuid' | 'description' | 'documents' | 'end_date' | 'external_url' | 'fixed_duration_in_days' | 'manager' | 'manager_uuid' | 'name' | 'offerings' | 'reference_code' | 'resource_templates' | 'reviewer_identity_visible_to_submitters' | 'reviews_visible_to_submitters' | 'rounds' | 'slug' | 'start_date' | 'state' | 'url' | 'uuid'>;
+        field?: Array<'backend_id' | 'compliance_checklist' | 'compliance_checklist_name' | 'created' | 'created_by' | 'customer_name' | 'customer_uuid' | 'description' | 'documents' | 'end_date' | 'external_url' | 'fixed_duration_in_days' | 'manager' | 'manager_uuid' | 'name' | 'offerings' | 'reference_code' | 'resource_templates' | 'reviewer_identity_visible_to_submitters' | 'reviews_visible_to_submitters' | 'rounds' | 'slug' | 'start_date' | 'state' | 'url' | 'uuid'>;
     };
     url: '/api/proposal-protected-calls/{uuid}/';
 };
@@ -36135,11 +36298,10 @@ export type ProposalProtectedCallsActivateData = {
 };
 
 export type ProposalProtectedCallsActivateResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    200: ProtectedCall;
 };
+
+export type ProposalProtectedCallsActivateResponse = ProposalProtectedCallsActivateResponses[keyof ProposalProtectedCallsActivateResponses];
 
 export type ProposalProtectedCallsAddUserData = {
     body: UserRoleCreateRequest;
@@ -36166,11 +36328,10 @@ export type ProposalProtectedCallsArchiveData = {
 };
 
 export type ProposalProtectedCallsArchiveResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    200: ProtectedCall;
 };
+
+export type ProposalProtectedCallsArchiveResponse = ProposalProtectedCallsArchiveResponses[keyof ProposalProtectedCallsArchiveResponses];
 
 export type ProposalProtectedCallsAttachDocumentsData = {
     body: CallAttachDocumentsRequest;
@@ -36187,6 +36348,21 @@ export type ProposalProtectedCallsAttachDocumentsResponses = {
      */
     200: unknown;
 };
+
+export type ProposalProtectedCallsComplianceOverviewRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-protected-calls/{uuid}/compliance_overview/';
+};
+
+export type ProposalProtectedCallsComplianceOverviewRetrieveResponses = {
+    200: CallComplianceOverview;
+};
+
+export type ProposalProtectedCallsComplianceOverviewRetrieveResponse = ProposalProtectedCallsComplianceOverviewRetrieveResponses[keyof ProposalProtectedCallsComplianceOverviewRetrieveResponses];
 
 export type ProposalProtectedCallsDeleteUserData = {
     body: UserRoleDeleteRequest;
@@ -36390,6 +36566,48 @@ export type ProposalProtectedCallsOfferingsUpdateResponses = {
 
 export type ProposalProtectedCallsOfferingsUpdateResponse = ProposalProtectedCallsOfferingsUpdateResponses[keyof ProposalProtectedCallsOfferingsUpdateResponses];
 
+export type ProposalProtectedCallsProposalsComplianceAnswersListData = {
+    body?: never;
+    path: {
+        /**
+         * UUID of the proposal
+         */
+        proposal_uuid: string;
+        uuid: string;
+    };
+    query?: {
+        customer?: string;
+        customer_keyword?: string;
+        customer_uuid?: string;
+        has_active_round?: boolean;
+        name?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-manager__customer__name' | '-name' | 'created' | 'manager__customer__name' | 'name'>;
+        offering_uuid?: string;
+        offerings_provider_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        state?: Array<'active' | 'archived' | 'draft'>;
+    };
+    url: '/api/proposal-protected-calls/{uuid}/proposals/{proposal_uuid}/compliance-answers/';
+};
+
+export type ProposalProtectedCallsProposalsComplianceAnswersListResponses = {
+    200: Array<ProposalChecklistAnswer>;
+};
+
+export type ProposalProtectedCallsProposalsComplianceAnswersListResponse = ProposalProtectedCallsProposalsComplianceAnswersListResponses[keyof ProposalProtectedCallsProposalsComplianceAnswersListResponses];
+
 export type ProposalProtectedCallsResourceTemplatesListData = {
     body?: never;
     path: {
@@ -36495,6 +36713,23 @@ export type ProposalProtectedCallsResourceTemplatesUpdateResponses = {
 };
 
 export type ProposalProtectedCallsResourceTemplatesUpdateResponse = ProposalProtectedCallsResourceTemplatesUpdateResponses[keyof ProposalProtectedCallsResourceTemplatesUpdateResponses];
+
+export type ProposalProtectedCallsReviewProposalComplianceData = {
+    body: CallComplianceReviewRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-protected-calls/{uuid}/review_proposal_compliance/';
+};
+
+export type ProposalProtectedCallsReviewProposalComplianceResponses = {
+    200: {
+        [key: string]: string;
+    };
+};
+
+export type ProposalProtectedCallsReviewProposalComplianceResponse = ProposalProtectedCallsReviewProposalComplianceResponses[keyof ProposalProtectedCallsReviewProposalComplianceResponses];
 
 export type ProposalProtectedCallsRoundsListData = {
     body?: never;
