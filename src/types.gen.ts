@@ -3485,6 +3485,10 @@ export type MaintenanceAnnouncement = {
      * Type of maintenance being performed
      */
     maintenance_type?: MaintenanceTypeEnum;
+    /**
+     * Optional reference to an external maintenance tracker
+     */
+    external_reference_url?: string;
     state: MaintenanceAnnouncementStateEnum;
     /**
      * When the maintenance is scheduled to begin
@@ -3576,6 +3580,10 @@ export type MaintenanceAnnouncementRequest = {
      * Type of maintenance being performed
      */
     maintenance_type?: MaintenanceTypeEnum;
+    /**
+     * Optional reference to an external maintenance tracker
+     */
+    external_reference_url?: string;
     /**
      * When the maintenance is scheduled to begin
      */
@@ -7177,6 +7185,10 @@ export type PatchedMaintenanceAnnouncementRequest = {
      */
     maintenance_type?: MaintenanceTypeEnum;
     /**
+     * Optional reference to an external maintenance tracker
+     */
+    external_reference_url?: string;
+    /**
      * When the maintenance is scheduled to begin
      */
     scheduled_start?: string;
@@ -7509,10 +7521,6 @@ export type PatchedProviderPlanDetailsRequest = {
 
 export type PatchedQuestionAdminRequest = {
     description?: string;
-    /**
-     * Guidance shown when answer needs clarification
-     */
-    solution?: string | null;
     image?: (Blob | File) | null;
     checklist?: string;
     order?: number;
@@ -8057,7 +8065,7 @@ export type Project = {
      * The date is inclusive. Once reached, all project resource will be scheduled for termination.
      */
     end_date?: string | null;
-    end_date_requested_by?: string | null;
+    readonly end_date_requested_by?: string | null;
     oecd_fos_2007_code?: OecdFos2007CodeEnum | BlankEnum | NullEnum | null;
     readonly oecd_fos_2007_label?: string;
     is_industry?: boolean;
@@ -8198,7 +8206,6 @@ export type ProjectRequest = {
      * The date is inclusive. Once reached, all project resource will be scheduled for termination.
      */
     end_date?: string | null;
-    end_date_requested_by?: string | null;
     oecd_fos_2007_code?: OecdFos2007CodeEnum | BlankEnum | NullEnum | null;
     is_industry?: boolean;
     image?: (Blob | File) | null;
@@ -8343,7 +8350,6 @@ export type ProposalChecklistAnswer = {
     readonly question_description: string;
     readonly question_type: string;
     readonly question_required: boolean;
-    readonly question_solution: string;
     /**
      * Flexible answer storage for different question types
      */
@@ -8405,10 +8411,6 @@ export type ProposalChecklistQuestion = {
      */
     question_type: QuestionTypeEnum;
     readonly required: boolean;
-    /**
-     * Guidance shown when answer needs clarification
-     */
-    readonly solution: string | null;
     readonly order: number;
     readonly existing_answer: {
         [key: string]: unknown;
@@ -9063,11 +9065,6 @@ export type QueryRequest = {
 export type Question = {
     readonly uuid: string;
     description?: string;
-    /**
-     * Guidance shown when answer needs clarification
-     */
-    solution?: string | null;
-    readonly category_uuid: string;
     image?: string | null;
     readonly question_options: Array<QuestionOptions>;
 };
@@ -9075,11 +9072,6 @@ export type Question = {
 export type QuestionAdmin = {
     readonly uuid: string;
     description?: string;
-    /**
-     * Guidance shown when answer needs clarification
-     */
-    solution?: string | null;
-    readonly category_uuid: string;
     image?: string | null;
     readonly question_options: Array<QuestionOptionsAdmin>;
     readonly url: string;
@@ -9105,10 +9097,6 @@ export type QuestionAdmin = {
 
 export type QuestionAdminRequest = {
     description?: string;
-    /**
-     * Guidance shown when answer needs clarification
-     */
-    solution?: string | null;
     image?: (Blob | File) | null;
     checklist: string;
     order?: number;
@@ -22134,6 +22122,15 @@ export type MarketplaceMaintenanceAnnouncementTemplateOfferingsListData = {
     body?: never;
     path?: never;
     query?: {
+        impact_level?: number;
+        maintenance_template_uuid?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | 'created'>;
+        offering_uuid?: string;
         /**
          * A page number within the paginated result set.
          */
@@ -22142,6 +22139,7 @@ export type MarketplaceMaintenanceAnnouncementTemplateOfferingsListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        service_provider_uuid?: string;
     };
     url: '/api/marketplace-maintenance-announcement-template-offerings/';
 };
@@ -22156,6 +22154,15 @@ export type MarketplaceMaintenanceAnnouncementTemplateOfferingsHeadData = {
     body?: never;
     path?: never;
     query?: {
+        impact_level?: number;
+        maintenance_template_uuid?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | 'created'>;
+        offering_uuid?: string;
         /**
          * A page number within the paginated result set.
          */
@@ -22164,6 +22171,7 @@ export type MarketplaceMaintenanceAnnouncementTemplateOfferingsHeadData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        service_provider_uuid?: string;
     };
     url: '/api/marketplace-maintenance-announcement-template-offerings/';
 };
@@ -22313,6 +22321,13 @@ export type MarketplaceMaintenanceAnnouncementsTemplateListData = {
     body?: never;
     path?: never;
     query?: {
+        maintenance_type?: number;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-name' | 'created' | 'name'>;
         /**
          * A page number within the paginated result set.
          */
@@ -22321,6 +22336,7 @@ export type MarketplaceMaintenanceAnnouncementsTemplateListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        service_provider_uuid?: string;
     };
     url: '/api/marketplace-maintenance-announcements-template/';
 };
@@ -22335,6 +22351,13 @@ export type MarketplaceMaintenanceAnnouncementsTemplateHeadData = {
     body?: never;
     path?: never;
     query?: {
+        maintenance_type?: number;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-name' | 'created' | 'name'>;
         /**
          * A page number within the paginated result set.
          */
@@ -22343,6 +22366,7 @@ export type MarketplaceMaintenanceAnnouncementsTemplateHeadData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        service_provider_uuid?: string;
     };
     url: '/api/marketplace-maintenance-announcements-template/';
 };
