@@ -886,7 +886,7 @@ export type BasicUser = {
 
 export type BillingTypeEnum = 'fixed' | 'usage' | 'limit' | 'one' | 'few';
 
-export type BillingUnit = 'month' | 'half_month' | 'day' | 'hour' | 'quantity';
+export type BillingUnit = 'month' | 'quarter' | 'half_month' | 'day' | 'hour' | 'quantity';
 
 export type BlankEnum = '';
 
@@ -3458,7 +3458,7 @@ export type LexisLinkRequest = {
     heappe_project_id?: number | null;
 };
 
-export type LimitPeriodEnum = 'month' | 'annual' | 'total';
+export type LimitPeriodEnum = 'month' | 'quarterly' | 'annual' | 'total';
 
 export type LinkOpenstackRequest = {
     instance: string;
