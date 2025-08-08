@@ -38,22 +38,33 @@ export type AgreementTypeEnum = 'TOS' | 'PP';
 
 export type AllocationTimeEnum = 'on_decision' | 'fixed_date';
 
-export type AnswerList = {
-    readonly question_uuid: string;
+export type Answer = {
+    readonly uuid: string;
+    readonly question_description: string;
+    readonly question_type: string;
+    readonly question_required: boolean;
     /**
      * Flexible answer storage for different question types
      */
     answer_data?: unknown;
-};
-
-export type AnswerSubmit = {
-    question_uuid: string;
-    answer_data: unknown;
+    /**
+     * Internal flag - this answer requires additional review
+     */
+    readonly requires_review: boolean;
+    readonly user: number;
+    readonly user_name: string;
+    readonly created: string;
+    readonly modified: string;
 };
 
 export type AnswerSubmitRequest = {
     question_uuid: string;
     answer_data: unknown;
+};
+
+export type AnswerSubmitResponse = {
+    detail: string;
+    completion: ChecklistCompletion;
 };
 
 export type Attachment = {
@@ -1393,17 +1404,6 @@ export type CategorySerializerForForNestedFieldsRequest = {
     title: string;
 };
 
-export type Checklist = {
-    readonly uuid: string;
-    readonly url: string;
-    name: string;
-    description?: string;
-    readonly questions_count: number;
-    readonly category_name: string;
-    readonly category_uuid: string;
-    readonly roles: Array<string>;
-};
-
 export type ChecklistAdmin = {
     readonly uuid: string;
     readonly url: string;
@@ -1412,7 +1412,6 @@ export type ChecklistAdmin = {
     readonly questions_count: number;
     readonly category_name: string;
     readonly category_uuid: string;
-    readonly roles: Array<string>;
     readonly checklist_type: string;
 };
 
@@ -1425,15 +1424,66 @@ export type ChecklistCategory = {
     readonly checklists_count: number;
 };
 
-export type ChecklistCustomerStats = {
-    readonly name: string;
+export type ChecklistCompletion = {
     readonly uuid: string;
-    readonly latitude: number;
-    readonly longitude: number;
-    readonly score: number;
+    /**
+     * Whether all required questions have been answered
+     */
+    readonly is_completed: boolean;
+    readonly completion_percentage: number;
+    readonly unanswered_required_questions: Array<unknown>;
+    readonly checklist_name: string;
+    readonly checklist_description: string;
+    readonly created: string;
+    readonly modified: string;
 };
 
-export type ChecklistTypeEnum = 'project_compliance' | 'proposal_compliance' | 'offering_compliance';
+export type ChecklistCompletionReviewer = {
+    readonly uuid: string;
+    /**
+     * Whether all required questions have been answered
+     */
+    readonly is_completed: boolean;
+    readonly completion_percentage: number;
+    readonly unanswered_required_questions: Array<unknown>;
+    readonly checklist_name: string;
+    readonly checklist_description: string;
+    readonly created: string;
+    readonly modified: string;
+    /**
+     * Whether any answers triggered review requirements
+     */
+    readonly requires_review: boolean;
+    /**
+     * User who reviewed the checklist completion
+     */
+    reviewed_by?: number | null;
+    readonly reviewed_by_name: string;
+    reviewed_at?: string | null;
+    /**
+     * Notes from the reviewer
+     */
+    review_notes?: string;
+    readonly review_trigger_summary: Array<unknown>;
+};
+
+export type ChecklistResponse = {
+    readonly checklist: {
+        [key: string]: unknown;
+    };
+    completion: ChecklistCompletion;
+    questions: Array<QuestionWithAnswer>;
+};
+
+export type ChecklistReviewerResponse = {
+    readonly checklist: {
+        [key: string]: unknown;
+    };
+    completion: ChecklistCompletionReviewer;
+    questions: Array<QuestionWithAnswerReviewer>;
+};
+
+export type ChecklistTypeEnum = 'project_compliance' | 'proposal_compliance' | 'offering_compliance' | 'project_metadata';
 
 export type ClusterSecurityGroup = {
     readonly uuid: string;
@@ -1969,14 +2019,12 @@ export type CreateChecklist = {
     readonly questions_count: number;
     readonly category_name: string;
     readonly category_uuid: string;
-    roles?: Array<string>;
     checklist_type: ChecklistTypeEnum;
 };
 
 export type CreateChecklistRequest = {
     name: string;
     description?: string;
-    roles?: Array<string>;
     checklist_type: ChecklistTypeEnum;
 };
 
@@ -2103,12 +2151,6 @@ export type Customer = {
     readonly service_provider_uuid?: string | null;
     readonly call_managing_organization_uuid?: string | null;
     billing_price_estimate?: NestedPriceEstimate;
-};
-
-export type CustomerChecklistStat = {
-    readonly name: string;
-    readonly uuid: string;
-    readonly score: number;
 };
 
 export type CustomerCredit = {
@@ -6988,7 +7030,6 @@ export type PatchedComponentUserUsageLimitRequest = {
 export type PatchedCreateChecklistRequest = {
     name?: string;
     description?: string;
-    roles?: Array<string>;
     checklist_type?: ChecklistTypeEnum;
 };
 
@@ -8241,15 +8282,6 @@ export type ProjectServiceAccountRequest = {
     project: string;
 };
 
-export type ProjectStatsItem = {
-    readonly name: string;
-    readonly uuid: string;
-    readonly positive_count: number;
-    readonly negative_count: number;
-    readonly unknown_count: number;
-    readonly score: number;
-};
-
 export type ProjectType = {
     readonly uuid: string;
     readonly url: string;
@@ -8343,87 +8375,6 @@ export type Proposal = {
 
 export type ProposalApproveRequest = {
     allocation_comment?: string;
-};
-
-export type ProposalChecklistAnswer = {
-    readonly uuid: string;
-    readonly question_description: string;
-    readonly question_type: string;
-    readonly question_required: boolean;
-    /**
-     * Flexible answer storage for different question types
-     */
-    answer_data?: unknown;
-    /**
-     * Internal flag - this answer requires additional review
-     */
-    readonly requires_review: boolean;
-    readonly user: number;
-    readonly user_name: string;
-    readonly created: string;
-    readonly modified: string;
-};
-
-export type ProposalChecklistAnswerSubmitRequest = {
-    question_uuid: string;
-    answer_data: unknown;
-};
-
-export type ProposalChecklistAnswerSubmitResponse = {
-    detail: string;
-    completion: ProposalChecklistCompletion;
-};
-
-export type ProposalChecklistCompletion = {
-    readonly uuid: string;
-    /**
-     * Whether all required questions have been answered
-     */
-    readonly is_completed: boolean;
-    /**
-     * Whether any answers triggered review requirements
-     */
-    readonly requires_review: boolean;
-    /**
-     * User who reviewed the checklist completion
-     */
-    reviewed_by?: number | null;
-    readonly reviewed_by_name: string;
-    reviewed_at?: string | null;
-    /**
-     * Notes from the reviewer
-     */
-    review_notes?: string;
-    readonly completion_percentage: number;
-    readonly review_trigger_summary: Array<unknown>;
-    readonly unanswered_required_questions: Array<unknown>;
-    readonly checklist_name: string;
-    readonly checklist_description: string;
-    readonly created: string;
-    readonly modified: string;
-};
-
-export type ProposalChecklistQuestion = {
-    readonly uuid: string;
-    readonly description: string;
-    /**
-     * Type of question and expected answer format
-     */
-    question_type: QuestionTypeEnum;
-    readonly required: boolean;
-    readonly order: number;
-    readonly existing_answer: {
-        [key: string]: unknown;
-    } | null;
-    readonly question_options: Array<unknown> | null;
-};
-
-export type ProposalComplianceChecklistResponse = {
-    readonly checklist: {
-        [key: string]: unknown;
-    };
-    completion: ProposalChecklistCompletion;
-    questions: Array<ProposalChecklistQuestion>;
 };
 
 export type ProposalDocumentation = {
@@ -9062,13 +9013,6 @@ export type QueryRequest = {
     query: string;
 };
 
-export type Question = {
-    readonly uuid: string;
-    description?: string;
-    image?: string | null;
-    readonly question_options: Array<QuestionOptions>;
-};
-
 export type QuestionAdmin = {
     readonly uuid: string;
     description?: string;
@@ -9140,12 +9084,6 @@ export type QuestionDependencyRequest = {
     operator?: OperatorEnum;
 };
 
-export type QuestionOptions = {
-    readonly uuid: string;
-    label: string;
-    order?: number;
-};
-
 export type QuestionOptionsAdmin = {
     readonly uuid: string;
     label: string;
@@ -9162,6 +9100,45 @@ export type QuestionOptionsAdminRequest = {
 };
 
 export type QuestionTypeEnum = 'boolean' | 'single_select' | 'multi_select' | 'text_input' | 'text_area' | 'number' | 'date' | 'file';
+
+export type QuestionWithAnswer = {
+    readonly uuid: string;
+    readonly description: string;
+    /**
+     * Type of question and expected answer format
+     */
+    question_type: QuestionTypeEnum;
+    readonly required: boolean;
+    readonly order: number;
+    readonly existing_answer: {
+        [key: string]: unknown;
+    } | null;
+    readonly question_options: Array<unknown> | null;
+};
+
+export type QuestionWithAnswerReviewer = {
+    readonly uuid: string;
+    readonly description: string;
+    /**
+     * Type of question and expected answer format
+     */
+    question_type: QuestionTypeEnum;
+    readonly required: boolean;
+    readonly order: number;
+    readonly existing_answer: {
+        [key: string]: unknown;
+    } | null;
+    readonly question_options: Array<unknown> | null;
+    operator?: OperatorEnum | BlankEnum;
+    /**
+     * Answer value that trigger review.
+     */
+    review_answer_value?: unknown;
+    /**
+     * This question always requires review regardless of answer
+     */
+    always_requires_review?: boolean;
+};
 
 export type Quota = {
     name?: string;
@@ -11369,10 +11346,6 @@ export type UserRoleUpdateRequest = {
     role: string;
     user: string;
     expiration_time?: string | null;
-};
-
-export type UserStats = {
-    readonly score: number;
 };
 
 export type UsernameGenerationPolicyEnum = 'service_provider' | 'anonymized' | 'full_name' | 'waldur_username' | 'freeipa' | 'identity_claim';
@@ -16406,52 +16379,6 @@ export type CustomersCreateResponses = {
 
 export type CustomersCreateResponse = CustomersCreateResponses[keyof CustomersCreateResponses];
 
-export type MarketplaceChecklistsCustomerRetrieveData = {
-    body?: never;
-    path: {
-        customer_uuid: string;
-    };
-    query?: never;
-    url: '/api/customers/{customer_uuid}/marketplace-checklists/';
-};
-
-export type MarketplaceChecklistsCustomerRetrieveResponses = {
-    200: Array<string>;
-};
-
-export type MarketplaceChecklistsCustomerRetrieveResponse = MarketplaceChecklistsCustomerRetrieveResponses[keyof MarketplaceChecklistsCustomerRetrieveResponses];
-
-export type MarketplaceChecklistsCustomerUpdateData = {
-    body: Array<string>;
-    path: {
-        customer_uuid: string;
-    };
-    query?: never;
-    url: '/api/customers/{customer_uuid}/marketplace-checklists/';
-};
-
-export type MarketplaceChecklistsCustomerUpdateResponses = {
-    200: Array<string>;
-};
-
-export type MarketplaceChecklistsCustomerUpdateResponse = MarketplaceChecklistsCustomerUpdateResponses[keyof MarketplaceChecklistsCustomerUpdateResponses];
-
-export type MarketplaceChecklistsCustomerStatsData = {
-    body?: never;
-    path: {
-        checklist_uuid: string;
-        customer_uuid: string;
-    };
-    query?: never;
-    url: '/api/customers/{customer_uuid}/marketplace-checklists/{checklist_uuid}/';
-};
-
-export type MarketplaceChecklistsCustomerStatsResponses = {
-    200: Array<CustomerChecklistStat>;
-};
-
-export type MarketplaceChecklistsCustomerStatsResponse = MarketplaceChecklistsCustomerStatsResponses[keyof MarketplaceChecklistsCustomerStatsResponses];
-
 export type CustomersDestroyData = {
     body?: never;
     path: {
@@ -20608,51 +20535,6 @@ export type MarketplaceCategoryHelpArticlesUpdateResponses = {
 
 export type MarketplaceCategoryHelpArticlesUpdateResponse = MarketplaceCategoryHelpArticlesUpdateResponses[keyof MarketplaceCategoryHelpArticlesUpdateResponses];
 
-export type MarketplaceChecklistsListData = {
-    body?: never;
-    path?: never;
-    query?: {
-        /**
-         * A page number within the paginated result set.
-         */
-        page?: number;
-        /**
-         * Number of results to return per page.
-         */
-        page_size?: number;
-    };
-    url: '/api/marketplace-checklists/';
-};
-
-export type MarketplaceChecklistsListResponses = {
-    200: Array<Checklist>;
-};
-
-export type MarketplaceChecklistsListResponse = MarketplaceChecklistsListResponses[keyof MarketplaceChecklistsListResponses];
-
-export type MarketplaceChecklistsHeadData = {
-    body?: never;
-    path?: never;
-    query?: {
-        /**
-         * A page number within the paginated result set.
-         */
-        page?: number;
-        /**
-         * Number of results to return per page.
-         */
-        page_size?: number;
-    };
-    url: '/api/marketplace-checklists/';
-};
-
-export type MarketplaceChecklistsHeadResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
-};
-
 export type MarketplaceChecklistsAdminListData = {
     body?: never;
     path?: never;
@@ -21191,30 +21073,6 @@ export type MarketplaceChecklistsCategoriesListResponses = {
 
 export type MarketplaceChecklistsCategoriesListResponse = MarketplaceChecklistsCategoriesListResponses[keyof MarketplaceChecklistsCategoriesListResponses];
 
-export type MarketplaceChecklistsCategoriesChecklistsListData = {
-    body?: never;
-    path: {
-        category_uuid: string;
-    };
-    query?: {
-        /**
-         * A page number within the paginated result set.
-         */
-        page?: number;
-        /**
-         * Number of results to return per page.
-         */
-        page_size?: number;
-    };
-    url: '/api/marketplace-checklists-categories/{category_uuid}/checklists/';
-};
-
-export type MarketplaceChecklistsCategoriesChecklistsListResponses = {
-    200: Array<Checklist>;
-};
-
-export type MarketplaceChecklistsCategoriesChecklistsListResponse = MarketplaceChecklistsCategoriesChecklistsListResponses[keyof MarketplaceChecklistsCategoriesChecklistsListResponses];
-
 export type MarketplaceChecklistsCategoriesRetrieveData = {
     body?: never;
     path: {
@@ -21229,137 +21087,6 @@ export type MarketplaceChecklistsCategoriesRetrieveResponses = {
 };
 
 export type MarketplaceChecklistsCategoriesRetrieveResponse = MarketplaceChecklistsCategoriesRetrieveResponses[keyof MarketplaceChecklistsCategoriesRetrieveResponses];
-
-export type MarketplaceChecklistsAnswersListData = {
-    body?: never;
-    path: {
-        checklist_uuid: string;
-    };
-    query?: {
-        /**
-         * A page number within the paginated result set.
-         */
-        page?: number;
-        /**
-         * Number of results to return per page.
-         */
-        page_size?: number;
-    };
-    url: '/api/marketplace-checklists/{checklist_uuid}/answers/';
-};
-
-export type MarketplaceChecklistsAnswersListResponses = {
-    200: Array<AnswerList>;
-};
-
-export type MarketplaceChecklistsAnswersListResponse = MarketplaceChecklistsAnswersListResponses[keyof MarketplaceChecklistsAnswersListResponses];
-
-export type MarketplaceChecklistsAnswersSubmitCreateData = {
-    body: Array<AnswerSubmitRequest>;
-    path: {
-        checklist_uuid: string;
-    };
-    query?: {
-        /**
-         * User UUID to submit answer on behalf of. Required staff permission.
-         */
-        on_behalf_user_uuid?: string;
-        /**
-         * A page number within the paginated result set.
-         */
-        page?: number;
-        /**
-         * Number of results to return per page.
-         */
-        page_size?: number;
-    };
-    url: '/api/marketplace-checklists/{checklist_uuid}/answers/submit/';
-};
-
-export type MarketplaceChecklistsAnswersSubmitCreateResponses = {
-    201: Array<AnswerSubmit>;
-};
-
-export type MarketplaceChecklistsAnswersSubmitCreateResponse = MarketplaceChecklistsAnswersSubmitCreateResponses[keyof MarketplaceChecklistsAnswersSubmitCreateResponses];
-
-export type MarketplaceChecklistsStatsListData = {
-    body?: never;
-    path: {
-        checklist_uuid: string;
-    };
-    query?: never;
-    url: '/api/marketplace-checklists/{checklist_uuid}/stats/';
-};
-
-export type MarketplaceChecklistsStatsListResponses = {
-    200: Array<ChecklistCustomerStats>;
-};
-
-export type MarketplaceChecklistsStatsListResponse = MarketplaceChecklistsStatsListResponses[keyof MarketplaceChecklistsStatsListResponses];
-
-export type MarketplaceChecklistsUserAnswersListData = {
-    body?: never;
-    path: {
-        checklist_uuid: string;
-        user_uuid: string;
-    };
-    query?: {
-        /**
-         * A page number within the paginated result set.
-         */
-        page?: number;
-        /**
-         * Number of results to return per page.
-         */
-        page_size?: number;
-    };
-    url: '/api/marketplace-checklists/{checklist_uuid}/user/{user_uuid}/answers/';
-};
-
-export type MarketplaceChecklistsUserAnswersListResponses = {
-    200: Array<AnswerList>;
-};
-
-export type MarketplaceChecklistsUserAnswersListResponse = MarketplaceChecklistsUserAnswersListResponses[keyof MarketplaceChecklistsUserAnswersListResponses];
-
-export type MarketplaceChecklistsRetrieveData = {
-    body?: never;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/marketplace-checklists/{uuid}/';
-};
-
-export type MarketplaceChecklistsRetrieveResponses = {
-    200: Checklist;
-};
-
-export type MarketplaceChecklistsRetrieveResponse = MarketplaceChecklistsRetrieveResponses[keyof MarketplaceChecklistsRetrieveResponses];
-
-export type MarketplaceChecklistsQuestionsListData = {
-    body?: never;
-    path: {
-        uuid: string;
-    };
-    query?: {
-        /**
-         * A page number within the paginated result set.
-         */
-        page?: number;
-        /**
-         * Number of results to return per page.
-         */
-        page_size?: number;
-    };
-    url: '/api/marketplace-checklists/{uuid}/questions/';
-};
-
-export type MarketplaceChecklistsQuestionsListResponses = {
-    200: Array<Question>;
-};
-
-export type MarketplaceChecklistsQuestionsListResponse = MarketplaceChecklistsQuestionsListResponses[keyof MarketplaceChecklistsQuestionsListResponses];
 
 export type MarketplaceComponentUsagesListData = {
     body?: never;
@@ -26542,6 +26269,23 @@ export type MarketplaceProviderResourcesPlanPeriodsListResponses = {
 
 export type MarketplaceProviderResourcesPlanPeriodsListResponse = MarketplaceProviderResourcesPlanPeriodsListResponses[keyof MarketplaceProviderResourcesPlanPeriodsListResponses];
 
+export type MarketplaceProviderResourcesPullData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-provider-resources/{uuid}/pull/';
+};
+
+export type MarketplaceProviderResourcesPullResponses = {
+    200: {
+        [key: string]: string;
+    };
+};
+
+export type MarketplaceProviderResourcesPullResponse = MarketplaceProviderResourcesPullResponses[keyof MarketplaceProviderResourcesPullResponses];
+
 export type MarketplaceProviderResourcesRefreshLastSyncData = {
     body?: never;
     path: {
@@ -27590,6 +27334,23 @@ export type MarketplaceResourcesPlanPeriodsListResponses = {
 };
 
 export type MarketplaceResourcesPlanPeriodsListResponse = MarketplaceResourcesPlanPeriodsListResponses[keyof MarketplaceResourcesPlanPeriodsListResponses];
+
+export type MarketplaceResourcesPullData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-resources/{uuid}/pull/';
+};
+
+export type MarketplaceResourcesPullResponses = {
+    200: {
+        [key: string]: string;
+    };
+};
+
+export type MarketplaceResourcesPullResponse = MarketplaceResourcesPullResponses[keyof MarketplaceResourcesPullResponses];
 
 export type MarketplaceResourcesSetEndDateByStaffData = {
     body?: ResourceEndDateByProviderRequest;
@@ -35356,21 +35117,6 @@ export type ProjectsCreateResponses = {
 
 export type ProjectsCreateResponse = ProjectsCreateResponses[keyof ProjectsCreateResponses];
 
-export type ProjectsMarketplaceChecklistsListData = {
-    body?: never;
-    path: {
-        project_uuid: string;
-    };
-    query?: never;
-    url: '/api/projects/{project_uuid}/marketplace-checklists/';
-};
-
-export type ProjectsMarketplaceChecklistsListResponses = {
-    200: Array<ProjectStatsItem>;
-};
-
-export type ProjectsMarketplaceChecklistsListResponse = ProjectsMarketplaceChecklistsListResponses[keyof ProjectsMarketplaceChecklistsListResponses];
-
 export type ProjectsDestroyData = {
     body?: never;
     path: {
@@ -36024,35 +35770,109 @@ export type ProposalProposalsAttachDocumentResponses = {
     200: unknown;
 };
 
-export type ProposalProposalsComplianceChecklistRetrieveData = {
+export type ProposalProposalsChecklistRetrieveData = {
     body?: never;
     path: {
         uuid: string;
     };
     query?: never;
-    url: '/api/proposal-proposals/{uuid}/compliance_checklist/';
+    url: '/api/proposal-proposals/{uuid}/checklist/';
 };
 
-export type ProposalProposalsComplianceChecklistRetrieveResponses = {
-    200: ProposalComplianceChecklistResponse;
+export type ProposalProposalsChecklistRetrieveErrors = {
+    /**
+     * No checklist configured
+     */
+    400: unknown;
+    /**
+     * Object not found
+     */
+    404: unknown;
 };
 
-export type ProposalProposalsComplianceChecklistRetrieveResponse = ProposalProposalsComplianceChecklistRetrieveResponses[keyof ProposalProposalsComplianceChecklistRetrieveResponses];
+export type ProposalProposalsChecklistRetrieveResponses = {
+    200: ChecklistResponse;
+};
 
-export type ProposalProposalsComplianceStatusRetrieveData = {
+export type ProposalProposalsChecklistRetrieveResponse = ProposalProposalsChecklistRetrieveResponses[keyof ProposalProposalsChecklistRetrieveResponses];
+
+export type ProposalProposalsChecklistReviewRetrieveData = {
     body?: never;
     path: {
         uuid: string;
     };
     query?: never;
-    url: '/api/proposal-proposals/{uuid}/compliance_status/';
+    url: '/api/proposal-proposals/{uuid}/checklist_review/';
 };
 
-export type ProposalProposalsComplianceStatusRetrieveResponses = {
-    200: ProposalChecklistCompletion;
+export type ProposalProposalsChecklistReviewRetrieveErrors = {
+    /**
+     * No checklist configured
+     */
+    400: unknown;
+    /**
+     * Object not found
+     */
+    404: unknown;
 };
 
-export type ProposalProposalsComplianceStatusRetrieveResponse = ProposalProposalsComplianceStatusRetrieveResponses[keyof ProposalProposalsComplianceStatusRetrieveResponses];
+export type ProposalProposalsChecklistReviewRetrieveResponses = {
+    200: ChecklistReviewerResponse;
+};
+
+export type ProposalProposalsChecklistReviewRetrieveResponse = ProposalProposalsChecklistReviewRetrieveResponses[keyof ProposalProposalsChecklistReviewRetrieveResponses];
+
+export type ProposalProposalsCompletionReviewStatusRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-proposals/{uuid}/completion_review_status/';
+};
+
+export type ProposalProposalsCompletionReviewStatusRetrieveErrors = {
+    /**
+     * No checklist configured
+     */
+    400: unknown;
+    /**
+     * Object not found
+     */
+    404: unknown;
+};
+
+export type ProposalProposalsCompletionReviewStatusRetrieveResponses = {
+    200: ChecklistCompletionReviewer;
+};
+
+export type ProposalProposalsCompletionReviewStatusRetrieveResponse = ProposalProposalsCompletionReviewStatusRetrieveResponses[keyof ProposalProposalsCompletionReviewStatusRetrieveResponses];
+
+export type ProposalProposalsCompletionStatusRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-proposals/{uuid}/completion_status/';
+};
+
+export type ProposalProposalsCompletionStatusRetrieveErrors = {
+    /**
+     * No checklist configured
+     */
+    400: unknown;
+    /**
+     * Object not found
+     */
+    404: unknown;
+};
+
+export type ProposalProposalsCompletionStatusRetrieveResponses = {
+    200: ChecklistCompletion;
+};
+
+export type ProposalProposalsCompletionStatusRetrieveResponse = ProposalProposalsCompletionStatusRetrieveResponses[keyof ProposalProposalsCompletionStatusRetrieveResponses];
 
 export type ProposalProposalsDeleteUserData = {
     body: UserRoleDeleteRequest;
@@ -36272,20 +36092,31 @@ export type ProposalProposalsSubmitResponses = {
     200: unknown;
 };
 
-export type ProposalProposalsSubmitComplianceAnswersData = {
-    body: Array<ProposalChecklistAnswerSubmitRequest>;
+export type ProposalProposalsSubmitAnswersData = {
+    body: Array<AnswerSubmitRequest>;
     path: {
         uuid: string;
     };
     query?: never;
-    url: '/api/proposal-proposals/{uuid}/submit_compliance_answers/';
+    url: '/api/proposal-proposals/{uuid}/submit_answers/';
 };
 
-export type ProposalProposalsSubmitComplianceAnswersResponses = {
-    200: ProposalChecklistAnswerSubmitResponse;
+export type ProposalProposalsSubmitAnswersErrors = {
+    /**
+     * Validation error or no checklist configured
+     */
+    400: unknown;
+    /**
+     * Object not found
+     */
+    404: unknown;
 };
 
-export type ProposalProposalsSubmitComplianceAnswersResponse = ProposalProposalsSubmitComplianceAnswersResponses[keyof ProposalProposalsSubmitComplianceAnswersResponses];
+export type ProposalProposalsSubmitAnswersResponses = {
+    200: AnswerSubmitResponse;
+};
+
+export type ProposalProposalsSubmitAnswersResponse = ProposalProposalsSubmitAnswersResponses[keyof ProposalProposalsSubmitAnswersResponses];
 
 export type ProposalProposalsUpdateProjectDetailsData = {
     body: ProposalUpdateProjectDetailsRequest;
@@ -36785,7 +36616,7 @@ export type ProposalProtectedCallsProposalsComplianceAnswersListData = {
 };
 
 export type ProposalProtectedCallsProposalsComplianceAnswersListResponses = {
-    200: Array<ProposalChecklistAnswer>;
+    200: Array<Answer>;
 };
 
 export type ProposalProtectedCallsProposalsComplianceAnswersListResponse = ProposalProtectedCallsProposalsComplianceAnswersListResponses[keyof ProposalProtectedCallsProposalsComplianceAnswersListResponses];
@@ -42901,21 +42732,6 @@ export type UsersCreateResponses = {
 };
 
 export type UsersCreateResponse = UsersCreateResponses[keyof UsersCreateResponses];
-
-export type UsersMarketplaceChecklistStatsRetrieveData = {
-    body?: never;
-    path: {
-        user_uuid: string;
-    };
-    query?: never;
-    url: '/api/users/{user_uuid}/marketplace-checklist-stats/';
-};
-
-export type UsersMarketplaceChecklistStatsRetrieveResponses = {
-    200: UserStats;
-};
-
-export type UsersMarketplaceChecklistStatsRetrieveResponse = UsersMarketplaceChecklistStatsRetrieveResponses[keyof UsersMarketplaceChecklistStatsRetrieveResponses];
 
 export type UsersDestroyData = {
     body?: never;
