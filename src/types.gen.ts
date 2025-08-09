@@ -3592,6 +3592,8 @@ export type MaintenanceAnnouncementOfferingTemplate = {
     readonly uuid: string;
     maintenance_template: string;
     offering: string;
+    readonly offering_name: string;
+    readonly offering_uuid: string;
     /**
      * Expected impact on this offering
      */
@@ -19771,6 +19773,552 @@ export type LexisLinksUpdateResponses = {
 
 export type LexisLinksUpdateResponse = LexisLinksUpdateResponses[keyof LexisLinksUpdateResponses];
 
+export type MaintenanceAnnouncementOfferingsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/maintenance-announcement-offerings/';
+};
+
+export type MaintenanceAnnouncementOfferingsListResponses = {
+    200: Array<MaintenanceAnnouncementOffering>;
+};
+
+export type MaintenanceAnnouncementOfferingsListResponse = MaintenanceAnnouncementOfferingsListResponses[keyof MaintenanceAnnouncementOfferingsListResponses];
+
+export type MaintenanceAnnouncementOfferingsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/maintenance-announcement-offerings/';
+};
+
+export type MaintenanceAnnouncementOfferingsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type MaintenanceAnnouncementOfferingsCreateData = {
+    body: MaintenanceAnnouncementOfferingRequest;
+    path?: never;
+    query?: never;
+    url: '/api/maintenance-announcement-offerings/';
+};
+
+export type MaintenanceAnnouncementOfferingsCreateResponses = {
+    201: MaintenanceAnnouncementOffering;
+};
+
+export type MaintenanceAnnouncementOfferingsCreateResponse = MaintenanceAnnouncementOfferingsCreateResponses[keyof MaintenanceAnnouncementOfferingsCreateResponses];
+
+export type MaintenanceAnnouncementOfferingsDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/maintenance-announcement-offerings/{uuid}/';
+};
+
+export type MaintenanceAnnouncementOfferingsDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type MaintenanceAnnouncementOfferingsDestroyResponse = MaintenanceAnnouncementOfferingsDestroyResponses[keyof MaintenanceAnnouncementOfferingsDestroyResponses];
+
+export type MaintenanceAnnouncementOfferingsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/maintenance-announcement-offerings/{uuid}/';
+};
+
+export type MaintenanceAnnouncementOfferingsRetrieveResponses = {
+    200: MaintenanceAnnouncementOffering;
+};
+
+export type MaintenanceAnnouncementOfferingsRetrieveResponse = MaintenanceAnnouncementOfferingsRetrieveResponses[keyof MaintenanceAnnouncementOfferingsRetrieveResponses];
+
+export type MaintenanceAnnouncementOfferingsPartialUpdateData = {
+    body?: PatchedMaintenanceAnnouncementOfferingRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/maintenance-announcement-offerings/{uuid}/';
+};
+
+export type MaintenanceAnnouncementOfferingsPartialUpdateResponses = {
+    200: MaintenanceAnnouncementOffering;
+};
+
+export type MaintenanceAnnouncementOfferingsPartialUpdateResponse = MaintenanceAnnouncementOfferingsPartialUpdateResponses[keyof MaintenanceAnnouncementOfferingsPartialUpdateResponses];
+
+export type MaintenanceAnnouncementOfferingsUpdateData = {
+    body: MaintenanceAnnouncementOfferingRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/maintenance-announcement-offerings/{uuid}/';
+};
+
+export type MaintenanceAnnouncementOfferingsUpdateResponses = {
+    200: MaintenanceAnnouncementOffering;
+};
+
+export type MaintenanceAnnouncementOfferingsUpdateResponse = MaintenanceAnnouncementOfferingsUpdateResponses[keyof MaintenanceAnnouncementOfferingsUpdateResponses];
+
+export type MaintenanceAnnouncementTemplateOfferingsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        impact_level?: number;
+        maintenance_template_uuid?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | 'created'>;
+        offering_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        service_provider_uuid?: string;
+    };
+    url: '/api/maintenance-announcement-template-offerings/';
+};
+
+export type MaintenanceAnnouncementTemplateOfferingsListResponses = {
+    200: Array<MaintenanceAnnouncementOfferingTemplate>;
+};
+
+export type MaintenanceAnnouncementTemplateOfferingsListResponse = MaintenanceAnnouncementTemplateOfferingsListResponses[keyof MaintenanceAnnouncementTemplateOfferingsListResponses];
+
+export type MaintenanceAnnouncementTemplateOfferingsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        impact_level?: number;
+        maintenance_template_uuid?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | 'created'>;
+        offering_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        service_provider_uuid?: string;
+    };
+    url: '/api/maintenance-announcement-template-offerings/';
+};
+
+export type MaintenanceAnnouncementTemplateOfferingsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type MaintenanceAnnouncementTemplateOfferingsCreateData = {
+    body: MaintenanceAnnouncementOfferingTemplateRequest;
+    path?: never;
+    query?: never;
+    url: '/api/maintenance-announcement-template-offerings/';
+};
+
+export type MaintenanceAnnouncementTemplateOfferingsCreateResponses = {
+    201: MaintenanceAnnouncementOfferingTemplate;
+};
+
+export type MaintenanceAnnouncementTemplateOfferingsCreateResponse = MaintenanceAnnouncementTemplateOfferingsCreateResponses[keyof MaintenanceAnnouncementTemplateOfferingsCreateResponses];
+
+export type MaintenanceAnnouncementTemplateOfferingsDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/maintenance-announcement-template-offerings/{uuid}/';
+};
+
+export type MaintenanceAnnouncementTemplateOfferingsDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type MaintenanceAnnouncementTemplateOfferingsDestroyResponse = MaintenanceAnnouncementTemplateOfferingsDestroyResponses[keyof MaintenanceAnnouncementTemplateOfferingsDestroyResponses];
+
+export type MaintenanceAnnouncementTemplateOfferingsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/maintenance-announcement-template-offerings/{uuid}/';
+};
+
+export type MaintenanceAnnouncementTemplateOfferingsRetrieveResponses = {
+    200: MaintenanceAnnouncementOfferingTemplate;
+};
+
+export type MaintenanceAnnouncementTemplateOfferingsRetrieveResponse = MaintenanceAnnouncementTemplateOfferingsRetrieveResponses[keyof MaintenanceAnnouncementTemplateOfferingsRetrieveResponses];
+
+export type MaintenanceAnnouncementTemplateOfferingsPartialUpdateData = {
+    body?: PatchedMaintenanceAnnouncementOfferingTemplateRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/maintenance-announcement-template-offerings/{uuid}/';
+};
+
+export type MaintenanceAnnouncementTemplateOfferingsPartialUpdateResponses = {
+    200: MaintenanceAnnouncementOfferingTemplate;
+};
+
+export type MaintenanceAnnouncementTemplateOfferingsPartialUpdateResponse = MaintenanceAnnouncementTemplateOfferingsPartialUpdateResponses[keyof MaintenanceAnnouncementTemplateOfferingsPartialUpdateResponses];
+
+export type MaintenanceAnnouncementTemplateOfferingsUpdateData = {
+    body: MaintenanceAnnouncementOfferingTemplateRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/maintenance-announcement-template-offerings/{uuid}/';
+};
+
+export type MaintenanceAnnouncementTemplateOfferingsUpdateResponses = {
+    200: MaintenanceAnnouncementOfferingTemplate;
+};
+
+export type MaintenanceAnnouncementTemplateOfferingsUpdateResponse = MaintenanceAnnouncementTemplateOfferingsUpdateResponses[keyof MaintenanceAnnouncementTemplateOfferingsUpdateResponses];
+
+export type MaintenanceAnnouncementsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        maintenance_type?: number;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-name' | '-scheduled_end' | '-scheduled_start' | 'created' | 'name' | 'scheduled_end' | 'scheduled_start'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        scheduled_end_after?: string;
+        scheduled_end_before?: string;
+        scheduled_start_after?: string;
+        scheduled_start_before?: string;
+        service_provider_uuid?: string;
+        state?: Array<'Cancelled' | 'Completed' | 'Draft' | 'In progress' | 'Scheduled'>;
+    };
+    url: '/api/maintenance-announcements/';
+};
+
+export type MaintenanceAnnouncementsListResponses = {
+    200: Array<MaintenanceAnnouncement>;
+};
+
+export type MaintenanceAnnouncementsListResponse = MaintenanceAnnouncementsListResponses[keyof MaintenanceAnnouncementsListResponses];
+
+export type MaintenanceAnnouncementsHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        maintenance_type?: number;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-name' | '-scheduled_end' | '-scheduled_start' | 'created' | 'name' | 'scheduled_end' | 'scheduled_start'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        scheduled_end_after?: string;
+        scheduled_end_before?: string;
+        scheduled_start_after?: string;
+        scheduled_start_before?: string;
+        service_provider_uuid?: string;
+        state?: Array<'Cancelled' | 'Completed' | 'Draft' | 'In progress' | 'Scheduled'>;
+    };
+    url: '/api/maintenance-announcements/';
+};
+
+export type MaintenanceAnnouncementsHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type MaintenanceAnnouncementsCreateData = {
+    body: MaintenanceAnnouncementRequest;
+    path?: never;
+    query?: never;
+    url: '/api/maintenance-announcements/';
+};
+
+export type MaintenanceAnnouncementsCreateResponses = {
+    201: MaintenanceAnnouncement;
+};
+
+export type MaintenanceAnnouncementsCreateResponse = MaintenanceAnnouncementsCreateResponses[keyof MaintenanceAnnouncementsCreateResponses];
+
+export type MaintenanceAnnouncementsTemplateListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        maintenance_type?: number;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-name' | 'created' | 'name'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        service_provider_uuid?: string;
+    };
+    url: '/api/maintenance-announcements-template/';
+};
+
+export type MaintenanceAnnouncementsTemplateListResponses = {
+    200: Array<MaintenanceAnnouncementTemplate>;
+};
+
+export type MaintenanceAnnouncementsTemplateListResponse = MaintenanceAnnouncementsTemplateListResponses[keyof MaintenanceAnnouncementsTemplateListResponses];
+
+export type MaintenanceAnnouncementsTemplateHeadData = {
+    body?: never;
+    path?: never;
+    query?: {
+        maintenance_type?: number;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-name' | 'created' | 'name'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        service_provider_uuid?: string;
+    };
+    url: '/api/maintenance-announcements-template/';
+};
+
+export type MaintenanceAnnouncementsTemplateHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type MaintenanceAnnouncementsTemplateCreateData = {
+    body: MaintenanceAnnouncementTemplateRequest;
+    path?: never;
+    query?: never;
+    url: '/api/maintenance-announcements-template/';
+};
+
+export type MaintenanceAnnouncementsTemplateCreateResponses = {
+    201: MaintenanceAnnouncementTemplate;
+};
+
+export type MaintenanceAnnouncementsTemplateCreateResponse = MaintenanceAnnouncementsTemplateCreateResponses[keyof MaintenanceAnnouncementsTemplateCreateResponses];
+
+export type MaintenanceAnnouncementsTemplateDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/maintenance-announcements-template/{uuid}/';
+};
+
+export type MaintenanceAnnouncementsTemplateDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type MaintenanceAnnouncementsTemplateDestroyResponse = MaintenanceAnnouncementsTemplateDestroyResponses[keyof MaintenanceAnnouncementsTemplateDestroyResponses];
+
+export type MaintenanceAnnouncementsTemplateRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/maintenance-announcements-template/{uuid}/';
+};
+
+export type MaintenanceAnnouncementsTemplateRetrieveResponses = {
+    200: MaintenanceAnnouncementTemplate;
+};
+
+export type MaintenanceAnnouncementsTemplateRetrieveResponse = MaintenanceAnnouncementsTemplateRetrieveResponses[keyof MaintenanceAnnouncementsTemplateRetrieveResponses];
+
+export type MaintenanceAnnouncementsTemplatePartialUpdateData = {
+    body?: PatchedMaintenanceAnnouncementTemplateRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/maintenance-announcements-template/{uuid}/';
+};
+
+export type MaintenanceAnnouncementsTemplatePartialUpdateResponses = {
+    200: MaintenanceAnnouncementTemplate;
+};
+
+export type MaintenanceAnnouncementsTemplatePartialUpdateResponse = MaintenanceAnnouncementsTemplatePartialUpdateResponses[keyof MaintenanceAnnouncementsTemplatePartialUpdateResponses];
+
+export type MaintenanceAnnouncementsTemplateUpdateData = {
+    body: MaintenanceAnnouncementTemplateRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/maintenance-announcements-template/{uuid}/';
+};
+
+export type MaintenanceAnnouncementsTemplateUpdateResponses = {
+    200: MaintenanceAnnouncementTemplate;
+};
+
+export type MaintenanceAnnouncementsTemplateUpdateResponse = MaintenanceAnnouncementsTemplateUpdateResponses[keyof MaintenanceAnnouncementsTemplateUpdateResponses];
+
+export type MaintenanceAnnouncementsDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/maintenance-announcements/{uuid}/';
+};
+
+export type MaintenanceAnnouncementsDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type MaintenanceAnnouncementsDestroyResponse = MaintenanceAnnouncementsDestroyResponses[keyof MaintenanceAnnouncementsDestroyResponses];
+
+export type MaintenanceAnnouncementsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/maintenance-announcements/{uuid}/';
+};
+
+export type MaintenanceAnnouncementsRetrieveResponses = {
+    200: MaintenanceAnnouncement;
+};
+
+export type MaintenanceAnnouncementsRetrieveResponse = MaintenanceAnnouncementsRetrieveResponses[keyof MaintenanceAnnouncementsRetrieveResponses];
+
+export type MaintenanceAnnouncementsPartialUpdateData = {
+    body?: PatchedMaintenanceAnnouncementRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/maintenance-announcements/{uuid}/';
+};
+
+export type MaintenanceAnnouncementsPartialUpdateResponses = {
+    200: MaintenanceAnnouncement;
+};
+
+export type MaintenanceAnnouncementsPartialUpdateResponse = MaintenanceAnnouncementsPartialUpdateResponses[keyof MaintenanceAnnouncementsPartialUpdateResponses];
+
+export type MaintenanceAnnouncementsUpdateData = {
+    body: MaintenanceAnnouncementRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/maintenance-announcements/{uuid}/';
+};
+
+export type MaintenanceAnnouncementsUpdateResponses = {
+    200: MaintenanceAnnouncement;
+};
+
+export type MaintenanceAnnouncementsUpdateResponse = MaintenanceAnnouncementsUpdateResponses[keyof MaintenanceAnnouncementsUpdateResponses];
+
 export type MarketplaceBookingsListData = {
     body?: never;
     path: {
@@ -21723,526 +22271,6 @@ export type MarketplaceIntegrationStatusesRetrieveResponses = {
 };
 
 export type MarketplaceIntegrationStatusesRetrieveResponse = MarketplaceIntegrationStatusesRetrieveResponses[keyof MarketplaceIntegrationStatusesRetrieveResponses];
-
-export type MarketplaceMaintenanceAnnouncementOfferingsListData = {
-    body?: never;
-    path?: never;
-    query?: {
-        /**
-         * A page number within the paginated result set.
-         */
-        page?: number;
-        /**
-         * Number of results to return per page.
-         */
-        page_size?: number;
-    };
-    url: '/api/marketplace-maintenance-announcement-offerings/';
-};
-
-export type MarketplaceMaintenanceAnnouncementOfferingsListResponses = {
-    200: Array<MaintenanceAnnouncementOffering>;
-};
-
-export type MarketplaceMaintenanceAnnouncementOfferingsListResponse = MarketplaceMaintenanceAnnouncementOfferingsListResponses[keyof MarketplaceMaintenanceAnnouncementOfferingsListResponses];
-
-export type MarketplaceMaintenanceAnnouncementOfferingsHeadData = {
-    body?: never;
-    path?: never;
-    query?: {
-        /**
-         * A page number within the paginated result set.
-         */
-        page?: number;
-        /**
-         * Number of results to return per page.
-         */
-        page_size?: number;
-    };
-    url: '/api/marketplace-maintenance-announcement-offerings/';
-};
-
-export type MarketplaceMaintenanceAnnouncementOfferingsHeadResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
-};
-
-export type MarketplaceMaintenanceAnnouncementOfferingsCreateData = {
-    body: MaintenanceAnnouncementOfferingRequest;
-    path?: never;
-    query?: never;
-    url: '/api/marketplace-maintenance-announcement-offerings/';
-};
-
-export type MarketplaceMaintenanceAnnouncementOfferingsCreateResponses = {
-    201: MaintenanceAnnouncementOffering;
-};
-
-export type MarketplaceMaintenanceAnnouncementOfferingsCreateResponse = MarketplaceMaintenanceAnnouncementOfferingsCreateResponses[keyof MarketplaceMaintenanceAnnouncementOfferingsCreateResponses];
-
-export type MarketplaceMaintenanceAnnouncementOfferingsDestroyData = {
-    body?: never;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/marketplace-maintenance-announcement-offerings/{uuid}/';
-};
-
-export type MarketplaceMaintenanceAnnouncementOfferingsDestroyResponses = {
-    /**
-     * No response body
-     */
-    204: void;
-};
-
-export type MarketplaceMaintenanceAnnouncementOfferingsDestroyResponse = MarketplaceMaintenanceAnnouncementOfferingsDestroyResponses[keyof MarketplaceMaintenanceAnnouncementOfferingsDestroyResponses];
-
-export type MarketplaceMaintenanceAnnouncementOfferingsRetrieveData = {
-    body?: never;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/marketplace-maintenance-announcement-offerings/{uuid}/';
-};
-
-export type MarketplaceMaintenanceAnnouncementOfferingsRetrieveResponses = {
-    200: MaintenanceAnnouncementOffering;
-};
-
-export type MarketplaceMaintenanceAnnouncementOfferingsRetrieveResponse = MarketplaceMaintenanceAnnouncementOfferingsRetrieveResponses[keyof MarketplaceMaintenanceAnnouncementOfferingsRetrieveResponses];
-
-export type MarketplaceMaintenanceAnnouncementOfferingsPartialUpdateData = {
-    body?: PatchedMaintenanceAnnouncementOfferingRequest;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/marketplace-maintenance-announcement-offerings/{uuid}/';
-};
-
-export type MarketplaceMaintenanceAnnouncementOfferingsPartialUpdateResponses = {
-    200: MaintenanceAnnouncementOffering;
-};
-
-export type MarketplaceMaintenanceAnnouncementOfferingsPartialUpdateResponse = MarketplaceMaintenanceAnnouncementOfferingsPartialUpdateResponses[keyof MarketplaceMaintenanceAnnouncementOfferingsPartialUpdateResponses];
-
-export type MarketplaceMaintenanceAnnouncementOfferingsUpdateData = {
-    body: MaintenanceAnnouncementOfferingRequest;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/marketplace-maintenance-announcement-offerings/{uuid}/';
-};
-
-export type MarketplaceMaintenanceAnnouncementOfferingsUpdateResponses = {
-    200: MaintenanceAnnouncementOffering;
-};
-
-export type MarketplaceMaintenanceAnnouncementOfferingsUpdateResponse = MarketplaceMaintenanceAnnouncementOfferingsUpdateResponses[keyof MarketplaceMaintenanceAnnouncementOfferingsUpdateResponses];
-
-export type MarketplaceMaintenanceAnnouncementTemplateOfferingsListData = {
-    body?: never;
-    path?: never;
-    query?: {
-        impact_level?: number;
-        maintenance_template_uuid?: string;
-        /**
-         * Ordering
-         *
-         *
-         */
-        o?: Array<'-created' | 'created'>;
-        offering_uuid?: string;
-        /**
-         * A page number within the paginated result set.
-         */
-        page?: number;
-        /**
-         * Number of results to return per page.
-         */
-        page_size?: number;
-        service_provider_uuid?: string;
-    };
-    url: '/api/marketplace-maintenance-announcement-template-offerings/';
-};
-
-export type MarketplaceMaintenanceAnnouncementTemplateOfferingsListResponses = {
-    200: Array<MaintenanceAnnouncementOfferingTemplate>;
-};
-
-export type MarketplaceMaintenanceAnnouncementTemplateOfferingsListResponse = MarketplaceMaintenanceAnnouncementTemplateOfferingsListResponses[keyof MarketplaceMaintenanceAnnouncementTemplateOfferingsListResponses];
-
-export type MarketplaceMaintenanceAnnouncementTemplateOfferingsHeadData = {
-    body?: never;
-    path?: never;
-    query?: {
-        impact_level?: number;
-        maintenance_template_uuid?: string;
-        /**
-         * Ordering
-         *
-         *
-         */
-        o?: Array<'-created' | 'created'>;
-        offering_uuid?: string;
-        /**
-         * A page number within the paginated result set.
-         */
-        page?: number;
-        /**
-         * Number of results to return per page.
-         */
-        page_size?: number;
-        service_provider_uuid?: string;
-    };
-    url: '/api/marketplace-maintenance-announcement-template-offerings/';
-};
-
-export type MarketplaceMaintenanceAnnouncementTemplateOfferingsHeadResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
-};
-
-export type MarketplaceMaintenanceAnnouncementTemplateOfferingsCreateData = {
-    body: MaintenanceAnnouncementOfferingTemplateRequest;
-    path?: never;
-    query?: never;
-    url: '/api/marketplace-maintenance-announcement-template-offerings/';
-};
-
-export type MarketplaceMaintenanceAnnouncementTemplateOfferingsCreateResponses = {
-    201: MaintenanceAnnouncementOfferingTemplate;
-};
-
-export type MarketplaceMaintenanceAnnouncementTemplateOfferingsCreateResponse = MarketplaceMaintenanceAnnouncementTemplateOfferingsCreateResponses[keyof MarketplaceMaintenanceAnnouncementTemplateOfferingsCreateResponses];
-
-export type MarketplaceMaintenanceAnnouncementTemplateOfferingsDestroyData = {
-    body?: never;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/marketplace-maintenance-announcement-template-offerings/{uuid}/';
-};
-
-export type MarketplaceMaintenanceAnnouncementTemplateOfferingsDestroyResponses = {
-    /**
-     * No response body
-     */
-    204: void;
-};
-
-export type MarketplaceMaintenanceAnnouncementTemplateOfferingsDestroyResponse = MarketplaceMaintenanceAnnouncementTemplateOfferingsDestroyResponses[keyof MarketplaceMaintenanceAnnouncementTemplateOfferingsDestroyResponses];
-
-export type MarketplaceMaintenanceAnnouncementTemplateOfferingsRetrieveData = {
-    body?: never;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/marketplace-maintenance-announcement-template-offerings/{uuid}/';
-};
-
-export type MarketplaceMaintenanceAnnouncementTemplateOfferingsRetrieveResponses = {
-    200: MaintenanceAnnouncementOfferingTemplate;
-};
-
-export type MarketplaceMaintenanceAnnouncementTemplateOfferingsRetrieveResponse = MarketplaceMaintenanceAnnouncementTemplateOfferingsRetrieveResponses[keyof MarketplaceMaintenanceAnnouncementTemplateOfferingsRetrieveResponses];
-
-export type MarketplaceMaintenanceAnnouncementTemplateOfferingsPartialUpdateData = {
-    body?: PatchedMaintenanceAnnouncementOfferingTemplateRequest;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/marketplace-maintenance-announcement-template-offerings/{uuid}/';
-};
-
-export type MarketplaceMaintenanceAnnouncementTemplateOfferingsPartialUpdateResponses = {
-    200: MaintenanceAnnouncementOfferingTemplate;
-};
-
-export type MarketplaceMaintenanceAnnouncementTemplateOfferingsPartialUpdateResponse = MarketplaceMaintenanceAnnouncementTemplateOfferingsPartialUpdateResponses[keyof MarketplaceMaintenanceAnnouncementTemplateOfferingsPartialUpdateResponses];
-
-export type MarketplaceMaintenanceAnnouncementTemplateOfferingsUpdateData = {
-    body: MaintenanceAnnouncementOfferingTemplateRequest;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/marketplace-maintenance-announcement-template-offerings/{uuid}/';
-};
-
-export type MarketplaceMaintenanceAnnouncementTemplateOfferingsUpdateResponses = {
-    200: MaintenanceAnnouncementOfferingTemplate;
-};
-
-export type MarketplaceMaintenanceAnnouncementTemplateOfferingsUpdateResponse = MarketplaceMaintenanceAnnouncementTemplateOfferingsUpdateResponses[keyof MarketplaceMaintenanceAnnouncementTemplateOfferingsUpdateResponses];
-
-export type MarketplaceMaintenanceAnnouncementsListData = {
-    body?: never;
-    path?: never;
-    query?: {
-        /**
-         * A page number within the paginated result set.
-         */
-        page?: number;
-        /**
-         * Number of results to return per page.
-         */
-        page_size?: number;
-    };
-    url: '/api/marketplace-maintenance-announcements/';
-};
-
-export type MarketplaceMaintenanceAnnouncementsListResponses = {
-    200: Array<MaintenanceAnnouncement>;
-};
-
-export type MarketplaceMaintenanceAnnouncementsListResponse = MarketplaceMaintenanceAnnouncementsListResponses[keyof MarketplaceMaintenanceAnnouncementsListResponses];
-
-export type MarketplaceMaintenanceAnnouncementsHeadData = {
-    body?: never;
-    path?: never;
-    query?: {
-        /**
-         * A page number within the paginated result set.
-         */
-        page?: number;
-        /**
-         * Number of results to return per page.
-         */
-        page_size?: number;
-    };
-    url: '/api/marketplace-maintenance-announcements/';
-};
-
-export type MarketplaceMaintenanceAnnouncementsHeadResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
-};
-
-export type MarketplaceMaintenanceAnnouncementsCreateData = {
-    body: MaintenanceAnnouncementRequest;
-    path?: never;
-    query?: never;
-    url: '/api/marketplace-maintenance-announcements/';
-};
-
-export type MarketplaceMaintenanceAnnouncementsCreateResponses = {
-    201: MaintenanceAnnouncement;
-};
-
-export type MarketplaceMaintenanceAnnouncementsCreateResponse = MarketplaceMaintenanceAnnouncementsCreateResponses[keyof MarketplaceMaintenanceAnnouncementsCreateResponses];
-
-export type MarketplaceMaintenanceAnnouncementsTemplateListData = {
-    body?: never;
-    path?: never;
-    query?: {
-        maintenance_type?: number;
-        /**
-         * Ordering
-         *
-         *
-         */
-        o?: Array<'-created' | '-name' | 'created' | 'name'>;
-        /**
-         * A page number within the paginated result set.
-         */
-        page?: number;
-        /**
-         * Number of results to return per page.
-         */
-        page_size?: number;
-        service_provider_uuid?: string;
-    };
-    url: '/api/marketplace-maintenance-announcements-template/';
-};
-
-export type MarketplaceMaintenanceAnnouncementsTemplateListResponses = {
-    200: Array<MaintenanceAnnouncementTemplate>;
-};
-
-export type MarketplaceMaintenanceAnnouncementsTemplateListResponse = MarketplaceMaintenanceAnnouncementsTemplateListResponses[keyof MarketplaceMaintenanceAnnouncementsTemplateListResponses];
-
-export type MarketplaceMaintenanceAnnouncementsTemplateHeadData = {
-    body?: never;
-    path?: never;
-    query?: {
-        maintenance_type?: number;
-        /**
-         * Ordering
-         *
-         *
-         */
-        o?: Array<'-created' | '-name' | 'created' | 'name'>;
-        /**
-         * A page number within the paginated result set.
-         */
-        page?: number;
-        /**
-         * Number of results to return per page.
-         */
-        page_size?: number;
-        service_provider_uuid?: string;
-    };
-    url: '/api/marketplace-maintenance-announcements-template/';
-};
-
-export type MarketplaceMaintenanceAnnouncementsTemplateHeadResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
-};
-
-export type MarketplaceMaintenanceAnnouncementsTemplateCreateData = {
-    body: MaintenanceAnnouncementTemplateRequest;
-    path?: never;
-    query?: never;
-    url: '/api/marketplace-maintenance-announcements-template/';
-};
-
-export type MarketplaceMaintenanceAnnouncementsTemplateCreateResponses = {
-    201: MaintenanceAnnouncementTemplate;
-};
-
-export type MarketplaceMaintenanceAnnouncementsTemplateCreateResponse = MarketplaceMaintenanceAnnouncementsTemplateCreateResponses[keyof MarketplaceMaintenanceAnnouncementsTemplateCreateResponses];
-
-export type MarketplaceMaintenanceAnnouncementsTemplateDestroyData = {
-    body?: never;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/marketplace-maintenance-announcements-template/{uuid}/';
-};
-
-export type MarketplaceMaintenanceAnnouncementsTemplateDestroyResponses = {
-    /**
-     * No response body
-     */
-    204: void;
-};
-
-export type MarketplaceMaintenanceAnnouncementsTemplateDestroyResponse = MarketplaceMaintenanceAnnouncementsTemplateDestroyResponses[keyof MarketplaceMaintenanceAnnouncementsTemplateDestroyResponses];
-
-export type MarketplaceMaintenanceAnnouncementsTemplateRetrieveData = {
-    body?: never;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/marketplace-maintenance-announcements-template/{uuid}/';
-};
-
-export type MarketplaceMaintenanceAnnouncementsTemplateRetrieveResponses = {
-    200: MaintenanceAnnouncementTemplate;
-};
-
-export type MarketplaceMaintenanceAnnouncementsTemplateRetrieveResponse = MarketplaceMaintenanceAnnouncementsTemplateRetrieveResponses[keyof MarketplaceMaintenanceAnnouncementsTemplateRetrieveResponses];
-
-export type MarketplaceMaintenanceAnnouncementsTemplatePartialUpdateData = {
-    body?: PatchedMaintenanceAnnouncementTemplateRequest;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/marketplace-maintenance-announcements-template/{uuid}/';
-};
-
-export type MarketplaceMaintenanceAnnouncementsTemplatePartialUpdateResponses = {
-    200: MaintenanceAnnouncementTemplate;
-};
-
-export type MarketplaceMaintenanceAnnouncementsTemplatePartialUpdateResponse = MarketplaceMaintenanceAnnouncementsTemplatePartialUpdateResponses[keyof MarketplaceMaintenanceAnnouncementsTemplatePartialUpdateResponses];
-
-export type MarketplaceMaintenanceAnnouncementsTemplateUpdateData = {
-    body: MaintenanceAnnouncementTemplateRequest;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/marketplace-maintenance-announcements-template/{uuid}/';
-};
-
-export type MarketplaceMaintenanceAnnouncementsTemplateUpdateResponses = {
-    200: MaintenanceAnnouncementTemplate;
-};
-
-export type MarketplaceMaintenanceAnnouncementsTemplateUpdateResponse = MarketplaceMaintenanceAnnouncementsTemplateUpdateResponses[keyof MarketplaceMaintenanceAnnouncementsTemplateUpdateResponses];
-
-export type MarketplaceMaintenanceAnnouncementsDestroyData = {
-    body?: never;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/marketplace-maintenance-announcements/{uuid}/';
-};
-
-export type MarketplaceMaintenanceAnnouncementsDestroyResponses = {
-    /**
-     * No response body
-     */
-    204: void;
-};
-
-export type MarketplaceMaintenanceAnnouncementsDestroyResponse = MarketplaceMaintenanceAnnouncementsDestroyResponses[keyof MarketplaceMaintenanceAnnouncementsDestroyResponses];
-
-export type MarketplaceMaintenanceAnnouncementsRetrieveData = {
-    body?: never;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/marketplace-maintenance-announcements/{uuid}/';
-};
-
-export type MarketplaceMaintenanceAnnouncementsRetrieveResponses = {
-    200: MaintenanceAnnouncement;
-};
-
-export type MarketplaceMaintenanceAnnouncementsRetrieveResponse = MarketplaceMaintenanceAnnouncementsRetrieveResponses[keyof MarketplaceMaintenanceAnnouncementsRetrieveResponses];
-
-export type MarketplaceMaintenanceAnnouncementsPartialUpdateData = {
-    body?: PatchedMaintenanceAnnouncementRequest;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/marketplace-maintenance-announcements/{uuid}/';
-};
-
-export type MarketplaceMaintenanceAnnouncementsPartialUpdateResponses = {
-    200: MaintenanceAnnouncement;
-};
-
-export type MarketplaceMaintenanceAnnouncementsPartialUpdateResponse = MarketplaceMaintenanceAnnouncementsPartialUpdateResponses[keyof MarketplaceMaintenanceAnnouncementsPartialUpdateResponses];
-
-export type MarketplaceMaintenanceAnnouncementsUpdateData = {
-    body: MaintenanceAnnouncementRequest;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/marketplace-maintenance-announcements/{uuid}/';
-};
-
-export type MarketplaceMaintenanceAnnouncementsUpdateResponses = {
-    200: MaintenanceAnnouncement;
-};
-
-export type MarketplaceMaintenanceAnnouncementsUpdateResponse = MarketplaceMaintenanceAnnouncementsUpdateResponses[keyof MarketplaceMaintenanceAnnouncementsUpdateResponses];
 
 export type MarketplaceOfferingEstimatedCostPoliciesListData = {
     body?: never;
