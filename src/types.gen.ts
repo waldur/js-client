@@ -5418,6 +5418,10 @@ export type OfferingUser = {
      * Additional comment for pending states like validation or account linking
      */
     readonly service_provider_comment?: string;
+    /**
+     * URL link for additional information or actions related to service provider comment
+     */
+    readonly service_provider_comment_url?: string;
 };
 
 export type OfferingUserRequest = {
@@ -5441,10 +5445,19 @@ export type OfferingUserRoleRequest = {
     offering: string;
 };
 
-export type OfferingUserStateEnum = 'Requested' | 'Creating' | 'Pending account linking' | 'Pending additional validation' | 'OK' | 'Requested deletion' | 'Deleting' | 'Deleted' | 'Error';
+export type OfferingUserServiceProviderComment = {
+    service_provider_comment?: string;
+    /**
+     * URL link for additional information or actions related to service provider comment
+     */
+    service_provider_comment_url?: string;
+};
+
+export type OfferingUserStateEnum = 'Requested' | 'Creating' | 'Pending account linking' | 'Pending additional validation' | 'OK' | 'Requested deletion' | 'Deleting' | 'Deleted' | 'Error creating' | 'Error deleting';
 
 export type OfferingUserStateTransitionRequest = {
     comment?: string;
+    comment_url?: string;
 };
 
 export type OfferingUserUpdateRestrictionRequest = {
@@ -7337,6 +7350,14 @@ export type PatchedOfferingUserRequest = {
 export type PatchedOfferingUserRoleRequest = {
     name?: string;
     offering?: string;
+};
+
+export type PatchedOfferingUserServiceProviderCommentRequest = {
+    service_provider_comment?: string;
+    /**
+     * URL link for additional information or actions related to service provider comment
+     */
+    service_provider_comment_url?: string;
 };
 
 export type PatchedOpenStackBackupRequest = {
@@ -23213,7 +23234,7 @@ export type MarketplaceOfferingUsersListData = {
          * Created after
          */
         created?: string;
-        field?: Array<'created' | 'customer_name' | 'customer_uuid' | 'is_restricted' | 'modified' | 'offering' | 'offering_name' | 'offering_uuid' | 'service_provider_comment' | 'state' | 'url' | 'user' | 'user_email' | 'user_full_name' | 'user_username' | 'user_uuid' | 'username' | 'uuid'>;
+        field?: Array<'created' | 'customer_name' | 'customer_uuid' | 'is_restricted' | 'modified' | 'offering' | 'offering_name' | 'offering_uuid' | 'service_provider_comment' | 'service_provider_comment_url' | 'state' | 'url' | 'user' | 'user_email' | 'user_full_name' | 'user_username' | 'user_uuid' | 'username' | 'uuid'>;
         is_restricted?: boolean;
         /**
          * Modified after
@@ -23238,7 +23259,7 @@ export type MarketplaceOfferingUsersListData = {
         parent_offering_uuid?: string;
         provider_uuid?: string;
         query?: string;
-        state?: Array<'Creating' | 'Deleted' | 'Deleting' | 'Error' | 'OK' | 'Pending account linking' | 'Pending additional validation' | 'Requested' | 'Requested deletion'>;
+        state?: Array<'Creating' | 'Deleted' | 'Deleting' | 'Error creating' | 'Error deleting' | 'OK' | 'Pending account linking' | 'Pending additional validation' | 'Requested' | 'Requested deletion'>;
         user_username?: string;
         user_uuid?: string;
     };
@@ -23283,7 +23304,7 @@ export type MarketplaceOfferingUsersHeadData = {
         parent_offering_uuid?: string;
         provider_uuid?: string;
         query?: string;
-        state?: Array<'Creating' | 'Deleted' | 'Deleting' | 'Error' | 'OK' | 'Pending account linking' | 'Pending additional validation' | 'Requested' | 'Requested deletion'>;
+        state?: Array<'Creating' | 'Deleted' | 'Deleting' | 'Error creating' | 'Error deleting' | 'OK' | 'Pending account linking' | 'Pending additional validation' | 'Requested' | 'Requested deletion'>;
         user_username?: string;
         user_uuid?: string;
     };
@@ -23334,7 +23355,7 @@ export type MarketplaceOfferingUsersRetrieveData = {
         uuid: string;
     };
     query?: {
-        field?: Array<'created' | 'customer_name' | 'customer_uuid' | 'is_restricted' | 'modified' | 'offering' | 'offering_name' | 'offering_uuid' | 'service_provider_comment' | 'state' | 'url' | 'user' | 'user_email' | 'user_full_name' | 'user_username' | 'user_uuid' | 'username' | 'uuid'>;
+        field?: Array<'created' | 'customer_name' | 'customer_uuid' | 'is_restricted' | 'modified' | 'offering' | 'offering_name' | 'offering_uuid' | 'service_provider_comment' | 'service_provider_comment_url' | 'state' | 'url' | 'user' | 'user_email' | 'user_full_name' | 'user_username' | 'user_uuid' | 'username' | 'uuid'>;
     };
     url: '/api/marketplace-offering-users/{uuid}/';
 };
@@ -23385,6 +23406,86 @@ export type MarketplaceOfferingUsersBeginCreatingData = {
 };
 
 export type MarketplaceOfferingUsersBeginCreatingResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type MarketplaceOfferingUsersRequestDeletionData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-offering-users/{uuid}/request_deletion/';
+};
+
+export type MarketplaceOfferingUsersRequestDeletionResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type MarketplaceOfferingUsersSetDeletedData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-offering-users/{uuid}/set_deleted/';
+};
+
+export type MarketplaceOfferingUsersSetDeletedResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type MarketplaceOfferingUsersSetDeletingData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-offering-users/{uuid}/set_deleting/';
+};
+
+export type MarketplaceOfferingUsersSetDeletingResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type MarketplaceOfferingUsersSetErrorCreatingData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-offering-users/{uuid}/set_error_creating/';
+};
+
+export type MarketplaceOfferingUsersSetErrorCreatingResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type MarketplaceOfferingUsersSetErrorDeletingData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-offering-users/{uuid}/set_error_deleting/';
+};
+
+export type MarketplaceOfferingUsersSetErrorDeletingResponses = {
     /**
      * No response body
      */
@@ -23454,6 +23555,21 @@ export type MarketplaceOfferingUsersSetValidationCompleteResponses = {
      */
     200: unknown;
 };
+
+export type MarketplaceOfferingUsersUpdateCommentsPartialUpdateData = {
+    body?: PatchedOfferingUserServiceProviderCommentRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-offering-users/{uuid}/update_comments/';
+};
+
+export type MarketplaceOfferingUsersUpdateCommentsPartialUpdateResponses = {
+    200: OfferingUserServiceProviderComment;
+};
+
+export type MarketplaceOfferingUsersUpdateCommentsPartialUpdateResponse = MarketplaceOfferingUsersUpdateCommentsPartialUpdateResponses[keyof MarketplaceOfferingUsersUpdateCommentsPartialUpdateResponses];
 
 export type MarketplaceOfferingUsersUpdateRestrictedData = {
     body: OfferingUserUpdateRestrictionRequest;
