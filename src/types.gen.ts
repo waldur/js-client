@@ -1404,15 +1404,22 @@ export type CategorySerializerForForNestedFieldsRequest = {
     title: string;
 };
 
-export type ChecklistAdmin = {
+export type Checklist = {
     readonly uuid: string;
     readonly url: string;
     name: string;
     description?: string;
+    /**
+     * Type of compliance this checklist addresses
+     */
+    checklist_type?: ChecklistTypeEnum;
     readonly questions_count: number;
     readonly category_name: string;
     readonly category_uuid: string;
-    readonly checklist_type: string;
+    /**
+     * Category of the checklist
+     */
+    category?: string | null;
 };
 
 export type ChecklistCategory = {
@@ -1422,6 +1429,12 @@ export type ChecklistCategory = {
     name: string;
     description?: string;
     readonly checklists_count: number;
+};
+
+export type ChecklistCategoryRequest = {
+    icon?: (Blob | File) | null;
+    name: string;
+    description?: string;
 };
 
 export type ChecklistCompletion = {
@@ -1465,6 +1478,21 @@ export type ChecklistCompletionReviewer = {
      */
     review_notes?: string;
     readonly review_trigger_summary: Array<unknown>;
+};
+
+export type ChecklistOperators = 'equals' | 'not_equals' | 'contains' | 'in' | 'not_in';
+
+export type ChecklistRequest = {
+    name: string;
+    description?: string;
+    /**
+     * Type of compliance this checklist addresses
+     */
+    checklist_type?: ChecklistTypeEnum;
+    /**
+     * Category of the checklist
+     */
+    category?: string | null;
 };
 
 export type ChecklistResponse = {
@@ -2009,23 +2037,6 @@ export type CountryEnum = 'AL' | 'AT' | 'BE' | 'BG' | 'BA' | 'CH' | 'CY' | 'CZ' 
 
 export type CreateAttachmentsRequest = {
     attachments: Array<Blob | File>;
-};
-
-export type CreateChecklist = {
-    readonly uuid: string;
-    readonly url: string;
-    name: string;
-    description?: string;
-    readonly questions_count: number;
-    readonly category_name: string;
-    readonly category_uuid: string;
-    checklist_type: ChecklistTypeEnum;
-};
-
-export type CreateChecklistRequest = {
-    name: string;
-    description?: string;
-    checklist_type: ChecklistTypeEnum;
 };
 
 export type CreateCustomerCredit = {
@@ -6661,8 +6672,6 @@ export type OpenStackVolumeType = {
     settings: string;
 };
 
-export type OperatorEnum = 'equals' | 'not_equals' | 'contains' | 'in' | 'not_in';
-
 export type OptionField = {
     type: OptionFieldTypeEnum;
     label: string;
@@ -7026,6 +7035,25 @@ export type PatchedCategoryHelpArticlesRequest = {
     categories?: Array<CategorySerializerForForNestedFieldsRequest>;
 };
 
+export type PatchedChecklistCategoryRequest = {
+    icon?: (Blob | File) | null;
+    name?: string;
+    description?: string;
+};
+
+export type PatchedChecklistRequest = {
+    name?: string;
+    description?: string;
+    /**
+     * Type of compliance this checklist addresses
+     */
+    checklist_type?: ChecklistTypeEnum;
+    /**
+     * Category of the checklist
+     */
+    category?: string | null;
+};
+
 export type PatchedClusterSecurityGroupRequest = {
     rules?: Array<RancherClusterSecurityGroupRuleRequest>;
 };
@@ -7040,12 +7068,6 @@ export type PatchedComponentUserUsageLimitRequest = {
     component?: string;
     user?: string;
     limit?: string;
-};
-
-export type PatchedCreateChecklistRequest = {
-    name?: string;
-    description?: string;
-    checklist_type?: ChecklistTypeEnum;
 };
 
 export type PatchedCreateCustomerCreditRequest = {
@@ -7585,7 +7607,10 @@ export type PatchedProviderPlanDetailsRequest = {
 
 export type PatchedQuestionAdminRequest = {
     description?: string;
-    image?: (Blob | File) | null;
+    /**
+     * Additional guidance text visible to users when answering and reviewing
+     */
+    user_guidance?: string;
     checklist?: string;
     order?: number;
     required?: boolean;
@@ -7593,7 +7618,7 @@ export type PatchedQuestionAdminRequest = {
      * Type of question and expected answer format
      */
     question_type?: QuestionTypeEnum;
-    operator?: OperatorEnum | BlankEnum;
+    operator?: ChecklistOperators | BlankEnum;
     /**
      * Answer value that trigger review.
      */
@@ -7602,6 +7627,26 @@ export type PatchedQuestionAdminRequest = {
      * This question always requires review regardless of answer
      */
     always_requires_review?: boolean;
+    /**
+     * Answer value that triggers display of user guidance.
+     */
+    guidance_answer_value?: unknown;
+    /**
+     * Operator to use when comparing answer with guidance_answer_value
+     */
+    guidance_operator?: ChecklistOperators | BlankEnum;
+    /**
+     * Show user guidance always, regardless of answer. If False, guidance is conditional on answer matching guidance_answer_value with guidance_operator
+     */
+    always_show_guidance?: boolean;
+    /**
+     * Minimum value allowed for NUMBER type questions
+     */
+    min_value?: string | null;
+    /**
+     * Maximum value allowed for NUMBER type questions
+     */
+    max_value?: string | null;
 };
 
 export type PatchedQuestionDependencyRequest = {
@@ -7611,7 +7656,7 @@ export type PatchedQuestionDependencyRequest = {
      * The answer value(s) that make this question visible
      */
     required_answer_value?: unknown;
-    operator?: OperatorEnum;
+    operator?: ChecklistOperators;
 };
 
 export type PatchedQuestionOptionsAdminRequest = {
@@ -9039,7 +9084,10 @@ export type QueryRequest = {
 export type QuestionAdmin = {
     readonly uuid: string;
     description?: string;
-    image?: string | null;
+    /**
+     * Additional guidance text visible to users when answering and reviewing
+     */
+    user_guidance?: string;
     readonly question_options: Array<QuestionOptionsAdmin>;
     readonly url: string;
     readonly checklist_name: string;
@@ -9051,7 +9099,7 @@ export type QuestionAdmin = {
      * Type of question and expected answer format
      */
     question_type?: QuestionTypeEnum;
-    operator?: OperatorEnum | BlankEnum;
+    operator?: ChecklistOperators | BlankEnum;
     /**
      * Answer value that trigger review.
      */
@@ -9060,11 +9108,34 @@ export type QuestionAdmin = {
      * This question always requires review regardless of answer
      */
     always_requires_review?: boolean;
+    /**
+     * Answer value that triggers display of user guidance.
+     */
+    guidance_answer_value?: unknown;
+    /**
+     * Operator to use when comparing answer with guidance_answer_value
+     */
+    guidance_operator?: ChecklistOperators | BlankEnum;
+    /**
+     * Show user guidance always, regardless of answer. If False, guidance is conditional on answer matching guidance_answer_value with guidance_operator
+     */
+    always_show_guidance?: boolean;
+    /**
+     * Minimum value allowed for NUMBER type questions
+     */
+    min_value?: string | null;
+    /**
+     * Maximum value allowed for NUMBER type questions
+     */
+    max_value?: string | null;
 };
 
 export type QuestionAdminRequest = {
     description?: string;
-    image?: (Blob | File) | null;
+    /**
+     * Additional guidance text visible to users when answering and reviewing
+     */
+    user_guidance?: string;
     checklist: string;
     order?: number;
     required?: boolean;
@@ -9072,7 +9143,7 @@ export type QuestionAdminRequest = {
      * Type of question and expected answer format
      */
     question_type?: QuestionTypeEnum;
-    operator?: OperatorEnum | BlankEnum;
+    operator?: ChecklistOperators | BlankEnum;
     /**
      * Answer value that trigger review.
      */
@@ -9081,6 +9152,26 @@ export type QuestionAdminRequest = {
      * This question always requires review regardless of answer
      */
     always_requires_review?: boolean;
+    /**
+     * Answer value that triggers display of user guidance.
+     */
+    guidance_answer_value?: unknown;
+    /**
+     * Operator to use when comparing answer with guidance_answer_value
+     */
+    guidance_operator?: ChecklistOperators | BlankEnum;
+    /**
+     * Show user guidance always, regardless of answer. If False, guidance is conditional on answer matching guidance_answer_value with guidance_operator
+     */
+    always_show_guidance?: boolean;
+    /**
+     * Minimum value allowed for NUMBER type questions
+     */
+    min_value?: string | null;
+    /**
+     * Maximum value allowed for NUMBER type questions
+     */
+    max_value?: string | null;
 };
 
 export type QuestionDependency = {
@@ -9094,7 +9185,7 @@ export type QuestionDependency = {
      * The answer value(s) that make this question visible
      */
     required_answer_value: unknown;
-    operator?: OperatorEnum;
+    operator?: ChecklistOperators;
 };
 
 export type QuestionDependencyRequest = {
@@ -9104,7 +9195,7 @@ export type QuestionDependencyRequest = {
      * The answer value(s) that make this question visible
      */
     required_answer_value: unknown;
-    operator?: OperatorEnum;
+    operator?: ChecklistOperators;
 };
 
 export type QuestionOptionsAdmin = {
@@ -9127,6 +9218,7 @@ export type QuestionTypeEnum = 'boolean' | 'single_select' | 'multi_select' | 't
 export type QuestionWithAnswer = {
     readonly uuid: string;
     readonly description: string;
+    readonly user_guidance: string | null;
     /**
      * Type of question and expected answer format
      */
@@ -9137,11 +9229,20 @@ export type QuestionWithAnswer = {
         [key: string]: unknown;
     } | null;
     readonly question_options: Array<unknown> | null;
+    /**
+     * Minimum value allowed for NUMBER type questions
+     */
+    readonly min_value: string | null;
+    /**
+     * Maximum value allowed for NUMBER type questions
+     */
+    readonly max_value: string | null;
 };
 
 export type QuestionWithAnswerReviewer = {
     readonly uuid: string;
     readonly description: string;
+    readonly user_guidance: string | null;
     /**
      * Type of question and expected answer format
      */
@@ -9152,7 +9253,15 @@ export type QuestionWithAnswerReviewer = {
         [key: string]: unknown;
     } | null;
     readonly question_options: Array<unknown> | null;
-    operator?: OperatorEnum | BlankEnum;
+    /**
+     * Minimum value allowed for NUMBER type questions
+     */
+    readonly min_value: string | null;
+    /**
+     * Maximum value allowed for NUMBER type questions
+     */
+    readonly max_value: string | null;
+    operator?: ChecklistOperators | BlankEnum;
     /**
      * Answer value that trigger review.
      */
@@ -15804,6 +15913,643 @@ export type CeleryStatsRetrieveResponses = {
     200: unknown;
 };
 
+export type ChecklistsAdminListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/checklists-admin/';
+};
+
+export type ChecklistsAdminListResponses = {
+    200: Array<Checklist>;
+};
+
+export type ChecklistsAdminListResponse = ChecklistsAdminListResponses[keyof ChecklistsAdminListResponses];
+
+export type ChecklistsAdminCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/checklists-admin/';
+};
+
+export type ChecklistsAdminCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type ChecklistsAdminCreateData = {
+    body: ChecklistRequest;
+    path?: never;
+    query?: never;
+    url: '/api/checklists-admin/';
+};
+
+export type ChecklistsAdminCreateResponses = {
+    201: Checklist;
+};
+
+export type ChecklistsAdminCreateResponse = ChecklistsAdminCreateResponses[keyof ChecklistsAdminCreateResponses];
+
+export type ChecklistsAdminCategoriesListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/checklists-admin-categories/';
+};
+
+export type ChecklistsAdminCategoriesListResponses = {
+    200: Array<ChecklistCategory>;
+};
+
+export type ChecklistsAdminCategoriesListResponse = ChecklistsAdminCategoriesListResponses[keyof ChecklistsAdminCategoriesListResponses];
+
+export type ChecklistsAdminCategoriesCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/checklists-admin-categories/';
+};
+
+export type ChecklistsAdminCategoriesCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type ChecklistsAdminCategoriesCreateData = {
+    body: ChecklistCategoryRequest;
+    path?: never;
+    query?: never;
+    url: '/api/checklists-admin-categories/';
+};
+
+export type ChecklistsAdminCategoriesCreateResponses = {
+    201: ChecklistCategory;
+};
+
+export type ChecklistsAdminCategoriesCreateResponse = ChecklistsAdminCategoriesCreateResponses[keyof ChecklistsAdminCategoriesCreateResponses];
+
+export type ChecklistsAdminCategoriesDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/checklists-admin-categories/{uuid}/';
+};
+
+export type ChecklistsAdminCategoriesDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type ChecklistsAdminCategoriesDestroyResponse = ChecklistsAdminCategoriesDestroyResponses[keyof ChecklistsAdminCategoriesDestroyResponses];
+
+export type ChecklistsAdminCategoriesRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/checklists-admin-categories/{uuid}/';
+};
+
+export type ChecklistsAdminCategoriesRetrieveResponses = {
+    200: ChecklistCategory;
+};
+
+export type ChecklistsAdminCategoriesRetrieveResponse = ChecklistsAdminCategoriesRetrieveResponses[keyof ChecklistsAdminCategoriesRetrieveResponses];
+
+export type ChecklistsAdminCategoriesPartialUpdateData = {
+    body?: PatchedChecklistCategoryRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/checklists-admin-categories/{uuid}/';
+};
+
+export type ChecklistsAdminCategoriesPartialUpdateResponses = {
+    200: ChecklistCategory;
+};
+
+export type ChecklistsAdminCategoriesPartialUpdateResponse = ChecklistsAdminCategoriesPartialUpdateResponses[keyof ChecklistsAdminCategoriesPartialUpdateResponses];
+
+export type ChecklistsAdminCategoriesUpdateData = {
+    body: ChecklistCategoryRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/checklists-admin-categories/{uuid}/';
+};
+
+export type ChecklistsAdminCategoriesUpdateResponses = {
+    200: ChecklistCategory;
+};
+
+export type ChecklistsAdminCategoriesUpdateResponse = ChecklistsAdminCategoriesUpdateResponses[keyof ChecklistsAdminCategoriesUpdateResponses];
+
+export type ChecklistsAdminQuestionDependenciesListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        depends_on_question_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        question_uuid?: string;
+    };
+    url: '/api/checklists-admin-question-dependencies/';
+};
+
+export type ChecklistsAdminQuestionDependenciesListResponses = {
+    200: Array<QuestionDependency>;
+};
+
+export type ChecklistsAdminQuestionDependenciesListResponse = ChecklistsAdminQuestionDependenciesListResponses[keyof ChecklistsAdminQuestionDependenciesListResponses];
+
+export type ChecklistsAdminQuestionDependenciesCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        depends_on_question_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        question_uuid?: string;
+    };
+    url: '/api/checklists-admin-question-dependencies/';
+};
+
+export type ChecklistsAdminQuestionDependenciesCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type ChecklistsAdminQuestionDependenciesCreateData = {
+    body: QuestionDependencyRequest;
+    path?: never;
+    query?: never;
+    url: '/api/checklists-admin-question-dependencies/';
+};
+
+export type ChecklistsAdminQuestionDependenciesCreateResponses = {
+    201: QuestionDependency;
+};
+
+export type ChecklistsAdminQuestionDependenciesCreateResponse = ChecklistsAdminQuestionDependenciesCreateResponses[keyof ChecklistsAdminQuestionDependenciesCreateResponses];
+
+export type ChecklistsAdminQuestionDependenciesDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/checklists-admin-question-dependencies/{uuid}/';
+};
+
+export type ChecklistsAdminQuestionDependenciesDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type ChecklistsAdminQuestionDependenciesDestroyResponse = ChecklistsAdminQuestionDependenciesDestroyResponses[keyof ChecklistsAdminQuestionDependenciesDestroyResponses];
+
+export type ChecklistsAdminQuestionDependenciesRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/checklists-admin-question-dependencies/{uuid}/';
+};
+
+export type ChecklistsAdminQuestionDependenciesRetrieveResponses = {
+    200: QuestionDependency;
+};
+
+export type ChecklistsAdminQuestionDependenciesRetrieveResponse = ChecklistsAdminQuestionDependenciesRetrieveResponses[keyof ChecklistsAdminQuestionDependenciesRetrieveResponses];
+
+export type ChecklistsAdminQuestionDependenciesPartialUpdateData = {
+    body?: PatchedQuestionDependencyRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/checklists-admin-question-dependencies/{uuid}/';
+};
+
+export type ChecklistsAdminQuestionDependenciesPartialUpdateResponses = {
+    200: QuestionDependency;
+};
+
+export type ChecklistsAdminQuestionDependenciesPartialUpdateResponse = ChecklistsAdminQuestionDependenciesPartialUpdateResponses[keyof ChecklistsAdminQuestionDependenciesPartialUpdateResponses];
+
+export type ChecklistsAdminQuestionDependenciesUpdateData = {
+    body: QuestionDependencyRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/checklists-admin-question-dependencies/{uuid}/';
+};
+
+export type ChecklistsAdminQuestionDependenciesUpdateResponses = {
+    200: QuestionDependency;
+};
+
+export type ChecklistsAdminQuestionDependenciesUpdateResponse = ChecklistsAdminQuestionDependenciesUpdateResponses[keyof ChecklistsAdminQuestionDependenciesUpdateResponses];
+
+export type ChecklistsAdminQuestionOptionsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        question_uuid?: string;
+    };
+    url: '/api/checklists-admin-question-options/';
+};
+
+export type ChecklistsAdminQuestionOptionsListResponses = {
+    200: Array<QuestionOptionsAdmin>;
+};
+
+export type ChecklistsAdminQuestionOptionsListResponse = ChecklistsAdminQuestionOptionsListResponses[keyof ChecklistsAdminQuestionOptionsListResponses];
+
+export type ChecklistsAdminQuestionOptionsCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        question_uuid?: string;
+    };
+    url: '/api/checklists-admin-question-options/';
+};
+
+export type ChecklistsAdminQuestionOptionsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type ChecklistsAdminQuestionOptionsCreateData = {
+    body: QuestionOptionsAdminRequest;
+    path?: never;
+    query?: never;
+    url: '/api/checklists-admin-question-options/';
+};
+
+export type ChecklistsAdminQuestionOptionsCreateResponses = {
+    201: QuestionOptionsAdmin;
+};
+
+export type ChecklistsAdminQuestionOptionsCreateResponse = ChecklistsAdminQuestionOptionsCreateResponses[keyof ChecklistsAdminQuestionOptionsCreateResponses];
+
+export type ChecklistsAdminQuestionOptionsDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/checklists-admin-question-options/{uuid}/';
+};
+
+export type ChecklistsAdminQuestionOptionsDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type ChecklistsAdminQuestionOptionsDestroyResponse = ChecklistsAdminQuestionOptionsDestroyResponses[keyof ChecklistsAdminQuestionOptionsDestroyResponses];
+
+export type ChecklistsAdminQuestionOptionsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/checklists-admin-question-options/{uuid}/';
+};
+
+export type ChecklistsAdminQuestionOptionsRetrieveResponses = {
+    200: QuestionOptionsAdmin;
+};
+
+export type ChecklistsAdminQuestionOptionsRetrieveResponse = ChecklistsAdminQuestionOptionsRetrieveResponses[keyof ChecklistsAdminQuestionOptionsRetrieveResponses];
+
+export type ChecklistsAdminQuestionOptionsPartialUpdateData = {
+    body?: PatchedQuestionOptionsAdminRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/checklists-admin-question-options/{uuid}/';
+};
+
+export type ChecklistsAdminQuestionOptionsPartialUpdateResponses = {
+    200: QuestionOptionsAdmin;
+};
+
+export type ChecklistsAdminQuestionOptionsPartialUpdateResponse = ChecklistsAdminQuestionOptionsPartialUpdateResponses[keyof ChecklistsAdminQuestionOptionsPartialUpdateResponses];
+
+export type ChecklistsAdminQuestionOptionsUpdateData = {
+    body: QuestionOptionsAdminRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/checklists-admin-question-options/{uuid}/';
+};
+
+export type ChecklistsAdminQuestionOptionsUpdateResponses = {
+    200: QuestionOptionsAdmin;
+};
+
+export type ChecklistsAdminQuestionOptionsUpdateResponse = ChecklistsAdminQuestionOptionsUpdateResponses[keyof ChecklistsAdminQuestionOptionsUpdateResponses];
+
+export type ChecklistsAdminQuestionsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        checklist_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/checklists-admin-questions/';
+};
+
+export type ChecklistsAdminQuestionsListResponses = {
+    200: Array<QuestionAdmin>;
+};
+
+export type ChecklistsAdminQuestionsListResponse = ChecklistsAdminQuestionsListResponses[keyof ChecklistsAdminQuestionsListResponses];
+
+export type ChecklistsAdminQuestionsCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        checklist_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/checklists-admin-questions/';
+};
+
+export type ChecklistsAdminQuestionsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type ChecklistsAdminQuestionsCreateData = {
+    body: QuestionAdminRequest;
+    path?: never;
+    query?: never;
+    url: '/api/checklists-admin-questions/';
+};
+
+export type ChecklistsAdminQuestionsCreateResponses = {
+    201: QuestionAdmin;
+};
+
+export type ChecklistsAdminQuestionsCreateResponse = ChecklistsAdminQuestionsCreateResponses[keyof ChecklistsAdminQuestionsCreateResponses];
+
+export type ChecklistsAdminQuestionsDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/checklists-admin-questions/{uuid}/';
+};
+
+export type ChecklistsAdminQuestionsDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type ChecklistsAdminQuestionsDestroyResponse = ChecklistsAdminQuestionsDestroyResponses[keyof ChecklistsAdminQuestionsDestroyResponses];
+
+export type ChecklistsAdminQuestionsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/checklists-admin-questions/{uuid}/';
+};
+
+export type ChecklistsAdminQuestionsRetrieveResponses = {
+    200: QuestionAdmin;
+};
+
+export type ChecklistsAdminQuestionsRetrieveResponse = ChecklistsAdminQuestionsRetrieveResponses[keyof ChecklistsAdminQuestionsRetrieveResponses];
+
+export type ChecklistsAdminQuestionsPartialUpdateData = {
+    body?: PatchedQuestionAdminRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/checklists-admin-questions/{uuid}/';
+};
+
+export type ChecklistsAdminQuestionsPartialUpdateResponses = {
+    200: QuestionAdmin;
+};
+
+export type ChecklistsAdminQuestionsPartialUpdateResponse = ChecklistsAdminQuestionsPartialUpdateResponses[keyof ChecklistsAdminQuestionsPartialUpdateResponses];
+
+export type ChecklistsAdminQuestionsUpdateData = {
+    body: QuestionAdminRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/checklists-admin-questions/{uuid}/';
+};
+
+export type ChecklistsAdminQuestionsUpdateResponses = {
+    200: QuestionAdmin;
+};
+
+export type ChecklistsAdminQuestionsUpdateResponse = ChecklistsAdminQuestionsUpdateResponses[keyof ChecklistsAdminQuestionsUpdateResponses];
+
+export type ChecklistsAdminDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/checklists-admin/{uuid}/';
+};
+
+export type ChecklistsAdminDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type ChecklistsAdminDestroyResponse = ChecklistsAdminDestroyResponses[keyof ChecklistsAdminDestroyResponses];
+
+export type ChecklistsAdminRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/checklists-admin/{uuid}/';
+};
+
+export type ChecklistsAdminRetrieveResponses = {
+    200: Checklist;
+};
+
+export type ChecklistsAdminRetrieveResponse = ChecklistsAdminRetrieveResponses[keyof ChecklistsAdminRetrieveResponses];
+
+export type ChecklistsAdminPartialUpdateData = {
+    body?: PatchedChecklistRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/checklists-admin/{uuid}/';
+};
+
+export type ChecklistsAdminPartialUpdateResponses = {
+    200: Checklist;
+};
+
+export type ChecklistsAdminPartialUpdateResponse = ChecklistsAdminPartialUpdateResponses[keyof ChecklistsAdminPartialUpdateResponses];
+
+export type ChecklistsAdminUpdateData = {
+    body: ChecklistRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/checklists-admin/{uuid}/';
+};
+
+export type ChecklistsAdminUpdateResponses = {
+    200: Checklist;
+};
+
+export type ChecklistsAdminUpdateResponse = ChecklistsAdminUpdateResponses[keyof ChecklistsAdminUpdateResponses];
+
+export type ChecklistsAdminChecklistQuestionsData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/checklists-admin/{uuid}/questions/';
+};
+
+export type ChecklistsAdminChecklistQuestionsResponses = {
+    200: Array<QuestionAdmin>;
+};
+
+export type ChecklistsAdminChecklistQuestionsResponse = ChecklistsAdminChecklistQuestionsResponses[keyof ChecklistsAdminChecklistQuestionsResponses];
+
 export type ComponentUserUsageLimitsListData = {
     body?: never;
     path?: never;
@@ -21103,559 +21849,6 @@ export type MarketplaceCategoryHelpArticlesUpdateResponses = {
 };
 
 export type MarketplaceCategoryHelpArticlesUpdateResponse = MarketplaceCategoryHelpArticlesUpdateResponses[keyof MarketplaceCategoryHelpArticlesUpdateResponses];
-
-export type MarketplaceChecklistsAdminListData = {
-    body?: never;
-    path?: never;
-    query?: {
-        /**
-         * A page number within the paginated result set.
-         */
-        page?: number;
-        /**
-         * Number of results to return per page.
-         */
-        page_size?: number;
-    };
-    url: '/api/marketplace-checklists-admin/';
-};
-
-export type MarketplaceChecklistsAdminListResponses = {
-    200: Array<ChecklistAdmin>;
-};
-
-export type MarketplaceChecklistsAdminListResponse = MarketplaceChecklistsAdminListResponses[keyof MarketplaceChecklistsAdminListResponses];
-
-export type MarketplaceChecklistsAdminCountData = {
-    body?: never;
-    path?: never;
-    query?: {
-        /**
-         * A page number within the paginated result set.
-         */
-        page?: number;
-        /**
-         * Number of results to return per page.
-         */
-        page_size?: number;
-    };
-    url: '/api/marketplace-checklists-admin/';
-};
-
-export type MarketplaceChecklistsAdminCountResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
-};
-
-export type MarketplaceChecklistsAdminCreateData = {
-    body: CreateChecklistRequest;
-    path?: never;
-    query?: never;
-    url: '/api/marketplace-checklists-admin/';
-};
-
-export type MarketplaceChecklistsAdminCreateResponses = {
-    201: CreateChecklist;
-};
-
-export type MarketplaceChecklistsAdminCreateResponse = MarketplaceChecklistsAdminCreateResponses[keyof MarketplaceChecklistsAdminCreateResponses];
-
-export type MarketplaceChecklistsAdminQuestionDependenciesListData = {
-    body?: never;
-    path?: never;
-    query?: {
-        depends_on_question_uuid?: string;
-        /**
-         * A page number within the paginated result set.
-         */
-        page?: number;
-        /**
-         * Number of results to return per page.
-         */
-        page_size?: number;
-        question_uuid?: string;
-    };
-    url: '/api/marketplace-checklists-admin-question-dependencies/';
-};
-
-export type MarketplaceChecklistsAdminQuestionDependenciesListResponses = {
-    200: Array<QuestionDependency>;
-};
-
-export type MarketplaceChecklistsAdminQuestionDependenciesListResponse = MarketplaceChecklistsAdminQuestionDependenciesListResponses[keyof MarketplaceChecklistsAdminQuestionDependenciesListResponses];
-
-export type MarketplaceChecklistsAdminQuestionDependenciesCountData = {
-    body?: never;
-    path?: never;
-    query?: {
-        depends_on_question_uuid?: string;
-        /**
-         * A page number within the paginated result set.
-         */
-        page?: number;
-        /**
-         * Number of results to return per page.
-         */
-        page_size?: number;
-        question_uuid?: string;
-    };
-    url: '/api/marketplace-checklists-admin-question-dependencies/';
-};
-
-export type MarketplaceChecklistsAdminQuestionDependenciesCountResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
-};
-
-export type MarketplaceChecklistsAdminQuestionDependenciesCreateData = {
-    body: QuestionDependencyRequest;
-    path?: never;
-    query?: never;
-    url: '/api/marketplace-checklists-admin-question-dependencies/';
-};
-
-export type MarketplaceChecklistsAdminQuestionDependenciesCreateResponses = {
-    201: QuestionDependency;
-};
-
-export type MarketplaceChecklistsAdminQuestionDependenciesCreateResponse = MarketplaceChecklistsAdminQuestionDependenciesCreateResponses[keyof MarketplaceChecklistsAdminQuestionDependenciesCreateResponses];
-
-export type MarketplaceChecklistsAdminQuestionDependenciesDestroyData = {
-    body?: never;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/marketplace-checklists-admin-question-dependencies/{uuid}/';
-};
-
-export type MarketplaceChecklistsAdminQuestionDependenciesDestroyResponses = {
-    /**
-     * No response body
-     */
-    204: void;
-};
-
-export type MarketplaceChecklistsAdminQuestionDependenciesDestroyResponse = MarketplaceChecklistsAdminQuestionDependenciesDestroyResponses[keyof MarketplaceChecklistsAdminQuestionDependenciesDestroyResponses];
-
-export type MarketplaceChecklistsAdminQuestionDependenciesRetrieveData = {
-    body?: never;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/marketplace-checklists-admin-question-dependencies/{uuid}/';
-};
-
-export type MarketplaceChecklistsAdminQuestionDependenciesRetrieveResponses = {
-    200: QuestionDependency;
-};
-
-export type MarketplaceChecklistsAdminQuestionDependenciesRetrieveResponse = MarketplaceChecklistsAdminQuestionDependenciesRetrieveResponses[keyof MarketplaceChecklistsAdminQuestionDependenciesRetrieveResponses];
-
-export type MarketplaceChecklistsAdminQuestionDependenciesPartialUpdateData = {
-    body?: PatchedQuestionDependencyRequest;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/marketplace-checklists-admin-question-dependencies/{uuid}/';
-};
-
-export type MarketplaceChecklistsAdminQuestionDependenciesPartialUpdateResponses = {
-    200: QuestionDependency;
-};
-
-export type MarketplaceChecklistsAdminQuestionDependenciesPartialUpdateResponse = MarketplaceChecklistsAdminQuestionDependenciesPartialUpdateResponses[keyof MarketplaceChecklistsAdminQuestionDependenciesPartialUpdateResponses];
-
-export type MarketplaceChecklistsAdminQuestionDependenciesUpdateData = {
-    body: QuestionDependencyRequest;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/marketplace-checklists-admin-question-dependencies/{uuid}/';
-};
-
-export type MarketplaceChecklistsAdminQuestionDependenciesUpdateResponses = {
-    200: QuestionDependency;
-};
-
-export type MarketplaceChecklistsAdminQuestionDependenciesUpdateResponse = MarketplaceChecklistsAdminQuestionDependenciesUpdateResponses[keyof MarketplaceChecklistsAdminQuestionDependenciesUpdateResponses];
-
-export type MarketplaceChecklistsAdminQuestionOptionsListData = {
-    body?: never;
-    path?: never;
-    query?: {
-        /**
-         * A page number within the paginated result set.
-         */
-        page?: number;
-        /**
-         * Number of results to return per page.
-         */
-        page_size?: number;
-        question_uuid?: string;
-    };
-    url: '/api/marketplace-checklists-admin-question-options/';
-};
-
-export type MarketplaceChecklistsAdminQuestionOptionsListResponses = {
-    200: Array<QuestionOptionsAdmin>;
-};
-
-export type MarketplaceChecklistsAdminQuestionOptionsListResponse = MarketplaceChecklistsAdminQuestionOptionsListResponses[keyof MarketplaceChecklistsAdminQuestionOptionsListResponses];
-
-export type MarketplaceChecklistsAdminQuestionOptionsCountData = {
-    body?: never;
-    path?: never;
-    query?: {
-        /**
-         * A page number within the paginated result set.
-         */
-        page?: number;
-        /**
-         * Number of results to return per page.
-         */
-        page_size?: number;
-        question_uuid?: string;
-    };
-    url: '/api/marketplace-checklists-admin-question-options/';
-};
-
-export type MarketplaceChecklistsAdminQuestionOptionsCountResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
-};
-
-export type MarketplaceChecklistsAdminQuestionOptionsCreateData = {
-    body: QuestionOptionsAdminRequest;
-    path?: never;
-    query?: never;
-    url: '/api/marketplace-checklists-admin-question-options/';
-};
-
-export type MarketplaceChecklistsAdminQuestionOptionsCreateResponses = {
-    201: QuestionOptionsAdmin;
-};
-
-export type MarketplaceChecklistsAdminQuestionOptionsCreateResponse = MarketplaceChecklistsAdminQuestionOptionsCreateResponses[keyof MarketplaceChecklistsAdminQuestionOptionsCreateResponses];
-
-export type MarketplaceChecklistsAdminQuestionOptionsDestroyData = {
-    body?: never;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/marketplace-checklists-admin-question-options/{uuid}/';
-};
-
-export type MarketplaceChecklistsAdminQuestionOptionsDestroyResponses = {
-    /**
-     * No response body
-     */
-    204: void;
-};
-
-export type MarketplaceChecklistsAdminQuestionOptionsDestroyResponse = MarketplaceChecklistsAdminQuestionOptionsDestroyResponses[keyof MarketplaceChecklistsAdminQuestionOptionsDestroyResponses];
-
-export type MarketplaceChecklistsAdminQuestionOptionsRetrieveData = {
-    body?: never;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/marketplace-checklists-admin-question-options/{uuid}/';
-};
-
-export type MarketplaceChecklistsAdminQuestionOptionsRetrieveResponses = {
-    200: QuestionOptionsAdmin;
-};
-
-export type MarketplaceChecklistsAdminQuestionOptionsRetrieveResponse = MarketplaceChecklistsAdminQuestionOptionsRetrieveResponses[keyof MarketplaceChecklistsAdminQuestionOptionsRetrieveResponses];
-
-export type MarketplaceChecklistsAdminQuestionOptionsPartialUpdateData = {
-    body?: PatchedQuestionOptionsAdminRequest;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/marketplace-checklists-admin-question-options/{uuid}/';
-};
-
-export type MarketplaceChecklistsAdminQuestionOptionsPartialUpdateResponses = {
-    200: QuestionOptionsAdmin;
-};
-
-export type MarketplaceChecklistsAdminQuestionOptionsPartialUpdateResponse = MarketplaceChecklistsAdminQuestionOptionsPartialUpdateResponses[keyof MarketplaceChecklistsAdminQuestionOptionsPartialUpdateResponses];
-
-export type MarketplaceChecklistsAdminQuestionOptionsUpdateData = {
-    body: QuestionOptionsAdminRequest;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/marketplace-checklists-admin-question-options/{uuid}/';
-};
-
-export type MarketplaceChecklistsAdminQuestionOptionsUpdateResponses = {
-    200: QuestionOptionsAdmin;
-};
-
-export type MarketplaceChecklistsAdminQuestionOptionsUpdateResponse = MarketplaceChecklistsAdminQuestionOptionsUpdateResponses[keyof MarketplaceChecklistsAdminQuestionOptionsUpdateResponses];
-
-export type MarketplaceChecklistsAdminQuestionsListData = {
-    body?: never;
-    path?: never;
-    query?: {
-        checklist_uuid?: string;
-        /**
-         * A page number within the paginated result set.
-         */
-        page?: number;
-        /**
-         * Number of results to return per page.
-         */
-        page_size?: number;
-    };
-    url: '/api/marketplace-checklists-admin-questions/';
-};
-
-export type MarketplaceChecklistsAdminQuestionsListResponses = {
-    200: Array<QuestionAdmin>;
-};
-
-export type MarketplaceChecklistsAdminQuestionsListResponse = MarketplaceChecklistsAdminQuestionsListResponses[keyof MarketplaceChecklistsAdminQuestionsListResponses];
-
-export type MarketplaceChecklistsAdminQuestionsCountData = {
-    body?: never;
-    path?: never;
-    query?: {
-        checklist_uuid?: string;
-        /**
-         * A page number within the paginated result set.
-         */
-        page?: number;
-        /**
-         * Number of results to return per page.
-         */
-        page_size?: number;
-    };
-    url: '/api/marketplace-checklists-admin-questions/';
-};
-
-export type MarketplaceChecklistsAdminQuestionsCountResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
-};
-
-export type MarketplaceChecklistsAdminQuestionsCreateData = {
-    body: QuestionAdminRequest;
-    path?: never;
-    query?: never;
-    url: '/api/marketplace-checklists-admin-questions/';
-};
-
-export type MarketplaceChecklistsAdminQuestionsCreateResponses = {
-    201: QuestionAdmin;
-};
-
-export type MarketplaceChecklistsAdminQuestionsCreateResponse = MarketplaceChecklistsAdminQuestionsCreateResponses[keyof MarketplaceChecklistsAdminQuestionsCreateResponses];
-
-export type MarketplaceChecklistsAdminQuestionsDestroyData = {
-    body?: never;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/marketplace-checklists-admin-questions/{uuid}/';
-};
-
-export type MarketplaceChecklistsAdminQuestionsDestroyResponses = {
-    /**
-     * No response body
-     */
-    204: void;
-};
-
-export type MarketplaceChecklistsAdminQuestionsDestroyResponse = MarketplaceChecklistsAdminQuestionsDestroyResponses[keyof MarketplaceChecklistsAdminQuestionsDestroyResponses];
-
-export type MarketplaceChecklistsAdminQuestionsRetrieveData = {
-    body?: never;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/marketplace-checklists-admin-questions/{uuid}/';
-};
-
-export type MarketplaceChecklistsAdminQuestionsRetrieveResponses = {
-    200: QuestionAdmin;
-};
-
-export type MarketplaceChecklistsAdminQuestionsRetrieveResponse = MarketplaceChecklistsAdminQuestionsRetrieveResponses[keyof MarketplaceChecklistsAdminQuestionsRetrieveResponses];
-
-export type MarketplaceChecklistsAdminQuestionsPartialUpdateData = {
-    body?: PatchedQuestionAdminRequest;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/marketplace-checklists-admin-questions/{uuid}/';
-};
-
-export type MarketplaceChecklistsAdminQuestionsPartialUpdateResponses = {
-    200: QuestionAdmin;
-};
-
-export type MarketplaceChecklistsAdminQuestionsPartialUpdateResponse = MarketplaceChecklistsAdminQuestionsPartialUpdateResponses[keyof MarketplaceChecklistsAdminQuestionsPartialUpdateResponses];
-
-export type MarketplaceChecklistsAdminQuestionsUpdateData = {
-    body: QuestionAdminRequest;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/marketplace-checklists-admin-questions/{uuid}/';
-};
-
-export type MarketplaceChecklistsAdminQuestionsUpdateResponses = {
-    200: QuestionAdmin;
-};
-
-export type MarketplaceChecklistsAdminQuestionsUpdateResponse = MarketplaceChecklistsAdminQuestionsUpdateResponses[keyof MarketplaceChecklistsAdminQuestionsUpdateResponses];
-
-export type MarketplaceChecklistsAdminDestroyData = {
-    body?: never;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/marketplace-checklists-admin/{uuid}/';
-};
-
-export type MarketplaceChecklistsAdminDestroyResponses = {
-    /**
-     * No response body
-     */
-    204: void;
-};
-
-export type MarketplaceChecklistsAdminDestroyResponse = MarketplaceChecklistsAdminDestroyResponses[keyof MarketplaceChecklistsAdminDestroyResponses];
-
-export type MarketplaceChecklistsAdminRetrieveData = {
-    body?: never;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/marketplace-checklists-admin/{uuid}/';
-};
-
-export type MarketplaceChecklistsAdminRetrieveResponses = {
-    200: ChecklistAdmin;
-};
-
-export type MarketplaceChecklistsAdminRetrieveResponse = MarketplaceChecklistsAdminRetrieveResponses[keyof MarketplaceChecklistsAdminRetrieveResponses];
-
-export type MarketplaceChecklistsAdminPartialUpdateData = {
-    body?: PatchedCreateChecklistRequest;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/marketplace-checklists-admin/{uuid}/';
-};
-
-export type MarketplaceChecklistsAdminPartialUpdateResponses = {
-    200: CreateChecklist;
-};
-
-export type MarketplaceChecklistsAdminPartialUpdateResponse = MarketplaceChecklistsAdminPartialUpdateResponses[keyof MarketplaceChecklistsAdminPartialUpdateResponses];
-
-export type MarketplaceChecklistsAdminUpdateData = {
-    body: CreateChecklistRequest;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/marketplace-checklists-admin/{uuid}/';
-};
-
-export type MarketplaceChecklistsAdminUpdateResponses = {
-    200: CreateChecklist;
-};
-
-export type MarketplaceChecklistsAdminUpdateResponse = MarketplaceChecklistsAdminUpdateResponses[keyof MarketplaceChecklistsAdminUpdateResponses];
-
-export type MarketplaceChecklistsAdminChecklistQuestionsData = {
-    body?: never;
-    path: {
-        uuid: string;
-    };
-    query?: {
-        /**
-         * A page number within the paginated result set.
-         */
-        page?: number;
-        /**
-         * Number of results to return per page.
-         */
-        page_size?: number;
-    };
-    url: '/api/marketplace-checklists-admin/{uuid}/questions/';
-};
-
-export type MarketplaceChecklistsAdminChecklistQuestionsResponses = {
-    200: Array<QuestionAdmin>;
-};
-
-export type MarketplaceChecklistsAdminChecklistQuestionsResponse = MarketplaceChecklistsAdminChecklistQuestionsResponses[keyof MarketplaceChecklistsAdminChecklistQuestionsResponses];
-
-export type MarketplaceChecklistsCategoriesListData = {
-    body?: never;
-    path?: never;
-    query?: {
-        /**
-         * A page number within the paginated result set.
-         */
-        page?: number;
-        /**
-         * Number of results to return per page.
-         */
-        page_size?: number;
-    };
-    url: '/api/marketplace-checklists-categories/';
-};
-
-export type MarketplaceChecklistsCategoriesListResponses = {
-    200: Array<ChecklistCategory>;
-};
-
-export type MarketplaceChecklistsCategoriesListResponse = MarketplaceChecklistsCategoriesListResponses[keyof MarketplaceChecklistsCategoriesListResponses];
-
-export type MarketplaceChecklistsCategoriesRetrieveData = {
-    body?: never;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/marketplace-checklists-categories/{uuid}/';
-};
-
-export type MarketplaceChecklistsCategoriesRetrieveResponses = {
-    200: ChecklistCategory;
-};
-
-export type MarketplaceChecklistsCategoriesRetrieveResponse = MarketplaceChecklistsCategoriesRetrieveResponses[keyof MarketplaceChecklistsCategoriesRetrieveResponses];
 
 export type MarketplaceComponentUsagesListData = {
     body?: never;
