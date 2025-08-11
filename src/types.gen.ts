@@ -12052,7 +12052,7 @@ export type AccessSubnetsListResponses = {
 
 export type AccessSubnetsListResponse = AccessSubnetsListResponses[keyof AccessSubnetsListResponses];
 
-export type AccessSubnetsHeadData = {
+export type AccessSubnetsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -12072,7 +12072,7 @@ export type AccessSubnetsHeadData = {
     url: '/api/access-subnets/';
 };
 
-export type AccessSubnetsHeadResponses = {
+export type AccessSubnetsCountResponses = {
     /**
      * No response body
      */
@@ -12187,7 +12187,7 @@ export type AdminAnnouncementsListResponses = {
 
 export type AdminAnnouncementsListResponse = AdminAnnouncementsListResponses[keyof AdminAnnouncementsListResponses];
 
-export type AdminAnnouncementsHeadData = {
+export type AdminAnnouncementsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -12212,7 +12212,7 @@ export type AdminAnnouncementsHeadData = {
     url: '/api/admin-announcements/';
 };
 
-export type AdminAnnouncementsHeadResponses = {
+export type AdminAnnouncementsCountResponses = {
     /**
      * No response body
      */
@@ -12319,7 +12319,7 @@ export type AuthTokensListResponses = {
 
 export type AuthTokensListResponse = AuthTokensListResponses[keyof AuthTokensListResponses];
 
-export type AuthTokensHeadData = {
+export type AuthTokensCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -12335,7 +12335,7 @@ export type AuthTokensHeadData = {
     url: '/api/auth-tokens/';
 };
 
-export type AuthTokensHeadResponses = {
+export type AuthTokensCountResponses = {
     /**
      * No response body
      */
@@ -12423,7 +12423,7 @@ export type AutoprovisioningRulesListResponses = {
 
 export type AutoprovisioningRulesListResponse = AutoprovisioningRulesListResponses[keyof AutoprovisioningRulesListResponses];
 
-export type AutoprovisioningRulesHeadData = {
+export type AutoprovisioningRulesCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -12439,7 +12439,7 @@ export type AutoprovisioningRulesHeadData = {
     url: '/api/autoprovisioning-rules/';
 };
 
-export type AutoprovisioningRulesHeadResponses = {
+export type AutoprovisioningRulesCountResponses = {
     /**
      * No response body
      */
@@ -12547,7 +12547,7 @@ export type AwsImagesListResponses = {
 
 export type AwsImagesListResponse = AwsImagesListResponses[keyof AwsImagesListResponses];
 
-export type AwsImagesHeadData = {
+export type AwsImagesCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -12566,7 +12566,7 @@ export type AwsImagesHeadData = {
     url: '/api/aws-images/';
 };
 
-export type AwsImagesHeadResponses = {
+export type AwsImagesCountResponses = {
     /**
      * No response body
      */
@@ -12632,7 +12632,7 @@ export type AwsInstancesListResponses = {
 
 export type AwsInstancesListResponse = AwsInstancesListResponses[keyof AwsInstancesListResponses];
 
-export type AwsInstancesHeadData = {
+export type AwsInstancesCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -12669,7 +12669,7 @@ export type AwsInstancesHeadData = {
     url: '/api/aws-instances/';
 };
 
-export type AwsInstancesHeadResponses = {
+export type AwsInstancesCountResponses = {
     /**
      * No response body
      */
@@ -12873,7 +12873,7 @@ export type AwsRegionsListResponses = {
 
 export type AwsRegionsListResponse = AwsRegionsListResponses[keyof AwsRegionsListResponses];
 
-export type AwsRegionsHeadData = {
+export type AwsRegionsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -12891,7 +12891,7 @@ export type AwsRegionsHeadData = {
     url: '/api/aws-regions/';
 };
 
-export type AwsRegionsHeadResponses = {
+export type AwsRegionsCountResponses = {
     /**
      * No response body
      */
@@ -12938,7 +12938,7 @@ export type AwsSizesListResponses = {
 
 export type AwsSizesListResponse = AwsSizesListResponses[keyof AwsSizesListResponses];
 
-export type AwsSizesHeadData = {
+export type AwsSizesCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -12957,7 +12957,7 @@ export type AwsSizesHeadData = {
     url: '/api/aws-sizes/';
 };
 
-export type AwsSizesHeadResponses = {
+export type AwsSizesCountResponses = {
     /**
      * No response body
      */
@@ -13002,7 +13002,7 @@ export type AwsVolumesListResponses = {
 
 export type AwsVolumesListResponse = AwsVolumesListResponses[keyof AwsVolumesListResponses];
 
-export type AwsVolumesHeadData = {
+export type AwsVolumesCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -13018,7 +13018,7 @@ export type AwsVolumesHeadData = {
     url: '/api/aws-volumes/';
 };
 
-export type AwsVolumesHeadResponses = {
+export type AwsVolumesCountResponses = {
     /**
      * No response body
      */
@@ -13194,7 +13194,7 @@ export type AzureImagesListResponses = {
 
 export type AzureImagesListResponse = AzureImagesListResponses[keyof AzureImagesListResponses];
 
-export type AzureImagesHeadData = {
+export type AzureImagesCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -13216,7 +13216,7 @@ export type AzureImagesHeadData = {
     url: '/api/azure-images/';
 };
 
-export type AzureImagesHeadResponses = {
+export type AzureImagesCountResponses = {
     /**
      * No response body
      */
@@ -13265,7 +13265,7 @@ export type AzureLocationsListResponses = {
 
 export type AzureLocationsListResponse = AzureLocationsListResponses[keyof AzureLocationsListResponses];
 
-export type AzureLocationsHeadData = {
+export type AzureLocationsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -13286,7 +13286,7 @@ export type AzureLocationsHeadData = {
     url: '/api/azure-locations/';
 };
 
-export type AzureLocationsHeadResponses = {
+export type AzureLocationsCountResponses = {
     /**
      * No response body
      */
@@ -13354,7 +13354,7 @@ export type AzurePublicIpsListResponses = {
 
 export type AzurePublicIpsListResponse = AzurePublicIpsListResponses[keyof AzurePublicIpsListResponses];
 
-export type AzurePublicIpsHeadData = {
+export type AzurePublicIpsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -13393,7 +13393,7 @@ export type AzurePublicIpsHeadData = {
     url: '/api/azure-public-ips/';
 };
 
-export type AzurePublicIpsHeadResponses = {
+export type AzurePublicIpsCountResponses = {
     /**
      * No response body
      */
@@ -13533,7 +13533,7 @@ export type AzureResourceGroupsListResponses = {
 
 export type AzureResourceGroupsListResponse = AzureResourceGroupsListResponses[keyof AzureResourceGroupsListResponses];
 
-export type AzureResourceGroupsHeadData = {
+export type AzureResourceGroupsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -13549,7 +13549,7 @@ export type AzureResourceGroupsHeadData = {
     url: '/api/azure-resource-groups/';
 };
 
-export type AzureResourceGroupsHeadResponses = {
+export type AzureResourceGroupsCountResponses = {
     /**
      * No response body
      */
@@ -13602,7 +13602,7 @@ export type AzureSizesListResponses = {
 
 export type AzureSizesListResponse = AzureSizesListResponses[keyof AzureSizesListResponses];
 
-export type AzureSizesHeadData = {
+export type AzureSizesCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -13625,7 +13625,7 @@ export type AzureSizesHeadData = {
     url: '/api/azure-sizes/';
 };
 
-export type AzureSizesHeadResponses = {
+export type AzureSizesCountResponses = {
     /**
      * No response body
      */
@@ -13695,7 +13695,7 @@ export type AzureSqlDatabasesListResponses = {
 
 export type AzureSqlDatabasesListResponse = AzureSqlDatabasesListResponses[keyof AzureSqlDatabasesListResponses];
 
-export type AzureSqlDatabasesHeadData = {
+export type AzureSqlDatabasesCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -13736,7 +13736,7 @@ export type AzureSqlDatabasesHeadData = {
     url: '/api/azure-sql-databases/';
 };
 
-export type AzureSqlDatabasesHeadResponses = {
+export type AzureSqlDatabasesCountResponses = {
     /**
      * No response body
      */
@@ -13899,7 +13899,7 @@ export type AzureSqlServersListResponses = {
 
 export type AzureSqlServersListResponse = AzureSqlServersListResponses[keyof AzureSqlServersListResponses];
 
-export type AzureSqlServersHeadData = {
+export type AzureSqlServersCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -13938,7 +13938,7 @@ export type AzureSqlServersHeadData = {
     url: '/api/azure-sql-servers/';
 };
 
-export type AzureSqlServersHeadResponses = {
+export type AzureSqlServersCountResponses = {
     /**
      * No response body
      */
@@ -14116,7 +14116,7 @@ export type AzureVirtualmachinesListResponses = {
 
 export type AzureVirtualmachinesListResponse = AzureVirtualmachinesListResponses[keyof AzureVirtualmachinesListResponses];
 
-export type AzureVirtualmachinesHeadData = {
+export type AzureVirtualmachinesCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -14155,7 +14155,7 @@ export type AzureVirtualmachinesHeadData = {
     url: '/api/azure-virtualmachines/';
 };
 
-export type AzureVirtualmachinesHeadResponses = {
+export type AzureVirtualmachinesCountResponses = {
     /**
      * No response body
      */
@@ -14366,7 +14366,7 @@ export type BackendResourceRequestsListResponses = {
 
 export type BackendResourceRequestsListResponse = BackendResourceRequestsListResponses[keyof BackendResourceRequestsListResponses];
 
-export type BackendResourceRequestsHeadData = {
+export type BackendResourceRequestsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -14406,7 +14406,7 @@ export type BackendResourceRequestsHeadData = {
     url: '/api/backend-resource-requests/';
 };
 
-export type BackendResourceRequestsHeadResponses = {
+export type BackendResourceRequestsCountResponses = {
     /**
      * No response body
      */
@@ -14536,7 +14536,7 @@ export type BackendResourcesListResponses = {
 
 export type BackendResourcesListResponse = BackendResourcesListResponses[keyof BackendResourcesListResponses];
 
-export type BackendResourcesHeadData = {
+export type BackendResourcesCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -14574,7 +14574,7 @@ export type BackendResourcesHeadData = {
     url: '/api/backend-resources/';
 };
 
-export type BackendResourcesHeadResponses = {
+export type BackendResourcesCountResponses = {
     /**
      * No response body
      */
@@ -14684,7 +14684,7 @@ export type BookingOfferingsListResponses = {
 
 export type BookingOfferingsListResponse = BookingOfferingsListResponses[keyof BookingOfferingsListResponses];
 
-export type BookingOfferingsHeadData = {
+export type BookingOfferingsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -14700,7 +14700,7 @@ export type BookingOfferingsHeadData = {
     url: '/api/booking-offerings/';
 };
 
-export type BookingOfferingsHeadResponses = {
+export type BookingOfferingsCountResponses = {
     /**
      * No response body
      */
@@ -14859,7 +14859,7 @@ export type BookingResourcesListResponses = {
 
 export type BookingResourcesListResponse = BookingResourcesListResponses[keyof BookingResourcesListResponses];
 
-export type BookingResourcesHeadData = {
+export type BookingResourcesCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -14939,7 +14939,7 @@ export type BookingResourcesHeadData = {
     url: '/api/booking-resources/';
 };
 
-export type BookingResourcesHeadResponses = {
+export type BookingResourcesCountResponses = {
     /**
      * No response body
      */
@@ -15018,7 +15018,7 @@ export type BroadcastMessageTemplatesListResponses = {
 
 export type BroadcastMessageTemplatesListResponse = BroadcastMessageTemplatesListResponses[keyof BroadcastMessageTemplatesListResponses];
 
-export type BroadcastMessageTemplatesHeadData = {
+export type BroadcastMessageTemplatesCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -15035,7 +15035,7 @@ export type BroadcastMessageTemplatesHeadData = {
     url: '/api/broadcast-message-templates/';
 };
 
-export type BroadcastMessageTemplatesHeadResponses = {
+export type BroadcastMessageTemplatesCountResponses = {
     /**
      * No response body
      */
@@ -15149,7 +15149,7 @@ export type BroadcastMessagesListResponses = {
 
 export type BroadcastMessagesListResponse = BroadcastMessagesListResponses[keyof BroadcastMessagesListResponses];
 
-export type BroadcastMessagesHeadData = {
+export type BroadcastMessagesCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -15173,7 +15173,7 @@ export type BroadcastMessagesHeadData = {
     url: '/api/broadcast-messages/';
 };
 
-export type BroadcastMessagesHeadResponses = {
+export type BroadcastMessagesCountResponses = {
     /**
      * No response body
      */
@@ -15305,14 +15305,14 @@ export type BroadcastMessagesRecipientsRetrieveResponses = {
 
 export type BroadcastMessagesRecipientsRetrieveResponse = BroadcastMessagesRecipientsRetrieveResponses[keyof BroadcastMessagesRecipientsRetrieveResponses];
 
-export type BroadcastMessagesRecipientsHeadData = {
+export type BroadcastMessagesRecipientsCountData = {
     body?: never;
     path?: never;
     query?: never;
     url: '/api/broadcast-messages/recipients/';
 };
 
-export type BroadcastMessagesRecipientsHeadResponses = {
+export type BroadcastMessagesRecipientsCountResponses = {
     /**
      * No response body
      */
@@ -15350,7 +15350,7 @@ export type CallManagingOrganisationsListResponses = {
 
 export type CallManagingOrganisationsListResponse = CallManagingOrganisationsListResponses[keyof CallManagingOrganisationsListResponses];
 
-export type CallManagingOrganisationsHeadData = {
+export type CallManagingOrganisationsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -15375,7 +15375,7 @@ export type CallManagingOrganisationsHeadData = {
     url: '/api/call-managing-organisations/';
 };
 
-export type CallManagingOrganisationsHeadResponses = {
+export type CallManagingOrganisationsCountResponses = {
     /**
      * No response body
      */
@@ -15606,7 +15606,7 @@ export type CallProposalProjectRoleMappingsListResponses = {
 
 export type CallProposalProjectRoleMappingsListResponse = CallProposalProjectRoleMappingsListResponses[keyof CallProposalProjectRoleMappingsListResponses];
 
-export type CallProposalProjectRoleMappingsHeadData = {
+export type CallProposalProjectRoleMappingsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -15623,7 +15623,7 @@ export type CallProposalProjectRoleMappingsHeadData = {
     url: '/api/call-proposal-project-role-mappings/';
 };
 
-export type CallProposalProjectRoleMappingsHeadResponses = {
+export type CallProposalProjectRoleMappingsCountResponses = {
     /**
      * No response body
      */
@@ -15728,7 +15728,7 @@ export type CallRoundsListResponses = {
 
 export type CallRoundsListResponse = CallRoundsListResponses[keyof CallRoundsListResponses];
 
-export type CallRoundsHeadData = {
+export type CallRoundsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -15744,7 +15744,7 @@ export type CallRoundsHeadData = {
     url: '/api/call-rounds/';
 };
 
-export type CallRoundsHeadResponses = {
+export type CallRoundsCountResponses = {
     /**
      * No response body
      */
@@ -15834,7 +15834,7 @@ export type ComponentUserUsageLimitsListResponses = {
 
 export type ComponentUserUsageLimitsListResponse = ComponentUserUsageLimitsListResponses[keyof ComponentUserUsageLimitsListResponses];
 
-export type ComponentUserUsageLimitsHeadData = {
+export type ComponentUserUsageLimitsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -15858,7 +15858,7 @@ export type ComponentUserUsageLimitsHeadData = {
     url: '/api/component-user-usage-limits/';
 };
 
-export type ComponentUserUsageLimitsHeadResponses = {
+export type ComponentUserUsageLimitsCountResponses = {
     /**
      * No response body
      */
@@ -15987,7 +15987,7 @@ export type CustomerCreditsListResponses = {
 
 export type CustomerCreditsListResponse = CustomerCreditsListResponses[keyof CustomerCreditsListResponses];
 
-export type CustomerCreditsHeadData = {
+export type CustomerCreditsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -16012,7 +16012,7 @@ export type CustomerCreditsHeadData = {
     url: '/api/customer-credits/';
 };
 
-export type CustomerCreditsHeadResponses = {
+export type CustomerCreditsCountResponses = {
     /**
      * No response body
      */
@@ -16189,7 +16189,7 @@ export type CustomerPermissionsReviewsListResponses = {
 
 export type CustomerPermissionsReviewsListResponse = CustomerPermissionsReviewsListResponses[keyof CustomerPermissionsReviewsListResponses];
 
-export type CustomerPermissionsReviewsHeadData = {
+export type CustomerPermissionsReviewsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -16214,7 +16214,7 @@ export type CustomerPermissionsReviewsHeadData = {
     url: '/api/customer-permissions-reviews/';
 };
 
-export type CustomerPermissionsReviewsHeadResponses = {
+export type CustomerPermissionsReviewsCountResponses = {
     /**
      * No response body
      */
@@ -16274,7 +16274,7 @@ export type CustomerQuotasListResponses = {
 
 export type CustomerQuotasListResponse = CustomerQuotasListResponses[keyof CustomerQuotasListResponses];
 
-export type CustomerQuotasHeadData = {
+export type CustomerQuotasCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -16290,7 +16290,7 @@ export type CustomerQuotasHeadData = {
     url: '/api/customer-quotas/';
 };
 
-export type CustomerQuotasHeadResponses = {
+export type CustomerQuotasCountResponses = {
     /**
      * No response body
      */
@@ -16343,7 +16343,7 @@ export type CustomersListResponses = {
 
 export type CustomersListResponse = CustomersListResponses[keyof CustomersListResponses];
 
-export type CustomersHeadData = {
+export type CustomersCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -16382,7 +16382,7 @@ export type CustomersHeadData = {
     url: '/api/customers/';
 };
 
-export type CustomersHeadResponses = {
+export type CustomersCountResponses = {
     /**
      * No response body
      */
@@ -16695,7 +16695,7 @@ export type CustomersCountriesListResponses = {
 
 export type CustomersCountriesListResponse = CustomersCountriesListResponses[keyof CustomersCountriesListResponses];
 
-export type CustomersCountriesHeadData = {
+export type CustomersCountriesCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -16734,7 +16734,7 @@ export type CustomersCountriesHeadData = {
     url: '/api/customers/countries/';
 };
 
-export type CustomersCountriesHeadResponses = {
+export type CustomersCountriesCountResponses = {
     /**
      * No response body
      */
@@ -16830,7 +16830,7 @@ export type DigitaloceanDropletsListResponses = {
 
 export type DigitaloceanDropletsListResponse = DigitaloceanDropletsListResponses[keyof DigitaloceanDropletsListResponses];
 
-export type DigitaloceanDropletsHeadData = {
+export type DigitaloceanDropletsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -16867,7 +16867,7 @@ export type DigitaloceanDropletsHeadData = {
     url: '/api/digitalocean-droplets/';
 };
 
-export type DigitaloceanDropletsHeadResponses = {
+export type DigitaloceanDropletsCountResponses = {
     /**
      * No response body
      */
@@ -17079,7 +17079,7 @@ export type DigitaloceanImagesListResponses = {
 
 export type DigitaloceanImagesListResponse = DigitaloceanImagesListResponses[keyof DigitaloceanImagesListResponses];
 
-export type DigitaloceanImagesHeadData = {
+export type DigitaloceanImagesCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -17105,7 +17105,7 @@ export type DigitaloceanImagesHeadData = {
     url: '/api/digitalocean-images/';
 };
 
-export type DigitaloceanImagesHeadResponses = {
+export type DigitaloceanImagesCountResponses = {
     /**
      * No response body
      */
@@ -17151,7 +17151,7 @@ export type DigitaloceanRegionsListResponses = {
 
 export type DigitaloceanRegionsListResponse = DigitaloceanRegionsListResponses[keyof DigitaloceanRegionsListResponses];
 
-export type DigitaloceanRegionsHeadData = {
+export type DigitaloceanRegionsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -17169,7 +17169,7 @@ export type DigitaloceanRegionsHeadData = {
     url: '/api/digitalocean-regions/';
 };
 
-export type DigitaloceanRegionsHeadResponses = {
+export type DigitaloceanRegionsCountResponses = {
     /**
      * No response body
      */
@@ -17218,7 +17218,7 @@ export type DigitaloceanSizesListResponses = {
 
 export type DigitaloceanSizesListResponse = DigitaloceanSizesListResponses[keyof DigitaloceanSizesListResponses];
 
-export type DigitaloceanSizesHeadData = {
+export type DigitaloceanSizesCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -17239,7 +17239,7 @@ export type DigitaloceanSizesHeadData = {
     url: '/api/digitalocean-sizes/';
 };
 
-export type DigitaloceanSizesHeadResponses = {
+export type DigitaloceanSizesCountResponses = {
     /**
      * No response body
      */
@@ -17293,7 +17293,7 @@ export type EmailLogsListResponses = {
 
 export type EmailLogsListResponse = EmailLogsListResponses[keyof EmailLogsListResponses];
 
-export type EmailLogsHeadData = {
+export type EmailLogsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -17319,7 +17319,7 @@ export type EmailLogsHeadData = {
     url: '/api/email-logs/';
 };
 
-export type EmailLogsHeadResponses = {
+export type EmailLogsCountResponses = {
     /**
      * No response body
      */
@@ -17371,7 +17371,7 @@ export type EventSubscriptionsListResponses = {
 
 export type EventSubscriptionsListResponse = EventSubscriptionsListResponses[keyof EventSubscriptionsListResponses];
 
-export type EventSubscriptionsHeadData = {
+export type EventSubscriptionsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -17395,7 +17395,7 @@ export type EventSubscriptionsHeadData = {
     url: '/api/event-subscriptions/';
 };
 
-export type EventSubscriptionsHeadResponses = {
+export type EventSubscriptionsCountResponses = {
     /**
      * No response body
      */
@@ -17492,7 +17492,7 @@ export type EventsListResponses = {
 
 export type EventsListResponse = EventsListResponses[keyof EventsListResponses];
 
-export type EventsHeadData = {
+export type EventsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -17529,7 +17529,7 @@ export type EventsHeadData = {
     url: '/api/events/';
 };
 
-export type EventsHeadResponses = {
+export type EventsCountResponses = {
     /**
      * No response body
      */
@@ -17558,7 +17558,7 @@ export type EventsStatsListResponses = {
 
 export type EventsStatsListResponse = EventsStatsListResponses[keyof EventsStatsListResponses];
 
-export type EventsStatsHeadData = {
+export type EventsStatsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -17574,7 +17574,7 @@ export type EventsStatsHeadData = {
     url: '/api/events-stats/';
 };
 
-export type EventsStatsHeadResponses = {
+export type EventsStatsCountResponses = {
     /**
      * No response body
      */
@@ -17616,14 +17616,14 @@ export type EventsCountRetrieveResponses = {
 
 export type EventsCountRetrieveResponse = EventsCountRetrieveResponses[keyof EventsCountRetrieveResponses];
 
-export type EventsCountHeadData = {
+export type EventsCountCountData = {
     body?: never;
     path?: never;
     query?: never;
     url: '/api/events/count/';
 };
 
-export type EventsCountHeadResponses = {
+export type EventsCountCountResponses = {
     /**
      * No response body
      */
@@ -17645,14 +17645,14 @@ export type EventsEventGroupsRetrieveResponses = {
 
 export type EventsEventGroupsRetrieveResponse = EventsEventGroupsRetrieveResponses[keyof EventsEventGroupsRetrieveResponses];
 
-export type EventsEventGroupsHeadData = {
+export type EventsEventGroupsCountData = {
     body?: never;
     path?: never;
     query?: never;
     url: '/api/events/event_groups/';
 };
 
-export type EventsEventGroupsHeadResponses = {
+export type EventsEventGroupsCountResponses = {
     /**
      * No response body
      */
@@ -17674,14 +17674,14 @@ export type EventsScopeTypesRetrieveResponses = {
 
 export type EventsScopeTypesRetrieveResponse = EventsScopeTypesRetrieveResponses[keyof EventsScopeTypesRetrieveResponses];
 
-export type EventsScopeTypesHeadData = {
+export type EventsScopeTypesCountData = {
     body?: never;
     path?: never;
     query?: never;
     url: '/api/events/scope_types/';
 };
 
-export type EventsScopeTypesHeadResponses = {
+export type EventsScopeTypesCountResponses = {
     /**
      * No response body
      */
@@ -17715,7 +17715,7 @@ export type ExternalLinksListResponses = {
 
 export type ExternalLinksListResponse = ExternalLinksListResponses[keyof ExternalLinksListResponses];
 
-export type ExternalLinksHeadData = {
+export type ExternalLinksCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -17736,7 +17736,7 @@ export type ExternalLinksHeadData = {
     url: '/api/external-links/';
 };
 
-export type ExternalLinksHeadResponses = {
+export type ExternalLinksCountResponses = {
     /**
      * No response body
      */
@@ -17879,7 +17879,7 @@ export type FinancialReportsListResponses = {
 
 export type FinancialReportsListResponse = FinancialReportsListResponses[keyof FinancialReportsListResponses];
 
-export type FinancialReportsHeadData = {
+export type FinancialReportsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -17918,7 +17918,7 @@ export type FinancialReportsHeadData = {
     url: '/api/financial-reports/';
 };
 
-export type FinancialReportsHeadResponses = {
+export type FinancialReportsCountResponses = {
     /**
      * No response body
      */
@@ -17964,7 +17964,7 @@ export type FreeipaProfilesListResponses = {
 
 export type FreeipaProfilesListResponse = FreeipaProfilesListResponses[keyof FreeipaProfilesListResponses];
 
-export type FreeipaProfilesHeadData = {
+export type FreeipaProfilesCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -17982,7 +17982,7 @@ export type FreeipaProfilesHeadData = {
     url: '/api/freeipa-profiles/';
 };
 
-export type FreeipaProfilesHeadResponses = {
+export type FreeipaProfilesCountResponses = {
     /**
      * No response body
      */
@@ -18090,7 +18090,7 @@ export type GoogleAuthListResponses = {
 
 export type GoogleAuthListResponse = GoogleAuthListResponses[keyof GoogleAuthListResponses];
 
-export type GoogleAuthHeadData = {
+export type GoogleAuthCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -18110,7 +18110,7 @@ export type GoogleAuthHeadData = {
     url: '/api/google-auth/';
 };
 
-export type GoogleAuthHeadResponses = {
+export type GoogleAuthCountResponses = {
     /**
      * No response body
      */
@@ -18174,7 +18174,7 @@ export type GoogleAuthCallbackRetrieveResponses = {
     200: unknown;
 };
 
-export type GoogleAuthCallbackHeadData = {
+export type GoogleAuthCallbackCountData = {
     body?: never;
     path?: never;
     query: {
@@ -18190,7 +18190,7 @@ export type GoogleAuthCallbackHeadData = {
     url: '/api/google-auth/callback/';
 };
 
-export type GoogleAuthCallbackHeadResponses = {
+export type GoogleAuthCallbackCountResponses = {
     /**
      * No response body
      */
@@ -18220,7 +18220,7 @@ export type HooksListResponses = {
     200: unknown;
 };
 
-export type HooksHeadData = {
+export type HooksCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -18236,7 +18236,7 @@ export type HooksHeadData = {
     url: '/api/hooks/';
 };
 
-export type HooksHeadResponses = {
+export type HooksCountResponses = {
     /**
      * No response body
      */
@@ -18276,7 +18276,7 @@ export type HooksEmailListResponses = {
 
 export type HooksEmailListResponse = HooksEmailListResponses[keyof HooksEmailListResponses];
 
-export type HooksEmailHeadData = {
+export type HooksEmailCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -18303,7 +18303,7 @@ export type HooksEmailHeadData = {
     url: '/api/hooks-email/';
 };
 
-export type HooksEmailHeadResponses = {
+export type HooksEmailCountResponses = {
     /**
      * No response body
      */
@@ -18420,7 +18420,7 @@ export type HooksWebListResponses = {
 
 export type HooksWebListResponse = HooksWebListResponses[keyof HooksWebListResponses];
 
-export type HooksWebHeadData = {
+export type HooksWebCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -18448,7 +18448,7 @@ export type HooksWebHeadData = {
     url: '/api/hooks-web/';
 };
 
-export type HooksWebHeadResponses = {
+export type HooksWebCountResponses = {
     /**
      * No response body
      */
@@ -18553,7 +18553,7 @@ export type IdentityProvidersListResponses = {
 
 export type IdentityProvidersListResponse = IdentityProvidersListResponses[keyof IdentityProvidersListResponses];
 
-export type IdentityProvidersHeadData = {
+export type IdentityProvidersCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -18569,7 +18569,7 @@ export type IdentityProvidersHeadData = {
     url: '/api/identity-providers/';
 };
 
-export type IdentityProvidersHeadResponses = {
+export type IdentityProvidersCountResponses = {
     /**
      * No response body
      */
@@ -18689,7 +18689,7 @@ export type InvoiceItemsListResponses = {
 
 export type InvoiceItemsListResponse = InvoiceItemsListResponses[keyof InvoiceItemsListResponses];
 
-export type InvoiceItemsHeadData = {
+export type InvoiceItemsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -18720,7 +18720,7 @@ export type InvoiceItemsHeadData = {
     url: '/api/invoice-items/';
 };
 
-export type InvoiceItemsHeadResponses = {
+export type InvoiceItemsCountResponses = {
     /**
      * No response body
      */
@@ -18861,7 +18861,7 @@ export type InvoiceItemsCostsListResponses = {
 
 export type InvoiceItemsCostsListResponse = InvoiceItemsCostsListResponses[keyof InvoiceItemsCostsListResponses];
 
-export type InvoiceItemsCostsHeadData = {
+export type InvoiceItemsCostsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -18881,7 +18881,7 @@ export type InvoiceItemsCostsHeadData = {
     url: '/api/invoice-items/costs/';
 };
 
-export type InvoiceItemsCostsHeadResponses = {
+export type InvoiceItemsCostsCountResponses = {
     /**
      * No response body
      */
@@ -18910,7 +18910,7 @@ export type InvoiceItemsCustomerCostsForPeriodRetrieveResponses = {
 
 export type InvoiceItemsCustomerCostsForPeriodRetrieveResponse = InvoiceItemsCustomerCostsForPeriodRetrieveResponses[keyof InvoiceItemsCustomerCostsForPeriodRetrieveResponses];
 
-export type InvoiceItemsCustomerCostsForPeriodHeadData = {
+export type InvoiceItemsCustomerCostsForPeriodCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -18926,7 +18926,7 @@ export type InvoiceItemsCustomerCostsForPeriodHeadData = {
     url: '/api/invoice-items/customer_costs_for_period/';
 };
 
-export type InvoiceItemsCustomerCostsForPeriodHeadResponses = {
+export type InvoiceItemsCustomerCostsForPeriodCountResponses = {
     /**
      * No response body
      */
@@ -18955,7 +18955,7 @@ export type InvoiceItemsProjectCostsForPeriodRetrieveResponses = {
 
 export type InvoiceItemsProjectCostsForPeriodRetrieveResponse = InvoiceItemsProjectCostsForPeriodRetrieveResponses[keyof InvoiceItemsProjectCostsForPeriodRetrieveResponses];
 
-export type InvoiceItemsProjectCostsForPeriodHeadData = {
+export type InvoiceItemsProjectCostsForPeriodCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -18971,7 +18971,7 @@ export type InvoiceItemsProjectCostsForPeriodHeadData = {
     url: '/api/invoice-items/project_costs_for_period/';
 };
 
-export type InvoiceItemsProjectCostsForPeriodHeadResponses = {
+export type InvoiceItemsProjectCostsForPeriodCountResponses = {
     /**
      * No response body
      */
@@ -19007,7 +19007,7 @@ export type InvoiceItemsTotalPriceRetrieveResponses = {
 
 export type InvoiceItemsTotalPriceRetrieveResponse = InvoiceItemsTotalPriceRetrieveResponses[keyof InvoiceItemsTotalPriceRetrieveResponses];
 
-export type InvoiceItemsTotalPriceHeadData = {
+export type InvoiceItemsTotalPriceCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -19030,7 +19030,7 @@ export type InvoiceItemsTotalPriceHeadData = {
     url: '/api/invoice-items/total_price/';
 };
 
-export type InvoiceItemsTotalPriceHeadResponses = {
+export type InvoiceItemsTotalPriceCountResponses = {
     /**
      * No response body
      */
@@ -19088,7 +19088,7 @@ export type InvoicesListResponses = {
 
 export type InvoicesListResponse = InvoicesListResponses[keyof InvoicesListResponses];
 
-export type InvoicesHeadData = {
+export type InvoicesCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -19118,7 +19118,7 @@ export type InvoicesHeadData = {
     url: '/api/invoices/';
 };
 
-export type InvoicesHeadResponses = {
+export type InvoicesCountResponses = {
     /**
      * No response body
      */
@@ -19301,7 +19301,7 @@ export type InvoicesGrowthRetrieveResponses = {
 
 export type InvoicesGrowthRetrieveResponse = InvoicesGrowthRetrieveResponses[keyof InvoicesGrowthRetrieveResponses];
 
-export type InvoicesGrowthHeadData = {
+export type InvoicesGrowthCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -19312,7 +19312,7 @@ export type InvoicesGrowthHeadData = {
     url: '/api/invoices/growth/';
 };
 
-export type InvoicesGrowthHeadResponses = {
+export type InvoicesGrowthCountResponses = {
     /**
      * No response body
      */
@@ -19344,7 +19344,7 @@ export type KeycloakGroupsListResponses = {
 
 export type KeycloakGroupsListResponse = KeycloakGroupsListResponses[keyof KeycloakGroupsListResponses];
 
-export type KeycloakGroupsHeadData = {
+export type KeycloakGroupsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -19363,7 +19363,7 @@ export type KeycloakGroupsHeadData = {
     url: '/api/keycloak-groups/';
 };
 
-export type KeycloakGroupsHeadResponses = {
+export type KeycloakGroupsCountResponses = {
     /**
      * No response body
      */
@@ -19416,7 +19416,7 @@ export type KeycloakUserGroupMembershipsListResponses = {
 
 export type KeycloakUserGroupMembershipsListResponse = KeycloakUserGroupMembershipsListResponses[keyof KeycloakUserGroupMembershipsListResponses];
 
-export type KeycloakUserGroupMembershipsHeadData = {
+export type KeycloakUserGroupMembershipsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -19441,7 +19441,7 @@ export type KeycloakUserGroupMembershipsHeadData = {
     url: '/api/keycloak-user-group-memberships/';
 };
 
-export type KeycloakUserGroupMembershipsHeadResponses = {
+export type KeycloakUserGroupMembershipsCountResponses = {
     /**
      * No response body
      */
@@ -19569,7 +19569,7 @@ export type KeysListResponses = {
 
 export type KeysListResponse = KeysListResponses[keyof KeysListResponses];
 
-export type KeysHeadData = {
+export type KeysCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -19607,7 +19607,7 @@ export type KeysHeadData = {
     url: '/api/keys/';
 };
 
-export type KeysHeadResponses = {
+export type KeysCountResponses = {
     /**
      * No response body
      */
@@ -19689,7 +19689,7 @@ export type LexisLinksListResponses = {
 
 export type LexisLinksListResponse = LexisLinksListResponses[keyof LexisLinksListResponses];
 
-export type LexisLinksHeadData = {
+export type LexisLinksCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -19710,7 +19710,7 @@ export type LexisLinksHeadData = {
     url: '/api/lexis-links/';
 };
 
-export type LexisLinksHeadResponses = {
+export type LexisLinksCountResponses = {
     /**
      * No response body
      */
@@ -19816,7 +19816,7 @@ export type MaintenanceAnnouncementOfferingsListResponses = {
 
 export type MaintenanceAnnouncementOfferingsListResponse = MaintenanceAnnouncementOfferingsListResponses[keyof MaintenanceAnnouncementOfferingsListResponses];
 
-export type MaintenanceAnnouncementOfferingsHeadData = {
+export type MaintenanceAnnouncementOfferingsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -19832,7 +19832,7 @@ export type MaintenanceAnnouncementOfferingsHeadData = {
     url: '/api/maintenance-announcement-offerings/';
 };
 
-export type MaintenanceAnnouncementOfferingsHeadResponses = {
+export type MaintenanceAnnouncementOfferingsCountResponses = {
     /**
      * No response body
      */
@@ -19947,7 +19947,7 @@ export type MaintenanceAnnouncementTemplateOfferingsListResponses = {
 
 export type MaintenanceAnnouncementTemplateOfferingsListResponse = MaintenanceAnnouncementTemplateOfferingsListResponses[keyof MaintenanceAnnouncementTemplateOfferingsListResponses];
 
-export type MaintenanceAnnouncementTemplateOfferingsHeadData = {
+export type MaintenanceAnnouncementTemplateOfferingsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -19973,7 +19973,7 @@ export type MaintenanceAnnouncementTemplateOfferingsHeadData = {
     url: '/api/maintenance-announcement-template-offerings/';
 };
 
-export type MaintenanceAnnouncementTemplateOfferingsHeadResponses = {
+export type MaintenanceAnnouncementTemplateOfferingsCountResponses = {
     /**
      * No response body
      */
@@ -20091,7 +20091,7 @@ export type MaintenanceAnnouncementsListResponses = {
 
 export type MaintenanceAnnouncementsListResponse = MaintenanceAnnouncementsListResponses[keyof MaintenanceAnnouncementsListResponses];
 
-export type MaintenanceAnnouncementsHeadData = {
+export type MaintenanceAnnouncementsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -20120,7 +20120,7 @@ export type MaintenanceAnnouncementsHeadData = {
     url: '/api/maintenance-announcements/';
 };
 
-export type MaintenanceAnnouncementsHeadResponses = {
+export type MaintenanceAnnouncementsCountResponses = {
     /**
      * No response body
      */
@@ -20170,7 +20170,7 @@ export type MaintenanceAnnouncementsTemplateListResponses = {
 
 export type MaintenanceAnnouncementsTemplateListResponse = MaintenanceAnnouncementsTemplateListResponses[keyof MaintenanceAnnouncementsTemplateListResponses];
 
-export type MaintenanceAnnouncementsTemplateHeadData = {
+export type MaintenanceAnnouncementsTemplateCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -20194,7 +20194,7 @@ export type MaintenanceAnnouncementsTemplateHeadData = {
     url: '/api/maintenance-announcements-template/';
 };
 
-export type MaintenanceAnnouncementsTemplateHeadResponses = {
+export type MaintenanceAnnouncementsTemplateCountResponses = {
     /**
      * No response body
      */
@@ -20397,7 +20397,7 @@ export type MarketplaceCategoriesListResponses = {
 
 export type MarketplaceCategoriesListResponse = MarketplaceCategoriesListResponses[keyof MarketplaceCategoriesListResponses];
 
-export type MarketplaceCategoriesHeadData = {
+export type MarketplaceCategoriesCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -20432,7 +20432,7 @@ export type MarketplaceCategoriesHeadData = {
     url: '/api/marketplace-categories/';
 };
 
-export type MarketplaceCategoriesHeadResponses = {
+export type MarketplaceCategoriesCountResponses = {
     /**
      * No response body
      */
@@ -20541,7 +20541,7 @@ export type MarketplaceCategoryColumnsListResponses = {
 
 export type MarketplaceCategoryColumnsListResponse = MarketplaceCategoryColumnsListResponses[keyof MarketplaceCategoryColumnsListResponses];
 
-export type MarketplaceCategoryColumnsHeadData = {
+export type MarketplaceCategoryColumnsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -20559,7 +20559,7 @@ export type MarketplaceCategoryColumnsHeadData = {
     url: '/api/marketplace-category-columns/';
 };
 
-export type MarketplaceCategoryColumnsHeadResponses = {
+export type MarketplaceCategoryColumnsCountResponses = {
     /**
      * No response body
      */
@@ -20667,7 +20667,7 @@ export type MarketplaceCategoryComponentUsagesListResponses = {
 
 export type MarketplaceCategoryComponentUsagesListResponse = MarketplaceCategoryComponentUsagesListResponses[keyof MarketplaceCategoryComponentUsagesListResponses];
 
-export type MarketplaceCategoryComponentUsagesHeadData = {
+export type MarketplaceCategoryComponentUsagesCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -20685,7 +20685,7 @@ export type MarketplaceCategoryComponentUsagesHeadData = {
     url: '/api/marketplace-category-component-usages/';
 };
 
-export type MarketplaceCategoryComponentUsagesHeadResponses = {
+export type MarketplaceCategoryComponentUsagesCountResponses = {
     /**
      * No response body
      */
@@ -20734,7 +20734,7 @@ export type MarketplaceCategoryComponentsListResponses = {
 
 export type MarketplaceCategoryComponentsListResponse = MarketplaceCategoryComponentsListResponses[keyof MarketplaceCategoryComponentsListResponses];
 
-export type MarketplaceCategoryComponentsHeadData = {
+export type MarketplaceCategoryComponentsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -20750,7 +20750,7 @@ export type MarketplaceCategoryComponentsHeadData = {
     url: '/api/marketplace-category-components/';
 };
 
-export type MarketplaceCategoryComponentsHeadResponses = {
+export type MarketplaceCategoryComponentsCountResponses = {
     /**
      * No response body
      */
@@ -20869,7 +20869,7 @@ export type MarketplaceCategoryGroupsListResponses = {
 
 export type MarketplaceCategoryGroupsListResponse = MarketplaceCategoryGroupsListResponses[keyof MarketplaceCategoryGroupsListResponses];
 
-export type MarketplaceCategoryGroupsHeadData = {
+export type MarketplaceCategoryGroupsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -20886,7 +20886,7 @@ export type MarketplaceCategoryGroupsHeadData = {
     url: '/api/marketplace-category-groups/';
 };
 
-export type MarketplaceCategoryGroupsHeadResponses = {
+export type MarketplaceCategoryGroupsCountResponses = {
     /**
      * No response body
      */
@@ -20993,7 +20993,7 @@ export type MarketplaceCategoryHelpArticlesListResponses = {
 
 export type MarketplaceCategoryHelpArticlesListResponse = MarketplaceCategoryHelpArticlesListResponses[keyof MarketplaceCategoryHelpArticlesListResponses];
 
-export type MarketplaceCategoryHelpArticlesHeadData = {
+export type MarketplaceCategoryHelpArticlesCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -21009,7 +21009,7 @@ export type MarketplaceCategoryHelpArticlesHeadData = {
     url: '/api/marketplace-category-help-articles/';
 };
 
-export type MarketplaceCategoryHelpArticlesHeadResponses = {
+export type MarketplaceCategoryHelpArticlesCountResponses = {
     /**
      * No response body
      */
@@ -21126,7 +21126,7 @@ export type MarketplaceChecklistsAdminListResponses = {
 
 export type MarketplaceChecklistsAdminListResponse = MarketplaceChecklistsAdminListResponses[keyof MarketplaceChecklistsAdminListResponses];
 
-export type MarketplaceChecklistsAdminHeadData = {
+export type MarketplaceChecklistsAdminCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -21142,7 +21142,7 @@ export type MarketplaceChecklistsAdminHeadData = {
     url: '/api/marketplace-checklists-admin/';
 };
 
-export type MarketplaceChecklistsAdminHeadResponses = {
+export type MarketplaceChecklistsAdminCountResponses = {
     /**
      * No response body
      */
@@ -21186,7 +21186,7 @@ export type MarketplaceChecklistsAdminQuestionDependenciesListResponses = {
 
 export type MarketplaceChecklistsAdminQuestionDependenciesListResponse = MarketplaceChecklistsAdminQuestionDependenciesListResponses[keyof MarketplaceChecklistsAdminQuestionDependenciesListResponses];
 
-export type MarketplaceChecklistsAdminQuestionDependenciesHeadData = {
+export type MarketplaceChecklistsAdminQuestionDependenciesCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -21204,7 +21204,7 @@ export type MarketplaceChecklistsAdminQuestionDependenciesHeadData = {
     url: '/api/marketplace-checklists-admin-question-dependencies/';
 };
 
-export type MarketplaceChecklistsAdminQuestionDependenciesHeadResponses = {
+export type MarketplaceChecklistsAdminQuestionDependenciesCountResponses = {
     /**
      * No response body
      */
@@ -21310,7 +21310,7 @@ export type MarketplaceChecklistsAdminQuestionOptionsListResponses = {
 
 export type MarketplaceChecklistsAdminQuestionOptionsListResponse = MarketplaceChecklistsAdminQuestionOptionsListResponses[keyof MarketplaceChecklistsAdminQuestionOptionsListResponses];
 
-export type MarketplaceChecklistsAdminQuestionOptionsHeadData = {
+export type MarketplaceChecklistsAdminQuestionOptionsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -21327,7 +21327,7 @@ export type MarketplaceChecklistsAdminQuestionOptionsHeadData = {
     url: '/api/marketplace-checklists-admin-question-options/';
 };
 
-export type MarketplaceChecklistsAdminQuestionOptionsHeadResponses = {
+export type MarketplaceChecklistsAdminQuestionOptionsCountResponses = {
     /**
      * No response body
      */
@@ -21433,7 +21433,7 @@ export type MarketplaceChecklistsAdminQuestionsListResponses = {
 
 export type MarketplaceChecklistsAdminQuestionsListResponse = MarketplaceChecklistsAdminQuestionsListResponses[keyof MarketplaceChecklistsAdminQuestionsListResponses];
 
-export type MarketplaceChecklistsAdminQuestionsHeadData = {
+export type MarketplaceChecklistsAdminQuestionsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -21450,7 +21450,7 @@ export type MarketplaceChecklistsAdminQuestionsHeadData = {
     url: '/api/marketplace-checklists-admin-questions/';
 };
 
-export type MarketplaceChecklistsAdminQuestionsHeadResponses = {
+export type MarketplaceChecklistsAdminQuestionsCountResponses = {
     /**
      * No response body
      */
@@ -21695,7 +21695,7 @@ export type MarketplaceComponentUsagesListResponses = {
 
 export type MarketplaceComponentUsagesListResponse = MarketplaceComponentUsagesListResponses[keyof MarketplaceComponentUsagesListResponses];
 
-export type MarketplaceComponentUsagesHeadData = {
+export type MarketplaceComponentUsagesCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -21726,7 +21726,7 @@ export type MarketplaceComponentUsagesHeadData = {
     url: '/api/marketplace-component-usages/';
 };
 
-export type MarketplaceComponentUsagesHeadResponses = {
+export type MarketplaceComponentUsagesCountResponses = {
     /**
      * No response body
      */
@@ -21824,7 +21824,7 @@ export type MarketplaceComponentUserUsagesListResponses = {
 
 export type MarketplaceComponentUserUsagesListResponse = MarketplaceComponentUserUsagesListResponses[keyof MarketplaceComponentUserUsagesListResponses];
 
-export type MarketplaceComponentUserUsagesHeadData = {
+export type MarketplaceComponentUserUsagesCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -21861,7 +21861,7 @@ export type MarketplaceComponentUserUsagesHeadData = {
     url: '/api/marketplace-component-user-usages/';
 };
 
-export type MarketplaceComponentUserUsagesHeadResponses = {
+export type MarketplaceComponentUserUsagesCountResponses = {
     /**
      * No response body
      */
@@ -21911,7 +21911,7 @@ export type MarketplaceCustomerEstimatedCostPoliciesListResponses = {
 
 export type MarketplaceCustomerEstimatedCostPoliciesListResponse = MarketplaceCustomerEstimatedCostPoliciesListResponses[keyof MarketplaceCustomerEstimatedCostPoliciesListResponses];
 
-export type MarketplaceCustomerEstimatedCostPoliciesHeadData = {
+export type MarketplaceCustomerEstimatedCostPoliciesCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -21931,7 +21931,7 @@ export type MarketplaceCustomerEstimatedCostPoliciesHeadData = {
     url: '/api/marketplace-customer-estimated-cost-policies/';
 };
 
-export type MarketplaceCustomerEstimatedCostPoliciesHeadResponses = {
+export type MarketplaceCustomerEstimatedCostPoliciesCountResponses = {
     /**
      * No response body
      */
@@ -22027,14 +22027,14 @@ export type MarketplaceCustomerEstimatedCostPoliciesActionsRetrieveResponses = {
 
 export type MarketplaceCustomerEstimatedCostPoliciesActionsRetrieveResponse = MarketplaceCustomerEstimatedCostPoliciesActionsRetrieveResponses[keyof MarketplaceCustomerEstimatedCostPoliciesActionsRetrieveResponses];
 
-export type MarketplaceCustomerEstimatedCostPoliciesActionsHeadData = {
+export type MarketplaceCustomerEstimatedCostPoliciesActionsCountData = {
     body?: never;
     path?: never;
     query?: never;
     url: '/api/marketplace-customer-estimated-cost-policies/actions/';
 };
 
-export type MarketplaceCustomerEstimatedCostPoliciesActionsHeadResponses = {
+export type MarketplaceCustomerEstimatedCostPoliciesActionsCountResponses = {
     /**
      * No response body
      */
@@ -22067,7 +22067,7 @@ export type MarketplaceCustomerServiceAccountsListResponses = {
 
 export type MarketplaceCustomerServiceAccountsListResponse = MarketplaceCustomerServiceAccountsListResponses[keyof MarketplaceCustomerServiceAccountsListResponses];
 
-export type MarketplaceCustomerServiceAccountsHeadData = {
+export type MarketplaceCustomerServiceAccountsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -22087,7 +22087,7 @@ export type MarketplaceCustomerServiceAccountsHeadData = {
     url: '/api/marketplace-customer-service-accounts/';
 };
 
-export type MarketplaceCustomerServiceAccountsHeadResponses = {
+export type MarketplaceCustomerServiceAccountsCountResponses = {
     /**
      * No response body
      */
@@ -22243,7 +22243,7 @@ export type MarketplaceIntegrationStatusesListResponses = {
 
 export type MarketplaceIntegrationStatusesListResponse = MarketplaceIntegrationStatusesListResponses[keyof MarketplaceIntegrationStatusesListResponses];
 
-export type MarketplaceIntegrationStatusesHeadData = {
+export type MarketplaceIntegrationStatusesCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -22271,7 +22271,7 @@ export type MarketplaceIntegrationStatusesHeadData = {
     url: '/api/marketplace-integration-statuses/';
 };
 
-export type MarketplaceIntegrationStatusesHeadResponses = {
+export type MarketplaceIntegrationStatusesCountResponses = {
     /**
      * No response body
      */
@@ -22317,7 +22317,7 @@ export type MarketplaceOfferingEstimatedCostPoliciesListResponses = {
 
 export type MarketplaceOfferingEstimatedCostPoliciesListResponse = MarketplaceOfferingEstimatedCostPoliciesListResponses[keyof MarketplaceOfferingEstimatedCostPoliciesListResponses];
 
-export type MarketplaceOfferingEstimatedCostPoliciesHeadData = {
+export type MarketplaceOfferingEstimatedCostPoliciesCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -22335,7 +22335,7 @@ export type MarketplaceOfferingEstimatedCostPoliciesHeadData = {
     url: '/api/marketplace-offering-estimated-cost-policies/';
 };
 
-export type MarketplaceOfferingEstimatedCostPoliciesHeadResponses = {
+export type MarketplaceOfferingEstimatedCostPoliciesCountResponses = {
     /**
      * No response body
      */
@@ -22431,14 +22431,14 @@ export type MarketplaceOfferingEstimatedCostPoliciesActionsRetrieveResponses = {
 
 export type MarketplaceOfferingEstimatedCostPoliciesActionsRetrieveResponse = MarketplaceOfferingEstimatedCostPoliciesActionsRetrieveResponses[keyof MarketplaceOfferingEstimatedCostPoliciesActionsRetrieveResponses];
 
-export type MarketplaceOfferingEstimatedCostPoliciesActionsHeadData = {
+export type MarketplaceOfferingEstimatedCostPoliciesActionsCountData = {
     body?: never;
     path?: never;
     query?: never;
     url: '/api/marketplace-offering-estimated-cost-policies/actions/';
 };
 
-export type MarketplaceOfferingEstimatedCostPoliciesActionsHeadResponses = {
+export type MarketplaceOfferingEstimatedCostPoliciesActionsCountResponses = {
     /**
      * No response body
      */
@@ -22477,7 +22477,7 @@ export type MarketplaceOfferingFilesListResponses = {
 
 export type MarketplaceOfferingFilesListResponse = MarketplaceOfferingFilesListResponses[keyof MarketplaceOfferingFilesListResponses];
 
-export type MarketplaceOfferingFilesHeadData = {
+export type MarketplaceOfferingFilesCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -22502,7 +22502,7 @@ export type MarketplaceOfferingFilesHeadData = {
     url: '/api/marketplace-offering-files/';
 };
 
-export type MarketplaceOfferingFilesHeadResponses = {
+export type MarketplaceOfferingFilesCountResponses = {
     /**
      * No response body
      */
@@ -22627,7 +22627,7 @@ export type MarketplaceOfferingPermissionsListResponses = {
 
 export type MarketplaceOfferingPermissionsListResponse = MarketplaceOfferingPermissionsListResponses[keyof MarketplaceOfferingPermissionsListResponses];
 
-export type MarketplaceOfferingPermissionsHeadData = {
+export type MarketplaceOfferingPermissionsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -22691,7 +22691,7 @@ export type MarketplaceOfferingPermissionsHeadData = {
     url: '/api/marketplace-offering-permissions/';
 };
 
-export type MarketplaceOfferingPermissionsHeadResponses = {
+export type MarketplaceOfferingPermissionsCountResponses = {
     /**
      * No response body
      */
@@ -22768,7 +22768,7 @@ export type MarketplaceOfferingPermissionsLogListResponses = {
 
 export type MarketplaceOfferingPermissionsLogListResponse = MarketplaceOfferingPermissionsLogListResponses[keyof MarketplaceOfferingPermissionsLogListResponses];
 
-export type MarketplaceOfferingPermissionsLogHeadData = {
+export type MarketplaceOfferingPermissionsLogCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -22832,7 +22832,7 @@ export type MarketplaceOfferingPermissionsLogHeadData = {
     url: '/api/marketplace-offering-permissions-log/';
 };
 
-export type MarketplaceOfferingPermissionsLogHeadResponses = {
+export type MarketplaceOfferingPermissionsLogCountResponses = {
     /**
      * No response body
      */
@@ -22903,7 +22903,7 @@ export type MarketplaceOfferingReferralsListResponses = {
 
 export type MarketplaceOfferingReferralsListResponse = MarketplaceOfferingReferralsListResponses[keyof MarketplaceOfferingReferralsListResponses];
 
-export type MarketplaceOfferingReferralsHeadData = {
+export type MarketplaceOfferingReferralsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -22925,7 +22925,7 @@ export type MarketplaceOfferingReferralsHeadData = {
     url: '/api/marketplace-offering-referrals/';
 };
 
-export type MarketplaceOfferingReferralsHeadResponses = {
+export type MarketplaceOfferingReferralsCountResponses = {
     /**
      * No response body
      */
@@ -22971,7 +22971,7 @@ export type MarketplaceOfferingUsagePoliciesListResponses = {
 
 export type MarketplaceOfferingUsagePoliciesListResponse = MarketplaceOfferingUsagePoliciesListResponses[keyof MarketplaceOfferingUsagePoliciesListResponses];
 
-export type MarketplaceOfferingUsagePoliciesHeadData = {
+export type MarketplaceOfferingUsagePoliciesCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -22989,7 +22989,7 @@ export type MarketplaceOfferingUsagePoliciesHeadData = {
     url: '/api/marketplace-offering-usage-policies/';
 };
 
-export type MarketplaceOfferingUsagePoliciesHeadResponses = {
+export type MarketplaceOfferingUsagePoliciesCountResponses = {
     /**
      * No response body
      */
@@ -23085,14 +23085,14 @@ export type MarketplaceOfferingUsagePoliciesActionsRetrieveResponses = {
 
 export type MarketplaceOfferingUsagePoliciesActionsRetrieveResponse = MarketplaceOfferingUsagePoliciesActionsRetrieveResponses[keyof MarketplaceOfferingUsagePoliciesActionsRetrieveResponses];
 
-export type MarketplaceOfferingUsagePoliciesActionsHeadData = {
+export type MarketplaceOfferingUsagePoliciesActionsCountData = {
     body?: never;
     path?: never;
     query?: never;
     url: '/api/marketplace-offering-usage-policies/actions/';
 };
 
-export type MarketplaceOfferingUsagePoliciesActionsHeadResponses = {
+export type MarketplaceOfferingUsagePoliciesActionsCountResponses = {
     /**
      * No response body
      */
@@ -23124,7 +23124,7 @@ export type MarketplaceOfferingUserRolesListResponses = {
 
 export type MarketplaceOfferingUserRolesListResponse = MarketplaceOfferingUserRolesListResponses[keyof MarketplaceOfferingUserRolesListResponses];
 
-export type MarketplaceOfferingUserRolesHeadData = {
+export type MarketplaceOfferingUserRolesCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -23143,7 +23143,7 @@ export type MarketplaceOfferingUserRolesHeadData = {
     url: '/api/marketplace-offering-user-roles/';
 };
 
-export type MarketplaceOfferingUserRolesHeadResponses = {
+export type MarketplaceOfferingUserRolesCountResponses = {
     /**
      * No response body
      */
@@ -23272,7 +23272,7 @@ export type MarketplaceOfferingUsersListResponses = {
 
 export type MarketplaceOfferingUsersListResponse = MarketplaceOfferingUsersListResponses[keyof MarketplaceOfferingUsersListResponses];
 
-export type MarketplaceOfferingUsersHeadData = {
+export type MarketplaceOfferingUsersCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -23311,7 +23311,7 @@ export type MarketplaceOfferingUsersHeadData = {
     url: '/api/marketplace-offering-users/';
 };
 
-export type MarketplaceOfferingUsersHeadResponses = {
+export type MarketplaceOfferingUsersCountResponses = {
     /**
      * No response body
      */
@@ -23640,7 +23640,7 @@ export type MarketplaceOrdersListResponses = {
 
 export type MarketplaceOrdersListResponse = MarketplaceOrdersListResponses[keyof MarketplaceOrdersListResponses];
 
-export type MarketplaceOrdersHeadData = {
+export type MarketplaceOrdersCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -23686,7 +23686,7 @@ export type MarketplaceOrdersHeadData = {
     url: '/api/marketplace-orders/';
 };
 
-export type MarketplaceOrdersHeadResponses = {
+export type MarketplaceOrdersCountResponses = {
     /**
      * No response body
      */
@@ -23941,7 +23941,7 @@ export type MarketplacePlanComponentsListResponses = {
 
 export type MarketplacePlanComponentsListResponse = MarketplacePlanComponentsListResponses[keyof MarketplacePlanComponentsListResponses];
 
-export type MarketplacePlanComponentsHeadData = {
+export type MarketplacePlanComponentsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -23967,7 +23967,7 @@ export type MarketplacePlanComponentsHeadData = {
     url: '/api/marketplace-plan-components/';
 };
 
-export type MarketplacePlanComponentsHeadResponses = {
+export type MarketplacePlanComponentsCountResponses = {
     /**
      * No response body
      */
@@ -24017,7 +24017,7 @@ export type MarketplacePlansListResponses = {
 
 export type MarketplacePlansListResponse = MarketplacePlansListResponses[keyof MarketplacePlansListResponses];
 
-export type MarketplacePlansHeadData = {
+export type MarketplacePlansCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -24036,7 +24036,7 @@ export type MarketplacePlansHeadData = {
     url: '/api/marketplace-plans/';
 };
 
-export type MarketplacePlansHeadResponses = {
+export type MarketplacePlansCountResponses = {
     /**
      * No response body
      */
@@ -24226,7 +24226,7 @@ export type MarketplacePlansUsageStatsListResponses = {
 
 export type MarketplacePlansUsageStatsListResponse = MarketplacePlansUsageStatsListResponses[keyof MarketplacePlansUsageStatsListResponses];
 
-export type MarketplacePlansUsageStatsHeadData = {
+export type MarketplacePlansUsageStatsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -24247,7 +24247,7 @@ export type MarketplacePlansUsageStatsHeadData = {
     url: '/api/marketplace-plans/usage_stats/';
 };
 
-export type MarketplacePlansUsageStatsHeadResponses = {
+export type MarketplacePlansUsageStatsCountResponses = {
     /**
      * No response body
      */
@@ -24295,7 +24295,7 @@ export type MarketplaceProjectEstimatedCostPoliciesListResponses = {
 
 export type MarketplaceProjectEstimatedCostPoliciesListResponse = MarketplaceProjectEstimatedCostPoliciesListResponses[keyof MarketplaceProjectEstimatedCostPoliciesListResponses];
 
-export type MarketplaceProjectEstimatedCostPoliciesHeadData = {
+export type MarketplaceProjectEstimatedCostPoliciesCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -24317,7 +24317,7 @@ export type MarketplaceProjectEstimatedCostPoliciesHeadData = {
     url: '/api/marketplace-project-estimated-cost-policies/';
 };
 
-export type MarketplaceProjectEstimatedCostPoliciesHeadResponses = {
+export type MarketplaceProjectEstimatedCostPoliciesCountResponses = {
     /**
      * No response body
      */
@@ -24413,14 +24413,14 @@ export type MarketplaceProjectEstimatedCostPoliciesActionsRetrieveResponses = {
 
 export type MarketplaceProjectEstimatedCostPoliciesActionsRetrieveResponse = MarketplaceProjectEstimatedCostPoliciesActionsRetrieveResponses[keyof MarketplaceProjectEstimatedCostPoliciesActionsRetrieveResponses];
 
-export type MarketplaceProjectEstimatedCostPoliciesActionsHeadData = {
+export type MarketplaceProjectEstimatedCostPoliciesActionsCountData = {
     body?: never;
     path?: never;
     query?: never;
     url: '/api/marketplace-project-estimated-cost-policies/actions/';
 };
 
-export type MarketplaceProjectEstimatedCostPoliciesActionsHeadResponses = {
+export type MarketplaceProjectEstimatedCostPoliciesActionsCountResponses = {
     /**
      * No response body
      */
@@ -24453,7 +24453,7 @@ export type MarketplaceProjectServiceAccountsListResponses = {
 
 export type MarketplaceProjectServiceAccountsListResponse = MarketplaceProjectServiceAccountsListResponses[keyof MarketplaceProjectServiceAccountsListResponses];
 
-export type MarketplaceProjectServiceAccountsHeadData = {
+export type MarketplaceProjectServiceAccountsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -24473,7 +24473,7 @@ export type MarketplaceProjectServiceAccountsHeadData = {
     url: '/api/marketplace-project-service-accounts/';
 };
 
-export type MarketplaceProjectServiceAccountsHeadResponses = {
+export type MarketplaceProjectServiceAccountsCountResponses = {
     /**
      * No response body
      */
@@ -24598,7 +24598,7 @@ export type MarketplaceProjectUpdateRequestsListResponses = {
 
 export type MarketplaceProjectUpdateRequestsListResponse = MarketplaceProjectUpdateRequestsListResponses[keyof MarketplaceProjectUpdateRequestsListResponses];
 
-export type MarketplaceProjectUpdateRequestsHeadData = {
+export type MarketplaceProjectUpdateRequestsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -24619,7 +24619,7 @@ export type MarketplaceProjectUpdateRequestsHeadData = {
     url: '/api/marketplace-project-update-requests/';
 };
 
-export type MarketplaceProjectUpdateRequestsHeadResponses = {
+export type MarketplaceProjectUpdateRequestsCountResponses = {
     /**
      * No response body
      */
@@ -24760,7 +24760,7 @@ export type MarketplaceProviderOfferingsListResponses = {
 
 export type MarketplaceProviderOfferingsListResponse = MarketplaceProviderOfferingsListResponses[keyof MarketplaceProviderOfferingsListResponses];
 
-export type MarketplaceProviderOfferingsHeadData = {
+export type MarketplaceProviderOfferingsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -24840,7 +24840,7 @@ export type MarketplaceProviderOfferingsHeadData = {
     url: '/api/marketplace-provider-offerings/';
 };
 
-export type MarketplaceProviderOfferingsHeadResponses = {
+export type MarketplaceProviderOfferingsCountResponses = {
     /**
      * No response body
      */
@@ -26015,7 +26015,7 @@ export type MarketplaceProviderOfferingsGroupsListResponses = {
 
 export type MarketplaceProviderOfferingsGroupsListResponse = MarketplaceProviderOfferingsGroupsListResponses[keyof MarketplaceProviderOfferingsGroupsListResponses];
 
-export type MarketplaceProviderOfferingsGroupsHeadData = {
+export type MarketplaceProviderOfferingsGroupsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -26095,7 +26095,7 @@ export type MarketplaceProviderOfferingsGroupsHeadData = {
     url: '/api/marketplace-provider-offerings/groups/';
 };
 
-export type MarketplaceProviderOfferingsGroupsHeadResponses = {
+export type MarketplaceProviderOfferingsGroupsCountResponses = {
     /**
      * No response body
      */
@@ -26188,7 +26188,7 @@ export type MarketplaceProviderResourcesListResponses = {
 
 export type MarketplaceProviderResourcesListResponse = MarketplaceProviderResourcesListResponses[keyof MarketplaceProviderResourcesListResponses];
 
-export type MarketplaceProviderResourcesHeadData = {
+export type MarketplaceProviderResourcesCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -26267,7 +26267,7 @@ export type MarketplaceProviderResourcesHeadData = {
     url: '/api/marketplace-provider-resources/';
 };
 
-export type MarketplaceProviderResourcesHeadResponses = {
+export type MarketplaceProviderResourcesCountResponses = {
     /**
      * No response body
      */
@@ -26744,7 +26744,7 @@ export type MarketplacePublicOfferingsListResponses = {
 
 export type MarketplacePublicOfferingsListResponse = MarketplacePublicOfferingsListResponses[keyof MarketplacePublicOfferingsListResponses];
 
-export type MarketplacePublicOfferingsHeadData = {
+export type MarketplacePublicOfferingsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -26824,7 +26824,7 @@ export type MarketplacePublicOfferingsHeadData = {
     url: '/api/marketplace-public-offerings/';
 };
 
-export type MarketplacePublicOfferingsHeadResponses = {
+export type MarketplacePublicOfferingsCountResponses = {
     /**
      * No response body
      */
@@ -26927,7 +26927,7 @@ export type MarketplaceRemoteSynchronisationsListResponses = {
 
 export type MarketplaceRemoteSynchronisationsListResponse = MarketplaceRemoteSynchronisationsListResponses[keyof MarketplaceRemoteSynchronisationsListResponses];
 
-export type MarketplaceRemoteSynchronisationsHeadData = {
+export type MarketplaceRemoteSynchronisationsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -26943,7 +26943,7 @@ export type MarketplaceRemoteSynchronisationsHeadData = {
     url: '/api/marketplace-remote-synchronisations/';
 };
 
-export type MarketplaceRemoteSynchronisationsHeadResponses = {
+export type MarketplaceRemoteSynchronisationsCountResponses = {
     /**
      * No response body
      */
@@ -27094,7 +27094,7 @@ export type MarketplaceResourceUsersListResponses = {
 
 export type MarketplaceResourceUsersListResponse = MarketplaceResourceUsersListResponses[keyof MarketplaceResourceUsersListResponses];
 
-export type MarketplaceResourceUsersHeadData = {
+export type MarketplaceResourceUsersCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -27115,7 +27115,7 @@ export type MarketplaceResourceUsersHeadData = {
     url: '/api/marketplace-resource-users/';
 };
 
-export type MarketplaceResourceUsersHeadResponses = {
+export type MarketplaceResourceUsersCountResponses = {
     /**
      * No response body
      */
@@ -27254,7 +27254,7 @@ export type MarketplaceResourcesListResponses = {
 
 export type MarketplaceResourcesListResponse = MarketplaceResourcesListResponses[keyof MarketplaceResourcesListResponses];
 
-export type MarketplaceResourcesHeadData = {
+export type MarketplaceResourcesCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -27333,7 +27333,7 @@ export type MarketplaceResourcesHeadData = {
     url: '/api/marketplace-resources/';
 };
 
-export type MarketplaceResourcesHeadResponses = {
+export type MarketplaceResourcesCountResponses = {
     /**
      * No response body
      */
@@ -27669,7 +27669,7 @@ export type MarketplaceRobotAccountsListResponses = {
 
 export type MarketplaceRobotAccountsListResponse = MarketplaceRobotAccountsListResponses[keyof MarketplaceRobotAccountsListResponses];
 
-export type MarketplaceRobotAccountsHeadData = {
+export type MarketplaceRobotAccountsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -27700,7 +27700,7 @@ export type MarketplaceRobotAccountsHeadData = {
     url: '/api/marketplace-robot-accounts/';
 };
 
-export type MarketplaceRobotAccountsHeadResponses = {
+export type MarketplaceRobotAccountsCountResponses = {
     /**
      * No response body
      */
@@ -27917,7 +27917,7 @@ export type MarketplaceScreenshotsListResponses = {
 
 export type MarketplaceScreenshotsListResponse = MarketplaceScreenshotsListResponses[keyof MarketplaceScreenshotsListResponses];
 
-export type MarketplaceScreenshotsHeadData = {
+export type MarketplaceScreenshotsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -27942,7 +27942,7 @@ export type MarketplaceScreenshotsHeadData = {
     url: '/api/marketplace-screenshots/';
 };
 
-export type MarketplaceScreenshotsHeadResponses = {
+export type MarketplaceScreenshotsCountResponses = {
     /**
      * No response body
      */
@@ -28047,7 +28047,7 @@ export type MarketplaceScriptAsyncDryRunListResponses = {
 
 export type MarketplaceScriptAsyncDryRunListResponse = MarketplaceScriptAsyncDryRunListResponses[keyof MarketplaceScriptAsyncDryRunListResponses];
 
-export type MarketplaceScriptAsyncDryRunHeadData = {
+export type MarketplaceScriptAsyncDryRunCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -28063,7 +28063,7 @@ export type MarketplaceScriptAsyncDryRunHeadData = {
     url: '/api/marketplace-script-async-dry-run/';
 };
 
-export type MarketplaceScriptAsyncDryRunHeadResponses = {
+export type MarketplaceScriptAsyncDryRunCountResponses = {
     /**
      * No response body
      */
@@ -28158,7 +28158,7 @@ export type MarketplaceSectionsListResponses = {
 
 export type MarketplaceSectionsListResponse = MarketplaceSectionsListResponses[keyof MarketplaceSectionsListResponses];
 
-export type MarketplaceSectionsHeadData = {
+export type MarketplaceSectionsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -28174,7 +28174,7 @@ export type MarketplaceSectionsHeadData = {
     url: '/api/marketplace-sections/';
 };
 
-export type MarketplaceSectionsHeadResponses = {
+export type MarketplaceSectionsCountResponses = {
     /**
      * No response body
      */
@@ -28301,7 +28301,7 @@ export type MarketplaceServiceProvidersListResponses = {
 
 export type MarketplaceServiceProvidersListResponse = MarketplaceServiceProvidersListResponses[keyof MarketplaceServiceProvidersListResponses];
 
-export type MarketplaceServiceProvidersHeadData = {
+export type MarketplaceServiceProvidersCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -28326,7 +28326,7 @@ export type MarketplaceServiceProvidersHeadData = {
     url: '/api/marketplace-service-providers/';
 };
 
-export type MarketplaceServiceProvidersHeadResponses = {
+export type MarketplaceServiceProvidersCountResponses = {
     /**
      * No response body
      */
@@ -29183,7 +29183,7 @@ export type MarketplaceStatsComponentUsagesListResponses = {
 
 export type MarketplaceStatsComponentUsagesListResponse = MarketplaceStatsComponentUsagesListResponses[keyof MarketplaceStatsComponentUsagesListResponses];
 
-export type MarketplaceStatsComponentUsagesHeadData = {
+export type MarketplaceStatsComponentUsagesCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -29199,7 +29199,7 @@ export type MarketplaceStatsComponentUsagesHeadData = {
     url: '/api/marketplace-stats/component_usages/';
 };
 
-export type MarketplaceStatsComponentUsagesHeadResponses = {
+export type MarketplaceStatsComponentUsagesCountResponses = {
     /**
      * No response body
      */
@@ -29228,7 +29228,7 @@ export type MarketplaceStatsComponentUsagesPerMonthListResponses = {
 
 export type MarketplaceStatsComponentUsagesPerMonthListResponse = MarketplaceStatsComponentUsagesPerMonthListResponses[keyof MarketplaceStatsComponentUsagesPerMonthListResponses];
 
-export type MarketplaceStatsComponentUsagesPerMonthHeadData = {
+export type MarketplaceStatsComponentUsagesPerMonthCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -29244,7 +29244,7 @@ export type MarketplaceStatsComponentUsagesPerMonthHeadData = {
     url: '/api/marketplace-stats/component_usages_per_month/';
 };
 
-export type MarketplaceStatsComponentUsagesPerMonthHeadResponses = {
+export type MarketplaceStatsComponentUsagesPerMonthCountResponses = {
     /**
      * No response body
      */
@@ -29273,7 +29273,7 @@ export type MarketplaceStatsComponentUsagesPerProjectListResponses = {
 
 export type MarketplaceStatsComponentUsagesPerProjectListResponse = MarketplaceStatsComponentUsagesPerProjectListResponses[keyof MarketplaceStatsComponentUsagesPerProjectListResponses];
 
-export type MarketplaceStatsComponentUsagesPerProjectHeadData = {
+export type MarketplaceStatsComponentUsagesPerProjectCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -29289,7 +29289,7 @@ export type MarketplaceStatsComponentUsagesPerProjectHeadData = {
     url: '/api/marketplace-stats/component_usages_per_project/';
 };
 
-export type MarketplaceStatsComponentUsagesPerProjectHeadResponses = {
+export type MarketplaceStatsComponentUsagesPerProjectCountResponses = {
     /**
      * No response body
      */
@@ -29318,7 +29318,7 @@ export type MarketplaceStatsCountActiveResourcesGroupedByOfferingListResponses =
 
 export type MarketplaceStatsCountActiveResourcesGroupedByOfferingListResponse = MarketplaceStatsCountActiveResourcesGroupedByOfferingListResponses[keyof MarketplaceStatsCountActiveResourcesGroupedByOfferingListResponses];
 
-export type MarketplaceStatsCountActiveResourcesGroupedByOfferingHeadData = {
+export type MarketplaceStatsCountActiveResourcesGroupedByOfferingCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -29334,7 +29334,7 @@ export type MarketplaceStatsCountActiveResourcesGroupedByOfferingHeadData = {
     url: '/api/marketplace-stats/count_active_resources_grouped_by_offering/';
 };
 
-export type MarketplaceStatsCountActiveResourcesGroupedByOfferingHeadResponses = {
+export type MarketplaceStatsCountActiveResourcesGroupedByOfferingCountResponses = {
     /**
      * No response body
      */
@@ -29363,7 +29363,7 @@ export type MarketplaceStatsCountActiveResourcesGroupedByOfferingCountryListResp
 
 export type MarketplaceStatsCountActiveResourcesGroupedByOfferingCountryListResponse = MarketplaceStatsCountActiveResourcesGroupedByOfferingCountryListResponses[keyof MarketplaceStatsCountActiveResourcesGroupedByOfferingCountryListResponses];
 
-export type MarketplaceStatsCountActiveResourcesGroupedByOfferingCountryHeadData = {
+export type MarketplaceStatsCountActiveResourcesGroupedByOfferingCountryCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -29379,7 +29379,7 @@ export type MarketplaceStatsCountActiveResourcesGroupedByOfferingCountryHeadData
     url: '/api/marketplace-stats/count_active_resources_grouped_by_offering_country/';
 };
 
-export type MarketplaceStatsCountActiveResourcesGroupedByOfferingCountryHeadResponses = {
+export type MarketplaceStatsCountActiveResourcesGroupedByOfferingCountryCountResponses = {
     /**
      * No response body
      */
@@ -29408,7 +29408,7 @@ export type MarketplaceStatsCountActiveResourcesGroupedByOrganizationGroupListRe
 
 export type MarketplaceStatsCountActiveResourcesGroupedByOrganizationGroupListResponse = MarketplaceStatsCountActiveResourcesGroupedByOrganizationGroupListResponses[keyof MarketplaceStatsCountActiveResourcesGroupedByOrganizationGroupListResponses];
 
-export type MarketplaceStatsCountActiveResourcesGroupedByOrganizationGroupHeadData = {
+export type MarketplaceStatsCountActiveResourcesGroupedByOrganizationGroupCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -29424,7 +29424,7 @@ export type MarketplaceStatsCountActiveResourcesGroupedByOrganizationGroupHeadDa
     url: '/api/marketplace-stats/count_active_resources_grouped_by_organization_group/';
 };
 
-export type MarketplaceStatsCountActiveResourcesGroupedByOrganizationGroupHeadResponses = {
+export type MarketplaceStatsCountActiveResourcesGroupedByOrganizationGroupCountResponses = {
     /**
      * No response body
      */
@@ -29453,7 +29453,7 @@ export type MarketplaceStatsCountProjectsGroupedByProviderAndIndustryFlagListRes
 
 export type MarketplaceStatsCountProjectsGroupedByProviderAndIndustryFlagListResponse = MarketplaceStatsCountProjectsGroupedByProviderAndIndustryFlagListResponses[keyof MarketplaceStatsCountProjectsGroupedByProviderAndIndustryFlagListResponses];
 
-export type MarketplaceStatsCountProjectsGroupedByProviderAndIndustryFlagHeadData = {
+export type MarketplaceStatsCountProjectsGroupedByProviderAndIndustryFlagCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -29469,7 +29469,7 @@ export type MarketplaceStatsCountProjectsGroupedByProviderAndIndustryFlagHeadDat
     url: '/api/marketplace-stats/count_projects_grouped_by_provider_and_industry_flag/';
 };
 
-export type MarketplaceStatsCountProjectsGroupedByProviderAndIndustryFlagHeadResponses = {
+export type MarketplaceStatsCountProjectsGroupedByProviderAndIndustryFlagCountResponses = {
     /**
      * No response body
      */
@@ -29498,7 +29498,7 @@ export type MarketplaceStatsCountProjectsGroupedByProviderAndOecdListResponses =
 
 export type MarketplaceStatsCountProjectsGroupedByProviderAndOecdListResponse = MarketplaceStatsCountProjectsGroupedByProviderAndOecdListResponses[keyof MarketplaceStatsCountProjectsGroupedByProviderAndOecdListResponses];
 
-export type MarketplaceStatsCountProjectsGroupedByProviderAndOecdHeadData = {
+export type MarketplaceStatsCountProjectsGroupedByProviderAndOecdCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -29514,7 +29514,7 @@ export type MarketplaceStatsCountProjectsGroupedByProviderAndOecdHeadData = {
     url: '/api/marketplace-stats/count_projects_grouped_by_provider_and_oecd/';
 };
 
-export type MarketplaceStatsCountProjectsGroupedByProviderAndOecdHeadResponses = {
+export type MarketplaceStatsCountProjectsGroupedByProviderAndOecdCountResponses = {
     /**
      * No response body
      */
@@ -29543,7 +29543,7 @@ export type MarketplaceStatsCountProjectsOfServiceProvidersListResponses = {
 
 export type MarketplaceStatsCountProjectsOfServiceProvidersListResponse = MarketplaceStatsCountProjectsOfServiceProvidersListResponses[keyof MarketplaceStatsCountProjectsOfServiceProvidersListResponses];
 
-export type MarketplaceStatsCountProjectsOfServiceProvidersHeadData = {
+export type MarketplaceStatsCountProjectsOfServiceProvidersCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -29559,7 +29559,7 @@ export type MarketplaceStatsCountProjectsOfServiceProvidersHeadData = {
     url: '/api/marketplace-stats/count_projects_of_service_providers/';
 };
 
-export type MarketplaceStatsCountProjectsOfServiceProvidersHeadResponses = {
+export type MarketplaceStatsCountProjectsOfServiceProvidersCountResponses = {
     /**
      * No response body
      */
@@ -29588,7 +29588,7 @@ export type MarketplaceStatsCountProjectsOfServiceProvidersGroupedByOecdListResp
 
 export type MarketplaceStatsCountProjectsOfServiceProvidersGroupedByOecdListResponse = MarketplaceStatsCountProjectsOfServiceProvidersGroupedByOecdListResponses[keyof MarketplaceStatsCountProjectsOfServiceProvidersGroupedByOecdListResponses];
 
-export type MarketplaceStatsCountProjectsOfServiceProvidersGroupedByOecdHeadData = {
+export type MarketplaceStatsCountProjectsOfServiceProvidersGroupedByOecdCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -29604,7 +29604,7 @@ export type MarketplaceStatsCountProjectsOfServiceProvidersGroupedByOecdHeadData
     url: '/api/marketplace-stats/count_projects_of_service_providers_grouped_by_oecd/';
 };
 
-export type MarketplaceStatsCountProjectsOfServiceProvidersGroupedByOecdHeadResponses = {
+export type MarketplaceStatsCountProjectsOfServiceProvidersGroupedByOecdCountResponses = {
     /**
      * No response body
      */
@@ -29633,7 +29633,7 @@ export type MarketplaceStatsCountUniqueUsersConnectedWithActiveResourcesOfServic
 
 export type MarketplaceStatsCountUniqueUsersConnectedWithActiveResourcesOfServiceProviderListResponse = MarketplaceStatsCountUniqueUsersConnectedWithActiveResourcesOfServiceProviderListResponses[keyof MarketplaceStatsCountUniqueUsersConnectedWithActiveResourcesOfServiceProviderListResponses];
 
-export type MarketplaceStatsCountUniqueUsersConnectedWithActiveResourcesOfServiceProviderHeadData = {
+export type MarketplaceStatsCountUniqueUsersConnectedWithActiveResourcesOfServiceProviderCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -29649,7 +29649,7 @@ export type MarketplaceStatsCountUniqueUsersConnectedWithActiveResourcesOfServic
     url: '/api/marketplace-stats/count_unique_users_connected_with_active_resources_of_service_provider/';
 };
 
-export type MarketplaceStatsCountUniqueUsersConnectedWithActiveResourcesOfServiceProviderHeadResponses = {
+export type MarketplaceStatsCountUniqueUsersConnectedWithActiveResourcesOfServiceProviderCountResponses = {
     /**
      * No response body
      */
@@ -29678,7 +29678,7 @@ export type MarketplaceStatsCountUsersOfServiceProvidersListResponses = {
 
 export type MarketplaceStatsCountUsersOfServiceProvidersListResponse = MarketplaceStatsCountUsersOfServiceProvidersListResponses[keyof MarketplaceStatsCountUsersOfServiceProvidersListResponses];
 
-export type MarketplaceStatsCountUsersOfServiceProvidersHeadData = {
+export type MarketplaceStatsCountUsersOfServiceProvidersCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -29694,7 +29694,7 @@ export type MarketplaceStatsCountUsersOfServiceProvidersHeadData = {
     url: '/api/marketplace-stats/count_users_of_service_providers/';
 };
 
-export type MarketplaceStatsCountUsersOfServiceProvidersHeadResponses = {
+export type MarketplaceStatsCountUsersOfServiceProvidersCountResponses = {
     /**
      * No response body
      */
@@ -29723,7 +29723,7 @@ export type MarketplaceStatsCustomerMemberCountListResponses = {
 
 export type MarketplaceStatsCustomerMemberCountListResponse = MarketplaceStatsCustomerMemberCountListResponses[keyof MarketplaceStatsCustomerMemberCountListResponses];
 
-export type MarketplaceStatsCustomerMemberCountHeadData = {
+export type MarketplaceStatsCustomerMemberCountCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -29739,7 +29739,7 @@ export type MarketplaceStatsCustomerMemberCountHeadData = {
     url: '/api/marketplace-stats/customer_member_count/';
 };
 
-export type MarketplaceStatsCustomerMemberCountHeadResponses = {
+export type MarketplaceStatsCustomerMemberCountCountResponses = {
     /**
      * No response body
      */
@@ -29768,7 +29768,7 @@ export type MarketplaceStatsOfferingsCounterStatsListResponses = {
 
 export type MarketplaceStatsOfferingsCounterStatsListResponse = MarketplaceStatsOfferingsCounterStatsListResponses[keyof MarketplaceStatsOfferingsCounterStatsListResponses];
 
-export type MarketplaceStatsOfferingsCounterStatsHeadData = {
+export type MarketplaceStatsOfferingsCounterStatsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -29784,7 +29784,7 @@ export type MarketplaceStatsOfferingsCounterStatsHeadData = {
     url: '/api/marketplace-stats/offerings_counter_stats/';
 };
 
-export type MarketplaceStatsOfferingsCounterStatsHeadResponses = {
+export type MarketplaceStatsOfferingsCounterStatsCountResponses = {
     /**
      * No response body
      */
@@ -29813,7 +29813,7 @@ export type MarketplaceStatsOrganizationProjectCountListResponses = {
 
 export type MarketplaceStatsOrganizationProjectCountListResponse = MarketplaceStatsOrganizationProjectCountListResponses[keyof MarketplaceStatsOrganizationProjectCountListResponses];
 
-export type MarketplaceStatsOrganizationProjectCountHeadData = {
+export type MarketplaceStatsOrganizationProjectCountCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -29829,7 +29829,7 @@ export type MarketplaceStatsOrganizationProjectCountHeadData = {
     url: '/api/marketplace-stats/organization_project_count/';
 };
 
-export type MarketplaceStatsOrganizationProjectCountHeadResponses = {
+export type MarketplaceStatsOrganizationProjectCountCountResponses = {
     /**
      * No response body
      */
@@ -29858,7 +29858,7 @@ export type MarketplaceStatsOrganizationResourceCountListResponses = {
 
 export type MarketplaceStatsOrganizationResourceCountListResponse = MarketplaceStatsOrganizationResourceCountListResponses[keyof MarketplaceStatsOrganizationResourceCountListResponses];
 
-export type MarketplaceStatsOrganizationResourceCountHeadData = {
+export type MarketplaceStatsOrganizationResourceCountCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -29874,7 +29874,7 @@ export type MarketplaceStatsOrganizationResourceCountHeadData = {
     url: '/api/marketplace-stats/organization_resource_count/';
 };
 
-export type MarketplaceStatsOrganizationResourceCountHeadResponses = {
+export type MarketplaceStatsOrganizationResourceCountCountResponses = {
     /**
      * No response body
      */
@@ -29894,14 +29894,14 @@ export type MarketplaceStatsProjectsLimitsGroupedByIndustryFlagRetrieveResponses
 
 export type MarketplaceStatsProjectsLimitsGroupedByIndustryFlagRetrieveResponse = MarketplaceStatsProjectsLimitsGroupedByIndustryFlagRetrieveResponses[keyof MarketplaceStatsProjectsLimitsGroupedByIndustryFlagRetrieveResponses];
 
-export type MarketplaceStatsProjectsLimitsGroupedByIndustryFlagHeadData = {
+export type MarketplaceStatsProjectsLimitsGroupedByIndustryFlagCountData = {
     body?: never;
     path?: never;
     query?: never;
     url: '/api/marketplace-stats/projects_limits_grouped_by_industry_flag/';
 };
 
-export type MarketplaceStatsProjectsLimitsGroupedByIndustryFlagHeadResponses = {
+export type MarketplaceStatsProjectsLimitsGroupedByIndustryFlagCountResponses = {
     /**
      * No response body
      */
@@ -29921,14 +29921,14 @@ export type MarketplaceStatsProjectsLimitsGroupedByOecdRetrieveResponses = {
 
 export type MarketplaceStatsProjectsLimitsGroupedByOecdRetrieveResponse = MarketplaceStatsProjectsLimitsGroupedByOecdRetrieveResponses[keyof MarketplaceStatsProjectsLimitsGroupedByOecdRetrieveResponses];
 
-export type MarketplaceStatsProjectsLimitsGroupedByOecdHeadData = {
+export type MarketplaceStatsProjectsLimitsGroupedByOecdCountData = {
     body?: never;
     path?: never;
     query?: never;
     url: '/api/marketplace-stats/projects_limits_grouped_by_oecd/';
 };
 
-export type MarketplaceStatsProjectsLimitsGroupedByOecdHeadResponses = {
+export type MarketplaceStatsProjectsLimitsGroupedByOecdCountResponses = {
     /**
      * No response body
      */
@@ -29948,14 +29948,14 @@ export type MarketplaceStatsProjectsUsagesGroupedByIndustryFlagRetrieveResponses
 
 export type MarketplaceStatsProjectsUsagesGroupedByIndustryFlagRetrieveResponse = MarketplaceStatsProjectsUsagesGroupedByIndustryFlagRetrieveResponses[keyof MarketplaceStatsProjectsUsagesGroupedByIndustryFlagRetrieveResponses];
 
-export type MarketplaceStatsProjectsUsagesGroupedByIndustryFlagHeadData = {
+export type MarketplaceStatsProjectsUsagesGroupedByIndustryFlagCountData = {
     body?: never;
     path?: never;
     query?: never;
     url: '/api/marketplace-stats/projects_usages_grouped_by_industry_flag/';
 };
 
-export type MarketplaceStatsProjectsUsagesGroupedByIndustryFlagHeadResponses = {
+export type MarketplaceStatsProjectsUsagesGroupedByIndustryFlagCountResponses = {
     /**
      * No response body
      */
@@ -29975,14 +29975,14 @@ export type MarketplaceStatsProjectsUsagesGroupedByOecdRetrieveResponses = {
 
 export type MarketplaceStatsProjectsUsagesGroupedByOecdRetrieveResponse = MarketplaceStatsProjectsUsagesGroupedByOecdRetrieveResponses[keyof MarketplaceStatsProjectsUsagesGroupedByOecdRetrieveResponses];
 
-export type MarketplaceStatsProjectsUsagesGroupedByOecdHeadData = {
+export type MarketplaceStatsProjectsUsagesGroupedByOecdCountData = {
     body?: never;
     path?: never;
     query?: never;
     url: '/api/marketplace-stats/projects_usages_grouped_by_oecd/';
 };
 
-export type MarketplaceStatsProjectsUsagesGroupedByOecdHeadResponses = {
+export type MarketplaceStatsProjectsUsagesGroupedByOecdCountResponses = {
     /**
      * No response body
      */
@@ -30011,7 +30011,7 @@ export type MarketplaceStatsResourcesLimitsListResponses = {
 
 export type MarketplaceStatsResourcesLimitsListResponse = MarketplaceStatsResourcesLimitsListResponses[keyof MarketplaceStatsResourcesLimitsListResponses];
 
-export type MarketplaceStatsResourcesLimitsHeadData = {
+export type MarketplaceStatsResourcesLimitsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -30027,7 +30027,7 @@ export type MarketplaceStatsResourcesLimitsHeadData = {
     url: '/api/marketplace-stats/resources_limits/';
 };
 
-export type MarketplaceStatsResourcesLimitsHeadResponses = {
+export type MarketplaceStatsResourcesLimitsCountResponses = {
     /**
      * No response body
      */
@@ -30056,7 +30056,7 @@ export type MarketplaceStatsTotalCostOfActiveResourcesPerOfferingListResponses =
 
 export type MarketplaceStatsTotalCostOfActiveResourcesPerOfferingListResponse = MarketplaceStatsTotalCostOfActiveResourcesPerOfferingListResponses[keyof MarketplaceStatsTotalCostOfActiveResourcesPerOfferingListResponses];
 
-export type MarketplaceStatsTotalCostOfActiveResourcesPerOfferingHeadData = {
+export type MarketplaceStatsTotalCostOfActiveResourcesPerOfferingCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -30072,7 +30072,7 @@ export type MarketplaceStatsTotalCostOfActiveResourcesPerOfferingHeadData = {
     url: '/api/marketplace-stats/total_cost_of_active_resources_per_offering/';
 };
 
-export type MarketplaceStatsTotalCostOfActiveResourcesPerOfferingHeadResponses = {
+export type MarketplaceStatsTotalCostOfActiveResourcesPerOfferingCountResponses = {
     /**
      * No response body
      */
@@ -30122,7 +30122,7 @@ export type NotificationMessagesListResponses = {
 
 export type NotificationMessagesListResponse = NotificationMessagesListResponses[keyof NotificationMessagesListResponses];
 
-export type NotificationMessagesHeadData = {
+export type NotificationMessagesCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -30144,7 +30144,7 @@ export type NotificationMessagesHeadData = {
     url: '/api/notification-messages/';
 };
 
-export type NotificationMessagesHeadResponses = {
+export type NotificationMessagesCountResponses = {
     /**
      * No response body
      */
@@ -30191,7 +30191,7 @@ export type NotificationMessagesTemplatesListResponses = {
 
 export type NotificationMessagesTemplatesListResponse = NotificationMessagesTemplatesListResponses[keyof NotificationMessagesTemplatesListResponses];
 
-export type NotificationMessagesTemplatesHeadData = {
+export type NotificationMessagesTemplatesCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -30212,7 +30212,7 @@ export type NotificationMessagesTemplatesHeadData = {
     url: '/api/notification-messages-templates/';
 };
 
-export type NotificationMessagesTemplatesHeadResponses = {
+export type NotificationMessagesTemplatesCountResponses = {
     /**
      * No response body
      */
@@ -30454,7 +30454,7 @@ export type OpenstackBackupsListResponses = {
 
 export type OpenstackBackupsListResponse = OpenstackBackupsListResponses[keyof OpenstackBackupsListResponses];
 
-export type OpenstackBackupsHeadData = {
+export type OpenstackBackupsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -30495,7 +30495,7 @@ export type OpenstackBackupsHeadData = {
     url: '/api/openstack-backups/';
 };
 
-export type OpenstackBackupsHeadResponses = {
+export type OpenstackBackupsCountResponses = {
     /**
      * No response body
      */
@@ -30660,7 +30660,7 @@ export type OpenstackFlavorsListResponses = {
 
 export type OpenstackFlavorsListResponse = OpenstackFlavorsListResponses[keyof OpenstackFlavorsListResponses];
 
-export type OpenstackFlavorsHeadData = {
+export type OpenstackFlavorsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -30699,7 +30699,7 @@ export type OpenstackFlavorsHeadData = {
     url: '/api/openstack-flavors/';
 };
 
-export type OpenstackFlavorsHeadResponses = {
+export type OpenstackFlavorsCountResponses = {
     /**
      * No response body
      */
@@ -30738,14 +30738,14 @@ export type OpenstackFlavorsUsageStatsRetrieveResponses = {
 
 export type OpenstackFlavorsUsageStatsRetrieveResponse = OpenstackFlavorsUsageStatsRetrieveResponses[keyof OpenstackFlavorsUsageStatsRetrieveResponses];
 
-export type OpenstackFlavorsUsageStatsHeadData = {
+export type OpenstackFlavorsUsageStatsCountData = {
     body?: never;
     path?: never;
     query?: never;
     url: '/api/openstack-flavors/usage_stats/';
 };
 
-export type OpenstackFlavorsUsageStatsHeadResponses = {
+export type OpenstackFlavorsUsageStatsCountResponses = {
     /**
      * No response body
      */
@@ -30801,7 +30801,7 @@ export type OpenstackFloatingIpsListResponses = {
 
 export type OpenstackFloatingIpsListResponse = OpenstackFloatingIpsListResponses[keyof OpenstackFloatingIpsListResponses];
 
-export type OpenstackFloatingIpsHeadData = {
+export type OpenstackFloatingIpsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -30843,7 +30843,7 @@ export type OpenstackFloatingIpsHeadData = {
     url: '/api/openstack-floating-ips/';
 };
 
-export type OpenstackFloatingIpsHeadResponses = {
+export type OpenstackFloatingIpsCountResponses = {
     /**
      * No response body
      */
@@ -30994,7 +30994,7 @@ export type OpenstackImagesListResponses = {
 
 export type OpenstackImagesListResponse = OpenstackImagesListResponses[keyof OpenstackImagesListResponses];
 
-export type OpenstackImagesHeadData = {
+export type OpenstackImagesCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -31017,7 +31017,7 @@ export type OpenstackImagesHeadData = {
     url: '/api/openstack-images/';
 };
 
-export type OpenstackImagesHeadResponses = {
+export type OpenstackImagesCountResponses = {
     /**
      * No response body
      */
@@ -31052,14 +31052,14 @@ export type OpenstackImagesUsageStatsRetrieveResponses = {
 
 export type OpenstackImagesUsageStatsRetrieveResponse = OpenstackImagesUsageStatsRetrieveResponses[keyof OpenstackImagesUsageStatsRetrieveResponses];
 
-export type OpenstackImagesUsageStatsHeadData = {
+export type OpenstackImagesUsageStatsCountData = {
     body?: never;
     path?: never;
     query?: never;
     url: '/api/openstack-images/usage_stats/';
 };
 
-export type OpenstackImagesUsageStatsHeadResponses = {
+export type OpenstackImagesUsageStatsCountResponses = {
     /**
      * No response body
      */
@@ -31094,7 +31094,7 @@ export type OpenstackInstanceAvailabilityZonesListResponses = {
 
 export type OpenstackInstanceAvailabilityZonesListResponse = OpenstackInstanceAvailabilityZonesListResponses[keyof OpenstackInstanceAvailabilityZonesListResponses];
 
-export type OpenstackInstanceAvailabilityZonesHeadData = {
+export type OpenstackInstanceAvailabilityZonesCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -31116,7 +31116,7 @@ export type OpenstackInstanceAvailabilityZonesHeadData = {
     url: '/api/openstack-instance-availability-zones/';
 };
 
-export type OpenstackInstanceAvailabilityZonesHeadResponses = {
+export type OpenstackInstanceAvailabilityZonesCountResponses = {
     /**
      * No response body
      */
@@ -31188,7 +31188,7 @@ export type OpenstackInstancesListResponses = {
 
 export type OpenstackInstancesListResponse = OpenstackInstancesListResponses[keyof OpenstackInstancesListResponses];
 
-export type OpenstackInstancesHeadData = {
+export type OpenstackInstancesCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -31231,7 +31231,7 @@ export type OpenstackInstancesHeadData = {
     url: '/api/openstack-instances/';
 };
 
-export type OpenstackInstancesHeadResponses = {
+export type OpenstackInstancesCountResponses = {
     /**
      * No response body
      */
@@ -31583,7 +31583,7 @@ export type OpenstackMarketplaceTenantsListResponses = {
 
 export type OpenstackMarketplaceTenantsListResponse = OpenstackMarketplaceTenantsListResponses[keyof OpenstackMarketplaceTenantsListResponses];
 
-export type OpenstackMarketplaceTenantsHeadData = {
+export type OpenstackMarketplaceTenantsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -31620,7 +31620,7 @@ export type OpenstackMarketplaceTenantsHeadData = {
     url: '/api/openstack-marketplace-tenants/';
 };
 
-export type OpenstackMarketplaceTenantsHeadResponses = {
+export type OpenstackMarketplaceTenantsCountResponses = {
     /**
      * No response body
      */
@@ -31697,7 +31697,7 @@ export type OpenstackMigrationsListResponses = {
 
 export type OpenstackMigrationsListResponse = OpenstackMigrationsListResponses[keyof OpenstackMigrationsListResponses];
 
-export type OpenstackMigrationsHeadData = {
+export type OpenstackMigrationsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -31715,7 +31715,7 @@ export type OpenstackMigrationsHeadData = {
     url: '/api/openstack-migrations/';
 };
 
-export type OpenstackMigrationsHeadResponses = {
+export type OpenstackMigrationsCountResponses = {
     /**
      * No response body
      */
@@ -31825,7 +31825,7 @@ export type OpenstackNetworkRbacPoliciesListResponses = {
 
 export type OpenstackNetworkRbacPoliciesListResponse = OpenstackNetworkRbacPoliciesListResponses[keyof OpenstackNetworkRbacPoliciesListResponses];
 
-export type OpenstackNetworkRbacPoliciesHeadData = {
+export type OpenstackNetworkRbacPoliciesCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -31846,7 +31846,7 @@ export type OpenstackNetworkRbacPoliciesHeadData = {
     url: '/api/openstack-network-rbac-policies/';
 };
 
-export type OpenstackNetworkRbacPoliciesHeadResponses = {
+export type OpenstackNetworkRbacPoliciesCountResponses = {
     /**
      * No response body
      */
@@ -31930,7 +31930,7 @@ export type OpenstackNetworksListResponses = {
 
 export type OpenstackNetworksListResponse = OpenstackNetworksListResponses[keyof OpenstackNetworksListResponses];
 
-export type OpenstackNetworksHeadData = {
+export type OpenstackNetworksCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -31985,7 +31985,7 @@ export type OpenstackNetworksHeadData = {
     url: '/api/openstack-networks/';
 };
 
-export type OpenstackNetworksHeadResponses = {
+export type OpenstackNetworksCountResponses = {
     /**
      * No response body
      */
@@ -32207,7 +32207,7 @@ export type OpenstackPortsListResponses = {
 
 export type OpenstackPortsListResponse = OpenstackPortsListResponses[keyof OpenstackPortsListResponses];
 
-export type OpenstackPortsHeadData = {
+export type OpenstackPortsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -32251,7 +32251,7 @@ export type OpenstackPortsHeadData = {
     url: '/api/openstack-ports/';
 };
 
-export type OpenstackPortsHeadResponses = {
+export type OpenstackPortsCountResponses = {
     /**
      * No response body
      */
@@ -32491,7 +32491,7 @@ export type OpenstackRoutersListResponses = {
 
 export type OpenstackRoutersListResponse = OpenstackRoutersListResponses[keyof OpenstackRoutersListResponses];
 
-export type OpenstackRoutersHeadData = {
+export type OpenstackRoutersCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -32511,7 +32511,7 @@ export type OpenstackRoutersHeadData = {
     url: '/api/openstack-routers/';
 };
 
-export type OpenstackRoutersHeadResponses = {
+export type OpenstackRoutersCountResponses = {
     /**
      * No response body
      */
@@ -32660,7 +32660,7 @@ export type OpenstackSecurityGroupsListResponses = {
 
 export type OpenstackSecurityGroupsListResponse = OpenstackSecurityGroupsListResponses[keyof OpenstackSecurityGroupsListResponses];
 
-export type OpenstackSecurityGroupsHeadData = {
+export type OpenstackSecurityGroupsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -32700,7 +32700,7 @@ export type OpenstackSecurityGroupsHeadData = {
     url: '/api/openstack-security-groups/';
 };
 
-export type OpenstackSecurityGroupsHeadResponses = {
+export type OpenstackSecurityGroupsCountResponses = {
     /**
      * No response body
      */
@@ -32866,7 +32866,7 @@ export type OpenstackServerGroupsListResponses = {
 
 export type OpenstackServerGroupsListResponse = OpenstackServerGroupsListResponses[keyof OpenstackServerGroupsListResponses];
 
-export type OpenstackServerGroupsHeadData = {
+export type OpenstackServerGroupsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -32905,7 +32905,7 @@ export type OpenstackServerGroupsHeadData = {
     url: '/api/openstack-server-groups/';
 };
 
-export type OpenstackServerGroupsHeadResponses = {
+export type OpenstackServerGroupsCountResponses = {
     /**
      * No response body
      */
@@ -33073,7 +33073,7 @@ export type OpenstackSnapshotsListResponses = {
 
 export type OpenstackSnapshotsListResponse = OpenstackSnapshotsListResponses[keyof OpenstackSnapshotsListResponses];
 
-export type OpenstackSnapshotsHeadData = {
+export type OpenstackSnapshotsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -33117,7 +33117,7 @@ export type OpenstackSnapshotsHeadData = {
     url: '/api/openstack-snapshots/';
 };
 
-export type OpenstackSnapshotsHeadResponses = {
+export type OpenstackSnapshotsCountResponses = {
     /**
      * No response body
      */
@@ -33324,7 +33324,7 @@ export type OpenstackSubnetsListResponses = {
 
 export type OpenstackSubnetsListResponse = OpenstackSubnetsListResponses[keyof OpenstackSubnetsListResponses];
 
-export type OpenstackSubnetsHeadData = {
+export type OpenstackSubnetsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -33381,7 +33381,7 @@ export type OpenstackSubnetsHeadData = {
     url: '/api/openstack-subnets/';
 };
 
-export type OpenstackSubnetsHeadResponses = {
+export type OpenstackSubnetsCountResponses = {
     /**
      * No response body
      */
@@ -33561,7 +33561,7 @@ export type OpenstackTenantsListResponses = {
 
 export type OpenstackTenantsListResponse = OpenstackTenantsListResponses[keyof OpenstackTenantsListResponses];
 
-export type OpenstackTenantsHeadData = {
+export type OpenstackTenantsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -33598,7 +33598,7 @@ export type OpenstackTenantsHeadData = {
     url: '/api/openstack-tenants/';
 };
 
-export type OpenstackTenantsHeadResponses = {
+export type OpenstackTenantsCountResponses = {
     /**
      * No response body
      */
@@ -33986,7 +33986,7 @@ export type OpenstackVolumeAvailabilityZonesListResponses = {
 
 export type OpenstackVolumeAvailabilityZonesListResponse = OpenstackVolumeAvailabilityZonesListResponses[keyof OpenstackVolumeAvailabilityZonesListResponses];
 
-export type OpenstackVolumeAvailabilityZonesHeadData = {
+export type OpenstackVolumeAvailabilityZonesCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -34008,7 +34008,7 @@ export type OpenstackVolumeAvailabilityZonesHeadData = {
     url: '/api/openstack-volume-availability-zones/';
 };
 
-export type OpenstackVolumeAvailabilityZonesHeadResponses = {
+export type OpenstackVolumeAvailabilityZonesCountResponses = {
     /**
      * No response body
      */
@@ -34059,7 +34059,7 @@ export type OpenstackVolumeTypesListResponses = {
 
 export type OpenstackVolumeTypesListResponse = OpenstackVolumeTypesListResponses[keyof OpenstackVolumeTypesListResponses];
 
-export type OpenstackVolumeTypesHeadData = {
+export type OpenstackVolumeTypesCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -34082,7 +34082,7 @@ export type OpenstackVolumeTypesHeadData = {
     url: '/api/openstack-volume-types/';
 };
 
-export type OpenstackVolumeTypesHeadResponses = {
+export type OpenstackVolumeTypesCountResponses = {
     /**
      * No response body
      */
@@ -34117,14 +34117,14 @@ export type OpenstackVolumeTypesNamesRetrieveResponses = {
 
 export type OpenstackVolumeTypesNamesRetrieveResponse = OpenstackVolumeTypesNamesRetrieveResponses[keyof OpenstackVolumeTypesNamesRetrieveResponses];
 
-export type OpenstackVolumeTypesNamesHeadData = {
+export type OpenstackVolumeTypesNamesCountData = {
     body?: never;
     path?: never;
     query?: never;
     url: '/api/openstack-volume-types/names/';
 };
 
-export type OpenstackVolumeTypesNamesHeadResponses = {
+export type OpenstackVolumeTypesNamesCountResponses = {
     /**
      * No response body
      */
@@ -34184,7 +34184,7 @@ export type OpenstackVolumesListResponses = {
 
 export type OpenstackVolumesListResponse = OpenstackVolumesListResponses[keyof OpenstackVolumesListResponses];
 
-export type OpenstackVolumesHeadData = {
+export type OpenstackVolumesCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -34230,7 +34230,7 @@ export type OpenstackVolumesHeadData = {
     url: '/api/openstack-volumes/';
 };
 
-export type OpenstackVolumesHeadResponses = {
+export type OpenstackVolumesCountResponses = {
     /**
      * No response body
      */
@@ -34424,7 +34424,7 @@ export type OrganizationGroupsListResponses = {
 
 export type OrganizationGroupsListResponse = OrganizationGroupsListResponses[keyof OrganizationGroupsListResponses];
 
-export type OrganizationGroupsHeadData = {
+export type OrganizationGroupsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -34447,7 +34447,7 @@ export type OrganizationGroupsHeadData = {
     url: '/api/organization-groups/';
 };
 
-export type OrganizationGroupsHeadResponses = {
+export type OrganizationGroupsCountResponses = {
     /**
      * No response body
      */
@@ -34589,7 +34589,7 @@ export type PaymentProfilesListResponses = {
 
 export type PaymentProfilesListResponse = PaymentProfilesListResponses[keyof PaymentProfilesListResponses];
 
-export type PaymentProfilesHeadData = {
+export type PaymentProfilesCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -34615,7 +34615,7 @@ export type PaymentProfilesHeadData = {
     url: '/api/payment-profiles/';
 };
 
-export type PaymentProfilesHeadResponses = {
+export type PaymentProfilesCountResponses = {
     /**
      * No response body
      */
@@ -34739,7 +34739,7 @@ export type PaymentsListResponses = {
 
 export type PaymentsListResponse = PaymentsListResponses[keyof PaymentsListResponses];
 
-export type PaymentsHeadData = {
+export type PaymentsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -34758,7 +34758,7 @@ export type PaymentsHeadData = {
     url: '/api/payments/';
 };
 
-export type PaymentsHeadResponses = {
+export type PaymentsCountResponses = {
     /**
      * No response body
      */
@@ -34905,7 +34905,7 @@ export type ProjectCreditsListResponses = {
 
 export type ProjectCreditsListResponse = ProjectCreditsListResponses[keyof ProjectCreditsListResponses];
 
-export type ProjectCreditsHeadData = {
+export type ProjectCreditsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -34932,7 +34932,7 @@ export type ProjectCreditsHeadData = {
     url: '/api/project-credits/';
 };
 
-export type ProjectCreditsHeadResponses = {
+export type ProjectCreditsCountResponses = {
     /**
      * No response body
      */
@@ -35037,7 +35037,7 @@ export type ProjectQuotasListResponses = {
 
 export type ProjectQuotasListResponse = ProjectQuotasListResponses[keyof ProjectQuotasListResponses];
 
-export type ProjectQuotasHeadData = {
+export type ProjectQuotasCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -35053,7 +35053,7 @@ export type ProjectQuotasHeadData = {
     url: '/api/project-quotas/';
 };
 
-export type ProjectQuotasHeadResponses = {
+export type ProjectQuotasCountResponses = {
     /**
      * No response body
      */
@@ -35084,7 +35084,7 @@ export type ProjectTypesListResponses = {
 
 export type ProjectTypesListResponse = ProjectTypesListResponses[keyof ProjectTypesListResponses];
 
-export type ProjectTypesHeadData = {
+export type ProjectTypesCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -35102,7 +35102,7 @@ export type ProjectTypesHeadData = {
     url: '/api/project-types/';
 };
 
-export type ProjectTypesHeadResponses = {
+export type ProjectTypesCountResponses = {
     /**
      * No response body
      */
@@ -35186,7 +35186,7 @@ export type ProjectsListResponses = {
 
 export type ProjectsListResponse = ProjectsListResponses[keyof ProjectsListResponses];
 
-export type ProjectsHeadData = {
+export type ProjectsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -35241,7 +35241,7 @@ export type ProjectsHeadData = {
     url: '/api/projects/';
 };
 
-export type ProjectsHeadResponses = {
+export type ProjectsCountResponses = {
     /**
      * No response body
      */
@@ -35559,7 +35559,7 @@ export type PromotionsCampaignsListResponses = {
 
 export type PromotionsCampaignsListResponse = PromotionsCampaignsListResponses[keyof PromotionsCampaignsListResponses];
 
-export type PromotionsCampaignsHeadData = {
+export type PromotionsCampaignsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -35592,7 +35592,7 @@ export type PromotionsCampaignsHeadData = {
     url: '/api/promotions-campaigns/';
 };
 
-export type PromotionsCampaignsHeadResponses = {
+export type PromotionsCampaignsCountResponses = {
     /**
      * No response body
      */
@@ -35787,7 +35787,7 @@ export type ProposalProposalsListResponses = {
 
 export type ProposalProposalsListResponse = ProposalProposalsListResponses[keyof ProposalProposalsListResponses];
 
-export type ProposalProposalsHeadData = {
+export type ProposalProposalsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -35814,7 +35814,7 @@ export type ProposalProposalsHeadData = {
     url: '/api/proposal-proposals/';
 };
 
-export type ProposalProposalsHeadResponses = {
+export type ProposalProposalsCountResponses = {
     /**
      * No response body
      */
@@ -36330,7 +36330,7 @@ export type ProposalProtectedCallsListResponses = {
 
 export type ProposalProtectedCallsListResponse = ProposalProtectedCallsListResponses[keyof ProposalProtectedCallsListResponses];
 
-export type ProposalProtectedCallsHeadData = {
+export type ProposalProtectedCallsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -36360,7 +36360,7 @@ export type ProposalProtectedCallsHeadData = {
     url: '/api/proposal-protected-calls/';
 };
 
-export type ProposalProtectedCallsHeadResponses = {
+export type ProposalProtectedCallsCountResponses = {
     /**
      * No response body
      */
@@ -37062,7 +37062,7 @@ export type ProposalPublicCallsListResponses = {
 
 export type ProposalPublicCallsListResponse = ProposalPublicCallsListResponses[keyof ProposalPublicCallsListResponses];
 
-export type ProposalPublicCallsHeadData = {
+export type ProposalPublicCallsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -37092,7 +37092,7 @@ export type ProposalPublicCallsHeadData = {
     url: '/api/proposal-public-calls/';
 };
 
-export type ProposalPublicCallsHeadResponses = {
+export type ProposalPublicCallsCountResponses = {
     /**
      * No response body
      */
@@ -37160,7 +37160,7 @@ export type ProposalRequestedOfferingsListResponses = {
 
 export type ProposalRequestedOfferingsListResponse = ProposalRequestedOfferingsListResponses[keyof ProposalRequestedOfferingsListResponses];
 
-export type ProposalRequestedOfferingsHeadData = {
+export type ProposalRequestedOfferingsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -37198,7 +37198,7 @@ export type ProposalRequestedOfferingsHeadData = {
     url: '/api/proposal-requested-offerings/';
 };
 
-export type ProposalRequestedOfferingsHeadResponses = {
+export type ProposalRequestedOfferingsCountResponses = {
     /**
      * No response body
      */
@@ -37296,7 +37296,7 @@ export type ProposalRequestedResourcesListResponses = {
 
 export type ProposalRequestedResourcesListResponse = ProposalRequestedResourcesListResponses[keyof ProposalRequestedResourcesListResponses];
 
-export type ProposalRequestedResourcesHeadData = {
+export type ProposalRequestedResourcesCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -37334,7 +37334,7 @@ export type ProposalRequestedResourcesHeadData = {
     url: '/api/proposal-requested-resources/';
 };
 
-export type ProposalRequestedResourcesHeadResponses = {
+export type ProposalRequestedResourcesCountResponses = {
     /**
      * No response body
      */
@@ -37391,7 +37391,7 @@ export type ProposalReviewsListResponses = {
 
 export type ProposalReviewsListResponse = ProposalReviewsListResponses[keyof ProposalReviewsListResponses];
 
-export type ProposalReviewsHeadData = {
+export type ProposalReviewsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -37420,7 +37420,7 @@ export type ProposalReviewsHeadData = {
     url: '/api/proposal-reviews/';
 };
 
-export type ProposalReviewsHeadResponses = {
+export type ProposalReviewsCountResponses = {
     /**
      * No response body
      */
@@ -37584,7 +37584,7 @@ export type ProviderInvoiceItemsListResponses = {
 
 export type ProviderInvoiceItemsListResponse = ProviderInvoiceItemsListResponses[keyof ProviderInvoiceItemsListResponses];
 
-export type ProviderInvoiceItemsHeadData = {
+export type ProviderInvoiceItemsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -37611,7 +37611,7 @@ export type ProviderInvoiceItemsHeadData = {
     url: '/api/provider-invoice-items/';
 };
 
-export type ProviderInvoiceItemsHeadResponses = {
+export type ProviderInvoiceItemsCountResponses = {
     /**
      * No response body
      */
@@ -37738,7 +37738,7 @@ export type RancherAppsListResponses = {
 
 export type RancherAppsListResponse = RancherAppsListResponses[keyof RancherAppsListResponses];
 
-export type RancherAppsHeadData = {
+export type RancherAppsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -37778,7 +37778,7 @@ export type RancherAppsHeadData = {
     url: '/api/rancher-apps/';
 };
 
-export type RancherAppsHeadResponses = {
+export type RancherAppsCountResponses = {
     /**
      * No response body
      */
@@ -37917,7 +37917,7 @@ export type RancherCatalogsListResponses = {
 
 export type RancherCatalogsListResponse = RancherCatalogsListResponses[keyof RancherCatalogsListResponses];
 
-export type RancherCatalogsHeadData = {
+export type RancherCatalogsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -37933,7 +37933,7 @@ export type RancherCatalogsHeadData = {
     url: '/api/rancher-catalogs/';
 };
 
-export type RancherCatalogsHeadResponses = {
+export type RancherCatalogsCountResponses = {
     /**
      * No response body
      */
@@ -38056,7 +38056,7 @@ export type RancherClusterSecurityGroupsListResponses = {
 
 export type RancherClusterSecurityGroupsListResponse = RancherClusterSecurityGroupsListResponses[keyof RancherClusterSecurityGroupsListResponses];
 
-export type RancherClusterSecurityGroupsHeadData = {
+export type RancherClusterSecurityGroupsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -38075,7 +38075,7 @@ export type RancherClusterSecurityGroupsHeadData = {
     url: '/api/rancher-cluster-security-groups/';
 };
 
-export type RancherClusterSecurityGroupsHeadResponses = {
+export type RancherClusterSecurityGroupsCountResponses = {
     /**
      * No response body
      */
@@ -38149,7 +38149,7 @@ export type RancherClusterTemplatesListResponses = {
 
 export type RancherClusterTemplatesListResponse = RancherClusterTemplatesListResponses[keyof RancherClusterTemplatesListResponses];
 
-export type RancherClusterTemplatesHeadData = {
+export type RancherClusterTemplatesCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -38165,7 +38165,7 @@ export type RancherClusterTemplatesHeadData = {
     url: '/api/rancher-cluster-templates/';
 };
 
-export type RancherClusterTemplatesHeadResponses = {
+export type RancherClusterTemplatesCountResponses = {
     /**
      * No response body
      */
@@ -38231,7 +38231,7 @@ export type RancherClustersListResponses = {
 
 export type RancherClustersListResponse = RancherClustersListResponses[keyof RancherClustersListResponses];
 
-export type RancherClustersHeadData = {
+export type RancherClustersCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -38268,7 +38268,7 @@ export type RancherClustersHeadData = {
     url: '/api/rancher-clusters/';
 };
 
-export type RancherClustersHeadResponses = {
+export type RancherClustersCountResponses = {
     /**
      * No response body
      */
@@ -38445,7 +38445,7 @@ export type RancherHpasListResponses = {
 
 export type RancherHpasListResponse = RancherHpasListResponses[keyof RancherHpasListResponses];
 
-export type RancherHpasHeadData = {
+export type RancherHpasCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -38469,7 +38469,7 @@ export type RancherHpasHeadData = {
     url: '/api/rancher-hpas/';
 };
 
-export type RancherHpasHeadResponses = {
+export type RancherHpasCountResponses = {
     /**
      * No response body
      */
@@ -38661,7 +38661,7 @@ export type RancherIngressesListResponses = {
 
 export type RancherIngressesListResponse = RancherIngressesListResponses[keyof RancherIngressesListResponses];
 
-export type RancherIngressesHeadData = {
+export type RancherIngressesCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -38701,7 +38701,7 @@ export type RancherIngressesHeadData = {
     url: '/api/rancher-ingresses/';
 };
 
-export type RancherIngressesHeadResponses = {
+export type RancherIngressesCountResponses = {
     /**
      * No response body
      */
@@ -38884,7 +38884,7 @@ export type RancherNamespacesListResponses = {
 
 export type RancherNamespacesListResponse = RancherNamespacesListResponses[keyof RancherNamespacesListResponses];
 
-export type RancherNamespacesHeadData = {
+export type RancherNamespacesCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -38912,7 +38912,7 @@ export type RancherNamespacesHeadData = {
     url: '/api/rancher-namespaces/';
 };
 
-export type RancherNamespacesHeadResponses = {
+export type RancherNamespacesCountResponses = {
     /**
      * No response body
      */
@@ -38957,7 +38957,7 @@ export type RancherNodesListResponses = {
 
 export type RancherNodesListResponse = RancherNodesListResponses[keyof RancherNodesListResponses];
 
-export type RancherNodesHeadData = {
+export type RancherNodesCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -38974,7 +38974,7 @@ export type RancherNodesHeadData = {
     url: '/api/rancher-nodes/';
 };
 
-export type RancherNodesHeadResponses = {
+export type RancherNodesCountResponses = {
     /**
      * No response body
      */
@@ -39157,7 +39157,7 @@ export type RancherProjectsListResponses = {
 
 export type RancherProjectsListResponse = RancherProjectsListResponses[keyof RancherProjectsListResponses];
 
-export type RancherProjectsHeadData = {
+export type RancherProjectsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -39178,7 +39178,7 @@ export type RancherProjectsHeadData = {
     url: '/api/rancher-projects/';
 };
 
-export type RancherProjectsHeadResponses = {
+export type RancherProjectsCountResponses = {
     /**
      * No response body
      */
@@ -39246,7 +39246,7 @@ export type RancherRoleTemplatesListResponses = {
 
 export type RancherRoleTemplatesListResponse = RancherRoleTemplatesListResponses[keyof RancherRoleTemplatesListResponses];
 
-export type RancherRoleTemplatesHeadData = {
+export type RancherRoleTemplatesCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -39271,7 +39271,7 @@ export type RancherRoleTemplatesHeadData = {
     url: '/api/rancher-role-templates/';
 };
 
-export type RancherRoleTemplatesHeadResponses = {
+export type RancherRoleTemplatesCountResponses = {
     /**
      * No response body
      */
@@ -39340,7 +39340,7 @@ export type RancherServicesListResponses = {
 
 export type RancherServicesListResponse = RancherServicesListResponses[keyof RancherServicesListResponses];
 
-export type RancherServicesHeadData = {
+export type RancherServicesCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -39380,7 +39380,7 @@ export type RancherServicesHeadData = {
     url: '/api/rancher-services/';
 };
 
-export type RancherServicesHeadResponses = {
+export type RancherServicesCountResponses = {
     /**
      * No response body
      */
@@ -39580,7 +39580,7 @@ export type RancherTemplatesListResponses = {
 
 export type RancherTemplatesListResponse = RancherTemplatesListResponses[keyof RancherTemplatesListResponses];
 
-export type RancherTemplatesHeadData = {
+export type RancherTemplatesCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -39609,7 +39609,7 @@ export type RancherTemplatesHeadData = {
     url: '/api/rancher-templates/';
 };
 
-export type RancherTemplatesHeadResponses = {
+export type RancherTemplatesCountResponses = {
     /**
      * No response body
      */
@@ -39665,7 +39665,7 @@ export type RancherUsersListResponses = {
 
 export type RancherUsersListResponse = RancherUsersListResponses[keyof RancherUsersListResponses];
 
-export type RancherUsersHeadData = {
+export type RancherUsersCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -39693,7 +39693,7 @@ export type RancherUsersHeadData = {
     url: '/api/rancher-users/';
 };
 
-export type RancherUsersHeadResponses = {
+export type RancherUsersCountResponses = {
     /**
      * No response body
      */
@@ -39750,7 +39750,7 @@ export type RancherWorkloadsListResponses = {
 
 export type RancherWorkloadsListResponse = RancherWorkloadsListResponses[keyof RancherWorkloadsListResponses];
 
-export type RancherWorkloadsHeadData = {
+export type RancherWorkloadsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -39779,7 +39779,7 @@ export type RancherWorkloadsHeadData = {
     url: '/api/rancher-workloads/';
 };
 
-export type RancherWorkloadsHeadResponses = {
+export type RancherWorkloadsCountResponses = {
     /**
      * No response body
      */
@@ -40219,7 +40219,7 @@ export type RolesListResponses = {
 
 export type RolesListResponse = RolesListResponses[keyof RolesListResponses];
 
-export type RolesHeadData = {
+export type RolesCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -40238,7 +40238,7 @@ export type RolesHeadData = {
     url: '/api/roles/';
 };
 
-export type RolesHeadResponses = {
+export type RolesCountResponses = {
     /**
      * No response body
      */
@@ -40408,7 +40408,7 @@ export type ServiceSettingsListResponses = {
 
 export type ServiceSettingsListResponse = ServiceSettingsListResponses[keyof ServiceSettingsListResponses];
 
-export type ServiceSettingsHeadData = {
+export type ServiceSettingsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -40439,7 +40439,7 @@ export type ServiceSettingsHeadData = {
     url: '/api/service-settings/';
 };
 
-export type ServiceSettingsHeadResponses = {
+export type ServiceSettingsCountResponses = {
     /**
      * No response body
      */
@@ -40491,7 +40491,7 @@ export type SlurmAllocationUserUsageListResponses = {
 
 export type SlurmAllocationUserUsageListResponse = SlurmAllocationUserUsageListResponses[keyof SlurmAllocationUserUsageListResponses];
 
-export type SlurmAllocationUserUsageHeadData = {
+export type SlurmAllocationUserUsageCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -40513,7 +40513,7 @@ export type SlurmAllocationUserUsageHeadData = {
     url: '/api/slurm-allocation-user-usage/';
 };
 
-export type SlurmAllocationUserUsageHeadResponses = {
+export type SlurmAllocationUserUsageCountResponses = {
     /**
      * No response body
      */
@@ -40583,7 +40583,7 @@ export type SlurmAllocationsListResponses = {
 
 export type SlurmAllocationsListResponse = SlurmAllocationsListResponses[keyof SlurmAllocationsListResponses];
 
-export type SlurmAllocationsHeadData = {
+export type SlurmAllocationsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -40621,7 +40621,7 @@ export type SlurmAllocationsHeadData = {
     url: '/api/slurm-allocations/';
 };
 
-export type SlurmAllocationsHeadResponses = {
+export type SlurmAllocationsCountResponses = {
     /**
      * No response body
      */
@@ -40777,7 +40777,7 @@ export type SlurmAssociationsListResponses = {
 
 export type SlurmAssociationsListResponse = SlurmAssociationsListResponses[keyof SlurmAssociationsListResponses];
 
-export type SlurmAssociationsHeadData = {
+export type SlurmAssociationsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -40795,7 +40795,7 @@ export type SlurmAssociationsHeadData = {
     url: '/api/slurm-associations/';
 };
 
-export type SlurmAssociationsHeadResponses = {
+export type SlurmAssociationsCountResponses = {
     /**
      * No response body
      */
@@ -40840,7 +40840,7 @@ export type SlurmJobsListResponses = {
 
 export type SlurmJobsListResponse = SlurmJobsListResponses[keyof SlurmJobsListResponses];
 
-export type SlurmJobsHeadData = {
+export type SlurmJobsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -40856,7 +40856,7 @@ export type SlurmJobsHeadData = {
     url: '/api/slurm-jobs/';
 };
 
-export type SlurmJobsHeadResponses = {
+export type SlurmJobsCountResponses = {
     /**
      * No response body
      */
@@ -40998,7 +40998,7 @@ export type SupportAttachmentsListResponses = {
 
 export type SupportAttachmentsListResponse = SupportAttachmentsListResponses[keyof SupportAttachmentsListResponses];
 
-export type SupportAttachmentsHeadData = {
+export type SupportAttachmentsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -41016,7 +41016,7 @@ export type SupportAttachmentsHeadData = {
     url: '/api/support-attachments/';
 };
 
-export type SupportAttachmentsHeadResponses = {
+export type SupportAttachmentsCountResponses = {
     /**
      * No response body
      */
@@ -41109,7 +41109,7 @@ export type SupportCommentsListResponses = {
 
 export type SupportCommentsListResponse = SupportCommentsListResponses[keyof SupportCommentsListResponses];
 
-export type SupportCommentsHeadData = {
+export type SupportCommentsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -41141,7 +41141,7 @@ export type SupportCommentsHeadData = {
     url: '/api/support-comments/';
 };
 
-export type SupportCommentsHeadResponses = {
+export type SupportCommentsCountResponses = {
     /**
      * No response body
      */
@@ -41273,7 +41273,7 @@ export type SupportFeedbacksListResponses = {
 
 export type SupportFeedbacksListResponse = SupportFeedbacksListResponses[keyof SupportFeedbacksListResponses];
 
-export type SupportFeedbacksHeadData = {
+export type SupportFeedbacksCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -41301,7 +41301,7 @@ export type SupportFeedbacksHeadData = {
     url: '/api/support-feedbacks/';
 };
 
-export type SupportFeedbacksHeadResponses = {
+export type SupportFeedbacksCountResponses = {
     /**
      * No response body
      */
@@ -41399,7 +41399,7 @@ export type SupportIssuesListResponses = {
 
 export type SupportIssuesListResponse = SupportIssuesListResponses[keyof SupportIssuesListResponses];
 
-export type SupportIssuesHeadData = {
+export type SupportIssuesCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -41456,7 +41456,7 @@ export type SupportIssuesHeadData = {
     url: '/api/support-issues/';
 };
 
-export type SupportIssuesHeadResponses = {
+export type SupportIssuesCountResponses = {
     /**
      * No response body
      */
@@ -41606,7 +41606,7 @@ export type SupportPrioritiesListResponses = {
 
 export type SupportPrioritiesListResponse = SupportPrioritiesListResponses[keyof SupportPrioritiesListResponses];
 
-export type SupportPrioritiesHeadData = {
+export type SupportPrioritiesCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -41624,7 +41624,7 @@ export type SupportPrioritiesHeadData = {
     url: '/api/support-priorities/';
 };
 
-export type SupportPrioritiesHeadResponses = {
+export type SupportPrioritiesCountResponses = {
     /**
      * No response body
      */
@@ -41694,7 +41694,7 @@ export type SupportTemplatesListResponses = {
 
 export type SupportTemplatesListResponse = SupportTemplatesListResponses[keyof SupportTemplatesListResponses];
 
-export type SupportTemplatesHeadData = {
+export type SupportTemplatesCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -41710,7 +41710,7 @@ export type SupportTemplatesHeadData = {
     url: '/api/support-templates/';
 };
 
-export type SupportTemplatesHeadResponses = {
+export type SupportTemplatesCountResponses = {
     /**
      * No response body
      */
@@ -41857,7 +41857,7 @@ export type SupportUsersListResponses = {
 
 export type SupportUsersListResponse = SupportUsersListResponses[keyof SupportUsersListResponses];
 
-export type SupportUsersHeadData = {
+export type SupportUsersCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -41876,7 +41876,7 @@ export type SupportUsersHeadData = {
     url: '/api/support-users/';
 };
 
-export type SupportUsersHeadResponses = {
+export type SupportUsersCountResponses = {
     /**
      * No response body
      */
@@ -41977,7 +41977,7 @@ export type UserAgreementsListResponses = {
 
 export type UserAgreementsListResponse = UserAgreementsListResponses[keyof UserAgreementsListResponses];
 
-export type UserAgreementsHeadData = {
+export type UserAgreementsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -41994,7 +41994,7 @@ export type UserAgreementsHeadData = {
     url: '/api/user-agreements/';
 };
 
-export type UserAgreementsHeadResponses = {
+export type UserAgreementsCountResponses = {
     /**
      * No response body
      */
@@ -42110,7 +42110,7 @@ export type UserGroupInvitationsListResponses = {
 
 export type UserGroupInvitationsListResponse = UserGroupInvitationsListResponses[keyof UserGroupInvitationsListResponses];
 
-export type UserGroupInvitationsHeadData = {
+export type UserGroupInvitationsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -42137,7 +42137,7 @@ export type UserGroupInvitationsHeadData = {
     url: '/api/user-group-invitations/';
 };
 
-export type UserGroupInvitationsHeadResponses = {
+export type UserGroupInvitationsCountResponses = {
     /**
      * No response body
      */
@@ -42262,7 +42262,7 @@ export type UserInvitationsListResponses = {
 
 export type UserInvitationsListResponse = UserInvitationsListResponses[keyof UserInvitationsListResponses];
 
-export type UserInvitationsHeadData = {
+export type UserInvitationsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -42291,7 +42291,7 @@ export type UserInvitationsHeadData = {
     url: '/api/user-invitations/';
 };
 
-export type UserInvitationsHeadResponses = {
+export type UserInvitationsCountResponses = {
     /**
      * No response body
      */
@@ -42480,7 +42480,7 @@ export type UserPermissionRequestsListResponses = {
 
 export type UserPermissionRequestsListResponse = UserPermissionRequestsListResponses[keyof UserPermissionRequestsListResponses];
 
-export type UserPermissionRequestsHeadData = {
+export type UserPermissionRequestsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -42506,7 +42506,7 @@ export type UserPermissionRequestsHeadData = {
     url: '/api/user-permission-requests/';
 };
 
-export type UserPermissionRequestsHeadResponses = {
+export type UserPermissionRequestsCountResponses = {
     /**
      * No response body
      */
@@ -42627,7 +42627,7 @@ export type UserPermissionsListResponses = {
 
 export type UserPermissionsListResponse = UserPermissionsListResponses[keyof UserPermissionsListResponses];
 
-export type UserPermissionsHeadData = {
+export type UserPermissionsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -42690,7 +42690,7 @@ export type UserPermissionsHeadData = {
     url: '/api/user-permissions/';
 };
 
-export type UserPermissionsHeadResponses = {
+export type UserPermissionsCountResponses = {
     /**
      * No response body
      */
@@ -42788,7 +42788,7 @@ export type UsersListResponses = {
 
 export type UsersListResponse = UsersListResponses[keyof UsersListResponses];
 
-export type UsersHeadData = {
+export type UsersCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -42857,7 +42857,7 @@ export type UsersHeadData = {
     url: '/api/users/';
 };
 
-export type UsersHeadResponses = {
+export type UsersCountResponses = {
     /**
      * No response body
      */
@@ -43065,14 +43065,14 @@ export type UsersMeRetrieveResponses = {
 
 export type UsersMeRetrieveResponse = UsersMeRetrieveResponses[keyof UsersMeRetrieveResponses];
 
-export type UsersMeHeadData = {
+export type UsersMeCountData = {
     body?: never;
     path?: never;
     query?: never;
     url: '/api/users/me/';
 };
 
-export type UsersMeHeadResponses = {
+export type UsersMeCountResponses = {
     /**
      * No response body
      */
@@ -43122,7 +43122,7 @@ export type VmwareClustersListResponses = {
 
 export type VmwareClustersListResponse = VmwareClustersListResponses[keyof VmwareClustersListResponses];
 
-export type VmwareClustersHeadData = {
+export type VmwareClustersCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -43146,7 +43146,7 @@ export type VmwareClustersHeadData = {
     url: '/api/vmware-clusters/';
 };
 
-export type VmwareClustersHeadResponses = {
+export type VmwareClustersCountResponses = {
     /**
      * No response body
      */
@@ -43198,7 +43198,7 @@ export type VmwareDatastoresListResponses = {
 
 export type VmwareDatastoresListResponse = VmwareDatastoresListResponses[keyof VmwareDatastoresListResponses];
 
-export type VmwareDatastoresHeadData = {
+export type VmwareDatastoresCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -43222,7 +43222,7 @@ export type VmwareDatastoresHeadData = {
     url: '/api/vmware-datastores/';
 };
 
-export type VmwareDatastoresHeadResponses = {
+export type VmwareDatastoresCountResponses = {
     /**
      * No response body
      */
@@ -43290,7 +43290,7 @@ export type VmwareDisksListResponses = {
 
 export type VmwareDisksListResponse = VmwareDisksListResponses[keyof VmwareDisksListResponses];
 
-export type VmwareDisksHeadData = {
+export type VmwareDisksCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -43329,7 +43329,7 @@ export type VmwareDisksHeadData = {
     url: '/api/vmware-disks/';
 };
 
-export type VmwareDisksHeadResponses = {
+export type VmwareDisksCountResponses = {
     /**
      * No response body
      */
@@ -43448,7 +43448,7 @@ export type VmwareFoldersListResponses = {
 
 export type VmwareFoldersListResponse = VmwareFoldersListResponses[keyof VmwareFoldersListResponses];
 
-export type VmwareFoldersHeadData = {
+export type VmwareFoldersCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -43472,7 +43472,7 @@ export type VmwareFoldersHeadData = {
     url: '/api/vmware-folders/';
 };
 
-export type VmwareFoldersHeadResponses = {
+export type VmwareFoldersCountResponses = {
     /**
      * No response body
      */
@@ -43543,7 +43543,7 @@ export type VmwareNetworksListResponses = {
 
 export type VmwareNetworksListResponse = VmwareNetworksListResponses[keyof VmwareNetworksListResponses];
 
-export type VmwareNetworksHeadData = {
+export type VmwareNetworksCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -43571,7 +43571,7 @@ export type VmwareNetworksHeadData = {
     url: '/api/vmware-networks/';
 };
 
-export type VmwareNetworksHeadResponses = {
+export type VmwareNetworksCountResponses = {
     /**
      * No response body
      */
@@ -43641,7 +43641,7 @@ export type VmwarePortsListResponses = {
 
 export type VmwarePortsListResponse = VmwarePortsListResponses[keyof VmwarePortsListResponses];
 
-export type VmwarePortsHeadData = {
+export type VmwarePortsCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -43682,7 +43682,7 @@ export type VmwarePortsHeadData = {
     url: '/api/vmware-ports/';
 };
 
-export type VmwarePortsHeadResponses = {
+export type VmwarePortsCountResponses = {
     /**
      * No response body
      */
@@ -43782,7 +43782,7 @@ export type VmwareTemplatesListResponses = {
 
 export type VmwareTemplatesListResponse = VmwareTemplatesListResponses[keyof VmwareTemplatesListResponses];
 
-export type VmwareTemplatesHeadData = {
+export type VmwareTemplatesCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -43802,7 +43802,7 @@ export type VmwareTemplatesHeadData = {
     url: '/api/vmware-templates/';
 };
 
-export type VmwareTemplatesHeadResponses = {
+export type VmwareTemplatesCountResponses = {
     /**
      * No response body
      */
@@ -43869,7 +43869,7 @@ export type VmwareVirtualMachineListResponses = {
 
 export type VmwareVirtualMachineListResponse = VmwareVirtualMachineListResponses[keyof VmwareVirtualMachineListResponses];
 
-export type VmwareVirtualMachineHeadData = {
+export type VmwareVirtualMachineCountData = {
     body?: never;
     path?: never;
     query?: {
@@ -43907,7 +43907,7 @@ export type VmwareVirtualMachineHeadData = {
     url: '/api/vmware-virtual-machine/';
 };
 
-export type VmwareVirtualMachineHeadResponses = {
+export type VmwareVirtualMachineCountResponses = {
     /**
      * No response body
      */
