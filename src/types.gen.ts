@@ -14941,7 +14941,7 @@ export type BookingResourcesListData = {
         project_uuid?: string;
         provider_uuid?: string;
         /**
-         * Query
+         * Search by resource UUID, name, backend ID, effective ID, IPs or hypervisor
          */
         query?: string;
         restrict_member_access?: boolean;
@@ -15027,7 +15027,7 @@ export type BookingResourcesCountData = {
         project_uuid?: string;
         provider_uuid?: string;
         /**
-         * Query
+         * Search by resource UUID, name, backend ID, effective ID, IPs or hypervisor
          */
         query?: string;
         restrict_member_access?: boolean;
@@ -17077,6 +17077,9 @@ export type CustomersListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Filter by name, native name, abbreviation, domain, UUID, registration code or agreement number
+         */
         query?: string;
         registration_code?: string;
     };
@@ -17122,6 +17125,9 @@ export type CustomersCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Filter by name, native name, abbreviation, domain, UUID, registration code or agreement number
+         */
         query?: string;
         registration_code?: string;
     };
@@ -17429,6 +17435,9 @@ export type CustomersCountriesListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Filter by name, native name, abbreviation, domain, UUID, registration code or agreement number
+         */
         query?: string;
         registration_code?: string;
     };
@@ -17474,6 +17483,9 @@ export type CustomersCountriesCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Filter by name, native name, abbreviation, domain, UUID, registration code or agreement number
+         */
         query?: string;
         registration_code?: string;
     };
@@ -18450,6 +18462,9 @@ export type ExternalLinksListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Filter by name, link or description
+         */
         query?: string;
     };
     url: '/api/external-links/';
@@ -18477,6 +18492,9 @@ export type ExternalLinksCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Filter by name, link or description
+         */
         query?: string;
     };
     url: '/api/external-links/';
@@ -18613,6 +18631,9 @@ export type FinancialReportsListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Filter by name, native name, abbreviation, domain, UUID, registration code or agreement number
+         */
         query?: string;
         registration_code?: string;
     };
@@ -18658,6 +18679,9 @@ export type FinancialReportsCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Filter by name, native name, abbreviation, domain, UUID, registration code or agreement number
+         */
         query?: string;
         registration_code?: string;
     };
@@ -18698,6 +18722,9 @@ export type FreeipaProfilesListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Filter by username, user UUID, first name or last name
+         */
         query?: string;
         user?: string;
     };
@@ -18722,6 +18749,9 @@ export type FreeipaProfilesCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Filter by username, user UUID, first name or last name
+         */
         query?: string;
         user?: string;
     };
@@ -19011,6 +19041,9 @@ export type HooksEmailListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Filter by author name, username and email
+         */
         query?: string;
     };
     url: '/api/hooks-email/';
@@ -19044,6 +19077,9 @@ export type HooksEmailCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Filter by author name, username and email
+         */
         query?: string;
     };
     url: '/api/hooks-email/';
@@ -19155,6 +19191,9 @@ export type HooksWebListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Filter by author name, username and email
+         */
         query?: string;
     };
     url: '/api/hooks-web/';
@@ -19189,6 +19228,9 @@ export type HooksWebCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Filter by author name, username and email
+         */
         query?: string;
     };
     url: '/api/hooks-web/';
@@ -20422,6 +20464,9 @@ export type LexisLinksListData = {
          */
         page_size?: number;
         project_uuid?: string;
+        /**
+         * Filter by robot account username or type
+         */
         query?: string;
         resource_uuid?: string;
         uuid?: string;
@@ -20449,6 +20494,9 @@ export type LexisLinksCountData = {
          */
         page_size?: number;
         project_uuid?: string;
+        /**
+         * Filter by robot account username or type
+         */
         query?: string;
         resource_uuid?: string;
         uuid?: string;
@@ -23451,6 +23499,9 @@ export type MarketplaceOfferingUsersListData = {
         page_size?: number;
         parent_offering_uuid?: string;
         provider_uuid?: string;
+        /**
+         * Search by offering name, username or user name
+         */
         query?: string;
         state?: Array<'Creating' | 'Deleted' | 'Deleting' | 'Error creating' | 'Error deleting' | 'OK' | 'Pending account linking' | 'Pending additional validation' | 'Requested' | 'Requested deletion'>;
         user_username?: string;
@@ -23496,6 +23547,9 @@ export type MarketplaceOfferingUsersCountData = {
         page_size?: number;
         parent_offering_uuid?: string;
         provider_uuid?: string;
+        /**
+         * Search by offering name, username or user name
+         */
         query?: string;
         state?: Array<'Creating' | 'Deleted' | 'Deleting' | 'Error creating' | 'Error deleting' | 'OK' | 'Pending account linking' | 'Pending additional validation' | 'Requested' | 'Requested deletion'>;
         user_username?: string;
@@ -23817,6 +23871,9 @@ export type MarketplaceOrdersListData = {
         parent_offering_uuid?: string;
         project_uuid?: string;
         provider_uuid?: string;
+        /**
+         * Search by order UUID, project name or resource name
+         */
         query?: string;
         resource?: string;
         resource_uuid?: string;
@@ -23869,6 +23926,9 @@ export type MarketplaceOrdersCountData = {
         parent_offering_uuid?: string;
         project_uuid?: string;
         provider_uuid?: string;
+        /**
+         * Search by order UUID, project name or resource name
+         */
         query?: string;
         resource?: string;
         resource_uuid?: string;
@@ -26354,7 +26414,7 @@ export type MarketplaceProviderResourcesListData = {
         project_uuid?: string;
         provider_uuid?: string;
         /**
-         * Query
+         * Search by resource UUID, name, backend ID, effective ID, IPs or hypervisor
          */
         query?: string;
         restrict_member_access?: boolean;
@@ -26439,7 +26499,7 @@ export type MarketplaceProviderResourcesCountData = {
         project_uuid?: string;
         provider_uuid?: string;
         /**
-         * Query
+         * Search by resource UUID, name, backend ID, effective ID, IPs or hypervisor
          */
         query?: string;
         restrict_member_access?: boolean;
@@ -27420,7 +27480,7 @@ export type MarketplaceResourcesListData = {
         project_uuid?: string;
         provider_uuid?: string;
         /**
-         * Query
+         * Search by resource UUID, name, backend ID, effective ID, IPs or hypervisor
          */
         query?: string;
         restrict_member_access?: boolean;
@@ -27505,7 +27565,7 @@ export type MarketplaceResourcesCountData = {
         project_uuid?: string;
         provider_uuid?: string;
         /**
-         * Query
+         * Search by resource UUID, name, backend ID, effective ID, IPs or hypervisor
          */
         query?: string;
         restrict_member_access?: boolean;
@@ -28591,6 +28651,9 @@ export type MarketplaceServiceProvidersCustomerProjectsListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Filter by name, UUID, backend ID or resource effective ID
+         */
         query?: string;
         slug?: string;
     };
@@ -28635,6 +28698,9 @@ export type MarketplaceServiceProvidersCustomersListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Filter by name, native name, abbreviation, domain, UUID, registration code or agreement number
+         */
         query?: string;
         registration_code?: string;
     };
@@ -28907,6 +28973,9 @@ export type MarketplaceServiceProvidersProjectsListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Filter by name, UUID, backend ID or resource effective ID
+         */
         query?: string;
         slug?: string;
     };
@@ -28951,6 +29020,9 @@ export type MarketplaceServiceProvidersUserCustomersListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Filter by name, native name, abbreviation, domain, UUID, registration code or agreement number
+         */
         query?: string;
         registration_code?: string;
         /**
@@ -29024,6 +29096,9 @@ export type MarketplaceServiceProvidersUsersListData = {
          */
         project_roles?: string;
         project_uuid?: string;
+        /**
+         * Filter by first name, last name, civil number, username or email
+         */
         query?: string;
         registration_method?: string;
         /**
@@ -30304,6 +30379,9 @@ export type NotificationMessagesListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Filter by key or description
+         */
         query?: string;
     };
     url: '/api/notification-messages/';
@@ -30332,6 +30410,9 @@ export type NotificationMessagesCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Filter by key or description
+         */
         query?: string;
     };
     url: '/api/notification-messages/';
@@ -31363,6 +31444,9 @@ export type OpenstackInstancesListData = {
         project?: string;
         project_name?: string;
         project_uuid?: string;
+        /**
+         * Search by name, internal IP, or external IP
+         */
         query?: string;
         runtime_state?: string;
         service_settings_name?: string;
@@ -31412,6 +31496,9 @@ export type OpenstackInstancesCountData = {
         project?: string;
         project_name?: string;
         project_uuid?: string;
+        /**
+         * Search by name, internal IP, or external IP
+         */
         query?: string;
         runtime_state?: string;
         service_settings_name?: string;
@@ -32384,7 +32471,7 @@ export type OpenstackPortsListData = {
          */
         page_size?: number;
         /**
-         * Query
+         * Search by name, MAC address or backend ID
          */
         query?: string;
         status?: string;
@@ -32434,7 +32521,7 @@ export type OpenstackPortsCountData = {
          */
         page_size?: number;
         /**
-         * Query
+         * Search by name, MAC address or backend ID
          */
         query?: string;
         status?: string;
@@ -32836,6 +32923,9 @@ export type OpenstackSecurityGroupsListData = {
         project?: string;
         project_name?: string;
         project_uuid?: string;
+        /**
+         * Search by name or description
+         */
         query?: string;
         service_settings_name?: string;
         service_settings_uuid?: string;
@@ -32882,6 +32972,9 @@ export type OpenstackSecurityGroupsCountData = {
         project?: string;
         project_name?: string;
         project_uuid?: string;
+        /**
+         * Search by name or description
+         */
         query?: string;
         service_settings_name?: string;
         service_settings_uuid?: string;
@@ -35367,6 +35460,9 @@ export type ProjectsListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Filter by name, UUID, backend ID or resource effective ID
+         */
         query?: string;
         slug?: string;
     };
@@ -35428,6 +35524,9 @@ export type ProjectsCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Filter by name, UUID, backend ID or resource effective ID
+         */
         query?: string;
         slug?: string;
     };
@@ -35738,6 +35837,9 @@ export type PromotionsCampaignsListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Search by name or coupon code
+         */
         query?: string;
         service_provider_uuid?: string;
         start_date?: string;
@@ -35777,6 +35879,9 @@ export type PromotionsCampaignsCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Search by name or coupon code
+         */
         query?: string;
         service_provider_uuid?: string;
         start_date?: string;
@@ -42960,6 +43065,9 @@ export type UsersListData = {
          */
         project_roles?: string;
         project_uuid?: string;
+        /**
+         * Filter by first name, last name, civil number, username or email
+         */
         query?: string;
         registration_method?: string;
         /**
@@ -43035,6 +43143,9 @@ export type UsersCountData = {
          */
         project_roles?: string;
         project_uuid?: string;
+        /**
+         * Filter by first name, last name, civil number, username or email
+         */
         query?: string;
         registration_method?: string;
         /**
