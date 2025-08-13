@@ -3529,6 +3529,13 @@ export type Logout = {
     readonly logout_url: string;
 };
 
+export type MaintenanceActionResponse = {
+    /**
+     * Response message describing the action result
+     */
+    detail: string;
+};
+
 export type MaintenanceAnnouncement = {
     readonly url: string;
     readonly uuid: string;
@@ -21134,6 +21141,81 @@ export type MaintenanceAnnouncementsUpdateResponses = {
 
 export type MaintenanceAnnouncementsUpdateResponse = MaintenanceAnnouncementsUpdateResponses[keyof MaintenanceAnnouncementsUpdateResponses];
 
+export type MaintenanceAnnouncementsCancelMaintenanceData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/maintenance-announcements/{uuid}/cancel_maintenance/';
+};
+
+export type MaintenanceAnnouncementsCancelMaintenanceResponses = {
+    200: MaintenanceActionResponse;
+};
+
+export type MaintenanceAnnouncementsCancelMaintenanceResponse = MaintenanceAnnouncementsCancelMaintenanceResponses[keyof MaintenanceAnnouncementsCancelMaintenanceResponses];
+
+export type MaintenanceAnnouncementsCompleteMaintenanceData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/maintenance-announcements/{uuid}/complete_maintenance/';
+};
+
+export type MaintenanceAnnouncementsCompleteMaintenanceResponses = {
+    200: MaintenanceActionResponse;
+};
+
+export type MaintenanceAnnouncementsCompleteMaintenanceResponse = MaintenanceAnnouncementsCompleteMaintenanceResponses[keyof MaintenanceAnnouncementsCompleteMaintenanceResponses];
+
+export type MaintenanceAnnouncementsScheduleData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/maintenance-announcements/{uuid}/schedule/';
+};
+
+export type MaintenanceAnnouncementsScheduleResponses = {
+    200: MaintenanceActionResponse;
+};
+
+export type MaintenanceAnnouncementsScheduleResponse = MaintenanceAnnouncementsScheduleResponses[keyof MaintenanceAnnouncementsScheduleResponses];
+
+export type MaintenanceAnnouncementsStartMaintenanceData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/maintenance-announcements/{uuid}/start_maintenance/';
+};
+
+export type MaintenanceAnnouncementsStartMaintenanceResponses = {
+    200: MaintenanceActionResponse;
+};
+
+export type MaintenanceAnnouncementsStartMaintenanceResponse = MaintenanceAnnouncementsStartMaintenanceResponses[keyof MaintenanceAnnouncementsStartMaintenanceResponses];
+
+export type MaintenanceAnnouncementsUnscheduleData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/maintenance-announcements/{uuid}/unschedule/';
+};
+
+export type MaintenanceAnnouncementsUnscheduleResponses = {
+    200: MaintenanceActionResponse;
+};
+
+export type MaintenanceAnnouncementsUnscheduleResponse = MaintenanceAnnouncementsUnscheduleResponses[keyof MaintenanceAnnouncementsUnscheduleResponses];
+
 export type MarketplaceBookingsListData = {
     body?: never;
     path: {
@@ -35633,6 +35715,58 @@ export type ProjectsAddUserResponses = {
 
 export type ProjectsAddUserResponse = ProjectsAddUserResponses[keyof ProjectsAddUserResponses];
 
+export type ProjectsChecklistRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/projects/{uuid}/checklist/';
+};
+
+export type ProjectsChecklistRetrieveErrors = {
+    /**
+     * No checklist configured
+     */
+    400: unknown;
+    /**
+     * Object not found
+     */
+    404: unknown;
+};
+
+export type ProjectsChecklistRetrieveResponses = {
+    200: ChecklistResponse;
+};
+
+export type ProjectsChecklistRetrieveResponse = ProjectsChecklistRetrieveResponses[keyof ProjectsChecklistRetrieveResponses];
+
+export type ProjectsCompletionStatusRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/projects/{uuid}/completion_status/';
+};
+
+export type ProjectsCompletionStatusRetrieveErrors = {
+    /**
+     * No checklist configured
+     */
+    400: unknown;
+    /**
+     * Object not found
+     */
+    404: unknown;
+};
+
+export type ProjectsCompletionStatusRetrieveResponses = {
+    200: ChecklistCompletion;
+};
+
+export type ProjectsCompletionStatusRetrieveResponse = ProjectsCompletionStatusRetrieveResponses[keyof ProjectsCompletionStatusRetrieveResponses];
+
 export type ProjectsDeleteUserData = {
     body: UserRoleDeleteRequest;
     path: {
@@ -35780,6 +35914,32 @@ export type ProjectsStatsRetrieveResponses = {
 };
 
 export type ProjectsStatsRetrieveResponse = ProjectsStatsRetrieveResponses[keyof ProjectsStatsRetrieveResponses];
+
+export type ProjectsSubmitAnswersData = {
+    body: Array<AnswerSubmitRequest>;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/projects/{uuid}/submit_answers/';
+};
+
+export type ProjectsSubmitAnswersErrors = {
+    /**
+     * Validation error or no checklist configured
+     */
+    400: unknown;
+    /**
+     * Object not found
+     */
+    404: unknown;
+};
+
+export type ProjectsSubmitAnswersResponses = {
+    200: AnswerSubmitResponse;
+};
+
+export type ProjectsSubmitAnswersResponse = ProjectsSubmitAnswersResponses[keyof ProjectsSubmitAnswersResponses];
 
 export type ProjectsSyncUserRolesData = {
     body?: never;
