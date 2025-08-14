@@ -880,13 +880,13 @@ export type BasicCustomer = {
 };
 
 export type BasicUser = {
-    readonly url: string;
-    readonly uuid: string;
+    readonly url?: string;
+    readonly uuid?: string;
     /**
      * Required. 128 characters or fewer. Lowercase letters, numbers and @/./+/-/_ characters
      */
-    username: string;
-    readonly full_name: string;
+    username?: string;
+    readonly full_name?: string;
     native_name?: string;
     /**
      * Email address
@@ -2703,9 +2703,9 @@ export type FinancialReportEmailRequest = {
 };
 
 export type Fingerprint = {
-    readonly md5: string;
-    readonly sha256: string;
-    readonly sha512: string;
+    readonly md5?: string;
+    readonly sha256?: string;
+    readonly sha512?: string;
 };
 
 export type FirecrestJob = {
@@ -10495,34 +10495,34 @@ export type RobotAccount = {
 };
 
 export type RobotAccountDetails = {
-    readonly url: string;
-    readonly uuid: string;
-    readonly created: string;
-    readonly modified: string;
+    readonly url?: string;
+    readonly uuid?: string;
+    readonly created?: string;
+    readonly modified?: string;
     username?: string;
     description?: string;
     readonly error_message?: string;
     readonly error_traceback?: string;
-    resource: string;
+    resource?: string;
     /**
      * Type of the robot account.
      */
-    type: string;
-    readonly users: Array<BasicUser>;
+    type?: string;
+    readonly users?: Array<BasicUser>;
     keys?: unknown;
-    readonly backend_id: string;
-    readonly fingerprints: Array<Fingerprint>;
-    responsible_user: BasicUser | null;
+    readonly backend_id?: string;
+    readonly fingerprints?: Array<Fingerprint>;
+    responsible_user?: BasicUser | null;
     state?: RobotAccountStates;
-    readonly user_keys: Array<SshKey>;
-    readonly resource_name: string;
-    readonly resource_uuid: string;
-    readonly project_name: string;
-    readonly project_uuid: string;
-    readonly customer_uuid: string;
-    readonly customer_name: string;
-    readonly offering_customer_uuid: string;
-    offering_plugin_options: MergedPluginOptions;
+    readonly user_keys?: Array<SshKey>;
+    readonly resource_name?: string;
+    readonly resource_uuid?: string;
+    readonly project_name?: string;
+    readonly project_uuid?: string;
+    readonly customer_uuid?: string;
+    readonly customer_name?: string;
+    readonly offering_customer_uuid?: string;
+    offering_plugin_options?: MergedPluginOptions;
 };
 
 export type RobotAccountErrorRequest = {
@@ -27976,6 +27976,7 @@ export type MarketplaceRobotAccountsListData = {
          */
         created?: string;
         customer_uuid?: string;
+        field?: Array<'backend_id' | 'created' | 'customer_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'fingerprints' | 'keys' | 'modified' | 'offering_customer_uuid' | 'offering_plugin_options' | 'project_name' | 'project_uuid' | 'resource' | 'resource_name' | 'resource_uuid' | 'responsible_user' | 'state' | 'type' | 'url' | 'user_keys' | 'username' | 'users' | 'uuid'>;
         /**
          * Modified after
          */
@@ -28078,7 +28079,9 @@ export type MarketplaceRobotAccountsRetrieveData = {
     path: {
         uuid: string;
     };
-    query?: never;
+    query?: {
+        field?: Array<'backend_id' | 'created' | 'customer_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'fingerprints' | 'keys' | 'modified' | 'offering_customer_uuid' | 'offering_plugin_options' | 'project_name' | 'project_uuid' | 'resource' | 'resource_name' | 'resource_uuid' | 'responsible_user' | 'state' | 'type' | 'url' | 'user_keys' | 'username' | 'users' | 'uuid'>;
+    };
     url: '/api/marketplace-robot-accounts/{uuid}/';
 };
 
