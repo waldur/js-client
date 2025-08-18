@@ -23,6 +23,20 @@ export type AdminAnnouncement = {
     readonly is_active?: boolean;
     type?: AdminAnnouncementTypeEnum;
     readonly created?: string;
+    readonly maintenance_uuid?: string;
+    readonly maintenance_name?: string;
+    readonly maintenance_type?: string;
+    readonly maintenance_state?: string;
+    readonly maintenance_scheduled_start?: string;
+    readonly maintenance_scheduled_end?: string;
+    readonly maintenance_service_provider?: string;
+    readonly maintenance_affected_offerings?: Array<{
+        uuid?: string;
+        name?: string;
+        impact_level?: string;
+        impact_level_display?: string;
+        impact_description?: string;
+    }>;
 };
 
 export type AdminAnnouncementRequest = {
@@ -2100,7 +2114,6 @@ export type Customer = {
     readonly url?: string;
     readonly uuid?: string;
     readonly created?: string;
-    readonly organization_groups?: Array<OrganizationGroup>;
     readonly display_name?: string;
     /**
      * Organization identifier in another application.
@@ -2115,7 +2128,6 @@ export type Customer = {
      */
     readonly accounting_start_date?: string;
     readonly projects_count?: number;
-    readonly users_count?: number;
     /**
      * External ID of the sponsor covering the costs
      */
@@ -6780,7 +6792,10 @@ export type OrderCreate = {
 export type OrderCreateRequest = {
     offering: string;
     plan?: string;
-    attributes?: unknown;
+    /**
+     * Attributes structure depends on the offering type specified in the parent object
+     */
+    attributes?: AzureVirtualMachineCreateOrderAttributes | AzureSqlServerCreateOrderAttributes | OpenStackTenantCreateOrderAttributes | OpenStackInstanceCreateOrderAttributes | OpenStackVolumeCreateOrderAttributes | MarketplaceRancherCreateOrderAttributes | MarketplaceManagedRancherCreateOrderAttributes | SlurmInvoicesSlurmPackageCreateOrderAttributes | VMwareVirtualMachineCreateOrderAttributes;
     limits?: {
         [key: string]: number;
     };
@@ -11914,6 +11929,154 @@ export type WebhookEventEnum = 'jira:issue_updated' | 'jira:issue_deleted' | 'co
 export type WidgetEnum = 'csv' | 'filesize' | 'attached_instance';
 
 /**
+ * This mixin allows to specify list of fields to be rendered by serializer.
+ * It expects that request is available in serializer's context.
+ */
+export type AzureVirtualMachineCreateOrderAttributes = {
+    name: string;
+    description?: string;
+    size: string;
+    image: string;
+    location: string;
+};
+
+/**
+ * This mixin allows to specify list of fields to be rendered by serializer.
+ * It expects that request is available in serializer's context.
+ */
+export type AzureSqlServerCreateOrderAttributes = {
+    name: string;
+    description?: string;
+    location: string;
+};
+
+/**
+ * This mixin allows to specify list of fields to be rendered by serializer.
+ * It expects that request is available in serializer's context.
+ */
+export type OpenStackTenantCreateOrderAttributes = {
+    name: string;
+    description?: string;
+    subnet_cidr?: string;
+    skip_connection_extnet?: boolean;
+    skip_creation_of_default_router?: boolean;
+    /**
+     * Optional availability group. Will be used for all instances provisioned in this tenant
+     */
+    availability_zone?: string;
+};
+
+/**
+ * This mixin allows to specify list of fields to be rendered by serializer.
+ * It expects that request is available in serializer's context.
+ */
+export type OpenStackInstanceCreateOrderAttributes = {
+    name: string;
+    description?: string;
+    flavor: string;
+    image: string;
+    ports: Array<OpenStackNestedPortRequest>;
+    floating_ips?: Array<OpenStackNestedFloatingIpRequest>;
+    system_volume_size: number;
+    system_volume_type?: string | null;
+    data_volume_size?: number;
+    data_volume_type?: string | null;
+    ssh_public_key?: string;
+    /**
+     * Additional data that will be added to instance on provisioning
+     */
+    user_data?: string;
+    availability_zone?: string | null;
+    connect_directly_to_external_network?: boolean;
+};
+
+/**
+ * This mixin allows to specify list of fields to be rendered by serializer.
+ * It expects that request is available in serializer's context.
+ */
+export type OpenStackVolumeCreateOrderAttributes = {
+    name: string;
+    description?: string;
+    image?: string | null;
+    /**
+     * Size in MiB
+     */
+    size?: number | null;
+    availability_zone?: string | null;
+    type?: string | null;
+};
+
+/**
+ * This mixin allows to specify list of fields to be rendered by serializer.
+ * It expects that request is available in serializer's context.
+ */
+export type MarketplaceRancherCreateOrderAttributes = {
+    name: string;
+    description?: string;
+    nodes: Array<RancherNestedNodeRequest>;
+    tenant?: string;
+    ssh_public_key?: string;
+    /**
+     * Longhorn is a distributed block storage deployed on top of Kubernetes cluster
+     */
+    install_longhorn?: boolean;
+    vm_project?: string | null;
+};
+
+export type MarketplaceManagedRancherCreateOrderAttributes = {
+    /**
+     * Unique identifier for the cluster
+     */
+    name: string;
+    worker_nodes_count: number;
+    worker_nodes_flavor_name: string;
+    /**
+     * Data volume size for worker nodes in MB (consistent with OpenStack)
+     */
+    worker_nodes_data_volume_size: number;
+    worker_nodes_data_volume_type_name?: string;
+    /**
+     * List of UUID of OpenStack offerings where tenant can be created
+     */
+    openstack_offering_uuid_list?: Array<string>;
+    /**
+     * Longhorn is a distributed block storage deployed on top of Kubernetes cluster
+     */
+    install_longhorn?: boolean;
+    /**
+     * Longhorn storage volume size for worker nodes in MB (consistent with OpenStack)
+     */
+    worker_nodes_longhorn_volume_size?: number;
+    worker_nodes_longhorn_volume_type_name?: string;
+};
+
+/**
+ * This mixin allows to specify list of fields to be rendered by serializer.
+ * It expects that request is available in serializer's context.
+ */
+export type SlurmInvoicesSlurmPackageCreateOrderAttributes = {
+    name: string;
+    description?: string;
+};
+
+/**
+ * This mixin allows to specify list of fields to be rendered by serializer.
+ * It expects that request is available in serializer's context.
+ */
+export type VMwareVirtualMachineCreateOrderAttributes = {
+    name: string;
+    description?: string;
+    guest_os?: 'DOS' | 'WIN_31' | 'WIN_95' | 'WIN_98' | 'WIN_ME' | 'WIN_NT' | 'WIN_2000_PRO' | 'WIN_2000_SERV' | 'WIN_2000_ADV_SERV' | 'WIN_XP_HOME' | 'WIN_XP_PRO' | 'WIN_XP_PRO_64' | 'WIN_NET_WEB' | 'WIN_NET_STANDARD' | 'WIN_NET_ENTERPRISE' | 'WIN_NET_DATACENTER' | 'WIN_NET_BUSINESS' | 'WIN_NET_STANDARD_64' | 'WIN_NET_ENTERPRISE_64' | 'WIN_LONGHORN' | 'WIN_LONGHORN_64' | 'WIN_NET_DATACENTER_64' | 'WIN_VISTA' | 'WIN_VISTA_64' | 'WINDOWS_7' | 'WINDOWS_7_64' | 'WINDOWS_7_SERVER_64' | 'WINDOWS_8' | 'WINDOWS_8_64' | 'WINDOWS_8_SERVER_64' | 'WINDOWS_9' | 'WINDOWS_9_64' | 'WINDOWS_9_SERVER_64' | 'WINDOWS_HYPERV' | 'FREEBSD' | 'FREEBSD_64' | 'REDHAT' | 'RHEL_2' | 'RHEL_3' | 'RHEL_3_64' | 'RHEL_4' | 'RHEL_4_64' | 'RHEL_5' | 'RHEL_5_64' | 'RHEL_6' | 'RHEL_6_64' | 'RHEL_7' | 'RHEL_7_64' | 'CENTOS' | 'CENTOS_64' | 'CENTOS_6' | 'CENTOS_6_64' | 'CENTOS_7' | 'CENTOS_7_64' | 'ORACLE_LINUX' | 'ORACLE_LINUX_64' | 'ORACLE_LINUX_6' | 'ORACLE_LINUX_6_64' | 'ORACLE_LINUX_7' | 'ORACLE_LINUX_7_64' | 'SUSE' | 'SUSE_64' | 'SLES' | 'SLES_64' | 'SLES_10' | 'SLES_10_64' | 'SLES_11' | 'SLES_11_64' | 'SLES_12' | 'SLES_12_64' | 'NLD_9' | 'OES' | 'SJDS' | 'MANDRAKE' | 'MANDRIVA' | 'MANDRIVA_64' | 'TURBO_LINUX' | 'TURBO_LINUX_64' | 'UBUNTU' | 'UBUNTU_64' | 'DEBIAN_4' | 'DEBIAN_4_64' | 'DEBIAN_5' | 'DEBIAN_5_64' | 'DEBIAN_6' | 'DEBIAN_6_64' | 'DEBIAN_7' | 'DEBIAN_7_64' | 'DEBIAN_8' | 'DEBIAN_8_64' | 'DEBIAN_9' | 'DEBIAN_9_64' | 'DEBIAN_10' | 'DEBIAN_10_64' | 'ASIANUX_3' | 'ASIANUX_3_64' | 'ASIANUX_4' | 'ASIANUX_4_64' | 'ASIANUX_5_64' | 'ASIANUX_7_64' | 'OPENSUSE' | 'OPENSUSE_64' | 'FEDORA' | 'FEDORA_64' | 'COREOS_64' | 'VMWARE_PHOTON_64' | 'OTHER_24X_LINUX' | 'OTHER_24X_LINUX_64' | 'OTHER_26X_LINUX' | 'OTHER_26X_LINUX_64' | 'OTHER_3X_LINUX' | 'OTHER_3X_LINUX_64' | 'OTHER_LINUX' | 'GENERIC_LINUX' | 'OTHER_LINUX_64' | 'SOLARIS_6' | 'SOLARIS_7' | 'SOLARIS_8' | 'SOLARIS_9' | 'SOLARIS_10' | 'SOLARIS_10_64' | 'SOLARIS_11_64' | 'OS2' | 'ECOMSTATION' | 'ECOMSTATION_2' | 'NETWARE_4' | 'NETWARE_5' | 'NETWARE_6' | 'OPENSERVER_5' | 'OPENSERVER_6' | 'UNIXWARE_7' | 'DARWIN' | 'DARWIN_64' | 'DARWIN_10' | 'DARWIN_10_64' | 'DARWIN_11' | 'DARWIN_11_64' | 'DARWIN_12_64' | 'DARWIN_13_64' | 'DARWIN_14_64' | 'DARWIN_15_64' | 'DARWIN_16_64' | 'VMKERNEL' | 'VMKERNEL_5' | 'VMKERNEL_6' | 'VMKERNEL_65' | 'OTHER' | 'OTHER_64' | null;
+    /**
+     * Number of cores per socket in a VM
+     */
+    cores_per_socket?: number;
+    template?: string | null;
+    cluster?: string | null;
+    datastore?: string | null;
+};
+
+/**
  * A page number within the paginated result set.
  */
 export type Page = number;
@@ -12276,7 +12439,7 @@ export type AdminAnnouncementsListData = {
     path?: never;
     query?: {
         description?: string;
-        field?: Array<'active_from' | 'active_to' | 'created' | 'description' | 'is_active' | 'type' | 'uuid'>;
+        field?: Array<'active_from' | 'active_to' | 'created' | 'description' | 'is_active' | 'maintenance_affected_offerings' | 'maintenance_name' | 'maintenance_scheduled_end' | 'maintenance_scheduled_start' | 'maintenance_service_provider' | 'maintenance_state' | 'maintenance_type' | 'maintenance_uuid' | 'type' | 'uuid'>;
         is_active?: boolean;
         /**
          * Ordering
@@ -12372,7 +12535,7 @@ export type AdminAnnouncementsRetrieveData = {
         uuid: string;
     };
     query?: {
-        field?: Array<'active_from' | 'active_to' | 'created' | 'description' | 'is_active' | 'type' | 'uuid'>;
+        field?: Array<'active_from' | 'active_to' | 'created' | 'description' | 'is_active' | 'maintenance_affected_offerings' | 'maintenance_name' | 'maintenance_scheduled_end' | 'maintenance_scheduled_start' | 'maintenance_service_provider' | 'maintenance_state' | 'maintenance_type' | 'maintenance_uuid' | 'type' | 'uuid'>;
     };
     url: '/api/admin-announcements/{uuid}/';
 };
@@ -17059,7 +17222,7 @@ export type CustomersListData = {
         archived?: boolean;
         backend_id?: string;
         contact_details?: string;
-        field?: Array<'abbreviation' | 'access_subnets' | 'accounting_start_date' | 'address' | 'agreement_number' | 'archived' | 'backend_id' | 'bank_account' | 'bank_name' | 'billing_price_estimate' | 'blocked' | 'call_managing_organization_uuid' | 'contact_details' | 'country' | 'country_name' | 'created' | 'customer_credit' | 'customer_unallocated_credit' | 'default_tax_percent' | 'display_name' | 'domain' | 'email' | 'homepage' | 'image' | 'is_service_provider' | 'latitude' | 'longitude' | 'max_service_accounts' | 'name' | 'native_name' | 'organization_groups' | 'payment_profiles' | 'phone_number' | 'postal' | 'projects_count' | 'registration_code' | 'service_provider' | 'service_provider_uuid' | 'slug' | 'sponsor_number' | 'url' | 'users_count' | 'uuid' | 'vat_code'>;
+        field?: Array<'abbreviation' | 'access_subnets' | 'accounting_start_date' | 'address' | 'agreement_number' | 'archived' | 'backend_id' | 'bank_account' | 'bank_name' | 'billing_price_estimate' | 'blocked' | 'call_managing_organization_uuid' | 'contact_details' | 'country' | 'country_name' | 'created' | 'customer_credit' | 'customer_unallocated_credit' | 'default_tax_percent' | 'display_name' | 'domain' | 'email' | 'homepage' | 'image' | 'is_service_provider' | 'latitude' | 'longitude' | 'max_service_accounts' | 'name' | 'native_name' | 'payment_profiles' | 'phone_number' | 'postal' | 'projects_count' | 'registration_code' | 'service_provider' | 'service_provider_uuid' | 'slug' | 'sponsor_number' | 'url' | 'uuid' | 'vat_code'>;
         name?: string;
         name_exact?: string;
         native_name?: string;
@@ -17185,7 +17348,7 @@ export type CustomersRetrieveData = {
         uuid: string;
     };
     query?: {
-        field?: Array<'abbreviation' | 'access_subnets' | 'accounting_start_date' | 'address' | 'agreement_number' | 'archived' | 'backend_id' | 'bank_account' | 'bank_name' | 'billing_price_estimate' | 'blocked' | 'call_managing_organization_uuid' | 'contact_details' | 'country' | 'country_name' | 'created' | 'customer_credit' | 'customer_unallocated_credit' | 'default_tax_percent' | 'display_name' | 'domain' | 'email' | 'homepage' | 'image' | 'is_service_provider' | 'latitude' | 'longitude' | 'max_service_accounts' | 'name' | 'native_name' | 'organization_groups' | 'payment_profiles' | 'phone_number' | 'postal' | 'projects_count' | 'registration_code' | 'service_provider' | 'service_provider_uuid' | 'slug' | 'sponsor_number' | 'url' | 'users_count' | 'uuid' | 'vat_code'>;
+        field?: Array<'abbreviation' | 'access_subnets' | 'accounting_start_date' | 'address' | 'agreement_number' | 'archived' | 'backend_id' | 'bank_account' | 'bank_name' | 'billing_price_estimate' | 'blocked' | 'call_managing_organization_uuid' | 'contact_details' | 'country' | 'country_name' | 'created' | 'customer_credit' | 'customer_unallocated_credit' | 'default_tax_percent' | 'display_name' | 'domain' | 'email' | 'homepage' | 'image' | 'is_service_provider' | 'latitude' | 'longitude' | 'max_service_accounts' | 'name' | 'native_name' | 'payment_profiles' | 'phone_number' | 'postal' | 'projects_count' | 'registration_code' | 'service_provider' | 'service_provider_uuid' | 'slug' | 'sponsor_number' | 'url' | 'uuid' | 'vat_code'>;
     };
     url: '/api/customers/{uuid}/';
 };
