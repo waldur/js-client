@@ -4803,29 +4803,6 @@ export type NestedSectionRequest = {
     is_standalone?: boolean;
 };
 
-export type NestedSecurityGroupRule = {
-    ethertype?: EthertypeEnum;
-    direction?: DirectionEnum;
-    protocol?: ProtocolEnum | BlankEnum;
-    from_port?: number | null;
-    to_port?: number | null;
-    cidr?: string | null;
-    description?: string;
-    readonly remote_group_name?: string;
-    readonly remote_group_uuid?: string;
-    readonly id?: number;
-};
-
-export type NestedSecurityGroupRuleRequest = {
-    ethertype?: EthertypeEnum;
-    direction?: DirectionEnum;
-    protocol?: ProtocolEnum | BlankEnum;
-    from_port?: number | null;
-    to_port?: number | null;
-    cidr?: string | null;
-    description?: string;
-};
-
 export type NetworkRbacPolicy = {
     readonly url?: string;
     readonly uuid?: string;
@@ -5613,6 +5590,7 @@ export type OpenStackBackupRestorationRequest = {
      */
     name?: string;
     floating_ips?: Array<OpenStackNestedFloatingIpRequest>;
+    security_groups?: Array<OpenStackNestedSecurityGroupRequest>;
     ports?: Array<OpenStackNestedPortRequest>;
 };
 
@@ -5907,13 +5885,13 @@ export type OpenStackNestedPortRequest = {
     port?: string;
 };
 
-export type OpenStackNestedSecurityGroup = {
-    readonly url?: string;
-    readonly name?: string;
-    readonly rules?: Array<NestedSecurityGroupRule>;
-    readonly description?: string;
-    readonly state?: string;
-};
+export type OpenStackNestedSecurityGroup = Array<{
+    url?: string;
+}>;
+
+export type OpenStackNestedSecurityGroupRequest = Array<{
+    url?: string;
+}>;
 
 export type OpenStackNestedServerGroup = {
     readonly url?: string;
@@ -9011,6 +8989,43 @@ export type PublicCall = {
     reviews_visible_to_submitters?: boolean;
 };
 
+export type PublicMaintenanceAnnouncement = {
+    readonly url: string;
+    readonly uuid: string;
+    readonly name: string;
+    readonly message: string;
+    /**
+     * Type of maintenance being performed
+     */
+    maintenance_type: MaintenanceTypeEnum;
+    readonly maintenance_type_display: string;
+    /**
+     * Optional reference to an external maintenance tracker
+     */
+    readonly external_reference_url: string;
+    state: PublicMaintenanceAnnouncementStateEnum;
+    /**
+     * When the maintenance is scheduled to begin
+     */
+    readonly scheduled_start: string;
+    /**
+     * When the maintenance is scheduled to complete
+     */
+    readonly scheduled_end: string;
+    /**
+     * When the maintenance actually began
+     */
+    readonly actual_start: string | null;
+    /**
+     * When the maintenance actually completed
+     */
+    readonly actual_end: string | null;
+    readonly affected_offerings: Array<MaintenanceAnnouncementOffering>;
+    readonly service_provider_name: string;
+};
+
+export type PublicMaintenanceAnnouncementStateEnum = 'Scheduled' | 'In progress' | 'Completed';
+
 export type PublicOfferingDetails = {
     readonly url?: string;
     readonly uuid?: string;
@@ -11975,6 +11990,7 @@ export type OpenStackInstanceCreateOrderAttributes = {
     description?: string;
     flavor: string;
     image: string;
+    security_groups?: Array<OpenStackNestedSecurityGroupRequest>;
     ports: Array<OpenStackNestedPortRequest>;
     floating_ips?: Array<OpenStackNestedFloatingIpRequest>;
     system_volume_size: number;
@@ -38259,6 +38275,92 @@ export type ProviderInvoiceItemsRetrieveResponses = {
 };
 
 export type ProviderInvoiceItemsRetrieveResponse = ProviderInvoiceItemsRetrieveResponses[keyof ProviderInvoiceItemsRetrieveResponses];
+
+export type PublicMaintenanceAnnouncementsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        maintenance_type?: number;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-name' | '-scheduled_end' | '-scheduled_start' | 'created' | 'name' | 'scheduled_end' | 'scheduled_start'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        scheduled_end_after?: string;
+        scheduled_end_before?: string;
+        scheduled_start_after?: string;
+        scheduled_start_before?: string;
+        service_provider_uuid?: string;
+        state?: Array<'Cancelled' | 'Completed' | 'Draft' | 'In progress' | 'Scheduled'>;
+    };
+    url: '/api/public-maintenance-announcements/';
+};
+
+export type PublicMaintenanceAnnouncementsListResponses = {
+    200: Array<PublicMaintenanceAnnouncement>;
+};
+
+export type PublicMaintenanceAnnouncementsListResponse = PublicMaintenanceAnnouncementsListResponses[keyof PublicMaintenanceAnnouncementsListResponses];
+
+export type PublicMaintenanceAnnouncementsCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        maintenance_type?: number;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-name' | '-scheduled_end' | '-scheduled_start' | 'created' | 'name' | 'scheduled_end' | 'scheduled_start'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        scheduled_end_after?: string;
+        scheduled_end_before?: string;
+        scheduled_start_after?: string;
+        scheduled_start_before?: string;
+        service_provider_uuid?: string;
+        state?: Array<'Cancelled' | 'Completed' | 'Draft' | 'In progress' | 'Scheduled'>;
+    };
+    url: '/api/public-maintenance-announcements/';
+};
+
+export type PublicMaintenanceAnnouncementsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type PublicMaintenanceAnnouncementsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/public-maintenance-announcements/{uuid}/';
+};
+
+export type PublicMaintenanceAnnouncementsRetrieveResponses = {
+    200: PublicMaintenanceAnnouncement;
+};
+
+export type PublicMaintenanceAnnouncementsRetrieveResponse = PublicMaintenanceAnnouncementsRetrieveResponses[keyof PublicMaintenanceAnnouncementsRetrieveResponses];
 
 export type QueryData = {
     body: QueryRequest;
