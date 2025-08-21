@@ -29185,6 +29185,34 @@ export type MarketplaceServiceProvidersProjectPermissionsListResponses = {
 
 export type MarketplaceServiceProvidersProjectPermissionsListResponse = MarketplaceServiceProvidersProjectPermissionsListResponses[keyof MarketplaceServiceProvidersProjectPermissionsListResponses];
 
+export type MarketplaceServiceProvidersProjectServiceAccountsListData = {
+    body?: never;
+    path: {
+        service_provider_uuid: string;
+    };
+    query?: {
+        email?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        project?: string;
+        project_uuid?: string;
+        username?: string;
+    };
+    url: '/api/marketplace-service-providers/{service_provider_uuid}/project_service_accounts/';
+};
+
+export type MarketplaceServiceProvidersProjectServiceAccountsListResponses = {
+    200: Array<ProjectServiceAccount>;
+};
+
+export type MarketplaceServiceProvidersProjectServiceAccountsListResponse = MarketplaceServiceProvidersProjectServiceAccountsListResponses[keyof MarketplaceServiceProvidersProjectServiceAccountsListResponses];
+
 export type MarketplaceServiceProvidersProjectsListData = {
     body?: never;
     path: {
