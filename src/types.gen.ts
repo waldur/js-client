@@ -2099,6 +2099,9 @@ export type CreateFeedbackRequest = {
 export type CreateRouter = {
     readonly url: string;
     readonly uuid: string;
+    /**
+     * OpenStack tenant this router belongs to
+     */
     tenant: string;
     name: string;
     readonly project: string;
@@ -2106,6 +2109,9 @@ export type CreateRouter = {
 };
 
 export type CreateRouterRequest = {
+    /**
+     * OpenStack tenant this router belongs to
+     */
     tenant: string;
     name: string;
 };
@@ -3023,6 +3029,9 @@ export type ImportableResource = {
 };
 
 export type InstanceFlavorChangeRequest = {
+    /**
+     * The new flavor to use for the instance. Flavor change can only be done when instance is stopped.
+     */
     flavor: string;
 };
 
@@ -4811,12 +4820,18 @@ export type NetworkRbacPolicy = {
     target_tenant?: string;
     readonly target_tenant_name?: string;
     readonly backend_id?: string;
+    /**
+     * Type of access granted - either shared access or external network access
+     */
     policy_type?: PolicyTypeEnum;
     readonly created?: string;
 };
 
 export type NetworkRbacPolicyRequest = {
     target_tenant: string;
+    /**
+     * Type of access granted - either shared access or external network access
+     */
     policy_type?: PolicyTypeEnum;
 };
 
@@ -5487,8 +5502,14 @@ export type OpenStackBackendInstance = {
     readonly state: string;
     runtime_state?: string;
     readonly created: string;
+    /**
+     * Instance ID in the OpenStack backend
+     */
     backend_id?: string | null;
     readonly availability_zone: string;
+    /**
+     * Name of the hypervisor hosting this instance
+     */
     hypervisor_hostname?: string;
 };
 
@@ -5499,9 +5520,18 @@ export type OpenStackBackendVolumes = {
      * Size in MiB
      */
     size: number;
+    /**
+     * Arbitrary key-value pairs associated with the volume
+     */
     metadata?: string;
+    /**
+     * Volume ID in the OpenStack backend
+     */
     backend_id?: string | null;
     readonly type: string;
+    /**
+     * Indicates if this volume can be used to boot an instance
+     */
     bootable?: boolean;
     runtime_state?: string;
     readonly state: string;
@@ -5538,6 +5568,9 @@ export type OpenStackBackup = {
      */
     kept_until?: string | null;
     readonly metadata?: unknown;
+    /**
+     * Instance that this backup is created from
+     */
     readonly instance?: string;
     readonly instance_name?: string;
     readonly instance_marketplace_uuid?: string;
@@ -5571,26 +5604,53 @@ export type OpenStackBackupRequest = {
 
 export type OpenStackBackupRestoration = {
     readonly uuid?: string;
+    /**
+     * Instance that is being restored from the backup
+     */
     readonly instance?: string;
     readonly created?: string;
+    /**
+     * Flavor to be used for the restored instance. If not specified, original instance flavor will be used
+     */
     flavor?: string;
     /**
      * New instance name. Leave blank to use source instance name.
      */
     name?: string;
+    /**
+     * Floating IPs that will be assigned to the restored instance
+     */
     floating_ips?: Array<OpenStackNestedFloatingIp>;
+    /**
+     * Security groups that will be assigned to the restored instance
+     */
     security_groups?: Array<OpenStackNestedSecurityGroup>;
+    /**
+     * Network ports that will be attached to the restored instance
+     */
     ports?: Array<OpenStackNestedPort>;
 };
 
 export type OpenStackBackupRestorationRequest = {
+    /**
+     * Flavor to be used for the restored instance. If not specified, original instance flavor will be used
+     */
     flavor: string;
     /**
      * New instance name. Leave blank to use source instance name.
      */
     name?: string;
+    /**
+     * Floating IPs that will be assigned to the restored instance
+     */
     floating_ips?: Array<OpenStackNestedFloatingIpRequest>;
+    /**
+     * Security groups that will be assigned to the restored instance
+     */
     security_groups?: Array<OpenStackNestedSecurityGroupRequest>;
+    /**
+     * Network ports that will be attached to the restored instance
+     */
     ports?: Array<OpenStackNestedPortRequest>;
 };
 
@@ -5605,12 +5665,24 @@ export type OpenStackDataVolumeRequest = {
 };
 
 export type OpenStackFixedIp = {
+    /**
+     * IP address to assign to the port
+     */
     ip_address?: string;
+    /**
+     * ID of the subnet in which to assign the IP address
+     */
     subnet_id?: string;
 };
 
 export type OpenStackFixedIpRequest = {
+    /**
+     * IP address to assign to the port
+     */
     ip_address: string;
+    /**
+     * ID of the subnet in which to assign the IP address
+     */
     subnet_id: string;
 };
 
@@ -5661,14 +5733,23 @@ export type OpenStackFloatingIp = {
     readonly backend_id?: string;
     readonly access_url?: string | null;
     readonly runtime_state?: string;
+    /**
+     * The public IPv4 address of the floating IP
+     */
     readonly address?: string | null;
+    /**
+     * ID of network in OpenStack where this floating IP is allocated
+     */
     readonly backend_network_id?: string;
+    /**
+     * OpenStack tenant this floating IP belongs to
+     */
     readonly tenant?: string;
     readonly tenant_name?: string;
     readonly tenant_uuid?: string;
     readonly port?: string;
     /**
-     * An optional address that maps to floating IP's address
+     * Optional address that maps to floating IP's address in external networks
      */
     readonly external_address?: string | null;
     readonly port_fixed_ips?: Array<OpenStackFixedIp>;
@@ -5722,6 +5803,9 @@ export type OpenStackInstance = {
     name?: string;
     description?: string;
     readonly service_name?: string;
+    /**
+     * OpenStack provider settings
+     */
     readonly service_settings?: string;
     readonly service_settings_uuid?: string;
     readonly service_settings_state?: string;
@@ -5739,6 +5823,9 @@ export type OpenStackInstance = {
     state?: CoreStates;
     readonly created?: string;
     readonly modified?: string;
+    /**
+     * Instance ID in the OpenStack backend
+     */
     readonly backend_id?: string | null;
     readonly access_url?: string | null;
     readonly start_time?: string | null;
@@ -5777,20 +5864,59 @@ export type OpenStackInstance = {
      * Flavor disk size in MiB
      */
     readonly flavor_disk?: number;
+    /**
+     * Name of the flavor used by this instance
+     */
     readonly flavor_name?: string;
+    /**
+     * List of volumes attached to the instance
+     */
     readonly volumes?: Array<OpenStackNestedVolume>;
+    /**
+     * List of security groups to apply to the instance
+     */
     security_groups?: Array<OpenStackNestedSecurityGroup>;
+    /**
+     * Server group for instance scheduling policy
+     */
     server_group?: OpenStackNestedServerGroup | null;
+    /**
+     * Floating IPs to assign to the instance
+     */
     floating_ips?: Array<OpenStackNestedFloatingIp>;
+    /**
+     * Network ports to attach to the instance
+     */
     ports?: Array<OpenStackNestedPort>;
+    /**
+     * Availability zone where this instance is located
+     */
     availability_zone?: string | null;
+    /**
+     * Name of the availability zone where instance is located
+     */
     readonly availability_zone_name?: string;
+    /**
+     * If True, instance will be connected directly to external network
+     */
     connect_directly_to_external_network?: boolean;
     readonly runtime_state?: string;
     readonly action?: string;
+    /**
+     * Details about ongoing or completed actions
+     */
     readonly action_details?: unknown;
+    /**
+     * UUID of the OpenStack tenant
+     */
     readonly tenant_uuid?: string;
+    /**
+     * Name of the hypervisor hosting this instance
+     */
     readonly hypervisor_hostname?: string;
+    /**
+     * The OpenStack tenant to create the instance in
+     */
     tenant?: string;
     readonly external_address?: Array<string>;
     rancher_cluster?: RancherClusterReference | null;
@@ -5809,7 +5935,13 @@ export type OpenStackInstance = {
 };
 
 export type OpenStackInstanceAllowedAddressPairsUpdateRequest = {
+    /**
+     * The subnet to update allowed address pairs for.
+     */
     subnet: string;
+    /**
+     * List of allowed address pairs to set on the port. Each pair should contain 'ip_address' and optional 'mac_address'.
+     */
     allowed_address_pairs: Array<OpenStackAllowedAddressPairRequest>;
 };
 
@@ -5818,6 +5950,9 @@ export type OpenStackInstanceAvailabilityZone = {
     readonly uuid: string;
     name: string;
     settings?: string | null;
+    /**
+     * Indicates whether this availability zone is available for instance provisioning
+     */
     available?: boolean;
 };
 
@@ -5832,25 +5967,46 @@ export type OpenStackInstancePortsUpdateRequest = {
 export type OpenStackInstanceRequest = {
     name: string;
     description?: string;
+    /**
+     * Volume type for the system volume
+     */
     system_volume_type?: string | null;
+    /**
+     * Volume type for the data volume
+     */
     data_volume_type?: string | null;
+    /**
+     * Additional data volumes to attach to the instance
+     */
     data_volumes?: Array<OpenStackDataVolumeRequest>;
 };
 
 export type OpenStackInstanceSecurityGroupsUpdateRequest = {
+    /**
+     * List of security groups to be assigned to the instance.
+     */
     security_groups: Array<string>;
 };
 
 export type OpenStackNestedFloatingIp = {
     readonly url?: string;
     readonly uuid?: string;
+    /**
+     * The public IPv4 address of the floating IP
+     */
     readonly address?: string | null;
     readonly port_fixed_ips?: Array<OpenStackFixedIp>;
+    /**
+     * MAC address of the port
+     */
     readonly port_mac_address?: string | null;
     subnet?: string;
     readonly subnet_uuid?: string;
     readonly subnet_name?: string;
     readonly subnet_description?: string;
+    /**
+     * IPv4 network address in CIDR format (e.g. 192.168.0.0/24)
+     */
     readonly subnet_cidr?: string;
 };
 
@@ -5859,6 +6015,9 @@ export type OpenStackNestedFloatingIpRequest = {
 };
 
 export type OpenStackNestedInstance = {
+    /**
+     * Instance ID in the OpenStack backend
+     */
     backend_id?: string | null;
     name?: string;
     readonly uuid?: string;
@@ -5867,20 +6026,38 @@ export type OpenStackNestedInstance = {
 export type OpenStackNestedPort = {
     readonly url?: string;
     fixed_ips?: Array<OpenStackFixedIp>;
+    /**
+     * MAC address of the port
+     */
     readonly mac_address?: string;
+    /**
+     * Subnet to which this port belongs
+     */
     subnet?: string | null;
     readonly subnet_uuid?: string | null;
     readonly subnet_name?: string | null;
     readonly subnet_description?: string | null;
+    /**
+     * IPv4 network address in CIDR format (e.g. 192.168.0.0/24)
+     */
     readonly subnet_cidr?: string | null;
     readonly allowed_address_pairs?: Array<OpenStackAllowedAddressPair>;
+    /**
+     * ID of device (instance, router etc) to which this port is connected
+     */
     readonly device_id?: string | null;
+    /**
+     * Entity that uses this port (e.g. network:router_interface)
+     */
     readonly device_owner?: string | null;
     readonly security_groups?: Array<OpenStackSecurityGroup>;
 };
 
 export type OpenStackNestedPortRequest = {
     fixed_ips?: Array<OpenStackFixedIpRequest>;
+    /**
+     * Subnet to which this port belongs
+     */
     subnet?: string | null;
     port?: string;
 };
@@ -5896,6 +6073,9 @@ export type OpenStackNestedSecurityGroupRequest = {
 export type OpenStackNestedServerGroup = {
     readonly url?: string;
     readonly name?: string;
+    /**
+     * Server group policy determining the rules for scheduling servers in this group
+     */
     policy?: PolicyEnum;
     readonly state?: string;
 };
@@ -5904,19 +6084,43 @@ export type OpenStackNestedSubNet = {
     readonly uuid?: string;
     name?: string;
     description?: string;
+    /**
+     * IPv4 network address in CIDR format (e.g. 192.168.0.0/24)
+     */
     cidr?: string;
+    /**
+     * IP address of the gateway for this subnet
+     */
     gateway_ip?: string | null;
     readonly allocation_pools?: Array<OpenStackSubNetAllocationPool>;
+    /**
+     * IP protocol version (4 or 6)
+     */
     ip_version?: number;
+    /**
+     * If True, DHCP service will be enabled on this subnet
+     */
     enable_dhcp?: boolean;
 };
 
 export type OpenStackNestedSubNetRequest = {
     name: string;
     description?: string;
+    /**
+     * IPv4 network address in CIDR format (e.g. 192.168.0.0/24)
+     */
     cidr?: string;
+    /**
+     * IP address of the gateway for this subnet
+     */
     gateway_ip?: string | null;
+    /**
+     * IP protocol version (4 or 6)
+     */
     ip_version?: number;
+    /**
+     * If True, DHCP service will be enabled on this subnet
+     */
     enable_dhcp?: boolean;
 };
 
@@ -5924,8 +6128,14 @@ export type OpenStackNestedVolume = {
     readonly url?: string;
     readonly uuid?: string;
     readonly name?: string;
+    /**
+     * Name of the image this volume was created from
+     */
     image_name?: string;
     readonly state?: string;
+    /**
+     * Indicates if this volume can be used to boot an instance
+     */
     bootable?: boolean;
     /**
      * Size in MiB
@@ -5936,13 +6146,22 @@ export type OpenStackNestedVolume = {
      */
     device?: string;
     readonly resource_type?: string;
+    /**
+     * Type of the volume (e.g. SSD, HDD)
+     */
     type?: string | null;
     readonly type_name?: string;
     readonly marketplace_resource_uuid?: string | null;
 };
 
 export type OpenStackNestedVolumeRequest = {
+    /**
+     * Name of the image this volume was created from
+     */
     image_name?: string;
+    /**
+     * Indicates if this volume can be used to boot an instance
+     */
     bootable?: boolean;
     /**
      * Size in MiB
@@ -5952,6 +6171,9 @@ export type OpenStackNestedVolumeRequest = {
      * Name of volume as instance device e.g. /dev/vdb.
      */
     device?: string;
+    /**
+     * Type of the volume (e.g. SSD, HDD)
+     */
     type?: string | null;
 };
 
@@ -5980,10 +6202,19 @@ export type OpenStackNetwork = {
     readonly modified?: string;
     readonly backend_id?: string;
     readonly access_url?: string | null;
+    /**
+     * OpenStack tenant this network belongs to
+     */
     readonly tenant?: string;
     readonly tenant_name?: string;
     readonly tenant_uuid?: string;
+    /**
+     * Defines whether this network is external (public) or internal (private)
+     */
     readonly is_external?: boolean;
+    /**
+     * Network type, such as local, flat, vlan, vxlan, or gre
+     */
     readonly type?: string;
     readonly subnets?: Array<OpenStackNestedSubNet>;
     /**
@@ -6033,23 +6264,50 @@ export type OpenStackPort = {
     state?: CoreStates;
     readonly created?: string;
     readonly modified?: string;
+    /**
+     * Port ID in OpenStack
+     */
     readonly backend_id?: string | null;
     readonly access_url?: string | null;
     fixed_ips?: Array<OpenStackFixedIp>;
+    /**
+     * MAC address of the port
+     */
     mac_address?: string;
     allowed_address_pairs?: Array<OpenStackAllowedAddressPair>;
+    /**
+     * OpenStack tenant this port belongs to
+     */
     readonly tenant?: string;
     readonly tenant_name?: string;
     readonly tenant_uuid?: string;
+    /**
+     * Network to which this port belongs
+     */
     network?: string | null;
     readonly network_name?: string;
     readonly network_uuid?: string;
     readonly floating_ips?: Array<string>;
+    /**
+     * ID of device (instance, router etc) to which this port is connected
+     */
     readonly device_id?: string | null;
+    /**
+     * Entity that uses this port (e.g. network:router_interface)
+     */
     readonly device_owner?: string | null;
+    /**
+     * If True, security groups and rules will be applied to this port
+     */
     port_security_enabled?: boolean;
     security_groups?: Array<OpenStackPortNestedSecurityGroup>;
+    /**
+     * Administrative state of the port. If down, port does not forward packets
+     */
     readonly admin_state_up?: boolean | null;
+    /**
+     * Port status in OpenStack (e.g. ACTIVE, DOWN)
+     */
     readonly status?: string | null;
     readonly marketplace_offering_uuid?: string | null;
     readonly marketplace_offering_name?: string | null;
@@ -6066,7 +6324,13 @@ export type OpenStackPort = {
 };
 
 export type OpenStackPortIpUpdateRequest = {
+    /**
+     * The subnet where the new IP address will be allocated
+     */
     subnet: string;
+    /**
+     * The IP address to assign within the subnet
+     */
     ip_address: string;
 };
 
@@ -6084,9 +6348,18 @@ export type OpenStackPortRequest = {
     name: string;
     description?: string;
     fixed_ips?: Array<OpenStackFixedIpRequest>;
+    /**
+     * MAC address of the port
+     */
     mac_address?: string;
     allowed_address_pairs?: Array<OpenStackAllowedAddressPairRequest>;
+    /**
+     * Network to which this port belongs
+     */
     network?: string | null;
+    /**
+     * If True, security groups and rules will be applied to this port
+     */
     port_security_enabled?: boolean;
     security_groups?: Array<OpenStackPortNestedSecurityGroupRequest>;
 };
@@ -6114,8 +6387,14 @@ export type OpenStackRouter = {
     state?: CoreStates;
     readonly created?: string;
     readonly modified?: string;
+    /**
+     * Router ID in OpenStack
+     */
     backend_id?: string | null;
     readonly access_url?: string | null;
+    /**
+     * OpenStack tenant this router belongs to
+     */
     tenant?: string;
     readonly tenant_name?: string;
     readonly tenant_uuid?: string;
@@ -6138,7 +6417,13 @@ export type OpenStackRouter = {
 };
 
 export type OpenStackRouterInterfaceRequest = {
+    /**
+     * The subnet to connect to the router. Either subnet or port must be specified, but not both.
+     */
     subnet?: string;
+    /**
+     * The port to connect to the router. Either subnet or port must be specified, but not both.
+     */
     port?: string;
 };
 
@@ -6200,38 +6485,101 @@ export type OpenStackSecurityGroupRequest = {
 };
 
 export type OpenStackSecurityGroupRuleCreate = {
+    /**
+     * IP protocol version - either 'IPv4' or 'IPv6'
+     */
     ethertype?: EthertypeEnum;
+    /**
+     * Traffic direction - either 'ingress' (incoming) or 'egress' (outgoing)
+     */
     direction?: DirectionEnum;
+    /**
+     * The network protocol (TCP, UDP, ICMP, or empty for any protocol)
+     */
     protocol?: ProtocolEnum | BlankEnum;
+    /**
+     * Starting port number in the range (1-65535)
+     */
     from_port?: number | null;
+    /**
+     * Ending port number in the range (1-65535)
+     */
     to_port?: number | null;
+    /**
+     * CIDR notation for the source/destination network address range
+     */
     cidr?: string | null;
     description?: string;
     readonly remote_group_name?: string;
     readonly remote_group_uuid?: string;
     readonly id?: number;
+    /**
+     * Remote security group that this rule references, if any
+     */
     remote_group?: string | null;
 };
 
 export type OpenStackSecurityGroupRuleCreateRequest = {
+    /**
+     * IP protocol version - either 'IPv4' or 'IPv6'
+     */
     ethertype?: EthertypeEnum;
+    /**
+     * Traffic direction - either 'ingress' (incoming) or 'egress' (outgoing)
+     */
     direction?: DirectionEnum;
+    /**
+     * The network protocol (TCP, UDP, ICMP, or empty for any protocol)
+     */
     protocol?: ProtocolEnum | BlankEnum;
+    /**
+     * Starting port number in the range (1-65535)
+     */
     from_port?: number | null;
+    /**
+     * Ending port number in the range (1-65535)
+     */
     to_port?: number | null;
+    /**
+     * CIDR notation for the source/destination network address range
+     */
     cidr?: string | null;
     description?: string;
+    /**
+     * Remote security group that this rule references, if any
+     */
     remote_group?: string | null;
 };
 
 export type OpenStackSecurityGroupRuleUpdateRequest = {
+    /**
+     * IP protocol version - either 'IPv4' or 'IPv6'
+     */
     ethertype?: EthertypeEnum;
+    /**
+     * Traffic direction - either 'ingress' (incoming) or 'egress' (outgoing)
+     */
     direction?: DirectionEnum;
+    /**
+     * The network protocol (TCP, UDP, ICMP, or empty for any protocol)
+     */
     protocol?: ProtocolEnum | BlankEnum;
+    /**
+     * Starting port number in the range (1-65535)
+     */
     from_port?: number | null;
+    /**
+     * Ending port number in the range (1-65535)
+     */
     to_port?: number | null;
+    /**
+     * CIDR notation for the source/destination network address range
+     */
     cidr?: string | null;
     description?: string;
+    /**
+     * Remote security group that this rule references, if any
+     */
     remote_group?: string | null;
 };
 
@@ -6273,6 +6621,9 @@ export type OpenStackServerGroup = {
     readonly tenant?: string;
     readonly tenant_name?: string;
     readonly tenant_uuid?: string;
+    /**
+     * Server group policy determining the rules for scheduling servers in this group
+     */
     policy?: PolicyEnum | BlankEnum;
     readonly display_name?: string;
     readonly instances?: Array<OpenStackNestedInstance>;
@@ -6293,6 +6644,9 @@ export type OpenStackServerGroup = {
 export type OpenStackServerGroupRequest = {
     name: string;
     description?: string;
+    /**
+     * Server group policy determining the rules for scheduling servers in this group
+     */
     policy?: PolicyEnum | BlankEnum;
 };
 
@@ -6319,8 +6673,14 @@ export type OpenStackSnapshot = {
     state?: CoreStates;
     readonly created?: string;
     readonly modified?: string;
+    /**
+     * Snapshot ID in the OpenStack backend
+     */
     readonly backend_id?: string | null;
     readonly access_url?: string | null;
+    /**
+     * Volume from which this snapshot was created
+     */
     readonly source_volume?: string | null;
     /**
      * Size in MiB
@@ -6368,6 +6728,9 @@ export type OpenStackSnapshotRestoration = {
      * New volume description.
      */
     description?: string;
+    /**
+     * Volume that is being restored from the snapshot
+     */
     readonly volume?: string;
     readonly volume_name?: string;
     readonly volume_state?: string;
@@ -6430,13 +6793,28 @@ export type OpenStackSubNet = {
     readonly access_url?: string | null;
     readonly tenant?: string;
     readonly tenant_name?: string;
+    /**
+     * Network to which this subnet belongs
+     */
     readonly network?: string;
     readonly network_name?: string;
     cidr?: string;
+    /**
+     * IP address of the gateway for this subnet
+     */
     gateway_ip?: string | null;
+    /**
+     * If True, no gateway IP address will be allocated
+     */
     disable_gateway?: boolean;
     allocation_pools?: Array<OpenStackSubNetAllocationPool>;
+    /**
+     * IP protocol version (4 or 6)
+     */
     readonly ip_version?: number;
+    /**
+     * If True, DHCP service will be enabled on this subnet
+     */
     readonly enable_dhcp?: boolean;
     dns_nameservers?: Array<string>;
     host_routes?: Array<OpenStackStaticRoute>;
@@ -6472,7 +6850,13 @@ export type OpenStackSubNetRequest = {
     name: string;
     description?: string;
     cidr?: string;
+    /**
+     * IP address of the gateway for this subnet
+     */
     gateway_ip?: string | null;
+    /**
+     * If True, no gateway IP address will be allocated
+     */
     disable_gateway?: boolean;
     allocation_pools?: Array<OpenStackSubNetAllocationPoolRequest>;
     dns_nameservers?: Array<string>;
@@ -6502,12 +6886,21 @@ export type OpenStackTenant = {
     state?: CoreStates;
     readonly created?: string;
     readonly modified?: string;
+    /**
+     * ID of tenant in the OpenStack backend
+     */
     readonly backend_id?: string | null;
     /**
      * Optional availability group. Will be used for all instances provisioned in this tenant
      */
     availability_zone?: string;
+    /**
+     * ID of internal network in OpenStack tenant
+     */
     readonly internal_network_id?: string;
+    /**
+     * ID of external network connected to OpenStack tenant
+     */
     readonly external_network_id?: string;
     readonly quotas?: Array<Quota>;
     /**
@@ -6596,21 +6989,45 @@ export type OpenStackVolume = {
     state?: CoreStates;
     readonly created?: string;
     readonly modified?: string;
+    /**
+     * Volume ID in the OpenStack backend
+     */
     readonly backend_id?: string | null;
     readonly access_url?: string | null;
+    /**
+     * Snapshot that this volume was created from, if any
+     */
     readonly source_snapshot?: string | null;
     /**
      * Size in MiB
      */
     size?: number | null;
+    /**
+     * Indicates if this volume can be used to boot an instance
+     */
     bootable?: boolean;
     readonly metadata?: unknown;
+    /**
+     * Image that this volume was created from, if any
+     */
     image?: string | null;
+    /**
+     * Metadata of the image this volume was created from
+     */
     readonly image_metadata?: string;
+    /**
+     * Name of the image this volume was created from
+     */
     readonly image_name?: string;
+    /**
+     * Type of the volume (e.g. SSD, HDD)
+     */
     type?: string | null;
     readonly type_name?: string;
     readonly runtime_state?: string;
+    /**
+     * Availability zone where this volume is located
+     */
     availability_zone?: string | null;
     readonly availability_zone_name?: string;
     /**
@@ -6619,6 +7036,9 @@ export type OpenStackVolume = {
     readonly device?: string;
     readonly action?: string;
     readonly action_details?: unknown;
+    /**
+     * Instance that this volume is attached to, if any
+     */
     readonly instance?: string | null;
     readonly instance_name?: string;
     readonly instance_marketplace_uuid?: string;
@@ -6654,6 +7074,9 @@ export type OpenStackVolumeExtendRequest = {
 export type OpenStackVolumeRequest = {
     name: string;
     description?: string;
+    /**
+     * Indicates if this volume can be used to boot an instance
+     */
     bootable?: boolean;
 };
 
@@ -7394,8 +7817,17 @@ export type PatchedOpenStackBackupRequest = {
 export type PatchedOpenStackInstanceRequest = {
     name?: string;
     description?: string;
+    /**
+     * Volume type for the system volume
+     */
     system_volume_type?: string | null;
+    /**
+     * Volume type for the data volume
+     */
     data_volume_type?: string | null;
+    /**
+     * Additional data volumes to attach to the instance
+     */
     data_volumes?: Array<OpenStackDataVolumeRequest>;
 };
 
@@ -7418,6 +7850,9 @@ export type PatchedOpenStackSecurityGroupUpdateRequest = {
 export type PatchedOpenStackServerGroupRequest = {
     name?: string;
     description?: string;
+    /**
+     * Server group policy determining the rules for scheduling servers in this group
+     */
     policy?: PolicyEnum | BlankEnum;
 };
 
@@ -7435,7 +7870,13 @@ export type PatchedOpenStackSubNetRequest = {
     name?: string;
     description?: string;
     cidr?: string;
+    /**
+     * IP address of the gateway for this subnet
+     */
     gateway_ip?: string | null;
+    /**
+     * If True, no gateway IP address will be allocated
+     */
     disable_gateway?: boolean;
     allocation_pools?: Array<OpenStackSubNetAllocationPoolRequest>;
     dns_nameservers?: Array<string>;
@@ -7458,6 +7899,9 @@ export type PatchedOpenStackTenantRequest = {
 export type PatchedOpenStackVolumeRequest = {
     name?: string;
     description?: string;
+    /**
+     * Indicates if this volume can be used to boot an instance
+     */
     bootable?: boolean;
 };
 
@@ -8069,7 +8513,13 @@ export type PermissionRequest = {
     readonly created_by_username: string;
     readonly reviewed_by_full_name: string;
     readonly reviewed_by_username: string;
+    /**
+     * Timestamp when the review was completed
+     */
     readonly reviewed_at: string | null;
+    /**
+     * Optional comment provided during review
+     */
     review_comment?: string | null;
     readonly scope_uuid: string;
     readonly scope_name: string;
@@ -9558,21 +10008,57 @@ export type RancherClusterRequest = {
 
 export type RancherClusterSecurityGroupRule = {
     readonly uuid: string;
+    /**
+     * IP protocol version - either 'IPv4' or 'IPv6'
+     */
     ethertype?: EthertypeEnum;
+    /**
+     * Traffic direction - either 'ingress' (incoming) or 'egress' (outgoing)
+     */
     direction?: DirectionEnum;
+    /**
+     * The network protocol (TCP, UDP, ICMP, or empty for any protocol)
+     */
     protocol?: ProtocolEnum | BlankEnum;
+    /**
+     * Starting port number in the range (1-65535)
+     */
     from_port?: number | null;
+    /**
+     * Ending port number in the range (1-65535)
+     */
     to_port?: number | null;
+    /**
+     * CIDR notation for the source/destination network address range
+     */
     cidr?: string | null;
     description?: string;
 };
 
 export type RancherClusterSecurityGroupRuleRequest = {
+    /**
+     * IP protocol version - either 'IPv4' or 'IPv6'
+     */
     ethertype?: EthertypeEnum;
+    /**
+     * Traffic direction - either 'ingress' (incoming) or 'egress' (outgoing)
+     */
     direction?: DirectionEnum;
+    /**
+     * The network protocol (TCP, UDP, ICMP, or empty for any protocol)
+     */
     protocol?: ProtocolEnum | BlankEnum;
+    /**
+     * Starting port number in the range (1-65535)
+     */
     from_port?: number | null;
+    /**
+     * Ending port number in the range (1-65535)
+     */
     to_port?: number | null;
+    /**
+     * CIDR notation for the source/destination network address range
+     */
     cidr?: string | null;
     description?: string;
 };
@@ -10093,9 +10579,15 @@ export type RemoteProjectUpdateRequest = {
     readonly offering_name: string;
     readonly offering_uuid: string;
     readonly created: string;
+    /**
+     * Timestamp when the review was completed
+     */
     readonly reviewed_at: string | null;
     readonly reviewed_by_full_name: string;
     readonly reviewed_by_uuid: string;
+    /**
+     * Optional comment provided during review
+     */
     review_comment?: string | null;
     old_name?: string;
     new_name?: string;
@@ -11881,6 +12373,9 @@ export type VmwareVirtualMachineRequest = {
 };
 
 export type VolumeAttachRequest = {
+    /**
+     * Instance that this volume is attached to, if any
+     */
     instance: string;
 };
 
@@ -11988,21 +12483,54 @@ export type OpenStackTenantCreateOrderAttributes = {
 export type OpenStackInstanceCreateOrderAttributes = {
     name: string;
     description?: string;
+    /**
+     * The flavor to use for the instance
+     */
     flavor: string;
+    /**
+     * The OS image to use for the instance
+     */
     image: string;
+    /**
+     * List of security groups to apply to the instance
+     */
     security_groups?: Array<OpenStackNestedSecurityGroupRequest>;
+    /**
+     * Network ports to attach to the instance
+     */
     ports: Array<OpenStackNestedPortRequest>;
+    /**
+     * Floating IPs to assign to the instance
+     */
     floating_ips?: Array<OpenStackNestedFloatingIpRequest>;
+    /**
+     * Size of the system volume in MiB. Minimum size is 1024 MiB (1 GiB)
+     */
     system_volume_size: number;
+    /**
+     * Volume type for the system volume
+     */
     system_volume_type?: string | null;
+    /**
+     * Size of the data volume in MiB. Minimum size is 1024 MiB (1 GiB)
+     */
     data_volume_size?: number;
+    /**
+     * Volume type for the data volume
+     */
     data_volume_type?: string | null;
     ssh_public_key?: string;
     /**
      * Additional data that will be added to instance on provisioning
      */
     user_data?: string;
+    /**
+     * Availability zone where this instance is located
+     */
     availability_zone?: string | null;
+    /**
+     * If True, instance will be connected directly to external network
+     */
     connect_directly_to_external_network?: boolean;
 };
 
@@ -12013,12 +12541,21 @@ export type OpenStackInstanceCreateOrderAttributes = {
 export type OpenStackVolumeCreateOrderAttributes = {
     name: string;
     description?: string;
+    /**
+     * Image that this volume was created from, if any
+     */
     image?: string | null;
     /**
      * Size in MiB
      */
     size?: number | null;
+    /**
+     * Availability zone where this volume is located
+     */
     availability_zone?: string | null;
+    /**
+     * Type of the volume (e.g. SSD, HDD)
+     */
     type?: string | null;
 };
 
@@ -32384,6 +32921,11 @@ export type OpenstackNetworkRbacPoliciesListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Type of access granted - either shared access or external network access
+         *
+         *
+         */
         policy_type?: 'access_as_external' | 'access_as_shared';
         target_tenant?: string;
         target_tenant_uuid?: string;
@@ -32411,6 +32953,11 @@ export type OpenstackNetworkRbacPoliciesCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Type of access granted - either shared access or external network access
+         *
+         *
+         */
         policy_type?: 'access_as_external' | 'access_as_shared';
         target_tenant?: string;
         target_tenant_uuid?: string;
