@@ -5885,13 +5885,13 @@ export type OpenStackNestedPortRequest = {
     port?: string;
 };
 
-export type OpenStackNestedSecurityGroup = Array<{
+export type OpenStackNestedSecurityGroup = {
     url?: string;
-}>;
+};
 
-export type OpenStackNestedSecurityGroupRequest = Array<{
+export type OpenStackNestedSecurityGroupRequest = {
     url?: string;
-}>;
+};
 
 export type OpenStackNestedServerGroup = {
     readonly url?: string;
