@@ -2861,6 +2861,10 @@ export type GroupInvitation = {
     readonly expires: string;
     readonly is_active: boolean;
     /**
+     * Allow non-authenticated users to see and accept this invitation. Only staff can create public invitations.
+     */
+    is_public?: boolean;
+    /**
      * Create project and grant project permissions instead of customer permissions
      */
     auto_create_project?: boolean;
@@ -2871,11 +2875,16 @@ export type GroupInvitation = {
     project_role?: string | null;
     user_affiliations?: unknown;
     user_email_patterns?: unknown;
+    readonly scope_image: string | null;
 };
 
 export type GroupInvitationRequest = {
     role: string;
     scope: string;
+    /**
+     * Allow non-authenticated users to see and accept this invitation. Only staff can create public invitations.
+     */
+    is_public?: boolean;
     /**
      * Create project and grant project permissions instead of customer permissions
      */
