@@ -12563,6 +12563,10 @@ export type OpenStackInstanceCreateOrderAttributes = {
      * If True, instance will be connected directly to external network
      */
     connect_directly_to_external_network?: boolean;
+    /**
+     * Additional data volumes to attach to the instance
+     */
+    data_volumes?: Array<OpenStackDataVolumeRequest>;
 };
 
 /**
