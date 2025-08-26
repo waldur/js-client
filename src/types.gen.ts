@@ -1497,6 +1497,12 @@ export type ChecklistCompletionReviewer = {
     readonly review_trigger_summary: Array<unknown>;
 };
 
+export type ChecklistInfo = {
+    readonly uuid: string;
+    readonly name: string;
+    readonly checklist_type: string;
+};
+
 export type ChecklistOperators = 'equals' | 'not_equals' | 'contains' | 'in' | 'not_in';
 
 export type ChecklistRequest = {
@@ -1565,6 +1571,14 @@ export type Comment = {
 export type CommentRequest = {
     description: string;
     is_public?: boolean;
+};
+
+export type ComplianceOverview = {
+    readonly total_projects: number;
+    readonly projects_with_completions: number;
+    readonly fully_completed_projects: number;
+    readonly projects_requiring_review: number;
+    readonly average_completion_percentage: number;
 };
 
 export type ComponentStats = {
@@ -8713,6 +8727,35 @@ export type Project = {
     billing_price_estimate?: NestedPriceEstimate;
 };
 
+export type ProjectAnswer = {
+    readonly project_uuid: string;
+    readonly project_name: string;
+    /**
+     * Get completion UUID.
+     */
+    readonly completion_uuid: string | null;
+    /**
+     * Get completion percentage.
+     */
+    readonly completion_percentage: number;
+    /**
+     * Get completion status.
+     */
+    readonly is_completed: boolean;
+    /**
+     * Get review requirement status.
+     */
+    readonly requires_review: boolean;
+    /**
+     * Get count of answers.
+     */
+    readonly answers_count: number;
+    /**
+     * Get count of unanswered required questions.
+     */
+    readonly unanswered_required_count: number;
+};
+
 export type ProjectCredit = {
     readonly uuid: string;
     readonly url: string;
@@ -8744,6 +8787,23 @@ export type ProjectCreditRequest = {
     minimal_consumption_logic?: MinimalConsumptionLogicEnum;
     grace_coefficient?: string;
     apply_as_minimal_consumption?: boolean;
+};
+
+export type ProjectDetail = {
+    readonly project_uuid: string;
+    readonly project_name: string;
+    readonly completion_percentage: number;
+    readonly is_completed: boolean;
+    readonly requires_review: boolean;
+};
+
+export type ProjectDetailsResponse = {
+    checklist: ChecklistInfo;
+    readonly total_projects: number;
+    readonly projects_with_completions: number;
+    readonly fully_completed_projects: number;
+    readonly projects_requiring_review: number;
+    readonly project_details: Array<ProjectDetail>;
 };
 
 export type ProjectEstimatedCostPolicy = {
@@ -9727,6 +9787,28 @@ export type QuestionAdminRequest = {
      * Maximum value allowed for NUMBER type questions
      */
     max_value?: string | null;
+};
+
+export type QuestionAnswer = {
+    readonly question_uuid: string;
+    readonly question_description: string;
+    readonly question_type: string;
+    readonly required: boolean;
+    readonly order: number;
+    /**
+     * Get total projects count.
+     */
+    readonly total_projects: number;
+    /**
+     * Get count of projects that answered this question.
+     */
+    readonly answered_projects_count: number;
+    /**
+     * Get all project answers for this question.
+     */
+    readonly project_answers: Array<{
+        [key: string]: unknown;
+    }>;
 };
 
 export type QuestionDependency = {
@@ -18015,6 +18097,114 @@ export type CustomersCreateResponses = {
 };
 
 export type CustomersCreateResponse = CustomersCreateResponses[keyof CustomersCreateResponses];
+
+export type CustomersProjectMetadataComplianceDetailsListData = {
+    body?: never;
+    path: {
+        /**
+         * UUID of the customer
+         */
+        customer_uuid: string;
+    };
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/customers/{customer_uuid}/project-metadata-compliance-details/';
+};
+
+export type CustomersProjectMetadataComplianceDetailsListResponses = {
+    200: Array<ProjectDetailsResponse>;
+};
+
+export type CustomersProjectMetadataComplianceDetailsListResponse = CustomersProjectMetadataComplianceDetailsListResponses[keyof CustomersProjectMetadataComplianceDetailsListResponses];
+
+export type CustomersProjectMetadataComplianceOverviewListData = {
+    body?: never;
+    path: {
+        /**
+         * UUID of the customer
+         */
+        customer_uuid: string;
+    };
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/customers/{customer_uuid}/project-metadata-compliance-overview/';
+};
+
+export type CustomersProjectMetadataComplianceOverviewListResponses = {
+    200: Array<ComplianceOverview>;
+};
+
+export type CustomersProjectMetadataComplianceOverviewListResponse = CustomersProjectMetadataComplianceOverviewListResponses[keyof CustomersProjectMetadataComplianceOverviewListResponses];
+
+export type CustomersProjectMetadataComplianceProjectsListData = {
+    body?: never;
+    path: {
+        /**
+         * UUID of the customer
+         */
+        customer_uuid: string;
+    };
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/customers/{customer_uuid}/project-metadata-compliance-projects/';
+};
+
+export type CustomersProjectMetadataComplianceProjectsListResponses = {
+    200: Array<ProjectAnswer>;
+};
+
+export type CustomersProjectMetadataComplianceProjectsListResponse = CustomersProjectMetadataComplianceProjectsListResponses[keyof CustomersProjectMetadataComplianceProjectsListResponses];
+
+export type CustomersProjectMetadataQuestionAnswersListData = {
+    body?: never;
+    path: {
+        /**
+         * UUID of the customer
+         */
+        customer_uuid: string;
+    };
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/customers/{customer_uuid}/project-metadata-question-answers/';
+};
+
+export type CustomersProjectMetadataQuestionAnswersListResponses = {
+    200: Array<QuestionAnswer>;
+};
+
+export type CustomersProjectMetadataQuestionAnswersListResponse = CustomersProjectMetadataQuestionAnswersListResponses[keyof CustomersProjectMetadataQuestionAnswersListResponses];
 
 export type CustomersDestroyData = {
     body?: never;
