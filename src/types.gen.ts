@@ -10754,6 +10754,67 @@ export type RemoteProjectUpdateRequest = {
     created_by?: number | null;
 };
 
+export type RemoteResourceOrder = {
+    /**
+     * Order UUID
+     */
+    readonly order_uuid: string;
+    /**
+     * Remote order state
+     */
+    remote_state: RemoteResourceOrderRemoteStateEnum;
+    /**
+     * Local order state
+     */
+    local_state: OrderState;
+    /**
+     * Sync status: in_sync, out_of_sync, sync_failed
+     */
+    sync_status: SyncStatusEnum;
+};
+
+export type RemoteResourceOrderRemoteStateEnum = 1 | 7 | 8 | 2 | 3 | 4 | 5 | 6;
+
+export type RemoteResourceSyncStatus = {
+    /**
+     * Local resource state
+     */
+    local_state: ResourceState;
+    /**
+     * Remote resource state
+     */
+    remote_state: RemoteResourceSyncStatusRemoteStateEnum | NullEnum | null;
+    /**
+     * Sync status: in_sync, out_of_sync, sync_failed
+     */
+    sync_status: SyncStatusEnum;
+    /**
+     * Last sync timestamp
+     */
+    readonly last_sync: string | null;
+};
+
+export type RemoteResourceSyncStatusRemoteStateEnum = 1 | 2 | 3 | 4 | 5 | 6;
+
+export type RemoteResourceTeamMember = {
+    /**
+     * Full name
+     */
+    readonly full_name: string;
+    /**
+     * Local role
+     */
+    readonly local_role: string;
+    /**
+     * Remote role
+     */
+    readonly remote_role: string;
+    /**
+     * Sync status: in_sync, out_of_sync, sync_failed
+     */
+    sync_status: SyncStatusEnum;
+};
+
 export type RemoteSynchronisation = {
     readonly uuid: string;
     readonly url: string;
@@ -11904,6 +11965,8 @@ export type SupportUser = {
     user: string | null;
     backend_name?: string | null;
 };
+
+export type SyncStatusEnum = 'in_sync' | 'out_of_sync' | 'sync_failed';
 
 export type TableSize = {
     readonly table_name: string;
@@ -42258,6 +42321,60 @@ export type RemoteWaldurApiRemoteCustomersResponses = {
 };
 
 export type RemoteWaldurApiRemoteCustomersResponse = RemoteWaldurApiRemoteCustomersResponses[keyof RemoteWaldurApiRemoteCustomersResponses];
+
+export type RemoteWaldurApiRemoteResourceOrderStatusRetrieveData = {
+    body?: never;
+    path: {
+        resource_uuid: string;
+    };
+    query?: never;
+    url: '/api/remote-waldur-api/remote_resource_order_status/{resource_uuid}/';
+};
+
+export type RemoteWaldurApiRemoteResourceOrderStatusRetrieveResponses = {
+    200: RemoteResourceOrder;
+};
+
+export type RemoteWaldurApiRemoteResourceOrderStatusRetrieveResponse = RemoteWaldurApiRemoteResourceOrderStatusRetrieveResponses[keyof RemoteWaldurApiRemoteResourceOrderStatusRetrieveResponses];
+
+export type RemoteWaldurApiRemoteResourceStatusRetrieveData = {
+    body?: never;
+    path: {
+        resource_uuid: string;
+    };
+    query?: never;
+    url: '/api/remote-waldur-api/remote_resource_status/{resource_uuid}/';
+};
+
+export type RemoteWaldurApiRemoteResourceStatusRetrieveResponses = {
+    200: RemoteResourceSyncStatus;
+};
+
+export type RemoteWaldurApiRemoteResourceStatusRetrieveResponse = RemoteWaldurApiRemoteResourceStatusRetrieveResponses[keyof RemoteWaldurApiRemoteResourceStatusRetrieveResponses];
+
+export type RemoteWaldurApiRemoteResourceTeamStatusListData = {
+    body?: never;
+    path: {
+        resource_uuid: string;
+    };
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/remote-waldur-api/remote_resource_team_status/{resource_uuid}/';
+};
+
+export type RemoteWaldurApiRemoteResourceTeamStatusListResponses = {
+    200: Array<RemoteResourceTeamMember>;
+};
+
+export type RemoteWaldurApiRemoteResourceTeamStatusListResponse = RemoteWaldurApiRemoteResourceTeamStatusListResponses[keyof RemoteWaldurApiRemoteResourceTeamStatusListResponses];
 
 export type RemoteWaldurApiSharedOfferingsData = {
     body: RemoteCredentialsRequest;
