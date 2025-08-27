@@ -8792,9 +8792,12 @@ export type ProjectCreditRequest = {
 export type ProjectDetail = {
     readonly project_uuid: string;
     readonly project_name: string;
+    readonly completion_uuid: string | null;
     readonly completion_percentage: number;
     readonly is_completed: boolean;
     readonly requires_review: boolean;
+    readonly answers: Array<unknown>;
+    readonly unanswered_required_questions: Array<unknown>;
 };
 
 export type ProjectDetailsResponse = {
@@ -9807,6 +9810,12 @@ export type QuestionAnswer = {
      * Get all project answers for this question.
      */
     readonly project_answers: Array<{
+        [key: string]: unknown;
+    }>;
+    /**
+     * Get question options for select-type questions.
+     */
+    readonly question_options: Array<{
         [key: string]: unknown;
     }>;
 };
