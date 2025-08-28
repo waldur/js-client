@@ -7266,9 +7266,9 @@ export type OrderCreateRequest = {
     offering: string;
     plan?: string;
     /**
-     * Attributes structure depends on the offering type specified in the parent object
+     * Attributes structure depends on the offering type specified in the parent object. Can also be a generic object for offerings without a specific attributes schema.
      */
-    attributes?: AzureVirtualMachineCreateOrderAttributes | AzureSqlServerCreateOrderAttributes | OpenStackTenantCreateOrderAttributes | OpenStackInstanceCreateOrderAttributes | OpenStackVolumeCreateOrderAttributes | MarketplaceRancherCreateOrderAttributes | MarketplaceManagedRancherCreateOrderAttributes | SlurmInvoicesSlurmPackageCreateOrderAttributes | VMwareVirtualMachineCreateOrderAttributes;
+    attributes?: AzureVirtualMachineCreateOrderAttributes | AzureSqlServerCreateOrderAttributes | OpenStackTenantCreateOrderAttributes | OpenStackInstanceCreateOrderAttributes | OpenStackVolumeCreateOrderAttributes | MarketplaceRancherCreateOrderAttributes | MarketplaceManagedRancherCreateOrderAttributes | SlurmInvoicesSlurmPackageCreateOrderAttributes | VMwareVirtualMachineCreateOrderAttributes | GenericOrderAttributes;
     limits?: {
         [key: string]: number;
     };
@@ -9798,6 +9798,8 @@ export type QuestionAnswer = {
     readonly question_type: string;
     readonly required: boolean;
     readonly order: number;
+    readonly min_value: string | null;
+    readonly max_value: string | null;
     /**
      * Get total projects count.
      */
@@ -12920,6 +12922,21 @@ export type VMwareVirtualMachineCreateOrderAttributes = {
     template?: string | null;
     cluster?: string | null;
     datastore?: string | null;
+};
+
+/**
+ * A generic JSON object for offerings without a predefined schema. Allows any key-value pairs.
+ */
+export type GenericOrderAttributes = {
+    /**
+     * The name of the resource to be created. Will be displayed in the portal.
+     */
+    name?: string;
+    /**
+     * A free-form description for the resource.
+     */
+    description?: string;
+    [key: string]: unknown | string | undefined;
 };
 
 /**
