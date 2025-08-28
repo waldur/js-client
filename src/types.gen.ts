@@ -989,7 +989,7 @@ export type BookingResource = {
     readonly is_usage_based?: boolean;
     readonly is_limit_based?: boolean;
     name?: string;
-    readonly slug?: string;
+    slug?: string;
     readonly current_usages?: {
         [key: string]: number;
     };
@@ -2137,7 +2137,9 @@ export type Customer = {
     readonly url?: string;
     readonly uuid?: string;
     readonly created?: string;
+    readonly organization_groups?: Array<OrganizationGroup>;
     readonly display_name?: string;
+    readonly projects?: Array<PermissionProject>;
     /**
      * Organization identifier in another application.
      */
@@ -2151,6 +2153,7 @@ export type Customer = {
      */
     readonly accounting_start_date?: string;
     readonly projects_count?: number;
+    readonly users_count?: number;
     /**
      * External ID of the sponsor covering the costs
      */
@@ -2162,7 +2165,7 @@ export type Customer = {
     readonly max_service_accounts?: number | null;
     readonly project_metadata_checklist?: string | null;
     name?: string;
-    readonly slug?: string;
+    slug?: string;
     native_name?: string;
     abbreviation?: string;
     contact_details?: string;
@@ -4922,7 +4925,7 @@ export type Offering = {
     readonly uuid?: string;
     readonly created?: string;
     name?: string;
-    readonly slug?: string;
+    slug?: string;
     description?: string;
     full_description?: string;
     privacy_policy_link?: string;
@@ -6289,6 +6292,10 @@ export type OpenStackNetwork = {
      * Network type, such as local, flat, vlan, vxlan, or gre
      */
     readonly type?: string;
+    /**
+     * VLAN ID for VLAN networks or tunnel ID for VXLAN/GRE networks
+     */
+    readonly segmentation_id?: number | null;
     readonly subnets?: Array<OpenStackNestedSubNet>;
     /**
      * The maximum transmission unit (MTU) value to address fragmentation.
@@ -8589,6 +8596,18 @@ export type Permission = {
     readonly customer_name?: string;
 };
 
+export type PermissionProject = {
+    readonly url?: string;
+    readonly uuid?: string;
+    name?: string;
+    image?: string | null;
+    readonly resource_count?: number;
+    /**
+     * The date is inclusive. Once reached, all project resource will be scheduled for termination.
+     */
+    end_date?: string | null;
+};
+
 export type PermissionRequest = {
     readonly url: string;
     readonly uuid: string;
@@ -9153,7 +9172,7 @@ export type ProtectedCall = {
     readonly created?: string;
     readonly start_date?: string;
     readonly end_date?: string;
-    readonly slug?: string;
+    slug?: string;
     name?: string;
     description?: string;
     state?: CallStates;
@@ -9262,7 +9281,7 @@ export type ProviderOffering = {
     readonly uuid?: string;
     readonly customer_uuid?: string;
     name?: string;
-    readonly slug?: string;
+    slug?: string;
     readonly category_title?: string;
     type?: string;
     state?: OfferingState;
@@ -9305,7 +9324,7 @@ export type ProviderOfferingDetails = {
     readonly uuid?: string;
     readonly created?: string;
     name?: string;
-    readonly slug?: string;
+    slug?: string;
     description?: string;
     full_description?: string;
     privacy_policy_link?: string;
@@ -9543,7 +9562,7 @@ export type PublicCall = {
     readonly created?: string;
     readonly start_date?: string;
     readonly end_date?: string;
-    readonly slug?: string;
+    slug?: string;
     name?: string;
     description?: string;
     state?: CallStates;
@@ -12732,6 +12751,9 @@ export type WidgetEnum = 'csv' | 'filesize' | 'attached_instance';
 /**
  * This mixin allows to specify list of fields to be rendered by serializer.
  * It expects that request is available in serializer's context.
+ *
+ * It is disabled for nested serializers (where parent is another serializer)
+ * but remains active for list views (where parent is a ListSerializer).
  */
 export type AzureVirtualMachineCreateOrderAttributes = {
     name: string;
@@ -12744,6 +12766,9 @@ export type AzureVirtualMachineCreateOrderAttributes = {
 /**
  * This mixin allows to specify list of fields to be rendered by serializer.
  * It expects that request is available in serializer's context.
+ *
+ * It is disabled for nested serializers (where parent is another serializer)
+ * but remains active for list views (where parent is a ListSerializer).
  */
 export type AzureSqlServerCreateOrderAttributes = {
     name: string;
@@ -12754,6 +12779,9 @@ export type AzureSqlServerCreateOrderAttributes = {
 /**
  * This mixin allows to specify list of fields to be rendered by serializer.
  * It expects that request is available in serializer's context.
+ *
+ * It is disabled for nested serializers (where parent is another serializer)
+ * but remains active for list views (where parent is a ListSerializer).
  */
 export type OpenStackTenantCreateOrderAttributes = {
     name: string;
@@ -12770,6 +12798,9 @@ export type OpenStackTenantCreateOrderAttributes = {
 /**
  * This mixin allows to specify list of fields to be rendered by serializer.
  * It expects that request is available in serializer's context.
+ *
+ * It is disabled for nested serializers (where parent is another serializer)
+ * but remains active for list views (where parent is a ListSerializer).
  */
 export type OpenStackInstanceCreateOrderAttributes = {
     name: string;
@@ -12832,6 +12863,9 @@ export type OpenStackInstanceCreateOrderAttributes = {
 /**
  * This mixin allows to specify list of fields to be rendered by serializer.
  * It expects that request is available in serializer's context.
+ *
+ * It is disabled for nested serializers (where parent is another serializer)
+ * but remains active for list views (where parent is a ListSerializer).
  */
 export type OpenStackVolumeCreateOrderAttributes = {
     name: string;
@@ -12857,6 +12891,9 @@ export type OpenStackVolumeCreateOrderAttributes = {
 /**
  * This mixin allows to specify list of fields to be rendered by serializer.
  * It expects that request is available in serializer's context.
+ *
+ * It is disabled for nested serializers (where parent is another serializer)
+ * but remains active for list views (where parent is a ListSerializer).
  */
 export type MarketplaceRancherCreateOrderAttributes = {
     name: string;
@@ -12901,6 +12938,9 @@ export type MarketplaceManagedRancherCreateOrderAttributes = {
 /**
  * This mixin allows to specify list of fields to be rendered by serializer.
  * It expects that request is available in serializer's context.
+ *
+ * It is disabled for nested serializers (where parent is another serializer)
+ * but remains active for list views (where parent is a ListSerializer).
  */
 export type SlurmInvoicesSlurmPackageCreateOrderAttributes = {
     name: string;
@@ -12910,6 +12950,9 @@ export type SlurmInvoicesSlurmPackageCreateOrderAttributes = {
 /**
  * This mixin allows to specify list of fields to be rendered by serializer.
  * It expects that request is available in serializer's context.
+ *
+ * It is disabled for nested serializers (where parent is another serializer)
+ * but remains active for list views (where parent is a ListSerializer).
  */
 export type VMwareVirtualMachineCreateOrderAttributes = {
     name: string;
@@ -15958,8 +16001,15 @@ export type BookingResourcesListData = {
          * Offering shared
          */
         offering_shared?: boolean;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        offering_slug?: Array<string>;
         offering_type?: string;
-        offering_uuid?: string;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        offering_uuid?: Array<string>;
         /**
          * A page number within the paginated result set.
          */
@@ -16044,8 +16094,15 @@ export type BookingResourcesCountData = {
          * Offering shared
          */
         offering_shared?: boolean;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        offering_slug?: Array<string>;
         offering_type?: string;
-        offering_uuid?: string;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        offering_uuid?: Array<string>;
         /**
          * A page number within the paginated result set.
          */
@@ -18085,7 +18142,7 @@ export type CustomersListData = {
         archived?: boolean;
         backend_id?: string;
         contact_details?: string;
-        field?: Array<'abbreviation' | 'access_subnets' | 'accounting_start_date' | 'address' | 'agreement_number' | 'archived' | 'backend_id' | 'bank_account' | 'bank_name' | 'billing_price_estimate' | 'blocked' | 'call_managing_organization_uuid' | 'contact_details' | 'country' | 'country_name' | 'created' | 'customer_credit' | 'customer_unallocated_credit' | 'default_tax_percent' | 'display_name' | 'domain' | 'email' | 'homepage' | 'image' | 'is_service_provider' | 'latitude' | 'longitude' | 'max_service_accounts' | 'name' | 'native_name' | 'payment_profiles' | 'phone_number' | 'postal' | 'project_metadata_checklist' | 'projects_count' | 'registration_code' | 'service_provider' | 'service_provider_uuid' | 'slug' | 'sponsor_number' | 'url' | 'uuid' | 'vat_code'>;
+        field?: Array<'abbreviation' | 'access_subnets' | 'accounting_start_date' | 'address' | 'agreement_number' | 'archived' | 'backend_id' | 'bank_account' | 'bank_name' | 'billing_price_estimate' | 'blocked' | 'call_managing_organization_uuid' | 'contact_details' | 'country' | 'country_name' | 'created' | 'customer_credit' | 'customer_unallocated_credit' | 'default_tax_percent' | 'display_name' | 'domain' | 'email' | 'homepage' | 'image' | 'is_service_provider' | 'latitude' | 'longitude' | 'max_service_accounts' | 'name' | 'native_name' | 'organization_groups' | 'payment_profiles' | 'phone_number' | 'postal' | 'project_metadata_checklist' | 'projects' | 'projects_count' | 'registration_code' | 'service_provider' | 'service_provider_uuid' | 'slug' | 'sponsor_number' | 'url' | 'users_count' | 'uuid' | 'vat_code'>;
         name?: string;
         name_exact?: string;
         native_name?: string;
@@ -18319,7 +18376,7 @@ export type CustomersRetrieveData = {
         uuid: string;
     };
     query?: {
-        field?: Array<'abbreviation' | 'access_subnets' | 'accounting_start_date' | 'address' | 'agreement_number' | 'archived' | 'backend_id' | 'bank_account' | 'bank_name' | 'billing_price_estimate' | 'blocked' | 'call_managing_organization_uuid' | 'contact_details' | 'country' | 'country_name' | 'created' | 'customer_credit' | 'customer_unallocated_credit' | 'default_tax_percent' | 'display_name' | 'domain' | 'email' | 'homepage' | 'image' | 'is_service_provider' | 'latitude' | 'longitude' | 'max_service_accounts' | 'name' | 'native_name' | 'payment_profiles' | 'phone_number' | 'postal' | 'project_metadata_checklist' | 'projects_count' | 'registration_code' | 'service_provider' | 'service_provider_uuid' | 'slug' | 'sponsor_number' | 'url' | 'uuid' | 'vat_code'>;
+        field?: Array<'abbreviation' | 'access_subnets' | 'accounting_start_date' | 'address' | 'agreement_number' | 'archived' | 'backend_id' | 'bank_account' | 'bank_name' | 'billing_price_estimate' | 'blocked' | 'call_managing_organization_uuid' | 'contact_details' | 'country' | 'country_name' | 'created' | 'customer_credit' | 'customer_unallocated_credit' | 'default_tax_percent' | 'display_name' | 'domain' | 'email' | 'homepage' | 'image' | 'is_service_provider' | 'latitude' | 'longitude' | 'max_service_accounts' | 'name' | 'native_name' | 'organization_groups' | 'payment_profiles' | 'phone_number' | 'postal' | 'project_metadata_checklist' | 'projects' | 'projects_count' | 'registration_code' | 'service_provider' | 'service_provider_uuid' | 'slug' | 'sponsor_number' | 'url' | 'users_count' | 'uuid' | 'vat_code'>;
     };
     url: '/api/customers/{uuid}/';
 };
@@ -23679,7 +23736,14 @@ export type MarketplaceIntegrationStatusesListData = {
          */
         o?: Array<'-last_request_timestamp' | 'last_request_timestamp'>;
         offering?: string;
-        offering_uuid?: string;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        offering_slug?: Array<string>;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        offering_uuid?: Array<string>;
         /**
          * A page number within the paginated result set.
          */
@@ -23713,7 +23777,14 @@ export type MarketplaceIntegrationStatusesCountData = {
          */
         o?: Array<'-last_request_timestamp' | 'last_request_timestamp'>;
         offering?: string;
-        offering_uuid?: string;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        offering_slug?: Array<string>;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        offering_uuid?: Array<string>;
         /**
          * A page number within the paginated result set.
          */
@@ -23914,7 +23985,14 @@ export type MarketplaceOfferingFilesListData = {
          */
         o?: Array<'-created' | '-name' | 'created' | 'name'>;
         offering?: string;
-        offering_uuid?: string;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        offering_slug?: Array<string>;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        offering_uuid?: Array<string>;
         /**
          * A page number within the paginated result set.
          */
@@ -23945,7 +24023,14 @@ export type MarketplaceOfferingFilesCountData = {
          */
         o?: Array<'-created' | '-name' | 'created' | 'name'>;
         offering?: string;
-        offering_uuid?: string;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        offering_slug?: Array<string>;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        offering_uuid?: Array<string>;
         /**
          * A page number within the paginated result set.
          */
@@ -24704,7 +24789,14 @@ export type MarketplaceOfferingUserRolesListData = {
     path?: never;
     query?: {
         offering?: string;
-        offering_uuid?: string;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        offering_slug?: Array<string>;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        offering_uuid?: Array<string>;
         /**
          * A page number within the paginated result set.
          */
@@ -24729,7 +24821,14 @@ export type MarketplaceOfferingUserRolesCountData = {
     path?: never;
     query?: {
         offering?: string;
-        offering_uuid?: string;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        offering_slug?: Array<string>;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        offering_uuid?: Array<string>;
         /**
          * A page number within the paginated result set.
          */
@@ -24847,7 +24946,14 @@ export type MarketplaceOfferingUsersListData = {
          */
         o?: Array<'-created' | '-modified' | '-username' | 'created' | 'modified' | 'username'>;
         offering?: string;
-        offering_uuid?: string;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        offering_slug?: Array<string>;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        offering_uuid?: Array<string>;
         /**
          * A page number within the paginated result set.
          */
@@ -24895,7 +25001,14 @@ export type MarketplaceOfferingUsersCountData = {
          */
         o?: Array<'-created' | '-modified' | '-username' | 'created' | 'modified' | 'username'>;
         offering?: string;
-        offering_uuid?: string;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        offering_slug?: Array<string>;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        offering_uuid?: Array<string>;
         /**
          * A page number within the paginated result set.
          */
@@ -25347,6 +25460,10 @@ export type MarketplaceOrdersListData = {
          */
         o?: Array<'-consumer_reviewed_at' | '-cost' | '-created' | '-state' | 'consumer_reviewed_at' | 'cost' | 'created' | 'state'>;
         offering?: string;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        offering_slug?: Array<string>;
         offering_type?: Array<string>;
         offering_uuid?: string;
         /**
@@ -25402,6 +25519,10 @@ export type MarketplaceOrdersCountData = {
          */
         o?: Array<'-consumer_reviewed_at' | '-cost' | '-created' | '-state' | 'consumer_reviewed_at' | 'cost' | 'created' | 'state'>;
         offering?: string;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        offering_slug?: Array<string>;
         offering_type?: Array<string>;
         offering_uuid?: string;
         /**
@@ -25739,6 +25860,10 @@ export type MarketplacePlansListData = {
     path?: never;
     query?: {
         offering?: string;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        offering_slug?: Array<string>;
         offering_uuid?: string;
         /**
          * A page number within the paginated result set.
@@ -25764,6 +25889,10 @@ export type MarketplacePlansCountData = {
     path?: never;
     query?: {
         offering?: string;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        offering_slug?: Array<string>;
         offering_uuid?: string;
         /**
          * A page number within the paginated result set.
@@ -25948,6 +26077,10 @@ export type MarketplacePlansUsageStatsListData = {
         customer_provider_uuid?: string;
         o?: string;
         offering?: string;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        offering_slug?: Array<string>;
         offering_uuid?: string;
         /**
          * A page number within the paginated result set.
@@ -25975,6 +26108,10 @@ export type MarketplacePlansUsageStatsCountData = {
         customer_provider_uuid?: string;
         o?: string;
         offering?: string;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        offering_slug?: Array<string>;
         offering_uuid?: string;
         /**
          * A page number within the paginated result set.
@@ -27887,8 +28024,15 @@ export type MarketplaceProviderResourcesListData = {
          * Offering shared
          */
         offering_shared?: boolean;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        offering_slug?: Array<string>;
         offering_type?: string;
-        offering_uuid?: string;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        offering_uuid?: Array<string>;
         /**
          * A page number within the paginated result set.
          */
@@ -27972,8 +28116,15 @@ export type MarketplaceProviderResourcesCountData = {
          * Offering shared
          */
         offering_shared?: boolean;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        offering_slug?: Array<string>;
         offering_type?: string;
-        offering_uuid?: string;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        offering_uuid?: Array<string>;
         /**
          * A page number within the paginated result set.
          */
@@ -28953,8 +29104,15 @@ export type MarketplaceResourcesListData = {
          * Offering shared
          */
         offering_shared?: boolean;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        offering_slug?: Array<string>;
         offering_type?: string;
-        offering_uuid?: string;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        offering_uuid?: Array<string>;
         /**
          * A page number within the paginated result set.
          */
@@ -29038,8 +29196,15 @@ export type MarketplaceResourcesCountData = {
          * Offering shared
          */
         offering_shared?: boolean;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        offering_slug?: Array<string>;
         offering_type?: string;
-        offering_uuid?: string;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        offering_uuid?: Array<string>;
         /**
          * A page number within the paginated result set.
          */
@@ -29642,7 +29807,14 @@ export type MarketplaceScreenshotsListData = {
          */
         o?: Array<'-created' | '-name' | 'created' | 'name'>;
         offering?: string;
-        offering_uuid?: string;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        offering_slug?: Array<string>;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        offering_uuid?: Array<string>;
         /**
          * A page number within the paginated result set.
          */
@@ -29673,7 +29845,14 @@ export type MarketplaceScreenshotsCountData = {
          */
         o?: Array<'-created' | '-name' | 'created' | 'name'>;
         offering?: string;
-        offering_uuid?: string;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        offering_slug?: Array<string>;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        offering_uuid?: Array<string>;
         /**
          * A page number within the paginated result set.
          */
@@ -33916,7 +34095,7 @@ export type OpenstackNetworksListData = {
          */
         direct_only?: boolean;
         external_ip?: string;
-        field?: Array<'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'description' | 'error_message' | 'error_traceback' | 'is_external' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'mtu' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'rbac_policies' | 'resource_type' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'subnets' | 'tenant' | 'tenant_name' | 'tenant_uuid' | 'type' | 'url' | 'uuid'>;
+        field?: Array<'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'description' | 'error_message' | 'error_traceback' | 'is_external' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'mtu' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'rbac_policies' | 'resource_type' | 'segmentation_id' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'subnets' | 'tenant' | 'tenant_name' | 'tenant_uuid' | 'type' | 'url' | 'uuid'>;
         is_external?: boolean;
         name?: string;
         name_exact?: string;
@@ -34044,7 +34223,7 @@ export type OpenstackNetworksRetrieveData = {
         uuid: string;
     };
     query?: {
-        field?: Array<'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'description' | 'error_message' | 'error_traceback' | 'is_external' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'mtu' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'rbac_policies' | 'resource_type' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'subnets' | 'tenant' | 'tenant_name' | 'tenant_uuid' | 'type' | 'url' | 'uuid'>;
+        field?: Array<'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'description' | 'error_message' | 'error_traceback' | 'is_external' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'mtu' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'rbac_policies' | 'resource_type' | 'segmentation_id' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'subnets' | 'tenant' | 'tenant_name' | 'tenant_uuid' | 'type' | 'url' | 'uuid'>;
     };
     url: '/api/openstack-networks/{uuid}/';
 };
