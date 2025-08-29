@@ -6141,6 +6141,20 @@ export type OpenStackNestedPortRequest = {
 
 export type OpenStackNestedSecurityGroup = {
     url?: string;
+    readonly name?: string;
+    readonly description?: string;
+    readonly state?: string;
+    readonly rules?: Array<{
+        id?: number;
+        protocol?: string | null;
+        from_port?: number | null;
+        to_port?: number | null;
+        cidr?: string | null;
+        remote_group?: string | null;
+        direction?: string;
+        ethertype?: string;
+        description?: string | null;
+    }>;
 };
 
 export type OpenStackNestedSecurityGroupRequest = {
