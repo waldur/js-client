@@ -2427,6 +2427,8 @@ export type DeleteAttachmentsRequest = {
     attachment_ids: Array<string>;
 };
 
+export type DependencyLogicOperatorEnum = 'and' | 'or';
+
 export type DetailState = {
     readonly detail: string;
     readonly state: string;
@@ -3746,6 +3748,19 @@ export type MaintenanceAnnouncementTemplateRequest = {
 
 export type MaintenanceTypeEnum = 1 | 2 | 3 | 4 | 5;
 
+export type ManagedRancherCreateNodeRequest = {
+    role: RoleEnum;
+    system_volume_size?: number;
+    system_volume_type?: string | null;
+    memory?: number;
+    cpu?: number;
+    subnet: string | null;
+    flavor?: string | null;
+    data_volumes?: Array<DataVolumeRequest>;
+    ssh_public_key?: string;
+    tenant?: string;
+};
+
 export type Mapping = {
     volume_types?: Array<VolumeTypeMapping>;
     subnets?: Array<SubNetMapping>;
@@ -4844,6 +4859,65 @@ export type NestedSectionRequest = {
     is_standalone?: boolean;
 };
 
+export type NestedSecurityGroupRule = {
+    /**
+     * IP protocol version - either 'IPv4' or 'IPv6'
+     */
+    ethertype?: EthertypeEnum;
+    /**
+     * Traffic direction - either 'ingress' (incoming) or 'egress' (outgoing)
+     */
+    direction?: DirectionEnum;
+    /**
+     * The network protocol (TCP, UDP, ICMP, or empty for any protocol)
+     */
+    protocol?: ProtocolEnum | BlankEnum;
+    /**
+     * Starting port number in the range (1-65535)
+     */
+    from_port?: number | null;
+    /**
+     * Ending port number in the range (1-65535)
+     */
+    to_port?: number | null;
+    /**
+     * CIDR notation for the source/destination network address range
+     */
+    cidr?: string | null;
+    description?: string;
+    readonly remote_group_name?: string;
+    readonly remote_group_uuid?: string;
+    readonly id?: number;
+};
+
+export type NestedSecurityGroupRuleRequest = {
+    /**
+     * IP protocol version - either 'IPv4' or 'IPv6'
+     */
+    ethertype?: EthertypeEnum;
+    /**
+     * Traffic direction - either 'ingress' (incoming) or 'egress' (outgoing)
+     */
+    direction?: DirectionEnum;
+    /**
+     * The network protocol (TCP, UDP, ICMP, or empty for any protocol)
+     */
+    protocol?: ProtocolEnum | BlankEnum;
+    /**
+     * Starting port number in the range (1-65535)
+     */
+    from_port?: number | null;
+    /**
+     * Ending port number in the range (1-65535)
+     */
+    to_port?: number | null;
+    /**
+     * CIDR notation for the source/destination network address range
+     */
+    cidr?: string | null;
+    description?: string;
+};
+
 export type NetworkRbacPolicy = {
     readonly url?: string;
     readonly uuid?: string;
@@ -5722,10 +5796,6 @@ export type OpenStackBackupRestorationRequest = {
      */
     floating_ips?: Array<OpenStackNestedFloatingIpRequest>;
     /**
-     * Security groups that will be assigned to the restored instance
-     */
-    security_groups?: Array<OpenStackNestedSecurityGroupRequest>;
-    /**
      * Network ports that will be attached to the restored instance
      */
     ports?: Array<OpenStackNestedPortRequest>;
@@ -6140,25 +6210,11 @@ export type OpenStackNestedPortRequest = {
 };
 
 export type OpenStackNestedSecurityGroup = {
-    url?: string;
+    readonly url?: string;
     readonly name?: string;
+    readonly rules?: Array<NestedSecurityGroupRule>;
     readonly description?: string;
     readonly state?: string;
-    readonly rules?: Array<{
-        id?: number;
-        protocol?: string | null;
-        from_port?: number | null;
-        to_port?: number | null;
-        cidr?: string | null;
-        remote_group?: string | null;
-        direction?: string;
-        ethertype?: string;
-        description?: string | null;
-    }>;
-};
-
-export type OpenStackNestedSecurityGroupRequest = {
-    url?: string;
 };
 
 export type OpenStackNestedServerGroup = {
@@ -8204,6 +8260,10 @@ export type PatchedQuestionAdminRequest = {
      * Maximum value allowed for NUMBER type questions
      */
     max_value?: string | null;
+    /**
+     * Defines how multiple dependencies are evaluated. AND: All dependencies must be satisfied. OR: At least one dependency must be satisfied.
+     */
+    dependency_logic_operator?: DependencyLogicOperatorEnum;
 };
 
 export type PatchedQuestionDependencyRequest = {
@@ -9789,6 +9849,10 @@ export type QuestionAdmin = {
      * Maximum value allowed for NUMBER type questions
      */
     max_value?: string | null;
+    /**
+     * Defines how multiple dependencies are evaluated. AND: All dependencies must be satisfied. OR: At least one dependency must be satisfied.
+     */
+    dependency_logic_operator?: DependencyLogicOperatorEnum;
 };
 
 export type QuestionAdminRequest = {
@@ -9833,6 +9897,10 @@ export type QuestionAdminRequest = {
      * Maximum value allowed for NUMBER type questions
      */
     max_value?: string | null;
+    /**
+     * Defines how multiple dependencies are evaluated. AND: All dependencies must be satisfied. OR: At least one dependency must be satisfied.
+     */
+    dependency_logic_operator?: DependencyLogicOperatorEnum;
 };
 
 export type QuestionAnswer = {
@@ -12847,10 +12915,6 @@ export type OpenStackInstanceCreateOrderAttributes = {
      */
     image: string;
     /**
-     * List of security groups to apply to the instance
-     */
-    security_groups?: Array<OpenStackNestedSecurityGroupRequest>;
-    /**
      * Network ports to attach to the instance
      */
     ports: Array<OpenStackNestedPortRequest>;
@@ -12891,6 +12955,10 @@ export type OpenStackInstanceCreateOrderAttributes = {
      * Additional data volumes to attach to the instance
      */
     data_volumes?: Array<OpenStackDataVolumeRequest>;
+    /**
+     * Security groups to attach to the instance
+     */
+    security_groups?: Array<OpenStackNestedSecurityGroupRequest>;
 };
 
 /**
@@ -12998,6 +13066,10 @@ export type VMwareVirtualMachineCreateOrderAttributes = {
     template?: string | null;
     cluster?: string | null;
     datastore?: string | null;
+};
+
+export type OpenStackNestedSecurityGroupRequest = {
+    url?: string;
 };
 
 /**
@@ -22439,6 +22511,84 @@ export type MaintenanceAnnouncementsUnscheduleResponses = {
 };
 
 export type MaintenanceAnnouncementsUnscheduleResponse = MaintenanceAnnouncementsUnscheduleResponses[keyof MaintenanceAnnouncementsUnscheduleResponses];
+
+export type ManagedRancherClusterResourcesListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        field?: Array<'attributes' | 'available_actions' | 'backend_id' | 'backend_metadata' | 'can_terminate' | 'category_icon' | 'category_title' | 'category_uuid' | 'created' | 'creation_order' | 'current_usages' | 'customer_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'downscaled' | 'effective_id' | 'end_date' | 'end_date_requested_by' | 'endpoints' | 'error_message' | 'error_traceback' | 'is_limit_based' | 'is_usage_based' | 'last_sync' | 'limit_usage' | 'limits' | 'modified' | 'name' | 'offering' | 'offering_billable' | 'offering_customer_uuid' | 'offering_description' | 'offering_image' | 'offering_name' | 'offering_plugin_options' | 'offering_shared' | 'offering_slug' | 'offering_thumbnail' | 'offering_type' | 'offering_uuid' | 'options' | 'order_in_progress' | 'parent_name' | 'parent_offering_name' | 'parent_offering_slug' | 'parent_offering_uuid' | 'parent_uuid' | 'paused' | 'plan' | 'plan_description' | 'plan_name' | 'plan_unit' | 'plan_uuid' | 'project' | 'project_description' | 'project_end_date' | 'project_end_date_requested_by' | 'project_name' | 'project_slug' | 'project_uuid' | 'provider_name' | 'provider_uuid' | 'report' | 'resource_type' | 'resource_uuid' | 'restrict_member_access' | 'scope' | 'service_settings_uuid' | 'slug' | 'state' | 'url' | 'user_requires_reconsent' | 'username' | 'uuid'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/managed-rancher-cluster-resources/';
+};
+
+export type ManagedRancherClusterResourcesListResponses = {
+    200: Array<Resource>;
+};
+
+export type ManagedRancherClusterResourcesListResponse = ManagedRancherClusterResourcesListResponses[keyof ManagedRancherClusterResourcesListResponses];
+
+export type ManagedRancherClusterResourcesCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/managed-rancher-cluster-resources/';
+};
+
+export type ManagedRancherClusterResourcesCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type ManagedRancherClusterResourcesRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        field?: Array<'attributes' | 'available_actions' | 'backend_id' | 'backend_metadata' | 'can_terminate' | 'category_icon' | 'category_title' | 'category_uuid' | 'created' | 'creation_order' | 'current_usages' | 'customer_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'downscaled' | 'effective_id' | 'end_date' | 'end_date_requested_by' | 'endpoints' | 'error_message' | 'error_traceback' | 'is_limit_based' | 'is_usage_based' | 'last_sync' | 'limit_usage' | 'limits' | 'modified' | 'name' | 'offering' | 'offering_billable' | 'offering_customer_uuid' | 'offering_description' | 'offering_image' | 'offering_name' | 'offering_plugin_options' | 'offering_shared' | 'offering_slug' | 'offering_thumbnail' | 'offering_type' | 'offering_uuid' | 'options' | 'order_in_progress' | 'parent_name' | 'parent_offering_name' | 'parent_offering_slug' | 'parent_offering_uuid' | 'parent_uuid' | 'paused' | 'plan' | 'plan_description' | 'plan_name' | 'plan_unit' | 'plan_uuid' | 'project' | 'project_description' | 'project_end_date' | 'project_end_date_requested_by' | 'project_name' | 'project_slug' | 'project_uuid' | 'provider_name' | 'provider_uuid' | 'report' | 'resource_type' | 'resource_uuid' | 'restrict_member_access' | 'scope' | 'service_settings_uuid' | 'slug' | 'state' | 'url' | 'user_requires_reconsent' | 'username' | 'uuid'>;
+    };
+    url: '/api/managed-rancher-cluster-resources/{uuid}/';
+};
+
+export type ManagedRancherClusterResourcesRetrieveResponses = {
+    200: Resource;
+};
+
+export type ManagedRancherClusterResourcesRetrieveResponse = ManagedRancherClusterResourcesRetrieveResponses[keyof ManagedRancherClusterResourcesRetrieveResponses];
+
+export type ManagedRancherClusterResourcesAddNodeData = {
+    body: ManagedRancherCreateNodeRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/managed-rancher-cluster-resources/{uuid}/add_node/';
+};
+
+export type ManagedRancherClusterResourcesAddNodeResponses = {
+    200: RancherNode;
+};
+
+export type ManagedRancherClusterResourcesAddNodeResponse = ManagedRancherClusterResourcesAddNodeResponses[keyof ManagedRancherClusterResourcesAddNodeResponses];
 
 export type MarketplaceBookingsListData = {
     body?: never;
