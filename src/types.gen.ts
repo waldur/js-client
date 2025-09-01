@@ -9117,6 +9117,7 @@ export type Proposal = {
     round: NestedRound;
     readonly call_uuid: string;
     readonly call_name: string;
+    readonly call_managing_organisation_uuid: string;
     oecd_fos_2007_code?: OecdFos2007CodeEnum | BlankEnum | NullEnum | null;
     readonly oecd_fos_2007_label: string;
     readonly allocation_comment: string | null;
@@ -9205,6 +9206,7 @@ export type ProposalReview = {
     readonly round_start_time: string;
     readonly call_name: string;
     readonly call_uuid: string;
+    readonly call_managing_organisation_uuid: string;
     comment_project_title?: string | null;
     comment_project_summary?: string | null;
     comment_project_is_confidential?: string | null;
