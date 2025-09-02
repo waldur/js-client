@@ -21245,6 +21245,10 @@ export type InvoicesItemsRetrieveData = {
          * Conceal compensation items
          */
         conceal_compensation_items?: boolean;
+        /**
+         * Order results by field
+         */
+        o?: 'project_name' | '-project_name' | 'resource_name' | '-resource_name' | 'provider_name' | '-provider_name' | 'name' | '-name';
         offering_uuid?: string;
         project_uuid?: string;
         provider_uuid?: string;
