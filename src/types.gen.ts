@@ -23759,6 +23759,7 @@ export type MarketplaceCustomerServiceAccountsListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        state?: Array<'Closed' | 'Erred' | 'OK'>;
         username?: string;
     };
     url: '/api/marketplace-customer-service-accounts/';
@@ -23785,6 +23786,7 @@ export type MarketplaceCustomerServiceAccountsCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        state?: Array<'Closed' | 'Erred' | 'OK'>;
         username?: string;
     };
     url: '/api/marketplace-customer-service-accounts/';
@@ -26510,6 +26512,7 @@ export type MarketplaceProjectServiceAccountsListData = {
         page_size?: number;
         project?: string;
         project_uuid?: string;
+        state?: Array<'Closed' | 'Erred' | 'OK'>;
         username?: string;
     };
     url: '/api/marketplace-project-service-accounts/';
@@ -26536,6 +26539,7 @@ export type MarketplaceProjectServiceAccountsCountData = {
         page_size?: number;
         project?: string;
         project_uuid?: string;
+        state?: Array<'Closed' | 'Erred' | 'OK'>;
         username?: string;
     };
     url: '/api/marketplace-project-service-accounts/';
@@ -30854,6 +30858,7 @@ export type MarketplaceServiceProvidersProjectServiceAccountsListData = {
         page_size?: number;
         project?: string;
         project_uuid?: string;
+        state?: Array<'Closed' | 'Erred' | 'OK'>;
         username?: string;
     };
     url: '/api/marketplace-service-providers/{service_provider_uuid}/project_service_accounts/';
