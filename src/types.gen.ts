@@ -2371,6 +2371,7 @@ export type CustomerServiceAccount = {
     description?: string;
     readonly error_message: string;
     error_traceback?: string;
+    state: ServiceAccountState;
     readonly token: string | null;
     email?: string;
     readonly expires_at: string | null;
@@ -9017,6 +9018,7 @@ export type ProjectServiceAccount = {
     description?: string;
     readonly error_message: string;
     error_traceback?: string;
+    state: ServiceAccountState;
     readonly token: string | null;
     email?: string;
     readonly expires_at: string | null;
@@ -11338,6 +11340,7 @@ export type RobotAccount = {
     description?: string;
     readonly error_message?: string;
     readonly error_traceback?: string;
+    readonly state?: string;
     resource: string;
     /**
      * Type of the robot account.
@@ -11351,7 +11354,6 @@ export type RobotAccount = {
     readonly backend_id: string;
     readonly fingerprints: Array<Fingerprint>;
     responsible_user?: string | null;
-    state?: RobotAccountStates;
 };
 
 export type RobotAccountDetails = {
@@ -11363,6 +11365,7 @@ export type RobotAccountDetails = {
     description?: string;
     readonly error_message?: string;
     readonly error_traceback?: string;
+    readonly state?: string;
     resource?: string;
     /**
      * Type of the robot account.
@@ -11373,7 +11376,6 @@ export type RobotAccountDetails = {
     readonly backend_id?: string;
     readonly fingerprints?: Array<Fingerprint>;
     responsible_user?: BasicUser | null;
-    state?: RobotAccountStates;
     readonly user_keys?: Array<SshKey>;
     readonly resource_name?: string;
     readonly resource_uuid?: string;
@@ -11407,8 +11409,6 @@ export type RobotAccountRequest = {
     keys?: unknown;
     responsible_user?: string | null;
 };
-
-export type RobotAccountStates = 1 | 2 | 3 | 4 | 5 | 6;
 
 export type RoleDescription = {
     description?: string;
@@ -11807,6 +11807,8 @@ export type SectionRequest = {
      */
     is_standalone?: boolean;
 };
+
+export type ServiceAccountState = 1 | 2 | 3;
 
 export type ServiceProvider = {
     readonly url?: string;
@@ -37980,22 +37982,6 @@ export type ProjectsSubmitAnswersResponses = {
 
 export type ProjectsSubmitAnswersResponse = ProjectsSubmitAnswersResponses[keyof ProjectsSubmitAnswersResponses];
 
-export type ProjectsSyncUserRolesData = {
-    body?: never;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/projects/{uuid}/sync_user_roles/';
-};
-
-export type ProjectsSyncUserRolesResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
-};
-
 export type ProjectsUpdateUserData = {
     body: UserRoleUpdateRequest;
     path: {
@@ -46822,6 +46808,22 @@ export type VmwareVirtualMachineWebConsoleRetrieveResponses = {
 };
 
 export type VmwareVirtualMachineWebConsoleRetrieveResponse = VmwareVirtualMachineWebConsoleRetrieveResponses[keyof VmwareVirtualMachineWebConsoleRetrieveResponses];
+
+export type ProjectsSyncUserRolesData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/projects/{uuid}/sync_user_roles/';
+};
+
+export type ProjectsSyncUserRolesResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type ClientOptions = {
     baseUrl: `${string}://waldur-openapi-schema.yaml` | (string & {});
