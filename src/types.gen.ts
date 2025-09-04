@@ -8701,6 +8701,7 @@ export type PermissionRequest = {
     readonly created: string;
     readonly created_by_full_name: string;
     readonly created_by_username: string;
+    readonly created_by_email: string;
     readonly reviewed_by_full_name: string;
     readonly reviewed_by_username: string;
     /**
@@ -8717,6 +8718,7 @@ export type PermissionRequest = {
     readonly customer_name: string;
     readonly role_name: string;
     readonly role_description: string;
+    readonly project_name_template: string;
 };
 
 export type PlanComponent = {
@@ -11808,7 +11810,7 @@ export type SectionRequest = {
     is_standalone?: boolean;
 };
 
-export type ServiceAccountState = 1 | 2 | 3;
+export type ServiceAccountState = 'OK' | 'Closed' | 'Erred';
 
 export type ServiceProvider = {
     readonly url?: string;
