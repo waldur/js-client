@@ -1868,6 +1868,7 @@ export type ConstanceSettings = {
     DEACTIVATE_USER_IF_NO_ROLES?: boolean;
     MAINTENANCE_ANNOUNCEMENT_NOTIFY_BEFORE_MINUTES?: number;
     MAINTENANCE_ANNOUNCEMENT_NOTIFY_SYSTEM?: Array<string>;
+    ENFORCE_USER_CONSENT_FOR_OFFERINGS?: boolean;
 };
 
 export type ConstanceSettingsRequest = {
@@ -2003,6 +2004,7 @@ export type ConstanceSettingsRequest = {
     DEACTIVATE_USER_IF_NO_ROLES?: boolean;
     MAINTENANCE_ANNOUNCEMENT_NOTIFY_BEFORE_MINUTES?: number;
     MAINTENANCE_ANNOUNCEMENT_NOTIFY_SYSTEM?: Array<string>;
+    ENFORCE_USER_CONSENT_FOR_OFFERINGS?: boolean;
 };
 
 export type ContainerFormatEnum = 'bare' | 'ovf' | 'aki' | 'ami' | 'ari';
@@ -2680,7 +2682,10 @@ export type EventSubscription = {
     observable_objects?: unknown;
     readonly created: string;
     readonly modified: string;
-    readonly source_ip: string | null;
+    /**
+     * An IPv4 or IPv6 address.
+     */
+    source_ip: string | null;
 };
 
 export type EventSubscriptionRequest = {
@@ -3413,6 +3418,27 @@ export type IssueRequest = {
     is_reported_manually?: boolean;
     template?: string | null;
 };
+
+export type IssueStatus = {
+    readonly url: string;
+    readonly uuid: string;
+    /**
+     * Status name in Jira.
+     */
+    name: string;
+    type?: IssueStatusTypeEnum;
+    readonly type_display: string;
+};
+
+export type IssueStatusRequest = {
+    /**
+     * Status name in Jira.
+     */
+    name: string;
+    type?: IssueStatusTypeEnum;
+};
+
+export type IssueStatusTypeEnum = 0 | 1;
 
 export type IssueTypeEnum = 'Informational' | 'Service Request' | 'Change Request' | 'Incident';
 
@@ -5884,7 +5910,7 @@ export type OpenStackFloatingIp = {
     /**
      * The public IPv4 address of the floating IP
      */
-    readonly address?: string | null;
+    address?: string | null;
     /**
      * ID of network in OpenStack where this floating IP is allocated
      */
@@ -5899,7 +5925,7 @@ export type OpenStackFloatingIp = {
     /**
      * Optional address that maps to floating IP's address in external networks
      */
-    readonly external_address?: string | null;
+    external_address?: string | null;
     readonly port_fixed_ips?: Array<OpenStackFixedIp>;
     readonly instance_uuid?: string | null;
     readonly instance_name?: string | null;
@@ -6142,7 +6168,7 @@ export type OpenStackNestedFloatingIp = {
     /**
      * The public IPv4 address of the floating IP
      */
-    readonly address?: string | null;
+    address?: string | null;
     readonly port_fixed_ips?: Array<OpenStackFixedIp>;
     /**
      * MAC address of the port
@@ -6910,11 +6936,17 @@ export type OpenStackSnapshotRestorationRequest = {
 
 export type OpenStackStaticRoute = {
     destination?: string;
+    /**
+     * An IPv4 or IPv6 address.
+     */
     nexthop?: string;
 };
 
 export type OpenStackStaticRouteRequest = {
     destination: string;
+    /**
+     * An IPv4 or IPv6 address.
+     */
     nexthop: string;
 };
 
@@ -6968,6 +7000,9 @@ export type OpenStackSubNet = {
      * If True, DHCP service will be enabled on this subnet
      */
     readonly enable_dhcp?: boolean;
+    /**
+     * An IPv4 or IPv6 address.
+     */
     dns_nameservers?: Array<string>;
     host_routes?: Array<OpenStackStaticRoute>;
     /**
@@ -6989,12 +7024,24 @@ export type OpenStackSubNet = {
 };
 
 export type OpenStackSubNetAllocationPool = {
+    /**
+     * An IPv4 or IPv6 address.
+     */
     start?: string;
+    /**
+     * An IPv4 or IPv6 address.
+     */
     end?: string;
 };
 
 export type OpenStackSubNetAllocationPoolRequest = {
+    /**
+     * An IPv4 or IPv6 address.
+     */
     start: string;
+    /**
+     * An IPv4 or IPv6 address.
+     */
     end: string;
 };
 
@@ -7011,6 +7058,9 @@ export type OpenStackSubNetRequest = {
      */
     disable_gateway?: boolean;
     allocation_pools?: Array<OpenStackSubNetAllocationPoolRequest>;
+    /**
+     * An IPv4 or IPv6 address.
+     */
     dns_nameservers?: Array<string>;
     host_routes?: Array<OpenStackStaticRouteRequest>;
 };
@@ -7791,6 +7841,14 @@ export type PatchedIssueRequest = {
     is_reported_manually?: boolean;
 };
 
+export type PatchedIssueStatusRequest = {
+    /**
+     * Status name in Jira.
+     */
+    name?: string;
+    type?: IssueStatusTypeEnum;
+};
+
 export type PatchedKeycloakUserGroupMembershipRequest = {
     /**
      * Keycloak user username
@@ -8049,6 +8107,9 @@ export type PatchedOpenStackSubNetRequest = {
      */
     disable_gateway?: boolean;
     allocation_pools?: Array<OpenStackSubNetAllocationPoolRequest>;
+    /**
+     * An IPv4 or IPv6 address.
+     */
     dns_nameservers?: Array<string>;
     host_routes?: Array<OpenStackStaticRouteRequest>;
 };
@@ -8353,6 +8414,9 @@ export type PatchedRancherServiceRequest = {
     backend_id?: string;
     runtime_state?: string;
     namespace?: string;
+    /**
+     * An IPv4 or IPv6 address.
+     */
     cluster_ip?: string | null;
     selector?: unknown;
     target_workloads?: Array<RancherNestedWorkloadRequest>;
@@ -10560,8 +10624,14 @@ export type RancherNestedNodeRequest = {
 export type RancherNestedPublicIp = {
     readonly floating_ip?: string;
     readonly floating_ip_uuid?: string;
-    readonly ip_address?: string;
-    readonly external_ip_address?: string;
+    /**
+     * An IPv4 or IPv6 address.
+     */
+    ip_address?: string;
+    /**
+     * An IPv4 or IPv6 address.
+     */
+    external_ip_address?: string;
 };
 
 export type RancherNestedSecurityGroup = {
@@ -10659,6 +10729,9 @@ export type RancherService = {
     runtime_state?: string;
     namespace?: string;
     readonly namespace_name?: string;
+    /**
+     * An IPv4 or IPv6 address.
+     */
     cluster_ip?: string | null;
     selector?: unknown;
     target_workloads?: Array<RancherNestedWorkload>;
@@ -10686,6 +10759,9 @@ export type RancherServiceRequest = {
     backend_id?: string;
     runtime_state?: string;
     namespace?: string;
+    /**
+     * An IPv4 or IPv6 address.
+     */
     cluster_ip?: string | null;
     selector?: unknown;
     target_workloads?: Array<RancherNestedWorkloadRequest>;
@@ -11306,14 +11382,20 @@ export type ReviewSubmitRequest = {
 };
 
 export type RmqConnection = {
-    readonly source_ip: string;
+    /**
+     * An IPv4 or IPv6 address.
+     */
+    source_ip: string;
     readonly vhost: string;
 };
 
 export type RmqSubscription = {
     readonly created: string;
     readonly uuid: string;
-    readonly source_ip: string;
+    /**
+     * An IPv4 or IPv6 address.
+     */
+    source_ip: string;
 };
 
 export type RmqUserStatsItem = {
@@ -43960,6 +44042,127 @@ export type SupportFeedbacksRetrieveResponses = {
 };
 
 export type SupportFeedbacksRetrieveResponse = SupportFeedbacksRetrieveResponses[keyof SupportFeedbacksRetrieveResponses];
+
+export type SupportIssueStatusesListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/support-issue-statuses/';
+};
+
+export type SupportIssueStatusesListResponses = {
+    200: Array<IssueStatus>;
+};
+
+export type SupportIssueStatusesListResponse = SupportIssueStatusesListResponses[keyof SupportIssueStatusesListResponses];
+
+export type SupportIssueStatusesCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/support-issue-statuses/';
+};
+
+export type SupportIssueStatusesCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type SupportIssueStatusesCreateData = {
+    body: IssueStatusRequest;
+    path?: never;
+    query?: never;
+    url: '/api/support-issue-statuses/';
+};
+
+export type SupportIssueStatusesCreateResponses = {
+    201: IssueStatus;
+};
+
+export type SupportIssueStatusesCreateResponse = SupportIssueStatusesCreateResponses[keyof SupportIssueStatusesCreateResponses];
+
+export type SupportIssueStatusesDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/support-issue-statuses/{uuid}/';
+};
+
+export type SupportIssueStatusesDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type SupportIssueStatusesDestroyResponse = SupportIssueStatusesDestroyResponses[keyof SupportIssueStatusesDestroyResponses];
+
+export type SupportIssueStatusesRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/support-issue-statuses/{uuid}/';
+};
+
+export type SupportIssueStatusesRetrieveResponses = {
+    200: IssueStatus;
+};
+
+export type SupportIssueStatusesRetrieveResponse = SupportIssueStatusesRetrieveResponses[keyof SupportIssueStatusesRetrieveResponses];
+
+export type SupportIssueStatusesPartialUpdateData = {
+    body?: PatchedIssueStatusRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/support-issue-statuses/{uuid}/';
+};
+
+export type SupportIssueStatusesPartialUpdateResponses = {
+    200: IssueStatus;
+};
+
+export type SupportIssueStatusesPartialUpdateResponse = SupportIssueStatusesPartialUpdateResponses[keyof SupportIssueStatusesPartialUpdateResponses];
+
+export type SupportIssueStatusesUpdateData = {
+    body: IssueStatusRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/support-issue-statuses/{uuid}/';
+};
+
+export type SupportIssueStatusesUpdateResponses = {
+    200: IssueStatus;
+};
+
+export type SupportIssueStatusesUpdateResponse = SupportIssueStatusesUpdateResponses[keyof SupportIssueStatusesUpdateResponses];
 
 export type SupportIssuesListData = {
     body?: never;
