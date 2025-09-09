@@ -1246,6 +1246,21 @@ export type CampaignRequest = {
     required_offerings?: Array<string>;
 };
 
+export type CancelRequestResponse = {
+    /**
+     * UUID of the canceled permission request
+     */
+    uuid: string;
+    /**
+     * Name of the invitation scope
+     */
+    scope_name: string;
+    /**
+     * UUID of the invitation scope
+     */
+    scope_uuid: string;
+};
+
 export type CategoryColumn = {
     readonly uuid: string;
     /**
@@ -2068,6 +2083,52 @@ export type Country = {
 
 export type CountryEnum = 'AL' | 'AT' | 'BE' | 'BG' | 'BA' | 'CH' | 'CY' | 'CZ' | 'DE' | 'DK' | 'ES' | 'EE' | 'FI' | 'FR' | 'GB' | 'GE' | 'GR' | 'HR' | 'HU' | 'IE' | 'IS' | 'IT' | 'LT' | 'LU' | 'LV' | 'MC' | 'MK' | 'MT' | 'NL' | 'NO' | 'PL' | 'PT' | 'RO' | 'RS' | 'SK' | 'SI' | 'SE' | 'UA' | 'EU';
 
+export type CourseAccount = {
+    readonly url: string;
+    readonly uuid: string;
+    readonly created: string;
+    readonly modified: string;
+    project: string;
+    readonly project_uuid: string;
+    readonly project_name: string;
+    readonly user_uuid: string;
+    readonly user_username: string;
+    readonly customer_uuid: string;
+    readonly customer_name: string;
+    readonly state: string;
+    email?: string;
+    description?: string;
+    readonly error_message: string;
+    error_traceback?: string;
+};
+
+export type CourseAccountCreateNested = {
+    email?: string;
+    description?: string;
+};
+
+export type CourseAccountCreateNestedRequest = {
+    email?: string;
+    description?: string;
+};
+
+export type CourseAccountRequest = {
+    project: string;
+    email?: string;
+    description?: string;
+    error_traceback?: string;
+};
+
+export type CourseAccountsBulkCreate = {
+    course_accounts: Array<CourseAccountCreateNested>;
+    project: string;
+};
+
+export type CourseAccountsBulkCreateRequest = {
+    course_accounts: Array<CourseAccountCreateNestedRequest>;
+    project: string;
+};
+
 export type CreateAttachmentsRequest = {
     attachments: Array<Blob | File>;
 };
@@ -2170,6 +2231,7 @@ export type Customer = {
     slug?: string;
     native_name?: string;
     abbreviation?: string;
+    description?: string;
     contact_details?: string;
     readonly agreement_number?: string;
     /**
@@ -2343,6 +2405,7 @@ export type CustomerRequest = {
     name: string;
     native_name?: string;
     abbreviation?: string;
+    description?: string;
     contact_details?: string;
     /**
      * Email address
@@ -2877,6 +2940,11 @@ export type GoogleCredentials = {
 export type GroupInvitation = {
     readonly scope_uuid: string;
     readonly scope_name: string;
+    /**
+     * Get the description field from the scope if it exists.
+     * Returns empty string if scope doesn't have a description field.
+     */
+    readonly scope_description: string;
     readonly scope_type: string | null;
     readonly customer_uuid: string;
     readonly customer_name: string;
@@ -3096,6 +3164,11 @@ export type IntegrationStatusDetails = {
 export type Invitation = {
     readonly scope_uuid: string;
     readonly scope_name: string;
+    /**
+     * Get the description field from the scope if it exists.
+     * Returns empty string if scope doesn't have a description field.
+     */
+    readonly scope_description: string;
     readonly scope_type: string | null;
     readonly customer_uuid: string;
     readonly customer_name: string;
@@ -3562,6 +3635,8 @@ export type KeycloakUserGroupMembershipRequest = {
 };
 
 export type KeycloakUserGroupMembershipState = 'pending' | 'active';
+
+export type KindEnum = 'default' | 'course' | 'public';
 
 export type LexisLink = {
     readonly url: string;
@@ -7733,6 +7808,7 @@ export type PatchedCustomerRequest = {
     name?: string;
     native_name?: string;
     abbreviation?: string;
+    description?: string;
     contact_details?: string;
     /**
      * Email address
@@ -8197,6 +8273,10 @@ export type PatchedProjectRequest = {
     oecd_fos_2007_code?: OecdFos2007CodeEnum | BlankEnum | NullEnum | null;
     is_industry?: boolean;
     image?: (Blob | File) | null;
+    /**
+     * Project type
+     */
+    kind?: KindEnum;
 };
 
 export type PatchedProjectServiceAccountRequest = {
@@ -8890,6 +8970,10 @@ export type Project = {
      * Maximum number of service accounts allowed
      */
     readonly max_service_accounts?: number | null;
+    /**
+     * Project type
+     */
+    kind?: KindEnum;
     readonly project_credit?: number | null;
     readonly marketplace_resource_count?: {
         [key: string]: number;
@@ -9073,6 +9157,10 @@ export type ProjectRequest = {
     oecd_fos_2007_code?: OecdFos2007CodeEnum | BlankEnum | NullEnum | null;
     is_industry?: boolean;
     image?: (Blob | File) | null;
+    /**
+     * Project type
+     */
+    kind?: KindEnum;
 };
 
 export type ProjectServiceAccount = {
@@ -12157,6 +12245,21 @@ export type SubNetMappingRequest = {
     dst_cidr: string;
 };
 
+export type SubmitRequestResponse = {
+    /**
+     * UUID of the created permission request
+     */
+    uuid: string;
+    /**
+     * Name of the invitation scope
+     */
+    scope_name: string;
+    /**
+     * UUID of the invitation scope
+     */
+    scope_uuid: string;
+};
+
 export type SubresourceOffering = {
     readonly uuid: string;
     readonly type: string;
@@ -12518,6 +12621,11 @@ export type VisibilityEnum = 'private' | 'public';
 export type VisibleInvitationDetails = {
     readonly scope_uuid: string;
     readonly scope_name: string;
+    /**
+     * Get the description field from the scope if it exists.
+     * Returns empty string if scope doesn't have a description field.
+     */
+    readonly scope_description: string;
     readonly scope_type: string | null;
     readonly customer_uuid: string;
     readonly customer_name: string;
@@ -18335,7 +18443,7 @@ export type CustomersListData = {
         archived?: boolean;
         backend_id?: string;
         contact_details?: string;
-        field?: Array<'abbreviation' | 'access_subnets' | 'accounting_start_date' | 'address' | 'agreement_number' | 'archived' | 'backend_id' | 'bank_account' | 'bank_name' | 'billing_price_estimate' | 'blocked' | 'call_managing_organization_uuid' | 'contact_details' | 'country' | 'country_name' | 'created' | 'customer_credit' | 'customer_unallocated_credit' | 'default_tax_percent' | 'display_name' | 'domain' | 'email' | 'homepage' | 'image' | 'is_service_provider' | 'latitude' | 'longitude' | 'max_service_accounts' | 'name' | 'native_name' | 'organization_groups' | 'payment_profiles' | 'phone_number' | 'postal' | 'project_metadata_checklist' | 'projects' | 'projects_count' | 'registration_code' | 'service_provider' | 'service_provider_uuid' | 'slug' | 'sponsor_number' | 'url' | 'users_count' | 'uuid' | 'vat_code'>;
+        field?: Array<'abbreviation' | 'access_subnets' | 'accounting_start_date' | 'address' | 'agreement_number' | 'archived' | 'backend_id' | 'bank_account' | 'bank_name' | 'billing_price_estimate' | 'blocked' | 'call_managing_organization_uuid' | 'contact_details' | 'country' | 'country_name' | 'created' | 'customer_credit' | 'customer_unallocated_credit' | 'default_tax_percent' | 'description' | 'display_name' | 'domain' | 'email' | 'homepage' | 'image' | 'is_service_provider' | 'latitude' | 'longitude' | 'max_service_accounts' | 'name' | 'native_name' | 'organization_groups' | 'payment_profiles' | 'phone_number' | 'postal' | 'project_metadata_checklist' | 'projects' | 'projects_count' | 'registration_code' | 'service_provider' | 'service_provider_uuid' | 'slug' | 'sponsor_number' | 'url' | 'users_count' | 'uuid' | 'vat_code'>;
         name?: string;
         name_exact?: string;
         native_name?: string;
@@ -18569,7 +18677,7 @@ export type CustomersRetrieveData = {
         uuid: string;
     };
     query?: {
-        field?: Array<'abbreviation' | 'access_subnets' | 'accounting_start_date' | 'address' | 'agreement_number' | 'archived' | 'backend_id' | 'bank_account' | 'bank_name' | 'billing_price_estimate' | 'blocked' | 'call_managing_organization_uuid' | 'contact_details' | 'country' | 'country_name' | 'created' | 'customer_credit' | 'customer_unallocated_credit' | 'default_tax_percent' | 'display_name' | 'domain' | 'email' | 'homepage' | 'image' | 'is_service_provider' | 'latitude' | 'longitude' | 'max_service_accounts' | 'name' | 'native_name' | 'organization_groups' | 'payment_profiles' | 'phone_number' | 'postal' | 'project_metadata_checklist' | 'projects' | 'projects_count' | 'registration_code' | 'service_provider' | 'service_provider_uuid' | 'slug' | 'sponsor_number' | 'url' | 'users_count' | 'uuid' | 'vat_code'>;
+        field?: Array<'abbreviation' | 'access_subnets' | 'accounting_start_date' | 'address' | 'agreement_number' | 'archived' | 'backend_id' | 'bank_account' | 'bank_name' | 'billing_price_estimate' | 'blocked' | 'call_managing_organization_uuid' | 'contact_details' | 'country' | 'country_name' | 'created' | 'customer_credit' | 'customer_unallocated_credit' | 'default_tax_percent' | 'description' | 'display_name' | 'domain' | 'email' | 'homepage' | 'image' | 'is_service_provider' | 'latitude' | 'longitude' | 'max_service_accounts' | 'name' | 'native_name' | 'organization_groups' | 'payment_profiles' | 'phone_number' | 'postal' | 'project_metadata_checklist' | 'projects' | 'projects_count' | 'registration_code' | 'service_provider' | 'service_provider_uuid' | 'slug' | 'sponsor_number' | 'url' | 'users_count' | 'uuid' | 'vat_code'>;
     };
     url: '/api/customers/{uuid}/';
 };
@@ -23673,6 +23781,118 @@ export type MarketplaceComponentUserUsagesRetrieveResponses = {
 };
 
 export type MarketplaceComponentUserUsagesRetrieveResponse = MarketplaceComponentUserUsagesRetrieveResponses[keyof MarketplaceComponentUserUsagesRetrieveResponses];
+
+export type MarketplaceCourseAccountsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        email?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        project_uuid?: string;
+        state?: Array<'Closed' | 'Erred' | 'OK'>;
+        username?: string;
+    };
+    url: '/api/marketplace-course-accounts/';
+};
+
+export type MarketplaceCourseAccountsListResponses = {
+    200: Array<CourseAccount>;
+};
+
+export type MarketplaceCourseAccountsListResponse = MarketplaceCourseAccountsListResponses[keyof MarketplaceCourseAccountsListResponses];
+
+export type MarketplaceCourseAccountsCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        email?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        project_uuid?: string;
+        state?: Array<'Closed' | 'Erred' | 'OK'>;
+        username?: string;
+    };
+    url: '/api/marketplace-course-accounts/';
+};
+
+export type MarketplaceCourseAccountsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type MarketplaceCourseAccountsCreateData = {
+    body: CourseAccountRequest;
+    path?: never;
+    query?: never;
+    url: '/api/marketplace-course-accounts/';
+};
+
+export type MarketplaceCourseAccountsCreateResponses = {
+    201: CourseAccount;
+};
+
+export type MarketplaceCourseAccountsCreateResponse = MarketplaceCourseAccountsCreateResponses[keyof MarketplaceCourseAccountsCreateResponses];
+
+export type MarketplaceCourseAccountsDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-course-accounts/{uuid}/';
+};
+
+export type MarketplaceCourseAccountsDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type MarketplaceCourseAccountsDestroyResponse = MarketplaceCourseAccountsDestroyResponses[keyof MarketplaceCourseAccountsDestroyResponses];
+
+export type MarketplaceCourseAccountsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-course-accounts/{uuid}/';
+};
+
+export type MarketplaceCourseAccountsRetrieveResponses = {
+    200: CourseAccount;
+};
+
+export type MarketplaceCourseAccountsRetrieveResponse = MarketplaceCourseAccountsRetrieveResponses[keyof MarketplaceCourseAccountsRetrieveResponses];
+
+export type MarketplaceCourseAccountsCreateBulkData = {
+    body: CourseAccountsBulkCreateRequest;
+    path?: never;
+    query?: never;
+    url: '/api/marketplace-course-accounts/create_bulk/';
+};
+
+export type MarketplaceCourseAccountsCreateBulkResponses = {
+    200: CourseAccountsBulkCreate;
+};
+
+export type MarketplaceCourseAccountsCreateBulkResponse = MarketplaceCourseAccountsCreateBulkResponses[keyof MarketplaceCourseAccountsCreateBulkResponses];
 
 export type MarketplaceCustomerEstimatedCostPoliciesListData = {
     body?: never;
@@ -30605,6 +30825,34 @@ export type ServiceProviderOfferingUsersComplianceResponses = {
 
 export type ServiceProviderOfferingUsersComplianceResponse = ServiceProviderOfferingUsersComplianceResponses[keyof ServiceProviderOfferingUsersComplianceResponses];
 
+export type MarketplaceServiceProvidersCourseAccountsListData = {
+    body?: never;
+    path: {
+        service_provider_uuid: string;
+    };
+    query?: {
+        email?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        project_uuid?: string;
+        state?: Array<'Closed' | 'Erred' | 'OK'>;
+        username?: string;
+    };
+    url: '/api/marketplace-service-providers/{service_provider_uuid}/course_accounts/';
+};
+
+export type MarketplaceServiceProvidersCourseAccountsListResponses = {
+    200: Array<CourseAccount>;
+};
+
+export type MarketplaceServiceProvidersCourseAccountsListResponse = MarketplaceServiceProvidersCourseAccountsListResponses[keyof MarketplaceServiceProvidersCourseAccountsListResponses];
+
 export type MarketplaceServiceProvidersCustomerProjectsListData = {
     body?: never;
     path: {
@@ -30987,7 +31235,7 @@ export type MarketplaceServiceProvidersProjectsListData = {
         customer_name?: string;
         customer_native_name?: string;
         description?: string;
-        field?: Array<'backend_id' | 'billing_price_estimate' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'end_date' | 'end_date_requested_by' | 'image' | 'is_industry' | 'marketplace_resource_count' | 'max_service_accounts' | 'name' | 'oecd_fos_2007_code' | 'oecd_fos_2007_label' | 'project_credit' | 'resources_count' | 'slug' | 'start_date' | 'type' | 'type_name' | 'type_uuid' | 'url' | 'uuid'>;
+        field?: Array<'backend_id' | 'billing_price_estimate' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'end_date' | 'end_date_requested_by' | 'image' | 'is_industry' | 'kind' | 'marketplace_resource_count' | 'max_service_accounts' | 'name' | 'oecd_fos_2007_code' | 'oecd_fos_2007_label' | 'project_credit' | 'resources_count' | 'slug' | 'start_date' | 'type' | 'type_name' | 'type_uuid' | 'url' | 'uuid'>;
         /**
          * Modified after
          */
@@ -37646,7 +37894,7 @@ export type ProjectsListData = {
         customer_name?: string;
         customer_native_name?: string;
         description?: string;
-        field?: Array<'backend_id' | 'billing_price_estimate' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'end_date' | 'end_date_requested_by' | 'image' | 'is_industry' | 'marketplace_resource_count' | 'max_service_accounts' | 'name' | 'oecd_fos_2007_code' | 'oecd_fos_2007_label' | 'project_credit' | 'resources_count' | 'slug' | 'start_date' | 'type' | 'type_name' | 'type_uuid' | 'url' | 'uuid'>;
+        field?: Array<'backend_id' | 'billing_price_estimate' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'end_date' | 'end_date_requested_by' | 'image' | 'is_industry' | 'kind' | 'marketplace_resource_count' | 'max_service_accounts' | 'name' | 'oecd_fos_2007_code' | 'oecd_fos_2007_label' | 'project_credit' | 'resources_count' | 'slug' | 'start_date' | 'type' | 'type_name' | 'type_uuid' | 'url' | 'uuid'>;
         /**
          * Modified after
          */
@@ -37784,7 +38032,7 @@ export type ProjectsRetrieveData = {
         uuid: string;
     };
     query?: {
-        field?: Array<'backend_id' | 'billing_price_estimate' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'end_date' | 'end_date_requested_by' | 'image' | 'is_industry' | 'marketplace_resource_count' | 'max_service_accounts' | 'name' | 'oecd_fos_2007_code' | 'oecd_fos_2007_label' | 'project_credit' | 'resources_count' | 'slug' | 'start_date' | 'type' | 'type_name' | 'type_uuid' | 'url' | 'uuid'>;
+        field?: Array<'backend_id' | 'billing_price_estimate' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'end_date' | 'end_date_requested_by' | 'image' | 'is_industry' | 'kind' | 'marketplace_resource_count' | 'max_service_accounts' | 'name' | 'oecd_fos_2007_code' | 'oecd_fos_2007_label' | 'project_credit' | 'resources_count' | 'slug' | 'start_date' | 'type' | 'type_name' | 'type_uuid' | 'url' | 'uuid'>;
     };
     url: '/api/projects/{uuid}/';
 };
@@ -45050,7 +45298,7 @@ export type UserGroupInvitationsSubmitRequestData = {
 };
 
 export type UserGroupInvitationsSubmitRequestResponses = {
-    200: GroupInvitation;
+    200: SubmitRequestResponse;
 };
 
 export type UserGroupInvitationsSubmitRequestResponse = UserGroupInvitationsSubmitRequestResponses[keyof UserGroupInvitationsSubmitRequestResponses];
@@ -45078,6 +45326,8 @@ export type UserInvitationsListData = {
         page_size?: number;
         role_name?: string;
         role_uuid?: string;
+        scope_description?: string;
+        scope_name?: string;
         scope_type?: string;
         state?: Array<'accepted' | 'canceled' | 'expired' | 'pending' | 'project' | 'rejected' | 'requested'>;
     };
@@ -45113,6 +45363,8 @@ export type UserInvitationsCountData = {
         page_size?: number;
         role_name?: string;
         role_uuid?: string;
+        scope_description?: string;
+        scope_name?: string;
         scope_type?: string;
         state?: Array<'accepted' | 'canceled' | 'expired' | 'pending' | 'project' | 'rejected' | 'requested'>;
     };
@@ -45370,6 +45622,21 @@ export type UserPermissionRequestsApproveResponses = {
 };
 
 export type UserPermissionRequestsApproveResponse = UserPermissionRequestsApproveResponses[keyof UserPermissionRequestsApproveResponses];
+
+export type UserPermissionRequestsCancelRequestData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/user-permission-requests/{uuid}/cancel_request/';
+};
+
+export type UserPermissionRequestsCancelRequestResponses = {
+    200: CancelRequestResponse;
+};
+
+export type UserPermissionRequestsCancelRequestResponse = UserPermissionRequestsCancelRequestResponses[keyof UserPermissionRequestsCancelRequestResponses];
 
 export type UserPermissionRequestsRejectData = {
     body?: ReviewCommentRequest;
