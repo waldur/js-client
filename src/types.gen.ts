@@ -2092,7 +2092,7 @@ export type CourseAccount = {
     readonly project_uuid: string;
     readonly project_name: string;
     readonly user_uuid: string;
-    readonly user_username: string;
+    readonly username: string;
     readonly customer_uuid: string;
     readonly customer_name: string;
     state: ServiceAccountState;
