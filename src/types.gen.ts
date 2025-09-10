@@ -2095,7 +2095,7 @@ export type CourseAccount = {
     readonly user_username: string;
     readonly customer_uuid: string;
     readonly customer_name: string;
-    readonly state: string;
+    state: ServiceAccountState;
     email?: string;
     description?: string;
     readonly error_message: string;
@@ -2383,11 +2383,11 @@ export type CustomerPermissionReview = {
     readonly uuid: string;
     readonly reviewer_full_name: string | null;
     readonly reviewer_uuid: string | null;
-    readonly customer_uuid: string;
-    readonly customer_name: string;
     readonly is_pending: boolean;
     readonly created: string;
     readonly closed: string | null;
+    readonly customer_uuid: string;
+    readonly customer_name: string;
 };
 
 export type CustomerQuotas = {
@@ -2756,7 +2756,7 @@ export type EventSubscriptionRequest = {
     observable_objects?: unknown;
 };
 
-export type EventTypesEnum = 'access_subnet_creation_succeeded' | 'access_subnet_deletion_succeeded' | 'access_subnet_update_succeeded' | 'allowed_offerings_have_been_updated' | 'attachment_created' | 'attachment_deleted' | 'attachment_updated' | 'auth_logged_in_with_saml2' | 'auth_logged_in_with_username' | 'auth_logged_in_with_oauth' | 'auth_logged_out' | 'auth_logged_out_with_saml2' | 'auth_login_failed_with_username' | 'block_creation_of_new_resources' | 'block_modification_of_existing_resources' | 'call_document_added' | 'call_document_removed' | 'create_of_credit_by_staff' | 'custom_notification' | 'customer_creation_succeeded' | 'customer_deletion_succeeded' | 'customer_update_succeeded' | 'droplet_resize_scheduled' | 'droplet_resize_succeeded' | 'freeipa_profile_created' | 'freeipa_profile_deleted' | 'freeipa_profile_disabled' | 'freeipa_profile_enabled' | 'invoice_canceled' | 'invoice_created' | 'invoice_item_created' | 'invoice_item_deleted' | 'invoice_item_updated' | 'invoice_paid' | 'issue_creation_succeeded' | 'issue_deletion_succeeded' | 'issue_update_succeeded' | 'marketplace_offering_component_created' | 'marketplace_offering_component_deleted' | 'marketplace_offering_component_updated' | 'marketplace_offering_created' | 'marketplace_offering_role_created' | 'marketplace_offering_role_deleted' | 'marketplace_offering_role_updated' | 'marketplace_offering_updated' | 'marketplace_offering_user_created' | 'marketplace_offering_user_updated' | 'marketplace_offering_user_deleted' | 'marketplace_offering_user_restriction_updated' | 'marketplace_order_approved' | 'marketplace_order_completed' | 'marketplace_order_created' | 'marketplace_order_failed' | 'marketplace_order_rejected' | 'marketplace_order_terminated' | 'marketplace_order_unlinked' | 'marketplace_plan_archived' | 'marketplace_plan_component_current_price_updated' | 'marketplace_plan_component_future_price_updated' | 'marketplace_plan_component_quota_updated' | 'marketplace_plan_created' | 'marketplace_plan_updated' | 'marketplace_plan_deleted' | 'marketplace_resource_create_canceled' | 'marketplace_resource_create_failed' | 'marketplace_resource_create_requested' | 'marketplace_resource_create_succeeded' | 'marketplace_resource_downscaled' | 'marketplace_resource_erred_on_backend' | 'marketplace_resource_paused' | 'marketplace_resource_terminate_canceled' | 'marketplace_resource_terminate_failed' | 'marketplace_resource_terminate_requested' | 'marketplace_resource_terminate_succeeded' | 'marketplace_resource_unlinked' | 'marketplace_resource_update_canceled' | 'marketplace_resource_update_end_date_succeeded' | 'marketplace_resource_update_failed' | 'marketplace_resource_update_limits_failed' | 'marketplace_resource_update_limits_succeeded' | 'marketplace_resource_update_requested' | 'marketplace_resource_update_succeeded' | 'marketplace_resource_user_created' | 'marketplace_resource_user_deleted' | 'notify_external_user' | 'notify_organization_owners' | 'notify_project_team' | 'openstack_floating_ip_attached' | 'openstack_floating_ip_connected' | 'openstack_floating_ip_description_updated' | 'openstack_floating_ip_detached' | 'openstack_floating_ip_disconnected' | 'openstack_network_cleaned' | 'openstack_network_created' | 'openstack_network_deleted' | 'openstack_network_imported' | 'openstack_network_pulled' | 'openstack_network_updated' | 'openstack_port_cleaned' | 'openstack_port_created' | 'openstack_port_deleted' | 'openstack_port_imported' | 'openstack_port_pulled' | 'openstack_port_updated' | 'openstack_router_updated' | 'openstack_security_group_cleaned' | 'openstack_security_group_created' | 'openstack_security_group_deleted' | 'openstack_security_group_imported' | 'openstack_security_group_pulled' | 'openstack_security_group_rule_cleaned' | 'openstack_security_group_rule_created' | 'openstack_security_group_rule_deleted' | 'openstack_security_group_rule_imported' | 'openstack_security_group_rule_updated' | 'openstack_security_group_updated' | 'openstack_security_group_added_remotely' | 'openstack_security_group_removed_remotely' | 'openstack_security_group_added_locally' | 'openstack_security_group_removed_locally' | 'openstack_server_group_cleaned' | 'openstack_server_group_created' | 'openstack_server_group_deleted' | 'openstack_server_group_imported' | 'openstack_server_group_pulled' | 'openstack_subnet_cleaned' | 'openstack_subnet_created' | 'openstack_subnet_deleted' | 'openstack_subnet_imported' | 'openstack_subnet_pulled' | 'openstack_subnet_updated' | 'openstack_tenant_quota_limit_updated' | 'payment_added' | 'payment_created' | 'payment_removed' | 'policy_notification' | 'project_creation_succeeded' | 'project_deletion_succeeded' | 'project_deletion_triggered' | 'project_update_request_approved' | 'project_update_request_created' | 'project_update_request_rejected' | 'project_update_succeeded' | 'proposal_canceled' | 'proposal_document_added' | 'proposal_document_removed' | 'query_executed' | 'reduction_of_customer_credit' | 'reduction_of_customer_credit_due_to_minimal_consumption' | 'reduction_of_customer_expected_consumption' | 'reduction_of_project_credit' | 'reduction_of_project_credit_due_to_minimal_consumption' | 'reduction_of_project_expected_consumption' | 'request_downscaling' | 'request_pausing' | 'resource_assign_floating_ip_failed' | 'resource_assign_floating_ip_scheduled' | 'resource_assign_floating_ip_succeeded' | 'resource_attach_failed' | 'resource_attach_scheduled' | 'resource_attach_succeeded' | 'resource_backup_creation_failed' | 'resource_backup_creation_scheduled' | 'resource_backup_creation_succeeded' | 'resource_backup_deletion_failed' | 'resource_backup_deletion_scheduled' | 'resource_backup_deletion_succeeded' | 'resource_backup_restoration_failed' | 'resource_backup_restoration_scheduled' | 'resource_backup_restoration_succeeded' | 'resource_change_flavor_failed' | 'resource_change_flavor_scheduled' | 'resource_change_flavor_succeeded' | 'resource_creation_failed' | 'resource_creation_scheduled' | 'resource_creation_succeeded' | 'resource_deletion_failed' | 'resource_deletion_scheduled' | 'resource_deletion_succeeded' | 'resource_detach_failed' | 'resource_detach_scheduled' | 'resource_detach_succeeded' | 'resource_extend_failed' | 'resource_extend_scheduled' | 'resource_extend_succeeded' | 'resource_extend_volume_failed' | 'resource_extend_volume_scheduled' | 'resource_extend_volume_succeeded' | 'resource_import_succeeded' | 'resource_pull_failed' | 'resource_pull_scheduled' | 'resource_pull_succeeded' | 'resource_restart_failed' | 'resource_restart_scheduled' | 'resource_restart_succeeded' | 'resource_retype_failed' | 'resource_retype_scheduled' | 'resource_retype_succeeded' | 'resource_robot_account_created' | 'resource_robot_account_deleted' | 'resource_robot_account_state_changed' | 'resource_robot_account_updated' | 'resource_start_failed' | 'resource_start_scheduled' | 'resource_start_succeeded' | 'resource_stop_failed' | 'resource_stop_scheduled' | 'resource_stop_succeeded' | 'resource_unassign_floating_ip_failed' | 'resource_unassign_floating_ip_scheduled' | 'resource_unassign_floating_ip_succeeded' | 'resource_update_allowed_address_pairs_failed' | 'resource_update_allowed_address_pairs_scheduled' | 'resource_update_allowed_address_pairs_succeeded' | 'resource_update_floating_ips_failed' | 'resource_update_floating_ips_scheduled' | 'resource_update_floating_ips_succeeded' | 'resource_update_ports_failed' | 'resource_update_ports_scheduled' | 'resource_update_ports_succeeded' | 'resource_update_security_groups_failed' | 'resource_update_security_groups_scheduled' | 'resource_update_security_groups_succeeded' | 'resource_update_succeeded' | 'restrict_members' | 'review_canceled' | 'role_granted' | 'role_revoked' | 'role_updated' | 'roll_back_customer_credit' | 'roll_back_project_credit' | 'service_account_created' | 'service_account_deleted' | 'service_account_updated' | 'set_to_zero_overdue_credit' | 'ssh_key_creation_succeeded' | 'ssh_key_deletion_succeeded' | 'terminate_resources' | 'token_created' | 'token_lifetime_updated' | 'update_of_credit_by_staff' | 'user_activated' | 'user_creation_succeeded' | 'user_deactivated' | 'user_deactivated_no_roles' | 'user_deletion_succeeded' | 'user_details_update_succeeded' | 'user_has_been_created_by_staff' | 'user_password_updated' | 'user_password_updated_by_staff' | 'user_update_succeeded';
+export type EventTypesEnum = 'access_subnet_creation_succeeded' | 'access_subnet_deletion_succeeded' | 'access_subnet_update_succeeded' | 'allowed_offerings_have_been_updated' | 'attachment_created' | 'attachment_deleted' | 'attachment_updated' | 'auth_logged_in_with_saml2' | 'auth_logged_in_with_username' | 'auth_logged_in_with_oauth' | 'auth_logged_out' | 'auth_logged_out_with_saml2' | 'auth_login_failed_with_username' | 'block_creation_of_new_resources' | 'block_modification_of_existing_resources' | 'call_document_added' | 'call_document_removed' | 'create_of_credit_by_staff' | 'custom_notification' | 'customer_creation_succeeded' | 'customer_deletion_succeeded' | 'customer_update_succeeded' | 'customer_permission_review_created' | 'customer_permission_review_closed' | 'droplet_resize_scheduled' | 'droplet_resize_succeeded' | 'freeipa_profile_created' | 'freeipa_profile_deleted' | 'freeipa_profile_disabled' | 'freeipa_profile_enabled' | 'invoice_canceled' | 'invoice_created' | 'invoice_item_created' | 'invoice_item_deleted' | 'invoice_item_updated' | 'invoice_paid' | 'issue_creation_succeeded' | 'issue_deletion_succeeded' | 'issue_update_succeeded' | 'marketplace_offering_component_created' | 'marketplace_offering_component_deleted' | 'marketplace_offering_component_updated' | 'marketplace_offering_created' | 'marketplace_offering_role_created' | 'marketplace_offering_role_deleted' | 'marketplace_offering_role_updated' | 'marketplace_offering_updated' | 'marketplace_offering_user_created' | 'marketplace_offering_user_updated' | 'marketplace_offering_user_deleted' | 'marketplace_offering_user_restriction_updated' | 'marketplace_order_approved' | 'marketplace_order_completed' | 'marketplace_order_created' | 'marketplace_order_failed' | 'marketplace_order_rejected' | 'marketplace_order_terminated' | 'marketplace_order_unlinked' | 'marketplace_plan_archived' | 'marketplace_plan_component_current_price_updated' | 'marketplace_plan_component_future_price_updated' | 'marketplace_plan_component_quota_updated' | 'marketplace_plan_created' | 'marketplace_plan_updated' | 'marketplace_plan_deleted' | 'marketplace_resource_create_canceled' | 'marketplace_resource_create_failed' | 'marketplace_resource_create_requested' | 'marketplace_resource_create_succeeded' | 'marketplace_resource_downscaled' | 'marketplace_resource_erred_on_backend' | 'marketplace_resource_paused' | 'marketplace_resource_terminate_canceled' | 'marketplace_resource_terminate_failed' | 'marketplace_resource_terminate_requested' | 'marketplace_resource_terminate_succeeded' | 'marketplace_resource_unlinked' | 'marketplace_resource_update_canceled' | 'marketplace_resource_update_end_date_succeeded' | 'marketplace_resource_update_failed' | 'marketplace_resource_update_limits_failed' | 'marketplace_resource_update_limits_succeeded' | 'marketplace_resource_update_requested' | 'marketplace_resource_update_succeeded' | 'marketplace_resource_user_created' | 'marketplace_resource_user_deleted' | 'notify_external_user' | 'notify_organization_owners' | 'notify_project_team' | 'openstack_floating_ip_attached' | 'openstack_floating_ip_connected' | 'openstack_floating_ip_description_updated' | 'openstack_floating_ip_detached' | 'openstack_floating_ip_disconnected' | 'openstack_network_cleaned' | 'openstack_network_created' | 'openstack_network_deleted' | 'openstack_network_imported' | 'openstack_network_pulled' | 'openstack_network_updated' | 'openstack_port_cleaned' | 'openstack_port_created' | 'openstack_port_deleted' | 'openstack_port_imported' | 'openstack_port_pulled' | 'openstack_port_updated' | 'openstack_router_updated' | 'openstack_security_group_cleaned' | 'openstack_security_group_created' | 'openstack_security_group_deleted' | 'openstack_security_group_imported' | 'openstack_security_group_pulled' | 'openstack_security_group_rule_cleaned' | 'openstack_security_group_rule_created' | 'openstack_security_group_rule_deleted' | 'openstack_security_group_rule_imported' | 'openstack_security_group_rule_updated' | 'openstack_security_group_updated' | 'openstack_security_group_added_remotely' | 'openstack_security_group_removed_remotely' | 'openstack_security_group_added_locally' | 'openstack_security_group_removed_locally' | 'openstack_server_group_cleaned' | 'openstack_server_group_created' | 'openstack_server_group_deleted' | 'openstack_server_group_imported' | 'openstack_server_group_pulled' | 'openstack_subnet_cleaned' | 'openstack_subnet_created' | 'openstack_subnet_deleted' | 'openstack_subnet_imported' | 'openstack_subnet_pulled' | 'openstack_subnet_updated' | 'openstack_tenant_quota_limit_updated' | 'payment_added' | 'payment_created' | 'payment_removed' | 'policy_notification' | 'project_creation_succeeded' | 'project_deletion_succeeded' | 'project_deletion_triggered' | 'project_update_request_approved' | 'project_update_request_created' | 'project_update_request_rejected' | 'project_update_succeeded' | 'project_permission_review_created' | 'project_permission_review_closed' | 'proposal_canceled' | 'proposal_document_added' | 'proposal_document_removed' | 'query_executed' | 'reduction_of_customer_credit' | 'reduction_of_customer_credit_due_to_minimal_consumption' | 'reduction_of_customer_expected_consumption' | 'reduction_of_project_credit' | 'reduction_of_project_credit_due_to_minimal_consumption' | 'reduction_of_project_expected_consumption' | 'request_downscaling' | 'request_pausing' | 'resource_assign_floating_ip_failed' | 'resource_assign_floating_ip_scheduled' | 'resource_assign_floating_ip_succeeded' | 'resource_attach_failed' | 'resource_attach_scheduled' | 'resource_attach_succeeded' | 'resource_backup_creation_failed' | 'resource_backup_creation_scheduled' | 'resource_backup_creation_succeeded' | 'resource_backup_deletion_failed' | 'resource_backup_deletion_scheduled' | 'resource_backup_deletion_succeeded' | 'resource_backup_restoration_failed' | 'resource_backup_restoration_scheduled' | 'resource_backup_restoration_succeeded' | 'resource_change_flavor_failed' | 'resource_change_flavor_scheduled' | 'resource_change_flavor_succeeded' | 'resource_creation_failed' | 'resource_creation_scheduled' | 'resource_creation_succeeded' | 'resource_deletion_failed' | 'resource_deletion_scheduled' | 'resource_deletion_succeeded' | 'resource_detach_failed' | 'resource_detach_scheduled' | 'resource_detach_succeeded' | 'resource_extend_failed' | 'resource_extend_scheduled' | 'resource_extend_succeeded' | 'resource_extend_volume_failed' | 'resource_extend_volume_scheduled' | 'resource_extend_volume_succeeded' | 'resource_import_succeeded' | 'resource_pull_failed' | 'resource_pull_scheduled' | 'resource_pull_succeeded' | 'resource_restart_failed' | 'resource_restart_scheduled' | 'resource_restart_succeeded' | 'resource_retype_failed' | 'resource_retype_scheduled' | 'resource_retype_succeeded' | 'resource_robot_account_created' | 'resource_robot_account_deleted' | 'resource_robot_account_state_changed' | 'resource_robot_account_updated' | 'resource_start_failed' | 'resource_start_scheduled' | 'resource_start_succeeded' | 'resource_stop_failed' | 'resource_stop_scheduled' | 'resource_stop_succeeded' | 'resource_unassign_floating_ip_failed' | 'resource_unassign_floating_ip_scheduled' | 'resource_unassign_floating_ip_succeeded' | 'resource_update_allowed_address_pairs_failed' | 'resource_update_allowed_address_pairs_scheduled' | 'resource_update_allowed_address_pairs_succeeded' | 'resource_update_floating_ips_failed' | 'resource_update_floating_ips_scheduled' | 'resource_update_floating_ips_succeeded' | 'resource_update_ports_failed' | 'resource_update_ports_scheduled' | 'resource_update_ports_succeeded' | 'resource_update_security_groups_failed' | 'resource_update_security_groups_scheduled' | 'resource_update_security_groups_succeeded' | 'resource_update_succeeded' | 'restrict_members' | 'review_canceled' | 'role_granted' | 'role_revoked' | 'role_updated' | 'roll_back_customer_credit' | 'roll_back_project_credit' | 'service_account_created' | 'service_account_deleted' | 'service_account_updated' | 'set_to_zero_overdue_credit' | 'ssh_key_creation_succeeded' | 'ssh_key_deletion_succeeded' | 'terminate_resources' | 'token_created' | 'token_lifetime_updated' | 'update_of_credit_by_staff' | 'user_activated' | 'user_creation_succeeded' | 'user_deactivated' | 'user_deactivated_no_roles' | 'user_deletion_succeeded' | 'user_details_update_succeeded' | 'user_has_been_created_by_staff' | 'user_password_updated' | 'user_password_updated_by_staff' | 'user_update_succeeded';
 
 export type ExecutionStateEnum = 'Scheduled' | 'Processing' | 'OK' | 'Erred';
 
@@ -9128,6 +9128,18 @@ export type ProjectPermissionLog = {
      * Email address
      */
     readonly user_email?: string;
+};
+
+export type ProjectPermissionReview = {
+    readonly url: string;
+    readonly uuid: string;
+    readonly reviewer_full_name: string | null;
+    readonly reviewer_uuid: string | null;
+    readonly is_pending: boolean;
+    readonly created: string;
+    readonly closed: string | null;
+    readonly project_uuid: string;
+    readonly project_name: string;
 };
 
 export type ProjectQuotas = {
@@ -18299,7 +18311,14 @@ export type CustomerPermissionsReviewsListData = {
     body?: never;
     path?: never;
     query?: {
+        closed?: string;
+        /**
+         * Customer UUID
+         */
         customer_uuid?: string;
+        /**
+         * Is pending
+         */
         is_pending?: boolean;
         /**
          * Ordering
@@ -18315,6 +18334,9 @@ export type CustomerPermissionsReviewsListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Reviewer UUID
+         */
         reviewer_uuid?: string;
     };
     url: '/api/customer-permissions-reviews/';
@@ -18330,7 +18352,14 @@ export type CustomerPermissionsReviewsCountData = {
     body?: never;
     path?: never;
     query?: {
+        closed?: string;
+        /**
+         * Customer UUID
+         */
         customer_uuid?: string;
+        /**
+         * Is pending
+         */
         is_pending?: boolean;
         /**
          * Ordering
@@ -18346,6 +18375,9 @@ export type CustomerPermissionsReviewsCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Reviewer UUID
+         */
         reviewer_uuid?: string;
     };
     url: '/api/customer-permissions-reviews/';
@@ -18653,6 +18685,76 @@ export type CustomersProjectMetadataQuestionAnswersListResponses = {
 
 export type CustomersProjectMetadataQuestionAnswersListResponse = CustomersProjectMetadataQuestionAnswersListResponses[keyof CustomersProjectMetadataQuestionAnswersListResponses];
 
+export type CustomersUsersListData = {
+    body?: never;
+    path: {
+        /**
+         * UUID of the customer
+         */
+        customer_uuid: string;
+    };
+    query?: {
+        /**
+         * Agreement date after
+         */
+        agreement_date?: string;
+        civil_number?: string;
+        /**
+         * Date joined after
+         */
+        date_joined?: string;
+        description?: string;
+        email?: string;
+        field?: Array<'email' | 'expiration_time' | 'full_name' | 'image' | 'projects' | 'role_name' | 'url' | 'username' | 'uuid'>;
+        /**
+         * Full name
+         */
+        full_name?: string;
+        is_active?: boolean;
+        job_title?: string;
+        /**
+         * Date modified after
+         */
+        modified?: string;
+        native_name?: string;
+        /**
+         * Ordering. Sort by a combination of first name, last name, and username.
+         */
+        o?: 'concatenated_name' | '-concatenated_name';
+        organization?: string;
+        /**
+         * Filter by one or more organization roles. Select a standard role or provide a custom role string. Can be specified multiple times.
+         */
+        organization_role?: Array<('CUSTOMER.MANAGER' | 'CUSTOMER.OWNER' | 'CUSTOMER.SUPPORT') | string>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        phone_number?: string;
+        /**
+         * Filter by one or more project roles. Select a standard role or provide a custom role string. Can be specified multiple times.
+         */
+        project_role?: Array<('PROJECT.ADMIN' | 'PROJECT.MANAGER' | 'PROJECT.MEMBER') | string>;
+        registration_method?: string;
+        /**
+         * User keyword
+         */
+        user_keyword?: string;
+        username?: string;
+    };
+    url: '/api/customers/{customer_uuid}/users/';
+};
+
+export type CustomersUsersListResponses = {
+    200: Array<CustomerUser>;
+};
+
+export type CustomersUsersListResponse = CustomersUsersListResponses[keyof CustomersUsersListResponses];
+
 export type CustomersDestroyData = {
     body?: never;
     path: {
@@ -18860,46 +18962,6 @@ export type CustomersUpdateUserResponses = {
 };
 
 export type CustomersUpdateUserResponse = CustomersUpdateUserResponses[keyof CustomersUpdateUserResponses];
-
-export type CustomersUsersListData = {
-    body?: never;
-    path: {
-        uuid: string;
-    };
-    query?: {
-        civil_number?: string;
-        description?: string;
-        email?: string;
-        field?: Array<'email' | 'expiration_time' | 'full_name' | 'image' | 'projects' | 'role_name' | 'url' | 'username' | 'uuid'>;
-        full_name?: string;
-        is_active?: string;
-        job_title?: string;
-        native_name?: string;
-        o?: string;
-        organization?: string;
-        organization_role?: string;
-        /**
-         * A page number within the paginated result set.
-         */
-        page?: number;
-        /**
-         * Number of results to return per page.
-         */
-        page_size?: number;
-        phone_number?: string;
-        project_role?: string;
-        registration_method?: string;
-        user_keyword?: string;
-        username?: string;
-    };
-    url: '/api/customers/{uuid}/users/';
-};
-
-export type CustomersUsersListResponses = {
-    200: Array<CustomerUser>;
-};
-
-export type CustomersUsersListResponse = CustomersUsersListResponses[keyof CustomersUsersListResponses];
 
 export type CustomersCountriesListData = {
     body?: never;
@@ -37756,6 +37818,120 @@ export type ProjectCreditsUpdateResponses = {
 
 export type ProjectCreditsUpdateResponse = ProjectCreditsUpdateResponses[keyof ProjectCreditsUpdateResponses];
 
+export type ProjectPermissionsReviewsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        closed?: string;
+        /**
+         * Is pending
+         */
+        is_pending?: boolean;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-closed' | '-created' | 'closed' | 'created'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Project UUID
+         */
+        project_uuid?: string;
+        /**
+         * Reviewer UUID
+         */
+        reviewer_uuid?: string;
+    };
+    url: '/api/project-permissions-reviews/';
+};
+
+export type ProjectPermissionsReviewsListResponses = {
+    200: Array<ProjectPermissionReview>;
+};
+
+export type ProjectPermissionsReviewsListResponse = ProjectPermissionsReviewsListResponses[keyof ProjectPermissionsReviewsListResponses];
+
+export type ProjectPermissionsReviewsCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        closed?: string;
+        /**
+         * Is pending
+         */
+        is_pending?: boolean;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-closed' | '-created' | 'closed' | 'created'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Project UUID
+         */
+        project_uuid?: string;
+        /**
+         * Reviewer UUID
+         */
+        reviewer_uuid?: string;
+    };
+    url: '/api/project-permissions-reviews/';
+};
+
+export type ProjectPermissionsReviewsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type ProjectPermissionsReviewsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/project-permissions-reviews/{uuid}/';
+};
+
+export type ProjectPermissionsReviewsRetrieveResponses = {
+    200: ProjectPermissionReview;
+};
+
+export type ProjectPermissionsReviewsRetrieveResponse = ProjectPermissionsReviewsRetrieveResponses[keyof ProjectPermissionsReviewsRetrieveResponses];
+
+export type ProjectPermissionsReviewsCloseData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/project-permissions-reviews/{uuid}/close/';
+};
+
+export type ProjectPermissionsReviewsCloseResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type ProjectQuotasListData = {
     body?: never;
     path?: never;
@@ -38008,6 +38184,67 @@ export type ProjectsCreateResponses = {
 
 export type ProjectsCreateResponse = ProjectsCreateResponses[keyof ProjectsCreateResponses];
 
+export type ProjectsOtherUsersListData = {
+    body?: never;
+    path: {
+        /**
+         * UUID of the project
+         */
+        project_uuid: string;
+    };
+    query?: {
+        /**
+         * Agreement date after
+         */
+        agreement_date?: string;
+        civil_number?: string;
+        /**
+         * Date joined after
+         */
+        date_joined?: string;
+        description?: string;
+        email?: string;
+        /**
+         * Full name
+         */
+        full_name?: string;
+        is_active?: boolean;
+        job_title?: string;
+        /**
+         * Date modified after
+         */
+        modified?: string;
+        native_name?: string;
+        /**
+         * Ordering. Sort by a combination of first name, last name, and username.
+         */
+        o?: 'concatenated_name' | '-concatenated_name';
+        organization?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        phone_number?: string;
+        registration_method?: string;
+        /**
+         * User keyword
+         */
+        user_keyword?: string;
+        username?: string;
+    };
+    url: '/api/projects/{project_uuid}/other_users/';
+};
+
+export type ProjectsOtherUsersListResponses = {
+    200: Array<BasicUser>;
+};
+
+export type ProjectsOtherUsersListResponse = ProjectsOtherUsersListResponses[keyof ProjectsOtherUsersListResponses];
+
 export type ProjectsDestroyData = {
     body?: never;
     path: {
@@ -38234,42 +38471,6 @@ export type ProjectsMoveProjectResponses = {
 };
 
 export type ProjectsMoveProjectResponse = ProjectsMoveProjectResponses[keyof ProjectsMoveProjectResponses];
-
-export type ProjectsOtherUsersListData = {
-    body?: never;
-    path: {
-        uuid: string;
-    };
-    query?: {
-        civil_number?: string;
-        description?: string;
-        email?: string;
-        full_name?: string;
-        is_active?: string;
-        job_title?: string;
-        native_name?: string;
-        organization?: string;
-        /**
-         * A page number within the paginated result set.
-         */
-        page?: number;
-        /**
-         * Number of results to return per page.
-         */
-        page_size?: number;
-        phone_number?: string;
-        registration_method?: string;
-        user_keyword?: string;
-        username?: string;
-    };
-    url: '/api/projects/{uuid}/other_users/';
-};
-
-export type ProjectsOtherUsersListResponses = {
-    200: Array<BasicUser>;
-};
-
-export type ProjectsOtherUsersListResponse = ProjectsOtherUsersListResponses[keyof ProjectsOtherUsersListResponses];
 
 export type ProjectsStatsRetrieveData = {
     body?: never;
