@@ -1860,6 +1860,7 @@ export type ConstanceSettings = {
     SMAX_REQUESTS_OFFERING?: string;
     SMAX_VERIFY_SSL?: boolean;
     ENABLE_MOCK_SERVICE_ACCOUNT_BACKEND?: boolean;
+    ENABLE_MOCK_COURSE_ACCOUNT_BACKEND?: boolean;
     PROPOSAL_REVIEW_DURATION?: number;
     USER_TABLE_COLUMNS?: string;
     AUTO_APPROVE_USER_TOS?: boolean;
@@ -1996,6 +1997,7 @@ export type ConstanceSettingsRequest = {
     SMAX_REQUESTS_OFFERING?: string;
     SMAX_VERIFY_SSL?: boolean;
     ENABLE_MOCK_SERVICE_ACCOUNT_BACKEND?: boolean;
+    ENABLE_MOCK_COURSE_ACCOUNT_BACKEND?: boolean;
     PROPOSAL_REVIEW_DURATION?: number;
     USER_TABLE_COLUMNS?: string;
     AUTO_APPROVE_USER_TOS?: boolean;
@@ -11524,7 +11526,7 @@ export type RobotAccount = {
     description?: string;
     readonly error_message?: string;
     readonly error_traceback?: string;
-    readonly state?: string;
+    state?: RobotAccountStates;
     resource: string;
     /**
      * Type of the robot account.
@@ -11549,7 +11551,7 @@ export type RobotAccountDetails = {
     description?: string;
     readonly error_message?: string;
     readonly error_traceback?: string;
-    readonly state?: string;
+    state?: RobotAccountStates;
     resource?: string;
     /**
      * Type of the robot account.
@@ -11593,6 +11595,8 @@ export type RobotAccountRequest = {
     keys?: unknown;
     responsible_user?: string | null;
 };
+
+export type RobotAccountStates = 1 | 2 | 3 | 4 | 5 | 6;
 
 export type RoleDescription = {
     description?: string;
@@ -27138,6 +27142,14 @@ export type MarketplaceProviderOfferingsListData = {
         description?: string;
         field?: Array<'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'has_compliance_requirements' | 'image' | 'integration_guide' | 'integration_status' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_options' | 'roles' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'state' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'uuid' | 'vendor_details'>;
         /**
+         * Has Active Terms of Service
+         */
+        has_active_terms_of_service?: boolean;
+        /**
+         * Has Terms of Service
+         */
+        has_terms_of_service?: boolean;
+        /**
          * Keyword
          */
         keyword?: string;
@@ -27223,6 +27235,14 @@ export type MarketplaceProviderOfferingsCountData = {
         customer?: string;
         customer_uuid?: string;
         description?: string;
+        /**
+         * Has Active Terms of Service
+         */
+        has_active_terms_of_service?: boolean;
+        /**
+         * Has Terms of Service
+         */
+        has_terms_of_service?: boolean;
         /**
          * Keyword
          */
@@ -27425,6 +27445,14 @@ export type MarketplaceProviderOfferingsComponentStatsListData = {
          */
         end?: string;
         /**
+         * Has Active Terms of Service
+         */
+        has_active_terms_of_service?: boolean;
+        /**
+         * Has Terms of Service
+         */
+        has_terms_of_service?: boolean;
+        /**
          * Keyword
          */
         keyword?: string;
@@ -27521,6 +27549,14 @@ export type MarketplaceProviderOfferingsCostsListData = {
          * End date in format YYYY-MM.
          */
         end?: string;
+        /**
+         * Has Active Terms of Service
+         */
+        has_active_terms_of_service?: boolean;
+        /**
+         * Has Terms of Service
+         */
+        has_terms_of_service?: boolean;
         /**
          * Keyword
          */
@@ -27629,6 +27665,14 @@ export type MarketplaceProviderOfferingsCustomersListData = {
         customer?: string;
         customer_uuid?: string;
         description?: string;
+        /**
+         * Has Active Terms of Service
+         */
+        has_active_terms_of_service?: boolean;
+        /**
+         * Has Terms of Service
+         */
+        has_terms_of_service?: boolean;
         /**
          * Keyword
          */
@@ -28393,6 +28437,14 @@ export type MarketplaceProviderOfferingsGroupsListData = {
         customer_uuid?: string;
         description?: string;
         /**
+         * Has Active Terms of Service
+         */
+        has_active_terms_of_service?: boolean;
+        /**
+         * Has Terms of Service
+         */
+        has_terms_of_service?: boolean;
+        /**
          * Keyword
          */
         keyword?: string;
@@ -28478,6 +28530,14 @@ export type MarketplaceProviderOfferingsGroupsCountData = {
         customer?: string;
         customer_uuid?: string;
         description?: string;
+        /**
+         * Has Active Terms of Service
+         */
+        has_active_terms_of_service?: boolean;
+        /**
+         * Has Terms of Service
+         */
+        has_terms_of_service?: boolean;
         /**
          * Keyword
          */
@@ -29136,6 +29196,14 @@ export type MarketplacePublicOfferingsListData = {
         description?: string;
         field?: Array<'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'has_compliance_requirements' | 'image' | 'integration_guide' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'project' | 'project_name' | 'project_uuid' | 'promotion_campaigns' | 'quotas' | 'resource_options' | 'roles' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'shared' | 'slug' | 'state' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'uuid' | 'vendor_details'>;
         /**
+         * Has Active Terms of Service
+         */
+        has_active_terms_of_service?: boolean;
+        /**
+         * Has Terms of Service
+         */
+        has_terms_of_service?: boolean;
+        /**
          * Keyword
          */
         keyword?: string;
@@ -29221,6 +29289,14 @@ export type MarketplacePublicOfferingsCountData = {
         customer?: string;
         customer_uuid?: string;
         description?: string;
+        /**
+         * Has Active Terms of Service
+         */
+        has_active_terms_of_service?: boolean;
+        /**
+         * Has Terms of Service
+         */
+        has_terms_of_service?: boolean;
         /**
          * Keyword
          */
@@ -31102,6 +31178,14 @@ export type MarketplaceServiceProvidersOfferingsListData = {
         customer_uuid?: string;
         description?: string;
         field?: Array<'billing_price_estimate' | 'category_title' | 'components' | 'customer_uuid' | 'name' | 'options' | 'plans' | 'resource_options' | 'resources_count' | 'secret_options' | 'slug' | 'state' | 'type' | 'uuid'>;
+        /**
+         * Has Active Terms of Service
+         */
+        has_active_terms_of_service?: boolean;
+        /**
+         * Has Terms of Service
+         */
+        has_terms_of_service?: boolean;
         /**
          * Keyword
          */
