@@ -2101,7 +2101,7 @@ export type CourseAccount = {
     email?: string;
     description?: string;
     readonly error_message: string;
-    error_traceback?: string;
+    readonly error_traceback: string;
 };
 
 export type CourseAccountCreateNested = {
@@ -2118,7 +2118,6 @@ export type CourseAccountRequest = {
     project: string;
     email?: string;
     description?: string;
-    error_traceback?: string;
 };
 
 export type CourseAccountsBulkCreate = {
