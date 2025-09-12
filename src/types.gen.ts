@@ -2083,7 +2083,7 @@ export type Country = {
     readonly value: string;
 };
 
-export type CountryEnum = 'AL' | 'AT' | 'BE' | 'BG' | 'BA' | 'CH' | 'CY' | 'CZ' | 'DE' | 'DK' | 'ES' | 'EE' | 'FI' | 'FR' | 'GB' | 'GE' | 'GR' | 'HR' | 'HU' | 'IE' | 'IS' | 'IT' | 'LT' | 'LU' | 'LV' | 'MC' | 'MK' | 'MT' | 'NL' | 'NO' | 'PL' | 'PT' | 'RO' | 'RS' | 'SK' | 'SI' | 'SE' | 'UA' | 'EU';
+export type CountryEnum = 'AW' | 'AF' | 'AO' | 'AI' | 'AX' | 'AL' | 'AD' | 'AE' | 'AR' | 'AM' | 'AS' | 'AQ' | 'TF' | 'AG' | 'AU' | 'AT' | 'AZ' | 'BI' | 'BE' | 'BJ' | 'BQ' | 'BF' | 'BD' | 'BG' | 'BH' | 'BS' | 'BA' | 'BL' | 'BY' | 'BZ' | 'BM' | 'BO' | 'BR' | 'BB' | 'BN' | 'BT' | 'BV' | 'BW' | 'CF' | 'CA' | 'CC' | 'CH' | 'CL' | 'CN' | 'CI' | 'CM' | 'CD' | 'CG' | 'CK' | 'CO' | 'KM' | 'CV' | 'CR' | 'CU' | 'CW' | 'CX' | 'KY' | 'CY' | 'CZ' | 'DE' | 'DJ' | 'DM' | 'DK' | 'DO' | 'DZ' | 'EC' | 'EG' | 'ER' | 'EH' | 'ES' | 'EE' | 'ET' | 'FI' | 'FJ' | 'FK' | 'FR' | 'FO' | 'FM' | 'GA' | 'GB' | 'GE' | 'GG' | 'GH' | 'GI' | 'GN' | 'GP' | 'GM' | 'GW' | 'GQ' | 'GR' | 'GD' | 'GL' | 'GT' | 'GF' | 'GU' | 'GY' | 'HK' | 'HM' | 'HN' | 'HR' | 'HT' | 'HU' | 'ID' | 'IM' | 'IN' | 'IO' | 'IE' | 'IR' | 'IQ' | 'IS' | 'IL' | 'IT' | 'JM' | 'JE' | 'JO' | 'JP' | 'KZ' | 'KE' | 'KG' | 'KH' | 'KI' | 'KN' | 'KR' | 'KW' | 'LA' | 'LB' | 'LR' | 'LY' | 'LC' | 'LI' | 'LK' | 'LS' | 'LT' | 'LU' | 'LV' | 'MO' | 'MF' | 'MA' | 'MC' | 'MD' | 'MG' | 'MV' | 'MX' | 'MH' | 'MK' | 'ML' | 'MT' | 'MM' | 'ME' | 'MN' | 'MP' | 'MZ' | 'MR' | 'MS' | 'MQ' | 'MU' | 'MW' | 'MY' | 'YT' | 'NA' | 'NC' | 'NE' | 'NF' | 'NG' | 'NI' | 'NU' | 'NL' | 'NO' | 'NP' | 'NR' | 'NZ' | 'OM' | 'PK' | 'PA' | 'PN' | 'PE' | 'PH' | 'PW' | 'PG' | 'PL' | 'PR' | 'KP' | 'PT' | 'PY' | 'PS' | 'PF' | 'QA' | 'RE' | 'RO' | 'RU' | 'RW' | 'SA' | 'SD' | 'SN' | 'SG' | 'GS' | 'SH' | 'SJ' | 'SB' | 'SL' | 'SV' | 'SM' | 'SO' | 'PM' | 'RS' | 'SS' | 'ST' | 'SR' | 'SK' | 'SI' | 'SE' | 'SZ' | 'SX' | 'SC' | 'SY' | 'TC' | 'TD' | 'TG' | 'TH' | 'TJ' | 'TK' | 'TM' | 'TL' | 'TO' | 'TT' | 'TN' | 'TR' | 'TV' | 'TW' | 'TZ' | 'UG' | 'UA' | 'UM' | 'UY' | 'US' | 'UZ' | 'VA' | 'VC' | 'VE' | 'VG' | 'VI' | 'VN' | 'VU' | 'WF' | 'WS' | 'YE' | 'ZA' | 'ZM' | 'ZW' | 'EU';
 
 export type CourseAccount = {
     readonly url: string;
@@ -3030,6 +3030,10 @@ export type IdentityProvider = {
      * ID of application used for OAuth authentication.
      */
     client_id: string;
+    /**
+     * Application secret key.
+     */
+    client_secret: string;
     verify_ssl?: boolean;
     enable_post_logout_redirect?: boolean;
     enable_pkce?: boolean;
@@ -3066,6 +3070,22 @@ export type IdentityProvider = {
      * Space-separated list of scopes to request during authentication.
      */
     extra_scope?: string | null;
+    /**
+     * The field in Waldur User model to be used for looking up the user
+     */
+    user_field?: string;
+    /**
+     * The OIDC claim from the userinfo endpoint to be used as the value for the lookup field.
+     */
+    user_claim?: string;
+    /**
+     * A JSON object mapping Waldur User model fields to OIDC claims. Example: {"first_name": "given_name", "last_name": "family_name", "email": "email"}
+     */
+    attribute_mapping?: unknown;
+    /**
+     * Space-separated list of extra fields to persist.
+     */
+    extra_fields?: string | null;
 };
 
 export type IdentityProviderRequest = {
@@ -3075,6 +3095,10 @@ export type IdentityProviderRequest = {
      * ID of application used for OAuth authentication.
      */
     client_id: string;
+    /**
+     * Application secret key.
+     */
+    client_secret: string;
     verify_ssl?: boolean;
     enable_post_logout_redirect?: boolean;
     enable_pkce?: boolean;
@@ -3095,6 +3119,22 @@ export type IdentityProviderRequest = {
      * Space-separated list of scopes to request during authentication.
      */
     extra_scope?: string | null;
+    /**
+     * The field in Waldur User model to be used for looking up the user
+     */
+    user_field?: string;
+    /**
+     * The OIDC claim from the userinfo endpoint to be used as the value for the lookup field.
+     */
+    user_claim?: string;
+    /**
+     * A JSON object mapping Waldur User model fields to OIDC claims. Example: {"first_name": "given_name", "last_name": "family_name", "email": "email"}
+     */
+    attribute_mapping?: unknown;
+    /**
+     * Space-separated list of extra fields to persist.
+     */
+    extra_fields?: string | null;
 };
 
 export type ImageCreateRequest = {
@@ -3420,7 +3460,7 @@ export type InvoiceStatsOffering = {
 export type Issue = {
     readonly url: string;
     readonly uuid: string;
-    type?: IssueTypeEnum;
+    type: IssueTypeEnum;
     readonly key: string;
     readonly backend_id: string | null;
     readonly backend_name: string | null;
@@ -3473,7 +3513,7 @@ export type IssueReference = {
 };
 
 export type IssueRequest = {
-    type?: IssueTypeEnum;
+    type: IssueTypeEnum;
     remote_id?: string | null;
     summary: string;
     description?: string;
@@ -3514,7 +3554,7 @@ export type IssueStatusRequest = {
 
 export type IssueStatusTypeEnum = 0 | 1;
 
-export type IssueTypeEnum = 'Informational' | 'Service Request' | 'Change Request' | 'Incident';
+export type IssueTypeEnum = unknown;
 
 export type JiraChangelog = {
     items: Array<unknown>;
@@ -5173,6 +5213,7 @@ export type Offering = {
     readonly parent_name?: string | null;
     backend_metadata?: unknown;
     readonly has_compliance_requirements?: boolean;
+    readonly user_has_consent?: boolean;
     googlecalendar?: GoogleCalendar;
 };
 
@@ -5586,6 +5627,8 @@ export type OfferingTermsOfService = {
      * If True, user will be asked to re-consent to the terms of service when the terms of service are updated.
      */
     requires_reconsent?: boolean;
+    user_consent: UserConsentInfo | null;
+    readonly has_user_consent: boolean;
     readonly created: string;
     readonly modified: string;
 };
@@ -7872,6 +7915,10 @@ export type PatchedIdentityProviderRequest = {
      * ID of application used for OAuth authentication.
      */
     client_id?: string;
+    /**
+     * Application secret key.
+     */
+    client_secret?: string;
     verify_ssl?: boolean;
     enable_post_logout_redirect?: boolean;
     enable_pkce?: boolean;
@@ -7892,6 +7939,22 @@ export type PatchedIdentityProviderRequest = {
      * Space-separated list of scopes to request during authentication.
      */
     extra_scope?: string | null;
+    /**
+     * The field in Waldur User model to be used for looking up the user
+     */
+    user_field?: string;
+    /**
+     * The OIDC claim from the userinfo endpoint to be used as the value for the lookup field.
+     */
+    user_claim?: string;
+    /**
+     * A JSON object mapping Waldur User model fields to OIDC claims. Example: {"first_name": "given_name", "last_name": "family_name", "email": "email"}
+     */
+    attribute_mapping?: unknown;
+    /**
+     * Space-separated list of extra fields to persist.
+     */
+    extra_fields?: string | null;
 };
 
 export type PatchedInvoiceItemUpdateRequest = {
@@ -9957,6 +10020,7 @@ export type PublicOfferingDetails = {
     readonly parent_name?: string | null;
     backend_metadata?: unknown;
     readonly has_compliance_requirements?: boolean;
+    readonly user_has_consent?: boolean;
     readonly google_calendar_is_public?: boolean | null;
     /**
      * Get the Google Calendar link for an offering.
@@ -12488,6 +12552,13 @@ export type UserAuthToken = {
      */
     readonly user_token_lifetime: number | null;
     readonly token: string;
+};
+
+export type UserConsentInfo = {
+    readonly uuid: string;
+    readonly version: string;
+    readonly agreement_date: string;
+    readonly is_revoked: boolean;
 };
 
 export type UserEmailChangeRequest = {
@@ -16166,7 +16237,7 @@ export type BookingOfferingsListData = {
     body?: never;
     path?: never;
     query?: {
-        field?: Array<'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'googlecalendar' | 'has_compliance_requirements' | 'image' | 'integration_guide' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_options' | 'roles' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'shared' | 'slug' | 'state' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'uuid' | 'vendor_details'>;
+        field?: Array<'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'googlecalendar' | 'has_compliance_requirements' | 'image' | 'integration_guide' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_options' | 'roles' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'shared' | 'slug' | 'state' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'user_has_consent' | 'uuid' | 'vendor_details'>;
         /**
          * A page number within the paginated result set.
          */
@@ -16214,7 +16285,7 @@ export type BookingOfferingsRetrieveData = {
         uuid: string;
     };
     query?: {
-        field?: Array<'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'googlecalendar' | 'has_compliance_requirements' | 'image' | 'integration_guide' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_options' | 'roles' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'shared' | 'slug' | 'state' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'uuid' | 'vendor_details'>;
+        field?: Array<'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'googlecalendar' | 'has_compliance_requirements' | 'image' | 'integration_guide' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_options' | 'roles' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'shared' | 'slug' | 'state' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'user_has_consent' | 'uuid' | 'vendor_details'>;
     };
     url: '/api/booking-offerings/{uuid}/';
 };
@@ -27198,6 +27269,10 @@ export type MarketplaceProviderOfferingsListData = {
         state?: Array<'Active' | 'Archived' | 'Draft' | 'Paused'>;
         type?: Array<string>;
         /**
+         * User Has Consent
+         */
+        user_has_consent?: boolean;
+        /**
          * Comma-separated offering UUIDs
          */
         uuid_list?: string;
@@ -27291,6 +27366,10 @@ export type MarketplaceProviderOfferingsCountData = {
         shared?: boolean;
         state?: Array<'Active' | 'Archived' | 'Draft' | 'Paused'>;
         type?: Array<string>;
+        /**
+         * User Has Consent
+         */
+        user_has_consent?: boolean;
         /**
          * Comma-separated offering UUIDs
          */
@@ -27505,6 +27584,10 @@ export type MarketplaceProviderOfferingsComponentStatsListData = {
         state?: Array<'Active' | 'Archived' | 'Draft' | 'Paused'>;
         type?: Array<string>;
         /**
+         * User Has Consent
+         */
+        user_has_consent?: boolean;
+        /**
          * Comma-separated offering UUIDs
          */
         uuid_list?: string;
@@ -27609,6 +27692,10 @@ export type MarketplaceProviderOfferingsCostsListData = {
         start?: string;
         state?: Array<'Active' | 'Archived' | 'Draft' | 'Paused'>;
         type?: Array<string>;
+        /**
+         * User Has Consent
+         */
+        user_has_consent?: boolean;
         /**
          * Comma-separated offering UUIDs
          */
@@ -27721,6 +27808,10 @@ export type MarketplaceProviderOfferingsCustomersListData = {
         shared?: boolean;
         state?: Array<'Active' | 'Archived' | 'Draft' | 'Paused'>;
         type?: Array<string>;
+        /**
+         * User Has Consent
+         */
+        user_has_consent?: boolean;
         /**
          * Comma-separated offering UUIDs
          */
@@ -28493,6 +28584,10 @@ export type MarketplaceProviderOfferingsGroupsListData = {
         state?: Array<'Active' | 'Archived' | 'Draft' | 'Paused'>;
         type?: Array<string>;
         /**
+         * User Has Consent
+         */
+        user_has_consent?: boolean;
+        /**
          * Comma-separated offering UUIDs
          */
         uuid_list?: string;
@@ -28586,6 +28681,10 @@ export type MarketplaceProviderOfferingsGroupsCountData = {
         shared?: boolean;
         state?: Array<'Active' | 'Archived' | 'Draft' | 'Paused'>;
         type?: Array<string>;
+        /**
+         * User Has Consent
+         */
+        user_has_consent?: boolean;
         /**
          * Comma-separated offering UUIDs
          */
@@ -29193,7 +29292,7 @@ export type MarketplacePublicOfferingsListData = {
         customer?: string;
         customer_uuid?: string;
         description?: string;
-        field?: Array<'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'has_compliance_requirements' | 'image' | 'integration_guide' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'project' | 'project_name' | 'project_uuid' | 'promotion_campaigns' | 'quotas' | 'resource_options' | 'roles' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'shared' | 'slug' | 'state' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'uuid' | 'vendor_details'>;
+        field?: Array<'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'has_compliance_requirements' | 'image' | 'integration_guide' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'project' | 'project_name' | 'project_uuid' | 'promotion_campaigns' | 'quotas' | 'resource_options' | 'roles' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'shared' | 'slug' | 'state' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'user_has_consent' | 'uuid' | 'vendor_details'>;
         /**
          * Has Active Terms of Service
          */
@@ -29251,6 +29350,10 @@ export type MarketplacePublicOfferingsListData = {
         shared?: boolean;
         state?: Array<'Active' | 'Archived' | 'Draft' | 'Paused'>;
         type?: Array<string>;
+        /**
+         * User Has Consent
+         */
+        user_has_consent?: boolean;
         /**
          * Comma-separated offering UUIDs
          */
@@ -29346,6 +29449,10 @@ export type MarketplacePublicOfferingsCountData = {
         state?: Array<'Active' | 'Archived' | 'Draft' | 'Paused'>;
         type?: Array<string>;
         /**
+         * User Has Consent
+         */
+        user_has_consent?: boolean;
+        /**
          * Comma-separated offering UUIDs
          */
         uuid_list?: string;
@@ -29366,7 +29473,7 @@ export type MarketplacePublicOfferingsRetrieveData = {
         uuid: string;
     };
     query?: {
-        field?: Array<'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'has_compliance_requirements' | 'image' | 'integration_guide' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'project' | 'project_name' | 'project_uuid' | 'promotion_campaigns' | 'quotas' | 'resource_options' | 'roles' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'shared' | 'slug' | 'state' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'uuid' | 'vendor_details'>;
+        field?: Array<'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'has_compliance_requirements' | 'image' | 'integration_guide' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'project' | 'project_name' | 'project_uuid' | 'promotion_campaigns' | 'quotas' | 'resource_options' | 'roles' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'shared' | 'slug' | 'state' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'user_has_consent' | 'uuid' | 'vendor_details'>;
     };
     url: '/api/marketplace-public-offerings/{uuid}/';
 };
@@ -31234,6 +31341,10 @@ export type MarketplaceServiceProvidersOfferingsListData = {
         shared?: boolean;
         state?: Array<'Active' | 'Archived' | 'Draft' | 'Paused'>;
         type?: Array<string>;
+        /**
+         * User Has Consent
+         */
+        user_has_consent?: boolean;
         /**
          * Comma-separated offering UUIDs
          */
