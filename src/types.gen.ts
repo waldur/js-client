@@ -3460,7 +3460,7 @@ export type InvoiceStatsOffering = {
 export type Issue = {
     readonly url: string;
     readonly uuid: string;
-    type: IssueTypeEnum;
+    type: string;
     readonly key: string;
     readonly backend_id: string | null;
     readonly backend_name: string | null;
@@ -3513,7 +3513,7 @@ export type IssueReference = {
 };
 
 export type IssueRequest = {
-    type: IssueTypeEnum;
+    type: string;
     remote_id?: string | null;
     summary: string;
     description?: string;
@@ -3554,7 +3554,7 @@ export type IssueStatusRequest = {
 
 export type IssueStatusTypeEnum = 0 | 1;
 
-export type IssueTypeEnum = unknown;
+export type IssueTypeEnum = 'INFORMATIONAL' | 'SERVICE_REQUEST' | 'CHANGE_REQUEST' | 'INCIDENT';
 
 export type JiraChangelog = {
     items: Array<unknown>;
