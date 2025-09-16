@@ -5741,6 +5741,14 @@ export type OfferingUser = {
      * URL link for additional information or actions related to service provider comment
      */
     readonly service_provider_comment_url?: string;
+    /**
+     * Check if the user has active consent for this offering.
+     */
+    readonly has_consent?: boolean;
+    /**
+     * Check if the user needs to re-consent due to ToS changes.
+     */
+    readonly requires_reconsent?: boolean;
 };
 
 export type OfferingUserRequest = {
@@ -25566,7 +25574,11 @@ export type MarketplaceOfferingUsersListData = {
          * Created after
          */
         created?: string;
-        field?: Array<'created' | 'customer_name' | 'customer_uuid' | 'is_restricted' | 'modified' | 'offering' | 'offering_name' | 'offering_uuid' | 'service_provider_comment' | 'service_provider_comment_url' | 'state' | 'url' | 'user' | 'user_email' | 'user_full_name' | 'user_username' | 'user_uuid' | 'username' | 'uuid'>;
+        field?: Array<'created' | 'customer_name' | 'customer_uuid' | 'has_consent' | 'is_restricted' | 'modified' | 'offering' | 'offering_name' | 'offering_uuid' | 'requires_reconsent' | 'service_provider_comment' | 'service_provider_comment_url' | 'state' | 'url' | 'user' | 'user_email' | 'user_full_name' | 'user_username' | 'user_uuid' | 'username' | 'uuid'>;
+        /**
+         * User Has Consent
+         */
+        has_consent?: boolean;
         is_restricted?: boolean;
         /**
          * Modified after
@@ -25622,6 +25634,10 @@ export type MarketplaceOfferingUsersCountData = {
          * Created after
          */
         created?: string;
+        /**
+         * User Has Consent
+         */
+        has_consent?: boolean;
         is_restricted?: boolean;
         /**
          * Modified after
@@ -25707,7 +25723,7 @@ export type MarketplaceOfferingUsersRetrieveData = {
         uuid: string;
     };
     query?: {
-        field?: Array<'created' | 'customer_name' | 'customer_uuid' | 'is_restricted' | 'modified' | 'offering' | 'offering_name' | 'offering_uuid' | 'service_provider_comment' | 'service_provider_comment_url' | 'state' | 'url' | 'user' | 'user_email' | 'user_full_name' | 'user_username' | 'user_uuid' | 'username' | 'uuid'>;
+        field?: Array<'created' | 'customer_name' | 'customer_uuid' | 'has_consent' | 'is_restricted' | 'modified' | 'offering' | 'offering_name' | 'offering_uuid' | 'requires_reconsent' | 'service_provider_comment' | 'service_provider_comment_url' | 'state' | 'url' | 'user' | 'user_email' | 'user_full_name' | 'user_username' | 'user_uuid' | 'username' | 'uuid'>;
     };
     url: '/api/marketplace-offering-users/{uuid}/';
 };
