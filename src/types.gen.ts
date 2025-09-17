@@ -2497,6 +2497,8 @@ export type DeleteAttachmentsRequest = {
 
 export type DependencyLogicOperatorEnum = 'and' | 'or';
 
+export type DeploymentModeEnum = 'self_managed' | 'managed';
+
 export type DetailState = {
     readonly detail: string;
     readonly state: string;
@@ -4146,9 +4148,9 @@ export type MergedPluginOptions = {
      */
     enable_issues_for_membership_changes?: boolean;
     /**
-     * Regular expression to limit flavors list
+     * Rancher deployment mode
      */
-    flavors_regex?: string;
+    deployment_mode?: DeploymentModeEnum;
     /**
      * List of UUID of OpenStack offerings where tenant can be created
      */
@@ -4293,9 +4295,9 @@ export type MergedPluginOptionsRequest = {
      */
     enable_issues_for_membership_changes?: boolean;
     /**
-     * Regular expression to limit flavors list
+     * Rancher deployment mode
      */
-    flavors_regex?: string;
+    deployment_mode?: DeploymentModeEnum;
     /**
      * List of UUID of OpenStack offerings where tenant can be created
      */
@@ -7547,7 +7549,7 @@ export type OrderCreateRequest = {
     /**
      * Attributes structure depends on the offering type specified in the parent object. Can also be a generic object for offerings without a specific attributes schema.
      */
-    attributes?: AzureVirtualMachineCreateOrderAttributes | AzureSqlServerCreateOrderAttributes | OpenStackTenantCreateOrderAttributes | OpenStackInstanceCreateOrderAttributes | OpenStackVolumeCreateOrderAttributes | MarketplaceRancherCreateOrderAttributes | MarketplaceManagedRancherCreateOrderAttributes | SlurmInvoicesSlurmPackageCreateOrderAttributes | VMwareVirtualMachineCreateOrderAttributes | GenericOrderAttributes;
+    attributes?: AzureVirtualMachineCreateOrderAttributes | AzureSqlServerCreateOrderAttributes | OpenStackTenantCreateOrderAttributes | OpenStackInstanceCreateOrderAttributes | OpenStackVolumeCreateOrderAttributes | SlurmInvoicesSlurmPackageCreateOrderAttributes | VMwareVirtualMachineCreateOrderAttributes | GenericOrderAttributes;
     limits?: {
         [key: string]: number;
     };
@@ -10536,10 +10538,6 @@ export type RancherClusterReference = {
 export type RancherClusterRequest = {
     name: string;
     description?: string;
-    service_settings: string;
-    project: string;
-    nodes: Array<RancherNestedNodeRequest>;
-    tenant?: string;
     vm_project?: string | null;
     ssh_public_key?: string;
     /**
@@ -13298,53 +13296,6 @@ export type OpenStackVolumeCreateOrderAttributes = {
      * Type of the volume (e.g. SSD, HDD)
      */
     type?: string | null;
-};
-
-/**
- * This mixin allows to specify list of fields to be rendered by serializer.
- * It expects that request is available in serializer's context.
- *
- * It is disabled for nested serializers (where parent is another serializer)
- * but remains active for list views (where parent is a ListSerializer).
- */
-export type MarketplaceRancherCreateOrderAttributes = {
-    name: string;
-    description?: string;
-    nodes: Array<RancherNestedNodeRequest>;
-    tenant?: string;
-    ssh_public_key?: string;
-    /**
-     * Longhorn is a distributed block storage deployed on top of Kubernetes cluster
-     */
-    install_longhorn?: boolean;
-    vm_project?: string | null;
-};
-
-export type MarketplaceManagedRancherCreateOrderAttributes = {
-    /**
-     * Unique identifier for the cluster
-     */
-    name: string;
-    worker_nodes_count: number;
-    worker_nodes_flavor_name: string;
-    /**
-     * Data volume size for worker nodes in MB (consistent with OpenStack)
-     */
-    worker_nodes_data_volume_size: number;
-    worker_nodes_data_volume_type_name?: string;
-    /**
-     * List of UUID of OpenStack offerings where tenant can be created
-     */
-    openstack_offering_uuid_list?: Array<string>;
-    /**
-     * Longhorn is a distributed block storage deployed on top of Kubernetes cluster
-     */
-    install_longhorn?: boolean;
-    /**
-     * Longhorn storage volume size for worker nodes in MB (consistent with OpenStack)
-     */
-    worker_nodes_longhorn_volume_size?: number;
-    worker_nodes_longhorn_volume_type_name?: string;
 };
 
 /**
@@ -41607,37 +41558,6 @@ export type RancherClustersCountResponses = {
      */
     200: unknown;
 };
-
-export type RancherClustersCreateData = {
-    body: RancherClusterRequest;
-    path?: never;
-    query?: never;
-    url: '/api/rancher-clusters/';
-};
-
-export type RancherClustersCreateResponses = {
-    201: RancherCluster;
-};
-
-export type RancherClustersCreateResponse = RancherClustersCreateResponses[keyof RancherClustersCreateResponses];
-
-export type RancherClustersDestroyData = {
-    body?: never;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/rancher-clusters/{uuid}/';
-};
-
-export type RancherClustersDestroyResponses = {
-    /**
-     * No response body
-     */
-    204: void;
-};
-
-export type RancherClustersDestroyResponse = RancherClustersDestroyResponses[keyof RancherClustersDestroyResponses];
 
 export type RancherClustersRetrieveData = {
     body?: never;
