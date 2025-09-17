@@ -2404,6 +2404,7 @@ export type CustomerRequest = {
     backend_id?: string;
     image?: (Blob | File) | null;
     name: string;
+    slug?: string;
     native_name?: string;
     abbreviation?: string;
     description?: string;
@@ -5320,7 +5321,7 @@ export type OfferingCreate = {
     readonly uuid: string;
     readonly created: string;
     name: string;
-    readonly slug: string;
+    slug?: string;
     description?: string;
     full_description?: string;
     privacy_policy_link?: string;
@@ -5396,6 +5397,7 @@ export type OfferingCreate = {
 
 export type OfferingCreateRequest = {
     name: string;
+    slug?: string;
     description?: string;
     full_description?: string;
     privacy_policy_link?: string;
@@ -5539,6 +5541,7 @@ export type OfferingOverviewUpdateRequest = {
     access_url?: string;
     getting_started?: string;
     integration_guide?: string;
+    slug?: string;
 };
 
 export type OfferingPauseRequest = {
@@ -7297,6 +7300,14 @@ export type OpenStackTenantRequest = {
      * Optional availability group. Will be used for all instances provisioned in this tenant
      */
     availability_zone?: string;
+    /**
+     * Username of the tenant user
+     */
+    user_username?: string;
+    /**
+     * Password of the tenant user
+     */
+    user_password?: string;
     subnet_cidr?: string;
     /**
      * Volume type name to use when creating volumes.
@@ -7500,11 +7511,14 @@ export type OrderCreate = {
     readonly output: string;
     readonly marketplace_resource_uuid: string;
     readonly error_message: string;
+    readonly error_traceback: string;
     callback_url?: string | null;
     /**
      * Completion time
      */
     readonly completed_at: string | null;
+    request_comment?: string | null;
+    attachment?: string | null;
     readonly url: string;
     readonly created_by: string;
     /**
@@ -7540,6 +7554,8 @@ export type OrderCreateRequest = {
     type?: RequestTypes;
     accepting_terms_of_service?: boolean;
     callback_url?: string | null;
+    request_comment?: string | null;
+    attachment?: (Blob | File) | null;
     project: string;
 };
 
@@ -7589,11 +7605,14 @@ export type OrderDetails = {
     readonly output?: string;
     readonly marketplace_resource_uuid?: string;
     readonly error_message?: string;
+    readonly error_traceback?: string;
     callback_url?: string | null;
     /**
      * Completion time
      */
     readonly completed_at?: string | null;
+    request_comment?: string | null;
+    attachment?: string | null;
     /**
      * Required. 128 characters or fewer. Lowercase letters, numbers and @/./+/-/_ characters
      */
@@ -7858,6 +7877,7 @@ export type PatchedCustomerRequest = {
     backend_id?: string;
     image?: (Blob | File) | null;
     name?: string;
+    slug?: string;
     native_name?: string;
     abbreviation?: string;
     description?: string;
@@ -8327,6 +8347,7 @@ export type PatchedProjectEstimatedCostPolicyRequest = {
 
 export type PatchedProjectRequest = {
     name?: string;
+    slug?: string;
     /**
      * Organization
      */
@@ -8382,6 +8403,7 @@ export type PatchedProposalReviewRequest = {
 };
 
 export type PatchedProtectedCallRequest = {
+    slug?: string;
     name?: string;
     description?: string;
     fixed_duration_in_days?: number | null;
@@ -8726,6 +8748,7 @@ export type PatchedSectionRequest = {
 
 export type PatchedServiceProviderRequest = {
     description?: string;
+    enable_notifications?: boolean;
     image?: (Blob | File) | null;
 };
 
@@ -8754,6 +8777,7 @@ export type PatchedUserRequest = {
      * Required. 128 characters or fewer. Lowercase letters, numbers and @/./+/-/_ characters
      */
     username?: string;
+    slug?: string;
     native_name?: string;
     job_title?: string;
     phone_number?: string;
@@ -9008,7 +9032,7 @@ export type Project = {
     readonly url?: string;
     readonly uuid?: string;
     name?: string;
-    readonly slug?: string;
+    slug?: string;
     /**
      * Organization
      */
@@ -9223,6 +9247,7 @@ export type ProjectQuotas = {
 
 export type ProjectRequest = {
     name: string;
+    slug?: string;
     /**
      * Organization
      */
@@ -9531,6 +9556,7 @@ export type ProtectedCall = {
 };
 
 export type ProtectedCallRequest = {
+    slug?: string;
     name: string;
     description?: string;
     manager: string;
@@ -9734,6 +9760,7 @@ export type ProviderOfferingDetails = {
 
 export type ProviderOfferingDetailsRequest = {
     name: string;
+    slug?: string;
     description?: string;
     full_description?: string;
     privacy_policy_link?: string;
@@ -9958,7 +9985,7 @@ export type PublicOfferingDetails = {
     readonly uuid?: string;
     readonly created?: string;
     name?: string;
-    readonly slug?: string;
+    slug?: string;
     description?: string;
     full_description?: string;
     privacy_policy_link?: string;
@@ -11361,7 +11388,7 @@ export type Resource = {
     readonly is_usage_based?: boolean;
     readonly is_limit_based?: boolean;
     name?: string;
-    readonly slug?: string;
+    slug?: string;
     readonly current_usages?: {
         [key: string]: number;
     };
@@ -12121,6 +12148,7 @@ export type ServiceProviderOfferingUserComplianceStateEnum = 1 | 2 | 3 | 4 | 5 |
 
 export type ServiceProviderRequest = {
     description?: string;
+    enable_notifications?: boolean;
     customer: string;
     image?: (Blob | File) | null;
 };
@@ -12463,7 +12491,7 @@ export type User = {
      * Required. 128 characters or fewer. Lowercase letters, numbers and @/./+/-/_ characters
      */
     username?: string;
-    readonly slug?: string;
+    slug?: string;
     readonly full_name?: string;
     native_name?: string;
     job_title?: string;
@@ -12615,6 +12643,7 @@ export type UserRequest = {
      * Required. 128 characters or fewer. Lowercase letters, numbers and @/./+/-/_ characters
      */
     username: string;
+    slug?: string;
     native_name?: string;
     job_title?: string;
     email: string;
@@ -13169,14 +13198,6 @@ export type AzureSqlServerCreateOrderAttributes = {
 export type OpenStackTenantCreateOrderAttributes = {
     name: string;
     description?: string;
-    /**
-     * Username of the tenant user
-     */
-    user_username?: string;
-    /**
-     * Password of the tenant user
-     */
-    user_password?: string;
     subnet_cidr?: string;
     skip_connection_extnet?: boolean;
     skip_creation_of_default_router?: boolean;
@@ -26097,7 +26118,7 @@ export type MarketplaceOrdersListData = {
          */
         created?: string;
         customer_uuid?: string;
-        field?: Array<'accepting_terms_of_service' | 'activation_price' | 'attributes' | 'backend_id' | 'callback_url' | 'can_terminate' | 'category_icon' | 'category_title' | 'category_uuid' | 'completed_at' | 'consumer_reviewed_at' | 'consumer_reviewed_by' | 'consumer_reviewed_by_full_name' | 'consumer_reviewed_by_username' | 'cost' | 'created' | 'created_by_civil_number' | 'created_by_full_name' | 'created_by_username' | 'customer_name' | 'customer_slug' | 'customer_uuid' | 'error_message' | 'error_traceback' | 'fixed_price' | 'issue' | 'limits' | 'marketplace_resource_uuid' | 'modified' | 'new_cost_estimate' | 'new_plan_name' | 'new_plan_uuid' | 'offering' | 'offering_billable' | 'offering_description' | 'offering_image' | 'offering_name' | 'offering_plugin_options' | 'offering_shared' | 'offering_thumbnail' | 'offering_type' | 'offering_uuid' | 'old_cost_estimate' | 'old_plan_name' | 'old_plan_uuid' | 'output' | 'plan' | 'plan_description' | 'plan_name' | 'plan_unit' | 'plan_uuid' | 'project_description' | 'project_name' | 'project_slug' | 'project_uuid' | 'provider_name' | 'provider_reviewed_at' | 'provider_reviewed_by' | 'provider_reviewed_by_full_name' | 'provider_reviewed_by_username' | 'provider_uuid' | 'resource_name' | 'resource_type' | 'resource_uuid' | 'state' | 'termination_comment' | 'type' | 'uuid'>;
+        field?: Array<'accepting_terms_of_service' | 'activation_price' | 'attachment' | 'attributes' | 'backend_id' | 'callback_url' | 'can_terminate' | 'category_icon' | 'category_title' | 'category_uuid' | 'completed_at' | 'consumer_reviewed_at' | 'consumer_reviewed_by' | 'consumer_reviewed_by_full_name' | 'consumer_reviewed_by_username' | 'cost' | 'created' | 'created_by_civil_number' | 'created_by_full_name' | 'created_by_username' | 'customer_name' | 'customer_slug' | 'customer_uuid' | 'error_message' | 'error_traceback' | 'fixed_price' | 'issue' | 'limits' | 'marketplace_resource_uuid' | 'modified' | 'new_cost_estimate' | 'new_plan_name' | 'new_plan_uuid' | 'offering' | 'offering_billable' | 'offering_description' | 'offering_image' | 'offering_name' | 'offering_plugin_options' | 'offering_shared' | 'offering_thumbnail' | 'offering_type' | 'offering_uuid' | 'old_cost_estimate' | 'old_plan_name' | 'old_plan_uuid' | 'output' | 'plan' | 'plan_description' | 'plan_name' | 'plan_unit' | 'plan_uuid' | 'project_description' | 'project_name' | 'project_slug' | 'project_uuid' | 'provider_name' | 'provider_reviewed_at' | 'provider_reviewed_by' | 'provider_reviewed_by_full_name' | 'provider_reviewed_by_username' | 'provider_uuid' | 'request_comment' | 'resource_name' | 'resource_type' | 'resource_uuid' | 'state' | 'termination_comment' | 'type' | 'uuid'>;
         /**
          * Modified after
          */
@@ -26242,7 +26263,7 @@ export type MarketplaceOrdersRetrieveData = {
         uuid: string;
     };
     query?: {
-        field?: Array<'accepting_terms_of_service' | 'activation_price' | 'attributes' | 'backend_id' | 'callback_url' | 'can_terminate' | 'category_icon' | 'category_title' | 'category_uuid' | 'completed_at' | 'consumer_reviewed_at' | 'consumer_reviewed_by' | 'consumer_reviewed_by_full_name' | 'consumer_reviewed_by_username' | 'cost' | 'created' | 'created_by_civil_number' | 'created_by_full_name' | 'created_by_username' | 'customer_name' | 'customer_slug' | 'customer_uuid' | 'error_message' | 'error_traceback' | 'fixed_price' | 'issue' | 'limits' | 'marketplace_resource_uuid' | 'modified' | 'new_cost_estimate' | 'new_plan_name' | 'new_plan_uuid' | 'offering' | 'offering_billable' | 'offering_description' | 'offering_image' | 'offering_name' | 'offering_plugin_options' | 'offering_shared' | 'offering_thumbnail' | 'offering_type' | 'offering_uuid' | 'old_cost_estimate' | 'old_plan_name' | 'old_plan_uuid' | 'output' | 'plan' | 'plan_description' | 'plan_name' | 'plan_unit' | 'plan_uuid' | 'project_description' | 'project_name' | 'project_slug' | 'project_uuid' | 'provider_name' | 'provider_reviewed_at' | 'provider_reviewed_by' | 'provider_reviewed_by_full_name' | 'provider_reviewed_by_username' | 'provider_uuid' | 'resource_name' | 'resource_type' | 'resource_uuid' | 'state' | 'termination_comment' | 'type' | 'uuid'>;
+        field?: Array<'accepting_terms_of_service' | 'activation_price' | 'attachment' | 'attributes' | 'backend_id' | 'callback_url' | 'can_terminate' | 'category_icon' | 'category_title' | 'category_uuid' | 'completed_at' | 'consumer_reviewed_at' | 'consumer_reviewed_by' | 'consumer_reviewed_by_full_name' | 'consumer_reviewed_by_username' | 'cost' | 'created' | 'created_by_civil_number' | 'created_by_full_name' | 'created_by_username' | 'customer_name' | 'customer_slug' | 'customer_uuid' | 'error_message' | 'error_traceback' | 'fixed_price' | 'issue' | 'limits' | 'marketplace_resource_uuid' | 'modified' | 'new_cost_estimate' | 'new_plan_name' | 'new_plan_uuid' | 'offering' | 'offering_billable' | 'offering_description' | 'offering_image' | 'offering_name' | 'offering_plugin_options' | 'offering_shared' | 'offering_thumbnail' | 'offering_type' | 'offering_uuid' | 'old_cost_estimate' | 'old_plan_name' | 'old_plan_uuid' | 'output' | 'plan' | 'plan_description' | 'plan_name' | 'plan_unit' | 'plan_uuid' | 'project_description' | 'project_name' | 'project_slug' | 'project_uuid' | 'provider_name' | 'provider_reviewed_at' | 'provider_reviewed_by' | 'provider_reviewed_by_full_name' | 'provider_reviewed_by_username' | 'provider_uuid' | 'request_comment' | 'resource_name' | 'resource_type' | 'resource_uuid' | 'state' | 'termination_comment' | 'type' | 'uuid'>;
     };
     url: '/api/marketplace-orders/{uuid}/';
 };
