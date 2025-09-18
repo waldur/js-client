@@ -11528,6 +11528,8 @@ export type ResourceUpdateLimitsRequest = {
     limits: {
         [key: string]: number;
     };
+    request_comment?: string | null;
+    attachment?: (Blob | File) | null;
 };
 
 export type ResourceUpdateRequest = {
