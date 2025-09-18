@@ -4084,6 +4084,10 @@ export type MergedPluginOptions = {
      */
     required_team_role_for_provisioning?: string;
     /**
+     * If set to True, orders will support comments and metadata
+     */
+    order_supports_comments_and_metadata?: boolean;
+    /**
      * If set, it will be used as a default MTU for the first network in a tenant
      */
     default_internal_network_mtu?: number;
@@ -4230,6 +4234,10 @@ export type MergedPluginOptionsRequest = {
      * Required user role in a project for provisioning of resources
      */
     required_team_role_for_provisioning?: string;
+    /**
+     * If set to True, orders will support comments and metadata
+     */
+    order_supports_comments_and_metadata?: boolean;
     /**
      * If set, it will be used as a default MTU for the first network in a tenant
      */
