@@ -4156,6 +4156,10 @@ export type MergedPluginOptions = {
      */
     deployment_mode?: DeploymentModeEnum;
     /**
+     * Regular expression to limit flavors list
+     */
+    flavors_regex?: string;
+    /**
      * List of UUID of OpenStack offerings where tenant can be created
      */
     openstack_offering_uuid_list?: Array<string>;
@@ -4306,6 +4310,10 @@ export type MergedPluginOptionsRequest = {
      * Rancher deployment mode
      */
     deployment_mode?: DeploymentModeEnum;
+    /**
+     * Regular expression to limit flavors list
+     */
+    flavors_regex?: string;
     /**
      * List of UUID of OpenStack offerings where tenant can be created
      */
