@@ -7483,6 +7483,14 @@ export type OptionFieldRequest = {
 
 export type OptionFieldTypeEnum = 'boolean' | 'integer' | 'money' | 'string' | 'text' | 'html_text' | 'select_string' | 'select_string_multi' | 'select_openstack_tenant' | 'select_multiple_openstack_tenants' | 'select_openstack_instance' | 'select_multiple_openstack_instances' | 'date' | 'time';
 
+export type OrderAttachment = {
+    attachment?: string | null;
+};
+
+export type OrderAttachmentRequest = {
+    attachment?: (Blob | File) | null;
+};
+
 export type OrderCreate = {
     offering: string;
     readonly offering_name: string;
@@ -7520,7 +7528,6 @@ export type OrderCreate = {
     readonly uuid: string;
     readonly created: string;
     readonly modified: string;
-    type?: RequestTypes;
     readonly resource_uuid: string | null;
     readonly resource_type: string | null;
     readonly resource_name: string;
@@ -7536,7 +7543,8 @@ export type OrderCreate = {
      */
     readonly completed_at: string | null;
     request_comment?: string | null;
-    attachment?: string | null;
+    readonly attachment: string | null;
+    type?: RequestTypes;
     readonly url: string;
     readonly created_by: string;
     /**
@@ -7569,11 +7577,10 @@ export type OrderCreateRequest = {
     limits?: {
         [key: string]: number;
     };
-    type?: RequestTypes;
     accepting_terms_of_service?: boolean;
     callback_url?: string | null;
     request_comment?: string | null;
-    attachment?: (Blob | File) | null;
+    type?: RequestTypes;
     project: string;
 };
 
@@ -7614,7 +7621,6 @@ export type OrderDetails = {
     readonly uuid?: string;
     readonly created?: string;
     readonly modified?: string;
-    type?: RequestTypes;
     readonly resource_uuid?: string | null;
     readonly resource_type?: string | null;
     readonly resource_name?: string;
@@ -7631,6 +7637,7 @@ export type OrderDetails = {
     readonly completed_at?: string | null;
     request_comment?: string | null;
     attachment?: string | null;
+    type?: RequestTypes;
     /**
      * Required. 128 characters or fewer. Lowercase letters, numbers and @/./+/-/_ characters
      */
@@ -8320,6 +8327,10 @@ export type PatchedOpenStackVolumeRequest = {
      * Indicates if this volume can be used to boot an instance
      */
     bootable?: boolean;
+};
+
+export type PatchedOrderAttachmentRequest = {
+    attachment?: (Blob | File) | null;
 };
 
 export type PatchedOrganizationGroupRequest = {
@@ -26274,6 +26285,54 @@ export type MarketplaceOrdersApproveByProviderResponses = {
      */
     200: unknown;
 };
+
+export type MarketplaceOrdersAttachmentDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-orders/{uuid}/attachment/';
+};
+
+export type MarketplaceOrdersAttachmentDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type MarketplaceOrdersAttachmentDestroyResponse = MarketplaceOrdersAttachmentDestroyResponses[keyof MarketplaceOrdersAttachmentDestroyResponses];
+
+export type MarketplaceOrdersAttachmentPartialUpdateData = {
+    body?: PatchedOrderAttachmentRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-orders/{uuid}/attachment/';
+};
+
+export type MarketplaceOrdersAttachmentPartialUpdateResponses = {
+    200: OrderAttachment;
+};
+
+export type MarketplaceOrdersAttachmentPartialUpdateResponse = MarketplaceOrdersAttachmentPartialUpdateResponses[keyof MarketplaceOrdersAttachmentPartialUpdateResponses];
+
+export type MarketplaceOrdersAttachmentUpdateData = {
+    body?: OrderAttachmentRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-orders/{uuid}/attachment/';
+};
+
+export type MarketplaceOrdersAttachmentUpdateResponses = {
+    200: OrderAttachment;
+};
+
+export type MarketplaceOrdersAttachmentUpdateResponse = MarketplaceOrdersAttachmentUpdateResponses[keyof MarketplaceOrdersAttachmentUpdateResponses];
 
 export type MarketplaceOrdersCancelData = {
     body?: never;
