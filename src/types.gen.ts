@@ -8329,10 +8329,6 @@ export type PatchedOpenStackVolumeRequest = {
     bootable?: boolean;
 };
 
-export type PatchedOrderAttachmentRequest = {
-    attachment?: (Blob | File) | null;
-};
-
 export type PatchedOrganizationGroupRequest = {
     name?: string;
     parent?: string | null;
@@ -26286,54 +26282,6 @@ export type MarketplaceOrdersApproveByProviderResponses = {
     200: unknown;
 };
 
-export type MarketplaceOrdersAttachmentDestroyData = {
-    body?: never;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/marketplace-orders/{uuid}/attachment/';
-};
-
-export type MarketplaceOrdersAttachmentDestroyResponses = {
-    /**
-     * No response body
-     */
-    204: void;
-};
-
-export type MarketplaceOrdersAttachmentDestroyResponse = MarketplaceOrdersAttachmentDestroyResponses[keyof MarketplaceOrdersAttachmentDestroyResponses];
-
-export type MarketplaceOrdersAttachmentPartialUpdateData = {
-    body?: PatchedOrderAttachmentRequest;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/marketplace-orders/{uuid}/attachment/';
-};
-
-export type MarketplaceOrdersAttachmentPartialUpdateResponses = {
-    200: OrderAttachment;
-};
-
-export type MarketplaceOrdersAttachmentPartialUpdateResponse = MarketplaceOrdersAttachmentPartialUpdateResponses[keyof MarketplaceOrdersAttachmentPartialUpdateResponses];
-
-export type MarketplaceOrdersAttachmentUpdateData = {
-    body?: OrderAttachmentRequest;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/marketplace-orders/{uuid}/attachment/';
-};
-
-export type MarketplaceOrdersAttachmentUpdateResponses = {
-    200: OrderAttachment;
-};
-
-export type MarketplaceOrdersAttachmentUpdateResponse = MarketplaceOrdersAttachmentUpdateResponses[keyof MarketplaceOrdersAttachmentUpdateResponses];
-
 export type MarketplaceOrdersCancelData = {
     body?: never;
     path: {
@@ -26349,6 +26297,24 @@ export type MarketplaceOrdersCancelResponses = {
      */
     200: unknown;
 };
+
+export type MarketplaceOrdersDeleteAttachmentData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-orders/{uuid}/delete_attachment/';
+};
+
+export type MarketplaceOrdersDeleteAttachmentResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type MarketplaceOrdersDeleteAttachmentResponse = MarketplaceOrdersDeleteAttachmentResponses[keyof MarketplaceOrdersDeleteAttachmentResponses];
 
 export type MarketplaceOrdersOfferingRetrieveData = {
     body?: never;
@@ -26469,6 +26435,21 @@ export type MarketplaceOrdersUnlinkResponses = {
 };
 
 export type MarketplaceOrdersUnlinkResponse = MarketplaceOrdersUnlinkResponses[keyof MarketplaceOrdersUnlinkResponses];
+
+export type MarketplaceOrdersUpdateAttachmentData = {
+    body?: OrderAttachmentRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-orders/{uuid}/update_attachment/';
+};
+
+export type MarketplaceOrdersUpdateAttachmentResponses = {
+    200: OrderAttachment;
+};
+
+export type MarketplaceOrdersUpdateAttachmentResponse = MarketplaceOrdersUpdateAttachmentResponses[keyof MarketplaceOrdersUpdateAttachmentResponses];
 
 export type MarketplacePlanComponentsListData = {
     body?: never;
