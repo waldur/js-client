@@ -2093,6 +2093,9 @@ export type CourseAccount = {
     project: string;
     readonly project_uuid: string;
     readonly project_name: string;
+    readonly project_slug: string;
+    readonly project_start_date: string;
+    readonly project_end_date: string;
     readonly user_uuid: string;
     readonly username: string;
     readonly customer_uuid: string;
@@ -23929,6 +23932,12 @@ export type MarketplaceCourseAccountsListData = {
     query?: {
         email?: string;
         /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-email' | '-modified' | '-project_end_date' | '-project_name' | '-project_start_date' | '-state' | '-username' | 'created' | 'email' | 'modified' | 'project_end_date' | 'project_name' | 'project_start_date' | 'state' | 'username'>;
+        /**
          * A page number within the paginated result set.
          */
         page?: number;
@@ -23936,6 +23945,10 @@ export type MarketplaceCourseAccountsListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        project_end_date_after?: string;
+        project_end_date_before?: string;
+        project_start_date_after?: string;
+        project_start_date_before?: string;
         project_uuid?: string;
         state?: Array<'Closed' | 'Erred' | 'OK'>;
         username?: string;
@@ -23955,6 +23968,12 @@ export type MarketplaceCourseAccountsCountData = {
     query?: {
         email?: string;
         /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-email' | '-modified' | '-project_end_date' | '-project_name' | '-project_start_date' | '-state' | '-username' | 'created' | 'email' | 'modified' | 'project_end_date' | 'project_name' | 'project_start_date' | 'state' | 'username'>;
+        /**
          * A page number within the paginated result set.
          */
         page?: number;
@@ -23962,6 +23981,10 @@ export type MarketplaceCourseAccountsCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        project_end_date_after?: string;
+        project_end_date_before?: string;
+        project_start_date_after?: string;
+        project_start_date_before?: string;
         project_uuid?: string;
         state?: Array<'Closed' | 'Erred' | 'OK'>;
         username?: string;
@@ -31123,6 +31146,12 @@ export type MarketplaceServiceProvidersCourseAccountsListData = {
     query?: {
         email?: string;
         /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-email' | '-modified' | '-project_end_date' | '-project_name' | '-project_start_date' | '-state' | '-username' | 'created' | 'email' | 'modified' | 'project_end_date' | 'project_name' | 'project_start_date' | 'state' | 'username'>;
+        /**
          * A page number within the paginated result set.
          */
         page?: number;
@@ -31130,6 +31159,10 @@ export type MarketplaceServiceProvidersCourseAccountsListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        project_end_date_after?: string;
+        project_end_date_before?: string;
+        project_start_date_after?: string;
+        project_start_date_before?: string;
         project_uuid?: string;
         state?: Array<'Closed' | 'Erred' | 'OK'>;
         username?: string;
