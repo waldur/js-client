@@ -2959,6 +2959,7 @@ export type GroupInvitation = {
     readonly role_description: string;
     readonly created_by_full_name: string;
     readonly created_by_username: string;
+    readonly created_by_image: string;
     readonly url: string;
     readonly uuid: string;
     role: string;
@@ -3223,6 +3224,7 @@ export type Invitation = {
     readonly role_description: string;
     readonly created_by_full_name: string;
     readonly created_by_username: string;
+    readonly created_by_image: string;
     readonly url: string;
     readonly uuid: string;
     role: string;
@@ -9786,43 +9788,6 @@ export type ProviderOfferingDetails = {
     readonly google_calendar_link?: string | null;
 };
 
-export type ProviderOfferingDetailsRequest = {
-    name: string;
-    slug?: string;
-    description?: string;
-    full_description?: string;
-    privacy_policy_link?: string;
-    /**
-     * Publicly accessible offering access URL
-     */
-    access_url?: string;
-    customer?: string | null;
-    category: string;
-    attributes?: unknown;
-    components?: Array<OfferingComponentRequest>;
-    vendor_details?: string;
-    getting_started?: string;
-    integration_guide?: string;
-    thumbnail?: (Blob | File) | null;
-    plans?: Array<BaseProviderPlanRequest>;
-    type: string;
-    /**
-     * Accessible to all customers.
-     */
-    shared?: boolean;
-    /**
-     * Purchase and usage is invoiced.
-     */
-    billable?: boolean;
-    datacite_doi?: string;
-    latitude?: number | null;
-    longitude?: number | null;
-    country?: CountryEnum | BlankEnum;
-    backend_id?: string;
-    image?: (Blob | File) | null;
-    backend_metadata?: unknown;
-};
-
 export type ProviderPlanDetails = {
     readonly url: string;
     readonly uuid: string;
@@ -11547,7 +11512,6 @@ export type ResourceUpdateLimitsRequest = {
         [key: string]: number;
     };
     request_comment?: string | null;
-    attachment?: (Blob | File) | null;
 };
 
 export type ResourceUpdateRequest = {
@@ -12814,6 +12778,7 @@ export type VisibleInvitationDetails = {
     readonly role_description: string;
     readonly created_by_full_name: string;
     readonly created_by_username: string;
+    readonly created_by_image: string;
     /**
      * Invitation link will be sent to this email. Note that user can accept invitation with different email.
      */
@@ -28189,6 +28154,23 @@ export type MarketplaceProviderOfferingsImportableResourcesListResponses = {
 
 export type MarketplaceProviderOfferingsImportableResourcesListResponse = MarketplaceProviderOfferingsImportableResourcesListResponses[keyof MarketplaceProviderOfferingsImportableResourcesListResponses];
 
+export type MarketplaceProviderOfferingsListCourseAccountsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        field?: Array<'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'has_compliance_requirements' | 'image' | 'integration_guide' | 'integration_status' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_options' | 'roles' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'state' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'uuid' | 'vendor_details'>;
+    };
+    url: '/api/marketplace-provider-offerings/{uuid}/list_course_accounts/';
+};
+
+export type MarketplaceProviderOfferingsListCourseAccountsRetrieveResponses = {
+    200: ProviderOfferingDetails;
+};
+
+export type MarketplaceProviderOfferingsListCourseAccountsRetrieveResponse = MarketplaceProviderOfferingsListCourseAccountsRetrieveResponses[keyof MarketplaceProviderOfferingsListCourseAccountsRetrieveResponses];
+
 export type MarketplaceProviderOfferingsListCustomerProjectsListData = {
     body?: never;
     path: {
@@ -28406,7 +28388,7 @@ export type MarketplaceProviderOfferingsPauseResponses = {
 export type MarketplaceProviderOfferingsPauseResponse = MarketplaceProviderOfferingsPauseResponses[keyof MarketplaceProviderOfferingsPauseResponses];
 
 export type MarketplaceProviderOfferingsRefreshOfferingUsernamesData = {
-    body: ProviderOfferingDetailsRequest;
+    body?: never;
     path: {
         uuid: string;
     };
@@ -45894,6 +45876,7 @@ export type UserInvitationsListData = {
         civil_number?: string;
         customer_uuid?: string;
         email?: string;
+        email_exact?: string;
         /**
          * Ordering
          *
@@ -45931,6 +45914,7 @@ export type UserInvitationsCountData = {
         civil_number?: string;
         customer_uuid?: string;
         email?: string;
+        email_exact?: string;
         /**
          * Ordering
          *
