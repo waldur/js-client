@@ -12616,6 +12616,38 @@ export type UserAuthToken = {
     readonly token: string;
 };
 
+export type UserChecklistCompletion = {
+    readonly uuid: string;
+    offering_user: OfferingUser;
+    readonly offering_user_uuid: string | null;
+    readonly offering_name: string | null;
+    readonly offering_uuid: string | null;
+    readonly checklist_uuid: string;
+    readonly checklist_name: string;
+    readonly checklist_description: string;
+    /**
+     * Whether all required questions have been answered
+     */
+    readonly is_completed: boolean;
+    readonly completion_percentage: number;
+    readonly unanswered_required_questions: number;
+    /**
+     * Whether any answers triggered review requirements
+     */
+    readonly requires_review: boolean;
+    /**
+     * User who reviewed the checklist completion
+     */
+    readonly reviewed_by: number | null;
+    readonly reviewed_at: string | null;
+    /**
+     * Notes from the reviewer
+     */
+    readonly review_notes: string;
+    readonly created: string;
+    readonly modified: string;
+};
+
 export type UserConsentInfo = {
     readonly uuid: string;
     readonly version: string;
@@ -25444,6 +25476,115 @@ export type MarketplaceOfferingUsagePoliciesActionsCountResponses = {
      */
     200: unknown;
 };
+
+export type MarketplaceOfferingUserChecklistCompletionsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Created after
+         */
+        created?: string;
+        is_completed?: boolean;
+        /**
+         * Modified after
+         */
+        modified?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-is_completed' | '-modified' | 'is_completed' | 'modified'>;
+        /**
+         * Filter by offering UUID
+         */
+        offering_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Filter by user UUID
+         */
+        user_uuid?: string;
+    };
+    url: '/api/marketplace-offering-user-checklist-completions/';
+};
+
+export type MarketplaceOfferingUserChecklistCompletionsListResponses = {
+    200: Array<UserChecklistCompletion>;
+};
+
+export type MarketplaceOfferingUserChecklistCompletionsListResponse = MarketplaceOfferingUserChecklistCompletionsListResponses[keyof MarketplaceOfferingUserChecklistCompletionsListResponses];
+
+export type MarketplaceOfferingUserChecklistCompletionsCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Created after
+         */
+        created?: string;
+        is_completed?: boolean;
+        /**
+         * Modified after
+         */
+        modified?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-is_completed' | '-modified' | 'is_completed' | 'modified'>;
+        /**
+         * Filter by offering UUID
+         */
+        offering_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Filter by user UUID
+         */
+        user_uuid?: string;
+    };
+    url: '/api/marketplace-offering-user-checklist-completions/';
+};
+
+export type MarketplaceOfferingUserChecklistCompletionsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type MarketplaceOfferingUserChecklistCompletionsRetrieveData = {
+    body?: never;
+    path: {
+        /**
+         * A unique integer value identifying this Checklist completion.
+         */
+        id: number;
+    };
+    query?: never;
+    url: '/api/marketplace-offering-user-checklist-completions/{id}/';
+};
+
+export type MarketplaceOfferingUserChecklistCompletionsRetrieveResponses = {
+    200: UserChecklistCompletion;
+};
+
+export type MarketplaceOfferingUserChecklistCompletionsRetrieveResponse = MarketplaceOfferingUserChecklistCompletionsRetrieveResponses[keyof MarketplaceOfferingUserChecklistCompletionsRetrieveResponses];
 
 export type MarketplaceOfferingUserRolesListData = {
     body?: never;
