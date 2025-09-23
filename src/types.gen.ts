@@ -5245,6 +5245,10 @@ export type OfferingBackendMetadataRequest = {
     backend_metadata?: unknown;
 };
 
+export type OfferingComplianceChecklistUpdateRequest = {
+    compliance_checklist?: string | null;
+};
+
 export type OfferingComponent = {
     readonly uuid?: string;
     billing_type?: BillingTypeEnum;
@@ -12586,6 +12590,8 @@ export type UserChecklistCompletion = {
     readonly offering_user_uuid: string | null;
     readonly offering_name: string | null;
     readonly offering_uuid: string | null;
+    readonly customer_provider_uuid: string | null;
+    readonly customer_provider_name: string | null;
     readonly checklist_uuid: string;
     readonly checklist_name: string;
     readonly checklist_description: string;
@@ -28494,6 +28500,22 @@ export type MarketplaceProviderOfferingsUpdateAttributesData = {
 };
 
 export type MarketplaceProviderOfferingsUpdateAttributesResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type MarketplaceProviderOfferingsUpdateComplianceChecklistData = {
+    body?: OfferingComplianceChecklistUpdateRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-provider-offerings/{uuid}/update_compliance_checklist/';
+};
+
+export type MarketplaceProviderOfferingsUpdateComplianceChecklistResponses = {
     /**
      * No response body
      */
