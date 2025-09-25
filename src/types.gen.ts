@@ -5794,7 +5794,7 @@ export type OfferingUser = {
      * Signal to service if the user account is restricted or not
      */
     readonly is_restricted?: boolean;
-    state?: OfferingUserStateEnum;
+    state?: OfferingUserState;
     /**
      * Additional comment for pending states like validation or account linking
      */
@@ -5842,7 +5842,7 @@ export type OfferingUserServiceProviderComment = {
     service_provider_comment_url?: string;
 };
 
-export type OfferingUserStateEnum = 'Requested' | 'Creating' | 'Pending account linking' | 'Pending additional validation' | 'OK' | 'Requested deletion' | 'Deleting' | 'Deleted' | 'Error creating' | 'Error deleting';
+export type OfferingUserState = 'Requested' | 'Creating' | 'Pending account linking' | 'Pending additional validation' | 'OK' | 'Requested deletion' | 'Deleting' | 'Deleted' | 'Error creating' | 'Error deleting';
 
 export type OfferingUserStateTransitionRequest = {
     comment?: string;
@@ -9394,6 +9394,7 @@ export type ProjectUser = {
     readonly role: string;
     readonly expiration_time: string | null;
     readonly offering_user_username: string | null;
+    offering_user_state: OfferingUserState;
 };
 
 export type ProjectsLimitsGroupedByIndustryFlag = {
@@ -9719,6 +9720,7 @@ export type ProviderOffering = {
      */
     resource_options?: unknown;
     secret_options?: MergedSecretOptions;
+    thumbnail?: string | null;
 };
 
 export type ProviderOfferingCosts = {
@@ -16439,7 +16441,7 @@ export type BookingResourcesListData = {
          */
         o?: Array<'-created' | '-name' | '-schedules' | '-type' | 'created' | 'name' | 'schedules' | 'type'>;
         offering?: string;
-        offering_billable?: string;
+        offering_billable?: boolean;
         /**
          * Offering shared
          */
@@ -16532,7 +16534,7 @@ export type BookingResourcesCountData = {
          */
         o?: Array<'-created' | '-name' | '-schedules' | '-type' | 'created' | 'name' | 'schedules' | 'type'>;
         offering?: string;
-        offering_billable?: string;
+        offering_billable?: boolean;
         /**
          * Offering shared
          */
@@ -29033,7 +29035,7 @@ export type MarketplaceProviderResourcesListData = {
          */
         o?: Array<'-created' | '-name' | '-project_name' | '-state' | 'created' | 'name' | 'project_name' | 'state'>;
         offering?: string;
-        offering_billable?: string;
+        offering_billable?: boolean;
         /**
          * Offering shared
          */
@@ -29125,7 +29127,7 @@ export type MarketplaceProviderResourcesCountData = {
          */
         o?: Array<'-created' | '-name' | '-project_name' | '-state' | 'created' | 'name' | 'project_name' | 'state'>;
         offering?: string;
-        offering_billable?: string;
+        offering_billable?: boolean;
         /**
          * Offering shared
          */
@@ -30137,7 +30139,7 @@ export type MarketplaceResourcesListData = {
          */
         o?: Array<'-created' | '-name' | '-project_name' | '-state' | 'created' | 'name' | 'project_name' | 'state'>;
         offering?: string;
-        offering_billable?: string;
+        offering_billable?: boolean;
         /**
          * Offering shared
          */
@@ -30229,7 +30231,7 @@ export type MarketplaceResourcesCountData = {
          */
         o?: Array<'-created' | '-name' | '-project_name' | '-state' | 'created' | 'name' | 'project_name' | 'state'>;
         offering?: string;
-        offering_billable?: string;
+        offering_billable?: boolean;
         /**
          * Offering shared
          */
@@ -31588,7 +31590,7 @@ export type MarketplaceServiceProvidersOfferingsListData = {
         customer?: string;
         customer_uuid?: string;
         description?: string;
-        field?: Array<'billing_price_estimate' | 'category_title' | 'components' | 'customer_uuid' | 'name' | 'options' | 'plans' | 'resource_options' | 'resources_count' | 'secret_options' | 'slug' | 'state' | 'type' | 'uuid'>;
+        field?: Array<'billing_price_estimate' | 'category_title' | 'components' | 'customer_uuid' | 'name' | 'options' | 'plans' | 'resource_options' | 'resources_count' | 'secret_options' | 'slug' | 'state' | 'thumbnail' | 'type' | 'uuid'>;
         /**
          * Has Active Terms of Service
          */
@@ -45828,6 +45830,7 @@ export type UserGroupInvitationsListData = {
     query?: {
         customer_uuid?: string;
         is_active?: boolean;
+        is_public?: boolean;
         /**
          * Ordering
          *
@@ -45861,6 +45864,7 @@ export type UserGroupInvitationsCountData = {
     query?: {
         customer_uuid?: string;
         is_active?: boolean;
+        is_public?: boolean;
         /**
          * Ordering
          *
