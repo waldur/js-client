@@ -1885,6 +1885,7 @@ export type ConstanceSettings = {
     OIDC_CLIENT_SECRET?: string;
     OIDC_USER_FIELD?: string;
     OIDC_CACHE_TIMEOUT?: number;
+    OIDC_BLOCK_CREATION_OF_UNINVITED_USERS?: boolean;
     DEACTIVATE_USER_IF_NO_ROLES?: boolean;
     MAINTENANCE_ANNOUNCEMENT_NOTIFY_BEFORE_MINUTES?: number;
     MAINTENANCE_ANNOUNCEMENT_NOTIFY_SYSTEM?: Array<string>;
@@ -2022,6 +2023,7 @@ export type ConstanceSettingsRequest = {
     OIDC_CLIENT_SECRET?: string;
     OIDC_USER_FIELD?: string;
     OIDC_CACHE_TIMEOUT?: number;
+    OIDC_BLOCK_CREATION_OF_UNINVITED_USERS?: boolean;
     DEACTIVATE_USER_IF_NO_ROLES?: boolean;
     MAINTENANCE_ANNOUNCEMENT_NOTIFY_BEFORE_MINUTES?: number;
     MAINTENANCE_ANNOUNCEMENT_NOTIFY_SYSTEM?: Array<string>;
@@ -13856,6 +13858,7 @@ export type ConstanceSettingsRequestForm = {
     OIDC_CLIENT_SECRET?: string;
     OIDC_USER_FIELD?: string;
     OIDC_CACHE_TIMEOUT?: number;
+    OIDC_BLOCK_CREATION_OF_UNINVITED_USERS?: boolean;
     DEACTIVATE_USER_IF_NO_ROLES?: boolean;
     MAINTENANCE_ANNOUNCEMENT_NOTIFY_BEFORE_MINUTES?: number;
     MAINTENANCE_ANNOUNCEMENT_NOTIFY_SYSTEM?: Array<string>;
@@ -13993,6 +13996,7 @@ export type ConstanceSettingsRequestMultipart = {
     OIDC_CLIENT_SECRET?: string;
     OIDC_USER_FIELD?: string;
     OIDC_CACHE_TIMEOUT?: number;
+    OIDC_BLOCK_CREATION_OF_UNINVITED_USERS?: boolean;
     DEACTIVATE_USER_IF_NO_ROLES?: boolean;
     MAINTENANCE_ANNOUNCEMENT_NOTIFY_BEFORE_MINUTES?: number;
     MAINTENANCE_ANNOUNCEMENT_NOTIFY_SYSTEM?: Array<string>;
