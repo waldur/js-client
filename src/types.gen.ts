@@ -9554,6 +9554,8 @@ export type ProposalReview = {
     comment_project_supporting_documentation?: string | null;
     comment_resource_requests?: string | null;
     comment_team?: string | null;
+    readonly created: string;
+    readonly modified: string;
 };
 
 export type ProposalReviewRequest = {
