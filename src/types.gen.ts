@@ -13236,6 +13236,1122 @@ export type WebhookEventEnum = 'jira:issue_updated' | 'jira:issue_deleted' | 'co
 
 export type WidgetEnum = 'csv' | 'filesize' | 'attached_instance';
 
+export type CallManagingOrganisationRequestForm = {
+    description?: string;
+    customer: string;
+    image?: (Blob | File) | null;
+};
+
+export type CallManagingOrganisationRequestMultipart = {
+    description?: string;
+    customer: string;
+    image?: (Blob | File) | null;
+};
+
+export type PatchedCallManagingOrganisationRequestForm = {
+    description?: string;
+    image?: (Blob | File) | null;
+};
+
+export type PatchedCallManagingOrganisationRequestMultipart = {
+    description?: string;
+    image?: (Blob | File) | null;
+};
+
+export type ChecklistCategoryRequestForm = {
+    icon?: (Blob | File) | null;
+    name: string;
+    description?: string;
+};
+
+export type ChecklistCategoryRequestMultipart = {
+    icon?: (Blob | File) | null;
+    name: string;
+    description?: string;
+};
+
+export type PatchedChecklistCategoryRequestForm = {
+    icon?: (Blob | File) | null;
+    name?: string;
+    description?: string;
+};
+
+export type PatchedChecklistCategoryRequestMultipart = {
+    icon?: (Blob | File) | null;
+    name?: string;
+    description?: string;
+};
+
+export type CustomerRequestForm = {
+    /**
+     * Organization identifier in another application.
+     */
+    backend_id?: string;
+    image?: (Blob | File) | null;
+    name: string;
+    slug?: string;
+    native_name?: string;
+    abbreviation?: string;
+    description?: string;
+    contact_details?: string;
+    /**
+     * Email address
+     */
+    email?: string;
+    phone_number?: string;
+    registration_code?: string;
+    homepage?: string;
+    /**
+     * VAT number
+     */
+    vat_code?: string;
+    postal?: string;
+    address?: string;
+    bank_name?: string;
+    latitude?: number | null;
+    longitude?: number | null;
+    bank_account?: string;
+    country?: CountryEnum | BlankEnum;
+};
+
+export type CustomerRequestMultipart = {
+    /**
+     * Organization identifier in another application.
+     */
+    backend_id?: string;
+    image?: (Blob | File) | null;
+    name: string;
+    slug?: string;
+    native_name?: string;
+    abbreviation?: string;
+    description?: string;
+    contact_details?: string;
+    /**
+     * Email address
+     */
+    email?: string;
+    phone_number?: string;
+    registration_code?: string;
+    homepage?: string;
+    /**
+     * VAT number
+     */
+    vat_code?: string;
+    postal?: string;
+    address?: string;
+    bank_name?: string;
+    latitude?: number | null;
+    longitude?: number | null;
+    bank_account?: string;
+    country?: CountryEnum | BlankEnum;
+};
+
+export type PatchedCustomerRequestForm = {
+    /**
+     * Organization identifier in another application.
+     */
+    backend_id?: string;
+    image?: (Blob | File) | null;
+    name?: string;
+    slug?: string;
+    native_name?: string;
+    abbreviation?: string;
+    description?: string;
+    contact_details?: string;
+    /**
+     * Email address
+     */
+    email?: string;
+    phone_number?: string;
+    registration_code?: string;
+    homepage?: string;
+    /**
+     * VAT number
+     */
+    vat_code?: string;
+    postal?: string;
+    address?: string;
+    bank_name?: string;
+    latitude?: number | null;
+    longitude?: number | null;
+    bank_account?: string;
+    country?: CountryEnum | BlankEnum;
+};
+
+export type PatchedCustomerRequestMultipart = {
+    /**
+     * Organization identifier in another application.
+     */
+    backend_id?: string;
+    image?: (Blob | File) | null;
+    name?: string;
+    slug?: string;
+    native_name?: string;
+    abbreviation?: string;
+    description?: string;
+    contact_details?: string;
+    /**
+     * Email address
+     */
+    email?: string;
+    phone_number?: string;
+    registration_code?: string;
+    homepage?: string;
+    /**
+     * VAT number
+     */
+    vat_code?: string;
+    postal?: string;
+    address?: string;
+    bank_name?: string;
+    latitude?: number | null;
+    longitude?: number | null;
+    bank_account?: string;
+    country?: CountryEnum | BlankEnum;
+};
+
+export type ExternalLinkRequestForm = {
+    name: string;
+    description?: string;
+    link: string;
+    image?: (Blob | File) | null;
+};
+
+export type ExternalLinkRequestMultipart = {
+    name: string;
+    description?: string;
+    link: string;
+    image?: (Blob | File) | null;
+};
+
+export type PatchedExternalLinkRequestForm = {
+    name?: string;
+    description?: string;
+    link?: string;
+    image?: (Blob | File) | null;
+};
+
+export type PatchedExternalLinkRequestMultipart = {
+    name?: string;
+    description?: string;
+    link?: string;
+    image?: (Blob | File) | null;
+};
+
+export type PaidRequestForm = {
+    date: string;
+    proof?: Blob | File;
+};
+
+export type PaidRequestMultipart = {
+    date: string;
+    proof?: Blob | File;
+};
+
+export type MarketplaceCategoryRequestForm = {
+    title: string;
+    description?: string;
+    icon?: (Blob | File) | null;
+    /**
+     * Set to "true" if this category is for OpenStack VM. Only one category can have "true" value.
+     */
+    default_vm_category?: boolean;
+    /**
+     * Set to true if this category is for OpenStack Volume. Only one category can have "true" value.
+     */
+    default_volume_category?: boolean;
+    /**
+     * Set to true if this category is for OpenStack Tenant. Only one category can have "true" value.
+     */
+    default_tenant_category?: boolean;
+    group?: string | null;
+};
+
+export type MarketplaceCategoryRequestMultipart = {
+    title: string;
+    description?: string;
+    icon?: (Blob | File) | null;
+    /**
+     * Set to "true" if this category is for OpenStack VM. Only one category can have "true" value.
+     */
+    default_vm_category?: boolean;
+    /**
+     * Set to true if this category is for OpenStack Volume. Only one category can have "true" value.
+     */
+    default_volume_category?: boolean;
+    /**
+     * Set to true if this category is for OpenStack Tenant. Only one category can have "true" value.
+     */
+    default_tenant_category?: boolean;
+    group?: string | null;
+};
+
+export type PatchedMarketplaceCategoryRequestForm = {
+    title?: string;
+    description?: string;
+    icon?: (Blob | File) | null;
+    /**
+     * Set to "true" if this category is for OpenStack VM. Only one category can have "true" value.
+     */
+    default_vm_category?: boolean;
+    /**
+     * Set to true if this category is for OpenStack Volume. Only one category can have "true" value.
+     */
+    default_volume_category?: boolean;
+    /**
+     * Set to true if this category is for OpenStack Tenant. Only one category can have "true" value.
+     */
+    default_tenant_category?: boolean;
+    group?: string | null;
+};
+
+export type PatchedMarketplaceCategoryRequestMultipart = {
+    title?: string;
+    description?: string;
+    icon?: (Blob | File) | null;
+    /**
+     * Set to "true" if this category is for OpenStack VM. Only one category can have "true" value.
+     */
+    default_vm_category?: boolean;
+    /**
+     * Set to true if this category is for OpenStack Volume. Only one category can have "true" value.
+     */
+    default_volume_category?: boolean;
+    /**
+     * Set to true if this category is for OpenStack Tenant. Only one category can have "true" value.
+     */
+    default_tenant_category?: boolean;
+    group?: string | null;
+};
+
+export type CategoryGroupRequestForm = {
+    title: string;
+    description?: string;
+    icon?: (Blob | File) | null;
+};
+
+export type CategoryGroupRequestMultipart = {
+    title: string;
+    description?: string;
+    icon?: (Blob | File) | null;
+};
+
+export type PatchedCategoryGroupRequestForm = {
+    title?: string;
+    description?: string;
+    icon?: (Blob | File) | null;
+};
+
+export type PatchedCategoryGroupRequestMultipart = {
+    title?: string;
+    description?: string;
+    icon?: (Blob | File) | null;
+};
+
+export type OfferingFileRequestForm = {
+    name: string;
+    offering: string;
+    file: Blob | File;
+};
+
+export type OfferingFileRequestMultipart = {
+    name: string;
+    offering: string;
+    file: Blob | File;
+};
+
+export type OrderAttachmentRequestForm = {
+    attachment?: (Blob | File) | null;
+};
+
+export type OrderAttachmentRequestMultipart = {
+    attachment?: (Blob | File) | null;
+};
+
+export type OfferingCreateRequestForm = {
+    name: string;
+    slug?: string;
+    description?: string;
+    full_description?: string;
+    privacy_policy_link?: string;
+    /**
+     * Publicly accessible offering access URL
+     */
+    access_url?: string;
+    customer?: string | null;
+    category: string;
+    attributes?: unknown;
+    options?: OfferingOptionsRequest;
+    resource_options?: OfferingOptionsRequest;
+    components?: Array<OfferingComponentRequest>;
+    vendor_details?: string;
+    getting_started?: string;
+    integration_guide?: string;
+    thumbnail?: (Blob | File) | null;
+    plans?: Array<BaseProviderPlanRequest>;
+    type: string;
+    /**
+     * Accessible to all customers.
+     */
+    shared?: boolean;
+    /**
+     * Purchase and usage is invoiced.
+     */
+    billable?: boolean;
+    datacite_doi?: string;
+    latitude?: number | null;
+    longitude?: number | null;
+    country?: CountryEnum | BlankEnum;
+    backend_id?: string;
+    image?: (Blob | File) | null;
+    backend_metadata?: unknown;
+    /**
+     * Checklist that offering users must complete for compliance
+     */
+    compliance_checklist?: string | null;
+    limits?: {
+        [key: string]: OfferingComponentLimitRequest;
+    };
+};
+
+export type OfferingCreateRequestMultipart = {
+    name: string;
+    slug?: string;
+    description?: string;
+    full_description?: string;
+    privacy_policy_link?: string;
+    /**
+     * Publicly accessible offering access URL
+     */
+    access_url?: string;
+    customer?: string | null;
+    category: string;
+    attributes?: unknown;
+    options?: OfferingOptionsRequest;
+    resource_options?: OfferingOptionsRequest;
+    components?: Array<OfferingComponentRequest>;
+    vendor_details?: string;
+    getting_started?: string;
+    integration_guide?: string;
+    thumbnail?: (Blob | File) | null;
+    plans?: Array<BaseProviderPlanRequest>;
+    type: string;
+    /**
+     * Accessible to all customers.
+     */
+    shared?: boolean;
+    /**
+     * Purchase and usage is invoiced.
+     */
+    billable?: boolean;
+    datacite_doi?: string;
+    latitude?: number | null;
+    longitude?: number | null;
+    country?: CountryEnum | BlankEnum;
+    backend_id?: string;
+    image?: (Blob | File) | null;
+    backend_metadata?: unknown;
+    /**
+     * Checklist that offering users must complete for compliance
+     */
+    compliance_checklist?: string | null;
+    limits?: {
+        [key: string]: OfferingComponentLimitRequest;
+    };
+};
+
+export type OfferingImageRequestForm = {
+    image: Blob | File;
+};
+
+export type OfferingImageRequestMultipart = {
+    image: Blob | File;
+};
+
+export type OfferingThumbnailRequestForm = {
+    thumbnail: Blob | File;
+};
+
+export type OfferingThumbnailRequestMultipart = {
+    thumbnail: Blob | File;
+};
+
+export type ScreenshotRequestForm = {
+    name: string;
+    description?: string;
+    image: Blob | File;
+    offering: string;
+};
+
+export type ScreenshotRequestMultipart = {
+    name: string;
+    description?: string;
+    image: Blob | File;
+    offering: string;
+};
+
+export type ServiceProviderRequestForm = {
+    description?: string;
+    enable_notifications?: boolean;
+    customer: string;
+    image?: (Blob | File) | null;
+};
+
+export type ServiceProviderRequestMultipart = {
+    description?: string;
+    enable_notifications?: boolean;
+    customer: string;
+    image?: (Blob | File) | null;
+};
+
+export type PatchedServiceProviderRequestForm = {
+    description?: string;
+    enable_notifications?: boolean;
+    image?: (Blob | File) | null;
+};
+
+export type PatchedServiceProviderRequestMultipart = {
+    description?: string;
+    enable_notifications?: boolean;
+    image?: (Blob | File) | null;
+};
+
+export type ConstanceSettingsRequestForm = {
+    SITE_NAME?: string;
+    SITE_DESCRIPTION?: string;
+    HOMEPORT_URL?: string;
+    RANCHER_USERNAME_INPUT_LABEL?: string;
+    SITE_ADDRESS?: string;
+    SITE_EMAIL?: string;
+    SITE_PHONE?: string;
+    CURRENCY_NAME?: string;
+    THUMBNAIL_SIZE?: string;
+    ANONYMOUS_USER_CAN_VIEW_OFFERINGS?: boolean;
+    ANONYMOUS_USER_CAN_VIEW_PLANS?: boolean;
+    NOTIFY_STAFF_ABOUT_APPROVALS?: boolean;
+    NOTIFY_ABOUT_RESOURCE_CHANGE?: boolean;
+    DISABLE_SENDING_NOTIFICATIONS_ABOUT_RESOURCE_UPDATE?: boolean;
+    MARKETPLACE_LANDING_PAGE?: string;
+    ENABLE_STALE_RESOURCE_NOTIFICATIONS?: boolean;
+    TELEMETRY_URL?: string;
+    TELEMETRY_VERSION?: number;
+    SCRIPT_RUN_MODE?: string;
+    DOCKER_CLIENT?: string;
+    DOCKER_RUN_OPTIONS?: string;
+    DOCKER_SCRIPT_DIR?: string;
+    DOCKER_REMOVE_CONTAINER?: boolean;
+    DOCKER_IMAGES?: string;
+    DOCKER_VOLUME_NAME?: string;
+    K8S_NAMESPACE?: string;
+    K8S_CONFIG_PATH?: string;
+    K8S_JOB_TIMEOUT?: number;
+    ENABLE_STRICT_CHECK_ACCEPTING_INVITATION?: boolean;
+    INVITATION_DISABLE_MULTIPLE_ROLES?: boolean;
+    DEFAULT_IDP?: string;
+    DOCS_URL?: string;
+    SHORT_PAGE_TITLE?: string;
+    FULL_PAGE_TITLE?: string;
+    BRAND_COLOR?: string;
+    HERO_LINK_LABEL?: string;
+    HERO_LINK_URL?: string;
+    SUPPORT_PORTAL_URL?: string;
+    COMMON_FOOTER_TEXT?: string;
+    COMMON_FOOTER_HTML?: string;
+    LANGUAGE_CHOICES?: string;
+    DISABLE_DARK_THEME?: boolean;
+    POWERED_BY_LOGO?: (Blob | File) | null;
+    HERO_IMAGE?: (Blob | File) | null;
+    MARKETPLACE_HERO_IMAGE?: (Blob | File) | null;
+    CALL_MANAGEMENT_HERO_IMAGE?: (Blob | File) | null;
+    SIDEBAR_LOGO?: (Blob | File) | null;
+    SIDEBAR_LOGO_DARK?: (Blob | File) | null;
+    SIDEBAR_LOGO_MOBILE?: (Blob | File) | null;
+    SIDEBAR_STYLE?: string;
+    SITE_LOGO?: (Blob | File) | null;
+    LOGIN_LOGO?: (Blob | File) | null;
+    FAVICON?: (Blob | File) | null;
+    OFFERING_LOGO_PLACEHOLDER?: (Blob | File) | null;
+    WALDUR_SUPPORT_ENABLED?: boolean;
+    WALDUR_SUPPORT_ACTIVE_BACKEND_TYPE?: string;
+    WALDUR_SUPPORT_DISPLAY_REQUEST_TYPE?: boolean;
+    ATLASSIAN_USE_OLD_API?: boolean;
+    ATLASSIAN_USE_TEENAGE_API?: boolean;
+    ATLASSIAN_USE_AUTOMATIC_REQUEST_MAPPING?: boolean;
+    ATLASSIAN_MAP_WALDUR_USERS_TO_SERVICEDESK_AGENTS?: boolean;
+    ATLASSIAN_STRANGE_SETTING?: number;
+    ATLASSIAN_API_URL?: string;
+    ATLASSIAN_USERNAME?: string;
+    ATLASSIAN_PASSWORD?: string;
+    ATLASSIAN_EMAIL?: string;
+    ATLASSIAN_TOKEN?: string;
+    ATLASSIAN_VERIFY_SSL?: boolean;
+    ATLASSIAN_PROJECT_ID?: string;
+    ATLASSIAN_SHARED_USERNAME?: boolean;
+    ATLASSIAN_CUSTOM_ISSUE_FIELD_MAPPING_ENABLED?: boolean;
+    ATLASSIAN_DEFAULT_OFFERING_ISSUE_TYPE?: string;
+    ATLASSIAN_EXCLUDED_ATTACHMENT_TYPES?: string;
+    ATLASSIAN_PULL_PRIORITIES?: boolean;
+    ATLASSIAN_ISSUE_TYPES?: string;
+    ATLASSIAN_DESCRIPTION_TEMPLATE?: string;
+    ATLASSIAN_SUMMARY_TEMPLATE?: string;
+    ATLASSIAN_AFFECTED_RESOURCE_FIELD?: string;
+    ATLASSIAN_IMPACT_FIELD?: string;
+    ATLASSIAN_ORGANISATION_FIELD?: string;
+    ATLASSIAN_RESOLUTION_SLA_FIELD?: string;
+    ATLASSIAN_PROJECT_FIELD?: string;
+    ATLASSIAN_REPORTER_FIELD?: string;
+    ATLASSIAN_CALLER_FIELD?: string;
+    ATLASSIAN_SLA_FIELD?: string;
+    ATLASSIAN_LINKED_ISSUE_TYPE?: string;
+    ATLASSIAN_SATISFACTION_FIELD?: string;
+    ATLASSIAN_REQUEST_FEEDBACK_FIELD?: string;
+    ATLASSIAN_TEMPLATE_FIELD?: string;
+    ZAMMAD_API_URL?: string;
+    ZAMMAD_TOKEN?: string;
+    ZAMMAD_GROUP?: string;
+    ZAMMAD_ARTICLE_TYPE?: string;
+    ZAMMAD_COMMENT_MARKER?: string;
+    ZAMMAD_COMMENT_PREFIX?: string;
+    ZAMMAD_COMMENT_COOLDOWN_DURATION?: number;
+    SMAX_API_URL?: string;
+    SMAX_TENANT_ID?: string;
+    SMAX_LOGIN?: string;
+    SMAX_PASSWORD?: string;
+    SMAX_ORGANISATION_FIELD?: string;
+    SMAX_PROJECT_FIELD?: string;
+    SMAX_AFFECTED_RESOURCE_FIELD?: string;
+    SMAX_TIMES_TO_PULL?: number;
+    SMAX_SECONDS_TO_WAIT?: number;
+    SMAX_CREATION_SOURCE_NAME?: string;
+    SMAX_REQUESTS_OFFERING?: string;
+    SMAX_VERIFY_SSL?: boolean;
+    ENABLE_MOCK_SERVICE_ACCOUNT_BACKEND?: boolean;
+    ENABLE_MOCK_COURSE_ACCOUNT_BACKEND?: boolean;
+    PROPOSAL_REVIEW_DURATION?: number;
+    USER_TABLE_COLUMNS?: string;
+    AUTO_APPROVE_USER_TOS?: boolean;
+    FREEIPA_ENABLED?: boolean;
+    FREEIPA_HOSTNAME?: string;
+    FREEIPA_USERNAME?: string;
+    FREEIPA_PASSWORD?: string;
+    FREEIPA_VERIFY_SSL?: boolean;
+    FREEIPA_USERNAME_PREFIX?: string;
+    FREEIPA_GROUPNAME_PREFIX?: string;
+    FREEIPA_BLACKLISTED_USERNAMES?: Array<string>;
+    FREEIPA_GROUP_SYNCHRONIZATION_ENABLED?: boolean;
+    KEYCLOAK_ICON?: (Blob | File) | null;
+    COUNTRIES?: Array<string>;
+    OIDC_AUTH_URL?: string;
+    OIDC_INTROSPECTION_URL?: string;
+    OIDC_CLIENT_ID?: string;
+    OIDC_CLIENT_SECRET?: string;
+    OIDC_USER_FIELD?: string;
+    OIDC_CACHE_TIMEOUT?: number;
+    DEACTIVATE_USER_IF_NO_ROLES?: boolean;
+    MAINTENANCE_ANNOUNCEMENT_NOTIFY_BEFORE_MINUTES?: number;
+    MAINTENANCE_ANNOUNCEMENT_NOTIFY_SYSTEM?: Array<string>;
+    ENFORCE_USER_CONSENT_FOR_OFFERINGS?: boolean;
+};
+
+export type ConstanceSettingsRequestMultipart = {
+    SITE_NAME?: string;
+    SITE_DESCRIPTION?: string;
+    HOMEPORT_URL?: string;
+    RANCHER_USERNAME_INPUT_LABEL?: string;
+    SITE_ADDRESS?: string;
+    SITE_EMAIL?: string;
+    SITE_PHONE?: string;
+    CURRENCY_NAME?: string;
+    THUMBNAIL_SIZE?: string;
+    ANONYMOUS_USER_CAN_VIEW_OFFERINGS?: boolean;
+    ANONYMOUS_USER_CAN_VIEW_PLANS?: boolean;
+    NOTIFY_STAFF_ABOUT_APPROVALS?: boolean;
+    NOTIFY_ABOUT_RESOURCE_CHANGE?: boolean;
+    DISABLE_SENDING_NOTIFICATIONS_ABOUT_RESOURCE_UPDATE?: boolean;
+    MARKETPLACE_LANDING_PAGE?: string;
+    ENABLE_STALE_RESOURCE_NOTIFICATIONS?: boolean;
+    TELEMETRY_URL?: string;
+    TELEMETRY_VERSION?: number;
+    SCRIPT_RUN_MODE?: string;
+    DOCKER_CLIENT?: string;
+    DOCKER_RUN_OPTIONS?: string;
+    DOCKER_SCRIPT_DIR?: string;
+    DOCKER_REMOVE_CONTAINER?: boolean;
+    DOCKER_IMAGES?: string;
+    DOCKER_VOLUME_NAME?: string;
+    K8S_NAMESPACE?: string;
+    K8S_CONFIG_PATH?: string;
+    K8S_JOB_TIMEOUT?: number;
+    ENABLE_STRICT_CHECK_ACCEPTING_INVITATION?: boolean;
+    INVITATION_DISABLE_MULTIPLE_ROLES?: boolean;
+    DEFAULT_IDP?: string;
+    DOCS_URL?: string;
+    SHORT_PAGE_TITLE?: string;
+    FULL_PAGE_TITLE?: string;
+    BRAND_COLOR?: string;
+    HERO_LINK_LABEL?: string;
+    HERO_LINK_URL?: string;
+    SUPPORT_PORTAL_URL?: string;
+    COMMON_FOOTER_TEXT?: string;
+    COMMON_FOOTER_HTML?: string;
+    LANGUAGE_CHOICES?: string;
+    DISABLE_DARK_THEME?: boolean;
+    POWERED_BY_LOGO?: (Blob | File) | null;
+    HERO_IMAGE?: (Blob | File) | null;
+    MARKETPLACE_HERO_IMAGE?: (Blob | File) | null;
+    CALL_MANAGEMENT_HERO_IMAGE?: (Blob | File) | null;
+    SIDEBAR_LOGO?: (Blob | File) | null;
+    SIDEBAR_LOGO_DARK?: (Blob | File) | null;
+    SIDEBAR_LOGO_MOBILE?: (Blob | File) | null;
+    SIDEBAR_STYLE?: string;
+    SITE_LOGO?: (Blob | File) | null;
+    LOGIN_LOGO?: (Blob | File) | null;
+    FAVICON?: (Blob | File) | null;
+    OFFERING_LOGO_PLACEHOLDER?: (Blob | File) | null;
+    WALDUR_SUPPORT_ENABLED?: boolean;
+    WALDUR_SUPPORT_ACTIVE_BACKEND_TYPE?: string;
+    WALDUR_SUPPORT_DISPLAY_REQUEST_TYPE?: boolean;
+    ATLASSIAN_USE_OLD_API?: boolean;
+    ATLASSIAN_USE_TEENAGE_API?: boolean;
+    ATLASSIAN_USE_AUTOMATIC_REQUEST_MAPPING?: boolean;
+    ATLASSIAN_MAP_WALDUR_USERS_TO_SERVICEDESK_AGENTS?: boolean;
+    ATLASSIAN_STRANGE_SETTING?: number;
+    ATLASSIAN_API_URL?: string;
+    ATLASSIAN_USERNAME?: string;
+    ATLASSIAN_PASSWORD?: string;
+    ATLASSIAN_EMAIL?: string;
+    ATLASSIAN_TOKEN?: string;
+    ATLASSIAN_VERIFY_SSL?: boolean;
+    ATLASSIAN_PROJECT_ID?: string;
+    ATLASSIAN_SHARED_USERNAME?: boolean;
+    ATLASSIAN_CUSTOM_ISSUE_FIELD_MAPPING_ENABLED?: boolean;
+    ATLASSIAN_DEFAULT_OFFERING_ISSUE_TYPE?: string;
+    ATLASSIAN_EXCLUDED_ATTACHMENT_TYPES?: string;
+    ATLASSIAN_PULL_PRIORITIES?: boolean;
+    ATLASSIAN_ISSUE_TYPES?: string;
+    ATLASSIAN_DESCRIPTION_TEMPLATE?: string;
+    ATLASSIAN_SUMMARY_TEMPLATE?: string;
+    ATLASSIAN_AFFECTED_RESOURCE_FIELD?: string;
+    ATLASSIAN_IMPACT_FIELD?: string;
+    ATLASSIAN_ORGANISATION_FIELD?: string;
+    ATLASSIAN_RESOLUTION_SLA_FIELD?: string;
+    ATLASSIAN_PROJECT_FIELD?: string;
+    ATLASSIAN_REPORTER_FIELD?: string;
+    ATLASSIAN_CALLER_FIELD?: string;
+    ATLASSIAN_SLA_FIELD?: string;
+    ATLASSIAN_LINKED_ISSUE_TYPE?: string;
+    ATLASSIAN_SATISFACTION_FIELD?: string;
+    ATLASSIAN_REQUEST_FEEDBACK_FIELD?: string;
+    ATLASSIAN_TEMPLATE_FIELD?: string;
+    ZAMMAD_API_URL?: string;
+    ZAMMAD_TOKEN?: string;
+    ZAMMAD_GROUP?: string;
+    ZAMMAD_ARTICLE_TYPE?: string;
+    ZAMMAD_COMMENT_MARKER?: string;
+    ZAMMAD_COMMENT_PREFIX?: string;
+    ZAMMAD_COMMENT_COOLDOWN_DURATION?: number;
+    SMAX_API_URL?: string;
+    SMAX_TENANT_ID?: string;
+    SMAX_LOGIN?: string;
+    SMAX_PASSWORD?: string;
+    SMAX_ORGANISATION_FIELD?: string;
+    SMAX_PROJECT_FIELD?: string;
+    SMAX_AFFECTED_RESOURCE_FIELD?: string;
+    SMAX_TIMES_TO_PULL?: number;
+    SMAX_SECONDS_TO_WAIT?: number;
+    SMAX_CREATION_SOURCE_NAME?: string;
+    SMAX_REQUESTS_OFFERING?: string;
+    SMAX_VERIFY_SSL?: boolean;
+    ENABLE_MOCK_SERVICE_ACCOUNT_BACKEND?: boolean;
+    ENABLE_MOCK_COURSE_ACCOUNT_BACKEND?: boolean;
+    PROPOSAL_REVIEW_DURATION?: number;
+    USER_TABLE_COLUMNS?: string;
+    AUTO_APPROVE_USER_TOS?: boolean;
+    FREEIPA_ENABLED?: boolean;
+    FREEIPA_HOSTNAME?: string;
+    FREEIPA_USERNAME?: string;
+    FREEIPA_PASSWORD?: string;
+    FREEIPA_VERIFY_SSL?: boolean;
+    FREEIPA_USERNAME_PREFIX?: string;
+    FREEIPA_GROUPNAME_PREFIX?: string;
+    FREEIPA_BLACKLISTED_USERNAMES?: Array<string>;
+    FREEIPA_GROUP_SYNCHRONIZATION_ENABLED?: boolean;
+    KEYCLOAK_ICON?: (Blob | File) | null;
+    COUNTRIES?: Array<string>;
+    OIDC_AUTH_URL?: string;
+    OIDC_INTROSPECTION_URL?: string;
+    OIDC_CLIENT_ID?: string;
+    OIDC_CLIENT_SECRET?: string;
+    OIDC_USER_FIELD?: string;
+    OIDC_CACHE_TIMEOUT?: number;
+    DEACTIVATE_USER_IF_NO_ROLES?: boolean;
+    MAINTENANCE_ANNOUNCEMENT_NOTIFY_BEFORE_MINUTES?: number;
+    MAINTENANCE_ANNOUNCEMENT_NOTIFY_SYSTEM?: Array<string>;
+    ENFORCE_USER_CONSENT_FOR_OFFERINGS?: boolean;
+};
+
+export type PaymentRequestForm = {
+    profile: string;
+    date_of_payment: string;
+    sum?: string;
+    proof?: (Blob | File) | null;
+};
+
+export type PaymentRequestMultipart = {
+    profile: string;
+    date_of_payment: string;
+    sum?: string;
+    proof?: (Blob | File) | null;
+};
+
+export type PatchedPaymentRequestForm = {
+    profile?: string;
+    date_of_payment?: string;
+    sum?: string;
+    proof?: (Blob | File) | null;
+};
+
+export type PatchedPaymentRequestMultipart = {
+    profile?: string;
+    date_of_payment?: string;
+    sum?: string;
+    proof?: (Blob | File) | null;
+};
+
+export type ProjectRequestForm = {
+    name: string;
+    slug?: string;
+    /**
+     * Organization
+     */
+    customer: string;
+    description?: string;
+    /**
+     * Project type
+     */
+    type?: string | null;
+    backend_id?: string;
+    start_date?: string | null;
+    /**
+     * The date is inclusive. Once reached, all project resource will be scheduled for termination.
+     */
+    end_date?: string | null;
+    oecd_fos_2007_code?: OecdFos2007CodeEnum | BlankEnum | NullEnum | null;
+    is_industry?: boolean;
+    image?: (Blob | File) | null;
+    /**
+     * Project type
+     */
+    kind?: KindEnum;
+};
+
+export type ProjectRequestMultipart = {
+    name: string;
+    slug?: string;
+    /**
+     * Organization
+     */
+    customer: string;
+    description?: string;
+    /**
+     * Project type
+     */
+    type?: string | null;
+    backend_id?: string;
+    start_date?: string | null;
+    /**
+     * The date is inclusive. Once reached, all project resource will be scheduled for termination.
+     */
+    end_date?: string | null;
+    oecd_fos_2007_code?: OecdFos2007CodeEnum | BlankEnum | NullEnum | null;
+    is_industry?: boolean;
+    image?: (Blob | File) | null;
+    /**
+     * Project type
+     */
+    kind?: KindEnum;
+};
+
+export type PatchedProjectRequestForm = {
+    name?: string;
+    slug?: string;
+    /**
+     * Organization
+     */
+    customer?: string;
+    description?: string;
+    /**
+     * Project type
+     */
+    type?: string | null;
+    backend_id?: string;
+    start_date?: string | null;
+    /**
+     * The date is inclusive. Once reached, all project resource will be scheduled for termination.
+     */
+    end_date?: string | null;
+    oecd_fos_2007_code?: OecdFos2007CodeEnum | BlankEnum | NullEnum | null;
+    is_industry?: boolean;
+    image?: (Blob | File) | null;
+    /**
+     * Project type
+     */
+    kind?: KindEnum;
+};
+
+export type PatchedProjectRequestMultipart = {
+    name?: string;
+    slug?: string;
+    /**
+     * Organization
+     */
+    customer?: string;
+    description?: string;
+    /**
+     * Project type
+     */
+    type?: string | null;
+    backend_id?: string;
+    start_date?: string | null;
+    /**
+     * The date is inclusive. Once reached, all project resource will be scheduled for termination.
+     */
+    end_date?: string | null;
+    oecd_fos_2007_code?: OecdFos2007CodeEnum | BlankEnum | NullEnum | null;
+    is_industry?: boolean;
+    image?: (Blob | File) | null;
+    /**
+     * Project type
+     */
+    kind?: KindEnum;
+};
+
+export type ProposalDocumentationRequestForm = {
+    /**
+     * Upload supporting documentation in PDF format.
+     */
+    file?: (Blob | File) | null;
+};
+
+export type ProposalDocumentationRequestMultipart = {
+    /**
+     * Upload supporting documentation in PDF format.
+     */
+    file?: (Blob | File) | null;
+};
+
+export type FirecrestJobRequestForm = {
+    name: string;
+    description?: string;
+    service_settings: string;
+    project: string;
+    runtime_state?: string;
+    /**
+     * Batch script file
+     */
+    file: Blob | File;
+};
+
+export type FirecrestJobRequestMultipart = {
+    name: string;
+    description?: string;
+    service_settings: string;
+    project: string;
+    runtime_state?: string;
+    /**
+     * Batch script file
+     */
+    file: Blob | File;
+};
+
+export type AttachmentRequestForm = {
+    issue: string;
+    file: Blob | File;
+};
+
+export type AttachmentRequestMultipart = {
+    issue: string;
+    file: Blob | File;
+};
+
+export type UserRequestForm = {
+    /**
+     * Required. 128 characters or fewer. Lowercase letters, numbers and @/./+/-/_ characters
+     */
+    username: string;
+    slug?: string;
+    native_name?: string;
+    job_title?: string;
+    email: string;
+    phone_number?: string;
+    organization?: string;
+    description?: string;
+    /**
+     * Staff status
+     * Designates whether the user can log into this admin site.
+     */
+    is_staff?: boolean;
+    /**
+     * Active
+     * Designates whether this user should be treated as active. Unselect this instead of deleting accounts.
+     */
+    is_active?: boolean;
+    /**
+     * Support status
+     * Designates whether the user is a global support user.
+     */
+    is_support?: boolean;
+    /**
+     * Token lifetime in seconds.
+     */
+    token_lifetime?: number | null;
+    /**
+     * User must agree with the policy to register.
+     */
+    agree_with_policy?: boolean;
+    /**
+     * Designates whether the user is allowed to receive email notifications.
+     */
+    notifications_enabled?: boolean;
+    preferred_language?: string;
+    first_name?: string;
+    last_name?: string;
+    image?: (Blob | File) | null;
+};
+
+export type UserRequestMultipart = {
+    /**
+     * Required. 128 characters or fewer. Lowercase letters, numbers and @/./+/-/_ characters
+     */
+    username: string;
+    slug?: string;
+    native_name?: string;
+    job_title?: string;
+    email: string;
+    phone_number?: string;
+    organization?: string;
+    description?: string;
+    /**
+     * Staff status
+     * Designates whether the user can log into this admin site.
+     */
+    is_staff?: boolean;
+    /**
+     * Active
+     * Designates whether this user should be treated as active. Unselect this instead of deleting accounts.
+     */
+    is_active?: boolean;
+    /**
+     * Support status
+     * Designates whether the user is a global support user.
+     */
+    is_support?: boolean;
+    /**
+     * Token lifetime in seconds.
+     */
+    token_lifetime?: number | null;
+    /**
+     * User must agree with the policy to register.
+     */
+    agree_with_policy?: boolean;
+    /**
+     * Designates whether the user is allowed to receive email notifications.
+     */
+    notifications_enabled?: boolean;
+    preferred_language?: string;
+    first_name?: string;
+    last_name?: string;
+    image?: (Blob | File) | null;
+};
+
+export type PatchedUserRequestForm = {
+    /**
+     * Required. 128 characters or fewer. Lowercase letters, numbers and @/./+/-/_ characters
+     */
+    username?: string;
+    slug?: string;
+    native_name?: string;
+    job_title?: string;
+    phone_number?: string;
+    organization?: string;
+    description?: string;
+    /**
+     * Staff status
+     * Designates whether the user can log into this admin site.
+     */
+    is_staff?: boolean;
+    /**
+     * Active
+     * Designates whether this user should be treated as active. Unselect this instead of deleting accounts.
+     */
+    is_active?: boolean;
+    /**
+     * Support status
+     * Designates whether the user is a global support user.
+     */
+    is_support?: boolean;
+    /**
+     * Token lifetime in seconds.
+     */
+    token_lifetime?: number | null;
+    /**
+     * User must agree with the policy to register.
+     */
+    agree_with_policy?: boolean;
+    /**
+     * Designates whether the user is allowed to receive email notifications.
+     */
+    notifications_enabled?: boolean;
+    preferred_language?: string;
+    first_name?: string;
+    last_name?: string;
+    image?: (Blob | File) | null;
+};
+
+export type PatchedUserRequestMultipart = {
+    /**
+     * Required. 128 characters or fewer. Lowercase letters, numbers and @/./+/-/_ characters
+     */
+    username?: string;
+    slug?: string;
+    native_name?: string;
+    job_title?: string;
+    phone_number?: string;
+    organization?: string;
+    description?: string;
+    /**
+     * Staff status
+     * Designates whether the user can log into this admin site.
+     */
+    is_staff?: boolean;
+    /**
+     * Active
+     * Designates whether this user should be treated as active. Unselect this instead of deleting accounts.
+     */
+    is_active?: boolean;
+    /**
+     * Support status
+     * Designates whether the user is a global support user.
+     */
+    is_support?: boolean;
+    /**
+     * Token lifetime in seconds.
+     */
+    token_lifetime?: number | null;
+    /**
+     * User must agree with the policy to register.
+     */
+    agree_with_policy?: boolean;
+    /**
+     * Designates whether the user is allowed to receive email notifications.
+     */
+    notifications_enabled?: boolean;
+    preferred_language?: string;
+    first_name?: string;
+    last_name?: string;
+    image?: (Blob | File) | null;
+};
+
 /**
  * This mixin allows to specify list of fields to be rendered by serializer.
  * It expects that request is available in serializer's context.
