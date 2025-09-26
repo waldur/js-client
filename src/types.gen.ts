@@ -2265,6 +2265,10 @@ export type Customer = {
     longitude?: number | null;
     bank_account?: string;
     country?: CountryEnum | BlankEnum;
+    /**
+     * Comma-separated list of notification email addresses
+     */
+    notification_emails?: string;
     readonly payment_profiles?: Array<PaymentProfile>;
     readonly customer_credit?: number | null;
     readonly customer_unallocated_credit?: number | null;
@@ -2434,6 +2438,10 @@ export type CustomerRequest = {
     longitude?: number | null;
     bank_account?: string;
     country?: CountryEnum | BlankEnum;
+    /**
+     * Comma-separated list of notification email addresses
+     */
+    notification_emails?: string;
 };
 
 export type CustomerServiceAccount = {
@@ -7960,6 +7968,10 @@ export type PatchedCustomerRequest = {
     longitude?: number | null;
     bank_account?: string;
     country?: CountryEnum | BlankEnum;
+    /**
+     * Comma-separated list of notification email addresses
+     */
+    notification_emails?: string;
 };
 
 export type PatchedCustomerServiceAccountRequest = {
@@ -13297,6 +13309,10 @@ export type CustomerRequestForm = {
     longitude?: number | null;
     bank_account?: string;
     country?: CountryEnum | BlankEnum;
+    /**
+     * Comma-separated list of notification email addresses
+     */
+    notification_emails?: string;
 };
 
 export type CustomerRequestMultipart = {
@@ -13329,6 +13345,10 @@ export type CustomerRequestMultipart = {
     longitude?: number | null;
     bank_account?: string;
     country?: CountryEnum | BlankEnum;
+    /**
+     * Comma-separated list of notification email addresses
+     */
+    notification_emails?: string;
 };
 
 export type PatchedCustomerRequestForm = {
@@ -13361,6 +13381,10 @@ export type PatchedCustomerRequestForm = {
     longitude?: number | null;
     bank_account?: string;
     country?: CountryEnum | BlankEnum;
+    /**
+     * Comma-separated list of notification email addresses
+     */
+    notification_emails?: string;
 };
 
 export type PatchedCustomerRequestMultipart = {
@@ -13393,6 +13417,10 @@ export type PatchedCustomerRequestMultipart = {
     longitude?: number | null;
     bank_account?: string;
     country?: CountryEnum | BlankEnum;
+    /**
+     * Comma-separated list of notification email addresses
+     */
+    notification_emails?: string;
 };
 
 export type ExternalLinkRequestForm = {
@@ -19738,7 +19766,7 @@ export type CustomersListData = {
         archived?: boolean;
         backend_id?: string;
         contact_details?: string;
-        field?: Array<'abbreviation' | 'access_subnets' | 'accounting_start_date' | 'address' | 'agreement_number' | 'archived' | 'backend_id' | 'bank_account' | 'bank_name' | 'billing_price_estimate' | 'blocked' | 'call_managing_organization_uuid' | 'contact_details' | 'country' | 'country_name' | 'created' | 'customer_credit' | 'customer_unallocated_credit' | 'default_tax_percent' | 'description' | 'display_name' | 'domain' | 'email' | 'homepage' | 'image' | 'is_service_provider' | 'latitude' | 'longitude' | 'max_service_accounts' | 'name' | 'native_name' | 'organization_groups' | 'payment_profiles' | 'phone_number' | 'postal' | 'project_metadata_checklist' | 'projects' | 'projects_count' | 'registration_code' | 'service_provider' | 'service_provider_uuid' | 'slug' | 'sponsor_number' | 'url' | 'users_count' | 'uuid' | 'vat_code'>;
+        field?: Array<'abbreviation' | 'access_subnets' | 'accounting_start_date' | 'address' | 'agreement_number' | 'archived' | 'backend_id' | 'bank_account' | 'bank_name' | 'billing_price_estimate' | 'blocked' | 'call_managing_organization_uuid' | 'contact_details' | 'country' | 'country_name' | 'created' | 'customer_credit' | 'customer_unallocated_credit' | 'default_tax_percent' | 'description' | 'display_name' | 'domain' | 'email' | 'homepage' | 'image' | 'is_service_provider' | 'latitude' | 'longitude' | 'max_service_accounts' | 'name' | 'native_name' | 'notification_emails' | 'organization_groups' | 'payment_profiles' | 'phone_number' | 'postal' | 'project_metadata_checklist' | 'projects' | 'projects_count' | 'registration_code' | 'service_provider' | 'service_provider_uuid' | 'slug' | 'sponsor_number' | 'url' | 'users_count' | 'uuid' | 'vat_code'>;
         name?: string;
         name_exact?: string;
         native_name?: string;
@@ -20042,7 +20070,7 @@ export type CustomersRetrieveData = {
         uuid: string;
     };
     query?: {
-        field?: Array<'abbreviation' | 'access_subnets' | 'accounting_start_date' | 'address' | 'agreement_number' | 'archived' | 'backend_id' | 'bank_account' | 'bank_name' | 'billing_price_estimate' | 'blocked' | 'call_managing_organization_uuid' | 'contact_details' | 'country' | 'country_name' | 'created' | 'customer_credit' | 'customer_unallocated_credit' | 'default_tax_percent' | 'description' | 'display_name' | 'domain' | 'email' | 'homepage' | 'image' | 'is_service_provider' | 'latitude' | 'longitude' | 'max_service_accounts' | 'name' | 'native_name' | 'organization_groups' | 'payment_profiles' | 'phone_number' | 'postal' | 'project_metadata_checklist' | 'projects' | 'projects_count' | 'registration_code' | 'service_provider' | 'service_provider_uuid' | 'slug' | 'sponsor_number' | 'url' | 'users_count' | 'uuid' | 'vat_code'>;
+        field?: Array<'abbreviation' | 'access_subnets' | 'accounting_start_date' | 'address' | 'agreement_number' | 'archived' | 'backend_id' | 'bank_account' | 'bank_name' | 'billing_price_estimate' | 'blocked' | 'call_managing_organization_uuid' | 'contact_details' | 'country' | 'country_name' | 'created' | 'customer_credit' | 'customer_unallocated_credit' | 'default_tax_percent' | 'description' | 'display_name' | 'domain' | 'email' | 'homepage' | 'image' | 'is_service_provider' | 'latitude' | 'longitude' | 'max_service_accounts' | 'name' | 'native_name' | 'notification_emails' | 'organization_groups' | 'payment_profiles' | 'phone_number' | 'postal' | 'project_metadata_checklist' | 'projects' | 'projects_count' | 'registration_code' | 'service_provider' | 'service_provider_uuid' | 'slug' | 'sponsor_number' | 'url' | 'users_count' | 'uuid' | 'vat_code'>;
     };
     url: '/api/customers/{uuid}/';
 };
