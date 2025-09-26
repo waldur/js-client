@@ -5257,9 +5257,6 @@ export type Offering = {
     readonly parent_name?: string | null;
     backend_metadata?: unknown;
     readonly has_compliance_requirements?: boolean;
-    /**
-     * Checklist that offering users must complete for compliance
-     */
     compliance_checklist?: string | null;
     readonly user_has_consent?: boolean;
     googlecalendar?: GoogleCalendar;
@@ -5444,9 +5441,6 @@ export type OfferingCreate = {
     readonly parent_name: string | null;
     backend_metadata?: unknown;
     readonly has_compliance_requirements: boolean;
-    /**
-     * Checklist that offering users must complete for compliance
-     */
     compliance_checklist?: string | null;
 };
 
@@ -5487,9 +5481,6 @@ export type OfferingCreateRequest = {
     backend_id?: string;
     image?: (Blob | File) | null;
     backend_metadata?: unknown;
-    /**
-     * Checklist that offering users must complete for compliance
-     */
     compliance_checklist?: string | null;
     limits?: {
         [key: string]: OfferingComponentLimitRequest;
@@ -9821,9 +9812,6 @@ export type ProviderOfferingDetails = {
     readonly parent_name?: string | null;
     backend_metadata?: unknown;
     readonly has_compliance_requirements?: boolean;
-    /**
-     * Checklist that offering users must complete for compliance
-     */
     compliance_checklist?: string | null;
     readonly integration_status?: Array<IntegrationStatus> | null;
     readonly google_calendar_is_public?: boolean | null;
@@ -10093,9 +10081,6 @@ export type PublicOfferingDetails = {
     readonly parent_name?: string | null;
     backend_metadata?: unknown;
     readonly has_compliance_requirements?: boolean;
-    /**
-     * Checklist that offering users must complete for compliance
-     */
     compliance_checklist?: string | null;
     readonly user_has_consent?: boolean;
     readonly google_calendar_is_public?: boolean | null;
@@ -13605,9 +13590,6 @@ export type OfferingCreateRequestForm = {
     backend_id?: string;
     image?: (Blob | File) | null;
     backend_metadata?: unknown;
-    /**
-     * Checklist that offering users must complete for compliance
-     */
     compliance_checklist?: string | null;
     limits?: {
         [key: string]: OfferingComponentLimitRequest;
@@ -13651,9 +13633,6 @@ export type OfferingCreateRequestMultipart = {
     backend_id?: string;
     image?: (Blob | File) | null;
     backend_metadata?: unknown;
-    /**
-     * Checklist that offering users must complete for compliance
-     */
     compliance_checklist?: string | null;
     limits?: {
         [key: string]: OfferingComponentLimitRequest;
