@@ -1177,6 +1177,7 @@ export type CallResourceTemplateRequest = {
 export type CallRound = {
     readonly url: string;
     readonly uuid: string;
+    slug?: string;
     start_time: string;
     cutoff_time: string;
     readonly call_uuid: string;
@@ -4990,6 +4991,7 @@ export type NestedRoleRequest = {
 
 export type NestedRound = {
     readonly uuid?: string;
+    slug?: string;
     readonly name?: string;
     start_time?: string;
     cutoff_time?: string;
@@ -5004,6 +5006,7 @@ export type NestedRound = {
 };
 
 export type NestedRoundRequest = {
+    slug?: string;
     start_time: string;
     cutoff_time: string;
     review_strategy?: ReviewStrategyEnum;
@@ -9437,6 +9440,7 @@ export type ProjectsUsagesGroupedByOecd = {
 export type Proposal = {
     readonly uuid: string;
     readonly url: string;
+    readonly slug: string;
     name: string;
     description?: string;
     readonly project_name: string;
@@ -9658,6 +9662,7 @@ export type ProtectedCallRequest = {
 
 export type ProtectedProposalList = {
     readonly uuid: string;
+    slug: string;
     name: string;
     state: ProposalStates;
     /**
@@ -9672,11 +9677,13 @@ export type ProtectedProposalList = {
 };
 
 export type ProtectedProposalListRequest = {
+    slug: string;
     name: string;
 };
 
 export type ProtectedRound = {
     readonly uuid: string;
+    readonly slug: string;
     readonly name: string;
     start_time: string;
     cutoff_time: string;
