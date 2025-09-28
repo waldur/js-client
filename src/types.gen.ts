@@ -9531,6 +9531,7 @@ export type ProposalReview = {
     proposal: string;
     readonly proposal_name: string;
     readonly proposal_uuid: string;
+    readonly proposal_slug: string;
     reviewer: string;
     readonly reviewer_full_name: string;
     readonly reviewer_uuid: string;
@@ -9546,10 +9547,12 @@ export type ProposalReview = {
     summary_private_comment?: string;
     readonly round_uuid: string;
     readonly round_name: string;
+    readonly round_slug: string;
     readonly round_cutoff_time: string;
     readonly round_start_time: string;
     readonly call_name: string;
     readonly call_uuid: string;
+    readonly call_slug: string;
     readonly call_managing_organisation_uuid: string;
     comment_project_title?: string | null;
     comment_project_summary?: string | null;
@@ -40418,7 +40421,7 @@ export type ProposalProposalsListData = {
          *
          *
          */
-        o?: Array<'-created' | '-round__call__name' | '-round__cutoff_time' | '-round__start_time' | '-state' | 'created' | 'round__call__name' | 'round__cutoff_time' | 'round__start_time' | 'state'>;
+        o?: Array<'-created' | '-round__call__name' | '-round__cutoff_time' | '-round__start_time' | '-slug' | '-state' | 'created' | 'round__call__name' | 'round__cutoff_time' | 'round__start_time' | 'slug' | 'state'>;
         organization_uuid?: string;
         /**
          * A page number within the paginated result set.
@@ -40451,7 +40454,7 @@ export type ProposalProposalsCountData = {
          *
          *
          */
-        o?: Array<'-created' | '-round__call__name' | '-round__cutoff_time' | '-round__start_time' | '-state' | 'created' | 'round__call__name' | 'round__cutoff_time' | 'round__start_time' | 'state'>;
+        o?: Array<'-created' | '-round__call__name' | '-round__cutoff_time' | '-round__start_time' | '-slug' | '-state' | 'created' | 'round__call__name' | 'round__cutoff_time' | 'round__start_time' | 'slug' | 'state'>;
         organization_uuid?: string;
         /**
          * A page number within the paginated result set.
