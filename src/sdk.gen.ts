@@ -13958,7 +13958,11 @@ export const marketplaceProviderResourcesMoveResource = <ThrowOnError extends bo
             }
         ],
         url: '/api/marketplace-provider-resources/{uuid}/move_resource/',
-        ...options
+        ...options,
+        headers: {
+            'Content-Type': 'application/json',
+            ...options.headers
+        }
     });
 };
 
@@ -14895,7 +14899,11 @@ export const marketplaceResourcesMoveResource = <ThrowOnError extends boolean = 
             }
         ],
         url: '/api/marketplace-resources/{uuid}/move_resource/',
-        ...options
+        ...options,
+        headers: {
+            'Content-Type': 'application/json',
+            ...options.headers
+        }
     });
 };
 
