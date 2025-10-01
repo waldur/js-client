@@ -5126,7 +5126,7 @@ export type NestedSecurityGroupRuleRequest = {
 export type NetworkRbacPolicy = {
     readonly url?: string;
     readonly uuid?: string;
-    readonly network?: string;
+    network?: string;
     readonly network_name?: string;
     target_tenant?: string;
     readonly target_tenant_name?: string;
@@ -5139,6 +5139,7 @@ export type NetworkRbacPolicy = {
 };
 
 export type NetworkRbacPolicyRequest = {
+    network: string;
     target_tenant: string;
     /**
      * Type of access granted - either shared access or external network access
@@ -8209,6 +8210,15 @@ export type PatchedMigrationDetailsRequest = {
     mappings?: MappingRequest;
     error_message?: string;
     error_traceback?: string;
+};
+
+export type PatchedNetworkRbacPolicyRequest = {
+    network?: string;
+    target_tenant?: string;
+    /**
+     * Type of access granted - either shared access or external network access
+     */
+    policy_type?: PolicyTypeEnum;
 };
 
 export type PatchedNotificationRequest = {
@@ -12232,6 +12242,14 @@ export type ServiceProvider = {
 
 export type ServiceProviderApiSecretCode = {
     readonly api_secret_code: string;
+};
+
+export type ServiceProviderChecklistSummary = {
+    readonly checklist_uuid: string;
+    readonly checklist_name: string;
+    readonly questions_count: number;
+    readonly offerings_count: number;
+    readonly category_name: string | null;
 };
 
 export type ServiceProviderComplianceOverview = {
@@ -17622,6 +17640,7 @@ export type BookingResourcesListData = {
         page_size?: number;
         parent_offering_uuid?: string;
         paused?: boolean;
+        plan_uuid?: string;
         project_name?: string;
         project_uuid?: string;
         provider_uuid?: string;
@@ -17715,6 +17734,7 @@ export type BookingResourcesCountData = {
         page_size?: number;
         parent_offering_uuid?: string;
         paused?: boolean;
+        plan_uuid?: string;
         project_name?: string;
         project_uuid?: string;
         provider_uuid?: string;
@@ -30216,6 +30236,7 @@ export type MarketplaceProviderResourcesListData = {
         page_size?: number;
         parent_offering_uuid?: string;
         paused?: boolean;
+        plan_uuid?: string;
         project_name?: string;
         project_uuid?: string;
         provider_uuid?: string;
@@ -30308,6 +30329,7 @@ export type MarketplaceProviderResourcesCountData = {
         page_size?: number;
         parent_offering_uuid?: string;
         paused?: boolean;
+        plan_uuid?: string;
         project_name?: string;
         project_uuid?: string;
         provider_uuid?: string;
@@ -31320,6 +31342,7 @@ export type MarketplaceResourcesListData = {
         page_size?: number;
         parent_offering_uuid?: string;
         paused?: boolean;
+        plan_uuid?: string;
         project_name?: string;
         project_uuid?: string;
         provider_uuid?: string;
@@ -31412,6 +31435,7 @@ export type MarketplaceResourcesCountData = {
         page_size?: number;
         parent_offering_uuid?: string;
         paused?: boolean;
+        plan_uuid?: string;
         project_name?: string;
         project_uuid?: string;
         provider_uuid?: string;
@@ -32466,6 +32490,30 @@ export type MarketplaceServiceProvidersCreateResponses = {
 };
 
 export type MarketplaceServiceProvidersCreateResponse = MarketplaceServiceProvidersCreateResponses[keyof MarketplaceServiceProvidersCreateResponses];
+
+export type ServiceProviderChecklistsSummaryData = {
+    body?: never;
+    path: {
+        service_provider_uuid: string;
+    };
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-service-providers/{service_provider_uuid}/compliance/checklists_summary/';
+};
+
+export type ServiceProviderChecklistsSummaryResponses = {
+    200: Array<ServiceProviderChecklistSummary>;
+};
+
+export type ServiceProviderChecklistsSummaryResponse = ServiceProviderChecklistsSummaryResponses[keyof ServiceProviderChecklistsSummaryResponses];
 
 export type ServiceProviderComplianceOverviewData = {
     body?: never;
@@ -36308,6 +36356,37 @@ export type OpenstackNetworkRbacPoliciesCountResponses = {
     200: unknown;
 };
 
+export type OpenstackNetworkRbacPoliciesCreateData = {
+    body: NetworkRbacPolicyRequest;
+    path?: never;
+    query?: never;
+    url: '/api/openstack-network-rbac-policies/';
+};
+
+export type OpenstackNetworkRbacPoliciesCreateResponses = {
+    201: NetworkRbacPolicy;
+};
+
+export type OpenstackNetworkRbacPoliciesCreateResponse = OpenstackNetworkRbacPoliciesCreateResponses[keyof OpenstackNetworkRbacPoliciesCreateResponses];
+
+export type OpenstackNetworkRbacPoliciesDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openstack-network-rbac-policies/{uuid}/';
+};
+
+export type OpenstackNetworkRbacPoliciesDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type OpenstackNetworkRbacPoliciesDestroyResponse = OpenstackNetworkRbacPoliciesDestroyResponses[keyof OpenstackNetworkRbacPoliciesDestroyResponses];
+
 export type OpenstackNetworkRbacPoliciesRetrieveData = {
     body?: never;
     path: {
@@ -36322,6 +36401,36 @@ export type OpenstackNetworkRbacPoliciesRetrieveResponses = {
 };
 
 export type OpenstackNetworkRbacPoliciesRetrieveResponse = OpenstackNetworkRbacPoliciesRetrieveResponses[keyof OpenstackNetworkRbacPoliciesRetrieveResponses];
+
+export type OpenstackNetworkRbacPoliciesPartialUpdateData = {
+    body?: PatchedNetworkRbacPolicyRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openstack-network-rbac-policies/{uuid}/';
+};
+
+export type OpenstackNetworkRbacPoliciesPartialUpdateResponses = {
+    200: NetworkRbacPolicy;
+};
+
+export type OpenstackNetworkRbacPoliciesPartialUpdateResponse = OpenstackNetworkRbacPoliciesPartialUpdateResponses[keyof OpenstackNetworkRbacPoliciesPartialUpdateResponses];
+
+export type OpenstackNetworkRbacPoliciesUpdateData = {
+    body: NetworkRbacPolicyRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openstack-network-rbac-policies/{uuid}/';
+};
+
+export type OpenstackNetworkRbacPoliciesUpdateResponses = {
+    200: NetworkRbacPolicy;
+};
+
+export type OpenstackNetworkRbacPoliciesUpdateResponse = OpenstackNetworkRbacPoliciesUpdateResponses[keyof OpenstackNetworkRbacPoliciesUpdateResponses];
 
 export type OpenstackNetworksListData = {
     body?: never;
