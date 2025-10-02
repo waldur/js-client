@@ -2517,6 +2517,29 @@ export type DependencyLogicOperatorEnum = 'and' | 'or';
 
 export type DeploymentModeEnum = 'self_managed' | 'managed';
 
+export type DeprecatedNetworkRbacPolicy = {
+    readonly url: string;
+    readonly uuid: string;
+    readonly network: string;
+    readonly network_name: string;
+    target_tenant: string;
+    readonly target_tenant_name: string;
+    readonly backend_id: string;
+    /**
+     * Type of access granted - either shared access or external network access
+     */
+    policy_type?: PolicyTypeEnum;
+    readonly created: string;
+};
+
+export type DeprecatedNetworkRbacPolicyRequest = {
+    target_tenant: string;
+    /**
+     * Type of access granted - either shared access or external network access
+     */
+    policy_type?: PolicyTypeEnum;
+};
+
 export type DetailState = {
     readonly detail: string;
     readonly state: string;
@@ -36653,7 +36676,7 @@ export type OpenstackNetworksPullResponses = {
 };
 
 export type OpenstackNetworksRbacPolicyCreateData = {
-    body: NetworkRbacPolicyRequest;
+    body: DeprecatedNetworkRbacPolicyRequest;
     path: {
         uuid: string;
     };
@@ -36662,7 +36685,7 @@ export type OpenstackNetworksRbacPolicyCreateData = {
 };
 
 export type OpenstackNetworksRbacPolicyCreateResponses = {
-    200: NetworkRbacPolicy;
+    200: DeprecatedNetworkRbacPolicy;
 };
 
 export type OpenstackNetworksRbacPolicyCreateResponse = OpenstackNetworksRbacPolicyCreateResponses[keyof OpenstackNetworksRbacPolicyCreateResponses];
