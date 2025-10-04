@@ -5205,7 +5205,7 @@ export type NotificationTemplateDetailSerializers = {
      */
     path: string;
     name: string;
-    readonly content: string;
+    readonly content: string | null;
     readonly original_content: string | null;
     readonly is_content_overridden: boolean;
 };
