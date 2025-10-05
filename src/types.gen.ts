@@ -6067,6 +6067,10 @@ export type OpenStackBackupRestorationRequest = {
 
 export type OpenStackCreateFloatingIpRequest = {
     url?: string;
+    /**
+     * Existing floating IP address in selected OpenStack tenant to be assigned to new virtual machine
+     */
+    ip_address?: string;
     subnet: string;
 };
 
