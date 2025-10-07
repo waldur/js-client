@@ -41481,6 +41481,10 @@ export type ProposalProtectedCallsOfferingsListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Filter by state
+         */
+        state?: string;
     };
     url: '/api/proposal-protected-calls/{uuid}/offerings/';
 };
