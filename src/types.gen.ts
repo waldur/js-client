@@ -2221,6 +2221,7 @@ export type Customer = {
     image?: string | null;
     readonly blocked?: boolean;
     readonly archived?: boolean;
+    readonly display_billing_info_in_projects?: boolean;
     readonly default_tax_percent?: string;
     /**
      * Start date of accounting
@@ -9148,6 +9149,7 @@ export type Project = {
     readonly customer_native_name?: string;
     readonly customer_abbreviation?: string;
     description?: string;
+    readonly customer_display_billing_info_in_projects?: boolean;
     readonly created?: string;
     /**
      * Project type
@@ -19872,7 +19874,7 @@ export type CustomersListData = {
         archived?: boolean;
         backend_id?: string;
         contact_details?: string;
-        field?: Array<'abbreviation' | 'access_subnets' | 'accounting_start_date' | 'address' | 'agreement_number' | 'archived' | 'backend_id' | 'bank_account' | 'bank_name' | 'billing_price_estimate' | 'blocked' | 'call_managing_organization_uuid' | 'contact_details' | 'country' | 'country_name' | 'created' | 'customer_credit' | 'customer_unallocated_credit' | 'default_tax_percent' | 'description' | 'display_name' | 'domain' | 'email' | 'homepage' | 'image' | 'is_service_provider' | 'latitude' | 'longitude' | 'max_service_accounts' | 'name' | 'native_name' | 'notification_emails' | 'organization_groups' | 'payment_profiles' | 'phone_number' | 'postal' | 'project_metadata_checklist' | 'projects' | 'projects_count' | 'registration_code' | 'service_provider' | 'service_provider_uuid' | 'slug' | 'sponsor_number' | 'url' | 'users_count' | 'uuid' | 'vat_code'>;
+        field?: Array<'abbreviation' | 'access_subnets' | 'accounting_start_date' | 'address' | 'agreement_number' | 'archived' | 'backend_id' | 'bank_account' | 'bank_name' | 'billing_price_estimate' | 'blocked' | 'call_managing_organization_uuid' | 'contact_details' | 'country' | 'country_name' | 'created' | 'customer_credit' | 'customer_unallocated_credit' | 'default_tax_percent' | 'description' | 'display_billing_info_in_projects' | 'display_name' | 'domain' | 'email' | 'homepage' | 'image' | 'is_service_provider' | 'latitude' | 'longitude' | 'max_service_accounts' | 'name' | 'native_name' | 'notification_emails' | 'organization_groups' | 'payment_profiles' | 'phone_number' | 'postal' | 'project_metadata_checklist' | 'projects' | 'projects_count' | 'registration_code' | 'service_provider' | 'service_provider_uuid' | 'slug' | 'sponsor_number' | 'url' | 'users_count' | 'uuid' | 'vat_code'>;
         name?: string;
         name_exact?: string;
         native_name?: string;
@@ -20176,7 +20178,7 @@ export type CustomersRetrieveData = {
         uuid: string;
     };
     query?: {
-        field?: Array<'abbreviation' | 'access_subnets' | 'accounting_start_date' | 'address' | 'agreement_number' | 'archived' | 'backend_id' | 'bank_account' | 'bank_name' | 'billing_price_estimate' | 'blocked' | 'call_managing_organization_uuid' | 'contact_details' | 'country' | 'country_name' | 'created' | 'customer_credit' | 'customer_unallocated_credit' | 'default_tax_percent' | 'description' | 'display_name' | 'domain' | 'email' | 'homepage' | 'image' | 'is_service_provider' | 'latitude' | 'longitude' | 'max_service_accounts' | 'name' | 'native_name' | 'notification_emails' | 'organization_groups' | 'payment_profiles' | 'phone_number' | 'postal' | 'project_metadata_checklist' | 'projects' | 'projects_count' | 'registration_code' | 'service_provider' | 'service_provider_uuid' | 'slug' | 'sponsor_number' | 'url' | 'users_count' | 'uuid' | 'vat_code'>;
+        field?: Array<'abbreviation' | 'access_subnets' | 'accounting_start_date' | 'address' | 'agreement_number' | 'archived' | 'backend_id' | 'bank_account' | 'bank_name' | 'billing_price_estimate' | 'blocked' | 'call_managing_organization_uuid' | 'contact_details' | 'country' | 'country_name' | 'created' | 'customer_credit' | 'customer_unallocated_credit' | 'default_tax_percent' | 'description' | 'display_billing_info_in_projects' | 'display_name' | 'domain' | 'email' | 'homepage' | 'image' | 'is_service_provider' | 'latitude' | 'longitude' | 'max_service_accounts' | 'name' | 'native_name' | 'notification_emails' | 'organization_groups' | 'payment_profiles' | 'phone_number' | 'postal' | 'project_metadata_checklist' | 'projects' | 'projects_count' | 'registration_code' | 'service_provider' | 'service_provider_uuid' | 'slug' | 'sponsor_number' | 'url' | 'users_count' | 'uuid' | 'vat_code'>;
     };
     url: '/api/customers/{uuid}/';
 };
@@ -33070,7 +33072,7 @@ export type MarketplaceServiceProvidersProjectsListData = {
         customer_name?: string;
         customer_native_name?: string;
         description?: string;
-        field?: Array<'backend_id' | 'billing_price_estimate' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'end_date' | 'end_date_requested_by' | 'image' | 'is_industry' | 'kind' | 'marketplace_resource_count' | 'max_service_accounts' | 'name' | 'oecd_fos_2007_code' | 'oecd_fos_2007_label' | 'project_credit' | 'resources_count' | 'slug' | 'start_date' | 'type' | 'type_name' | 'type_uuid' | 'url' | 'uuid'>;
+        field?: Array<'backend_id' | 'billing_price_estimate' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_display_billing_info_in_projects' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'end_date' | 'end_date_requested_by' | 'image' | 'is_industry' | 'kind' | 'marketplace_resource_count' | 'max_service_accounts' | 'name' | 'oecd_fos_2007_code' | 'oecd_fos_2007_label' | 'project_credit' | 'resources_count' | 'slug' | 'start_date' | 'type' | 'type_name' | 'type_uuid' | 'url' | 'uuid'>;
         /**
          * Modified after
          */
@@ -39904,7 +39906,7 @@ export type ProjectsListData = {
         customer_name?: string;
         customer_native_name?: string;
         description?: string;
-        field?: Array<'backend_id' | 'billing_price_estimate' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'end_date' | 'end_date_requested_by' | 'image' | 'is_industry' | 'kind' | 'marketplace_resource_count' | 'max_service_accounts' | 'name' | 'oecd_fos_2007_code' | 'oecd_fos_2007_label' | 'project_credit' | 'resources_count' | 'slug' | 'start_date' | 'type' | 'type_name' | 'type_uuid' | 'url' | 'uuid'>;
+        field?: Array<'backend_id' | 'billing_price_estimate' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_display_billing_info_in_projects' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'end_date' | 'end_date_requested_by' | 'image' | 'is_industry' | 'kind' | 'marketplace_resource_count' | 'max_service_accounts' | 'name' | 'oecd_fos_2007_code' | 'oecd_fos_2007_label' | 'project_credit' | 'resources_count' | 'slug' | 'start_date' | 'type' | 'type_name' | 'type_uuid' | 'url' | 'uuid'>;
         /**
          * Modified after
          */
@@ -40103,7 +40105,7 @@ export type ProjectsRetrieveData = {
         uuid: string;
     };
     query?: {
-        field?: Array<'backend_id' | 'billing_price_estimate' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'end_date' | 'end_date_requested_by' | 'image' | 'is_industry' | 'kind' | 'marketplace_resource_count' | 'max_service_accounts' | 'name' | 'oecd_fos_2007_code' | 'oecd_fos_2007_label' | 'project_credit' | 'resources_count' | 'slug' | 'start_date' | 'type' | 'type_name' | 'type_uuid' | 'url' | 'uuid'>;
+        field?: Array<'backend_id' | 'billing_price_estimate' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_display_billing_info_in_projects' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'end_date' | 'end_date_requested_by' | 'image' | 'is_industry' | 'kind' | 'marketplace_resource_count' | 'max_service_accounts' | 'name' | 'oecd_fos_2007_code' | 'oecd_fos_2007_label' | 'project_credit' | 'resources_count' | 'slug' | 'start_date' | 'type' | 'type_name' | 'type_uuid' | 'url' | 'uuid'>;
     };
     url: '/api/projects/{uuid}/';
 };
