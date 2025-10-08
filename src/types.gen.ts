@@ -1180,7 +1180,7 @@ export type CallRound = {
     cutoff_time: string;
     readonly call_uuid: string;
     readonly call_name: string;
-    status: StatusEnum;
+    status: RoundStatus;
 };
 
 export type CallStates = 'draft' | 'active' | 'archived';
@@ -1890,6 +1890,11 @@ export type ConstanceSettings = {
     MAINTENANCE_ANNOUNCEMENT_NOTIFY_BEFORE_MINUTES?: number;
     MAINTENANCE_ANNOUNCEMENT_NOTIFY_SYSTEM?: Array<string>;
     ENFORCE_USER_CONSENT_FOR_OFFERINGS?: boolean;
+    ONBOARDING_VERIFICATION_EXPIRY_HOURS?: number;
+    ONBOARDING_ARIREGISTER_BASE_URL?: string;
+    ONBOARDING_ARIREGISTER_USERNAME?: string;
+    ONBOARDING_ARIREGISTER_PASSWORD?: string;
+    ONBOARDING_ARIREGISTER_TIMEOUT?: number;
 };
 
 export type ConstanceSettingsRequest = {
@@ -2029,6 +2034,11 @@ export type ConstanceSettingsRequest = {
     MAINTENANCE_ANNOUNCEMENT_NOTIFY_BEFORE_MINUTES?: number;
     MAINTENANCE_ANNOUNCEMENT_NOTIFY_SYSTEM?: Array<string>;
     ENFORCE_USER_CONSENT_FOR_OFFERINGS?: boolean;
+    ONBOARDING_VERIFICATION_EXPIRY_HOURS?: number;
+    ONBOARDING_ARIREGISTER_BASE_URL?: string;
+    ONBOARDING_ARIREGISTER_USERNAME?: string;
+    ONBOARDING_ARIREGISTER_PASSWORD?: string;
+    ONBOARDING_ARIREGISTER_TIMEOUT?: number;
 };
 
 export type ContainerFormatEnum = 'bare' | 'ovf' | 'aki' | 'ami' | 'ari';
@@ -4181,6 +4191,14 @@ export type MergedPluginOptions = {
      */
     homedir_prefix?: string;
     /**
+     * HEAppE scratch project directory
+     */
+    scratch_project_directory?: string;
+    /**
+     * HEAppE project permanent directory
+     */
+    project_permanent_directory?: string;
+    /**
      * GLAuth initial primary group number
      */
     initial_primarygroup_number?: number;
@@ -4343,6 +4361,14 @@ export type MergedPluginOptionsRequest = {
      * GLAuth homedir prefix
      */
     homedir_prefix?: string;
+    /**
+     * HEAppE scratch project directory
+     */
+    scratch_project_directory?: string;
+    /**
+     * HEAppE project permanent directory
+     */
+    project_permanent_directory?: string;
     /**
      * GLAuth initial primary group number
      */
@@ -5031,7 +5057,7 @@ export type NestedRound = {
     readonly name?: string;
     start_time?: string;
     cutoff_time?: string;
-    status?: StatusEnum;
+    status?: RoundStatus;
     review_strategy?: ReviewStrategyEnum;
     deciding_entity?: DecidingEntityEnum;
     allocation_time?: AllocationTimeEnum;
@@ -5186,9 +5212,9 @@ export type Notification = {
     readonly templates: Array<NotificationTemplateDetailSerializers>;
     /**
      * Finds the notification definition in the global NOTIFICATIONS
-     * dictionary and returns its 'context' fields.
+     * dictionary and returns its 'context' schema.
      */
-    readonly context_fields: {
+    readonly context_schema: {
         [key: string]: unknown;
     };
 };
@@ -5350,6 +5376,10 @@ export type OfferingComponent = {
     default_limit?: number | null;
     readonly factor?: number | null;
     readonly is_builtin?: boolean;
+    is_prepaid?: boolean;
+    overage_component?: string | null;
+    min_prepaid_duration?: number | null;
+    max_prepaid_duration?: number | null;
 };
 
 export type OfferingComponentLimit = {
@@ -5391,6 +5421,10 @@ export type OfferingComponentRequest = {
     max_available_limit?: number | null;
     is_boolean?: boolean;
     default_limit?: number | null;
+    is_prepaid?: boolean;
+    overage_component?: string | null;
+    min_prepaid_duration?: number | null;
+    max_prepaid_duration?: number | null;
 };
 
 export type OfferingComponentStat = {
@@ -5893,6 +5927,169 @@ export type OfferingUserStateTransitionRequest = {
 export type OfferingUserUpdateRestrictionRequest = {
     is_restricted: boolean;
 };
+
+export type OnboardingCompanyValidationRequestRequest = {
+    /**
+     * ISO country code (e.g., 'EE' for Estonia)
+     */
+    country: string;
+    /**
+     * Official company registration code
+     */
+    legal_person_identifier: string;
+    /**
+     * Company name (optional, for reference)
+     */
+    legal_name?: string;
+    /**
+     * Optional customer metadata for manual verification cases. Should contain valid Customer model fields.
+     */
+    user_submitted_customer_metadata?: unknown;
+};
+
+export type OnboardingJustification = {
+    readonly uuid: string;
+    verification: number;
+    user: number;
+    /**
+     * User's explanation for why they should be authorized
+     */
+    user_justification: string;
+    readonly validated_by: number | null;
+    readonly validated_at: string | null;
+    validation_decision: ValidationDecisionEnum;
+    /**
+     * Administrator notes on the review decision
+     */
+    readonly staff_notes: string;
+    readonly supporting_documentation: Array<OnboardingJustificationDocumentation>;
+    readonly created: string;
+    readonly modified: string;
+};
+
+export type OnboardingJustificationCreateRequest = {
+    /**
+     * UUID of the OnboardingVerification to justify
+     */
+    verification_uuid: string;
+    /**
+     * User's explanation for why they should be authorized
+     */
+    user_justification: string;
+};
+
+export type OnboardingJustificationDocumentation = {
+    readonly uuid: string;
+    /**
+     * Upload supporting documentation.
+     */
+    file?: string | null;
+    readonly file_name: string;
+    readonly file_size: number;
+    readonly created: string;
+};
+
+export type OnboardingJustificationDocumentationRequest = {
+    /**
+     * Upload supporting documentation.
+     */
+    file?: (Blob | File) | null;
+};
+
+export type OnboardingJustificationRequest = {
+    verification: number;
+    user: number;
+    /**
+     * User's explanation for why they should be authorized
+     */
+    user_justification: string;
+};
+
+export type OnboardingVerification = {
+    readonly uuid: string;
+    /**
+     * User requesting company onboarding
+     */
+    user: number;
+    /**
+     * ISO country code (e.g., 'EE' for Estonia)
+     */
+    country: string;
+    /**
+     * Official company registration code
+     */
+    legal_person_identifier: string;
+    /**
+     * Claimed company name (optional, for reference)
+     */
+    legal_name?: string;
+    /**
+     * Additional customer metadata submitted by user for manual verification cases. Should contain valid Customer model fields.
+     */
+    user_submitted_customer_metadata?: unknown;
+    status: OnboardingVerificationStatusEnum;
+    /**
+     * Method used for validation
+     */
+    validation_method: ValidationMethodEnum;
+    /**
+     * Roles the user has in the company
+     */
+    readonly verified_user_roles: unknown;
+    /**
+     * Company information retrieved during validation
+     */
+    readonly verified_company_data: unknown;
+    /**
+     * Raw API response for debugging and auditing
+     */
+    readonly raw_response: unknown;
+    readonly error_traceback: string;
+    readonly error_message: string;
+    /**
+     * When validation was completed
+     */
+    readonly validated_at: string | null;
+    /**
+     * When this verification expires
+     */
+    expires_at?: string | null;
+    /**
+     * Customer created after successful validation
+     */
+    readonly customer: number | null;
+    readonly created: string;
+    readonly modified: string;
+};
+
+export type OnboardingVerificationRequest = {
+    /**
+     * User requesting company onboarding
+     */
+    user: number;
+    /**
+     * ISO country code (e.g., 'EE' for Estonia)
+     */
+    country: string;
+    /**
+     * Official company registration code
+     */
+    legal_person_identifier: string;
+    /**
+     * Claimed company name (optional, for reference)
+     */
+    legal_name?: string;
+    /**
+     * Additional customer metadata submitted by user for manual verification cases. Should contain valid Customer model fields.
+     */
+    user_submitted_customer_metadata?: unknown;
+    /**
+     * When this verification expires
+     */
+    expires_at?: string | null;
+};
+
+export type OnboardingVerificationStatusEnum = 'pending' | 'verified' | 'failed' | 'escalated' | 'expired';
 
 export type OpenStackAllowedAddressPair = {
     mac_address?: string;
@@ -8318,6 +8515,42 @@ export type PatchedOfferingUserServiceProviderCommentRequest = {
     service_provider_comment_url?: string;
 };
 
+export type PatchedOnboardingJustificationRequest = {
+    verification?: number;
+    user?: number;
+    /**
+     * User's explanation for why they should be authorized
+     */
+    user_justification?: string;
+};
+
+export type PatchedOnboardingVerificationRequest = {
+    /**
+     * User requesting company onboarding
+     */
+    user?: number;
+    /**
+     * ISO country code (e.g., 'EE' for Estonia)
+     */
+    country?: string;
+    /**
+     * Official company registration code
+     */
+    legal_person_identifier?: string;
+    /**
+     * Claimed company name (optional, for reference)
+     */
+    legal_name?: string;
+    /**
+     * Additional customer metadata submitted by user for manual verification cases. Should contain valid Customer model fields.
+     */
+    user_submitted_customer_metadata?: unknown;
+    /**
+     * When this verification expires
+     */
+    expires_at?: string | null;
+};
+
 export type PatchedOpenStackBackupRequest = {
     name?: string;
     description?: string;
@@ -9726,7 +9959,7 @@ export type ProtectedRound = {
     readonly name: string;
     start_time: string;
     cutoff_time: string;
-    status: StatusEnum;
+    status: RoundStatus;
     review_strategy?: ReviewStrategyEnum;
     deciding_entity?: DecidingEntityEnum;
     allocation_time?: AllocationTimeEnum;
@@ -11620,6 +11853,19 @@ export type ResourcePlanPeriod = {
     components: Array<BaseComponentUsage>;
 };
 
+export type ResourceRenewRequest = {
+    /**
+     * Number of months to extend the subscription by.
+     */
+    extension_months: number;
+    /**
+     * Optional new limits for the resource. Supports upgrades only.
+     */
+    limits?: {
+        [key: string]: number;
+    };
+};
+
 export type ResourceReportRequest = {
     report: Array<ReportSectionRequest>;
 };
@@ -12131,6 +12377,8 @@ export type RoundReviewer = {
     in_review_proposals: number;
 };
 
+export type RoundStatus = 'scheduled' | 'open' | 'ended';
+
 export type Rule = {
     name: string;
     readonly uuid: string;
@@ -12511,8 +12759,6 @@ export type StateTransitionError = {
     detail: string;
 };
 
-export type StatusEnum = 'scheduled' | 'open' | 'ended';
-
 export type StorageModeEnum = 'fixed' | 'dynamic';
 
 export type SubNetMapping = {
@@ -12664,6 +12910,10 @@ export type UpdateOfferingComponentRequest = {
     max_available_limit?: number | null;
     is_boolean?: boolean;
     default_limit?: number | null;
+    is_prepaid?: boolean;
+    overage_component?: string | null;
+    min_prepaid_duration?: number | null;
+    max_prepaid_duration?: number | null;
 };
 
 export type User = {
@@ -12943,6 +13193,10 @@ export type UserRoleUpdateRequest = {
 };
 
 export type UsernameGenerationPolicyEnum = 'service_provider' | 'anonymized' | 'full_name' | 'waldur_username' | 'freeipa' | 'identity_claim';
+
+export type ValidationDecisionEnum = 'approved' | 'rejected' | 'pending';
+
+export type ValidationMethodEnum = 'ariregister';
 
 export type Version = {
     /**
@@ -14016,6 +14270,20 @@ export type PatchedServiceProviderRequestMultipart = {
     image?: (Blob | File) | null;
 };
 
+export type OnboardingJustificationDocumentationRequestForm = {
+    /**
+     * Upload supporting documentation.
+     */
+    file?: (Blob | File) | null;
+};
+
+export type OnboardingJustificationDocumentationRequestMultipart = {
+    /**
+     * Upload supporting documentation.
+     */
+    file?: (Blob | File) | null;
+};
+
 export type ConstanceSettingsRequestForm = {
     SITE_NAME?: string;
     SITE_DESCRIPTION?: string;
@@ -14153,6 +14421,11 @@ export type ConstanceSettingsRequestForm = {
     MAINTENANCE_ANNOUNCEMENT_NOTIFY_BEFORE_MINUTES?: number;
     MAINTENANCE_ANNOUNCEMENT_NOTIFY_SYSTEM?: Array<string>;
     ENFORCE_USER_CONSENT_FOR_OFFERINGS?: boolean;
+    ONBOARDING_VERIFICATION_EXPIRY_HOURS?: number;
+    ONBOARDING_ARIREGISTER_BASE_URL?: string;
+    ONBOARDING_ARIREGISTER_USERNAME?: string;
+    ONBOARDING_ARIREGISTER_PASSWORD?: string;
+    ONBOARDING_ARIREGISTER_TIMEOUT?: number;
 };
 
 export type ConstanceSettingsRequestMultipart = {
@@ -14292,6 +14565,11 @@ export type ConstanceSettingsRequestMultipart = {
     MAINTENANCE_ANNOUNCEMENT_NOTIFY_BEFORE_MINUTES?: number;
     MAINTENANCE_ANNOUNCEMENT_NOTIFY_SYSTEM?: Array<string>;
     ENFORCE_USER_CONSENT_FOR_OFFERINGS?: boolean;
+    ONBOARDING_VERIFICATION_EXPIRY_HOURS?: number;
+    ONBOARDING_ARIREGISTER_BASE_URL?: string;
+    ONBOARDING_ARIREGISTER_USERNAME?: string;
+    ONBOARDING_ARIREGISTER_PASSWORD?: string;
+    ONBOARDING_ARIREGISTER_TIMEOUT?: number;
 };
 
 export type PaymentRequestForm = {
@@ -31693,6 +31971,21 @@ export type MarketplaceResourcesPullResponses = {
 
 export type MarketplaceResourcesPullResponse = MarketplaceResourcesPullResponses[keyof MarketplaceResourcesPullResponses];
 
+export type MarketplaceResourcesRenewData = {
+    body: ResourceRenewRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-resources/{uuid}/renew/';
+};
+
+export type MarketplaceResourcesRenewResponses = {
+    200: OrderUuid;
+};
+
+export type MarketplaceResourcesRenewResponse = MarketplaceResourcesRenewResponses[keyof MarketplaceResourcesRenewResponses];
+
 export type MarketplaceResourcesSetEndDateByStaffData = {
     body?: ResourceEndDateByProviderRequest;
     path: {
@@ -34962,6 +35255,311 @@ export type NotificationMessagesEnableResponses = {
     200: unknown;
 };
 
+export type OnboardingJustificationsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/onboarding-justifications/';
+};
+
+export type OnboardingJustificationsListResponses = {
+    200: Array<OnboardingJustification>;
+};
+
+export type OnboardingJustificationsListResponse = OnboardingJustificationsListResponses[keyof OnboardingJustificationsListResponses];
+
+export type OnboardingJustificationsCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/onboarding-justifications/';
+};
+
+export type OnboardingJustificationsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type OnboardingJustificationsCreateData = {
+    body: OnboardingJustificationRequest;
+    path?: never;
+    query?: never;
+    url: '/api/onboarding-justifications/';
+};
+
+export type OnboardingJustificationsCreateResponses = {
+    201: OnboardingJustification;
+};
+
+export type OnboardingJustificationsCreateResponse = OnboardingJustificationsCreateResponses[keyof OnboardingJustificationsCreateResponses];
+
+export type OnboardingJustificationsDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/onboarding-justifications/{uuid}/';
+};
+
+export type OnboardingJustificationsDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type OnboardingJustificationsDestroyResponse = OnboardingJustificationsDestroyResponses[keyof OnboardingJustificationsDestroyResponses];
+
+export type OnboardingJustificationsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/onboarding-justifications/{uuid}/';
+};
+
+export type OnboardingJustificationsRetrieveResponses = {
+    200: OnboardingJustification;
+};
+
+export type OnboardingJustificationsRetrieveResponse = OnboardingJustificationsRetrieveResponses[keyof OnboardingJustificationsRetrieveResponses];
+
+export type OnboardingJustificationsPartialUpdateData = {
+    body?: PatchedOnboardingJustificationRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/onboarding-justifications/{uuid}/';
+};
+
+export type OnboardingJustificationsPartialUpdateResponses = {
+    200: OnboardingJustification;
+};
+
+export type OnboardingJustificationsPartialUpdateResponse = OnboardingJustificationsPartialUpdateResponses[keyof OnboardingJustificationsPartialUpdateResponses];
+
+export type OnboardingJustificationsUpdateData = {
+    body: OnboardingJustificationRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/onboarding-justifications/{uuid}/';
+};
+
+export type OnboardingJustificationsUpdateResponses = {
+    200: OnboardingJustification;
+};
+
+export type OnboardingJustificationsUpdateResponse = OnboardingJustificationsUpdateResponses[keyof OnboardingJustificationsUpdateResponses];
+
+export type OnboardingJustificationsAttachDocumentData = {
+    body?: OnboardingJustificationDocumentationRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/onboarding-justifications/{uuid}/attach_document/';
+};
+
+export type OnboardingJustificationsAttachDocumentResponses = {
+    200: OnboardingJustificationDocumentation;
+};
+
+export type OnboardingJustificationsAttachDocumentResponse = OnboardingJustificationsAttachDocumentResponses[keyof OnboardingJustificationsAttachDocumentResponses];
+
+export type OnboardingJustificationsCreateJustificationData = {
+    body: OnboardingJustificationCreateRequest;
+    path?: never;
+    query?: never;
+    url: '/api/onboarding-justifications/create_justification/';
+};
+
+export type OnboardingJustificationsCreateJustificationResponses = {
+    200: OnboardingJustification;
+};
+
+export type OnboardingJustificationsCreateJustificationResponse = OnboardingJustificationsCreateJustificationResponses[keyof OnboardingJustificationsCreateJustificationResponses];
+
+export type OnboardingVerificationsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/onboarding-verifications/';
+};
+
+export type OnboardingVerificationsListResponses = {
+    200: Array<OnboardingVerification>;
+};
+
+export type OnboardingVerificationsListResponse = OnboardingVerificationsListResponses[keyof OnboardingVerificationsListResponses];
+
+export type OnboardingVerificationsCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/onboarding-verifications/';
+};
+
+export type OnboardingVerificationsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type OnboardingVerificationsCreateData = {
+    body: OnboardingVerificationRequest;
+    path?: never;
+    query?: never;
+    url: '/api/onboarding-verifications/';
+};
+
+export type OnboardingVerificationsCreateResponses = {
+    201: OnboardingVerification;
+};
+
+export type OnboardingVerificationsCreateResponse = OnboardingVerificationsCreateResponses[keyof OnboardingVerificationsCreateResponses];
+
+export type OnboardingVerificationsDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/onboarding-verifications/{uuid}/';
+};
+
+export type OnboardingVerificationsDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type OnboardingVerificationsDestroyResponse = OnboardingVerificationsDestroyResponses[keyof OnboardingVerificationsDestroyResponses];
+
+export type OnboardingVerificationsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/onboarding-verifications/{uuid}/';
+};
+
+export type OnboardingVerificationsRetrieveResponses = {
+    200: OnboardingVerification;
+};
+
+export type OnboardingVerificationsRetrieveResponse = OnboardingVerificationsRetrieveResponses[keyof OnboardingVerificationsRetrieveResponses];
+
+export type OnboardingVerificationsPartialUpdateData = {
+    body?: PatchedOnboardingVerificationRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/onboarding-verifications/{uuid}/';
+};
+
+export type OnboardingVerificationsPartialUpdateResponses = {
+    200: OnboardingVerification;
+};
+
+export type OnboardingVerificationsPartialUpdateResponse = OnboardingVerificationsPartialUpdateResponses[keyof OnboardingVerificationsPartialUpdateResponses];
+
+export type OnboardingVerificationsUpdateData = {
+    body: OnboardingVerificationRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/onboarding-verifications/{uuid}/';
+};
+
+export type OnboardingVerificationsUpdateResponses = {
+    200: OnboardingVerification;
+};
+
+export type OnboardingVerificationsUpdateResponse = OnboardingVerificationsUpdateResponses[keyof OnboardingVerificationsUpdateResponses];
+
+export type OnboardingVerificationsCreateCustomerData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/onboarding-verifications/{uuid}/create_customer/';
+};
+
+export type OnboardingVerificationsCreateCustomerResponses = {
+    201: Customer;
+};
+
+export type OnboardingVerificationsCreateCustomerResponse = OnboardingVerificationsCreateCustomerResponses[keyof OnboardingVerificationsCreateCustomerResponses];
+
+export type OnboardingVerificationsValidateCompanyData = {
+    body: OnboardingCompanyValidationRequestRequest;
+    path?: never;
+    query?: never;
+    url: '/api/onboarding-verifications/validate_company/';
+};
+
+export type OnboardingVerificationsValidateCompanyResponses = {
+    200: OnboardingVerification;
+};
+
+export type OnboardingVerificationsValidateCompanyResponse = OnboardingVerificationsValidateCompanyResponses[keyof OnboardingVerificationsValidateCompanyResponses];
+
+export type OnboardingSupportedCountriesRetrieveData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/onboarding/supported-countries/';
+};
+
 export type OpenstackBackupsListData = {
     body?: never;
     path?: never;
@@ -36382,6 +36980,8 @@ export type OpenstackNetworkRbacPoliciesListData = {
         policy_type?: 'access_as_external' | 'access_as_shared';
         target_tenant?: string;
         target_tenant_uuid?: string;
+        tenant?: string;
+        tenant_uuid?: string;
     };
     url: '/api/openstack-network-rbac-policies/';
 };
@@ -36414,6 +37014,8 @@ export type OpenstackNetworkRbacPoliciesCountData = {
         policy_type?: 'access_as_external' | 'access_as_shared';
         target_tenant?: string;
         target_tenant_uuid?: string;
+        tenant?: string;
+        tenant_uuid?: string;
     };
     url: '/api/openstack-network-rbac-policies/';
 };
