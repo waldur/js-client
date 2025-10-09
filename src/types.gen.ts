@@ -1552,6 +1552,14 @@ export type ChecklistReviewerResponse = {
     questions: Array<QuestionWithAnswerReviewer>;
 };
 
+export type ChecklistTemplate = {
+    readonly checklist: {
+        [key: string]: unknown;
+    };
+    questions: Array<Question>;
+    initial_visible_questions: Array<Question>;
+};
+
 export type ChecklistTypeEnum = 'project_compliance' | 'proposal_compliance' | 'offering_compliance' | 'project_metadata';
 
 export type ClusterSecurityGroup = {
@@ -8698,9 +8706,6 @@ export type PatchedProjectRequest = {
     type?: string | null;
     backend_id?: string;
     start_date?: string | null;
-    /**
-     * The date is inclusive. Once reached, all project resource will be scheduled for termination.
-     */
     end_date?: string | null;
     oecd_fos_2007_code?: OecdFos2007CodeEnum | BlankEnum | NullEnum | null;
     is_industry?: boolean;
@@ -9392,9 +9397,6 @@ export type Project = {
     readonly type_uuid?: string | null;
     backend_id?: string;
     start_date?: string | null;
-    /**
-     * The date is inclusive. Once reached, all project resource will be scheduled for termination.
-     */
     end_date?: string | null;
     readonly end_date_requested_by?: string | null;
     oecd_fos_2007_code?: OecdFos2007CodeEnum | BlankEnum | NullEnum | null;
@@ -9605,9 +9607,6 @@ export type ProjectRequest = {
     type?: string | null;
     backend_id?: string;
     start_date?: string | null;
-    /**
-     * The date is inclusive. Once reached, all project resource will be scheduled for termination.
-     */
     end_date?: string | null;
     oecd_fos_2007_code?: OecdFos2007CodeEnum | BlankEnum | NullEnum | null;
     is_industry?: boolean;
@@ -10394,6 +10393,16 @@ export type QueryRequest = {
     query: string;
 };
 
+export type Question = {
+    readonly uuid: string;
+    description?: string;
+    /**
+     * Additional guidance text visible to users when answering and reviewing
+     */
+    user_guidance?: string;
+    readonly question_options: Array<QuestionOptions>;
+};
+
 export type QuestionAdmin = {
     readonly uuid: string;
     description?: string;
@@ -10547,6 +10556,12 @@ export type QuestionDependencyRequest = {
      */
     required_answer_value: unknown;
     operator?: ChecklistOperators;
+};
+
+export type QuestionOptions = {
+    readonly uuid: string;
+    label: string;
+    order?: number;
 };
 
 export type QuestionOptionsAdmin = {
@@ -14614,9 +14629,6 @@ export type ProjectRequestForm = {
     type?: string | null;
     backend_id?: string;
     start_date?: string | null;
-    /**
-     * The date is inclusive. Once reached, all project resource will be scheduled for termination.
-     */
     end_date?: string | null;
     oecd_fos_2007_code?: OecdFos2007CodeEnum | BlankEnum | NullEnum | null;
     is_industry?: boolean;
@@ -14641,9 +14653,6 @@ export type ProjectRequestMultipart = {
     type?: string | null;
     backend_id?: string;
     start_date?: string | null;
-    /**
-     * The date is inclusive. Once reached, all project resource will be scheduled for termination.
-     */
     end_date?: string | null;
     oecd_fos_2007_code?: OecdFos2007CodeEnum | BlankEnum | NullEnum | null;
     is_industry?: boolean;
@@ -14668,9 +14677,6 @@ export type PatchedProjectRequestForm = {
     type?: string | null;
     backend_id?: string;
     start_date?: string | null;
-    /**
-     * The date is inclusive. Once reached, all project resource will be scheduled for termination.
-     */
     end_date?: string | null;
     oecd_fos_2007_code?: OecdFos2007CodeEnum | BlankEnum | NullEnum | null;
     is_industry?: boolean;
@@ -14695,9 +14701,6 @@ export type PatchedProjectRequestMultipart = {
     type?: string | null;
     backend_id?: string;
     start_date?: string | null;
-    /**
-     * The date is inclusive. Once reached, all project resource will be scheduled for termination.
-     */
     end_date?: string | null;
     oecd_fos_2007_code?: OecdFos2007CodeEnum | BlankEnum | NullEnum | null;
     is_industry?: boolean;
@@ -27803,6 +27806,40 @@ export type MarketplaceOfferingUsersUpdateRestrictedData = {
 };
 
 export type MarketplaceOfferingUsersUpdateRestrictedResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type MarketplaceOfferingUsersChecklistTemplateRetrieveData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/marketplace-offering-users/checklist-template/';
+};
+
+export type MarketplaceOfferingUsersChecklistTemplateRetrieveErrors = {
+    /**
+     * No checklist configured
+     */
+    400: unknown;
+};
+
+export type MarketplaceOfferingUsersChecklistTemplateRetrieveResponses = {
+    200: ChecklistTemplate;
+};
+
+export type MarketplaceOfferingUsersChecklistTemplateRetrieveResponse = MarketplaceOfferingUsersChecklistTemplateRetrieveResponses[keyof MarketplaceOfferingUsersChecklistTemplateRetrieveResponses];
+
+export type MarketplaceOfferingUsersChecklistTemplateCountData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/marketplace-offering-users/checklist-template/';
+};
+
+export type MarketplaceOfferingUsersChecklistTemplateCountResponses = {
     /**
      * No response body
      */
@@ -40983,6 +41020,40 @@ export type ProjectsUpdateUserResponses = {
 
 export type ProjectsUpdateUserResponse = ProjectsUpdateUserResponses[keyof ProjectsUpdateUserResponses];
 
+export type ProjectsChecklistTemplateRetrieveData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/projects/checklist-template/';
+};
+
+export type ProjectsChecklistTemplateRetrieveErrors = {
+    /**
+     * No checklist configured
+     */
+    400: unknown;
+};
+
+export type ProjectsChecklistTemplateRetrieveResponses = {
+    200: ChecklistTemplate;
+};
+
+export type ProjectsChecklistTemplateRetrieveResponse = ProjectsChecklistTemplateRetrieveResponses[keyof ProjectsChecklistTemplateRetrieveResponses];
+
+export type ProjectsChecklistTemplateCountData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/projects/checklist-template/';
+};
+
+export type ProjectsChecklistTemplateCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type PromotionsCampaignsListData = {
     body?: never;
     path?: never;
@@ -41761,6 +41832,40 @@ export type ProposalProposalsUpdateUserResponses = {
 };
 
 export type ProposalProposalsUpdateUserResponse = ProposalProposalsUpdateUserResponses[keyof ProposalProposalsUpdateUserResponses];
+
+export type ProposalProposalsChecklistTemplateRetrieveData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/proposal-proposals/checklist-template/';
+};
+
+export type ProposalProposalsChecklistTemplateRetrieveErrors = {
+    /**
+     * No checklist configured
+     */
+    400: unknown;
+};
+
+export type ProposalProposalsChecklistTemplateRetrieveResponses = {
+    200: ChecklistTemplate;
+};
+
+export type ProposalProposalsChecklistTemplateRetrieveResponse = ProposalProposalsChecklistTemplateRetrieveResponses[keyof ProposalProposalsChecklistTemplateRetrieveResponses];
+
+export type ProposalProposalsChecklistTemplateCountData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/proposal-proposals/checklist-template/';
+};
+
+export type ProposalProposalsChecklistTemplateCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type ProposalProtectedCallsListData = {
     body?: never;
