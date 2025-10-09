@@ -31066,6 +31066,21 @@ export type MarketplaceProviderResourcesUnlinkResponses = {
     200: unknown;
 };
 
+export type MarketplaceProviderResourcesUpdateOptionsData = {
+    body?: ResourceOptionsRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-provider-resources/{uuid}/update_options/';
+};
+
+export type MarketplaceProviderResourcesUpdateOptionsResponses = {
+    200: ResourceResponseStatus;
+};
+
+export type MarketplaceProviderResourcesUpdateOptionsResponse = MarketplaceProviderResourcesUpdateOptionsResponses[keyof MarketplaceProviderResourcesUpdateOptionsResponses];
+
 export type MarketplacePublicApiCheckSignatureData = {
     body: ServiceProviderSignatureRequest;
     path?: never;
