@@ -48,6 +48,105 @@ export type AdminAnnouncementRequest = {
 
 export type AdminAnnouncementTypeEnum = 'information' | 'warning' | 'danger';
 
+export type AgentEventSubscriptionCreateRequest = {
+    /**
+     * The type of object to observe for events
+     */
+    observable_object_type: ObservableObjectTypeEnum;
+    /**
+     * Optional description for the event subscription
+     */
+    description?: string;
+};
+
+export type AgentIdentity = {
+    readonly uuid: string;
+    readonly url: string;
+    offering: string;
+    name: string;
+    version?: string | null;
+    dependencies?: unknown;
+    /**
+     * Example: '/etc/waldur/agent.yaml'
+     */
+    config_file_path?: string | null;
+    config_file_content?: string | null;
+    /**
+     * Last restarted at
+     */
+    last_restarted?: string;
+    readonly created: string;
+    readonly modified: string;
+};
+
+export type AgentIdentityRequest = {
+    offering: string;
+    name: string;
+    version?: string | null;
+    dependencies?: unknown;
+    /**
+     * Example: '/etc/waldur/agent.yaml'
+     */
+    config_file_path?: string | null;
+    config_file_content?: string | null;
+    /**
+     * Last restarted at
+     */
+    last_restarted?: string;
+};
+
+export type AgentProcessor = {
+    readonly uuid: string;
+    readonly url: string;
+    service: string;
+    readonly service_name: string;
+    name: string;
+    last_run?: string | null;
+    /**
+     * Type of the backend, for example SLURM.
+     */
+    backend_type: string;
+    backend_version?: string | null;
+    readonly created: string;
+    readonly modified: string;
+};
+
+export type AgentProcessorCreateRequest = {
+    name: string;
+    /**
+     * Type of the backend, for example SLURM.
+     */
+    backend_type: string;
+    backend_version?: string | null;
+};
+
+export type AgentService = {
+    readonly uuid: string;
+    readonly url: string;
+    identity: string;
+    readonly identity_name: string;
+    name: string;
+    mode?: string | null;
+    state: AgentServiceStateEnum;
+    statistics?: unknown;
+    readonly created: string;
+    readonly modified: string;
+};
+
+export type AgentServiceCreateRequest = {
+    name: string;
+    mode?: string | null;
+};
+
+export type AgentServiceStateEnum = 'Active' | 'Idle' | 'Error';
+
+export type AgentServiceStatisticsRequest = {
+    /**
+     * Statistics data to be stored for the service
+     */
+    statistics: unknown;
+};
+
 export type AgentTypeEnum = 'Order processing' | 'Usage reporting' | 'Glauth sync' | 'Resource sync' | 'Event processing' | 'unknown';
 
 export type AgreementTypeEnum = 'TOS' | 'PP';
@@ -1819,23 +1918,23 @@ export type ConstanceSettings = {
     WALDUR_SUPPORT_ENABLED?: boolean;
     WALDUR_SUPPORT_ACTIVE_BACKEND_TYPE?: string;
     WALDUR_SUPPORT_DISPLAY_REQUEST_TYPE?: boolean;
-    ATLASSIAN_USE_OLD_API?: boolean;
-    ATLASSIAN_USE_TEENAGE_API?: boolean;
-    ATLASSIAN_USE_AUTOMATIC_REQUEST_MAPPING?: boolean;
     ATLASSIAN_MAP_WALDUR_USERS_TO_SERVICEDESK_AGENTS?: boolean;
-    ATLASSIAN_STRANGE_SETTING?: number;
     ATLASSIAN_API_URL?: string;
     ATLASSIAN_USERNAME?: string;
     ATLASSIAN_PASSWORD?: string;
     ATLASSIAN_EMAIL?: string;
+    ATLASSIAN_USE_OLD_API?: boolean;
     ATLASSIAN_TOKEN?: string;
+    ATLASSIAN_PERSONAL_ACCESS_TOKEN?: string;
+    ATLASSIAN_OAUTH2_CLIENT_ID?: string;
+    ATLASSIAN_OAUTH2_ACCESS_TOKEN?: string;
+    ATLASSIAN_OAUTH2_TOKEN_TYPE?: string;
     ATLASSIAN_VERIFY_SSL?: boolean;
     ATLASSIAN_PROJECT_ID?: string;
     ATLASSIAN_SHARED_USERNAME?: boolean;
     ATLASSIAN_CUSTOM_ISSUE_FIELD_MAPPING_ENABLED?: boolean;
     ATLASSIAN_DEFAULT_OFFERING_ISSUE_TYPE?: string;
     ATLASSIAN_EXCLUDED_ATTACHMENT_TYPES?: string;
-    ATLASSIAN_PULL_PRIORITIES?: boolean;
     ATLASSIAN_ISSUE_TYPES?: string;
     ATLASSIAN_DESCRIPTION_TEMPLATE?: string;
     ATLASSIAN_SUMMARY_TEMPLATE?: string;
@@ -1963,23 +2062,23 @@ export type ConstanceSettingsRequest = {
     WALDUR_SUPPORT_ENABLED?: boolean;
     WALDUR_SUPPORT_ACTIVE_BACKEND_TYPE?: string;
     WALDUR_SUPPORT_DISPLAY_REQUEST_TYPE?: boolean;
-    ATLASSIAN_USE_OLD_API?: boolean;
-    ATLASSIAN_USE_TEENAGE_API?: boolean;
-    ATLASSIAN_USE_AUTOMATIC_REQUEST_MAPPING?: boolean;
     ATLASSIAN_MAP_WALDUR_USERS_TO_SERVICEDESK_AGENTS?: boolean;
-    ATLASSIAN_STRANGE_SETTING?: number;
     ATLASSIAN_API_URL?: string;
     ATLASSIAN_USERNAME?: string;
     ATLASSIAN_PASSWORD?: string;
     ATLASSIAN_EMAIL?: string;
+    ATLASSIAN_USE_OLD_API?: boolean;
     ATLASSIAN_TOKEN?: string;
+    ATLASSIAN_PERSONAL_ACCESS_TOKEN?: string;
+    ATLASSIAN_OAUTH2_CLIENT_ID?: string;
+    ATLASSIAN_OAUTH2_ACCESS_TOKEN?: string;
+    ATLASSIAN_OAUTH2_TOKEN_TYPE?: string;
     ATLASSIAN_VERIFY_SSL?: boolean;
     ATLASSIAN_PROJECT_ID?: string;
     ATLASSIAN_SHARED_USERNAME?: boolean;
     ATLASSIAN_CUSTOM_ISSUE_FIELD_MAPPING_ENABLED?: boolean;
     ATLASSIAN_DEFAULT_OFFERING_ISSUE_TYPE?: string;
     ATLASSIAN_EXCLUDED_ATTACHMENT_TYPES?: string;
-    ATLASSIAN_PULL_PRIORITIES?: boolean;
     ATLASSIAN_ISSUE_TYPES?: string;
     ATLASSIAN_DESCRIPTION_TEMPLATE?: string;
     ATLASSIAN_SUMMARY_TEMPLATE?: string;
@@ -3563,7 +3662,6 @@ export type Issue = {
     readonly resource_name: string;
     readonly created: string;
     readonly modified: string;
-    readonly first_response_sla: string | null;
     template?: string | null;
     feedback: NestedFeedback | null;
     readonly resolved: boolean | null;
@@ -5259,6 +5357,8 @@ export type NotificationTemplateUpdateSerializersRequest = {
 
 export type NullEnum = unknown;
 
+export type ObservableObjectTypeEnum = 'order' | 'user_role' | 'resource' | 'offering_user' | 'importable_resources' | 'service_account' | 'course_account';
+
 export type ObtainAuthTokenRequest = {
     username: string;
     password: string;
@@ -6011,6 +6111,13 @@ export type OnboardingJustificationRequest = {
      * User's explanation for why they should be authorized
      */
     user_justification: string;
+};
+
+export type OnboardingJustificationReviewRequest = {
+    /**
+     * Administrator notes about the review decision
+     */
+    staff_notes?: string;
 };
 
 export type OnboardingVerification = {
@@ -9670,7 +9777,7 @@ export type ProjectUser = {
     readonly role: string;
     readonly expiration_time: string | null;
     readonly offering_user_username: string | null;
-    offering_user_state: OfferingUserState;
+    offering_user_state: OfferingUserState | NullEnum | null;
 };
 
 export type ProjectsLimitsGroupedByIndustryFlag = {
@@ -11835,6 +11942,10 @@ export type ResourceBackendMetadataRequest = {
     backend_metadata: unknown;
 };
 
+export type ResourceDownscaledRequest = {
+    downscaled?: boolean;
+};
+
 export type ResourceEndDateByProviderRequest = {
     /**
      * The date is inclusive. Once reached, a resource will be scheduled for termination.
@@ -11857,6 +11968,10 @@ export type ResourceOffering = {
 
 export type ResourceOptionsRequest = {
     options?: unknown;
+};
+
+export type ResourcePausedRequest = {
+    paused?: boolean;
 };
 
 export type ResourcePlanPeriod = {
@@ -11887,6 +12002,10 @@ export type ResourceReportRequest = {
 
 export type ResourceResponseStatus = {
     readonly status: string;
+};
+
+export type ResourceRestrictMemberAccessRequest = {
+    restrict_member_access?: boolean;
 };
 
 export type ResourceSetLimitsRequest = {
@@ -14357,23 +14476,23 @@ export type ConstanceSettingsRequestForm = {
     WALDUR_SUPPORT_ENABLED?: boolean;
     WALDUR_SUPPORT_ACTIVE_BACKEND_TYPE?: string;
     WALDUR_SUPPORT_DISPLAY_REQUEST_TYPE?: boolean;
-    ATLASSIAN_USE_OLD_API?: boolean;
-    ATLASSIAN_USE_TEENAGE_API?: boolean;
-    ATLASSIAN_USE_AUTOMATIC_REQUEST_MAPPING?: boolean;
     ATLASSIAN_MAP_WALDUR_USERS_TO_SERVICEDESK_AGENTS?: boolean;
-    ATLASSIAN_STRANGE_SETTING?: number;
     ATLASSIAN_API_URL?: string;
     ATLASSIAN_USERNAME?: string;
     ATLASSIAN_PASSWORD?: string;
     ATLASSIAN_EMAIL?: string;
+    ATLASSIAN_USE_OLD_API?: boolean;
     ATLASSIAN_TOKEN?: string;
+    ATLASSIAN_PERSONAL_ACCESS_TOKEN?: string;
+    ATLASSIAN_OAUTH2_CLIENT_ID?: string;
+    ATLASSIAN_OAUTH2_ACCESS_TOKEN?: string;
+    ATLASSIAN_OAUTH2_TOKEN_TYPE?: string;
     ATLASSIAN_VERIFY_SSL?: boolean;
     ATLASSIAN_PROJECT_ID?: string;
     ATLASSIAN_SHARED_USERNAME?: boolean;
     ATLASSIAN_CUSTOM_ISSUE_FIELD_MAPPING_ENABLED?: boolean;
     ATLASSIAN_DEFAULT_OFFERING_ISSUE_TYPE?: string;
     ATLASSIAN_EXCLUDED_ATTACHMENT_TYPES?: string;
-    ATLASSIAN_PULL_PRIORITIES?: boolean;
     ATLASSIAN_ISSUE_TYPES?: string;
     ATLASSIAN_DESCRIPTION_TEMPLATE?: string;
     ATLASSIAN_SUMMARY_TEMPLATE?: string;
@@ -14501,23 +14620,23 @@ export type ConstanceSettingsRequestMultipart = {
     WALDUR_SUPPORT_ENABLED?: boolean;
     WALDUR_SUPPORT_ACTIVE_BACKEND_TYPE?: string;
     WALDUR_SUPPORT_DISPLAY_REQUEST_TYPE?: boolean;
-    ATLASSIAN_USE_OLD_API?: boolean;
-    ATLASSIAN_USE_TEENAGE_API?: boolean;
-    ATLASSIAN_USE_AUTOMATIC_REQUEST_MAPPING?: boolean;
     ATLASSIAN_MAP_WALDUR_USERS_TO_SERVICEDESK_AGENTS?: boolean;
-    ATLASSIAN_STRANGE_SETTING?: number;
     ATLASSIAN_API_URL?: string;
     ATLASSIAN_USERNAME?: string;
     ATLASSIAN_PASSWORD?: string;
     ATLASSIAN_EMAIL?: string;
+    ATLASSIAN_USE_OLD_API?: boolean;
     ATLASSIAN_TOKEN?: string;
+    ATLASSIAN_PERSONAL_ACCESS_TOKEN?: string;
+    ATLASSIAN_OAUTH2_CLIENT_ID?: string;
+    ATLASSIAN_OAUTH2_ACCESS_TOKEN?: string;
+    ATLASSIAN_OAUTH2_TOKEN_TYPE?: string;
     ATLASSIAN_VERIFY_SSL?: boolean;
     ATLASSIAN_PROJECT_ID?: string;
     ATLASSIAN_SHARED_USERNAME?: boolean;
     ATLASSIAN_CUSTOM_ISSUE_FIELD_MAPPING_ENABLED?: boolean;
     ATLASSIAN_DEFAULT_OFFERING_ISSUE_TYPE?: string;
     ATLASSIAN_EXCLUDED_ATTACHMENT_TYPES?: string;
-    ATLASSIAN_PULL_PRIORITIES?: boolean;
     ATLASSIAN_ISSUE_TYPES?: string;
     ATLASSIAN_DESCRIPTION_TEMPLATE?: string;
     ATLASSIAN_SUMMARY_TEMPLATE?: string;
@@ -30980,6 +31099,22 @@ export type MarketplaceProviderResourcesSetBackendMetadataResponses = {
 
 export type MarketplaceProviderResourcesSetBackendMetadataResponse = MarketplaceProviderResourcesSetBackendMetadataResponses[keyof MarketplaceProviderResourcesSetBackendMetadataResponses];
 
+export type MarketplaceProviderResourcesSetDownscaledData = {
+    body?: ResourceDownscaledRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-provider-resources/{uuid}/set_downscaled/';
+};
+
+export type MarketplaceProviderResourcesSetDownscaledResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type MarketplaceProviderResourcesSetEndDateByProviderData = {
     body?: ResourceEndDateByProviderRequest;
     path: {
@@ -31025,6 +31160,38 @@ export type MarketplaceProviderResourcesSetLimitsResponses = {
 };
 
 export type MarketplaceProviderResourcesSetLimitsResponse = MarketplaceProviderResourcesSetLimitsResponses[keyof MarketplaceProviderResourcesSetLimitsResponses];
+
+export type MarketplaceProviderResourcesSetPausedData = {
+    body?: ResourcePausedRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-provider-resources/{uuid}/set_paused/';
+};
+
+export type MarketplaceProviderResourcesSetPausedResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type MarketplaceProviderResourcesSetRestrictMemberAccessData = {
+    body?: ResourceRestrictMemberAccessRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-provider-resources/{uuid}/set_restrict_member_access/';
+};
+
+export type MarketplaceProviderResourcesSetRestrictMemberAccessResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type MarketplaceProviderResourcesSetSlugData = {
     body: ResourceSlugRequest;
@@ -32038,6 +32205,22 @@ export type MarketplaceResourcesRenewResponses = {
 
 export type MarketplaceResourcesRenewResponse = MarketplaceResourcesRenewResponses[keyof MarketplaceResourcesRenewResponses];
 
+export type MarketplaceResourcesSetDownscaledData = {
+    body?: ResourceDownscaledRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-resources/{uuid}/set_downscaled/';
+};
+
+export type MarketplaceResourcesSetDownscaledResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type MarketplaceResourcesSetEndDateByStaffData = {
     body?: ResourceEndDateByProviderRequest;
     path: {
@@ -32048,6 +32231,38 @@ export type MarketplaceResourcesSetEndDateByStaffData = {
 };
 
 export type MarketplaceResourcesSetEndDateByStaffResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type MarketplaceResourcesSetPausedData = {
+    body?: ResourcePausedRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-resources/{uuid}/set_paused/';
+};
+
+export type MarketplaceResourcesSetPausedResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type MarketplaceResourcesSetRestrictMemberAccessData = {
+    body?: ResourceRestrictMemberAccessRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-resources/{uuid}/set_restrict_member_access/';
+};
+
+export type MarketplaceResourcesSetRestrictMemberAccessResponses = {
     /**
      * No response body
      */
@@ -33894,6 +34109,329 @@ export type MarketplaceServiceProvidersUpdateUserResponses = {
 
 export type MarketplaceServiceProvidersUpdateUserResponse = MarketplaceServiceProvidersUpdateUserResponses[keyof MarketplaceServiceProvidersUpdateUserResponses];
 
+export type MarketplaceSiteAgentIdentitiesListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Last restarted after
+         */
+        last_restarted?: string;
+        name?: string;
+        offering_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        version?: string;
+    };
+    url: '/api/marketplace-site-agent-identities/';
+};
+
+export type MarketplaceSiteAgentIdentitiesListResponses = {
+    200: Array<AgentIdentity>;
+};
+
+export type MarketplaceSiteAgentIdentitiesListResponse = MarketplaceSiteAgentIdentitiesListResponses[keyof MarketplaceSiteAgentIdentitiesListResponses];
+
+export type MarketplaceSiteAgentIdentitiesCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Last restarted after
+         */
+        last_restarted?: string;
+        name?: string;
+        offering_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        version?: string;
+    };
+    url: '/api/marketplace-site-agent-identities/';
+};
+
+export type MarketplaceSiteAgentIdentitiesCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type MarketplaceSiteAgentIdentitiesCreateData = {
+    body: AgentIdentityRequest;
+    path?: never;
+    query?: never;
+    url: '/api/marketplace-site-agent-identities/';
+};
+
+export type MarketplaceSiteAgentIdentitiesCreateResponses = {
+    201: AgentIdentity;
+};
+
+export type MarketplaceSiteAgentIdentitiesCreateResponse = MarketplaceSiteAgentIdentitiesCreateResponses[keyof MarketplaceSiteAgentIdentitiesCreateResponses];
+
+export type MarketplaceSiteAgentIdentitiesDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-site-agent-identities/{uuid}/';
+};
+
+export type MarketplaceSiteAgentIdentitiesDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type MarketplaceSiteAgentIdentitiesDestroyResponse = MarketplaceSiteAgentIdentitiesDestroyResponses[keyof MarketplaceSiteAgentIdentitiesDestroyResponses];
+
+export type MarketplaceSiteAgentIdentitiesRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-site-agent-identities/{uuid}/';
+};
+
+export type MarketplaceSiteAgentIdentitiesRetrieveResponses = {
+    200: AgentIdentity;
+};
+
+export type MarketplaceSiteAgentIdentitiesRetrieveResponse = MarketplaceSiteAgentIdentitiesRetrieveResponses[keyof MarketplaceSiteAgentIdentitiesRetrieveResponses];
+
+export type MarketplaceSiteAgentIdentitiesUpdateData = {
+    body: AgentIdentityRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-site-agent-identities/{uuid}/';
+};
+
+export type MarketplaceSiteAgentIdentitiesUpdateResponses = {
+    200: AgentIdentity;
+};
+
+export type MarketplaceSiteAgentIdentitiesUpdateResponse = MarketplaceSiteAgentIdentitiesUpdateResponses[keyof MarketplaceSiteAgentIdentitiesUpdateResponses];
+
+export type MarketplaceSiteAgentIdentitiesRegisterEventSubscriptionData = {
+    body: AgentEventSubscriptionCreateRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-site-agent-identities/{uuid}/register_event_subscription/';
+};
+
+export type MarketplaceSiteAgentIdentitiesRegisterEventSubscriptionResponses = {
+    200: EventSubscription;
+    201: EventSubscription;
+};
+
+export type MarketplaceSiteAgentIdentitiesRegisterEventSubscriptionResponse = MarketplaceSiteAgentIdentitiesRegisterEventSubscriptionResponses[keyof MarketplaceSiteAgentIdentitiesRegisterEventSubscriptionResponses];
+
+export type MarketplaceSiteAgentIdentitiesRegisterServiceData = {
+    body: AgentServiceCreateRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-site-agent-identities/{uuid}/register_service/';
+};
+
+export type MarketplaceSiteAgentIdentitiesRegisterServiceResponses = {
+    200: AgentService;
+    201: AgentService;
+};
+
+export type MarketplaceSiteAgentIdentitiesRegisterServiceResponse = MarketplaceSiteAgentIdentitiesRegisterServiceResponses[keyof MarketplaceSiteAgentIdentitiesRegisterServiceResponses];
+
+export type MarketplaceSiteAgentProcessorsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        backend_type?: string;
+        backend_version?: string;
+        /**
+         * Last run after
+         */
+        last_run?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        service_uuid?: string;
+    };
+    url: '/api/marketplace-site-agent-processors/';
+};
+
+export type MarketplaceSiteAgentProcessorsListResponses = {
+    200: Array<AgentProcessor>;
+};
+
+export type MarketplaceSiteAgentProcessorsListResponse = MarketplaceSiteAgentProcessorsListResponses[keyof MarketplaceSiteAgentProcessorsListResponses];
+
+export type MarketplaceSiteAgentProcessorsCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        backend_type?: string;
+        backend_version?: string;
+        /**
+         * Last run after
+         */
+        last_run?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        service_uuid?: string;
+    };
+    url: '/api/marketplace-site-agent-processors/';
+};
+
+export type MarketplaceSiteAgentProcessorsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type MarketplaceSiteAgentProcessorsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-site-agent-processors/{uuid}/';
+};
+
+export type MarketplaceSiteAgentProcessorsRetrieveResponses = {
+    200: AgentProcessor;
+};
+
+export type MarketplaceSiteAgentProcessorsRetrieveResponse = MarketplaceSiteAgentProcessorsRetrieveResponses[keyof MarketplaceSiteAgentProcessorsRetrieveResponses];
+
+export type MarketplaceSiteAgentServicesListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        identity_uuid?: string;
+        mode?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        state?: Array<1 | 2 | 3>;
+    };
+    url: '/api/marketplace-site-agent-services/';
+};
+
+export type MarketplaceSiteAgentServicesListResponses = {
+    200: Array<AgentService>;
+};
+
+export type MarketplaceSiteAgentServicesListResponse = MarketplaceSiteAgentServicesListResponses[keyof MarketplaceSiteAgentServicesListResponses];
+
+export type MarketplaceSiteAgentServicesCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        identity_uuid?: string;
+        mode?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        state?: Array<1 | 2 | 3>;
+    };
+    url: '/api/marketplace-site-agent-services/';
+};
+
+export type MarketplaceSiteAgentServicesCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type MarketplaceSiteAgentServicesRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-site-agent-services/{uuid}/';
+};
+
+export type MarketplaceSiteAgentServicesRetrieveResponses = {
+    200: AgentService;
+};
+
+export type MarketplaceSiteAgentServicesRetrieveResponse = MarketplaceSiteAgentServicesRetrieveResponses[keyof MarketplaceSiteAgentServicesRetrieveResponses];
+
+export type MarketplaceSiteAgentServicesRegisterProcessorData = {
+    body: AgentProcessorCreateRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-site-agent-services/{uuid}/register_processor/';
+};
+
+export type MarketplaceSiteAgentServicesRegisterProcessorResponses = {
+    200: AgentProcessor;
+    201: AgentProcessor;
+};
+
+export type MarketplaceSiteAgentServicesRegisterProcessorResponse = MarketplaceSiteAgentServicesRegisterProcessorResponses[keyof MarketplaceSiteAgentServicesRegisterProcessorResponses];
+
+export type MarketplaceSiteAgentServicesSetStatisticsData = {
+    body: AgentServiceStatisticsRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-site-agent-services/{uuid}/set_statistics/';
+};
+
+export type MarketplaceSiteAgentServicesSetStatisticsResponses = {
+    200: AgentService;
+};
+
+export type MarketplaceSiteAgentServicesSetStatisticsResponse = MarketplaceSiteAgentServicesSetStatisticsResponses[keyof MarketplaceSiteAgentServicesSetStatisticsResponses];
+
 export type MarketplaceStatsComponentUsagesListData = {
     body?: never;
     path?: never;
@@ -35428,6 +35966,21 @@ export type OnboardingJustificationsUpdateResponses = {
 
 export type OnboardingJustificationsUpdateResponse = OnboardingJustificationsUpdateResponses[keyof OnboardingJustificationsUpdateResponses];
 
+export type OnboardingJustificationsApproveData = {
+    body?: OnboardingJustificationReviewRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/onboarding-justifications/{uuid}/approve/';
+};
+
+export type OnboardingJustificationsApproveResponses = {
+    200: OnboardingJustification;
+};
+
+export type OnboardingJustificationsApproveResponse = OnboardingJustificationsApproveResponses[keyof OnboardingJustificationsApproveResponses];
+
 export type OnboardingJustificationsAttachDocumentData = {
     body?: OnboardingJustificationDocumentationRequest;
     path: {
@@ -35442,6 +35995,21 @@ export type OnboardingJustificationsAttachDocumentResponses = {
 };
 
 export type OnboardingJustificationsAttachDocumentResponse = OnboardingJustificationsAttachDocumentResponses[keyof OnboardingJustificationsAttachDocumentResponses];
+
+export type OnboardingJustificationsRejectData = {
+    body?: OnboardingJustificationReviewRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/onboarding-justifications/{uuid}/reject/';
+};
+
+export type OnboardingJustificationsRejectResponses = {
+    200: OnboardingJustification;
+};
+
+export type OnboardingJustificationsRejectResponse = OnboardingJustificationsRejectResponses[keyof OnboardingJustificationsRejectResponses];
 
 export type OnboardingJustificationsCreateJustificationData = {
     body: OnboardingJustificationCreateRequest;
