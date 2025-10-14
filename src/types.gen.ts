@@ -46279,6 +46279,22 @@ export type RemoteWaldurApiPullOrderResponses = {
     200: unknown;
 };
 
+export type RemoteWaldurApiPullResourceRobotAccountsData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/remote-waldur-api/pull_resource_robot_accounts/{uuid}/';
+};
+
+export type RemoteWaldurApiPullResourceRobotAccountsResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type RemoteWaldurApiPushProjectDataData = {
     body?: never;
     path: {
