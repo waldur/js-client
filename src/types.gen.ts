@@ -7880,6 +7880,10 @@ export type OrderAttachmentRequest = {
     attachment?: (Blob | File) | null;
 };
 
+export type OrderBackendIdRequest = {
+    backend_id: string;
+};
+
 export type OrderCreate = {
     offering: string;
     readonly offering_name: string;
@@ -18058,6 +18062,10 @@ export type BookingResourcesListData = {
          */
         lexis_links_supported?: boolean;
         /**
+         * Filter by limit-based offerings
+         */
+        limit_based?: boolean;
+        /**
          * Modified after
          */
         modified?: string;
@@ -18112,6 +18120,10 @@ export type BookingResourcesListData = {
          */
         service_manager_uuid?: string;
         state?: Array<'Creating' | 'Erred' | 'OK' | 'Terminated' | 'Terminating' | 'Updating'>;
+        /**
+         * Filter by usage-based offerings
+         */
+        usage_based?: boolean;
         /**
          * Visible to username
          */
@@ -18152,6 +18164,10 @@ export type BookingResourcesCountData = {
          */
         lexis_links_supported?: boolean;
         /**
+         * Filter by limit-based offerings
+         */
+        limit_based?: boolean;
+        /**
          * Modified after
          */
         modified?: string;
@@ -18206,6 +18222,10 @@ export type BookingResourcesCountData = {
          */
         service_manager_uuid?: string;
         state?: Array<'Creating' | 'Erred' | 'OK' | 'Terminated' | 'Terminating' | 'Updating'>;
+        /**
+         * Filter by usage-based offerings
+         */
+        usage_based?: boolean;
         /**
          * Visible to username
          */
@@ -28246,6 +28266,22 @@ export type MarketplaceOrdersRejectByProviderResponses = {
     200: unknown;
 };
 
+export type MarketplaceOrdersSetBackendIdData = {
+    body: OrderBackendIdRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-orders/{uuid}/set_backend_id/';
+};
+
+export type MarketplaceOrdersSetBackendIdResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type MarketplaceOrdersSetStateDoneData = {
     body?: never;
     path: {
@@ -30703,6 +30739,10 @@ export type MarketplaceProviderResourcesListData = {
          */
         lexis_links_supported?: boolean;
         /**
+         * Filter by limit-based offerings
+         */
+        limit_based?: boolean;
+        /**
          * Modified after
          */
         modified?: string;
@@ -30757,6 +30797,10 @@ export type MarketplaceProviderResourcesListData = {
          */
         service_manager_uuid?: string;
         state?: Array<'Creating' | 'Erred' | 'OK' | 'Terminated' | 'Terminating' | 'Updating'>;
+        /**
+         * Filter by usage-based offerings
+         */
+        usage_based?: boolean;
         /**
          * Visible to username
          */
@@ -30796,6 +30840,10 @@ export type MarketplaceProviderResourcesCountData = {
          */
         lexis_links_supported?: boolean;
         /**
+         * Filter by limit-based offerings
+         */
+        limit_based?: boolean;
+        /**
          * Modified after
          */
         modified?: string;
@@ -30850,6 +30898,10 @@ export type MarketplaceProviderResourcesCountData = {
          */
         service_manager_uuid?: string;
         state?: Array<'Creating' | 'Erred' | 'OK' | 'Terminated' | 'Terminating' | 'Updating'>;
+        /**
+         * Filter by usage-based offerings
+         */
+        usage_based?: boolean;
         /**
          * Visible to username
          */
@@ -31872,6 +31924,10 @@ export type MarketplaceResourcesListData = {
          */
         lexis_links_supported?: boolean;
         /**
+         * Filter by limit-based offerings
+         */
+        limit_based?: boolean;
+        /**
          * Modified after
          */
         modified?: string;
@@ -31926,6 +31982,10 @@ export type MarketplaceResourcesListData = {
          */
         service_manager_uuid?: string;
         state?: Array<'Creating' | 'Erred' | 'OK' | 'Terminated' | 'Terminating' | 'Updating'>;
+        /**
+         * Filter by usage-based offerings
+         */
+        usage_based?: boolean;
         /**
          * Visible to username
          */
@@ -31965,6 +32025,10 @@ export type MarketplaceResourcesCountData = {
          */
         lexis_links_supported?: boolean;
         /**
+         * Filter by limit-based offerings
+         */
+        limit_based?: boolean;
+        /**
          * Modified after
          */
         modified?: string;
@@ -32019,6 +32083,10 @@ export type MarketplaceResourcesCountData = {
          */
         service_manager_uuid?: string;
         state?: Array<'Creating' | 'Erred' | 'OK' | 'Terminated' | 'Terminating' | 'Updating'>;
+        /**
+         * Filter by usage-based offerings
+         */
+        usage_based?: boolean;
         /**
          * Visible to username
          */
