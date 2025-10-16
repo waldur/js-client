@@ -18093,6 +18093,14 @@ export type BookingResourcesListData = {
          */
         offering_uuid?: Array<string>;
         /**
+         * Filter out resources with only limit-based components
+         */
+        only_limit_based?: boolean;
+        /**
+         * Filter out resources with only usage-based components
+         */
+        only_usage_based?: boolean;
+        /**
          * A page number within the paginated result set.
          */
         page?: number;
@@ -18194,6 +18202,14 @@ export type BookingResourcesCountData = {
          * Multiple values may be separated by commas.
          */
         offering_uuid?: Array<string>;
+        /**
+         * Filter out resources with only limit-based components
+         */
+        only_limit_based?: boolean;
+        /**
+         * Filter out resources with only usage-based components
+         */
+        only_usage_based?: boolean;
         /**
          * A page number within the paginated result set.
          */
@@ -30770,6 +30786,14 @@ export type MarketplaceProviderResourcesListData = {
          */
         offering_uuid?: Array<string>;
         /**
+         * Filter out resources with only limit-based components
+         */
+        only_limit_based?: boolean;
+        /**
+         * Filter out resources with only usage-based components
+         */
+        only_usage_based?: boolean;
+        /**
          * A page number within the paginated result set.
          */
         page?: number;
@@ -30870,6 +30894,14 @@ export type MarketplaceProviderResourcesCountData = {
          * Multiple values may be separated by commas.
          */
         offering_uuid?: Array<string>;
+        /**
+         * Filter out resources with only limit-based components
+         */
+        only_limit_based?: boolean;
+        /**
+         * Filter out resources with only usage-based components
+         */
+        only_usage_based?: boolean;
         /**
          * A page number within the paginated result set.
          */
@@ -31955,6 +31987,14 @@ export type MarketplaceResourcesListData = {
          */
         offering_uuid?: Array<string>;
         /**
+         * Filter out resources with only limit-based components
+         */
+        only_limit_based?: boolean;
+        /**
+         * Filter out resources with only usage-based components
+         */
+        only_usage_based?: boolean;
+        /**
          * A page number within the paginated result set.
          */
         page?: number;
@@ -32055,6 +32095,14 @@ export type MarketplaceResourcesCountData = {
          * Multiple values may be separated by commas.
          */
         offering_uuid?: Array<string>;
+        /**
+         * Filter out resources with only limit-based components
+         */
+        only_limit_based?: boolean;
+        /**
+         * Filter out resources with only usage-based components
+         */
+        only_usage_based?: boolean;
         /**
          * A page number within the paginated result set.
          */
