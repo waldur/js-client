@@ -77,6 +77,7 @@ export type AgentIdentity = {
     last_restarted?: string;
     readonly created: string;
     readonly modified: string;
+    readonly services: Array<NestedAgentService>;
 };
 
 export type AgentIdentityRequest = {
@@ -127,10 +128,11 @@ export type AgentService = {
     readonly identity_name: string;
     name: string;
     mode?: string | null;
-    state: AgentServiceStateEnum;
+    state: AgentServiceState;
     statistics?: unknown;
     readonly created: string;
     readonly modified: string;
+    readonly processors: Array<NestedAgentProcessor>;
 };
 
 export type AgentServiceCreateRequest = {
@@ -138,7 +140,7 @@ export type AgentServiceCreateRequest = {
     mode?: string | null;
 };
 
-export type AgentServiceStateEnum = 'Active' | 'Idle' | 'Error';
+export type AgentServiceState = 'Active' | 'Idle' | 'Error';
 
 export type AgentServiceStatisticsRequest = {
     /**
@@ -2398,6 +2400,35 @@ export type Customer = {
     readonly service_provider_uuid?: string | null;
     readonly call_managing_organization_uuid?: string | null;
     billing_price_estimate?: NestedPriceEstimate;
+};
+
+export type CustomerComponentUsagePolicy = {
+    readonly uuid: string;
+    readonly url: string;
+    scope: string;
+    readonly scope_name: string;
+    readonly scope_uuid: string;
+    actions: string;
+    readonly created: string;
+    readonly created_by_full_name: string;
+    readonly created_by_username: string;
+    readonly has_fired: boolean;
+    readonly fired_datetime: string;
+    /**
+     * Fields for saving actions extra data. Keys are name of actions.
+     */
+    options?: unknown;
+    component_limits_set: Array<NestedCustomerUsagePolicyComponent>;
+};
+
+export type CustomerComponentUsagePolicyRequest = {
+    scope: string;
+    actions: string;
+    /**
+     * Fields for saving actions extra data. Keys are name of actions.
+     */
+    options?: unknown;
+    component_limits_set: Array<NestedCustomerUsagePolicyComponentRequest>;
 };
 
 export type CustomerCredit = {
@@ -4925,6 +4956,37 @@ export type NameUuid = {
     readonly uuid: string;
 };
 
+export type NestedAgentProcessor = {
+    readonly uuid: string;
+    readonly url: string;
+    name: string;
+    last_run?: string | null;
+    /**
+     * Type of the backend, for example SLURM.
+     */
+    backend_type: string;
+    backend_version?: string | null;
+    readonly created: string;
+    readonly modified: string;
+};
+
+export type NestedAgentService = {
+    readonly uuid: string;
+    readonly url: string;
+    name: string;
+    mode?: string | null;
+    state: AgentServiceState;
+    statistics?: unknown;
+    readonly created: string;
+    readonly modified: string;
+};
+
+export type NestedAgentServiceRequest = {
+    name: string;
+    mode?: string | null;
+    statistics?: unknown;
+};
+
 export type NestedAttribute = {
     key?: string;
     title?: string;
@@ -5020,6 +5082,20 @@ export type NestedColumnRequest = {
      * Widget field allows to customise table cell rendering.
      */
     widget?: WidgetEnum | BlankEnum | NullEnum | null;
+};
+
+export type NestedCustomerUsagePolicyComponent = {
+    readonly type: string;
+    limit: number;
+    period?: PeriodEnum;
+    readonly period_name: string;
+    component: string;
+};
+
+export type NestedCustomerUsagePolicyComponentRequest = {
+    limit: number;
+    period?: PeriodEnum;
+    component: string;
 };
 
 export type NestedEndpoint = {
@@ -8277,6 +8353,16 @@ export type PatchedCreateCustomerCreditRequest = {
     minimal_consumption_logic?: MinimalConsumptionLogicEnum;
     grace_coefficient?: string;
     apply_as_minimal_consumption?: boolean;
+};
+
+export type PatchedCustomerComponentUsagePolicyRequest = {
+    scope?: string;
+    actions?: string;
+    /**
+     * Fields for saving actions extra data. Keys are name of actions.
+     */
+    options?: unknown;
+    component_limits_set?: Array<NestedCustomerUsagePolicyComponentRequest>;
 };
 
 export type PatchedCustomerEstimatedCostPolicyRequest = {
@@ -25810,6 +25896,162 @@ export type MarketplaceCourseAccountsCreateBulkResponses = {
 };
 
 export type MarketplaceCourseAccountsCreateBulkResponse = MarketplaceCourseAccountsCreateBulkResponses[keyof MarketplaceCourseAccountsCreateBulkResponses];
+
+export type MarketplaceCustomerComponentUsagePoliciesListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        customer?: string;
+        customer_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        scope?: string;
+        scope_uuid?: string;
+    };
+    url: '/api/marketplace-customer-component-usage-policies/';
+};
+
+export type MarketplaceCustomerComponentUsagePoliciesListResponses = {
+    200: Array<CustomerComponentUsagePolicy>;
+};
+
+export type MarketplaceCustomerComponentUsagePoliciesListResponse = MarketplaceCustomerComponentUsagePoliciesListResponses[keyof MarketplaceCustomerComponentUsagePoliciesListResponses];
+
+export type MarketplaceCustomerComponentUsagePoliciesCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        customer?: string;
+        customer_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        scope?: string;
+        scope_uuid?: string;
+    };
+    url: '/api/marketplace-customer-component-usage-policies/';
+};
+
+export type MarketplaceCustomerComponentUsagePoliciesCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type MarketplaceCustomerComponentUsagePoliciesCreateData = {
+    body: CustomerComponentUsagePolicyRequest;
+    path?: never;
+    query?: never;
+    url: '/api/marketplace-customer-component-usage-policies/';
+};
+
+export type MarketplaceCustomerComponentUsagePoliciesCreateResponses = {
+    201: CustomerComponentUsagePolicy;
+};
+
+export type MarketplaceCustomerComponentUsagePoliciesCreateResponse = MarketplaceCustomerComponentUsagePoliciesCreateResponses[keyof MarketplaceCustomerComponentUsagePoliciesCreateResponses];
+
+export type MarketplaceCustomerComponentUsagePoliciesDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-customer-component-usage-policies/{uuid}/';
+};
+
+export type MarketplaceCustomerComponentUsagePoliciesDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type MarketplaceCustomerComponentUsagePoliciesDestroyResponse = MarketplaceCustomerComponentUsagePoliciesDestroyResponses[keyof MarketplaceCustomerComponentUsagePoliciesDestroyResponses];
+
+export type MarketplaceCustomerComponentUsagePoliciesRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-customer-component-usage-policies/{uuid}/';
+};
+
+export type MarketplaceCustomerComponentUsagePoliciesRetrieveResponses = {
+    200: CustomerComponentUsagePolicy;
+};
+
+export type MarketplaceCustomerComponentUsagePoliciesRetrieveResponse = MarketplaceCustomerComponentUsagePoliciesRetrieveResponses[keyof MarketplaceCustomerComponentUsagePoliciesRetrieveResponses];
+
+export type MarketplaceCustomerComponentUsagePoliciesPartialUpdateData = {
+    body?: PatchedCustomerComponentUsagePolicyRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-customer-component-usage-policies/{uuid}/';
+};
+
+export type MarketplaceCustomerComponentUsagePoliciesPartialUpdateResponses = {
+    200: CustomerComponentUsagePolicy;
+};
+
+export type MarketplaceCustomerComponentUsagePoliciesPartialUpdateResponse = MarketplaceCustomerComponentUsagePoliciesPartialUpdateResponses[keyof MarketplaceCustomerComponentUsagePoliciesPartialUpdateResponses];
+
+export type MarketplaceCustomerComponentUsagePoliciesUpdateData = {
+    body: CustomerComponentUsagePolicyRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-customer-component-usage-policies/{uuid}/';
+};
+
+export type MarketplaceCustomerComponentUsagePoliciesUpdateResponses = {
+    200: CustomerComponentUsagePolicy;
+};
+
+export type MarketplaceCustomerComponentUsagePoliciesUpdateResponse = MarketplaceCustomerComponentUsagePoliciesUpdateResponses[keyof MarketplaceCustomerComponentUsagePoliciesUpdateResponses];
+
+export type MarketplaceCustomerComponentUsagePoliciesActionsRetrieveData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/marketplace-customer-component-usage-policies/actions/';
+};
+
+export type MarketplaceCustomerComponentUsagePoliciesActionsRetrieveResponses = {
+    200: CustomerComponentUsagePolicy;
+};
+
+export type MarketplaceCustomerComponentUsagePoliciesActionsRetrieveResponse = MarketplaceCustomerComponentUsagePoliciesActionsRetrieveResponses[keyof MarketplaceCustomerComponentUsagePoliciesActionsRetrieveResponses];
+
+export type MarketplaceCustomerComponentUsagePoliciesActionsCountData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/marketplace-customer-component-usage-policies/actions/';
+};
+
+export type MarketplaceCustomerComponentUsagePoliciesActionsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type MarketplaceCustomerEstimatedCostPoliciesListData = {
     body?: never;
