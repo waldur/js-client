@@ -33671,6 +33671,7 @@ export type MarketplaceServiceProvidersCustomerProjectsListData = {
         customer_native_name?: string;
         description?: string;
         field?: Array<'billing_price_estimate' | 'description' | 'end_date' | 'name' | 'resources_count' | 'users_count' | 'uuid'>;
+        is_removed?: boolean;
         /**
          * Modified after
          */
@@ -34038,6 +34039,7 @@ export type MarketplaceServiceProvidersProjectsListData = {
         customer_native_name?: string;
         description?: string;
         field?: Array<'backend_id' | 'billing_price_estimate' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_display_billing_info_in_projects' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'end_date' | 'end_date_requested_by' | 'image' | 'is_industry' | 'is_removed' | 'kind' | 'marketplace_resource_count' | 'max_service_accounts' | 'name' | 'oecd_fos_2007_code' | 'oecd_fos_2007_label' | 'project_credit' | 'resources_count' | 'slug' | 'start_date' | 'type' | 'type_name' | 'type_uuid' | 'url' | 'uuid'>;
+        is_removed?: boolean;
         /**
          * Modified after
          */
@@ -41538,6 +41540,7 @@ export type ProjectsListData = {
          * Include soft-deleted (terminated) projects. Only available to staff and support users, or users with organizational roles who can see their terminated projects.
          */
         include_terminated?: boolean;
+        is_removed?: boolean;
         /**
          * Modified after
          */
@@ -41606,6 +41609,7 @@ export type ProjectsCountData = {
          * Include soft-deleted (terminated) projects. Only available to staff and support users, or users with organizational roles who can see their terminated projects.
          */
         include_terminated?: boolean;
+        is_removed?: boolean;
         /**
          * Modified after
          */
