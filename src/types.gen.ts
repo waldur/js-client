@@ -1900,6 +1900,7 @@ export type ConstanceSettings = {
     DOCS_URL?: string;
     SHORT_PAGE_TITLE?: string;
     FULL_PAGE_TITLE?: string;
+    PROJECT_END_DATE_MANDATORY?: boolean;
     BRAND_COLOR?: string;
     HERO_LINK_LABEL?: string;
     HERO_LINK_URL?: string;
@@ -2044,6 +2045,7 @@ export type ConstanceSettingsRequest = {
     DOCS_URL?: string;
     SHORT_PAGE_TITLE?: string;
     FULL_PAGE_TITLE?: string;
+    PROJECT_END_DATE_MANDATORY?: boolean;
     BRAND_COLOR?: string;
     HERO_LINK_LABEL?: string;
     HERO_LINK_URL?: string;
@@ -14550,6 +14552,7 @@ export type ConstanceSettingsRequestForm = {
     DOCS_URL?: string;
     SHORT_PAGE_TITLE?: string;
     FULL_PAGE_TITLE?: string;
+    PROJECT_END_DATE_MANDATORY?: boolean;
     BRAND_COLOR?: string;
     HERO_LINK_LABEL?: string;
     HERO_LINK_URL?: string;
@@ -14694,6 +14697,7 @@ export type ConstanceSettingsRequestMultipart = {
     DOCS_URL?: string;
     SHORT_PAGE_TITLE?: string;
     FULL_PAGE_TITLE?: string;
+    PROJECT_END_DATE_MANDATORY?: boolean;
     BRAND_COLOR?: string;
     HERO_LINK_LABEL?: string;
     HERO_LINK_URL?: string;
@@ -18137,6 +18141,10 @@ export type BookingResourcesListData = {
          */
         backend_id?: string;
         category_uuid?: string;
+        /**
+         * Filter by exact number of components
+         */
+        component_count?: number;
         connected_customer_uuid?: string;
         /**
          * Created after
@@ -18158,6 +18166,10 @@ export type BookingResourcesListData = {
          * Filter by limit-based offerings
          */
         limit_based?: boolean;
+        /**
+         * Filter by exact number of limit-based components
+         */
+        limit_component_count?: number;
         /**
          * Modified after
          */
@@ -18248,6 +18260,10 @@ export type BookingResourcesCountData = {
          */
         backend_id?: string;
         category_uuid?: string;
+        /**
+         * Filter by exact number of components
+         */
+        component_count?: number;
         connected_customer_uuid?: string;
         /**
          * Created after
@@ -18268,6 +18284,10 @@ export type BookingResourcesCountData = {
          * Filter by limit-based offerings
          */
         limit_based?: boolean;
+        /**
+         * Filter by exact number of limit-based components
+         */
+        limit_component_count?: number;
         /**
          * Modified after
          */
@@ -31016,6 +31036,10 @@ export type MarketplaceProviderResourcesListData = {
         backend_id?: string;
         category_uuid?: string;
         /**
+         * Filter by exact number of components
+         */
+        component_count?: number;
+        /**
          * Created after
          */
         created?: string;
@@ -31035,6 +31059,10 @@ export type MarketplaceProviderResourcesListData = {
          * Filter by limit-based offerings
          */
         limit_based?: boolean;
+        /**
+         * Filter by exact number of limit-based components
+         */
+        limit_component_count?: number;
         /**
          * Modified after
          */
@@ -31126,6 +31154,10 @@ export type MarketplaceProviderResourcesCountData = {
         backend_id?: string;
         category_uuid?: string;
         /**
+         * Filter by exact number of components
+         */
+        component_count?: number;
+        /**
          * Created after
          */
         created?: string;
@@ -31144,6 +31176,10 @@ export type MarketplaceProviderResourcesCountData = {
          * Filter by limit-based offerings
          */
         limit_based?: boolean;
+        /**
+         * Filter by exact number of limit-based components
+         */
+        limit_component_count?: number;
         /**
          * Modified after
          */
@@ -32225,6 +32261,10 @@ export type MarketplaceResourcesListData = {
         backend_id?: string;
         category_uuid?: string;
         /**
+         * Filter by exact number of components
+         */
+        component_count?: number;
+        /**
          * Created after
          */
         created?: string;
@@ -32244,6 +32284,10 @@ export type MarketplaceResourcesListData = {
          * Filter by limit-based offerings
          */
         limit_based?: boolean;
+        /**
+         * Filter by exact number of limit-based components
+         */
+        limit_component_count?: number;
         /**
          * Modified after
          */
@@ -32335,6 +32379,10 @@ export type MarketplaceResourcesCountData = {
         backend_id?: string;
         category_uuid?: string;
         /**
+         * Filter by exact number of components
+         */
+        component_count?: number;
+        /**
          * Created after
          */
         created?: string;
@@ -32353,6 +32401,10 @@ export type MarketplaceResourcesCountData = {
          * Filter by limit-based offerings
          */
         limit_based?: boolean;
+        /**
+         * Filter by exact number of limit-based components
+         */
+        limit_component_count?: number;
         /**
          * Modified after
          */
