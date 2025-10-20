@@ -4404,6 +4404,14 @@ export type MergedPluginOptions = {
      * Slurm account name generation policy
      */
     account_name_generation_policy?: AccountNameGenerationPolicyEnum | NullEnum | null;
+    /**
+     * Defines if backend_id should be shown more prominently by the UI
+     */
+    highlight_backend_id_display?: boolean;
+    /**
+     * Label used by UI for showing value of the backend_id
+     */
+    backend_id_display_label?: string;
 };
 
 export type MergedPluginOptionsRequest = {
@@ -4575,6 +4583,14 @@ export type MergedPluginOptionsRequest = {
      * Slurm account name generation policy
      */
     account_name_generation_policy?: AccountNameGenerationPolicyEnum | NullEnum | null;
+    /**
+     * Defines if backend_id should be shown more prominently by the UI
+     */
+    highlight_backend_id_display?: boolean;
+    /**
+     * Label used by UI for showing value of the backend_id
+     */
+    backend_id_display_label?: string;
 };
 
 export type MergedSecretOptions = {
