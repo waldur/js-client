@@ -9633,6 +9633,7 @@ export type Project = {
      */
     kind?: KindEnum;
     readonly is_removed?: boolean;
+    readonly termination_metadata?: unknown;
     readonly project_credit?: number | null;
     readonly marketplace_resource_count?: {
         [key: string]: number;
@@ -9812,6 +9813,17 @@ export type ProjectQuotas = {
     readonly customer_name: string;
     readonly customer_abbreviation: string;
     readonly value: number;
+};
+
+export type ProjectRecoveryRequest = {
+    /**
+     * Whether to automatically restore team members who had access before project deletion (staff only)
+     */
+    restore_team_members?: boolean;
+    /**
+     * Whether to send invitations to users who had access before project deletion
+     */
+    send_invitations_to_previous_members?: boolean;
 };
 
 export type ProjectRequest = {
@@ -18909,6 +18921,17 @@ export type CallManagingOrganisationsAddUserData = {
     url: '/api/call-managing-organisations/{uuid}/add_user/';
 };
 
+export type CallManagingOrganisationsAddUserErrors = {
+    /**
+     * Validation error when trying to add user to terminated project
+     */
+    400: {
+        non_field_errors?: Array<string>;
+    };
+};
+
+export type CallManagingOrganisationsAddUserError = CallManagingOrganisationsAddUserErrors[keyof CallManagingOrganisationsAddUserErrors];
+
 export type CallManagingOrganisationsAddUserResponses = {
     201: UserRoleExpirationTime;
 };
@@ -20794,6 +20817,17 @@ export type CustomersAddUserData = {
     query?: never;
     url: '/api/customers/{uuid}/add_user/';
 };
+
+export type CustomersAddUserErrors = {
+    /**
+     * Validation error when trying to add user to terminated project
+     */
+    400: {
+        non_field_errors?: Array<string>;
+    };
+};
+
+export type CustomersAddUserError = CustomersAddUserErrors[keyof CustomersAddUserErrors];
 
 export type CustomersAddUserResponses = {
     201: UserRoleExpirationTime;
@@ -25587,6 +25621,8 @@ export type MarketplaceComponentUsagesListData = {
     path?: never;
     query?: {
         billing_period?: string;
+        billing_period_month?: number;
+        billing_period_year?: number;
         customer_uuid?: string;
         date_after?: string;
         date_before?: string;
@@ -25625,6 +25661,8 @@ export type MarketplaceComponentUsagesCountData = {
     path?: never;
     query?: {
         billing_period?: string;
+        billing_period_month?: number;
+        billing_period_year?: number;
         customer_uuid?: string;
         date_after?: string;
         date_before?: string;
@@ -29747,6 +29785,17 @@ export type MarketplaceProviderOfferingsAddUserData = {
     query?: never;
     url: '/api/marketplace-provider-offerings/{uuid}/add_user/';
 };
+
+export type MarketplaceProviderOfferingsAddUserErrors = {
+    /**
+     * Validation error when trying to add user to terminated project
+     */
+    400: {
+        non_field_errors?: Array<string>;
+    };
+};
+
+export type MarketplaceProviderOfferingsAddUserError = MarketplaceProviderOfferingsAddUserErrors[keyof MarketplaceProviderOfferingsAddUserErrors];
 
 export type MarketplaceProviderOfferingsAddUserResponses = {
     201: UserRoleExpirationTime;
@@ -34108,7 +34157,7 @@ export type MarketplaceServiceProvidersProjectsListData = {
         customer_name?: string;
         customer_native_name?: string;
         description?: string;
-        field?: Array<'backend_id' | 'billing_price_estimate' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_display_billing_info_in_projects' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'end_date' | 'end_date_requested_by' | 'image' | 'is_industry' | 'is_removed' | 'kind' | 'marketplace_resource_count' | 'max_service_accounts' | 'name' | 'oecd_fos_2007_code' | 'oecd_fos_2007_label' | 'project_credit' | 'resources_count' | 'slug' | 'start_date' | 'type' | 'type_name' | 'type_uuid' | 'url' | 'uuid'>;
+        field?: Array<'backend_id' | 'billing_price_estimate' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_display_billing_info_in_projects' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'end_date' | 'end_date_requested_by' | 'image' | 'is_industry' | 'is_removed' | 'kind' | 'marketplace_resource_count' | 'max_service_accounts' | 'name' | 'oecd_fos_2007_code' | 'oecd_fos_2007_label' | 'project_credit' | 'resources_count' | 'slug' | 'start_date' | 'termination_metadata' | 'type' | 'type_name' | 'type_uuid' | 'url' | 'uuid'>;
         is_removed?: boolean;
         /**
          * Modified after
@@ -34350,6 +34399,17 @@ export type MarketplaceServiceProvidersAddUserData = {
     query?: never;
     url: '/api/marketplace-service-providers/{uuid}/add_user/';
 };
+
+export type MarketplaceServiceProvidersAddUserErrors = {
+    /**
+     * Validation error when trying to add user to terminated project
+     */
+    400: {
+        non_field_errors?: Array<string>;
+    };
+};
+
+export type MarketplaceServiceProvidersAddUserError = MarketplaceServiceProvidersAddUserErrors[keyof MarketplaceServiceProvidersAddUserErrors];
 
 export type MarketplaceServiceProvidersAddUserResponses = {
     201: UserRoleExpirationTime;
@@ -41605,7 +41665,7 @@ export type ProjectsListData = {
         customer_name?: string;
         customer_native_name?: string;
         description?: string;
-        field?: Array<'backend_id' | 'billing_price_estimate' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_display_billing_info_in_projects' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'end_date' | 'end_date_requested_by' | 'image' | 'is_industry' | 'is_removed' | 'kind' | 'marketplace_resource_count' | 'max_service_accounts' | 'name' | 'oecd_fos_2007_code' | 'oecd_fos_2007_label' | 'project_credit' | 'resources_count' | 'slug' | 'start_date' | 'type' | 'type_name' | 'type_uuid' | 'url' | 'uuid'>;
+        field?: Array<'backend_id' | 'billing_price_estimate' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_display_billing_info_in_projects' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'end_date' | 'end_date_requested_by' | 'image' | 'is_industry' | 'is_removed' | 'kind' | 'marketplace_resource_count' | 'max_service_accounts' | 'name' | 'oecd_fos_2007_code' | 'oecd_fos_2007_label' | 'project_credit' | 'resources_count' | 'slug' | 'start_date' | 'termination_metadata' | 'type' | 'type_name' | 'type_uuid' | 'url' | 'uuid'>;
         /**
          * Include soft-deleted (terminated) projects. Only available to staff and support users, or users with organizational roles who can see their terminated projects.
          */
@@ -41814,7 +41874,7 @@ export type ProjectsRetrieveData = {
         uuid: string;
     };
     query?: {
-        field?: Array<'backend_id' | 'billing_price_estimate' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_display_billing_info_in_projects' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'end_date' | 'end_date_requested_by' | 'image' | 'is_industry' | 'is_removed' | 'kind' | 'marketplace_resource_count' | 'max_service_accounts' | 'name' | 'oecd_fos_2007_code' | 'oecd_fos_2007_label' | 'project_credit' | 'resources_count' | 'slug' | 'start_date' | 'type' | 'type_name' | 'type_uuid' | 'url' | 'uuid'>;
+        field?: Array<'backend_id' | 'billing_price_estimate' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_display_billing_info_in_projects' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'end_date' | 'end_date_requested_by' | 'image' | 'is_industry' | 'is_removed' | 'kind' | 'marketplace_resource_count' | 'max_service_accounts' | 'name' | 'oecd_fos_2007_code' | 'oecd_fos_2007_label' | 'project_credit' | 'resources_count' | 'slug' | 'start_date' | 'termination_metadata' | 'type' | 'type_name' | 'type_uuid' | 'url' | 'uuid'>;
     };
     url: '/api/projects/{uuid}/';
 };
@@ -41863,6 +41923,17 @@ export type ProjectsAddUserData = {
     query?: never;
     url: '/api/projects/{uuid}/add_user/';
 };
+
+export type ProjectsAddUserErrors = {
+    /**
+     * Validation error when trying to add user to terminated project
+     */
+    400: {
+        non_field_errors?: Array<string>;
+    };
+};
+
+export type ProjectsAddUserError = ProjectsAddUserErrors[keyof ProjectsAddUserErrors];
 
 export type ProjectsAddUserResponses = {
     201: UserRoleExpirationTime;
@@ -42011,11 +42082,37 @@ export type ProjectsMoveProjectData = {
     url: '/api/projects/{uuid}/move_project/';
 };
 
+export type ProjectsMoveProjectErrors = {
+    /**
+     * Validation error when trying to move a terminated project
+     */
+    400: {
+        non_field_errors?: Array<string>;
+    };
+};
+
+export type ProjectsMoveProjectError = ProjectsMoveProjectErrors[keyof ProjectsMoveProjectErrors];
+
 export type ProjectsMoveProjectResponses = {
     200: Project;
 };
 
 export type ProjectsMoveProjectResponse = ProjectsMoveProjectResponses[keyof ProjectsMoveProjectResponses];
+
+export type ProjectsRecoverData = {
+    body?: ProjectRecoveryRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/projects/{uuid}/recover/';
+};
+
+export type ProjectsRecoverResponses = {
+    200: Project;
+};
+
+export type ProjectsRecoverResponse = ProjectsRecoverResponses[keyof ProjectsRecoverResponses];
 
 export type ProjectsStatsRetrieveData = {
     body?: never;
@@ -42470,6 +42567,17 @@ export type ProposalProposalsAddUserData = {
     query?: never;
     url: '/api/proposal-proposals/{uuid}/add_user/';
 };
+
+export type ProposalProposalsAddUserErrors = {
+    /**
+     * Validation error when trying to add user to terminated project
+     */
+    400: {
+        non_field_errors?: Array<string>;
+    };
+};
+
+export type ProposalProposalsAddUserError = ProposalProposalsAddUserErrors[keyof ProposalProposalsAddUserErrors];
 
 export type ProposalProposalsAddUserResponses = {
     201: UserRoleExpirationTime;
@@ -43097,6 +43205,17 @@ export type ProposalProtectedCallsAddUserData = {
     query?: never;
     url: '/api/proposal-protected-calls/{uuid}/add_user/';
 };
+
+export type ProposalProtectedCallsAddUserErrors = {
+    /**
+     * Validation error when trying to add user to terminated project
+     */
+    400: {
+        non_field_errors?: Array<string>;
+    };
+};
+
+export type ProposalProtectedCallsAddUserError = ProposalProtectedCallsAddUserErrors[keyof ProposalProtectedCallsAddUserErrors];
 
 export type ProposalProtectedCallsAddUserResponses = {
     201: UserRoleExpirationTime;
