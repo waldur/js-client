@@ -6159,7 +6159,7 @@ export type OnboardingJustification = {
     /**
      * User's explanation for why they should be authorized
      */
-    user_justification: string;
+    user_justification?: string | null;
     readonly validated_by: number | null;
     readonly validated_at: string | null;
     validation_decision: ValidationDecisionEnum;
@@ -6180,7 +6180,7 @@ export type OnboardingJustificationCreateRequest = {
     /**
      * User's explanation for why they should be authorized
      */
-    user_justification: string;
+    user_justification?: string;
 };
 
 export type OnboardingJustificationDocumentation = {
@@ -6207,7 +6207,7 @@ export type OnboardingJustificationRequest = {
     /**
      * User's explanation for why they should be authorized
      */
-    user_justification: string;
+    user_justification?: string | null;
 };
 
 export type OnboardingJustificationReviewRequest = {
@@ -8747,7 +8747,7 @@ export type PatchedOnboardingJustificationRequest = {
     /**
      * User's explanation for why they should be authorized
      */
-    user_justification?: string;
+    user_justification?: string | null;
 };
 
 export type PatchedOnboardingVerificationRequest = {
