@@ -6156,6 +6156,8 @@ export type OnboardingJustification = {
     readonly uuid: string;
     verification: number;
     user: number;
+    readonly legal_person_identifier: string;
+    readonly legal_name: string;
     /**
      * User's explanation for why they should be authorized
      */
