@@ -4285,9 +4285,13 @@ export type MergedPluginOptions = {
      */
     required_team_role_for_provisioning?: string;
     /**
-     * If set to True, orders will support comments and metadata
+     * If set to True, users will be able to upload purchase orders.
      */
-    order_supports_comments_and_metadata?: boolean;
+    enable_purchase_order_upload?: boolean;
+    /**
+     * If set to True, users will be required to upload purchase orders.
+     */
+    require_purchase_order_upload?: boolean;
     /**
      * If set to True, pricing and components tab would be concealed.
      */
@@ -4464,9 +4468,13 @@ export type MergedPluginOptionsRequest = {
      */
     required_team_role_for_provisioning?: string;
     /**
-     * If set to True, orders will support comments and metadata
+     * If set to True, users will be able to upload purchase orders.
      */
-    order_supports_comments_and_metadata?: boolean;
+    enable_purchase_order_upload?: boolean;
+    /**
+     * If set to True, users will be required to upload purchase orders.
+     */
+    require_purchase_order_upload?: boolean;
     /**
      * If set to True, pricing and components tab would be concealed.
      */
