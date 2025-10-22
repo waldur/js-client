@@ -907,6 +907,7 @@ export type BaseProviderPlan = {
     readonly switch_price?: number;
     backend_id?: string;
     readonly organization_groups?: Array<OrganizationGroup>;
+    readonly components?: Array<NestedPlanComponent>;
     readonly prices?: {
         [key: string]: number;
     };
@@ -959,6 +960,7 @@ export type BasePublicPlan = {
     readonly switch_price?: number;
     backend_id?: string;
     readonly organization_groups?: Array<OrganizationGroup>;
+    readonly components?: Array<NestedPlanComponent>;
     readonly prices?: {
         [key: string]: number;
     };
@@ -2845,7 +2847,27 @@ export type DigitalOceanSize = {
 
 export type DirectionEnum = 'ingress' | 'egress';
 
+export type DiscountConfigRequest = {
+    /**
+     * Minimum quantity to be eligible for discount.
+     */
+    discount_threshold?: number | null;
+    /**
+     * Discount rate in percentage (0-100).
+     */
+    discount_rate?: number | null;
+};
+
 export type DiscountTypeEnum = 'discount' | 'special_price';
+
+export type DiscountsUpdateRequest = {
+    /**
+     * Dictionary mapping component types to their discount configuration.
+     */
+    discounts: {
+        [key: string]: DiscountConfigRequest;
+    };
+};
 
 export type DiskFormatEnum = 'qcow2' | 'raw' | 'vhd' | 'vmdk' | 'vdi' | 'iso' | 'aki' | 'ami' | 'ari';
 
@@ -4297,6 +4319,10 @@ export type MergedPluginOptions = {
      */
     conceal_billing_data?: boolean;
     /**
+     * If set to True, create orders when options of related resources are changed.
+     */
+    create_orders_on_resource_option_change?: boolean;
+    /**
      * If set, it will be used as a default MTU for the first network in a tenant
      */
     default_internal_network_mtu?: number;
@@ -4479,6 +4505,10 @@ export type MergedPluginOptionsRequest = {
      * If set to True, pricing and components tab would be concealed.
      */
     conceal_billing_data?: boolean;
+    /**
+     * If set to True, create orders when options of related resources are changed.
+     */
+    create_orders_on_resource_option_change?: boolean;
     /**
      * If set, it will be used as a default MTU for the first network in a tenant
      */
@@ -5168,6 +5198,58 @@ export type NestedOfferingFile = {
 export type NestedOfferingFileRequest = {
     name: string;
     file: Blob | File;
+};
+
+export type NestedPlanComponent = {
+    /**
+     * Unique internal name of the measured unit, for example floating_ip.
+     */
+    readonly type?: string;
+    /**
+     * Display name for the measured unit, for example, Floating IP.
+     */
+    readonly name?: string;
+    /**
+     * Unit of measurement, for example, GB.
+     */
+    readonly measured_unit?: string;
+    amount?: number;
+    /**
+     * Price per unit per billing period.
+     */
+    price?: string;
+    /**
+     * Price per unit for future month.
+     */
+    future_price?: string | null;
+    /**
+     * Minimum amount to be eligible for discount.
+     */
+    discount_threshold?: number | null;
+    /**
+     * Discount rate in percentage.
+     */
+    discount_rate?: number | null;
+};
+
+export type NestedPlanComponentRequest = {
+    amount?: number;
+    /**
+     * Price per unit per billing period.
+     */
+    price?: string;
+    /**
+     * Price per unit for future month.
+     */
+    future_price?: string | null;
+    /**
+     * Minimum amount to be eligible for discount.
+     */
+    discount_threshold?: number | null;
+    /**
+     * Discount rate in percentage.
+     */
+    discount_rate?: number | null;
 };
 
 export type NestedPriceEstimate = {
@@ -8140,6 +8222,7 @@ export type OrderDetails = {
     request_comment?: string | null;
     attachment?: string | null;
     type?: RequestTypes;
+    readonly url?: string;
     /**
      * Required. 128 characters or fewer. Lowercase letters, numbers and @/./+/-/_ characters
      */
@@ -9555,6 +9638,14 @@ export type PlanComponent = {
      * Price per unit for future month.
      */
     future_price?: string | null;
+    /**
+     * Minimum amount to be eligible for discount.
+     */
+    discount_threshold?: number | null;
+    /**
+     * Discount rate in percentage.
+     */
+    discount_rate?: number | null;
 };
 
 export type PlanUsageResponse = {
@@ -10377,6 +10468,7 @@ export type ProviderPlanDetails = {
     readonly switch_price: number;
     backend_id?: string;
     readonly organization_groups: Array<OrganizationGroup>;
+    readonly components: Array<NestedPlanComponent>;
     offering: string;
     readonly prices: {
         [key: string]: number;
@@ -28346,7 +28438,7 @@ export type MarketplaceOrdersListData = {
          */
         created?: string;
         customer_uuid?: string;
-        field?: Array<'accepting_terms_of_service' | 'activation_price' | 'attachment' | 'attributes' | 'backend_id' | 'callback_url' | 'can_terminate' | 'category_icon' | 'category_title' | 'category_uuid' | 'completed_at' | 'consumer_reviewed_at' | 'consumer_reviewed_by' | 'consumer_reviewed_by_full_name' | 'consumer_reviewed_by_username' | 'cost' | 'created' | 'created_by_civil_number' | 'created_by_full_name' | 'created_by_username' | 'customer_name' | 'customer_slug' | 'customer_uuid' | 'error_message' | 'error_traceback' | 'fixed_price' | 'issue' | 'limits' | 'marketplace_resource_uuid' | 'modified' | 'new_cost_estimate' | 'new_plan_name' | 'new_plan_uuid' | 'offering' | 'offering_billable' | 'offering_description' | 'offering_image' | 'offering_name' | 'offering_plugin_options' | 'offering_shared' | 'offering_thumbnail' | 'offering_type' | 'offering_uuid' | 'old_cost_estimate' | 'old_plan_name' | 'old_plan_uuid' | 'output' | 'plan' | 'plan_description' | 'plan_name' | 'plan_unit' | 'plan_uuid' | 'project_description' | 'project_name' | 'project_slug' | 'project_uuid' | 'provider_name' | 'provider_reviewed_at' | 'provider_reviewed_by' | 'provider_reviewed_by_full_name' | 'provider_reviewed_by_username' | 'provider_slug' | 'provider_uuid' | 'request_comment' | 'resource_name' | 'resource_type' | 'resource_uuid' | 'state' | 'termination_comment' | 'type' | 'uuid'>;
+        field?: Array<'accepting_terms_of_service' | 'activation_price' | 'attachment' | 'attributes' | 'backend_id' | 'callback_url' | 'can_terminate' | 'category_icon' | 'category_title' | 'category_uuid' | 'completed_at' | 'consumer_reviewed_at' | 'consumer_reviewed_by' | 'consumer_reviewed_by_full_name' | 'consumer_reviewed_by_username' | 'cost' | 'created' | 'created_by_civil_number' | 'created_by_full_name' | 'created_by_username' | 'customer_name' | 'customer_slug' | 'customer_uuid' | 'error_message' | 'error_traceback' | 'fixed_price' | 'issue' | 'limits' | 'marketplace_resource_uuid' | 'modified' | 'new_cost_estimate' | 'new_plan_name' | 'new_plan_uuid' | 'offering' | 'offering_billable' | 'offering_description' | 'offering_image' | 'offering_name' | 'offering_plugin_options' | 'offering_shared' | 'offering_thumbnail' | 'offering_type' | 'offering_uuid' | 'old_cost_estimate' | 'old_plan_name' | 'old_plan_uuid' | 'output' | 'plan' | 'plan_description' | 'plan_name' | 'plan_unit' | 'plan_uuid' | 'project_description' | 'project_name' | 'project_slug' | 'project_uuid' | 'provider_name' | 'provider_reviewed_at' | 'provider_reviewed_by' | 'provider_reviewed_by_full_name' | 'provider_reviewed_by_username' | 'provider_slug' | 'provider_uuid' | 'request_comment' | 'resource_name' | 'resource_type' | 'resource_uuid' | 'state' | 'termination_comment' | 'type' | 'url' | 'uuid'>;
         /**
          * Modified after
          */
@@ -28491,7 +28583,7 @@ export type MarketplaceOrdersRetrieveData = {
         uuid: string;
     };
     query?: {
-        field?: Array<'accepting_terms_of_service' | 'activation_price' | 'attachment' | 'attributes' | 'backend_id' | 'callback_url' | 'can_terminate' | 'category_icon' | 'category_title' | 'category_uuid' | 'completed_at' | 'consumer_reviewed_at' | 'consumer_reviewed_by' | 'consumer_reviewed_by_full_name' | 'consumer_reviewed_by_username' | 'cost' | 'created' | 'created_by_civil_number' | 'created_by_full_name' | 'created_by_username' | 'customer_name' | 'customer_slug' | 'customer_uuid' | 'error_message' | 'error_traceback' | 'fixed_price' | 'issue' | 'limits' | 'marketplace_resource_uuid' | 'modified' | 'new_cost_estimate' | 'new_plan_name' | 'new_plan_uuid' | 'offering' | 'offering_billable' | 'offering_description' | 'offering_image' | 'offering_name' | 'offering_plugin_options' | 'offering_shared' | 'offering_thumbnail' | 'offering_type' | 'offering_uuid' | 'old_cost_estimate' | 'old_plan_name' | 'old_plan_uuid' | 'output' | 'plan' | 'plan_description' | 'plan_name' | 'plan_unit' | 'plan_uuid' | 'project_description' | 'project_name' | 'project_slug' | 'project_uuid' | 'provider_name' | 'provider_reviewed_at' | 'provider_reviewed_by' | 'provider_reviewed_by_full_name' | 'provider_reviewed_by_username' | 'provider_slug' | 'provider_uuid' | 'request_comment' | 'resource_name' | 'resource_type' | 'resource_uuid' | 'state' | 'termination_comment' | 'type' | 'uuid'>;
+        field?: Array<'accepting_terms_of_service' | 'activation_price' | 'attachment' | 'attributes' | 'backend_id' | 'callback_url' | 'can_terminate' | 'category_icon' | 'category_title' | 'category_uuid' | 'completed_at' | 'consumer_reviewed_at' | 'consumer_reviewed_by' | 'consumer_reviewed_by_full_name' | 'consumer_reviewed_by_username' | 'cost' | 'created' | 'created_by_civil_number' | 'created_by_full_name' | 'created_by_username' | 'customer_name' | 'customer_slug' | 'customer_uuid' | 'error_message' | 'error_traceback' | 'fixed_price' | 'issue' | 'limits' | 'marketplace_resource_uuid' | 'modified' | 'new_cost_estimate' | 'new_plan_name' | 'new_plan_uuid' | 'offering' | 'offering_billable' | 'offering_description' | 'offering_image' | 'offering_name' | 'offering_plugin_options' | 'offering_shared' | 'offering_thumbnail' | 'offering_type' | 'offering_uuid' | 'old_cost_estimate' | 'old_plan_name' | 'old_plan_uuid' | 'output' | 'plan' | 'plan_description' | 'plan_name' | 'plan_unit' | 'plan_uuid' | 'project_description' | 'project_name' | 'project_slug' | 'project_uuid' | 'provider_name' | 'provider_reviewed_at' | 'provider_reviewed_by' | 'provider_reviewed_by_full_name' | 'provider_reviewed_by_username' | 'provider_slug' | 'provider_uuid' | 'request_comment' | 'resource_name' | 'resource_type' | 'resource_uuid' | 'state' | 'termination_comment' | 'type' | 'url' | 'uuid'>;
     };
     url: '/api/marketplace-orders/{uuid}/';
 };
@@ -28963,6 +29055,22 @@ export type MarketplacePlansDeleteOrganizationGroupsData = {
 };
 
 export type MarketplacePlansDeleteOrganizationGroupsResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type MarketplacePlansUpdateDiscountsData = {
+    body: DiscountsUpdateRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-plans/{uuid}/update_discounts/';
+};
+
+export type MarketplacePlansUpdateDiscountsResponses = {
     /**
      * No response body
      */
