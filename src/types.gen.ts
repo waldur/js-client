@@ -1903,6 +1903,7 @@ export type ConstanceSettings = {
     SHORT_PAGE_TITLE?: string;
     FULL_PAGE_TITLE?: string;
     PROJECT_END_DATE_MANDATORY?: boolean;
+    ENABLE_ORDER_START_DATE?: boolean;
     BRAND_COLOR?: string;
     HERO_LINK_LABEL?: string;
     HERO_LINK_URL?: string;
@@ -2049,6 +2050,7 @@ export type ConstanceSettingsRequest = {
     SHORT_PAGE_TITLE?: string;
     FULL_PAGE_TITLE?: string;
     PROJECT_END_DATE_MANDATORY?: boolean;
+    ENABLE_ORDER_START_DATE?: boolean;
     BRAND_COLOR?: string;
     HERO_LINK_LABEL?: string;
     HERO_LINK_URL?: string;
@@ -8277,7 +8279,7 @@ export type OrderSetStateErredRequest = {
     error_traceback?: string;
 };
 
-export type OrderState = 'pending-consumer' | 'pending-provider' | 'pending-project' | 'executing' | 'done' | 'erred' | 'canceled' | 'rejected';
+export type OrderState = 'pending-consumer' | 'pending-provider' | 'pending-project' | 'pending-start-date' | 'executing' | 'done' | 'erred' | 'canceled' | 'rejected';
 
 export type OrderUuid = {
     readonly order_uuid: string;
@@ -11915,7 +11917,7 @@ export type RemoteResourceOrder = {
     sync_status: SyncStatusEnum;
 };
 
-export type RemoteResourceOrderRemoteStateEnum = 1 | 7 | 8 | 2 | 3 | 4 | 5 | 6;
+export type RemoteResourceOrderRemoteStateEnum = 1 | 7 | 8 | 9 | 2 | 3 | 4 | 5 | 6;
 
 export type RemoteResourceSyncStatus = {
     /**
@@ -14686,6 +14688,7 @@ export type ConstanceSettingsRequestForm = {
     SHORT_PAGE_TITLE?: string;
     FULL_PAGE_TITLE?: string;
     PROJECT_END_DATE_MANDATORY?: boolean;
+    ENABLE_ORDER_START_DATE?: boolean;
     BRAND_COLOR?: string;
     HERO_LINK_LABEL?: string;
     HERO_LINK_URL?: string;
@@ -14832,6 +14835,7 @@ export type ConstanceSettingsRequestMultipart = {
     SHORT_PAGE_TITLE?: string;
     FULL_PAGE_TITLE?: string;
     PROJECT_END_DATE_MANDATORY?: boolean;
+    ENABLE_ORDER_START_DATE?: boolean;
     BRAND_COLOR?: string;
     HERO_LINK_LABEL?: string;
     HERO_LINK_URL?: string;
@@ -28479,7 +28483,7 @@ export type MarketplaceOrdersListData = {
         resource?: string;
         resource_uuid?: string;
         service_manager_uuid?: string;
-        state?: Array<'canceled' | 'done' | 'erred' | 'executing' | 'pending-consumer' | 'pending-project' | 'pending-provider' | 'rejected'>;
+        state?: Array<'canceled' | 'done' | 'erred' | 'executing' | 'pending-consumer' | 'pending-project' | 'pending-provider' | 'pending-start-date' | 'rejected'>;
         type?: Array<'Create' | 'Terminate' | 'Update'>;
     };
     url: '/api/marketplace-orders/';
@@ -28538,7 +28542,7 @@ export type MarketplaceOrdersCountData = {
         resource?: string;
         resource_uuid?: string;
         service_manager_uuid?: string;
-        state?: Array<'canceled' | 'done' | 'erred' | 'executing' | 'pending-consumer' | 'pending-project' | 'pending-provider' | 'rejected'>;
+        state?: Array<'canceled' | 'done' | 'erred' | 'executing' | 'pending-consumer' | 'pending-project' | 'pending-provider' | 'pending-start-date' | 'rejected'>;
         type?: Array<'Create' | 'Terminate' | 'Update'>;
     };
     url: '/api/marketplace-orders/';
