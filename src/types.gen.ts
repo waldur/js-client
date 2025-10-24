@@ -9033,6 +9033,7 @@ export type PatchedProjectRequest = {
      * Project type
      */
     kind?: KindEnum;
+    staff_notes?: string;
 };
 
 export type PatchedProjectServiceAccountRequest = {
@@ -9741,6 +9742,7 @@ export type Project = {
     kind?: KindEnum;
     readonly is_removed?: boolean;
     readonly termination_metadata?: unknown;
+    staff_notes?: string;
     readonly project_credit?: number | null;
     readonly marketplace_resource_count?: {
         [key: string]: number;
@@ -9955,6 +9957,7 @@ export type ProjectRequest = {
      * Project type
      */
     kind?: KindEnum;
+    staff_notes?: string;
 };
 
 export type ProjectServiceAccount = {
@@ -13002,11 +13005,6 @@ export type SetMtuRequest = {
     mtu: number;
 };
 
-export type SetOfferingsUsername = {
-    user_uuid: string;
-    username: string;
-};
-
 export type SetOfferingsUsernameRequest = {
     user_uuid: string;
     username: string;
@@ -15000,6 +14998,7 @@ export type ProjectRequestForm = {
      * Project type
      */
     kind?: KindEnum;
+    staff_notes?: string;
 };
 
 export type ProjectRequestMultipart = {
@@ -15024,6 +15023,7 @@ export type ProjectRequestMultipart = {
      * Project type
      */
     kind?: KindEnum;
+    staff_notes?: string;
 };
 
 export type PatchedProjectRequestForm = {
@@ -15048,6 +15048,7 @@ export type PatchedProjectRequestForm = {
      * Project type
      */
     kind?: KindEnum;
+    staff_notes?: string;
 };
 
 export type PatchedProjectRequestMultipart = {
@@ -15072,6 +15073,7 @@ export type PatchedProjectRequestMultipart = {
      * Project type
      */
     kind?: KindEnum;
+    staff_notes?: string;
 };
 
 export type ProposalDocumentationRequestForm = {
@@ -18140,7 +18142,7 @@ export type BackendResourcesImportResourceData = {
 };
 
 export type BackendResourcesImportResourceResponses = {
-    200: Resource;
+    201: Resource;
 };
 
 export type BackendResourcesImportResourceResponse = BackendResourcesImportResourceResponses[keyof BackendResourcesImportResourceResponses];
@@ -30185,7 +30187,7 @@ export type MarketplaceProviderOfferingsCreateOfferingComponentResponses = {
     /**
      * No response body
      */
-    200: unknown;
+    201: unknown;
 };
 
 export type MarketplaceProviderOfferingsCustomersListData = {
@@ -34286,7 +34288,6 @@ export type MarketplaceServiceProvidersProjectsListData = {
         customer_name?: string;
         customer_native_name?: string;
         description?: string;
-        field?: Array<'backend_id' | 'billing_price_estimate' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_display_billing_info_in_projects' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'end_date' | 'end_date_requested_by' | 'image' | 'is_industry' | 'is_removed' | 'kind' | 'marketplace_resource_count' | 'max_service_accounts' | 'name' | 'oecd_fos_2007_code' | 'oecd_fos_2007_label' | 'project_credit' | 'resources_count' | 'slug' | 'start_date' | 'termination_metadata' | 'type' | 'type_name' | 'type_uuid' | 'url' | 'uuid'>;
         is_removed?: boolean;
         /**
          * Modified after
@@ -34740,10 +34741,11 @@ export type MarketplaceServiceProvidersSetOfferingsUsernameData = {
 };
 
 export type MarketplaceServiceProvidersSetOfferingsUsernameResponses = {
-    200: SetOfferingsUsername;
+    /**
+     * No response body
+     */
+    201: unknown;
 };
-
-export type MarketplaceServiceProvidersSetOfferingsUsernameResponse = MarketplaceServiceProvidersSetOfferingsUsernameResponses[keyof MarketplaceServiceProvidersSetOfferingsUsernameResponses];
 
 export type MarketplaceServiceProvidersStatRetrieveData = {
     body?: never;
@@ -41794,7 +41796,7 @@ export type ProjectsListData = {
         customer_name?: string;
         customer_native_name?: string;
         description?: string;
-        field?: Array<'backend_id' | 'billing_price_estimate' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_display_billing_info_in_projects' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'end_date' | 'end_date_requested_by' | 'image' | 'is_industry' | 'is_removed' | 'kind' | 'marketplace_resource_count' | 'max_service_accounts' | 'name' | 'oecd_fos_2007_code' | 'oecd_fos_2007_label' | 'project_credit' | 'resources_count' | 'slug' | 'start_date' | 'termination_metadata' | 'type' | 'type_name' | 'type_uuid' | 'url' | 'uuid'>;
+        field?: Array<'backend_id' | 'billing_price_estimate' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_display_billing_info_in_projects' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'end_date' | 'end_date_requested_by' | 'image' | 'is_industry' | 'is_removed' | 'kind' | 'marketplace_resource_count' | 'max_service_accounts' | 'name' | 'oecd_fos_2007_code' | 'oecd_fos_2007_label' | 'project_credit' | 'resources_count' | 'slug' | 'staff_notes' | 'start_date' | 'termination_metadata' | 'type' | 'type_name' | 'type_uuid' | 'url' | 'uuid'>;
         /**
          * Include soft-deleted (terminated) projects. Only available to staff and support users, or users with organizational roles who can see their terminated projects.
          */
@@ -42003,7 +42005,7 @@ export type ProjectsRetrieveData = {
         uuid: string;
     };
     query?: {
-        field?: Array<'backend_id' | 'billing_price_estimate' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_display_billing_info_in_projects' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'end_date' | 'end_date_requested_by' | 'image' | 'is_industry' | 'is_removed' | 'kind' | 'marketplace_resource_count' | 'max_service_accounts' | 'name' | 'oecd_fos_2007_code' | 'oecd_fos_2007_label' | 'project_credit' | 'resources_count' | 'slug' | 'start_date' | 'termination_metadata' | 'type' | 'type_name' | 'type_uuid' | 'url' | 'uuid'>;
+        field?: Array<'backend_id' | 'billing_price_estimate' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_display_billing_info_in_projects' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'end_date' | 'end_date_requested_by' | 'image' | 'is_industry' | 'is_removed' | 'kind' | 'marketplace_resource_count' | 'max_service_accounts' | 'name' | 'oecd_fos_2007_code' | 'oecd_fos_2007_label' | 'project_credit' | 'resources_count' | 'slug' | 'staff_notes' | 'start_date' | 'termination_metadata' | 'type' | 'type_name' | 'type_uuid' | 'url' | 'uuid'>;
     };
     url: '/api/projects/{uuid}/';
 };
