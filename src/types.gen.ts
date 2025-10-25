@@ -1945,6 +1945,7 @@ export type ConstanceSettings = {
     ATLASSIAN_DEFAULT_OFFERING_ISSUE_TYPE?: string;
     ATLASSIAN_EXCLUDED_ATTACHMENT_TYPES?: string;
     ATLASSIAN_ISSUE_TYPES?: string;
+    ATLASSIAN_SUPPORT_TYPE_MAPPING?: string;
     ATLASSIAN_DESCRIPTION_TEMPLATE?: string;
     ATLASSIAN_SUMMARY_TEMPLATE?: string;
     ATLASSIAN_AFFECTED_RESOURCE_FIELD?: string;
@@ -2092,6 +2093,7 @@ export type ConstanceSettingsRequest = {
     ATLASSIAN_DEFAULT_OFFERING_ISSUE_TYPE?: string;
     ATLASSIAN_EXCLUDED_ATTACHMENT_TYPES?: string;
     ATLASSIAN_ISSUE_TYPES?: string;
+    ATLASSIAN_SUPPORT_TYPE_MAPPING?: string;
     ATLASSIAN_DESCRIPTION_TEMPLATE?: string;
     ATLASSIAN_SUMMARY_TEMPLATE?: string;
     ATLASSIAN_AFFECTED_RESOURCE_FIELD?: string;
@@ -5204,6 +5206,173 @@ export type NestedOfferingFileRequest = {
     file: Blob | File;
 };
 
+export type NestedPartition = {
+    readonly uuid?: string;
+    /**
+     * Name of the SLURM partition
+     */
+    partition_name?: string;
+    /**
+     * Default task binding policy (SLURM cpu_bind)
+     */
+    cpu_bind?: number | null;
+    /**
+     * Default CPUs allocated per GPU
+     */
+    def_cpu_per_gpu?: number | null;
+    /**
+     * Maximum allocated CPUs per node
+     */
+    max_cpus_per_node?: number | null;
+    /**
+     * Maximum allocated CPUs per socket
+     */
+    max_cpus_per_socket?: number | null;
+    /**
+     * Default memory per CPU in MB
+     */
+    def_mem_per_cpu?: number | null;
+    /**
+     * Default memory per GPU in MB
+     */
+    def_mem_per_gpu?: number | null;
+    /**
+     * Default memory per node in MB
+     */
+    def_mem_per_node?: number | null;
+    /**
+     * Maximum memory per CPU in MB
+     */
+    max_mem_per_cpu?: number | null;
+    /**
+     * Maximum memory per node in MB
+     */
+    max_mem_per_node?: number | null;
+    /**
+     * Default time limit in minutes
+     */
+    default_time?: number | null;
+    /**
+     * Maximum time limit in minutes
+     */
+    max_time?: number | null;
+    /**
+     * Preemption grace time in seconds
+     */
+    grace_time?: number | null;
+    /**
+     * Maximum nodes per job
+     */
+    max_nodes?: number | null;
+    /**
+     * Minimum nodes per job
+     */
+    min_nodes?: number | null;
+    /**
+     * Exclusive topology access required
+     */
+    exclusive_topo?: boolean;
+    /**
+     * Exclusive user access required
+     */
+    exclusive_user?: boolean;
+    /**
+     * Priority tier for scheduling and preemption
+     */
+    priority_tier?: number | null;
+    /**
+     * Quality of Service (QOS) name
+     */
+    qos?: string;
+    /**
+     * Require reservation for job allocation
+     */
+    req_resv?: boolean;
+};
+
+export type NestedPartitionRequest = {
+    /**
+     * Name of the SLURM partition
+     */
+    partition_name: string;
+    /**
+     * Default task binding policy (SLURM cpu_bind)
+     */
+    cpu_bind?: number | null;
+    /**
+     * Default CPUs allocated per GPU
+     */
+    def_cpu_per_gpu?: number | null;
+    /**
+     * Maximum allocated CPUs per node
+     */
+    max_cpus_per_node?: number | null;
+    /**
+     * Maximum allocated CPUs per socket
+     */
+    max_cpus_per_socket?: number | null;
+    /**
+     * Default memory per CPU in MB
+     */
+    def_mem_per_cpu?: number | null;
+    /**
+     * Default memory per GPU in MB
+     */
+    def_mem_per_gpu?: number | null;
+    /**
+     * Default memory per node in MB
+     */
+    def_mem_per_node?: number | null;
+    /**
+     * Maximum memory per CPU in MB
+     */
+    max_mem_per_cpu?: number | null;
+    /**
+     * Maximum memory per node in MB
+     */
+    max_mem_per_node?: number | null;
+    /**
+     * Default time limit in minutes
+     */
+    default_time?: number | null;
+    /**
+     * Maximum time limit in minutes
+     */
+    max_time?: number | null;
+    /**
+     * Preemption grace time in seconds
+     */
+    grace_time?: number | null;
+    /**
+     * Maximum nodes per job
+     */
+    max_nodes?: number | null;
+    /**
+     * Minimum nodes per job
+     */
+    min_nodes?: number | null;
+    /**
+     * Exclusive topology access required
+     */
+    exclusive_topo?: boolean;
+    /**
+     * Exclusive user access required
+     */
+    exclusive_user?: boolean;
+    /**
+     * Priority tier for scheduling and preemption
+     */
+    priority_tier?: number | null;
+    /**
+     * Quality of Service (QOS) name
+     */
+    qos?: string;
+    /**
+     * Require reservation for job allocation
+     */
+    req_resv?: boolean;
+};
+
 export type NestedPlanComponent = {
     /**
      * Unique internal name of the measured unit, for example floating_ip.
@@ -5470,6 +5639,67 @@ export type NestedSecurityGroupRuleRequest = {
     description?: string;
 };
 
+export type NestedSoftwareCatalog = {
+    readonly uuid?: string;
+    readonly catalog?: {
+        uuid?: string;
+        name?: string;
+        version?: string;
+        description?: string;
+    };
+    /**
+     * List of enabled CPU families: ['x86_64', 'aarch64']
+     */
+    enabled_cpu_family?: unknown;
+    /**
+     * List of enabled CPU microarchitectures: ['generic', 'zen3']
+     */
+    enabled_cpu_microarchitectures?: unknown;
+    readonly package_count?: number;
+    readonly partition?: {
+        uuid?: string;
+        partition_name?: string;
+        priority_tier?: number;
+        qos?: string;
+    };
+};
+
+export type NestedSoftwareCatalogRequest = {
+    /**
+     * List of enabled CPU families: ['x86_64', 'aarch64']
+     */
+    enabled_cpu_family?: unknown;
+    /**
+     * List of enabled CPU microarchitectures: ['generic', 'zen3']
+     */
+    enabled_cpu_microarchitectures?: unknown;
+};
+
+export type NestedSoftwareTarget = {
+    readonly uuid: string;
+    cpu_family: string;
+    cpu_microarchitecture: string;
+    path: string;
+};
+
+export type NestedSoftwareTargetRequest = {
+    cpu_family: string;
+    cpu_microarchitecture: string;
+    path: string;
+};
+
+export type NestedSoftwareVersion = {
+    readonly uuid: string;
+    version: string;
+    release_date?: string | null;
+    readonly targets: Array<NestedSoftwareTarget>;
+};
+
+export type NestedSoftwareVersionRequest = {
+    version: string;
+    release_date?: string | null;
+};
+
 export type NetworkRbacPolicy = {
     readonly url?: string;
     readonly uuid?: string;
@@ -5571,6 +5801,8 @@ export type Offering = {
      */
     access_url?: string;
     readonly endpoints?: Array<NestedEndpoint>;
+    readonly software_catalogs?: Array<NestedSoftwareCatalog>;
+    readonly partitions?: Array<NestedPartition>;
     readonly roles?: Array<NestedRole>;
     customer?: string | null;
     readonly customer_uuid?: string | null;
@@ -5761,6 +5993,8 @@ export type OfferingCreate = {
      */
     access_url?: string;
     readonly endpoints: Array<NestedEndpoint>;
+    readonly software_catalogs: Array<NestedSoftwareCatalog>;
+    readonly partitions: Array<NestedPartition>;
     readonly roles: Array<NestedRole>;
     customer?: string | null;
     readonly customer_uuid: string | null;
@@ -5977,6 +6211,178 @@ export type OfferingOverviewUpdateRequest = {
     slug?: string;
 };
 
+export type OfferingPartition = {
+    readonly uuid: string;
+    readonly created: string;
+    readonly modified: string;
+    offering: string;
+    readonly offering_name: string;
+    /**
+     * Name of the SLURM partition
+     */
+    partition_name: string;
+    /**
+     * Default task binding policy (SLURM cpu_bind)
+     */
+    cpu_bind?: number | null;
+    /**
+     * Default CPUs allocated per GPU
+     */
+    def_cpu_per_gpu?: number | null;
+    /**
+     * Maximum allocated CPUs per node
+     */
+    max_cpus_per_node?: number | null;
+    /**
+     * Maximum allocated CPUs per socket
+     */
+    max_cpus_per_socket?: number | null;
+    /**
+     * Default memory per CPU in MB
+     */
+    def_mem_per_cpu?: number | null;
+    /**
+     * Default memory per GPU in MB
+     */
+    def_mem_per_gpu?: number | null;
+    /**
+     * Default memory per node in MB
+     */
+    def_mem_per_node?: number | null;
+    /**
+     * Maximum memory per CPU in MB
+     */
+    max_mem_per_cpu?: number | null;
+    /**
+     * Maximum memory per node in MB
+     */
+    max_mem_per_node?: number | null;
+    /**
+     * Default time limit in minutes
+     */
+    default_time?: number | null;
+    /**
+     * Maximum time limit in minutes
+     */
+    max_time?: number | null;
+    /**
+     * Preemption grace time in seconds
+     */
+    grace_time?: number | null;
+    /**
+     * Maximum nodes per job
+     */
+    max_nodes?: number | null;
+    /**
+     * Minimum nodes per job
+     */
+    min_nodes?: number | null;
+    /**
+     * Exclusive topology access required
+     */
+    exclusive_topo?: boolean;
+    /**
+     * Exclusive user access required
+     */
+    exclusive_user?: boolean;
+    /**
+     * Priority tier for scheduling and preemption
+     */
+    priority_tier?: number | null;
+    /**
+     * Quality of Service (QOS) name
+     */
+    qos?: string;
+    /**
+     * Require reservation for job allocation
+     */
+    req_resv?: boolean;
+};
+
+export type OfferingPartitionRequest = {
+    offering: string;
+    /**
+     * Name of the SLURM partition
+     */
+    partition_name: string;
+    /**
+     * Default task binding policy (SLURM cpu_bind)
+     */
+    cpu_bind?: number | null;
+    /**
+     * Default CPUs allocated per GPU
+     */
+    def_cpu_per_gpu?: number | null;
+    /**
+     * Maximum allocated CPUs per node
+     */
+    max_cpus_per_node?: number | null;
+    /**
+     * Maximum allocated CPUs per socket
+     */
+    max_cpus_per_socket?: number | null;
+    /**
+     * Default memory per CPU in MB
+     */
+    def_mem_per_cpu?: number | null;
+    /**
+     * Default memory per GPU in MB
+     */
+    def_mem_per_gpu?: number | null;
+    /**
+     * Default memory per node in MB
+     */
+    def_mem_per_node?: number | null;
+    /**
+     * Maximum memory per CPU in MB
+     */
+    max_mem_per_cpu?: number | null;
+    /**
+     * Maximum memory per node in MB
+     */
+    max_mem_per_node?: number | null;
+    /**
+     * Default time limit in minutes
+     */
+    default_time?: number | null;
+    /**
+     * Maximum time limit in minutes
+     */
+    max_time?: number | null;
+    /**
+     * Preemption grace time in seconds
+     */
+    grace_time?: number | null;
+    /**
+     * Maximum nodes per job
+     */
+    max_nodes?: number | null;
+    /**
+     * Minimum nodes per job
+     */
+    min_nodes?: number | null;
+    /**
+     * Exclusive topology access required
+     */
+    exclusive_topo?: boolean;
+    /**
+     * Exclusive user access required
+     */
+    exclusive_user?: boolean;
+    /**
+     * Priority tier for scheduling and preemption
+     */
+    priority_tier?: number | null;
+    /**
+     * Quality of Service (QOS) name
+     */
+    qos?: string;
+    /**
+     * Require reservation for job allocation
+     */
+    req_resv?: boolean;
+};
+
 export type OfferingPauseRequest = {
     paused_reason?: string;
 };
@@ -6032,6 +6438,41 @@ export type OfferingReferral = {
 
 export type OfferingResourceOptionsUpdateRequest = {
     resource_options: OfferingOptionsRequest;
+};
+
+export type OfferingSoftwareCatalog = {
+    readonly uuid: string;
+    readonly created: string;
+    readonly modified: string;
+    offering: string;
+    catalog: string;
+    readonly offering_name: string;
+    readonly catalog_name: string;
+    readonly catalog_version: string;
+    /**
+     * List of enabled CPU families: ['x86_64', 'aarch64']
+     */
+    enabled_cpu_family?: unknown;
+    /**
+     * List of enabled CPU microarchitectures: ['generic', 'zen3']
+     */
+    enabled_cpu_microarchitectures?: unknown;
+    partition?: string | null;
+    readonly partition_name: string;
+};
+
+export type OfferingSoftwareCatalogRequest = {
+    offering: string;
+    catalog: string;
+    /**
+     * List of enabled CPU families: ['x86_64', 'aarch64']
+     */
+    enabled_cpu_family?: unknown;
+    /**
+     * List of enabled CPU microarchitectures: ['generic', 'zen3']
+     */
+    enabled_cpu_microarchitectures?: unknown;
+    partition?: string | null;
 };
 
 export type OfferingState = 'Draft' | 'Active' | 'Paused' | 'Archived';
@@ -8798,6 +9239,104 @@ export type PatchedOfferingEstimatedCostPolicyRequest = {
     organization_groups?: Array<string>;
 };
 
+export type PatchedOfferingPartitionRequest = {
+    offering?: string;
+    /**
+     * Name of the SLURM partition
+     */
+    partition_name?: string;
+    /**
+     * Default task binding policy (SLURM cpu_bind)
+     */
+    cpu_bind?: number | null;
+    /**
+     * Default CPUs allocated per GPU
+     */
+    def_cpu_per_gpu?: number | null;
+    /**
+     * Maximum allocated CPUs per node
+     */
+    max_cpus_per_node?: number | null;
+    /**
+     * Maximum allocated CPUs per socket
+     */
+    max_cpus_per_socket?: number | null;
+    /**
+     * Default memory per CPU in MB
+     */
+    def_mem_per_cpu?: number | null;
+    /**
+     * Default memory per GPU in MB
+     */
+    def_mem_per_gpu?: number | null;
+    /**
+     * Default memory per node in MB
+     */
+    def_mem_per_node?: number | null;
+    /**
+     * Maximum memory per CPU in MB
+     */
+    max_mem_per_cpu?: number | null;
+    /**
+     * Maximum memory per node in MB
+     */
+    max_mem_per_node?: number | null;
+    /**
+     * Default time limit in minutes
+     */
+    default_time?: number | null;
+    /**
+     * Maximum time limit in minutes
+     */
+    max_time?: number | null;
+    /**
+     * Preemption grace time in seconds
+     */
+    grace_time?: number | null;
+    /**
+     * Maximum nodes per job
+     */
+    max_nodes?: number | null;
+    /**
+     * Minimum nodes per job
+     */
+    min_nodes?: number | null;
+    /**
+     * Exclusive topology access required
+     */
+    exclusive_topo?: boolean;
+    /**
+     * Exclusive user access required
+     */
+    exclusive_user?: boolean;
+    /**
+     * Priority tier for scheduling and preemption
+     */
+    priority_tier?: number | null;
+    /**
+     * Quality of Service (QOS) name
+     */
+    qos?: string;
+    /**
+     * Require reservation for job allocation
+     */
+    req_resv?: boolean;
+};
+
+export type PatchedOfferingSoftwareCatalogUpdateRequest = {
+    offering_catalog_uuid?: string;
+    catalog?: string;
+    /**
+     * List of enabled CPU families: ['x86_64', 'aarch64']
+     */
+    enabled_cpu_family?: unknown;
+    /**
+     * List of enabled CPU microarchitectures: ['generic', 'zen3']
+     */
+    enabled_cpu_microarchitectures?: unknown;
+    partition?: string | null;
+};
+
 export type PatchedOfferingTermsOfServiceRequest = {
     terms_of_service?: string;
     terms_of_service_link?: string;
@@ -9419,6 +9958,29 @@ export type PatchedServiceProviderRequest = {
 export type PatchedSlurmAllocationRequest = {
     name?: string;
     description?: string;
+};
+
+export type PatchedSoftwareCatalogRequest = {
+    /**
+     * Catalog name (e.g., EESSI)
+     */
+    name?: string;
+    /**
+     * Catalog version (e.g., 2023.06)
+     */
+    version?: string;
+    /**
+     * Catalog source URL
+     */
+    source_url?: string;
+    description?: string;
+};
+
+export type PatchedSoftwarePackageRequest = {
+    catalog?: string;
+    name?: string;
+    description?: string;
+    homepage?: string;
 };
 
 export type PatchedTemplateRequest = {
@@ -10384,6 +10946,8 @@ export type ProviderOfferingDetails = {
      */
     access_url?: string;
     readonly endpoints?: Array<NestedEndpoint>;
+    readonly software_catalogs?: Array<NestedSoftwareCatalog>;
+    readonly partitions?: Array<NestedPartition>;
     readonly roles?: Array<NestedRole>;
     customer?: string | null;
     readonly customer_uuid?: string | null;
@@ -10658,6 +11222,8 @@ export type PublicOfferingDetails = {
      */
     access_url?: string;
     readonly endpoints?: Array<NestedEndpoint>;
+    readonly software_catalogs?: Array<NestedSoftwareCatalog>;
+    readonly partitions?: Array<NestedPartition>;
     readonly roles?: Array<NestedRole>;
     customer?: string | null;
     readonly customer_uuid?: string | null;
@@ -11999,6 +12565,14 @@ export type RemoveOfferingComponentRequest = {
     uuid: string;
 };
 
+export type RemovePartitionRequest = {
+    partition_uuid: string;
+};
+
+export type RemoveSoftwareCatalogRequest = {
+    offering_catalog_uuid: string;
+};
+
 export type ReportSection = {
     header?: string;
     body?: string;
@@ -13101,6 +13675,90 @@ export type SmaxWebHookReceiver = {
 
 export type SmaxWebHookReceiverRequest = {
     id: string;
+};
+
+export type SoftwareCatalog = {
+    readonly url: string;
+    readonly uuid: string;
+    readonly created: string;
+    readonly modified: string;
+    /**
+     * Catalog name (e.g., EESSI)
+     */
+    name: string;
+    /**
+     * Catalog version (e.g., 2023.06)
+     */
+    version: string;
+    /**
+     * Catalog source URL
+     */
+    source_url?: string;
+    description?: string;
+    readonly package_count: number;
+};
+
+export type SoftwareCatalogRequest = {
+    /**
+     * Catalog name (e.g., EESSI)
+     */
+    name: string;
+    /**
+     * Catalog version (e.g., 2023.06)
+     */
+    version: string;
+    /**
+     * Catalog source URL
+     */
+    source_url?: string;
+    description?: string;
+};
+
+export type SoftwareCatalogUuid = {
+    uuid: string;
+};
+
+export type SoftwarePackage = {
+    readonly url: string;
+    readonly uuid: string;
+    readonly created: string;
+    readonly modified: string;
+    catalog: string;
+    name: string;
+    description?: string;
+    homepage?: string;
+    readonly catalog_name: string;
+    readonly catalog_version: string;
+    readonly version_count: number;
+    readonly versions: Array<NestedSoftwareVersion>;
+};
+
+export type SoftwarePackageRequest = {
+    catalog: string;
+    name: string;
+    description?: string;
+    homepage?: string;
+};
+
+export type SoftwareTarget = {
+    readonly url: string;
+    readonly uuid: string;
+    readonly created: string;
+    readonly modified: string;
+    readonly cpu_family: string;
+    readonly cpu_microarchitecture: string;
+    readonly path: string;
+};
+
+export type SoftwareVersion = {
+    readonly url: string;
+    readonly uuid: string;
+    readonly created: string;
+    readonly modified: string;
+    readonly version: string;
+    readonly release_date: string | null;
+    readonly package_name: string;
+    readonly target_count: number;
 };
 
 export type SshKey = {
@@ -14732,6 +15390,7 @@ export type ConstanceSettingsRequestForm = {
     ATLASSIAN_DEFAULT_OFFERING_ISSUE_TYPE?: string;
     ATLASSIAN_EXCLUDED_ATTACHMENT_TYPES?: string;
     ATLASSIAN_ISSUE_TYPES?: string;
+    ATLASSIAN_SUPPORT_TYPE_MAPPING?: string;
     ATLASSIAN_DESCRIPTION_TEMPLATE?: string;
     ATLASSIAN_SUMMARY_TEMPLATE?: string;
     ATLASSIAN_AFFECTED_RESOURCE_FIELD?: string;
@@ -14879,6 +15538,7 @@ export type ConstanceSettingsRequestMultipart = {
     ATLASSIAN_DEFAULT_OFFERING_ISSUE_TYPE?: string;
     ATLASSIAN_EXCLUDED_ATTACHMENT_TYPES?: string;
     ATLASSIAN_ISSUE_TYPES?: string;
+    ATLASSIAN_SUPPORT_TYPE_MAPPING?: string;
     ATLASSIAN_DESCRIPTION_TEMPLATE?: string;
     ATLASSIAN_SUMMARY_TEMPLATE?: string;
     ATLASSIAN_AFFECTED_RESOURCE_FIELD?: string;
@@ -18170,7 +18830,7 @@ export type BookingOfferingsListData = {
     body?: never;
     path?: never;
     query?: {
-        field?: Array<'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'googlecalendar' | 'has_compliance_requirements' | 'image' | 'integration_guide' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_options' | 'roles' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'shared' | 'slug' | 'state' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'user_has_consent' | 'uuid' | 'vendor_details'>;
+        field?: Array<'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'googlecalendar' | 'has_compliance_requirements' | 'image' | 'integration_guide' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_options' | 'roles' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'user_has_consent' | 'uuid' | 'vendor_details'>;
         /**
          * A page number within the paginated result set.
          */
@@ -18218,7 +18878,7 @@ export type BookingOfferingsRetrieveData = {
         uuid: string;
     };
     query?: {
-        field?: Array<'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'googlecalendar' | 'has_compliance_requirements' | 'image' | 'integration_guide' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_options' | 'roles' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'shared' | 'slug' | 'state' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'user_has_consent' | 'uuid' | 'vendor_details'>;
+        field?: Array<'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'googlecalendar' | 'has_compliance_requirements' | 'image' | 'integration_guide' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_options' | 'roles' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'user_has_consent' | 'uuid' | 'vendor_details'>;
     };
     url: '/api/booking-offerings/{uuid}/';
 };
@@ -29647,7 +30307,7 @@ export type MarketplaceProviderOfferingsListData = {
         customer?: string;
         customer_uuid?: string;
         description?: string;
-        field?: Array<'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'has_compliance_requirements' | 'image' | 'integration_guide' | 'integration_status' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_options' | 'roles' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'state' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'uuid' | 'vendor_details'>;
+        field?: Array<'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'has_compliance_requirements' | 'image' | 'integration_guide' | 'integration_status' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_options' | 'roles' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'uuid' | 'vendor_details'>;
         /**
          * Has Active Terms of Service
          */
@@ -29867,7 +30527,7 @@ export type MarketplaceProviderOfferingsRetrieveData = {
         uuid: string;
     };
     query?: {
-        field?: Array<'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'has_compliance_requirements' | 'image' | 'integration_guide' | 'integration_status' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_options' | 'roles' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'state' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'uuid' | 'vendor_details'>;
+        field?: Array<'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'has_compliance_requirements' | 'image' | 'integration_guide' | 'integration_status' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_options' | 'roles' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'uuid' | 'vendor_details'>;
     };
     url: '/api/marketplace-provider-offerings/{uuid}/';
 };
@@ -29907,6 +30567,36 @@ export type MarketplaceProviderOfferingsAddEndpointResponses = {
 };
 
 export type MarketplaceProviderOfferingsAddEndpointResponse = MarketplaceProviderOfferingsAddEndpointResponses[keyof MarketplaceProviderOfferingsAddEndpointResponses];
+
+export type MarketplaceProviderOfferingsAddPartitionData = {
+    body: OfferingPartitionRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-provider-offerings/{uuid}/add_partition/';
+};
+
+export type MarketplaceProviderOfferingsAddPartitionResponses = {
+    201: OfferingPartition;
+};
+
+export type MarketplaceProviderOfferingsAddPartitionResponse = MarketplaceProviderOfferingsAddPartitionResponses[keyof MarketplaceProviderOfferingsAddPartitionResponses];
+
+export type MarketplaceProviderOfferingsAddSoftwareCatalogData = {
+    body: OfferingSoftwareCatalogRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-provider-offerings/{uuid}/add_software_catalog/';
+};
+
+export type MarketplaceProviderOfferingsAddSoftwareCatalogResponses = {
+    201: SoftwareCatalogUuid;
+};
+
+export type MarketplaceProviderOfferingsAddSoftwareCatalogResponse = MarketplaceProviderOfferingsAddSoftwareCatalogResponses[keyof MarketplaceProviderOfferingsAddSoftwareCatalogResponses];
 
 export type MarketplaceProviderOfferingsAddUserData = {
     body: UserRoleCreateRequest;
@@ -30453,7 +31143,7 @@ export type MarketplaceProviderOfferingsListCourseAccountsRetrieveData = {
         uuid: string;
     };
     query?: {
-        field?: Array<'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'has_compliance_requirements' | 'image' | 'integration_guide' | 'integration_status' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_options' | 'roles' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'state' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'uuid' | 'vendor_details'>;
+        field?: Array<'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'has_compliance_requirements' | 'image' | 'integration_guide' | 'integration_status' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_options' | 'roles' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'uuid' | 'vendor_details'>;
     };
     url: '/api/marketplace-provider-offerings/{uuid}/list_course_accounts/';
 };
@@ -30494,7 +31184,7 @@ export type MarketplaceProviderOfferingsListCustomerServiceAccountsRetrieveData 
         uuid: string;
     };
     query?: {
-        field?: Array<'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'has_compliance_requirements' | 'image' | 'integration_guide' | 'integration_status' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_options' | 'roles' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'state' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'uuid' | 'vendor_details'>;
+        field?: Array<'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'has_compliance_requirements' | 'image' | 'integration_guide' | 'integration_status' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_options' | 'roles' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'uuid' | 'vendor_details'>;
     };
     url: '/api/marketplace-provider-offerings/{uuid}/list_customer_service_accounts/';
 };
@@ -30535,7 +31225,7 @@ export type MarketplaceProviderOfferingsListProjectServiceAccountsRetrieveData =
         uuid: string;
     };
     query?: {
-        field?: Array<'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'has_compliance_requirements' | 'image' | 'integration_guide' | 'integration_status' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_options' | 'roles' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'state' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'uuid' | 'vendor_details'>;
+        field?: Array<'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'has_compliance_requirements' | 'image' | 'integration_guide' | 'integration_status' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_options' | 'roles' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'uuid' | 'vendor_details'>;
     };
     url: '/api/marketplace-provider-offerings/{uuid}/list_project_service_accounts/';
 };
@@ -30711,6 +31401,38 @@ export type MarketplaceProviderOfferingsRemoveOfferingComponentResponses = {
     200: unknown;
 };
 
+export type MarketplaceProviderOfferingsRemovePartitionData = {
+    body: RemovePartitionRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-provider-offerings/{uuid}/remove_partition/';
+};
+
+export type MarketplaceProviderOfferingsRemovePartitionResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type MarketplaceProviderOfferingsRemoveSoftwareCatalogData = {
+    body: RemoveSoftwareCatalogRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-provider-offerings/{uuid}/remove_software_catalog/';
+};
+
+export type MarketplaceProviderOfferingsRemoveSoftwareCatalogResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type MarketplaceProviderOfferingsSetBackendMetadataData = {
     body?: OfferingBackendMetadataRequest;
     path: {
@@ -30733,7 +31455,7 @@ export type MarketplaceProviderOfferingsStatsRetrieveData = {
         uuid: string;
     };
     query?: {
-        field?: Array<'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'has_compliance_requirements' | 'image' | 'integration_guide' | 'integration_status' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_options' | 'roles' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'state' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'uuid' | 'vendor_details'>;
+        field?: Array<'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'has_compliance_requirements' | 'image' | 'integration_guide' | 'integration_status' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_options' | 'roles' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'uuid' | 'vendor_details'>;
     };
     url: '/api/marketplace-provider-offerings/{uuid}/stats/';
 };
@@ -30951,6 +31673,21 @@ export type MarketplaceProviderOfferingsUpdateOverviewResponses = {
     200: unknown;
 };
 
+export type MarketplaceProviderOfferingsUpdatePartitionPartialUpdateData = {
+    body?: PatchedOfferingPartitionRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-provider-offerings/{uuid}/update_partition/';
+};
+
+export type MarketplaceProviderOfferingsUpdatePartitionPartialUpdateResponses = {
+    200: OfferingPartition;
+};
+
+export type MarketplaceProviderOfferingsUpdatePartitionPartialUpdateResponse = MarketplaceProviderOfferingsUpdatePartitionPartialUpdateResponses[keyof MarketplaceProviderOfferingsUpdatePartitionPartialUpdateResponses];
+
 export type MarketplaceProviderOfferingsUpdateResourceOptionsData = {
     body: OfferingResourceOptionsUpdateRequest;
     path: {
@@ -30966,6 +31703,21 @@ export type MarketplaceProviderOfferingsUpdateResourceOptionsResponses = {
      */
     200: unknown;
 };
+
+export type MarketplaceProviderOfferingsUpdateSoftwareCatalogPartialUpdateData = {
+    body?: PatchedOfferingSoftwareCatalogUpdateRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-provider-offerings/{uuid}/update_software_catalog/';
+};
+
+export type MarketplaceProviderOfferingsUpdateSoftwareCatalogPartialUpdateResponses = {
+    200: OfferingSoftwareCatalog;
+};
+
+export type MarketplaceProviderOfferingsUpdateSoftwareCatalogPartialUpdateResponse = MarketplaceProviderOfferingsUpdateSoftwareCatalogPartialUpdateResponses[keyof MarketplaceProviderOfferingsUpdateSoftwareCatalogPartialUpdateResponses];
 
 export type MarketplaceProviderOfferingsUpdateThumbnailData = {
     body: OfferingThumbnailRequest;
@@ -31004,7 +31756,7 @@ export type MarketplaceProviderOfferingsUserHasResourceAccessRetrieveData = {
         uuid: string;
     };
     query: {
-        field?: Array<'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'has_compliance_requirements' | 'image' | 'integration_guide' | 'integration_status' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_options' | 'roles' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'state' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'uuid' | 'vendor_details'>;
+        field?: Array<'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'has_compliance_requirements' | 'image' | 'integration_guide' | 'integration_status' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_options' | 'roles' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'uuid' | 'vendor_details'>;
         /**
          * Username of the user to check.
          */
@@ -31929,7 +32681,7 @@ export type MarketplacePublicOfferingsListData = {
         customer?: string;
         customer_uuid?: string;
         description?: string;
-        field?: Array<'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'has_compliance_requirements' | 'image' | 'integration_guide' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'project' | 'project_name' | 'project_uuid' | 'promotion_campaigns' | 'quotas' | 'resource_options' | 'roles' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'shared' | 'slug' | 'state' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'user_has_consent' | 'uuid' | 'vendor_details'>;
+        field?: Array<'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'has_compliance_requirements' | 'image' | 'integration_guide' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'project' | 'project_name' | 'project_uuid' | 'promotion_campaigns' | 'quotas' | 'resource_options' | 'roles' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'user_has_consent' | 'uuid' | 'vendor_details'>;
         /**
          * Has Active Terms of Service
          */
@@ -32118,7 +32870,7 @@ export type MarketplacePublicOfferingsRetrieveData = {
         uuid: string;
     };
     query?: {
-        field?: Array<'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'has_compliance_requirements' | 'image' | 'integration_guide' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'project' | 'project_name' | 'project_uuid' | 'promotion_campaigns' | 'quotas' | 'resource_options' | 'roles' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'shared' | 'slug' | 'state' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'user_has_consent' | 'uuid' | 'vendor_details'>;
+        field?: Array<'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'has_compliance_requirements' | 'image' | 'integration_guide' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'project' | 'project_name' | 'project_uuid' | 'promotion_campaigns' | 'quotas' | 'resource_options' | 'roles' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'user_has_consent' | 'uuid' | 'vendor_details'>;
     };
     url: '/api/marketplace-public-offerings/{uuid}/';
 };
@@ -35099,6 +35851,650 @@ export type MarketplaceSiteAgentServicesSetStatisticsResponses = {
 };
 
 export type MarketplaceSiteAgentServicesSetStatisticsResponse = MarketplaceSiteAgentServicesSetStatisticsResponses[keyof MarketplaceSiteAgentServicesSetStatisticsResponses];
+
+export type MarketplaceSoftwareCatalogsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        name?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-modified' | '-name' | '-version' | 'created' | 'modified' | 'name' | 'version'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        version?: string;
+    };
+    url: '/api/marketplace-software-catalogs/';
+};
+
+export type MarketplaceSoftwareCatalogsListResponses = {
+    200: Array<SoftwareCatalog>;
+};
+
+export type MarketplaceSoftwareCatalogsListResponse = MarketplaceSoftwareCatalogsListResponses[keyof MarketplaceSoftwareCatalogsListResponses];
+
+export type MarketplaceSoftwareCatalogsCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        name?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-modified' | '-name' | '-version' | 'created' | 'modified' | 'name' | 'version'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        version?: string;
+    };
+    url: '/api/marketplace-software-catalogs/';
+};
+
+export type MarketplaceSoftwareCatalogsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type MarketplaceSoftwareCatalogsCreateData = {
+    body: SoftwareCatalogRequest;
+    path?: never;
+    query?: never;
+    url: '/api/marketplace-software-catalogs/';
+};
+
+export type MarketplaceSoftwareCatalogsCreateResponses = {
+    201: SoftwareCatalog;
+};
+
+export type MarketplaceSoftwareCatalogsCreateResponse = MarketplaceSoftwareCatalogsCreateResponses[keyof MarketplaceSoftwareCatalogsCreateResponses];
+
+export type MarketplaceSoftwareCatalogsDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-software-catalogs/{uuid}/';
+};
+
+export type MarketplaceSoftwareCatalogsDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type MarketplaceSoftwareCatalogsDestroyResponse = MarketplaceSoftwareCatalogsDestroyResponses[keyof MarketplaceSoftwareCatalogsDestroyResponses];
+
+export type MarketplaceSoftwareCatalogsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-software-catalogs/{uuid}/';
+};
+
+export type MarketplaceSoftwareCatalogsRetrieveResponses = {
+    200: SoftwareCatalog;
+};
+
+export type MarketplaceSoftwareCatalogsRetrieveResponse = MarketplaceSoftwareCatalogsRetrieveResponses[keyof MarketplaceSoftwareCatalogsRetrieveResponses];
+
+export type MarketplaceSoftwareCatalogsPartialUpdateData = {
+    body?: PatchedSoftwareCatalogRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-software-catalogs/{uuid}/';
+};
+
+export type MarketplaceSoftwareCatalogsPartialUpdateResponses = {
+    200: SoftwareCatalog;
+};
+
+export type MarketplaceSoftwareCatalogsPartialUpdateResponse = MarketplaceSoftwareCatalogsPartialUpdateResponses[keyof MarketplaceSoftwareCatalogsPartialUpdateResponses];
+
+export type MarketplaceSoftwareCatalogsUpdateData = {
+    body: SoftwareCatalogRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-software-catalogs/{uuid}/';
+};
+
+export type MarketplaceSoftwareCatalogsUpdateResponses = {
+    200: SoftwareCatalog;
+};
+
+export type MarketplaceSoftwareCatalogsUpdateResponse = MarketplaceSoftwareCatalogsUpdateResponses[keyof MarketplaceSoftwareCatalogsUpdateResponses];
+
+export type MarketplaceSoftwarePackagesListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Filter packages by catalog name (case-insensitive partial match)
+         */
+        catalog_name?: string;
+        /**
+         * Filter packages from a specific software catalog
+         */
+        catalog_uuid?: string;
+        /**
+         * Filter packages by catalog version (case-insensitive partial match)
+         */
+        catalog_version?: string;
+        /**
+         * Filter packages available for specific CPU family (e.g., x86_64, aarch64)
+         */
+        cpu_family?: string;
+        /**
+         * Filter packages available for specific CPU microarchitecture (e.g., generic, zen2, haswell)
+         */
+        cpu_microarchitecture?: string;
+        /**
+         * Filter packages by description (case-insensitive partial match)
+         */
+        description?: string;
+        /**
+         * Filter packages that have a specific version
+         */
+        has_version?: string;
+        /**
+         * Filter packages by name (case-insensitive partial match)
+         */
+        name?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-catalog_name' | '-catalog_version' | '-created' | '-modified' | '-name' | 'catalog_name' | 'catalog_version' | 'created' | 'modified' | 'name'>;
+        /**
+         * Filter packages available for a specific offering
+         */
+        offering_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Query packages by name, description, or version (case-insensitive partial match)
+         */
+        query?: string;
+    };
+    url: '/api/marketplace-software-packages/';
+};
+
+export type MarketplaceSoftwarePackagesListResponses = {
+    200: Array<SoftwarePackage>;
+};
+
+export type MarketplaceSoftwarePackagesListResponse = MarketplaceSoftwarePackagesListResponses[keyof MarketplaceSoftwarePackagesListResponses];
+
+export type MarketplaceSoftwarePackagesCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Filter packages by catalog name (case-insensitive partial match)
+         */
+        catalog_name?: string;
+        /**
+         * Filter packages from a specific software catalog
+         */
+        catalog_uuid?: string;
+        /**
+         * Filter packages by catalog version (case-insensitive partial match)
+         */
+        catalog_version?: string;
+        /**
+         * Filter packages available for specific CPU family (e.g., x86_64, aarch64)
+         */
+        cpu_family?: string;
+        /**
+         * Filter packages available for specific CPU microarchitecture (e.g., generic, zen2, haswell)
+         */
+        cpu_microarchitecture?: string;
+        /**
+         * Filter packages by description (case-insensitive partial match)
+         */
+        description?: string;
+        /**
+         * Filter packages that have a specific version
+         */
+        has_version?: string;
+        /**
+         * Filter packages by name (case-insensitive partial match)
+         */
+        name?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-catalog_name' | '-catalog_version' | '-created' | '-modified' | '-name' | 'catalog_name' | 'catalog_version' | 'created' | 'modified' | 'name'>;
+        /**
+         * Filter packages available for a specific offering
+         */
+        offering_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Query packages by name, description, or version (case-insensitive partial match)
+         */
+        query?: string;
+    };
+    url: '/api/marketplace-software-packages/';
+};
+
+export type MarketplaceSoftwarePackagesCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type MarketplaceSoftwarePackagesCreateData = {
+    body: SoftwarePackageRequest;
+    path?: never;
+    query?: never;
+    url: '/api/marketplace-software-packages/';
+};
+
+export type MarketplaceSoftwarePackagesCreateResponses = {
+    201: SoftwarePackage;
+};
+
+export type MarketplaceSoftwarePackagesCreateResponse = MarketplaceSoftwarePackagesCreateResponses[keyof MarketplaceSoftwarePackagesCreateResponses];
+
+export type MarketplaceSoftwarePackagesDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-software-packages/{uuid}/';
+};
+
+export type MarketplaceSoftwarePackagesDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type MarketplaceSoftwarePackagesDestroyResponse = MarketplaceSoftwarePackagesDestroyResponses[keyof MarketplaceSoftwarePackagesDestroyResponses];
+
+export type MarketplaceSoftwarePackagesRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-software-packages/{uuid}/';
+};
+
+export type MarketplaceSoftwarePackagesRetrieveResponses = {
+    200: SoftwarePackage;
+};
+
+export type MarketplaceSoftwarePackagesRetrieveResponse = MarketplaceSoftwarePackagesRetrieveResponses[keyof MarketplaceSoftwarePackagesRetrieveResponses];
+
+export type MarketplaceSoftwarePackagesPartialUpdateData = {
+    body?: PatchedSoftwarePackageRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-software-packages/{uuid}/';
+};
+
+export type MarketplaceSoftwarePackagesPartialUpdateResponses = {
+    200: SoftwarePackage;
+};
+
+export type MarketplaceSoftwarePackagesPartialUpdateResponse = MarketplaceSoftwarePackagesPartialUpdateResponses[keyof MarketplaceSoftwarePackagesPartialUpdateResponses];
+
+export type MarketplaceSoftwarePackagesUpdateData = {
+    body: SoftwarePackageRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-software-packages/{uuid}/';
+};
+
+export type MarketplaceSoftwarePackagesUpdateResponses = {
+    200: SoftwarePackage;
+};
+
+export type MarketplaceSoftwarePackagesUpdateResponse = MarketplaceSoftwarePackagesUpdateResponses[keyof MarketplaceSoftwarePackagesUpdateResponses];
+
+export type MarketplaceSoftwareTargetsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        catalog_uuid?: string;
+        cpu_family?: string;
+        cpu_microarchitecture?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-cpu_family' | '-cpu_microarchitecture' | '-created' | '-package_name' | 'cpu_family' | 'cpu_microarchitecture' | 'created' | 'package_name'>;
+        offering_uuid?: string;
+        package_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        path?: string;
+        version_uuid?: string;
+    };
+    url: '/api/marketplace-software-targets/';
+};
+
+export type MarketplaceSoftwareTargetsListResponses = {
+    200: Array<SoftwareTarget>;
+};
+
+export type MarketplaceSoftwareTargetsListResponse = MarketplaceSoftwareTargetsListResponses[keyof MarketplaceSoftwareTargetsListResponses];
+
+export type MarketplaceSoftwareTargetsCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        catalog_uuid?: string;
+        cpu_family?: string;
+        cpu_microarchitecture?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-cpu_family' | '-cpu_microarchitecture' | '-created' | '-package_name' | 'cpu_family' | 'cpu_microarchitecture' | 'created' | 'package_name'>;
+        offering_uuid?: string;
+        package_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        path?: string;
+        version_uuid?: string;
+    };
+    url: '/api/marketplace-software-targets/';
+};
+
+export type MarketplaceSoftwareTargetsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type MarketplaceSoftwareTargetsCreateData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/marketplace-software-targets/';
+};
+
+export type MarketplaceSoftwareTargetsCreateResponses = {
+    201: SoftwareTarget;
+};
+
+export type MarketplaceSoftwareTargetsCreateResponse = MarketplaceSoftwareTargetsCreateResponses[keyof MarketplaceSoftwareTargetsCreateResponses];
+
+export type MarketplaceSoftwareTargetsDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-software-targets/{uuid}/';
+};
+
+export type MarketplaceSoftwareTargetsDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type MarketplaceSoftwareTargetsDestroyResponse = MarketplaceSoftwareTargetsDestroyResponses[keyof MarketplaceSoftwareTargetsDestroyResponses];
+
+export type MarketplaceSoftwareTargetsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-software-targets/{uuid}/';
+};
+
+export type MarketplaceSoftwareTargetsRetrieveResponses = {
+    200: SoftwareTarget;
+};
+
+export type MarketplaceSoftwareTargetsRetrieveResponse = MarketplaceSoftwareTargetsRetrieveResponses[keyof MarketplaceSoftwareTargetsRetrieveResponses];
+
+export type MarketplaceSoftwareTargetsPartialUpdateData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-software-targets/{uuid}/';
+};
+
+export type MarketplaceSoftwareTargetsPartialUpdateResponses = {
+    200: SoftwareTarget;
+};
+
+export type MarketplaceSoftwareTargetsPartialUpdateResponse = MarketplaceSoftwareTargetsPartialUpdateResponses[keyof MarketplaceSoftwareTargetsPartialUpdateResponses];
+
+export type MarketplaceSoftwareTargetsUpdateData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-software-targets/{uuid}/';
+};
+
+export type MarketplaceSoftwareTargetsUpdateResponses = {
+    200: SoftwareTarget;
+};
+
+export type MarketplaceSoftwareTargetsUpdateResponse = MarketplaceSoftwareTargetsUpdateResponses[keyof MarketplaceSoftwareTargetsUpdateResponses];
+
+export type MarketplaceSoftwareVersionsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        catalog_uuid?: string;
+        cpu_family?: string;
+        cpu_microarchitecture?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-package_name' | '-release_date' | '-version' | 'created' | 'package_name' | 'release_date' | 'version'>;
+        offering_uuid?: string;
+        package_name?: string;
+        package_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        version?: string;
+    };
+    url: '/api/marketplace-software-versions/';
+};
+
+export type MarketplaceSoftwareVersionsListResponses = {
+    200: Array<SoftwareVersion>;
+};
+
+export type MarketplaceSoftwareVersionsListResponse = MarketplaceSoftwareVersionsListResponses[keyof MarketplaceSoftwareVersionsListResponses];
+
+export type MarketplaceSoftwareVersionsCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        catalog_uuid?: string;
+        cpu_family?: string;
+        cpu_microarchitecture?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-package_name' | '-release_date' | '-version' | 'created' | 'package_name' | 'release_date' | 'version'>;
+        offering_uuid?: string;
+        package_name?: string;
+        package_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        version?: string;
+    };
+    url: '/api/marketplace-software-versions/';
+};
+
+export type MarketplaceSoftwareVersionsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type MarketplaceSoftwareVersionsCreateData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/marketplace-software-versions/';
+};
+
+export type MarketplaceSoftwareVersionsCreateResponses = {
+    201: SoftwareVersion;
+};
+
+export type MarketplaceSoftwareVersionsCreateResponse = MarketplaceSoftwareVersionsCreateResponses[keyof MarketplaceSoftwareVersionsCreateResponses];
+
+export type MarketplaceSoftwareVersionsDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-software-versions/{uuid}/';
+};
+
+export type MarketplaceSoftwareVersionsDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type MarketplaceSoftwareVersionsDestroyResponse = MarketplaceSoftwareVersionsDestroyResponses[keyof MarketplaceSoftwareVersionsDestroyResponses];
+
+export type MarketplaceSoftwareVersionsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-software-versions/{uuid}/';
+};
+
+export type MarketplaceSoftwareVersionsRetrieveResponses = {
+    200: SoftwareVersion;
+};
+
+export type MarketplaceSoftwareVersionsRetrieveResponse = MarketplaceSoftwareVersionsRetrieveResponses[keyof MarketplaceSoftwareVersionsRetrieveResponses];
+
+export type MarketplaceSoftwareVersionsPartialUpdateData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-software-versions/{uuid}/';
+};
+
+export type MarketplaceSoftwareVersionsPartialUpdateResponses = {
+    200: SoftwareVersion;
+};
+
+export type MarketplaceSoftwareVersionsPartialUpdateResponse = MarketplaceSoftwareVersionsPartialUpdateResponses[keyof MarketplaceSoftwareVersionsPartialUpdateResponses];
+
+export type MarketplaceSoftwareVersionsUpdateData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-software-versions/{uuid}/';
+};
+
+export type MarketplaceSoftwareVersionsUpdateResponses = {
+    200: SoftwareVersion;
+};
+
+export type MarketplaceSoftwareVersionsUpdateResponse = MarketplaceSoftwareVersionsUpdateResponses[keyof MarketplaceSoftwareVersionsUpdateResponses];
 
 export type MarketplaceStatsComponentUsagesListData = {
     body?: never;
