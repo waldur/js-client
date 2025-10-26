@@ -19025,7 +19025,7 @@ export type BookingResourcesListData = {
         project_uuid?: string;
         provider_uuid?: string;
         /**
-         * Search by resource UUID, name, backend ID, effective ID, IPs or hypervisor
+         * Search by resource UUID, name, slug, backend ID, effective ID, IPs or hypervisor
          */
         query?: string;
         restrict_member_access?: boolean;
@@ -19143,7 +19143,7 @@ export type BookingResourcesCountData = {
         project_uuid?: string;
         provider_uuid?: string;
         /**
-         * Search by resource UUID, name, backend ID, effective ID, IPs or hypervisor
+         * Search by resource UUID, name, slug, backend ID, effective ID, IPs or hypervisor
          */
         query?: string;
         restrict_member_access?: boolean;
@@ -29143,7 +29143,7 @@ export type MarketplaceOrdersListData = {
         project_uuid?: string;
         provider_uuid?: string;
         /**
-         * Search by order UUID, project name or resource name
+         * Search by order UUID, slug, project name or resource name
          */
         query?: string;
         resource?: string;
@@ -29202,7 +29202,7 @@ export type MarketplaceOrdersCountData = {
         project_uuid?: string;
         provider_uuid?: string;
         /**
-         * Search by order UUID, project name or resource name
+         * Search by order UUID, slug, project name or resource name
          */
         query?: string;
         resource?: string;
@@ -30347,6 +30347,10 @@ export type MarketplaceProviderOfferingsListData = {
          */
         project_uuid?: string;
         /**
+         * Search by offering name, slug or description
+         */
+        query?: string;
+        /**
          * Resource customer UUID
          */
         resource_customer_uuid?: string;
@@ -30448,6 +30452,10 @@ export type MarketplaceProviderOfferingsCountData = {
          * Project UUID
          */
         project_uuid?: string;
+        /**
+         * Search by offering name, slug or description
+         */
+        query?: string;
         /**
          * Resource customer UUID
          */
@@ -30707,6 +30715,10 @@ export type MarketplaceProviderOfferingsComponentStatsListData = {
          */
         project_uuid?: string;
         /**
+         * Search by offering name, slug or description
+         */
+        query?: string;
+        /**
          * Resource customer UUID
          */
         resource_customer_uuid?: string;
@@ -30819,6 +30831,10 @@ export type MarketplaceProviderOfferingsCostsListData = {
          * Project UUID
          */
         project_uuid?: string;
+        /**
+         * Search by offering name, slug or description
+         */
+        query?: string;
         /**
          * Resource customer UUID
          */
@@ -30943,6 +30959,10 @@ export type MarketplaceProviderOfferingsCustomersListData = {
          * Project UUID
          */
         project_uuid?: string;
+        /**
+         * Search by offering name, slug or description
+         */
+        query?: string;
         /**
          * Resource customer UUID
          */
@@ -31833,6 +31853,10 @@ export type MarketplaceProviderOfferingsGroupsListData = {
          */
         project_uuid?: string;
         /**
+         * Search by offering name, slug or description
+         */
+        query?: string;
+        /**
          * Resource customer UUID
          */
         resource_customer_uuid?: string;
@@ -31934,6 +31958,10 @@ export type MarketplaceProviderOfferingsGroupsCountData = {
          * Project UUID
          */
         project_uuid?: string;
+        /**
+         * Search by offering name, slug or description
+         */
+        query?: string;
         /**
          * Resource customer UUID
          */
@@ -32063,7 +32091,7 @@ export type MarketplaceProviderResourcesListData = {
         project_uuid?: string;
         provider_uuid?: string;
         /**
-         * Search by resource UUID, name, backend ID, effective ID, IPs or hypervisor
+         * Search by resource UUID, name, slug, backend ID, effective ID, IPs or hypervisor
          */
         query?: string;
         restrict_member_access?: boolean;
@@ -32180,7 +32208,7 @@ export type MarketplaceProviderResourcesCountData = {
         project_uuid?: string;
         provider_uuid?: string;
         /**
-         * Search by resource UUID, name, backend ID, effective ID, IPs or hypervisor
+         * Search by resource UUID, name, slug, backend ID, effective ID, IPs or hypervisor
          */
         query?: string;
         restrict_member_access?: boolean;
@@ -32721,6 +32749,10 @@ export type MarketplacePublicOfferingsListData = {
          */
         project_uuid?: string;
         /**
+         * Search by offering name, slug or description
+         */
+        query?: string;
+        /**
          * Resource customer UUID
          */
         resource_customer_uuid?: string;
@@ -32822,6 +32854,10 @@ export type MarketplacePublicOfferingsCountData = {
          * Project UUID
          */
         project_uuid?: string;
+        /**
+         * Search by offering name, slug or description
+         */
+        query?: string;
         /**
          * Resource customer UUID
          */
@@ -33288,7 +33324,7 @@ export type MarketplaceResourcesListData = {
         project_uuid?: string;
         provider_uuid?: string;
         /**
-         * Search by resource UUID, name, backend ID, effective ID, IPs or hypervisor
+         * Search by resource UUID, name, slug, backend ID, effective ID, IPs or hypervisor
          */
         query?: string;
         restrict_member_access?: boolean;
@@ -33405,7 +33441,7 @@ export type MarketplaceResourcesCountData = {
         project_uuid?: string;
         provider_uuid?: string;
         /**
-         * Search by resource UUID, name, backend ID, effective ID, IPs or hypervisor
+         * Search by resource UUID, name, slug, backend ID, effective ID, IPs or hypervisor
          */
         query?: string;
         restrict_member_access?: boolean;
@@ -34695,7 +34731,7 @@ export type MarketplaceServiceProvidersCustomerProjectsListData = {
          */
         page_size?: number;
         /**
-         * Filter by name, UUID, backend ID or resource effective ID
+         * Filter by name, slug, UUID, backend ID or resource effective ID
          */
         query?: string;
         slug?: string;
@@ -34867,6 +34903,10 @@ export type MarketplaceServiceProvidersOfferingsListData = {
          * Project UUID
          */
         project_uuid?: string;
+        /**
+         * Search by offering name, slug or description
+         */
+        query?: string;
         /**
          * Resource customer UUID
          */
@@ -35062,7 +35102,7 @@ export type MarketplaceServiceProvidersProjectsListData = {
          */
         page_size?: number;
         /**
-         * Filter by name, UUID, backend ID or resource effective ID
+         * Filter by name, slug, UUID, backend ID or resource effective ID
          */
         query?: string;
         slug?: string;
@@ -43219,7 +43259,7 @@ export type ProjectsListData = {
          */
         page_size?: number;
         /**
-         * Filter by name, UUID, backend ID or resource effective ID
+         * Filter by name, slug, UUID, backend ID or resource effective ID
          */
         query?: string;
         slug?: string;
@@ -43288,7 +43328,7 @@ export type ProjectsCountData = {
          */
         page_size?: number;
         /**
-         * Filter by name, UUID, backend ID or resource effective ID
+         * Filter by name, slug, UUID, backend ID or resource effective ID
          */
         query?: string;
         slug?: string;
