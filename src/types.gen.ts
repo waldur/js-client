@@ -10516,6 +10516,10 @@ export type ProjectRecoveryRequest = {
      * Whether to send invitations to users who had access before project deletion
      */
     send_invitations_to_previous_members?: boolean;
+    /**
+     * End date for the recovered project
+     */
+    end_date?: string | null;
 };
 
 export type ProjectRequest = {
