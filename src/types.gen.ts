@@ -13964,6 +13964,10 @@ export type SupportUser = {
     backend_name?: string | null;
 };
 
+export type SupportedCountriesResponse = {
+    supported_countries: Array<string>;
+};
+
 export type SyncStatusEnum = 'in_sync' | 'out_of_sync' | 'sync_failed';
 
 export type TableSize = {
@@ -38786,6 +38790,12 @@ export type OnboardingSupportedCountriesRetrieveData = {
     query?: never;
     url: '/api/onboarding/supported-countries/';
 };
+
+export type OnboardingSupportedCountriesRetrieveResponses = {
+    200: SupportedCountriesResponse;
+};
+
+export type OnboardingSupportedCountriesRetrieveResponse = OnboardingSupportedCountriesRetrieveResponses[keyof OnboardingSupportedCountriesRetrieveResponses];
 
 export type OpenstackBackupsListData = {
     body?: never;
