@@ -4351,6 +4351,10 @@ export type MergedPluginOptions = {
      */
     max_volumes?: number;
     /**
+     * Default limit for number of security groups in OpenStack tenant
+     */
+    max_security_groups?: number;
+    /**
      * Storage mode for OpenStack offering
      */
     storage_mode?: StorageModeEnum;
@@ -4537,6 +4541,10 @@ export type MergedPluginOptionsRequest = {
      * Default limit for number of volumes in OpenStack tenant
      */
     max_volumes?: number;
+    /**
+     * Default limit for number of security groups in OpenStack tenant
+     */
+    max_security_groups?: number;
     /**
      * Storage mode for OpenStack offering
      */
