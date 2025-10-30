@@ -6020,8 +6020,8 @@ export type OfferingCreate = {
     resource_options?: OfferingOptions;
     components?: Array<OfferingComponent>;
     plugin_options: MergedPluginOptions;
-    secret_options: MergedSecretOptions;
-    readonly service_attributes: {
+    secret_options?: MergedSecretOptions;
+    readonly service_attributes?: {
         [key: string]: unknown;
     };
     state: OfferingState;
@@ -8659,7 +8659,7 @@ export type OrderCreate = {
     readonly output: string;
     readonly marketplace_resource_uuid: string;
     readonly error_message: string;
-    readonly error_traceback: string;
+    readonly error_traceback?: string;
     callback_url?: string | null;
     /**
      * Completion time
@@ -8668,6 +8668,10 @@ export type OrderCreate = {
     request_comment?: string | null;
     readonly attachment: string | null;
     type?: RequestTypes;
+    /**
+     * Enables delayed processing of resource provisioning order.
+     */
+    start_date?: string | null;
     readonly url: string;
     readonly created_by: string;
     /**
@@ -8704,6 +8708,10 @@ export type OrderCreateRequest = {
     callback_url?: string | null;
     request_comment?: string | null;
     type?: RequestTypes;
+    /**
+     * Enables delayed processing of resource provisioning order.
+     */
+    start_date?: string | null;
     project: string;
 };
 
@@ -10830,14 +10838,14 @@ export type ProposalReview = {
     readonly proposal_name: string;
     readonly proposal_uuid: string;
     readonly proposal_slug: string;
-    reviewer: string;
-    readonly reviewer_full_name: string;
-    readonly reviewer_uuid: string;
+    reviewer?: string;
+    readonly reviewer_full_name?: string;
+    readonly reviewer_uuid?: string;
     /**
      * Generate an anonymous reviewer identifier like 'Reviewer 1', 'Reviewer 2'.
      * Returns None if the review is not associated with a proposal.
      */
-    readonly anonymous_reviewer_name: string | null;
+    readonly anonymous_reviewer_name?: string | null;
     state: ProposalReviewStateEnum;
     readonly review_end_date: string;
     summary_score?: number;
@@ -10867,7 +10875,7 @@ export type ProposalReview = {
 
 export type ProposalReviewRequest = {
     proposal: string;
-    reviewer: string;
+    reviewer?: string;
     summary_score?: number;
     summary_public_comment?: string;
     summary_private_comment?: string;
