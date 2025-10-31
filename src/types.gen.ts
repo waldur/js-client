@@ -2021,6 +2021,8 @@ export type ConstanceSettings = {
     ONBOARDING_ARIREGISTER_USERNAME?: string;
     ONBOARDING_ARIREGISTER_PASSWORD?: string;
     ONBOARDING_ARIREGISTER_TIMEOUT?: number;
+    ONBOARDING_WICO_API_URL?: string;
+    ONBOARDING_WICO_TOKEN?: string;
 };
 
 export type ConstanceSettingsRequest = {
@@ -2169,6 +2171,8 @@ export type ConstanceSettingsRequest = {
     ONBOARDING_ARIREGISTER_USERNAME?: string;
     ONBOARDING_ARIREGISTER_PASSWORD?: string;
     ONBOARDING_ARIREGISTER_TIMEOUT?: number;
+    ONBOARDING_WICO_API_URL?: string;
+    ONBOARDING_WICO_TOKEN?: string;
 };
 
 export type ContainerFormatEnum = 'bare' | 'ovf' | 'aki' | 'ami' | 'ari';
@@ -6702,6 +6706,7 @@ export type OnboardingCompanyValidationRequestRequest = {
 };
 
 export type OnboardingCountryChecklistConfiguration = {
+    readonly url: string;
     readonly uuid: string;
     /**
      * ISO country code (e.g., 'EE' for Estonia)
@@ -6710,7 +6715,7 @@ export type OnboardingCountryChecklistConfiguration = {
     /**
      * Checklist to use for this country's onboarding
      */
-    checklist: number;
+    checklist: string;
     readonly checklist_name: string;
     readonly checklist_uuid: string;
     /**
@@ -6729,7 +6734,7 @@ export type OnboardingCountryChecklistConfigurationRequest = {
     /**
      * Checklist to use for this country's onboarding
      */
-    checklist: number;
+    checklist: string;
     /**
      * Whether this country configuration is active
      */
@@ -6808,10 +6813,11 @@ export type OnboardingJustificationReviewRequest = {
 
 export type OnboardingQuestionMetadata = {
     readonly uuid: string;
+    readonly url: string;
     /**
      * Question this metadata applies to
      */
-    question: number;
+    question: string;
     readonly question_uuid: string;
     readonly question_description: string;
     /**
@@ -6830,7 +6836,7 @@ export type OnboardingQuestionMetadataRequest = {
     /**
      * Question this metadata applies to
      */
-    question: number;
+    question: string;
     /**
      * Customer model field name to map this answer to (e.g., 'registration_code', 'email', 'vat_code')
      */
@@ -9500,7 +9506,7 @@ export type PatchedOnboardingCountryChecklistConfigurationRequest = {
     /**
      * Checklist to use for this country's onboarding
      */
-    checklist?: number;
+    checklist?: string;
     /**
      * Whether this country configuration is active
      */
@@ -9520,7 +9526,7 @@ export type PatchedOnboardingQuestionMetadataRequest = {
     /**
      * Question this metadata applies to
      */
-    question?: number;
+    question?: string;
     /**
      * Customer model field name to map this answer to (e.g., 'registration_code', 'email', 'vat_code')
      */
@@ -10176,6 +10182,7 @@ export type PatchedUserRequest = {
     preferred_language?: string;
     first_name?: string;
     last_name?: string;
+    birth_date?: string | null;
     image?: (Blob | File) | null;
 };
 
@@ -14153,6 +14160,7 @@ export type User = {
     readonly affiliations?: unknown;
     first_name?: string;
     last_name?: string;
+    birth_date?: string | null;
     readonly identity_provider_name?: string;
     readonly identity_provider_label?: string;
     readonly identity_provider_management_url?: string;
@@ -14325,6 +14333,7 @@ export type UserRequest = {
     preferred_language?: string;
     first_name?: string;
     last_name?: string;
+    birth_date?: string | null;
     image?: (Blob | File) | null;
 };
 
@@ -14375,7 +14384,7 @@ export type UsernameGenerationPolicyEnum = 'service_provider' | 'anonymized' | '
 
 export type ValidationDecisionEnum = 'approved' | 'rejected' | 'pending';
 
-export type ValidationMethodEnum = 'ariregister';
+export type ValidationMethodEnum = 'ariregister' | 'wirtschaftscompass';
 
 export type Version = {
     /**
@@ -15612,6 +15621,8 @@ export type ConstanceSettingsRequestForm = {
     ONBOARDING_ARIREGISTER_USERNAME?: string;
     ONBOARDING_ARIREGISTER_PASSWORD?: string;
     ONBOARDING_ARIREGISTER_TIMEOUT?: number;
+    ONBOARDING_WICO_API_URL?: string;
+    ONBOARDING_WICO_TOKEN?: string;
 };
 
 export type ConstanceSettingsRequestMultipart = {
@@ -15760,6 +15771,8 @@ export type ConstanceSettingsRequestMultipart = {
     ONBOARDING_ARIREGISTER_USERNAME?: string;
     ONBOARDING_ARIREGISTER_PASSWORD?: string;
     ONBOARDING_ARIREGISTER_TIMEOUT?: number;
+    ONBOARDING_WICO_API_URL?: string;
+    ONBOARDING_WICO_TOKEN?: string;
 };
 
 export type PaymentRequestForm = {
@@ -15980,6 +15993,7 @@ export type UserRequestForm = {
     preferred_language?: string;
     first_name?: string;
     last_name?: string;
+    birth_date?: string | null;
     image?: (Blob | File) | null;
 };
 
@@ -16025,6 +16039,7 @@ export type UserRequestMultipart = {
     preferred_language?: string;
     first_name?: string;
     last_name?: string;
+    birth_date?: string | null;
     image?: (Blob | File) | null;
 };
 
@@ -16069,6 +16084,7 @@ export type PatchedUserRequestForm = {
     preferred_language?: string;
     first_name?: string;
     last_name?: string;
+    birth_date?: string | null;
     image?: (Blob | File) | null;
 };
 
@@ -16113,6 +16129,7 @@ export type PatchedUserRequestMultipart = {
     preferred_language?: string;
     first_name?: string;
     last_name?: string;
+    birth_date?: string | null;
     image?: (Blob | File) | null;
 };
 
@@ -38108,6 +38125,8 @@ export type OnboardingCountryConfigsListData = {
     body?: never;
     path?: never;
     query?: {
+        country?: string;
+        is_active?: boolean;
         /**
          * A page number within the paginated result set.
          */
@@ -38130,6 +38149,8 @@ export type OnboardingCountryConfigsCountData = {
     body?: never;
     path?: never;
     query?: {
+        country?: string;
+        is_active?: boolean;
         /**
          * A page number within the paginated result set.
          */
@@ -38409,6 +38430,12 @@ export type OnboardingQuestionMetadataListData = {
     path?: never;
     query?: {
         /**
+         * Checklist uuid
+         */
+        checklist_uuid?: string;
+        intent_field?: string;
+        maps_to_customer_field?: string;
+        /**
          * A page number within the paginated result set.
          */
         page?: number;
@@ -38416,6 +38443,7 @@ export type OnboardingQuestionMetadataListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        question_uuid?: string;
     };
     url: '/api/onboarding-question-metadata/';
 };
@@ -38431,6 +38459,12 @@ export type OnboardingQuestionMetadataCountData = {
     path?: never;
     query?: {
         /**
+         * Checklist uuid
+         */
+        checklist_uuid?: string;
+        intent_field?: string;
+        maps_to_customer_field?: string;
+        /**
          * A page number within the paginated result set.
          */
         page?: number;
@@ -38438,6 +38472,7 @@ export type OnboardingQuestionMetadataCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        question_uuid?: string;
     };
     url: '/api/onboarding-question-metadata/';
 };
@@ -51846,7 +51881,7 @@ export type UsersListData = {
         date_joined?: string;
         description?: string;
         email?: string;
-        field?: Array<'affiliations' | 'agree_with_policy' | 'agreement_date' | 'civil_number' | 'date_joined' | 'description' | 'email' | 'first_name' | 'full_name' | 'has_active_session' | 'identity_provider_fields' | 'identity_provider_label' | 'identity_provider_management_url' | 'identity_provider_name' | 'identity_source' | 'image' | 'ip_address' | 'is_active' | 'is_staff' | 'is_support' | 'job_title' | 'last_name' | 'native_name' | 'notifications_enabled' | 'organization' | 'permissions' | 'phone_number' | 'preferred_language' | 'registration_method' | 'requested_email' | 'slug' | 'token' | 'token_expires_at' | 'token_lifetime' | 'url' | 'username' | 'uuid'>;
+        field?: Array<'affiliations' | 'agree_with_policy' | 'agreement_date' | 'birth_date' | 'civil_number' | 'date_joined' | 'description' | 'email' | 'first_name' | 'full_name' | 'has_active_session' | 'identity_provider_fields' | 'identity_provider_label' | 'identity_provider_management_url' | 'identity_provider_name' | 'identity_source' | 'image' | 'ip_address' | 'is_active' | 'is_staff' | 'is_support' | 'job_title' | 'last_name' | 'native_name' | 'notifications_enabled' | 'organization' | 'permissions' | 'phone_number' | 'preferred_language' | 'registration_method' | 'requested_email' | 'slug' | 'token' | 'token_expires_at' | 'token_lifetime' | 'url' | 'username' | 'uuid'>;
         /**
          * Full name
          */
@@ -52025,7 +52060,7 @@ export type UsersRetrieveData = {
         uuid: string;
     };
     query?: {
-        field?: Array<'affiliations' | 'agree_with_policy' | 'agreement_date' | 'civil_number' | 'date_joined' | 'description' | 'email' | 'first_name' | 'full_name' | 'has_active_session' | 'identity_provider_fields' | 'identity_provider_label' | 'identity_provider_management_url' | 'identity_provider_name' | 'identity_source' | 'image' | 'ip_address' | 'is_active' | 'is_staff' | 'is_support' | 'job_title' | 'last_name' | 'native_name' | 'notifications_enabled' | 'organization' | 'permissions' | 'phone_number' | 'preferred_language' | 'registration_method' | 'requested_email' | 'slug' | 'token' | 'token_expires_at' | 'token_lifetime' | 'url' | 'username' | 'uuid'>;
+        field?: Array<'affiliations' | 'agree_with_policy' | 'agreement_date' | 'birth_date' | 'civil_number' | 'date_joined' | 'description' | 'email' | 'first_name' | 'full_name' | 'has_active_session' | 'identity_provider_fields' | 'identity_provider_label' | 'identity_provider_management_url' | 'identity_provider_name' | 'identity_source' | 'image' | 'ip_address' | 'is_active' | 'is_staff' | 'is_support' | 'job_title' | 'last_name' | 'native_name' | 'notifications_enabled' | 'organization' | 'permissions' | 'phone_number' | 'preferred_language' | 'registration_method' | 'requested_email' | 'slug' | 'token' | 'token_expires_at' | 'token_lifetime' | 'url' | 'username' | 'uuid'>;
     };
     url: '/api/users/{uuid}/';
 };
@@ -52178,7 +52213,7 @@ export type UsersMeRetrieveData = {
     body?: never;
     path?: never;
     query?: {
-        field?: Array<'affiliations' | 'agree_with_policy' | 'agreement_date' | 'civil_number' | 'date_joined' | 'description' | 'email' | 'first_name' | 'full_name' | 'has_active_session' | 'identity_provider_fields' | 'identity_provider_label' | 'identity_provider_management_url' | 'identity_provider_name' | 'identity_source' | 'image' | 'ip_address' | 'is_active' | 'is_staff' | 'is_support' | 'job_title' | 'last_name' | 'native_name' | 'notifications_enabled' | 'organization' | 'permissions' | 'phone_number' | 'preferred_language' | 'registration_method' | 'requested_email' | 'slug' | 'token' | 'token_expires_at' | 'token_lifetime' | 'url' | 'username' | 'uuid'>;
+        field?: Array<'affiliations' | 'agree_with_policy' | 'agreement_date' | 'birth_date' | 'civil_number' | 'date_joined' | 'description' | 'email' | 'first_name' | 'full_name' | 'has_active_session' | 'identity_provider_fields' | 'identity_provider_label' | 'identity_provider_management_url' | 'identity_provider_name' | 'identity_source' | 'image' | 'ip_address' | 'is_active' | 'is_staff' | 'is_support' | 'job_title' | 'last_name' | 'native_name' | 'notifications_enabled' | 'organization' | 'permissions' | 'phone_number' | 'preferred_language' | 'registration_method' | 'requested_email' | 'slug' | 'token' | 'token_expires_at' | 'token_lifetime' | 'url' | 'username' | 'uuid'>;
     };
     url: '/api/users/me/';
 };
