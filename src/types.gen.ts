@@ -37837,6 +37837,80 @@ export type MediaRetrieveResponses = {
 
 export type MediaRetrieveResponse = MediaRetrieveResponses[keyof MediaRetrieveResponses];
 
+export type MetadataEventsRetrieveData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/metadata/events/';
+};
+
+export type MetadataEventsRetrieveResponses = {
+    200: {
+        event_groups?: {
+            [key: string]: unknown;
+        };
+    };
+};
+
+export type MetadataEventsRetrieveResponse = MetadataEventsRetrieveResponses[keyof MetadataEventsRetrieveResponses];
+
+export type MetadataFeaturesRetrieveData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/metadata/features/';
+};
+
+export type MetadataFeaturesRetrieveResponses = {
+    200: {
+        features?: Array<unknown>;
+        feature_enums?: {
+            [key: string]: unknown;
+        };
+    };
+};
+
+export type MetadataFeaturesRetrieveResponse = MetadataFeaturesRetrieveResponses[keyof MetadataFeaturesRetrieveResponses];
+
+export type MetadataPermissionsRetrieveData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/metadata/permissions/';
+};
+
+export type MetadataPermissionsRetrieveResponses = {
+    200: {
+        roles?: {
+            [key: string]: unknown;
+        };
+        permissions?: {
+            [key: string]: unknown;
+        };
+        permission_map?: {
+            [key: string]: unknown;
+        };
+        permission_descriptions?: Array<unknown>;
+    };
+};
+
+export type MetadataPermissionsRetrieveResponse = MetadataPermissionsRetrieveResponses[keyof MetadataPermissionsRetrieveResponses];
+
+export type MetadataSettingsRetrieveData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/metadata/settings/';
+};
+
+export type MetadataSettingsRetrieveResponses = {
+    200: {
+        settings?: Array<unknown>;
+    };
+};
+
+export type MetadataSettingsRetrieveResponse = MetadataSettingsRetrieveResponses[keyof MetadataSettingsRetrieveResponses];
+
 export type NotificationMessagesListData = {
     body?: never;
     path?: never;
