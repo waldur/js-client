@@ -1749,6 +1749,20 @@ export type ComplianceOverview = {
     readonly average_completion_percentage: number;
 };
 
+export type ComponentMultiplierConfig = {
+    component_type: string;
+    factor: number;
+    min_limit?: number;
+    max_limit?: number;
+};
+
+export type ComponentMultiplierConfigRequest = {
+    component_type: string;
+    factor: number;
+    min_limit?: number;
+    max_limit?: number;
+};
+
 export type ComponentStats = {
     readonly type: string;
     readonly name: string;
@@ -8629,6 +8643,7 @@ export type OptionField = {
     min?: number;
     max?: number;
     cascade_config?: CascadeConfig;
+    component_multiplier_config?: ComponentMultiplierConfig;
 };
 
 export type OptionFieldRequest = {
@@ -8641,9 +8656,10 @@ export type OptionFieldRequest = {
     min?: number;
     max?: number;
     cascade_config?: CascadeConfigRequest;
+    component_multiplier_config?: ComponentMultiplierConfigRequest;
 };
 
-export type OptionFieldTypeEnum = 'boolean' | 'integer' | 'money' | 'string' | 'text' | 'html_text' | 'select_string' | 'select_string_multi' | 'select_openstack_tenant' | 'select_multiple_openstack_tenants' | 'select_openstack_instance' | 'select_multiple_openstack_instances' | 'date' | 'time' | 'conditional_cascade';
+export type OptionFieldTypeEnum = 'boolean' | 'integer' | 'money' | 'string' | 'text' | 'html_text' | 'select_string' | 'select_string_multi' | 'select_openstack_tenant' | 'select_multiple_openstack_tenants' | 'select_openstack_instance' | 'select_multiple_openstack_instances' | 'date' | 'time' | 'conditional_cascade' | 'component_multiplier';
 
 export type OrderAttachment = {
     attachment?: string | null;
