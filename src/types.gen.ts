@@ -6856,9 +6856,7 @@ export type OnboardingJustificationReviewRequest = {
 export type OnboardingQuestionMetadata = {
     readonly uuid: string;
     readonly url: string;
-    /**
-     * Question this metadata applies to
-     */
+    readonly checklist_name: string;
     question: string;
     readonly question_uuid: string;
     readonly question_description: string;
@@ -6875,9 +6873,6 @@ export type OnboardingQuestionMetadata = {
 };
 
 export type OnboardingQuestionMetadataRequest = {
-    /**
-     * Question this metadata applies to
-     */
     question: string;
     /**
      * Customer model field name to map this answer to (e.g., 'registration_code', 'email', 'vat_code')
@@ -9569,9 +9564,6 @@ export type PatchedOnboardingJustificationRequest = {
 };
 
 export type PatchedOnboardingQuestionMetadataRequest = {
-    /**
-     * Question this metadata applies to
-     */
     question?: string;
     /**
      * Customer model field name to map this answer to (e.g., 'registration_code', 'email', 'vat_code')
@@ -20716,6 +20708,12 @@ export type ChecklistsAdminQuestionsListData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Type of compliance this checklist addresses
+         *
+         *
+         */
+        checklist_type?: 'customer_onboarding' | 'offering_compliance' | 'project_compliance' | 'project_metadata' | 'proposal_compliance';
         checklist_uuid?: string;
         /**
          * A page number within the paginated result set.
@@ -20739,6 +20737,12 @@ export type ChecklistsAdminQuestionsCountData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Type of compliance this checklist addresses
+         *
+         *
+         */
+        checklist_type?: 'customer_onboarding' | 'offering_compliance' | 'project_compliance' | 'project_metadata' | 'proposal_compliance';
         checklist_uuid?: string;
         /**
          * A page number within the paginated result set.
@@ -38567,6 +38571,7 @@ export type OnboardingQuestionMetadataListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        question_description?: string;
         question_uuid?: string;
     };
     url: '/api/onboarding-question-metadata/';
@@ -38596,6 +38601,7 @@ export type OnboardingQuestionMetadataCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        question_description?: string;
         question_uuid?: string;
     };
     url: '/api/onboarding-question-metadata/';
