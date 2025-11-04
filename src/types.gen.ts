@@ -40911,7 +40911,7 @@ export type OpenstackPortsListData = {
          *
          *
          */
-        o?: Array<'-network_name' | 'network_name'>;
+        o?: Array<'-admin_state_up' | '-created' | '-device_owner' | '-instance_name' | '-mac_address' | '-name' | '-network_name' | '-status' | '-subnet_name' | 'admin_state_up' | 'created' | 'device_owner' | 'instance_name' | 'mac_address' | 'name' | 'network_name' | 'status' | 'subnet_name'>;
         /**
          * A page number within the paginated result set.
          */
@@ -40973,7 +40973,7 @@ export type OpenstackPortsCountData = {
          *
          *
          */
-        o?: Array<'-network_name' | 'network_name'>;
+        o?: Array<'-admin_state_up' | '-created' | '-device_owner' | '-instance_name' | '-mac_address' | '-name' | '-network_name' | '-status' | '-subnet_name' | 'admin_state_up' | 'created' | 'device_owner' | 'instance_name' | 'mac_address' | 'name' | 'network_name' | 'status' | 'subnet_name'>;
         /**
          * A page number within the paginated result set.
          */
