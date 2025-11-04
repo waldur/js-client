@@ -7189,6 +7189,10 @@ export type OpenStackCreatePortRequest = {
      */
     subnet?: string | null;
     port?: string;
+    /**
+     * Target tenant for port creation. If not specified, uses subnet's tenant.
+     */
+    tenant?: string;
 };
 
 export type OpenStackFixedIp = {
@@ -7863,6 +7867,10 @@ export type OpenStackPortRequest = {
      */
     mac_address?: string;
     allowed_address_pairs?: Array<OpenStackAllowedAddressPairRequest>;
+    /**
+     * Target tenant for shared network port creation. If not specified, defaults to network's tenant.
+     */
+    target_tenant?: string;
     /**
      * Network to which this port belongs
      */
@@ -9646,6 +9654,10 @@ export type PatchedOpenStackNetworkRequest = {
 export type PatchedOpenStackPortRequest = {
     name?: string;
     description?: string;
+    /**
+     * Target tenant for shared network port creation. If not specified, defaults to network's tenant.
+     */
+    target_tenant?: string;
     security_groups?: Array<OpenStackPortNestedSecurityGroupRequest>;
 };
 
@@ -10129,7 +10141,8 @@ export type PatchedRuleRequest = {
     name?: string;
     user_affiliations?: Array<string>;
     user_email_patterns?: Array<string>;
-    customer?: string;
+    customer?: string | null;
+    use_user_organization_as_customer_name?: boolean;
     project_role?: string | null;
     project_role_name?: string | null;
     plan?: string | null;
@@ -13577,9 +13590,10 @@ export type Rule = {
     readonly url: string;
     user_affiliations?: Array<string>;
     user_email_patterns?: Array<string>;
-    customer: string;
+    customer?: string | null;
     readonly customer_name: string;
     readonly customer_uuid: string;
+    use_user_organization_as_customer_name?: boolean;
     project_role?: string | null;
     readonly project_role_display_name: string;
     readonly project_role_description: string;
@@ -13601,7 +13615,8 @@ export type RuleRequest = {
     name: string;
     user_affiliations?: Array<string>;
     user_email_patterns?: Array<string>;
-    customer: string;
+    customer?: string | null;
+    use_user_organization_as_customer_name?: boolean;
     project_role?: string | null;
     project_role_name?: string | null;
     plan?: string | null;
@@ -14949,6 +14964,15 @@ export type OpenStackTenantCreateOrderAttributes = {
     availability_zone?: string;
 };
 
+export type OpenStackCreateInstancePortRequest = {
+    fixed_ips?: Array<OpenStackFixedIpRequest>;
+    /**
+     * Subnet to which this port belongs
+     */
+    subnet?: string | null;
+    port?: string;
+};
+
 export type OpenStackDataVolumeRequest = {
     size: number;
     volume_type?: string | null;
@@ -14980,7 +15004,7 @@ export type OpenStackInstanceCreateOrderAttributes = {
     /**
      * Network ports to attach to the instance
      */
-    ports: Array<OpenStackCreatePortRequest>;
+    ports: Array<OpenStackCreateInstancePortRequest>;
     /**
      * Floating IPs to assign to the instance
      */
@@ -40862,7 +40886,11 @@ export type OpenstackPortsListData = {
          * Exclude Subnet UUIDs (comma-separated)
          */
         exclude_subnet_uuids?: string;
-        field?: Array<'access_url' | 'admin_state_up' | 'allowed_address_pairs' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'device_id' | 'device_owner' | 'error_message' | 'error_traceback' | 'fixed_ips' | 'floating_ips' | 'is_limit_based' | 'is_usage_based' | 'mac_address' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'network' | 'network_name' | 'network_uuid' | 'port_security_enabled' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'security_groups' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'status' | 'tenant' | 'tenant_name' | 'tenant_uuid' | 'url' | 'uuid'>;
+        field?: Array<'access_url' | 'admin_state_up' | 'allowed_address_pairs' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'device_id' | 'device_owner' | 'error_message' | 'error_traceback' | 'fixed_ips' | 'floating_ips' | 'is_limit_based' | 'is_usage_based' | 'mac_address' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'network' | 'network_name' | 'network_uuid' | 'port_security_enabled' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'security_groups' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'status' | 'target_tenant' | 'tenant' | 'tenant_name' | 'tenant_uuid' | 'url' | 'uuid'>;
+        /**
+         * Search by fixed IP
+         */
+        fixed_ips?: string;
         /**
          * Has device owner
          */
@@ -40870,6 +40898,14 @@ export type OpenstackPortsListData = {
         mac_address?: string;
         name?: string;
         name_exact?: string;
+        /**
+         * Search by network name
+         */
+        network_name?: string;
+        /**
+         * Search by network UUID
+         */
+        network_uuid?: string;
         /**
          * Ordering
          *
@@ -40914,12 +40950,24 @@ export type OpenstackPortsCountData = {
          */
         exclude_subnet_uuids?: string;
         /**
+         * Search by fixed IP
+         */
+        fixed_ips?: string;
+        /**
          * Has device owner
          */
         has_device_owner?: boolean;
         mac_address?: string;
         name?: string;
         name_exact?: string;
+        /**
+         * Search by network name
+         */
+        network_name?: string;
+        /**
+         * Search by network UUID
+         */
+        network_uuid?: string;
         /**
          * Ordering
          *
@@ -40989,7 +41037,7 @@ export type OpenstackPortsRetrieveData = {
         uuid: string;
     };
     query?: {
-        field?: Array<'access_url' | 'admin_state_up' | 'allowed_address_pairs' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'device_id' | 'device_owner' | 'error_message' | 'error_traceback' | 'fixed_ips' | 'floating_ips' | 'is_limit_based' | 'is_usage_based' | 'mac_address' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'network' | 'network_name' | 'network_uuid' | 'port_security_enabled' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'security_groups' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'status' | 'tenant' | 'tenant_name' | 'tenant_uuid' | 'url' | 'uuid'>;
+        field?: Array<'access_url' | 'admin_state_up' | 'allowed_address_pairs' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'device_id' | 'device_owner' | 'error_message' | 'error_traceback' | 'fixed_ips' | 'floating_ips' | 'is_limit_based' | 'is_usage_based' | 'mac_address' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'network' | 'network_name' | 'network_uuid' | 'port_security_enabled' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'security_groups' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'status' | 'target_tenant' | 'tenant' | 'tenant_name' | 'tenant_uuid' | 'url' | 'uuid'>;
     };
     url: '/api/openstack-ports/{uuid}/';
 };
