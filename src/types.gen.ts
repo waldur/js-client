@@ -6786,6 +6786,7 @@ export type OnboardingCountryChecklistConfiguration = {
     checklist: string;
     readonly checklist_name: string;
     readonly checklist_uuid: string;
+    readonly questions: Array<QuestionAdmin>;
     /**
      * Whether this country configuration is active
      */
@@ -9877,6 +9878,7 @@ export type PatchedProviderPlanDetailsRequest = {
 };
 
 export type PatchedQuestionAdminRequest = {
+    required?: boolean;
     description?: string;
     /**
      * Additional guidance text visible to users when answering and reviewing
@@ -9884,7 +9886,6 @@ export type PatchedQuestionAdminRequest = {
     user_guidance?: string;
     checklist?: string;
     order?: number;
-    required?: boolean;
     /**
      * Type of question and expected answer format
      */
@@ -11557,6 +11558,7 @@ export type QueryRequest = {
 
 export type Question = {
     readonly uuid: string;
+    required?: boolean;
     description?: string;
     /**
      * Additional guidance text visible to users when answering and reviewing
@@ -11567,6 +11569,7 @@ export type Question = {
 
 export type QuestionAdmin = {
     readonly uuid: string;
+    required?: boolean;
     description?: string;
     /**
      * Additional guidance text visible to users when answering and reviewing
@@ -11578,7 +11581,6 @@ export type QuestionAdmin = {
     readonly checklist_uuid: string;
     checklist: string;
     order?: number;
-    required?: boolean;
     /**
      * Type of question and expected answer format
      */
@@ -11619,6 +11621,7 @@ export type QuestionAdmin = {
 };
 
 export type QuestionAdminRequest = {
+    required?: boolean;
     description?: string;
     /**
      * Additional guidance text visible to users when answering and reviewing
@@ -11626,7 +11629,6 @@ export type QuestionAdminRequest = {
     user_guidance?: string;
     checklist: string;
     order?: number;
-    required?: boolean;
     /**
      * Type of question and expected answer format
      */
