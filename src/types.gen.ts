@@ -6594,6 +6594,10 @@ export type OfferingTermsOfService = {
      * If True, user will be asked to re-consent to the terms of service when the terms of service are updated.
      */
     requires_reconsent?: boolean;
+    /**
+     * Number of days before outdated consents are automatically revoked. Only applies when requires_reconsent=True.
+     */
+    grace_period_days?: number;
     user_consent: UserConsentInfo | null;
     readonly has_user_consent: boolean;
     readonly created: string;
@@ -6610,6 +6614,10 @@ export type OfferingTermsOfServiceCreate = {
      * If True, user will be asked to re-consent to the terms of service when the terms of service are updated.
      */
     requires_reconsent?: boolean;
+    /**
+     * Number of days before outdated consents are automatically revoked. Only applies when requires_reconsent=True.
+     */
+    grace_period_days?: number;
 };
 
 export type OfferingTermsOfServiceCreateRequest = {
@@ -6622,6 +6630,10 @@ export type OfferingTermsOfServiceCreateRequest = {
      * If True, user will be asked to re-consent to the terms of service when the terms of service are updated.
      */
     requires_reconsent?: boolean;
+    /**
+     * Number of days before outdated consents are automatically revoked. Only applies when requires_reconsent=True.
+     */
+    grace_period_days?: number;
 };
 
 export type OfferingTermsOfServiceRequest = {
@@ -6633,6 +6645,10 @@ export type OfferingTermsOfServiceRequest = {
      * If True, user will be asked to re-consent to the terms of service when the terms of service are updated.
      */
     requires_reconsent?: boolean;
+    /**
+     * Number of days before outdated consents are automatically revoked. Only applies when requires_reconsent=True.
+     */
+    grace_period_days?: number;
 };
 
 export type OfferingThumbnailRequest = {
@@ -9539,6 +9555,10 @@ export type PatchedOfferingTermsOfServiceRequest = {
      * If True, user will be asked to re-consent to the terms of service when the terms of service are updated.
      */
     requires_reconsent?: boolean;
+    /**
+     * Number of days before outdated consents are automatically revoked. Only applies when requires_reconsent=True.
+     */
+    grace_period_days?: number;
 };
 
 export type PatchedOfferingUsagePolicyRequest = {
