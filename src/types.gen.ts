@@ -4202,7 +4202,7 @@ export type MaintenanceAnnouncementTemplateRequest = {
 export type MaintenanceTypeEnum = 1 | 2 | 3 | 4 | 5;
 
 export type ManagedRancherCreateNodeRequest = {
-    role: RoleEnum;
+    role: RancherNodeRoleEnum;
     system_volume_size?: number;
     system_volume_type?: string | null;
     memory?: number;
@@ -12150,18 +12150,18 @@ export type RancherClusterTemplateNode = {
      */
     system_volume_size: number;
     preferred_volume_type?: string;
-    role: RoleEnum;
+    role: RancherNodeRoleEnum;
 };
 
 export type RancherCreateNode = {
     cluster: string;
-    role: RoleEnum;
+    role: RancherNodeRoleEnum;
     readonly uuid: string;
 };
 
 export type RancherCreateNodeRequest = {
     cluster: string;
-    role: RoleEnum;
+    role: RancherNodeRoleEnum;
     system_volume_size?: number;
     system_volume_type?: string | null;
     memory?: number;
@@ -12299,7 +12299,7 @@ export type RancherNestedNamespace = {
 
 export type RancherNestedNode = {
     readonly url?: string;
-    role?: RoleEnum;
+    role?: RancherNodeRoleEnum;
     readonly instance?: string;
     readonly created?: string;
     readonly modified?: string;
@@ -12338,7 +12338,7 @@ export type RancherNestedNodeRequest = {
     data_volumes?: Array<DataVolumeRequest>;
     memory?: number;
     cpu?: number;
-    role: RoleEnum;
+    role: RancherNodeRoleEnum;
     tenant?: string;
     error_traceback?: string;
     backend_id?: string;
@@ -12386,7 +12386,7 @@ export type RancherNode = {
     readonly instance_name: string;
     readonly instance_uuid: string;
     readonly instance_marketplace_uuid: string;
-    role: RoleEnum;
+    role: RancherNodeRoleEnum;
     readonly k8s_version: string;
     readonly docker_version: string;
     readonly cpu_allocated: number | null;
@@ -12405,6 +12405,8 @@ export type RancherNode = {
     readonly annotations: unknown;
     readonly runtime_state: string;
 };
+
+export type RancherNodeRoleEnum = 'agent' | 'server';
 
 export type RancherProject = {
     readonly url: string;
@@ -13515,8 +13517,6 @@ export type RoleDetails = {
     readonly users_count?: number;
     content_type?: RoleType;
 };
-
-export type RoleEnum = 'agent' | 'server';
 
 export type RoleModifyRequest = {
     name: string;
