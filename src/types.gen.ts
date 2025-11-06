@@ -6639,12 +6639,7 @@ export type OfferingTermsOfServiceCreateRequest = {
 export type OfferingTermsOfServiceRequest = {
     terms_of_service?: string;
     terms_of_service_link?: string;
-    version?: string;
     is_active?: boolean;
-    /**
-     * If True, user will be asked to re-consent to the terms of service when the terms of service are updated.
-     */
-    requires_reconsent?: boolean;
     /**
      * Number of days before outdated consents are automatically revoked. Only applies when requires_reconsent=True.
      */
@@ -9553,12 +9548,7 @@ export type PatchedOfferingSoftwareCatalogUpdateRequest = {
 export type PatchedOfferingTermsOfServiceRequest = {
     terms_of_service?: string;
     terms_of_service_link?: string;
-    version?: string;
     is_active?: boolean;
-    /**
-     * If True, user will be asked to re-consent to the terms of service when the terms of service are updated.
-     */
-    requires_reconsent?: boolean;
     /**
      * Number of days before outdated consents are automatically revoked. Only applies when requires_reconsent=True.
      */
@@ -44532,6 +44522,22 @@ export type ProjectsSubmitAnswersResponses = {
 
 export type ProjectsSubmitAnswersResponse = ProjectsSubmitAnswersResponses[keyof ProjectsSubmitAnswersResponses];
 
+export type ProjectsSyncUserRolesData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/projects/{uuid}/sync_user_roles/';
+};
+
+export type ProjectsSyncUserRolesResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type ProjectsUpdateUserData = {
     body: UserRoleUpdateRequest;
     path: {
@@ -53583,22 +53589,6 @@ export type VmwareVirtualMachineWebConsoleRetrieveResponses = {
 };
 
 export type VmwareVirtualMachineWebConsoleRetrieveResponse = VmwareVirtualMachineWebConsoleRetrieveResponses[keyof VmwareVirtualMachineWebConsoleRetrieveResponses];
-
-export type ProjectsSyncUserRolesData = {
-    body?: never;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/projects/{uuid}/sync_user_roles/';
-};
-
-export type ProjectsSyncUserRolesResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
-};
 
 export type ClientOptions = {
     baseUrl: `${string}://waldur-openapi-schema.yaml` | (string & {});
