@@ -4825,23 +4825,7 @@ export const customerQuotasCount = <ThrowOnError extends boolean = false>(option
 };
 
 /**
- * To get a list of customers, run GET against /api/customers/ as authenticated user. Note that a user can
- * only see connected customers:
- *
- * - customers that the user owns
- * - customers that have a project where user has a role
- *
- * Staff also can filter customers by user UUID, for example /api/customers/?user_uuid=<UUID>
- *
- * Staff also can filter customers by exists accounting_start_date, for example:
- *
- * The first category:
- * /api/customers/?accounting_is_running=True
- * has accounting_start_date empty (i.e. accounting starts at once)
- * has accounting_start_date in the past (i.e. has already started).
- *
- * Those that are not in the first:
- * /api/customers/?accounting_is_running=False # exists accounting_start_date
+ * Mixin to optimize HEAD requests for DRF views bypassing serializer processing
  */
 export const customersList = <ThrowOnError extends boolean = false>(options?: Options<CustomersListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<CustomersListResponses, unknown, ThrowOnError>({
