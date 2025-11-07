@@ -32986,6 +32986,21 @@ export type MarketplaceProviderResourcesUpdateOptionsResponses = {
 
 export type MarketplaceProviderResourcesUpdateOptionsResponse = MarketplaceProviderResourcesUpdateOptionsResponses[keyof MarketplaceProviderResourcesUpdateOptionsResponses];
 
+export type MarketplaceProviderResourcesUpdateOptionsDirectData = {
+    body?: ResourceOptionsRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-provider-resources/{uuid}/update_options_direct/';
+};
+
+export type MarketplaceProviderResourcesUpdateOptionsDirectResponses = {
+    200: ResourceResponseStatus;
+};
+
+export type MarketplaceProviderResourcesUpdateOptionsDirectResponse = MarketplaceProviderResourcesUpdateOptionsDirectResponses[keyof MarketplaceProviderResourcesUpdateOptionsDirectResponses];
+
 export type MarketplacePublicApiCheckSignatureData = {
     body: ServiceProviderSignatureRequest;
     path?: never;
