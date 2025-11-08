@@ -11807,8 +11807,8 @@ export const marketplaceOfferingUsersUpdateRestricted = <ThrowOnError extends bo
 /**
  * Get checklist template for creating new objects.
  */
-export const marketplaceOfferingUsersChecklistTemplateRetrieve = <ThrowOnError extends boolean = false>(options?: Options<MarketplaceOfferingUsersChecklistTemplateRetrieveData, ThrowOnError>) => {
-    return (options?.client ?? _heyApiClient).get<MarketplaceOfferingUsersChecklistTemplateRetrieveResponses, MarketplaceOfferingUsersChecklistTemplateRetrieveErrors, ThrowOnError>({
+export const marketplaceOfferingUsersChecklistTemplateRetrieve = <ThrowOnError extends boolean = false>(options: Options<MarketplaceOfferingUsersChecklistTemplateRetrieveData, ThrowOnError>) => {
+    return (options.client ?? _heyApiClient).get<MarketplaceOfferingUsersChecklistTemplateRetrieveResponses, MarketplaceOfferingUsersChecklistTemplateRetrieveErrors, ThrowOnError>({
         security: [
             {
                 name: 'Authorization',
@@ -11827,8 +11827,8 @@ export const marketplaceOfferingUsersChecklistTemplateRetrieve = <ThrowOnError e
 /**
  * Get number of items in the collection matching the request parameters.
  */
-export const marketplaceOfferingUsersChecklistTemplateCount = <ThrowOnError extends boolean = false>(options?: Options<MarketplaceOfferingUsersChecklistTemplateCountData, ThrowOnError>) => {
-    return (options?.client ?? _heyApiClient).head<MarketplaceOfferingUsersChecklistTemplateCountResponses, unknown, ThrowOnError>({
+export const marketplaceOfferingUsersChecklistTemplateCount = <ThrowOnError extends boolean = false>(options: Options<MarketplaceOfferingUsersChecklistTemplateCountData, ThrowOnError>) => {
+    return (options.client ?? _heyApiClient).head<MarketplaceOfferingUsersChecklistTemplateCountResponses, unknown, ThrowOnError>({
         security: [
             {
                 name: 'Authorization',
@@ -20114,8 +20114,8 @@ export const onboardingVerificationsSubmitAnswers = <ThrowOnError extends boolea
 /**
  * Get checklist template for creating new objects.
  */
-export const onboardingVerificationsChecklistTemplateRetrieve = <ThrowOnError extends boolean = false>(options?: Options<OnboardingVerificationsChecklistTemplateRetrieveData, ThrowOnError>) => {
-    return (options?.client ?? _heyApiClient).get<OnboardingVerificationsChecklistTemplateRetrieveResponses, OnboardingVerificationsChecklistTemplateRetrieveErrors, ThrowOnError>({
+export const onboardingVerificationsChecklistTemplateRetrieve = <ThrowOnError extends boolean = false>(options: Options<OnboardingVerificationsChecklistTemplateRetrieveData, ThrowOnError>) => {
+    return (options.client ?? _heyApiClient).get<OnboardingVerificationsChecklistTemplateRetrieveResponses, OnboardingVerificationsChecklistTemplateRetrieveErrors, ThrowOnError>({
         security: [
             {
                 name: 'Authorization',
@@ -20134,8 +20134,8 @@ export const onboardingVerificationsChecklistTemplateRetrieve = <ThrowOnError ex
 /**
  * Get number of items in the collection matching the request parameters.
  */
-export const onboardingVerificationsChecklistTemplateCount = <ThrowOnError extends boolean = false>(options?: Options<OnboardingVerificationsChecklistTemplateCountData, ThrowOnError>) => {
-    return (options?.client ?? _heyApiClient).head<OnboardingVerificationsChecklistTemplateCountResponses, unknown, ThrowOnError>({
+export const onboardingVerificationsChecklistTemplateCount = <ThrowOnError extends boolean = false>(options: Options<OnboardingVerificationsChecklistTemplateCountData, ThrowOnError>) => {
+    return (options.client ?? _heyApiClient).head<OnboardingVerificationsChecklistTemplateCountResponses, unknown, ThrowOnError>({
         security: [
             {
                 name: 'Authorization',
@@ -25133,8 +25133,8 @@ export const projectsUpdateUser = <ThrowOnError extends boolean = false>(options
 /**
  * Get checklist template for creating new objects.
  */
-export const projectsChecklistTemplateRetrieve = <ThrowOnError extends boolean = false>(options?: Options<ProjectsChecklistTemplateRetrieveData, ThrowOnError>) => {
-    return (options?.client ?? _heyApiClient).get<ProjectsChecklistTemplateRetrieveResponses, ProjectsChecklistTemplateRetrieveErrors, ThrowOnError>({
+export const projectsChecklistTemplateRetrieve = <ThrowOnError extends boolean = false>(options: Options<ProjectsChecklistTemplateRetrieveData, ThrowOnError>) => {
+    return (options.client ?? _heyApiClient).get<ProjectsChecklistTemplateRetrieveResponses, ProjectsChecklistTemplateRetrieveErrors, ThrowOnError>({
         security: [
             {
                 name: 'Authorization',
@@ -25153,8 +25153,8 @@ export const projectsChecklistTemplateRetrieve = <ThrowOnError extends boolean =
 /**
  * Get number of items in the collection matching the request parameters.
  */
-export const projectsChecklistTemplateCount = <ThrowOnError extends boolean = false>(options?: Options<ProjectsChecklistTemplateCountData, ThrowOnError>) => {
-    return (options?.client ?? _heyApiClient).head<ProjectsChecklistTemplateCountResponses, unknown, ThrowOnError>({
+export const projectsChecklistTemplateCount = <ThrowOnError extends boolean = false>(options: Options<ProjectsChecklistTemplateCountData, ThrowOnError>) => {
+    return (options.client ?? _heyApiClient).head<ProjectsChecklistTemplateCountResponses, unknown, ThrowOnError>({
         security: [
             {
                 name: 'Authorization',
@@ -25884,8 +25884,8 @@ export const proposalProposalsUpdateUser = <ThrowOnError extends boolean = false
 /**
  * Get checklist template for creating new objects.
  */
-export const proposalProposalsChecklistTemplateRetrieve = <ThrowOnError extends boolean = false>(options?: Options<ProposalProposalsChecklistTemplateRetrieveData, ThrowOnError>) => {
-    return (options?.client ?? _heyApiClient).get<ProposalProposalsChecklistTemplateRetrieveResponses, ProposalProposalsChecklistTemplateRetrieveErrors, ThrowOnError>({
+export const proposalProposalsChecklistTemplateRetrieve = <ThrowOnError extends boolean = false>(options: Options<ProposalProposalsChecklistTemplateRetrieveData, ThrowOnError>) => {
+    return (options.client ?? _heyApiClient).get<ProposalProposalsChecklistTemplateRetrieveResponses, ProposalProposalsChecklistTemplateRetrieveErrors, ThrowOnError>({
         security: [
             {
                 name: 'Authorization',
@@ -25904,8 +25904,8 @@ export const proposalProposalsChecklistTemplateRetrieve = <ThrowOnError extends 
 /**
  * Get number of items in the collection matching the request parameters.
  */
-export const proposalProposalsChecklistTemplateCount = <ThrowOnError extends boolean = false>(options?: Options<ProposalProposalsChecklistTemplateCountData, ThrowOnError>) => {
-    return (options?.client ?? _heyApiClient).head<ProposalProposalsChecklistTemplateCountResponses, unknown, ThrowOnError>({
+export const proposalProposalsChecklistTemplateCount = <ThrowOnError extends boolean = false>(options: Options<ProposalProposalsChecklistTemplateCountData, ThrowOnError>) => {
+    return (options.client ?? _heyApiClient).head<ProposalProposalsChecklistTemplateCountResponses, unknown, ThrowOnError>({
         security: [
             {
                 name: 'Authorization',

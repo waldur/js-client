@@ -10919,6 +10919,11 @@ export type ProposalApproveRequest = {
     allocation_comment?: string;
 };
 
+export type ProposalChecklistAnswerSubmitResponse = {
+    detail: string;
+    completion: ChecklistCompletionReviewer;
+};
+
 export type ProposalDocumentation = {
     /**
      * Upload supporting documentation in PDF format.
@@ -29396,7 +29401,12 @@ export type MarketplaceOfferingUsersUpdateRestrictedResponses = {
 export type MarketplaceOfferingUsersChecklistTemplateRetrieveData = {
     body?: never;
     path?: never;
-    query?: never;
+    query: {
+        /**
+         * UUID of the parent object (e.g., customer UUID for new projects)
+         */
+        parent_uuid: string;
+    };
     url: '/api/marketplace-offering-users/checklist-template/';
 };
 
@@ -29405,6 +29415,10 @@ export type MarketplaceOfferingUsersChecklistTemplateRetrieveErrors = {
      * No checklist configured
      */
     400: unknown;
+    /**
+     * Parent object not found
+     */
+    404: unknown;
 };
 
 export type MarketplaceOfferingUsersChecklistTemplateRetrieveResponses = {
@@ -29416,7 +29430,12 @@ export type MarketplaceOfferingUsersChecklistTemplateRetrieveResponse = Marketpl
 export type MarketplaceOfferingUsersChecklistTemplateCountData = {
     body?: never;
     path?: never;
-    query?: never;
+    query: {
+        /**
+         * UUID of the parent object (e.g., customer UUID for new projects)
+         */
+        parent_uuid: string;
+    };
     url: '/api/marketplace-offering-users/checklist-template/';
 };
 
@@ -39020,7 +39039,12 @@ export type OnboardingVerificationsSubmitAnswersResponse = OnboardingVerificatio
 export type OnboardingVerificationsChecklistTemplateRetrieveData = {
     body?: never;
     path?: never;
-    query?: never;
+    query: {
+        /**
+         * UUID of the parent object (e.g., customer UUID for new projects)
+         */
+        parent_uuid: string;
+    };
     url: '/api/onboarding-verifications/checklist-template/';
 };
 
@@ -39029,6 +39053,10 @@ export type OnboardingVerificationsChecklistTemplateRetrieveErrors = {
      * No checklist configured
      */
     400: unknown;
+    /**
+     * Parent object not found
+     */
+    404: unknown;
 };
 
 export type OnboardingVerificationsChecklistTemplateRetrieveResponses = {
@@ -39040,7 +39068,12 @@ export type OnboardingVerificationsChecklistTemplateRetrieveResponse = Onboardin
 export type OnboardingVerificationsChecklistTemplateCountData = {
     body?: never;
     path?: never;
-    query?: never;
+    query: {
+        /**
+         * UUID of the parent object (e.g., customer UUID for new projects)
+         */
+        parent_uuid: string;
+    };
     url: '/api/onboarding-verifications/checklist-template/';
 };
 
@@ -44575,7 +44608,12 @@ export type ProjectsUpdateUserResponse = ProjectsUpdateUserResponses[keyof Proje
 export type ProjectsChecklistTemplateRetrieveData = {
     body?: never;
     path?: never;
-    query?: never;
+    query: {
+        /**
+         * UUID of the parent object (e.g., customer UUID for new projects)
+         */
+        parent_uuid: string;
+    };
     url: '/api/projects/checklist-template/';
 };
 
@@ -44584,6 +44622,10 @@ export type ProjectsChecklistTemplateRetrieveErrors = {
      * No checklist configured
      */
     400: unknown;
+    /**
+     * Parent object not found
+     */
+    404: unknown;
 };
 
 export type ProjectsChecklistTemplateRetrieveResponses = {
@@ -44595,7 +44637,12 @@ export type ProjectsChecklistTemplateRetrieveResponse = ProjectsChecklistTemplat
 export type ProjectsChecklistTemplateCountData = {
     body?: never;
     path?: never;
-    query?: never;
+    query: {
+        /**
+         * UUID of the parent object (e.g., customer UUID for new projects)
+         */
+        parent_uuid: string;
+    };
     url: '/api/projects/checklist-template/';
 };
 
@@ -45362,7 +45409,7 @@ export type ProposalProposalsSubmitAnswersErrors = {
 };
 
 export type ProposalProposalsSubmitAnswersResponses = {
-    200: AnswerSubmitResponse;
+    200: ProposalChecklistAnswerSubmitResponse;
 };
 
 export type ProposalProposalsSubmitAnswersResponse = ProposalProposalsSubmitAnswersResponses[keyof ProposalProposalsSubmitAnswersResponses];
@@ -45401,7 +45448,12 @@ export type ProposalProposalsUpdateUserResponse = ProposalProposalsUpdateUserRes
 export type ProposalProposalsChecklistTemplateRetrieveData = {
     body?: never;
     path?: never;
-    query?: never;
+    query: {
+        /**
+         * UUID of the parent object (e.g., customer UUID for new projects)
+         */
+        parent_uuid: string;
+    };
     url: '/api/proposal-proposals/checklist-template/';
 };
 
@@ -45410,6 +45462,10 @@ export type ProposalProposalsChecklistTemplateRetrieveErrors = {
      * No checklist configured
      */
     400: unknown;
+    /**
+     * Parent object not found
+     */
+    404: unknown;
 };
 
 export type ProposalProposalsChecklistTemplateRetrieveResponses = {
@@ -45421,7 +45477,12 @@ export type ProposalProposalsChecklistTemplateRetrieveResponse = ProposalProposa
 export type ProposalProposalsChecklistTemplateCountData = {
     body?: never;
     path?: never;
-    query?: never;
+    query: {
+        /**
+         * UUID of the parent object (e.g., customer UUID for new projects)
+         */
+        parent_uuid: string;
+    };
     url: '/api/proposal-proposals/checklist-template/';
 };
 
