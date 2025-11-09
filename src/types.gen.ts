@@ -5870,7 +5870,7 @@ export type NotificationTemplateUpdateSerializersRequest = {
 
 export type NullEnum = unknown;
 
-export type ObservableObjectTypeEnum = 'order' | 'user_role' | 'resource' | 'offering_user' | 'importable_resources' | 'service_account' | 'course_account';
+export type ObservableObjectTypeEnum = 'order' | 'user_role' | 'resource' | 'offering_user' | 'importable_resources' | 'service_account' | 'course_account' | 'resource_periodic_limits';
 
 export type ObtainAuthTokenRequest = {
     username: string;
