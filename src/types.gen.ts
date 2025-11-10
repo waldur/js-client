@@ -6729,6 +6729,10 @@ export type OfferingUser = {
      * Check if the user needs to re-consent due to ToS changes.
      */
     readonly requires_reconsent?: boolean;
+    /**
+     * Check if the offering user has a connected compliance checklist completion.
+     */
+    readonly has_compliance_checklist?: boolean;
 };
 
 export type OfferingUserRequest = {
@@ -28887,7 +28891,7 @@ export type MarketplaceOfferingUsersListData = {
          * Created after
          */
         created?: string;
-        field?: Array<'created' | 'customer_name' | 'customer_uuid' | 'has_consent' | 'is_restricted' | 'modified' | 'offering' | 'offering_name' | 'offering_uuid' | 'requires_reconsent' | 'service_provider_comment' | 'service_provider_comment_url' | 'state' | 'url' | 'user' | 'user_email' | 'user_full_name' | 'user_username' | 'user_uuid' | 'username' | 'uuid'>;
+        field?: Array<'created' | 'customer_name' | 'customer_uuid' | 'has_compliance_checklist' | 'has_consent' | 'is_restricted' | 'modified' | 'offering' | 'offering_name' | 'offering_uuid' | 'requires_reconsent' | 'service_provider_comment' | 'service_provider_comment_url' | 'state' | 'url' | 'user' | 'user_email' | 'user_full_name' | 'user_username' | 'user_uuid' | 'username' | 'uuid'>;
         /**
          * User Has Consent
          */
@@ -29036,7 +29040,7 @@ export type MarketplaceOfferingUsersRetrieveData = {
         uuid: string;
     };
     query?: {
-        field?: Array<'created' | 'customer_name' | 'customer_uuid' | 'has_consent' | 'is_restricted' | 'modified' | 'offering' | 'offering_name' | 'offering_uuid' | 'requires_reconsent' | 'service_provider_comment' | 'service_provider_comment_url' | 'state' | 'url' | 'user' | 'user_email' | 'user_full_name' | 'user_username' | 'user_uuid' | 'username' | 'uuid'>;
+        field?: Array<'created' | 'customer_name' | 'customer_uuid' | 'has_compliance_checklist' | 'has_consent' | 'is_restricted' | 'modified' | 'offering' | 'offering_name' | 'offering_uuid' | 'requires_reconsent' | 'service_provider_comment' | 'service_provider_comment_url' | 'state' | 'url' | 'user' | 'user_email' | 'user_full_name' | 'user_username' | 'user_uuid' | 'username' | 'uuid'>;
     };
     url: '/api/marketplace-offering-users/{uuid}/';
 };
