@@ -9942,6 +9942,22 @@ export type PatchedQuestionAdminRequest = {
      * Defines how multiple dependencies are evaluated. AND: All dependencies must be satisfied. OR: At least one dependency must be satisfied.
      */
     dependency_logic_operator?: DependencyLogicOperatorEnum;
+    /**
+     * List of allowed file extensions (e.g., ['.pdf', '.doc', '.docx']). If empty, all file types are allowed.
+     */
+    allowed_file_types?: unknown;
+    /**
+     * List of allowed MIME types (e.g., ['application/pdf', 'application/msword']). If empty, MIME type validation is not enforced. When both extensions and MIME types are specified, files must match both criteria for security.
+     */
+    allowed_mime_types?: unknown;
+    /**
+     * Maximum file size in megabytes. If not set, no size limit is enforced.
+     */
+    max_file_size_mb?: number | null;
+    /**
+     * Maximum number of files allowed for MULTIPLE_FILES type questions. If not set, no count limit is enforced.
+     */
+    max_files_count?: number | null;
 };
 
 export type PatchedQuestionDependencyRequest = {
@@ -11642,6 +11658,22 @@ export type QuestionAdmin = {
      * Defines how multiple dependencies are evaluated. AND: All dependencies must be satisfied. OR: At least one dependency must be satisfied.
      */
     dependency_logic_operator?: DependencyLogicOperatorEnum;
+    /**
+     * List of allowed file extensions (e.g., ['.pdf', '.doc', '.docx']). If empty, all file types are allowed.
+     */
+    allowed_file_types?: unknown;
+    /**
+     * List of allowed MIME types (e.g., ['application/pdf', 'application/msword']). If empty, MIME type validation is not enforced. When both extensions and MIME types are specified, files must match both criteria for security.
+     */
+    allowed_mime_types?: unknown;
+    /**
+     * Maximum file size in megabytes. If not set, no size limit is enforced.
+     */
+    max_file_size_mb?: number | null;
+    /**
+     * Maximum number of files allowed for MULTIPLE_FILES type questions. If not set, no count limit is enforced.
+     */
+    max_files_count?: number | null;
 };
 
 export type QuestionAdminRequest = {
@@ -11690,6 +11722,22 @@ export type QuestionAdminRequest = {
      * Defines how multiple dependencies are evaluated. AND: All dependencies must be satisfied. OR: At least one dependency must be satisfied.
      */
     dependency_logic_operator?: DependencyLogicOperatorEnum;
+    /**
+     * List of allowed file extensions (e.g., ['.pdf', '.doc', '.docx']). If empty, all file types are allowed.
+     */
+    allowed_file_types?: unknown;
+    /**
+     * List of allowed MIME types (e.g., ['application/pdf', 'application/msword']). If empty, MIME type validation is not enforced. When both extensions and MIME types are specified, files must match both criteria for security.
+     */
+    allowed_mime_types?: unknown;
+    /**
+     * Maximum file size in megabytes. If not set, no size limit is enforced.
+     */
+    max_file_size_mb?: number | null;
+    /**
+     * Maximum number of files allowed for MULTIPLE_FILES type questions. If not set, no count limit is enforced.
+     */
+    max_files_count?: number | null;
 };
 
 export type QuestionAnswer = {
@@ -11767,7 +11815,7 @@ export type QuestionOptionsAdminRequest = {
     question: string;
 };
 
-export type QuestionTypeEnum = 'boolean' | 'single_select' | 'multi_select' | 'text_input' | 'text_area' | 'number' | 'date' | 'file';
+export type QuestionTypeEnum = 'boolean' | 'single_select' | 'multi_select' | 'text_input' | 'text_area' | 'number' | 'date' | 'file' | 'multiple_files';
 
 export type QuestionWithAnswer = {
     readonly uuid: string;
@@ -11791,6 +11839,22 @@ export type QuestionWithAnswer = {
      * Maximum value allowed for NUMBER type questions
      */
     readonly max_value: string | null;
+    /**
+     * List of allowed file extensions (e.g., ['.pdf', '.doc', '.docx']). If empty, all file types are allowed.
+     */
+    readonly allowed_file_types: unknown;
+    /**
+     * List of allowed MIME types (e.g., ['application/pdf', 'application/msword']). If empty, MIME type validation is not enforced. When both extensions and MIME types are specified, files must match both criteria for security.
+     */
+    readonly allowed_mime_types: unknown;
+    /**
+     * Maximum file size in megabytes. If not set, no size limit is enforced.
+     */
+    readonly max_file_size_mb: number | null;
+    /**
+     * Maximum number of files allowed for MULTIPLE_FILES type questions. If not set, no count limit is enforced.
+     */
+    readonly max_files_count: number | null;
 };
 
 export type QuestionWithAnswerReviewer = {
@@ -11815,6 +11879,22 @@ export type QuestionWithAnswerReviewer = {
      * Maximum value allowed for NUMBER type questions
      */
     readonly max_value: string | null;
+    /**
+     * List of allowed file extensions (e.g., ['.pdf', '.doc', '.docx']). If empty, all file types are allowed.
+     */
+    readonly allowed_file_types: unknown;
+    /**
+     * List of allowed MIME types (e.g., ['application/pdf', 'application/msword']). If empty, MIME type validation is not enforced. When both extensions and MIME types are specified, files must match both criteria for security.
+     */
+    readonly allowed_mime_types: unknown;
+    /**
+     * Maximum file size in megabytes. If not set, no size limit is enforced.
+     */
+    readonly max_file_size_mb: number | null;
+    /**
+     * Maximum number of files allowed for MULTIPLE_FILES type questions. If not set, no count limit is enforced.
+     */
+    readonly max_files_count: number | null;
     operator?: ChecklistOperators | BlankEnum;
     /**
      * Answer value that trigger review.
