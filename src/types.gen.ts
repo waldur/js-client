@@ -2059,6 +2059,7 @@ export type ConstanceSettings = {
     MAINTENANCE_ANNOUNCEMENT_NOTIFY_SYSTEM?: Array<string>;
     ENFORCE_USER_CONSENT_FOR_OFFERINGS?: boolean;
     DISABLED_OFFERING_TYPES?: Array<string>;
+    ONBOARDING_COUNTRY?: string;
     ONBOARDING_VERIFICATION_EXPIRY_HOURS?: number;
     ONBOARDING_ARIREGISTER_BASE_URL?: string;
     ONBOARDING_ARIREGISTER_USERNAME?: string;
@@ -2066,6 +2067,10 @@ export type ConstanceSettings = {
     ONBOARDING_ARIREGISTER_TIMEOUT?: number;
     ONBOARDING_WICO_API_URL?: string;
     ONBOARDING_WICO_TOKEN?: string;
+    ONBOARDING_BOLAGSVERKET_API_URL?: string;
+    ONBOARDING_BOLAGSVERKET_TOKEN_API_URL?: string;
+    ONBOARDING_BOLAGSVERKET_CLIENT_ID?: string;
+    ONBOARDING_BOLAGSVERKET_CLIENT_SECRET?: string;
 };
 
 export type ConstanceSettingsRequest = {
@@ -2210,6 +2215,7 @@ export type ConstanceSettingsRequest = {
     MAINTENANCE_ANNOUNCEMENT_NOTIFY_SYSTEM?: Array<string>;
     ENFORCE_USER_CONSENT_FOR_OFFERINGS?: boolean;
     DISABLED_OFFERING_TYPES?: Array<string>;
+    ONBOARDING_COUNTRY?: string;
     ONBOARDING_VERIFICATION_EXPIRY_HOURS?: number;
     ONBOARDING_ARIREGISTER_BASE_URL?: string;
     ONBOARDING_ARIREGISTER_USERNAME?: string;
@@ -2217,6 +2223,10 @@ export type ConstanceSettingsRequest = {
     ONBOARDING_ARIREGISTER_TIMEOUT?: number;
     ONBOARDING_WICO_API_URL?: string;
     ONBOARDING_WICO_TOKEN?: string;
+    ONBOARDING_BOLAGSVERKET_API_URL?: string;
+    ONBOARDING_BOLAGSVERKET_TOKEN_API_URL?: string;
+    ONBOARDING_BOLAGSVERKET_CLIENT_ID?: string;
+    ONBOARDING_BOLAGSVERKET_CLIENT_SECRET?: string;
 };
 
 export type ContainerFormatEnum = 'bare' | 'ovf' | 'aki' | 'ami' | 'ari';
@@ -6798,6 +6808,22 @@ export type OnboardingCompanyValidationRequestRequest = {
      * Indicates if the validation is to be performed manually
      */
     is_manual_validation?: boolean;
+    /**
+     * Personal identifier (temporary workaround for Estonian civil_number)
+     */
+    person_identifier?: string;
+    /**
+     * User's first name (temporary workaround for Austrian validation)
+     */
+    first_name?: string;
+    /**
+     * User's last name (temporary workaround for Austrian validation)
+     */
+    last_name?: string;
+    /**
+     * User's birth date (temporary workaround for Austrian validation)
+     */
+    birth_date?: string | null;
 };
 
 export type OnboardingCountryChecklistConfiguration = {
@@ -14767,7 +14793,7 @@ export type UsernameGenerationPolicyEnum = 'service_provider' | 'anonymized' | '
 
 export type ValidationDecisionEnum = 'approved' | 'rejected' | 'pending';
 
-export type ValidationMethodEnum = 'ariregister' | 'wirtschaftscompass';
+export type ValidationMethodEnum = 'ariregister' | 'wirtschaftscompass' | 'bolagsverket';
 
 export type Version = {
     /**
@@ -16009,6 +16035,7 @@ export type ConstanceSettingsRequestForm = {
     MAINTENANCE_ANNOUNCEMENT_NOTIFY_SYSTEM?: Array<string>;
     ENFORCE_USER_CONSENT_FOR_OFFERINGS?: boolean;
     DISABLED_OFFERING_TYPES?: Array<string>;
+    ONBOARDING_COUNTRY?: string;
     ONBOARDING_VERIFICATION_EXPIRY_HOURS?: number;
     ONBOARDING_ARIREGISTER_BASE_URL?: string;
     ONBOARDING_ARIREGISTER_USERNAME?: string;
@@ -16016,6 +16043,10 @@ export type ConstanceSettingsRequestForm = {
     ONBOARDING_ARIREGISTER_TIMEOUT?: number;
     ONBOARDING_WICO_API_URL?: string;
     ONBOARDING_WICO_TOKEN?: string;
+    ONBOARDING_BOLAGSVERKET_API_URL?: string;
+    ONBOARDING_BOLAGSVERKET_TOKEN_API_URL?: string;
+    ONBOARDING_BOLAGSVERKET_CLIENT_ID?: string;
+    ONBOARDING_BOLAGSVERKET_CLIENT_SECRET?: string;
 };
 
 export type ConstanceSettingsRequestMultipart = {
@@ -16160,6 +16191,7 @@ export type ConstanceSettingsRequestMultipart = {
     MAINTENANCE_ANNOUNCEMENT_NOTIFY_SYSTEM?: Array<string>;
     ENFORCE_USER_CONSENT_FOR_OFFERINGS?: boolean;
     DISABLED_OFFERING_TYPES?: Array<string>;
+    ONBOARDING_COUNTRY?: string;
     ONBOARDING_VERIFICATION_EXPIRY_HOURS?: number;
     ONBOARDING_ARIREGISTER_BASE_URL?: string;
     ONBOARDING_ARIREGISTER_USERNAME?: string;
@@ -16167,6 +16199,10 @@ export type ConstanceSettingsRequestMultipart = {
     ONBOARDING_ARIREGISTER_TIMEOUT?: number;
     ONBOARDING_WICO_API_URL?: string;
     ONBOARDING_WICO_TOKEN?: string;
+    ONBOARDING_BOLAGSVERKET_API_URL?: string;
+    ONBOARDING_BOLAGSVERKET_TOKEN_API_URL?: string;
+    ONBOARDING_BOLAGSVERKET_CLIENT_ID?: string;
+    ONBOARDING_BOLAGSVERKET_CLIENT_SECRET?: string;
 };
 
 export type PaymentRequestForm = {
