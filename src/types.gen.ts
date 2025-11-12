@@ -2427,6 +2427,10 @@ export type Customer = {
      */
     readonly max_service_accounts?: number | null;
     readonly project_metadata_checklist?: string | null;
+    /**
+     * Number of extra days after project end date before resources are terminated
+     */
+    readonly grace_period_days?: number | null;
     name?: string;
     slug?: string;
     native_name?: string;
@@ -4021,6 +4025,8 @@ export type LexisLinkRequest = {
 };
 
 export type LimitPeriodEnum = 'month' | 'quarterly' | 'annual' | 'total';
+
+export type LimitTypeEnum = 'GrpTRESMins' | 'MaxTRESMins' | 'GrpTRES';
 
 export type LinkOpenstackRequest = {
     instance: string;
@@ -9812,6 +9818,10 @@ export type PatchedProjectRequest = {
      */
     kind?: KindEnum;
     staff_notes?: string;
+    /**
+     * Number of extra days after project end date before resources are terminated. Overrides customer-level setting.
+     */
+    grace_period_days?: number | null;
 };
 
 export type PatchedProjectServiceAccountRequest = {
@@ -10216,6 +10226,50 @@ export type PatchedSlurmAllocationRequest = {
     description?: string;
 };
 
+export type PatchedSlurmPeriodicUsagePolicyRequest = {
+    scope?: string;
+    actions?: string;
+    /**
+     * Fields for saving actions extra data. Keys are name of actions.
+     */
+    options?: unknown;
+    organization_groups?: Array<string>;
+    component_limits_set?: Array<NestedOfferingComponentLimitRequest>;
+    period?: PeriodEnum;
+    /**
+     * SLURM limit type to apply
+     */
+    limit_type?: LimitTypeEnum;
+    /**
+     * Use TRES billing units instead of raw TRES values
+     */
+    tres_billing_enabled?: boolean;
+    /**
+     * TRES billing weights (e.g., {"CPU": 0.015625, "Mem": 0.001953125, "GRES/gpu": 0.25})
+     */
+    tres_billing_weights?: unknown;
+    /**
+     * Fairshare decay half-life in days (matches SLURM PriorityDecayHalfLife)
+     */
+    fairshare_decay_half_life?: number;
+    /**
+     * Grace period ratio (0.2 = 20% overconsumption allowed)
+     */
+    grace_ratio?: number;
+    /**
+     * Enable unused allocation carryover to next period
+     */
+    carryover_enabled?: boolean;
+    /**
+     * Reset raw usage at period transitions (PriorityUsageResetPeriod=None)
+     */
+    raw_usage_reset?: boolean;
+    /**
+     * QoS management strategy
+     */
+    qos_strategy?: QosStrategyEnum;
+};
+
 export type PatchedSoftwareCatalogRequest = {
     /**
      * Catalog name (e.g., EESSI)
@@ -10589,6 +10643,10 @@ export type Project = {
     readonly is_removed?: boolean;
     readonly termination_metadata?: unknown;
     staff_notes?: string;
+    /**
+     * Number of extra days after project end date before resources are terminated. Overrides customer-level setting.
+     */
+    grace_period_days?: number | null;
     readonly project_credit?: number | null;
     readonly marketplace_resource_count?: {
         [key: string]: number;
@@ -10808,6 +10866,10 @@ export type ProjectRequest = {
      */
     kind?: KindEnum;
     staff_notes?: string;
+    /**
+     * Number of extra days after project end date before resources are terminated. Overrides customer-level setting.
+     */
+    grace_period_days?: number | null;
 };
 
 export type ProjectServiceAccount = {
@@ -11591,6 +11653,8 @@ export type PublicOfferingDetails = {
 export type PullMarketplaceScriptResourceRequest = {
     resource_uuid: string;
 };
+
+export type QosStrategyEnum = 'threshold' | 'progressive';
 
 export type QueryRequest = {
     query: string;
@@ -14044,6 +14108,104 @@ export type SlurmAssociation = {
     allocation: string;
 };
 
+export type SlurmPeriodicUsagePolicy = {
+    readonly uuid: string;
+    readonly url: string;
+    scope: string;
+    readonly scope_name: string;
+    readonly scope_uuid: string;
+    actions: string;
+    readonly created: string;
+    readonly created_by_full_name: string;
+    readonly created_by_username: string;
+    readonly has_fired: boolean;
+    readonly fired_datetime: string;
+    /**
+     * Fields for saving actions extra data. Keys are name of actions.
+     */
+    options?: unknown;
+    organization_groups: Array<string>;
+    component_limits_set: Array<NestedOfferingComponentLimit>;
+    period?: PeriodEnum;
+    readonly period_name: string;
+    /**
+     * SLURM limit type to apply
+     */
+    limit_type?: LimitTypeEnum;
+    /**
+     * Use TRES billing units instead of raw TRES values
+     */
+    tres_billing_enabled?: boolean;
+    /**
+     * TRES billing weights (e.g., {"CPU": 0.015625, "Mem": 0.001953125, "GRES/gpu": 0.25})
+     */
+    tres_billing_weights?: unknown;
+    /**
+     * Fairshare decay half-life in days (matches SLURM PriorityDecayHalfLife)
+     */
+    fairshare_decay_half_life?: number;
+    /**
+     * Grace period ratio (0.2 = 20% overconsumption allowed)
+     */
+    grace_ratio?: number;
+    /**
+     * Enable unused allocation carryover to next period
+     */
+    carryover_enabled?: boolean;
+    /**
+     * Reset raw usage at period transitions (PriorityUsageResetPeriod=None)
+     */
+    raw_usage_reset?: boolean;
+    /**
+     * QoS management strategy
+     */
+    qos_strategy?: QosStrategyEnum;
+};
+
+export type SlurmPeriodicUsagePolicyRequest = {
+    scope: string;
+    actions: string;
+    /**
+     * Fields for saving actions extra data. Keys are name of actions.
+     */
+    options?: unknown;
+    organization_groups: Array<string>;
+    component_limits_set: Array<NestedOfferingComponentLimitRequest>;
+    period?: PeriodEnum;
+    /**
+     * SLURM limit type to apply
+     */
+    limit_type?: LimitTypeEnum;
+    /**
+     * Use TRES billing units instead of raw TRES values
+     */
+    tres_billing_enabled?: boolean;
+    /**
+     * TRES billing weights (e.g., {"CPU": 0.015625, "Mem": 0.001953125, "GRES/gpu": 0.25})
+     */
+    tres_billing_weights?: unknown;
+    /**
+     * Fairshare decay half-life in days (matches SLURM PriorityDecayHalfLife)
+     */
+    fairshare_decay_half_life?: number;
+    /**
+     * Grace period ratio (0.2 = 20% overconsumption allowed)
+     */
+    grace_ratio?: number;
+    /**
+     * Enable unused allocation carryover to next period
+     */
+    carryover_enabled?: boolean;
+    /**
+     * Reset raw usage at period transitions (PriorityUsageResetPeriod=None)
+     */
+    raw_usage_reset?: boolean;
+    /**
+     * QoS management strategy
+     */
+    qos_strategy?: QosStrategyEnum;
+};
+
 export type SmaxWebHookReceiver = {
     id: string;
 };
@@ -16058,6 +16220,10 @@ export type ProjectRequestForm = {
      */
     kind?: KindEnum;
     staff_notes?: string;
+    /**
+     * Number of extra days after project end date before resources are terminated. Overrides customer-level setting.
+     */
+    grace_period_days?: number | null;
 };
 
 export type ProjectRequestMultipart = {
@@ -16083,6 +16249,10 @@ export type ProjectRequestMultipart = {
      */
     kind?: KindEnum;
     staff_notes?: string;
+    /**
+     * Number of extra days after project end date before resources are terminated. Overrides customer-level setting.
+     */
+    grace_period_days?: number | null;
 };
 
 export type PatchedProjectRequestForm = {
@@ -16108,6 +16278,10 @@ export type PatchedProjectRequestForm = {
      */
     kind?: KindEnum;
     staff_notes?: string;
+    /**
+     * Number of extra days after project end date before resources are terminated. Overrides customer-level setting.
+     */
+    grace_period_days?: number | null;
 };
 
 export type PatchedProjectRequestMultipart = {
@@ -16133,6 +16307,10 @@ export type PatchedProjectRequestMultipart = {
      */
     kind?: KindEnum;
     staff_notes?: string;
+    /**
+     * Number of extra days after project end date before resources are terminated. Overrides customer-level setting.
+     */
+    grace_period_days?: number | null;
 };
 
 export type ProposalDocumentationRequestForm = {
@@ -21654,7 +21832,7 @@ export type CustomersListData = {
         archived?: boolean;
         backend_id?: string;
         contact_details?: string;
-        field?: Array<'abbreviation' | 'access_subnets' | 'accounting_start_date' | 'address' | 'agreement_number' | 'archived' | 'backend_id' | 'bank_account' | 'bank_name' | 'billing_price_estimate' | 'blocked' | 'call_managing_organization_uuid' | 'contact_details' | 'country' | 'country_name' | 'created' | 'customer_credit' | 'customer_unallocated_credit' | 'default_tax_percent' | 'description' | 'display_billing_info_in_projects' | 'display_name' | 'domain' | 'email' | 'homepage' | 'image' | 'is_service_provider' | 'latitude' | 'longitude' | 'max_service_accounts' | 'name' | 'native_name' | 'notification_emails' | 'organization_groups' | 'payment_profiles' | 'phone_number' | 'postal' | 'project_metadata_checklist' | 'projects' | 'projects_count' | 'registration_code' | 'service_provider' | 'service_provider_uuid' | 'slug' | 'sponsor_number' | 'url' | 'users_count' | 'uuid' | 'vat_code'>;
+        field?: Array<'abbreviation' | 'access_subnets' | 'accounting_start_date' | 'address' | 'agreement_number' | 'archived' | 'backend_id' | 'bank_account' | 'bank_name' | 'billing_price_estimate' | 'blocked' | 'call_managing_organization_uuid' | 'contact_details' | 'country' | 'country_name' | 'created' | 'customer_credit' | 'customer_unallocated_credit' | 'default_tax_percent' | 'description' | 'display_billing_info_in_projects' | 'display_name' | 'domain' | 'email' | 'grace_period_days' | 'homepage' | 'image' | 'is_service_provider' | 'latitude' | 'longitude' | 'max_service_accounts' | 'name' | 'native_name' | 'notification_emails' | 'organization_groups' | 'payment_profiles' | 'phone_number' | 'postal' | 'project_metadata_checklist' | 'projects' | 'projects_count' | 'registration_code' | 'service_provider' | 'service_provider_uuid' | 'slug' | 'sponsor_number' | 'url' | 'users_count' | 'uuid' | 'vat_code'>;
         name?: string;
         name_exact?: string;
         native_name?: string;
@@ -21958,7 +22136,7 @@ export type CustomersRetrieveData = {
         uuid: string;
     };
     query?: {
-        field?: Array<'abbreviation' | 'access_subnets' | 'accounting_start_date' | 'address' | 'agreement_number' | 'archived' | 'backend_id' | 'bank_account' | 'bank_name' | 'billing_price_estimate' | 'blocked' | 'call_managing_organization_uuid' | 'contact_details' | 'country' | 'country_name' | 'created' | 'customer_credit' | 'customer_unallocated_credit' | 'default_tax_percent' | 'description' | 'display_billing_info_in_projects' | 'display_name' | 'domain' | 'email' | 'homepage' | 'image' | 'is_service_provider' | 'latitude' | 'longitude' | 'max_service_accounts' | 'name' | 'native_name' | 'notification_emails' | 'organization_groups' | 'payment_profiles' | 'phone_number' | 'postal' | 'project_metadata_checklist' | 'projects' | 'projects_count' | 'registration_code' | 'service_provider' | 'service_provider_uuid' | 'slug' | 'sponsor_number' | 'url' | 'users_count' | 'uuid' | 'vat_code'>;
+        field?: Array<'abbreviation' | 'access_subnets' | 'accounting_start_date' | 'address' | 'agreement_number' | 'archived' | 'backend_id' | 'bank_account' | 'bank_name' | 'billing_price_estimate' | 'blocked' | 'call_managing_organization_uuid' | 'contact_details' | 'country' | 'country_name' | 'created' | 'customer_credit' | 'customer_unallocated_credit' | 'default_tax_percent' | 'description' | 'display_billing_info_in_projects' | 'display_name' | 'domain' | 'email' | 'grace_period_days' | 'homepage' | 'image' | 'is_service_provider' | 'latitude' | 'longitude' | 'max_service_accounts' | 'name' | 'native_name' | 'notification_emails' | 'organization_groups' | 'payment_profiles' | 'phone_number' | 'postal' | 'project_metadata_checklist' | 'projects' | 'projects_count' | 'registration_code' | 'service_provider' | 'service_provider_uuid' | 'slug' | 'sponsor_number' | 'url' | 'users_count' | 'uuid' | 'vat_code'>;
     };
     url: '/api/customers/{uuid}/';
 };
@@ -31610,7 +31788,7 @@ export type MarketplaceProviderOfferingsListCustomerProjectsListData = {
         uuid: string;
     };
     query?: {
-        field?: Array<'backend_id' | 'billing_price_estimate' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_display_billing_info_in_projects' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'end_date' | 'end_date_requested_by' | 'image' | 'is_industry' | 'is_removed' | 'kind' | 'marketplace_resource_count' | 'max_service_accounts' | 'name' | 'oecd_fos_2007_code' | 'oecd_fos_2007_label' | 'project_credit' | 'resources_count' | 'slug' | 'staff_notes' | 'start_date' | 'termination_metadata' | 'type' | 'type_name' | 'type_uuid' | 'url' | 'uuid'>;
+        field?: Array<'backend_id' | 'billing_price_estimate' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_display_billing_info_in_projects' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'end_date' | 'end_date_requested_by' | 'grace_period_days' | 'image' | 'is_industry' | 'is_removed' | 'kind' | 'marketplace_resource_count' | 'max_service_accounts' | 'name' | 'oecd_fos_2007_code' | 'oecd_fos_2007_label' | 'project_credit' | 'resources_count' | 'slug' | 'staff_notes' | 'start_date' | 'termination_metadata' | 'type' | 'type_name' | 'type_uuid' | 'url' | 'uuid'>;
         /**
          * A page number within the paginated result set.
          */
@@ -35528,7 +35706,7 @@ export type MarketplaceServiceProvidersProjectsListData = {
         customer_name?: string;
         customer_native_name?: string;
         description?: string;
-        field?: Array<'backend_id' | 'billing_price_estimate' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_display_billing_info_in_projects' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'end_date' | 'end_date_requested_by' | 'image' | 'is_industry' | 'is_removed' | 'kind' | 'marketplace_resource_count' | 'max_service_accounts' | 'name' | 'oecd_fos_2007_code' | 'oecd_fos_2007_label' | 'project_credit' | 'resources_count' | 'slug' | 'staff_notes' | 'start_date' | 'termination_metadata' | 'type' | 'type_name' | 'type_uuid' | 'url' | 'uuid'>;
+        field?: Array<'backend_id' | 'billing_price_estimate' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_display_billing_info_in_projects' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'end_date' | 'end_date_requested_by' | 'grace_period_days' | 'image' | 'is_industry' | 'is_removed' | 'kind' | 'marketplace_resource_count' | 'max_service_accounts' | 'name' | 'oecd_fos_2007_code' | 'oecd_fos_2007_label' | 'project_credit' | 'resources_count' | 'slug' | 'staff_notes' | 'start_date' | 'termination_metadata' | 'type' | 'type_name' | 'type_uuid' | 'url' | 'uuid'>;
         is_removed?: boolean;
         /**
          * Modified after
@@ -36340,6 +36518,158 @@ export type MarketplaceSiteAgentServicesSetStatisticsResponses = {
 };
 
 export type MarketplaceSiteAgentServicesSetStatisticsResponse = MarketplaceSiteAgentServicesSetStatisticsResponses[keyof MarketplaceSiteAgentServicesSetStatisticsResponses];
+
+export type MarketplaceSlurmPeriodicUsagePoliciesListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        scope?: string;
+        scope_uuid?: string;
+    };
+    url: '/api/marketplace-slurm-periodic-usage-policies/';
+};
+
+export type MarketplaceSlurmPeriodicUsagePoliciesListResponses = {
+    200: Array<SlurmPeriodicUsagePolicy>;
+};
+
+export type MarketplaceSlurmPeriodicUsagePoliciesListResponse = MarketplaceSlurmPeriodicUsagePoliciesListResponses[keyof MarketplaceSlurmPeriodicUsagePoliciesListResponses];
+
+export type MarketplaceSlurmPeriodicUsagePoliciesCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        scope?: string;
+        scope_uuid?: string;
+    };
+    url: '/api/marketplace-slurm-periodic-usage-policies/';
+};
+
+export type MarketplaceSlurmPeriodicUsagePoliciesCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type MarketplaceSlurmPeriodicUsagePoliciesCreateData = {
+    body: SlurmPeriodicUsagePolicyRequest;
+    path?: never;
+    query?: never;
+    url: '/api/marketplace-slurm-periodic-usage-policies/';
+};
+
+export type MarketplaceSlurmPeriodicUsagePoliciesCreateResponses = {
+    201: SlurmPeriodicUsagePolicy;
+};
+
+export type MarketplaceSlurmPeriodicUsagePoliciesCreateResponse = MarketplaceSlurmPeriodicUsagePoliciesCreateResponses[keyof MarketplaceSlurmPeriodicUsagePoliciesCreateResponses];
+
+export type MarketplaceSlurmPeriodicUsagePoliciesDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-slurm-periodic-usage-policies/{uuid}/';
+};
+
+export type MarketplaceSlurmPeriodicUsagePoliciesDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type MarketplaceSlurmPeriodicUsagePoliciesDestroyResponse = MarketplaceSlurmPeriodicUsagePoliciesDestroyResponses[keyof MarketplaceSlurmPeriodicUsagePoliciesDestroyResponses];
+
+export type MarketplaceSlurmPeriodicUsagePoliciesRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-slurm-periodic-usage-policies/{uuid}/';
+};
+
+export type MarketplaceSlurmPeriodicUsagePoliciesRetrieveResponses = {
+    200: SlurmPeriodicUsagePolicy;
+};
+
+export type MarketplaceSlurmPeriodicUsagePoliciesRetrieveResponse = MarketplaceSlurmPeriodicUsagePoliciesRetrieveResponses[keyof MarketplaceSlurmPeriodicUsagePoliciesRetrieveResponses];
+
+export type MarketplaceSlurmPeriodicUsagePoliciesPartialUpdateData = {
+    body?: PatchedSlurmPeriodicUsagePolicyRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-slurm-periodic-usage-policies/{uuid}/';
+};
+
+export type MarketplaceSlurmPeriodicUsagePoliciesPartialUpdateResponses = {
+    200: SlurmPeriodicUsagePolicy;
+};
+
+export type MarketplaceSlurmPeriodicUsagePoliciesPartialUpdateResponse = MarketplaceSlurmPeriodicUsagePoliciesPartialUpdateResponses[keyof MarketplaceSlurmPeriodicUsagePoliciesPartialUpdateResponses];
+
+export type MarketplaceSlurmPeriodicUsagePoliciesUpdateData = {
+    body: SlurmPeriodicUsagePolicyRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-slurm-periodic-usage-policies/{uuid}/';
+};
+
+export type MarketplaceSlurmPeriodicUsagePoliciesUpdateResponses = {
+    200: SlurmPeriodicUsagePolicy;
+};
+
+export type MarketplaceSlurmPeriodicUsagePoliciesUpdateResponse = MarketplaceSlurmPeriodicUsagePoliciesUpdateResponses[keyof MarketplaceSlurmPeriodicUsagePoliciesUpdateResponses];
+
+export type MarketplaceSlurmPeriodicUsagePoliciesActionsRetrieveData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/marketplace-slurm-periodic-usage-policies/actions/';
+};
+
+export type MarketplaceSlurmPeriodicUsagePoliciesActionsRetrieveResponses = {
+    200: SlurmPeriodicUsagePolicy;
+};
+
+export type MarketplaceSlurmPeriodicUsagePoliciesActionsRetrieveResponse = MarketplaceSlurmPeriodicUsagePoliciesActionsRetrieveResponses[keyof MarketplaceSlurmPeriodicUsagePoliciesActionsRetrieveResponses];
+
+export type MarketplaceSlurmPeriodicUsagePoliciesActionsCountData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/marketplace-slurm-periodic-usage-policies/actions/';
+};
+
+export type MarketplaceSlurmPeriodicUsagePoliciesActionsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type MarketplaceSoftwareCatalogsListData = {
     body?: never;
@@ -44166,7 +44496,7 @@ export type ProjectsListData = {
         customer_name?: string;
         customer_native_name?: string;
         description?: string;
-        field?: Array<'backend_id' | 'billing_price_estimate' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_display_billing_info_in_projects' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'end_date' | 'end_date_requested_by' | 'image' | 'is_industry' | 'is_removed' | 'kind' | 'marketplace_resource_count' | 'max_service_accounts' | 'name' | 'oecd_fos_2007_code' | 'oecd_fos_2007_label' | 'project_credit' | 'resources_count' | 'slug' | 'staff_notes' | 'start_date' | 'termination_metadata' | 'type' | 'type_name' | 'type_uuid' | 'url' | 'uuid'>;
+        field?: Array<'backend_id' | 'billing_price_estimate' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_display_billing_info_in_projects' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'end_date' | 'end_date_requested_by' | 'grace_period_days' | 'image' | 'is_industry' | 'is_removed' | 'kind' | 'marketplace_resource_count' | 'max_service_accounts' | 'name' | 'oecd_fos_2007_code' | 'oecd_fos_2007_label' | 'project_credit' | 'resources_count' | 'slug' | 'staff_notes' | 'start_date' | 'termination_metadata' | 'type' | 'type_name' | 'type_uuid' | 'url' | 'uuid'>;
         /**
          * Include soft-deleted (terminated) projects. Only available to staff and support users, or users with organizational roles who can see their terminated projects.
          */
@@ -44375,7 +44705,7 @@ export type ProjectsRetrieveData = {
         uuid: string;
     };
     query?: {
-        field?: Array<'backend_id' | 'billing_price_estimate' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_display_billing_info_in_projects' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'end_date' | 'end_date_requested_by' | 'image' | 'is_industry' | 'is_removed' | 'kind' | 'marketplace_resource_count' | 'max_service_accounts' | 'name' | 'oecd_fos_2007_code' | 'oecd_fos_2007_label' | 'project_credit' | 'resources_count' | 'slug' | 'staff_notes' | 'start_date' | 'termination_metadata' | 'type' | 'type_name' | 'type_uuid' | 'url' | 'uuid'>;
+        field?: Array<'backend_id' | 'billing_price_estimate' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_display_billing_info_in_projects' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'end_date' | 'end_date_requested_by' | 'grace_period_days' | 'image' | 'is_industry' | 'is_removed' | 'kind' | 'marketplace_resource_count' | 'max_service_accounts' | 'name' | 'oecd_fos_2007_code' | 'oecd_fos_2007_label' | 'project_credit' | 'resources_count' | 'slug' | 'staff_notes' | 'start_date' | 'termination_metadata' | 'type' | 'type_name' | 'type_uuid' | 'url' | 'uuid'>;
     };
     url: '/api/projects/{uuid}/';
 };
