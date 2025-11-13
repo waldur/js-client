@@ -4889,7 +4889,7 @@ export const customersCreate = <ThrowOnError extends boolean = false>(options: O
 };
 
 /**
- * Get detailed project compliance information with database-level pagination.
+ * Get detailed project compliance information.
  */
 export const customersProjectMetadataComplianceDetailsList = <ThrowOnError extends boolean = false>(options: Options<CustomersProjectMetadataComplianceDetailsListData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).get<CustomersProjectMetadataComplianceDetailsListResponses, unknown, ThrowOnError>({
@@ -4929,7 +4929,7 @@ export const customersProjectMetadataComplianceOverviewList = <ThrowOnError exte
 };
 
 /**
- * List project checklist answer data with database-level pagination.
+ * List project checklist answer data.
  */
 export const customersProjectMetadataComplianceProjectsList = <ThrowOnError extends boolean = false>(options: Options<CustomersProjectMetadataComplianceProjectsListData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).get<CustomersProjectMetadataComplianceProjectsListResponses, unknown, ThrowOnError>({
@@ -4949,7 +4949,7 @@ export const customersProjectMetadataComplianceProjectsList = <ThrowOnError exte
 };
 
 /**
- * List questions with project answers, paginated by question at database level.
+ * List questions with project answers
  */
 export const customersProjectMetadataQuestionAnswersList = <ThrowOnError extends boolean = false>(options: Options<CustomersProjectMetadataQuestionAnswersListData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).get<CustomersProjectMetadataQuestionAnswersListResponses, unknown, ThrowOnError>({
