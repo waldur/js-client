@@ -154,7 +154,78 @@ export type AgentTypeEnum = 'Order processing' | 'Usage reporting' | 'Glauth syn
 
 export type AgreementTypeEnum = 'TOS' | 'PP';
 
+export type Allocation = {
+    readonly url?: string;
+    readonly uuid?: string;
+    name?: string;
+    description?: string;
+    readonly service_name?: string;
+    service_settings?: string;
+    readonly service_settings_uuid?: string;
+    readonly service_settings_state?: string;
+    readonly service_settings_error_message?: string;
+    project?: string;
+    readonly project_name?: string;
+    readonly project_uuid?: string;
+    readonly customer?: string;
+    readonly customer_uuid?: string;
+    readonly customer_name?: string;
+    readonly customer_native_name?: string;
+    readonly customer_abbreviation?: string;
+    readonly error_message?: string;
+    readonly error_traceback?: string;
+    readonly resource_type?: string;
+    state?: CoreStates;
+    readonly created?: string;
+    readonly modified?: string;
+    readonly backend_id?: string;
+    readonly access_url?: string | null;
+    node_limit?: number;
+    groupname?: string | null;
+    readonly node_usage?: string;
+    readonly is_active?: boolean;
+    readonly marketplace_offering_uuid?: string | null;
+    readonly marketplace_offering_name?: string | null;
+    readonly marketplace_offering_plugin_options?: {
+        [key: string]: unknown;
+    } | null;
+    readonly marketplace_category_uuid?: string | null;
+    readonly marketplace_category_name?: string | null;
+    readonly marketplace_resource_uuid?: string | null;
+    readonly marketplace_plan_uuid?: string | null;
+    readonly marketplace_resource_state?: string | null;
+    readonly is_usage_based?: boolean | null;
+    readonly is_limit_based?: boolean | null;
+};
+
+export type AllocationRequest = {
+    name: string;
+    description?: string;
+    service_settings: string;
+    project: string;
+    node_limit?: number;
+    groupname?: string | null;
+};
+
+export type AllocationSetLimits = {
+    node_limit: number;
+};
+
+export type AllocationSetLimitsRequest = {
+    node_limit: number;
+};
+
 export type AllocationTimeEnum = 'on_decision' | 'fixed_date';
+
+export type AllocationUserUsage = {
+    node_usage?: string;
+    month: number;
+    year: number;
+    allocation: string;
+    user?: string | null;
+    username: string;
+    readonly full_name: string;
+};
 
 export type Answer = {
     readonly uuid: string;
@@ -183,6 +254,14 @@ export type AnswerSubmitRequest = {
 export type AnswerSubmitResponse = {
     detail: string;
     completion: ChecklistCompletion;
+};
+
+export type Association = {
+    readonly uuid: string;
+    username?: string | null;
+    groupname?: string | null;
+    useridentifier?: string | null;
+    allocation: string;
 };
 
 export type Attachment = {
@@ -4245,6 +4324,42 @@ export type MaintenanceAnnouncementTemplateRequest = {
 };
 
 export type MaintenanceTypeEnum = 1 | 2 | 3 | 4 | 5;
+
+export type ManagedProject = {
+    readonly state: string;
+    readonly created: string;
+    /**
+     * Timestamp when the review was completed
+     */
+    readonly reviewed_at: string | null;
+    readonly reviewed_by_full_name: string;
+    readonly reviewed_by_uuid: string;
+    /**
+     * Optional comment provided during review
+     */
+    review_comment?: string | null;
+    /**
+     * ID
+     */
+    identifier: string;
+    /**
+     * The destination used to send instructions from the remote portal.
+     */
+    destination: string;
+    /**
+     * Details of the project as provided by the remote OpenPortal.
+     */
+    readonly details: unknown;
+    project: string;
+    project_data: Project;
+    project_template: string;
+    project_template_data: ProjectTemplate;
+    /**
+     * Local ID
+     * The local project identifier in this portal.
+     */
+    local_identifier?: string | null;
+};
 
 export type ManagedRancherCreateNodeRequest = {
     role: RancherNodeRoleEnum;
@@ -8870,7 +8985,7 @@ export type OrderCreateRequest = {
     /**
      * Attributes structure depends on the offering type specified in the parent object. Can also be a generic object for offerings without a specific attributes schema.
      */
-    attributes?: AzureVirtualMachineCreateOrderAttributes | AzureSqlServerCreateOrderAttributes | OpenStackTenantCreateOrderAttributes | OpenStackInstanceCreateOrderAttributes | OpenStackVolumeCreateOrderAttributes | SlurmInvoicesSlurmPackageCreateOrderAttributes | VMwareVirtualMachineCreateOrderAttributes | GenericOrderAttributes;
+    attributes?: AzureVirtualMachineCreateOrderAttributes | AzureSqlServerCreateOrderAttributes | MarketplaceOpenPortalCreateOrderAttributes | MarketplaceOpenPortalRemoteCreateOrderAttributes | OpenStackTenantCreateOrderAttributes | OpenStackInstanceCreateOrderAttributes | OpenStackVolumeCreateOrderAttributes | SlurmInvoicesSlurmPackageCreateOrderAttributes | VMwareVirtualMachineCreateOrderAttributes | GenericOrderAttributes;
     limits?: {
         [key: string]: number;
     };
@@ -9041,6 +9156,13 @@ export type PatchedAdminAnnouncementRequest = {
     active_from?: string;
     active_to?: string;
     type?: AdminAnnouncementTypeEnum;
+};
+
+export type PatchedAllocationRequest = {
+    name?: string;
+    description?: string;
+    node_limit?: number;
+    groupname?: string | null;
 };
 
 export type PatchedAwsInstanceRequest = {
@@ -9875,6 +9997,18 @@ export type PatchedProjectEstimatedCostPolicyRequest = {
     period?: PeriodEnum;
 };
 
+export type PatchedProjectInfoRequest = {
+    project?: string;
+    /**
+     * A short, unique name for the project. It will be used to form the local username of any users in the project on any systems. Should only contain lower-case letters and digits and must start with a letter.
+     */
+    shortname?: string | null;
+    /**
+     * A comma-separated list of allowable destinations of instances that              can be attached to this project. For example, a project may only allow              'brics.aip1.*', meaning that only instances that start with 'brics.aip1.'              can be attached to this project.
+     */
+    allowed_destinations?: string | null;
+};
+
 export type PatchedProjectRequest = {
     name?: string;
     slug?: string;
@@ -9911,6 +10045,40 @@ export type PatchedProjectServiceAccountRequest = {
     email?: string;
     preferred_identifier?: string;
     project?: string;
+};
+
+export type PatchedProjectTemplateRequest = {
+    name?: string;
+    /**
+     * The offering for which this template applies.
+     */
+    offering?: string | null;
+    provider?: string;
+    portal?: string;
+    /**
+     * The key that is used to authenticate requests for this class.
+     */
+    key?: string | null;
+    customer?: string;
+    shortname?: string | null;
+    offerings?: Array<string>;
+    /**
+     * The credit limit beyond which requests need to be approved by a local admin. If this is None, then no local approval is required. If this is set to 0, then all requests (including creating the project) need to be approved.
+     */
+    approval_limit?: string | null;
+    /**
+     * Maximum credit limit
+     * The maximum credit limit for any projects created in this class. Any requests beyond this limit are automatically rejected. If this is None, then no maximum limit is set. If this is set to 0, then no projects can be created in this class.
+     */
+    max_credit_limit?: string | null;
+    /**
+     * The mapping of credits to allocation units, i.e. how many allocation units to award per credit allocated.
+     */
+    allocation_units_mapping?: unknown;
+    /**
+     * The mapping of role names from the remote portal to role information in this portal for users in projects created in this class.
+     */
+    role_mapping?: unknown;
 };
 
 export type PatchedProposalProjectRoleMappingRequest = {
@@ -10153,6 +10321,16 @@ export type PatchedRancherWorkloadRequest = {
     scale?: number;
 };
 
+export type PatchedRemoteAllocationRequest = {
+    name?: string;
+    description?: string;
+    node_limit?: number;
+    /**
+     * The identifier of the project in the remote OpenPortal instance.
+     */
+    remote_project_identifier?: string | null;
+};
+
 export type PatchedRemoteSynchronisationRequest = {
     api_url?: string;
     token?: string;
@@ -10382,6 +10560,14 @@ export type PatchedTemplateRequest = {
 export type PatchedUserAgreementRequest = {
     content?: string;
     agreement_type?: AgreementTypeEnum;
+};
+
+export type PatchedUserInfoRequest = {
+    /**
+     * A short, unique name for you. It will be used to form your local username on any systems. Should only contain lower-case letters and digits and must start with a letter.
+     */
+    shortname?: string | null;
+    user?: string;
 };
 
 export type PatchedUserOfferingConsentRequest = {
@@ -10763,6 +10949,13 @@ export type ProjectAnswer = {
     readonly unanswered_required_count: number;
 };
 
+export type ProjectAttachRequest = {
+    /**
+     * UUID of the project to attach to this managed project
+     */
+    project_uuid: string;
+};
+
 export type ProjectCredit = {
     readonly uuid: string;
     readonly url: string;
@@ -10855,6 +11048,30 @@ export type ProjectEstimatedCostPolicyRequest = {
 
 export type ProjectHyperlinkRequest = {
     url: string;
+};
+
+export type ProjectInfo = {
+    project: string;
+    /**
+     * A short, unique name for the project. It will be used to form the local username of any users in the project on any systems. Should only contain lower-case letters and digits and must start with a letter.
+     */
+    shortname?: string | null;
+    /**
+     * A comma-separated list of allowable destinations of instances that              can be attached to this project. For example, a project may only allow              'brics.aip1.*', meaning that only instances that start with 'brics.aip1.'              can be attached to this project.
+     */
+    allowed_destinations?: string | null;
+};
+
+export type ProjectInfoRequest = {
+    project: string;
+    /**
+     * A short, unique name for the project. It will be used to form the local username of any users in the project on any systems. Should only contain lower-case letters and digits and must start with a letter.
+     */
+    shortname?: string | null;
+    /**
+     * A comma-separated list of allowable destinations of instances that              can be attached to this project. For example, a project may only allow              'brics.aip1.*', meaning that only instances that start with 'brics.aip1.'              can be attached to this project.
+     */
+    allowed_destinations?: string | null;
 };
 
 export type ProjectPermissionLog = {
@@ -10981,6 +11198,86 @@ export type ProjectServiceAccountRequest = {
     email?: string;
     preferred_identifier?: string;
     project: string;
+};
+
+export type ProjectTemplate = {
+    readonly uuid: string;
+    name: string;
+    /**
+     * The offering for which this template applies.
+     */
+    offering: string | null;
+    provider: string;
+    provider_data: Customer;
+    portal: string;
+    /**
+     * The key that is used to authenticate requests for this class.
+     */
+    key?: string | null;
+    customer: string;
+    customer_data: Customer;
+    shortname?: string | null;
+    offerings: Array<string>;
+    readonly offerings_data: Array<ProviderOfferingDetails>;
+    /**
+     * The credit limit beyond which requests need to be approved by a local admin. If this is None, then no local approval is required. If this is set to 0, then all requests (including creating the project) need to be approved.
+     */
+    approval_limit?: string | null;
+    /**
+     * Maximum credit limit
+     * The maximum credit limit for any projects created in this class. Any requests beyond this limit are automatically rejected. If this is None, then no maximum limit is set. If this is set to 0, then no projects can be created in this class.
+     */
+    max_credit_limit?: string | null;
+    /**
+     * The mapping of credits to allocation units, i.e. how many allocation units to award per credit allocated.
+     */
+    allocation_units_mapping?: unknown;
+    /**
+     * The mapping of role names from the remote portal to role information in this portal for users in projects created in this class.
+     */
+    role_mapping?: unknown;
+    /**
+     * Serialize the role mapping dictionary returned by get_role_mapping()
+     */
+    readonly role_mapping_data: {
+        [key: string]: {
+            [key: string]: string;
+        };
+    };
+};
+
+export type ProjectTemplateRequest = {
+    name: string;
+    /**
+     * The offering for which this template applies.
+     */
+    offering: string | null;
+    provider: string;
+    portal: string;
+    /**
+     * The key that is used to authenticate requests for this class.
+     */
+    key?: string | null;
+    customer: string;
+    shortname?: string | null;
+    offerings: Array<string>;
+    /**
+     * The credit limit beyond which requests need to be approved by a local admin. If this is None, then no local approval is required. If this is set to 0, then all requests (including creating the project) need to be approved.
+     */
+    approval_limit?: string | null;
+    /**
+     * Maximum credit limit
+     * The maximum credit limit for any projects created in this class. Any requests beyond this limit are automatically rejected. If this is None, then no maximum limit is set. If this is set to 0, then no projects can be created in this class.
+     */
+    max_credit_limit?: string | null;
+    /**
+     * The mapping of credits to allocation units, i.e. how many allocation units to award per credit allocated.
+     */
+    allocation_units_mapping?: unknown;
+    /**
+     * The mapping of role names from the remote portal to role information in this portal for users in projects created in this class.
+     */
+    role_mapping?: unknown;
 };
 
 export type ProjectType = {
@@ -11455,6 +11752,44 @@ export type ProviderOfferingDetails = {
      * Get the Google Calendar link for an offering.
      */
     readonly google_calendar_link?: string | null;
+};
+
+export type ProviderOfferingDetailsRequest = {
+    name: string;
+    slug?: string;
+    description?: string;
+    full_description?: string;
+    privacy_policy_link?: string;
+    /**
+     * Publicly accessible offering access URL
+     */
+    access_url?: string;
+    customer?: string | null;
+    category: string;
+    attributes?: unknown;
+    components?: Array<OfferingComponentRequest>;
+    vendor_details?: string;
+    getting_started?: string;
+    integration_guide?: string;
+    thumbnail?: (Blob | File) | null;
+    plans?: Array<BaseProviderPlanRequest>;
+    type: string;
+    /**
+     * Accessible to all customers.
+     */
+    shared?: boolean;
+    /**
+     * Purchase and usage is invoiced.
+     */
+    billable?: boolean;
+    datacite_doi?: string;
+    latitude?: number | null;
+    longitude?: number | null;
+    country?: CountryEnum | BlankEnum;
+    backend_id?: string;
+    image?: (Blob | File) | null;
+    backend_metadata?: unknown;
+    compliance_checklist?: string | null;
 };
 
 export type ProviderPlanDetails = {
@@ -12903,6 +13238,78 @@ export type ReferenceNumberRequest = {
      * Reference number associated with the invoice.
      */
     reference_number?: string;
+};
+
+export type RemoteAllocation = {
+    readonly url?: string;
+    readonly uuid?: string;
+    name?: string;
+    description?: string;
+    readonly service_name?: string;
+    service_settings?: string;
+    readonly service_settings_uuid?: string;
+    readonly service_settings_state?: string;
+    readonly service_settings_error_message?: string;
+    project?: string;
+    readonly project_name?: string;
+    readonly project_uuid?: string;
+    readonly customer?: string;
+    readonly customer_uuid?: string;
+    readonly customer_name?: string;
+    readonly customer_native_name?: string;
+    readonly customer_abbreviation?: string;
+    readonly error_message?: string;
+    readonly error_traceback?: string;
+    readonly resource_type?: string;
+    state?: CoreStates;
+    readonly created?: string;
+    readonly modified?: string;
+    readonly backend_id?: string;
+    readonly access_url?: string | null;
+    node_limit?: number;
+    /**
+     * The identifier of the project in the remote OpenPortal instance.
+     */
+    remote_project_identifier?: string | null;
+    readonly node_usage?: string;
+    readonly is_active?: boolean;
+    readonly marketplace_offering_uuid?: string | null;
+    readonly marketplace_offering_name?: string | null;
+    readonly marketplace_offering_plugin_options?: {
+        [key: string]: unknown;
+    } | null;
+    readonly marketplace_category_uuid?: string | null;
+    readonly marketplace_category_name?: string | null;
+    readonly marketplace_resource_uuid?: string | null;
+    readonly marketplace_plan_uuid?: string | null;
+    readonly marketplace_resource_state?: string | null;
+    readonly is_usage_based?: boolean | null;
+    readonly is_limit_based?: boolean | null;
+};
+
+export type RemoteAllocationRequest = {
+    name: string;
+    description?: string;
+    service_settings: string;
+    project: string;
+    node_limit?: number;
+    /**
+     * The identifier of the project in the remote OpenPortal instance.
+     */
+    remote_project_identifier?: string | null;
+};
+
+export type RemoteAllocationSetLimits = {
+    node_limit: number;
+};
+
+export type RemoteAllocationSetLimitsRequest = {
+    node_limit: number;
+};
+
+export type RemoteAssociation = {
+    readonly uuid: string;
+    allocation: string;
 };
 
 export type RemoteCredentialsRequest = {
@@ -14717,6 +15124,22 @@ export type UserEmailChangeRequest = {
     email: string;
 };
 
+export type UserInfo = {
+    /**
+     * A short, unique name for you. It will be used to form your local username on any systems. Should only contain lower-case letters and digits and must start with a letter.
+     */
+    shortname?: string | null;
+    user: string;
+};
+
+export type UserInfoRequest = {
+    /**
+     * A short, unique name for you. It will be used to form your local username on any systems. Should only contain lower-case letters and digits and must start with a letter.
+     */
+    shortname?: string | null;
+    user: string;
+};
+
 export type UserOfferingConsent = {
     readonly uuid: string;
     readonly user_uuid: string;
@@ -15298,6 +15721,16 @@ export type AzureSqlServerCreateOrderAttributes = {
     name: string;
     description?: string;
     location: string;
+};
+
+export type MarketplaceOpenPortalCreateOrderAttributes = {
+    name: string;
+    description?: string;
+};
+
+export type MarketplaceOpenPortalRemoteCreateOrderAttributes = {
+    name: string;
+    description?: string;
 };
 
 export type OpenStackTenantCreateOrderAttributes = {
@@ -16055,6 +16488,122 @@ export type OnboardingJustificationDocumentationRequestMultipart = {
     file?: (Blob | File) | null;
 };
 
+export type ProjectRequestForm = {
+    name: string;
+    slug?: string;
+    /**
+     * Organization
+     */
+    customer: string;
+    description?: string;
+    /**
+     * Project type
+     */
+    type?: string | null;
+    backend_id?: string;
+    start_date?: string | null;
+    end_date?: string | null;
+    oecd_fos_2007_code?: OecdFos2007CodeEnum | BlankEnum | NullEnum | null;
+    is_industry?: boolean;
+    image?: (Blob | File) | null;
+    /**
+     * Project type
+     */
+    kind?: KindEnum;
+    staff_notes?: string;
+    /**
+     * Number of extra days after project end date before resources are terminated. Overrides customer-level setting.
+     */
+    grace_period_days?: number | null;
+};
+
+export type ProjectRequestMultipart = {
+    name: string;
+    slug?: string;
+    /**
+     * Organization
+     */
+    customer: string;
+    description?: string;
+    /**
+     * Project type
+     */
+    type?: string | null;
+    backend_id?: string;
+    start_date?: string | null;
+    end_date?: string | null;
+    oecd_fos_2007_code?: OecdFos2007CodeEnum | BlankEnum | NullEnum | null;
+    is_industry?: boolean;
+    image?: (Blob | File) | null;
+    /**
+     * Project type
+     */
+    kind?: KindEnum;
+    staff_notes?: string;
+    /**
+     * Number of extra days after project end date before resources are terminated. Overrides customer-level setting.
+     */
+    grace_period_days?: number | null;
+};
+
+export type PatchedProjectRequestForm = {
+    name?: string;
+    slug?: string;
+    /**
+     * Organization
+     */
+    customer?: string;
+    description?: string;
+    /**
+     * Project type
+     */
+    type?: string | null;
+    backend_id?: string;
+    start_date?: string | null;
+    end_date?: string | null;
+    oecd_fos_2007_code?: OecdFos2007CodeEnum | BlankEnum | NullEnum | null;
+    is_industry?: boolean;
+    image?: (Blob | File) | null;
+    /**
+     * Project type
+     */
+    kind?: KindEnum;
+    staff_notes?: string;
+    /**
+     * Number of extra days after project end date before resources are terminated. Overrides customer-level setting.
+     */
+    grace_period_days?: number | null;
+};
+
+export type PatchedProjectRequestMultipart = {
+    name?: string;
+    slug?: string;
+    /**
+     * Organization
+     */
+    customer?: string;
+    description?: string;
+    /**
+     * Project type
+     */
+    type?: string | null;
+    backend_id?: string;
+    start_date?: string | null;
+    end_date?: string | null;
+    oecd_fos_2007_code?: OecdFos2007CodeEnum | BlankEnum | NullEnum | null;
+    is_industry?: boolean;
+    image?: (Blob | File) | null;
+    /**
+     * Project type
+     */
+    kind?: KindEnum;
+    staff_notes?: string;
+    /**
+     * Number of extra days after project end date before resources are terminated. Overrides customer-level setting.
+     */
+    grace_period_days?: number | null;
+};
+
 export type ConstanceSettingsRequestForm = {
     SITE_NAME?: string;
     SITE_DESCRIPTION?: string;
@@ -16393,122 +16942,6 @@ export type PatchedPaymentRequestMultipart = {
     date_of_payment?: string;
     sum?: string;
     proof?: (Blob | File) | null;
-};
-
-export type ProjectRequestForm = {
-    name: string;
-    slug?: string;
-    /**
-     * Organization
-     */
-    customer: string;
-    description?: string;
-    /**
-     * Project type
-     */
-    type?: string | null;
-    backend_id?: string;
-    start_date?: string | null;
-    end_date?: string | null;
-    oecd_fos_2007_code?: OecdFos2007CodeEnum | BlankEnum | NullEnum | null;
-    is_industry?: boolean;
-    image?: (Blob | File) | null;
-    /**
-     * Project type
-     */
-    kind?: KindEnum;
-    staff_notes?: string;
-    /**
-     * Number of extra days after project end date before resources are terminated. Overrides customer-level setting.
-     */
-    grace_period_days?: number | null;
-};
-
-export type ProjectRequestMultipart = {
-    name: string;
-    slug?: string;
-    /**
-     * Organization
-     */
-    customer: string;
-    description?: string;
-    /**
-     * Project type
-     */
-    type?: string | null;
-    backend_id?: string;
-    start_date?: string | null;
-    end_date?: string | null;
-    oecd_fos_2007_code?: OecdFos2007CodeEnum | BlankEnum | NullEnum | null;
-    is_industry?: boolean;
-    image?: (Blob | File) | null;
-    /**
-     * Project type
-     */
-    kind?: KindEnum;
-    staff_notes?: string;
-    /**
-     * Number of extra days after project end date before resources are terminated. Overrides customer-level setting.
-     */
-    grace_period_days?: number | null;
-};
-
-export type PatchedProjectRequestForm = {
-    name?: string;
-    slug?: string;
-    /**
-     * Organization
-     */
-    customer?: string;
-    description?: string;
-    /**
-     * Project type
-     */
-    type?: string | null;
-    backend_id?: string;
-    start_date?: string | null;
-    end_date?: string | null;
-    oecd_fos_2007_code?: OecdFos2007CodeEnum | BlankEnum | NullEnum | null;
-    is_industry?: boolean;
-    image?: (Blob | File) | null;
-    /**
-     * Project type
-     */
-    kind?: KindEnum;
-    staff_notes?: string;
-    /**
-     * Number of extra days after project end date before resources are terminated. Overrides customer-level setting.
-     */
-    grace_period_days?: number | null;
-};
-
-export type PatchedProjectRequestMultipart = {
-    name?: string;
-    slug?: string;
-    /**
-     * Organization
-     */
-    customer?: string;
-    description?: string;
-    /**
-     * Project type
-     */
-    type?: string | null;
-    backend_id?: string;
-    start_date?: string | null;
-    end_date?: string | null;
-    oecd_fos_2007_code?: OecdFos2007CodeEnum | BlankEnum | NullEnum | null;
-    is_industry?: boolean;
-    image?: (Blob | File) | null;
-    /**
-     * Project type
-     */
-    kind?: KindEnum;
-    staff_notes?: string;
-    /**
-     * Number of extra days after project end date before resources are terminated. Overrides customer-level setting.
-     */
-    grace_period_days?: number | null;
 };
 
 export type ProposalDocumentationRequestForm = {
@@ -39721,6 +40154,1850 @@ export type OnboardingSupportedCountriesRetrieveResponses = {
 };
 
 export type OnboardingSupportedCountriesRetrieveResponse = OnboardingSupportedCountriesRetrieveResponses[keyof OnboardingSupportedCountriesRetrieveResponses];
+
+export type OpenportalAllocationUserUsageListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        allocation?: string;
+        allocation_uuid?: string;
+        month?: number;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        user?: string;
+        user_uuid?: string;
+        year?: number;
+    };
+    url: '/api/openportal-allocation-user-usage/';
+};
+
+export type OpenportalAllocationUserUsageListResponses = {
+    200: Array<AllocationUserUsage>;
+};
+
+export type OpenportalAllocationUserUsageListResponse = OpenportalAllocationUserUsageListResponses[keyof OpenportalAllocationUserUsageListResponses];
+
+export type OpenportalAllocationUserUsageCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        allocation?: string;
+        allocation_uuid?: string;
+        month?: number;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        user?: string;
+        user_uuid?: string;
+        year?: number;
+    };
+    url: '/api/openportal-allocation-user-usage/';
+};
+
+export type OpenportalAllocationUserUsageCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type OpenportalAllocationUserUsageRetrieveData = {
+    body?: never;
+    path: {
+        /**
+         * A unique integer value identifying this allocation user usage.
+         */
+        id: number;
+    };
+    query?: never;
+    url: '/api/openportal-allocation-user-usage/{id}/';
+};
+
+export type OpenportalAllocationUserUsageRetrieveResponses = {
+    200: AllocationUserUsage;
+};
+
+export type OpenportalAllocationUserUsageRetrieveResponse = OpenportalAllocationUserUsageRetrieveResponses[keyof OpenportalAllocationUserUsageRetrieveResponses];
+
+export type OpenportalAllocationsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        backend_id?: string;
+        /**
+         * Can manage
+         */
+        can_manage?: boolean;
+        customer?: string;
+        customer_abbreviation?: string;
+        customer_name?: string;
+        customer_native_name?: string;
+        customer_uuid?: string;
+        description?: string;
+        external_ip?: string;
+        field?: Array<'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'groupname' | 'is_active' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'node_limit' | 'node_usage' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'url' | 'uuid'>;
+        is_active?: boolean;
+        name?: string;
+        name_exact?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        project?: string;
+        project_name?: string;
+        project_uuid?: string;
+        service_settings_name?: string;
+        service_settings_uuid?: string;
+        state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        uuid?: string;
+    };
+    url: '/api/openportal-allocations/';
+};
+
+export type OpenportalAllocationsListResponses = {
+    200: Array<Allocation>;
+};
+
+export type OpenportalAllocationsListResponse = OpenportalAllocationsListResponses[keyof OpenportalAllocationsListResponses];
+
+export type OpenportalAllocationsCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        backend_id?: string;
+        /**
+         * Can manage
+         */
+        can_manage?: boolean;
+        customer?: string;
+        customer_abbreviation?: string;
+        customer_name?: string;
+        customer_native_name?: string;
+        customer_uuid?: string;
+        description?: string;
+        external_ip?: string;
+        is_active?: boolean;
+        name?: string;
+        name_exact?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        project?: string;
+        project_name?: string;
+        project_uuid?: string;
+        service_settings_name?: string;
+        service_settings_uuid?: string;
+        state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        uuid?: string;
+    };
+    url: '/api/openportal-allocations/';
+};
+
+export type OpenportalAllocationsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type OpenportalAllocationsCreateData = {
+    body: AllocationRequest;
+    path?: never;
+    query?: never;
+    url: '/api/openportal-allocations/';
+};
+
+export type OpenportalAllocationsCreateResponses = {
+    201: Allocation;
+};
+
+export type OpenportalAllocationsCreateResponse = OpenportalAllocationsCreateResponses[keyof OpenportalAllocationsCreateResponses];
+
+export type OpenportalAllocationsDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openportal-allocations/{uuid}/';
+};
+
+export type OpenportalAllocationsDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type OpenportalAllocationsDestroyResponse = OpenportalAllocationsDestroyResponses[keyof OpenportalAllocationsDestroyResponses];
+
+export type OpenportalAllocationsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        field?: Array<'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'groupname' | 'is_active' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'node_limit' | 'node_usage' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'url' | 'uuid'>;
+    };
+    url: '/api/openportal-allocations/{uuid}/';
+};
+
+export type OpenportalAllocationsRetrieveResponses = {
+    200: Allocation;
+};
+
+export type OpenportalAllocationsRetrieveResponse = OpenportalAllocationsRetrieveResponses[keyof OpenportalAllocationsRetrieveResponses];
+
+export type OpenportalAllocationsPartialUpdateData = {
+    body?: PatchedAllocationRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openportal-allocations/{uuid}/';
+};
+
+export type OpenportalAllocationsPartialUpdateResponses = {
+    200: Allocation;
+};
+
+export type OpenportalAllocationsPartialUpdateResponse = OpenportalAllocationsPartialUpdateResponses[keyof OpenportalAllocationsPartialUpdateResponses];
+
+export type OpenportalAllocationsUpdateData = {
+    body: AllocationRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openportal-allocations/{uuid}/';
+};
+
+export type OpenportalAllocationsUpdateResponses = {
+    200: Allocation;
+};
+
+export type OpenportalAllocationsUpdateResponse = OpenportalAllocationsUpdateResponses[keyof OpenportalAllocationsUpdateResponses];
+
+export type OpenportalAllocationsPullData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openportal-allocations/{uuid}/pull/';
+};
+
+export type OpenportalAllocationsPullResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type OpenportalAllocationsSetLimitsData = {
+    body: AllocationSetLimitsRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openportal-allocations/{uuid}/set_limits/';
+};
+
+export type OpenportalAllocationsSetLimitsResponses = {
+    200: AllocationSetLimits;
+};
+
+export type OpenportalAllocationsSetLimitsResponse = OpenportalAllocationsSetLimitsResponses[keyof OpenportalAllocationsSetLimitsResponses];
+
+export type OpenportalAllocationsUnlinkData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openportal-allocations/{uuid}/unlink/';
+};
+
+export type OpenportalAllocationsUnlinkResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type OpenportalAssociationsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        allocation?: string;
+        allocation_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/openportal-associations/';
+};
+
+export type OpenportalAssociationsListResponses = {
+    200: Array<Association>;
+};
+
+export type OpenportalAssociationsListResponse = OpenportalAssociationsListResponses[keyof OpenportalAssociationsListResponses];
+
+export type OpenportalAssociationsCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        allocation?: string;
+        allocation_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/openportal-associations/';
+};
+
+export type OpenportalAssociationsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type OpenportalAssociationsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openportal-associations/{uuid}/';
+};
+
+export type OpenportalAssociationsRetrieveResponses = {
+    200: Association;
+};
+
+export type OpenportalAssociationsRetrieveResponse = OpenportalAssociationsRetrieveResponses[keyof OpenportalAssociationsRetrieveResponses];
+
+export type OpenportalManagedProjectsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        identifier?: string;
+        local_identifier?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        project?: string;
+        project_template?: string;
+        project_template_uuid?: string;
+        project_uuid?: string;
+        state?: Array<'approved' | 'canceled' | 'draft' | 'pending' | 'rejected'>;
+    };
+    url: '/api/openportal-managed-projects/';
+};
+
+export type OpenportalManagedProjectsListResponses = {
+    200: Array<ManagedProject>;
+};
+
+export type OpenportalManagedProjectsListResponse = OpenportalManagedProjectsListResponses[keyof OpenportalManagedProjectsListResponses];
+
+export type OpenportalManagedProjectsCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        identifier?: string;
+        local_identifier?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        project?: string;
+        project_template?: string;
+        project_template_uuid?: string;
+        project_uuid?: string;
+        state?: Array<'approved' | 'canceled' | 'draft' | 'pending' | 'rejected'>;
+    };
+    url: '/api/openportal-managed-projects/';
+};
+
+export type OpenportalManagedProjectsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type OpenportalManagedProjectsRetrieveGetData = {
+    body?: never;
+    path: {
+        /**
+         * The destination of the managed project
+         */
+        destination: string;
+        /**
+         * The identifier of the managed project
+         */
+        identifier: string;
+    };
+    query?: never;
+    url: '/api/openportal-managed-projects/{identifier}/{destination}/';
+};
+
+export type OpenportalManagedProjectsRetrieveGetResponses = {
+    200: ManagedProject;
+};
+
+export type OpenportalManagedProjectsRetrieveGetResponse = OpenportalManagedProjectsRetrieveGetResponses[keyof OpenportalManagedProjectsRetrieveGetResponses];
+
+export type OpenportalManagedProjectsRetrieveHeadData = {
+    body?: never;
+    path: {
+        /**
+         * The destination of the managed project
+         */
+        destination: string;
+        /**
+         * The identifier of the managed project
+         */
+        identifier: string;
+    };
+    query?: never;
+    url: '/api/openportal-managed-projects/{identifier}/{destination}/';
+};
+
+export type OpenportalManagedProjectsRetrieveHeadResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type OpenportalManagedProjectsApproveData = {
+    body?: ReviewCommentRequest;
+    path: {
+        /**
+         * The destination of the managed project
+         */
+        destination: string;
+        /**
+         * The identifier of the managed project
+         */
+        identifier: string;
+    };
+    query?: never;
+    url: '/api/openportal-managed-projects/{identifier}/{destination}/approve/';
+};
+
+export type OpenportalManagedProjectsApproveResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type OpenportalManagedProjectsAttachData = {
+    body: ProjectAttachRequest;
+    path: {
+        /**
+         * The destination of the managed project
+         */
+        destination: string;
+        /**
+         * The identifier of the managed project
+         */
+        identifier: string;
+    };
+    query?: never;
+    url: '/api/openportal-managed-projects/{identifier}/{destination}/attach/';
+};
+
+export type OpenportalManagedProjectsAttachResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type OpenportalManagedProjectsDeleteDestroyData = {
+    body?: never;
+    path: {
+        /**
+         * The destination of the managed project
+         */
+        destination: string;
+        /**
+         * The identifier of the managed project
+         */
+        identifier: string;
+    };
+    query?: never;
+    url: '/api/openportal-managed-projects/{identifier}/{destination}/delete/';
+};
+
+export type OpenportalManagedProjectsDeleteDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type OpenportalManagedProjectsDeleteDestroyResponse = OpenportalManagedProjectsDeleteDestroyResponses[keyof OpenportalManagedProjectsDeleteDestroyResponses];
+
+export type OpenportalManagedProjectsDetachData = {
+    body?: never;
+    path: {
+        /**
+         * The destination of the managed project
+         */
+        destination: string;
+        /**
+         * The identifier of the managed project
+         */
+        identifier: string;
+    };
+    query?: never;
+    url: '/api/openportal-managed-projects/{identifier}/{destination}/detach/';
+};
+
+export type OpenportalManagedProjectsDetachResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type OpenportalManagedProjectsRejectData = {
+    body?: ReviewCommentRequest;
+    path: {
+        /**
+         * The destination of the managed project
+         */
+        destination: string;
+        /**
+         * The identifier of the managed project
+         */
+        identifier: string;
+    };
+    query?: never;
+    url: '/api/openportal-managed-projects/{identifier}/{destination}/reject/';
+};
+
+export type OpenportalManagedProjectsRejectResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type OpenportalProjectTemplateListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        name?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        portal?: string;
+        uuid?: string;
+    };
+    url: '/api/openportal-project-template/';
+};
+
+export type OpenportalProjectTemplateListResponses = {
+    200: Array<ProjectTemplate>;
+};
+
+export type OpenportalProjectTemplateListResponse = OpenportalProjectTemplateListResponses[keyof OpenportalProjectTemplateListResponses];
+
+export type OpenportalProjectTemplateCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        name?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        portal?: string;
+        uuid?: string;
+    };
+    url: '/api/openportal-project-template/';
+};
+
+export type OpenportalProjectTemplateCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type OpenportalProjectTemplateCreateData = {
+    body: ProjectTemplateRequest;
+    path?: never;
+    query?: never;
+    url: '/api/openportal-project-template/';
+};
+
+export type OpenportalProjectTemplateCreateResponses = {
+    201: ProjectTemplate;
+};
+
+export type OpenportalProjectTemplateCreateResponse = OpenportalProjectTemplateCreateResponses[keyof OpenportalProjectTemplateCreateResponses];
+
+export type OpenportalProjectTemplateDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openportal-project-template/{uuid}/';
+};
+
+export type OpenportalProjectTemplateDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type OpenportalProjectTemplateDestroyResponse = OpenportalProjectTemplateDestroyResponses[keyof OpenportalProjectTemplateDestroyResponses];
+
+export type OpenportalProjectTemplateRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openportal-project-template/{uuid}/';
+};
+
+export type OpenportalProjectTemplateRetrieveResponses = {
+    200: ProjectTemplate;
+};
+
+export type OpenportalProjectTemplateRetrieveResponse = OpenportalProjectTemplateRetrieveResponses[keyof OpenportalProjectTemplateRetrieveResponses];
+
+export type OpenportalProjectTemplatePartialUpdateData = {
+    body?: PatchedProjectTemplateRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openportal-project-template/{uuid}/';
+};
+
+export type OpenportalProjectTemplatePartialUpdateResponses = {
+    200: ProjectTemplate;
+};
+
+export type OpenportalProjectTemplatePartialUpdateResponse = OpenportalProjectTemplatePartialUpdateResponses[keyof OpenportalProjectTemplatePartialUpdateResponses];
+
+export type OpenportalProjectTemplateUpdateData = {
+    body: ProjectTemplateRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openportal-project-template/{uuid}/';
+};
+
+export type OpenportalProjectTemplateUpdateResponses = {
+    200: ProjectTemplate;
+};
+
+export type OpenportalProjectTemplateUpdateResponse = OpenportalProjectTemplateUpdateResponses[keyof OpenportalProjectTemplateUpdateResponses];
+
+export type OpenportalProjectTemplateDeleteDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openportal-project-template/{uuid}/delete/';
+};
+
+export type OpenportalProjectTemplateDeleteDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type OpenportalProjectTemplateDeleteDestroyResponse = OpenportalProjectTemplateDeleteDestroyResponses[keyof OpenportalProjectTemplateDeleteDestroyResponses];
+
+export type OpenportalProjectinfoListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        project?: string;
+        project_uuid?: string;
+    };
+    url: '/api/openportal-projectinfo/';
+};
+
+export type OpenportalProjectinfoListResponses = {
+    200: Array<ProjectInfo>;
+};
+
+export type OpenportalProjectinfoListResponse = OpenportalProjectinfoListResponses[keyof OpenportalProjectinfoListResponses];
+
+export type OpenportalProjectinfoCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        project?: string;
+        project_uuid?: string;
+    };
+    url: '/api/openportal-projectinfo/';
+};
+
+export type OpenportalProjectinfoCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type OpenportalProjectinfoCreateData = {
+    body: ProjectInfoRequest;
+    path?: never;
+    query?: never;
+    url: '/api/openportal-projectinfo/';
+};
+
+export type OpenportalProjectinfoCreateResponses = {
+    201: ProjectInfo;
+};
+
+export type OpenportalProjectinfoCreateResponse = OpenportalProjectinfoCreateResponses[keyof OpenportalProjectinfoCreateResponses];
+
+export type OpenportalProjectinfoDestroyData = {
+    body?: never;
+    path: {
+        project: number;
+    };
+    query?: never;
+    url: '/api/openportal-projectinfo/{project}/';
+};
+
+export type OpenportalProjectinfoDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type OpenportalProjectinfoDestroyResponse = OpenportalProjectinfoDestroyResponses[keyof OpenportalProjectinfoDestroyResponses];
+
+export type OpenportalProjectinfoRetrieveData = {
+    body?: never;
+    path: {
+        project: number;
+    };
+    query?: never;
+    url: '/api/openportal-projectinfo/{project}/';
+};
+
+export type OpenportalProjectinfoRetrieveResponses = {
+    200: ProjectInfo;
+};
+
+export type OpenportalProjectinfoRetrieveResponse = OpenportalProjectinfoRetrieveResponses[keyof OpenportalProjectinfoRetrieveResponses];
+
+export type OpenportalProjectinfoPartialUpdateData = {
+    body?: PatchedProjectInfoRequest;
+    path: {
+        project: number;
+    };
+    query?: never;
+    url: '/api/openportal-projectinfo/{project}/';
+};
+
+export type OpenportalProjectinfoPartialUpdateResponses = {
+    200: ProjectInfo;
+};
+
+export type OpenportalProjectinfoPartialUpdateResponse = OpenportalProjectinfoPartialUpdateResponses[keyof OpenportalProjectinfoPartialUpdateResponses];
+
+export type OpenportalProjectinfoUpdateData = {
+    body: ProjectInfoRequest;
+    path: {
+        project: number;
+    };
+    query?: never;
+    url: '/api/openportal-projectinfo/{project}/';
+};
+
+export type OpenportalProjectinfoUpdateResponses = {
+    200: ProjectInfo;
+};
+
+export type OpenportalProjectinfoUpdateResponse = OpenportalProjectinfoUpdateResponses[keyof OpenportalProjectinfoUpdateResponses];
+
+export type OpenportalProjectinfoSetAllowedDestinationsUpdateData = {
+    body: ProjectInfoRequest;
+    path: {
+        project: number;
+    };
+    query?: never;
+    url: '/api/openportal-projectinfo/{project}/set_allowed_destinations/';
+};
+
+export type OpenportalProjectinfoSetAllowedDestinationsUpdateResponses = {
+    200: ProjectInfo;
+};
+
+export type OpenportalProjectinfoSetAllowedDestinationsUpdateResponse = OpenportalProjectinfoSetAllowedDestinationsUpdateResponses[keyof OpenportalProjectinfoSetAllowedDestinationsUpdateResponses];
+
+export type OpenportalProjectinfoSetShortnameUpdateData = {
+    body: ProjectInfoRequest;
+    path: {
+        project: number;
+    };
+    query?: never;
+    url: '/api/openportal-projectinfo/{project}/set_shortname/';
+};
+
+export type OpenportalProjectinfoSetShortnameUpdateResponses = {
+    200: ProjectInfo;
+};
+
+export type OpenportalProjectinfoSetShortnameUpdateResponse = OpenportalProjectinfoSetShortnameUpdateResponses[keyof OpenportalProjectinfoSetShortnameUpdateResponses];
+
+export type OpenportalRemoteAllocationsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        backend_id?: string;
+        /**
+         * Can manage
+         */
+        can_manage?: boolean;
+        customer?: string;
+        customer_abbreviation?: string;
+        customer_name?: string;
+        customer_native_name?: string;
+        customer_uuid?: string;
+        description?: string;
+        external_ip?: string;
+        field?: Array<'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'is_active' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'node_limit' | 'node_usage' | 'project' | 'project_name' | 'project_uuid' | 'remote_project_identifier' | 'resource_type' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'url' | 'uuid'>;
+        is_active?: boolean;
+        name?: string;
+        name_exact?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        project?: string;
+        project_name?: string;
+        project_uuid?: string;
+        service_settings_name?: string;
+        service_settings_uuid?: string;
+        state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        uuid?: string;
+    };
+    url: '/api/openportal-remote-allocations/';
+};
+
+export type OpenportalRemoteAllocationsListResponses = {
+    200: Array<RemoteAllocation>;
+};
+
+export type OpenportalRemoteAllocationsListResponse = OpenportalRemoteAllocationsListResponses[keyof OpenportalRemoteAllocationsListResponses];
+
+export type OpenportalRemoteAllocationsCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        backend_id?: string;
+        /**
+         * Can manage
+         */
+        can_manage?: boolean;
+        customer?: string;
+        customer_abbreviation?: string;
+        customer_name?: string;
+        customer_native_name?: string;
+        customer_uuid?: string;
+        description?: string;
+        external_ip?: string;
+        is_active?: boolean;
+        name?: string;
+        name_exact?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        project?: string;
+        project_name?: string;
+        project_uuid?: string;
+        service_settings_name?: string;
+        service_settings_uuid?: string;
+        state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        uuid?: string;
+    };
+    url: '/api/openportal-remote-allocations/';
+};
+
+export type OpenportalRemoteAllocationsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type OpenportalRemoteAllocationsCreateData = {
+    body: RemoteAllocationRequest;
+    path?: never;
+    query?: never;
+    url: '/api/openportal-remote-allocations/';
+};
+
+export type OpenportalRemoteAllocationsCreateResponses = {
+    201: RemoteAllocation;
+};
+
+export type OpenportalRemoteAllocationsCreateResponse = OpenportalRemoteAllocationsCreateResponses[keyof OpenportalRemoteAllocationsCreateResponses];
+
+export type OpenportalRemoteAllocationsDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openportal-remote-allocations/{uuid}/';
+};
+
+export type OpenportalRemoteAllocationsDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type OpenportalRemoteAllocationsDestroyResponse = OpenportalRemoteAllocationsDestroyResponses[keyof OpenportalRemoteAllocationsDestroyResponses];
+
+export type OpenportalRemoteAllocationsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        field?: Array<'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'is_active' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'node_limit' | 'node_usage' | 'project' | 'project_name' | 'project_uuid' | 'remote_project_identifier' | 'resource_type' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'url' | 'uuid'>;
+    };
+    url: '/api/openportal-remote-allocations/{uuid}/';
+};
+
+export type OpenportalRemoteAllocationsRetrieveResponses = {
+    200: RemoteAllocation;
+};
+
+export type OpenportalRemoteAllocationsRetrieveResponse = OpenportalRemoteAllocationsRetrieveResponses[keyof OpenportalRemoteAllocationsRetrieveResponses];
+
+export type OpenportalRemoteAllocationsPartialUpdateData = {
+    body?: PatchedRemoteAllocationRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openportal-remote-allocations/{uuid}/';
+};
+
+export type OpenportalRemoteAllocationsPartialUpdateResponses = {
+    200: RemoteAllocation;
+};
+
+export type OpenportalRemoteAllocationsPartialUpdateResponse = OpenportalRemoteAllocationsPartialUpdateResponses[keyof OpenportalRemoteAllocationsPartialUpdateResponses];
+
+export type OpenportalRemoteAllocationsUpdateData = {
+    body: RemoteAllocationRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openportal-remote-allocations/{uuid}/';
+};
+
+export type OpenportalRemoteAllocationsUpdateResponses = {
+    200: RemoteAllocation;
+};
+
+export type OpenportalRemoteAllocationsUpdateResponse = OpenportalRemoteAllocationsUpdateResponses[keyof OpenportalRemoteAllocationsUpdateResponses];
+
+export type OpenportalRemoteAllocationsPullData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openportal-remote-allocations/{uuid}/pull/';
+};
+
+export type OpenportalRemoteAllocationsPullResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type OpenportalRemoteAllocationsSetLimitsData = {
+    body: RemoteAllocationSetLimitsRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openportal-remote-allocations/{uuid}/set_limits/';
+};
+
+export type OpenportalRemoteAllocationsSetLimitsResponses = {
+    200: RemoteAllocationSetLimits;
+};
+
+export type OpenportalRemoteAllocationsSetLimitsResponse = OpenportalRemoteAllocationsSetLimitsResponses[keyof OpenportalRemoteAllocationsSetLimitsResponses];
+
+export type OpenportalRemoteAllocationsUnlinkData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openportal-remote-allocations/{uuid}/unlink/';
+};
+
+export type OpenportalRemoteAllocationsUnlinkResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type OpenportalRemoteAssociationsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        allocation?: string;
+        allocation_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/openportal-remote-associations/';
+};
+
+export type OpenportalRemoteAssociationsListResponses = {
+    200: Array<RemoteAssociation>;
+};
+
+export type OpenportalRemoteAssociationsListResponse = OpenportalRemoteAssociationsListResponses[keyof OpenportalRemoteAssociationsListResponses];
+
+export type OpenportalRemoteAssociationsCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        allocation?: string;
+        allocation_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/openportal-remote-associations/';
+};
+
+export type OpenportalRemoteAssociationsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type OpenportalRemoteAssociationsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openportal-remote-associations/{uuid}/';
+};
+
+export type OpenportalRemoteAssociationsRetrieveResponses = {
+    200: RemoteAssociation;
+};
+
+export type OpenportalRemoteAssociationsRetrieveResponse = OpenportalRemoteAssociationsRetrieveResponses[keyof OpenportalRemoteAssociationsRetrieveResponses];
+
+export type OpenportalUnmanagedProjectsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        backend_id?: string;
+        /**
+         * Return a list of projects where current user is admin.
+         */
+        can_admin?: boolean;
+        /**
+         * Return a list of projects where current user is manager or a customer owner.
+         */
+        can_manage?: boolean;
+        /**
+         * Conceal finished projects
+         */
+        conceal_finished_projects?: boolean;
+        /**
+         * Created after
+         */
+        created?: string;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        customer?: Array<string>;
+        customer_abbreviation?: string;
+        customer_name?: string;
+        customer_native_name?: string;
+        description?: string;
+        field?: Array<'backend_id' | 'billing_price_estimate' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_display_billing_info_in_projects' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'end_date' | 'end_date_requested_by' | 'grace_period_days' | 'image' | 'is_industry' | 'is_removed' | 'kind' | 'marketplace_resource_count' | 'max_service_accounts' | 'name' | 'oecd_fos_2007_code' | 'oecd_fos_2007_label' | 'project_credit' | 'resources_count' | 'slug' | 'staff_notes' | 'start_date' | 'termination_metadata' | 'type' | 'type_name' | 'type_uuid' | 'url' | 'uuid'>;
+        /**
+         * Include soft-deleted (terminated) projects. Only available to staff and support users, or users with organizational roles who can see their terminated projects.
+         */
+        include_terminated?: boolean;
+        is_removed?: boolean;
+        /**
+         * Modified after
+         */
+        modified?: string;
+        name?: string;
+        name_exact?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-customer_abbreviation' | '-customer_name' | '-customer_native_name' | '-end_date' | '-estimated_cost' | '-name' | '-start_date' | 'created' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'end_date' | 'estimated_cost' | 'name' | 'start_date'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Filter by name, slug, UUID, backend ID or resource effective ID
+         */
+        query?: string;
+        slug?: string;
+    };
+    url: '/api/openportal-unmanaged-projects/';
+};
+
+export type OpenportalUnmanagedProjectsListResponses = {
+    200: Array<Project>;
+};
+
+export type OpenportalUnmanagedProjectsListResponse = OpenportalUnmanagedProjectsListResponses[keyof OpenportalUnmanagedProjectsListResponses];
+
+export type OpenportalUnmanagedProjectsCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        backend_id?: string;
+        /**
+         * Return a list of projects where current user is admin.
+         */
+        can_admin?: boolean;
+        /**
+         * Return a list of projects where current user is manager or a customer owner.
+         */
+        can_manage?: boolean;
+        /**
+         * Conceal finished projects
+         */
+        conceal_finished_projects?: boolean;
+        /**
+         * Created after
+         */
+        created?: string;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        customer?: Array<string>;
+        customer_abbreviation?: string;
+        customer_name?: string;
+        customer_native_name?: string;
+        description?: string;
+        /**
+         * Include soft-deleted (terminated) projects. Only available to staff and support users, or users with organizational roles who can see their terminated projects.
+         */
+        include_terminated?: boolean;
+        is_removed?: boolean;
+        /**
+         * Modified after
+         */
+        modified?: string;
+        name?: string;
+        name_exact?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-customer_abbreviation' | '-customer_name' | '-customer_native_name' | '-end_date' | '-estimated_cost' | '-name' | '-start_date' | 'created' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'end_date' | 'estimated_cost' | 'name' | 'start_date'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Filter by name, slug, UUID, backend ID or resource effective ID
+         */
+        query?: string;
+        slug?: string;
+    };
+    url: '/api/openportal-unmanaged-projects/';
+};
+
+export type OpenportalUnmanagedProjectsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type OpenportalUnmanagedProjectsCreateData = {
+    body: ProjectRequest;
+    path?: never;
+    query?: never;
+    url: '/api/openportal-unmanaged-projects/';
+};
+
+export type OpenportalUnmanagedProjectsCreateResponses = {
+    201: Project;
+};
+
+export type OpenportalUnmanagedProjectsCreateResponse = OpenportalUnmanagedProjectsCreateResponses[keyof OpenportalUnmanagedProjectsCreateResponses];
+
+export type OpenportalUnmanagedProjectsDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openportal-unmanaged-projects/{uuid}/';
+};
+
+export type OpenportalUnmanagedProjectsDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type OpenportalUnmanagedProjectsDestroyResponse = OpenportalUnmanagedProjectsDestroyResponses[keyof OpenportalUnmanagedProjectsDestroyResponses];
+
+export type OpenportalUnmanagedProjectsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        field?: Array<'backend_id' | 'billing_price_estimate' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_display_billing_info_in_projects' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'end_date' | 'end_date_requested_by' | 'grace_period_days' | 'image' | 'is_industry' | 'is_removed' | 'kind' | 'marketplace_resource_count' | 'max_service_accounts' | 'name' | 'oecd_fos_2007_code' | 'oecd_fos_2007_label' | 'project_credit' | 'resources_count' | 'slug' | 'staff_notes' | 'start_date' | 'termination_metadata' | 'type' | 'type_name' | 'type_uuid' | 'url' | 'uuid'>;
+    };
+    url: '/api/openportal-unmanaged-projects/{uuid}/';
+};
+
+export type OpenportalUnmanagedProjectsRetrieveResponses = {
+    200: Project;
+};
+
+export type OpenportalUnmanagedProjectsRetrieveResponse = OpenportalUnmanagedProjectsRetrieveResponses[keyof OpenportalUnmanagedProjectsRetrieveResponses];
+
+export type OpenportalUnmanagedProjectsPartialUpdateData = {
+    body?: PatchedProjectRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openportal-unmanaged-projects/{uuid}/';
+};
+
+export type OpenportalUnmanagedProjectsPartialUpdateResponses = {
+    200: Project;
+};
+
+export type OpenportalUnmanagedProjectsPartialUpdateResponse = OpenportalUnmanagedProjectsPartialUpdateResponses[keyof OpenportalUnmanagedProjectsPartialUpdateResponses];
+
+export type OpenportalUnmanagedProjectsUpdateData = {
+    body: ProjectRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openportal-unmanaged-projects/{uuid}/';
+};
+
+export type OpenportalUnmanagedProjectsUpdateResponses = {
+    200: Project;
+};
+
+export type OpenportalUnmanagedProjectsUpdateResponse = OpenportalUnmanagedProjectsUpdateResponses[keyof OpenportalUnmanagedProjectsUpdateResponses];
+
+export type OpenportalUnmanagedProjectsAddUserData = {
+    body: UserRoleCreateRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openportal-unmanaged-projects/{uuid}/add_user/';
+};
+
+export type OpenportalUnmanagedProjectsAddUserErrors = {
+    /**
+     * Validation error when trying to add user to terminated project
+     */
+    400: {
+        non_field_errors?: Array<string>;
+    };
+};
+
+export type OpenportalUnmanagedProjectsAddUserError = OpenportalUnmanagedProjectsAddUserErrors[keyof OpenportalUnmanagedProjectsAddUserErrors];
+
+export type OpenportalUnmanagedProjectsAddUserResponses = {
+    201: UserRoleExpirationTime;
+};
+
+export type OpenportalUnmanagedProjectsAddUserResponse = OpenportalUnmanagedProjectsAddUserResponses[keyof OpenportalUnmanagedProjectsAddUserResponses];
+
+export type OpenportalUnmanagedProjectsChecklistRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openportal-unmanaged-projects/{uuid}/checklist/';
+};
+
+export type OpenportalUnmanagedProjectsChecklistRetrieveErrors = {
+    /**
+     * No checklist configured
+     */
+    400: unknown;
+    /**
+     * Object not found
+     */
+    404: unknown;
+};
+
+export type OpenportalUnmanagedProjectsChecklistRetrieveResponses = {
+    200: ChecklistResponse;
+};
+
+export type OpenportalUnmanagedProjectsChecklistRetrieveResponse = OpenportalUnmanagedProjectsChecklistRetrieveResponses[keyof OpenportalUnmanagedProjectsChecklistRetrieveResponses];
+
+export type OpenportalUnmanagedProjectsCompletionStatusRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openportal-unmanaged-projects/{uuid}/completion_status/';
+};
+
+export type OpenportalUnmanagedProjectsCompletionStatusRetrieveErrors = {
+    /**
+     * No checklist configured
+     */
+    400: unknown;
+    /**
+     * Object not found
+     */
+    404: unknown;
+};
+
+export type OpenportalUnmanagedProjectsCompletionStatusRetrieveResponses = {
+    200: ChecklistCompletion;
+};
+
+export type OpenportalUnmanagedProjectsCompletionStatusRetrieveResponse = OpenportalUnmanagedProjectsCompletionStatusRetrieveResponses[keyof OpenportalUnmanagedProjectsCompletionStatusRetrieveResponses];
+
+export type OpenportalUnmanagedProjectsDeleteUserData = {
+    body: UserRoleDeleteRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openportal-unmanaged-projects/{uuid}/delete_user/';
+};
+
+export type OpenportalUnmanagedProjectsDeleteUserResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type OpenportalUnmanagedProjectsListUsersListData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * Fields to include in response
+         */
+        field?: Array<'created' | 'created_by_full_name' | 'created_by_uuid' | 'expiration_time' | 'role_name' | 'role_uuid' | 'user_email' | 'user_full_name' | 'user_image' | 'user_username' | 'user_uuid' | 'uuid'>;
+        /**
+         * User full name
+         */
+        full_name?: string;
+        /**
+         * User native name
+         */
+        native_name?: string;
+        /**
+         * Ordering fields
+         */
+        o?: Array<'created' | 'email' | 'expiration_time' | 'full_name' | 'native_name' | 'role' | 'username'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Role UUID or name
+         */
+        role?: string;
+        /**
+         * Search string for user
+         */
+        search_string?: string;
+        /**
+         * User UUID
+         */
+        user?: string;
+        /**
+         * User slug
+         */
+        user_slug?: string;
+        /**
+         * User URL
+         */
+        user_url?: string;
+        /**
+         * User username
+         */
+        username?: string;
+    };
+    url: '/api/openportal-unmanaged-projects/{uuid}/list_users/';
+};
+
+export type OpenportalUnmanagedProjectsListUsersListResponses = {
+    200: Array<UserRoleDetails>;
+};
+
+export type OpenportalUnmanagedProjectsListUsersListResponse = OpenportalUnmanagedProjectsListUsersListResponses[keyof OpenportalUnmanagedProjectsListUsersListResponses];
+
+export type OpenportalUnmanagedProjectsMoveProjectData = {
+    body: MoveProjectRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openportal-unmanaged-projects/{uuid}/move_project/';
+};
+
+export type OpenportalUnmanagedProjectsMoveProjectErrors = {
+    /**
+     * Validation error when trying to move a terminated project
+     */
+    400: {
+        non_field_errors?: Array<string>;
+    };
+};
+
+export type OpenportalUnmanagedProjectsMoveProjectError = OpenportalUnmanagedProjectsMoveProjectErrors[keyof OpenportalUnmanagedProjectsMoveProjectErrors];
+
+export type OpenportalUnmanagedProjectsMoveProjectResponses = {
+    200: Project;
+};
+
+export type OpenportalUnmanagedProjectsMoveProjectResponse = OpenportalUnmanagedProjectsMoveProjectResponses[keyof OpenportalUnmanagedProjectsMoveProjectResponses];
+
+export type OpenportalUnmanagedProjectsRecoverData = {
+    body?: ProjectRecoveryRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openportal-unmanaged-projects/{uuid}/recover/';
+};
+
+export type OpenportalUnmanagedProjectsRecoverResponses = {
+    200: Project;
+};
+
+export type OpenportalUnmanagedProjectsRecoverResponse = OpenportalUnmanagedProjectsRecoverResponses[keyof OpenportalUnmanagedProjectsRecoverResponses];
+
+export type OpenportalUnmanagedProjectsStatsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        for_current_month?: boolean;
+    };
+    url: '/api/openportal-unmanaged-projects/{uuid}/stats/';
+};
+
+export type OpenportalUnmanagedProjectsStatsRetrieveResponses = {
+    200: ComponentsUsageStats;
+};
+
+export type OpenportalUnmanagedProjectsStatsRetrieveResponse = OpenportalUnmanagedProjectsStatsRetrieveResponses[keyof OpenportalUnmanagedProjectsStatsRetrieveResponses];
+
+export type OpenportalUnmanagedProjectsSubmitAnswersData = {
+    body: Array<AnswerSubmitRequest>;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openportal-unmanaged-projects/{uuid}/submit_answers/';
+};
+
+export type OpenportalUnmanagedProjectsSubmitAnswersErrors = {
+    /**
+     * Validation error or no checklist configured
+     */
+    400: unknown;
+    /**
+     * Object not found
+     */
+    404: unknown;
+};
+
+export type OpenportalUnmanagedProjectsSubmitAnswersResponses = {
+    200: AnswerSubmitResponse;
+};
+
+export type OpenportalUnmanagedProjectsSubmitAnswersResponse = OpenportalUnmanagedProjectsSubmitAnswersResponses[keyof OpenportalUnmanagedProjectsSubmitAnswersResponses];
+
+export type OpenportalUnmanagedProjectsUpdateUserData = {
+    body: UserRoleUpdateRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openportal-unmanaged-projects/{uuid}/update_user/';
+};
+
+export type OpenportalUnmanagedProjectsUpdateUserResponses = {
+    200: UserRoleExpirationTime;
+};
+
+export type OpenportalUnmanagedProjectsUpdateUserResponse = OpenportalUnmanagedProjectsUpdateUserResponses[keyof OpenportalUnmanagedProjectsUpdateUserResponses];
+
+export type OpenportalUnmanagedProjectsChecklistTemplateRetrieveData = {
+    body?: never;
+    path?: never;
+    query: {
+        /**
+         * UUID of the parent object (e.g., customer UUID for new projects)
+         */
+        parent_uuid: string;
+    };
+    url: '/api/openportal-unmanaged-projects/checklist-template/';
+};
+
+export type OpenportalUnmanagedProjectsChecklistTemplateRetrieveErrors = {
+    /**
+     * No checklist configured
+     */
+    400: unknown;
+    /**
+     * Parent object not found
+     */
+    404: unknown;
+};
+
+export type OpenportalUnmanagedProjectsChecklistTemplateRetrieveResponses = {
+    200: ChecklistTemplate;
+};
+
+export type OpenportalUnmanagedProjectsChecklistTemplateRetrieveResponse = OpenportalUnmanagedProjectsChecklistTemplateRetrieveResponses[keyof OpenportalUnmanagedProjectsChecklistTemplateRetrieveResponses];
+
+export type OpenportalUnmanagedProjectsChecklistTemplateCountData = {
+    body?: never;
+    path?: never;
+    query: {
+        /**
+         * UUID of the parent object (e.g., customer UUID for new projects)
+         */
+        parent_uuid: string;
+    };
+    url: '/api/openportal-unmanaged-projects/checklist-template/';
+};
+
+export type OpenportalUnmanagedProjectsChecklistTemplateCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type OpenportalUserinfoListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        user?: string;
+        user_uuid?: string;
+    };
+    url: '/api/openportal-userinfo/';
+};
+
+export type OpenportalUserinfoListResponses = {
+    200: Array<UserInfo>;
+};
+
+export type OpenportalUserinfoListResponse = OpenportalUserinfoListResponses[keyof OpenportalUserinfoListResponses];
+
+export type OpenportalUserinfoCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        user?: string;
+        user_uuid?: string;
+    };
+    url: '/api/openportal-userinfo/';
+};
+
+export type OpenportalUserinfoCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type OpenportalUserinfoCreateData = {
+    body: UserInfoRequest;
+    path?: never;
+    query?: never;
+    url: '/api/openportal-userinfo/';
+};
+
+export type OpenportalUserinfoCreateResponses = {
+    201: UserInfo;
+};
+
+export type OpenportalUserinfoCreateResponse = OpenportalUserinfoCreateResponses[keyof OpenportalUserinfoCreateResponses];
+
+export type OpenportalUserinfoDestroyData = {
+    body?: never;
+    path: {
+        user: number;
+    };
+    query?: never;
+    url: '/api/openportal-userinfo/{user}/';
+};
+
+export type OpenportalUserinfoDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type OpenportalUserinfoDestroyResponse = OpenportalUserinfoDestroyResponses[keyof OpenportalUserinfoDestroyResponses];
+
+export type OpenportalUserinfoRetrieveData = {
+    body?: never;
+    path: {
+        user: number;
+    };
+    query?: never;
+    url: '/api/openportal-userinfo/{user}/';
+};
+
+export type OpenportalUserinfoRetrieveResponses = {
+    200: UserInfo;
+};
+
+export type OpenportalUserinfoRetrieveResponse = OpenportalUserinfoRetrieveResponses[keyof OpenportalUserinfoRetrieveResponses];
+
+export type OpenportalUserinfoPartialUpdateData = {
+    body?: PatchedUserInfoRequest;
+    path: {
+        user: number;
+    };
+    query?: never;
+    url: '/api/openportal-userinfo/{user}/';
+};
+
+export type OpenportalUserinfoPartialUpdateResponses = {
+    200: UserInfo;
+};
+
+export type OpenportalUserinfoPartialUpdateResponse = OpenportalUserinfoPartialUpdateResponses[keyof OpenportalUserinfoPartialUpdateResponses];
+
+export type OpenportalUserinfoUpdateData = {
+    body: UserInfoRequest;
+    path: {
+        user: number;
+    };
+    query?: never;
+    url: '/api/openportal-userinfo/{user}/';
+};
+
+export type OpenportalUserinfoUpdateResponses = {
+    200: UserInfo;
+};
+
+export type OpenportalUserinfoUpdateResponse = OpenportalUserinfoUpdateResponses[keyof OpenportalUserinfoUpdateResponses];
+
+export type OpenportalUserinfoSetShortnameUpdateData = {
+    body: UserInfoRequest;
+    path: {
+        user: number;
+    };
+    query?: never;
+    url: '/api/openportal-userinfo/{user}/set_shortname/';
+};
+
+export type OpenportalUserinfoSetShortnameUpdateResponses = {
+    200: UserInfo;
+};
+
+export type OpenportalUserinfoSetShortnameUpdateResponse = OpenportalUserinfoSetShortnameUpdateResponses[keyof OpenportalUserinfoSetShortnameUpdateResponses];
+
+export type OpenportalUserinfoMeRetrieveData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/openportal-userinfo/me/';
+};
+
+export type OpenportalUserinfoMeRetrieveResponses = {
+    200: UserInfo;
+};
+
+export type OpenportalUserinfoMeRetrieveResponse = OpenportalUserinfoMeRetrieveResponses[keyof OpenportalUserinfoMeRetrieveResponses];
+
+export type OpenportalUserinfoMeCountData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/openportal-userinfo/me/';
+};
+
+export type OpenportalUserinfoMeCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type OpenstackBackupsListData = {
     body?: never;
