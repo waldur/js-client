@@ -2417,37 +2417,37 @@ export type Customer = {
      */
     backend_id?: string;
     image?: string | null;
-    readonly blocked?: boolean;
-    readonly archived?: boolean;
-    readonly display_billing_info_in_projects?: boolean;
-    readonly default_tax_percent?: string;
+    blocked?: boolean;
+    archived?: boolean;
+    display_billing_info_in_projects?: boolean;
+    default_tax_percent?: string;
     /**
      * Start date of accounting
      */
-    readonly accounting_start_date?: string;
+    accounting_start_date?: string;
     readonly projects_count?: number;
     readonly users_count?: number;
     /**
      * External ID of the sponsor covering the costs
      */
-    readonly sponsor_number?: number | null;
+    sponsor_number?: number | null;
     readonly country_name?: string;
     /**
      * Maximum number of service accounts allowed
      */
-    readonly max_service_accounts?: number | null;
-    readonly project_metadata_checklist?: string | null;
+    max_service_accounts?: number | null;
+    project_metadata_checklist?: string | null;
     /**
      * Number of extra days after project end date before resources are terminated
      */
-    readonly grace_period_days?: number | null;
+    grace_period_days?: number | null;
     name?: string;
     slug?: string;
     native_name?: string;
     abbreviation?: string;
     description?: string;
     contact_details?: string;
-    readonly agreement_number?: string;
+    agreement_number?: string;
     /**
      * Email address
      */
@@ -2456,10 +2456,10 @@ export type Customer = {
     /**
      * Enter a comma separated list of IPv4 or IPv6 CIDR addresses from where connection to self-service is allowed.
      */
-    readonly access_subnets?: string;
+    access_subnets?: string;
     registration_code?: string;
     homepage?: string;
-    readonly domain?: string;
+    domain?: string;
     /**
      * VAT number
      */
@@ -2649,19 +2649,46 @@ export type CustomerRequest = {
      */
     backend_id?: string;
     image?: (Blob | File) | null;
+    blocked?: boolean;
+    archived?: boolean;
+    display_billing_info_in_projects?: boolean;
+    default_tax_percent?: string;
+    /**
+     * Start date of accounting
+     */
+    accounting_start_date?: string;
+    /**
+     * External ID of the sponsor covering the costs
+     */
+    sponsor_number?: number | null;
+    /**
+     * Maximum number of service accounts allowed
+     */
+    max_service_accounts?: number | null;
+    project_metadata_checklist?: string | null;
+    /**
+     * Number of extra days after project end date before resources are terminated
+     */
+    grace_period_days?: number | null;
     name: string;
     slug?: string;
     native_name?: string;
     abbreviation?: string;
     description?: string;
     contact_details?: string;
+    agreement_number?: string;
     /**
      * Email address
      */
     email?: string;
     phone_number?: string;
+    /**
+     * Enter a comma separated list of IPv4 or IPv6 CIDR addresses from where connection to self-service is allowed.
+     */
+    access_subnets?: string;
     registration_code?: string;
     homepage?: string;
+    domain?: string;
     /**
      * VAT number
      */
@@ -9191,19 +9218,46 @@ export type PatchedCustomerRequest = {
      */
     backend_id?: string;
     image?: (Blob | File) | null;
+    blocked?: boolean;
+    archived?: boolean;
+    display_billing_info_in_projects?: boolean;
+    default_tax_percent?: string;
+    /**
+     * Start date of accounting
+     */
+    accounting_start_date?: string;
+    /**
+     * External ID of the sponsor covering the costs
+     */
+    sponsor_number?: number | null;
+    /**
+     * Maximum number of service accounts allowed
+     */
+    max_service_accounts?: number | null;
+    project_metadata_checklist?: string | null;
+    /**
+     * Number of extra days after project end date before resources are terminated
+     */
+    grace_period_days?: number | null;
     name?: string;
     slug?: string;
     native_name?: string;
     abbreviation?: string;
     description?: string;
     contact_details?: string;
+    agreement_number?: string;
     /**
      * Email address
      */
     email?: string;
     phone_number?: string;
+    /**
+     * Enter a comma separated list of IPv4 or IPv6 CIDR addresses from where connection to self-service is allowed.
+     */
+    access_subnets?: string;
     registration_code?: string;
     homepage?: string;
+    domain?: string;
     /**
      * VAT number
      */
@@ -15441,19 +15495,46 @@ export type CustomerRequestForm = {
      */
     backend_id?: string;
     image?: (Blob | File) | null;
+    blocked?: boolean;
+    archived?: boolean;
+    display_billing_info_in_projects?: boolean;
+    default_tax_percent?: string;
+    /**
+     * Start date of accounting
+     */
+    accounting_start_date?: string;
+    /**
+     * External ID of the sponsor covering the costs
+     */
+    sponsor_number?: number | null;
+    /**
+     * Maximum number of service accounts allowed
+     */
+    max_service_accounts?: number | null;
+    project_metadata_checklist?: string | null;
+    /**
+     * Number of extra days after project end date before resources are terminated
+     */
+    grace_period_days?: number | null;
     name: string;
     slug?: string;
     native_name?: string;
     abbreviation?: string;
     description?: string;
     contact_details?: string;
+    agreement_number?: string;
     /**
      * Email address
      */
     email?: string;
     phone_number?: string;
+    /**
+     * Enter a comma separated list of IPv4 or IPv6 CIDR addresses from where connection to self-service is allowed.
+     */
+    access_subnets?: string;
     registration_code?: string;
     homepage?: string;
+    domain?: string;
     /**
      * VAT number
      */
@@ -15477,19 +15558,46 @@ export type CustomerRequestMultipart = {
      */
     backend_id?: string;
     image?: (Blob | File) | null;
+    blocked?: boolean;
+    archived?: boolean;
+    display_billing_info_in_projects?: boolean;
+    default_tax_percent?: string;
+    /**
+     * Start date of accounting
+     */
+    accounting_start_date?: string;
+    /**
+     * External ID of the sponsor covering the costs
+     */
+    sponsor_number?: number | null;
+    /**
+     * Maximum number of service accounts allowed
+     */
+    max_service_accounts?: number | null;
+    project_metadata_checklist?: string | null;
+    /**
+     * Number of extra days after project end date before resources are terminated
+     */
+    grace_period_days?: number | null;
     name: string;
     slug?: string;
     native_name?: string;
     abbreviation?: string;
     description?: string;
     contact_details?: string;
+    agreement_number?: string;
     /**
      * Email address
      */
     email?: string;
     phone_number?: string;
+    /**
+     * Enter a comma separated list of IPv4 or IPv6 CIDR addresses from where connection to self-service is allowed.
+     */
+    access_subnets?: string;
     registration_code?: string;
     homepage?: string;
+    domain?: string;
     /**
      * VAT number
      */
@@ -15513,19 +15621,46 @@ export type PatchedCustomerRequestForm = {
      */
     backend_id?: string;
     image?: (Blob | File) | null;
+    blocked?: boolean;
+    archived?: boolean;
+    display_billing_info_in_projects?: boolean;
+    default_tax_percent?: string;
+    /**
+     * Start date of accounting
+     */
+    accounting_start_date?: string;
+    /**
+     * External ID of the sponsor covering the costs
+     */
+    sponsor_number?: number | null;
+    /**
+     * Maximum number of service accounts allowed
+     */
+    max_service_accounts?: number | null;
+    project_metadata_checklist?: string | null;
+    /**
+     * Number of extra days after project end date before resources are terminated
+     */
+    grace_period_days?: number | null;
     name?: string;
     slug?: string;
     native_name?: string;
     abbreviation?: string;
     description?: string;
     contact_details?: string;
+    agreement_number?: string;
     /**
      * Email address
      */
     email?: string;
     phone_number?: string;
+    /**
+     * Enter a comma separated list of IPv4 or IPv6 CIDR addresses from where connection to self-service is allowed.
+     */
+    access_subnets?: string;
     registration_code?: string;
     homepage?: string;
+    domain?: string;
     /**
      * VAT number
      */
@@ -15549,19 +15684,46 @@ export type PatchedCustomerRequestMultipart = {
      */
     backend_id?: string;
     image?: (Blob | File) | null;
+    blocked?: boolean;
+    archived?: boolean;
+    display_billing_info_in_projects?: boolean;
+    default_tax_percent?: string;
+    /**
+     * Start date of accounting
+     */
+    accounting_start_date?: string;
+    /**
+     * External ID of the sponsor covering the costs
+     */
+    sponsor_number?: number | null;
+    /**
+     * Maximum number of service accounts allowed
+     */
+    max_service_accounts?: number | null;
+    project_metadata_checklist?: string | null;
+    /**
+     * Number of extra days after project end date before resources are terminated
+     */
+    grace_period_days?: number | null;
     name?: string;
     slug?: string;
     native_name?: string;
     abbreviation?: string;
     description?: string;
     contact_details?: string;
+    agreement_number?: string;
     /**
      * Email address
      */
     email?: string;
     phone_number?: string;
+    /**
+     * Enter a comma separated list of IPv4 or IPv6 CIDR addresses from where connection to self-service is allowed.
+     */
+    access_subnets?: string;
     registration_code?: string;
     homepage?: string;
+    domain?: string;
     /**
      * VAT number
      */
