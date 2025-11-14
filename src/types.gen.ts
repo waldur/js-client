@@ -10161,12 +10161,35 @@ export type PatchedQuestionAdminRequest = {
      * Additional guidance text visible to users when answering and reviewing
      */
     user_guidance?: string;
-    checklist?: string;
-    order?: number;
     /**
      * Type of question and expected answer format
      */
     question_type?: QuestionTypeEnum;
+    order?: number;
+    /**
+     * Minimum value allowed for NUMBER type questions
+     */
+    min_value?: string | null;
+    /**
+     * Maximum value allowed for NUMBER type questions
+     */
+    max_value?: string | null;
+    /**
+     * List of allowed file extensions (e.g., ['.pdf', '.doc', '.docx']). If empty, all file types are allowed.
+     */
+    allowed_file_types?: unknown;
+    /**
+     * List of allowed MIME types (e.g., ['application/pdf', 'application/msword']). If empty, MIME type validation is not enforced. When both extensions and MIME types are specified, files must match both criteria for security.
+     */
+    allowed_mime_types?: unknown;
+    /**
+     * Maximum file size in megabytes. If not set, no size limit is enforced.
+     */
+    max_file_size_mb?: number | null;
+    /**
+     * Maximum number of files allowed for MULTIPLE_FILES type questions. If not set, no count limit is enforced.
+     */
+    max_files_count?: number | null;
     operator?: ChecklistOperators | BlankEnum;
     /**
      * Answer value that trigger review.
@@ -10189,33 +10212,10 @@ export type PatchedQuestionAdminRequest = {
      */
     always_show_guidance?: boolean;
     /**
-     * Minimum value allowed for NUMBER type questions
-     */
-    min_value?: string | null;
-    /**
-     * Maximum value allowed for NUMBER type questions
-     */
-    max_value?: string | null;
-    /**
      * Defines how multiple dependencies are evaluated. AND: All dependencies must be satisfied. OR: At least one dependency must be satisfied.
      */
     dependency_logic_operator?: DependencyLogicOperatorEnum;
-    /**
-     * List of allowed file extensions (e.g., ['.pdf', '.doc', '.docx']). If empty, all file types are allowed.
-     */
-    allowed_file_types?: unknown;
-    /**
-     * List of allowed MIME types (e.g., ['application/pdf', 'application/msword']). If empty, MIME type validation is not enforced. When both extensions and MIME types are specified, files must match both criteria for security.
-     */
-    allowed_mime_types?: unknown;
-    /**
-     * Maximum file size in megabytes. If not set, no size limit is enforced.
-     */
-    max_file_size_mb?: number | null;
-    /**
-     * Maximum number of files allowed for MULTIPLE_FILES type questions. If not set, no count limit is enforced.
-     */
-    max_files_count?: number | null;
+    checklist?: string;
 };
 
 export type PatchedQuestionDependencyRequest = {
@@ -12084,6 +12084,60 @@ export type Question = {
      */
     user_guidance?: string;
     readonly question_options: Array<QuestionOptions>;
+    /**
+     * Type of question and expected answer format
+     */
+    question_type?: QuestionTypeEnum;
+    order?: number;
+    /**
+     * Minimum value allowed for NUMBER type questions
+     */
+    min_value?: string | null;
+    /**
+     * Maximum value allowed for NUMBER type questions
+     */
+    max_value?: string | null;
+    /**
+     * List of allowed file extensions (e.g., ['.pdf', '.doc', '.docx']). If empty, all file types are allowed.
+     */
+    allowed_file_types?: unknown;
+    /**
+     * List of allowed MIME types (e.g., ['application/pdf', 'application/msword']). If empty, MIME type validation is not enforced. When both extensions and MIME types are specified, files must match both criteria for security.
+     */
+    allowed_mime_types?: unknown;
+    /**
+     * Maximum file size in megabytes. If not set, no size limit is enforced.
+     */
+    max_file_size_mb?: number | null;
+    /**
+     * Maximum number of files allowed for MULTIPLE_FILES type questions. If not set, no count limit is enforced.
+     */
+    max_files_count?: number | null;
+    operator?: ChecklistOperators | BlankEnum;
+    /**
+     * Answer value that trigger review.
+     */
+    review_answer_value?: unknown;
+    /**
+     * This question always requires review regardless of answer
+     */
+    always_requires_review?: boolean;
+    /**
+     * Answer value that triggers display of user guidance.
+     */
+    guidance_answer_value?: unknown;
+    /**
+     * Operator to use when comparing answer with guidance_answer_value
+     */
+    guidance_operator?: ChecklistOperators | BlankEnum;
+    /**
+     * Show user guidance always, regardless of answer. If False, guidance is conditional on answer matching guidance_answer_value with guidance_operator
+     */
+    always_show_guidance?: boolean;
+    /**
+     * Defines how multiple dependencies are evaluated. AND: All dependencies must be satisfied. OR: At least one dependency must be satisfied.
+     */
+    dependency_logic_operator?: DependencyLogicOperatorEnum;
 };
 
 export type QuestionAdmin = {
@@ -12095,15 +12149,35 @@ export type QuestionAdmin = {
      */
     user_guidance?: string;
     readonly question_options: Array<QuestionOptionsAdmin>;
-    readonly url: string;
-    readonly checklist_name: string;
-    readonly checklist_uuid: string;
-    checklist: string;
-    order?: number;
     /**
      * Type of question and expected answer format
      */
     question_type?: QuestionTypeEnum;
+    order?: number;
+    /**
+     * Minimum value allowed for NUMBER type questions
+     */
+    min_value?: string | null;
+    /**
+     * Maximum value allowed for NUMBER type questions
+     */
+    max_value?: string | null;
+    /**
+     * List of allowed file extensions (e.g., ['.pdf', '.doc', '.docx']). If empty, all file types are allowed.
+     */
+    allowed_file_types?: unknown;
+    /**
+     * List of allowed MIME types (e.g., ['application/pdf', 'application/msword']). If empty, MIME type validation is not enforced. When both extensions and MIME types are specified, files must match both criteria for security.
+     */
+    allowed_mime_types?: unknown;
+    /**
+     * Maximum file size in megabytes. If not set, no size limit is enforced.
+     */
+    max_file_size_mb?: number | null;
+    /**
+     * Maximum number of files allowed for MULTIPLE_FILES type questions. If not set, no count limit is enforced.
+     */
+    max_files_count?: number | null;
     operator?: ChecklistOperators | BlankEnum;
     /**
      * Answer value that trigger review.
@@ -12126,33 +12200,13 @@ export type QuestionAdmin = {
      */
     always_show_guidance?: boolean;
     /**
-     * Minimum value allowed for NUMBER type questions
-     */
-    min_value?: string | null;
-    /**
-     * Maximum value allowed for NUMBER type questions
-     */
-    max_value?: string | null;
-    /**
      * Defines how multiple dependencies are evaluated. AND: All dependencies must be satisfied. OR: At least one dependency must be satisfied.
      */
     dependency_logic_operator?: DependencyLogicOperatorEnum;
-    /**
-     * List of allowed file extensions (e.g., ['.pdf', '.doc', '.docx']). If empty, all file types are allowed.
-     */
-    allowed_file_types?: unknown;
-    /**
-     * List of allowed MIME types (e.g., ['application/pdf', 'application/msword']). If empty, MIME type validation is not enforced. When both extensions and MIME types are specified, files must match both criteria for security.
-     */
-    allowed_mime_types?: unknown;
-    /**
-     * Maximum file size in megabytes. If not set, no size limit is enforced.
-     */
-    max_file_size_mb?: number | null;
-    /**
-     * Maximum number of files allowed for MULTIPLE_FILES type questions. If not set, no count limit is enforced.
-     */
-    max_files_count?: number | null;
+    readonly url: string;
+    readonly checklist_name: string;
+    readonly checklist_uuid: string;
+    checklist: string;
 };
 
 export type QuestionAdminRequest = {
@@ -12162,12 +12216,35 @@ export type QuestionAdminRequest = {
      * Additional guidance text visible to users when answering and reviewing
      */
     user_guidance?: string;
-    checklist: string;
-    order?: number;
     /**
      * Type of question and expected answer format
      */
     question_type?: QuestionTypeEnum;
+    order?: number;
+    /**
+     * Minimum value allowed for NUMBER type questions
+     */
+    min_value?: string | null;
+    /**
+     * Maximum value allowed for NUMBER type questions
+     */
+    max_value?: string | null;
+    /**
+     * List of allowed file extensions (e.g., ['.pdf', '.doc', '.docx']). If empty, all file types are allowed.
+     */
+    allowed_file_types?: unknown;
+    /**
+     * List of allowed MIME types (e.g., ['application/pdf', 'application/msword']). If empty, MIME type validation is not enforced. When both extensions and MIME types are specified, files must match both criteria for security.
+     */
+    allowed_mime_types?: unknown;
+    /**
+     * Maximum file size in megabytes. If not set, no size limit is enforced.
+     */
+    max_file_size_mb?: number | null;
+    /**
+     * Maximum number of files allowed for MULTIPLE_FILES type questions. If not set, no count limit is enforced.
+     */
+    max_files_count?: number | null;
     operator?: ChecklistOperators | BlankEnum;
     /**
      * Answer value that trigger review.
@@ -12190,33 +12267,10 @@ export type QuestionAdminRequest = {
      */
     always_show_guidance?: boolean;
     /**
-     * Minimum value allowed for NUMBER type questions
-     */
-    min_value?: string | null;
-    /**
-     * Maximum value allowed for NUMBER type questions
-     */
-    max_value?: string | null;
-    /**
      * Defines how multiple dependencies are evaluated. AND: All dependencies must be satisfied. OR: At least one dependency must be satisfied.
      */
     dependency_logic_operator?: DependencyLogicOperatorEnum;
-    /**
-     * List of allowed file extensions (e.g., ['.pdf', '.doc', '.docx']). If empty, all file types are allowed.
-     */
-    allowed_file_types?: unknown;
-    /**
-     * List of allowed MIME types (e.g., ['application/pdf', 'application/msword']). If empty, MIME type validation is not enforced. When both extensions and MIME types are specified, files must match both criteria for security.
-     */
-    allowed_mime_types?: unknown;
-    /**
-     * Maximum file size in megabytes. If not set, no size limit is enforced.
-     */
-    max_file_size_mb?: number | null;
-    /**
-     * Maximum number of files allowed for MULTIPLE_FILES type questions. If not set, no count limit is enforced.
-     */
-    max_files_count?: number | null;
+    checklist: string;
 };
 
 export type QuestionAnswer = {
@@ -13829,10 +13883,6 @@ export type ResourcesLimits = {
     readonly offering_country: string;
     readonly organization_group_name: string;
     readonly organization_group_uuid: string;
-};
-
-export type ReviewComment = {
-    comment?: string;
 };
 
 export type ReviewCommentRequest = {
@@ -18140,11 +18190,18 @@ export type AwsInstancesPullData = {
     url: '/api/aws-instances/{uuid}/pull/';
 };
 
+export type AwsInstancesPullErrors = {
+    /**
+     * No response body
+     */
+    409: unknown;
+};
+
 export type AwsInstancesPullResponses = {
     /**
      * No response body
      */
-    200: unknown;
+    202: unknown;
 };
 
 export type AwsInstancesResizeData = {
@@ -18223,8 +18280,10 @@ export type AwsInstancesUnlinkResponses = {
     /**
      * No response body
      */
-    200: unknown;
+    204: void;
 };
+
+export type AwsInstancesUnlinkResponse = AwsInstancesUnlinkResponses[keyof AwsInstancesUnlinkResponses];
 
 export type AwsRegionsListData = {
     body?: never;
@@ -18520,11 +18579,18 @@ export type AwsVolumesPullData = {
     url: '/api/aws-volumes/{uuid}/pull/';
 };
 
+export type AwsVolumesPullErrors = {
+    /**
+     * No response body
+     */
+    409: unknown;
+};
+
 export type AwsVolumesPullResponses = {
     /**
      * No response body
      */
-    200: unknown;
+    202: unknown;
 };
 
 export type AwsVolumesUnlinkData = {
@@ -18540,8 +18606,10 @@ export type AwsVolumesUnlinkResponses = {
     /**
      * No response body
      */
-    200: unknown;
+    204: void;
 };
+
+export type AwsVolumesUnlinkResponse = AwsVolumesUnlinkResponses[keyof AwsVolumesUnlinkResponses];
 
 export type AzureImagesListData = {
     body?: never;
@@ -18864,11 +18932,18 @@ export type AzurePublicIpsPullData = {
     url: '/api/azure-public-ips/{uuid}/pull/';
 };
 
+export type AzurePublicIpsPullErrors = {
+    /**
+     * No response body
+     */
+    409: unknown;
+};
+
 export type AzurePublicIpsPullResponses = {
     /**
      * No response body
      */
-    200: unknown;
+    202: unknown;
 };
 
 export type AzurePublicIpsUnlinkData = {
@@ -18884,8 +18959,10 @@ export type AzurePublicIpsUnlinkResponses = {
     /**
      * No response body
      */
-    200: unknown;
+    204: void;
 };
+
+export type AzurePublicIpsUnlinkResponse = AzurePublicIpsUnlinkResponses[keyof AzurePublicIpsUnlinkResponses];
 
 export type AzureResourceGroupsListData = {
     body?: never;
@@ -19207,11 +19284,18 @@ export type AzureSqlDatabasesPullData = {
     url: '/api/azure-sql-databases/{uuid}/pull/';
 };
 
+export type AzureSqlDatabasesPullErrors = {
+    /**
+     * No response body
+     */
+    409: unknown;
+};
+
 export type AzureSqlDatabasesPullResponses = {
     /**
      * No response body
      */
-    200: unknown;
+    202: unknown;
 };
 
 export type AzureSqlDatabasesUnlinkData = {
@@ -19227,8 +19311,10 @@ export type AzureSqlDatabasesUnlinkResponses = {
     /**
      * No response body
      */
-    200: unknown;
+    204: void;
 };
+
+export type AzureSqlDatabasesUnlinkResponse = AzureSqlDatabasesUnlinkResponses[keyof AzureSqlDatabasesUnlinkResponses];
 
 export type AzureSqlServersListData = {
     body?: never;
@@ -19424,11 +19510,18 @@ export type AzureSqlServersPullData = {
     url: '/api/azure-sql-servers/{uuid}/pull/';
 };
 
+export type AzureSqlServersPullErrors = {
+    /**
+     * No response body
+     */
+    409: unknown;
+};
+
 export type AzureSqlServersPullResponses = {
     /**
      * No response body
      */
-    200: unknown;
+    202: unknown;
 };
 
 export type AzureSqlServersUnlinkData = {
@@ -19444,8 +19537,10 @@ export type AzureSqlServersUnlinkResponses = {
     /**
      * No response body
      */
-    200: unknown;
+    204: void;
 };
+
+export type AzureSqlServersUnlinkResponse = AzureSqlServersUnlinkResponses[keyof AzureSqlServersUnlinkResponses];
 
 export type AzureVirtualmachinesListData = {
     body?: never;
@@ -19626,11 +19721,18 @@ export type AzureVirtualmachinesPullData = {
     url: '/api/azure-virtualmachines/{uuid}/pull/';
 };
 
+export type AzureVirtualmachinesPullErrors = {
+    /**
+     * No response body
+     */
+    409: unknown;
+};
+
 export type AzureVirtualmachinesPullResponses = {
     /**
      * No response body
      */
-    200: unknown;
+    202: unknown;
 };
 
 export type AzureVirtualmachinesRestartData = {
@@ -19694,8 +19796,10 @@ export type AzureVirtualmachinesUnlinkResponses = {
     /**
      * No response body
      */
-    200: unknown;
+    204: void;
 };
+
+export type AzureVirtualmachinesUnlinkResponse = AzureVirtualmachinesUnlinkResponses[keyof AzureVirtualmachinesUnlinkResponses];
 
 export type BackendResourceRequestsListData = {
     body?: never;
@@ -21250,11 +21354,12 @@ export type CeleryStatsRetrieveData = {
 };
 
 export type CeleryStatsRetrieveResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    200: {
+        [key: string]: unknown;
+    };
 };
+
+export type CeleryStatsRetrieveResponse = CeleryStatsRetrieveResponses[keyof CeleryStatsRetrieveResponses];
 
 export type ChecklistsAdminListData = {
     body?: never;
@@ -22920,6 +23025,9 @@ export type CustomersStatsRetrieveData = {
         uuid: string;
     };
     query?: {
+        /**
+         * If true, returns usage data for the current month only. Otherwise, returns total usage.
+         */
         for_current_month?: boolean;
     };
     url: '/api/customers/{uuid}/stats/';
@@ -23279,11 +23387,18 @@ export type DigitaloceanDropletsPullData = {
     url: '/api/digitalocean-droplets/{uuid}/pull/';
 };
 
+export type DigitaloceanDropletsPullErrors = {
+    /**
+     * No response body
+     */
+    409: unknown;
+};
+
 export type DigitaloceanDropletsPullResponses = {
     /**
      * No response body
      */
-    200: unknown;
+    202: unknown;
 };
 
 export type DigitaloceanDropletsResizeData = {
@@ -23362,8 +23477,10 @@ export type DigitaloceanDropletsUnlinkResponses = {
     /**
      * No response body
      */
-    200: unknown;
+    204: void;
 };
+
+export type DigitaloceanDropletsUnlinkResponse = DigitaloceanDropletsUnlinkResponses[keyof DigitaloceanDropletsUnlinkResponses];
 
 export type DigitaloceanImagesListData = {
     body?: never;
@@ -31536,6 +31653,7 @@ export type MarketplaceProviderOfferingsListData = {
         allowed_customer_uuid?: string;
         attributes?: string;
         billable?: boolean;
+        can_create_offering_user?: boolean;
         category_group_uuid?: string;
         category_uuid?: string;
         /**
@@ -31643,6 +31761,7 @@ export type MarketplaceProviderOfferingsCountData = {
         allowed_customer_uuid?: string;
         attributes?: string;
         billable?: boolean;
+        can_create_offering_user?: boolean;
         category_group_uuid?: string;
         category_uuid?: string;
         /**
@@ -31901,6 +32020,7 @@ export type MarketplaceProviderOfferingsComponentStatsListData = {
         allowed_customer_uuid?: string;
         attributes?: string;
         billable?: boolean;
+        can_create_offering_user?: boolean;
         category_group_uuid?: string;
         category_uuid?: string;
         /**
@@ -32018,6 +32138,7 @@ export type MarketplaceProviderOfferingsCostsListData = {
         allowed_customer_uuid?: string;
         attributes?: string;
         billable?: boolean;
+        can_create_offering_user?: boolean;
         category_group_uuid?: string;
         category_uuid?: string;
         /**
@@ -32150,6 +32271,7 @@ export type MarketplaceProviderOfferingsCustomersListData = {
         allowed_customer_uuid?: string;
         attributes?: string;
         billable?: boolean;
+        can_create_offering_user?: boolean;
         category_group_uuid?: string;
         category_uuid?: string;
         /**
@@ -33047,6 +33169,7 @@ export type MarketplaceProviderOfferingsGroupsListData = {
         allowed_customer_uuid?: string;
         attributes?: string;
         billable?: boolean;
+        can_create_offering_user?: boolean;
         category_group_uuid?: string;
         category_uuid?: string;
         /**
@@ -33153,6 +33276,7 @@ export type MarketplaceProviderOfferingsGroupsCountData = {
         allowed_customer_uuid?: string;
         attributes?: string;
         billable?: boolean;
+        can_create_offering_user?: boolean;
         category_group_uuid?: string;
         category_uuid?: string;
         /**
@@ -33957,6 +34081,7 @@ export type MarketplacePublicOfferingsListData = {
         allowed_customer_uuid?: string;
         attributes?: string;
         billable?: boolean;
+        can_create_offering_user?: boolean;
         category_group_uuid?: string;
         category_uuid?: string;
         /**
@@ -34064,6 +34189,7 @@ export type MarketplacePublicOfferingsCountData = {
         allowed_customer_uuid?: string;
         attributes?: string;
         billable?: boolean;
+        can_create_offering_user?: boolean;
         category_group_uuid?: string;
         category_uuid?: string;
         /**
@@ -36112,6 +36238,7 @@ export type MarketplaceServiceProvidersOfferingsListData = {
         allowed_customer_uuid?: string;
         attributes?: string;
         billable?: boolean;
+        can_create_offering_user?: boolean;
         category_group_uuid?: string;
         category_uuid?: string;
         /**
@@ -40407,11 +40534,18 @@ export type OpenportalAllocationsPullData = {
     url: '/api/openportal-allocations/{uuid}/pull/';
 };
 
+export type OpenportalAllocationsPullErrors = {
+    /**
+     * No response body
+     */
+    409: unknown;
+};
+
 export type OpenportalAllocationsPullResponses = {
     /**
      * No response body
      */
-    200: unknown;
+    202: unknown;
 };
 
 export type OpenportalAllocationsSetLimitsData = {
@@ -40442,8 +40576,10 @@ export type OpenportalAllocationsUnlinkResponses = {
     /**
      * No response body
      */
-    200: unknown;
+    204: void;
 };
+
+export type OpenportalAllocationsUnlinkResponse = OpenportalAllocationsUnlinkResponses[keyof OpenportalAllocationsUnlinkResponses];
 
 export type OpenportalAssociationsListData = {
     body?: never;
@@ -41207,11 +41343,18 @@ export type OpenportalRemoteAllocationsPullData = {
     url: '/api/openportal-remote-allocations/{uuid}/pull/';
 };
 
+export type OpenportalRemoteAllocationsPullErrors = {
+    /**
+     * No response body
+     */
+    409: unknown;
+};
+
 export type OpenportalRemoteAllocationsPullResponses = {
     /**
      * No response body
      */
-    200: unknown;
+    202: unknown;
 };
 
 export type OpenportalRemoteAllocationsSetLimitsData = {
@@ -41242,8 +41385,10 @@ export type OpenportalRemoteAllocationsUnlinkResponses = {
     /**
      * No response body
      */
-    200: unknown;
+    204: void;
 };
+
+export type OpenportalRemoteAllocationsUnlinkResponse = OpenportalRemoteAllocationsUnlinkResponses[keyof OpenportalRemoteAllocationsUnlinkResponses];
 
 export type OpenportalRemoteAssociationsListData = {
     body?: never;
@@ -41732,6 +41877,9 @@ export type OpenportalUnmanagedProjectsStatsRetrieveData = {
         uuid: string;
     };
     query?: {
+        /**
+         * If true, returns usage data for the current month only. Otherwise, returns total usage.
+         */
         for_current_month?: boolean;
     };
     url: '/api/openportal-unmanaged-projects/{uuid}/stats/';
@@ -42169,11 +42317,18 @@ export type OpenstackBackupsPullData = {
     url: '/api/openstack-backups/{uuid}/pull/';
 };
 
+export type OpenstackBackupsPullErrors = {
+    /**
+     * No response body
+     */
+    409: unknown;
+};
+
 export type OpenstackBackupsPullResponses = {
     /**
      * No response body
      */
-    200: unknown;
+    202: unknown;
 };
 
 export type OpenstackBackupsRestoreData = {
@@ -42204,8 +42359,10 @@ export type OpenstackBackupsUnlinkResponses = {
     /**
      * No response body
      */
-    200: unknown;
+    204: void;
 };
+
+export type OpenstackBackupsUnlinkResponse = OpenstackBackupsUnlinkResponses[keyof OpenstackBackupsUnlinkResponses];
 
 export type OpenstackFlavorsListData = {
     body?: never;
@@ -42519,11 +42676,18 @@ export type OpenstackFloatingIpsPullData = {
     url: '/api/openstack-floating-ips/{uuid}/pull/';
 };
 
+export type OpenstackFloatingIpsPullErrors = {
+    /**
+     * No response body
+     */
+    409: unknown;
+};
+
 export type OpenstackFloatingIpsPullResponses = {
     /**
      * No response body
      */
-    200: unknown;
+    202: unknown;
 };
 
 export type OpenstackFloatingIpsUnlinkData = {
@@ -42539,8 +42703,10 @@ export type OpenstackFloatingIpsUnlinkResponses = {
     /**
      * No response body
      */
-    200: unknown;
+    204: void;
 };
+
+export type OpenstackFloatingIpsUnlinkResponse = OpenstackFloatingIpsUnlinkResponses[keyof OpenstackFloatingIpsUnlinkResponses];
 
 export type OpenstackFloatingIpsUpdateDescriptionData = {
     body?: OpenStackFloatingIpDescriptionUpdateRequest;
@@ -43004,11 +43170,18 @@ export type OpenstackInstancesPullData = {
     url: '/api/openstack-instances/{uuid}/pull/';
 };
 
+export type OpenstackInstancesPullErrors = {
+    /**
+     * No response body
+     */
+    409: unknown;
+};
+
 export type OpenstackInstancesPullResponses = {
     /**
      * No response body
      */
-    200: unknown;
+    202: unknown;
 };
 
 export type OpenstackInstancesRestartData = {
@@ -43072,8 +43245,10 @@ export type OpenstackInstancesUnlinkResponses = {
     /**
      * No response body
      */
-    200: unknown;
+    204: void;
 };
+
+export type OpenstackInstancesUnlinkResponse = OpenstackInstancesUnlinkResponses[keyof OpenstackInstancesUnlinkResponses];
 
 export type OpenstackInstancesUpdateAllowedAddressPairsData = {
     body: OpenStackInstanceAllowedAddressPairsUpdateRequest;
@@ -43755,11 +43930,18 @@ export type OpenstackNetworksPullData = {
     url: '/api/openstack-networks/{uuid}/pull/';
 };
 
+export type OpenstackNetworksPullErrors = {
+    /**
+     * No response body
+     */
+    409: unknown;
+};
+
 export type OpenstackNetworksPullResponses = {
     /**
      * No response body
      */
-    200: unknown;
+    202: unknown;
 };
 
 export type OpenstackNetworksRbacPolicyCreateData = {
@@ -43827,8 +44009,10 @@ export type OpenstackNetworksUnlinkResponses = {
     /**
      * No response body
      */
-    200: unknown;
+    204: void;
 };
+
+export type OpenstackNetworksUnlinkResponse = OpenstackNetworksUnlinkResponses[keyof OpenstackNetworksUnlinkResponses];
 
 export type OpenstackPortsListData = {
     body?: never;
@@ -44107,11 +44291,18 @@ export type OpenstackPortsPullData = {
     url: '/api/openstack-ports/{uuid}/pull/';
 };
 
+export type OpenstackPortsPullErrors = {
+    /**
+     * No response body
+     */
+    409: unknown;
+};
+
 export type OpenstackPortsPullResponses = {
     /**
      * No response body
      */
-    200: unknown;
+    202: unknown;
 };
 
 export type OpenstackPortsUnlinkData = {
@@ -44127,8 +44318,10 @@ export type OpenstackPortsUnlinkResponses = {
     /**
      * No response body
      */
-    200: unknown;
+    204: void;
 };
+
+export type OpenstackPortsUnlinkResponse = OpenstackPortsUnlinkResponses[keyof OpenstackPortsUnlinkResponses];
 
 export type OpenstackPortsUpdatePortIpData = {
     body: OpenStackPortIpUpdateRequest;
@@ -44485,11 +44678,18 @@ export type OpenstackSecurityGroupsPullData = {
     url: '/api/openstack-security-groups/{uuid}/pull/';
 };
 
+export type OpenstackSecurityGroupsPullErrors = {
+    /**
+     * No response body
+     */
+    409: unknown;
+};
+
 export type OpenstackSecurityGroupsPullResponses = {
     /**
      * No response body
      */
-    200: unknown;
+    202: unknown;
 };
 
 export type OpenstackSecurityGroupsSetRulesData = {
@@ -44521,8 +44721,10 @@ export type OpenstackSecurityGroupsUnlinkResponses = {
     /**
      * No response body
      */
-    200: unknown;
+    204: void;
 };
+
+export type OpenstackSecurityGroupsUnlinkResponse = OpenstackSecurityGroupsUnlinkResponses[keyof OpenstackSecurityGroupsUnlinkResponses];
 
 export type OpenstackServerGroupsListData = {
     body?: never;
@@ -44703,11 +44905,18 @@ export type OpenstackServerGroupsPullData = {
     url: '/api/openstack-server-groups/{uuid}/pull/';
 };
 
+export type OpenstackServerGroupsPullErrors = {
+    /**
+     * No response body
+     */
+    409: unknown;
+};
+
 export type OpenstackServerGroupsPullResponses = {
     /**
      * No response body
      */
-    200: unknown;
+    202: unknown;
 };
 
 export type OpenstackServerGroupsUnlinkData = {
@@ -44723,8 +44932,10 @@ export type OpenstackServerGroupsUnlinkResponses = {
     /**
      * No response body
      */
-    200: unknown;
+    204: void;
 };
+
+export type OpenstackServerGroupsUnlinkResponse = OpenstackServerGroupsUnlinkResponses[keyof OpenstackServerGroupsUnlinkResponses];
 
 export type OpenstackSnapshotsListData = {
     body?: never;
@@ -44902,11 +45113,18 @@ export type OpenstackSnapshotsPullData = {
     url: '/api/openstack-snapshots/{uuid}/pull/';
 };
 
+export type OpenstackSnapshotsPullErrors = {
+    /**
+     * No response body
+     */
+    409: unknown;
+};
+
 export type OpenstackSnapshotsPullResponses = {
     /**
      * No response body
      */
-    200: unknown;
+    202: unknown;
 };
 
 export type OpenstackSnapshotsRestorationsListData = {
@@ -44961,8 +45179,10 @@ export type OpenstackSnapshotsUnlinkResponses = {
     /**
      * No response body
      */
-    200: unknown;
+    204: void;
 };
+
+export type OpenstackSnapshotsUnlinkResponse = OpenstackSnapshotsUnlinkResponses[keyof OpenstackSnapshotsUnlinkResponses];
 
 export type OpenstackSubnetsListData = {
     body?: never;
@@ -45198,11 +45418,18 @@ export type OpenstackSubnetsPullData = {
     url: '/api/openstack-subnets/{uuid}/pull/';
 };
 
+export type OpenstackSubnetsPullErrors = {
+    /**
+     * No response body
+     */
+    409: unknown;
+};
+
 export type OpenstackSubnetsPullResponses = {
     /**
      * No response body
      */
-    200: unknown;
+    202: unknown;
 };
 
 export type OpenstackSubnetsUnlinkData = {
@@ -45218,8 +45445,10 @@ export type OpenstackSubnetsUnlinkResponses = {
     /**
      * No response body
      */
-    200: unknown;
+    204: void;
 };
+
+export type OpenstackSubnetsUnlinkResponse = OpenstackSubnetsUnlinkResponses[keyof OpenstackSubnetsUnlinkResponses];
 
 export type OpenstackTenantsListData = {
     body?: never;
@@ -45562,11 +45791,18 @@ export type OpenstackTenantsPullData = {
     url: '/api/openstack-tenants/{uuid}/pull/';
 };
 
+export type OpenstackTenantsPullErrors = {
+    /**
+     * No response body
+     */
+    409: unknown;
+};
+
 export type OpenstackTenantsPullResponses = {
     /**
      * No response body
      */
-    200: unknown;
+    202: unknown;
 };
 
 export type OpenstackTenantsPullFloatingIpsData = {
@@ -45659,8 +45895,10 @@ export type OpenstackTenantsUnlinkResponses = {
     /**
      * No response body
      */
-    200: unknown;
+    204: void;
 };
+
+export type OpenstackTenantsUnlinkResponse = OpenstackTenantsUnlinkResponses[keyof OpenstackTenantsUnlinkResponses];
 
 export type OpenstackVolumeAvailabilityZonesListData = {
     body?: never;
@@ -46045,11 +46283,18 @@ export type OpenstackVolumesPullData = {
     url: '/api/openstack-volumes/{uuid}/pull/';
 };
 
+export type OpenstackVolumesPullErrors = {
+    /**
+     * No response body
+     */
+    409: unknown;
+};
+
 export type OpenstackVolumesPullResponses = {
     /**
      * No response body
      */
-    200: unknown;
+    202: unknown;
 };
 
 export type OpenstackVolumesRetypeData = {
@@ -46096,8 +46341,10 @@ export type OpenstackVolumesUnlinkResponses = {
     /**
      * No response body
      */
-    200: unknown;
+    204: void;
 };
+
+export type OpenstackVolumesUnlinkResponse = OpenstackVolumesUnlinkResponses[keyof OpenstackVolumesUnlinkResponses];
 
 export type OrganizationGroupsListData = {
     body?: never;
@@ -47426,6 +47673,9 @@ export type ProjectsStatsRetrieveData = {
         uuid: string;
     };
     query?: {
+        /**
+         * If true, returns usage data for the current month only. Otherwise, returns total usage.
+         */
         for_current_month?: boolean;
     };
     url: '/api/projects/{uuid}/stats/';
@@ -50062,11 +50312,18 @@ export type RancherAppsPullData = {
     url: '/api/rancher-apps/{uuid}/pull/';
 };
 
+export type RancherAppsPullErrors = {
+    /**
+     * No response body
+     */
+    409: unknown;
+};
+
 export type RancherAppsPullResponses = {
     /**
      * No response body
      */
-    200: unknown;
+    202: unknown;
 };
 
 export type RancherAppsUnlinkData = {
@@ -50082,8 +50339,10 @@ export type RancherAppsUnlinkResponses = {
     /**
      * No response body
      */
-    200: unknown;
+    204: void;
 };
+
+export type RancherAppsUnlinkResponse = RancherAppsUnlinkResponses[keyof RancherAppsUnlinkResponses];
 
 export type RancherCatalogsListData = {
     body?: never;
@@ -50551,11 +50810,18 @@ export type RancherClustersPullData = {
     url: '/api/rancher-clusters/{uuid}/pull/';
 };
 
+export type RancherClustersPullErrors = {
+    /**
+     * No response body
+     */
+    409: unknown;
+};
+
 export type RancherClustersPullResponses = {
     /**
      * No response body
      */
-    200: unknown;
+    202: unknown;
 };
 
 export type RancherClustersUnlinkData = {
@@ -50571,8 +50837,10 @@ export type RancherClustersUnlinkResponses = {
     /**
      * No response body
      */
-    200: unknown;
+    204: void;
 };
+
+export type RancherClustersUnlinkResponse = RancherClustersUnlinkResponses[keyof RancherClustersUnlinkResponses];
 
 export type RancherHpasListData = {
     body?: never;
@@ -50720,11 +50988,18 @@ export type RancherHpasPullData = {
     url: '/api/rancher-hpas/{uuid}/pull/';
 };
 
+export type RancherHpasPullErrors = {
+    /**
+     * No response body
+     */
+    409: unknown;
+};
+
 export type RancherHpasPullResponses = {
     /**
      * No response body
      */
-    200: unknown;
+    202: unknown;
 };
 
 export type RancherHpasUnlinkData = {
@@ -50740,8 +51015,10 @@ export type RancherHpasUnlinkResponses = {
     /**
      * No response body
      */
-    200: unknown;
+    204: void;
 };
+
+export type RancherHpasUnlinkResponse = RancherHpasUnlinkResponses[keyof RancherHpasUnlinkResponses];
 
 export type RancherHpasYamlRetrieveData = {
     body?: never;
@@ -50954,11 +51231,18 @@ export type RancherIngressesPullData = {
     url: '/api/rancher-ingresses/{uuid}/pull/';
 };
 
+export type RancherIngressesPullErrors = {
+    /**
+     * No response body
+     */
+    409: unknown;
+};
+
 export type RancherIngressesPullResponses = {
     /**
      * No response body
      */
-    200: unknown;
+    202: unknown;
 };
 
 export type RancherIngressesUnlinkData = {
@@ -50974,8 +51258,10 @@ export type RancherIngressesUnlinkResponses = {
     /**
      * No response body
      */
-    200: unknown;
+    204: void;
 };
+
+export type RancherIngressesUnlinkResponse = RancherIngressesUnlinkResponses[keyof RancherIngressesUnlinkResponses];
 
 export type RancherIngressesYamlRetrieveData = {
     body?: never;
@@ -51250,11 +51536,18 @@ export type RancherNodesPullData = {
     url: '/api/rancher-nodes/{uuid}/pull/';
 };
 
+export type RancherNodesPullErrors = {
+    /**
+     * No response body
+     */
+    409: unknown;
+};
+
 export type RancherNodesPullResponses = {
     /**
      * No response body
      */
-    200: unknown;
+    202: unknown;
 };
 
 export type RancherNodesUnlinkData = {
@@ -51270,8 +51563,10 @@ export type RancherNodesUnlinkResponses = {
     /**
      * No response body
      */
-    200: unknown;
+    204: void;
 };
+
+export type RancherNodesUnlinkResponse = RancherNodesUnlinkResponses[keyof RancherNodesUnlinkResponses];
 
 export type RancherNodesUnlinkOpenstackData = {
     body?: never;
@@ -51633,11 +51928,18 @@ export type RancherServicesPullData = {
     url: '/api/rancher-services/{uuid}/pull/';
 };
 
+export type RancherServicesPullErrors = {
+    /**
+     * No response body
+     */
+    409: unknown;
+};
+
 export type RancherServicesPullResponses = {
     /**
      * No response body
      */
-    200: unknown;
+    202: unknown;
 };
 
 export type RancherServicesUnlinkData = {
@@ -51653,8 +51955,10 @@ export type RancherServicesUnlinkResponses = {
     /**
      * No response body
      */
-    200: unknown;
+    204: void;
 };
+
+export type RancherServicesUnlinkResponse = RancherServicesUnlinkResponses[keyof RancherServicesUnlinkResponses];
 
 export type RancherServicesYamlRetrieveData = {
     body?: never;
@@ -52944,11 +53248,18 @@ export type SlurmAllocationsPullData = {
     url: '/api/slurm-allocations/{uuid}/pull/';
 };
 
+export type SlurmAllocationsPullErrors = {
+    /**
+     * No response body
+     */
+    409: unknown;
+};
+
 export type SlurmAllocationsPullResponses = {
     /**
      * No response body
      */
-    200: unknown;
+    202: unknown;
 };
 
 export type SlurmAllocationsSetLimitsData = {
@@ -52979,8 +53290,10 @@ export type SlurmAllocationsUnlinkResponses = {
     /**
      * No response body
      */
-    200: unknown;
+    204: void;
 };
+
+export type SlurmAllocationsUnlinkResponse = SlurmAllocationsUnlinkResponses[keyof SlurmAllocationsUnlinkResponses];
 
 export type SlurmAssociationsListData = {
     body?: never;
@@ -53179,11 +53492,18 @@ export type SlurmJobsPullData = {
     url: '/api/slurm-jobs/{uuid}/pull/';
 };
 
+export type SlurmJobsPullErrors = {
+    /**
+     * No response body
+     */
+    409: unknown;
+};
+
 export type SlurmJobsPullResponses = {
     /**
      * No response body
      */
-    200: unknown;
+    202: unknown;
 };
 
 export type SlurmJobsUnlinkData = {
@@ -53199,8 +53519,10 @@ export type SlurmJobsUnlinkResponses = {
     /**
      * No response body
      */
-    200: unknown;
+    204: void;
 };
+
+export type SlurmJobsUnlinkResponse = SlurmJobsUnlinkResponses[keyof SlurmJobsUnlinkResponses];
 
 export type SupportAttachmentsListData = {
     body?: never;
@@ -54711,7 +55033,7 @@ export type UserInvitationsCancelData = {
 
 export type UserInvitationsCancelResponses = {
     /**
-     * No response body
+     * Invitation has been successfully canceled.
      */
     200: unknown;
 };
@@ -54896,10 +55218,11 @@ export type UserPermissionRequestsApproveData = {
 };
 
 export type UserPermissionRequestsApproveResponses = {
-    200: ReviewComment;
+    /**
+     * No response body
+     */
+    200: unknown;
 };
-
-export type UserPermissionRequestsApproveResponse = UserPermissionRequestsApproveResponses[keyof UserPermissionRequestsApproveResponses];
 
 export type UserPermissionRequestsCancelRequestData = {
     body?: never;
@@ -54926,10 +55249,11 @@ export type UserPermissionRequestsRejectData = {
 };
 
 export type UserPermissionRequestsRejectResponses = {
-    200: ReviewComment;
+    /**
+     * No response body
+     */
+    200: unknown;
 };
-
-export type UserPermissionRequestsRejectResponse = UserPermissionRequestsRejectResponses[keyof UserPermissionRequestsRejectResponses];
 
 export type UserPermissionsListData = {
     body?: never;
@@ -55774,11 +56098,18 @@ export type VmwareDisksPullData = {
     url: '/api/vmware-disks/{uuid}/pull/';
 };
 
+export type VmwareDisksPullErrors = {
+    /**
+     * No response body
+     */
+    409: unknown;
+};
+
 export type VmwareDisksPullResponses = {
     /**
      * No response body
      */
-    200: unknown;
+    202: unknown;
 };
 
 export type VmwareDisksUnlinkData = {
@@ -55794,8 +56125,10 @@ export type VmwareDisksUnlinkResponses = {
     /**
      * No response body
      */
-    200: unknown;
+    204: void;
 };
+
+export type VmwareDisksUnlinkResponse = VmwareDisksUnlinkResponses[keyof VmwareDisksUnlinkResponses];
 
 export type VmwareFoldersListData = {
     body?: never;
@@ -56112,11 +56445,18 @@ export type VmwarePortsPullData = {
     url: '/api/vmware-ports/{uuid}/pull/';
 };
 
+export type VmwarePortsPullErrors = {
+    /**
+     * No response body
+     */
+    409: unknown;
+};
+
 export type VmwarePortsPullResponses = {
     /**
      * No response body
      */
-    200: unknown;
+    202: unknown;
 };
 
 export type VmwarePortsUnlinkData = {
@@ -56132,8 +56472,10 @@ export type VmwarePortsUnlinkResponses = {
     /**
      * No response body
      */
-    200: unknown;
+    204: void;
 };
+
+export type VmwarePortsUnlinkResponse = VmwarePortsUnlinkResponses[keyof VmwarePortsUnlinkResponses];
 
 export type VmwareTemplatesListData = {
     body?: never;
@@ -56425,11 +56767,18 @@ export type VmwareVirtualMachinePullData = {
     url: '/api/vmware-virtual-machine/{uuid}/pull/';
 };
 
+export type VmwareVirtualMachinePullErrors = {
+    /**
+     * No response body
+     */
+    409: unknown;
+};
+
 export type VmwareVirtualMachinePullResponses = {
     /**
      * No response body
      */
-    200: unknown;
+    202: unknown;
 };
 
 export type VmwareVirtualMachineRebootGuestData = {
@@ -56541,8 +56890,10 @@ export type VmwareVirtualMachineUnlinkResponses = {
     /**
      * No response body
      */
-    200: unknown;
+    204: void;
 };
+
+export type VmwareVirtualMachineUnlinkResponse = VmwareVirtualMachineUnlinkResponses[keyof VmwareVirtualMachineUnlinkResponses];
 
 export type VmwareVirtualMachineWebConsoleRetrieveData = {
     body?: never;
