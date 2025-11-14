@@ -33294,7 +33294,7 @@ export type MarketplaceProviderResourcesListData = {
          *
          *
          */
-        o?: Array<'-created' | '-name' | '-project_name' | '-state' | 'created' | 'name' | 'project_name' | 'state'>;
+        o?: Array<'-created' | '-end_date' | '-name' | '-project_name' | '-state' | 'created' | 'end_date' | 'name' | 'project_name' | 'state'>;
         offering?: string;
         offering_billable?: boolean;
         /**
@@ -33411,7 +33411,7 @@ export type MarketplaceProviderResourcesCountData = {
          *
          *
          */
-        o?: Array<'-created' | '-name' | '-project_name' | '-state' | 'created' | 'name' | 'project_name' | 'state'>;
+        o?: Array<'-created' | '-end_date' | '-name' | '-project_name' | '-state' | 'created' | 'end_date' | 'name' | 'project_name' | 'state'>;
         offering?: string;
         offering_billable?: boolean;
         /**
@@ -34542,7 +34542,7 @@ export type MarketplaceResourcesListData = {
          *
          *
          */
-        o?: Array<'-created' | '-name' | '-project_name' | '-state' | 'created' | 'name' | 'project_name' | 'state'>;
+        o?: Array<'-created' | '-end_date' | '-name' | '-project_name' | '-state' | 'created' | 'end_date' | 'name' | 'project_name' | 'state'>;
         offering?: string;
         offering_billable?: boolean;
         /**
@@ -34659,7 +34659,7 @@ export type MarketplaceResourcesCountData = {
          *
          *
          */
-        o?: Array<'-created' | '-name' | '-project_name' | '-state' | 'created' | 'name' | 'project_name' | 'state'>;
+        o?: Array<'-created' | '-end_date' | '-name' | '-project_name' | '-state' | 'created' | 'end_date' | 'name' | 'project_name' | 'state'>;
         offering?: string;
         offering_billable?: boolean;
         /**
