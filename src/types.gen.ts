@@ -6377,7 +6377,11 @@ export type OfferingEstimatedCostPolicy = {
     limit_cost: number;
     period?: PeriodEnum;
     readonly period_name: string;
-    organization_groups: Array<string>;
+    organization_groups?: Array<string>;
+    /**
+     * If True, policy applies to all customers. Mutually exclusive with organization_groups.
+     */
+    apply_to_all?: boolean;
 };
 
 export type OfferingEstimatedCostPolicyRequest = {
@@ -6389,7 +6393,11 @@ export type OfferingEstimatedCostPolicyRequest = {
     options?: unknown;
     limit_cost: number;
     period?: PeriodEnum;
-    organization_groups: Array<string>;
+    organization_groups?: Array<string>;
+    /**
+     * If True, policy applies to all customers. Mutually exclusive with organization_groups.
+     */
+    apply_to_all?: boolean;
 };
 
 export type OfferingFile = {
@@ -6826,7 +6834,11 @@ export type OfferingUsagePolicy = {
      * Fields for saving actions extra data. Keys are name of actions.
      */
     options?: unknown;
-    organization_groups: Array<string>;
+    organization_groups?: Array<string>;
+    /**
+     * If True, policy applies to all customers. Mutually exclusive with organization_groups.
+     */
+    apply_to_all?: boolean;
     component_limits_set: Array<NestedOfferingComponentLimit>;
     period?: PeriodEnum;
     readonly period_name: string;
@@ -6839,7 +6851,11 @@ export type OfferingUsagePolicyRequest = {
      * Fields for saving actions extra data. Keys are name of actions.
      */
     options?: unknown;
-    organization_groups: Array<string>;
+    organization_groups?: Array<string>;
+    /**
+     * If True, policy applies to all customers. Mutually exclusive with organization_groups.
+     */
+    apply_to_all?: boolean;
     component_limits_set: Array<NestedOfferingComponentLimitRequest>;
     period?: PeriodEnum;
 };
@@ -8729,6 +8745,19 @@ export type OpenStackTenantRequest = {
      * Volume type name to use when creating volumes.
      */
     default_volume_type_name?: string;
+    security_groups?: Array<OpenStackTenantSecurityGroupRequest>;
+};
+
+export type OpenStackTenantSecurityGroup = {
+    name: string;
+    description?: string;
+    rules?: Array<OpenStackSecurityGroupRuleCreate>;
+};
+
+export type OpenStackTenantSecurityGroupRequest = {
+    name: string;
+    description?: string;
+    rules?: Array<OpenStackSecurityGroupRuleCreateRequest>;
 };
 
 export type OpenStackVolume = {
@@ -9659,6 +9688,10 @@ export type PatchedOfferingEstimatedCostPolicyRequest = {
     limit_cost?: number;
     period?: PeriodEnum;
     organization_groups?: Array<string>;
+    /**
+     * If True, policy applies to all customers. Mutually exclusive with organization_groups.
+     */
+    apply_to_all?: boolean;
 };
 
 export type PatchedOfferingPartitionUpdateRequest = {
@@ -9777,6 +9810,10 @@ export type PatchedOfferingUsagePolicyRequest = {
      */
     options?: unknown;
     organization_groups?: Array<string>;
+    /**
+     * If True, policy applies to all customers. Mutually exclusive with organization_groups.
+     */
+    apply_to_all?: boolean;
     component_limits_set?: Array<NestedOfferingComponentLimitRequest>;
     period?: PeriodEnum;
 };
@@ -9944,6 +9981,7 @@ export type PatchedOpenStackTenantRequest = {
      * Volume type name to use when creating volumes.
      */
     default_volume_type_name?: string;
+    security_groups?: Array<OpenStackTenantSecurityGroupRequest>;
 };
 
 export type PatchedOpenStackVolumeRequest = {
@@ -10492,6 +10530,10 @@ export type PatchedSlurmPeriodicUsagePolicyRequest = {
      */
     options?: unknown;
     organization_groups?: Array<string>;
+    /**
+     * If True, policy applies to all customers. Mutually exclusive with organization_groups.
+     */
+    apply_to_all?: boolean;
     component_limits_set?: Array<NestedOfferingComponentLimitRequest>;
     period?: PeriodEnum;
     /**
@@ -14661,7 +14703,11 @@ export type SlurmPeriodicUsagePolicy = {
      * Fields for saving actions extra data. Keys are name of actions.
      */
     options?: unknown;
-    organization_groups: Array<string>;
+    organization_groups?: Array<string>;
+    /**
+     * If True, policy applies to all customers. Mutually exclusive with organization_groups.
+     */
+    apply_to_all?: boolean;
     component_limits_set: Array<NestedOfferingComponentLimit>;
     period?: PeriodEnum;
     readonly period_name: string;
@@ -14706,7 +14752,11 @@ export type SlurmPeriodicUsagePolicyRequest = {
      * Fields for saving actions extra data. Keys are name of actions.
      */
     options?: unknown;
-    organization_groups: Array<string>;
+    organization_groups?: Array<string>;
+    /**
+     * If True, policy applies to all customers. Mutually exclusive with organization_groups.
+     */
+    apply_to_all?: boolean;
     component_limits_set: Array<NestedOfferingComponentLimitRequest>;
     period?: PeriodEnum;
     /**
@@ -45446,7 +45496,7 @@ export type OpenstackTenantsListData = {
         customer_uuid?: string;
         description?: string;
         external_ip?: string;
-        field?: Array<'availability_zone' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'default_volume_type_name' | 'description' | 'error_message' | 'error_traceback' | 'external_network_id' | 'internal_network_id' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_type' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'subnet_cidr' | 'url' | 'uuid'>;
+        field?: Array<'availability_zone' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'default_volume_type_name' | 'description' | 'error_message' | 'error_traceback' | 'external_network_id' | 'internal_network_id' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_type' | 'security_groups' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'subnet_cidr' | 'url' | 'uuid'>;
         name?: string;
         name_exact?: string;
         /**
@@ -45555,7 +45605,7 @@ export type OpenstackTenantsRetrieveData = {
         uuid: string;
     };
     query?: {
-        field?: Array<'availability_zone' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'default_volume_type_name' | 'description' | 'error_message' | 'error_traceback' | 'external_network_id' | 'internal_network_id' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_type' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'subnet_cidr' | 'url' | 'uuid'>;
+        field?: Array<'availability_zone' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'default_volume_type_name' | 'description' | 'error_message' | 'error_traceback' | 'external_network_id' | 'internal_network_id' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_type' | 'security_groups' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'subnet_cidr' | 'url' | 'uuid'>;
     };
     url: '/api/openstack-tenants/{uuid}/';
 };
