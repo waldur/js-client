@@ -3306,6 +3306,10 @@ export const callManagingOrganisationsUpdate = <ThrowOnError extends boolean = f
     });
 };
 
+/**
+ * Grant a role to a user
+ * Assigns a specific role to a user within the current scope. An optional expiration time for the role can be set.
+ */
 export const callManagingOrganisationsAddUser = <ThrowOnError extends boolean = false>(options: Options<CallManagingOrganisationsAddUserData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).post<CallManagingOrganisationsAddUserResponses, CallManagingOrganisationsAddUserErrors, ThrowOnError>({
         security: [
@@ -3327,6 +3331,10 @@ export const callManagingOrganisationsAddUser = <ThrowOnError extends boolean = 
     });
 };
 
+/**
+ * Revoke a role from a user
+ * Removes a specific role from a user within the current scope. This effectively revokes their permissions associated with that role.
+ */
 export const callManagingOrganisationsDeleteUser = <ThrowOnError extends boolean = false>(options: Options<CallManagingOrganisationsDeleteUserData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).post<CallManagingOrganisationsDeleteUserResponses, unknown, ThrowOnError>({
         security: [
@@ -3348,6 +3356,10 @@ export const callManagingOrganisationsDeleteUser = <ThrowOnError extends boolean
     });
 };
 
+/**
+ * List users and their roles in a scope
+ * Retrieves a list of users who have a role within a specific scope (e.g., a project or an organization). The list can be filtered by user details or role.
+ */
 export const callManagingOrganisationsListUsersList = <ThrowOnError extends boolean = false>(options: Options<CallManagingOrganisationsListUsersListData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).get<CallManagingOrganisationsListUsersListResponses, unknown, ThrowOnError>({
         security: [
@@ -3385,6 +3397,10 @@ export const callManagingOrganisationsStatsRetrieve = <ThrowOnError extends bool
     });
 };
 
+/**
+ * Update a user's role expiration
+ * Updates the expiration time for a user's existing role in the current scope. This is useful for extending or shortening the duration of a permission. To make a role permanent, set expiration_time to null.
+ */
 export const callManagingOrganisationsUpdateUser = <ThrowOnError extends boolean = false>(options: Options<CallManagingOrganisationsUpdateUserData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).post<CallManagingOrganisationsUpdateUserResponses, unknown, ThrowOnError>({
         security: [
@@ -5054,6 +5070,10 @@ export const customersUpdate = <ThrowOnError extends boolean = false>(options: O
     });
 };
 
+/**
+ * Grant a role to a user
+ * Assigns a specific role to a user within the current scope. An optional expiration time for the role can be set.
+ */
 export const customersAddUser = <ThrowOnError extends boolean = false>(options: Options<CustomersAddUserData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).post<CustomersAddUserResponses, CustomersAddUserErrors, ThrowOnError>({
         security: [
@@ -5075,6 +5095,10 @@ export const customersAddUser = <ThrowOnError extends boolean = false>(options: 
     });
 };
 
+/**
+ * Revoke a role from a user
+ * Removes a specific role from a user within the current scope. This effectively revokes their permissions associated with that role.
+ */
 export const customersDeleteUser = <ThrowOnError extends boolean = false>(options: Options<CustomersDeleteUserData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).post<CustomersDeleteUserResponses, unknown, ThrowOnError>({
         security: [
@@ -5096,6 +5120,10 @@ export const customersDeleteUser = <ThrowOnError extends boolean = false>(option
     });
 };
 
+/**
+ * List users and their roles in a scope
+ * Retrieves a list of users who have a role within a specific scope (e.g., a project or an organization). The list can be filtered by user details or role.
+ */
 export const customersListUsersList = <ThrowOnError extends boolean = false>(options: Options<CustomersListUsersListData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).get<CustomersListUsersListResponses, unknown, ThrowOnError>({
         security: [
@@ -5159,6 +5187,10 @@ export const customersUpdateOrganizationGroups = <ThrowOnError extends boolean =
     });
 };
 
+/**
+ * Update a user's role expiration
+ * Updates the expiration time for a user's existing role in the current scope. This is useful for extending or shortening the duration of a permission. To make a role permanent, set expiration_time to null.
+ */
 export const customersUpdateUser = <ThrowOnError extends boolean = false>(options: Options<CustomersUpdateUserData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).post<CustomersUpdateUserResponses, unknown, ThrowOnError>({
         security: [
@@ -13020,6 +13052,10 @@ export const marketplaceProviderOfferingsAddSoftwareCatalog = <ThrowOnError exte
     });
 };
 
+/**
+ * Grant a role to a user
+ * Assigns a specific role to a user within the current scope. An optional expiration time for the role can be set.
+ */
 export const marketplaceProviderOfferingsAddUser = <ThrowOnError extends boolean = false>(options: Options<MarketplaceProviderOfferingsAddUserData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).post<MarketplaceProviderOfferingsAddUserResponses, MarketplaceProviderOfferingsAddUserErrors, ThrowOnError>({
         security: [
@@ -13223,6 +13259,10 @@ export const marketplaceProviderOfferingsDeleteThumbnail = <ThrowOnError extends
     });
 };
 
+/**
+ * Revoke a role from a user
+ * Removes a specific role from a user within the current scope. This effectively revokes their permissions associated with that role.
+ */
 export const marketplaceProviderOfferingsDeleteUser = <ThrowOnError extends boolean = false>(options: Options<MarketplaceProviderOfferingsDeleteUserData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).post<MarketplaceProviderOfferingsDeleteUserResponses, unknown, ThrowOnError>({
         security: [
@@ -13410,6 +13450,10 @@ export const marketplaceProviderOfferingsListProjectServiceAccountsRetrieve = <T
     });
 };
 
+/**
+ * List users and their roles in a scope
+ * Retrieves a list of users who have a role within a specific scope (e.g., a project or an organization). The list can be filtered by user details or role.
+ */
 export const marketplaceProviderOfferingsListUsersList = <ThrowOnError extends boolean = false>(options: Options<MarketplaceProviderOfferingsListUsersListData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).get<MarketplaceProviderOfferingsListUsersListResponses, unknown, ThrowOnError>({
         security: [
@@ -13996,6 +14040,10 @@ export const marketplaceProviderOfferingsUpdateThumbnail = <ThrowOnError extends
     });
 };
 
+/**
+ * Update a user's role expiration
+ * Updates the expiration time for a user's existing role in the current scope. This is useful for extending or shortening the duration of a permission. To make a role permanent, set expiration_time to null.
+ */
 export const marketplaceProviderOfferingsUpdateUser = <ThrowOnError extends boolean = false>(options: Options<MarketplaceProviderOfferingsUpdateUserData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).post<MarketplaceProviderOfferingsUpdateUserResponses, unknown, ThrowOnError>({
         security: [
@@ -16706,6 +16754,10 @@ export const marketplaceServiceProvidersUpdate = <ThrowOnError extends boolean =
     });
 };
 
+/**
+ * Grant a role to a user
+ * Assigns a specific role to a user within the current scope. An optional expiration time for the role can be set.
+ */
 export const marketplaceServiceProvidersAddUser = <ThrowOnError extends boolean = false>(options: Options<MarketplaceServiceProvidersAddUserData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).post<MarketplaceServiceProvidersAddUserResponses, MarketplaceServiceProvidersAddUserErrors, ThrowOnError>({
         security: [
@@ -16767,6 +16819,10 @@ export const serviceProviderApiSecretCodeGenerate = <ThrowOnError extends boolea
     });
 };
 
+/**
+ * Revoke a role from a user
+ * Removes a specific role from a user within the current scope. This effectively revokes their permissions associated with that role.
+ */
 export const marketplaceServiceProvidersDeleteUser = <ThrowOnError extends boolean = false>(options: Options<MarketplaceServiceProvidersDeleteUserData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).post<MarketplaceServiceProvidersDeleteUserResponses, unknown, ThrowOnError>({
         security: [
@@ -16788,6 +16844,10 @@ export const marketplaceServiceProvidersDeleteUser = <ThrowOnError extends boole
     });
 };
 
+/**
+ * List users and their roles in a scope
+ * Retrieves a list of users who have a role within a specific scope (e.g., a project or an organization). The list can be filtered by user details or role.
+ */
 export const marketplaceServiceProvidersListUsersList = <ThrowOnError extends boolean = false>(options: Options<MarketplaceServiceProvidersListUsersListData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).get<MarketplaceServiceProvidersListUsersListResponses, unknown, ThrowOnError>({
         security: [
@@ -16894,6 +16954,10 @@ export const marketplaceServiceProvidersStatRetrieve = <ThrowOnError extends boo
     });
 };
 
+/**
+ * Update a user's role expiration
+ * Updates the expiration time for a user's existing role in the current scope. This is useful for extending or shortening the duration of a permission. To make a role permanent, set expiration_time to null.
+ */
 export const marketplaceServiceProvidersUpdateUser = <ThrowOnError extends boolean = false>(options: Options<MarketplaceServiceProvidersUpdateUserData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).post<MarketplaceServiceProvidersUpdateUserResponses, unknown, ThrowOnError>({
         security: [
@@ -21415,6 +21479,10 @@ export const openportalUnmanagedProjectsUpdate = <ThrowOnError extends boolean =
     });
 };
 
+/**
+ * Grant a role to a user
+ * Assigns a specific role to a user within the current scope. An optional expiration time for the role can be set.
+ */
 export const openportalUnmanagedProjectsAddUser = <ThrowOnError extends boolean = false>(options: Options<OpenportalUnmanagedProjectsAddUserData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).post<OpenportalUnmanagedProjectsAddUserResponses, OpenportalUnmanagedProjectsAddUserErrors, ThrowOnError>({
         security: [
@@ -21476,6 +21544,10 @@ export const openportalUnmanagedProjectsCompletionStatusRetrieve = <ThrowOnError
     });
 };
 
+/**
+ * Revoke a role from a user
+ * Removes a specific role from a user within the current scope. This effectively revokes their permissions associated with that role.
+ */
 export const openportalUnmanagedProjectsDeleteUser = <ThrowOnError extends boolean = false>(options: Options<OpenportalUnmanagedProjectsDeleteUserData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).post<OpenportalUnmanagedProjectsDeleteUserResponses, unknown, ThrowOnError>({
         security: [
@@ -21497,6 +21569,10 @@ export const openportalUnmanagedProjectsDeleteUser = <ThrowOnError extends boole
     });
 };
 
+/**
+ * List users and their roles in a scope
+ * Retrieves a list of users who have a role within a specific scope (e.g., a project or an organization). The list can be filtered by user details or role.
+ */
 export const openportalUnmanagedProjectsListUsersList = <ThrowOnError extends boolean = false>(options: Options<OpenportalUnmanagedProjectsListUsersListData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).get<OpenportalUnmanagedProjectsListUsersListResponses, unknown, ThrowOnError>({
         security: [
@@ -21609,6 +21685,10 @@ export const openportalUnmanagedProjectsSubmitAnswers = <ThrowOnError extends bo
     });
 };
 
+/**
+ * Update a user's role expiration
+ * Updates the expiration time for a user's existing role in the current scope. This is useful for extending or shortening the duration of a permission. To make a role permanent, set expiration_time to null.
+ */
 export const openportalUnmanagedProjectsUpdateUser = <ThrowOnError extends boolean = false>(options: Options<OpenportalUnmanagedProjectsUpdateUserData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).post<OpenportalUnmanagedProjectsUpdateUserResponses, unknown, ThrowOnError>({
         security: [
@@ -21862,6 +21942,10 @@ export const openportalUserinfoMeCount = <ThrowOnError extends boolean = false>(
     });
 };
 
+/**
+ * List backups
+ * Get a list of instance backups.
+ */
 export const openstackBackupsList = <ThrowOnError extends boolean = false>(options?: Options<OpenstackBackupsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<OpenstackBackupsListResponses, unknown, ThrowOnError>({
         security: [
@@ -21880,6 +21964,7 @@ export const openstackBackupsList = <ThrowOnError extends boolean = false>(optio
 };
 
 /**
+ * List backups
  * Get number of items in the collection matching the request parameters.
  */
 export const openstackBackupsCount = <ThrowOnError extends boolean = false>(options?: Options<OpenstackBackupsCountData, ThrowOnError>) => {
@@ -21899,6 +21984,10 @@ export const openstackBackupsCount = <ThrowOnError extends boolean = false>(opti
     });
 };
 
+/**
+ * Delete backup
+ * Delete an instance backup.
+ */
 export const openstackBackupsDestroy = <ThrowOnError extends boolean = false>(options: Options<OpenstackBackupsDestroyData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).delete<OpenstackBackupsDestroyResponses, unknown, ThrowOnError>({
         security: [
@@ -21916,6 +22005,10 @@ export const openstackBackupsDestroy = <ThrowOnError extends boolean = false>(op
     });
 };
 
+/**
+ * Get backup details
+ * Retrieve details of a specific instance backup.
+ */
 export const openstackBackupsRetrieve = <ThrowOnError extends boolean = false>(options: Options<OpenstackBackupsRetrieveData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).get<OpenstackBackupsRetrieveResponses, unknown, ThrowOnError>({
         security: [
@@ -21933,6 +22026,10 @@ export const openstackBackupsRetrieve = <ThrowOnError extends boolean = false>(o
     });
 };
 
+/**
+ * Partially update backup
+ * Update specific fields of an instance backup.
+ */
 export const openstackBackupsPartialUpdate = <ThrowOnError extends boolean = false>(options: Options<OpenstackBackupsPartialUpdateData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).patch<OpenstackBackupsPartialUpdateResponses, unknown, ThrowOnError>({
         security: [
@@ -21954,6 +22051,10 @@ export const openstackBackupsPartialUpdate = <ThrowOnError extends boolean = fal
     });
 };
 
+/**
+ * Update backup
+ * Update an existing instance backup.
+ */
 export const openstackBackupsUpdate = <ThrowOnError extends boolean = false>(options: Options<OpenstackBackupsUpdateData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).put<OpenstackBackupsUpdateResponses, unknown, ThrowOnError>({
         security: [
@@ -21997,6 +22098,7 @@ export const openstackBackupsPull = <ThrowOnError extends boolean = false>(optio
 };
 
 /**
+ * Restore instance from backup
  * Restore instance from backup
  */
 export const openstackBackupsRestore = <ThrowOnError extends boolean = false>(options: Options<OpenstackBackupsRestoreData, ThrowOnError>) => {
@@ -22043,6 +22145,10 @@ export const openstackBackupsUnlink = <ThrowOnError extends boolean = false>(opt
     });
 };
 
+/**
+ * List flavors
+ * Get a list of available VM instance flavors.
+ */
 export const openstackFlavorsList = <ThrowOnError extends boolean = false>(options?: Options<OpenstackFlavorsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<OpenstackFlavorsListResponses, unknown, ThrowOnError>({
         security: [
@@ -22061,6 +22167,7 @@ export const openstackFlavorsList = <ThrowOnError extends boolean = false>(optio
 };
 
 /**
+ * List flavors
  * Get number of items in the collection matching the request parameters.
  */
 export const openstackFlavorsCount = <ThrowOnError extends boolean = false>(options?: Options<OpenstackFlavorsCountData, ThrowOnError>) => {
@@ -22080,6 +22187,10 @@ export const openstackFlavorsCount = <ThrowOnError extends boolean = false>(opti
     });
 };
 
+/**
+ * Get flavor details
+ * Retrieve details of a specific VM instance flavor.
+ */
 export const openstackFlavorsRetrieve = <ThrowOnError extends boolean = false>(options: Options<OpenstackFlavorsRetrieveData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).get<OpenstackFlavorsRetrieveResponses, unknown, ThrowOnError>({
         security: [
@@ -22097,6 +22208,10 @@ export const openstackFlavorsRetrieve = <ThrowOnError extends boolean = false>(o
     });
 };
 
+/**
+ * Get flavor usage statistics
+ * Retrieve usage statistics for VM instance flavors, showing running and created instance counts for each flavor.
+ */
 export const openstackFlavorsUsageStatsRetrieve = <ThrowOnError extends boolean = false>(options?: Options<OpenstackFlavorsUsageStatsRetrieveData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<OpenstackFlavorsUsageStatsRetrieveResponses, unknown, ThrowOnError>({
         security: [
@@ -22115,6 +22230,7 @@ export const openstackFlavorsUsageStatsRetrieve = <ThrowOnError extends boolean 
 };
 
 /**
+ * Get flavor usage statistics
  * Get number of items in the collection matching the request parameters.
  */
 export const openstackFlavorsUsageStatsCount = <ThrowOnError extends boolean = false>(options?: Options<OpenstackFlavorsUsageStatsCountData, ThrowOnError>) => {
@@ -22135,7 +22251,8 @@ export const openstackFlavorsUsageStatsCount = <ThrowOnError extends boolean = f
 };
 
 /**
- * Status *DOWN* means that floating IP is not linked to a VM, status *ACTIVE* means that it is in use.
+ * List floating IPs
+ * Get a list of floating IP addresses. Status *DOWN* means that floating IP is not linked to a VM, status *ACTIVE* means that it is in use.
  */
 export const openstackFloatingIpsList = <ThrowOnError extends boolean = false>(options?: Options<OpenstackFloatingIpsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<OpenstackFloatingIpsListResponses, unknown, ThrowOnError>({
@@ -22155,6 +22272,7 @@ export const openstackFloatingIpsList = <ThrowOnError extends boolean = false>(o
 };
 
 /**
+ * List floating IPs
  * Get number of items in the collection matching the request parameters.
  */
 export const openstackFloatingIpsCount = <ThrowOnError extends boolean = false>(options?: Options<OpenstackFloatingIpsCountData, ThrowOnError>) => {
@@ -22174,6 +22292,10 @@ export const openstackFloatingIpsCount = <ThrowOnError extends boolean = false>(
     });
 };
 
+/**
+ * Delete floating IP
+ * Delete a floating IP address.
+ */
 export const openstackFloatingIpsDestroy = <ThrowOnError extends boolean = false>(options: Options<OpenstackFloatingIpsDestroyData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).delete<OpenstackFloatingIpsDestroyResponses, unknown, ThrowOnError>({
         security: [
@@ -22191,6 +22313,10 @@ export const openstackFloatingIpsDestroy = <ThrowOnError extends boolean = false
     });
 };
 
+/**
+ * Get floating IP details
+ * Retrieve details of a specific floating IP address.
+ */
 export const openstackFloatingIpsRetrieve = <ThrowOnError extends boolean = false>(options: Options<OpenstackFloatingIpsRetrieveData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).get<OpenstackFloatingIpsRetrieveResponses, unknown, ThrowOnError>({
         security: [
@@ -22209,6 +22335,7 @@ export const openstackFloatingIpsRetrieve = <ThrowOnError extends boolean = fals
 };
 
 /**
+ * Attach floating IP to a port
  * Attach floating IP to port
  */
 export const openstackFloatingIpsAttachToPort = <ThrowOnError extends boolean = false>(options: Options<OpenstackFloatingIpsAttachToPortData, ThrowOnError>) => {
@@ -22233,6 +22360,7 @@ export const openstackFloatingIpsAttachToPort = <ThrowOnError extends boolean = 
 };
 
 /**
+ * Detach floating IP from port
  * Detach floating IP from port
  */
 export const openstackFloatingIpsDetachFromPort = <ThrowOnError extends boolean = false>(options: Options<OpenstackFloatingIpsDetachFromPortData, ThrowOnError>) => {
@@ -22297,6 +22425,7 @@ export const openstackFloatingIpsUnlink = <ThrowOnError extends boolean = false>
 };
 
 /**
+ * Update floating IP description
  * Update description of the floating IP
  */
 export const openstackFloatingIpsUpdateDescription = <ThrowOnError extends boolean = false>(options: Options<OpenstackFloatingIpsUpdateDescriptionData, ThrowOnError>) => {
@@ -22320,6 +22449,10 @@ export const openstackFloatingIpsUpdateDescription = <ThrowOnError extends boole
     });
 };
 
+/**
+ * List images
+ * Get a list of available VM instance images.
+ */
 export const openstackImagesList = <ThrowOnError extends boolean = false>(options?: Options<OpenstackImagesListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<OpenstackImagesListResponses, unknown, ThrowOnError>({
         security: [
@@ -22338,6 +22471,7 @@ export const openstackImagesList = <ThrowOnError extends boolean = false>(option
 };
 
 /**
+ * List images
  * Get number of items in the collection matching the request parameters.
  */
 export const openstackImagesCount = <ThrowOnError extends boolean = false>(options?: Options<OpenstackImagesCountData, ThrowOnError>) => {
@@ -22357,6 +22491,10 @@ export const openstackImagesCount = <ThrowOnError extends boolean = false>(optio
     });
 };
 
+/**
+ * Get image details
+ * Retrieve details of a specific VM instance image.
+ */
 export const openstackImagesRetrieve = <ThrowOnError extends boolean = false>(options: Options<OpenstackImagesRetrieveData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).get<OpenstackImagesRetrieveResponses, unknown, ThrowOnError>({
         security: [
@@ -22374,6 +22512,10 @@ export const openstackImagesRetrieve = <ThrowOnError extends boolean = false>(op
     });
 };
 
+/**
+ * Get image usage statistics
+ * Retrieve usage statistics for VM instance images, showing running and created instance counts for each image.
+ */
 export const openstackImagesUsageStatsRetrieve = <ThrowOnError extends boolean = false>(options?: Options<OpenstackImagesUsageStatsRetrieveData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<OpenstackImagesUsageStatsRetrieveResponses, unknown, ThrowOnError>({
         security: [
@@ -22392,6 +22534,7 @@ export const openstackImagesUsageStatsRetrieve = <ThrowOnError extends boolean =
 };
 
 /**
+ * Get image usage statistics
  * Get number of items in the collection matching the request parameters.
  */
 export const openstackImagesUsageStatsCount = <ThrowOnError extends boolean = false>(options?: Options<OpenstackImagesUsageStatsCountData, ThrowOnError>) => {
@@ -22411,6 +22554,10 @@ export const openstackImagesUsageStatsCount = <ThrowOnError extends boolean = fa
     });
 };
 
+/**
+ * List instance availability zones
+ * Get a list of instance availability zones.
+ */
 export const openstackInstanceAvailabilityZonesList = <ThrowOnError extends boolean = false>(options?: Options<OpenstackInstanceAvailabilityZonesListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<OpenstackInstanceAvailabilityZonesListResponses, unknown, ThrowOnError>({
         security: [
@@ -22429,6 +22576,7 @@ export const openstackInstanceAvailabilityZonesList = <ThrowOnError extends bool
 };
 
 /**
+ * List instance availability zones
  * Get number of items in the collection matching the request parameters.
  */
 export const openstackInstanceAvailabilityZonesCount = <ThrowOnError extends boolean = false>(options?: Options<OpenstackInstanceAvailabilityZonesCountData, ThrowOnError>) => {
@@ -22448,6 +22596,10 @@ export const openstackInstanceAvailabilityZonesCount = <ThrowOnError extends boo
     });
 };
 
+/**
+ * Get instance availability zone details
+ * Retrieve details of a specific instance availability zone.
+ */
 export const openstackInstanceAvailabilityZonesRetrieve = <ThrowOnError extends boolean = false>(options: Options<OpenstackInstanceAvailabilityZonesRetrieveData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).get<OpenstackInstanceAvailabilityZonesRetrieveResponses, unknown, ThrowOnError>({
         security: [
@@ -22465,6 +22617,10 @@ export const openstackInstanceAvailabilityZonesRetrieve = <ThrowOnError extends 
     });
 };
 
+/**
+ * List instances
+ * Get a list of VM instances.
+ */
 export const openstackInstancesList = <ThrowOnError extends boolean = false>(options?: Options<OpenstackInstancesListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<OpenstackInstancesListResponses, unknown, ThrowOnError>({
         security: [
@@ -22483,6 +22639,7 @@ export const openstackInstancesList = <ThrowOnError extends boolean = false>(opt
 };
 
 /**
+ * List instances
  * Get number of items in the collection matching the request parameters.
  */
 export const openstackInstancesCount = <ThrowOnError extends boolean = false>(options?: Options<OpenstackInstancesCountData, ThrowOnError>) => {
@@ -22502,6 +22659,10 @@ export const openstackInstancesCount = <ThrowOnError extends boolean = false>(op
     });
 };
 
+/**
+ * Get instance details
+ * Retrieve details of a specific VM instance.
+ */
 export const openstackInstancesRetrieve = <ThrowOnError extends boolean = false>(options: Options<OpenstackInstancesRetrieveData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).get<OpenstackInstancesRetrieveResponses, unknown, ThrowOnError>({
         security: [
@@ -22519,6 +22680,10 @@ export const openstackInstancesRetrieve = <ThrowOnError extends boolean = false>
     });
 };
 
+/**
+ * Partially update instance
+ * Update specific fields of a VM instance.
+ */
 export const openstackInstancesPartialUpdate = <ThrowOnError extends boolean = false>(options: Options<OpenstackInstancesPartialUpdateData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).patch<OpenstackInstancesPartialUpdateResponses, unknown, ThrowOnError>({
         security: [
@@ -22540,6 +22705,10 @@ export const openstackInstancesPartialUpdate = <ThrowOnError extends boolean = f
     });
 };
 
+/**
+ * Update instance
+ * Update an existing VM instance.
+ */
 export const openstackInstancesUpdate = <ThrowOnError extends boolean = false>(options: Options<OpenstackInstancesUpdateData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).put<OpenstackInstancesUpdateResponses, unknown, ThrowOnError>({
         security: [
@@ -22562,6 +22731,7 @@ export const openstackInstancesUpdate = <ThrowOnError extends boolean = false>(o
 };
 
 /**
+ * Create instance backup
  * Create backup from instance
  */
 export const openstackInstancesBackup = <ThrowOnError extends boolean = false>(options: Options<OpenstackInstancesBackupData, ThrowOnError>) => {
@@ -22586,6 +22756,7 @@ export const openstackInstancesBackup = <ThrowOnError extends boolean = false>(o
 };
 
 /**
+ * Change instance flavor
  * Change flavor of the instance
  */
 export const openstackInstancesChangeFlavor = <ThrowOnError extends boolean = false>(options: Options<OpenstackInstancesChangeFlavorData, ThrowOnError>) => {
@@ -22610,6 +22781,7 @@ export const openstackInstancesChangeFlavor = <ThrowOnError extends boolean = fa
 };
 
 /**
+ * Get console URL
  * Get console url for the instance
  */
 export const openstackInstancesConsoleRetrieve = <ThrowOnError extends boolean = false>(options: Options<OpenstackInstancesConsoleRetrieveData, ThrowOnError>) => {
@@ -22630,6 +22802,7 @@ export const openstackInstancesConsoleRetrieve = <ThrowOnError extends boolean =
 };
 
 /**
+ * Get console log
  * Get console log for the instance
  */
 export const openstackInstancesConsoleLogRetrieve = <ThrowOnError extends boolean = false>(options: Options<OpenstackInstancesConsoleLogRetrieveData, ThrowOnError>) => {
@@ -22650,6 +22823,7 @@ export const openstackInstancesConsoleLogRetrieve = <ThrowOnError extends boolea
 };
 
 /**
+ * List instance floating IPs
  * Get a list of instance floating IPs
  */
 export const openstackInstancesFloatingIpsList = <ThrowOnError extends boolean = false>(options: Options<OpenstackInstancesFloatingIpsListData, ThrowOnError>) => {
@@ -22670,6 +22844,7 @@ export const openstackInstancesFloatingIpsList = <ThrowOnError extends boolean =
 };
 
 /**
+ * List instance ports
  * Get a list of instance ports
  */
 export const openstackInstancesPortsList = <ThrowOnError extends boolean = false>(options: Options<OpenstackInstancesPortsListData, ThrowOnError>) => {
@@ -22711,6 +22886,7 @@ export const openstackInstancesPull = <ThrowOnError extends boolean = false>(opt
 };
 
 /**
+ * Restart instance
  * Restart the instance
  */
 export const openstackInstancesRestart = <ThrowOnError extends boolean = false>(options: Options<OpenstackInstancesRestartData, ThrowOnError>) => {
@@ -22731,6 +22907,7 @@ export const openstackInstancesRestart = <ThrowOnError extends boolean = false>(
 };
 
 /**
+ * Start instance
  * Start the instance
  */
 export const openstackInstancesStart = <ThrowOnError extends boolean = false>(options: Options<OpenstackInstancesStartData, ThrowOnError>) => {
@@ -22751,6 +22928,7 @@ export const openstackInstancesStart = <ThrowOnError extends boolean = false>(op
 };
 
 /**
+ * Stop instance
  * Stop the instance
  */
 export const openstackInstancesStop = <ThrowOnError extends boolean = false>(options: Options<OpenstackInstancesStopData, ThrowOnError>) => {
@@ -22794,6 +22972,7 @@ export const openstackInstancesUnlink = <ThrowOnError extends boolean = false>(o
 };
 
 /**
+ * Update instance allowed address pairs
  * Update allowed address pairs of the instance
  */
 export const openstackInstancesUpdateAllowedAddressPairs = <ThrowOnError extends boolean = false>(options: Options<OpenstackInstancesUpdateAllowedAddressPairsData, ThrowOnError>) => {
@@ -22818,6 +22997,7 @@ export const openstackInstancesUpdateAllowedAddressPairs = <ThrowOnError extends
 };
 
 /**
+ * Update instance floating IPs
  * Update floating IPs of the instance
  */
 export const openstackInstancesUpdateFloatingIps = <ThrowOnError extends boolean = false>(options: Options<OpenstackInstancesUpdateFloatingIpsData, ThrowOnError>) => {
@@ -22842,6 +23022,7 @@ export const openstackInstancesUpdateFloatingIps = <ThrowOnError extends boolean
 };
 
 /**
+ * Update instance ports
  * Update ports of the instance
  */
 export const openstackInstancesUpdatePorts = <ThrowOnError extends boolean = false>(options: Options<OpenstackInstancesUpdatePortsData, ThrowOnError>) => {
@@ -22866,6 +23047,7 @@ export const openstackInstancesUpdatePorts = <ThrowOnError extends boolean = fal
 };
 
 /**
+ * Update instance security groups
  * Update security groups of the instance
  */
 export const openstackInstancesUpdateSecurityGroups = <ThrowOnError extends boolean = false>(options: Options<OpenstackInstancesUpdateSecurityGroupsData, ThrowOnError>) => {
@@ -23119,6 +23301,10 @@ export const openstackMigrationsUpdate = <ThrowOnError extends boolean = false>(
     });
 };
 
+/**
+ * List network RBAC policies
+ * Get a list of network RBAC policies.
+ */
 export const openstackNetworkRbacPoliciesList = <ThrowOnError extends boolean = false>(options?: Options<OpenstackNetworkRbacPoliciesListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<OpenstackNetworkRbacPoliciesListResponses, unknown, ThrowOnError>({
         security: [
@@ -23137,6 +23323,7 @@ export const openstackNetworkRbacPoliciesList = <ThrowOnError extends boolean = 
 };
 
 /**
+ * List network RBAC policies
  * Get number of items in the collection matching the request parameters.
  */
 export const openstackNetworkRbacPoliciesCount = <ThrowOnError extends boolean = false>(options?: Options<OpenstackNetworkRbacPoliciesCountData, ThrowOnError>) => {
@@ -23157,6 +23344,7 @@ export const openstackNetworkRbacPoliciesCount = <ThrowOnError extends boolean =
 };
 
 /**
+ * Create RBAC policy
  * Create RBAC policy for the network
  */
 export const openstackNetworkRbacPoliciesCreate = <ThrowOnError extends boolean = false>(options: Options<OpenstackNetworkRbacPoliciesCreateData, ThrowOnError>) => {
@@ -23181,6 +23369,7 @@ export const openstackNetworkRbacPoliciesCreate = <ThrowOnError extends boolean 
 };
 
 /**
+ * Delete RBAC policy
  * Delete RBAC policy for the network
  */
 export const openstackNetworkRbacPoliciesDestroy = <ThrowOnError extends boolean = false>(options: Options<OpenstackNetworkRbacPoliciesDestroyData, ThrowOnError>) => {
@@ -23200,6 +23389,10 @@ export const openstackNetworkRbacPoliciesDestroy = <ThrowOnError extends boolean
     });
 };
 
+/**
+ * Get network RBAC policy details
+ * Retrieve details of a specific network RBAC policy.
+ */
 export const openstackNetworkRbacPoliciesRetrieve = <ThrowOnError extends boolean = false>(options: Options<OpenstackNetworkRbacPoliciesRetrieveData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).get<OpenstackNetworkRbacPoliciesRetrieveResponses, unknown, ThrowOnError>({
         security: [
@@ -23259,6 +23452,10 @@ export const openstackNetworkRbacPoliciesUpdate = <ThrowOnError extends boolean 
     });
 };
 
+/**
+ * List networks
+ * Get a list of networks.
+ */
 export const openstackNetworksList = <ThrowOnError extends boolean = false>(options?: Options<OpenstackNetworksListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<OpenstackNetworksListResponses, unknown, ThrowOnError>({
         security: [
@@ -23277,6 +23474,7 @@ export const openstackNetworksList = <ThrowOnError extends boolean = false>(opti
 };
 
 /**
+ * List networks
  * Get number of items in the collection matching the request parameters.
  */
 export const openstackNetworksCount = <ThrowOnError extends boolean = false>(options?: Options<OpenstackNetworksCountData, ThrowOnError>) => {
@@ -23296,6 +23494,10 @@ export const openstackNetworksCount = <ThrowOnError extends boolean = false>(opt
     });
 };
 
+/**
+ * Delete network
+ * Delete a network.
+ */
 export const openstackNetworksDestroy = <ThrowOnError extends boolean = false>(options: Options<OpenstackNetworksDestroyData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).delete<OpenstackNetworksDestroyResponses, unknown, ThrowOnError>({
         security: [
@@ -23313,6 +23515,10 @@ export const openstackNetworksDestroy = <ThrowOnError extends boolean = false>(o
     });
 };
 
+/**
+ * Get network details
+ * Retrieve details of a specific network.
+ */
 export const openstackNetworksRetrieve = <ThrowOnError extends boolean = false>(options: Options<OpenstackNetworksRetrieveData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).get<OpenstackNetworksRetrieveResponses, unknown, ThrowOnError>({
         security: [
@@ -23330,6 +23536,10 @@ export const openstackNetworksRetrieve = <ThrowOnError extends boolean = false>(
     });
 };
 
+/**
+ * Partially update network
+ * Update specific fields of a network.
+ */
 export const openstackNetworksPartialUpdate = <ThrowOnError extends boolean = false>(options: Options<OpenstackNetworksPartialUpdateData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).patch<OpenstackNetworksPartialUpdateResponses, unknown, ThrowOnError>({
         security: [
@@ -23351,6 +23561,10 @@ export const openstackNetworksPartialUpdate = <ThrowOnError extends boolean = fa
     });
 };
 
+/**
+ * Update network
+ * Update an existing network.
+ */
 export const openstackNetworksUpdate = <ThrowOnError extends boolean = false>(options: Options<OpenstackNetworksUpdateData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).put<OpenstackNetworksUpdateResponses, unknown, ThrowOnError>({
         security: [
@@ -23372,6 +23586,10 @@ export const openstackNetworksUpdate = <ThrowOnError extends boolean = false>(op
     });
 };
 
+/**
+ * Create subnet
+ * Create a new subnet within the network.
+ */
 export const openstackNetworksCreateSubnet = <ThrowOnError extends boolean = false>(options: Options<OpenstackNetworksCreateSubnetData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).post<OpenstackNetworksCreateSubnetResponses, unknown, ThrowOnError>({
         security: [
@@ -23415,7 +23633,9 @@ export const openstackNetworksPull = <ThrowOnError extends boolean = false>(opti
 };
 
 /**
- * Create RBAC policy for the network
+ * Create RBAC policy
+ * Create RBAC policy for the network. DEPRECATED: please use the dedicated /api/openstack-network-rbac-policies/ endpoint.
+ * @deprecated
  */
 export const openstackNetworksRbacPolicyCreate = <ThrowOnError extends boolean = false>(options: Options<OpenstackNetworksRbacPolicyCreateData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).post<OpenstackNetworksRbacPolicyCreateResponses, unknown, ThrowOnError>({
@@ -23439,7 +23659,9 @@ export const openstackNetworksRbacPolicyCreate = <ThrowOnError extends boolean =
 };
 
 /**
- * Delete RBAC policy for the network
+ * Delete RBAC policy
+ * Delete RBAC policy for the network. DEPRECATED: please use the dedicated /api/openstack-network-rbac-policies/ endpoint.
+ * @deprecated
  */
 export const openstackNetworksRbacPolicyDeleteDestroy = <ThrowOnError extends boolean = false>(options: Options<OpenstackNetworksRbacPolicyDeleteDestroyData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).delete<OpenstackNetworksRbacPolicyDeleteDestroyResponses, unknown, ThrowOnError>({
@@ -23458,6 +23680,10 @@ export const openstackNetworksRbacPolicyDeleteDestroy = <ThrowOnError extends bo
     });
 };
 
+/**
+ * Set network MTU
+ * Update the Maximum Transmission Unit (MTU) for the network.
+ */
 export const openstackNetworksSetMtu = <ThrowOnError extends boolean = false>(options: Options<OpenstackNetworksSetMtuData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).post<OpenstackNetworksSetMtuResponses, unknown, ThrowOnError>({
         security: [
@@ -23502,6 +23728,10 @@ export const openstackNetworksUnlink = <ThrowOnError extends boolean = false>(op
     });
 };
 
+/**
+ * List ports
+ * Get a list of network ports.
+ */
 export const openstackPortsList = <ThrowOnError extends boolean = false>(options?: Options<OpenstackPortsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<OpenstackPortsListResponses, unknown, ThrowOnError>({
         security: [
@@ -23520,6 +23750,7 @@ export const openstackPortsList = <ThrowOnError extends boolean = false>(options
 };
 
 /**
+ * List ports
  * Get number of items in the collection matching the request parameters.
  */
 export const openstackPortsCount = <ThrowOnError extends boolean = false>(options?: Options<OpenstackPortsCountData, ThrowOnError>) => {
@@ -23539,6 +23770,10 @@ export const openstackPortsCount = <ThrowOnError extends boolean = false>(option
     });
 };
 
+/**
+ * Create port
+ * Create a new network port.
+ */
 export const openstackPortsCreate = <ThrowOnError extends boolean = false>(options: Options<OpenstackPortsCreateData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).post<OpenstackPortsCreateResponses, unknown, ThrowOnError>({
         security: [
@@ -23560,6 +23795,10 @@ export const openstackPortsCreate = <ThrowOnError extends boolean = false>(optio
     });
 };
 
+/**
+ * Delete port
+ * Delete a network port.
+ */
 export const openstackPortsDestroy = <ThrowOnError extends boolean = false>(options: Options<OpenstackPortsDestroyData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).delete<OpenstackPortsDestroyResponses, unknown, ThrowOnError>({
         security: [
@@ -23577,6 +23816,10 @@ export const openstackPortsDestroy = <ThrowOnError extends boolean = false>(opti
     });
 };
 
+/**
+ * Get port details
+ * Retrieve details of a specific network port.
+ */
 export const openstackPortsRetrieve = <ThrowOnError extends boolean = false>(options: Options<OpenstackPortsRetrieveData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).get<OpenstackPortsRetrieveResponses, unknown, ThrowOnError>({
         security: [
@@ -23594,6 +23837,10 @@ export const openstackPortsRetrieve = <ThrowOnError extends boolean = false>(opt
     });
 };
 
+/**
+ * Partially update port
+ * Update specific fields of a network port.
+ */
 export const openstackPortsPartialUpdate = <ThrowOnError extends boolean = false>(options: Options<OpenstackPortsPartialUpdateData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).patch<OpenstackPortsPartialUpdateResponses, unknown, ThrowOnError>({
         security: [
@@ -23615,6 +23862,10 @@ export const openstackPortsPartialUpdate = <ThrowOnError extends boolean = false
     });
 };
 
+/**
+ * Update port
+ * Update an existing network port.
+ */
 export const openstackPortsUpdate = <ThrowOnError extends boolean = false>(options: Options<OpenstackPortsUpdateData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).put<OpenstackPortsUpdateResponses, unknown, ThrowOnError>({
         security: [
@@ -23637,6 +23888,7 @@ export const openstackPortsUpdate = <ThrowOnError extends boolean = false>(optio
 };
 
 /**
+ * Disable port
  * Disable port.
  */
 export const openstackPortsDisablePort = <ThrowOnError extends boolean = false>(options: Options<OpenstackPortsDisablePortData, ThrowOnError>) => {
@@ -23657,6 +23909,7 @@ export const openstackPortsDisablePort = <ThrowOnError extends boolean = false>(
 };
 
 /**
+ * Disable port security
  * Disable port security for the port
  */
 export const openstackPortsDisablePortSecurity = <ThrowOnError extends boolean = false>(options: Options<OpenstackPortsDisablePortSecurityData, ThrowOnError>) => {
@@ -23677,6 +23930,7 @@ export const openstackPortsDisablePortSecurity = <ThrowOnError extends boolean =
 };
 
 /**
+ * Enable port
  * Enable port.
  */
 export const openstackPortsEnablePort = <ThrowOnError extends boolean = false>(options: Options<OpenstackPortsEnablePortData, ThrowOnError>) => {
@@ -23697,6 +23951,7 @@ export const openstackPortsEnablePort = <ThrowOnError extends boolean = false>(o
 };
 
 /**
+ * Enable port security
  * Enable port security for the port
  */
 export const openstackPortsEnablePortSecurity = <ThrowOnError extends boolean = false>(options: Options<OpenstackPortsEnablePortSecurityData, ThrowOnError>) => {
@@ -23761,6 +24016,7 @@ export const openstackPortsUnlink = <ThrowOnError extends boolean = false>(optio
 };
 
 /**
+ * Update port IP address
  * Update port IP address.
  */
 export const openstackPortsUpdatePortIp = <ThrowOnError extends boolean = false>(options: Options<OpenstackPortsUpdatePortIpData, ThrowOnError>) => {
@@ -23785,6 +24041,7 @@ export const openstackPortsUpdatePortIp = <ThrowOnError extends boolean = false>
 };
 
 /**
+ * Update port security groups
  * Update security groups of the port
  */
 export const openstackPortsUpdateSecurityGroups = <ThrowOnError extends boolean = false>(options: Options<OpenstackPortsUpdateSecurityGroupsData, ThrowOnError>) => {
@@ -23808,6 +24065,10 @@ export const openstackPortsUpdateSecurityGroups = <ThrowOnError extends boolean 
     });
 };
 
+/**
+ * List routers
+ * Get a list of routers.
+ */
 export const openstackRoutersList = <ThrowOnError extends boolean = false>(options?: Options<OpenstackRoutersListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<OpenstackRoutersListResponses, unknown, ThrowOnError>({
         security: [
@@ -23826,6 +24087,7 @@ export const openstackRoutersList = <ThrowOnError extends boolean = false>(optio
 };
 
 /**
+ * List routers
  * Get number of items in the collection matching the request parameters.
  */
 export const openstackRoutersCount = <ThrowOnError extends boolean = false>(options?: Options<OpenstackRoutersCountData, ThrowOnError>) => {
@@ -23845,6 +24107,10 @@ export const openstackRoutersCount = <ThrowOnError extends boolean = false>(opti
     });
 };
 
+/**
+ * Create router
+ * Create a new router.
+ */
 export const openstackRoutersCreate = <ThrowOnError extends boolean = false>(options: Options<OpenstackRoutersCreateData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).post<OpenstackRoutersCreateResponses, unknown, ThrowOnError>({
         security: [
@@ -23866,6 +24132,10 @@ export const openstackRoutersCreate = <ThrowOnError extends boolean = false>(opt
     });
 };
 
+/**
+ * Delete router
+ * Delete a router.
+ */
 export const openstackRoutersDestroy = <ThrowOnError extends boolean = false>(options: Options<OpenstackRoutersDestroyData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).delete<OpenstackRoutersDestroyResponses, unknown, ThrowOnError>({
         security: [
@@ -23883,6 +24153,10 @@ export const openstackRoutersDestroy = <ThrowOnError extends boolean = false>(op
     });
 };
 
+/**
+ * Get router details
+ * Retrieve details of a specific router.
+ */
 export const openstackRoutersRetrieve = <ThrowOnError extends boolean = false>(options: Options<OpenstackRoutersRetrieveData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).get<OpenstackRoutersRetrieveResponses, unknown, ThrowOnError>({
         security: [
@@ -23901,6 +24175,7 @@ export const openstackRoutersRetrieve = <ThrowOnError extends boolean = false>(o
 };
 
 /**
+ * Add router interface
  * Add interface to router. Either subnet or port must be provided.
  */
 export const openstackRoutersAddRouterInterface = <ThrowOnError extends boolean = false>(options: Options<OpenstackRoutersAddRouterInterfaceData, ThrowOnError>) => {
@@ -23925,6 +24200,7 @@ export const openstackRoutersAddRouterInterface = <ThrowOnError extends boolean 
 };
 
 /**
+ * Remove router interface
  * Remove interface from router. Either subnet or port must be provided.
  */
 export const openstackRoutersRemoveRouterInterface = <ThrowOnError extends boolean = false>(options: Options<OpenstackRoutersRemoveRouterInterfaceData, ThrowOnError>) => {
@@ -23948,6 +24224,10 @@ export const openstackRoutersRemoveRouterInterface = <ThrowOnError extends boole
     });
 };
 
+/**
+ * Set static routes
+ * Define or overwrite the static routes for the router.
+ */
 export const openstackRoutersSetRoutes = <ThrowOnError extends boolean = false>(options: Options<OpenstackRoutersSetRoutesData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).post<OpenstackRoutersSetRoutesResponses, unknown, ThrowOnError>({
         security: [
@@ -23969,6 +24249,10 @@ export const openstackRoutersSetRoutes = <ThrowOnError extends boolean = false>(
     });
 };
 
+/**
+ * List security groups
+ * Get a list of security groups.
+ */
 export const openstackSecurityGroupsList = <ThrowOnError extends boolean = false>(options?: Options<OpenstackSecurityGroupsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<OpenstackSecurityGroupsListResponses, unknown, ThrowOnError>({
         security: [
@@ -23987,6 +24271,7 @@ export const openstackSecurityGroupsList = <ThrowOnError extends boolean = false
 };
 
 /**
+ * List security groups
  * Get number of items in the collection matching the request parameters.
  */
 export const openstackSecurityGroupsCount = <ThrowOnError extends boolean = false>(options?: Options<OpenstackSecurityGroupsCountData, ThrowOnError>) => {
@@ -24006,6 +24291,10 @@ export const openstackSecurityGroupsCount = <ThrowOnError extends boolean = fals
     });
 };
 
+/**
+ * Delete security group
+ * Delete a security group.
+ */
 export const openstackSecurityGroupsDestroy = <ThrowOnError extends boolean = false>(options: Options<OpenstackSecurityGroupsDestroyData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).delete<OpenstackSecurityGroupsDestroyResponses, unknown, ThrowOnError>({
         security: [
@@ -24023,6 +24312,10 @@ export const openstackSecurityGroupsDestroy = <ThrowOnError extends boolean = fa
     });
 };
 
+/**
+ * Get security group details
+ * Retrieve details of a specific security group.
+ */
 export const openstackSecurityGroupsRetrieve = <ThrowOnError extends boolean = false>(options: Options<OpenstackSecurityGroupsRetrieveData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).get<OpenstackSecurityGroupsRetrieveResponses, unknown, ThrowOnError>({
         security: [
@@ -24040,6 +24333,10 @@ export const openstackSecurityGroupsRetrieve = <ThrowOnError extends boolean = f
     });
 };
 
+/**
+ * Partially update security group
+ * Update specific fields of a security group.
+ */
 export const openstackSecurityGroupsPartialUpdate = <ThrowOnError extends boolean = false>(options: Options<OpenstackSecurityGroupsPartialUpdateData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).patch<OpenstackSecurityGroupsPartialUpdateResponses, unknown, ThrowOnError>({
         security: [
@@ -24104,7 +24401,8 @@ export const openstackSecurityGroupsPull = <ThrowOnError extends boolean = false
 };
 
 /**
- * Update security group rules
+ * Set security group rules
+ * Update the rules for a specific security group. This overwrites all existing rules.
  */
 export const openstackSecurityGroupsSetRules = <ThrowOnError extends boolean = false>(options: Options<OpenstackSecurityGroupsSetRulesData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).post<OpenstackSecurityGroupsSetRulesResponses, unknown, ThrowOnError>({
@@ -24150,6 +24448,10 @@ export const openstackSecurityGroupsUnlink = <ThrowOnError extends boolean = fal
     });
 };
 
+/**
+ * List server groups
+ * Get a list of server groups.
+ */
 export const openstackServerGroupsList = <ThrowOnError extends boolean = false>(options?: Options<OpenstackServerGroupsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<OpenstackServerGroupsListResponses, unknown, ThrowOnError>({
         security: [
@@ -24168,6 +24470,7 @@ export const openstackServerGroupsList = <ThrowOnError extends boolean = false>(
 };
 
 /**
+ * List server groups
  * Get number of items in the collection matching the request parameters.
  */
 export const openstackServerGroupsCount = <ThrowOnError extends boolean = false>(options?: Options<OpenstackServerGroupsCountData, ThrowOnError>) => {
@@ -24208,6 +24511,10 @@ export const openstackServerGroupsCreate = <ThrowOnError extends boolean = false
     });
 };
 
+/**
+ * Delete server group
+ * Delete a server group.
+ */
 export const openstackServerGroupsDestroy = <ThrowOnError extends boolean = false>(options: Options<OpenstackServerGroupsDestroyData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).delete<OpenstackServerGroupsDestroyResponses, unknown, ThrowOnError>({
         security: [
@@ -24225,6 +24532,10 @@ export const openstackServerGroupsDestroy = <ThrowOnError extends boolean = fals
     });
 };
 
+/**
+ * Get server group details
+ * Retrieve details of a specific server group.
+ */
 export const openstackServerGroupsRetrieve = <ThrowOnError extends boolean = false>(options: Options<OpenstackServerGroupsRetrieveData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).get<OpenstackServerGroupsRetrieveResponses, unknown, ThrowOnError>({
         security: [
@@ -24328,6 +24639,10 @@ export const openstackServerGroupsUnlink = <ThrowOnError extends boolean = false
     });
 };
 
+/**
+ * List snapshots
+ * Get a list of snapshots.
+ */
 export const openstackSnapshotsList = <ThrowOnError extends boolean = false>(options?: Options<OpenstackSnapshotsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<OpenstackSnapshotsListResponses, unknown, ThrowOnError>({
         security: [
@@ -24346,6 +24661,7 @@ export const openstackSnapshotsList = <ThrowOnError extends boolean = false>(opt
 };
 
 /**
+ * List snapshots
  * Get number of items in the collection matching the request parameters.
  */
 export const openstackSnapshotsCount = <ThrowOnError extends boolean = false>(options?: Options<OpenstackSnapshotsCountData, ThrowOnError>) => {
@@ -24365,6 +24681,10 @@ export const openstackSnapshotsCount = <ThrowOnError extends boolean = false>(op
     });
 };
 
+/**
+ * Delete snapshot
+ * Delete a snapshot.
+ */
 export const openstackSnapshotsDestroy = <ThrowOnError extends boolean = false>(options: Options<OpenstackSnapshotsDestroyData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).delete<OpenstackSnapshotsDestroyResponses, unknown, ThrowOnError>({
         security: [
@@ -24382,6 +24702,10 @@ export const openstackSnapshotsDestroy = <ThrowOnError extends boolean = false>(
     });
 };
 
+/**
+ * Get snapshot details
+ * Retrieve details of a specific snapshot.
+ */
 export const openstackSnapshotsRetrieve = <ThrowOnError extends boolean = false>(options: Options<OpenstackSnapshotsRetrieveData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).get<OpenstackSnapshotsRetrieveResponses, unknown, ThrowOnError>({
         security: [
@@ -24399,6 +24723,10 @@ export const openstackSnapshotsRetrieve = <ThrowOnError extends boolean = false>
     });
 };
 
+/**
+ * Partially update snapshot
+ * Update specific fields of a snapshot.
+ */
 export const openstackSnapshotsPartialUpdate = <ThrowOnError extends boolean = false>(options: Options<OpenstackSnapshotsPartialUpdateData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).patch<OpenstackSnapshotsPartialUpdateResponses, unknown, ThrowOnError>({
         security: [
@@ -24420,6 +24748,10 @@ export const openstackSnapshotsPartialUpdate = <ThrowOnError extends boolean = f
     });
 };
 
+/**
+ * Update snapshot
+ * Update an existing snapshot.
+ */
 export const openstackSnapshotsUpdate = <ThrowOnError extends boolean = false>(options: Options<OpenstackSnapshotsUpdateData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).put<OpenstackSnapshotsUpdateResponses, unknown, ThrowOnError>({
         security: [
@@ -24463,6 +24795,7 @@ export const openstackSnapshotsPull = <ThrowOnError extends boolean = false>(opt
 };
 
 /**
+ * List snapshot restorations
  * Get a list of snapshot restorations
  */
 export const openstackSnapshotsRestorationsList = <ThrowOnError extends boolean = false>(options: Options<OpenstackSnapshotsRestorationsListData, ThrowOnError>) => {
@@ -24483,6 +24816,7 @@ export const openstackSnapshotsRestorationsList = <ThrowOnError extends boolean 
 };
 
 /**
+ * Restore volume from snapshot
  * Restore volume from snapshot
  */
 export const openstackSnapshotsRestore = <ThrowOnError extends boolean = false>(options: Options<OpenstackSnapshotsRestoreData, ThrowOnError>) => {
@@ -24529,6 +24863,10 @@ export const openstackSnapshotsUnlink = <ThrowOnError extends boolean = false>(o
     });
 };
 
+/**
+ * List subnets
+ * Get a list of subnets.
+ */
 export const openstackSubnetsList = <ThrowOnError extends boolean = false>(options?: Options<OpenstackSubnetsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<OpenstackSubnetsListResponses, unknown, ThrowOnError>({
         security: [
@@ -24547,6 +24885,7 @@ export const openstackSubnetsList = <ThrowOnError extends boolean = false>(optio
 };
 
 /**
+ * List subnets
  * Get number of items in the collection matching the request parameters.
  */
 export const openstackSubnetsCount = <ThrowOnError extends boolean = false>(options?: Options<OpenstackSubnetsCountData, ThrowOnError>) => {
@@ -24566,6 +24905,10 @@ export const openstackSubnetsCount = <ThrowOnError extends boolean = false>(opti
     });
 };
 
+/**
+ * Delete subnet
+ * Delete a subnet.
+ */
 export const openstackSubnetsDestroy = <ThrowOnError extends boolean = false>(options: Options<OpenstackSubnetsDestroyData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).delete<OpenstackSubnetsDestroyResponses, unknown, ThrowOnError>({
         security: [
@@ -24583,6 +24926,10 @@ export const openstackSubnetsDestroy = <ThrowOnError extends boolean = false>(op
     });
 };
 
+/**
+ * Get subnet details
+ * Retrieve details of a specific subnet.
+ */
 export const openstackSubnetsRetrieve = <ThrowOnError extends boolean = false>(options: Options<OpenstackSubnetsRetrieveData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).get<OpenstackSubnetsRetrieveResponses, unknown, ThrowOnError>({
         security: [
@@ -24600,6 +24947,10 @@ export const openstackSubnetsRetrieve = <ThrowOnError extends boolean = false>(o
     });
 };
 
+/**
+ * Partially update subnet
+ * Update specific fields of a subnet.
+ */
 export const openstackSubnetsPartialUpdate = <ThrowOnError extends boolean = false>(options: Options<OpenstackSubnetsPartialUpdateData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).patch<OpenstackSubnetsPartialUpdateResponses, unknown, ThrowOnError>({
         security: [
@@ -24621,6 +24972,10 @@ export const openstackSubnetsPartialUpdate = <ThrowOnError extends boolean = fal
     });
 };
 
+/**
+ * Update subnet
+ * Update an existing subnet.
+ */
 export const openstackSubnetsUpdate = <ThrowOnError extends boolean = false>(options: Options<OpenstackSubnetsUpdateData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).put<OpenstackSubnetsUpdateResponses, unknown, ThrowOnError>({
         security: [
@@ -24642,6 +24997,10 @@ export const openstackSubnetsUpdate = <ThrowOnError extends boolean = false>(opt
     });
 };
 
+/**
+ * Connect subnet to router
+ * Connect the subnet to the default tenant router.
+ */
 export const openstackSubnetsConnect = <ThrowOnError extends boolean = false>(options: Options<OpenstackSubnetsConnectData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).post<OpenstackSubnetsConnectResponses, unknown, ThrowOnError>({
         security: [
@@ -24659,6 +25018,10 @@ export const openstackSubnetsConnect = <ThrowOnError extends boolean = false>(op
     });
 };
 
+/**
+ * Disconnect subnet from router
+ * Disconnect the subnet from the default tenant router.
+ */
 export const openstackSubnetsDisconnect = <ThrowOnError extends boolean = false>(options: Options<OpenstackSubnetsDisconnectData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).post<OpenstackSubnetsDisconnectResponses, unknown, ThrowOnError>({
         security: [
@@ -24720,6 +25083,10 @@ export const openstackSubnetsUnlink = <ThrowOnError extends boolean = false>(opt
     });
 };
 
+/**
+ * List tenants
+ * Get a list of OpenStack tenants.
+ */
 export const openstackTenantsList = <ThrowOnError extends boolean = false>(options?: Options<OpenstackTenantsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<OpenstackTenantsListResponses, unknown, ThrowOnError>({
         security: [
@@ -24738,6 +25105,7 @@ export const openstackTenantsList = <ThrowOnError extends boolean = false>(optio
 };
 
 /**
+ * List tenants
  * Get number of items in the collection matching the request parameters.
  */
 export const openstackTenantsCount = <ThrowOnError extends boolean = false>(options?: Options<OpenstackTenantsCountData, ThrowOnError>) => {
@@ -24757,6 +25125,10 @@ export const openstackTenantsCount = <ThrowOnError extends boolean = false>(opti
     });
 };
 
+/**
+ * Create tenant
+ * Create a new OpenStack tenant.
+ */
 export const openstackTenantsCreate = <ThrowOnError extends boolean = false>(options: Options<OpenstackTenantsCreateData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).post<OpenstackTenantsCreateResponses, unknown, ThrowOnError>({
         security: [
@@ -24778,6 +25150,10 @@ export const openstackTenantsCreate = <ThrowOnError extends boolean = false>(opt
     });
 };
 
+/**
+ * Delete tenant
+ * Delete an OpenStack tenant and all its resources.
+ */
 export const openstackTenantsDestroy = <ThrowOnError extends boolean = false>(options: Options<OpenstackTenantsDestroyData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).delete<OpenstackTenantsDestroyResponses, unknown, ThrowOnError>({
         security: [
@@ -24795,6 +25171,10 @@ export const openstackTenantsDestroy = <ThrowOnError extends boolean = false>(op
     });
 };
 
+/**
+ * Get tenant details
+ * Retrieve details of a specific OpenStack tenant.
+ */
 export const openstackTenantsRetrieve = <ThrowOnError extends boolean = false>(options: Options<OpenstackTenantsRetrieveData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).get<OpenstackTenantsRetrieveResponses, unknown, ThrowOnError>({
         security: [
@@ -24812,6 +25192,10 @@ export const openstackTenantsRetrieve = <ThrowOnError extends boolean = false>(o
     });
 };
 
+/**
+ * Partially update tenant
+ * Update specific fields of an OpenStack tenant.
+ */
 export const openstackTenantsPartialUpdate = <ThrowOnError extends boolean = false>(options: Options<OpenstackTenantsPartialUpdateData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).patch<OpenstackTenantsPartialUpdateResponses, unknown, ThrowOnError>({
         security: [
@@ -24833,6 +25217,10 @@ export const openstackTenantsPartialUpdate = <ThrowOnError extends boolean = fal
     });
 };
 
+/**
+ * Update tenant
+ * Update an existing OpenStack tenant.
+ */
 export const openstackTenantsUpdate = <ThrowOnError extends boolean = false>(options: Options<OpenstackTenantsUpdateData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).put<OpenstackTenantsUpdateResponses, unknown, ThrowOnError>({
         security: [
@@ -24855,6 +25243,7 @@ export const openstackTenantsUpdate = <ThrowOnError extends boolean = false>(opt
 };
 
 /**
+ * List backend instances
  * Return a list of volumes from backend
  */
 export const openstackTenantsBackendInstancesList = <ThrowOnError extends boolean = false>(options: Options<OpenstackTenantsBackendInstancesListData, ThrowOnError>) => {
@@ -24875,6 +25264,7 @@ export const openstackTenantsBackendInstancesList = <ThrowOnError extends boolea
 };
 
 /**
+ * List backend volumes
  * Return a list of volumes from backend
  */
 export const openstackTenantsBackendVolumesList = <ThrowOnError extends boolean = false>(options: Options<OpenstackTenantsBackendVolumesListData, ThrowOnError>) => {
@@ -24895,6 +25285,7 @@ export const openstackTenantsBackendVolumesList = <ThrowOnError extends boolean 
 };
 
 /**
+ * Change tenant user password
  * Change password for tenant user
  */
 export const openstackTenantsChangePassword = <ThrowOnError extends boolean = false>(options: Options<OpenstackTenantsChangePasswordData, ThrowOnError>) => {
@@ -24920,6 +25311,7 @@ export const openstackTenantsChangePassword = <ThrowOnError extends boolean = fa
 
 /**
  * Create floating IP for tenant
+ * Create floating IP for tenant
  */
 export const openstackTenantsCreateFloatingIp = <ThrowOnError extends boolean = false>(options: Options<OpenstackTenantsCreateFloatingIpData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).post<OpenstackTenantsCreateFloatingIpResponses, unknown, ThrowOnError>({
@@ -24939,6 +25331,7 @@ export const openstackTenantsCreateFloatingIp = <ThrowOnError extends boolean = 
 };
 
 /**
+ * Create network for tenant
  * Create network for tenant
  */
 export const openstackTenantsCreateNetwork = <ThrowOnError extends boolean = false>(options: Options<OpenstackTenantsCreateNetworkData, ThrowOnError>) => {
@@ -24962,6 +25355,10 @@ export const openstackTenantsCreateNetwork = <ThrowOnError extends boolean = fal
     });
 };
 
+/**
+ * Create security group
+ * Create a security group for the tenant.
+ */
 export const openstackTenantsCreateSecurityGroup = <ThrowOnError extends boolean = false>(options: Options<OpenstackTenantsCreateSecurityGroupData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).post<OpenstackTenantsCreateSecurityGroupResponses, unknown, ThrowOnError>({
         security: [
@@ -24983,6 +25380,10 @@ export const openstackTenantsCreateSecurityGroup = <ThrowOnError extends boolean
     });
 };
 
+/**
+ * Create server group
+ * Create a new server group for the tenant.
+ */
 export const openstackTenantsCreateServerGroup = <ThrowOnError extends boolean = false>(options: Options<OpenstackTenantsCreateServerGroupData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).post<OpenstackTenantsCreateServerGroupResponses, unknown, ThrowOnError>({
         security: [
@@ -25026,6 +25427,7 @@ export const openstackTenantsPull = <ThrowOnError extends boolean = false>(optio
 };
 
 /**
+ * Pull floating IPs
  * Trigger job to pull floating IPs from remote VPC
  */
 export const openstackTenantsPullFloatingIps = <ThrowOnError extends boolean = false>(options: Options<OpenstackTenantsPullFloatingIpsData, ThrowOnError>) => {
@@ -25046,6 +25448,7 @@ export const openstackTenantsPullFloatingIps = <ThrowOnError extends boolean = f
 };
 
 /**
+ * Pull tenant quotas
  * It triggers celery job to pull quotas from remote VPC
  */
 export const openstackTenantsPullQuotas = <ThrowOnError extends boolean = false>(options: Options<OpenstackTenantsPullQuotasData, ThrowOnError>) => {
@@ -25066,6 +25469,7 @@ export const openstackTenantsPullQuotas = <ThrowOnError extends boolean = false>
 };
 
 /**
+ * Pull security groups
  * Trigger job to pull security groups from remote VPC
  */
 export const openstackTenantsPullSecurityGroups = <ThrowOnError extends boolean = false>(options: Options<OpenstackTenantsPullSecurityGroupsData, ThrowOnError>) => {
@@ -25086,6 +25490,7 @@ export const openstackTenantsPullSecurityGroups = <ThrowOnError extends boolean 
 };
 
 /**
+ * Pull server groups
  * Trigger job to pull server groups from remote VPC
  */
 export const openstackTenantsPullServerGroups = <ThrowOnError extends boolean = false>(options: Options<OpenstackTenantsPullServerGroupsData, ThrowOnError>) => {
@@ -25106,6 +25511,7 @@ export const openstackTenantsPullServerGroups = <ThrowOnError extends boolean = 
 };
 
 /**
+ * Set tenant quotas
  * A quota can be set for a particular tenant. Only staff users can do that.
  * In order to set quota submit POST request to /api/openstack-tenants/<uuid>/set_quotas/.
  * The quota values are propagated to the backend.
@@ -25132,6 +25538,7 @@ export const openstackTenantsPullServerGroups = <ThrowOnError extends boolean = 
  * In case tenant is in a non-stable status, the response would be **409 CONFLICT**.
  * In this case REST client is advised to repeat the request after some time.
  * On successful completion the task will synchronize quotas with the backend.
+ *
  */
 export const openstackTenantsSetQuotas = <ThrowOnError extends boolean = false>(options: Options<OpenstackTenantsSetQuotasData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).post<OpenstackTenantsSetQuotasResponses, unknown, ThrowOnError>({
@@ -25177,6 +25584,10 @@ export const openstackTenantsUnlink = <ThrowOnError extends boolean = false>(opt
     });
 };
 
+/**
+ * List volume availability zones
+ * Get a list of volume availability zones.
+ */
 export const openstackVolumeAvailabilityZonesList = <ThrowOnError extends boolean = false>(options?: Options<OpenstackVolumeAvailabilityZonesListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<OpenstackVolumeAvailabilityZonesListResponses, unknown, ThrowOnError>({
         security: [
@@ -25195,6 +25606,7 @@ export const openstackVolumeAvailabilityZonesList = <ThrowOnError extends boolea
 };
 
 /**
+ * List volume availability zones
  * Get number of items in the collection matching the request parameters.
  */
 export const openstackVolumeAvailabilityZonesCount = <ThrowOnError extends boolean = false>(options?: Options<OpenstackVolumeAvailabilityZonesCountData, ThrowOnError>) => {
@@ -25214,6 +25626,10 @@ export const openstackVolumeAvailabilityZonesCount = <ThrowOnError extends boole
     });
 };
 
+/**
+ * Get volume availability zone details
+ * Retrieve details of a specific volume availability zone.
+ */
 export const openstackVolumeAvailabilityZonesRetrieve = <ThrowOnError extends boolean = false>(options: Options<OpenstackVolumeAvailabilityZonesRetrieveData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).get<OpenstackVolumeAvailabilityZonesRetrieveResponses, unknown, ThrowOnError>({
         security: [
@@ -25231,6 +25647,10 @@ export const openstackVolumeAvailabilityZonesRetrieve = <ThrowOnError extends bo
     });
 };
 
+/**
+ * List volume types
+ * Get a list of available volume types.
+ */
 export const openstackVolumeTypesList = <ThrowOnError extends boolean = false>(options?: Options<OpenstackVolumeTypesListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<OpenstackVolumeTypesListResponses, unknown, ThrowOnError>({
         security: [
@@ -25249,6 +25669,7 @@ export const openstackVolumeTypesList = <ThrowOnError extends boolean = false>(o
 };
 
 /**
+ * List volume types
  * Get number of items in the collection matching the request parameters.
  */
 export const openstackVolumeTypesCount = <ThrowOnError extends boolean = false>(options?: Options<OpenstackVolumeTypesCountData, ThrowOnError>) => {
@@ -25268,6 +25689,10 @@ export const openstackVolumeTypesCount = <ThrowOnError extends boolean = false>(
     });
 };
 
+/**
+ * Get volume type details
+ * Retrieve details of a specific volume type.
+ */
 export const openstackVolumeTypesRetrieve = <ThrowOnError extends boolean = false>(options: Options<OpenstackVolumeTypesRetrieveData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).get<OpenstackVolumeTypesRetrieveResponses, unknown, ThrowOnError>({
         security: [
@@ -25286,6 +25711,7 @@ export const openstackVolumeTypesRetrieve = <ThrowOnError extends boolean = fals
 };
 
 /**
+ * List unique volume type names
  * Return a list of unique volume type names.
  */
 export const openstackVolumeTypesNamesRetrieve = <ThrowOnError extends boolean = false>(options?: Options<OpenstackVolumeTypesNamesRetrieveData, ThrowOnError>) => {
@@ -25306,6 +25732,7 @@ export const openstackVolumeTypesNamesRetrieve = <ThrowOnError extends boolean =
 };
 
 /**
+ * List unique volume type names
  * Get number of items in the collection matching the request parameters.
  */
 export const openstackVolumeTypesNamesCount = <ThrowOnError extends boolean = false>(options?: Options<OpenstackVolumeTypesNamesCountData, ThrowOnError>) => {
@@ -25325,6 +25752,10 @@ export const openstackVolumeTypesNamesCount = <ThrowOnError extends boolean = fa
     });
 };
 
+/**
+ * List volumes
+ * Get a list of volumes.
+ */
 export const openstackVolumesList = <ThrowOnError extends boolean = false>(options?: Options<OpenstackVolumesListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<OpenstackVolumesListResponses, unknown, ThrowOnError>({
         security: [
@@ -25343,6 +25774,7 @@ export const openstackVolumesList = <ThrowOnError extends boolean = false>(optio
 };
 
 /**
+ * List volumes
  * Get number of items in the collection matching the request parameters.
  */
 export const openstackVolumesCount = <ThrowOnError extends boolean = false>(options?: Options<OpenstackVolumesCountData, ThrowOnError>) => {
@@ -25362,6 +25794,10 @@ export const openstackVolumesCount = <ThrowOnError extends boolean = false>(opti
     });
 };
 
+/**
+ * Get volume details
+ * Retrieve details of a specific volume.
+ */
 export const openstackVolumesRetrieve = <ThrowOnError extends boolean = false>(options: Options<OpenstackVolumesRetrieveData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).get<OpenstackVolumesRetrieveResponses, unknown, ThrowOnError>({
         security: [
@@ -25379,6 +25815,10 @@ export const openstackVolumesRetrieve = <ThrowOnError extends boolean = false>(o
     });
 };
 
+/**
+ * Partially update volume
+ * Update specific fields of a volume.
+ */
 export const openstackVolumesPartialUpdate = <ThrowOnError extends boolean = false>(options: Options<OpenstackVolumesPartialUpdateData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).patch<OpenstackVolumesPartialUpdateResponses, unknown, ThrowOnError>({
         security: [
@@ -25400,6 +25840,10 @@ export const openstackVolumesPartialUpdate = <ThrowOnError extends boolean = fal
     });
 };
 
+/**
+ * Update volume
+ * Update an existing volume.
+ */
 export const openstackVolumesUpdate = <ThrowOnError extends boolean = false>(options: Options<OpenstackVolumesUpdateData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).put<OpenstackVolumesUpdateResponses, unknown, ThrowOnError>({
         security: [
@@ -25422,6 +25866,7 @@ export const openstackVolumesUpdate = <ThrowOnError extends boolean = false>(opt
 };
 
 /**
+ * Attach volume to instance
  * Attach volume to instance
  */
 export const openstackVolumesAttach = <ThrowOnError extends boolean = false>(options: Options<OpenstackVolumesAttachData, ThrowOnError>) => {
@@ -25446,6 +25891,7 @@ export const openstackVolumesAttach = <ThrowOnError extends boolean = false>(opt
 };
 
 /**
+ * Detach volume from instance
  * Detach instance from volume
  */
 export const openstackVolumesDetach = <ThrowOnError extends boolean = false>(options: Options<OpenstackVolumesDetachData, ThrowOnError>) => {
@@ -25466,6 +25912,7 @@ export const openstackVolumesDetach = <ThrowOnError extends boolean = false>(opt
 };
 
 /**
+ * Extend volume size
  * Increase volume size
  */
 export const openstackVolumesExtend = <ThrowOnError extends boolean = false>(options: Options<OpenstackVolumesExtendData, ThrowOnError>) => {
@@ -25511,6 +25958,7 @@ export const openstackVolumesPull = <ThrowOnError extends boolean = false>(optio
 };
 
 /**
+ * Change volume type
  * Retype detached volume
  */
 export const openstackVolumesRetype = <ThrowOnError extends boolean = false>(options: Options<OpenstackVolumesRetypeData, ThrowOnError>) => {
@@ -25535,6 +25983,7 @@ export const openstackVolumesRetype = <ThrowOnError extends boolean = false>(opt
 };
 
 /**
+ * Create volume snapshot
  * Create snapshot from volume
  */
 export const openstackVolumesSnapshot = <ThrowOnError extends boolean = false>(options: Options<OpenstackVolumesSnapshotData, ThrowOnError>) => {
@@ -26581,6 +27030,10 @@ export const projectsUpdate = <ThrowOnError extends boolean = false>(options: Op
     });
 };
 
+/**
+ * Grant a role to a user
+ * Assigns a specific role to a user within the current scope. An optional expiration time for the role can be set.
+ */
 export const projectsAddUser = <ThrowOnError extends boolean = false>(options: Options<ProjectsAddUserData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).post<ProjectsAddUserResponses, ProjectsAddUserErrors, ThrowOnError>({
         security: [
@@ -26642,6 +27095,10 @@ export const projectsCompletionStatusRetrieve = <ThrowOnError extends boolean = 
     });
 };
 
+/**
+ * Revoke a role from a user
+ * Removes a specific role from a user within the current scope. This effectively revokes their permissions associated with that role.
+ */
 export const projectsDeleteUser = <ThrowOnError extends boolean = false>(options: Options<ProjectsDeleteUserData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).post<ProjectsDeleteUserResponses, unknown, ThrowOnError>({
         security: [
@@ -26663,6 +27120,10 @@ export const projectsDeleteUser = <ThrowOnError extends boolean = false>(options
     });
 };
 
+/**
+ * List users and their roles in a scope
+ * Retrieves a list of users who have a role within a specific scope (e.g., a project or an organization). The list can be filtered by user details or role.
+ */
 export const projectsListUsersList = <ThrowOnError extends boolean = false>(options: Options<ProjectsListUsersListData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).get<ProjectsListUsersListResponses, unknown, ThrowOnError>({
         security: [
@@ -26795,6 +27256,10 @@ export const projectsSyncUserRoles = <ThrowOnError extends boolean = false>(opti
     });
 };
 
+/**
+ * Update a user's role expiration
+ * Updates the expiration time for a user's existing role in the current scope. This is useful for extending or shortening the duration of a permission. To make a role permanent, set expiration_time to null.
+ */
 export const projectsUpdateUser = <ThrowOnError extends boolean = false>(options: Options<ProjectsUpdateUserData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).post<ProjectsUpdateUserResponses, unknown, ThrowOnError>({
         security: [
@@ -27141,6 +27606,10 @@ export const proposalProposalsRetrieve = <ThrowOnError extends boolean = false>(
     });
 };
 
+/**
+ * Grant a role to a user
+ * Assigns a specific role to a user within the current scope. An optional expiration time for the role can be set.
+ */
 export const proposalProposalsAddUser = <ThrowOnError extends boolean = false>(options: Options<ProposalProposalsAddUserData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).post<ProposalProposalsAddUserResponses, ProposalProposalsAddUserErrors, ThrowOnError>({
         security: [
@@ -27290,6 +27759,10 @@ export const proposalProposalsCompletionStatusRetrieve = <ThrowOnError extends b
     });
 };
 
+/**
+ * Revoke a role from a user
+ * Removes a specific role from a user within the current scope. This effectively revokes their permissions associated with that role.
+ */
 export const proposalProposalsDeleteUser = <ThrowOnError extends boolean = false>(options: Options<ProposalProposalsDeleteUserData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).post<ProposalProposalsDeleteUserResponses, unknown, ThrowOnError>({
         security: [
@@ -27311,6 +27784,10 @@ export const proposalProposalsDeleteUser = <ThrowOnError extends boolean = false
     });
 };
 
+/**
+ * List users and their roles in a scope
+ * Retrieves a list of users who have a role within a specific scope (e.g., a project or an organization). The list can be filtered by user details or role.
+ */
 export const proposalProposalsListUsersList = <ThrowOnError extends boolean = false>(options: Options<ProposalProposalsListUsersListData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).get<ProposalProposalsListUsersListResponses, unknown, ThrowOnError>({
         security: [
@@ -27540,6 +28017,10 @@ export const proposalProposalsUpdateProjectDetails = <ThrowOnError extends boole
     });
 };
 
+/**
+ * Update a user's role expiration
+ * Updates the expiration time for a user's existing role in the current scope. This is useful for extending or shortening the duration of a permission. To make a role permanent, set expiration_time to null.
+ */
 export const proposalProposalsUpdateUser = <ThrowOnError extends boolean = false>(options: Options<ProposalProposalsUpdateUserData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).post<ProposalProposalsUpdateUserResponses, unknown, ThrowOnError>({
         security: [
@@ -27755,6 +28236,10 @@ export const proposalProtectedCallsActivate = <ThrowOnError extends boolean = fa
     });
 };
 
+/**
+ * Grant a role to a user
+ * Assigns a specific role to a user within the current scope. An optional expiration time for the role can be set.
+ */
 export const proposalProtectedCallsAddUser = <ThrowOnError extends boolean = false>(options: Options<ProposalProtectedCallsAddUserData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).post<ProposalProtectedCallsAddUserResponses, ProposalProtectedCallsAddUserErrors, ThrowOnError>({
         security: [
@@ -27840,6 +28325,10 @@ export const proposalProtectedCallsComplianceOverviewRetrieve = <ThrowOnError ex
     });
 };
 
+/**
+ * Revoke a role from a user
+ * Removes a specific role from a user within the current scope. This effectively revokes their permissions associated with that role.
+ */
 export const proposalProtectedCallsDeleteUser = <ThrowOnError extends boolean = false>(options: Options<ProposalProtectedCallsDeleteUserData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).post<ProposalProtectedCallsDeleteUserResponses, unknown, ThrowOnError>({
         security: [
@@ -27885,6 +28374,10 @@ export const proposalProtectedCallsDetachDocuments = <ThrowOnError extends boole
     });
 };
 
+/**
+ * List users and their roles in a scope
+ * Retrieves a list of users who have a role within a specific scope (e.g., a project or an organization). The list can be filtered by user details or role.
+ */
 export const proposalProtectedCallsListUsersList = <ThrowOnError extends boolean = false>(options: Options<ProposalProtectedCallsListUsersListData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).get<ProposalProtectedCallsListUsersListResponses, unknown, ThrowOnError>({
         security: [
@@ -28327,6 +28820,10 @@ export const proposalProtectedCallsRoundsClose = <ThrowOnError extends boolean =
     });
 };
 
+/**
+ * Update a user's role expiration
+ * Updates the expiration time for a user's existing role in the current scope. This is useful for extending or shortening the duration of a permission. To make a role permanent, set expiration_time to null.
+ */
 export const proposalProtectedCallsUpdateUser = <ThrowOnError extends boolean = false>(options: Options<ProposalProtectedCallsUpdateUserData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).post<ProposalProtectedCallsUpdateUserResponses, unknown, ThrowOnError>({
         security: [
@@ -31351,6 +31848,10 @@ export const remoteWaldurApiSyncResourceProjectPermissions = <ThrowOnError exten
     });
 };
 
+/**
+ * List roles
+ * Get a list of all available roles.
+ */
 export const rolesList = <ThrowOnError extends boolean = false>(options?: Options<RolesListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<RolesListResponses, unknown, ThrowOnError>({
         security: [
@@ -31369,6 +31870,7 @@ export const rolesList = <ThrowOnError extends boolean = false>(options?: Option
 };
 
 /**
+ * List roles
  * Get number of items in the collection matching the request parameters.
  */
 export const rolesCount = <ThrowOnError extends boolean = false>(options?: Options<RolesCountData, ThrowOnError>) => {
@@ -31388,6 +31890,10 @@ export const rolesCount = <ThrowOnError extends boolean = false>(options?: Optio
     });
 };
 
+/**
+ * Create a new role
+ * Allows staff users to create a new custom role with a specific set of permissions.
+ */
 export const rolesCreate = <ThrowOnError extends boolean = false>(options: Options<RolesCreateData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).post<RolesCreateResponses, unknown, ThrowOnError>({
         security: [
@@ -31409,6 +31915,10 @@ export const rolesCreate = <ThrowOnError extends boolean = false>(options: Optio
     });
 };
 
+/**
+ * Delete a role
+ * Allows staff users to delete a custom role. System roles and roles that are currently in use cannot be deleted.
+ */
 export const rolesDestroy = <ThrowOnError extends boolean = false>(options: Options<RolesDestroyData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).delete<RolesDestroyResponses, unknown, ThrowOnError>({
         security: [
@@ -31426,6 +31936,10 @@ export const rolesDestroy = <ThrowOnError extends boolean = false>(options: Opti
     });
 };
 
+/**
+ * Get role details
+ * Retrieve the details of a specific role by its UUID.
+ */
 export const rolesRetrieve = <ThrowOnError extends boolean = false>(options: Options<RolesRetrieveData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).get<RolesRetrieveResponses, unknown, ThrowOnError>({
         security: [
@@ -31464,6 +31978,10 @@ export const rolesPartialUpdate = <ThrowOnError extends boolean = false>(options
     });
 };
 
+/**
+ * Update a role
+ * Allows staff users to update an existing role's name, description, content type, and permissions. The name of a system role cannot be changed.
+ */
 export const rolesUpdate = <ThrowOnError extends boolean = false>(options: Options<RolesUpdateData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).put<RolesUpdateResponses, unknown, ThrowOnError>({
         security: [
@@ -31485,6 +32003,10 @@ export const rolesUpdate = <ThrowOnError extends boolean = false>(options: Optio
     });
 };
 
+/**
+ * Disable a role
+ * Allows staff users to disable a role, preventing it from being assigned further. Existing assignments are not affected.
+ */
 export const rolesDisable = <ThrowOnError extends boolean = false>(options: Options<RolesDisableData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).post<RolesDisableResponses, unknown, ThrowOnError>({
         security: [
@@ -31502,6 +32024,10 @@ export const rolesDisable = <ThrowOnError extends boolean = false>(options: Opti
     });
 };
 
+/**
+ * Enable a role
+ * Allows staff users to enable a role, making it available for assignment.
+ */
 export const rolesEnable = <ThrowOnError extends boolean = false>(options: Options<RolesEnableData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).post<RolesEnableResponses, unknown, ThrowOnError>({
         security: [
@@ -31519,6 +32045,10 @@ export const rolesEnable = <ThrowOnError extends boolean = false>(options: Optio
     });
 };
 
+/**
+ * Update role descriptions
+ * Allows staff users to update the multilingual descriptions of a role.
+ */
 export const rolesUpdateDescriptionsUpdate = <ThrowOnError extends boolean = false>(options: Options<RolesUpdateDescriptionsUpdateData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).put<RolesUpdateDescriptionsUpdateResponses, unknown, ThrowOnError>({
         security: [
@@ -33765,6 +34295,10 @@ export const userPermissionRequestsReject = <ThrowOnError extends boolean = fals
     });
 };
 
+/**
+ * List user permissions
+ * Get a list of all permissions for the current user. Staff and support users can view all user permissions. The list can be filtered by user, scope, role, etc.
+ */
 export const userPermissionsList = <ThrowOnError extends boolean = false>(options?: Options<UserPermissionsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<UserPermissionsListResponses, unknown, ThrowOnError>({
         security: [
@@ -33783,6 +34317,7 @@ export const userPermissionsList = <ThrowOnError extends boolean = false>(option
 };
 
 /**
+ * List user permissions
  * Get number of items in the collection matching the request parameters.
  */
 export const userPermissionsCount = <ThrowOnError extends boolean = false>(options?: Options<UserPermissionsCountData, ThrowOnError>) => {
@@ -33802,6 +34337,10 @@ export const userPermissionsCount = <ThrowOnError extends boolean = false>(optio
     });
 };
 
+/**
+ * Get permission details
+ * Retrieve the details of a specific user permission grant by its UUID.
+ */
 export const userPermissionsRetrieve = <ThrowOnError extends boolean = false>(options: Options<UserPermissionsRetrieveData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).get<UserPermissionsRetrieveResponses, unknown, ThrowOnError>({
         security: [

@@ -21014,14 +21014,10 @@ export type CallManagingOrganisationsAddUserData = {
 
 export type CallManagingOrganisationsAddUserErrors = {
     /**
-     * Validation error when trying to add user to terminated project
+     * Validation error, for example when trying to add a user to a terminated project.
      */
-    400: {
-        non_field_errors?: Array<string>;
-    };
+    400: unknown;
 };
-
-export type CallManagingOrganisationsAddUserError = CallManagingOrganisationsAddUserErrors[keyof CallManagingOrganisationsAddUserErrors];
 
 export type CallManagingOrganisationsAddUserResponses = {
     201: UserRoleExpirationTime;
@@ -21040,7 +21036,7 @@ export type CallManagingOrganisationsDeleteUserData = {
 
 export type CallManagingOrganisationsDeleteUserResponses = {
     /**
-     * No response body
+     * Role revoked successfully.
      */
     200: unknown;
 };
@@ -22924,14 +22920,10 @@ export type CustomersAddUserData = {
 
 export type CustomersAddUserErrors = {
     /**
-     * Validation error when trying to add user to terminated project
+     * Validation error, for example when trying to add a user to a terminated project.
      */
-    400: {
-        non_field_errors?: Array<string>;
-    };
+    400: unknown;
 };
-
-export type CustomersAddUserError = CustomersAddUserErrors[keyof CustomersAddUserErrors];
 
 export type CustomersAddUserResponses = {
     201: UserRoleExpirationTime;
@@ -22950,7 +22942,7 @@ export type CustomersDeleteUserData = {
 
 export type CustomersDeleteUserResponses = {
     /**
-     * No response body
+     * Role revoked successfully.
      */
     200: unknown;
 };
@@ -31974,14 +31966,10 @@ export type MarketplaceProviderOfferingsAddUserData = {
 
 export type MarketplaceProviderOfferingsAddUserErrors = {
     /**
-     * Validation error when trying to add user to terminated project
+     * Validation error, for example when trying to add a user to a terminated project.
      */
-    400: {
-        non_field_errors?: Array<string>;
-    };
+    400: unknown;
 };
-
-export type MarketplaceProviderOfferingsAddUserError = MarketplaceProviderOfferingsAddUserErrors[keyof MarketplaceProviderOfferingsAddUserErrors];
 
 export type MarketplaceProviderOfferingsAddUserResponses = {
     201: UserRoleExpirationTime;
@@ -32444,7 +32432,7 @@ export type MarketplaceProviderOfferingsDeleteUserData = {
 
 export type MarketplaceProviderOfferingsDeleteUserResponses = {
     /**
-     * No response body
+     * Role revoked successfully.
      */
     200: unknown;
 };
@@ -36709,14 +36697,10 @@ export type MarketplaceServiceProvidersAddUserData = {
 
 export type MarketplaceServiceProvidersAddUserErrors = {
     /**
-     * Validation error when trying to add user to terminated project
+     * Validation error, for example when trying to add a user to a terminated project.
      */
-    400: {
-        non_field_errors?: Array<string>;
-    };
+    400: unknown;
 };
-
-export type MarketplaceServiceProvidersAddUserError = MarketplaceServiceProvidersAddUserErrors[keyof MarketplaceServiceProvidersAddUserErrors];
 
 export type MarketplaceServiceProvidersAddUserResponses = {
     201: UserRoleExpirationTime;
@@ -36765,7 +36749,7 @@ export type MarketplaceServiceProvidersDeleteUserData = {
 
 export type MarketplaceServiceProvidersDeleteUserResponses = {
     /**
-     * No response body
+     * Role revoked successfully.
      */
     200: unknown;
 };
@@ -41683,14 +41667,10 @@ export type OpenportalUnmanagedProjectsAddUserData = {
 
 export type OpenportalUnmanagedProjectsAddUserErrors = {
     /**
-     * Validation error when trying to add user to terminated project
+     * Validation error, for example when trying to add a user to a terminated project.
      */
-    400: {
-        non_field_errors?: Array<string>;
-    };
+    400: unknown;
 };
-
-export type OpenportalUnmanagedProjectsAddUserError = OpenportalUnmanagedProjectsAddUserErrors[keyof OpenportalUnmanagedProjectsAddUserErrors];
 
 export type OpenportalUnmanagedProjectsAddUserResponses = {
     201: UserRoleExpirationTime;
@@ -41761,7 +41741,7 @@ export type OpenportalUnmanagedProjectsDeleteUserData = {
 
 export type OpenportalUnmanagedProjectsDeleteUserResponses = {
     /**
-     * No response body
+     * Role revoked successfully.
      */
     200: unknown;
 };
@@ -47479,14 +47459,10 @@ export type ProjectsAddUserData = {
 
 export type ProjectsAddUserErrors = {
     /**
-     * Validation error when trying to add user to terminated project
+     * Validation error, for example when trying to add a user to a terminated project.
      */
-    400: {
-        non_field_errors?: Array<string>;
-    };
+    400: unknown;
 };
-
-export type ProjectsAddUserError = ProjectsAddUserErrors[keyof ProjectsAddUserErrors];
 
 export type ProjectsAddUserResponses = {
     201: UserRoleExpirationTime;
@@ -47557,7 +47533,7 @@ export type ProjectsDeleteUserData = {
 
 export type ProjectsDeleteUserResponses = {
     /**
-     * No response body
+     * Role revoked successfully.
      */
     200: unknown;
 };
@@ -48158,14 +48134,10 @@ export type ProposalProposalsAddUserData = {
 
 export type ProposalProposalsAddUserErrors = {
     /**
-     * Validation error when trying to add user to terminated project
+     * Validation error, for example when trying to add a user to a terminated project.
      */
-    400: {
-        non_field_errors?: Array<string>;
-    };
+    400: unknown;
 };
-
-export type ProposalProposalsAddUserError = ProposalProposalsAddUserErrors[keyof ProposalProposalsAddUserErrors];
 
 export type ProposalProposalsAddUserResponses = {
     201: UserRoleExpirationTime;
@@ -48320,7 +48292,7 @@ export type ProposalProposalsDeleteUserData = {
 
 export type ProposalProposalsDeleteUserResponses = {
     /**
-     * No response body
+     * Role revoked successfully.
      */
     200: unknown;
 };
@@ -48810,14 +48782,10 @@ export type ProposalProtectedCallsAddUserData = {
 
 export type ProposalProtectedCallsAddUserErrors = {
     /**
-     * Validation error when trying to add user to terminated project
+     * Validation error, for example when trying to add a user to a terminated project.
      */
-    400: {
-        non_field_errors?: Array<string>;
-    };
+    400: unknown;
 };
-
-export type ProposalProtectedCallsAddUserError = ProposalProtectedCallsAddUserErrors[keyof ProposalProtectedCallsAddUserErrors];
 
 export type ProposalProtectedCallsAddUserResponses = {
     201: UserRoleExpirationTime;
@@ -48882,7 +48850,7 @@ export type ProposalProtectedCallsDeleteUserData = {
 
 export type ProposalProtectedCallsDeleteUserResponses = {
     /**
-     * No response body
+     * Role revoked successfully.
      */
     200: unknown;
 };
@@ -52867,7 +52835,7 @@ export type RolesDisableData = {
 
 export type RolesDisableResponses = {
     /**
-     * No response body
+     * Role disabled successfully.
      */
     200: unknown;
 };
@@ -52883,7 +52851,7 @@ export type RolesEnableData = {
 
 export type RolesEnableResponses = {
     /**
-     * No response body
+     * Role enabled successfully.
      */
     200: unknown;
 };
