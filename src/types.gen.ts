@@ -2391,11 +2391,6 @@ export type CourseAccount = {
     readonly error_traceback: string;
 };
 
-export type CourseAccountCreateNested = {
-    email?: string;
-    description?: string;
-};
-
 export type CourseAccountCreateNestedRequest = {
     email?: string;
     description?: string;
@@ -2405,11 +2400,6 @@ export type CourseAccountRequest = {
     project: string;
     email?: string;
     description?: string;
-};
-
-export type CourseAccountsBulkCreate = {
-    course_accounts: Array<CourseAccountCreateNested>;
-    project: string;
 };
 
 export type CourseAccountsBulkCreateRequest = {
@@ -6163,12 +6153,6 @@ export type OfferingComponent = {
     max_prepaid_duration?: number | null;
 };
 
-export type OfferingComponentLimit = {
-    min: number;
-    max: number;
-    max_available_limit: number;
-};
-
 export type OfferingComponentLimitRequest = {
     min: number;
     max: number;
@@ -6227,88 +6211,6 @@ export type OfferingCost = {
 export type OfferingCountryStats = {
     country: string;
     count: number;
-};
-
-export type OfferingCreate = {
-    readonly url: string;
-    readonly uuid: string;
-    readonly created: string;
-    name: string;
-    slug?: string;
-    description?: string;
-    full_description?: string;
-    privacy_policy_link?: string;
-    /**
-     * Publicly accessible offering access URL
-     */
-    access_url?: string;
-    readonly endpoints: Array<NestedEndpoint>;
-    readonly software_catalogs: Array<NestedSoftwareCatalog>;
-    readonly partitions: Array<NestedPartition>;
-    readonly roles: Array<NestedRole>;
-    customer?: string | null;
-    readonly customer_uuid: string | null;
-    readonly customer_name: string | null;
-    readonly project: string | null;
-    readonly project_uuid: string | null;
-    readonly project_name: string | null;
-    category: string;
-    readonly category_uuid: string;
-    readonly category_title: string;
-    attributes?: unknown;
-    options?: OfferingOptions;
-    resource_options?: OfferingOptions;
-    components?: Array<OfferingComponent>;
-    plugin_options: MergedPluginOptions;
-    secret_options?: MergedSecretOptions;
-    readonly service_attributes?: {
-        [key: string]: unknown;
-    };
-    state: OfferingState;
-    vendor_details?: string;
-    getting_started?: string;
-    integration_guide?: string;
-    thumbnail?: string | null;
-    readonly order_count: number;
-    plans?: Array<BaseProviderPlan>;
-    readonly screenshots: Array<NestedScreenshot>;
-    type: string;
-    /**
-     * Accessible to all customers.
-     */
-    shared?: boolean;
-    /**
-     * Purchase and usage is invoiced.
-     */
-    billable?: boolean;
-    readonly scope: string;
-    readonly scope_uuid: string | null;
-    readonly scope_name: string | null;
-    scope_state: CoreStates | null;
-    readonly scope_error_message: string | null;
-    readonly files: Array<NestedOfferingFile>;
-    readonly quotas: Array<Quota>;
-    readonly paused_reason: string;
-    datacite_doi?: string;
-    /**
-     * Number of citations of a DOI
-     */
-    readonly citation_count: number;
-    latitude?: number | null;
-    longitude?: number | null;
-    country?: CountryEnum | BlankEnum;
-    backend_id?: string;
-    readonly organization_groups: Array<OrganizationGroup>;
-    image?: string | null;
-    readonly total_customers: number | null;
-    readonly total_cost: number | null;
-    readonly total_cost_estimated: number | null;
-    readonly parent_description: string | null;
-    readonly parent_uuid: string | null;
-    readonly parent_name: string | null;
-    backend_metadata?: unknown;
-    readonly has_compliance_requirements: boolean;
-    compliance_checklist?: string | null;
 };
 
 export type OfferingCreateRequest = {
@@ -8925,87 +8827,6 @@ export type OrderAttachmentRequest = {
 
 export type OrderBackendIdRequest = {
     backend_id: string;
-};
-
-export type OrderCreate = {
-    offering: string;
-    readonly offering_name: string;
-    readonly offering_uuid: string;
-    readonly offering_description: string;
-    readonly offering_image: string;
-    readonly offering_thumbnail: string;
-    readonly offering_type: string;
-    /**
-     * Accessible to all customers.
-     */
-    readonly offering_shared: boolean;
-    /**
-     * Purchase and usage is invoiced.
-     */
-    readonly offering_billable: boolean;
-    /**
-     * Public data used by specific plugin, such as storage mode for OpenStack.
-     */
-    readonly offering_plugin_options: unknown;
-    readonly provider_name: string;
-    readonly provider_uuid: string;
-    readonly provider_slug: string;
-    readonly category_title: string;
-    readonly category_uuid: string;
-    readonly category_icon: string;
-    plan?: string;
-    plan_unit: BillingUnit | null;
-    readonly plan_name: string | null;
-    readonly plan_uuid: string | null;
-    readonly plan_description: string | null;
-    attributes?: unknown;
-    limits?: {
-        [key: string]: number;
-    };
-    readonly uuid: string;
-    readonly created: string;
-    readonly modified: string;
-    readonly resource_uuid: string | null;
-    readonly resource_type: string | null;
-    readonly resource_name: string;
-    readonly cost: string | null;
-    state: OrderState;
-    readonly output: string;
-    readonly marketplace_resource_uuid: string;
-    readonly error_message: string;
-    readonly error_traceback?: string;
-    callback_url?: string | null;
-    /**
-     * Completion time
-     */
-    readonly completed_at: string | null;
-    request_comment?: string | null;
-    readonly attachment: string | null;
-    type?: RequestTypes;
-    /**
-     * Enables delayed processing of resource provisioning order.
-     */
-    start_date?: string | null;
-    readonly url: string;
-    readonly created_by: string;
-    /**
-     * Required. 128 characters or fewer. Lowercase letters, numbers and @/./+/-/_ characters
-     */
-    readonly created_by_username: string;
-    readonly created_by_full_name: string;
-    readonly consumer_reviewed_by: string | null;
-    readonly consumer_reviewed_at: string | null;
-    /**
-     * Required. 128 characters or fewer. Lowercase letters, numbers and @/./+/-/_ characters
-     */
-    readonly consumer_reviewed_by_username: string | null;
-    readonly consumer_reviewed_by_full_name: string | null;
-    project: string;
-    readonly project_uuid: string;
-    readonly project_name: string;
-    readonly project_description: string;
-    readonly customer_name: string;
-    readonly customer_uuid: string;
 };
 
 export type OrderCreateRequest = {
@@ -13849,11 +13670,6 @@ export type ResourceSlugRequest = {
 
 export type ResourceState = 'Creating' | 'OK' | 'Erred' | 'Updating' | 'Terminating' | 'Terminated';
 
-export type ResourceSuggestName = {
-    project: string;
-    offering: string;
-};
-
 export type ResourceSuggestNameRequest = {
     project: string;
     offering: string;
@@ -14526,12 +14342,6 @@ export type ServiceProviderRevenues = {
     readonly total: number;
     readonly year: number;
     readonly month: number;
-};
-
-export type ServiceProviderSignature = {
-    customer: string;
-    data: string;
-    dry_run?: boolean;
 };
 
 export type ServiceProviderSignatureRequest = {
@@ -15843,6 +15653,7 @@ export type OpenStackTenantCreateOrderAttributes = {
      * Optional availability group. Will be used for all instances provisioned in this tenant
      */
     availability_zone?: string;
+    security_groups?: Array<OpenStackTenantSecurityGroupRequest>;
 };
 
 export type OpenStackCreateInstancePortRequest = {
@@ -19983,7 +19794,7 @@ export type BackendResourceRequestsSetDoneData = {
 
 export type BackendResourceRequestsSetDoneResponses = {
     200: {
-        [key: string]: unknown;
+        status?: string;
     };
 };
 
@@ -20000,7 +19811,7 @@ export type BackendResourceRequestsSetErredData = {
 
 export type BackendResourceRequestsSetErredResponses = {
     200: {
-        [key: string]: unknown;
+        status?: string;
     };
 };
 
@@ -20017,7 +19828,7 @@ export type BackendResourceRequestsStartProcessingData = {
 
 export type BackendResourceRequestsStartProcessingResponses = {
     200: {
-        [key: string]: unknown;
+        status?: string;
     };
 };
 
@@ -28128,12 +27939,35 @@ export type MarketplaceCourseAccountsRetrieveResponse = MarketplaceCourseAccount
 export type MarketplaceCourseAccountsCreateBulkData = {
     body: CourseAccountsBulkCreateRequest;
     path?: never;
-    query?: never;
+    query?: {
+        email?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-email' | '-modified' | '-project_end_date' | '-project_name' | '-project_start_date' | '-state' | '-username' | 'created' | 'email' | 'modified' | 'project_end_date' | 'project_name' | 'project_start_date' | 'state' | 'username'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        project_end_date_after?: string;
+        project_end_date_before?: string;
+        project_start_date_after?: string;
+        project_start_date_before?: string;
+        project_uuid?: string;
+        state?: Array<'Closed' | 'Erred' | 'OK'>;
+        username?: string;
+    };
     url: '/api/marketplace-course-accounts/create_bulk/';
 };
 
 export type MarketplaceCourseAccountsCreateBulkResponses = {
-    200: CourseAccountsBulkCreate;
+    200: Array<CourseAccount>;
 };
 
 export type MarketplaceCourseAccountsCreateBulkResponse = MarketplaceCourseAccountsCreateBulkResponses[keyof MarketplaceCourseAccountsCreateBulkResponses];
@@ -28601,11 +28435,11 @@ export type MarketplaceGlobalCategoriesRetrieveData = {
     path?: never;
     query?: {
         /**
-         * UUID of the customer to filter resources by.
+         * Filter counts by resources within a specific customer.
          */
         customer_uuid?: string;
         /**
-         * UUID of the project to filter resources by.
+         * Filter counts by resources within a specific project.
          */
         project_uuid?: string;
     };
@@ -28614,7 +28448,7 @@ export type MarketplaceGlobalCategoriesRetrieveData = {
 
 export type MarketplaceGlobalCategoriesRetrieveResponses = {
     200: {
-        [key: string]: number;
+        [key: string]: unknown;
     };
 };
 
@@ -30626,7 +30460,7 @@ export type MarketplaceOrdersCreateData = {
 };
 
 export type MarketplaceOrdersCreateResponses = {
-    201: OrderCreate;
+    201: OrderDetails;
 };
 
 export type MarketplaceOrdersCreateResponse = MarketplaceOrdersCreateResponses[keyof MarketplaceOrdersCreateResponses];
@@ -30676,11 +30510,10 @@ export type MarketplaceOrdersApproveByConsumerData = {
 };
 
 export type MarketplaceOrdersApproveByConsumerResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    200: string;
 };
+
+export type MarketplaceOrdersApproveByConsumerResponse = MarketplaceOrdersApproveByConsumerResponses[keyof MarketplaceOrdersApproveByConsumerResponses];
 
 export type MarketplaceOrdersApproveByProviderData = {
     body?: never;
@@ -30692,11 +30525,10 @@ export type MarketplaceOrdersApproveByProviderData = {
 };
 
 export type MarketplaceOrdersApproveByProviderResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    200: string;
 };
+
+export type MarketplaceOrdersApproveByProviderResponse = MarketplaceOrdersApproveByProviderResponses[keyof MarketplaceOrdersApproveByProviderResponses];
 
 export type MarketplaceOrdersCancelData = {
     body?: never;
@@ -30711,7 +30543,7 @@ export type MarketplaceOrdersCancelResponses = {
     /**
      * No response body
      */
-    200: unknown;
+    202: unknown;
 };
 
 export type MarketplaceOrdersDeleteAttachmentData = {
@@ -30789,11 +30621,12 @@ export type MarketplaceOrdersSetBackendIdData = {
 };
 
 export type MarketplaceOrdersSetBackendIdResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    200: {
+        status?: string;
+    };
 };
+
+export type MarketplaceOrdersSetBackendIdResponse = MarketplaceOrdersSetBackendIdResponses[keyof MarketplaceOrdersSetBackendIdResponses];
 
 export type MarketplaceOrdersSetStateDoneData = {
     body?: never;
@@ -31130,8 +30963,10 @@ export type MarketplacePlansDeleteOrganizationGroupsResponses = {
     /**
      * No response body
      */
-    200: unknown;
+    204: void;
 };
+
+export type MarketplacePlansDeleteOrganizationGroupsResponse = MarketplacePlansDeleteOrganizationGroupsResponses[keyof MarketplacePlansDeleteOrganizationGroupsResponses];
 
 export type MarketplacePlansUpdateDiscountsData = {
     body: DiscountsUpdateRequest;
@@ -31201,13 +31036,22 @@ export type MarketplacePlansUsageStatsListData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Filter by service provider's customer UUID.
+         */
         customer_provider_uuid?: string;
+        /**
+         * Ordering field. Available options: `usage`, `limit`, `remaining`, and their descending counterparts (e.g., `-usage`).
+         */
         o?: string;
         offering?: string;
         /**
          * Multiple values may be separated by commas.
          */
         offering_slug?: Array<string>;
+        /**
+         * Filter by offering UUID.
+         */
         offering_uuid?: string;
         /**
          * A page number within the paginated result set.
@@ -31232,13 +31076,22 @@ export type MarketplacePlansUsageStatsCountData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Filter by service provider's customer UUID.
+         */
         customer_provider_uuid?: string;
+        /**
+         * Ordering field. Available options: `usage`, `limit`, `remaining`, and their descending counterparts (e.g., `-usage`).
+         */
         o?: string;
         offering?: string;
         /**
          * Multiple values may be separated by commas.
          */
         offering_slug?: Array<string>;
+        /**
+         * Filter by offering UUID.
+         */
         offering_uuid?: string;
         /**
          * A page number within the paginated result set.
@@ -31905,7 +31758,7 @@ export type MarketplaceProviderOfferingsCreateData = {
 };
 
 export type MarketplaceProviderOfferingsCreateResponses = {
-    201: OfferingCreate;
+    201: ProviderOfferingDetails;
 };
 
 export type MarketplaceProviderOfferingsCreateResponse = MarketplaceProviderOfferingsCreateResponses[keyof MarketplaceProviderOfferingsCreateResponses];
@@ -32434,8 +32287,10 @@ export type MarketplaceProviderOfferingsDeleteImageResponses = {
     /**
      * No response body
      */
-    200: unknown;
+    204: void;
 };
+
+export type MarketplaceProviderOfferingsDeleteImageResponse = MarketplaceProviderOfferingsDeleteImageResponses[keyof MarketplaceProviderOfferingsDeleteImageResponses];
 
 export type MarketplaceProviderOfferingsDeleteOrganizationGroupsData = {
     body?: never;
@@ -32450,8 +32305,10 @@ export type MarketplaceProviderOfferingsDeleteOrganizationGroupsResponses = {
     /**
      * No response body
      */
-    200: unknown;
+    204: void;
 };
+
+export type MarketplaceProviderOfferingsDeleteOrganizationGroupsResponse = MarketplaceProviderOfferingsDeleteOrganizationGroupsResponses[keyof MarketplaceProviderOfferingsDeleteOrganizationGroupsResponses];
 
 export type MarketplaceProviderOfferingsDeleteThumbnailData = {
     body?: never;
@@ -32556,22 +32413,114 @@ export type MarketplaceProviderOfferingsImportableResourcesListResponses = {
 
 export type MarketplaceProviderOfferingsImportableResourcesListResponse = MarketplaceProviderOfferingsImportableResourcesListResponses[keyof MarketplaceProviderOfferingsImportableResourcesListResponses];
 
-export type MarketplaceProviderOfferingsListCourseAccountsRetrieveData = {
+export type MarketplaceProviderOfferingsListCourseAccountsListData = {
     body?: never;
     path: {
         uuid: string;
     };
     query?: {
-        field?: Array<'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'has_compliance_requirements' | 'image' | 'integration_guide' | 'integration_status' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_options' | 'roles' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'uuid' | 'vendor_details'>;
+        /**
+         * Accessible via calls
+         */
+        accessible_via_calls?: boolean;
+        /**
+         * Allowed customer UUID
+         */
+        allowed_customer_uuid?: string;
+        attributes?: string;
+        billable?: boolean;
+        can_create_offering_user?: boolean;
+        category_group_uuid?: string;
+        category_uuid?: string;
+        /**
+         * Created after
+         */
+        created?: string;
+        customer?: string;
+        customer_uuid?: string;
+        description?: string;
+        /**
+         * Has Active Terms of Service
+         */
+        has_active_terms_of_service?: boolean;
+        /**
+         * Has Terms of Service
+         */
+        has_terms_of_service?: boolean;
+        /**
+         * Keyword
+         */
+        keyword?: string;
+        /**
+         * Modified after
+         */
+        modified?: string;
+        name?: string;
+        name_exact?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-name' | '-state' | '-total_cost' | '-total_cost_estimated' | '-total_customers' | '-type' | 'created' | 'name' | 'state' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type'>;
+        organization_group_uuid?: Array<string>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        parent_uuid?: string;
+        /**
+         * Project UUID
+         */
+        project_uuid?: string;
+        /**
+         * Search by offering name, slug or description
+         */
+        query?: string;
+        /**
+         * Resource customer UUID
+         */
+        resource_customer_uuid?: string;
+        /**
+         * Resource project UUID
+         */
+        resource_project_uuid?: string;
+        /**
+         * Scope UUID
+         */
+        scope_uuid?: string;
+        /**
+         * Service manager UUID
+         */
+        service_manager_uuid?: string;
+        shared?: boolean;
+        state?: Array<'Active' | 'Archived' | 'Draft' | 'Paused'>;
+        type?: Array<string>;
+        /**
+         * User Has Consent
+         */
+        user_has_consent?: boolean;
+        /**
+         * User Has Offering User
+         */
+        user_has_offering_user?: boolean;
+        /**
+         * Comma-separated offering UUIDs
+         */
+        uuid_list?: string;
     };
     url: '/api/marketplace-provider-offerings/{uuid}/list_course_accounts/';
 };
 
-export type MarketplaceProviderOfferingsListCourseAccountsRetrieveResponses = {
-    200: ProviderOfferingDetails;
+export type MarketplaceProviderOfferingsListCourseAccountsListResponses = {
+    200: Array<CourseAccount>;
 };
 
-export type MarketplaceProviderOfferingsListCourseAccountsRetrieveResponse = MarketplaceProviderOfferingsListCourseAccountsRetrieveResponses[keyof MarketplaceProviderOfferingsListCourseAccountsRetrieveResponses];
+export type MarketplaceProviderOfferingsListCourseAccountsListResponse = MarketplaceProviderOfferingsListCourseAccountsListResponses[keyof MarketplaceProviderOfferingsListCourseAccountsListResponses];
 
 export type MarketplaceProviderOfferingsListCustomerProjectsListData = {
     body?: never;
@@ -32598,22 +32547,114 @@ export type MarketplaceProviderOfferingsListCustomerProjectsListResponses = {
 
 export type MarketplaceProviderOfferingsListCustomerProjectsListResponse = MarketplaceProviderOfferingsListCustomerProjectsListResponses[keyof MarketplaceProviderOfferingsListCustomerProjectsListResponses];
 
-export type MarketplaceProviderOfferingsListCustomerServiceAccountsRetrieveData = {
+export type MarketplaceProviderOfferingsListCustomerServiceAccountsListData = {
     body?: never;
     path: {
         uuid: string;
     };
     query?: {
-        field?: Array<'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'has_compliance_requirements' | 'image' | 'integration_guide' | 'integration_status' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_options' | 'roles' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'uuid' | 'vendor_details'>;
+        /**
+         * Accessible via calls
+         */
+        accessible_via_calls?: boolean;
+        /**
+         * Allowed customer UUID
+         */
+        allowed_customer_uuid?: string;
+        attributes?: string;
+        billable?: boolean;
+        can_create_offering_user?: boolean;
+        category_group_uuid?: string;
+        category_uuid?: string;
+        /**
+         * Created after
+         */
+        created?: string;
+        customer?: string;
+        customer_uuid?: string;
+        description?: string;
+        /**
+         * Has Active Terms of Service
+         */
+        has_active_terms_of_service?: boolean;
+        /**
+         * Has Terms of Service
+         */
+        has_terms_of_service?: boolean;
+        /**
+         * Keyword
+         */
+        keyword?: string;
+        /**
+         * Modified after
+         */
+        modified?: string;
+        name?: string;
+        name_exact?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-name' | '-state' | '-total_cost' | '-total_cost_estimated' | '-total_customers' | '-type' | 'created' | 'name' | 'state' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type'>;
+        organization_group_uuid?: Array<string>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        parent_uuid?: string;
+        /**
+         * Project UUID
+         */
+        project_uuid?: string;
+        /**
+         * Search by offering name, slug or description
+         */
+        query?: string;
+        /**
+         * Resource customer UUID
+         */
+        resource_customer_uuid?: string;
+        /**
+         * Resource project UUID
+         */
+        resource_project_uuid?: string;
+        /**
+         * Scope UUID
+         */
+        scope_uuid?: string;
+        /**
+         * Service manager UUID
+         */
+        service_manager_uuid?: string;
+        shared?: boolean;
+        state?: Array<'Active' | 'Archived' | 'Draft' | 'Paused'>;
+        type?: Array<string>;
+        /**
+         * User Has Consent
+         */
+        user_has_consent?: boolean;
+        /**
+         * User Has Offering User
+         */
+        user_has_offering_user?: boolean;
+        /**
+         * Comma-separated offering UUIDs
+         */
+        uuid_list?: string;
     };
     url: '/api/marketplace-provider-offerings/{uuid}/list_customer_service_accounts/';
 };
 
-export type MarketplaceProviderOfferingsListCustomerServiceAccountsRetrieveResponses = {
-    200: ProviderOfferingDetails;
+export type MarketplaceProviderOfferingsListCustomerServiceAccountsListResponses = {
+    200: Array<CustomerServiceAccount>;
 };
 
-export type MarketplaceProviderOfferingsListCustomerServiceAccountsRetrieveResponse = MarketplaceProviderOfferingsListCustomerServiceAccountsRetrieveResponses[keyof MarketplaceProviderOfferingsListCustomerServiceAccountsRetrieveResponses];
+export type MarketplaceProviderOfferingsListCustomerServiceAccountsListResponse = MarketplaceProviderOfferingsListCustomerServiceAccountsListResponses[keyof MarketplaceProviderOfferingsListCustomerServiceAccountsListResponses];
 
 export type MarketplaceProviderOfferingsListCustomerUsersListData = {
     body?: never;
@@ -32640,22 +32681,114 @@ export type MarketplaceProviderOfferingsListCustomerUsersListResponses = {
 
 export type MarketplaceProviderOfferingsListCustomerUsersListResponse = MarketplaceProviderOfferingsListCustomerUsersListResponses[keyof MarketplaceProviderOfferingsListCustomerUsersListResponses];
 
-export type MarketplaceProviderOfferingsListProjectServiceAccountsRetrieveData = {
+export type MarketplaceProviderOfferingsListProjectServiceAccountsListData = {
     body?: never;
     path: {
         uuid: string;
     };
     query?: {
-        field?: Array<'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'has_compliance_requirements' | 'image' | 'integration_guide' | 'integration_status' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_options' | 'roles' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'uuid' | 'vendor_details'>;
+        /**
+         * Accessible via calls
+         */
+        accessible_via_calls?: boolean;
+        /**
+         * Allowed customer UUID
+         */
+        allowed_customer_uuid?: string;
+        attributes?: string;
+        billable?: boolean;
+        can_create_offering_user?: boolean;
+        category_group_uuid?: string;
+        category_uuid?: string;
+        /**
+         * Created after
+         */
+        created?: string;
+        customer?: string;
+        customer_uuid?: string;
+        description?: string;
+        /**
+         * Has Active Terms of Service
+         */
+        has_active_terms_of_service?: boolean;
+        /**
+         * Has Terms of Service
+         */
+        has_terms_of_service?: boolean;
+        /**
+         * Keyword
+         */
+        keyword?: string;
+        /**
+         * Modified after
+         */
+        modified?: string;
+        name?: string;
+        name_exact?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-name' | '-state' | '-total_cost' | '-total_cost_estimated' | '-total_customers' | '-type' | 'created' | 'name' | 'state' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type'>;
+        organization_group_uuid?: Array<string>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        parent_uuid?: string;
+        /**
+         * Project UUID
+         */
+        project_uuid?: string;
+        /**
+         * Search by offering name, slug or description
+         */
+        query?: string;
+        /**
+         * Resource customer UUID
+         */
+        resource_customer_uuid?: string;
+        /**
+         * Resource project UUID
+         */
+        resource_project_uuid?: string;
+        /**
+         * Scope UUID
+         */
+        scope_uuid?: string;
+        /**
+         * Service manager UUID
+         */
+        service_manager_uuid?: string;
+        shared?: boolean;
+        state?: Array<'Active' | 'Archived' | 'Draft' | 'Paused'>;
+        type?: Array<string>;
+        /**
+         * User Has Consent
+         */
+        user_has_consent?: boolean;
+        /**
+         * User Has Offering User
+         */
+        user_has_offering_user?: boolean;
+        /**
+         * Comma-separated offering UUIDs
+         */
+        uuid_list?: string;
     };
     url: '/api/marketplace-provider-offerings/{uuid}/list_project_service_accounts/';
 };
 
-export type MarketplaceProviderOfferingsListProjectServiceAccountsRetrieveResponses = {
-    200: ProviderOfferingDetails;
+export type MarketplaceProviderOfferingsListProjectServiceAccountsListResponses = {
+    200: Array<ProjectServiceAccount>;
 };
 
-export type MarketplaceProviderOfferingsListProjectServiceAccountsRetrieveResponse = MarketplaceProviderOfferingsListProjectServiceAccountsRetrieveResponses[keyof MarketplaceProviderOfferingsListProjectServiceAccountsRetrieveResponses];
+export type MarketplaceProviderOfferingsListProjectServiceAccountsListResponse = MarketplaceProviderOfferingsListProjectServiceAccountsListResponses[keyof MarketplaceProviderOfferingsListProjectServiceAccountsListResponses];
 
 export type MarketplaceProviderOfferingsListUsersListData = {
     body?: never;
@@ -32836,8 +32969,10 @@ export type MarketplaceProviderOfferingsRemovePartitionResponses = {
     /**
      * No response body
      */
-    200: unknown;
+    204: void;
 };
+
+export type MarketplaceProviderOfferingsRemovePartitionResponse = MarketplaceProviderOfferingsRemovePartitionResponses[keyof MarketplaceProviderOfferingsRemovePartitionResponses];
 
 export type MarketplaceProviderOfferingsRemoveSoftwareCatalogData = {
     body: RemoveSoftwareCatalogRequest;
@@ -32852,8 +32987,10 @@ export type MarketplaceProviderOfferingsRemoveSoftwareCatalogResponses = {
     /**
      * No response body
      */
-    200: unknown;
+    204: void;
 };
+
+export type MarketplaceProviderOfferingsRemoveSoftwareCatalogResponse = MarketplaceProviderOfferingsRemoveSoftwareCatalogResponses[keyof MarketplaceProviderOfferingsRemoveSoftwareCatalogResponses];
 
 export type MarketplaceProviderOfferingsSetBackendMetadataData = {
     body?: OfferingBackendMetadataRequest;
@@ -32876,14 +33013,15 @@ export type MarketplaceProviderOfferingsStatsRetrieveData = {
     path: {
         uuid: string;
     };
-    query?: {
-        field?: Array<'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'has_compliance_requirements' | 'image' | 'integration_guide' | 'integration_status' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_options' | 'roles' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'uuid' | 'vendor_details'>;
-    };
+    query?: never;
     url: '/api/marketplace-provider-offerings/{uuid}/stats/';
 };
 
 export type MarketplaceProviderOfferingsStatsRetrieveResponses = {
-    200: ProviderOfferingDetails;
+    200: {
+        resources_count?: number;
+        customers_count?: number;
+    };
 };
 
 export type MarketplaceProviderOfferingsStatsRetrieveResponse = MarketplaceProviderOfferingsStatsRetrieveResponses[keyof MarketplaceProviderOfferingsStatsRetrieveResponses];
@@ -32901,7 +33039,7 @@ export type MarketplaceProviderOfferingsSyncResponses = {
     /**
      * No response body
      */
-    200: unknown;
+    202: unknown;
 };
 
 export type MarketplaceProviderOfferingsTosStatsRetrieveData = {
@@ -32994,10 +33132,11 @@ export type MarketplaceProviderOfferingsUpdateImageData = {
 };
 
 export type MarketplaceProviderOfferingsUpdateImageResponses = {
-    200: ProviderOfferingDetails;
+    /**
+     * No response body
+     */
+    200: unknown;
 };
-
-export type MarketplaceProviderOfferingsUpdateImageResponse = MarketplaceProviderOfferingsUpdateImageResponses[keyof MarketplaceProviderOfferingsUpdateImageResponses];
 
 export type MarketplaceProviderOfferingsUpdateIntegrationData = {
     body?: OfferingIntegrationUpdateRequest;
@@ -33696,14 +33835,19 @@ export type MarketplaceProviderResourcesDetailsRetrieveData = {
     path: {
         uuid: string;
     };
-    query?: {
-        field?: Array<'attributes' | 'available_actions' | 'backend_id' | 'backend_metadata' | 'can_terminate' | 'category_icon' | 'category_title' | 'category_uuid' | 'created' | 'creation_order' | 'current_usages' | 'customer_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'downscaled' | 'effective_id' | 'end_date' | 'end_date_requested_by' | 'endpoints' | 'error_message' | 'error_traceback' | 'is_limit_based' | 'is_usage_based' | 'last_sync' | 'limit_usage' | 'limits' | 'modified' | 'name' | 'offering' | 'offering_billable' | 'offering_description' | 'offering_image' | 'offering_name' | 'offering_plugin_options' | 'offering_shared' | 'offering_slug' | 'offering_thumbnail' | 'offering_type' | 'offering_uuid' | 'options' | 'order_in_progress' | 'parent_name' | 'parent_offering_name' | 'parent_offering_slug' | 'parent_offering_uuid' | 'parent_uuid' | 'paused' | 'plan' | 'plan_description' | 'plan_name' | 'plan_unit' | 'plan_uuid' | 'project' | 'project_description' | 'project_end_date' | 'project_end_date_requested_by' | 'project_name' | 'project_slug' | 'project_uuid' | 'provider_name' | 'provider_slug' | 'provider_uuid' | 'renewal_date' | 'report' | 'resource_type' | 'resource_uuid' | 'restrict_member_access' | 'scope' | 'service_settings_uuid' | 'slug' | 'state' | 'url' | 'user_requires_reconsent' | 'username' | 'uuid'>;
-    };
+    query?: never;
     url: '/api/marketplace-provider-resources/{uuid}/details/';
 };
 
+export type MarketplaceProviderResourcesDetailsRetrieveErrors = {
+    404: unknown;
+};
+
 export type MarketplaceProviderResourcesDetailsRetrieveResponses = {
-    200: Resource;
+    200: {
+        [key: string]: unknown;
+    };
+    204: unknown;
 };
 
 export type MarketplaceProviderResourcesDetailsRetrieveResponse = MarketplaceProviderResourcesDetailsRetrieveResponses[keyof MarketplaceProviderResourcesDetailsRetrieveResponses];
@@ -33793,8 +33937,8 @@ export type MarketplaceProviderResourcesPullData = {
 };
 
 export type MarketplaceProviderResourcesPullResponses = {
-    200: {
-        [key: string]: string;
+    202: {
+        detail?: string;
     };
 };
 
@@ -33888,11 +34032,12 @@ export type MarketplaceProviderResourcesSetDownscaledData = {
 };
 
 export type MarketplaceProviderResourcesSetDownscaledResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    200: {
+        status?: string;
+    };
 };
+
+export type MarketplaceProviderResourcesSetDownscaledResponse = MarketplaceProviderResourcesSetDownscaledResponses[keyof MarketplaceProviderResourcesSetDownscaledResponses];
 
 export type MarketplaceProviderResourcesSetEndDateByProviderData = {
     body?: ResourceEndDateByProviderRequest;
@@ -33904,10 +34049,11 @@ export type MarketplaceProviderResourcesSetEndDateByProviderData = {
 };
 
 export type MarketplaceProviderResourcesSetEndDateByProviderResponses = {
-    200: Resource;
+    /**
+     * No response body
+     */
+    200: unknown;
 };
-
-export type MarketplaceProviderResourcesSetEndDateByProviderResponse = MarketplaceProviderResourcesSetEndDateByProviderResponses[keyof MarketplaceProviderResourcesSetEndDateByProviderResponses];
 
 export type MarketplaceProviderResourcesSetEndDateByStaffData = {
     body?: ResourceEndDateByProviderRequest;
@@ -33950,11 +34096,12 @@ export type MarketplaceProviderResourcesSetPausedData = {
 };
 
 export type MarketplaceProviderResourcesSetPausedResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    200: {
+        status?: string;
+    };
 };
+
+export type MarketplaceProviderResourcesSetPausedResponse = MarketplaceProviderResourcesSetPausedResponses[keyof MarketplaceProviderResourcesSetPausedResponses];
 
 export type MarketplaceProviderResourcesSetRestrictMemberAccessData = {
     body?: ResourceRestrictMemberAccessRequest;
@@ -33966,11 +34113,12 @@ export type MarketplaceProviderResourcesSetRestrictMemberAccessData = {
 };
 
 export type MarketplaceProviderResourcesSetRestrictMemberAccessResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    200: {
+        status?: string;
+    };
 };
+
+export type MarketplaceProviderResourcesSetRestrictMemberAccessResponse = MarketplaceProviderResourcesSetRestrictMemberAccessResponses[keyof MarketplaceProviderResourcesSetRestrictMemberAccessResponses];
 
 export type MarketplaceProviderResourcesSetSlugData = {
     body: ResourceSlugRequest;
@@ -33982,11 +34130,12 @@ export type MarketplaceProviderResourcesSetSlugData = {
 };
 
 export type MarketplaceProviderResourcesSetSlugResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    200: {
+        status?: string;
+    };
 };
+
+export type MarketplaceProviderResourcesSetSlugResponse = MarketplaceProviderResourcesSetSlugResponses[keyof MarketplaceProviderResourcesSetSlugResponses];
 
 export type MarketplaceProviderResourcesSubmitReportData = {
     body: ResourceReportRequest;
@@ -34042,12 +34191,21 @@ export type MarketplaceProviderResourcesUnlinkData = {
     url: '/api/marketplace-provider-resources/{uuid}/unlink/';
 };
 
+export type MarketplaceProviderResourcesUnlinkErrors = {
+    /**
+     * No response body
+     */
+    403: unknown;
+};
+
 export type MarketplaceProviderResourcesUnlinkResponses = {
     /**
      * No response body
      */
-    200: unknown;
+    204: void;
 };
+
+export type MarketplaceProviderResourcesUnlinkResponse = MarketplaceProviderResourcesUnlinkResponses[keyof MarketplaceProviderResourcesUnlinkResponses];
 
 export type MarketplaceProviderResourcesUpdateOptionsData = {
     body?: ResourceOptionsRequest;
@@ -34060,6 +34218,7 @@ export type MarketplaceProviderResourcesUpdateOptionsData = {
 
 export type MarketplaceProviderResourcesUpdateOptionsResponses = {
     200: ResourceResponseStatus;
+    201: OrderUuid;
 };
 
 export type MarketplaceProviderResourcesUpdateOptionsResponse = MarketplaceProviderResourcesUpdateOptionsResponses[keyof MarketplaceProviderResourcesUpdateOptionsResponses];
@@ -34087,10 +34246,11 @@ export type MarketplacePublicApiCheckSignatureData = {
 };
 
 export type MarketplacePublicApiCheckSignatureResponses = {
-    200: ServiceProviderSignature;
+    /**
+     * No response body
+     */
+    200: unknown;
 };
-
-export type MarketplacePublicApiCheckSignatureResponse = MarketplacePublicApiCheckSignatureResponses[keyof MarketplacePublicApiCheckSignatureResponses];
 
 export type MarketplacePublicApiSetUsageData = {
     body: ServiceProviderSignatureRequest;
@@ -34100,10 +34260,11 @@ export type MarketplacePublicApiSetUsageData = {
 };
 
 export type MarketplacePublicApiSetUsageResponses = {
-    200: ServiceProviderSignature;
+    /**
+     * No response body
+     */
+    201: unknown;
 };
-
-export type MarketplacePublicApiSetUsageResponse = MarketplacePublicApiSetUsageResponses[keyof MarketplacePublicApiSetUsageResponses];
 
 export type MarketplacePublicOfferingsListData = {
     body?: never;
@@ -34946,14 +35107,19 @@ export type MarketplaceResourcesDetailsRetrieveData = {
     path: {
         uuid: string;
     };
-    query?: {
-        field?: Array<'attributes' | 'available_actions' | 'backend_id' | 'backend_metadata' | 'can_terminate' | 'category_icon' | 'category_title' | 'category_uuid' | 'created' | 'creation_order' | 'current_usages' | 'customer_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'downscaled' | 'effective_id' | 'end_date' | 'end_date_requested_by' | 'endpoints' | 'error_message' | 'error_traceback' | 'is_limit_based' | 'is_usage_based' | 'last_sync' | 'limit_usage' | 'limits' | 'modified' | 'name' | 'offering' | 'offering_billable' | 'offering_description' | 'offering_image' | 'offering_name' | 'offering_plugin_options' | 'offering_shared' | 'offering_slug' | 'offering_thumbnail' | 'offering_type' | 'offering_uuid' | 'options' | 'order_in_progress' | 'parent_name' | 'parent_offering_name' | 'parent_offering_slug' | 'parent_offering_uuid' | 'parent_uuid' | 'paused' | 'plan' | 'plan_description' | 'plan_name' | 'plan_unit' | 'plan_uuid' | 'project' | 'project_description' | 'project_end_date' | 'project_end_date_requested_by' | 'project_name' | 'project_slug' | 'project_uuid' | 'provider_name' | 'provider_slug' | 'provider_uuid' | 'renewal_date' | 'report' | 'resource_type' | 'resource_uuid' | 'restrict_member_access' | 'scope' | 'service_settings_uuid' | 'slug' | 'state' | 'url' | 'user_requires_reconsent' | 'username' | 'uuid'>;
-    };
+    query?: never;
     url: '/api/marketplace-resources/{uuid}/details/';
 };
 
+export type MarketplaceResourcesDetailsRetrieveErrors = {
+    404: unknown;
+};
+
 export type MarketplaceResourcesDetailsRetrieveResponses = {
-    200: Resource;
+    200: {
+        [key: string]: unknown;
+    };
+    204: unknown;
 };
 
 export type MarketplaceResourcesDetailsRetrieveResponse = MarketplaceResourcesDetailsRetrieveResponses[keyof MarketplaceResourcesDetailsRetrieveResponses];
@@ -35043,8 +35209,8 @@ export type MarketplaceResourcesPullData = {
 };
 
 export type MarketplaceResourcesPullResponses = {
-    200: {
-        [key: string]: string;
+    202: {
+        detail?: string;
     };
 };
 
@@ -35075,11 +35241,12 @@ export type MarketplaceResourcesSetDownscaledData = {
 };
 
 export type MarketplaceResourcesSetDownscaledResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    200: {
+        status?: string;
+    };
 };
+
+export type MarketplaceResourcesSetDownscaledResponse = MarketplaceResourcesSetDownscaledResponses[keyof MarketplaceResourcesSetDownscaledResponses];
 
 export type MarketplaceResourcesSetEndDateByStaffData = {
     body?: ResourceEndDateByProviderRequest;
@@ -35107,11 +35274,12 @@ export type MarketplaceResourcesSetPausedData = {
 };
 
 export type MarketplaceResourcesSetPausedResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    200: {
+        status?: string;
+    };
 };
+
+export type MarketplaceResourcesSetPausedResponse = MarketplaceResourcesSetPausedResponses[keyof MarketplaceResourcesSetPausedResponses];
 
 export type MarketplaceResourcesSetRestrictMemberAccessData = {
     body?: ResourceRestrictMemberAccessRequest;
@@ -35123,11 +35291,12 @@ export type MarketplaceResourcesSetRestrictMemberAccessData = {
 };
 
 export type MarketplaceResourcesSetRestrictMemberAccessResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    200: {
+        status?: string;
+    };
 };
+
+export type MarketplaceResourcesSetRestrictMemberAccessResponse = MarketplaceResourcesSetRestrictMemberAccessResponses[keyof MarketplaceResourcesSetRestrictMemberAccessResponses];
 
 export type MarketplaceResourcesSetSlugData = {
     body: ResourceSlugRequest;
@@ -35139,11 +35308,12 @@ export type MarketplaceResourcesSetSlugData = {
 };
 
 export type MarketplaceResourcesSetSlugResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    200: {
+        status?: string;
+    };
 };
+
+export type MarketplaceResourcesSetSlugResponse = MarketplaceResourcesSetSlugResponses[keyof MarketplaceResourcesSetSlugResponses];
 
 export type MarketplaceResourcesSwitchPlanData = {
     body: ResourceSwitchPlanRequest;
@@ -35199,12 +35369,21 @@ export type MarketplaceResourcesUnlinkData = {
     url: '/api/marketplace-resources/{uuid}/unlink/';
 };
 
+export type MarketplaceResourcesUnlinkErrors = {
+    /**
+     * No response body
+     */
+    403: unknown;
+};
+
 export type MarketplaceResourcesUnlinkResponses = {
     /**
      * No response body
      */
-    200: unknown;
+    204: void;
 };
+
+export type MarketplaceResourcesUnlinkResponse = MarketplaceResourcesUnlinkResponses[keyof MarketplaceResourcesUnlinkResponses];
 
 export type MarketplaceResourcesUpdateLimitsData = {
     body: ResourceUpdateLimitsRequest;
@@ -35232,6 +35411,7 @@ export type MarketplaceResourcesUpdateOptionsData = {
 
 export type MarketplaceResourcesUpdateOptionsResponses = {
     200: ResourceResponseStatus;
+    201: OrderUuid;
 };
 
 export type MarketplaceResourcesUpdateOptionsResponse = MarketplaceResourcesUpdateOptionsResponses[keyof MarketplaceResourcesUpdateOptionsResponses];
@@ -35244,7 +35424,9 @@ export type MarketplaceResourcesSuggestNameData = {
 };
 
 export type MarketplaceResourcesSuggestNameResponses = {
-    200: ResourceSuggestName;
+    200: {
+        name?: string;
+    };
 };
 
 export type MarketplaceResourcesSuggestNameResponse = MarketplaceResourcesSuggestNameResponses[keyof MarketplaceResourcesSuggestNameResponses];
@@ -35433,6 +35615,12 @@ export type MarketplaceRobotAccountsSetStateDeletedData = {
     url: '/api/marketplace-robot-accounts/{uuid}/set_state_deleted/';
 };
 
+export type MarketplaceRobotAccountsSetStateDeletedErrors = {
+    400: StateTransitionError;
+};
+
+export type MarketplaceRobotAccountsSetStateDeletedError = MarketplaceRobotAccountsSetStateDeletedErrors[keyof MarketplaceRobotAccountsSetStateDeletedErrors];
+
 export type MarketplaceRobotAccountsSetStateDeletedResponses = {
     200: RobotAccountDetails;
 };
@@ -35447,6 +35635,12 @@ export type MarketplaceRobotAccountsSetStateErredData = {
     query?: never;
     url: '/api/marketplace-robot-accounts/{uuid}/set_state_erred/';
 };
+
+export type MarketplaceRobotAccountsSetStateErredErrors = {
+    400: StateTransitionError;
+};
+
+export type MarketplaceRobotAccountsSetStateErredError = MarketplaceRobotAccountsSetStateErredErrors[keyof MarketplaceRobotAccountsSetStateErredErrors];
 
 export type MarketplaceRobotAccountsSetStateErredResponses = {
     200: RobotAccountDetails;
@@ -35463,6 +35657,12 @@ export type MarketplaceRobotAccountsSetStateOkData = {
     url: '/api/marketplace-robot-accounts/{uuid}/set_state_ok/';
 };
 
+export type MarketplaceRobotAccountsSetStateOkErrors = {
+    400: StateTransitionError;
+};
+
+export type MarketplaceRobotAccountsSetStateOkError = MarketplaceRobotAccountsSetStateOkErrors[keyof MarketplaceRobotAccountsSetStateOkErrors];
+
 export type MarketplaceRobotAccountsSetStateOkResponses = {
     200: RobotAccountDetails;
 };
@@ -35478,6 +35678,12 @@ export type MarketplaceRobotAccountsSetStateRequestDeletionData = {
     url: '/api/marketplace-robot-accounts/{uuid}/set_state_request_deletion/';
 };
 
+export type MarketplaceRobotAccountsSetStateRequestDeletionErrors = {
+    400: StateTransitionError;
+};
+
+export type MarketplaceRobotAccountsSetStateRequestDeletionError = MarketplaceRobotAccountsSetStateRequestDeletionErrors[keyof MarketplaceRobotAccountsSetStateRequestDeletionErrors];
+
 export type MarketplaceRobotAccountsSetStateRequestDeletionResponses = {
     200: RobotAccountDetails;
 };
@@ -35489,11 +35695,11 @@ export type MarketplaceRuntimeStatesListData = {
     path?: never;
     query?: {
         /**
-         * UUID of the category to filter runtime states by.
+         * Filter runtime states by resources belonging to a specific category.
          */
         category_uuid?: string;
         /**
-         * UUID of the project to filter runtime states by.
+         * Filter runtime states by resources within a specific project.
          */
         project_uuid?: string;
     };
@@ -36035,11 +36241,11 @@ export type ServiceProviderOfferingUsersComplianceData = {
     };
     query?: {
         /**
-         * Filter by compliance status: completed, pending, no_checklist
+         * Filter by compliance status: completed, pending, no_checklist.
          */
         compliance_status?: string;
         /**
-         * Filter by offering UUID
+         * Filter by offering UUID.
          */
         offering_uuid?: string;
         /**
@@ -36103,7 +36309,7 @@ export type MarketplaceServiceProvidersCustomerProjectsListData = {
     path: {
         service_provider_uuid: string;
     };
-    query?: {
+    query: {
         backend_id?: string;
         /**
          * Return a list of projects where current user is admin.
@@ -36151,6 +36357,10 @@ export type MarketplaceServiceProvidersCustomerProjectsListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * UUID of the customer to filter projects by.
+         */
+        project_customer_uuid: string;
         /**
          * Filter by name, slug, UUID, backend ID or resource effective ID
          */
@@ -36577,7 +36787,7 @@ export type MarketplaceServiceProvidersUserCustomersListData = {
         query?: string;
         registration_code?: string;
         /**
-         * UUID of user to get related customers for
+         * UUID of the user to get related customers for.
          */
         user_uuid: string;
     };
@@ -36898,6 +37108,9 @@ export type MarketplaceServiceProvidersRobotAccountCustomersListData = {
         uuid: string;
     };
     query?: {
+        /**
+         * Filter by customer name (case-insensitive partial match).
+         */
         customer_name?: string;
         /**
          * A page number within the paginated result set.
@@ -36931,6 +37144,9 @@ export type MarketplaceServiceProvidersRobotAccountProjectsListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Filter by project name (case-insensitive partial match).
+         */
         project_name?: string;
     };
     url: '/api/marketplace-service-providers/{uuid}/robot_account_projects/';
