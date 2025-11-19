@@ -8189,6 +8189,36 @@ export type OpenStackSecurityGroupRuleCreateRequest = {
     remote_group?: string | null;
 };
 
+export type OpenStackSecurityGroupRuleUpdateByNameRequest = {
+    /**
+     * IP protocol version - either 'IPv4' or 'IPv6'
+     */
+    ethertype?: EthertypeEnum;
+    /**
+     * Traffic direction - either 'ingress' (incoming) or 'egress' (outgoing)
+     */
+    direction?: DirectionEnum;
+    /**
+     * The network protocol (TCP, UDP, ICMP, or empty for any protocol)
+     */
+    protocol?: ProtocolEnum | BlankEnum;
+    /**
+     * Starting port number in the range (1-65535)
+     */
+    from_port?: number | null;
+    /**
+     * Ending port number in the range (1-65535)
+     */
+    to_port?: number | null;
+    /**
+     * CIDR notation for the source/destination network address range
+     */
+    cidr?: string | null;
+    description?: string;
+    remote_group_name?: string;
+    remote_group?: string;
+};
+
 export type OpenStackSecurityGroupRuleUpdateRequest = {
     /**
      * IP protocol version - either 'IPv4' or 'IPv6'
@@ -14819,6 +14849,13 @@ export type Tenant = {
     readonly url: string;
     readonly uuid: string;
     name: string;
+};
+
+export type TenantSecurityGroupUpdateRequest = {
+    uuid?: string;
+    name: string;
+    description?: string;
+    rules?: Array<OpenStackSecurityGroupRuleUpdateByNameRequest>;
 };
 
 export type TimeSeriesToSData = {
@@ -46112,6 +46149,22 @@ export type OpenstackTenantsPullServerGroupsResponses = {
 };
 
 export type OpenstackTenantsPullServerGroupsResponse = OpenstackTenantsPullServerGroupsResponses[keyof OpenstackTenantsPullServerGroupsResponses];
+
+export type OpenstackTenantsPushSecurityGroupsData = {
+    body: Array<TenantSecurityGroupUpdateRequest>;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openstack-tenants/{uuid}/push_security_groups/';
+};
+
+export type OpenstackTenantsPushSecurityGroupsResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type OpenstackTenantsSetQuotasData = {
     body?: OpenStackTenantQuotaRequest;
