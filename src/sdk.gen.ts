@@ -21376,7 +21376,11 @@ export const onboardingVerificationsRunValidation = <ThrowOnError extends boolea
             }
         ],
         url: '/api/onboarding-verifications/{uuid}/run_validation/',
-        ...options
+        ...options,
+        headers: {
+            'Content-Type': 'application/json',
+            ...options.headers
+        }
     });
 };
 

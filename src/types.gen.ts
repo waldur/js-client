@@ -6878,22 +6878,6 @@ export type OnboardingCompanyValidationRequestRequest = {
      * Indicates if the validation is to be performed manually
      */
     is_manual_validation?: boolean;
-    /**
-     * Personal identifier (temporary workaround for Estonian civil_number)
-     */
-    person_identifier?: string;
-    /**
-     * User's first name (temporary workaround for Austrian validation)
-     */
-    first_name?: string;
-    /**
-     * User's last name (temporary workaround for Austrian validation)
-     */
-    last_name?: string;
-    /**
-     * User's birth date (temporary workaround for Austrian validation)
-     */
-    birth_date?: string | null;
 };
 
 export type OnboardingCountryChecklistConfiguration = {
@@ -7032,6 +7016,25 @@ export type OnboardingQuestionMetadataRequest = {
      * Type of intent/purpose field (e.g., 'intent', 'registration_purpose') - stays with verification
      */
     intent_field?: string;
+};
+
+export type OnboardingRunValidationRequestRequest = {
+    /**
+     * Personal identifier (temporary workaround for Estonian civil_number)
+     */
+    person_identifier?: string;
+    /**
+     * User's first name (temporary workaround for Austrian validation)
+     */
+    first_name?: string;
+    /**
+     * User's last name (temporary workaround for Austrian validation)
+     */
+    last_name?: string;
+    /**
+     * User's birth date (temporary workaround for Austrian validation)
+     */
+    birth_date?: string | null;
 };
 
 export type OnboardingVerification = {
@@ -40475,7 +40478,7 @@ export type OnboardingVerificationsCreateCustomerResponses = {
 export type OnboardingVerificationsCreateCustomerResponse = OnboardingVerificationsCreateCustomerResponses[keyof OnboardingVerificationsCreateCustomerResponses];
 
 export type OnboardingVerificationsRunValidationData = {
-    body?: never;
+    body?: OnboardingRunValidationRequestRequest;
     path: {
         uuid: string;
     };
