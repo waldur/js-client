@@ -2150,6 +2150,11 @@ export type ConstanceSettings = {
     ONBOARDING_BOLAGSVERKET_TOKEN_API_URL?: string;
     ONBOARDING_BOLAGSVERKET_CLIENT_ID?: string;
     ONBOARDING_BOLAGSVERKET_CLIENT_SECRET?: string;
+    LLM_CHAT_ENABLED?: boolean;
+    LLM_INFERENCES_BACKEND_TYPE?: string;
+    LLM_INFERENCES_API_URL?: string;
+    LLM_INFERENCES_API_TOKEN?: string;
+    LLM_INFERENCES_MODEL?: string;
 };
 
 export type ConstanceSettingsRequest = {
@@ -2306,6 +2311,11 @@ export type ConstanceSettingsRequest = {
     ONBOARDING_BOLAGSVERKET_TOKEN_API_URL?: string;
     ONBOARDING_BOLAGSVERKET_CLIENT_ID?: string;
     ONBOARDING_BOLAGSVERKET_CLIENT_SECRET?: string;
+    LLM_CHAT_ENABLED?: boolean;
+    LLM_INFERENCES_BACKEND_TYPE?: string;
+    LLM_INFERENCES_API_URL?: string;
+    LLM_INFERENCES_API_TOKEN?: string;
+    LLM_INFERENCES_MODEL?: string;
 };
 
 export type ContainerFormatEnum = 'bare' | 'ovf' | 'aki' | 'ami' | 'ari';
@@ -16706,6 +16716,11 @@ export type ConstanceSettingsRequestForm = {
     ONBOARDING_BOLAGSVERKET_TOKEN_API_URL?: string;
     ONBOARDING_BOLAGSVERKET_CLIENT_ID?: string;
     ONBOARDING_BOLAGSVERKET_CLIENT_SECRET?: string;
+    LLM_CHAT_ENABLED?: boolean;
+    LLM_INFERENCES_BACKEND_TYPE?: string;
+    LLM_INFERENCES_API_URL?: string;
+    LLM_INFERENCES_API_TOKEN?: string;
+    LLM_INFERENCES_MODEL?: string;
 };
 
 export type ConstanceSettingsRequestMultipart = {
@@ -16862,6 +16877,11 @@ export type ConstanceSettingsRequestMultipart = {
     ONBOARDING_BOLAGSVERKET_TOKEN_API_URL?: string;
     ONBOARDING_BOLAGSVERKET_CLIENT_ID?: string;
     ONBOARDING_BOLAGSVERKET_CLIENT_SECRET?: string;
+    LLM_CHAT_ENABLED?: boolean;
+    LLM_INFERENCES_BACKEND_TYPE?: string;
+    LLM_INFERENCES_API_URL?: string;
+    LLM_INFERENCES_API_TOKEN?: string;
+    LLM_INFERENCES_MODEL?: string;
 };
 
 export type PaymentRequestForm = {
