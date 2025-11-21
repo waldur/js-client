@@ -13675,6 +13675,25 @@ export type ResourcePlanPeriod = {
     components: Array<BaseComponentUsage>;
 };
 
+export type ResourceReallocateLimitsRequest = {
+    limits: {
+        [key: string]: number;
+    };
+    targets: Array<ResourceReallocateTargetRequest>;
+};
+
+export type ResourceReallocateLimitsResponse = {
+    readonly source_order_uuid: string;
+    readonly target_order_uuids: Array<string>;
+};
+
+export type ResourceReallocateTargetRequest = {
+    resource_uuid: string;
+    allocated_limits: {
+        [key: string]: number;
+    };
+};
+
 export type ResourceRenewRequest = {
     /**
      * Number of months to extend the subscription by.
@@ -35277,6 +35296,21 @@ export type MarketplaceResourcesPullResponses = {
 };
 
 export type MarketplaceResourcesPullResponse = MarketplaceResourcesPullResponses[keyof MarketplaceResourcesPullResponses];
+
+export type MarketplaceResourcesReallocateLimitsData = {
+    body: ResourceReallocateLimitsRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-resources/{uuid}/reallocate_limits/';
+};
+
+export type MarketplaceResourcesReallocateLimitsResponses = {
+    200: ResourceReallocateLimitsResponse;
+};
+
+export type MarketplaceResourcesReallocateLimitsResponse = MarketplaceResourcesReallocateLimitsResponses[keyof MarketplaceResourcesReallocateLimitsResponses];
 
 export type MarketplaceResourcesRenewData = {
     body: ResourceRenewRequest;
