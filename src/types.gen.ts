@@ -4172,6 +4172,7 @@ export type MaintenanceAnnouncement = {
     readonly uuid: string;
     name: string;
     message?: string;
+    internal_notes?: string;
     /**
      * Type of maintenance being performed
      */
@@ -4270,6 +4271,7 @@ export type MaintenanceAnnouncementOfferingTemplateRequest = {
 export type MaintenanceAnnouncementRequest = {
     name: string;
     message?: string;
+    internal_notes?: string;
     /**
      * Type of maintenance being performed
      */
@@ -9456,6 +9458,7 @@ export type PatchedMaintenanceAnnouncementOfferingTemplateRequest = {
 export type PatchedMaintenanceAnnouncementRequest = {
     name?: string;
     message?: string;
+    internal_notes?: string;
     /**
      * Type of maintenance being performed
      */
