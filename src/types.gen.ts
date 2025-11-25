@@ -1660,6 +1660,15 @@ export type CategorySerializerForForNestedFieldsRequest = {
     title: string;
 };
 
+export type CheckUniqueBackendIdRequest = {
+    backend_id: string;
+    check_all_offerings?: boolean;
+};
+
+export type CheckUniqueBackendIdResponse = {
+    is_unique: boolean;
+};
+
 export type Checklist = {
     readonly uuid: string;
     readonly url: string;
@@ -1893,6 +1902,10 @@ export type ComponentUsageCreateRequest = {
     usages: Array<ComponentUsageItemRequest>;
     plan_period?: string;
     resource?: string;
+    /**
+     * Date for usage reporting (staff only). If not provided, current date is used.
+     */
+    date?: string;
 };
 
 export type ComponentUsageItemRequest = {
@@ -1962,6 +1975,10 @@ export type ComponentUserUsageCreateRequest = {
     usage?: string;
     username: string;
     user?: string;
+    /**
+     * Date for usage reporting (staff only). If not provided, current date is used.
+     */
+    date?: string;
 };
 
 export type ComponentUserUsageLimit = {
@@ -31978,6 +31995,21 @@ export type MarketplaceProviderOfferingsArchiveResponses = {
 };
 
 export type MarketplaceProviderOfferingsArchiveResponse = MarketplaceProviderOfferingsArchiveResponses[keyof MarketplaceProviderOfferingsArchiveResponses];
+
+export type MarketplaceProviderOfferingsCheckUniqueBackendIdData = {
+    body: CheckUniqueBackendIdRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-provider-offerings/{uuid}/check_unique_backend_id/';
+};
+
+export type MarketplaceProviderOfferingsCheckUniqueBackendIdResponses = {
+    200: CheckUniqueBackendIdResponse;
+};
+
+export type MarketplaceProviderOfferingsCheckUniqueBackendIdResponse = MarketplaceProviderOfferingsCheckUniqueBackendIdResponses[keyof MarketplaceProviderOfferingsCheckUniqueBackendIdResponses];
 
 export type MarketplaceProviderOfferingsComponentStatsListData = {
     body?: never;
