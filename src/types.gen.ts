@@ -333,6 +333,16 @@ export type AuthToken = {
     readonly user_token_lifetime: number | null;
 };
 
+export type AvailableChecklist = {
+    readonly uuid: string;
+    readonly name: string;
+    readonly description: string;
+    readonly checklist_type: string;
+    readonly questions_count: number;
+    readonly category_name: string | null;
+    readonly category_uuid: string | null;
+};
+
 export type AwsImage = {
     readonly url: string;
     readonly uuid: string;
@@ -3837,6 +3847,8 @@ export type InvoiceItemDetail = {
      * Stores data about scope
      */
     details?: unknown;
+    readonly offering_uuid: string;
+    readonly offering_component_type: string | null;
 };
 
 export type InvoiceItemDetails = {
@@ -49759,6 +49771,93 @@ export type ProposalProtectedCallsUpdateUserResponses = {
 };
 
 export type ProposalProtectedCallsUpdateUserResponse = ProposalProtectedCallsUpdateUserResponses[keyof ProposalProtectedCallsUpdateUserResponses];
+
+export type ProposalProtectedCallsAvailableComplianceChecklistsListData = {
+    body?: never;
+    path?: never;
+    query: {
+        /**
+         * Filter by checklist type (default: proposal_compliance)
+         */
+        checklist_type?: string;
+        customer?: string;
+        customer_keyword?: string;
+        /**
+         * Customer UUID to check permissions for. Required to verify user has CREATE_CALL permission on that customer's call managing organization.
+         */
+        customer_uuid: string;
+        has_active_round?: boolean;
+        name?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-manager__customer__name' | '-name' | 'created' | 'manager__customer__name' | 'name'>;
+        offering_uuid?: string;
+        offerings_provider_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        state?: Array<'active' | 'archived' | 'draft'>;
+    };
+    url: '/api/proposal-protected-calls/available_compliance_checklists/';
+};
+
+export type ProposalProtectedCallsAvailableComplianceChecklistsListResponses = {
+    200: Array<AvailableChecklist>;
+};
+
+export type ProposalProtectedCallsAvailableComplianceChecklistsListResponse = ProposalProtectedCallsAvailableComplianceChecklistsListResponses[keyof ProposalProtectedCallsAvailableComplianceChecklistsListResponses];
+
+export type ProposalProtectedCallsAvailableComplianceChecklistsCountData = {
+    body?: never;
+    path?: never;
+    query: {
+        /**
+         * Filter by checklist type (default: proposal_compliance)
+         */
+        checklist_type?: string;
+        customer?: string;
+        customer_keyword?: string;
+        /**
+         * Customer UUID to check permissions for. Required to verify user has CREATE_CALL permission on that customer's call managing organization.
+         */
+        customer_uuid: string;
+        has_active_round?: boolean;
+        name?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-manager__customer__name' | '-name' | 'created' | 'manager__customer__name' | 'name'>;
+        offering_uuid?: string;
+        offerings_provider_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        state?: Array<'active' | 'archived' | 'draft'>;
+    };
+    url: '/api/proposal-protected-calls/available_compliance_checklists/';
+};
+
+export type ProposalProtectedCallsAvailableComplianceChecklistsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type ProposalPublicCallsListData = {
     body?: never;
