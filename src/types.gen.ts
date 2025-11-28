@@ -17431,9 +17431,21 @@ export type AccessSubnetsListData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Customer URL
+         */
         customer?: string;
+        /**
+         * Customer UUID
+         */
         customer_uuid?: string;
+        /**
+         * Description
+         */
         description?: string;
+        /**
+         * Inet
+         */
         inet?: string;
         /**
          * A page number within the paginated result set.
@@ -17457,9 +17469,21 @@ export type AccessSubnetsCountData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Customer URL
+         */
         customer?: string;
+        /**
+         * Customer UUID
+         */
         customer_uuid?: string;
+        /**
+         * Description
+         */
         description?: string;
+        /**
+         * Inet
+         */
         inet?: string;
         /**
          * A page number within the paginated result set.
@@ -17927,7 +17951,13 @@ export type AwsImagesListData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -17952,7 +17982,13 @@ export type AwsImagesCountData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -17993,20 +18029,47 @@ export type AwsInstancesListData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Backend ID
+         */
         backend_id?: string;
         /**
          * Can manage
          */
         can_manage?: boolean;
+        /**
+         * Customer UUID
+         */
         customer?: string;
+        /**
+         * Customer abbreviation
+         */
         customer_abbreviation?: string;
+        /**
+         * Customer name
+         */
         customer_name?: string;
+        /**
+         * Customer native name
+         */
         customer_native_name?: string;
+        /**
+         * Customer UUID
+         */
         customer_uuid?: string;
+        /**
+         * Description
+         */
         description?: string;
         external_ip?: string;
         field?: Array<'access_url' | 'backend_id' | 'cores' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'disk' | 'error_message' | 'error_traceback' | 'external_ips' | 'image' | 'image_name' | 'internal_ips' | 'is_limit_based' | 'is_usage_based' | 'key_fingerprint' | 'key_name' | 'latitude' | 'longitude' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'min_disk' | 'min_ram' | 'modified' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'ram' | 'region' | 'resource_type' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'size' | 'ssh_public_key' | 'start_time' | 'state' | 'url' | 'user_data' | 'uuid'>;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -18016,12 +18079,35 @@ export type AwsInstancesListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Project UUID
+         */
         project?: string;
+        /**
+         * Project name
+         */
         project_name?: string;
+        /**
+         * Project UUID
+         */
         project_uuid?: string;
+        /**
+         * Service settings name
+         */
         service_settings_name?: string;
+        /**
+         * Service settings UUID
+         */
         service_settings_uuid?: string;
+        /**
+         * State
+         *
+         *
+         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        /**
+         * UUID
+         */
         uuid?: string;
     };
     url: '/api/aws-instances/';
@@ -18037,19 +18123,46 @@ export type AwsInstancesCountData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Backend ID
+         */
         backend_id?: string;
         /**
          * Can manage
          */
         can_manage?: boolean;
+        /**
+         * Customer UUID
+         */
         customer?: string;
+        /**
+         * Customer abbreviation
+         */
         customer_abbreviation?: string;
+        /**
+         * Customer name
+         */
         customer_name?: string;
+        /**
+         * Customer native name
+         */
         customer_native_name?: string;
+        /**
+         * Customer UUID
+         */
         customer_uuid?: string;
+        /**
+         * Description
+         */
         description?: string;
         external_ip?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -18059,12 +18172,35 @@ export type AwsInstancesCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Project UUID
+         */
         project?: string;
+        /**
+         * Project name
+         */
         project_name?: string;
+        /**
+         * Project UUID
+         */
         project_uuid?: string;
+        /**
+         * Service settings name
+         */
         service_settings_name?: string;
+        /**
+         * Service settings UUID
+         */
         service_settings_uuid?: string;
+        /**
+         * State
+         *
+         *
+         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        /**
+         * UUID
+         */
         uuid?: string;
     };
     url: '/api/aws-instances/';
@@ -18263,7 +18399,13 @@ export type AwsRegionsListData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -18287,7 +18429,13 @@ export type AwsRegionsCountData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -18327,7 +18475,13 @@ export type AwsSizesListData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -18352,7 +18506,13 @@ export type AwsSizesCountData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -18591,7 +18751,13 @@ export type AzureImagesListData = {
     query?: {
         location?: string;
         location_uuid?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -18601,7 +18767,13 @@ export type AzureImagesListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Settings URL
+         */
         settings?: string;
+        /**
+         * Settings UUID
+         */
         settings_uuid?: string;
     };
     url: '/api/azure-images/';
@@ -18619,7 +18791,13 @@ export type AzureImagesCountData = {
     query?: {
         location?: string;
         location_uuid?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -18629,7 +18807,13 @@ export type AzureImagesCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Settings URL
+         */
         settings?: string;
+        /**
+         * Settings UUID
+         */
         settings_uuid?: string;
     };
     url: '/api/azure-images/';
@@ -18662,7 +18846,13 @@ export type AzureLocationsListData = {
     path?: never;
     query?: {
         has_sizes?: boolean;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -18672,7 +18862,13 @@ export type AzureLocationsListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Settings URL
+         */
         settings?: string;
+        /**
+         * Settings UUID
+         */
         settings_uuid?: string;
     };
     url: '/api/azure-locations/';
@@ -18689,7 +18885,13 @@ export type AzureLocationsCountData = {
     path?: never;
     query?: {
         has_sizes?: boolean;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -18699,7 +18901,13 @@ export type AzureLocationsCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Settings URL
+         */
         settings?: string;
+        /**
+         * Settings UUID
+         */
         settings_uuid?: string;
     };
     url: '/api/azure-locations/';
@@ -18731,20 +18939,50 @@ export type AzurePublicIpsListData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Backend ID
+         */
         backend_id?: string;
         /**
          * Can manage
          */
         can_manage?: boolean;
+        /**
+         * Customer UUID
+         */
         customer?: string;
+        /**
+         * Customer abbreviation
+         */
         customer_abbreviation?: string;
+        /**
+         * Customer name
+         */
         customer_name?: string;
+        /**
+         * Customer native name
+         */
         customer_native_name?: string;
+        /**
+         * Customer UUID
+         */
         customer_uuid?: string;
+        /**
+         * Description
+         */
         description?: string;
+        /**
+         * External IP
+         */
         external_ip?: string;
         field?: Array<'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'is_limit_based' | 'is_usage_based' | 'location' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'resource_group' | 'resource_type' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'url' | 'uuid'>;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -18754,14 +18992,37 @@ export type AzurePublicIpsListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Project UUID
+         */
         project?: string;
+        /**
+         * Project name
+         */
         project_name?: string;
+        /**
+         * Project UUID
+         */
         project_uuid?: string;
         resource_group?: string;
         resource_group_uuid?: string;
+        /**
+         * Service settings name
+         */
         service_settings_name?: string;
+        /**
+         * Service settings UUID
+         */
         service_settings_uuid?: string;
+        /**
+         * State
+         *
+         *
+         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        /**
+         * UUID
+         */
         uuid?: string;
     };
     url: '/api/azure-public-ips/';
@@ -18777,19 +19038,49 @@ export type AzurePublicIpsCountData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Backend ID
+         */
         backend_id?: string;
         /**
          * Can manage
          */
         can_manage?: boolean;
+        /**
+         * Customer UUID
+         */
         customer?: string;
+        /**
+         * Customer abbreviation
+         */
         customer_abbreviation?: string;
+        /**
+         * Customer name
+         */
         customer_name?: string;
+        /**
+         * Customer native name
+         */
         customer_native_name?: string;
+        /**
+         * Customer UUID
+         */
         customer_uuid?: string;
+        /**
+         * Description
+         */
         description?: string;
+        /**
+         * External IP
+         */
         external_ip?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -18799,14 +19090,37 @@ export type AzurePublicIpsCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Project UUID
+         */
         project?: string;
+        /**
+         * Project name
+         */
         project_name?: string;
+        /**
+         * Project UUID
+         */
         project_uuid?: string;
         resource_group?: string;
         resource_group_uuid?: string;
+        /**
+         * Service settings name
+         */
         service_settings_name?: string;
+        /**
+         * Service settings UUID
+         */
         service_settings_uuid?: string;
+        /**
+         * State
+         *
+         *
+         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        /**
+         * UUID
+         */
         uuid?: string;
     };
     url: '/api/azure-public-ips/';
@@ -19007,7 +19321,13 @@ export type AzureSizesListData = {
     query?: {
         location?: string;
         location_uuid?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -19017,7 +19337,13 @@ export type AzureSizesListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Settings URL
+         */
         settings?: string;
+        /**
+         * Settings UUID
+         */
         settings_uuid?: string;
         zone?: number;
     };
@@ -19036,7 +19362,13 @@ export type AzureSizesCountData = {
     query?: {
         location?: string;
         location_uuid?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -19046,7 +19378,13 @@ export type AzureSizesCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Settings URL
+         */
         settings?: string;
+        /**
+         * Settings UUID
+         */
         settings_uuid?: string;
         zone?: number;
     };
@@ -19079,20 +19417,50 @@ export type AzureSqlDatabasesListData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Backend ID
+         */
         backend_id?: string;
         /**
          * Can manage
          */
         can_manage?: boolean;
+        /**
+         * Customer UUID
+         */
         customer?: string;
+        /**
+         * Customer abbreviation
+         */
         customer_abbreviation?: string;
+        /**
+         * Customer name
+         */
         customer_name?: string;
+        /**
+         * Customer native name
+         */
         customer_native_name?: string;
+        /**
+         * Customer UUID
+         */
         customer_uuid?: string;
+        /**
+         * Description
+         */
         description?: string;
+        /**
+         * External IP
+         */
         external_ip?: string;
         field?: Array<'access_url' | 'backend_id' | 'charset' | 'collation' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'is_limit_based' | 'is_usage_based' | 'location_name' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'resource_group_name' | 'resource_type' | 'server' | 'server_marketplace_uuid' | 'server_name' | 'server_uuid' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'url' | 'uuid'>;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -19102,16 +19470,39 @@ export type AzureSqlDatabasesListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Project UUID
+         */
         project?: string;
+        /**
+         * Project name
+         */
         project_name?: string;
+        /**
+         * Project UUID
+         */
         project_uuid?: string;
         resource_group?: string;
         resource_group_uuid?: string;
         server?: string;
         server_uuid?: string;
+        /**
+         * Service settings name
+         */
         service_settings_name?: string;
+        /**
+         * Service settings UUID
+         */
         service_settings_uuid?: string;
+        /**
+         * State
+         *
+         *
+         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        /**
+         * UUID
+         */
         uuid?: string;
     };
     url: '/api/azure-sql-databases/';
@@ -19127,19 +19518,49 @@ export type AzureSqlDatabasesCountData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Backend ID
+         */
         backend_id?: string;
         /**
          * Can manage
          */
         can_manage?: boolean;
+        /**
+         * Customer UUID
+         */
         customer?: string;
+        /**
+         * Customer abbreviation
+         */
         customer_abbreviation?: string;
+        /**
+         * Customer name
+         */
         customer_name?: string;
+        /**
+         * Customer native name
+         */
         customer_native_name?: string;
+        /**
+         * Customer UUID
+         */
         customer_uuid?: string;
+        /**
+         * Description
+         */
         description?: string;
+        /**
+         * External IP
+         */
         external_ip?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -19149,16 +19570,39 @@ export type AzureSqlDatabasesCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Project UUID
+         */
         project?: string;
+        /**
+         * Project name
+         */
         project_name?: string;
+        /**
+         * Project UUID
+         */
         project_uuid?: string;
         resource_group?: string;
         resource_group_uuid?: string;
         server?: string;
         server_uuid?: string;
+        /**
+         * Service settings name
+         */
         service_settings_name?: string;
+        /**
+         * Service settings UUID
+         */
         service_settings_uuid?: string;
+        /**
+         * State
+         *
+         *
+         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        /**
+         * UUID
+         */
         uuid?: string;
     };
     url: '/api/azure-sql-databases/';
@@ -19294,20 +19738,50 @@ export type AzureSqlServersListData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Backend ID
+         */
         backend_id?: string;
         /**
          * Can manage
          */
         can_manage?: boolean;
+        /**
+         * Customer UUID
+         */
         customer?: string;
+        /**
+         * Customer abbreviation
+         */
         customer_abbreviation?: string;
+        /**
+         * Customer name
+         */
         customer_name?: string;
+        /**
+         * Customer native name
+         */
         customer_native_name?: string;
+        /**
+         * Customer UUID
+         */
         customer_uuid?: string;
+        /**
+         * Description
+         */
         description?: string;
+        /**
+         * External IP
+         */
         external_ip?: string;
         field?: Array<'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'fqdn' | 'is_limit_based' | 'is_usage_based' | 'location' | 'location_name' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'password' | 'project' | 'project_name' | 'project_uuid' | 'resource_group' | 'resource_group_name' | 'resource_type' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'storage_mb' | 'url' | 'username' | 'uuid'>;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -19317,14 +19791,37 @@ export type AzureSqlServersListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Project UUID
+         */
         project?: string;
+        /**
+         * Project name
+         */
         project_name?: string;
+        /**
+         * Project UUID
+         */
         project_uuid?: string;
         resource_group?: string;
         resource_group_uuid?: string;
+        /**
+         * Service settings name
+         */
         service_settings_name?: string;
+        /**
+         * Service settings UUID
+         */
         service_settings_uuid?: string;
+        /**
+         * State
+         *
+         *
+         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        /**
+         * UUID
+         */
         uuid?: string;
     };
     url: '/api/azure-sql-servers/';
@@ -19340,19 +19837,49 @@ export type AzureSqlServersCountData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Backend ID
+         */
         backend_id?: string;
         /**
          * Can manage
          */
         can_manage?: boolean;
+        /**
+         * Customer UUID
+         */
         customer?: string;
+        /**
+         * Customer abbreviation
+         */
         customer_abbreviation?: string;
+        /**
+         * Customer name
+         */
         customer_name?: string;
+        /**
+         * Customer native name
+         */
         customer_native_name?: string;
+        /**
+         * Customer UUID
+         */
         customer_uuid?: string;
+        /**
+         * Description
+         */
         description?: string;
+        /**
+         * External IP
+         */
         external_ip?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -19362,14 +19889,37 @@ export type AzureSqlServersCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Project UUID
+         */
         project?: string;
+        /**
+         * Project name
+         */
         project_name?: string;
+        /**
+         * Project UUID
+         */
         project_uuid?: string;
         resource_group?: string;
         resource_group_uuid?: string;
+        /**
+         * Service settings name
+         */
         service_settings_name?: string;
+        /**
+         * Service settings UUID
+         */
         service_settings_uuid?: string;
+        /**
+         * State
+         *
+         *
+         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        /**
+         * UUID
+         */
         uuid?: string;
     };
     url: '/api/azure-sql-servers/';
@@ -19520,20 +20070,50 @@ export type AzureVirtualmachinesListData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Backend ID
+         */
         backend_id?: string;
         /**
          * Can manage
          */
         can_manage?: boolean;
+        /**
+         * Customer UUID
+         */
         customer?: string;
+        /**
+         * Customer abbreviation
+         */
         customer_abbreviation?: string;
+        /**
+         * Customer name
+         */
         customer_name?: string;
+        /**
+         * Customer native name
+         */
         customer_native_name?: string;
+        /**
+         * Customer UUID
+         */
         customer_uuid?: string;
+        /**
+         * Description
+         */
         description?: string;
+        /**
+         * External IP
+         */
         external_ip?: string;
         field?: Array<'access_url' | 'backend_id' | 'cores' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'disk' | 'error_message' | 'error_traceback' | 'external_ips' | 'image' | 'image_name' | 'internal_ips' | 'is_limit_based' | 'is_usage_based' | 'key_fingerprint' | 'key_name' | 'latitude' | 'location' | 'location_name' | 'longitude' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'min_disk' | 'min_ram' | 'modified' | 'name' | 'password' | 'project' | 'project_name' | 'project_uuid' | 'ram' | 'resource_group' | 'resource_group_name' | 'resource_type' | 'runtime_state' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'size' | 'size_name' | 'ssh_public_key' | 'start_time' | 'state' | 'url' | 'user_data' | 'username' | 'uuid'>;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -19543,14 +20123,37 @@ export type AzureVirtualmachinesListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Project UUID
+         */
         project?: string;
+        /**
+         * Project name
+         */
         project_name?: string;
+        /**
+         * Project UUID
+         */
         project_uuid?: string;
         resource_group?: string;
         resource_group_uuid?: string;
+        /**
+         * Service settings name
+         */
         service_settings_name?: string;
+        /**
+         * Service settings UUID
+         */
         service_settings_uuid?: string;
+        /**
+         * State
+         *
+         *
+         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        /**
+         * UUID
+         */
         uuid?: string;
     };
     url: '/api/azure-virtualmachines/';
@@ -19566,19 +20169,49 @@ export type AzureVirtualmachinesCountData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Backend ID
+         */
         backend_id?: string;
         /**
          * Can manage
          */
         can_manage?: boolean;
+        /**
+         * Customer UUID
+         */
         customer?: string;
+        /**
+         * Customer abbreviation
+         */
         customer_abbreviation?: string;
+        /**
+         * Customer name
+         */
         customer_name?: string;
+        /**
+         * Customer native name
+         */
         customer_native_name?: string;
+        /**
+         * Customer UUID
+         */
         customer_uuid?: string;
+        /**
+         * Description
+         */
         description?: string;
+        /**
+         * External IP
+         */
         external_ip?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -19588,14 +20221,37 @@ export type AzureVirtualmachinesCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Project UUID
+         */
         project?: string;
+        /**
+         * Project name
+         */
         project_name?: string;
+        /**
+         * Project UUID
+         */
         project_uuid?: string;
         resource_group?: string;
         resource_group_uuid?: string;
+        /**
+         * Service settings name
+         */
         service_settings_name?: string;
+        /**
+         * Service settings UUID
+         */
         service_settings_uuid?: string;
+        /**
+         * State
+         *
+         *
+         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        /**
+         * UUID
+         */
         uuid?: string;
     };
     url: '/api/azure-virtualmachines/';
@@ -19979,7 +20635,13 @@ export type BackendResourcesListData = {
          * Modified after
          */
         modified?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * Ordering
@@ -20029,7 +20691,13 @@ export type BackendResourcesCountData = {
          * Modified after
          */
         modified?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * Ordering
@@ -20309,7 +20977,13 @@ export type BookingResourcesListData = {
          * Modified after
          */
         modified?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * Ordering
@@ -20474,7 +21148,13 @@ export type BookingResourcesCountData = {
          * Modified after
          */
         modified?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * Ordering
@@ -22679,22 +23359,40 @@ export type CustomersListData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Abbreviation
+         */
         abbreviation?: string;
         agreement_number?: string;
         archived?: boolean;
         backend_id?: string;
+        /**
+         * Contact details
+         */
         contact_details?: string;
         field?: Array<'abbreviation' | 'access_subnets' | 'accounting_start_date' | 'address' | 'agreement_number' | 'archived' | 'backend_id' | 'bank_account' | 'bank_name' | 'billing_price_estimate' | 'blocked' | 'call_managing_organization_uuid' | 'contact_details' | 'country' | 'country_name' | 'created' | 'customer_credit' | 'customer_unallocated_credit' | 'default_tax_percent' | 'description' | 'display_billing_info_in_projects' | 'display_name' | 'domain' | 'email' | 'grace_period_days' | 'homepage' | 'image' | 'is_service_provider' | 'latitude' | 'longitude' | 'max_service_accounts' | 'name' | 'native_name' | 'notification_emails' | 'organization_groups' | 'payment_profiles' | 'phone_number' | 'postal' | 'project_metadata_checklist' | 'projects' | 'projects_count' | 'registration_code' | 'service_provider' | 'service_provider_uuid' | 'slug' | 'sponsor_number' | 'url' | 'users_count' | 'uuid' | 'vat_code'>;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
+        /**
+         * Native name
+         */
         native_name?: string;
         /**
          * Which field to use when ordering the results.
          */
         o?: string;
+        /**
+         * Organization group name
+         */
         organization_group_name?: string;
         /**
-         * organization_group_uuid
+         * Organization group UUID
          */
         organization_group_uuid?: Array<string>;
         /**
@@ -22728,21 +23426,39 @@ export type CustomersCountData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Abbreviation
+         */
         abbreviation?: string;
         agreement_number?: string;
         archived?: boolean;
         backend_id?: string;
+        /**
+         * Contact details
+         */
         contact_details?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
+        /**
+         * Native name
+         */
         native_name?: string;
         /**
          * Which field to use when ordering the results.
          */
         o?: string;
+        /**
+         * Organization group name
+         */
         organization_group_name?: string;
         /**
-         * organization_group_uuid
+         * Organization group UUID
          */
         organization_group_uuid?: Array<string>;
         /**
@@ -22913,23 +23629,38 @@ export type CustomersUsersListData = {
          */
         date_joined?: string;
         description?: string;
+        /**
+         * Email
+         */
         email?: string;
         field?: Array<'email' | 'expiration_time' | 'full_name' | 'image' | 'projects' | 'role_name' | 'url' | 'username' | 'uuid'>;
         /**
          * Full name
          */
         full_name?: string;
+        /**
+         * Is active
+         */
         is_active?: boolean;
+        /**
+         * Job title
+         */
         job_title?: string;
         /**
          * Date modified after
          */
         modified?: string;
+        /**
+         * Native name
+         */
         native_name?: string;
         /**
          * Ordering. Sort by a combination of first name, last name, and username.
          */
         o?: 'concatenated_name' | '-concatenated_name';
+        /**
+         * Organization
+         */
         organization?: string;
         /**
          * Filter by one or more organization roles. Select a standard role or provide a custom role string. Can be specified multiple times.
@@ -22953,6 +23684,9 @@ export type CustomersUsersListData = {
          * User keyword
          */
         user_keyword?: string;
+        /**
+         * Username
+         */
         username?: string;
     };
     url: '/api/customers/{customer_uuid}/users/';
@@ -23186,21 +23920,39 @@ export type CustomersCountriesListData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Abbreviation
+         */
         abbreviation?: string;
         agreement_number?: string;
         archived?: boolean;
         backend_id?: string;
+        /**
+         * Contact details
+         */
         contact_details?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
+        /**
+         * Native name
+         */
         native_name?: string;
         /**
          * Which field to use when ordering the results.
          */
         o?: string;
+        /**
+         * Organization group name
+         */
         organization_group_name?: string;
         /**
-         * organization_group_uuid
+         * Organization group UUID
          */
         organization_group_uuid?: Array<string>;
         /**
@@ -23234,21 +23986,39 @@ export type CustomersCountriesCountData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Abbreviation
+         */
         abbreviation?: string;
         agreement_number?: string;
         archived?: boolean;
         backend_id?: string;
+        /**
+         * Contact details
+         */
         contact_details?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
+        /**
+         * Native name
+         */
         native_name?: string;
         /**
          * Which field to use when ordering the results.
          */
         o?: string;
+        /**
+         * Organization group name
+         */
         organization_group_name?: string;
         /**
-         * organization_group_uuid
+         * Organization group UUID
          */
         organization_group_uuid?: Array<string>;
         /**
@@ -23328,20 +24098,47 @@ export type DigitaloceanDropletsListData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Backend ID
+         */
         backend_id?: string;
         /**
          * Can manage
          */
         can_manage?: boolean;
+        /**
+         * Customer UUID
+         */
         customer?: string;
+        /**
+         * Customer abbreviation
+         */
         customer_abbreviation?: string;
+        /**
+         * Customer name
+         */
         customer_name?: string;
+        /**
+         * Customer native name
+         */
         customer_native_name?: string;
+        /**
+         * Customer UUID
+         */
         customer_uuid?: string;
+        /**
+         * Description
+         */
         description?: string;
         external_ip?: string;
         field?: Array<'access_url' | 'backend_id' | 'cores' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'disk' | 'error_message' | 'error_traceback' | 'external_ips' | 'image' | 'image_name' | 'internal_ips' | 'is_limit_based' | 'is_usage_based' | 'key_fingerprint' | 'key_name' | 'latitude' | 'longitude' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'min_disk' | 'min_ram' | 'modified' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'ram' | 'region' | 'region_name' | 'resource_type' | 'runtime_state' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'size' | 'ssh_public_key' | 'start_time' | 'state' | 'url' | 'user_data' | 'uuid'>;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -23351,12 +24148,35 @@ export type DigitaloceanDropletsListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Project UUID
+         */
         project?: string;
+        /**
+         * Project name
+         */
         project_name?: string;
+        /**
+         * Project UUID
+         */
         project_uuid?: string;
+        /**
+         * Service settings name
+         */
         service_settings_name?: string;
+        /**
+         * Service settings UUID
+         */
         service_settings_uuid?: string;
+        /**
+         * State
+         *
+         *
+         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        /**
+         * UUID
+         */
         uuid?: string;
     };
     url: '/api/digitalocean-droplets/';
@@ -23372,19 +24192,46 @@ export type DigitaloceanDropletsCountData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Backend ID
+         */
         backend_id?: string;
         /**
          * Can manage
          */
         can_manage?: boolean;
+        /**
+         * Customer UUID
+         */
         customer?: string;
+        /**
+         * Customer abbreviation
+         */
         customer_abbreviation?: string;
+        /**
+         * Customer name
+         */
         customer_name?: string;
+        /**
+         * Customer native name
+         */
         customer_native_name?: string;
+        /**
+         * Customer UUID
+         */
         customer_uuid?: string;
+        /**
+         * Description
+         */
         description?: string;
         external_ip?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -23394,12 +24241,35 @@ export type DigitaloceanDropletsCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Project UUID
+         */
         project?: string;
+        /**
+         * Project name
+         */
         project_name?: string;
+        /**
+         * Project UUID
+         */
         project_uuid?: string;
+        /**
+         * Service settings name
+         */
         service_settings_name?: string;
+        /**
+         * Service settings UUID
+         */
         service_settings_uuid?: string;
+        /**
+         * State
+         *
+         *
+         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        /**
+         * UUID
+         */
         uuid?: string;
     };
     url: '/api/digitalocean-droplets/';
@@ -23599,7 +24469,13 @@ export type DigitaloceanImagesListData = {
     path?: never;
     query?: {
         distribution?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * Ordering
@@ -23631,7 +24507,13 @@ export type DigitaloceanImagesCountData = {
     path?: never;
     query?: {
         distribution?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * Ordering
@@ -23678,7 +24560,13 @@ export type DigitaloceanRegionsListData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -23702,7 +24590,13 @@ export type DigitaloceanRegionsCountData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -23744,7 +24638,13 @@ export type DigitaloceanSizesListData = {
     query?: {
         cores?: number;
         disk?: number;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -23771,7 +24671,13 @@ export type DigitaloceanSizesCountData = {
     query?: {
         cores?: number;
         disk?: number;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -24391,21 +25297,39 @@ export type FinancialReportsListData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Abbreviation
+         */
         abbreviation?: string;
         agreement_number?: string;
         archived?: boolean;
         backend_id?: string;
+        /**
+         * Contact details
+         */
         contact_details?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
+        /**
+         * Native name
+         */
         native_name?: string;
         /**
          * Which field to use when ordering the results.
          */
         o?: string;
+        /**
+         * Organization group name
+         */
         organization_group_name?: string;
         /**
-         * organization_group_uuid
+         * Organization group UUID
          */
         organization_group_uuid?: Array<string>;
         /**
@@ -24439,21 +25363,39 @@ export type FinancialReportsCountData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Abbreviation
+         */
         abbreviation?: string;
         agreement_number?: string;
         archived?: boolean;
         backend_id?: string;
+        /**
+         * Contact details
+         */
         contact_details?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
+        /**
+         * Native name
+         */
         native_name?: string;
         /**
          * Which field to use when ordering the results.
          */
         o?: string;
+        /**
+         * Organization group name
+         */
         organization_group_name?: string;
         /**
-         * organization_group_uuid
+         * Organization group UUID
          */
         organization_group_uuid?: Array<string>;
         /**
@@ -26122,7 +27064,13 @@ export type KeysListData = {
          * Modified after
          */
         modified?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * Ordering
@@ -26138,7 +27086,13 @@ export type KeysListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * User UUID
+         */
         user_uuid?: string;
+        /**
+         * UUID
+         */
         uuid?: string;
     };
     url: '/api/keys/';
@@ -26166,7 +27120,13 @@ export type KeysCountData = {
          * Modified after
          */
         modified?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * Ordering
@@ -26182,7 +27142,13 @@ export type KeysCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * User UUID
+         */
         user_uuid?: string;
+        /**
+         * UUID
+         */
         uuid?: string;
     };
     url: '/api/keys/';
@@ -32447,7 +33413,13 @@ export type MarketplaceProviderOfferingsListData = {
          * Modified after
          */
         modified?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * Ordering
@@ -32592,7 +33564,13 @@ export type MarketplaceProviderOfferingsCountData = {
          * Modified after
          */
         modified?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * Ordering
@@ -32904,7 +33882,13 @@ export type MarketplaceProviderOfferingsComponentStatsListData = {
          * Modified after
          */
         modified?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * Ordering
@@ -33060,7 +34044,13 @@ export type MarketplaceProviderOfferingsCostsListData = {
          * Modified after
          */
         modified?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * Ordering
@@ -33228,7 +34218,13 @@ export type MarketplaceProviderOfferingsCustomersListData = {
          * Modified after
          */
         modified?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * Ordering
@@ -33532,7 +34528,13 @@ export type MarketplaceProviderOfferingsListCourseAccountsListData = {
          * Modified after
          */
         modified?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * Ordering
@@ -33704,7 +34706,13 @@ export type MarketplaceProviderOfferingsListCustomerServiceAccountsListData = {
          * Modified after
          */
         modified?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * Ordering
@@ -33876,7 +34884,13 @@ export type MarketplaceProviderOfferingsListProjectServiceAccountsListData = {
          * Modified after
          */
         modified?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * Ordering
@@ -34563,7 +35577,13 @@ export type MarketplaceProviderOfferingsGroupsListData = {
          * Modified after
          */
         modified?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * Ordering
@@ -34708,7 +35728,13 @@ export type MarketplaceProviderOfferingsGroupsCountData = {
          * Modified after
          */
         modified?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * Ordering
@@ -34846,7 +35872,13 @@ export type MarketplaceProviderResourcesListData = {
          * Modified after
          */
         modified?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * Ordering
@@ -35010,7 +36042,13 @@ export type MarketplaceProviderResourcesCountData = {
          * Modified after
          */
         modified?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * Ordering
@@ -35668,7 +36706,13 @@ export type MarketplacePublicOfferingsListData = {
          * Modified after
          */
         modified?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * Ordering
@@ -35813,7 +36857,13 @@ export type MarketplacePublicOfferingsCountData = {
          * Modified after
          */
         modified?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * Ordering
@@ -35952,7 +37002,13 @@ export type MarketplaceRelatedCustomersListData = {
         customer_uuid: string;
     };
     query?: {
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -36114,7 +37170,13 @@ export type MarketplaceResourceOfferingsListData = {
         category_uuid: string;
     };
     query?: {
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -36318,7 +37380,13 @@ export type MarketplaceResourcesListData = {
          * Modified after
          */
         modified?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * Ordering
@@ -36482,7 +37550,13 @@ export type MarketplaceResourcesCountData = {
          * Modified after
          */
         modified?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * Ordering
@@ -37970,17 +39044,38 @@ export type MarketplaceServiceProvidersCustomerProjectsListData = {
          * Multiple values may be separated by commas.
          */
         customer?: Array<string>;
+        /**
+         * Customer abbreviation
+         */
         customer_abbreviation?: string;
+        /**
+         * Customer name
+         */
         customer_name?: string;
+        /**
+         * Customer native name
+         */
         customer_native_name?: string;
+        /**
+         * Description
+         */
         description?: string;
         field?: Array<'billing_price_estimate' | 'description' | 'end_date' | 'name' | 'resources_count' | 'users_count' | 'uuid'>;
+        /**
+         * Is removed
+         */
         is_removed?: boolean;
         /**
          * Modified after
          */
         modified?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * Ordering
@@ -38004,6 +39099,9 @@ export type MarketplaceServiceProvidersCustomerProjectsListData = {
          * Filter by name, slug, UUID, backend ID or resource effective ID
          */
         query?: string;
+        /**
+         * Slug
+         */
         slug?: string;
     };
     url: '/api/marketplace-service-providers/{service_provider_uuid}/customer_projects/';
@@ -38021,18 +39119,36 @@ export type MarketplaceServiceProvidersCustomersListData = {
         service_provider_uuid: string;
     };
     query?: {
+        /**
+         * Abbreviation
+         */
         abbreviation?: string;
         agreement_number?: string;
         archived?: boolean;
         backend_id?: string;
+        /**
+         * Contact details
+         */
         contact_details?: string;
         field?: Array<'abbreviation' | 'billing_price_estimate' | 'email' | 'name' | 'payment_profiles' | 'phone_number' | 'projects' | 'projects_count' | 'slug' | 'users' | 'users_count' | 'uuid'>;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
+        /**
+         * Native name
+         */
         native_name?: string;
+        /**
+         * Organization group name
+         */
         organization_group_name?: string;
         /**
-         * organization_group_uuid
+         * Organization group UUID
          */
         organization_group_uuid?: Array<string>;
         /**
@@ -38081,7 +39197,13 @@ export type MarketplaceServiceProvidersKeysListData = {
          * Modified after
          */
         modified?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * Ordering
@@ -38097,7 +39219,13 @@ export type MarketplaceServiceProvidersKeysListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * User UUID
+         */
         user_uuid?: string;
+        /**
+         * UUID
+         */
         uuid?: string;
     };
     url: '/api/marketplace-service-providers/{service_provider_uuid}/keys/';
@@ -38173,7 +39301,13 @@ export type MarketplaceServiceProvidersOfferingsListData = {
          * Modified after
          */
         modified?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * Ordering
@@ -38402,17 +39536,38 @@ export type MarketplaceServiceProvidersProjectsListData = {
          * Multiple values may be separated by commas.
          */
         customer?: Array<string>;
+        /**
+         * Customer abbreviation
+         */
         customer_abbreviation?: string;
+        /**
+         * Customer name
+         */
         customer_name?: string;
+        /**
+         * Customer native name
+         */
         customer_native_name?: string;
+        /**
+         * Description
+         */
         description?: string;
         field?: Array<'backend_id' | 'billing_price_estimate' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_display_billing_info_in_projects' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'end_date' | 'end_date_requested_by' | 'grace_period_days' | 'image' | 'is_industry' | 'is_removed' | 'kind' | 'marketplace_resource_count' | 'max_service_accounts' | 'name' | 'oecd_fos_2007_code' | 'oecd_fos_2007_label' | 'project_credit' | 'resources_count' | 'slug' | 'staff_notes' | 'start_date' | 'termination_metadata' | 'type' | 'type_name' | 'type_uuid' | 'url' | 'uuid'>;
+        /**
+         * Is removed
+         */
         is_removed?: boolean;
         /**
          * Modified after
          */
         modified?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * Ordering
@@ -38432,6 +39587,9 @@ export type MarketplaceServiceProvidersProjectsListData = {
          * Filter by name, slug, UUID, backend ID or resource effective ID
          */
         query?: string;
+        /**
+         * Slug
+         */
         slug?: string;
     };
     url: '/api/marketplace-service-providers/{service_provider_uuid}/projects/';
@@ -38449,18 +39607,36 @@ export type MarketplaceServiceProvidersUserCustomersListData = {
         service_provider_uuid: string;
     };
     query: {
+        /**
+         * Abbreviation
+         */
         abbreviation?: string;
         agreement_number?: string;
         archived?: boolean;
         backend_id?: string;
+        /**
+         * Contact details
+         */
         contact_details?: string;
         field?: Array<'abbreviation' | 'billing_price_estimate' | 'email' | 'name' | 'payment_profiles' | 'phone_number' | 'projects' | 'projects_count' | 'slug' | 'users' | 'users_count' | 'uuid'>;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
+        /**
+         * Native name
+         */
         native_name?: string;
+        /**
+         * Organization group name
+         */
         organization_group_name?: string;
         /**
-         * organization_group_uuid
+         * Organization group UUID
          */
         organization_group_uuid?: Array<string>;
         /**
@@ -38505,26 +39681,47 @@ export type MarketplaceServiceProvidersUsersListData = {
          */
         agreement_date?: string;
         civil_number?: string;
+        /**
+         * Customer UUID
+         */
         customer_uuid?: string;
         /**
          * Date joined after
          */
         date_joined?: string;
         description?: string;
+        /**
+         * Email
+         */
         email?: string;
         field?: Array<'affiliations' | 'email' | 'first_name' | 'full_name' | 'is_active' | 'last_name' | 'organization' | 'phone_number' | 'projects_count' | 'registration_method' | 'username' | 'uuid'>;
         /**
          * Full name
          */
         full_name?: string;
+        /**
+         * Is active
+         */
         is_active?: boolean;
+        /**
+         * Is staff
+         */
         is_staff?: boolean;
+        /**
+         * Is support
+         */
         is_support?: boolean;
+        /**
+         * Job title
+         */
         job_title?: string;
         /**
          * Date modified after
          */
         modified?: string;
+        /**
+         * Native name
+         */
         native_name?: string;
         /**
          * Ordering
@@ -38532,6 +39729,9 @@ export type MarketplaceServiceProvidersUsersListData = {
          *
          */
         o?: Array<'-description' | '-email' | '-full_name' | '-is_active' | '-is_staff' | '-is_support' | '-job_title' | '-native_name' | '-organization' | '-phone_number' | '-registration_method' | '-username' | 'description' | 'email' | 'full_name' | 'is_active' | 'is_staff' | 'is_support' | 'job_title' | 'native_name' | 'organization' | 'phone_number' | 'registration_method' | 'username'>;
+        /**
+         * Organization
+         */
         organization?: string;
         /**
          * Organization roles
@@ -38550,6 +39750,9 @@ export type MarketplaceServiceProvidersUsersListData = {
          * Project roles
          */
         project_roles?: string;
+        /**
+         * Project UUID
+         */
         project_uuid?: string;
         /**
          * Filter by first name, last name, civil number, username or email
@@ -38560,6 +39763,9 @@ export type MarketplaceServiceProvidersUsersListData = {
          * User keyword
          */
         user_keyword?: string;
+        /**
+         * Username (exact)
+         */
         username?: string;
         /**
          * Comma-separated usernames
@@ -41211,9 +42417,18 @@ export type NotificationMessagesListData = {
     path?: never;
     query?: {
         description?: string;
+        /**
+         * Is overridden
+         */
         is_overridden?: boolean;
         key?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -41242,9 +42457,18 @@ export type NotificationMessagesCountData = {
     path?: never;
     query?: {
         description?: string;
+        /**
+         * Is overridden
+         */
         is_overridden?: boolean;
         key?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -41286,8 +42510,17 @@ export type NotificationMessagesTemplatesListData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Is overridden
+         */
         is_overridden?: boolean;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -41297,7 +42530,13 @@ export type NotificationMessagesTemplatesListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Path
+         */
         path?: string;
+        /**
+         * Path (exact)
+         */
         path_exact?: string;
     };
     url: '/api/notification-messages-templates/';
@@ -41313,8 +42552,17 @@ export type NotificationMessagesTemplatesCountData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Is overridden
+         */
         is_overridden?: boolean;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -41324,7 +42572,13 @@ export type NotificationMessagesTemplatesCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Path
+         */
         path?: string;
+        /**
+         * Path (exact)
+         */
         path_exact?: string;
     };
     url: '/api/notification-messages-templates/';
@@ -42347,21 +43601,51 @@ export type OpenportalAllocationsListData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Backend ID
+         */
         backend_id?: string;
         /**
          * Can manage
          */
         can_manage?: boolean;
+        /**
+         * Customer UUID
+         */
         customer?: string;
+        /**
+         * Customer abbreviation
+         */
         customer_abbreviation?: string;
+        /**
+         * Customer name
+         */
         customer_name?: string;
+        /**
+         * Customer native name
+         */
         customer_native_name?: string;
+        /**
+         * Customer UUID
+         */
         customer_uuid?: string;
+        /**
+         * Description
+         */
         description?: string;
+        /**
+         * External IP
+         */
         external_ip?: string;
         field?: Array<'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'groupname' | 'is_active' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'node_limit' | 'node_usage' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'url' | 'uuid'>;
         is_active?: boolean;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -42371,12 +43655,35 @@ export type OpenportalAllocationsListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Project UUID
+         */
         project?: string;
+        /**
+         * Project name
+         */
         project_name?: string;
+        /**
+         * Project UUID
+         */
         project_uuid?: string;
+        /**
+         * Service settings name
+         */
         service_settings_name?: string;
+        /**
+         * Service settings UUID
+         */
         service_settings_uuid?: string;
+        /**
+         * State
+         *
+         *
+         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        /**
+         * UUID
+         */
         uuid?: string;
     };
     url: '/api/openportal-allocations/';
@@ -42392,20 +43699,50 @@ export type OpenportalAllocationsCountData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Backend ID
+         */
         backend_id?: string;
         /**
          * Can manage
          */
         can_manage?: boolean;
+        /**
+         * Customer UUID
+         */
         customer?: string;
+        /**
+         * Customer abbreviation
+         */
         customer_abbreviation?: string;
+        /**
+         * Customer name
+         */
         customer_name?: string;
+        /**
+         * Customer native name
+         */
         customer_native_name?: string;
+        /**
+         * Customer UUID
+         */
         customer_uuid?: string;
+        /**
+         * Description
+         */
         description?: string;
+        /**
+         * External IP
+         */
         external_ip?: string;
         is_active?: boolean;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -42415,12 +43752,35 @@ export type OpenportalAllocationsCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Project UUID
+         */
         project?: string;
+        /**
+         * Project name
+         */
         project_name?: string;
+        /**
+         * Project UUID
+         */
         project_uuid?: string;
+        /**
+         * Service settings name
+         */
         service_settings_name?: string;
+        /**
+         * Service settings UUID
+         */
         service_settings_uuid?: string;
+        /**
+         * State
+         *
+         *
+         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        /**
+         * UUID
+         */
         uuid?: string;
     };
     url: '/api/openportal-allocations/';
@@ -43156,21 +44516,51 @@ export type OpenportalRemoteAllocationsListData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Backend ID
+         */
         backend_id?: string;
         /**
          * Can manage
          */
         can_manage?: boolean;
+        /**
+         * Customer UUID
+         */
         customer?: string;
+        /**
+         * Customer abbreviation
+         */
         customer_abbreviation?: string;
+        /**
+         * Customer name
+         */
         customer_name?: string;
+        /**
+         * Customer native name
+         */
         customer_native_name?: string;
+        /**
+         * Customer UUID
+         */
         customer_uuid?: string;
+        /**
+         * Description
+         */
         description?: string;
+        /**
+         * External IP
+         */
         external_ip?: string;
         field?: Array<'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'is_active' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'node_limit' | 'node_usage' | 'project' | 'project_name' | 'project_uuid' | 'remote_project_identifier' | 'resource_type' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'url' | 'uuid'>;
         is_active?: boolean;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -43180,12 +44570,35 @@ export type OpenportalRemoteAllocationsListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Project UUID
+         */
         project?: string;
+        /**
+         * Project name
+         */
         project_name?: string;
+        /**
+         * Project UUID
+         */
         project_uuid?: string;
+        /**
+         * Service settings name
+         */
         service_settings_name?: string;
+        /**
+         * Service settings UUID
+         */
         service_settings_uuid?: string;
+        /**
+         * State
+         *
+         *
+         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        /**
+         * UUID
+         */
         uuid?: string;
     };
     url: '/api/openportal-remote-allocations/';
@@ -43201,20 +44614,50 @@ export type OpenportalRemoteAllocationsCountData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Backend ID
+         */
         backend_id?: string;
         /**
          * Can manage
          */
         can_manage?: boolean;
+        /**
+         * Customer UUID
+         */
         customer?: string;
+        /**
+         * Customer abbreviation
+         */
         customer_abbreviation?: string;
+        /**
+         * Customer name
+         */
         customer_name?: string;
+        /**
+         * Customer native name
+         */
         customer_native_name?: string;
+        /**
+         * Customer UUID
+         */
         customer_uuid?: string;
+        /**
+         * Description
+         */
         description?: string;
+        /**
+         * External IP
+         */
         external_ip?: string;
         is_active?: boolean;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -43224,12 +44667,35 @@ export type OpenportalRemoteAllocationsCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Project UUID
+         */
         project?: string;
+        /**
+         * Project name
+         */
         project_name?: string;
+        /**
+         * Project UUID
+         */
         project_uuid?: string;
+        /**
+         * Service settings name
+         */
         service_settings_name?: string;
+        /**
+         * Service settings UUID
+         */
         service_settings_uuid?: string;
+        /**
+         * State
+         *
+         *
+         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        /**
+         * UUID
+         */
         uuid?: string;
     };
     url: '/api/openportal-remote-allocations/';
@@ -43465,21 +44931,42 @@ export type OpenportalUnmanagedProjectsListData = {
          * Multiple values may be separated by commas.
          */
         customer?: Array<string>;
+        /**
+         * Customer abbreviation
+         */
         customer_abbreviation?: string;
+        /**
+         * Customer name
+         */
         customer_name?: string;
+        /**
+         * Customer native name
+         */
         customer_native_name?: string;
+        /**
+         * Description
+         */
         description?: string;
         field?: Array<'backend_id' | 'billing_price_estimate' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_display_billing_info_in_projects' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'end_date' | 'end_date_requested_by' | 'grace_period_days' | 'image' | 'is_industry' | 'is_removed' | 'kind' | 'marketplace_resource_count' | 'max_service_accounts' | 'name' | 'oecd_fos_2007_code' | 'oecd_fos_2007_label' | 'project_credit' | 'resources_count' | 'slug' | 'staff_notes' | 'start_date' | 'termination_metadata' | 'type' | 'type_name' | 'type_uuid' | 'url' | 'uuid'>;
         /**
          * Include soft-deleted (terminated) projects. Only available to staff and support users, or users with organizational roles who can see their terminated projects.
          */
         include_terminated?: boolean;
+        /**
+         * Is removed
+         */
         is_removed?: boolean;
         /**
          * Modified after
          */
         modified?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * Ordering
@@ -43499,6 +44986,9 @@ export type OpenportalUnmanagedProjectsListData = {
          * Filter by name, slug, UUID, backend ID or resource effective ID
          */
         query?: string;
+        /**
+         * Slug
+         */
         slug?: string;
     };
     url: '/api/openportal-unmanaged-projects/';
@@ -43535,20 +45025,41 @@ export type OpenportalUnmanagedProjectsCountData = {
          * Multiple values may be separated by commas.
          */
         customer?: Array<string>;
+        /**
+         * Customer abbreviation
+         */
         customer_abbreviation?: string;
+        /**
+         * Customer name
+         */
         customer_name?: string;
+        /**
+         * Customer native name
+         */
         customer_native_name?: string;
+        /**
+         * Description
+         */
         description?: string;
         /**
          * Include soft-deleted (terminated) projects. Only available to staff and support users, or users with organizational roles who can see their terminated projects.
          */
         include_terminated?: boolean;
+        /**
+         * Is removed
+         */
         is_removed?: boolean;
         /**
          * Modified after
          */
         modified?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * Ordering
@@ -43568,6 +45079,9 @@ export type OpenportalUnmanagedProjectsCountData = {
          * Filter by name, slug, UUID, backend ID or resource effective ID
          */
         query?: string;
+        /**
+         * Slug
+         */
         slug?: string;
     };
     url: '/api/openportal-unmanaged-projects/';
@@ -44133,22 +45647,58 @@ export type OpenstackBackupsListData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Backend ID
+         */
         backend_id?: string;
         /**
          * Can manage
          */
         can_manage?: boolean;
+        /**
+         * Customer UUID
+         */
         customer?: string;
+        /**
+         * Customer abbreviation
+         */
         customer_abbreviation?: string;
+        /**
+         * Customer name
+         */
         customer_name?: string;
+        /**
+         * Customer native name
+         */
         customer_native_name?: string;
+        /**
+         * Customer UUID
+         */
         customer_uuid?: string;
+        /**
+         * Description
+         */
         description?: string;
+        /**
+         * External IP
+         */
         external_ip?: string;
         field?: Array<'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'instance' | 'instance_floating_ips' | 'instance_marketplace_uuid' | 'instance_name' | 'instance_ports' | 'instance_security_groups' | 'is_limit_based' | 'is_usage_based' | 'kept_until' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'metadata' | 'modified' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'restorations' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'tenant_uuid' | 'url' | 'uuid'>;
+        /**
+         * Instance URL
+         */
         instance?: string;
+        /**
+         * Instance UUID
+         */
         instance_uuid?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -44158,14 +45708,43 @@ export type OpenstackBackupsListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Project UUID
+         */
         project?: string;
+        /**
+         * Project name
+         */
         project_name?: string;
+        /**
+         * Project UUID
+         */
         project_uuid?: string;
+        /**
+         * Service settings name
+         */
         service_settings_name?: string;
+        /**
+         * Service settings UUID
+         */
         service_settings_uuid?: string;
+        /**
+         * State
+         *
+         *
+         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        /**
+         * Tenant URL
+         */
         tenant?: string;
+        /**
+         * Tenant UUID
+         */
         tenant_uuid?: string;
+        /**
+         * UUID
+         */
         uuid?: string;
     };
     url: '/api/openstack-backups/';
@@ -44181,21 +45760,57 @@ export type OpenstackBackupsCountData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Backend ID
+         */
         backend_id?: string;
         /**
          * Can manage
          */
         can_manage?: boolean;
+        /**
+         * Customer UUID
+         */
         customer?: string;
+        /**
+         * Customer abbreviation
+         */
         customer_abbreviation?: string;
+        /**
+         * Customer name
+         */
         customer_name?: string;
+        /**
+         * Customer native name
+         */
         customer_native_name?: string;
+        /**
+         * Customer UUID
+         */
         customer_uuid?: string;
+        /**
+         * Description
+         */
         description?: string;
+        /**
+         * External IP
+         */
         external_ip?: string;
+        /**
+         * Instance URL
+         */
         instance?: string;
+        /**
+         * Instance UUID
+         */
         instance_uuid?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -44205,14 +45820,43 @@ export type OpenstackBackupsCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Project UUID
+         */
         project?: string;
+        /**
+         * Project name
+         */
         project_name?: string;
+        /**
+         * Project UUID
+         */
         project_uuid?: string;
+        /**
+         * Service settings name
+         */
         service_settings_name?: string;
+        /**
+         * Service settings UUID
+         */
         service_settings_uuid?: string;
+        /**
+         * State
+         *
+         *
+         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        /**
+         * Tenant URL
+         */
         tenant?: string;
+        /**
+         * Tenant UUID
+         */
         tenant_uuid?: string;
+        /**
+         * UUID
+         */
         uuid?: string;
     };
     url: '/api/openstack-backups/';
@@ -44357,8 +46001,17 @@ export type OpenstackFlavorsListData = {
         disk__gte?: number;
         disk__lte?: number;
         field?: Array<'backend_id' | 'cores' | 'disk' | 'display_name' | 'name' | 'ram' | 'settings' | 'url' | 'uuid'>;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
+        /**
+         * Name (regex)
+         */
         name_iregex?: string;
         /**
          * Ordering
@@ -44366,6 +46019,9 @@ export type OpenstackFlavorsListData = {
          *
          */
         o?: Array<'-cores' | '-disk' | '-ram' | 'cores' | 'disk' | 'ram'>;
+        /**
+         * Offering UUID
+         */
         offering_uuid?: string;
         /**
          * A page number within the paginated result set.
@@ -44378,9 +46034,21 @@ export type OpenstackFlavorsListData = {
         ram?: number;
         ram__gte?: number;
         ram__lte?: number;
+        /**
+         * Settings URL
+         */
         settings?: string;
+        /**
+         * Settings UUID
+         */
         settings_uuid?: string;
+        /**
+         * Tenant URL
+         */
         tenant?: string;
+        /**
+         * Tenant UUID
+         */
         tenant_uuid?: string;
     };
     url: '/api/openstack-flavors/';
@@ -44402,8 +46070,17 @@ export type OpenstackFlavorsCountData = {
         disk?: number;
         disk__gte?: number;
         disk__lte?: number;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
+        /**
+         * Name (regex)
+         */
         name_iregex?: string;
         /**
          * Ordering
@@ -44411,6 +46088,9 @@ export type OpenstackFlavorsCountData = {
          *
          */
         o?: Array<'-cores' | '-disk' | '-ram' | 'cores' | 'disk' | 'ram'>;
+        /**
+         * Offering UUID
+         */
         offering_uuid?: string;
         /**
          * A page number within the paginated result set.
@@ -44423,9 +46103,21 @@ export type OpenstackFlavorsCountData = {
         ram?: number;
         ram__gte?: number;
         ram__lte?: number;
+        /**
+         * Settings URL
+         */
         settings?: string;
+        /**
+         * Settings UUID
+         */
         settings_uuid?: string;
+        /**
+         * Tenant URL
+         */
         tenant?: string;
+        /**
+         * Tenant UUID
+         */
         tenant_uuid?: string;
     };
     url: '/api/openstack-flavors/';
@@ -44489,21 +46181,54 @@ export type OpenstackFloatingIpsListData = {
     path?: never;
     query?: {
         address?: string;
+        /**
+         * Backend ID
+         */
         backend_id?: string;
         /**
          * Can manage
          */
         can_manage?: boolean;
+        /**
+         * Customer UUID
+         */
         customer?: string;
+        /**
+         * Customer abbreviation
+         */
         customer_abbreviation?: string;
+        /**
+         * Customer name
+         */
         customer_name?: string;
+        /**
+         * Customer native name
+         */
         customer_native_name?: string;
+        /**
+         * Customer UUID
+         */
         customer_uuid?: string;
+        /**
+         * Description
+         */
         description?: string;
+        /**
+         * External IP
+         */
         external_ip?: string;
         field?: Array<'access_url' | 'address' | 'backend_id' | 'backend_network_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'external_address' | 'instance_name' | 'instance_url' | 'instance_uuid' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'port' | 'port_fixed_ips' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'runtime_state' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'tenant' | 'tenant_name' | 'tenant_uuid' | 'url' | 'uuid'>;
+        /**
+         * Is free
+         */
         free?: boolean;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -44513,15 +46238,44 @@ export type OpenstackFloatingIpsListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Project UUID
+         */
         project?: string;
+        /**
+         * Project name
+         */
         project_name?: string;
+        /**
+         * Project UUID
+         */
         project_uuid?: string;
         runtime_state?: string;
+        /**
+         * Service settings name
+         */
         service_settings_name?: string;
+        /**
+         * Service settings UUID
+         */
         service_settings_uuid?: string;
+        /**
+         * State
+         *
+         *
+         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        /**
+         * Tenant URL
+         */
         tenant?: string;
+        /**
+         * Tenant UUID
+         */
         tenant_uuid?: string;
+        /**
+         * UUID
+         */
         uuid?: string;
     };
     url: '/api/openstack-floating-ips/';
@@ -44538,20 +46292,53 @@ export type OpenstackFloatingIpsCountData = {
     path?: never;
     query?: {
         address?: string;
+        /**
+         * Backend ID
+         */
         backend_id?: string;
         /**
          * Can manage
          */
         can_manage?: boolean;
+        /**
+         * Customer UUID
+         */
         customer?: string;
+        /**
+         * Customer abbreviation
+         */
         customer_abbreviation?: string;
+        /**
+         * Customer name
+         */
         customer_name?: string;
+        /**
+         * Customer native name
+         */
         customer_native_name?: string;
+        /**
+         * Customer UUID
+         */
         customer_uuid?: string;
+        /**
+         * Description
+         */
         description?: string;
+        /**
+         * External IP
+         */
         external_ip?: string;
+        /**
+         * Is free
+         */
         free?: boolean;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -44561,15 +46348,44 @@ export type OpenstackFloatingIpsCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Project UUID
+         */
         project?: string;
+        /**
+         * Project name
+         */
         project_name?: string;
+        /**
+         * Project UUID
+         */
         project_uuid?: string;
         runtime_state?: string;
+        /**
+         * Service settings name
+         */
         service_settings_name?: string;
+        /**
+         * Service settings UUID
+         */
         service_settings_uuid?: string;
+        /**
+         * State
+         *
+         *
+         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        /**
+         * Tenant URL
+         */
         tenant?: string;
+        /**
+         * Tenant UUID
+         */
         tenant_uuid?: string;
+        /**
+         * UUID
+         */
         uuid?: string;
     };
     url: '/api/openstack-floating-ips/';
@@ -44710,8 +46526,17 @@ export type OpenstackImagesListData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
+        /**
+         * Offering UUID
+         */
         offering_uuid?: string;
         /**
          * A page number within the paginated result set.
@@ -44721,9 +46546,21 @@ export type OpenstackImagesListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Settings URL
+         */
         settings?: string;
+        /**
+         * Settings UUID
+         */
         settings_uuid?: string;
+        /**
+         * Tenant URL
+         */
         tenant?: string;
+        /**
+         * Tenant UUID
+         */
         tenant_uuid?: string;
     };
     url: '/api/openstack-images/';
@@ -44739,8 +46576,17 @@ export type OpenstackImagesCountData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
+        /**
+         * Offering UUID
+         */
         offering_uuid?: string;
         /**
          * A page number within the paginated result set.
@@ -44750,9 +46596,21 @@ export type OpenstackImagesCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Settings URL
+         */
         settings?: string;
+        /**
+         * Settings UUID
+         */
         settings_uuid?: string;
+        /**
+         * Tenant URL
+         */
         tenant?: string;
+        /**
+         * Tenant UUID
+         */
         tenant_uuid?: string;
     };
     url: '/api/openstack-images/';
@@ -44811,7 +46669,13 @@ export type OpenstackInstanceAvailabilityZonesListData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -44821,9 +46685,21 @@ export type OpenstackInstanceAvailabilityZonesListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Settings URL
+         */
         settings?: string;
+        /**
+         * Settings UUID
+         */
         settings_uuid?: string;
+        /**
+         * Tenant URL
+         */
         tenant?: string;
+        /**
+         * Tenant UUID
+         */
         tenant_uuid?: string;
     };
     url: '/api/openstack-instance-availability-zones/';
@@ -44839,7 +46715,13 @@ export type OpenstackInstanceAvailabilityZonesCountData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -44849,9 +46731,21 @@ export type OpenstackInstanceAvailabilityZonesCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Settings URL
+         */
         settings?: string;
+        /**
+         * Settings UUID
+         */
         settings_uuid?: string;
+        /**
+         * Tenant URL
+         */
         tenant?: string;
+        /**
+         * Tenant UUID
+         */
         tenant_uuid?: string;
     };
     url: '/api/openstack-instance-availability-zones/';
@@ -44883,22 +46777,58 @@ export type OpenstackInstancesListData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Filter for attachment to volume UUID
+         */
         attach_volume_uuid?: string;
+        /**
+         * Availability zone name
+         */
         availability_zone_name?: string;
+        /**
+         * Backend ID
+         */
         backend_id?: string;
         /**
          * Can manage
          */
         can_manage?: boolean;
+        /**
+         * Customer UUID
+         */
         customer?: string;
+        /**
+         * Customer abbreviation
+         */
         customer_abbreviation?: string;
+        /**
+         * Customer name
+         */
         customer_name?: string;
+        /**
+         * Customer native name
+         */
         customer_native_name?: string;
+        /**
+         * Customer UUID
+         */
         customer_uuid?: string;
+        /**
+         * Description
+         */
         description?: string;
+        /**
+         * External IP
+         */
         external_ip?: string;
         field?: Array<'access_url' | 'action' | 'action_details' | 'availability_zone' | 'availability_zone_name' | 'backend_id' | 'connect_directly_to_external_network' | 'cores' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'disk' | 'error_message' | 'error_traceback' | 'external_address' | 'external_ips' | 'flavor_disk' | 'flavor_name' | 'floating_ips' | 'hypervisor_hostname' | 'image_name' | 'internal_ips' | 'is_limit_based' | 'is_usage_based' | 'key_fingerprint' | 'key_name' | 'latitude' | 'longitude' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'min_disk' | 'min_ram' | 'modified' | 'name' | 'ports' | 'project' | 'project_name' | 'project_uuid' | 'ram' | 'rancher_cluster' | 'resource_type' | 'runtime_state' | 'security_groups' | 'server_group' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'ssh_public_key' | 'start_time' | 'state' | 'tenant' | 'tenant_uuid' | 'url' | 'user_data' | 'uuid' | 'volumes'>;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -44908,19 +46838,48 @@ export type OpenstackInstancesListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Project UUID
+         */
         project?: string;
+        /**
+         * Project name
+         */
         project_name?: string;
+        /**
+         * Project UUID
+         */
         project_uuid?: string;
         /**
          * Search by name, internal IP, or external IP
          */
         query?: string;
         runtime_state?: string;
+        /**
+         * Service settings name
+         */
         service_settings_name?: string;
+        /**
+         * Service settings UUID
+         */
         service_settings_uuid?: string;
+        /**
+         * State
+         *
+         *
+         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        /**
+         * Tenant URL
+         */
         tenant?: string;
+        /**
+         * Tenant UUID
+         */
         tenant_uuid?: string;
+        /**
+         * UUID
+         */
         uuid?: string;
     };
     url: '/api/openstack-instances/';
@@ -44936,21 +46895,57 @@ export type OpenstackInstancesCountData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Filter for attachment to volume UUID
+         */
         attach_volume_uuid?: string;
+        /**
+         * Availability zone name
+         */
         availability_zone_name?: string;
+        /**
+         * Backend ID
+         */
         backend_id?: string;
         /**
          * Can manage
          */
         can_manage?: boolean;
+        /**
+         * Customer UUID
+         */
         customer?: string;
+        /**
+         * Customer abbreviation
+         */
         customer_abbreviation?: string;
+        /**
+         * Customer name
+         */
         customer_name?: string;
+        /**
+         * Customer native name
+         */
         customer_native_name?: string;
+        /**
+         * Customer UUID
+         */
         customer_uuid?: string;
+        /**
+         * Description
+         */
         description?: string;
+        /**
+         * External IP
+         */
         external_ip?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -44960,19 +46955,48 @@ export type OpenstackInstancesCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Project UUID
+         */
         project?: string;
+        /**
+         * Project name
+         */
         project_name?: string;
+        /**
+         * Project UUID
+         */
         project_uuid?: string;
         /**
          * Search by name, internal IP, or external IP
          */
         query?: string;
         runtime_state?: string;
+        /**
+         * Service settings name
+         */
         service_settings_name?: string;
+        /**
+         * Service settings UUID
+         */
         service_settings_uuid?: string;
+        /**
+         * State
+         *
+         *
+         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        /**
+         * Tenant URL
+         */
         tenant?: string;
+        /**
+         * Tenant UUID
+         */
         tenant_uuid?: string;
+        /**
+         * UUID
+         */
         uuid?: string;
     };
     url: '/api/openstack-instances/';
@@ -45300,19 +47324,49 @@ export type OpenstackMarketplaceTenantsListData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Backend ID
+         */
         backend_id?: string;
         /**
          * Can manage
          */
         can_manage?: boolean;
+        /**
+         * Customer UUID
+         */
         customer?: string;
+        /**
+         * Customer abbreviation
+         */
         customer_abbreviation?: string;
+        /**
+         * Customer name
+         */
         customer_name?: string;
+        /**
+         * Customer native name
+         */
         customer_native_name?: string;
+        /**
+         * Customer UUID
+         */
         customer_uuid?: string;
+        /**
+         * Description
+         */
         description?: string;
+        /**
+         * External IP
+         */
         external_ip?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -45322,12 +47376,35 @@ export type OpenstackMarketplaceTenantsListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Project UUID
+         */
         project?: string;
+        /**
+         * Project name
+         */
         project_name?: string;
+        /**
+         * Project UUID
+         */
         project_uuid?: string;
+        /**
+         * Service settings name
+         */
         service_settings_name?: string;
+        /**
+         * Service settings UUID
+         */
         service_settings_uuid?: string;
+        /**
+         * State
+         *
+         *
+         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        /**
+         * UUID
+         */
         uuid?: string;
     };
     url: '/api/openstack-marketplace-tenants/';
@@ -45343,19 +47420,49 @@ export type OpenstackMarketplaceTenantsCountData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Backend ID
+         */
         backend_id?: string;
         /**
          * Can manage
          */
         can_manage?: boolean;
+        /**
+         * Customer UUID
+         */
         customer?: string;
+        /**
+         * Customer abbreviation
+         */
         customer_abbreviation?: string;
+        /**
+         * Customer name
+         */
         customer_name?: string;
+        /**
+         * Customer native name
+         */
         customer_native_name?: string;
+        /**
+         * Customer UUID
+         */
         customer_uuid?: string;
+        /**
+         * Description
+         */
         description?: string;
+        /**
+         * External IP
+         */
         external_ip?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -45365,12 +47472,35 @@ export type OpenstackMarketplaceTenantsCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Project UUID
+         */
         project?: string;
+        /**
+         * Project name
+         */
         project_name?: string;
+        /**
+         * Project UUID
+         */
         project_uuid?: string;
+        /**
+         * Service settings name
+         */
         service_settings_name?: string;
+        /**
+         * Service settings UUID
+         */
         service_settings_uuid?: string;
+        /**
+         * State
+         *
+         *
+         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        /**
+         * UUID
+         */
         uuid?: string;
     };
     url: '/api/openstack-marketplace-tenants/';
@@ -45558,7 +47688,13 @@ export type OpenstackNetworkRbacPoliciesListData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Network URL
+         */
         network?: string;
+        /**
+         * Network UUID
+         */
         network_uuid?: string;
         /**
          * A page number within the paginated result set.
@@ -45574,9 +47710,21 @@ export type OpenstackNetworkRbacPoliciesListData = {
          *
          */
         policy_type?: 'access_as_external' | 'access_as_shared';
+        /**
+         * Target tenant URL
+         */
         target_tenant?: string;
+        /**
+         * Target tenant UUID
+         */
         target_tenant_uuid?: string;
+        /**
+         * Tenant URL
+         */
         tenant?: string;
+        /**
+         * Tenant UUID
+         */
         tenant_uuid?: string;
     };
     url: '/api/openstack-network-rbac-policies/';
@@ -45592,7 +47740,13 @@ export type OpenstackNetworkRbacPoliciesCountData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Network URL
+         */
         network?: string;
+        /**
+         * Network UUID
+         */
         network_uuid?: string;
         /**
          * A page number within the paginated result set.
@@ -45608,9 +47762,21 @@ export type OpenstackNetworkRbacPoliciesCountData = {
          *
          */
         policy_type?: 'access_as_external' | 'access_as_shared';
+        /**
+         * Target tenant URL
+         */
         target_tenant?: string;
+        /**
+         * Target tenant UUID
+         */
         target_tenant_uuid?: string;
+        /**
+         * Tenant URL
+         */
         tenant?: string;
+        /**
+         * Tenant UUID
+         */
         tenant_uuid?: string;
     };
     url: '/api/openstack-network-rbac-policies/';
@@ -45703,25 +47869,55 @@ export type OpenstackNetworksListData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Backend ID
+         */
         backend_id?: string;
         /**
          * Can manage
          */
         can_manage?: boolean;
+        /**
+         * Customer UUID
+         */
         customer?: string;
+        /**
+         * Customer abbreviation
+         */
         customer_abbreviation?: string;
+        /**
+         * Customer name
+         */
         customer_name?: string;
+        /**
+         * Customer native name
+         */
         customer_native_name?: string;
+        /**
+         * Customer UUID
+         */
         customer_uuid?: string;
+        /**
+         * Description
+         */
         description?: string;
         /**
          * Direct only
          */
         direct_only?: boolean;
+        /**
+         * External IP
+         */
         external_ip?: string;
         field?: Array<'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'is_external' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'mtu' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'rbac_policies' | 'resource_type' | 'segmentation_id' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'subnets' | 'tenant' | 'tenant_name' | 'tenant_uuid' | 'type' | 'url' | 'uuid'>;
         is_external?: boolean;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -45731,15 +47927,35 @@ export type OpenstackNetworksListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Project UUID
+         */
         project?: string;
+        /**
+         * Project name
+         */
         project_name?: string;
+        /**
+         * Project UUID
+         */
         project_uuid?: string;
         /**
          * RBAC only
          */
         rbac_only?: boolean;
+        /**
+         * Service settings name
+         */
         service_settings_name?: string;
+        /**
+         * Service settings UUID
+         */
         service_settings_uuid?: string;
+        /**
+         * State
+         *
+         *
+         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
         /**
          * Tenant URL
@@ -45750,6 +47966,9 @@ export type OpenstackNetworksListData = {
          */
         tenant_uuid?: string;
         type?: string;
+        /**
+         * UUID
+         */
         uuid?: string;
     };
     url: '/api/openstack-networks/';
@@ -45765,24 +47984,54 @@ export type OpenstackNetworksCountData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Backend ID
+         */
         backend_id?: string;
         /**
          * Can manage
          */
         can_manage?: boolean;
+        /**
+         * Customer UUID
+         */
         customer?: string;
+        /**
+         * Customer abbreviation
+         */
         customer_abbreviation?: string;
+        /**
+         * Customer name
+         */
         customer_name?: string;
+        /**
+         * Customer native name
+         */
         customer_native_name?: string;
+        /**
+         * Customer UUID
+         */
         customer_uuid?: string;
+        /**
+         * Description
+         */
         description?: string;
         /**
          * Direct only
          */
         direct_only?: boolean;
+        /**
+         * External IP
+         */
         external_ip?: string;
         is_external?: boolean;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -45792,15 +48041,35 @@ export type OpenstackNetworksCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Project UUID
+         */
         project?: string;
+        /**
+         * Project name
+         */
         project_name?: string;
+        /**
+         * Project UUID
+         */
         project_uuid?: string;
         /**
          * RBAC only
          */
         rbac_only?: boolean;
+        /**
+         * Service settings name
+         */
         service_settings_name?: string;
+        /**
+         * Service settings UUID
+         */
         service_settings_uuid?: string;
+        /**
+         * State
+         *
+         *
+         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
         /**
          * Tenant URL
@@ -45811,6 +48080,9 @@ export type OpenstackNetworksCountData = {
          */
         tenant_uuid?: string;
         type?: string;
+        /**
+         * UUID
+         */
         uuid?: string;
     };
     url: '/api/openstack-networks/';
@@ -46018,7 +48290,13 @@ export type OpenstackPortsListData = {
          */
         has_device_owner?: boolean;
         mac_address?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * Search by network name
@@ -46047,7 +48325,13 @@ export type OpenstackPortsListData = {
          */
         query?: string;
         status?: string;
+        /**
+         * Tenant URL
+         */
         tenant?: string;
+        /**
+         * Tenant UUID
+         */
         tenant_uuid?: string;
     };
     url: '/api/openstack-ports/';
@@ -46080,7 +48364,13 @@ export type OpenstackPortsCountData = {
          */
         has_device_owner?: boolean;
         mac_address?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * Search by network name
@@ -46109,7 +48399,13 @@ export type OpenstackPortsCountData = {
          */
         query?: string;
         status?: string;
+        /**
+         * Tenant URL
+         */
         tenant?: string;
+        /**
+         * Tenant UUID
+         */
         tenant_uuid?: string;
     };
     url: '/api/openstack-ports/';
@@ -46342,7 +48638,13 @@ export type OpenstackRoutersListData = {
     path?: never;
     query?: {
         field?: Array<'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'fixed_ips' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'offering_external_ips' | 'ports' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'routes' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'tenant' | 'tenant_name' | 'tenant_uuid' | 'url' | 'uuid'>;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -46352,7 +48654,13 @@ export type OpenstackRoutersListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Tenant URL
+         */
         tenant?: string;
+        /**
+         * Tenant UUID
+         */
         tenant_uuid?: string;
     };
     url: '/api/openstack-routers/';
@@ -46368,7 +48676,13 @@ export type OpenstackRoutersCountData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -46378,7 +48692,13 @@ export type OpenstackRoutersCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Tenant URL
+         */
         tenant?: string;
+        /**
+         * Tenant UUID
+         */
         tenant_uuid?: string;
     };
     url: '/api/openstack-routers/';
@@ -46490,20 +48810,50 @@ export type OpenstackSecurityGroupsListData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Backend ID
+         */
         backend_id?: string;
         /**
          * Can manage
          */
         can_manage?: boolean;
+        /**
+         * Customer UUID
+         */
         customer?: string;
+        /**
+         * Customer abbreviation
+         */
         customer_abbreviation?: string;
+        /**
+         * Customer name
+         */
         customer_name?: string;
+        /**
+         * Customer native name
+         */
         customer_native_name?: string;
+        /**
+         * Customer UUID
+         */
         customer_uuid?: string;
+        /**
+         * Description
+         */
         description?: string;
+        /**
+         * External IP
+         */
         external_ip?: string;
         field?: Array<'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'rules' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'tenant' | 'tenant_name' | 'tenant_uuid' | 'url' | 'uuid'>;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -46513,18 +48863,47 @@ export type OpenstackSecurityGroupsListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Project UUID
+         */
         project?: string;
+        /**
+         * Project name
+         */
         project_name?: string;
+        /**
+         * Project UUID
+         */
         project_uuid?: string;
         /**
          * Search by name or description
          */
         query?: string;
+        /**
+         * Service settings name
+         */
         service_settings_name?: string;
+        /**
+         * Service settings UUID
+         */
         service_settings_uuid?: string;
+        /**
+         * State
+         *
+         *
+         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        /**
+         * Tenant URL
+         */
         tenant?: string;
+        /**
+         * Tenant UUID
+         */
         tenant_uuid?: string;
+        /**
+         * UUID
+         */
         uuid?: string;
     };
     url: '/api/openstack-security-groups/';
@@ -46540,19 +48919,49 @@ export type OpenstackSecurityGroupsCountData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Backend ID
+         */
         backend_id?: string;
         /**
          * Can manage
          */
         can_manage?: boolean;
+        /**
+         * Customer UUID
+         */
         customer?: string;
+        /**
+         * Customer abbreviation
+         */
         customer_abbreviation?: string;
+        /**
+         * Customer name
+         */
         customer_name?: string;
+        /**
+         * Customer native name
+         */
         customer_native_name?: string;
+        /**
+         * Customer UUID
+         */
         customer_uuid?: string;
+        /**
+         * Description
+         */
         description?: string;
+        /**
+         * External IP
+         */
         external_ip?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -46562,18 +48971,47 @@ export type OpenstackSecurityGroupsCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Project UUID
+         */
         project?: string;
+        /**
+         * Project name
+         */
         project_name?: string;
+        /**
+         * Project UUID
+         */
         project_uuid?: string;
         /**
          * Search by name or description
          */
         query?: string;
+        /**
+         * Service settings name
+         */
         service_settings_name?: string;
+        /**
+         * Service settings UUID
+         */
         service_settings_uuid?: string;
+        /**
+         * State
+         *
+         *
+         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        /**
+         * Tenant URL
+         */
         tenant?: string;
+        /**
+         * Tenant UUID
+         */
         tenant_uuid?: string;
+        /**
+         * UUID
+         */
         uuid?: string;
     };
     url: '/api/openstack-security-groups/';
@@ -46712,20 +49150,50 @@ export type OpenstackServerGroupsListData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Backend ID
+         */
         backend_id?: string;
         /**
          * Can manage
          */
         can_manage?: boolean;
+        /**
+         * Customer UUID
+         */
         customer?: string;
+        /**
+         * Customer abbreviation
+         */
         customer_abbreviation?: string;
+        /**
+         * Customer name
+         */
         customer_name?: string;
+        /**
+         * Customer native name
+         */
         customer_native_name?: string;
+        /**
+         * Customer UUID
+         */
         customer_uuid?: string;
+        /**
+         * Description
+         */
         description?: string;
+        /**
+         * External IP
+         */
         external_ip?: string;
         field?: Array<'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'display_name' | 'error_message' | 'error_traceback' | 'instances' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'policy' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'tenant' | 'tenant_name' | 'tenant_uuid' | 'url' | 'uuid'>;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -46735,14 +49203,43 @@ export type OpenstackServerGroupsListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Project UUID
+         */
         project?: string;
+        /**
+         * Project name
+         */
         project_name?: string;
+        /**
+         * Project UUID
+         */
         project_uuid?: string;
+        /**
+         * Service settings name
+         */
         service_settings_name?: string;
+        /**
+         * Service settings UUID
+         */
         service_settings_uuid?: string;
+        /**
+         * State
+         *
+         *
+         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        /**
+         * Tenant URL
+         */
         tenant?: string;
+        /**
+         * Tenant UUID
+         */
         tenant_uuid?: string;
+        /**
+         * UUID
+         */
         uuid?: string;
     };
     url: '/api/openstack-server-groups/';
@@ -46758,19 +49255,49 @@ export type OpenstackServerGroupsCountData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Backend ID
+         */
         backend_id?: string;
         /**
          * Can manage
          */
         can_manage?: boolean;
+        /**
+         * Customer UUID
+         */
         customer?: string;
+        /**
+         * Customer abbreviation
+         */
         customer_abbreviation?: string;
+        /**
+         * Customer name
+         */
         customer_name?: string;
+        /**
+         * Customer native name
+         */
         customer_native_name?: string;
+        /**
+         * Customer UUID
+         */
         customer_uuid?: string;
+        /**
+         * Description
+         */
         description?: string;
+        /**
+         * External IP
+         */
         external_ip?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -46780,14 +49307,43 @@ export type OpenstackServerGroupsCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Project UUID
+         */
         project?: string;
+        /**
+         * Project name
+         */
         project_name?: string;
+        /**
+         * Project UUID
+         */
         project_uuid?: string;
+        /**
+         * Service settings name
+         */
         service_settings_name?: string;
+        /**
+         * Service settings UUID
+         */
         service_settings_uuid?: string;
+        /**
+         * State
+         *
+         *
+         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        /**
+         * Tenant URL
+         */
         tenant?: string;
+        /**
+         * Tenant UUID
+         */
         tenant_uuid?: string;
+        /**
+         * UUID
+         */
         uuid?: string;
     };
     url: '/api/openstack-server-groups/';
@@ -46923,22 +49479,58 @@ export type OpenstackSnapshotsListData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Backend ID
+         */
         backend_id?: string;
+        /**
+         * Backup URL
+         */
         backup?: string;
+        /**
+         * Backup UUID
+         */
         backup_uuid?: string;
         /**
          * Can manage
          */
         can_manage?: boolean;
+        /**
+         * Customer UUID
+         */
         customer?: string;
+        /**
+         * Customer abbreviation
+         */
         customer_abbreviation?: string;
+        /**
+         * Customer name
+         */
         customer_name?: string;
+        /**
+         * Customer native name
+         */
         customer_native_name?: string;
+        /**
+         * Customer UUID
+         */
         customer_uuid?: string;
+        /**
+         * Description
+         */
         description?: string;
+        /**
+         * External IP
+         */
         external_ip?: string;
         field?: Array<'access_url' | 'action' | 'action_details' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'is_limit_based' | 'is_usage_based' | 'kept_until' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'metadata' | 'modified' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'restorations' | 'runtime_state' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'size' | 'source_volume' | 'source_volume_marketplace_uuid' | 'source_volume_name' | 'state' | 'url' | 'uuid'>;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -46948,17 +49540,52 @@ export type OpenstackSnapshotsListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Project UUID
+         */
         project?: string;
+        /**
+         * Project name
+         */
         project_name?: string;
+        /**
+         * Project UUID
+         */
         project_uuid?: string;
         runtime_state?: string;
+        /**
+         * Service settings name
+         */
         service_settings_name?: string;
+        /**
+         * Service settings UUID
+         */
         service_settings_uuid?: string;
+        /**
+         * Source volume URL
+         */
         source_volume?: string;
+        /**
+         * Source volume UUID
+         */
         source_volume_uuid?: string;
+        /**
+         * State
+         *
+         *
+         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        /**
+         * Tenant URL
+         */
         tenant?: string;
+        /**
+         * Tenant UUID
+         */
         tenant_uuid?: string;
+        /**
+         * UUID
+         */
         uuid?: string;
     };
     url: '/api/openstack-snapshots/';
@@ -46974,21 +49601,57 @@ export type OpenstackSnapshotsCountData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Backend ID
+         */
         backend_id?: string;
+        /**
+         * Backup URL
+         */
         backup?: string;
+        /**
+         * Backup UUID
+         */
         backup_uuid?: string;
         /**
          * Can manage
          */
         can_manage?: boolean;
+        /**
+         * Customer UUID
+         */
         customer?: string;
+        /**
+         * Customer abbreviation
+         */
         customer_abbreviation?: string;
+        /**
+         * Customer name
+         */
         customer_name?: string;
+        /**
+         * Customer native name
+         */
         customer_native_name?: string;
+        /**
+         * Customer UUID
+         */
         customer_uuid?: string;
+        /**
+         * Description
+         */
         description?: string;
+        /**
+         * External IP
+         */
         external_ip?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -46998,17 +49661,52 @@ export type OpenstackSnapshotsCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Project UUID
+         */
         project?: string;
+        /**
+         * Project name
+         */
         project_name?: string;
+        /**
+         * Project UUID
+         */
         project_uuid?: string;
         runtime_state?: string;
+        /**
+         * Service settings name
+         */
         service_settings_name?: string;
+        /**
+         * Service settings UUID
+         */
         service_settings_uuid?: string;
+        /**
+         * Source volume URL
+         */
         source_volume?: string;
+        /**
+         * Source volume UUID
+         */
         source_volume_uuid?: string;
+        /**
+         * State
+         *
+         *
+         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        /**
+         * Tenant URL
+         */
         tenant?: string;
+        /**
+         * Tenant UUID
+         */
         tenant_uuid?: string;
+        /**
+         * UUID
+         */
         uuid?: string;
     };
     url: '/api/openstack-snapshots/';
@@ -47170,28 +49868,64 @@ export type OpenstackSubnetsListData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Backend ID
+         */
         backend_id?: string;
         /**
          * Can manage
          */
         can_manage?: boolean;
+        /**
+         * Customer UUID
+         */
         customer?: string;
+        /**
+         * Customer abbreviation
+         */
         customer_abbreviation?: string;
+        /**
+         * Customer name
+         */
         customer_name?: string;
+        /**
+         * Customer native name
+         */
         customer_native_name?: string;
+        /**
+         * Customer UUID
+         */
         customer_uuid?: string;
+        /**
+         * Description
+         */
         description?: string;
         /**
          * Direct only
          */
         direct_only?: boolean;
         enable_dhcp?: boolean;
+        /**
+         * External IP
+         */
         external_ip?: string;
         field?: Array<'access_url' | 'allocation_pools' | 'backend_id' | 'cidr' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'disable_gateway' | 'dns_nameservers' | 'enable_dhcp' | 'error_message' | 'error_traceback' | 'gateway_ip' | 'host_routes' | 'ip_version' | 'is_connected' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'network' | 'network_name' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'tenant' | 'tenant_name' | 'url' | 'uuid'>;
         ip_version?: number;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
+        /**
+         * Network URL
+         */
         network?: string;
+        /**
+         * Network UUID
+         */
         network_uuid?: string;
         /**
          * A page number within the paginated result set.
@@ -47201,15 +49935,35 @@ export type OpenstackSubnetsListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Project UUID
+         */
         project?: string;
+        /**
+         * Project name
+         */
         project_name?: string;
+        /**
+         * Project UUID
+         */
         project_uuid?: string;
         /**
          * RBAC only
          */
         rbac_only?: boolean;
+        /**
+         * Service settings name
+         */
         service_settings_name?: string;
+        /**
+         * Service settings UUID
+         */
         service_settings_uuid?: string;
+        /**
+         * State
+         *
+         *
+         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
         /**
          * Tenant URL
@@ -47219,6 +49973,9 @@ export type OpenstackSubnetsListData = {
          * Tenant UUID
          */
         tenant_uuid?: string;
+        /**
+         * UUID
+         */
         uuid?: string;
     };
     url: '/api/openstack-subnets/';
@@ -47234,27 +49991,63 @@ export type OpenstackSubnetsCountData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Backend ID
+         */
         backend_id?: string;
         /**
          * Can manage
          */
         can_manage?: boolean;
+        /**
+         * Customer UUID
+         */
         customer?: string;
+        /**
+         * Customer abbreviation
+         */
         customer_abbreviation?: string;
+        /**
+         * Customer name
+         */
         customer_name?: string;
+        /**
+         * Customer native name
+         */
         customer_native_name?: string;
+        /**
+         * Customer UUID
+         */
         customer_uuid?: string;
+        /**
+         * Description
+         */
         description?: string;
         /**
          * Direct only
          */
         direct_only?: boolean;
         enable_dhcp?: boolean;
+        /**
+         * External IP
+         */
         external_ip?: string;
         ip_version?: number;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
+        /**
+         * Network URL
+         */
         network?: string;
+        /**
+         * Network UUID
+         */
         network_uuid?: string;
         /**
          * A page number within the paginated result set.
@@ -47264,15 +50057,35 @@ export type OpenstackSubnetsCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Project UUID
+         */
         project?: string;
+        /**
+         * Project name
+         */
         project_name?: string;
+        /**
+         * Project UUID
+         */
         project_uuid?: string;
         /**
          * RBAC only
          */
         rbac_only?: boolean;
+        /**
+         * Service settings name
+         */
         service_settings_name?: string;
+        /**
+         * Service settings UUID
+         */
         service_settings_uuid?: string;
+        /**
+         * State
+         *
+         *
+         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
         /**
          * Tenant URL
@@ -47282,6 +50095,9 @@ export type OpenstackSubnetsCountData = {
          * Tenant UUID
          */
         tenant_uuid?: string;
+        /**
+         * UUID
+         */
         uuid?: string;
     };
     url: '/api/openstack-subnets/';
@@ -47436,20 +50252,50 @@ export type OpenstackTenantsListData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Backend ID
+         */
         backend_id?: string;
         /**
          * Can manage
          */
         can_manage?: boolean;
+        /**
+         * Customer UUID
+         */
         customer?: string;
+        /**
+         * Customer abbreviation
+         */
         customer_abbreviation?: string;
+        /**
+         * Customer name
+         */
         customer_name?: string;
+        /**
+         * Customer native name
+         */
         customer_native_name?: string;
+        /**
+         * Customer UUID
+         */
         customer_uuid?: string;
+        /**
+         * Description
+         */
         description?: string;
+        /**
+         * External IP
+         */
         external_ip?: string;
         field?: Array<'availability_zone' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'default_volume_type_name' | 'description' | 'error_message' | 'error_traceback' | 'external_network_id' | 'internal_network_id' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_type' | 'security_groups' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'subnet_cidr' | 'url' | 'uuid'>;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -47459,12 +50305,35 @@ export type OpenstackTenantsListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Project UUID
+         */
         project?: string;
+        /**
+         * Project name
+         */
         project_name?: string;
+        /**
+         * Project UUID
+         */
         project_uuid?: string;
+        /**
+         * Service settings name
+         */
         service_settings_name?: string;
+        /**
+         * Service settings UUID
+         */
         service_settings_uuid?: string;
+        /**
+         * State
+         *
+         *
+         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        /**
+         * UUID
+         */
         uuid?: string;
     };
     url: '/api/openstack-tenants/';
@@ -47480,19 +50349,49 @@ export type OpenstackTenantsCountData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Backend ID
+         */
         backend_id?: string;
         /**
          * Can manage
          */
         can_manage?: boolean;
+        /**
+         * Customer UUID
+         */
         customer?: string;
+        /**
+         * Customer abbreviation
+         */
         customer_abbreviation?: string;
+        /**
+         * Customer name
+         */
         customer_name?: string;
+        /**
+         * Customer native name
+         */
         customer_native_name?: string;
+        /**
+         * Customer UUID
+         */
         customer_uuid?: string;
+        /**
+         * Description
+         */
         description?: string;
+        /**
+         * External IP
+         */
         external_ip?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -47502,12 +50401,35 @@ export type OpenstackTenantsCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Project UUID
+         */
         project?: string;
+        /**
+         * Project name
+         */
         project_name?: string;
+        /**
+         * Project UUID
+         */
         project_uuid?: string;
+        /**
+         * Service settings name
+         */
         service_settings_name?: string;
+        /**
+         * Service settings UUID
+         */
         service_settings_uuid?: string;
+        /**
+         * State
+         *
+         *
+         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        /**
+         * UUID
+         */
         uuid?: string;
     };
     url: '/api/openstack-tenants/';
@@ -47604,19 +50526,49 @@ export type OpenstackTenantsBackendInstancesListData = {
         uuid: string;
     };
     query?: {
+        /**
+         * Backend ID
+         */
         backend_id?: string;
         /**
          * Can manage
          */
         can_manage?: boolean;
+        /**
+         * Customer UUID
+         */
         customer?: string;
+        /**
+         * Customer abbreviation
+         */
         customer_abbreviation?: string;
+        /**
+         * Customer name
+         */
         customer_name?: string;
+        /**
+         * Customer native name
+         */
         customer_native_name?: string;
+        /**
+         * Customer UUID
+         */
         customer_uuid?: string;
+        /**
+         * Description
+         */
         description?: string;
+        /**
+         * External IP
+         */
         external_ip?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -47626,12 +50578,35 @@ export type OpenstackTenantsBackendInstancesListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Project UUID
+         */
         project?: string;
+        /**
+         * Project name
+         */
         project_name?: string;
+        /**
+         * Project UUID
+         */
         project_uuid?: string;
+        /**
+         * Service settings name
+         */
         service_settings_name?: string;
+        /**
+         * Service settings UUID
+         */
         service_settings_uuid?: string;
+        /**
+         * State
+         *
+         *
+         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        /**
+         * UUID
+         */
         uuid?: string;
     };
     url: '/api/openstack-tenants/{uuid}/backend_instances/';
@@ -47649,19 +50624,49 @@ export type OpenstackTenantsBackendVolumesListData = {
         uuid: string;
     };
     query?: {
+        /**
+         * Backend ID
+         */
         backend_id?: string;
         /**
          * Can manage
          */
         can_manage?: boolean;
+        /**
+         * Customer UUID
+         */
         customer?: string;
+        /**
+         * Customer abbreviation
+         */
         customer_abbreviation?: string;
+        /**
+         * Customer name
+         */
         customer_name?: string;
+        /**
+         * Customer native name
+         */
         customer_native_name?: string;
+        /**
+         * Customer UUID
+         */
         customer_uuid?: string;
+        /**
+         * Description
+         */
         description?: string;
+        /**
+         * External IP
+         */
         external_ip?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -47671,12 +50676,35 @@ export type OpenstackTenantsBackendVolumesListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Project UUID
+         */
         project?: string;
+        /**
+         * Project name
+         */
         project_name?: string;
+        /**
+         * Project UUID
+         */
         project_uuid?: string;
+        /**
+         * Service settings name
+         */
         service_settings_name?: string;
+        /**
+         * Service settings UUID
+         */
         service_settings_uuid?: string;
+        /**
+         * State
+         *
+         *
+         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        /**
+         * UUID
+         */
         uuid?: string;
     };
     url: '/api/openstack-tenants/{uuid}/backend_volumes/';
@@ -47902,7 +50930,13 @@ export type OpenstackVolumeAvailabilityZonesListData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -47912,9 +50946,21 @@ export type OpenstackVolumeAvailabilityZonesListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Settings URL
+         */
         settings?: string;
+        /**
+         * Settings UUID
+         */
         settings_uuid?: string;
+        /**
+         * Tenant URL
+         */
         tenant?: string;
+        /**
+         * Tenant UUID
+         */
         tenant_uuid?: string;
     };
     url: '/api/openstack-volume-availability-zones/';
@@ -47930,7 +50976,13 @@ export type OpenstackVolumeAvailabilityZonesCountData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -47940,9 +50992,21 @@ export type OpenstackVolumeAvailabilityZonesCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Settings URL
+         */
         settings?: string;
+        /**
+         * Settings UUID
+         */
         settings_uuid?: string;
+        /**
+         * Tenant URL
+         */
         tenant?: string;
+        /**
+         * Tenant UUID
+         */
         tenant_uuid?: string;
     };
     url: '/api/openstack-volume-availability-zones/';
@@ -47974,8 +51038,17 @@ export type OpenstackVolumeTypesListData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
+        /**
+         * Offering UUID
+         */
         offering_uuid?: string;
         /**
          * A page number within the paginated result set.
@@ -47985,9 +51058,21 @@ export type OpenstackVolumeTypesListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Settings URL
+         */
         settings?: string;
+        /**
+         * Settings UUID
+         */
         settings_uuid?: string;
+        /**
+         * Tenant URL
+         */
         tenant?: string;
+        /**
+         * Tenant UUID
+         */
         tenant_uuid?: string;
     };
     url: '/api/openstack-volume-types/';
@@ -48003,8 +51088,17 @@ export type OpenstackVolumeTypesCountData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
+        /**
+         * Offering UUID
+         */
         offering_uuid?: string;
         /**
          * A page number within the paginated result set.
@@ -48014,9 +51108,21 @@ export type OpenstackVolumeTypesCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Settings URL
+         */
         settings?: string;
+        /**
+         * Settings UUID
+         */
         settings_uuid?: string;
+        /**
+         * Tenant URL
+         */
         tenant?: string;
+        /**
+         * Tenant UUID
+         */
         tenant_uuid?: string;
     };
     url: '/api/openstack-volume-types/';
@@ -48075,24 +51181,66 @@ export type OpenstackVolumesListData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Filter for attachment to instance UUID
+         */
         attach_instance_uuid?: string;
+        /**
+         * Availability zone name
+         */
         availability_zone_name?: string;
+        /**
+         * Backend ID
+         */
         backend_id?: string;
         /**
          * Can manage
          */
         can_manage?: boolean;
+        /**
+         * Customer UUID
+         */
         customer?: string;
+        /**
+         * Customer abbreviation
+         */
         customer_abbreviation?: string;
+        /**
+         * Customer name
+         */
         customer_name?: string;
+        /**
+         * Customer native name
+         */
         customer_native_name?: string;
+        /**
+         * Customer UUID
+         */
         customer_uuid?: string;
+        /**
+         * Description
+         */
         description?: string;
+        /**
+         * External IP
+         */
         external_ip?: string;
         field?: Array<'access_url' | 'action' | 'action_details' | 'availability_zone' | 'availability_zone_name' | 'backend_id' | 'bootable' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'device' | 'error_message' | 'error_traceback' | 'extend_enabled' | 'image' | 'image_metadata' | 'image_name' | 'instance' | 'instance_marketplace_uuid' | 'instance_name' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'metadata' | 'modified' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'runtime_state' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'size' | 'source_snapshot' | 'state' | 'tenant' | 'tenant_uuid' | 'type' | 'type_name' | 'url' | 'uuid'>;
+        /**
+         * Instance URL
+         */
         instance?: string;
+        /**
+         * Instance UUID
+         */
         instance_uuid?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -48102,17 +51250,52 @@ export type OpenstackVolumesListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Project UUID
+         */
         project?: string;
+        /**
+         * Project name
+         */
         project_name?: string;
+        /**
+         * Project UUID
+         */
         project_uuid?: string;
         runtime_state?: string;
+        /**
+         * Service settings name
+         */
         service_settings_name?: string;
+        /**
+         * Service settings UUID
+         */
         service_settings_uuid?: string;
+        /**
+         * Snapshot URL
+         */
         snapshot?: string;
+        /**
+         * Snapshot UUID
+         */
         snapshot_uuid?: string;
+        /**
+         * State
+         *
+         *
+         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        /**
+         * Tenant URL
+         */
         tenant?: string;
+        /**
+         * Tenant UUID
+         */
         tenant_uuid?: string;
+        /**
+         * UUID
+         */
         uuid?: string;
     };
     url: '/api/openstack-volumes/';
@@ -48128,23 +51311,65 @@ export type OpenstackVolumesCountData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Filter for attachment to instance UUID
+         */
         attach_instance_uuid?: string;
+        /**
+         * Availability zone name
+         */
         availability_zone_name?: string;
+        /**
+         * Backend ID
+         */
         backend_id?: string;
         /**
          * Can manage
          */
         can_manage?: boolean;
+        /**
+         * Customer UUID
+         */
         customer?: string;
+        /**
+         * Customer abbreviation
+         */
         customer_abbreviation?: string;
+        /**
+         * Customer name
+         */
         customer_name?: string;
+        /**
+         * Customer native name
+         */
         customer_native_name?: string;
+        /**
+         * Customer UUID
+         */
         customer_uuid?: string;
+        /**
+         * Description
+         */
         description?: string;
+        /**
+         * External IP
+         */
         external_ip?: string;
+        /**
+         * Instance URL
+         */
         instance?: string;
+        /**
+         * Instance UUID
+         */
         instance_uuid?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -48154,17 +51379,52 @@ export type OpenstackVolumesCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Project UUID
+         */
         project?: string;
+        /**
+         * Project name
+         */
         project_name?: string;
+        /**
+         * Project UUID
+         */
         project_uuid?: string;
         runtime_state?: string;
+        /**
+         * Service settings name
+         */
         service_settings_name?: string;
+        /**
+         * Service settings UUID
+         */
         service_settings_uuid?: string;
+        /**
+         * Snapshot URL
+         */
         snapshot?: string;
+        /**
+         * Snapshot UUID
+         */
         snapshot_uuid?: string;
+        /**
+         * State
+         *
+         *
+         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        /**
+         * Tenant URL
+         */
         tenant?: string;
+        /**
+         * Tenant UUID
+         */
         tenant_uuid?: string;
+        /**
+         * UUID
+         */
         uuid?: string;
     };
     url: '/api/openstack-volumes/';
@@ -48348,7 +51608,13 @@ export type OrganizationGroupsListData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * Which field to use when ordering the results.
@@ -48362,6 +51628,9 @@ export type OrganizationGroupsListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Parent UUID
+         */
         parent?: string;
     };
     url: '/api/organization-groups/';
@@ -48377,7 +51646,13 @@ export type OrganizationGroupsCountData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * Which field to use when ordering the results.
@@ -48391,6 +51666,9 @@ export type OrganizationGroupsCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Parent UUID
+         */
         parent?: string;
     };
     url: '/api/organization-groups/';
@@ -49127,7 +52405,13 @@ export type ProjectTypesListData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -49151,7 +52435,13 @@ export type ProjectTypesCountData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -49212,21 +52502,42 @@ export type ProjectsListData = {
          * Multiple values may be separated by commas.
          */
         customer?: Array<string>;
+        /**
+         * Customer abbreviation
+         */
         customer_abbreviation?: string;
+        /**
+         * Customer name
+         */
         customer_name?: string;
+        /**
+         * Customer native name
+         */
         customer_native_name?: string;
+        /**
+         * Description
+         */
         description?: string;
         field?: Array<'backend_id' | 'billing_price_estimate' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_display_billing_info_in_projects' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'end_date' | 'end_date_requested_by' | 'grace_period_days' | 'image' | 'is_industry' | 'is_removed' | 'kind' | 'marketplace_resource_count' | 'max_service_accounts' | 'name' | 'oecd_fos_2007_code' | 'oecd_fos_2007_label' | 'project_credit' | 'resources_count' | 'slug' | 'staff_notes' | 'start_date' | 'termination_metadata' | 'type' | 'type_name' | 'type_uuid' | 'url' | 'uuid'>;
         /**
          * Include soft-deleted (terminated) projects. Only available to staff and support users, or users with organizational roles who can see their terminated projects.
          */
         include_terminated?: boolean;
+        /**
+         * Is removed
+         */
         is_removed?: boolean;
         /**
          * Modified after
          */
         modified?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * Ordering
@@ -49246,6 +52557,9 @@ export type ProjectsListData = {
          * Filter by name, slug, UUID, backend ID or resource effective ID
          */
         query?: string;
+        /**
+         * Slug
+         */
         slug?: string;
     };
     url: '/api/projects/';
@@ -49282,20 +52596,41 @@ export type ProjectsCountData = {
          * Multiple values may be separated by commas.
          */
         customer?: Array<string>;
+        /**
+         * Customer abbreviation
+         */
         customer_abbreviation?: string;
+        /**
+         * Customer name
+         */
         customer_name?: string;
+        /**
+         * Customer native name
+         */
         customer_native_name?: string;
+        /**
+         * Description
+         */
         description?: string;
         /**
          * Include soft-deleted (terminated) projects. Only available to staff and support users, or users with organizational roles who can see their terminated projects.
          */
         include_terminated?: boolean;
+        /**
+         * Is removed
+         */
         is_removed?: boolean;
         /**
          * Modified after
          */
         modified?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * Ordering
@@ -49315,6 +52650,9 @@ export type ProjectsCountData = {
          * Filter by name, slug, UUID, backend ID or resource effective ID
          */
         query?: string;
+        /**
+         * Slug
+         */
         slug?: string;
     };
     url: '/api/projects/';
@@ -49359,22 +52697,37 @@ export type ProjectsOtherUsersListData = {
          */
         date_joined?: string;
         description?: string;
+        /**
+         * Email
+         */
         email?: string;
         /**
          * Full name
          */
         full_name?: string;
+        /**
+         * Is active
+         */
         is_active?: boolean;
+        /**
+         * Job title
+         */
         job_title?: string;
         /**
          * Date modified after
          */
         modified?: string;
+        /**
+         * Native name
+         */
         native_name?: string;
         /**
          * Ordering. Sort by a combination of first name, last name, and username.
          */
         o?: 'concatenated_name' | '-concatenated_name';
+        /**
+         * Organization
+         */
         organization?: string;
         /**
          * A page number within the paginated result set.
@@ -49390,6 +52743,9 @@ export type ProjectsOtherUsersListData = {
          * User keyword
          */
         user_keyword?: string;
+        /**
+         * Username
+         */
         username?: string;
     };
     url: '/api/projects/{project_uuid}/other_users/';
@@ -52284,21 +55640,51 @@ export type RancherAppsListData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Backend ID
+         */
         backend_id?: string;
         /**
          * Can manage
          */
         can_manage?: boolean;
         cluster_uuid?: string;
+        /**
+         * Customer UUID
+         */
         customer?: string;
+        /**
+         * Customer abbreviation
+         */
         customer_abbreviation?: string;
+        /**
+         * Customer name
+         */
         customer_name?: string;
+        /**
+         * Customer native name
+         */
         customer_native_name?: string;
+        /**
+         * Customer UUID
+         */
         customer_uuid?: string;
+        /**
+         * Description
+         */
         description?: string;
+        /**
+         * External IP
+         */
         external_ip?: string;
         field?: Array<'access_url' | 'answers' | 'backend_id' | 'catalog_name' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'external_url' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'namespace' | 'namespace_name' | 'project' | 'project_name' | 'project_uuid' | 'rancher_project' | 'rancher_project_name' | 'resource_type' | 'runtime_state' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'template' | 'template_name' | 'url' | 'uuid' | 'version'>;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         namespace_uuid?: string;
         /**
@@ -52309,13 +55695,33 @@ export type RancherAppsListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Project UUID
+         */
         project?: string;
+        /**
+         * Project name
+         */
         project_name?: string;
         project_uuid?: string;
+        /**
+         * Service settings name
+         */
         service_settings_name?: string;
+        /**
+         * Service settings UUID
+         */
         service_settings_uuid?: string;
+        /**
+         * State
+         *
+         *
+         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
         template_uuid?: string;
+        /**
+         * UUID
+         */
         uuid?: string;
     };
     url: '/api/rancher-apps/';
@@ -52331,20 +55737,50 @@ export type RancherAppsCountData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Backend ID
+         */
         backend_id?: string;
         /**
          * Can manage
          */
         can_manage?: boolean;
         cluster_uuid?: string;
+        /**
+         * Customer UUID
+         */
         customer?: string;
+        /**
+         * Customer abbreviation
+         */
         customer_abbreviation?: string;
+        /**
+         * Customer name
+         */
         customer_name?: string;
+        /**
+         * Customer native name
+         */
         customer_native_name?: string;
+        /**
+         * Customer UUID
+         */
         customer_uuid?: string;
+        /**
+         * Description
+         */
         description?: string;
+        /**
+         * External IP
+         */
         external_ip?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         namespace_uuid?: string;
         /**
@@ -52355,13 +55791,33 @@ export type RancherAppsCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Project UUID
+         */
         project?: string;
+        /**
+         * Project name
+         */
         project_name?: string;
         project_uuid?: string;
+        /**
+         * Service settings name
+         */
         service_settings_name?: string;
+        /**
+         * Service settings UUID
+         */
         service_settings_uuid?: string;
+        /**
+         * State
+         *
+         *
+         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
         template_uuid?: string;
+        /**
+         * UUID
+         */
         uuid?: string;
     };
     url: '/api/rancher-apps/';
@@ -52634,7 +56090,13 @@ export type RancherClusterSecurityGroupsListData = {
     path?: never;
     query?: {
         cluster_uuid?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -52659,7 +56121,13 @@ export type RancherClusterSecurityGroupsCountData = {
     path?: never;
     query?: {
         cluster_uuid?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -52789,20 +56257,50 @@ export type RancherClustersListData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Backend ID
+         */
         backend_id?: string;
         /**
          * Can manage
          */
         can_manage?: boolean;
+        /**
+         * Customer UUID
+         */
         customer?: string;
+        /**
+         * Customer abbreviation
+         */
         customer_abbreviation?: string;
+        /**
+         * Customer name
+         */
         customer_name?: string;
+        /**
+         * Customer native name
+         */
         customer_native_name?: string;
+        /**
+         * Customer UUID
+         */
         customer_uuid?: string;
+        /**
+         * Description
+         */
         description?: string;
+        /**
+         * External IP
+         */
         external_ip?: string;
         field?: Array<'access_url' | 'backend_id' | 'capacity' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'install_longhorn' | 'is_limit_based' | 'is_usage_based' | 'kubernetes_version' | 'management_security_group' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'nodes' | 'project' | 'project_name' | 'project_uuid' | 'public_ips' | 'requested' | 'resource_type' | 'router_ips' | 'runtime_state' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'ssh_public_key' | 'state' | 'tenant' | 'tenant_uuid' | 'url' | 'uuid' | 'vm_project'>;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -52812,12 +56310,35 @@ export type RancherClustersListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Project UUID
+         */
         project?: string;
+        /**
+         * Project name
+         */
         project_name?: string;
+        /**
+         * Project UUID
+         */
         project_uuid?: string;
+        /**
+         * Service settings name
+         */
         service_settings_name?: string;
+        /**
+         * Service settings UUID
+         */
         service_settings_uuid?: string;
+        /**
+         * State
+         *
+         *
+         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        /**
+         * UUID
+         */
         uuid?: string;
     };
     url: '/api/rancher-clusters/';
@@ -52833,19 +56354,49 @@ export type RancherClustersCountData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Backend ID
+         */
         backend_id?: string;
         /**
          * Can manage
          */
         can_manage?: boolean;
+        /**
+         * Customer UUID
+         */
         customer?: string;
+        /**
+         * Customer abbreviation
+         */
         customer_abbreviation?: string;
+        /**
+         * Customer name
+         */
         customer_name?: string;
+        /**
+         * Customer native name
+         */
         customer_native_name?: string;
+        /**
+         * Customer UUID
+         */
         customer_uuid?: string;
+        /**
+         * Description
+         */
         description?: string;
+        /**
+         * External IP
+         */
         external_ip?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -52855,12 +56406,35 @@ export type RancherClustersCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Project UUID
+         */
         project?: string;
+        /**
+         * Project name
+         */
         project_name?: string;
+        /**
+         * Project UUID
+         */
         project_uuid?: string;
+        /**
+         * Service settings name
+         */
         service_settings_name?: string;
+        /**
+         * Service settings UUID
+         */
         service_settings_uuid?: string;
+        /**
+         * State
+         *
+         *
+         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        /**
+         * UUID
+         */
         uuid?: string;
     };
     url: '/api/rancher-clusters/';
@@ -52996,7 +56570,13 @@ export type RancherHpasListData = {
     path?: never;
     query?: {
         cluster_uuid?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         namespace_uuid?: string;
         /**
@@ -53008,7 +56588,13 @@ export type RancherHpasListData = {
          */
         page_size?: number;
         project_uuid?: string;
+        /**
+         * Settings URL
+         */
         settings?: string;
+        /**
+         * Settings UUID
+         */
         settings_uuid?: string;
         workload_uuid?: string;
     };
@@ -53026,7 +56612,13 @@ export type RancherHpasCountData = {
     path?: never;
     query?: {
         cluster_uuid?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         namespace_uuid?: string;
         /**
@@ -53038,7 +56630,13 @@ export type RancherHpasCountData = {
          */
         page_size?: number;
         project_uuid?: string;
+        /**
+         * Settings URL
+         */
         settings?: string;
+        /**
+         * Settings UUID
+         */
         settings_uuid?: string;
         workload_uuid?: string;
     };
@@ -53203,21 +56801,51 @@ export type RancherIngressesListData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Backend ID
+         */
         backend_id?: string;
         /**
          * Can manage
          */
         can_manage?: boolean;
         cluster_uuid?: string;
+        /**
+         * Customer UUID
+         */
         customer?: string;
+        /**
+         * Customer abbreviation
+         */
         customer_abbreviation?: string;
+        /**
+         * Customer name
+         */
         customer_name?: string;
+        /**
+         * Customer native name
+         */
         customer_native_name?: string;
+        /**
+         * Customer UUID
+         */
         customer_uuid?: string;
+        /**
+         * Description
+         */
         description?: string;
+        /**
+         * External IP
+         */
         external_ip?: string;
         field?: Array<'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'namespace' | 'namespace_name' | 'project' | 'project_name' | 'project_uuid' | 'rancher_project' | 'rancher_project_name' | 'resource_type' | 'rules' | 'runtime_state' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'url' | 'uuid'>;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         namespace_uuid?: string;
         /**
@@ -53228,13 +56856,36 @@ export type RancherIngressesListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Project UUID
+         */
         project?: string;
+        /**
+         * Project name
+         */
         project_name?: string;
+        /**
+         * Project UUID
+         */
         project_uuid?: string;
         rancher_project_uuid?: string;
+        /**
+         * Service settings name
+         */
         service_settings_name?: string;
+        /**
+         * Service settings UUID
+         */
         service_settings_uuid?: string;
+        /**
+         * State
+         *
+         *
+         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        /**
+         * UUID
+         */
         uuid?: string;
     };
     url: '/api/rancher-ingresses/';
@@ -53250,20 +56901,50 @@ export type RancherIngressesCountData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Backend ID
+         */
         backend_id?: string;
         /**
          * Can manage
          */
         can_manage?: boolean;
         cluster_uuid?: string;
+        /**
+         * Customer UUID
+         */
         customer?: string;
+        /**
+         * Customer abbreviation
+         */
         customer_abbreviation?: string;
+        /**
+         * Customer name
+         */
         customer_name?: string;
+        /**
+         * Customer native name
+         */
         customer_native_name?: string;
+        /**
+         * Customer UUID
+         */
         customer_uuid?: string;
+        /**
+         * Description
+         */
         description?: string;
+        /**
+         * External IP
+         */
         external_ip?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         namespace_uuid?: string;
         /**
@@ -53274,13 +56955,36 @@ export type RancherIngressesCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Project UUID
+         */
         project?: string;
+        /**
+         * Project name
+         */
         project_name?: string;
+        /**
+         * Project UUID
+         */
         project_uuid?: string;
         rancher_project_uuid?: string;
+        /**
+         * Service settings name
+         */
         service_settings_name?: string;
+        /**
+         * Service settings UUID
+         */
         service_settings_uuid?: string;
+        /**
+         * State
+         *
+         *
+         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        /**
+         * UUID
+         */
         uuid?: string;
     };
     url: '/api/rancher-ingresses/';
@@ -53449,7 +57153,13 @@ export type RancherNamespacesListData = {
     path?: never;
     query?: {
         cluster_uuid?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * Ordering
@@ -53466,7 +57176,13 @@ export type RancherNamespacesListData = {
          */
         page_size?: number;
         project_uuid?: string;
+        /**
+         * Settings URL
+         */
         settings?: string;
+        /**
+         * Settings UUID
+         */
         settings_uuid?: string;
     };
     url: '/api/rancher-namespaces/';
@@ -53483,7 +57199,13 @@ export type RancherNamespacesCountData = {
     path?: never;
     query?: {
         cluster_uuid?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * Ordering
@@ -53500,7 +57222,13 @@ export type RancherNamespacesCountData = {
          */
         page_size?: number;
         project_uuid?: string;
+        /**
+         * Settings URL
+         */
         settings?: string;
+        /**
+         * Settings UUID
+         */
         settings_uuid?: string;
     };
     url: '/api/rancher-namespaces/';
@@ -53738,7 +57466,13 @@ export type RancherProjectsListData = {
     path?: never;
     query?: {
         cluster_uuid?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -53748,7 +57482,13 @@ export type RancherProjectsListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Settings URL
+         */
         settings?: string;
+        /**
+         * Settings UUID
+         */
         settings_uuid?: string;
     };
     url: '/api/rancher-projects/';
@@ -53765,7 +57505,13 @@ export type RancherProjectsCountData = {
     path?: never;
     query?: {
         cluster_uuid?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -53775,7 +57521,13 @@ export type RancherProjectsCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Settings URL
+         */
         settings?: string;
+        /**
+         * Settings UUID
+         */
         settings_uuid?: string;
     };
     url: '/api/rancher-projects/';
@@ -53900,21 +57652,51 @@ export type RancherServicesListData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Backend ID
+         */
         backend_id?: string;
         /**
          * Can manage
          */
         can_manage?: boolean;
         cluster_uuid?: string;
+        /**
+         * Customer UUID
+         */
         customer?: string;
+        /**
+         * Customer abbreviation
+         */
         customer_abbreviation?: string;
+        /**
+         * Customer name
+         */
         customer_name?: string;
+        /**
+         * Customer native name
+         */
         customer_native_name?: string;
+        /**
+         * Customer UUID
+         */
         customer_uuid?: string;
+        /**
+         * Description
+         */
         description?: string;
+        /**
+         * External IP
+         */
         external_ip?: string;
         field?: Array<'access_url' | 'backend_id' | 'cluster_ip' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'namespace' | 'namespace_name' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'runtime_state' | 'selector' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'target_workloads' | 'url' | 'uuid'>;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         namespace_uuid?: string;
         /**
@@ -53925,13 +57707,36 @@ export type RancherServicesListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Project UUID
+         */
         project?: string;
+        /**
+         * Project name
+         */
         project_name?: string;
+        /**
+         * Project UUID
+         */
         project_uuid?: string;
         rancher_project_uuid?: string;
+        /**
+         * Service settings name
+         */
         service_settings_name?: string;
+        /**
+         * Service settings UUID
+         */
         service_settings_uuid?: string;
+        /**
+         * State
+         *
+         *
+         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        /**
+         * UUID
+         */
         uuid?: string;
     };
     url: '/api/rancher-services/';
@@ -53947,20 +57752,50 @@ export type RancherServicesCountData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Backend ID
+         */
         backend_id?: string;
         /**
          * Can manage
          */
         can_manage?: boolean;
         cluster_uuid?: string;
+        /**
+         * Customer UUID
+         */
         customer?: string;
+        /**
+         * Customer abbreviation
+         */
         customer_abbreviation?: string;
+        /**
+         * Customer name
+         */
         customer_name?: string;
+        /**
+         * Customer native name
+         */
         customer_native_name?: string;
+        /**
+         * Customer UUID
+         */
         customer_uuid?: string;
+        /**
+         * Description
+         */
         description?: string;
+        /**
+         * External IP
+         */
         external_ip?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         namespace_uuid?: string;
         /**
@@ -53971,13 +57806,36 @@ export type RancherServicesCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Project UUID
+         */
         project?: string;
+        /**
+         * Project name
+         */
         project_name?: string;
+        /**
+         * Project UUID
+         */
         project_uuid?: string;
         rancher_project_uuid?: string;
+        /**
+         * Service settings name
+         */
         service_settings_name?: string;
+        /**
+         * Service settings UUID
+         */
         service_settings_uuid?: string;
+        /**
+         * State
+         *
+         *
+         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        /**
+         * UUID
+         */
         uuid?: string;
     };
     url: '/api/rancher-services/';
@@ -54163,7 +58021,13 @@ export type RancherTemplatesListData = {
     query?: {
         catalog_uuid?: string;
         cluster_uuid?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * Ordering
@@ -54180,7 +58044,13 @@ export type RancherTemplatesListData = {
          */
         page_size?: number;
         project_uuid?: string;
+        /**
+         * Settings URL
+         */
         settings?: string;
+        /**
+         * Settings UUID
+         */
         settings_uuid?: string;
     };
     url: '/api/rancher-templates/';
@@ -54198,7 +58068,13 @@ export type RancherTemplatesCountData = {
     query?: {
         catalog_uuid?: string;
         cluster_uuid?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * Ordering
@@ -54215,7 +58091,13 @@ export type RancherTemplatesCountData = {
          */
         page_size?: number;
         project_uuid?: string;
+        /**
+         * Settings URL
+         */
         settings?: string;
+        /**
+         * Settings UUID
+         */
         settings_uuid?: string;
     };
     url: '/api/rancher-templates/';
@@ -54332,7 +58214,13 @@ export type RancherWorkloadsListData = {
     path?: never;
     query?: {
         cluster_uuid?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         namespace_uuid?: string;
         /**
@@ -54350,7 +58238,13 @@ export type RancherWorkloadsListData = {
          */
         page_size?: number;
         project_uuid?: string;
+        /**
+         * Settings URL
+         */
         settings?: string;
+        /**
+         * Settings UUID
+         */
         settings_uuid?: string;
     };
     url: '/api/rancher-workloads/';
@@ -54367,7 +58261,13 @@ export type RancherWorkloadsCountData = {
     path?: never;
     query?: {
         cluster_uuid?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         namespace_uuid?: string;
         /**
@@ -54385,7 +58285,13 @@ export type RancherWorkloadsCountData = {
          */
         page_size?: number;
         project_uuid?: string;
+        /**
+         * Settings URL
+         */
         settings?: string;
+        /**
+         * Settings UUID
+         */
         settings_uuid?: string;
     };
     url: '/api/rancher-workloads/';
@@ -55056,10 +58962,22 @@ export type ServiceSettingsListData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Customer UUID
+         */
         customer?: string;
+        /**
+         * Customer UUID
+         */
         customer_uuid?: string;
         field?: Array<'customer' | 'customer_name' | 'customer_native_name' | 'error_message' | 'name' | 'options' | 'scope' | 'scope_uuid' | 'shared' | 'state' | 'terms_of_services' | 'type' | 'url' | 'uuid'>;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * Which field to use when ordering the results.
@@ -55078,7 +58996,15 @@ export type ServiceSettingsListData = {
          */
         scope_uuid?: string;
         shared?: boolean;
+        /**
+         * State
+         *
+         *
+         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        /**
+         * Type
+         */
         type?: string;
     };
     url: '/api/service-settings/';
@@ -55094,9 +59020,21 @@ export type ServiceSettingsCountData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Customer UUID
+         */
         customer?: string;
+        /**
+         * Customer UUID
+         */
         customer_uuid?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * Which field to use when ordering the results.
@@ -55115,7 +59053,15 @@ export type ServiceSettingsCountData = {
          */
         scope_uuid?: string;
         shared?: boolean;
+        /**
+         * State
+         *
+         *
+         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        /**
+         * Type
+         */
         type?: string;
     };
     url: '/api/service-settings/';
@@ -55224,21 +59170,51 @@ export type SlurmAllocationsListData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Backend ID
+         */
         backend_id?: string;
         /**
          * Can manage
          */
         can_manage?: boolean;
+        /**
+         * Customer UUID
+         */
         customer?: string;
+        /**
+         * Customer abbreviation
+         */
         customer_abbreviation?: string;
+        /**
+         * Customer name
+         */
         customer_name?: string;
+        /**
+         * Customer native name
+         */
         customer_native_name?: string;
+        /**
+         * Customer UUID
+         */
         customer_uuid?: string;
+        /**
+         * Description
+         */
         description?: string;
+        /**
+         * External IP
+         */
         external_ip?: string;
         field?: Array<'access_url' | 'backend_id' | 'cpu_limit' | 'cpu_usage' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'gateway' | 'gpu_limit' | 'gpu_usage' | 'is_active' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'ram_limit' | 'ram_usage' | 'resource_type' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'url' | 'username' | 'uuid'>;
         is_active?: boolean;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -55248,12 +59224,35 @@ export type SlurmAllocationsListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Project UUID
+         */
         project?: string;
+        /**
+         * Project name
+         */
         project_name?: string;
+        /**
+         * Project UUID
+         */
         project_uuid?: string;
+        /**
+         * Service settings name
+         */
         service_settings_name?: string;
+        /**
+         * Service settings UUID
+         */
         service_settings_uuid?: string;
+        /**
+         * State
+         *
+         *
+         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        /**
+         * UUID
+         */
         uuid?: string;
     };
     url: '/api/slurm-allocations/';
@@ -55269,20 +59268,50 @@ export type SlurmAllocationsCountData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Backend ID
+         */
         backend_id?: string;
         /**
          * Can manage
          */
         can_manage?: boolean;
+        /**
+         * Customer UUID
+         */
         customer?: string;
+        /**
+         * Customer abbreviation
+         */
         customer_abbreviation?: string;
+        /**
+         * Customer name
+         */
         customer_name?: string;
+        /**
+         * Customer native name
+         */
         customer_native_name?: string;
+        /**
+         * Customer UUID
+         */
         customer_uuid?: string;
+        /**
+         * Description
+         */
         description?: string;
+        /**
+         * External IP
+         */
         external_ip?: string;
         is_active?: boolean;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -55292,12 +59321,35 @@ export type SlurmAllocationsCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Project UUID
+         */
         project?: string;
+        /**
+         * Project name
+         */
         project_name?: string;
+        /**
+         * Project UUID
+         */
         project_uuid?: string;
+        /**
+         * Service settings name
+         */
         service_settings_name?: string;
+        /**
+         * Service settings UUID
+         */
         service_settings_uuid?: string;
+        /**
+         * State
+         *
+         *
+         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        /**
+         * UUID
+         */
         uuid?: string;
     };
     url: '/api/slurm-allocations/';
@@ -56407,7 +60459,13 @@ export type SupportPrioritiesListData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -56431,7 +60489,13 @@ export type SupportPrioritiesCountData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -57567,26 +61631,47 @@ export type UsersListData = {
          */
         agreement_date?: string;
         civil_number?: string;
+        /**
+         * Customer UUID
+         */
         customer_uuid?: string;
         /**
          * Date joined after
          */
         date_joined?: string;
         description?: string;
+        /**
+         * Email
+         */
         email?: string;
         field?: Array<'affiliations' | 'agree_with_policy' | 'agreement_date' | 'birth_date' | 'civil_number' | 'date_joined' | 'description' | 'email' | 'first_name' | 'full_name' | 'has_active_session' | 'identity_provider_fields' | 'identity_provider_label' | 'identity_provider_management_url' | 'identity_provider_name' | 'identity_source' | 'image' | 'ip_address' | 'is_active' | 'is_staff' | 'is_support' | 'job_title' | 'last_name' | 'native_name' | 'notifications_enabled' | 'organization' | 'permissions' | 'phone_number' | 'preferred_language' | 'registration_method' | 'requested_email' | 'slug' | 'token' | 'token_expires_at' | 'token_lifetime' | 'url' | 'username' | 'uuid'>;
         /**
          * Full name
          */
         full_name?: string;
+        /**
+         * Is active
+         */
         is_active?: boolean;
+        /**
+         * Is staff
+         */
         is_staff?: boolean;
+        /**
+         * Is support
+         */
         is_support?: boolean;
+        /**
+         * Job title
+         */
         job_title?: string;
         /**
          * Date modified after
          */
         modified?: string;
+        /**
+         * Native name
+         */
         native_name?: string;
         /**
          * Ordering
@@ -57594,6 +61679,9 @@ export type UsersListData = {
          *
          */
         o?: Array<'-description' | '-email' | '-full_name' | '-is_active' | '-is_staff' | '-is_support' | '-job_title' | '-native_name' | '-organization' | '-phone_number' | '-registration_method' | '-username' | 'description' | 'email' | 'full_name' | 'is_active' | 'is_staff' | 'is_support' | 'job_title' | 'native_name' | 'organization' | 'phone_number' | 'registration_method' | 'username'>;
+        /**
+         * Organization
+         */
         organization?: string;
         /**
          * Organization roles
@@ -57612,6 +61700,9 @@ export type UsersListData = {
          * Project roles
          */
         project_roles?: string;
+        /**
+         * Project UUID
+         */
         project_uuid?: string;
         /**
          * Filter by first name, last name, civil number, username or email
@@ -57622,6 +61713,9 @@ export type UsersListData = {
          * User keyword
          */
         user_keyword?: string;
+        /**
+         * Username (exact)
+         */
         username?: string;
         /**
          * Comma-separated usernames
@@ -57646,25 +61740,46 @@ export type UsersCountData = {
          */
         agreement_date?: string;
         civil_number?: string;
+        /**
+         * Customer UUID
+         */
         customer_uuid?: string;
         /**
          * Date joined after
          */
         date_joined?: string;
         description?: string;
+        /**
+         * Email
+         */
         email?: string;
         /**
          * Full name
          */
         full_name?: string;
+        /**
+         * Is active
+         */
         is_active?: boolean;
+        /**
+         * Is staff
+         */
         is_staff?: boolean;
+        /**
+         * Is support
+         */
         is_support?: boolean;
+        /**
+         * Job title
+         */
         job_title?: string;
         /**
          * Date modified after
          */
         modified?: string;
+        /**
+         * Native name
+         */
         native_name?: string;
         /**
          * Ordering
@@ -57672,6 +61787,9 @@ export type UsersCountData = {
          *
          */
         o?: Array<'-description' | '-email' | '-full_name' | '-is_active' | '-is_staff' | '-is_support' | '-job_title' | '-native_name' | '-organization' | '-phone_number' | '-registration_method' | '-username' | 'description' | 'email' | 'full_name' | 'is_active' | 'is_staff' | 'is_support' | 'job_title' | 'native_name' | 'organization' | 'phone_number' | 'registration_method' | 'username'>;
+        /**
+         * Organization
+         */
         organization?: string;
         /**
          * Organization roles
@@ -57690,6 +61808,9 @@ export type UsersCountData = {
          * Project roles
          */
         project_roles?: string;
+        /**
+         * Project UUID
+         */
         project_uuid?: string;
         /**
          * Filter by first name, last name, civil number, username or email
@@ -57700,6 +61821,9 @@ export type UsersCountData = {
          * User keyword
          */
         user_keyword?: string;
+        /**
+         * Username (exact)
+         */
         username?: string;
         /**
          * Comma-separated usernames
@@ -57952,7 +62076,13 @@ export type VmwareClustersListData = {
          * Customer UUID
          */
         customer_uuid?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -57962,7 +62092,13 @@ export type VmwareClustersListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Settings URL
+         */
         settings?: string;
+        /**
+         * Settings UUID
+         */
         settings_uuid?: string;
     };
     url: '/api/vmware-clusters/';
@@ -57982,7 +62118,13 @@ export type VmwareClustersCountData = {
          * Customer UUID
          */
         customer_uuid?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -57992,7 +62134,13 @@ export type VmwareClustersCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Settings URL
+         */
         settings?: string;
+        /**
+         * Settings UUID
+         */
         settings_uuid?: string;
     };
     url: '/api/vmware-clusters/';
@@ -58028,7 +62176,13 @@ export type VmwareDatastoresListData = {
          * Customer UUID
          */
         customer_uuid?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -58038,7 +62192,13 @@ export type VmwareDatastoresListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Settings URL
+         */
         settings?: string;
+        /**
+         * Settings UUID
+         */
         settings_uuid?: string;
     };
     url: '/api/vmware-datastores/';
@@ -58058,7 +62218,13 @@ export type VmwareDatastoresCountData = {
          * Customer UUID
          */
         customer_uuid?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -58068,7 +62234,13 @@ export type VmwareDatastoresCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Settings URL
+         */
         settings?: string;
+        /**
+         * Settings UUID
+         */
         settings_uuid?: string;
     };
     url: '/api/vmware-datastores/';
@@ -58100,20 +62272,50 @@ export type VmwareDisksListData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Backend ID
+         */
         backend_id?: string;
         /**
          * Can manage
          */
         can_manage?: boolean;
+        /**
+         * Customer UUID
+         */
         customer?: string;
+        /**
+         * Customer abbreviation
+         */
         customer_abbreviation?: string;
+        /**
+         * Customer name
+         */
         customer_name?: string;
+        /**
+         * Customer native name
+         */
         customer_native_name?: string;
+        /**
+         * Customer UUID
+         */
         customer_uuid?: string;
+        /**
+         * Description
+         */
         description?: string;
+        /**
+         * External IP
+         */
         external_ip?: string;
         field?: Array<'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'size' | 'state' | 'url' | 'uuid' | 'vm' | 'vm_name' | 'vm_uuid'>;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -58123,12 +62325,35 @@ export type VmwareDisksListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Project UUID
+         */
         project?: string;
+        /**
+         * Project name
+         */
         project_name?: string;
+        /**
+         * Project UUID
+         */
         project_uuid?: string;
+        /**
+         * Service settings name
+         */
         service_settings_name?: string;
+        /**
+         * Service settings UUID
+         */
         service_settings_uuid?: string;
+        /**
+         * State
+         *
+         *
+         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        /**
+         * UUID
+         */
         uuid?: string;
         vm?: string;
         vm_uuid?: string;
@@ -58146,19 +62371,49 @@ export type VmwareDisksCountData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Backend ID
+         */
         backend_id?: string;
         /**
          * Can manage
          */
         can_manage?: boolean;
+        /**
+         * Customer UUID
+         */
         customer?: string;
+        /**
+         * Customer abbreviation
+         */
         customer_abbreviation?: string;
+        /**
+         * Customer name
+         */
         customer_name?: string;
+        /**
+         * Customer native name
+         */
         customer_native_name?: string;
+        /**
+         * Customer UUID
+         */
         customer_uuid?: string;
+        /**
+         * Description
+         */
         description?: string;
+        /**
+         * External IP
+         */
         external_ip?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -58168,12 +62423,35 @@ export type VmwareDisksCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Project UUID
+         */
         project?: string;
+        /**
+         * Project name
+         */
         project_name?: string;
+        /**
+         * Project UUID
+         */
         project_uuid?: string;
+        /**
+         * Service settings name
+         */
         service_settings_name?: string;
+        /**
+         * Service settings UUID
+         */
         service_settings_uuid?: string;
+        /**
+         * State
+         *
+         *
+         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        /**
+         * UUID
+         */
         uuid?: string;
         vm?: string;
         vm_uuid?: string;
@@ -58287,7 +62565,13 @@ export type VmwareFoldersListData = {
          * Customer UUID
          */
         customer_uuid?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -58297,7 +62581,13 @@ export type VmwareFoldersListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Settings URL
+         */
         settings?: string;
+        /**
+         * Settings UUID
+         */
         settings_uuid?: string;
     };
     url: '/api/vmware-folders/';
@@ -58317,7 +62607,13 @@ export type VmwareFoldersCountData = {
          * Customer UUID
          */
         customer_uuid?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -58327,7 +62623,13 @@ export type VmwareFoldersCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Settings URL
+         */
         settings?: string;
+        /**
+         * Settings UUID
+         */
         settings_uuid?: string;
     };
     url: '/api/vmware-folders/';
@@ -58382,7 +62684,13 @@ export type VmwareNetworksListData = {
          * Customer UUID
          */
         customer_uuid?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -58392,7 +62700,13 @@ export type VmwareNetworksListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Settings URL
+         */
         settings?: string;
+        /**
+         * Settings UUID
+         */
         settings_uuid?: string;
     };
     url: '/api/vmware-networks/';
@@ -58416,7 +62730,13 @@ export type VmwareNetworksCountData = {
          * Customer UUID
          */
         customer_uuid?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -58426,7 +62746,13 @@ export type VmwareNetworksCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Settings URL
+         */
         settings?: string;
+        /**
+         * Settings UUID
+         */
         settings_uuid?: string;
     };
     url: '/api/vmware-networks/';
@@ -58458,20 +62784,50 @@ export type VmwarePortsListData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Backend ID
+         */
         backend_id?: string;
         /**
          * Can manage
          */
         can_manage?: boolean;
+        /**
+         * Customer UUID
+         */
         customer?: string;
+        /**
+         * Customer abbreviation
+         */
         customer_abbreviation?: string;
+        /**
+         * Customer name
+         */
         customer_name?: string;
+        /**
+         * Customer native name
+         */
         customer_native_name?: string;
+        /**
+         * Customer UUID
+         */
         customer_uuid?: string;
+        /**
+         * Description
+         */
         description?: string;
+        /**
+         * External IP
+         */
         external_ip?: string;
         field?: Array<'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'is_limit_based' | 'is_usage_based' | 'mac_address' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'network' | 'network_name' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'url' | 'uuid' | 'vm' | 'vm_name' | 'vm_uuid'>;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         network?: string;
         network_uuid?: string;
@@ -58483,12 +62839,35 @@ export type VmwarePortsListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Project UUID
+         */
         project?: string;
+        /**
+         * Project name
+         */
         project_name?: string;
+        /**
+         * Project UUID
+         */
         project_uuid?: string;
+        /**
+         * Service settings name
+         */
         service_settings_name?: string;
+        /**
+         * Service settings UUID
+         */
         service_settings_uuid?: string;
+        /**
+         * State
+         *
+         *
+         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        /**
+         * UUID
+         */
         uuid?: string;
         vm?: string;
         vm_uuid?: string;
@@ -58506,19 +62885,49 @@ export type VmwarePortsCountData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Backend ID
+         */
         backend_id?: string;
         /**
          * Can manage
          */
         can_manage?: boolean;
+        /**
+         * Customer UUID
+         */
         customer?: string;
+        /**
+         * Customer abbreviation
+         */
         customer_abbreviation?: string;
+        /**
+         * Customer name
+         */
         customer_name?: string;
+        /**
+         * Customer native name
+         */
         customer_native_name?: string;
+        /**
+         * Customer UUID
+         */
         customer_uuid?: string;
+        /**
+         * Description
+         */
         description?: string;
+        /**
+         * External IP
+         */
         external_ip?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         network?: string;
         network_uuid?: string;
@@ -58530,12 +62939,35 @@ export type VmwarePortsCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Project UUID
+         */
         project?: string;
+        /**
+         * Project name
+         */
         project_name?: string;
+        /**
+         * Project UUID
+         */
         project_uuid?: string;
+        /**
+         * Service settings name
+         */
         service_settings_name?: string;
+        /**
+         * Service settings UUID
+         */
         service_settings_uuid?: string;
+        /**
+         * State
+         *
+         *
+         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        /**
+         * UUID
+         */
         uuid?: string;
         vm?: string;
         vm_uuid?: string;
@@ -58630,7 +63062,13 @@ export type VmwareTemplatesListData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -58640,7 +63078,13 @@ export type VmwareTemplatesListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Settings URL
+         */
         settings?: string;
+        /**
+         * Settings UUID
+         */
         settings_uuid?: string;
     };
     url: '/api/vmware-templates/';
@@ -58656,7 +63100,13 @@ export type VmwareTemplatesCountData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -58666,7 +63116,13 @@ export type VmwareTemplatesCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Settings URL
+         */
         settings?: string;
+        /**
+         * Settings UUID
+         */
         settings_uuid?: string;
     };
     url: '/api/vmware-templates/';
@@ -58698,20 +63154,50 @@ export type VmwareVirtualMachineListData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Backend ID
+         */
         backend_id?: string;
         /**
          * Can manage
          */
         can_manage?: boolean;
+        /**
+         * Customer UUID
+         */
         customer?: string;
+        /**
+         * Customer abbreviation
+         */
         customer_abbreviation?: string;
+        /**
+         * Customer name
+         */
         customer_name?: string;
+        /**
+         * Customer native name
+         */
         customer_native_name?: string;
+        /**
+         * Customer UUID
+         */
         customer_uuid?: string;
+        /**
+         * Description
+         */
         description?: string;
+        /**
+         * External IP
+         */
         external_ip?: string;
         field?: Array<'access_url' | 'backend_id' | 'cluster' | 'cluster_name' | 'cores' | 'cores_per_socket' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'datastore' | 'datastore_name' | 'description' | 'disk' | 'disks' | 'error_message' | 'error_traceback' | 'folder' | 'folder_name' | 'guest_os' | 'guest_os_name' | 'guest_power_state' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'networks' | 'ports' | 'project' | 'project_name' | 'project_uuid' | 'ram' | 'resource_type' | 'runtime_state' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'template' | 'template_name' | 'tools_installed' | 'tools_state' | 'url' | 'uuid'>;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -58721,13 +63207,36 @@ export type VmwareVirtualMachineListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Project UUID
+         */
         project?: string;
+        /**
+         * Project name
+         */
         project_name?: string;
+        /**
+         * Project UUID
+         */
         project_uuid?: string;
         runtime_state?: string;
+        /**
+         * Service settings name
+         */
         service_settings_name?: string;
+        /**
+         * Service settings UUID
+         */
         service_settings_uuid?: string;
+        /**
+         * State
+         *
+         *
+         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        /**
+         * UUID
+         */
         uuid?: string;
     };
     url: '/api/vmware-virtual-machine/';
@@ -58743,19 +63252,49 @@ export type VmwareVirtualMachineCountData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Backend ID
+         */
         backend_id?: string;
         /**
          * Can manage
          */
         can_manage?: boolean;
+        /**
+         * Customer UUID
+         */
         customer?: string;
+        /**
+         * Customer abbreviation
+         */
         customer_abbreviation?: string;
+        /**
+         * Customer name
+         */
         customer_name?: string;
+        /**
+         * Customer native name
+         */
         customer_native_name?: string;
+        /**
+         * Customer UUID
+         */
         customer_uuid?: string;
+        /**
+         * Description
+         */
         description?: string;
+        /**
+         * External IP
+         */
         external_ip?: string;
+        /**
+         * Name
+         */
         name?: string;
+        /**
+         * Name (exact)
+         */
         name_exact?: string;
         /**
          * A page number within the paginated result set.
@@ -58765,13 +63304,36 @@ export type VmwareVirtualMachineCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Project UUID
+         */
         project?: string;
+        /**
+         * Project name
+         */
         project_name?: string;
+        /**
+         * Project UUID
+         */
         project_uuid?: string;
         runtime_state?: string;
+        /**
+         * Service settings name
+         */
         service_settings_name?: string;
+        /**
+         * Service settings UUID
+         */
         service_settings_uuid?: string;
+        /**
+         * State
+         *
+         *
+         */
         state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
+        /**
+         * UUID
+         */
         uuid?: string;
     };
     url: '/api/vmware-virtual-machine/';
