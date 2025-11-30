@@ -3102,7 +3102,7 @@ export type DryRunRequest = {
 
 export type DryRunStateEnum = 1 | 2 | 3 | 4;
 
-export type DryRunTypeEnum = 'Create' | 'Update' | 'Terminate' | 'Pull';
+export type DryRunTypeEnum = 'Create' | 'Update' | 'Terminate' | 'Restore' | 'Pull';
 
 export type EmailHook = {
     readonly url: string;
@@ -4602,6 +4602,10 @@ export type MergedPluginOptions = {
      */
     create_orders_on_resource_option_change?: boolean;
     /**
+     * If set to True, resource can be restored.
+     */
+    can_restore_resource?: boolean;
+    /**
      * If set, it will be used as a default MTU for the first network in a tenant
      */
     default_internal_network_mtu?: number;
@@ -4792,6 +4796,10 @@ export type MergedPluginOptionsRequest = {
      * If set to True, create orders when options of related resources are changed.
      */
     create_orders_on_resource_option_change?: boolean;
+    /**
+     * If set to True, resource can be restored.
+     */
+    can_restore_resource?: boolean;
     /**
      * If set, it will be used as a default MTU for the first network in a tenant
      */
@@ -13493,7 +13501,7 @@ export type ReportSectionRequest = {
     body: string;
 };
 
-export type RequestTypes = 'Create' | 'Update' | 'Terminate';
+export type RequestTypes = 'Create' | 'Update' | 'Terminate' | 'Restore';
 
 export type RequestedOffering = {
     readonly uuid: string;
@@ -13741,6 +13749,19 @@ export type ResourceRenewRequest = {
 
 export type ResourceReportRequest = {
     report: Array<ReportSectionRequest>;
+};
+
+export type ResourceRequest = {
+    offering: string;
+    plan?: string;
+    name: string;
+    slug?: string;
+    /**
+     * The date is inclusive. Once reached, a resource will be scheduled for termination.
+     */
+    end_date?: string | null;
+    downscaled?: boolean;
+    paused?: boolean;
 };
 
 export type ResourceResponseStatus = {
@@ -32111,7 +32132,7 @@ export type MarketplaceOrdersListData = {
          *
          *
          */
-        type?: Array<'Create' | 'Terminate' | 'Update'>;
+        type?: Array<'Create' | 'Restore' | 'Terminate' | 'Update'>;
     };
     url: '/api/marketplace-orders/';
 };
@@ -32213,7 +32234,7 @@ export type MarketplaceOrdersCountData = {
          *
          *
          */
-        type?: Array<'Create' | 'Terminate' | 'Update'>;
+        type?: Array<'Create' | 'Restore' | 'Terminate' | 'Update'>;
     };
     url: '/api/marketplace-orders/';
 };
@@ -36354,6 +36375,21 @@ export type MarketplaceProviderResourcesRefreshLastSyncResponses = {
     200: unknown;
 };
 
+export type MarketplaceProviderResourcesRestoreData = {
+    body: ResourceRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-provider-resources/{uuid}/restore/';
+};
+
+export type MarketplaceProviderResourcesRestoreResponses = {
+    200: Resource;
+};
+
+export type MarketplaceProviderResourcesRestoreResponse = MarketplaceProviderResourcesRestoreResponses[keyof MarketplaceProviderResourcesRestoreResponses];
+
 export type MarketplaceProviderResourcesSetAsErredData = {
     body?: ResourceSetStateErredRequest;
     path: {
@@ -37883,6 +37919,21 @@ export type MarketplaceResourcesRenewResponses = {
 };
 
 export type MarketplaceResourcesRenewResponse = MarketplaceResourcesRenewResponses[keyof MarketplaceResourcesRenewResponses];
+
+export type MarketplaceResourcesRestoreData = {
+    body: ResourceRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-resources/{uuid}/restore/';
+};
+
+export type MarketplaceResourcesRestoreResponses = {
+    200: Resource;
+};
+
+export type MarketplaceResourcesRestoreResponse = MarketplaceResourcesRestoreResponses[keyof MarketplaceResourcesRestoreResponses];
 
 export type MarketplaceResourcesSetDownscaledData = {
     body?: ResourceDownscaledRequest;
