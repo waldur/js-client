@@ -1495,6 +1495,8 @@ export type CascadeStepRequest = {
 
 export type CascadeStepTypeEnum = 'select_string' | 'select_string_multi';
 
+export type CatalogTypeEnum = 'binary_runtime' | 'source_package' | 'package_manager';
+
 export type CategoryColumn = {
     readonly uuid: string;
     /**
@@ -2182,6 +2184,16 @@ export type ConstanceSettings = {
     LLM_INFERENCES_API_URL?: string;
     LLM_INFERENCES_API_TOKEN?: string;
     LLM_INFERENCES_MODEL?: string;
+    SOFTWARE_CATALOG_EESSI_UPDATE_ENABLED?: boolean;
+    SOFTWARE_CATALOG_EESSI_VERSION?: string;
+    SOFTWARE_CATALOG_EESSI_API_URL?: string;
+    SOFTWARE_CATALOG_EESSI_INCLUDE_EXTENSIONS?: boolean;
+    SOFTWARE_CATALOG_SPACK_UPDATE_ENABLED?: boolean;
+    SOFTWARE_CATALOG_SPACK_VERSION?: string;
+    SOFTWARE_CATALOG_SPACK_DATA_URL?: string;
+    SOFTWARE_CATALOG_UPDATE_EXISTING_PACKAGES?: boolean;
+    SOFTWARE_CATALOG_CLEANUP_ENABLED?: boolean;
+    SOFTWARE_CATALOG_RETENTION_DAYS?: number;
 };
 
 export type ConstanceSettingsRequest = {
@@ -2343,6 +2355,16 @@ export type ConstanceSettingsRequest = {
     LLM_INFERENCES_API_URL?: string;
     LLM_INFERENCES_API_TOKEN?: string;
     LLM_INFERENCES_MODEL?: string;
+    SOFTWARE_CATALOG_EESSI_UPDATE_ENABLED?: boolean;
+    SOFTWARE_CATALOG_EESSI_VERSION?: string;
+    SOFTWARE_CATALOG_EESSI_API_URL?: string;
+    SOFTWARE_CATALOG_EESSI_INCLUDE_EXTENSIONS?: boolean;
+    SOFTWARE_CATALOG_SPACK_UPDATE_ENABLED?: boolean;
+    SOFTWARE_CATALOG_SPACK_VERSION?: string;
+    SOFTWARE_CATALOG_SPACK_DATA_URL?: string;
+    SOFTWARE_CATALOG_UPDATE_EXISTING_PACKAGES?: boolean;
+    SOFTWARE_CATALOG_CLEANUP_ENABLED?: boolean;
+    SOFTWARE_CATALOG_RETENTION_DAYS?: number;
 };
 
 export type ContainerFormatEnum = 'bare' | 'ovf' | 'aki' | 'ami' | 'ari';
@@ -5966,15 +5988,49 @@ export type NestedSoftwareCatalogRequest = {
 
 export type NestedSoftwareTarget = {
     readonly uuid: string;
-    cpu_family: string;
-    cpu_microarchitecture: string;
-    path: string;
+    /**
+     * Type of target (architecture, platform, variant, etc.)
+     */
+    target_type?: string;
+    /**
+     * Target identifier (x86_64/generic, linux, variant_name, etc.)
+     */
+    target_name?: string;
+    /**
+     * Target subtype (microarchitecture, distribution, etc.)
+     */
+    target_subtype?: string;
+    /**
+     * Target location (CVMFS path, download URL, etc.)
+     */
+    location?: string;
+    /**
+     * Target-specific metadata (build options, system requirements, etc.)
+     */
+    metadata?: unknown;
 };
 
 export type NestedSoftwareTargetRequest = {
-    cpu_family: string;
-    cpu_microarchitecture: string;
-    path: string;
+    /**
+     * Type of target (architecture, platform, variant, etc.)
+     */
+    target_type?: string;
+    /**
+     * Target identifier (x86_64/generic, linux, variant_name, etc.)
+     */
+    target_name?: string;
+    /**
+     * Target subtype (microarchitecture, distribution, etc.)
+     */
+    target_subtype?: string;
+    /**
+     * Target location (CVMFS path, download URL, etc.)
+     */
+    location?: string;
+    /**
+     * Target-specific metadata (build options, system requirements, etc.)
+     */
+    metadata?: unknown;
 };
 
 export type NestedSoftwareVersion = {
@@ -6153,6 +6209,11 @@ export type Offering = {
     readonly parent_name?: string | null;
     backend_metadata?: unknown;
     readonly has_compliance_requirements?: boolean;
+    /**
+     * Classify offering components by billing type.
+     * Returns 'limit_only', 'usage_only', or 'mixed'.
+     */
+    readonly billing_type_classification?: string;
     compliance_checklist?: string | null;
     readonly user_has_consent?: boolean;
     googlecalendar?: GoogleCalendar;
@@ -10478,25 +10539,58 @@ export type PatchedSlurmPeriodicUsagePolicyRequest = {
 
 export type PatchedSoftwareCatalogRequest = {
     /**
-     * Catalog name (e.g., EESSI)
+     * Catalog name (e.g., EESSI, Spack)
      */
     name?: string;
     /**
-     * Catalog version (e.g., 2023.06)
+     * Catalog version (e.g., 2023.06, 0.21.0)
      */
     version?: string;
+    /**
+     * Type of software catalog
+     */
+    catalog_type?: CatalogTypeEnum;
     /**
      * Catalog source URL
      */
     source_url?: string;
     description?: string;
+    /**
+     * Catalog-specific metadata (architecture maps, API endpoints, etc.)
+     */
+    metadata?: unknown;
+    /**
+     * Whether to automatically update this catalog via scheduled tasks
+     */
+    auto_update_enabled?: boolean;
+    update_errors?: string;
 };
 
 export type PatchedSoftwarePackageRequest = {
     catalog?: string;
     name?: string;
     description?: string;
-    homepage?: string;
+    homepage?: string | null;
+    /**
+     * Package categories (e.g., ['bio', 'hpc', 'build-tools'])
+     */
+    categories?: unknown;
+    /**
+     * Software licenses (e.g., ['GPL-3.0', 'MIT'])
+     */
+    licenses?: unknown;
+    /**
+     * Package maintainers
+     */
+    maintainers?: unknown;
+    /**
+     * Whether this package is an extension of another package
+     */
+    is_extension?: boolean;
+    /**
+     * Parent package for extensions (e.g., Python package within Python)
+     */
+    parent_software?: string | null;
 };
 
 export type PatchedTemplateRequest = {
@@ -11693,6 +11787,11 @@ export type ProviderOfferingDetails = {
     readonly parent_name?: string | null;
     backend_metadata?: unknown;
     readonly has_compliance_requirements?: boolean;
+    /**
+     * Classify offering components by billing type.
+     * Returns 'limit_only', 'usage_only', or 'mixed'.
+     */
+    readonly billing_type_classification?: string;
     compliance_checklist?: string | null;
     readonly integration_status?: Array<IntegrationStatus> | null;
     readonly google_calendar_is_public?: boolean | null;
@@ -12003,6 +12102,11 @@ export type PublicOfferingDetails = {
     readonly parent_name?: string | null;
     backend_metadata?: unknown;
     readonly has_compliance_requirements?: boolean;
+    /**
+     * Classify offering components by billing type.
+     * Returns 'limit_only', 'usage_only', or 'mixed'.
+     */
+    readonly billing_type_classification?: string;
     compliance_checklist?: string | null;
     readonly user_has_consent?: boolean;
     readonly google_calendar_is_public?: boolean | null;
@@ -14734,35 +14838,64 @@ export type SoftwareCatalog = {
     readonly created: string;
     readonly modified: string;
     /**
-     * Catalog name (e.g., EESSI)
+     * Catalog name (e.g., EESSI, Spack)
      */
     name: string;
     /**
-     * Catalog version (e.g., 2023.06)
+     * Catalog version (e.g., 2023.06, 0.21.0)
      */
     version: string;
+    /**
+     * Type of software catalog
+     */
+    catalog_type?: CatalogTypeEnum;
+    readonly catalog_type_display: string;
     /**
      * Catalog source URL
      */
     source_url?: string;
     description?: string;
+    /**
+     * Catalog-specific metadata (architecture maps, API endpoints, etc.)
+     */
+    metadata?: unknown;
+    /**
+     * Whether to automatically update this catalog via scheduled tasks
+     */
+    auto_update_enabled?: boolean;
+    readonly last_update_attempt: string | null;
+    readonly last_successful_update: string | null;
+    update_errors?: string;
     readonly package_count: number;
 };
 
 export type SoftwareCatalogRequest = {
     /**
-     * Catalog name (e.g., EESSI)
+     * Catalog name (e.g., EESSI, Spack)
      */
     name: string;
     /**
-     * Catalog version (e.g., 2023.06)
+     * Catalog version (e.g., 2023.06, 0.21.0)
      */
     version: string;
+    /**
+     * Type of software catalog
+     */
+    catalog_type?: CatalogTypeEnum;
     /**
      * Catalog source URL
      */
     source_url?: string;
     description?: string;
+    /**
+     * Catalog-specific metadata (architecture maps, API endpoints, etc.)
+     */
+    metadata?: unknown;
+    /**
+     * Whether to automatically update this catalog via scheduled tasks
+     */
+    auto_update_enabled?: boolean;
+    update_errors?: string;
 };
 
 export type SoftwareCatalogUuid = {
@@ -14777,10 +14910,33 @@ export type SoftwarePackage = {
     catalog: string;
     name: string;
     description?: string;
-    homepage?: string;
+    homepage?: string | null;
+    /**
+     * Package categories (e.g., ['bio', 'hpc', 'build-tools'])
+     */
+    categories?: unknown;
+    /**
+     * Software licenses (e.g., ['GPL-3.0', 'MIT'])
+     */
+    licenses?: unknown;
+    /**
+     * Package maintainers
+     */
+    maintainers?: unknown;
+    /**
+     * Whether this package is an extension of another package
+     */
+    is_extension?: boolean;
+    /**
+     * Parent package for extensions (e.g., Python package within Python)
+     */
+    parent_software?: string | null;
     readonly catalog_name: string;
     readonly catalog_version: string;
+    readonly catalog_type: string;
+    readonly catalog_type_display: string;
     readonly version_count: number;
+    readonly extension_count: number;
     readonly versions: Array<NestedSoftwareVersion>;
 };
 
@@ -14788,7 +14944,27 @@ export type SoftwarePackageRequest = {
     catalog: string;
     name: string;
     description?: string;
-    homepage?: string;
+    homepage?: string | null;
+    /**
+     * Package categories (e.g., ['bio', 'hpc', 'build-tools'])
+     */
+    categories?: unknown;
+    /**
+     * Software licenses (e.g., ['GPL-3.0', 'MIT'])
+     */
+    licenses?: unknown;
+    /**
+     * Package maintainers
+     */
+    maintainers?: unknown;
+    /**
+     * Whether this package is an extension of another package
+     */
+    is_extension?: boolean;
+    /**
+     * Parent package for extensions (e.g., Python package within Python)
+     */
+    parent_software?: string | null;
 };
 
 export type SoftwareTarget = {
@@ -14796,9 +14972,26 @@ export type SoftwareTarget = {
     readonly uuid: string;
     readonly created: string;
     readonly modified: string;
-    readonly cpu_family: string;
-    readonly cpu_microarchitecture: string;
-    readonly path: string;
+    /**
+     * Type of target (architecture, platform, variant, etc.)
+     */
+    readonly target_type: string;
+    /**
+     * Target identifier (x86_64/generic, linux, variant_name, etc.)
+     */
+    readonly target_name: string;
+    /**
+     * Target subtype (microarchitecture, distribution, etc.)
+     */
+    readonly target_subtype: string;
+    /**
+     * Target location (CVMFS path, download URL, etc.)
+     */
+    readonly location: string;
+    /**
+     * Target-specific metadata (build options, system requirements, etc.)
+     */
+    readonly metadata: unknown;
 };
 
 export type SoftwareVersion = {
@@ -14808,7 +15001,16 @@ export type SoftwareVersion = {
     readonly modified: string;
     readonly version: string;
     readonly release_date: string | null;
+    /**
+     * Package dependencies (format varies by catalog type)
+     */
+    readonly dependencies: unknown;
+    /**
+     * Version-specific metadata (toolchains, build info, modules, etc.)
+     */
+    readonly metadata: unknown;
     readonly package_name: string;
+    readonly catalog_type: string;
     readonly target_count: number;
 };
 
@@ -16798,6 +17000,16 @@ export type ConstanceSettingsRequestForm = {
     LLM_INFERENCES_API_URL?: string;
     LLM_INFERENCES_API_TOKEN?: string;
     LLM_INFERENCES_MODEL?: string;
+    SOFTWARE_CATALOG_EESSI_UPDATE_ENABLED?: boolean;
+    SOFTWARE_CATALOG_EESSI_VERSION?: string;
+    SOFTWARE_CATALOG_EESSI_API_URL?: string;
+    SOFTWARE_CATALOG_EESSI_INCLUDE_EXTENSIONS?: boolean;
+    SOFTWARE_CATALOG_SPACK_UPDATE_ENABLED?: boolean;
+    SOFTWARE_CATALOG_SPACK_VERSION?: string;
+    SOFTWARE_CATALOG_SPACK_DATA_URL?: string;
+    SOFTWARE_CATALOG_UPDATE_EXISTING_PACKAGES?: boolean;
+    SOFTWARE_CATALOG_CLEANUP_ENABLED?: boolean;
+    SOFTWARE_CATALOG_RETENTION_DAYS?: number;
 };
 
 export type ConstanceSettingsRequestMultipart = {
@@ -16959,6 +17171,16 @@ export type ConstanceSettingsRequestMultipart = {
     LLM_INFERENCES_API_URL?: string;
     LLM_INFERENCES_API_TOKEN?: string;
     LLM_INFERENCES_MODEL?: string;
+    SOFTWARE_CATALOG_EESSI_UPDATE_ENABLED?: boolean;
+    SOFTWARE_CATALOG_EESSI_VERSION?: string;
+    SOFTWARE_CATALOG_EESSI_API_URL?: string;
+    SOFTWARE_CATALOG_EESSI_INCLUDE_EXTENSIONS?: boolean;
+    SOFTWARE_CATALOG_SPACK_UPDATE_ENABLED?: boolean;
+    SOFTWARE_CATALOG_SPACK_VERSION?: string;
+    SOFTWARE_CATALOG_SPACK_DATA_URL?: string;
+    SOFTWARE_CATALOG_UPDATE_EXISTING_PACKAGES?: boolean;
+    SOFTWARE_CATALOG_CLEANUP_ENABLED?: boolean;
+    SOFTWARE_CATALOG_RETENTION_DAYS?: number;
 };
 
 export type PaymentRequestForm = {
@@ -20837,7 +21059,7 @@ export type BookingOfferingsListData = {
     body?: never;
     path?: never;
     query?: {
-        field?: Array<'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'googlecalendar' | 'has_compliance_requirements' | 'image' | 'integration_guide' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_options' | 'roles' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'user_has_consent' | 'uuid' | 'vendor_details'>;
+        field?: Array<'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'billing_type_classification' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'googlecalendar' | 'has_compliance_requirements' | 'image' | 'integration_guide' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_options' | 'roles' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'user_has_consent' | 'uuid' | 'vendor_details'>;
         /**
          * A page number within the paginated result set.
          */
@@ -20885,7 +21107,7 @@ export type BookingOfferingsRetrieveData = {
         uuid: string;
     };
     query?: {
-        field?: Array<'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'googlecalendar' | 'has_compliance_requirements' | 'image' | 'integration_guide' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_options' | 'roles' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'user_has_consent' | 'uuid' | 'vendor_details'>;
+        field?: Array<'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'billing_type_classification' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'googlecalendar' | 'has_compliance_requirements' | 'image' | 'integration_guide' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_options' | 'roles' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'user_has_consent' | 'uuid' | 'vendor_details'>;
     };
     url: '/api/booking-offerings/{uuid}/';
 };
@@ -33425,7 +33647,7 @@ export type MarketplaceProviderOfferingsListData = {
          * Description contains
          */
         description?: string;
-        field?: Array<'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'has_compliance_requirements' | 'image' | 'integration_guide' | 'integration_status' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_options' | 'roles' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'uuid' | 'vendor_details'>;
+        field?: Array<'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'billing_type_classification' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'has_compliance_requirements' | 'image' | 'integration_guide' | 'integration_status' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_options' | 'roles' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'uuid' | 'vendor_details'>;
         /**
          * Has Active Terms of Service
          */
@@ -33721,7 +33943,7 @@ export type MarketplaceProviderOfferingsRetrieveData = {
         uuid: string;
     };
     query?: {
-        field?: Array<'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'has_compliance_requirements' | 'image' | 'integration_guide' | 'integration_status' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_options' | 'roles' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'uuid' | 'vendor_details'>;
+        field?: Array<'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'billing_type_classification' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'has_compliance_requirements' | 'image' | 'integration_guide' | 'integration_status' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_options' | 'roles' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'uuid' | 'vendor_details'>;
     };
     url: '/api/marketplace-provider-offerings/{uuid}/';
 };
@@ -35530,7 +35752,7 @@ export type MarketplaceProviderOfferingsUserHasResourceAccessRetrieveData = {
         uuid: string;
     };
     query: {
-        field?: Array<'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'has_compliance_requirements' | 'image' | 'integration_guide' | 'integration_status' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_options' | 'roles' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'uuid' | 'vendor_details'>;
+        field?: Array<'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'billing_type_classification' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'has_compliance_requirements' | 'image' | 'integration_guide' | 'integration_status' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_options' | 'roles' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'uuid' | 'vendor_details'>;
         /**
          * Username of the user to check.
          */
@@ -36741,7 +36963,7 @@ export type MarketplacePublicOfferingsListData = {
          * Description contains
          */
         description?: string;
-        field?: Array<'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'has_compliance_requirements' | 'image' | 'integration_guide' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'project' | 'project_name' | 'project_uuid' | 'promotion_campaigns' | 'quotas' | 'resource_options' | 'roles' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'user_has_consent' | 'uuid' | 'vendor_details'>;
+        field?: Array<'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'billing_type_classification' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'has_compliance_requirements' | 'image' | 'integration_guide' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'project' | 'project_name' | 'project_uuid' | 'promotion_campaigns' | 'quotas' | 'resource_options' | 'roles' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'user_has_consent' | 'uuid' | 'vendor_details'>;
         /**
          * Has Active Terms of Service
          */
@@ -37006,7 +37228,7 @@ export type MarketplacePublicOfferingsRetrieveData = {
         uuid: string;
     };
     query?: {
-        field?: Array<'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'has_compliance_requirements' | 'image' | 'integration_guide' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'project' | 'project_name' | 'project_uuid' | 'promotion_campaigns' | 'quotas' | 'resource_options' | 'roles' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'user_has_consent' | 'uuid' | 'vendor_details'>;
+        field?: Array<'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'billing_type_classification' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'has_compliance_requirements' | 'image' | 'integration_guide' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'project' | 'project_name' | 'project_uuid' | 'promotion_campaigns' | 'quotas' | 'resource_options' | 'roles' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'user_has_consent' | 'uuid' | 'vendor_details'>;
     };
     url: '/api/marketplace-public-offerings/{uuid}/';
 };
