@@ -13881,6 +13881,14 @@ export type ResourceRenewRequest = {
     limits?: {
         [key: string]: number;
     };
+    /**
+     * Optional comment for the renewal request.
+     */
+    request_comment?: string;
+    /**
+     * Optional PDF attachment for the renewal request.
+     */
+    attachment?: Blob | File;
 };
 
 export type ResourceReportRequest = {
@@ -16701,6 +16709,48 @@ export type OfferingThumbnailRequestForm = {
 
 export type OfferingThumbnailRequestMultipart = {
     thumbnail: Blob | File;
+};
+
+export type ResourceRenewRequestForm = {
+    /**
+     * Number of months to extend the subscription by.
+     */
+    extension_months: number;
+    /**
+     * Optional new limits for the resource. Supports upgrades only.
+     */
+    limits?: {
+        [key: string]: number;
+    };
+    /**
+     * Optional comment for the renewal request.
+     */
+    request_comment?: string;
+    /**
+     * Optional PDF attachment for the renewal request.
+     */
+    attachment?: Blob | File;
+};
+
+export type ResourceRenewRequestMultipart = {
+    /**
+     * Number of months to extend the subscription by.
+     */
+    extension_months: number;
+    /**
+     * Optional new limits for the resource. Supports upgrades only.
+     */
+    limits?: {
+        [key: string]: number;
+    };
+    /**
+     * Optional comment for the renewal request.
+     */
+    request_comment?: string;
+    /**
+     * Optional PDF attachment for the renewal request.
+     */
+    attachment?: Blob | File;
 };
 
 export type ScreenshotRequestForm = {
