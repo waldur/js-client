@@ -4760,6 +4760,10 @@ export type MergedPluginOptions = {
      */
     account_name_generation_policy?: AccountNameGenerationPolicyEnum | NullEnum | null;
     /**
+     * If set to False, an order requires manual provider approval
+     */
+    auto_approve_marketplace_script?: boolean;
+    /**
      * Defines if backend_id should be shown more prominently by the UI
      */
     highlight_backend_id_display?: boolean;
@@ -4954,6 +4958,10 @@ export type MergedPluginOptionsRequest = {
      * Slurm account name generation policy
      */
     account_name_generation_policy?: AccountNameGenerationPolicyEnum | NullEnum | null;
+    /**
+     * If set to False, an order requires manual provider approval
+     */
+    auto_approve_marketplace_script?: boolean;
     /**
      * Defines if backend_id should be shown more prominently by the UI
      */
