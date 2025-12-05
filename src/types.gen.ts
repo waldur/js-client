@@ -14130,7 +14130,7 @@ export type RobotAccountRequest = {
     responsible_user?: string | null;
 };
 
-export type RobotAccountStates = 1 | 2 | 3 | 4 | 5 | 6;
+export type RobotAccountStates = 'Requested' | 'Creating' | 'OK' | 'Requested deletion' | 'Deleted' | 'Error';
 
 export type RoleDescription = {
     description?: string;
