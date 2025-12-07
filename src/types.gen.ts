@@ -2179,6 +2179,7 @@ export type ConstanceSettings = {
     ONBOARDING_BOLAGSVERKET_TOKEN_API_URL?: string;
     ONBOARDING_BOLAGSVERKET_CLIENT_ID?: string;
     ONBOARDING_BOLAGSVERKET_CLIENT_SECRET?: string;
+    ONBOARDING_BREG_API_URL?: string;
     LLM_CHAT_ENABLED?: boolean;
     LLM_INFERENCES_BACKEND_TYPE?: string;
     LLM_INFERENCES_API_URL?: string;
@@ -2350,6 +2351,7 @@ export type ConstanceSettingsRequest = {
     ONBOARDING_BOLAGSVERKET_TOKEN_API_URL?: string;
     ONBOARDING_BOLAGSVERKET_CLIENT_ID?: string;
     ONBOARDING_BOLAGSVERKET_CLIENT_SECRET?: string;
+    ONBOARDING_BREG_API_URL?: string;
     LLM_CHAT_ENABLED?: boolean;
     LLM_INFERENCES_BACKEND_TYPE?: string;
     LLM_INFERENCES_API_URL?: string;
@@ -6436,6 +6438,68 @@ export type OfferingEstimatedCostPolicyRequest = {
     apply_to_all?: boolean;
 };
 
+export type OfferingExportParametersRequest = {
+    /**
+     * Include offering components in export
+     */
+    include_components?: boolean;
+    /**
+     * Include offering plans in export
+     */
+    include_plans?: boolean;
+    /**
+     * Include offering screenshots in export
+     */
+    include_screenshots?: boolean;
+    /**
+     * Include offering files in export
+     */
+    include_files?: boolean;
+    /**
+     * Include offering access endpoints in export
+     */
+    include_endpoints?: boolean;
+    /**
+     * Include organization groups associations in export
+     */
+    include_organization_groups?: boolean;
+    /**
+     * Include terms of service configurations in export
+     */
+    include_terms_of_service?: boolean;
+    /**
+     * Include plugin options in export
+     */
+    include_plugin_options?: boolean;
+    /**
+     * Include secret options in export (WARNING: sensitive data)
+     */
+    include_secret_options?: boolean;
+    /**
+     * Include offering attributes in export
+     */
+    include_attributes?: boolean;
+    /**
+     * Include offering options in export
+     */
+    include_options?: boolean;
+    /**
+     * Include resource options in export
+     */
+    include_resource_options?: boolean;
+};
+
+export type OfferingExportResponse = {
+    offering_uuid: string;
+    offering_name: string;
+    export_data: unknown;
+    /**
+     * List of exported component types
+     */
+    exported_components: Array<string>;
+    export_timestamp: string;
+};
+
 export type OfferingFile = {
     readonly url?: string;
     readonly uuid?: string;
@@ -6459,6 +6523,83 @@ export type OfferingGroups = {
 
 export type OfferingImageRequest = {
     image: Blob | File;
+};
+
+export type OfferingImportParametersRequest = {
+    /**
+     * Target customer for imported offering. If not provided, uses current user's customer
+     */
+    customer?: string | null;
+    /**
+     * Target category name for imported offering. If not provided, uses category from export data
+     */
+    category?: string | null;
+    /**
+     * Target project for imported offering (optional)
+     */
+    project?: string | null;
+    /**
+     * Import offering components
+     */
+    import_components?: boolean;
+    /**
+     * Import offering plans
+     */
+    import_plans?: boolean;
+    /**
+     * Import offering screenshots
+     */
+    import_screenshots?: boolean;
+    /**
+     * Import offering files
+     */
+    import_files?: boolean;
+    /**
+     * Import offering access endpoints
+     */
+    import_endpoints?: boolean;
+    /**
+     * Import organization groups associations (may fail if groups don't exist)
+     */
+    import_organization_groups?: boolean;
+    /**
+     * Import terms of service configurations
+     */
+    import_terms_of_service?: boolean;
+    /**
+     * Import plugin options
+     */
+    import_plugin_options?: boolean;
+    /**
+     * Import secret options (WARNING: will overwrite existing secrets)
+     */
+    import_secret_options?: boolean;
+    /**
+     * Overwrite existing offering if one with the same name exists
+     */
+    overwrite_existing?: boolean;
+    /**
+     * Preserve offering state from export, otherwise set to 'Draft'
+     */
+    preserve_state?: boolean;
+    /**
+     * The exported offering data to import
+     */
+    offering_data: unknown;
+};
+
+export type OfferingImportResponse = {
+    imported_offering_uuid: string;
+    imported_offering_name: string;
+    /**
+     * List of imported component types
+     */
+    imported_components: Array<string>;
+    /**
+     * List of warnings encountered during import
+     */
+    warnings?: Array<string>;
+    import_timestamp: string;
 };
 
 export type OfferingIntegrationUpdateRequest = {
@@ -9116,7 +9257,7 @@ export type OrderDetails = {
     readonly new_plan_name?: string | null;
     readonly old_plan_uuid?: string | null;
     readonly new_plan_uuid?: string | null;
-    readonly old_cost_estimate?: string | null;
+    readonly old_cost_estimate?: number;
     readonly new_cost_estimate?: string | null;
     readonly can_terminate?: boolean;
     readonly fixed_price?: number;
@@ -15546,7 +15687,7 @@ export type UsernameGenerationPolicyEnum = 'service_provider' | 'anonymized' | '
 
 export type ValidationDecisionEnum = 'approved' | 'rejected' | 'pending';
 
-export type ValidationMethodEnum = 'ariregister' | 'wirtschaftscompass' | 'bolagsverket';
+export type ValidationMethodEnum = 'ariregister' | 'wirtschaftscompass' | 'bolagsverket' | 'breg';
 
 export type Version = {
     /**
@@ -17077,6 +17218,7 @@ export type ConstanceSettingsRequestForm = {
     ONBOARDING_BOLAGSVERKET_TOKEN_API_URL?: string;
     ONBOARDING_BOLAGSVERKET_CLIENT_ID?: string;
     ONBOARDING_BOLAGSVERKET_CLIENT_SECRET?: string;
+    ONBOARDING_BREG_API_URL?: string;
     LLM_CHAT_ENABLED?: boolean;
     LLM_INFERENCES_BACKEND_TYPE?: string;
     LLM_INFERENCES_API_URL?: string;
@@ -17248,6 +17390,7 @@ export type ConstanceSettingsRequestMultipart = {
     ONBOARDING_BOLAGSVERKET_TOKEN_API_URL?: string;
     ONBOARDING_BOLAGSVERKET_CLIENT_ID?: string;
     ONBOARDING_BOLAGSVERKET_CLIENT_SECRET?: string;
+    ONBOARDING_BREG_API_URL?: string;
     LLM_CHAT_ENABLED?: boolean;
     LLM_INFERENCES_BACKEND_TYPE?: string;
     LLM_INFERENCES_API_URL?: string;
@@ -34747,6 +34890,21 @@ export type MarketplaceProviderOfferingsDraftResponses = {
 
 export type MarketplaceProviderOfferingsDraftResponse = MarketplaceProviderOfferingsDraftResponses[keyof MarketplaceProviderOfferingsDraftResponses];
 
+export type MarketplaceProviderOfferingsExportOfferingData = {
+    body?: OfferingExportParametersRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-provider-offerings/{uuid}/export_offering/';
+};
+
+export type MarketplaceProviderOfferingsExportOfferingResponses = {
+    200: OfferingExportResponse;
+};
+
+export type MarketplaceProviderOfferingsExportOfferingResponse = MarketplaceProviderOfferingsExportOfferingResponses[keyof MarketplaceProviderOfferingsExportOfferingResponses];
+
 export type MarketplaceProviderOfferingsGlauthUsersConfigRetrieveData = {
     body?: never;
     path: {
@@ -36154,6 +36312,19 @@ export type MarketplaceProviderOfferingsGroupsCountResponses = {
      */
     200: unknown;
 };
+
+export type MarketplaceProviderOfferingsImportOfferingData = {
+    body: OfferingImportParametersRequest;
+    path?: never;
+    query?: never;
+    url: '/api/marketplace-provider-offerings/import_offering/';
+};
+
+export type MarketplaceProviderOfferingsImportOfferingResponses = {
+    200: OfferingImportResponse;
+};
+
+export type MarketplaceProviderOfferingsImportOfferingResponse = MarketplaceProviderOfferingsImportOfferingResponses[keyof MarketplaceProviderOfferingsImportOfferingResponses];
 
 export type MarketplaceProviderResourcesListData = {
     body?: never;
