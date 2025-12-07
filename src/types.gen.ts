@@ -3224,6 +3224,180 @@ export type EventTypesEnum = 'access_subnet_creation_succeeded' | 'access_subnet
 
 export type ExecutionStateEnum = 'Scheduled' | 'Processing' | 'OK' | 'Erred';
 
+export type ExportComponentData = {
+    type: string;
+    name: string;
+    description: string;
+    billing_type: string;
+    measured_unit: string;
+    unit_factor: number | null;
+    limit_period: string | null;
+    limit_amount: number | null;
+    article_code: string;
+    backend_id: string;
+};
+
+export type ExportComponentDataRequest = {
+    type: string;
+    name: string;
+    description: string;
+    billing_type: string;
+    measured_unit: string;
+    unit_factor: number | null;
+    limit_period: string | null;
+    limit_amount: number | null;
+    article_code: string;
+    backend_id: string;
+};
+
+export type ExportEndpointData = {
+    name: string;
+    url: string;
+};
+
+export type ExportEndpointDataRequest = {
+    name: string;
+    url: string;
+};
+
+export type ExportFileData = {
+    name: string;
+    file_content: string;
+    filename: string;
+    content_type: string;
+};
+
+export type ExportFileDataRequest = {
+    name: string;
+    file_content: string;
+    filename: string;
+    content_type: string;
+};
+
+export type ExportOfferingData = {
+    name: string;
+    description: string;
+    full_description: string;
+    vendor_details: string;
+    getting_started: string;
+    integration_guide: string;
+    type: string;
+    shared: boolean;
+    billable: boolean;
+    state: string;
+    category_name: string | null;
+    country: string;
+    latitude: number | null;
+    longitude: number | null;
+    access_url: string;
+    paused_reason: string;
+    attributes?: unknown;
+    options?: unknown;
+};
+
+export type ExportOfferingDataRequest = {
+    name: string;
+    description: string;
+    full_description: string;
+    vendor_details: string;
+    getting_started: string;
+    integration_guide: string;
+    type: string;
+    shared: boolean;
+    billable: boolean;
+    state: string;
+    category_name: string | null;
+    country: string;
+    latitude: number | null;
+    longitude: number | null;
+    access_url: string;
+    paused_reason: string;
+    attributes?: unknown;
+    options?: unknown;
+};
+
+export type ExportOrganizationGroupData = {
+    name: string;
+    parent_name: string | null;
+};
+
+export type ExportOrganizationGroupDataRequest = {
+    name: string;
+    parent_name: string | null;
+};
+
+export type ExportPlanComponentData = {
+    component_type: string | null;
+    amount: number;
+    price: number;
+    future_price: number | null;
+};
+
+export type ExportPlanComponentDataRequest = {
+    component_type: string | null;
+    amount: number;
+    price: number;
+    future_price: number | null;
+};
+
+export type ExportPlanData = {
+    name: string;
+    description: string;
+    unit_price: number;
+    unit: string;
+    archived: boolean;
+    max_amount: number | null;
+    article_code: string;
+    backend_id: string;
+    components: Array<ExportPlanComponentData>;
+};
+
+export type ExportPlanDataRequest = {
+    name: string;
+    description: string;
+    unit_price: number;
+    unit: string;
+    archived: boolean;
+    max_amount: number | null;
+    article_code: string;
+    backend_id: string;
+    components: Array<ExportPlanComponentDataRequest>;
+};
+
+export type ExportScreenshotData = {
+    name: string;
+    description: string;
+    image_content: string;
+    image_filename: string;
+    content_type: string;
+};
+
+export type ExportScreenshotDataRequest = {
+    name: string;
+    description: string;
+    image_content: string;
+    image_filename: string;
+    content_type: string;
+};
+
+export type ExportTermsOfServiceData = {
+    terms_of_service: string;
+    terms_of_service_link: string;
+    version: string;
+    is_active: boolean;
+    requires_reconsent: boolean;
+    grace_period_days: number | null;
+};
+
+export type ExportTermsOfServiceDataRequest = {
+    terms_of_service: string;
+    terms_of_service_link: string;
+    version: string;
+    is_active: boolean;
+    requires_reconsent: boolean;
+    grace_period_days: number | null;
+};
+
 export type ExternalLink = {
     readonly url: string;
     readonly uuid: string;
@@ -6438,6 +6612,34 @@ export type OfferingEstimatedCostPolicyRequest = {
     apply_to_all?: boolean;
 };
 
+export type OfferingExportData = {
+    offering: ExportOfferingData;
+    components?: Array<ExportComponentData>;
+    plans?: Array<ExportPlanData>;
+    screenshots?: Array<ExportScreenshotData>;
+    files?: Array<ExportFileData>;
+    endpoints?: Array<ExportEndpointData>;
+    organization_groups?: Array<ExportOrganizationGroupData>;
+    terms_of_service?: Array<ExportTermsOfServiceData>;
+    plugin_options?: unknown;
+    secret_options?: unknown;
+    resource_options?: unknown;
+};
+
+export type OfferingExportDataRequest = {
+    offering: ExportOfferingDataRequest;
+    components?: Array<ExportComponentDataRequest>;
+    plans?: Array<ExportPlanDataRequest>;
+    screenshots?: Array<ExportScreenshotDataRequest>;
+    files?: Array<ExportFileDataRequest>;
+    endpoints?: Array<ExportEndpointDataRequest>;
+    organization_groups?: Array<ExportOrganizationGroupDataRequest>;
+    terms_of_service?: Array<ExportTermsOfServiceDataRequest>;
+    plugin_options?: unknown;
+    secret_options?: unknown;
+    resource_options?: unknown;
+};
+
 export type OfferingExportParametersRequest = {
     /**
      * Include offering components in export
@@ -6492,7 +6694,10 @@ export type OfferingExportParametersRequest = {
 export type OfferingExportResponse = {
     offering_uuid: string;
     offering_name: string;
-    export_data: unknown;
+    /**
+     * Complete export data containing the offering structure
+     */
+    export_data: OfferingExportData;
     /**
      * List of exported component types
      */
@@ -6585,7 +6790,7 @@ export type OfferingImportParametersRequest = {
     /**
      * The exported offering data to import
      */
-    offering_data: unknown;
+    offering_data: OfferingExportDataRequest;
 };
 
 export type OfferingImportResponse = {
