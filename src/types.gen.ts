@@ -7115,7 +7115,7 @@ export type OfferingSoftwareCatalogRequest = {
     partition?: string | null;
 };
 
-export type OfferingState = 'Draft' | 'Active' | 'Paused' | 'Archived';
+export type OfferingState = 'Draft' | 'Active' | 'Paused' | 'Archived' | 'Unavailable';
 
 export type OfferingStats = {
     count: number;
@@ -28841,7 +28841,7 @@ export type MarketplaceCategoriesListData = {
          *
          *
          */
-        customers_offerings_state?: Array<1 | 2 | 3 | 4>;
+        customers_offerings_state?: Array<1 | 2 | 3 | 4 | 5>;
         field?: Array<'articles' | 'available_offerings_count' | 'columns' | 'components' | 'default_tenant_category' | 'default_vm_category' | 'default_volume_category' | 'description' | 'group' | 'icon' | 'offering_count' | 'sections' | 'title' | 'url' | 'uuid'>;
         /**
          * Category group UUID
@@ -28898,7 +28898,7 @@ export type MarketplaceCategoriesCountData = {
          *
          *
          */
-        customers_offerings_state?: Array<1 | 2 | 3 | 4>;
+        customers_offerings_state?: Array<1 | 2 | 3 | 4 | 5>;
         /**
          * Category group UUID
          */
@@ -34161,7 +34161,7 @@ export type MarketplaceProviderOfferingsListData = {
          *
          *
          */
-        state?: Array<'Active' | 'Archived' | 'Draft' | 'Paused'>;
+        state?: Array<'Active' | 'Archived' | 'Draft' | 'Paused' | 'Unavailable'>;
         /**
          * Offering type
          */
@@ -34312,7 +34312,7 @@ export type MarketplaceProviderOfferingsCountData = {
          *
          *
          */
-        state?: Array<'Active' | 'Archived' | 'Draft' | 'Paused'>;
+        state?: Array<'Active' | 'Archived' | 'Draft' | 'Paused' | 'Unavailable'>;
         /**
          * Offering type
          */
@@ -34634,7 +34634,7 @@ export type MarketplaceProviderOfferingsComponentStatsListData = {
          *
          *
          */
-        state?: Array<'Active' | 'Archived' | 'Draft' | 'Paused'>;
+        state?: Array<'Active' | 'Archived' | 'Draft' | 'Paused' | 'Unavailable'>;
         /**
          * Offering type
          */
@@ -34796,7 +34796,7 @@ export type MarketplaceProviderOfferingsCostsListData = {
          *
          *
          */
-        state?: Array<'Active' | 'Archived' | 'Draft' | 'Paused'>;
+        state?: Array<'Active' | 'Archived' | 'Draft' | 'Paused' | 'Unavailable'>;
         /**
          * Offering type
          */
@@ -34966,7 +34966,7 @@ export type MarketplaceProviderOfferingsCustomersListData = {
          *
          *
          */
-        state?: Array<'Active' | 'Archived' | 'Draft' | 'Paused'>;
+        state?: Array<'Active' | 'Archived' | 'Draft' | 'Paused' | 'Unavailable'>;
         /**
          * Offering type
          */
@@ -35291,7 +35291,7 @@ export type MarketplaceProviderOfferingsListCourseAccountsListData = {
          *
          *
          */
-        state?: Array<'Active' | 'Archived' | 'Draft' | 'Paused'>;
+        state?: Array<'Active' | 'Archived' | 'Draft' | 'Paused' | 'Unavailable'>;
         /**
          * Offering type
          */
@@ -35469,7 +35469,7 @@ export type MarketplaceProviderOfferingsListCustomerServiceAccountsListData = {
          *
          *
          */
-        state?: Array<'Active' | 'Archived' | 'Draft' | 'Paused'>;
+        state?: Array<'Active' | 'Archived' | 'Draft' | 'Paused' | 'Unavailable'>;
         /**
          * Offering type
          */
@@ -35647,7 +35647,7 @@ export type MarketplaceProviderOfferingsListProjectServiceAccountsListData = {
          *
          *
          */
-        state?: Array<'Active' | 'Archived' | 'Draft' | 'Paused'>;
+        state?: Array<'Active' | 'Archived' | 'Draft' | 'Paused' | 'Unavailable'>;
         /**
          * Offering type
          */
@@ -35737,6 +35737,36 @@ export type MarketplaceProviderOfferingsListUsersListResponses = {
 };
 
 export type MarketplaceProviderOfferingsListUsersListResponse = MarketplaceProviderOfferingsListUsersListResponses[keyof MarketplaceProviderOfferingsListUsersListResponses];
+
+export type MarketplaceProviderOfferingsMakeAvailableData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-provider-offerings/{uuid}/make_available/';
+};
+
+export type MarketplaceProviderOfferingsMakeAvailableResponses = {
+    200: DetailState;
+};
+
+export type MarketplaceProviderOfferingsMakeAvailableResponse = MarketplaceProviderOfferingsMakeAvailableResponses[keyof MarketplaceProviderOfferingsMakeAvailableResponses];
+
+export type MarketplaceProviderOfferingsMakeUnavailableData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-provider-offerings/{uuid}/make_unavailable/';
+};
+
+export type MarketplaceProviderOfferingsMakeUnavailableResponses = {
+    200: DetailState;
+};
+
+export type MarketplaceProviderOfferingsMakeUnavailableResponse = MarketplaceProviderOfferingsMakeUnavailableResponses[keyof MarketplaceProviderOfferingsMakeUnavailableResponses];
 
 export type MarketplaceProviderOfferingsMoveOfferingData = {
     body: MoveOfferingRequest;
@@ -36340,7 +36370,7 @@ export type MarketplaceProviderOfferingsGroupsListData = {
          *
          *
          */
-        state?: Array<'Active' | 'Archived' | 'Draft' | 'Paused'>;
+        state?: Array<'Active' | 'Archived' | 'Draft' | 'Paused' | 'Unavailable'>;
         /**
          * Offering type
          */
@@ -36491,7 +36521,7 @@ export type MarketplaceProviderOfferingsGroupsCountData = {
          *
          *
          */
-        state?: Array<'Active' | 'Archived' | 'Draft' | 'Paused'>;
+        state?: Array<'Active' | 'Archived' | 'Draft' | 'Paused' | 'Unavailable'>;
         /**
          * Offering type
          */
@@ -37505,7 +37535,7 @@ export type MarketplacePublicOfferingsListData = {
          *
          *
          */
-        state?: Array<'Active' | 'Archived' | 'Draft' | 'Paused'>;
+        state?: Array<'Active' | 'Archived' | 'Draft' | 'Paused' | 'Unavailable'>;
         /**
          * Offering type
          */
@@ -37656,7 +37686,7 @@ export type MarketplacePublicOfferingsCountData = {
          *
          *
          */
-        state?: Array<'Active' | 'Archived' | 'Draft' | 'Paused'>;
+        state?: Array<'Active' | 'Archived' | 'Draft' | 'Paused' | 'Unavailable'>;
         /**
          * Offering type
          */
@@ -40123,7 +40153,7 @@ export type MarketplaceServiceProvidersOfferingsListData = {
          *
          *
          */
-        state?: Array<'Active' | 'Archived' | 'Draft' | 'Paused'>;
+        state?: Array<'Active' | 'Archived' | 'Draft' | 'Paused' | 'Unavailable'>;
         /**
          * Offering type
          */
