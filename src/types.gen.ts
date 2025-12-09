@@ -7567,6 +7567,14 @@ export type OnboardingVerification = {
     readonly user_submitted_customer_data: {
         [key: string]: unknown;
     };
+    /**
+     * Boolean indicating if a customer can be created from this verification
+     */
+    readonly can_customer_be_created: boolean;
+    /**
+     * Reason why customer cannot be created (null if can be created)
+     */
+    readonly customer_creation_error_message: string | null;
     readonly created: string;
     readonly modified: string;
 };
