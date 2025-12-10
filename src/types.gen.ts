@@ -9351,7 +9351,7 @@ export type OptionFieldRequest = {
     component_multiplier_config?: ComponentMultiplierConfigRequest;
 };
 
-export type OptionFieldTypeEnum = 'boolean' | 'integer' | 'money' | 'string' | 'text' | 'html_text' | 'select_string' | 'select_string_multi' | 'select_openstack_tenant' | 'select_multiple_openstack_tenants' | 'select_openstack_instance' | 'select_multiple_openstack_instances' | 'date' | 'time' | 'conditional_cascade' | 'component_multiplier';
+export type OptionFieldTypeEnum = 'boolean' | 'integer' | 'money' | 'string' | 'text' | 'html_text' | 'select_string' | 'select_string_multi' | 'select_openstack_tenant' | 'select_multiple_openstack_tenants' | 'select_openstack_instance' | 'select_multiple_openstack_instances' | 'date' | 'time' | 'conditional_cascade' | 'component_multiplier' | 'multi_datacenter_k8s_config';
 
 export type OrderAttachment = {
     attachment?: string | null;
