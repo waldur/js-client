@@ -1626,6 +1626,8 @@ export type CategoryComponentsRequest = {
     category: CategorySerializerForForNestedFieldsRequest;
 };
 
+export type CategoryEnum = 'view' | 'approve' | 'reject' | 'extend' | 'terminate' | 'backup' | 'migrate' | 'contact' | 'escalate' | 'configure' | 'repair' | 'monitor';
+
 export type CategoryGroup = {
     readonly url?: string;
     readonly uuid?: string;
@@ -2376,6 +2378,20 @@ export type CoreAuthToken = {
 };
 
 export type CoreStates = 'CREATION_SCHEDULED' | 'CREATING' | 'UPDATE_SCHEDULED' | 'UPDATING' | 'DELETION_SCHEDULED' | 'DELETING' | 'OK' | 'ERRED';
+
+export type CorrectiveAction = {
+    label: string;
+    url: string;
+    category: CategoryEnum;
+    severity: SeverityEnum;
+    method?: string;
+    api_endpoint?: boolean;
+    confirmation_required?: boolean;
+    permissions_required?: Array<string>;
+    metadata?: {
+        [key: string]: unknown;
+    };
+};
 
 export type CostsForPeriod = {
     readonly total_price: string;
@@ -15014,6 +15030,8 @@ export type SettingsMetadataResponse = {
     }>;
 };
 
+export type SeverityEnum = 'safe' | 'low' | 'medium' | 'high' | 'critical';
+
 export type SlurmAllocation = {
     readonly url?: string;
     readonly uuid?: string;
@@ -15589,6 +15607,8 @@ export type UpdateOfferingComponentRequest = {
     max_prepaid_duration?: number | null;
 };
 
+export type UrgencyEnum = 'low' | 'medium' | 'high';
+
 export type User = {
     readonly url?: string;
     readonly uuid?: string;
@@ -15661,6 +15681,65 @@ export type User = {
     readonly identity_source?: string;
     readonly has_active_session?: boolean;
     readonly ip_address?: string | null;
+};
+
+export type UserAction = {
+    readonly uuid: string;
+    /**
+     * Type of action, e.g. 'pending_order', 'expiring_resource'
+     */
+    action_type: string;
+    title: string;
+    description: string;
+    urgency: UrgencyEnum;
+    due_date?: string | null;
+    action_url?: string;
+    metadata?: string;
+    is_silenced?: boolean;
+    silenced_until?: string | null;
+    readonly is_temporarily_silenced: boolean;
+    readonly is_effectively_silenced: boolean;
+    readonly created: string;
+    readonly modified: string;
+    readonly related_object_name: string;
+    readonly related_object_type: string;
+    readonly corrective_actions: Array<CorrectiveAction>;
+    readonly days_until_due: number | null;
+};
+
+export type UserActionExecution = {
+    readonly id: number;
+    corrective_action_label: string;
+    readonly executed_at: string;
+    success?: boolean;
+    error_message?: string;
+    execution_metadata?: string;
+};
+
+export type UserActionProvider = {
+    readonly id: number;
+    app_name: string;
+    provider_class: string;
+    action_type: string;
+    is_enabled?: boolean;
+    schedule?: string;
+    readonly last_execution: string | null;
+    readonly last_execution_status: string;
+};
+
+export type UserActionRequest = {
+    /**
+     * Type of action, e.g. 'pending_order', 'expiring_resource'
+     */
+    action_type: string;
+    title: string;
+    description: string;
+    urgency: UrgencyEnum;
+    due_date?: string | null;
+    action_url?: string;
+    metadata?: string;
+    is_silenced?: boolean;
+    silenced_until?: string | null;
 };
 
 export type UserAgreement = {
@@ -61624,6 +61703,222 @@ export type SyncIssuesResponses = {
      */
     202: unknown;
 };
+
+export type UserActionExecutionsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Which field to use when ordering the results.
+         */
+        o?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/user-action-executions/';
+};
+
+export type UserActionExecutionsListResponses = {
+    200: Array<UserActionExecution>;
+};
+
+export type UserActionExecutionsListResponse = UserActionExecutionsListResponses[keyof UserActionExecutionsListResponses];
+
+export type UserActionExecutionsRetrieveData = {
+    body?: never;
+    path: {
+        /**
+         * A unique integer value identifying this user action execution.
+         */
+        id: number;
+    };
+    query?: never;
+    url: '/api/user-action-executions/{id}/';
+};
+
+export type UserActionExecutionsRetrieveResponses = {
+    200: UserActionExecution;
+};
+
+export type UserActionExecutionsRetrieveResponse = UserActionExecutionsRetrieveResponses[keyof UserActionExecutionsRetrieveResponses];
+
+export type UserActionProvidersListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/user-action-providers/';
+};
+
+export type UserActionProvidersListResponses = {
+    200: Array<UserActionProvider>;
+};
+
+export type UserActionProvidersListResponse = UserActionProvidersListResponses[keyof UserActionProvidersListResponses];
+
+export type UserActionProvidersRetrieveData = {
+    body?: never;
+    path: {
+        /**
+         * A unique integer value identifying this user action provider.
+         */
+        id: number;
+    };
+    query?: never;
+    url: '/api/user-action-providers/{id}/';
+};
+
+export type UserActionProvidersRetrieveResponses = {
+    200: UserActionProvider;
+};
+
+export type UserActionProvidersRetrieveResponse = UserActionProvidersRetrieveResponses[keyof UserActionProvidersRetrieveResponses];
+
+export type UserActionsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        action_type?: string;
+        created_after?: string;
+        created_before?: string;
+        due_within_days?: number;
+        include_silenced?: boolean;
+        is_silenced?: boolean;
+        /**
+         * Which field to use when ordering the results.
+         */
+        o?: string;
+        overdue?: boolean;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        urgency?: 'high' | 'low' | 'medium';
+    };
+    url: '/api/user-actions/';
+};
+
+export type UserActionsListResponses = {
+    200: Array<UserAction>;
+};
+
+export type UserActionsListResponse = UserActionsListResponses[keyof UserActionsListResponses];
+
+export type UserActionsRetrieveData = {
+    body?: never;
+    path: {
+        /**
+         * A unique integer value identifying this user action.
+         */
+        id: number;
+    };
+    query?: never;
+    url: '/api/user-actions/{id}/';
+};
+
+export type UserActionsRetrieveResponses = {
+    200: UserAction;
+};
+
+export type UserActionsRetrieveResponse = UserActionsRetrieveResponses[keyof UserActionsRetrieveResponses];
+
+export type UserActionsExecuteActionData = {
+    body: UserActionRequest;
+    path: {
+        /**
+         * A unique integer value identifying this user action.
+         */
+        id: number;
+    };
+    query?: never;
+    url: '/api/user-actions/{id}/execute_action/';
+};
+
+export type UserActionsExecuteActionResponses = {
+    200: UserAction;
+};
+
+export type UserActionsExecuteActionResponse = UserActionsExecuteActionResponses[keyof UserActionsExecuteActionResponses];
+
+export type UserActionsSilenceData = {
+    body: UserActionRequest;
+    path: {
+        /**
+         * A unique integer value identifying this user action.
+         */
+        id: number;
+    };
+    query?: never;
+    url: '/api/user-actions/{id}/silence/';
+};
+
+export type UserActionsSilenceResponses = {
+    200: UserAction;
+};
+
+export type UserActionsSilenceResponse = UserActionsSilenceResponses[keyof UserActionsSilenceResponses];
+
+export type UserActionsUnsilenceData = {
+    body: UserActionRequest;
+    path: {
+        /**
+         * A unique integer value identifying this user action.
+         */
+        id: number;
+    };
+    query?: never;
+    url: '/api/user-actions/{id}/unsilence/';
+};
+
+export type UserActionsUnsilenceResponses = {
+    200: UserAction;
+};
+
+export type UserActionsUnsilenceResponse = UserActionsUnsilenceResponses[keyof UserActionsUnsilenceResponses];
+
+export type UserActionsBulkSilenceData = {
+    body: UserActionRequest;
+    path?: never;
+    query?: never;
+    url: '/api/user-actions/bulk_silence/';
+};
+
+export type UserActionsBulkSilenceResponses = {
+    200: UserAction;
+};
+
+export type UserActionsBulkSilenceResponse = UserActionsBulkSilenceResponses[keyof UserActionsBulkSilenceResponses];
+
+export type UserActionsSummaryRetrieveData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/user-actions/summary/';
+};
+
+export type UserActionsSummaryRetrieveResponses = {
+    200: UserAction;
+};
+
+export type UserActionsSummaryRetrieveResponse = UserActionsSummaryRetrieveResponses[keyof UserActionsSummaryRetrieveResponses];
 
 export type UserAgreementsListData = {
     body?: never;
