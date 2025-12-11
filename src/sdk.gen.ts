@@ -15066,8 +15066,7 @@ export const marketplaceProviderOfferingsGroupsCount = <ThrowOnError extends boo
 };
 
 /**
- * Import offering data
- * Imports an offering and all its connected parts from YAML format. Allows configuration of which components to import and how to handle conflicts.
+ * Import offering data with configurable parameters.
  */
 export const marketplaceProviderOfferingsImportOffering = <ThrowOnError extends boolean = false>(options: Options<MarketplaceProviderOfferingsImportOfferingData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).post<MarketplaceProviderOfferingsImportOfferingResponses, unknown, ThrowOnError>({
