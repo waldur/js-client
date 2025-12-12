@@ -1952,28 +1952,73 @@ export type ComponentUsageItemRequest = {
 };
 
 export type ComponentUsagesPerMonthStats = {
+    /**
+     * Total usage amount
+     */
     usage: string;
+    /**
+     * UUID of the offering
+     */
     offering_uuid: string;
+    /**
+     * Type of the component
+     */
     component_type: string;
+    /**
+     * Country of the offering
+     */
     readonly offering_country: string;
+    /**
+     * Name of the organization group
+     */
     readonly organization_group_name: string;
+    /**
+     * UUID of the organization group
+     */
     readonly organization_group_uuid: string;
     month: number;
     year: number;
 };
 
 export type ComponentUsagesPerProject = {
+    /**
+     * UUID of the project
+     */
     project_uuid: string;
+    /**
+     * Type of the component
+     */
     component_type: string;
+    /**
+     * Total usage for the component
+     */
     readonly usage: number;
 };
 
 export type ComponentUsagesStats = {
+    /**
+     * Total usage amount
+     */
     usage: string;
+    /**
+     * UUID of the offering
+     */
     offering_uuid: string;
+    /**
+     * Type of the component
+     */
     component_type: string;
+    /**
+     * Country of the offering
+     */
     readonly offering_country: string;
+    /**
+     * Name of the organization group
+     */
     readonly organization_group_name: string;
+    /**
+     * UUID of the organization group
+     */
     readonly organization_group_uuid: string;
 };
 
@@ -2425,20 +2470,56 @@ export type CostsForPeriod = {
 };
 
 export type CountProjectsOfServiceProviders = {
+    /**
+     * UUID of the service provider
+     */
     readonly service_provider_uuid: string;
+    /**
+     * UUID of the customer
+     */
     readonly customer_uuid: string;
+    /**
+     * Name of the customer
+     */
     readonly customer_name: string;
+    /**
+     * UUID of the customer's organization group
+     */
     readonly customer_organization_group_uuid: string;
+    /**
+     * Name of the customer's organization group
+     */
     readonly customer_organization_group_name: string;
+    /**
+     * Count value
+     */
     readonly count: number;
 };
 
 export type CountProjectsOfServiceProvidersGroupedByOecd = {
+    /**
+     * UUID of the service provider
+     */
     readonly service_provider_uuid: string;
+    /**
+     * UUID of the customer
+     */
     readonly customer_uuid: string;
+    /**
+     * Name of the customer
+     */
     readonly customer_name: string;
+    /**
+     * UUID of the customer's organization group
+     */
     readonly customer_organization_group_uuid: string;
+    /**
+     * Name of the customer's organization group
+     */
     readonly customer_organization_group_name: string;
+    /**
+     * Count value
+     */
     readonly count: number;
     readonly oecd_fos_2007_name: string;
 };
@@ -2450,17 +2531,44 @@ export type CountStats = {
 };
 
 export type CountUniqueUsersConnectedWithActiveResourcesOfServiceProvider = {
+    /**
+     * UUID of the customer
+     */
     readonly customer_uuid: string;
+    /**
+     * Name of the customer
+     */
     readonly customer_name: string;
+    /**
+     * Number of unique users
+     */
     readonly count_users: number;
 };
 
 export type CountUsersOfServiceProviders = {
+    /**
+     * UUID of the service provider
+     */
     readonly service_provider_uuid: string;
+    /**
+     * UUID of the customer
+     */
     readonly customer_uuid: string;
+    /**
+     * Name of the customer
+     */
     readonly customer_name: string;
+    /**
+     * UUID of the customer's organization group
+     */
     readonly customer_organization_group_uuid: string;
+    /**
+     * Name of the customer's organization group
+     */
     readonly customer_organization_group_name: string;
+    /**
+     * Count value
+     */
     readonly count: number;
 };
 
@@ -3570,8 +3678,17 @@ export type FinancialReportEmailRequest = {
 };
 
 export type Fingerprint = {
+    /**
+     * MD5 fingerprint of SSH key
+     */
     readonly md5?: string;
+    /**
+     * SHA256 fingerprint of SSH key
+     */
     readonly sha256?: string;
+    /**
+     * SHA512 fingerprint of SSH key
+     */
     readonly sha512?: string;
 };
 
@@ -6835,8 +6952,17 @@ export type OfferingComponent = {
 };
 
 export type OfferingComponentLimitRequest = {
+    /**
+     * Minimum allowed value
+     */
     min: number;
+    /**
+     * Maximum allowed value
+     */
     max: number;
+    /**
+     * Maximum available limit across all resources
+     */
     max_available_limit: number;
 };
 
@@ -6885,12 +7011,24 @@ export type OfferingComponentStat = {
 };
 
 export type OfferingCost = {
+    /**
+     * UUID of the offering
+     */
     offering_uuid: string;
+    /**
+     * Total cost for the offering
+     */
     cost: number;
 };
 
 export type OfferingCountryStats = {
+    /**
+     * Country code of the offering
+     */
     country: string;
+    /**
+     * Number of offerings in this country
+     */
     count: number;
 };
 
@@ -7545,17 +7683,44 @@ export type OfferingSoftwareCatalogRequest = {
 export type OfferingState = 'Draft' | 'Active' | 'Paused' | 'Archived' | 'Unavailable';
 
 export type OfferingStats = {
+    /**
+     * Number of resources for the offering
+     */
     count: number;
+    /**
+     * Name of the offering
+     */
     name: string;
+    /**
+     * UUID of the offering
+     */
     uuid: string;
+    /**
+     * Country of the offering
+     */
     country: string;
 };
 
 export type OfferingStatsCounter = {
+    /**
+     * UUID of the category
+     */
     category_uuid: string;
+    /**
+     * Title of the category
+     */
     category_title: string;
+    /**
+     * Name of the service provider
+     */
     service_provider_name: string;
+    /**
+     * UUID of the service provider
+     */
     service_provider_uuid: string;
+    /**
+     * Number of offerings
+     */
     count: number;
 };
 
@@ -14520,6 +14685,9 @@ export type RemovePartitionRequest = {
 };
 
 export type RemoveSoftwareCatalogRequest = {
+    /**
+     * UUID of the offering catalog to remove
+     */
     offering_catalog_uuid: string;
 };
 
@@ -15394,7 +15562,13 @@ export type RuleRequest = {
 };
 
 export type RuntimeStates = {
+    /**
+     * Value of the runtime state
+     */
     readonly value: string;
+    /**
+     * Human-readable label for the runtime state
+     */
     readonly label: string;
 };
 
@@ -15542,8 +15716,17 @@ export type ServiceProviderRequest = {
 };
 
 export type ServiceProviderRevenues = {
+    /**
+     * Total revenue amount
+     */
     readonly total: number;
+    /**
+     * Invoice year
+     */
     readonly year: number;
+    /**
+     * Invoice month
+     */
     readonly month: number;
 };
 
@@ -16165,7 +16348,13 @@ export type TenantSecurityGroupUpdateRequest = {
 };
 
 export type TimeSeriesToSData = {
+    /**
+     * Date of the data point
+     */
     readonly date: string;
+    /**
+     * Count for the date
+     */
     readonly count: number;
 };
 
