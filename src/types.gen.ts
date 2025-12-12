@@ -7465,65 +7465,6 @@ export type OfferingImageRequest = {
     image: Blob | File;
 };
 
-export type OfferingImportParameters = {
-    /**
-     * Target customer for imported offering. If not provided, uses current user's customer
-     */
-    customer?: string | null;
-    /**
-     * Target category name for imported offering. If not provided, uses category from export data
-     */
-    category?: string | null;
-    /**
-     * Target project for imported offering (optional)
-     */
-    project?: string | null;
-    /**
-     * Import offering components
-     */
-    import_components?: boolean;
-    /**
-     * Import offering plans
-     */
-    import_plans?: boolean;
-    /**
-     * Import offering screenshots
-     */
-    import_screenshots?: boolean;
-    /**
-     * Import offering files
-     */
-    import_files?: boolean;
-    /**
-     * Import offering access endpoints
-     */
-    import_endpoints?: boolean;
-    /**
-     * Import organization groups associations (may fail if groups don't exist)
-     */
-    import_organization_groups?: boolean;
-    /**
-     * Import terms of service configurations
-     */
-    import_terms_of_service?: boolean;
-    /**
-     * Import plugin options
-     */
-    import_plugin_options?: boolean;
-    /**
-     * Import secret options (WARNING: will overwrite existing secrets)
-     */
-    import_secret_options?: boolean;
-    /**
-     * Overwrite existing offering if one with the same name exists
-     */
-    overwrite_existing?: boolean;
-    /**
-     * The exported offering data to import
-     */
-    offering_data: OfferingExportData;
-};
-
 export type OfferingImportParametersRequest = {
     /**
      * Target customer for imported offering. If not provided, uses current user's customer
@@ -7581,6 +7522,29 @@ export type OfferingImportParametersRequest = {
      * The exported offering data to import
      */
     offering_data: OfferingExportDataRequest;
+};
+
+export type OfferingImportResponse = {
+    /**
+     * UUID of the imported offering
+     */
+    imported_offering_uuid: string;
+    /**
+     * Name of the imported offering
+     */
+    imported_offering_name: string;
+    /**
+     * List of imported component types
+     */
+    imported_components: Array<string>;
+    /**
+     * List of warnings encountered during import
+     */
+    warnings?: Array<string>;
+    /**
+     * Timestamp when the import was completed
+     */
+    import_timestamp: string;
 };
 
 export type OfferingIntegrationUpdateRequest = {
@@ -37974,7 +37938,7 @@ export type MarketplaceProviderOfferingsImportOfferingData = {
 };
 
 export type MarketplaceProviderOfferingsImportOfferingResponses = {
-    200: OfferingImportParameters;
+    200: OfferingImportResponse;
 };
 
 export type MarketplaceProviderOfferingsImportOfferingResponse = MarketplaceProviderOfferingsImportOfferingResponses[keyof MarketplaceProviderOfferingsImportOfferingResponses];
