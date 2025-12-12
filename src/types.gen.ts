@@ -1698,11 +1698,20 @@ export type CategorySerializerForForNestedFieldsRequest = {
 };
 
 export type CheckUniqueBackendIdRequest = {
+    /**
+     * Backend identifier to check
+     */
     backend_id: string;
+    /**
+     * Check across all offerings
+     */
     check_all_offerings?: boolean;
 };
 
 export type CheckUniqueBackendIdResponse = {
+    /**
+     * Whether the backend ID is unique
+     */
     is_unique: boolean;
 };
 
@@ -1936,8 +1945,17 @@ export type ComponentUsage = {
 };
 
 export type ComponentUsageCreateRequest = {
+    /**
+     * List of component usage items to report
+     */
     usages: Array<ComponentUsageItemRequest>;
+    /**
+     * UUID of the specific resource plan period for usage reporting
+     */
     plan_period?: string;
+    /**
+     * UUID of the resource for usage reporting (required if plan_period not provided)
+     */
     resource?: string;
     /**
      * Date for usage reporting (staff and service providers for limit-based components). If not provided, current date is used.
@@ -2544,8 +2562,17 @@ export type CountProjectsOfServiceProvidersGroupedByOecd = {
 };
 
 export type CountStats = {
+    /**
+     * Name from the record
+     */
     readonly name: string;
+    /**
+     * UUID from the record
+     */
     readonly uuid: string;
+    /**
+     * Count value from the record
+     */
     readonly count: number;
 };
 
@@ -2926,10 +2953,25 @@ export type CustomerEstimatedCostPolicyRequest = {
 };
 
 export type CustomerIndustryFlagStats = {
+    /**
+     * Name from the record
+     */
     readonly name: string;
+    /**
+     * UUID from the record
+     */
     readonly uuid: string;
+    /**
+     * Count value from the record
+     */
     readonly count: number;
+    /**
+     * Customer abbreviation from the record
+     */
     readonly abbreviation: string;
+    /**
+     * Industry classification flag
+     */
     is_industry: string;
 };
 
@@ -2957,9 +2999,21 @@ export type CustomerMemberCount = {
 };
 
 export type CustomerOecdCodeStats = {
+    /**
+     * Name from the record
+     */
     readonly name: string;
+    /**
+     * UUID from the record
+     */
     readonly uuid: string;
+    /**
+     * Count value from the record
+     */
     readonly count: number;
+    /**
+     * Customer abbreviation from the record
+     */
     readonly abbreviation: string;
     oecd: string;
 };
@@ -4122,7 +4176,13 @@ export type ImpactLevelDisplayEnum = 'No impact' | 'Degraded performance' | 'Par
 export type ImpactLevelEnum = 1 | 2 | 3 | 4;
 
 export type ImportResourceRequest = {
+    /**
+     * Backend identifier of the resource
+     */
     backend_id: string;
+    /**
+     * Target project for the resource
+     */
     project: string;
     plan?: string;
     additional_details?: unknown;
@@ -5177,9 +5237,21 @@ export type MarketplaceCategoryRequest = {
 };
 
 export type MarketplaceCustomerStats = {
+    /**
+     * Name from the record
+     */
     readonly name: string;
+    /**
+     * UUID from the record
+     */
     readonly uuid: string;
+    /**
+     * Count value from the record
+     */
     readonly count: number;
+    /**
+     * Customer abbreviation from the record
+     */
     readonly abbreviation: string;
 };
 
@@ -5402,17 +5474,53 @@ export type MergedPluginOptions = {
      * List of UUID of OpenStack offerings where tenant can be created
      */
     openstack_offering_uuid_list?: Array<string>;
+    /**
+     * Flavor name for managed Rancher server instances
+     */
     managed_rancher_server_flavor_name?: string;
+    /**
+     * System volume size in GB for managed Rancher server
+     */
     managed_rancher_server_system_volume_size_gb?: number;
+    /**
+     * System volume type name for managed Rancher server
+     */
     managed_rancher_server_system_volume_type_name?: string;
+    /**
+     * Data volume size in GB for managed Rancher server
+     */
     managed_rancher_server_data_volume_size_gb?: number;
+    /**
+     * Data volume type name for managed Rancher server
+     */
     managed_rancher_server_data_volume_type_name?: string;
+    /**
+     * System volume size in GB for managed Rancher worker nodes
+     */
     managed_rancher_worker_system_volume_size_gb?: number;
+    /**
+     * System volume type name for managed Rancher worker nodes
+     */
     managed_rancher_worker_system_volume_type_name?: string;
+    /**
+     * Flavor name for managed Rancher load balancer
+     */
     managed_rancher_load_balancer_flavor_name?: string;
+    /**
+     * System volume size in GB for managed Rancher load balancer
+     */
     managed_rancher_load_balancer_system_volume_size_gb?: number;
+    /**
+     * System volume type name for managed Rancher load balancer
+     */
     managed_rancher_load_balancer_system_volume_type_name?: string;
+    /**
+     * Data volume size in GB for managed Rancher load balancer
+     */
     managed_rancher_load_balancer_data_volume_size_gb?: number;
+    /**
+     * Data volume type name for managed Rancher load balancer
+     */
     managed_rancher_load_balancer_data_volume_type_name?: string;
     /**
      * Max number of vCPUs for tenants
@@ -5601,17 +5709,53 @@ export type MergedPluginOptionsRequest = {
      * List of UUID of OpenStack offerings where tenant can be created
      */
     openstack_offering_uuid_list?: Array<string>;
+    /**
+     * Flavor name for managed Rancher server instances
+     */
     managed_rancher_server_flavor_name?: string;
+    /**
+     * System volume size in GB for managed Rancher server
+     */
     managed_rancher_server_system_volume_size_gb?: number;
+    /**
+     * System volume type name for managed Rancher server
+     */
     managed_rancher_server_system_volume_type_name?: string;
+    /**
+     * Data volume size in GB for managed Rancher server
+     */
     managed_rancher_server_data_volume_size_gb?: number;
+    /**
+     * Data volume type name for managed Rancher server
+     */
     managed_rancher_server_data_volume_type_name?: string;
+    /**
+     * System volume size in GB for managed Rancher worker nodes
+     */
     managed_rancher_worker_system_volume_size_gb?: number;
+    /**
+     * System volume type name for managed Rancher worker nodes
+     */
     managed_rancher_worker_system_volume_type_name?: string;
+    /**
+     * Flavor name for managed Rancher load balancer
+     */
     managed_rancher_load_balancer_flavor_name?: string;
+    /**
+     * System volume size in GB for managed Rancher load balancer
+     */
     managed_rancher_load_balancer_system_volume_size_gb?: number;
+    /**
+     * System volume type name for managed Rancher load balancer
+     */
     managed_rancher_load_balancer_system_volume_type_name?: string;
+    /**
+     * Data volume size in GB for managed Rancher load balancer
+     */
     managed_rancher_load_balancer_data_volume_size_gb?: number;
+    /**
+     * Data volume type name for managed Rancher load balancer
+     */
     managed_rancher_load_balancer_data_volume_type_name?: string;
     /**
      * Max number of vCPUs for tenants
@@ -5656,6 +5800,9 @@ export type MergedSecretOptions = {
      * OpenStack IPv4 external IP mapping
      */
     ipv4_external_ip_mapping?: Array<IpMapping>;
+    /**
+     * TLS certificate for OpenStack API connection verification
+     */
     openstack_api_tls_certificate?: string;
     /**
      * Default value for new subnets DNS name servers. Should be defined as list.
@@ -5717,7 +5864,13 @@ export type MergedSecretOptions = {
      * Rancher secret key
      */
     password?: string;
+    /**
+     * Cloud-init template for Rancher cluster node initialization
+     */
     cloud_init_template?: string;
+    /**
+     * Cloud-init template for managed Rancher load balancer initialization
+     */
     managed_rancher_load_balancer_cloud_init_template?: string;
     /**
      * Host of the Vault server
@@ -5810,6 +5963,9 @@ export type MergedSecretOptionsRequest = {
      * OpenStack IPv4 external IP mapping
      */
     ipv4_external_ip_mapping?: Array<IpMappingRequest>;
+    /**
+     * TLS certificate for OpenStack API connection verification
+     */
     openstack_api_tls_certificate?: string;
     /**
      * Default value for new subnets DNS name servers. Should be defined as list.
@@ -5871,7 +6027,13 @@ export type MergedSecretOptionsRequest = {
      * Rancher secret key
      */
     password?: string;
+    /**
+     * Cloud-init template for Rancher cluster node initialization
+     */
     cloud_init_template?: string;
+    /**
+     * Cloud-init template for managed Rancher load balancer initialization
+     */
     managed_rancher_load_balancer_cloud_init_template?: string;
     /**
      * Host of the Vault server
@@ -6009,7 +6171,13 @@ export type MigrationDetailsRequest = {
 export type MinimalConsumptionLogicEnum = 'fixed' | 'linear';
 
 export type MoveOfferingRequest = {
+    /**
+     * Target customer URL with service provider profile where the offering should be moved
+     */
     customer: string;
+    /**
+     * Whether to preserve existing permissions when moving the offering
+     */
     preserve_permissions: boolean;
 };
 
@@ -6019,6 +6187,9 @@ export type MoveProjectRequest = {
 };
 
 export type MoveResourceRequest = {
+    /**
+     * Target project URL where the resource should be moved
+     */
     project: ProjectHyperlinkRequest;
 };
 
@@ -7964,11 +8135,20 @@ export type OfferingUserServiceProviderComment = {
 export type OfferingUserState = 'Requested' | 'Creating' | 'Pending account linking' | 'Pending additional validation' | 'OK' | 'Requested deletion' | 'Deleting' | 'Deleted' | 'Error creating' | 'Error deleting';
 
 export type OfferingUserStateTransitionRequest = {
+    /**
+     * Comment explaining the state transition
+     */
     comment?: string;
+    /**
+     * URL reference related to the state transition comment
+     */
     comment_url?: string;
 };
 
 export type OfferingUserUpdateRestrictionRequest = {
+    /**
+     * Whether the offering user should be restricted from accessing resources
+     */
     is_restricted: boolean;
 };
 
@@ -11921,10 +12101,25 @@ export type PlanComponent = {
 };
 
 export type PlanUsageResponse = {
+    /**
+     * UUID of the plan
+     */
     readonly plan_uuid: string;
+    /**
+     * Name of the plan
+     */
     readonly plan_name: string;
+    /**
+     * Usage limit
+     */
     readonly limit: number;
+    /**
+     * Current usage count
+     */
     readonly usage: number;
+    /**
+     * Remaining usage
+     */
     readonly remaining: number;
     readonly offering_uuid: string;
     readonly offering_name: string;
@@ -12454,6 +12649,9 @@ export type ProjectUser = {
 };
 
 export type ProjectsLimitsGroupedByIndustryFlag = {
+    /**
+     * Nested dictionary of resource limits by category and component type
+     */
     limits: {
         [key: string]: {
             [key: string]: string;
@@ -12462,6 +12660,9 @@ export type ProjectsLimitsGroupedByIndustryFlag = {
 };
 
 export type ProjectsLimitsGroupedByOecd = {
+    /**
+     * Nested dictionary of resource limits by category and component type
+     */
     limits: {
         [key: string]: {
             [key: string]: string;
@@ -12470,6 +12671,9 @@ export type ProjectsLimitsGroupedByOecd = {
 };
 
 export type ProjectsUsagesGroupedByIndustryFlag = {
+    /**
+     * Nested dictionary of usage values by category and component type
+     */
     usages: {
         [key: string]: {
             [key: string]: string;
@@ -12478,6 +12682,9 @@ export type ProjectsUsagesGroupedByIndustryFlag = {
 };
 
 export type ProjectsUsagesGroupedByOecd = {
+    /**
+     * Nested dictionary of usage values by category and component type
+     */
     usages: {
         [key: string]: {
             [key: string]: string;
@@ -13655,6 +13862,9 @@ export type QuotaRequest = {
 };
 
 export type QuotasUpdateRequest = {
+    /**
+     * Dictionary of quotas to update
+     */
     quotas: {
         [key: string]: number;
     };
@@ -15075,6 +15285,9 @@ export type ResourceRequest = {
 };
 
 export type ResourceResponseStatus = {
+    /**
+     * Status of the resource response
+     */
     readonly status: string;
 };
 
@@ -15083,6 +15296,9 @@ export type ResourceRestrictMemberAccessRequest = {
 };
 
 export type ResourceSetLimitsRequest = {
+    /**
+     * Dictionary mapping component types to their new limit values
+     */
     limits: unknown;
 };
 
@@ -15109,6 +15325,7 @@ export type ResourceSwitchPlanRequest = {
 export type ResourceTerminateRequest = {
     /**
      * Termination attributes
+     * Optional attributes/parameters to pass to the termination operation
      */
     attributes?: unknown;
 };
@@ -15162,11 +15379,29 @@ export type ResourceUserRequest = {
 };
 
 export type ResourcesLimits = {
+    /**
+     * UUID of the offering
+     */
     readonly offering_uuid: string;
+    /**
+     * Name of the limit
+     */
     readonly name: string;
+    /**
+     * Limit value
+     */
     readonly value: number;
+    /**
+     * Country of the offering
+     */
     readonly offering_country: string;
+    /**
+     * Name of the organization group
+     */
     readonly organization_group_name: string;
+    /**
+     * UUID of the organization group
+     */
     readonly organization_group_uuid: string;
 };
 
@@ -15793,8 +16028,17 @@ export type ServiceProviderRevenues = {
 };
 
 export type ServiceProviderSignatureRequest = {
+    /**
+     * Service provider customer UUID
+     */
     customer: string;
+    /**
+     * JWT-encoded data signed with the service provider's API secret code
+     */
     data: string;
+    /**
+     * If true, validates the signature without executing the operation
+     */
     dry_run?: boolean;
 };
 
@@ -16344,7 +16588,13 @@ export type SubmitRequestResponse = {
 };
 
 export type SubresourceOffering = {
+    /**
+     * UUID of the offering
+     */
     readonly uuid: string;
+    /**
+     * Type of the offering
+     */
     readonly type: string;
 };
 
@@ -16448,11 +16698,29 @@ export type TimeSeriesToSData = {
 };
 
 export type ToSConsentDashboard = {
+    /**
+     * Number of active users
+     */
     readonly active_users_count: number;
+    /**
+     * Total number of users
+     */
     readonly total_users_count: number;
+    /**
+     * Percentage of active users
+     */
     readonly active_users_percentage: number;
+    /**
+     * Number of accepted consents
+     */
     readonly accepted_consents_count: number;
+    /**
+     * Number of revoked consents
+     */
     readonly revoked_consents_count: number;
+    /**
+     * Total number of consents
+     */
     readonly total_consents_count: number;
     readonly revoked_consents_over_time: Array<TimeSeriesToSData>;
     readonly tos_version_adoption: Array<VersionAdoption>;
@@ -16898,7 +17166,13 @@ export type Version = {
 };
 
 export type VersionAdoption = {
+    /**
+     * Version identifier
+     */
     readonly version: string;
+    /**
+     * Number of users on this version
+     */
     readonly users_count: number;
 };
 
