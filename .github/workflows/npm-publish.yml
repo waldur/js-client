@@ -10,8 +10,8 @@ on:
       - 'src/**'
 
 permissions:
-  id-token: write  # Required for OIDC
-  contents: read
+  id-token: write
+  contents: write
 
 jobs:
   publish-npm:
