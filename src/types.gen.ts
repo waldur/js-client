@@ -9272,21 +9272,10 @@ export type OpenStackTenantQuotaRequest = {
 export type OpenStackTenantRequest = {
     name: string;
     description?: string;
-    service_settings: string;
-    project: string;
     /**
      * Optional availability group. Will be used for all instances provisioned in this tenant
      */
     availability_zone?: string;
-    /**
-     * Username of the tenant user
-     */
-    user_username?: string;
-    /**
-     * Password of the tenant user
-     */
-    user_password?: string;
-    subnet_cidr?: string;
     /**
      * Volume type name to use when creating volumes.
      */
@@ -51440,37 +51429,6 @@ export type OpenstackTenantsCountResponses = {
      */
     200: unknown;
 };
-
-export type OpenstackTenantsCreateData = {
-    body: OpenStackTenantRequest;
-    path?: never;
-    query?: never;
-    url: '/api/openstack-tenants/';
-};
-
-export type OpenstackTenantsCreateResponses = {
-    201: OpenStackTenant;
-};
-
-export type OpenstackTenantsCreateResponse = OpenstackTenantsCreateResponses[keyof OpenstackTenantsCreateResponses];
-
-export type OpenstackTenantsDestroyData = {
-    body?: never;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/openstack-tenants/{uuid}/';
-};
-
-export type OpenstackTenantsDestroyResponses = {
-    /**
-     * No response body
-     */
-    204: void;
-};
-
-export type OpenstackTenantsDestroyResponse = OpenstackTenantsDestroyResponses[keyof OpenstackTenantsDestroyResponses];
 
 export type OpenstackTenantsRetrieveData = {
     body?: never;
