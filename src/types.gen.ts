@@ -1933,9 +1933,21 @@ export type ComponentUsageCreateRequest = {
 };
 
 export type ComponentUsageItemRequest = {
+    /**
+     * Type of the component
+     */
     type: string;
+    /**
+     * Usage amount
+     */
     amount: string;
+    /**
+     * Optional description of usage
+     */
     description?: string;
+    /**
+     * Whether this usage is recurring
+     */
     recurring?: boolean;
 };
 
@@ -3225,10 +3237,16 @@ export type EmailLog = {
 };
 
 export type EndpointUuid = {
+    /**
+     * UUID of the access endpoint
+     */
     uuid: string;
 };
 
 export type EndpointUuidRequest = {
+    /**
+     * UUID of the access endpoint
+     */
     uuid: string;
 };
 
@@ -3960,9 +3978,21 @@ export type ImportResourceRequest = {
 };
 
 export type ImportableResource = {
+    /**
+     * Backend identifier of the resource
+     */
     backend_id: string;
+    /**
+     * Name of the resource
+     */
     name: string;
+    /**
+     * Type of the resource
+     */
     type: string;
+    /**
+     * Description of the resource
+     */
     description: string;
 };
 
@@ -5991,11 +6021,17 @@ export type NestedCustomerUsagePolicyComponentRequest = {
 export type NestedEndpoint = {
     readonly uuid?: string;
     name?: string;
+    /**
+     * URL of the access endpoint
+     */
     url?: string;
 };
 
 export type NestedEndpointRequest = {
     name: string;
+    /**
+     * URL of the access endpoint
+     */
     url: string;
 };
 
@@ -7442,7 +7478,13 @@ export type OfferingPermission = {
 };
 
 export type OfferingReference = {
+    /**
+     * Name of the offering
+     */
     readonly offering_name: string;
+    /**
+     * UUID of the offering
+     */
     readonly offering_uuid: string;
 };
 
@@ -9868,6 +9910,9 @@ export type OrderSetStateErredRequest = {
 export type OrderState = 'pending-consumer' | 'pending-provider' | 'pending-project' | 'pending-start-date' | 'executing' | 'done' | 'erred' | 'canceled' | 'rejected';
 
 export type OrderUuid = {
+    /**
+     * UUID of the created or updated order
+     */
     readonly order_uuid: string;
 };
 
@@ -11674,9 +11719,21 @@ export type PlanUsageResponse = {
 };
 
 export type PluginComponent = {
+    /**
+     * Type identifier of the component
+     */
     type: string;
+    /**
+     * Display name of the component
+     */
     name: string;
+    /**
+     * Unit of measurement for the component
+     */
     measured_unit: string;
+    /**
+     * Billing type for the component
+     */
     billing_type: BillingTypeEnum;
 };
 
@@ -14452,6 +14509,9 @@ export type RemoteSynchronisationRequest = {
 };
 
 export type RemoveOfferingComponentRequest = {
+    /**
+     * UUID of the component to remove
+     */
     uuid: string;
 };
 
@@ -14726,7 +14786,13 @@ export type ResourceReallocateLimitsRequest = {
 };
 
 export type ResourceReallocateLimitsResponse = {
+    /**
+     * UUID of the source order for limit reallocation
+     */
     readonly source_order_uuid: string;
+    /**
+     * List of UUIDs for target orders receiving the reallocated limits
+     */
     readonly target_order_uuids: Array<string>;
 };
 
@@ -15535,7 +15601,13 @@ export type SetMtuRequest = {
 };
 
 export type SetOfferingsUsernameRequest = {
+    /**
+     * UUID of the user
+     */
     user_uuid: string;
+    /**
+     * Username for offering access
+     */
     username: string;
 };
 
@@ -15829,6 +15901,9 @@ export type SoftwareCatalogRequest = {
 };
 
 export type SoftwareCatalogUuid = {
+    /**
+     * UUID of the software catalog
+     */
     uuid: string;
 };
 
