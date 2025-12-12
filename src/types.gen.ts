@@ -1192,6 +1192,9 @@ export type BookingResource = {
     readonly is_usage_based?: boolean;
     readonly is_limit_based?: boolean;
     name?: string;
+    /**
+     * URL-friendly identifier. Only editable by staff users.
+     */
     slug?: string;
     readonly current_usages?: {
         [key: string]: number;
@@ -2381,6 +2384,9 @@ export type ConstanceSettingsRequest = {
 export type ContainerFormatEnum = 'bare' | 'ovf' | 'aki' | 'ami' | 'ari';
 
 export type CoreAuthToken = {
+    /**
+     * Authentication token for API access
+     */
     readonly token: string;
 };
 
@@ -2492,6 +2498,9 @@ export type CourseAccountsBulkCreateRequest = {
 };
 
 export type CreateAttachmentsRequest = {
+    /**
+     * List of files to attach
+     */
     attachments: Array<Blob | File>;
 };
 
@@ -2562,7 +2571,13 @@ export type Customer = {
     readonly url?: string;
     readonly uuid?: string;
     readonly created?: string;
+    /**
+     * Organization groups this customer belongs to
+     */
     readonly organization_groups?: Array<OrganizationGroup>;
+    /**
+     * Display name of the organization (includes native name if available)
+     */
     readonly display_name?: string;
     /**
      * Organization identifier in another application.
@@ -2577,23 +2592,38 @@ export type Customer = {
      * Start date of accounting
      */
     accounting_start_date?: string;
+    /**
+     * Number of projects in this organization
+     */
     readonly projects_count?: number;
+    /**
+     * Number of users with access to this organization
+     */
     readonly users_count?: number;
     /**
      * External ID of the sponsor covering the costs
      */
     sponsor_number?: number | null;
+    /**
+     * Human-readable country name
+     */
     readonly country_name?: string;
     /**
      * Maximum number of service accounts allowed
      */
     max_service_accounts?: number | null;
+    /**
+     * Checklist to be used for project metadata validation in this organization
+     */
     project_metadata_checklist?: string | null;
     /**
      * Number of extra days after project end date before resources are terminated
      */
     grace_period_days?: number | null;
     name?: string;
+    /**
+     * URL-friendly identifier. Only editable by staff users.
+     */
     slug?: string;
     native_name?: string;
     abbreviation?: string;
@@ -2622,6 +2652,9 @@ export type Customer = {
     latitude?: number | null;
     longitude?: number | null;
     bank_account?: string;
+    /**
+     * Country code (ISO 3166-1 alpha-2)
+     */
     country?: CountryEnum | BlankEnum;
     /**
      * Comma-separated list of notification email addresses
@@ -2817,12 +2850,18 @@ export type CustomerRequest = {
      * Maximum number of service accounts allowed
      */
     max_service_accounts?: number | null;
+    /**
+     * Checklist to be used for project metadata validation in this organization
+     */
     project_metadata_checklist?: string | null;
     /**
      * Number of extra days after project end date before resources are terminated
      */
     grace_period_days?: number | null;
     name: string;
+    /**
+     * URL-friendly identifier. Only editable by staff users.
+     */
     slug?: string;
     native_name?: string;
     abbreviation?: string;
@@ -2851,6 +2890,9 @@ export type CustomerRequest = {
     latitude?: number | null;
     longitude?: number | null;
     bank_account?: string;
+    /**
+     * Country code (ISO 3166-1 alpha-2)
+     */
     country?: CountryEnum | BlankEnum;
     /**
      * Comma-separated list of notification email addresses
@@ -3636,25 +3678,60 @@ export type GoogleCredentials = {
 };
 
 export type GroupInvitation = {
+    /**
+     * UUID of the invitation scope (Customer or Project)
+     */
     readonly scope_uuid: string;
+    /**
+     * Name of the invitation scope
+     */
     readonly scope_name: string;
     /**
-     * Get the description field from the scope if it exists.
-     * Returns empty string if scope doesn't have a description field.
+     * Description of the invitation scope
      */
     readonly scope_description: string;
+    /**
+     * Type of the invitation scope (e.g., 'customer', 'project')
+     */
     readonly scope_type: string | null;
+    /**
+     * UUID of the customer organization
+     */
     readonly customer_uuid: string;
+    /**
+     * Name of the customer organization
+     */
     readonly customer_name: string;
+    /**
+     * Name of the role being granted (e.g., 'PROJECT.ADMIN')
+     */
     readonly role_name: string;
+    /**
+     * Description of the role being granted
+     */
     readonly role_description: string;
+    /**
+     * Full name of the user who created this invitation
+     */
     readonly created_by_full_name: string;
+    /**
+     * Username of the user who created this invitation
+     */
     readonly created_by_username: string;
+    /**
+     * Profile image of the user who created this invitation
+     */
     readonly created_by_image: string;
     readonly url: string;
     readonly uuid: string;
+    /**
+     * UUID of the role to grant to the invited user
+     */
     role: string;
     readonly created: string;
+    /**
+     * Expiration date and time of the invitation
+     */
     readonly expires: string;
     readonly is_active: boolean;
     /**
@@ -3669,14 +3746,26 @@ export type GroupInvitation = {
      * Template for project name. Supports {username}, {email}, {full_name} variables
      */
     project_name_template?: string | null;
+    /**
+     * UUID of the project role to grant if auto_create_project is enabled
+     */
     project_role?: string | null;
     user_affiliations?: unknown;
     user_email_patterns?: unknown;
+    /**
+     * Image URL of the invitation scope (Customer or Project)
+     */
     readonly scope_image: string | null;
 };
 
 export type GroupInvitationRequest = {
+    /**
+     * UUID of the role to grant to the invited user
+     */
     role: string;
+    /**
+     * URL of the scope (Customer or Project) for this invitation
+     */
     scope: string;
     /**
      * Allow non-authenticated users to see and accept this invitation. Only staff can create public invitations.
@@ -3690,6 +3779,9 @@ export type GroupInvitationRequest = {
      * Template for project name. Supports {username}, {email}, {full_name} variables
      */
     project_name_template?: string | null;
+    /**
+     * UUID of the project role to grant if auto_create_project is enabled
+     */
     project_role?: string | null;
     user_affiliations?: unknown;
     user_email_patterns?: unknown;
@@ -3902,25 +3994,60 @@ export type IntegrationStatusDetails = {
 };
 
 export type Invitation = {
+    /**
+     * UUID of the invitation scope (Customer or Project)
+     */
     readonly scope_uuid: string;
+    /**
+     * Name of the invitation scope
+     */
     readonly scope_name: string;
     /**
-     * Get the description field from the scope if it exists.
-     * Returns empty string if scope doesn't have a description field.
+     * Description of the invitation scope
      */
     readonly scope_description: string;
+    /**
+     * Type of the invitation scope (e.g., 'customer', 'project')
+     */
     readonly scope_type: string | null;
+    /**
+     * UUID of the customer organization
+     */
     readonly customer_uuid: string;
+    /**
+     * Name of the customer organization
+     */
     readonly customer_name: string;
+    /**
+     * Name of the role being granted (e.g., 'PROJECT.ADMIN')
+     */
     readonly role_name: string;
+    /**
+     * Description of the role being granted
+     */
     readonly role_description: string;
+    /**
+     * Full name of the user who created this invitation
+     */
     readonly created_by_full_name: string;
+    /**
+     * Username of the user who created this invitation
+     */
     readonly created_by_username: string;
+    /**
+     * Profile image of the user who created this invitation
+     */
     readonly created_by_image: string;
     readonly url: string;
     readonly uuid: string;
+    /**
+     * UUID of the role to grant to the invited user
+     */
     role: string;
     readonly created: string;
+    /**
+     * Expiration date and time of the invitation
+     */
     readonly expires: string;
     full_name?: string;
     native_name?: string;
@@ -3942,12 +4069,24 @@ export type Invitation = {
 };
 
 export type InvitationCheck = {
+    /**
+     * Email address to check for existing invitations
+     */
     email: string;
+    /**
+     * Whether civil number verification is required
+     */
     civil_number_required?: boolean;
 };
 
 export type InvitationRequest = {
+    /**
+     * UUID of the role to grant to the invited user
+     */
     role: string;
+    /**
+     * URL of the scope (Customer or Project) for this invitation
+     */
     scope: string;
     full_name?: string;
     native_name?: string;
@@ -3974,6 +4113,9 @@ export type InvitationUpdate = {
      * Invitation link will be sent to this email. Note that user can accept invitation with different email.
      */
     email: string;
+    /**
+     * UUID of the new role to assign. Must be compatible with the invitation scope.
+     */
     role?: string;
 };
 
@@ -3982,6 +4124,9 @@ export type InvitationUpdateRequest = {
      * Invitation link will be sent to this email. Note that user can accept invitation with different email.
      */
     email: string;
+    /**
+     * UUID of the new role to assign. Must be compatible with the invitation scope.
+     */
     role?: string;
 };
 
@@ -4071,10 +4216,16 @@ export type InvoiceItem = {
 };
 
 export type InvoiceItemCompensation = {
+    /**
+     * Name of the offering component for compensation
+     */
     offering_component_name: string;
 };
 
 export type InvoiceItemCompensationRequest = {
+    /**
+     * Name of the offering component for compensation
+     */
     offering_component_name: string;
 };
 
@@ -4108,18 +4259,57 @@ export type InvoiceItemDetail = {
 };
 
 export type InvoiceItemDetails = {
+    /**
+     * Name of the marketplace resource
+     */
     resource_name?: string;
+    /**
+     * UUID of the marketplace resource
+     */
     resource_uuid?: string;
+    /**
+     * Name of the pricing plan
+     */
     plan_name?: string;
+    /**
+     * UUID of the pricing plan
+     */
     plan_uuid?: string;
+    /**
+     * Type of the offering
+     */
     offering_type?: string;
+    /**
+     * Name of the offering
+     */
     offering_name?: string;
+    /**
+     * UUID of the offering
+     */
     offering_uuid?: string;
+    /**
+     * Name of the service provider
+     */
     service_provider_name?: string;
+    /**
+     * UUID of the service provider
+     */
     service_provider_uuid?: string;
+    /**
+     * ID of the plan component
+     */
     plan_component_id?: number;
+    /**
+     * Type of the offering component
+     */
     offering_component_type?: string;
+    /**
+     * Name of the offering component
+     */
     offering_component_name?: string;
+    /**
+     * List of resource limit periods for this invoice item
+     */
     resource_limit_periods?: Array<ResourceLimitPeriod>;
 };
 
@@ -4132,6 +4322,9 @@ export type InvoiceItemMigrateToRequest = {
 };
 
 export type InvoiceItemTotalPrice = {
+    /**
+     * Total price for the invoice item
+     */
     total_price: string;
 };
 
@@ -4274,22 +4467,37 @@ export type IssueStatusTypeEnum = 0 | 1;
 export type IssueTypeEnum = 'INFORMATIONAL' | 'SERVICE_REQUEST' | 'CHANGE_REQUEST' | 'INCIDENT';
 
 export type JiraChangelog = {
+    /**
+     * List of changelog items
+     */
     items: Array<unknown>;
 };
 
 export type JiraChangelogRequest = {
+    /**
+     * List of changelog items
+     */
     items: Array<unknown>;
 };
 
 export type JiraComment = {
+    /**
+     * Jira comment ID
+     */
     id: string;
 };
 
 export type JiraCommentRequest = {
+    /**
+     * Jira comment ID
+     */
     id: string;
 };
 
 export type JiraIssue = {
+    /**
+     * Jira issue key
+     */
     key: string;
     fields: JiraIssueFields;
 };
@@ -4309,18 +4517,39 @@ export type JiraIssueFieldsRequest = {
 };
 
 export type JiraIssueProject = {
+    /**
+     * Jira field ID
+     */
     id: string;
+    /**
+     * Jira field name
+     */
     name: string;
+    /**
+     * Jira project key
+     */
     key: string;
 };
 
 export type JiraIssueProjectRequest = {
+    /**
+     * Jira field ID
+     */
     id: string;
+    /**
+     * Jira field name
+     */
     name: string;
+    /**
+     * Jira project key
+     */
     key: string;
 };
 
 export type JiraIssueRequest = {
+    /**
+     * Jira issue key
+     */
     key: string;
     fields: JiraIssueFieldsRequest;
 };
@@ -4482,6 +4711,9 @@ export type LinkToInvoiceRequest = {
 };
 
 export type Logout = {
+    /**
+     * URL to redirect to after logout
+     */
     readonly logout_url: string;
 };
 
@@ -5768,9 +6000,18 @@ export type NestedEndpointRequest = {
 };
 
 export type NestedFeedback = {
+    /**
+     * Customer satisfaction rating (1-5 stars)
+     */
     readonly evaluation: number;
+    /**
+     * Numeric value of the rating
+     */
     readonly evaluation_number: number;
     comment?: string;
+    /**
+     * Current state of the feedback
+     */
     readonly state: string;
 };
 
@@ -6408,7 +6649,13 @@ export type NullEnum = unknown;
 export type ObservableObjectTypeEnum = 'order' | 'user_role' | 'resource' | 'offering_user' | 'importable_resources' | 'service_account' | 'course_account' | 'resource_periodic_limits';
 
 export type ObtainAuthTokenRequest = {
+    /**
+     * Username for authentication
+     */
     username: string;
+    /**
+     * Password for authentication
+     */
     password: string;
 };
 
@@ -6419,6 +6666,9 @@ export type Offering = {
     readonly uuid?: string;
     readonly created?: string;
     name?: string;
+    /**
+     * URL-friendly identifier. Only editable by staff users.
+     */
     slug?: string;
     description?: string;
     full_description?: string;
@@ -6467,7 +6717,7 @@ export type Offering = {
     readonly scope?: string;
     readonly scope_uuid?: string | null;
     readonly scope_name?: string | null;
-    scope_state?: CoreStates | null;
+    scope_state?: CoreStates | NullEnum | null;
     readonly scope_error_message?: string | null;
     readonly files?: Array<NestedOfferingFile>;
     readonly quotas?: Array<Quota>;
@@ -6479,6 +6729,9 @@ export type Offering = {
     readonly citation_count?: number;
     latitude?: number | null;
     longitude?: number | null;
+    /**
+     * Country code (ISO 3166-1 alpha-2)
+     */
     country?: CountryEnum | BlankEnum;
     backend_id?: string;
     readonly organization_groups?: Array<OrganizationGroup>;
@@ -6607,6 +6860,9 @@ export type OfferingCountryStats = {
 
 export type OfferingCreateRequest = {
     name: string;
+    /**
+     * URL-friendly identifier. Only editable by staff users.
+     */
     slug?: string;
     description?: string;
     full_description?: string;
@@ -6638,6 +6894,9 @@ export type OfferingCreateRequest = {
     datacite_doi?: string;
     latitude?: number | null;
     longitude?: number | null;
+    /**
+     * Country code (ISO 3166-1 alpha-2)
+     */
     country?: CountryEnum | BlankEnum;
     backend_id?: string;
     image?: (Blob | File) | null;
@@ -6971,6 +7230,9 @@ export type OfferingOverviewUpdateRequest = {
     access_url?: string;
     getting_started?: string;
     integration_guide?: string;
+    /**
+     * URL-friendly identifier. Only editable by staff users.
+     */
     slug?: string;
 };
 
@@ -9482,6 +9744,9 @@ export type OrderCreateRequest = {
      * Enables delayed processing of resource provisioning order.
      */
     start_date?: string | null;
+    /**
+     * URL-friendly identifier. Only editable by staff users.
+     */
     slug?: string;
     project: string;
 };
@@ -9610,9 +9875,18 @@ export type OrganizationGroup = {
     readonly uuid?: string;
     readonly url?: string;
     name?: string;
+    /**
+     * UUID of the parent organization group
+     */
     readonly parent_uuid?: string;
+    /**
+     * Name of the parent organization group
+     */
     readonly parent_name?: string;
     parent?: string | null;
+    /**
+     * Number of customers in this organization group
+     */
     readonly customers_count?: number;
 };
 
@@ -9844,12 +10118,18 @@ export type PatchedCustomerRequest = {
      * Maximum number of service accounts allowed
      */
     max_service_accounts?: number | null;
+    /**
+     * Checklist to be used for project metadata validation in this organization
+     */
     project_metadata_checklist?: string | null;
     /**
      * Number of extra days after project end date before resources are terminated
      */
     grace_period_days?: number | null;
     name?: string;
+    /**
+     * URL-friendly identifier. Only editable by staff users.
+     */
     slug?: string;
     native_name?: string;
     abbreviation?: string;
@@ -9878,6 +10158,9 @@ export type PatchedCustomerRequest = {
     latitude?: number | null;
     longitude?: number | null;
     bank_account?: string;
+    /**
+     * Country code (ISO 3166-1 alpha-2)
+     */
     country?: CountryEnum | BlankEnum;
     /**
      * Comma-separated list of notification email addresses
@@ -9973,6 +10256,9 @@ export type PatchedInvitationUpdateRequest = {
      * Invitation link will be sent to this email. Note that user can accept invitation with different email.
      */
     email?: string;
+    /**
+     * UUID of the new role to assign. Must be compatible with the invitation scope.
+     */
     role?: string;
 };
 
@@ -10517,18 +10803,30 @@ export type PatchedProjectInfoRequest = {
 
 export type PatchedProjectRequest = {
     name?: string;
+    /**
+     * URL-friendly identifier. Only editable by staff users.
+     */
     slug?: string;
     /**
      * Organization
      */
     customer?: string;
+    /**
+     * Project description (HTML content will be sanitized)
+     */
     description?: string;
     /**
      * Project type
      */
     type?: string | null;
     backend_id?: string;
+    /**
+     * Project start date. Cannot be edited after the start date has arrived.
+     */
     start_date?: string | null;
+    /**
+     * Project end date. Setting this field requires DELETE_PROJECT permission.
+     */
     end_date?: string | null;
     oecd_fos_2007_code?: OecdFos2007CodeEnum | BlankEnum | NullEnum | null;
     is_industry?: boolean;
@@ -10537,6 +10835,9 @@ export type PatchedProjectRequest = {
      * Project type
      */
     kind?: KindEnum;
+    /**
+     * Internal notes visible only to staff and support users (HTML content will be sanitized)
+     */
     staff_notes?: string;
     /**
      * Number of extra days after project end date before resources are terminated. Overrides customer-level setting.
@@ -10609,6 +10910,9 @@ export type PatchedProposalReviewRequest = {
 };
 
 export type PatchedProtectedCallRequest = {
+    /**
+     * URL-friendly identifier. Only editable by staff users.
+     */
     slug?: string;
     name?: string;
     description?: string;
@@ -11122,6 +11426,9 @@ export type PatchedUserRequest = {
      * Required. 128 characters or fewer. Lowercase letters, numbers and @/./+/-/_ characters
      */
     username?: string;
+    /**
+     * URL-friendly identifier. Only editable by staff users.
+     */
     slug?: string;
     native_name?: string;
     job_title?: string;
@@ -11401,6 +11708,9 @@ export type Project = {
     readonly url?: string;
     readonly uuid?: string;
     name?: string;
+    /**
+     * URL-friendly identifier. Only editable by staff users.
+     */
     slug?: string;
     /**
      * Organization
@@ -11411,6 +11721,9 @@ export type Project = {
     readonly customer_slug?: string;
     readonly customer_native_name?: string;
     readonly customer_abbreviation?: string;
+    /**
+     * Project description (HTML content will be sanitized)
+     */
     description?: string;
     readonly customer_display_billing_info_in_projects?: boolean;
     readonly created?: string;
@@ -11421,13 +11734,25 @@ export type Project = {
     readonly type_name?: string | null;
     readonly type_uuid?: string | null;
     backend_id?: string;
+    /**
+     * Project start date. Cannot be edited after the start date has arrived.
+     */
     start_date?: string | null;
+    /**
+     * Project end date. Setting this field requires DELETE_PROJECT permission.
+     */
     end_date?: string | null;
     readonly end_date_requested_by?: string | null;
     oecd_fos_2007_code?: OecdFos2007CodeEnum | BlankEnum | NullEnum | null;
+    /**
+     * Human-readable label for the OECD FOS 2007 classification code
+     */
     readonly oecd_fos_2007_label?: string;
     is_industry?: boolean;
     image?: string | null;
+    /**
+     * Number of active resources in this project
+     */
     readonly resources_count?: number;
     /**
      * Maximum number of service accounts allowed
@@ -11438,7 +11763,13 @@ export type Project = {
      */
     kind?: KindEnum;
     readonly is_removed?: boolean;
+    /**
+     * Metadata about project termination (read-only)
+     */
     readonly termination_metadata?: unknown;
+    /**
+     * Internal notes visible only to staff and support users (HTML content will be sanitized)
+     */
     staff_notes?: string;
     /**
      * Number of extra days after project end date before resources are terminated. Overrides customer-level setting.
@@ -11673,18 +12004,30 @@ export type ProjectRecoveryRequest = {
 
 export type ProjectRequest = {
     name: string;
+    /**
+     * URL-friendly identifier. Only editable by staff users.
+     */
     slug?: string;
     /**
      * Organization
      */
     customer: string;
+    /**
+     * Project description (HTML content will be sanitized)
+     */
     description?: string;
     /**
      * Project type
      */
     type?: string | null;
     backend_id?: string;
+    /**
+     * Project start date. Cannot be edited after the start date has arrived.
+     */
     start_date?: string | null;
+    /**
+     * Project end date. Setting this field requires DELETE_PROJECT permission.
+     */
     end_date?: string | null;
     oecd_fos_2007_code?: OecdFos2007CodeEnum | BlankEnum | NullEnum | null;
     is_industry?: boolean;
@@ -11693,6 +12036,9 @@ export type ProjectRequest = {
      * Project type
      */
     kind?: KindEnum;
+    /**
+     * Internal notes visible only to staff and support users (HTML content will be sanitized)
+     */
     staff_notes?: string;
     /**
      * Number of extra days after project end date before resources are terminated. Overrides customer-level setting.
@@ -12043,6 +12389,9 @@ export type ProtectedCall = {
     readonly created?: string;
     readonly start_date?: string;
     readonly end_date?: string;
+    /**
+     * URL-friendly identifier. Only editable by staff users.
+     */
     slug?: string;
     name?: string;
     description?: string;
@@ -12076,6 +12425,9 @@ export type ProtectedCall = {
 };
 
 export type ProtectedCallRequest = {
+    /**
+     * URL-friendly identifier. Only editable by staff users.
+     */
     slug?: string;
     name: string;
     description?: string;
@@ -12156,6 +12508,9 @@ export type ProviderOffering = {
     readonly uuid?: string;
     readonly customer_uuid?: string;
     name?: string;
+    /**
+     * URL-friendly identifier. Only editable by staff users.
+     */
     slug?: string;
     readonly category_title?: string;
     type?: string;
@@ -12200,6 +12555,9 @@ export type ProviderOfferingDetails = {
     readonly uuid?: string;
     readonly created?: string;
     name?: string;
+    /**
+     * URL-friendly identifier. Only editable by staff users.
+     */
     slug?: string;
     description?: string;
     full_description?: string;
@@ -12252,7 +12610,7 @@ export type ProviderOfferingDetails = {
     readonly scope?: string;
     readonly scope_uuid?: string | null;
     readonly scope_name?: string | null;
-    scope_state?: CoreStates | null;
+    scope_state?: CoreStates | NullEnum | null;
     readonly scope_error_message?: string | null;
     readonly files?: Array<NestedOfferingFile>;
     readonly quotas?: Array<Quota>;
@@ -12264,6 +12622,9 @@ export type ProviderOfferingDetails = {
     readonly citation_count?: number;
     latitude?: number | null;
     longitude?: number | null;
+    /**
+     * Country code (ISO 3166-1 alpha-2)
+     */
     country?: CountryEnum | BlankEnum;
     backend_id?: string;
     readonly organization_groups?: Array<OrganizationGroup>;
@@ -12292,6 +12653,9 @@ export type ProviderOfferingDetails = {
 
 export type ProviderOfferingDetailsRequest = {
     name: string;
+    /**
+     * URL-friendly identifier. Only editable by staff users.
+     */
     slug?: string;
     description?: string;
     full_description?: string;
@@ -12321,6 +12685,9 @@ export type ProviderOfferingDetailsRequest = {
     datacite_doi?: string;
     latitude?: number | null;
     longitude?: number | null;
+    /**
+     * Country code (ISO 3166-1 alpha-2)
+     */
     country?: CountryEnum | BlankEnum;
     backend_id?: string;
     image?: (Blob | File) | null;
@@ -12449,6 +12816,9 @@ export type PublicCall = {
     readonly created?: string;
     readonly start_date?: string;
     readonly end_date?: string;
+    /**
+     * URL-friendly identifier. Only editable by staff users.
+     */
     slug?: string;
     name?: string;
     description?: string;
@@ -12519,6 +12889,9 @@ export type PublicOfferingDetails = {
     readonly uuid?: string;
     readonly created?: string;
     name?: string;
+    /**
+     * URL-friendly identifier. Only editable by staff users.
+     */
     slug?: string;
     description?: string;
     full_description?: string;
@@ -12567,7 +12940,7 @@ export type PublicOfferingDetails = {
     readonly scope?: string;
     readonly scope_uuid?: string | null;
     readonly scope_name?: string | null;
-    scope_state?: CoreStates | null;
+    scope_state?: CoreStates | NullEnum | null;
     readonly scope_error_message?: string | null;
     readonly files?: Array<NestedOfferingFile>;
     readonly quotas?: Array<Quota>;
@@ -12579,6 +12952,9 @@ export type PublicOfferingDetails = {
     readonly citation_count?: number;
     latitude?: number | null;
     longitude?: number | null;
+    /**
+     * Country code (ISO 3166-1 alpha-2)
+     */
     country?: CountryEnum | BlankEnum;
     backend_id?: string;
     readonly organization_groups?: Array<OrganizationGroup>;
@@ -12613,6 +12989,9 @@ export type PullMarketplaceScriptResourceRequest = {
 export type QosStrategyEnum = 'threshold' | 'progressive';
 
 export type QueryRequest = {
+    /**
+     * Search query string
+     */
     query: string;
 };
 
@@ -14085,12 +14464,24 @@ export type RemoveSoftwareCatalogRequest = {
 };
 
 export type ReportSection = {
+    /**
+     * Section header text
+     */
     header?: string;
+    /**
+     * Section body content
+     */
     body?: string;
 };
 
 export type ReportSectionRequest = {
+    /**
+     * Section header text
+     */
     header: string;
+    /**
+     * Section body content
+     */
     body: string;
 };
 
@@ -14221,6 +14612,9 @@ export type Resource = {
     readonly is_usage_based?: boolean;
     readonly is_limit_based?: boolean;
     name?: string;
+    /**
+     * URL-friendly identifier. Only editable by staff users.
+     */
     slug?: string;
     readonly current_usages?: {
         [key: string]: number;
@@ -14280,10 +14674,25 @@ export type ResourceEndDateByProviderRequest = {
 };
 
 export type ResourceLimitPeriod = {
+    /**
+     * Start date of the resource limit period
+     */
     start?: string;
+    /**
+     * End date of the resource limit period
+     */
     end?: string;
+    /**
+     * Quantity of resources consumed during this period
+     */
     quantity?: number;
+    /**
+     * Number of billing periods
+     */
     billing_periods?: number;
+    /**
+     * Total amount for this period
+     */
     total?: string;
 };
 
@@ -14357,6 +14766,9 @@ export type ResourceRequest = {
     offering: string;
     plan?: string;
     name: string;
+    /**
+     * URL-friendly identifier. Only editable by staff users.
+     */
     slug?: string;
     /**
      * The date is inclusive. Once reached, a resource will be scheduled for termination.
@@ -14463,6 +14875,9 @@ export type ResourcesLimits = {
 };
 
 export type ReviewCommentRequest = {
+    /**
+     * Optional comment for review
+     */
     comment?: string;
 };
 
@@ -15012,6 +15427,9 @@ export type ServiceProvider = {
 };
 
 export type ServiceProviderApiSecretCode = {
+    /**
+     * API secret code for authenticating service provider requests
+     */
     readonly api_secret_code: string;
 };
 
@@ -15605,9 +16023,21 @@ export type SupportedCountriesResponse = {
 export type SyncStatusEnum = 'in_sync' | 'out_of_sync' | 'sync_failed';
 
 export type TableSize = {
+    /**
+     * Name of the database table
+     */
     readonly table_name: string;
+    /**
+     * Total size of the table in bytes
+     */
     readonly total_size: number;
+    /**
+     * Size of the actual data in bytes
+     */
     readonly data_size: number;
+    /**
+     * Size of external data (e.g., TOAST) in bytes
+     */
     readonly external_size: number;
 };
 
@@ -15677,6 +16107,9 @@ export type ToSConsentDashboard = {
 };
 
 export type TokenRequest = {
+    /**
+     * Authentication token for invitation acceptance
+     */
     token: string;
 };
 
@@ -15745,6 +16178,9 @@ export type User = {
      * Required. 128 characters or fewer. Lowercase letters, numbers and @/./+/-/_ characters
      */
     username?: string;
+    /**
+     * URL-friendly identifier. Only editable by staff users.
+     */
     slug?: string;
     readonly full_name?: string;
     native_name?: string;
@@ -16004,6 +16440,9 @@ export type UserRequest = {
      * Required. 128 characters or fewer. Lowercase letters, numbers and @/./+/-/_ characters
      */
     username: string;
+    /**
+     * URL-friendly identifier. Only editable by staff users.
+     */
     slug?: string;
     native_name?: string;
     job_title?: string;
@@ -16113,20 +16552,49 @@ export type VersionAdoption = {
 export type VisibilityEnum = 'private' | 'public';
 
 export type VisibleInvitationDetails = {
+    /**
+     * UUID of the invitation scope (Customer or Project)
+     */
     readonly scope_uuid: string;
+    /**
+     * Name of the invitation scope
+     */
     readonly scope_name: string;
     /**
-     * Get the description field from the scope if it exists.
-     * Returns empty string if scope doesn't have a description field.
+     * Description of the invitation scope
      */
     readonly scope_description: string;
+    /**
+     * Type of the invitation scope (e.g., 'customer', 'project')
+     */
     readonly scope_type: string | null;
+    /**
+     * UUID of the customer organization
+     */
     readonly customer_uuid: string;
+    /**
+     * Name of the customer organization
+     */
     readonly customer_name: string;
+    /**
+     * Name of the role being granted (e.g., 'PROJECT.ADMIN')
+     */
     readonly role_name: string;
+    /**
+     * Description of the role being granted
+     */
     readonly role_description: string;
+    /**
+     * Full name of the user who created this invitation
+     */
     readonly created_by_full_name: string;
+    /**
+     * Username of the user who created this invitation
+     */
     readonly created_by_username: string;
+    /**
+     * Profile image of the user who created this invitation
+     */
     readonly created_by_image: string;
     /**
      * Invitation link will be sent to this email. Note that user can accept invitation with different email.
@@ -16134,6 +16602,9 @@ export type VisibleInvitationDetails = {
     email: string;
     readonly error_message: string;
     execution_state: ExecutionStateEnum;
+    /**
+     * Current state of the invitation (e.g., 'pending', 'accepted', 'rejected')
+     */
     state: InvitationState;
 };
 
@@ -16767,12 +17238,18 @@ export type CustomerRequestForm = {
      * Maximum number of service accounts allowed
      */
     max_service_accounts?: number | null;
+    /**
+     * Checklist to be used for project metadata validation in this organization
+     */
     project_metadata_checklist?: string | null;
     /**
      * Number of extra days after project end date before resources are terminated
      */
     grace_period_days?: number | null;
     name: string;
+    /**
+     * URL-friendly identifier. Only editable by staff users.
+     */
     slug?: string;
     native_name?: string;
     abbreviation?: string;
@@ -16801,6 +17278,9 @@ export type CustomerRequestForm = {
     latitude?: number | null;
     longitude?: number | null;
     bank_account?: string;
+    /**
+     * Country code (ISO 3166-1 alpha-2)
+     */
     country?: CountryEnum | BlankEnum;
     /**
      * Comma-separated list of notification email addresses
@@ -16830,12 +17310,18 @@ export type CustomerRequestMultipart = {
      * Maximum number of service accounts allowed
      */
     max_service_accounts?: number | null;
+    /**
+     * Checklist to be used for project metadata validation in this organization
+     */
     project_metadata_checklist?: string | null;
     /**
      * Number of extra days after project end date before resources are terminated
      */
     grace_period_days?: number | null;
     name: string;
+    /**
+     * URL-friendly identifier. Only editable by staff users.
+     */
     slug?: string;
     native_name?: string;
     abbreviation?: string;
@@ -16864,6 +17350,9 @@ export type CustomerRequestMultipart = {
     latitude?: number | null;
     longitude?: number | null;
     bank_account?: string;
+    /**
+     * Country code (ISO 3166-1 alpha-2)
+     */
     country?: CountryEnum | BlankEnum;
     /**
      * Comma-separated list of notification email addresses
@@ -16893,12 +17382,18 @@ export type PatchedCustomerRequestForm = {
      * Maximum number of service accounts allowed
      */
     max_service_accounts?: number | null;
+    /**
+     * Checklist to be used for project metadata validation in this organization
+     */
     project_metadata_checklist?: string | null;
     /**
      * Number of extra days after project end date before resources are terminated
      */
     grace_period_days?: number | null;
     name?: string;
+    /**
+     * URL-friendly identifier. Only editable by staff users.
+     */
     slug?: string;
     native_name?: string;
     abbreviation?: string;
@@ -16927,6 +17422,9 @@ export type PatchedCustomerRequestForm = {
     latitude?: number | null;
     longitude?: number | null;
     bank_account?: string;
+    /**
+     * Country code (ISO 3166-1 alpha-2)
+     */
     country?: CountryEnum | BlankEnum;
     /**
      * Comma-separated list of notification email addresses
@@ -16956,12 +17454,18 @@ export type PatchedCustomerRequestMultipart = {
      * Maximum number of service accounts allowed
      */
     max_service_accounts?: number | null;
+    /**
+     * Checklist to be used for project metadata validation in this organization
+     */
     project_metadata_checklist?: string | null;
     /**
      * Number of extra days after project end date before resources are terminated
      */
     grace_period_days?: number | null;
     name?: string;
+    /**
+     * URL-friendly identifier. Only editable by staff users.
+     */
     slug?: string;
     native_name?: string;
     abbreviation?: string;
@@ -16990,6 +17494,9 @@ export type PatchedCustomerRequestMultipart = {
     latitude?: number | null;
     longitude?: number | null;
     bank_account?: string;
+    /**
+     * Country code (ISO 3166-1 alpha-2)
+     */
     country?: CountryEnum | BlankEnum;
     /**
      * Comma-separated list of notification email addresses
@@ -17157,6 +17664,9 @@ export type OrderAttachmentRequestMultipart = {
 
 export type OfferingCreateRequestForm = {
     name: string;
+    /**
+     * URL-friendly identifier. Only editable by staff users.
+     */
     slug?: string;
     description?: string;
     full_description?: string;
@@ -17188,6 +17698,9 @@ export type OfferingCreateRequestForm = {
     datacite_doi?: string;
     latitude?: number | null;
     longitude?: number | null;
+    /**
+     * Country code (ISO 3166-1 alpha-2)
+     */
     country?: CountryEnum | BlankEnum;
     backend_id?: string;
     image?: (Blob | File) | null;
@@ -17200,6 +17713,9 @@ export type OfferingCreateRequestForm = {
 
 export type OfferingCreateRequestMultipart = {
     name: string;
+    /**
+     * URL-friendly identifier. Only editable by staff users.
+     */
     slug?: string;
     description?: string;
     full_description?: string;
@@ -17231,6 +17747,9 @@ export type OfferingCreateRequestMultipart = {
     datacite_doi?: string;
     latitude?: number | null;
     longitude?: number | null;
+    /**
+     * Country code (ISO 3166-1 alpha-2)
+     */
     country?: CountryEnum | BlankEnum;
     backend_id?: string;
     image?: (Blob | File) | null;
@@ -17355,18 +17874,30 @@ export type OnboardingJustificationDocumentationRequestMultipart = {
 
 export type ProjectRequestForm = {
     name: string;
+    /**
+     * URL-friendly identifier. Only editable by staff users.
+     */
     slug?: string;
     /**
      * Organization
      */
     customer: string;
+    /**
+     * Project description (HTML content will be sanitized)
+     */
     description?: string;
     /**
      * Project type
      */
     type?: string | null;
     backend_id?: string;
+    /**
+     * Project start date. Cannot be edited after the start date has arrived.
+     */
     start_date?: string | null;
+    /**
+     * Project end date. Setting this field requires DELETE_PROJECT permission.
+     */
     end_date?: string | null;
     oecd_fos_2007_code?: OecdFos2007CodeEnum | BlankEnum | NullEnum | null;
     is_industry?: boolean;
@@ -17375,6 +17906,9 @@ export type ProjectRequestForm = {
      * Project type
      */
     kind?: KindEnum;
+    /**
+     * Internal notes visible only to staff and support users (HTML content will be sanitized)
+     */
     staff_notes?: string;
     /**
      * Number of extra days after project end date before resources are terminated. Overrides customer-level setting.
@@ -17384,18 +17918,30 @@ export type ProjectRequestForm = {
 
 export type ProjectRequestMultipart = {
     name: string;
+    /**
+     * URL-friendly identifier. Only editable by staff users.
+     */
     slug?: string;
     /**
      * Organization
      */
     customer: string;
+    /**
+     * Project description (HTML content will be sanitized)
+     */
     description?: string;
     /**
      * Project type
      */
     type?: string | null;
     backend_id?: string;
+    /**
+     * Project start date. Cannot be edited after the start date has arrived.
+     */
     start_date?: string | null;
+    /**
+     * Project end date. Setting this field requires DELETE_PROJECT permission.
+     */
     end_date?: string | null;
     oecd_fos_2007_code?: OecdFos2007CodeEnum | BlankEnum | NullEnum | null;
     is_industry?: boolean;
@@ -17404,6 +17950,9 @@ export type ProjectRequestMultipart = {
      * Project type
      */
     kind?: KindEnum;
+    /**
+     * Internal notes visible only to staff and support users (HTML content will be sanitized)
+     */
     staff_notes?: string;
     /**
      * Number of extra days after project end date before resources are terminated. Overrides customer-level setting.
@@ -17413,18 +17962,30 @@ export type ProjectRequestMultipart = {
 
 export type PatchedProjectRequestForm = {
     name?: string;
+    /**
+     * URL-friendly identifier. Only editable by staff users.
+     */
     slug?: string;
     /**
      * Organization
      */
     customer?: string;
+    /**
+     * Project description (HTML content will be sanitized)
+     */
     description?: string;
     /**
      * Project type
      */
     type?: string | null;
     backend_id?: string;
+    /**
+     * Project start date. Cannot be edited after the start date has arrived.
+     */
     start_date?: string | null;
+    /**
+     * Project end date. Setting this field requires DELETE_PROJECT permission.
+     */
     end_date?: string | null;
     oecd_fos_2007_code?: OecdFos2007CodeEnum | BlankEnum | NullEnum | null;
     is_industry?: boolean;
@@ -17433,6 +17994,9 @@ export type PatchedProjectRequestForm = {
      * Project type
      */
     kind?: KindEnum;
+    /**
+     * Internal notes visible only to staff and support users (HTML content will be sanitized)
+     */
     staff_notes?: string;
     /**
      * Number of extra days after project end date before resources are terminated. Overrides customer-level setting.
@@ -17442,18 +18006,30 @@ export type PatchedProjectRequestForm = {
 
 export type PatchedProjectRequestMultipart = {
     name?: string;
+    /**
+     * URL-friendly identifier. Only editable by staff users.
+     */
     slug?: string;
     /**
      * Organization
      */
     customer?: string;
+    /**
+     * Project description (HTML content will be sanitized)
+     */
     description?: string;
     /**
      * Project type
      */
     type?: string | null;
     backend_id?: string;
+    /**
+     * Project start date. Cannot be edited after the start date has arrived.
+     */
     start_date?: string | null;
+    /**
+     * Project end date. Setting this field requires DELETE_PROJECT permission.
+     */
     end_date?: string | null;
     oecd_fos_2007_code?: OecdFos2007CodeEnum | BlankEnum | NullEnum | null;
     is_industry?: boolean;
@@ -17462,6 +18038,9 @@ export type PatchedProjectRequestMultipart = {
      * Project type
      */
     kind?: KindEnum;
+    /**
+     * Internal notes visible only to staff and support users (HTML content will be sanitized)
+     */
     staff_notes?: string;
     /**
      * Number of extra days after project end date before resources are terminated. Overrides customer-level setting.
@@ -17894,6 +18473,9 @@ export type UserRequestForm = {
      * Required. 128 characters or fewer. Lowercase letters, numbers and @/./+/-/_ characters
      */
     username: string;
+    /**
+     * URL-friendly identifier. Only editable by staff users.
+     */
     slug?: string;
     native_name?: string;
     job_title?: string;
@@ -17940,6 +18522,9 @@ export type UserRequestMultipart = {
      * Required. 128 characters or fewer. Lowercase letters, numbers and @/./+/-/_ characters
      */
     username: string;
+    /**
+     * URL-friendly identifier. Only editable by staff users.
+     */
     slug?: string;
     native_name?: string;
     job_title?: string;
@@ -17986,6 +18571,9 @@ export type PatchedUserRequestForm = {
      * Required. 128 characters or fewer. Lowercase letters, numbers and @/./+/-/_ characters
      */
     username?: string;
+    /**
+     * URL-friendly identifier. Only editable by staff users.
+     */
     slug?: string;
     native_name?: string;
     job_title?: string;
@@ -18031,6 +18619,9 @@ export type PatchedUserRequestMultipart = {
      * Required. 128 characters or fewer. Lowercase letters, numbers and @/./+/-/_ characters
      */
     username?: string;
+    /**
+     * URL-friendly identifier. Only editable by staff users.
+     */
     slug?: string;
     native_name?: string;
     job_title?: string;
