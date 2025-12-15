@@ -1243,7 +1243,7 @@ export type BookingResource = {
     readonly renewal_date?: {
         [key: string]: string;
     } | null;
-    offering_state?: ResourceState;
+    offering_state?: OfferingStateEnum;
     readonly offering_components?: Array<OfferingComponent>;
     readonly created_by?: string;
     /**
@@ -7872,6 +7872,8 @@ export type OfferingSoftwareCatalogRequest = {
 };
 
 export type OfferingState = 'Draft' | 'Active' | 'Paused' | 'Archived' | 'Unavailable';
+
+export type OfferingStateEnum = 1 | 2 | 3 | 4 | 5;
 
 export type OfferingStats = {
     /**
@@ -15121,7 +15123,7 @@ export type Resource = {
     readonly renewal_date?: {
         [key: string]: string;
     } | null;
-    offering_state?: ResourceState;
+    offering_state?: OfferingStateEnum;
     readonly offering_components?: Array<OfferingComponent>;
 };
 
@@ -23018,10 +23020,6 @@ export type BookingResourcesListData = {
          * Downscaled
          */
         downscaled?: boolean;
-        /**
-         * Exclude transitional resources with early pending orders
-         */
-        exclude_pending_transitional?: boolean;
         field?: Array<'attributes' | 'available_actions' | 'backend_id' | 'backend_metadata' | 'can_terminate' | 'category_icon' | 'category_title' | 'category_uuid' | 'consumer_reviewed_by' | 'consumer_reviewed_by_full_name' | 'consumer_reviewed_by_username' | 'created' | 'created_by' | 'created_by_full_name' | 'created_by_username' | 'creation_order' | 'current_usages' | 'customer_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'downscaled' | 'effective_id' | 'end_date' | 'end_date_requested_by' | 'endpoints' | 'error_message' | 'error_traceback' | 'is_limit_based' | 'is_usage_based' | 'last_sync' | 'limit_usage' | 'limits' | 'modified' | 'name' | 'offering' | 'offering_billable' | 'offering_components' | 'offering_description' | 'offering_image' | 'offering_name' | 'offering_plugin_options' | 'offering_shared' | 'offering_slug' | 'offering_state' | 'offering_thumbnail' | 'offering_type' | 'offering_uuid' | 'options' | 'order_in_progress' | 'parent_name' | 'parent_offering_name' | 'parent_offering_slug' | 'parent_offering_uuid' | 'parent_uuid' | 'paused' | 'plan' | 'plan_description' | 'plan_name' | 'plan_unit' | 'plan_uuid' | 'project' | 'project_description' | 'project_end_date' | 'project_end_date_requested_by' | 'project_name' | 'project_slug' | 'project_uuid' | 'provider_name' | 'provider_slug' | 'provider_uuid' | 'renewal_date' | 'report' | 'resource_type' | 'resource_uuid' | 'restrict_member_access' | 'scope' | 'service_settings_uuid' | 'slots' | 'slug' | 'state' | 'url' | 'user_requires_reconsent' | 'username' | 'uuid'>;
         /**
          * Has termination date
@@ -23148,6 +23146,10 @@ export type BookingResourcesListData = {
          */
         usage_based?: boolean;
         /**
+         * Include only resources visible to service providers
+         */
+        visible_to_providers?: boolean;
+        /**
          * Visible to username
          */
         visible_to_username?: string;
@@ -23194,10 +23196,6 @@ export type BookingResourcesCountData = {
          * Downscaled
          */
         downscaled?: boolean;
-        /**
-         * Exclude transitional resources with early pending orders
-         */
-        exclude_pending_transitional?: boolean;
         /**
          * Has termination date
          */
@@ -23322,6 +23320,10 @@ export type BookingResourcesCountData = {
          * Filter by usage-based offerings
          */
         usage_based?: boolean;
+        /**
+         * Include only resources visible to service providers
+         */
+        visible_to_providers?: boolean;
         /**
          * Visible to username
          */
@@ -38009,10 +38011,6 @@ export type MarketplaceProviderResourcesListData = {
          * Downscaled
          */
         downscaled?: boolean;
-        /**
-         * Exclude transitional resources with early pending orders
-         */
-        exclude_pending_transitional?: boolean;
         field?: Array<'attributes' | 'available_actions' | 'backend_id' | 'backend_metadata' | 'can_terminate' | 'category_icon' | 'category_title' | 'category_uuid' | 'created' | 'creation_order' | 'current_usages' | 'customer_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'downscaled' | 'effective_id' | 'end_date' | 'end_date_requested_by' | 'endpoints' | 'error_message' | 'error_traceback' | 'is_limit_based' | 'is_usage_based' | 'last_sync' | 'limit_usage' | 'limits' | 'modified' | 'name' | 'offering' | 'offering_billable' | 'offering_components' | 'offering_description' | 'offering_image' | 'offering_name' | 'offering_plugin_options' | 'offering_shared' | 'offering_slug' | 'offering_state' | 'offering_thumbnail' | 'offering_type' | 'offering_uuid' | 'options' | 'order_in_progress' | 'parent_name' | 'parent_offering_name' | 'parent_offering_slug' | 'parent_offering_uuid' | 'parent_uuid' | 'paused' | 'plan' | 'plan_description' | 'plan_name' | 'plan_unit' | 'plan_uuid' | 'project' | 'project_description' | 'project_end_date' | 'project_end_date_requested_by' | 'project_name' | 'project_slug' | 'project_uuid' | 'provider_name' | 'provider_slug' | 'provider_uuid' | 'renewal_date' | 'report' | 'resource_type' | 'resource_uuid' | 'restrict_member_access' | 'scope' | 'service_settings_uuid' | 'slug' | 'state' | 'url' | 'user_requires_reconsent' | 'username' | 'uuid'>;
         /**
          * Has termination date
@@ -38139,6 +38137,10 @@ export type MarketplaceProviderResourcesListData = {
          */
         usage_based?: boolean;
         /**
+         * Include only resources visible to service providers
+         */
+        visible_to_providers?: boolean;
+        /**
          * Visible to username
          */
         visible_to_username?: string;
@@ -38184,10 +38186,6 @@ export type MarketplaceProviderResourcesCountData = {
          * Downscaled
          */
         downscaled?: boolean;
-        /**
-         * Exclude transitional resources with early pending orders
-         */
-        exclude_pending_transitional?: boolean;
         /**
          * Has termination date
          */
@@ -38312,6 +38310,10 @@ export type MarketplaceProviderResourcesCountData = {
          * Filter by usage-based offerings
          */
         usage_based?: boolean;
+        /**
+         * Include only resources visible to service providers
+         */
+        visible_to_providers?: boolean;
         /**
          * Visible to username
          */
@@ -39540,10 +39542,6 @@ export type MarketplaceResourcesListData = {
          * Downscaled
          */
         downscaled?: boolean;
-        /**
-         * Exclude transitional resources with early pending orders
-         */
-        exclude_pending_transitional?: boolean;
         field?: Array<'attributes' | 'available_actions' | 'backend_id' | 'backend_metadata' | 'can_terminate' | 'category_icon' | 'category_title' | 'category_uuid' | 'created' | 'creation_order' | 'current_usages' | 'customer_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'downscaled' | 'effective_id' | 'end_date' | 'end_date_requested_by' | 'endpoints' | 'error_message' | 'error_traceback' | 'is_limit_based' | 'is_usage_based' | 'last_sync' | 'limit_usage' | 'limits' | 'modified' | 'name' | 'offering' | 'offering_billable' | 'offering_components' | 'offering_description' | 'offering_image' | 'offering_name' | 'offering_plugin_options' | 'offering_shared' | 'offering_slug' | 'offering_state' | 'offering_thumbnail' | 'offering_type' | 'offering_uuid' | 'options' | 'order_in_progress' | 'parent_name' | 'parent_offering_name' | 'parent_offering_slug' | 'parent_offering_uuid' | 'parent_uuid' | 'paused' | 'plan' | 'plan_description' | 'plan_name' | 'plan_unit' | 'plan_uuid' | 'project' | 'project_description' | 'project_end_date' | 'project_end_date_requested_by' | 'project_name' | 'project_slug' | 'project_uuid' | 'provider_name' | 'provider_slug' | 'provider_uuid' | 'renewal_date' | 'report' | 'resource_type' | 'resource_uuid' | 'restrict_member_access' | 'scope' | 'service_settings_uuid' | 'slug' | 'state' | 'url' | 'user_requires_reconsent' | 'username' | 'uuid'>;
         /**
          * Has termination date
@@ -39670,6 +39668,10 @@ export type MarketplaceResourcesListData = {
          */
         usage_based?: boolean;
         /**
+         * Include only resources visible to service providers
+         */
+        visible_to_providers?: boolean;
+        /**
          * Visible to username
          */
         visible_to_username?: string;
@@ -39715,10 +39717,6 @@ export type MarketplaceResourcesCountData = {
          * Downscaled
          */
         downscaled?: boolean;
-        /**
-         * Exclude transitional resources with early pending orders
-         */
-        exclude_pending_transitional?: boolean;
         /**
          * Has termination date
          */
@@ -39843,6 +39841,10 @@ export type MarketplaceResourcesCountData = {
          * Filter by usage-based offerings
          */
         usage_based?: boolean;
+        /**
+         * Include only resources visible to service providers
+         */
+        visible_to_providers?: boolean;
         /**
          * Visible to username
          */
