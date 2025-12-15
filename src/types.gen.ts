@@ -1697,6 +1697,13 @@ export type CategorySerializerForForNestedFieldsRequest = {
     title: string;
 };
 
+export type ChatRequestRequest = {
+    /**
+     * User input text for the chat model.
+     */
+    input: string;
+};
+
 export type CheckUniqueBackendIdRequest = {
     /**
      * Backend identifier to check
@@ -24195,6 +24202,33 @@ export type CeleryStatsRetrieveResponses = {
 };
 
 export type CeleryStatsRetrieveResponse = CeleryStatsRetrieveResponses[keyof CeleryStatsRetrieveResponses];
+
+export type ChatInvokeData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/chat/invoke/';
+};
+
+export type ChatInvokeResponses = {
+    200: string;
+};
+
+export type ChatInvokeResponse = ChatInvokeResponses[keyof ChatInvokeResponses];
+
+export type ChatStreamData = {
+    body: ChatRequestRequest;
+    path?: never;
+    query?: never;
+    url: '/api/chat/stream/';
+};
+
+export type ChatStreamResponses = {
+    /**
+     * LLM chat streamed response.
+     */
+    200: unknown;
+};
 
 export type ChecklistsAdminListData = {
     body?: never;
