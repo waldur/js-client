@@ -1243,7 +1243,7 @@ export type BookingResource = {
     readonly renewal_date?: {
         [key: string]: string;
     } | null;
-    offering_state?: OfferingStateEnum;
+    offering_state?: OfferingState;
     readonly offering_components?: Array<OfferingComponent>;
     readonly created_by?: string;
     /**
@@ -2276,6 +2276,7 @@ export type ConstanceSettings = {
     OIDC_ACCESS_TOKEN_ENABLED?: boolean;
     OIDC_BLOCK_CREATION_OF_UNINVITED_USERS?: boolean;
     DEACTIVATE_USER_IF_NO_ROLES?: boolean;
+    WALDUR_AUTH_SOCIAL_ROLE_CLAIM?: string;
     MAINTENANCE_ANNOUNCEMENT_NOTIFY_BEFORE_MINUTES?: number;
     MAINTENANCE_ANNOUNCEMENT_NOTIFY_SYSTEM?: Array<string>;
     ENFORCE_USER_CONSENT_FOR_OFFERINGS?: boolean;
@@ -2448,6 +2449,7 @@ export type ConstanceSettingsRequest = {
     OIDC_ACCESS_TOKEN_ENABLED?: boolean;
     OIDC_BLOCK_CREATION_OF_UNINVITED_USERS?: boolean;
     DEACTIVATE_USER_IF_NO_ROLES?: boolean;
+    WALDUR_AUTH_SOCIAL_ROLE_CLAIM?: string;
     MAINTENANCE_ANNOUNCEMENT_NOTIFY_BEFORE_MINUTES?: number;
     MAINTENANCE_ANNOUNCEMENT_NOTIFY_SYSTEM?: Array<string>;
     ENFORCE_USER_CONSENT_FOR_OFFERINGS?: boolean;
@@ -7872,8 +7874,6 @@ export type OfferingSoftwareCatalogRequest = {
 };
 
 export type OfferingState = 'Draft' | 'Active' | 'Paused' | 'Archived' | 'Unavailable';
-
-export type OfferingStateEnum = 1 | 2 | 3 | 4 | 5;
 
 export type OfferingStats = {
     /**
@@ -15123,7 +15123,7 @@ export type Resource = {
     readonly renewal_date?: {
         [key: string]: string;
     } | null;
-    offering_state?: OfferingStateEnum;
+    offering_state?: OfferingState;
     readonly offering_components?: Array<OfferingComponent>;
 };
 
@@ -18786,6 +18786,7 @@ export type ConstanceSettingsRequestForm = {
     OIDC_ACCESS_TOKEN_ENABLED?: boolean;
     OIDC_BLOCK_CREATION_OF_UNINVITED_USERS?: boolean;
     DEACTIVATE_USER_IF_NO_ROLES?: boolean;
+    WALDUR_AUTH_SOCIAL_ROLE_CLAIM?: string;
     MAINTENANCE_ANNOUNCEMENT_NOTIFY_BEFORE_MINUTES?: number;
     MAINTENANCE_ANNOUNCEMENT_NOTIFY_SYSTEM?: Array<string>;
     ENFORCE_USER_CONSENT_FOR_OFFERINGS?: boolean;
@@ -18958,6 +18959,7 @@ export type ConstanceSettingsRequestMultipart = {
     OIDC_ACCESS_TOKEN_ENABLED?: boolean;
     OIDC_BLOCK_CREATION_OF_UNINVITED_USERS?: boolean;
     DEACTIVATE_USER_IF_NO_ROLES?: boolean;
+    WALDUR_AUTH_SOCIAL_ROLE_CLAIM?: string;
     MAINTENANCE_ANNOUNCEMENT_NOTIFY_BEFORE_MINUTES?: number;
     MAINTENANCE_ANNOUNCEMENT_NOTIFY_SYSTEM?: Array<string>;
     ENFORCE_USER_CONSENT_FOR_OFFERINGS?: boolean;
