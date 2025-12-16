@@ -8187,6 +8187,7 @@ export type OnboardingJustification = {
     readonly verification_uuid: string;
     readonly country: string;
     readonly user: string;
+    readonly user_full_name: string;
     readonly legal_person_identifier: string;
     readonly legal_name: string;
     readonly error_message: string;
@@ -8203,6 +8204,18 @@ export type OnboardingJustification = {
      */
     readonly staff_notes: string;
     readonly supporting_documentation: Array<OnboardingJustificationDocumentation>;
+    /**
+     * Onboarding-specific data like intents, purposes extracted from checklist answers
+     */
+    readonly onboarding_metadata: {
+        [key: string]: unknown;
+    };
+    /**
+     * Customer-related data submitted by the user via checklist answers
+     */
+    readonly user_submitted_customer_data: {
+        [key: string]: unknown;
+    };
     readonly created: string;
     readonly modified: string;
 };
@@ -8306,7 +8319,8 @@ export type OnboardingVerification = {
     /**
      * User requesting company onboarding
      */
-    user: number;
+    readonly user: string;
+    readonly user_full_name: string;
     /**
      * ISO country code (e.g., 'EE' for Estonia)
      */
@@ -8349,7 +8363,7 @@ export type OnboardingVerification = {
     /**
      * Customer created after successful validation
      */
-    readonly customer: number | null;
+    readonly customer: string | null;
     /**
      * Onboarding-specific data like intents, purposes extracted from checklist answers
      */
@@ -8375,10 +8389,6 @@ export type OnboardingVerification = {
 };
 
 export type OnboardingVerificationRequest = {
-    /**
-     * User requesting company onboarding
-     */
-    user: number;
     /**
      * ISO country code (e.g., 'EE' for Estonia)
      */
@@ -11041,10 +11051,6 @@ export type PatchedOnboardingQuestionMetadataRequest = {
 };
 
 export type PatchedOnboardingVerificationRequest = {
-    /**
-     * User requesting company onboarding
-     */
-    user?: number;
     /**
      * ISO country code (e.g., 'EE' for Estonia)
      */
@@ -45123,6 +45129,14 @@ export type OnboardingJustificationsListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * User UUID
+         */
+        user_uuid?: string;
+        /**
+         * Verification UUID
+         */
+        verification_uuid?: string;
     };
     url: '/api/onboarding-justifications/';
 };
@@ -45145,6 +45159,14 @@ export type OnboardingJustificationsCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * User UUID
+         */
+        user_uuid?: string;
+        /**
+         * Verification UUID
+         */
+        verification_uuid?: string;
     };
     url: '/api/onboarding-justifications/';
 };
@@ -45431,6 +45453,9 @@ export type OnboardingVerificationsListData = {
     body?: never;
     path?: never;
     query?: {
+        country?: string;
+        legal_name?: string;
+        legal_person_identifier?: string;
         /**
          * A page number within the paginated result set.
          */
@@ -45439,6 +45464,11 @@ export type OnboardingVerificationsListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        status?: string;
+        /**
+         * User UUID
+         */
+        user_uuid?: string;
     };
     url: '/api/onboarding-verifications/';
 };
@@ -45453,6 +45483,9 @@ export type OnboardingVerificationsCountData = {
     body?: never;
     path?: never;
     query?: {
+        country?: string;
+        legal_name?: string;
+        legal_person_identifier?: string;
         /**
          * A page number within the paginated result set.
          */
@@ -45461,6 +45494,11 @@ export type OnboardingVerificationsCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        status?: string;
+        /**
+         * User UUID
+         */
+        user_uuid?: string;
     };
     url: '/api/onboarding-verifications/';
 };
