@@ -34203,6 +34203,10 @@ export type MarketplaceOrdersListData = {
          */
         resource?: string;
         /**
+         * Resource name
+         */
+        resource_name?: string;
+        /**
          * Resource UUID
          */
         resource_uuid?: string;
@@ -34304,6 +34308,10 @@ export type MarketplaceOrdersCountData = {
          * Resource URL
          */
         resource?: string;
+        /**
+         * Resource name
+         */
+        resource_name?: string;
         /**
          * Resource UUID
          */
