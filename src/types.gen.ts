@@ -5548,6 +5548,10 @@ export type MergedPluginOptions = {
      */
     account_name_generation_policy?: AccountNameGenerationPolicyEnum | NullEnum | null;
     /**
+     * Enable display of order actions for service provider
+     */
+    enable_display_of_order_actions_for_service_provider?: boolean;
+    /**
      * If set to False, an order requires manual provider approval
      */
     auto_approve_marketplace_script?: boolean;
@@ -5782,6 +5786,10 @@ export type MergedPluginOptionsRequest = {
      * Slurm account name generation policy
      */
     account_name_generation_policy?: AccountNameGenerationPolicyEnum | NullEnum | null;
+    /**
+     * Enable display of order actions for service provider
+     */
+    enable_display_of_order_actions_for_service_provider?: boolean;
     /**
      * If set to False, an order requires manual provider approval
      */
