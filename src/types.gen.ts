@@ -2497,7 +2497,6 @@ export type CoreStates = 'CREATION_SCHEDULED' | 'CREATING' | 'UPDATE_SCHEDULED' 
 
 export type CorrectiveAction = {
     label: string;
-    url: string;
     category: CategoryEnum;
     severity: SeverityEnum;
     method?: string;
@@ -2505,6 +2504,10 @@ export type CorrectiveAction = {
     confirmation_required?: boolean;
     permissions_required?: Array<string>;
     metadata?: {
+        [key: string]: unknown;
+    };
+    route_name?: string | null;
+    route_params?: {
         [key: string]: unknown;
     };
 };
@@ -16866,8 +16869,6 @@ export type UserAction = {
     description: string;
     urgency: UrgencyEnum;
     due_date?: string | null;
-    action_url?: string;
-    metadata?: string;
     is_silenced?: boolean;
     silenced_until?: string | null;
     readonly is_temporarily_silenced: boolean;
@@ -16878,6 +16879,20 @@ export type UserAction = {
     readonly related_object_type: string;
     readonly corrective_actions: Array<CorrectiveAction>;
     readonly days_until_due: number | null;
+    /**
+     * UI-Router state name for navigation
+     */
+    route_name?: string;
+    /**
+     * Parameters for route navigation
+     */
+    route_params?: string;
+    project_name?: string;
+    project_uuid?: string | null;
+    organization_name?: string;
+    organization_uuid?: string | null;
+    offering_name?: string;
+    offering_type?: string;
 };
 
 export type UserActionExecution = {
@@ -63278,13 +63293,10 @@ export type UserActionsCountResponses = {
 export type UserActionsRetrieveData = {
     body?: never;
     path: {
-        /**
-         * A unique integer value identifying this user action.
-         */
-        id: number;
+        uuid: string;
     };
     query?: never;
-    url: '/api/user-actions/{id}/';
+    url: '/api/user-actions/{uuid}/';
 };
 
 export type UserActionsRetrieveResponses = {
@@ -63296,13 +63308,10 @@ export type UserActionsRetrieveResponse = UserActionsRetrieveResponses[keyof Use
 export type UserActionsExecuteActionData = {
     body: ExecuteActionRequest;
     path: {
-        /**
-         * A unique integer value identifying this user action.
-         */
-        id: number;
+        uuid: string;
     };
     query?: never;
-    url: '/api/user-actions/{id}/execute_action/';
+    url: '/api/user-actions/{uuid}/execute_action/';
 };
 
 export type UserActionsExecuteActionErrors = {
@@ -63321,13 +63330,10 @@ export type UserActionsExecuteActionResponse = UserActionsExecuteActionResponses
 export type UserActionsSilenceData = {
     body?: SilenceActionRequest;
     path: {
-        /**
-         * A unique integer value identifying this user action.
-         */
-        id: number;
+        uuid: string;
     };
     query?: never;
-    url: '/api/user-actions/{id}/silence/';
+    url: '/api/user-actions/{uuid}/silence/';
 };
 
 export type UserActionsSilenceResponses = {
@@ -63339,13 +63345,10 @@ export type UserActionsSilenceResponse = UserActionsSilenceResponses[keyof UserA
 export type UserActionsUnsilenceData = {
     body?: never;
     path: {
-        /**
-         * A unique integer value identifying this user action.
-         */
-        id: number;
+        uuid: string;
     };
     query?: never;
-    url: '/api/user-actions/{id}/unsilence/';
+    url: '/api/user-actions/{uuid}/unsilence/';
 };
 
 export type UserActionsUnsilenceResponses = {

@@ -35282,7 +35282,7 @@ export const userActionsRetrieve = <ThrowOnError extends boolean = false>(option
                 type: 'http'
             }
         ],
-        url: '/api/user-actions/{id}/',
+        url: '/api/user-actions/{uuid}/',
         ...options
     });
 };
@@ -35302,7 +35302,7 @@ export const userActionsExecuteAction = <ThrowOnError extends boolean = false>(o
                 type: 'http'
             }
         ],
-        url: '/api/user-actions/{id}/execute_action/',
+        url: '/api/user-actions/{uuid}/execute_action/',
         ...options,
         headers: {
             'Content-Type': 'application/json',
@@ -35326,7 +35326,7 @@ export const userActionsSilence = <ThrowOnError extends boolean = false>(options
                 type: 'http'
             }
         ],
-        url: '/api/user-actions/{id}/silence/',
+        url: '/api/user-actions/{uuid}/silence/',
         ...options,
         headers: {
             'Content-Type': 'application/json',
@@ -35350,7 +35350,7 @@ export const userActionsUnsilence = <ThrowOnError extends boolean = false>(optio
                 type: 'http'
             }
         ],
-        url: '/api/user-actions/{id}/unsilence/',
+        url: '/api/user-actions/{uuid}/unsilence/',
         ...options
     });
 };
@@ -35420,7 +35420,7 @@ export const userActionsSummaryCount = <ThrowOnError extends boolean = false>(op
 };
 
 /**
- * Trigger update of user actions (admin only)
+ * Trigger update of user actions
  */
 export const userActionsUpdateActions = <ThrowOnError extends boolean = false>(options?: Options<UserActionsUpdateActionsData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).post<UserActionsUpdateActionsResponses, unknown, ThrowOnError>({
