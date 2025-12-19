@@ -15208,6 +15208,53 @@ export type ResourcePlanPeriod = {
     components: Array<BaseComponentUsage>;
 };
 
+export type ResourceProvisioningStats = {
+    /**
+     * UUID of the offering
+     */
+    readonly offering_uuid: string;
+    /**
+     * Name of the offering
+     */
+    readonly offering_name: string;
+    /**
+     * UUID of the service provider
+     */
+    readonly service_provider_uuid: string;
+    /**
+     * Name of the service provider
+     */
+    readonly service_provider_name: string;
+    /**
+     * Total finished provisioning attempts (DONE + ERRED)
+     */
+    readonly provisioning_count: number;
+    /**
+     * Total successful provisioning attempts (DONE)
+     */
+    readonly provisioning_success_count: number;
+    /**
+     * Total failed provisioning attempts (ERRED)
+     */
+    readonly provisioning_error_count: number;
+    /**
+     * Total currently in-progress provisioning attempts
+     */
+    readonly provisioning_in_progress_count: number;
+    /**
+     * Rate of successful provisioning (0.0 to 1.0)
+     */
+    readonly provisioning_success_rate: number;
+    /**
+     * Average duration in seconds from Executing to Terminal state
+     */
+    readonly avg_provisioning_duration: number;
+    /**
+     * Average duration in seconds from Creation to Executing state
+     */
+    readonly avg_pending_duration: number;
+};
+
 export type ResourceReallocateLimitsRequest = {
     limits: {
         [key: string]: number;
@@ -44290,6 +44337,59 @@ export type MarketplaceStatsProjectsUsagesGroupedByOecdCountData = {
 };
 
 export type MarketplaceStatsProjectsUsagesGroupedByOecdCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type MarketplaceStatsResourceProvisioningStatsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Filter by last N minutes. Default is 60.
+         */
+        last_minutes?: number;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-stats/resource_provisioning_stats/';
+};
+
+export type MarketplaceStatsResourceProvisioningStatsListResponses = {
+    200: Array<ResourceProvisioningStats>;
+};
+
+export type MarketplaceStatsResourceProvisioningStatsListResponse = MarketplaceStatsResourceProvisioningStatsListResponses[keyof MarketplaceStatsResourceProvisioningStatsListResponses];
+
+export type MarketplaceStatsResourceProvisioningStatsCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Filter by last N minutes. Default is 60.
+         */
+        last_minutes?: number;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-stats/resource_provisioning_stats/';
+};
+
+export type MarketplaceStatsResourceProvisioningStatsCountResponses = {
     /**
      * No response body
      */
