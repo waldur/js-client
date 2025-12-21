@@ -16973,6 +16973,17 @@ export type UserActionSummary = {
     overdue: number;
 };
 
+export type UserAffiliationCount = {
+    /**
+     * Affiliation name
+     */
+    affiliation: string;
+    /**
+     * Number of users
+     */
+    count: number;
+};
+
 export type UserAgreement = {
     readonly url: string;
     readonly uuid: string;
@@ -16985,6 +16996,17 @@ export type UserAgreement = {
 export type UserAgreementRequest = {
     content: string;
     agreement_type: AgreementTypeEnum;
+};
+
+export type UserAuthMethodCount = {
+    /**
+     * Authentication method
+     */
+    method: string;
+    /**
+     * Number of users
+     */
+    count: number;
 };
 
 export type UserAuthToken = {
@@ -17052,6 +17074,17 @@ export type UserEmailChangeRequest = {
     email: string;
 };
 
+export type UserIdentitySourceCount = {
+    /**
+     * Identity source
+     */
+    identity_source: string;
+    /**
+     * Number of users
+     */
+    count: number;
+};
+
 export type UserInfo = {
     /**
      * A short, unique name for you. It will be used to form your local username on any systems. Should only contain lower-case letters and digits and must start with a letter.
@@ -17103,6 +17136,17 @@ export type UserOfferingConsentCreateRequest = {
 
 export type UserOfferingConsentRequest = {
     version?: string;
+};
+
+export type UserOrganizationCount = {
+    /**
+     * Organization name
+     */
+    organization: string;
+    /**
+     * Number of users
+     */
+    count: number;
 };
 
 export type UserRequest = {
@@ -44480,6 +44524,186 @@ export type MarketplaceStatsTotalCostOfActiveResourcesPerOfferingCountData = {
 };
 
 export type MarketplaceStatsTotalCostOfActiveResourcesPerOfferingCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type MarketplaceStatsUserAffiliationCountListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-stats/user_affiliation_count/';
+};
+
+export type MarketplaceStatsUserAffiliationCountListResponses = {
+    200: Array<UserAffiliationCount>;
+};
+
+export type MarketplaceStatsUserAffiliationCountListResponse = MarketplaceStatsUserAffiliationCountListResponses[keyof MarketplaceStatsUserAffiliationCountListResponses];
+
+export type MarketplaceStatsUserAffiliationCountCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-stats/user_affiliation_count/';
+};
+
+export type MarketplaceStatsUserAffiliationCountCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type MarketplaceStatsUserAuthMethodCountListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-stats/user_auth_method_count/';
+};
+
+export type MarketplaceStatsUserAuthMethodCountListResponses = {
+    200: Array<UserAuthMethodCount>;
+};
+
+export type MarketplaceStatsUserAuthMethodCountListResponse = MarketplaceStatsUserAuthMethodCountListResponses[keyof MarketplaceStatsUserAuthMethodCountListResponses];
+
+export type MarketplaceStatsUserAuthMethodCountCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-stats/user_auth_method_count/';
+};
+
+export type MarketplaceStatsUserAuthMethodCountCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type MarketplaceStatsUserIdentitySourceCountListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-stats/user_identity_source_count/';
+};
+
+export type MarketplaceStatsUserIdentitySourceCountListResponses = {
+    200: Array<UserIdentitySourceCount>;
+};
+
+export type MarketplaceStatsUserIdentitySourceCountListResponse = MarketplaceStatsUserIdentitySourceCountListResponses[keyof MarketplaceStatsUserIdentitySourceCountListResponses];
+
+export type MarketplaceStatsUserIdentitySourceCountCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-stats/user_identity_source_count/';
+};
+
+export type MarketplaceStatsUserIdentitySourceCountCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type MarketplaceStatsUserOrganizationCountListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-stats/user_organization_count/';
+};
+
+export type MarketplaceStatsUserOrganizationCountListResponses = {
+    200: Array<UserOrganizationCount>;
+};
+
+export type MarketplaceStatsUserOrganizationCountListResponse = MarketplaceStatsUserOrganizationCountListResponses[keyof MarketplaceStatsUserOrganizationCountListResponses];
+
+export type MarketplaceStatsUserOrganizationCountCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-stats/user_organization_count/';
+};
+
+export type MarketplaceStatsUserOrganizationCountCountResponses = {
     /**
      * No response body
      */
