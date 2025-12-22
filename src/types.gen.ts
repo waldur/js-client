@@ -8357,6 +8357,7 @@ export type OnboardingVerification = {
      */
     legal_name?: string;
     status: OnboardingVerificationStatusEnum;
+    readonly justifications: Array<OnboardingJustification>;
     /**
      * Method used for validation
      */
