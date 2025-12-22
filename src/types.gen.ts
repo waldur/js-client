@@ -3978,6 +3978,10 @@ export type GroupInvitation = {
      */
     auto_create_project?: boolean;
     /**
+     * Automatically approve permission requests from users matching email patterns or affiliations
+     */
+    auto_approve?: boolean;
+    /**
      * Template for project name. Supports {username}, {email}, {full_name} variables
      */
     project_name_template?: string | null;
@@ -4010,6 +4014,10 @@ export type GroupInvitationRequest = {
      * Create project and grant project permissions instead of customer permissions
      */
     auto_create_project?: boolean;
+    /**
+     * Automatically approve permission requests from users matching email patterns or affiliations
+     */
+    auto_approve?: boolean;
     /**
      * Template for project name. Supports {username}, {email}, {full_name} variables
      */
@@ -16626,6 +16634,10 @@ export type SubmitRequestResponse = {
      * UUID of the invitation scope
      */
     scope_uuid: string;
+    /**
+     * Whether the request was automatically approved
+     */
+    auto_approved: boolean;
 };
 
 export type SubresourceOffering = {

@@ -35909,7 +35909,7 @@ export const userGroupInvitationsProjectsList = <ThrowOnError extends boolean = 
 
 /**
  * Submit a permission request
- * Creates a permission request based on a group invitation for the currently authenticated user.
+ * Creates a permission request based on a group invitation for the currently authenticated user. If the invitation has auto_approve enabled and the user matches the required patterns, the request is automatically approved.
  */
 export const userGroupInvitationsSubmitRequest = <ThrowOnError extends boolean = false>(options: Options<UserGroupInvitationsSubmitRequestData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).post<UserGroupInvitationsSubmitRequestResponses, unknown, ThrowOnError>({
