@@ -12547,7 +12547,11 @@ export const marketplaceOrdersRejectByConsumer = <ThrowOnError extends boolean =
             }
         ],
         url: '/api/marketplace-orders/{uuid}/reject_by_consumer/',
-        ...options
+        ...options,
+        headers: {
+            'Content-Type': 'application/json',
+            ...options.headers
+        }
     });
 };
 

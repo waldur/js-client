@@ -10303,7 +10303,7 @@ export type OrderDetails = {
     issue?: IssueReference | null;
 };
 
-export type OrderSetStateErredRequest = {
+export type OrderErrorDetailsRequest = {
     error_message?: string;
     error_traceback?: string;
 };
@@ -34594,7 +34594,7 @@ export type MarketplaceOrdersOfferingRetrieveResponses = {
 export type MarketplaceOrdersOfferingRetrieveResponse = MarketplaceOrdersOfferingRetrieveResponses[keyof MarketplaceOrdersOfferingRetrieveResponses];
 
 export type MarketplaceOrdersRejectByConsumerData = {
-    body?: never;
+    body?: OrderErrorDetailsRequest;
     path: {
         uuid: string;
     };
@@ -34659,7 +34659,7 @@ export type MarketplaceOrdersSetStateDoneResponses = {
 };
 
 export type MarketplaceOrdersSetStateErredData = {
-    body?: OrderSetStateErredRequest;
+    body?: OrderErrorDetailsRequest;
     path: {
         uuid: string;
     };
