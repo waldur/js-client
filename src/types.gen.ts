@@ -2798,6 +2798,12 @@ export type Customer = {
      * Number of extra days after project end date before resources are terminated
      */
     grace_period_days?: number | null;
+    user_email_patterns?: unknown;
+    user_affiliations?: unknown;
+    /**
+     * List of allowed identity sources (identity providers).
+     */
+    user_identity_sources?: unknown;
     name?: string;
     /**
      * URL-friendly identifier. Only editable by staff users.
@@ -3078,6 +3084,12 @@ export type CustomerRequest = {
      * Number of extra days after project end date before resources are terminated
      */
     grace_period_days?: number | null;
+    user_email_patterns?: unknown;
+    user_affiliations?: unknown;
+    /**
+     * List of allowed identity sources (identity providers).
+     */
+    user_identity_sources?: unknown;
     name: string;
     /**
      * URL-friendly identifier. Only editable by staff users.
@@ -3992,6 +4004,10 @@ export type GroupInvitation = {
     user_affiliations?: unknown;
     user_email_patterns?: unknown;
     /**
+     * List of allowed identity sources (identity providers).
+     */
+    user_identity_sources?: unknown;
+    /**
      * Image URL of the invitation scope (Customer or Project)
      */
     readonly scope_image: string | null;
@@ -4028,6 +4044,10 @@ export type GroupInvitationRequest = {
     project_role?: string | null;
     user_affiliations?: unknown;
     user_email_patterns?: unknown;
+    /**
+     * List of allowed identity sources (identity providers).
+     */
+    user_identity_sources?: unknown;
 };
 
 export type GuestOsEnum = 'DOS' | 'WIN_31' | 'WIN_95' | 'WIN_98' | 'WIN_ME' | 'WIN_NT' | 'WIN_2000_PRO' | 'WIN_2000_SERV' | 'WIN_2000_ADV_SERV' | 'WIN_XP_HOME' | 'WIN_XP_PRO' | 'WIN_XP_PRO_64' | 'WIN_NET_WEB' | 'WIN_NET_STANDARD' | 'WIN_NET_ENTERPRISE' | 'WIN_NET_DATACENTER' | 'WIN_NET_BUSINESS' | 'WIN_NET_STANDARD_64' | 'WIN_NET_ENTERPRISE_64' | 'WIN_LONGHORN' | 'WIN_LONGHORN_64' | 'WIN_NET_DATACENTER_64' | 'WIN_VISTA' | 'WIN_VISTA_64' | 'WINDOWS_7' | 'WINDOWS_7_64' | 'WINDOWS_7_SERVER_64' | 'WINDOWS_8' | 'WINDOWS_8_64' | 'WINDOWS_8_SERVER_64' | 'WINDOWS_9' | 'WINDOWS_9_64' | 'WINDOWS_9_SERVER_64' | 'WINDOWS_HYPERV' | 'FREEBSD' | 'FREEBSD_64' | 'REDHAT' | 'RHEL_2' | 'RHEL_3' | 'RHEL_3_64' | 'RHEL_4' | 'RHEL_4_64' | 'RHEL_5' | 'RHEL_5_64' | 'RHEL_6' | 'RHEL_6_64' | 'RHEL_7' | 'RHEL_7_64' | 'CENTOS' | 'CENTOS_64' | 'CENTOS_6' | 'CENTOS_6_64' | 'CENTOS_7' | 'CENTOS_7_64' | 'ORACLE_LINUX' | 'ORACLE_LINUX_64' | 'ORACLE_LINUX_6' | 'ORACLE_LINUX_6_64' | 'ORACLE_LINUX_7' | 'ORACLE_LINUX_7_64' | 'SUSE' | 'SUSE_64' | 'SLES' | 'SLES_64' | 'SLES_10' | 'SLES_10_64' | 'SLES_11' | 'SLES_11_64' | 'SLES_12' | 'SLES_12_64' | 'NLD_9' | 'OES' | 'SJDS' | 'MANDRAKE' | 'MANDRIVA' | 'MANDRIVA_64' | 'TURBO_LINUX' | 'TURBO_LINUX_64' | 'UBUNTU' | 'UBUNTU_64' | 'DEBIAN_4' | 'DEBIAN_4_64' | 'DEBIAN_5' | 'DEBIAN_5_64' | 'DEBIAN_6' | 'DEBIAN_6_64' | 'DEBIAN_7' | 'DEBIAN_7_64' | 'DEBIAN_8' | 'DEBIAN_8_64' | 'DEBIAN_9' | 'DEBIAN_9_64' | 'DEBIAN_10' | 'DEBIAN_10_64' | 'ASIANUX_3' | 'ASIANUX_3_64' | 'ASIANUX_4' | 'ASIANUX_4_64' | 'ASIANUX_5_64' | 'ASIANUX_7_64' | 'OPENSUSE' | 'OPENSUSE_64' | 'FEDORA' | 'FEDORA_64' | 'COREOS_64' | 'VMWARE_PHOTON_64' | 'OTHER_24X_LINUX' | 'OTHER_24X_LINUX_64' | 'OTHER_26X_LINUX' | 'OTHER_26X_LINUX_64' | 'OTHER_3X_LINUX' | 'OTHER_3X_LINUX_64' | 'OTHER_LINUX' | 'GENERIC_LINUX' | 'OTHER_LINUX_64' | 'SOLARIS_6' | 'SOLARIS_7' | 'SOLARIS_8' | 'SOLARIS_9' | 'SOLARIS_10' | 'SOLARIS_10_64' | 'SOLARIS_11_64' | 'OS2' | 'ECOMSTATION' | 'ECOMSTATION_2' | 'NETWARE_4' | 'NETWARE_5' | 'NETWARE_6' | 'OPENSERVER_5' | 'OPENSERVER_6' | 'UNIXWARE_7' | 'DARWIN' | 'DARWIN_64' | 'DARWIN_10' | 'DARWIN_10_64' | 'DARWIN_11' | 'DARWIN_11_64' | 'DARWIN_12_64' | 'DARWIN_13_64' | 'DARWIN_14_64' | 'DARWIN_15_64' | 'DARWIN_16_64' | 'VMKERNEL' | 'VMKERNEL_5' | 'VMKERNEL_6' | 'VMKERNEL_65' | 'OTHER' | 'OTHER_64';
@@ -10572,6 +10592,12 @@ export type PatchedCustomerRequest = {
      * Number of extra days after project end date before resources are terminated
      */
     grace_period_days?: number | null;
+    user_email_patterns?: unknown;
+    user_affiliations?: unknown;
+    /**
+     * List of allowed identity sources (identity providers).
+     */
+    user_identity_sources?: unknown;
     name?: string;
     /**
      * URL-friendly identifier. Only editable by staff users.
@@ -11285,6 +11311,12 @@ export type PatchedProjectRequest = {
      * Number of extra days after project end date before resources are terminated. Overrides customer-level setting.
      */
     grace_period_days?: number | null;
+    user_email_patterns?: unknown;
+    user_affiliations?: unknown;
+    /**
+     * List of allowed identity sources (identity providers).
+     */
+    user_identity_sources?: unknown;
 };
 
 export type PatchedProjectServiceAccountRequest = {
@@ -12244,6 +12276,12 @@ export type Project = {
      * Number of extra days after project end date before resources are terminated. Overrides customer-level setting.
      */
     grace_period_days?: number | null;
+    user_email_patterns?: unknown;
+    user_affiliations?: unknown;
+    /**
+     * List of allowed identity sources (identity providers).
+     */
+    user_identity_sources?: unknown;
     readonly project_credit?: number | null;
     readonly marketplace_resource_count?: {
         [key: string]: number;
@@ -12513,6 +12551,12 @@ export type ProjectRequest = {
      * Number of extra days after project end date before resources are terminated. Overrides customer-level setting.
      */
     grace_period_days?: number | null;
+    user_email_patterns?: unknown;
+    user_affiliations?: unknown;
+    /**
+     * List of allowed identity sources (identity providers).
+     */
+    user_identity_sources?: unknown;
 };
 
 export type ProjectServiceAccount = {
@@ -17983,6 +18027,12 @@ export type CustomerRequestForm = {
      * Number of extra days after project end date before resources are terminated
      */
     grace_period_days?: number | null;
+    user_email_patterns?: unknown;
+    user_affiliations?: unknown;
+    /**
+     * List of allowed identity sources (identity providers).
+     */
+    user_identity_sources?: unknown;
     name: string;
     /**
      * URL-friendly identifier. Only editable by staff users.
@@ -18055,6 +18105,12 @@ export type CustomerRequestMultipart = {
      * Number of extra days after project end date before resources are terminated
      */
     grace_period_days?: number | null;
+    user_email_patterns?: unknown;
+    user_affiliations?: unknown;
+    /**
+     * List of allowed identity sources (identity providers).
+     */
+    user_identity_sources?: unknown;
     name: string;
     /**
      * URL-friendly identifier. Only editable by staff users.
@@ -18127,6 +18183,12 @@ export type PatchedCustomerRequestForm = {
      * Number of extra days after project end date before resources are terminated
      */
     grace_period_days?: number | null;
+    user_email_patterns?: unknown;
+    user_affiliations?: unknown;
+    /**
+     * List of allowed identity sources (identity providers).
+     */
+    user_identity_sources?: unknown;
     name?: string;
     /**
      * URL-friendly identifier. Only editable by staff users.
@@ -18199,6 +18261,12 @@ export type PatchedCustomerRequestMultipart = {
      * Number of extra days after project end date before resources are terminated
      */
     grace_period_days?: number | null;
+    user_email_patterns?: unknown;
+    user_affiliations?: unknown;
+    /**
+     * List of allowed identity sources (identity providers).
+     */
+    user_identity_sources?: unknown;
     name?: string;
     /**
      * URL-friendly identifier. Only editable by staff users.
@@ -18651,6 +18719,12 @@ export type ProjectRequestForm = {
      * Number of extra days after project end date before resources are terminated. Overrides customer-level setting.
      */
     grace_period_days?: number | null;
+    user_email_patterns?: unknown;
+    user_affiliations?: unknown;
+    /**
+     * List of allowed identity sources (identity providers).
+     */
+    user_identity_sources?: unknown;
 };
 
 export type ProjectRequestMultipart = {
@@ -18695,6 +18769,12 @@ export type ProjectRequestMultipart = {
      * Number of extra days after project end date before resources are terminated. Overrides customer-level setting.
      */
     grace_period_days?: number | null;
+    user_email_patterns?: unknown;
+    user_affiliations?: unknown;
+    /**
+     * List of allowed identity sources (identity providers).
+     */
+    user_identity_sources?: unknown;
 };
 
 export type PatchedProjectRequestForm = {
@@ -18739,6 +18819,12 @@ export type PatchedProjectRequestForm = {
      * Number of extra days after project end date before resources are terminated. Overrides customer-level setting.
      */
     grace_period_days?: number | null;
+    user_email_patterns?: unknown;
+    user_affiliations?: unknown;
+    /**
+     * List of allowed identity sources (identity providers).
+     */
+    user_identity_sources?: unknown;
 };
 
 export type PatchedProjectRequestMultipart = {
@@ -18783,6 +18869,12 @@ export type PatchedProjectRequestMultipart = {
      * Number of extra days after project end date before resources are terminated. Overrides customer-level setting.
      */
     grace_period_days?: number | null;
+    user_email_patterns?: unknown;
+    user_affiliations?: unknown;
+    /**
+     * List of allowed identity sources (identity providers).
+     */
+    user_identity_sources?: unknown;
 };
 
 export type ConstanceSettingsRequestForm = {
@@ -24834,6 +24926,10 @@ export type ChecklistsAdminQuestionsListData = {
         checklist_type?: 'customer_onboarding' | 'offering_compliance' | 'project_compliance' | 'project_metadata' | 'proposal_compliance';
         checklist_uuid?: string;
         /**
+         * Filter questions that have onboarding metadata mapping
+         */
+        has_onboarding_mapping?: boolean;
+        /**
          * A page number within the paginated result set.
          */
         page?: number;
@@ -24862,6 +24958,10 @@ export type ChecklistsAdminQuestionsCountData = {
          */
         checklist_type?: 'customer_onboarding' | 'offering_compliance' | 'project_compliance' | 'project_metadata' | 'proposal_compliance';
         checklist_uuid?: string;
+        /**
+         * Filter questions that have onboarding metadata mapping
+         */
+        has_onboarding_mapping?: boolean;
         /**
          * A page number within the paginated result set.
          */
@@ -25611,7 +25711,7 @@ export type CustomersListData = {
          * Contact details
          */
         contact_details?: string;
-        field?: Array<'abbreviation' | 'access_subnets' | 'accounting_start_date' | 'address' | 'agreement_number' | 'archived' | 'backend_id' | 'bank_account' | 'bank_name' | 'billing_price_estimate' | 'blocked' | 'call_managing_organization_uuid' | 'contact_details' | 'country' | 'country_name' | 'created' | 'customer_credit' | 'customer_unallocated_credit' | 'default_tax_percent' | 'description' | 'display_billing_info_in_projects' | 'display_name' | 'domain' | 'email' | 'grace_period_days' | 'homepage' | 'image' | 'is_service_provider' | 'latitude' | 'longitude' | 'max_service_accounts' | 'name' | 'native_name' | 'notification_emails' | 'organization_groups' | 'payment_profiles' | 'phone_number' | 'postal' | 'project_metadata_checklist' | 'projects_count' | 'registration_code' | 'service_provider' | 'service_provider_uuid' | 'slug' | 'sponsor_number' | 'url' | 'users_count' | 'uuid' | 'vat_code'>;
+        field?: Array<'abbreviation' | 'access_subnets' | 'accounting_start_date' | 'address' | 'agreement_number' | 'archived' | 'backend_id' | 'bank_account' | 'bank_name' | 'billing_price_estimate' | 'blocked' | 'call_managing_organization_uuid' | 'contact_details' | 'country' | 'country_name' | 'created' | 'customer_credit' | 'customer_unallocated_credit' | 'default_tax_percent' | 'description' | 'display_billing_info_in_projects' | 'display_name' | 'domain' | 'email' | 'grace_period_days' | 'homepage' | 'image' | 'is_service_provider' | 'latitude' | 'longitude' | 'max_service_accounts' | 'name' | 'native_name' | 'notification_emails' | 'organization_groups' | 'payment_profiles' | 'phone_number' | 'postal' | 'project_metadata_checklist' | 'projects_count' | 'registration_code' | 'service_provider' | 'service_provider_uuid' | 'slug' | 'sponsor_number' | 'url' | 'user_affiliations' | 'user_email_patterns' | 'user_identity_sources' | 'users_count' | 'uuid' | 'vat_code'>;
         /**
          * Name
          */
@@ -25963,7 +26063,7 @@ export type CustomersRetrieveData = {
         uuid: string;
     };
     query?: {
-        field?: Array<'abbreviation' | 'access_subnets' | 'accounting_start_date' | 'address' | 'agreement_number' | 'archived' | 'backend_id' | 'bank_account' | 'bank_name' | 'billing_price_estimate' | 'blocked' | 'call_managing_organization_uuid' | 'contact_details' | 'country' | 'country_name' | 'created' | 'customer_credit' | 'customer_unallocated_credit' | 'default_tax_percent' | 'description' | 'display_billing_info_in_projects' | 'display_name' | 'domain' | 'email' | 'grace_period_days' | 'homepage' | 'image' | 'is_service_provider' | 'latitude' | 'longitude' | 'max_service_accounts' | 'name' | 'native_name' | 'notification_emails' | 'organization_groups' | 'payment_profiles' | 'phone_number' | 'postal' | 'project_metadata_checklist' | 'projects_count' | 'registration_code' | 'service_provider' | 'service_provider_uuid' | 'slug' | 'sponsor_number' | 'url' | 'users_count' | 'uuid' | 'vat_code'>;
+        field?: Array<'abbreviation' | 'access_subnets' | 'accounting_start_date' | 'address' | 'agreement_number' | 'archived' | 'backend_id' | 'bank_account' | 'bank_name' | 'billing_price_estimate' | 'blocked' | 'call_managing_organization_uuid' | 'contact_details' | 'country' | 'country_name' | 'created' | 'customer_credit' | 'customer_unallocated_credit' | 'default_tax_percent' | 'description' | 'display_billing_info_in_projects' | 'display_name' | 'domain' | 'email' | 'grace_period_days' | 'homepage' | 'image' | 'is_service_provider' | 'latitude' | 'longitude' | 'max_service_accounts' | 'name' | 'native_name' | 'notification_emails' | 'organization_groups' | 'payment_profiles' | 'phone_number' | 'postal' | 'project_metadata_checklist' | 'projects_count' | 'registration_code' | 'service_provider' | 'service_provider_uuid' | 'slug' | 'sponsor_number' | 'url' | 'user_affiliations' | 'user_email_patterns' | 'user_identity_sources' | 'users_count' | 'uuid' | 'vat_code'>;
     };
     url: '/api/customers/{uuid}/';
 };
@@ -36888,7 +36988,7 @@ export type MarketplaceProviderOfferingsListCustomerProjectsListData = {
         uuid: string;
     };
     query?: {
-        field?: Array<'backend_id' | 'billing_price_estimate' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_display_billing_info_in_projects' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'end_date' | 'end_date_requested_by' | 'grace_period_days' | 'image' | 'is_industry' | 'is_removed' | 'kind' | 'marketplace_resource_count' | 'max_service_accounts' | 'name' | 'oecd_fos_2007_code' | 'oecd_fos_2007_label' | 'project_credit' | 'resources_count' | 'slug' | 'staff_notes' | 'start_date' | 'termination_metadata' | 'type' | 'type_name' | 'type_uuid' | 'url' | 'uuid'>;
+        field?: Array<'backend_id' | 'billing_price_estimate' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_display_billing_info_in_projects' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'end_date' | 'end_date_requested_by' | 'grace_period_days' | 'image' | 'is_industry' | 'is_removed' | 'kind' | 'marketplace_resource_count' | 'max_service_accounts' | 'name' | 'oecd_fos_2007_code' | 'oecd_fos_2007_label' | 'project_credit' | 'resources_count' | 'slug' | 'staff_notes' | 'start_date' | 'termination_metadata' | 'type' | 'type_name' | 'type_uuid' | 'url' | 'user_affiliations' | 'user_email_patterns' | 'user_identity_sources' | 'uuid'>;
         /**
          * A page number within the paginated result set.
          */
@@ -41905,7 +42005,7 @@ export type MarketplaceServiceProvidersProjectsListData = {
          * Description
          */
         description?: string;
-        field?: Array<'backend_id' | 'billing_price_estimate' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_display_billing_info_in_projects' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'end_date' | 'end_date_requested_by' | 'grace_period_days' | 'image' | 'is_industry' | 'is_removed' | 'kind' | 'marketplace_resource_count' | 'max_service_accounts' | 'name' | 'oecd_fos_2007_code' | 'oecd_fos_2007_label' | 'project_credit' | 'resources_count' | 'slug' | 'staff_notes' | 'start_date' | 'termination_metadata' | 'type' | 'type_name' | 'type_uuid' | 'url' | 'uuid'>;
+        field?: Array<'backend_id' | 'billing_price_estimate' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_display_billing_info_in_projects' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'end_date' | 'end_date_requested_by' | 'grace_period_days' | 'image' | 'is_industry' | 'is_removed' | 'kind' | 'marketplace_resource_count' | 'max_service_accounts' | 'name' | 'oecd_fos_2007_code' | 'oecd_fos_2007_label' | 'project_credit' | 'resources_count' | 'slug' | 'staff_notes' | 'start_date' | 'termination_metadata' | 'type' | 'type_name' | 'type_uuid' | 'url' | 'user_affiliations' | 'user_email_patterns' | 'user_identity_sources' | 'uuid'>;
         /**
          * Is removed
          */
@@ -47565,7 +47665,7 @@ export type OpenportalUnmanagedProjectsListData = {
          * Description
          */
         description?: string;
-        field?: Array<'backend_id' | 'billing_price_estimate' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_display_billing_info_in_projects' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'end_date' | 'end_date_requested_by' | 'grace_period_days' | 'image' | 'is_industry' | 'is_removed' | 'kind' | 'marketplace_resource_count' | 'max_service_accounts' | 'name' | 'oecd_fos_2007_code' | 'oecd_fos_2007_label' | 'project_credit' | 'resources_count' | 'slug' | 'staff_notes' | 'start_date' | 'termination_metadata' | 'type' | 'type_name' | 'type_uuid' | 'url' | 'uuid'>;
+        field?: Array<'backend_id' | 'billing_price_estimate' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_display_billing_info_in_projects' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'end_date' | 'end_date_requested_by' | 'grace_period_days' | 'image' | 'is_industry' | 'is_removed' | 'kind' | 'marketplace_resource_count' | 'max_service_accounts' | 'name' | 'oecd_fos_2007_code' | 'oecd_fos_2007_label' | 'project_credit' | 'resources_count' | 'slug' | 'staff_notes' | 'start_date' | 'termination_metadata' | 'type' | 'type_name' | 'type_uuid' | 'url' | 'user_affiliations' | 'user_email_patterns' | 'user_identity_sources' | 'uuid'>;
         /**
          * Include soft-deleted (terminated) projects. Only available to staff and support users, or users with organizational roles who can see their terminated projects.
          */
@@ -47749,7 +47849,7 @@ export type OpenportalUnmanagedProjectsRetrieveData = {
         uuid: string;
     };
     query?: {
-        field?: Array<'backend_id' | 'billing_price_estimate' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_display_billing_info_in_projects' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'end_date' | 'end_date_requested_by' | 'grace_period_days' | 'image' | 'is_industry' | 'is_removed' | 'kind' | 'marketplace_resource_count' | 'max_service_accounts' | 'name' | 'oecd_fos_2007_code' | 'oecd_fos_2007_label' | 'project_credit' | 'resources_count' | 'slug' | 'staff_notes' | 'start_date' | 'termination_metadata' | 'type' | 'type_name' | 'type_uuid' | 'url' | 'uuid'>;
+        field?: Array<'backend_id' | 'billing_price_estimate' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_display_billing_info_in_projects' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'end_date' | 'end_date_requested_by' | 'grace_period_days' | 'image' | 'is_industry' | 'is_removed' | 'kind' | 'marketplace_resource_count' | 'max_service_accounts' | 'name' | 'oecd_fos_2007_code' | 'oecd_fos_2007_label' | 'project_credit' | 'resources_count' | 'slug' | 'staff_notes' | 'start_date' | 'termination_metadata' | 'type' | 'type_name' | 'type_uuid' | 'url' | 'user_affiliations' | 'user_email_patterns' | 'user_identity_sources' | 'uuid'>;
     };
     url: '/api/openportal-unmanaged-projects/{uuid}/';
 };
@@ -55107,7 +55207,7 @@ export type ProjectsListData = {
          * Description
          */
         description?: string;
-        field?: Array<'backend_id' | 'billing_price_estimate' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_display_billing_info_in_projects' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'end_date' | 'end_date_requested_by' | 'grace_period_days' | 'image' | 'is_industry' | 'is_removed' | 'kind' | 'marketplace_resource_count' | 'max_service_accounts' | 'name' | 'oecd_fos_2007_code' | 'oecd_fos_2007_label' | 'project_credit' | 'resources_count' | 'slug' | 'staff_notes' | 'start_date' | 'termination_metadata' | 'type' | 'type_name' | 'type_uuid' | 'url' | 'uuid'>;
+        field?: Array<'backend_id' | 'billing_price_estimate' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_display_billing_info_in_projects' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'end_date' | 'end_date_requested_by' | 'grace_period_days' | 'image' | 'is_industry' | 'is_removed' | 'kind' | 'marketplace_resource_count' | 'max_service_accounts' | 'name' | 'oecd_fos_2007_code' | 'oecd_fos_2007_label' | 'project_credit' | 'resources_count' | 'slug' | 'staff_notes' | 'start_date' | 'termination_metadata' | 'type' | 'type_name' | 'type_uuid' | 'url' | 'user_affiliations' | 'user_email_patterns' | 'user_identity_sources' | 'uuid'>;
         /**
          * Include soft-deleted (terminated) projects. Only available to staff and support users, or users with organizational roles who can see their terminated projects.
          */
@@ -55370,7 +55470,7 @@ export type ProjectsRetrieveData = {
         uuid: string;
     };
     query?: {
-        field?: Array<'backend_id' | 'billing_price_estimate' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_display_billing_info_in_projects' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'end_date' | 'end_date_requested_by' | 'grace_period_days' | 'image' | 'is_industry' | 'is_removed' | 'kind' | 'marketplace_resource_count' | 'max_service_accounts' | 'name' | 'oecd_fos_2007_code' | 'oecd_fos_2007_label' | 'project_credit' | 'resources_count' | 'slug' | 'staff_notes' | 'start_date' | 'termination_metadata' | 'type' | 'type_name' | 'type_uuid' | 'url' | 'uuid'>;
+        field?: Array<'backend_id' | 'billing_price_estimate' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_display_billing_info_in_projects' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'end_date' | 'end_date_requested_by' | 'grace_period_days' | 'image' | 'is_industry' | 'is_removed' | 'kind' | 'marketplace_resource_count' | 'max_service_accounts' | 'name' | 'oecd_fos_2007_code' | 'oecd_fos_2007_label' | 'project_credit' | 'resources_count' | 'slug' | 'staff_notes' | 'start_date' | 'termination_metadata' | 'type' | 'type_name' | 'type_uuid' | 'url' | 'user_affiliations' | 'user_email_patterns' | 'user_identity_sources' | 'uuid'>;
     };
     url: '/api/projects/{uuid}/';
 };
