@@ -3198,6 +3198,51 @@ export type DeleteAttachmentsRequest = {
     attachment_ids: Array<string>;
 };
 
+export type DemoPreset = {
+    readonly name: string;
+    readonly title: string;
+    readonly description: string;
+    readonly version: string;
+    readonly entity_counts: {
+        [key: string]: number;
+    };
+    readonly scenarios: Array<string>;
+};
+
+export type DemoPresetLoadRequestRequest = {
+    /**
+     * Preview changes without applying them
+     */
+    dry_run?: boolean;
+    /**
+     * Clean up existing data before loading the preset
+     */
+    cleanup_first?: boolean;
+    /**
+     * Skip user import/cleanup
+     */
+    skip_users?: boolean;
+    /**
+     * Skip role import/cleanup
+     */
+    skip_roles?: boolean;
+};
+
+export type DemoPresetLoadResponse = {
+    success: boolean;
+    message: string;
+    output?: string;
+    users?: Array<DemoPresetUser>;
+};
+
+export type DemoPresetUser = {
+    username: string;
+    password: string;
+    email?: string;
+    is_staff?: boolean;
+    is_support?: boolean;
+};
+
 export type DependencyLogicOperatorEnum = 'and' | 'or';
 
 export type DeploymentModeEnum = 'self_managed' | 'managed';
@@ -4692,6 +4737,10 @@ export type Issue = {
     readonly destroy_is_available: boolean;
     readonly add_comment_is_available: boolean;
     readonly add_attachment_is_available: boolean;
+    /**
+     * Internal processing log for debugging order lifecycle events. Visible only to staff.
+     */
+    readonly processing_log: unknown;
 };
 
 export type IssueReference = {
@@ -32367,6 +32416,124 @@ export type MarketplaceCustomerServiceAccountsRotateApiKeyResponses = {
 };
 
 export type MarketplaceCustomerServiceAccountsRotateApiKeyResponse = MarketplaceCustomerServiceAccountsRotateApiKeyResponses[keyof MarketplaceCustomerServiceAccountsRotateApiKeyResponses];
+
+export type MarketplaceDemoPresetsInfoRetrieveData = {
+    body?: never;
+    path: {
+        /**
+         * Name of the preset
+         */
+        name: string;
+    };
+    query?: never;
+    url: '/api/marketplace-demo-presets/info/{name}/';
+};
+
+export type MarketplaceDemoPresetsInfoRetrieveErrors = {
+    /**
+     * No response body
+     */
+    404: unknown;
+};
+
+export type MarketplaceDemoPresetsInfoRetrieveResponses = {
+    200: DemoPreset;
+};
+
+export type MarketplaceDemoPresetsInfoRetrieveResponse = MarketplaceDemoPresetsInfoRetrieveResponses[keyof MarketplaceDemoPresetsInfoRetrieveResponses];
+
+export type MarketplaceDemoPresetsInfoCountData = {
+    body?: never;
+    path: {
+        /**
+         * Name of the preset
+         */
+        name: string;
+    };
+    query?: never;
+    url: '/api/marketplace-demo-presets/info/{name}/';
+};
+
+export type MarketplaceDemoPresetsInfoCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type MarketplaceDemoPresetsListListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-demo-presets/list/';
+};
+
+export type MarketplaceDemoPresetsListListResponses = {
+    200: Array<DemoPreset>;
+};
+
+export type MarketplaceDemoPresetsListListResponse = MarketplaceDemoPresetsListListResponses[keyof MarketplaceDemoPresetsListListResponses];
+
+export type MarketplaceDemoPresetsListCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-demo-presets/list/';
+};
+
+export type MarketplaceDemoPresetsListCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type MarketplaceDemoPresetsLoadData = {
+    body?: DemoPresetLoadRequestRequest;
+    path: {
+        /**
+         * Name of the preset to load
+         */
+        name: string;
+    };
+    query?: never;
+    url: '/api/marketplace-demo-presets/load/{name}/';
+};
+
+export type MarketplaceDemoPresetsLoadErrors = {
+    /**
+     * No response body
+     */
+    400: unknown;
+    /**
+     * No response body
+     */
+    404: unknown;
+};
+
+export type MarketplaceDemoPresetsLoadResponses = {
+    200: DemoPresetLoadResponse;
+};
+
+export type MarketplaceDemoPresetsLoadResponse = MarketplaceDemoPresetsLoadResponses[keyof MarketplaceDemoPresetsLoadResponses];
 
 export type MarketplaceGlobalCategoriesRetrieveData = {
     body?: never;
