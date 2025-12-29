@@ -3976,10 +3976,6 @@ export type GroupInvitation = {
      */
     role: string;
     readonly created: string;
-    /**
-     * Expiration date and time of the invitation
-     */
-    readonly expires: string;
     readonly is_active: boolean;
     /**
      * Allow non-authenticated users to see and accept this invitation. Only staff can create public invitations.
@@ -23257,6 +23253,10 @@ export type BookingResourcesListData = {
          */
         has_terminate_date?: boolean;
         /**
+         * Filter by attached state
+         */
+        is_attached?: boolean;
+        /**
          * LEXIS links supported
          */
         lexis_links_supported?: boolean;
@@ -23431,6 +23431,10 @@ export type BookingResourcesCountData = {
          * Has termination date
          */
         has_terminate_date?: boolean;
+        /**
+         * Filter by attached state
+         */
+        is_attached?: boolean;
         /**
          * LEXIS links supported
          */
@@ -38264,6 +38268,10 @@ export type MarketplaceProviderResourcesListData = {
          */
         has_terminate_date?: boolean;
         /**
+         * Filter by attached state
+         */
+        is_attached?: boolean;
+        /**
          * LEXIS links supported
          */
         lexis_links_supported?: boolean;
@@ -38437,6 +38445,10 @@ export type MarketplaceProviderResourcesCountData = {
          * Has termination date
          */
         has_terminate_date?: boolean;
+        /**
+         * Filter by attached state
+         */
+        is_attached?: boolean;
         /**
          * LEXIS links supported
          */
@@ -39795,6 +39807,10 @@ export type MarketplaceResourcesListData = {
          */
         has_terminate_date?: boolean;
         /**
+         * Filter by attached state
+         */
+        is_attached?: boolean;
+        /**
          * LEXIS links supported
          */
         lexis_links_supported?: boolean;
@@ -39968,6 +39984,10 @@ export type MarketplaceResourcesCountData = {
          * Has termination date
          */
         has_terminate_date?: boolean;
+        /**
+         * Filter by attached state
+         */
+        is_attached?: boolean;
         /**
          * LEXIS links supported
          */
@@ -64055,6 +64075,24 @@ export type UserGroupInvitationsCreateResponses = {
 };
 
 export type UserGroupInvitationsCreateResponse = UserGroupInvitationsCreateResponses[keyof UserGroupInvitationsCreateResponses];
+
+export type UserGroupInvitationsDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/user-group-invitations/{uuid}/';
+};
+
+export type UserGroupInvitationsDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type UserGroupInvitationsDestroyResponse = UserGroupInvitationsDestroyResponses[keyof UserGroupInvitationsDestroyResponses];
 
 export type UserGroupInvitationsRetrieveData = {
     body?: never;
