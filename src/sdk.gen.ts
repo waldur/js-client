@@ -3682,7 +3682,20 @@ export const callRoundsReviewersList = <ThrowOnError extends boolean = false>(op
 
 /**
  * Get Celery worker statistics
- * Provides a snapshot of the Celery workers' status, including active, scheduled, reserved, and revoked tasks, as well as worker-specific statistics. Requires support user permissions.
+ * Provides a comprehensive snapshot of all Celery workers' status.
+ *
+ * This endpoint returns detailed information about:
+ * - **active**: Tasks currently being executed by workers
+ * - **scheduled**: Tasks scheduled for future execution (with ETA)
+ * - **reserved**: Tasks received by workers but not yet started
+ * - **revoked**: Task IDs that have been cancelled/revoked
+ * - **query_task**: Results of task queries (if any)
+ * - **stats**: Detailed worker statistics including uptime, pool info, and broker connection
+ *
+ * Each field is a dictionary where keys are worker names (e.g., 'celery@hostname').
+ * If no workers are available, fields will be `null`.
+ *
+ * Requires support user permissions.
  */
 export const celeryStatsRetrieve = <ThrowOnError extends boolean = false>(options?: Options<CeleryStatsRetrieveData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<CeleryStatsRetrieveResponses, unknown, ThrowOnError>({

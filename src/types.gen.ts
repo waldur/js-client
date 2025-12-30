@@ -1697,6 +1697,218 @@ export type CategorySerializerForForNestedFieldsRequest = {
     title: string;
 };
 
+export type CeleryBroker = {
+    /**
+     * Broker hostname
+     */
+    readonly hostname: string;
+    /**
+     * Broker user ID
+     */
+    readonly userid: string;
+    /**
+     * Virtual host
+     */
+    readonly virtual_host: string;
+    /**
+     * Broker port
+     */
+    readonly port: number;
+    readonly insist: boolean;
+    readonly ssl: boolean;
+    /**
+     * Transport protocol
+     */
+    readonly transport: string;
+    /**
+     * Connection timeout in seconds
+     */
+    readonly connect_timeout: number;
+    /**
+     * Additional transport options
+     */
+    readonly transport_options: {
+        [key: string]: unknown;
+    };
+    /**
+     * Authentication method
+     */
+    readonly login_method: string;
+    readonly uri_prefix: string;
+    /**
+     * Heartbeat interval
+     */
+    readonly heartbeat: number;
+    readonly failover_strategy: string;
+    readonly alternates: Array<string>;
+};
+
+export type CeleryScheduledTask = {
+    /**
+     * Estimated time of arrival for the task
+     */
+    readonly eta: string;
+    /**
+     * Task priority level
+     */
+    readonly priority: number;
+    /**
+     * Task request details
+     */
+    request: CeleryTask;
+};
+
+export type CeleryStatsResponse = {
+    /**
+     * Currently executing tasks per worker. Keys are worker names, values are lists of active tasks.
+     */
+    readonly active: {
+        [key: string]: Array<CeleryTask>;
+    } | null;
+    /**
+     * Tasks scheduled for future execution per worker. Keys are worker names, values are lists of scheduled tasks with ETA.
+     */
+    readonly scheduled: {
+        [key: string]: Array<CeleryScheduledTask>;
+    } | null;
+    /**
+     * Tasks that have been received but not yet started per worker. Keys are worker names, values are lists of reserved tasks.
+     */
+    readonly reserved: {
+        [key: string]: Array<CeleryTask>;
+    } | null;
+    /**
+     * IDs of revoked (cancelled) tasks per worker. Keys are worker names, values are lists of task IDs.
+     */
+    readonly revoked: {
+        [key: string]: Array<string>;
+    } | null;
+    /**
+     * Query results for specific tasks. May be null if no query was performed.
+     */
+    readonly query_task: {
+        [key: string]: unknown;
+    } | null;
+    /**
+     * Detailed statistics per worker including uptime, pool info, and resource usage. Keys are worker names.
+     */
+    readonly stats: {
+        [key: string]: CeleryWorkerStats;
+    } | null;
+};
+
+export type CeleryTask = {
+    /**
+     * Unique task identifier
+     */
+    readonly id: string;
+    /**
+     * Name of the task
+     */
+    readonly name: string;
+    /**
+     * Positional arguments passed to the task
+     */
+    readonly args: Array<unknown>;
+    /**
+     * Keyword arguments passed to the task
+     */
+    readonly kwargs: {
+        [key: string]: unknown;
+    };
+    /**
+     * Task type
+     */
+    readonly type: string;
+    /**
+     * Worker hostname executing the task
+     */
+    readonly hostname: string;
+    /**
+     * Unix timestamp when task started
+     */
+    readonly time_start: number;
+    /**
+     * Whether task has been acknowledged
+     */
+    readonly acknowledged: boolean;
+    /**
+     * Message delivery information
+     */
+    readonly delivery_info: {
+        [key: string]: unknown;
+    };
+    /**
+     * Worker process ID
+     */
+    readonly worker_pid: number;
+};
+
+export type CeleryWorkerPool = {
+    /**
+     * Maximum number of concurrent processes
+     */
+    readonly max_concurrency: number;
+    /**
+     * List of worker process IDs
+     */
+    readonly processes: Array<number>;
+    /**
+     * Maximum tasks per child process
+     */
+    readonly max_tasks_per_child: number;
+    readonly put_guarded_by_semaphore: boolean;
+    /**
+     * Timeout values
+     */
+    readonly timeouts: Array<number>;
+    /**
+     * Write statistics
+     */
+    readonly writes: {
+        [key: string]: unknown;
+    };
+};
+
+export type CeleryWorkerStats = {
+    /**
+     * Broker connection information
+     */
+    broker: CeleryBroker;
+    /**
+     * Logical clock value
+     */
+    readonly clock: string;
+    /**
+     * Worker uptime in seconds
+     */
+    readonly uptime: number;
+    /**
+     * Worker process ID
+     */
+    readonly pid: number;
+    /**
+     * Worker pool statistics
+     */
+    pool: CeleryWorkerPool;
+    /**
+     * Number of tasks prefetched
+     */
+    readonly prefetch_count: number;
+    /**
+     * Resource usage statistics
+     */
+    readonly rusage: {
+        [key: string]: unknown;
+    };
+    /**
+     * Total task counts by type
+     */
+    readonly total: {
+        [key: string]: unknown;
+    };
+};
+
 export type ChatRequestRequest = {
     /**
      * User input text for the chat model.
@@ -24482,9 +24694,7 @@ export type CeleryStatsRetrieveData = {
 };
 
 export type CeleryStatsRetrieveResponses = {
-    200: {
-        [key: string]: unknown;
-    };
+    200: CeleryStatsResponse;
 };
 
 export type CeleryStatsRetrieveResponse = CeleryStatsRetrieveResponses[keyof CeleryStatsRetrieveResponses];
