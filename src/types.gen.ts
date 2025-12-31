@@ -12138,6 +12138,10 @@ export type PatchedTemplateRequest = {
 export type PatchedUserAgreementRequest = {
     content?: string;
     agreement_type?: AgreementTypeEnum;
+    /**
+     * ISO 639-1 language code (e.g., 'en', 'de', 'et'). Leave empty for the default version.
+     */
+    language?: string;
 };
 
 export type PatchedUserInfoRequest = {
@@ -17307,6 +17311,10 @@ export type UserAgreement = {
     readonly uuid: string;
     content: string;
     agreement_type: AgreementTypeEnum;
+    /**
+     * ISO 639-1 language code (e.g., 'en', 'de', 'et'). Leave empty for the default version.
+     */
+    language: string;
     readonly created: string;
     readonly modified: string;
 };
@@ -17314,6 +17322,10 @@ export type UserAgreement = {
 export type UserAgreementRequest = {
     content: string;
     agreement_type: AgreementTypeEnum;
+    /**
+     * ISO 639-1 language code (e.g., 'en', 'de', 'et'). Leave empty for the default version.
+     */
+    language: string;
 };
 
 export type UserAuthMethodCount = {
