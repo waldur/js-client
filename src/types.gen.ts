@@ -2405,6 +2405,9 @@ export type ConstanceSettings = {
     SIDEBAR_STYLE?: string;
     SITE_LOGO?: string | null;
     LOGIN_LOGO?: string | null;
+    LOGIN_LOGO_MULTILINGUAL?: {
+        [key: string]: string | null;
+    };
     FAVICON?: string | null;
     OFFERING_LOGO_PLACEHOLDER?: string | null;
     WALDUR_SUPPORT_ENABLED?: boolean;
@@ -2578,6 +2581,9 @@ export type ConstanceSettingsRequest = {
     SIDEBAR_STYLE?: string;
     SITE_LOGO?: (Blob | File) | null;
     LOGIN_LOGO?: (Blob | File) | null;
+    LOGIN_LOGO_MULTILINGUAL?: {
+        [key: string]: (Blob | File) | null;
+    };
     FAVICON?: (Blob | File) | null;
     OFFERING_LOGO_PLACEHOLDER?: (Blob | File) | null;
     WALDUR_SUPPORT_ENABLED?: boolean;
@@ -19201,6 +19207,9 @@ export type ConstanceSettingsRequestForm = {
     SIDEBAR_STYLE?: string;
     SITE_LOGO?: (Blob | File) | null;
     LOGIN_LOGO?: (Blob | File) | null;
+    LOGIN_LOGO_MULTILINGUAL?: {
+        [key: string]: (Blob | File) | null;
+    };
     FAVICON?: (Blob | File) | null;
     OFFERING_LOGO_PLACEHOLDER?: (Blob | File) | null;
     WALDUR_SUPPORT_ENABLED?: boolean;
@@ -19374,6 +19383,9 @@ export type ConstanceSettingsRequestMultipart = {
     SIDEBAR_STYLE?: string;
     SITE_LOGO?: (Blob | File) | null;
     LOGIN_LOGO?: (Blob | File) | null;
+    LOGIN_LOGO_MULTILINGUAL?: {
+        [key: string]: (Blob | File) | null;
+    };
     FAVICON?: (Blob | File) | null;
     OFFERING_LOGO_PLACEHOLDER?: (Blob | File) | null;
     WALDUR_SUPPORT_ENABLED?: boolean;
