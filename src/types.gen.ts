@@ -11670,6 +11670,10 @@ export type PatchedProtectedCallRequest = {
      * Compliance checklist that proposals must complete before submission
      */
     compliance_checklist?: string | null;
+    /**
+     * Template for proposal slugs. Supports: {call_slug}, {round_slug}, {org_slug}, {year}, {month}, {counter}, {counter_padded}. Default: {round_slug}-{counter_padded}
+     */
+    proposal_slug_template?: string | null;
 };
 
 export type PatchedProtectedRoundRequest = {
@@ -13214,6 +13218,10 @@ export type ProtectedCall = {
      */
     compliance_checklist?: string | null;
     readonly compliance_checklist_name?: string;
+    /**
+     * Template for proposal slugs. Supports: {call_slug}, {round_slug}, {org_slug}, {year}, {month}, {counter}, {counter_padded}. Default: {round_slug}-{counter_padded}
+     */
+    proposal_slug_template?: string | null;
 };
 
 export type ProtectedCallRequest = {
@@ -13241,6 +13249,10 @@ export type ProtectedCallRequest = {
      * Compliance checklist that proposals must complete before submission
      */
     compliance_checklist?: string | null;
+    /**
+     * Template for proposal slugs. Supports: {call_slug}, {round_slug}, {org_slug}, {year}, {month}, {counter}, {counter_padded}. Default: {round_slug}-{counter_padded}
+     */
+    proposal_slug_template?: string | null;
 };
 
 export type ProtectedProposalList = {
@@ -57095,7 +57107,7 @@ export type ProposalProtectedCallsListData = {
         customer?: string;
         customer_keyword?: string;
         customer_uuid?: string;
-        field?: Array<'backend_id' | 'compliance_checklist' | 'compliance_checklist_name' | 'created' | 'created_by' | 'customer_name' | 'customer_uuid' | 'description' | 'documents' | 'end_date' | 'external_url' | 'fixed_duration_in_days' | 'manager' | 'manager_uuid' | 'name' | 'offerings' | 'reference_code' | 'resource_templates' | 'reviewer_identity_visible_to_submitters' | 'reviews_visible_to_submitters' | 'rounds' | 'slug' | 'start_date' | 'state' | 'url' | 'uuid'>;
+        field?: Array<'backend_id' | 'compliance_checklist' | 'compliance_checklist_name' | 'created' | 'created_by' | 'customer_name' | 'customer_uuid' | 'description' | 'documents' | 'end_date' | 'external_url' | 'fixed_duration_in_days' | 'manager' | 'manager_uuid' | 'name' | 'offerings' | 'proposal_slug_template' | 'reference_code' | 'resource_templates' | 'reviewer_identity_visible_to_submitters' | 'reviews_visible_to_submitters' | 'rounds' | 'slug' | 'start_date' | 'state' | 'url' | 'uuid'>;
         has_active_round?: boolean;
         name?: string;
         /**
@@ -57199,7 +57211,7 @@ export type ProposalProtectedCallsRetrieveData = {
         uuid: string;
     };
     query?: {
-        field?: Array<'backend_id' | 'compliance_checklist' | 'compliance_checklist_name' | 'created' | 'created_by' | 'customer_name' | 'customer_uuid' | 'description' | 'documents' | 'end_date' | 'external_url' | 'fixed_duration_in_days' | 'manager' | 'manager_uuid' | 'name' | 'offerings' | 'reference_code' | 'resource_templates' | 'reviewer_identity_visible_to_submitters' | 'reviews_visible_to_submitters' | 'rounds' | 'slug' | 'start_date' | 'state' | 'url' | 'uuid'>;
+        field?: Array<'backend_id' | 'compliance_checklist' | 'compliance_checklist_name' | 'created' | 'created_by' | 'customer_name' | 'customer_uuid' | 'description' | 'documents' | 'end_date' | 'external_url' | 'fixed_duration_in_days' | 'manager' | 'manager_uuid' | 'name' | 'offerings' | 'proposal_slug_template' | 'reference_code' | 'resource_templates' | 'reviewer_identity_visible_to_submitters' | 'reviews_visible_to_submitters' | 'rounds' | 'slug' | 'start_date' | 'state' | 'url' | 'uuid'>;
     };
     url: '/api/proposal-protected-calls/{uuid}/';
 };
