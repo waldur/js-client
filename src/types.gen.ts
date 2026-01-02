@@ -11718,11 +11718,11 @@ export type PatchedQuestionAdminRequest = {
     question_type?: QuestionTypeEnum;
     order?: number;
     /**
-     * Minimum value allowed for NUMBER type questions
+     * Minimum value allowed for NUMBER, YEAR, and RATING type questions
      */
     min_value?: string | null;
     /**
-     * Maximum value allowed for NUMBER type questions
+     * Maximum value allowed for NUMBER, YEAR, and RATING type questions
      */
     max_value?: string | null;
     /**
@@ -13826,11 +13826,11 @@ export type Question = {
     question_type?: QuestionTypeEnum;
     order?: number;
     /**
-     * Minimum value allowed for NUMBER type questions
+     * Minimum value allowed for NUMBER, YEAR, and RATING type questions
      */
     min_value?: string | null;
     /**
-     * Maximum value allowed for NUMBER type questions
+     * Maximum value allowed for NUMBER, YEAR, and RATING type questions
      */
     max_value?: string | null;
     /**
@@ -13891,11 +13891,11 @@ export type QuestionAdmin = {
     question_type?: QuestionTypeEnum;
     order?: number;
     /**
-     * Minimum value allowed for NUMBER type questions
+     * Minimum value allowed for NUMBER, YEAR, and RATING type questions
      */
     min_value?: string | null;
     /**
-     * Maximum value allowed for NUMBER type questions
+     * Maximum value allowed for NUMBER, YEAR, and RATING type questions
      */
     max_value?: string | null;
     /**
@@ -13958,11 +13958,11 @@ export type QuestionAdminRequest = {
     question_type?: QuestionTypeEnum;
     order?: number;
     /**
-     * Minimum value allowed for NUMBER type questions
+     * Minimum value allowed for NUMBER, YEAR, and RATING type questions
      */
     min_value?: string | null;
     /**
-     * Maximum value allowed for NUMBER type questions
+     * Maximum value allowed for NUMBER, YEAR, and RATING type questions
      */
     max_value?: string | null;
     /**
@@ -14084,7 +14084,7 @@ export type QuestionOptionsAdminRequest = {
     question: string;
 };
 
-export type QuestionTypeEnum = 'boolean' | 'single_select' | 'multi_select' | 'text_input' | 'text_area' | 'number' | 'date' | 'file' | 'multiple_files';
+export type QuestionTypeEnum = 'boolean' | 'single_select' | 'multi_select' | 'text_input' | 'text_area' | 'number' | 'date' | 'file' | 'multiple_files' | 'phone_number' | 'year' | 'email' | 'url' | 'country' | 'rating' | 'datetime';
 
 export type QuestionWithAnswer = {
     readonly uuid: string;
@@ -14101,11 +14101,11 @@ export type QuestionWithAnswer = {
     } | null;
     readonly question_options: Array<unknown> | null;
     /**
-     * Minimum value allowed for NUMBER type questions
+     * Minimum value allowed for NUMBER, YEAR, and RATING type questions
      */
     readonly min_value: string | null;
     /**
-     * Maximum value allowed for NUMBER type questions
+     * Maximum value allowed for NUMBER, YEAR, and RATING type questions
      */
     readonly max_value: string | null;
     /**
@@ -14141,11 +14141,11 @@ export type QuestionWithAnswerReviewer = {
     } | null;
     readonly question_options: Array<unknown> | null;
     /**
-     * Minimum value allowed for NUMBER type questions
+     * Minimum value allowed for NUMBER, YEAR, and RATING type questions
      */
     readonly min_value: string | null;
     /**
-     * Maximum value allowed for NUMBER type questions
+     * Maximum value allowed for NUMBER, YEAR, and RATING type questions
      */
     readonly max_value: string | null;
     /**
