@@ -64290,6 +64290,10 @@ export type UserAgreementsListData = {
     query?: {
         agreement_type?: 'PP' | 'TOS';
         /**
+         * ISO 639-1 language code (e.g., 'en', 'de', 'et'). Returns requested language or falls back to default version if unavailable.
+         */
+        language?: string;
+        /**
          * A page number within the paginated result set.
          */
         page?: number;
@@ -64312,6 +64316,10 @@ export type UserAgreementsCountData = {
     path?: never;
     query?: {
         agreement_type?: 'PP' | 'TOS';
+        /**
+         * ISO 639-1 language code (e.g., 'en', 'de', 'et'). Returns requested language or falls back to default version if unavailable.
+         */
+        language?: string;
         /**
          * A page number within the paginated result set.
          */

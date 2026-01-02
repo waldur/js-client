@@ -35769,6 +35769,10 @@ export const userActionsUpdateActions = <ThrowOnError extends boolean = false>(o
     });
 };
 
+/**
+ * List user agreements
+ * Retrieve a list of user agreements (Terms of Service and Privacy Policy). Supports filtering by agreement type and language with fallback behavior.
+ */
 export const userAgreementsList = <ThrowOnError extends boolean = false>(options?: Options<UserAgreementsListData, ThrowOnError>) => {
     return (options?.client ?? _heyApiClient).get<UserAgreementsListResponses, unknown, ThrowOnError>({
         security: [
@@ -35787,6 +35791,7 @@ export const userAgreementsList = <ThrowOnError extends boolean = false>(options
 };
 
 /**
+ * List user agreements
  * Get number of items in the collection matching the request parameters.
  */
 export const userAgreementsCount = <ThrowOnError extends boolean = false>(options?: Options<UserAgreementsCountData, ThrowOnError>) => {
@@ -35844,6 +35849,10 @@ export const userAgreementsDestroy = <ThrowOnError extends boolean = false>(opti
     });
 };
 
+/**
+ * Retrieve user agreement
+ * Fetch the details of a specific user agreement by its UUID.
+ */
 export const userAgreementsRetrieve = <ThrowOnError extends boolean = false>(options: Options<UserAgreementsRetrieveData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).get<UserAgreementsRetrieveResponses, unknown, ThrowOnError>({
         security: [
