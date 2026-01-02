@@ -13056,7 +13056,12 @@ export type ProposalChecklistAnswerSubmitResponse = {
     completion: ChecklistCompletionReviewer;
 };
 
+export type ProposalDetachDocumentsRequest = {
+    documents: Array<string>;
+};
+
 export type ProposalDocumentation = {
+    readonly uuid: string;
     /**
      * Upload supporting documentation in PDF format.
      */
@@ -14124,6 +14129,9 @@ export type QuestionWithAnswer = {
      * Maximum number of files allowed for MULTIPLE_FILES type questions. If not set, no count limit is enforced.
      */
     readonly max_files_count: number | null;
+    readonly dependencies_info: {
+        [key: string]: unknown;
+    } | null;
 };
 
 export type QuestionWithAnswerReviewer = {
@@ -14164,6 +14172,9 @@ export type QuestionWithAnswerReviewer = {
      * Maximum number of files allowed for MULTIPLE_FILES type questions. If not set, no count limit is enforced.
      */
     readonly max_files_count: number | null;
+    readonly dependencies_info: {
+        [key: string]: unknown;
+    } | null;
     operator?: ChecklistOperators | BlankEnum;
     /**
      * Answer value that trigger review.
@@ -34421,7 +34432,12 @@ export type MarketplaceOfferingUsersChecklistRetrieveData = {
     path: {
         uuid: string;
     };
-    query?: never;
+    query?: {
+        /**
+         * If true, returns all questions including hidden ones (for dynamic form visibility). Default: false.
+         */
+        include_all?: boolean;
+    };
     url: '/api/marketplace-offering-users/{uuid}/checklist/';
 };
 
@@ -46496,7 +46512,12 @@ export type OnboardingVerificationsChecklistRetrieveData = {
     path: {
         uuid: string;
     };
-    query?: never;
+    query?: {
+        /**
+         * If true, returns all questions including hidden ones (for dynamic form visibility). Default: false.
+         */
+        include_all?: boolean;
+    };
     url: '/api/onboarding-verifications/{uuid}/checklist/';
 };
 
@@ -48350,7 +48371,12 @@ export type OpenportalUnmanagedProjectsChecklistRetrieveData = {
     path: {
         uuid: string;
     };
-    query?: never;
+    query?: {
+        /**
+         * If true, returns all questions including hidden ones (for dynamic form visibility). Default: false.
+         */
+        include_all?: boolean;
+    };
     url: '/api/openportal-unmanaged-projects/{uuid}/checklist/';
 };
 
@@ -55971,7 +55997,12 @@ export type ProjectsChecklistRetrieveData = {
     path: {
         uuid: string;
     };
-    query?: never;
+    query?: {
+        /**
+         * If true, returns all questions including hidden ones (for dynamic form visibility). Default: false.
+         */
+        include_all?: boolean;
+    };
     url: '/api/projects/{uuid}/checklist/';
 };
 
@@ -56678,7 +56709,12 @@ export type ProposalProposalsChecklistRetrieveData = {
     path: {
         uuid: string;
     };
-    query?: never;
+    query?: {
+        /**
+         * If true, returns all questions including hidden ones (for dynamic form visibility). Default: false.
+         */
+        include_all?: boolean;
+    };
     url: '/api/proposal-proposals/{uuid}/checklist/';
 };
 
@@ -56789,6 +56825,22 @@ export type ProposalProposalsDeleteUserData = {
 export type ProposalProposalsDeleteUserResponses = {
     /**
      * Role revoked successfully.
+     */
+    200: unknown;
+};
+
+export type ProposalProposalsDetachDocumentsData = {
+    body: ProposalDetachDocumentsRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-proposals/{uuid}/detach_documents/';
+};
+
+export type ProposalProposalsDetachDocumentsResponses = {
+    /**
+     * No response body
      */
     200: unknown;
 };
