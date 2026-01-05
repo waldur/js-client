@@ -5846,7 +5846,7 @@ export type MergedPluginOptions = {
      */
     enable_display_of_order_actions_for_service_provider?: boolean;
     /**
-     * If set to False, an order requires manual provider approval
+     * If set to False, all orders require manual provider approval, including for service provider owners and staff
      */
     auto_approve_marketplace_script?: boolean;
     /**
@@ -6085,7 +6085,7 @@ export type MergedPluginOptionsRequest = {
      */
     enable_display_of_order_actions_for_service_provider?: boolean;
     /**
-     * If set to False, an order requires manual provider approval
+     * If set to False, all orders require manual provider approval, including for service provider owners and staff
      */
     auto_approve_marketplace_script?: boolean;
     /**
