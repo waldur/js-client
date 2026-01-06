@@ -2408,6 +2408,11 @@ export type ConstanceSettings = {
     LOGIN_LOGO_MULTILINGUAL?: {
         [key: string]: string | null;
     };
+    LOGIN_PAGE_LAYOUT?: string;
+    LOGIN_PAGE_VIDEO_URL?: string;
+    LOGIN_PAGE_STATS?: Array<unknown>;
+    LOGIN_PAGE_CAROUSEL_SLIDES?: Array<unknown>;
+    LOGIN_PAGE_NEWS?: Array<unknown>;
     FAVICON?: string | null;
     OFFERING_LOGO_PLACEHOLDER?: string | null;
     WALDUR_SUPPORT_ENABLED?: boolean;
@@ -2584,6 +2589,11 @@ export type ConstanceSettingsRequest = {
     LOGIN_LOGO_MULTILINGUAL?: {
         [key: string]: (Blob | File) | null;
     };
+    LOGIN_PAGE_LAYOUT?: string;
+    LOGIN_PAGE_VIDEO_URL?: string;
+    LOGIN_PAGE_STATS?: Array<unknown>;
+    LOGIN_PAGE_CAROUSEL_SLIDES?: Array<unknown>;
+    LOGIN_PAGE_NEWS?: Array<unknown>;
     FAVICON?: (Blob | File) | null;
     OFFERING_LOGO_PLACEHOLDER?: (Blob | File) | null;
     WALDUR_SUPPORT_ENABLED?: boolean;
@@ -19233,6 +19243,11 @@ export type ConstanceSettingsRequestForm = {
     LOGIN_LOGO_MULTILINGUAL?: {
         [key: string]: (Blob | File) | null;
     };
+    LOGIN_PAGE_LAYOUT?: string;
+    LOGIN_PAGE_VIDEO_URL?: string;
+    LOGIN_PAGE_STATS?: Array<unknown>;
+    LOGIN_PAGE_CAROUSEL_SLIDES?: Array<unknown>;
+    LOGIN_PAGE_NEWS?: Array<unknown>;
     FAVICON?: (Blob | File) | null;
     OFFERING_LOGO_PLACEHOLDER?: (Blob | File) | null;
     WALDUR_SUPPORT_ENABLED?: boolean;
@@ -19409,6 +19424,11 @@ export type ConstanceSettingsRequestMultipart = {
     LOGIN_LOGO_MULTILINGUAL?: {
         [key: string]: (Blob | File) | null;
     };
+    LOGIN_PAGE_LAYOUT?: string;
+    LOGIN_PAGE_VIDEO_URL?: string;
+    LOGIN_PAGE_STATS?: Array<unknown>;
+    LOGIN_PAGE_CAROUSEL_SLIDES?: Array<unknown>;
+    LOGIN_PAGE_NEWS?: Array<unknown>;
     FAVICON?: (Blob | File) | null;
     OFFERING_LOGO_PLACEHOLDER?: (Blob | File) | null;
     WALDUR_SUPPORT_ENABLED?: boolean;
