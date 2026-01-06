@@ -264,6 +264,122 @@ export type Association = {
     allocation: string;
 };
 
+export type AtlassianCredentialsRequest = {
+    /**
+     * Atlassian API URL (e.g., https://your-domain.atlassian.net)
+     */
+    api_url: string;
+    /**
+     * Authentication method to use
+     */
+    auth_method: AuthMethodEnum;
+    email?: string;
+    token?: string;
+    personal_access_token?: string;
+    username?: string;
+    password?: string;
+    verify_ssl?: boolean;
+};
+
+export type AtlassianCustomFieldResponse = {
+    id: string;
+    name: string;
+    clause_names?: Array<string>;
+    field_type?: string;
+    required?: boolean;
+};
+
+export type AtlassianPriorityResponse = {
+    id: string;
+    name: string;
+    description?: string;
+    icon_url?: string;
+};
+
+export type AtlassianProjectResponse = {
+    id: string;
+    key: string;
+    name: string;
+    description?: string;
+};
+
+export type AtlassianRequestTypeResponse = {
+    id: string;
+    name: string;
+    description?: string;
+    issue_type_id?: string;
+};
+
+export type AtlassianSettingsPreviewRequest = {
+    api_url: string;
+    auth_method: AuthMethodEnum;
+    email?: string;
+    token?: string;
+    personal_access_token?: string;
+    username?: string;
+    password?: string;
+    verify_ssl?: boolean;
+    project_id: string;
+    issue_types?: Array<string>;
+    /**
+     * Mapping from frontend types to backend request types
+     */
+    support_type_mapping?: {
+        [key: string]: string;
+    };
+    reporter_field?: string;
+    impact_field?: string;
+    organisation_field?: string;
+    project_field?: string;
+    affected_resource_field?: string;
+    caller_field?: string;
+    template_field?: string;
+    sla_field?: string;
+    resolution_sla_field?: string;
+    satisfaction_field?: string;
+    request_feedback_field?: string;
+    waldur_backend_id_field?: string;
+    use_old_api?: boolean;
+    custom_field_mapping_enabled?: boolean;
+};
+
+export type AtlassianSettingsSaveRequest = {
+    api_url: string;
+    auth_method: AuthMethodEnum;
+    email?: string;
+    token?: string;
+    personal_access_token?: string;
+    username?: string;
+    password?: string;
+    verify_ssl?: boolean;
+    project_id: string;
+    issue_types?: Array<string>;
+    /**
+     * Mapping from frontend types to backend request types
+     */
+    support_type_mapping?: {
+        [key: string]: string;
+    };
+    reporter_field?: string;
+    impact_field?: string;
+    organisation_field?: string;
+    project_field?: string;
+    affected_resource_field?: string;
+    caller_field?: string;
+    template_field?: string;
+    sla_field?: string;
+    resolution_sla_field?: string;
+    satisfaction_field?: string;
+    request_feedback_field?: string;
+    waldur_backend_id_field?: string;
+    use_old_api?: boolean;
+    custom_field_mapping_enabled?: boolean;
+    /**
+     * Must be True to confirm saving settings
+     */
+    confirm_save: boolean;
+};
+
 export type Attachment = {
     readonly url?: string;
     readonly uuid?: string;
@@ -282,6 +398,8 @@ export type AttachmentRequest = {
     issue: string;
     file: Blob | File;
 };
+
+export type AuthMethodEnum = 'api_token' | 'personal_access_token' | 'basic';
 
 export type AuthResult = {
     readonly uuid: string;
@@ -2435,8 +2553,6 @@ export type ConstanceSettings = {
     ATLASSIAN_CUSTOM_ISSUE_FIELD_MAPPING_ENABLED?: boolean;
     ATLASSIAN_DEFAULT_OFFERING_ISSUE_TYPE?: string;
     ATLASSIAN_EXCLUDED_ATTACHMENT_TYPES?: string;
-    ATLASSIAN_ISSUE_TYPES?: string;
-    ATLASSIAN_SUPPORT_TYPE_MAPPING?: string;
     ATLASSIAN_DESCRIPTION_TEMPLATE?: string;
     ATLASSIAN_SUMMARY_TEMPLATE?: string;
     ATLASSIAN_AFFECTED_RESOURCE_FIELD?: string;
@@ -2616,8 +2732,6 @@ export type ConstanceSettingsRequest = {
     ATLASSIAN_CUSTOM_ISSUE_FIELD_MAPPING_ENABLED?: boolean;
     ATLASSIAN_DEFAULT_OFFERING_ISSUE_TYPE?: string;
     ATLASSIAN_EXCLUDED_ATTACHMENT_TYPES?: string;
-    ATLASSIAN_ISSUE_TYPES?: string;
-    ATLASSIAN_SUPPORT_TYPE_MAPPING?: string;
     ATLASSIAN_DESCRIPTION_TEMPLATE?: string;
     ATLASSIAN_SUMMARY_TEMPLATE?: string;
     ATLASSIAN_AFFECTED_RESOURCE_FIELD?: string;
@@ -3670,6 +3784,83 @@ export type DiscountsUpdateRequest = {
     discounts: {
         [key: string]: DiscountConfigRequest;
     };
+};
+
+export type DiscoverCustomFieldsRequestRequest = {
+    /**
+     * Atlassian API URL (e.g., https://your-domain.atlassian.net)
+     */
+    api_url: string;
+    /**
+     * Authentication method to use
+     */
+    auth_method: AuthMethodEnum;
+    email?: string;
+    token?: string;
+    personal_access_token?: string;
+    username?: string;
+    password?: string;
+    verify_ssl?: boolean;
+    project_id?: string;
+    /**
+     * Optional: Filter fields by request type
+     */
+    request_type_id?: string;
+};
+
+export type DiscoverPrioritiesRequestRequest = {
+    /**
+     * Atlassian API URL (e.g., https://your-domain.atlassian.net)
+     */
+    api_url: string;
+    /**
+     * Authentication method to use
+     */
+    auth_method: AuthMethodEnum;
+    email?: string;
+    token?: string;
+    personal_access_token?: string;
+    username?: string;
+    password?: string;
+    verify_ssl?: boolean;
+};
+
+export type DiscoverProjectsRequestRequest = {
+    /**
+     * Atlassian API URL (e.g., https://your-domain.atlassian.net)
+     */
+    api_url: string;
+    /**
+     * Authentication method to use
+     */
+    auth_method: AuthMethodEnum;
+    email?: string;
+    token?: string;
+    personal_access_token?: string;
+    username?: string;
+    password?: string;
+    verify_ssl?: boolean;
+};
+
+export type DiscoverRequestTypesRequestRequest = {
+    /**
+     * Atlassian API URL (e.g., https://your-domain.atlassian.net)
+     */
+    api_url: string;
+    /**
+     * Authentication method to use
+     */
+    auth_method: AuthMethodEnum;
+    email?: string;
+    token?: string;
+    personal_access_token?: string;
+    username?: string;
+    password?: string;
+    verify_ssl?: boolean;
+    /**
+     * Service Desk project ID or key
+     */
+    project_id: string;
 };
 
 export type DiskFormatEnum = 'qcow2' | 'raw' | 'vhd' | 'vmdk' | 'vdi' | 'iso' | 'aki' | 'ami' | 'ari';
@@ -10279,6 +10470,7 @@ export type OpenStackTenantRequest = {
      */
     default_volume_type_name?: string;
     security_groups?: Array<OpenStackTenantSecurityGroupRequest>;
+    skip_creation_of_default_subnet?: boolean;
 };
 
 export type OpenStackTenantSecurityGroup = {
@@ -11477,6 +11669,7 @@ export type PatchedOpenStackTenantRequest = {
      */
     default_volume_type_name?: string;
     security_groups?: Array<OpenStackTenantSecurityGroupRequest>;
+    skip_creation_of_default_subnet?: boolean;
 };
 
 export type PatchedOpenStackVolumeRequest = {
@@ -11899,6 +12092,19 @@ export type PatchedRemoteSynchronisationRequest = {
     local_service_provider?: string;
     is_active?: boolean;
     remotelocalcategory_set?: Array<NestedRemoteLocalCategoryRequest>;
+};
+
+export type PatchedRequestTypeAdminRequest = {
+    name?: string;
+    issue_type_name?: string;
+    /**
+     * Whether this request type is available for issue creation.
+     */
+    is_active?: boolean;
+    /**
+     * Display order. First type (lowest order) is the default.
+     */
+    order?: number;
 };
 
 export type PatchedRequestedOfferingRequest = {
@@ -15331,6 +15537,54 @@ export type ReportSectionRequest = {
     body: string;
 };
 
+export type RequestType = {
+    readonly url: string;
+    readonly uuid: string;
+    name: string;
+    issue_type_name: string;
+    /**
+     * Display order. First type (lowest order) is the default.
+     */
+    order?: number;
+};
+
+export type RequestTypeAdmin = {
+    readonly url: string;
+    readonly uuid: string;
+    name: string;
+    issue_type_name: string;
+    /**
+     * Backend ID for synced types. Null for manually created types.
+     */
+    readonly backend_id: number | null;
+    readonly backend_name: string | null;
+    /**
+     * Whether this request type is available for issue creation.
+     */
+    is_active?: boolean;
+    /**
+     * Display order. First type (lowest order) is the default.
+     */
+    order?: number;
+    /**
+     * Returns True if the request type was synced from a backend.
+     */
+    readonly is_synced: boolean;
+};
+
+export type RequestTypeAdminRequest = {
+    name: string;
+    issue_type_name: string;
+    /**
+     * Whether this request type is available for issue creation.
+     */
+    is_active?: boolean;
+    /**
+     * Display order. First type (lowest order) is the default.
+     */
+    order?: number;
+};
+
 export type RequestTypes = 'Create' | 'Update' | 'Terminate' | 'Restore';
 
 export type RequestedOffering = {
@@ -18121,6 +18375,7 @@ export type OpenStackTenantCreateOrderAttributes = {
     subnet_cidr?: string;
     skip_connection_extnet?: boolean;
     skip_creation_of_default_router?: boolean;
+    skip_creation_of_default_subnet?: boolean;
     /**
      * Optional availability group. Will be used for all instances provisioned in this tenant
      */
@@ -19270,8 +19525,6 @@ export type ConstanceSettingsRequestForm = {
     ATLASSIAN_CUSTOM_ISSUE_FIELD_MAPPING_ENABLED?: boolean;
     ATLASSIAN_DEFAULT_OFFERING_ISSUE_TYPE?: string;
     ATLASSIAN_EXCLUDED_ATTACHMENT_TYPES?: string;
-    ATLASSIAN_ISSUE_TYPES?: string;
-    ATLASSIAN_SUPPORT_TYPE_MAPPING?: string;
     ATLASSIAN_DESCRIPTION_TEMPLATE?: string;
     ATLASSIAN_SUMMARY_TEMPLATE?: string;
     ATLASSIAN_AFFECTED_RESOURCE_FIELD?: string;
@@ -19451,8 +19704,6 @@ export type ConstanceSettingsRequestMultipart = {
     ATLASSIAN_CUSTOM_ISSUE_FIELD_MAPPING_ENABLED?: boolean;
     ATLASSIAN_DEFAULT_OFFERING_ISSUE_TYPE?: string;
     ATLASSIAN_EXCLUDED_ATTACHMENT_TYPES?: string;
-    ATLASSIAN_ISSUE_TYPES?: string;
-    ATLASSIAN_SUPPORT_TYPE_MAPPING?: string;
     ATLASSIAN_DESCRIPTION_TEMPLATE?: string;
     ATLASSIAN_SUMMARY_TEMPLATE?: string;
     ATLASSIAN_AFFECTED_RESOURCE_FIELD?: string;
@@ -53485,7 +53736,7 @@ export type OpenstackTenantsListData = {
          * External IP
          */
         external_ip?: string;
-        field?: Array<'availability_zone' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'default_volume_type_name' | 'description' | 'error_message' | 'error_traceback' | 'external_network_id' | 'internal_network_id' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_type' | 'security_groups' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'subnet_cidr' | 'url' | 'uuid'>;
+        field?: Array<'availability_zone' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'default_volume_type_name' | 'description' | 'error_message' | 'error_traceback' | 'external_network_id' | 'internal_network_id' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_type' | 'security_groups' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'skip_creation_of_default_subnet' | 'state' | 'subnet_cidr' | 'url' | 'uuid'>;
         /**
          * Name
          */
@@ -53645,7 +53896,7 @@ export type OpenstackTenantsRetrieveData = {
         uuid: string;
     };
     query?: {
-        field?: Array<'availability_zone' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'default_volume_type_name' | 'description' | 'error_message' | 'error_traceback' | 'external_network_id' | 'internal_network_id' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_type' | 'security_groups' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'subnet_cidr' | 'url' | 'uuid'>;
+        field?: Array<'availability_zone' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'default_volume_type_name' | 'description' | 'error_message' | 'error_traceback' | 'external_network_id' | 'internal_network_id' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_type' | 'security_groups' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'skip_creation_of_default_subnet' | 'state' | 'subnet_cidr' | 'url' | 'uuid'>;
     };
     url: '/api/openstack-tenants/{uuid}/';
 };
@@ -63725,6 +63976,234 @@ export type SupportPrioritiesRetrieveResponses = {
 
 export type SupportPrioritiesRetrieveResponse = SupportPrioritiesRetrieveResponses[keyof SupportPrioritiesRetrieveResponses];
 
+export type SupportRequestTypesListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/support-request-types/';
+};
+
+export type SupportRequestTypesListResponses = {
+    200: Array<RequestType>;
+};
+
+export type SupportRequestTypesListResponse = SupportRequestTypesListResponses[keyof SupportRequestTypesListResponses];
+
+export type SupportRequestTypesCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/support-request-types/';
+};
+
+export type SupportRequestTypesCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type SupportRequestTypesAdminListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        is_active?: boolean;
+        name?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/support-request-types-admin/';
+};
+
+export type SupportRequestTypesAdminListResponses = {
+    200: Array<RequestTypeAdmin>;
+};
+
+export type SupportRequestTypesAdminListResponse = SupportRequestTypesAdminListResponses[keyof SupportRequestTypesAdminListResponses];
+
+export type SupportRequestTypesAdminCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        is_active?: boolean;
+        name?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/support-request-types-admin/';
+};
+
+export type SupportRequestTypesAdminCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type SupportRequestTypesAdminCreateData = {
+    body: RequestTypeAdminRequest;
+    path?: never;
+    query?: never;
+    url: '/api/support-request-types-admin/';
+};
+
+export type SupportRequestTypesAdminCreateResponses = {
+    201: RequestTypeAdmin;
+};
+
+export type SupportRequestTypesAdminCreateResponse = SupportRequestTypesAdminCreateResponses[keyof SupportRequestTypesAdminCreateResponses];
+
+export type SupportRequestTypesAdminDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/support-request-types-admin/{uuid}/';
+};
+
+export type SupportRequestTypesAdminDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type SupportRequestTypesAdminDestroyResponse = SupportRequestTypesAdminDestroyResponses[keyof SupportRequestTypesAdminDestroyResponses];
+
+export type SupportRequestTypesAdminRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/support-request-types-admin/{uuid}/';
+};
+
+export type SupportRequestTypesAdminRetrieveResponses = {
+    200: RequestTypeAdmin;
+};
+
+export type SupportRequestTypesAdminRetrieveResponse = SupportRequestTypesAdminRetrieveResponses[keyof SupportRequestTypesAdminRetrieveResponses];
+
+export type SupportRequestTypesAdminPartialUpdateData = {
+    body?: PatchedRequestTypeAdminRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/support-request-types-admin/{uuid}/';
+};
+
+export type SupportRequestTypesAdminPartialUpdateResponses = {
+    200: RequestTypeAdmin;
+};
+
+export type SupportRequestTypesAdminPartialUpdateResponse = SupportRequestTypesAdminPartialUpdateResponses[keyof SupportRequestTypesAdminPartialUpdateResponses];
+
+export type SupportRequestTypesAdminUpdateData = {
+    body: RequestTypeAdminRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/support-request-types-admin/{uuid}/';
+};
+
+export type SupportRequestTypesAdminUpdateResponses = {
+    200: RequestTypeAdmin;
+};
+
+export type SupportRequestTypesAdminUpdateResponse = SupportRequestTypesAdminUpdateResponses[keyof SupportRequestTypesAdminUpdateResponses];
+
+export type SupportRequestTypesAdminActivateData = {
+    body: RequestTypeAdminRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/support-request-types-admin/{uuid}/activate/';
+};
+
+export type SupportRequestTypesAdminActivateResponses = {
+    200: RequestTypeAdmin;
+};
+
+export type SupportRequestTypesAdminActivateResponse = SupportRequestTypesAdminActivateResponses[keyof SupportRequestTypesAdminActivateResponses];
+
+export type SupportRequestTypesAdminDeactivateData = {
+    body: RequestTypeAdminRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/support-request-types-admin/{uuid}/deactivate/';
+};
+
+export type SupportRequestTypesAdminDeactivateResponses = {
+    200: RequestTypeAdmin;
+};
+
+export type SupportRequestTypesAdminDeactivateResponse = SupportRequestTypesAdminDeactivateResponses[keyof SupportRequestTypesAdminDeactivateResponses];
+
+export type SupportRequestTypesAdminReorderData = {
+    body: RequestTypeAdminRequest;
+    path?: never;
+    query?: never;
+    url: '/api/support-request-types-admin/reorder/';
+};
+
+export type SupportRequestTypesAdminReorderResponses = {
+    200: RequestTypeAdmin;
+};
+
+export type SupportRequestTypesAdminReorderResponse = SupportRequestTypesAdminReorderResponses[keyof SupportRequestTypesAdminReorderResponses];
+
+export type SupportRequestTypesRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/support-request-types/{uuid}/';
+};
+
+export type SupportRequestTypesRetrieveResponses = {
+    200: RequestType;
+};
+
+export type SupportRequestTypesRetrieveResponse = SupportRequestTypesRetrieveResponses[keyof SupportRequestTypesRetrieveResponses];
+
 export type SupportSmaxWebhookData = {
     body: SmaxWebHookReceiverRequest;
     path?: never;
@@ -63985,6 +64464,265 @@ export type SupportZammadWebhookData = {
 };
 
 export type SupportZammadWebhookResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type SupportSettingsAtlassianListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/support/settings/atlassian/';
+};
+
+export type SupportSettingsAtlassianListResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type SupportSettingsAtlassianCreateData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/support/settings/atlassian/';
+};
+
+export type SupportSettingsAtlassianCreateResponses = {
+    /**
+     * No response body
+     */
+    201: unknown;
+};
+
+export type SupportSettingsAtlassianDestroyData = {
+    body?: never;
+    path: {
+        /**
+         * A unique integer value identifying this issue.
+         */
+        id: number;
+    };
+    query?: never;
+    url: '/api/support/settings/atlassian/{id}/';
+};
+
+export type SupportSettingsAtlassianDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type SupportSettingsAtlassianDestroyResponse = SupportSettingsAtlassianDestroyResponses[keyof SupportSettingsAtlassianDestroyResponses];
+
+export type SupportSettingsAtlassianRetrieveData = {
+    body?: never;
+    path: {
+        /**
+         * A unique integer value identifying this issue.
+         */
+        id: number;
+    };
+    query?: never;
+    url: '/api/support/settings/atlassian/{id}/';
+};
+
+export type SupportSettingsAtlassianRetrieveResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type SupportSettingsAtlassianPartialUpdateData = {
+    body?: never;
+    path: {
+        /**
+         * A unique integer value identifying this issue.
+         */
+        id: number;
+    };
+    query?: never;
+    url: '/api/support/settings/atlassian/{id}/';
+};
+
+export type SupportSettingsAtlassianPartialUpdateResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type SupportSettingsAtlassianUpdateData = {
+    body?: never;
+    path: {
+        /**
+         * A unique integer value identifying this issue.
+         */
+        id: number;
+    };
+    query?: never;
+    url: '/api/support/settings/atlassian/{id}/';
+};
+
+export type SupportSettingsAtlassianUpdateResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type SupportSettingsAtlassianCurrentSettingsRetrieveData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/support/settings/atlassian/current_settings/';
+};
+
+export type SupportSettingsAtlassianCurrentSettingsRetrieveResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type SupportSettingsAtlassianDiscoverCustomFieldsData = {
+    body: DiscoverCustomFieldsRequestRequest;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/support/settings/atlassian/discover_custom_fields/';
+};
+
+export type SupportSettingsAtlassianDiscoverCustomFieldsResponses = {
+    200: Array<AtlassianCustomFieldResponse>;
+};
+
+export type SupportSettingsAtlassianDiscoverCustomFieldsResponse = SupportSettingsAtlassianDiscoverCustomFieldsResponses[keyof SupportSettingsAtlassianDiscoverCustomFieldsResponses];
+
+export type SupportSettingsAtlassianDiscoverPrioritiesData = {
+    body: DiscoverPrioritiesRequestRequest;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/support/settings/atlassian/discover_priorities/';
+};
+
+export type SupportSettingsAtlassianDiscoverPrioritiesResponses = {
+    200: Array<AtlassianPriorityResponse>;
+};
+
+export type SupportSettingsAtlassianDiscoverPrioritiesResponse = SupportSettingsAtlassianDiscoverPrioritiesResponses[keyof SupportSettingsAtlassianDiscoverPrioritiesResponses];
+
+export type SupportSettingsAtlassianDiscoverProjectsData = {
+    body: DiscoverProjectsRequestRequest;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/support/settings/atlassian/discover_projects/';
+};
+
+export type SupportSettingsAtlassianDiscoverProjectsResponses = {
+    200: Array<AtlassianProjectResponse>;
+};
+
+export type SupportSettingsAtlassianDiscoverProjectsResponse = SupportSettingsAtlassianDiscoverProjectsResponses[keyof SupportSettingsAtlassianDiscoverProjectsResponses];
+
+export type SupportSettingsAtlassianDiscoverRequestTypesData = {
+    body: DiscoverRequestTypesRequestRequest;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/support/settings/atlassian/discover_request_types/';
+};
+
+export type SupportSettingsAtlassianDiscoverRequestTypesResponses = {
+    200: Array<AtlassianRequestTypeResponse>;
+};
+
+export type SupportSettingsAtlassianDiscoverRequestTypesResponse = SupportSettingsAtlassianDiscoverRequestTypesResponses[keyof SupportSettingsAtlassianDiscoverRequestTypesResponses];
+
+export type SupportSettingsAtlassianPreviewSettingsData = {
+    body: AtlassianSettingsPreviewRequest;
+    path?: never;
+    query?: never;
+    url: '/api/support/settings/atlassian/preview_settings/';
+};
+
+export type SupportSettingsAtlassianPreviewSettingsResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type SupportSettingsAtlassianSaveSettingsData = {
+    body: AtlassianSettingsSaveRequest;
+    path?: never;
+    query?: never;
+    url: '/api/support/settings/atlassian/save_settings/';
+};
+
+export type SupportSettingsAtlassianSaveSettingsResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type SupportSettingsAtlassianValidateCredentialsData = {
+    body: AtlassianCredentialsRequest;
+    path?: never;
+    query?: never;
+    url: '/api/support/settings/atlassian/validate_credentials/';
+};
+
+export type SupportSettingsAtlassianValidateCredentialsResponses = {
     /**
      * No response body
      */
