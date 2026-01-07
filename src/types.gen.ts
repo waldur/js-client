@@ -339,6 +339,10 @@ export type AtlassianSettingsPreviewRequest = {
     satisfaction_field?: string;
     request_feedback_field?: string;
     waldur_backend_id_field?: string;
+    /**
+     * Default issue type for marketplace request-based orders
+     */
+    default_offering_issue_type?: string;
     use_old_api?: boolean;
     custom_field_mapping_enabled?: boolean;
 };
@@ -372,6 +376,10 @@ export type AtlassianSettingsSaveRequest = {
     satisfaction_field?: string;
     request_feedback_field?: string;
     waldur_backend_id_field?: string;
+    /**
+     * Default issue type for marketplace request-based orders
+     */
+    default_offering_issue_type?: string;
     use_old_api?: boolean;
     custom_field_mapping_enabled?: boolean;
     /**
@@ -5160,6 +5168,22 @@ export type Issue = {
      * Internal processing log for debugging order lifecycle events. Visible only to staff.
      */
     readonly processing_log: unknown;
+    /**
+     * Return order UUID if the issue's resource is an Order.
+     */
+    readonly order_uuid: string | null;
+    /**
+     * Return order's project UUID if the issue's resource is an Order.
+     */
+    readonly order_project_uuid: string | null;
+    /**
+     * Return order's customer UUID if the issue's resource is an Order.
+     */
+    readonly order_customer_uuid: string | null;
+    /**
+     * Return order's resource name if the issue's resource is an Order.
+     */
+    readonly order_resource_name: string | null;
 };
 
 export type IssueReference = {
@@ -5195,19 +5219,27 @@ export type IssueStatus = {
      * Status name in Jira.
      */
     name: string;
-    type?: IssueStatusTypeEnum;
+    type?: IssueStatusType;
     readonly type_display: string;
 };
 
-export type IssueStatusRequest = {
+export type IssueStatusCreate = {
     /**
      * Status name in Jira.
      */
     name: string;
-    type?: IssueStatusTypeEnum;
+    type?: IssueStatusType;
 };
 
-export type IssueStatusTypeEnum = 0 | 1;
+export type IssueStatusCreateRequest = {
+    /**
+     * Status name in Jira.
+     */
+    name: string;
+    type?: IssueStatusType;
+};
+
+export type IssueStatusType = 0 | 1;
 
 export type IssueTypeEnum = 'INFORMATIONAL' | 'SERVICE_REQUEST' | 'CHANGE_REQUEST' | 'INCIDENT';
 
@@ -11228,7 +11260,7 @@ export type PatchedIssueStatusRequest = {
      * Status name in Jira.
      */
     name?: string;
-    type?: IssueStatusTypeEnum;
+    type?: IssueStatusType;
 };
 
 export type PatchedKeycloakUserGroupMembershipRequest = {
@@ -18318,7 +18350,7 @@ export type WebHook = {
 export type WebHookContentTypeEnum = 'json' | 'form';
 
 export type WebHookReceiver = {
-    webhookEvent: WebhookEventEnum;
+    webhookEvent: string;
     issue: JiraIssue;
     comment?: JiraComment;
     changelog?: JiraChangelog;
@@ -18326,7 +18358,7 @@ export type WebHookReceiver = {
 };
 
 export type WebHookReceiverRequest = {
-    webhookEvent: WebhookEventEnum;
+    webhookEvent: string;
     issue: JiraIssueRequest;
     comment?: JiraCommentRequest;
     changelog?: JiraChangelogRequest;
@@ -18340,8 +18372,6 @@ export type WebHookRequest = {
     destination_url: string;
     content_type?: WebHookContentTypeEnum;
 };
-
-export type WebhookEventEnum = 'jira:issue_updated' | 'jira:issue_deleted' | 'comment_created' | 'comment_updated' | 'comment_deleted';
 
 export type WidgetEnum = 'csv' | 'filesize' | 'attached_instance';
 
@@ -63579,14 +63609,14 @@ export type SupportIssueStatusesCountResponses = {
 };
 
 export type SupportIssueStatusesCreateData = {
-    body: IssueStatusRequest;
+    body: IssueStatusCreateRequest;
     path?: never;
     query?: never;
     url: '/api/support-issue-statuses/';
 };
 
 export type SupportIssueStatusesCreateResponses = {
-    201: IssueStatus;
+    201: IssueStatusCreate;
 };
 
 export type SupportIssueStatusesCreateResponse = SupportIssueStatusesCreateResponses[keyof SupportIssueStatusesCreateResponses];
@@ -63640,7 +63670,7 @@ export type SupportIssueStatusesPartialUpdateResponses = {
 export type SupportIssueStatusesPartialUpdateResponse = SupportIssueStatusesPartialUpdateResponses[keyof SupportIssueStatusesPartialUpdateResponses];
 
 export type SupportIssueStatusesUpdateData = {
-    body: IssueStatusRequest;
+    body: IssueStatusCreateRequest;
     path: {
         uuid: string;
     };
@@ -63649,7 +63679,7 @@ export type SupportIssueStatusesUpdateData = {
 };
 
 export type SupportIssueStatusesUpdateResponses = {
-    200: IssueStatus;
+    200: IssueStatusCreate;
 };
 
 export type SupportIssueStatusesUpdateResponse = SupportIssueStatusesUpdateResponses[keyof SupportIssueStatusesUpdateResponses];
