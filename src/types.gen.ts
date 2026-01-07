@@ -5883,6 +5883,10 @@ export type MergedPluginOptions = {
      */
     auto_approve_in_service_provider_projects?: boolean;
     /**
+     * If set to True, orders for this offering will always require manual approval, overriding auto_approve_in_service_provider_projects
+     */
+    disable_autoapprove?: boolean;
+    /**
      * If set to True, it will be possible to downscale resources
      */
     supports_downscaling?: boolean;
@@ -6121,6 +6125,10 @@ export type MergedPluginOptionsRequest = {
      * Skip approval of public offering belonging to the same organization under which the request is done
      */
     auto_approve_in_service_provider_projects?: boolean;
+    /**
+     * If set to True, orders for this offering will always require manual approval, overriding auto_approve_in_service_provider_projects
+     */
+    disable_autoapprove?: boolean;
     /**
      * If set to True, it will be possible to downscale resources
      */
