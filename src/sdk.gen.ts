@@ -27091,7 +27091,11 @@ export const openstackTenantsCreateFloatingIp = <ThrowOnError extends boolean = 
             }
         ],
         url: '/api/openstack-tenants/{uuid}/create_floating_ip/',
-        ...options
+        ...options,
+        headers: {
+            'Content-Type': 'application/json',
+            ...options.headers
+        }
     });
 };
 

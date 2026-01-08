@@ -9270,6 +9270,13 @@ export type OpenStackFloatingIpDescriptionUpdateRequest = {
     description?: string;
 };
 
+export type OpenStackFloatingIpRequest = {
+    /**
+     * Optional router to use for external network detection
+     */
+    router?: string | null;
+};
+
 export type OpenStackImage = {
     readonly url: string;
     readonly uuid: string;
@@ -49706,7 +49713,7 @@ export type OpenstackFloatingIpsListData = {
          * External IP
          */
         external_ip?: string;
-        field?: Array<'access_url' | 'address' | 'backend_id' | 'backend_network_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'external_address' | 'instance_name' | 'instance_url' | 'instance_uuid' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'port' | 'port_fixed_ips' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'runtime_state' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'tenant' | 'tenant_name' | 'tenant_uuid' | 'url' | 'uuid'>;
+        field?: Array<'access_url' | 'address' | 'backend_id' | 'backend_network_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'external_address' | 'instance_name' | 'instance_url' | 'instance_uuid' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'port' | 'port_fixed_ips' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'router' | 'runtime_state' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'tenant' | 'tenant_name' | 'tenant_uuid' | 'url' | 'uuid'>;
         /**
          * Is free
          */
@@ -49911,7 +49918,7 @@ export type OpenstackFloatingIpsRetrieveData = {
         uuid: string;
     };
     query?: {
-        field?: Array<'access_url' | 'address' | 'backend_id' | 'backend_network_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'external_address' | 'instance_name' | 'instance_url' | 'instance_uuid' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'port' | 'port_fixed_ips' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'runtime_state' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'tenant' | 'tenant_name' | 'tenant_uuid' | 'url' | 'uuid'>;
+        field?: Array<'access_url' | 'address' | 'backend_id' | 'backend_network_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'external_address' | 'instance_name' | 'instance_url' | 'instance_uuid' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'port' | 'port_fixed_ips' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'router' | 'runtime_state' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'tenant' | 'tenant_name' | 'tenant_uuid' | 'url' | 'uuid'>;
     };
     url: '/api/openstack-floating-ips/{uuid}/';
 };
@@ -52143,6 +52150,7 @@ export type OpenstackRoutersListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        state?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
         /**
          * Tenant URL
          */
@@ -52181,6 +52189,7 @@ export type OpenstackRoutersCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        state?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
         /**
          * Tenant URL
          */
@@ -54191,7 +54200,7 @@ export type OpenstackTenantsChangePasswordResponses = {
 };
 
 export type OpenstackTenantsCreateFloatingIpData = {
-    body?: never;
+    body?: OpenStackFloatingIpRequest;
     path: {
         uuid: string;
     };
