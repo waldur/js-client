@@ -49,6 +49,31 @@ export type AdminAnnouncementRequest = {
 
 export type AdminAnnouncementTypeEnum = 'information' | 'warning' | 'danger';
 
+export type AffiliationTypeEnum = 'employment' | 'education' | 'visiting' | 'honorary' | 'consulting';
+
+export type AffinityMatrixEntry = {
+    uuid: string;
+    reviewer_uuid: string;
+    reviewer_name: string;
+    proposal_uuid: string;
+    proposal_name: string;
+    affinity_score: number;
+    keyword_score: number | null;
+    text_score: number | null;
+    has_conflict: boolean;
+    coi_type: string | null;
+    coi_severity: string | null;
+    coi_status: string | null;
+    source: string;
+};
+
+export type AffinityMatrixResponse = {
+    count: number;
+    results: Array<AffinityMatrixEntry>;
+};
+
+export type AffinityMethodEnum = 'keyword' | 'tfidf' | 'combined';
+
 export type AgentEventSubscriptionCreateRequest = {
     /**
      * The type of object to observe for events
@@ -227,6 +252,8 @@ export type AllocationUserUsage = {
     readonly full_name: string;
 };
 
+export type AmountRangeEnum = 'none' | 'under_5k' | '5k_10k' | '10k_50k' | 'over_50k';
+
 export type Answer = {
     readonly uuid: string;
     readonly question_description: string;
@@ -255,6 +282,211 @@ export type AnswerSubmitResponse = {
     detail: string;
     completion: ChecklistCompletion;
 };
+
+export type AssignmentBatch = {
+    readonly url: string;
+    readonly uuid: string;
+    readonly call: string;
+    readonly call_uuid: string;
+    readonly call_name: string;
+    readonly reviewer_pool_entry: string;
+    readonly reviewer_pool_entry_uuid: string;
+    /**
+     * Get reviewer name from pool entry.
+     */
+    readonly reviewer_name: string | null;
+    /**
+     * Get reviewer email from pool entry.
+     */
+    readonly reviewer_email: string | null;
+    /**
+     * Get reviewer profile UUID if available.
+     */
+    readonly reviewer_uuid: string | null;
+    status: AssignmentBatchStatus;
+    readonly status_display: string;
+    /**
+     * When the invitation was sent to the reviewer.
+     */
+    readonly sent_at: string | null;
+    /**
+     * When the invitation expires.
+     */
+    readonly expires_at: string | null;
+    /**
+     * When the reviewer completed their response.
+     */
+    readonly responded_at: string | null;
+    source: AssignmentSource;
+    readonly source_display: string;
+    /**
+     * User who created/approved this batch.
+     */
+    readonly created_by: string | null;
+    readonly created_by_name: string;
+    /**
+     * Optional notes from call manager to reviewer.
+     */
+    manager_notes?: string;
+    readonly items: Array<AssignmentItem>;
+    /**
+     * Total count of items in batch.
+     */
+    readonly items_count: number;
+    /**
+     * Count of pending items.
+     */
+    readonly items_pending_count: number;
+    /**
+     * Count of accepted items.
+     */
+    readonly items_accepted_count: number;
+    /**
+     * Count of declined items.
+     */
+    readonly items_declined_count: number;
+    readonly is_expired: boolean;
+    readonly created: string;
+};
+
+export type AssignmentBatchList = {
+    readonly url: string;
+    readonly uuid: string;
+    readonly call: string;
+    readonly call_uuid: string;
+    readonly call_name: string;
+    readonly reviewer_pool_entry: string;
+    readonly reviewer_pool_entry_uuid: string;
+    /**
+     * Get reviewer name from pool entry.
+     */
+    readonly reviewer_name: string | null;
+    /**
+     * Get reviewer email from pool entry.
+     */
+    readonly reviewer_email: string | null;
+    /**
+     * Get reviewer profile UUID if available.
+     */
+    readonly reviewer_uuid: string | null;
+    status: AssignmentBatchStatus;
+    readonly status_display: string;
+    /**
+     * When the invitation was sent to the reviewer.
+     */
+    readonly sent_at: string | null;
+    /**
+     * When the invitation expires.
+     */
+    readonly expires_at: string | null;
+    /**
+     * When the reviewer completed their response.
+     */
+    readonly responded_at: string | null;
+    source: AssignmentSource;
+    readonly source_display: string;
+    /**
+     * User who created/approved this batch.
+     */
+    readonly created_by: string | null;
+    readonly created_by_name: string;
+    /**
+     * Optional notes from call manager to reviewer.
+     */
+    manager_notes?: string;
+    /**
+     * Total count of items in batch.
+     */
+    readonly items_count: number;
+    /**
+     * Count of pending items.
+     */
+    readonly items_pending_count: number;
+    /**
+     * Count of accepted items.
+     */
+    readonly items_accepted_count: number;
+    /**
+     * Count of declined items.
+     */
+    readonly items_declined_count: number;
+    readonly is_expired: boolean;
+    readonly created: string;
+};
+
+export type AssignmentBatchRequest = {
+    /**
+     * Optional notes from call manager to reviewer.
+     */
+    manager_notes?: string;
+};
+
+export type AssignmentBatchStatus = 'draft' | 'sent' | 'responded' | 'expired' | 'cancelled';
+
+export type AssignmentItem = {
+    readonly url: string;
+    readonly uuid: string;
+    readonly batch: string;
+    readonly proposal: string;
+    readonly proposal_uuid: string;
+    readonly proposal_name: string;
+    readonly proposal_slug: string;
+    status: AssignmentItemStatus;
+    readonly status_display: string;
+    /**
+     * Affinity score used for assignment (0-1).
+     */
+    readonly affinity_score: number | null;
+    /**
+     * Whether COI was detected during pre-check.
+     */
+    readonly has_coi: boolean;
+    /**
+     * Count of COI records blocking this assignment.
+     */
+    readonly coi_count: number;
+    readonly responded_at: string | null;
+    /**
+     * Reason provided by reviewer for declining.
+     */
+    decline_reason?: string;
+    /**
+     * The Review record created when this assignment was accepted.
+     */
+    readonly review: string | null;
+    readonly review_uuid: string;
+    /**
+     * Number of times this proposal has been reassigned.
+     */
+    readonly reassign_count: number;
+    readonly created: string;
+};
+
+export type AssignmentItemDeclineRequest = {
+    /**
+     * Reason for declining this assignment
+     */
+    reason?: string;
+};
+
+export type AssignmentItemRequest = {
+    /**
+     * Reason provided by reviewer for declining.
+     */
+    decline_reason?: string;
+};
+
+export type AssignmentItemResponse = {
+    detail: string;
+    /**
+     * UUID of created review (only on accept)
+     */
+    review_uuid?: string | null;
+};
+
+export type AssignmentItemStatus = 'pending' | 'accepted' | 'declined' | 'coi_blocked' | 'expired' | 'reassigned';
+
+export type AssignmentSource = 'algorithm' | 'manual';
 
 export type Association = {
     readonly uuid: string;
@@ -1249,6 +1481,8 @@ export type BasicUser = {
     image?: string | null;
 };
 
+export type BidEnum = 'eager' | 'willing' | 'not_willing' | 'conflict';
+
 export type BillingTypeEnum = 'fixed' | 'usage' | 'limit' | 'one' | 'few';
 
 export type BillingUnit = 'month' | 'quarter' | 'half_month' | 'day' | 'hour' | 'quantity';
@@ -1419,9 +1653,220 @@ export type BulkSilenceResponse = {
     duration_days?: number | null;
 };
 
+export type CoiDetectionJob = {
+    /**
+     * Return URL for the job detail endpoint.
+     */
+    readonly url: string;
+    readonly uuid: string;
+    readonly call: string;
+    readonly call_uuid: string;
+    readonly call_name: string;
+    job_type: CoiDetectionJobJobTypeEnum;
+    state: CoiDetectionJobStateEnum;
+    readonly total_pairs: number;
+    readonly processed_pairs: number;
+    readonly progress_percentage: number;
+    readonly conflicts_found: number;
+    readonly started_at: string | null;
+    readonly completed_at: string | null;
+    readonly error_message: string;
+    readonly created: string;
+};
+
+export type CoiDetectionJobJobTypeEnum = 'full_call' | 'incremental' | 'single_pair';
+
+export type CoiDetectionJobStateEnum = 'pending' | 'running' | 'completed' | 'failed' | 'cancelled';
+
+export type CoiDisclosureFinancialInterest = {
+    readonly uuid: string;
+    entity_name: string;
+    entity_type: EntityTypeEnum;
+    relationship_type: RelationshipTypeEnum;
+    amount_range: AmountRangeEnum;
+    is_ongoing?: boolean;
+    description?: string;
+};
+
+export type CoiDisclosureFinancialInterestRequest = {
+    entity_name: string;
+    entity_type: EntityTypeEnum;
+    relationship_type: RelationshipTypeEnum;
+    amount_range: AmountRangeEnum;
+    is_ongoing?: boolean;
+    description?: string;
+};
+
+export type CoiDisclosureForm = {
+    readonly url: string;
+    readonly uuid: string;
+    readonly reviewer: string;
+    readonly reviewer_uuid: string;
+    readonly reviewer_name: string;
+    /**
+     * Null for general annual disclosure
+     */
+    call?: string | null;
+    readonly call_uuid: string;
+    readonly call_name: string;
+    certified?: boolean;
+    readonly certification_date: string | null;
+    /**
+     * Legal text they agreed to
+     */
+    certification_statement?: string;
+    has_financial_interests?: boolean;
+    readonly financial_interests: Array<CoiDisclosureFinancialInterest>;
+    has_personal_relationships?: boolean;
+    personal_relationships?: unknown;
+    has_other_conflicts?: boolean;
+    other_conflicts_description?: string;
+    /**
+     * Typically 1 year from certification
+     */
+    valid_until: string;
+    readonly is_current: boolean;
+    readonly created: string;
+};
+
+export type CoiDisclosureFormRequest = {
+    /**
+     * Null for general annual disclosure
+     */
+    call?: string | null;
+    certified?: boolean;
+    /**
+     * Legal text they agreed to
+     */
+    certification_statement?: string;
+    has_financial_interests?: boolean;
+    has_personal_relationships?: boolean;
+    personal_relationships?: unknown;
+    has_other_conflicts?: boolean;
+    other_conflicts_description?: string;
+    /**
+     * Typically 1 year from certification
+     */
+    valid_until: string;
+};
+
+export type CoiSeverityLevel = 'real' | 'apparent' | 'potential';
+
+export type CoiStatusUpdateRequest = {
+    status: CoiStatusUpdateStatusEnum;
+    review_notes?: string;
+    /**
+     * Required when status is 'waived'
+     */
+    management_plan?: string;
+};
+
+export type CoiStatusUpdateStatusEnum = 'dismissed' | 'waived' | 'recused';
+
+export type CallAssignmentConfiguration = {
+    readonly uuid: string;
+    readonly call: string;
+    readonly call_uuid: string;
+    readonly call_name: string;
+    /**
+     * Automatically assign next-best reviewer when someone declines. If False, manager must manually approve reassignments.
+     */
+    auto_reassign_on_decline?: boolean;
+    /**
+     * Maximum automatic reassignment attempts before requiring manual intervention.
+     */
+    max_auto_reassign_attempts?: number;
+    /**
+     * Days until assignment invitation expires if not responded to.
+     */
+    assignment_expiration_days?: number;
+    /**
+     * Days before expiry to send reminder notification.
+     */
+    send_reminder_before_expiry_days?: number;
+    readonly created: string;
+    readonly modified: string;
+};
+
+export type CallAssignmentConfigurationRequest = {
+    /**
+     * Automatically assign next-best reviewer when someone declines. If False, manager must manually approve reassignments.
+     */
+    auto_reassign_on_decline?: boolean;
+    /**
+     * Maximum automatic reassignment attempts before requiring manual intervention.
+     */
+    max_auto_reassign_attempts?: number;
+    /**
+     * Days until assignment invitation expires if not responded to.
+     */
+    assignment_expiration_days?: number;
+    /**
+     * Days before expiry to send reminder notification.
+     */
+    send_reminder_before_expiry_days?: number;
+};
+
 export type CallAttachDocumentsRequest = {
     documents: Array<Blob | File>;
     description?: string;
+};
+
+export type CallCoiConfiguration = {
+    readonly uuid: string;
+    readonly call: string;
+    readonly call_uuid: string;
+    readonly call_name: string;
+    /**
+     * Years to look back for co-authorship detection
+     */
+    coauthorship_lookback_years?: number;
+    /**
+     * Minimum shared papers to trigger COI
+     */
+    coauthorship_threshold_papers?: number;
+    /**
+     * Years to look back for former institution detection
+     */
+    institutional_lookback_years?: number;
+    /**
+     * Detect same-department as COI
+     */
+    include_same_department?: boolean;
+    /**
+     * Detect same-institution as COI
+     */
+    include_same_institution?: boolean;
+    /**
+     * COI types requiring automatic recusal
+     */
+    recusal_required_types?: Array<string>;
+    /**
+     * COI types allowing management plan
+     */
+    management_allowed_types?: Array<string>;
+    /**
+     * COI types requiring disclosure only
+     */
+    disclosure_only_types?: Array<string>;
+    /**
+     * Enable automated co-authorship detection
+     */
+    auto_detect_coauthorship?: boolean;
+    /**
+     * Enable automated institutional affiliation detection
+     */
+    auto_detect_institutional?: boolean;
+    /**
+     * Enable detection of reviewer named in proposals
+     */
+    auto_detect_named_personnel?: boolean;
+    /**
+     * Level of proposal information disclosed in reviewer invitations
+     */
+    invitation_proposal_disclosure?: InvitationProposalDisclosureEnum;
+    readonly created: string;
+    readonly modified: string;
 };
 
 export type CallComplianceOverview = {
@@ -1522,6 +1967,88 @@ export type CallResourceTemplateRequest = {
      */
     is_required?: boolean;
     requested_offering: string;
+};
+
+export type CallReviewerPool = {
+    readonly url: string;
+    readonly uuid: string;
+    readonly call: string;
+    readonly call_uuid: string;
+    readonly call_name: string;
+    readonly reviewer: string | null;
+    /**
+     * Get reviewer profile UUID if available.
+     */
+    readonly reviewer_uuid: string | null;
+    /**
+     * Get reviewer name from profile or invited_user.
+     */
+    readonly reviewer_name: string | null;
+    /**
+     * Get email from profile, invited_user, or invited_email.
+     */
+    readonly reviewer_email: string | null;
+    /**
+     * Check if reviewer has a profile.
+     */
+    readonly has_profile: boolean;
+    /**
+     * Email address for direct invitations
+     */
+    readonly invited_email: string;
+    /**
+     * Waldur user if email matches existing account
+     */
+    readonly invited_user: string | null;
+    readonly invited_user_name: string;
+    readonly invited_at: string;
+    invitation_status: InvitationStatusEnum;
+    readonly invitation_status_display: string;
+    readonly response_date: string | null;
+    readonly decline_reason: string;
+    max_assignments?: number;
+    readonly current_assignments: number;
+    /**
+     * Calculated affinity to call topics (0-1)
+     */
+    expertise_match_score?: number | null;
+    readonly invited_by_name: string;
+    readonly invitation_token: string;
+    readonly invitation_expires_at: string | null;
+    readonly created: string;
+    /**
+     * Count total COIs for this reviewer in this call.
+     */
+    readonly coi_count: number;
+    /**
+     * Count COIs by severity level.
+     */
+    readonly coi_by_severity: {
+        [key: string]: unknown;
+    };
+    /**
+     * Legacy field - always returns 0.
+     *
+     * Previously counted reviews in 'created' state, but that state
+     * has been removed. Reviews are now created directly in 'in_review' state.
+     * Kept for backwards compatibility with frontend.
+     */
+    readonly reviews_pending: number;
+    /**
+     * Count reviews in 'in_review' state.
+     */
+    readonly reviews_in_progress: number;
+    /**
+     * Count reviews in 'submitted' state.
+     */
+    readonly reviews_completed: number;
+};
+
+export type CallReviewerPoolUpdate = {
+    /**
+     * Maximum number of proposals that can be assigned to this reviewer
+     */
+    max_assignments: number;
 };
 
 export type CallRound = {
@@ -2194,6 +2721,8 @@ export type ClusterSecurityGroupRequest = {
     rules: Array<RancherClusterSecurityGroupRuleRequest>;
 };
 
+export type CoiTypeEnum = 'INST_SAME' | 'FIN_DIRECT' | 'REL_FAMILY' | 'ROLE_NAMED' | 'COLLAB_ACTIVE' | 'REL_MENTOR' | 'REL_SUPERVISOR' | 'COAUTH_RECENT' | 'INST_DEPT' | 'INST_FORMER' | 'ROLE_CONF' | 'COLLAB_GRANT' | 'REL_EDITORIAL' | 'COMPET' | 'COAUTH_OLD' | 'INST_CONSORT' | 'CONF_ATTEND' | 'SOC_MEMBER';
+
 export type Comment = {
     readonly url: string;
     readonly uuid: string;
@@ -2468,8 +2997,82 @@ export type ComponentsUsageStats = {
     readonly components: Array<ComponentStats>;
 };
 
+export type ComputeAffinitiesResponse = {
+    computed_count: number;
+    message: string;
+};
+
 export type ConfirmEmailRequestRequest = {
     code: string;
+};
+
+export type ConflictOfInterest = {
+    readonly url: string;
+    readonly uuid: string;
+    readonly reviewer: string;
+    readonly reviewer_uuid: string;
+    readonly reviewer_name: string;
+    readonly proposal: string | null;
+    readonly proposal_uuid: string;
+    readonly proposal_name: string;
+    readonly round_uuid: string;
+    readonly round_name: string;
+    readonly call: string;
+    readonly call_uuid: string;
+    readonly call_name: string;
+    coi_type: CoiTypeEnum;
+    readonly coi_type_display: string;
+    severity: CoiSeverityLevel;
+    readonly severity_display: string;
+    detection_method: DetectionMethodEnum;
+    readonly detected_at: string;
+    readonly evidence_description: string;
+    /**
+     * Structured evidence: {"papers": [...], "affiliation_overlap": {...}}
+     */
+    readonly evidence_data: unknown;
+    status?: ConflictOfInterestStatusEnum;
+    readonly status_display: string;
+    readonly reviewed_by: string | null;
+    readonly reviewed_by_name: string;
+    readonly reviewed_at: string | null;
+    review_notes?: string;
+    /**
+     * If waived, how is it managed
+     */
+    management_plan?: string;
+    /**
+     * Specific person causing conflict
+     */
+    readonly conflicting_user: string | null;
+    readonly conflicting_user_name: string;
+    readonly conflicting_organization: string | null;
+    readonly conflicting_organization_name: string;
+    readonly created: string;
+};
+
+export type ConflictOfInterestRequest = {
+    status?: ConflictOfInterestStatusEnum;
+    review_notes?: string;
+    /**
+     * If waived, how is it managed
+     */
+    management_plan?: string;
+};
+
+export type ConflictOfInterestStatusEnum = 'pending' | 'dismissed' | 'waived' | 'recused';
+
+export type ConflictSummaryResponse = {
+    total: number;
+    by_status: {
+        [key: string]: number;
+    };
+    by_severity: {
+        [key: string]: number;
+    };
+    by_type: {
+        [key: string]: number;
+    };
 };
 
 export type ConsoleUrl = {
@@ -2598,6 +3201,21 @@ export type ConstanceSettings = {
     ENABLE_MOCK_SERVICE_ACCOUNT_BACKEND?: boolean;
     ENABLE_MOCK_COURSE_ACCOUNT_BACKEND?: boolean;
     PROPOSAL_REVIEW_DURATION?: number;
+    ORCID_CLIENT_ID?: string;
+    ORCID_CLIENT_SECRET?: string;
+    ORCID_REDIRECT_URI?: string;
+    ORCID_API_URL?: string;
+    ORCID_AUTH_URL?: string;
+    ORCID_SANDBOX_MODE?: boolean;
+    SEMANTIC_SCHOLAR_API_KEY?: string;
+    CROSSREF_MAILTO?: string;
+    REVIEWER_PROFILES_ENABLED?: boolean;
+    COI_DETECTION_ENABLED?: boolean;
+    COI_DISCLOSURE_REQUIRED?: boolean;
+    AUTOMATED_MATCHING_ENABLED?: boolean;
+    COI_COAUTHORSHIP_LOOKBACK_YEARS?: number;
+    COI_COAUTHORSHIP_THRESHOLD_PAPERS?: number;
+    COI_INSTITUTIONAL_LOOKBACK_YEARS?: number;
     USER_TABLE_COLUMNS?: string;
     AUTO_APPROVE_USER_TOS?: boolean;
     FREEIPA_ENABLED?: boolean;
@@ -2777,6 +3395,21 @@ export type ConstanceSettingsRequest = {
     ENABLE_MOCK_SERVICE_ACCOUNT_BACKEND?: boolean;
     ENABLE_MOCK_COURSE_ACCOUNT_BACKEND?: boolean;
     PROPOSAL_REVIEW_DURATION?: number;
+    ORCID_CLIENT_ID?: string;
+    ORCID_CLIENT_SECRET?: string;
+    ORCID_REDIRECT_URI?: string;
+    ORCID_API_URL?: string;
+    ORCID_AUTH_URL?: string;
+    ORCID_SANDBOX_MODE?: boolean;
+    SEMANTIC_SCHOLAR_API_KEY?: string;
+    CROSSREF_MAILTO?: string;
+    REVIEWER_PROFILES_ENABLED?: boolean;
+    COI_DETECTION_ENABLED?: boolean;
+    COI_DISCLOSURE_REQUIRED?: boolean;
+    AUTOMATED_MATCHING_ENABLED?: boolean;
+    COI_COAUTHORSHIP_LOOKBACK_YEARS?: number;
+    COI_COAUTHORSHIP_THRESHOLD_PAPERS?: number;
+    COI_INSTITUTIONAL_LOOKBACK_YEARS?: number;
     USER_TABLE_COLUMNS?: string;
     AUTO_APPROVE_USER_TOS?: boolean;
     FREEIPA_ENABLED?: boolean;
@@ -2848,7 +3481,7 @@ export type CoreStates = 'CREATION_SCHEDULED' | 'CREATING' | 'UPDATE_SCHEDULED' 
 export type CorrectiveAction = {
     label: string;
     category: CategoryEnum;
-    severity: SeverityEnum;
+    severity: CorrectiveActionSeverityEnum;
     method?: string;
     api_endpoint?: boolean;
     confirmation_required?: boolean;
@@ -2861,6 +3494,8 @@ export type CorrectiveAction = {
         [key: string]: unknown;
     };
 };
+
+export type CorrectiveActionSeverityEnum = 'safe' | 'low' | 'medium' | 'high' | 'critical';
 
 export type CostsForPeriod = {
     readonly total_price: string;
@@ -3073,6 +3708,32 @@ export type CreateFeedbackRequest = {
     comment?: string;
     evaluation: number;
     token: string;
+};
+
+export type CreateManualAssignmentRequest = {
+    /**
+     * UUID of the reviewer pool entry to assign proposals to
+     */
+    reviewer_pool_entry_uuid: string;
+    /**
+     * List of proposal UUIDs to assign to the reviewer
+     */
+    proposal_uuids: Array<string>;
+    /**
+     * Optional notes about this assignment
+     */
+    manager_notes?: string;
+};
+
+export type CreateManualAssignmentResponse = {
+    batch_uuid: string;
+    items_created: number;
+    /**
+     * Proposals that were skipped with reasons
+     */
+    skipped_proposals: Array<{
+        [key: string]: unknown;
+    }>;
 };
 
 export type CreateRouter = {
@@ -3625,6 +4286,8 @@ export type DetailState = {
     readonly state: string;
 };
 
+export type DetectionMethodEnum = 'automated' | 'self_disclosed' | 'reported' | 'manager_identified';
+
 export type DigitalOceanDroplet = {
     readonly url?: string;
     readonly uuid?: string;
@@ -3919,6 +4582,18 @@ export type EmailHookRequest = {
     email: string;
 };
 
+export type EmailInvitationRequest = {
+    /**
+     * Email address to send the invitation to
+     */
+    email: string;
+    /**
+     * Custom message to include in invitation email
+     */
+    invitation_message?: string;
+    max_assignments?: number;
+};
+
 export type EmailLog = {
     readonly uuid: string;
     readonly url: string;
@@ -3941,6 +4616,8 @@ export type EndpointUuidRequest = {
      */
     uuid: string;
 };
+
+export type EntityTypeEnum = 'company' | 'startup' | 'nonprofit' | 'government' | 'other';
 
 export type EthertypeEnum = 'IPv4' | 'IPv6';
 
@@ -4017,6 +4694,19 @@ export type ExecuteActionResponse = {
 };
 
 export type ExecutionStateEnum = 'Scheduled' | 'Processing' | 'OK' | 'Erred';
+
+export type ExpertiseCategory = {
+    readonly url: string;
+    readonly uuid: string;
+    name: string;
+    code: string;
+    description?: string;
+    parent?: string | null;
+    /**
+     * Depth in hierarchy (0 = root)
+     */
+    level?: number;
+};
 
 export type ExportComponentData = {
     type: string;
@@ -4190,6 +4880,24 @@ export type ExportTermsOfServiceDataRequest = {
     is_active: boolean;
     requires_reconsent: boolean;
     grace_period_days: number | null;
+};
+
+export type ExtendDeadlineRequestRequest = {
+    /**
+     * New expiration date and time for the assignment batch.
+     */
+    expires_at: string;
+};
+
+export type ExtendDeadlineResponse = {
+    /**
+     * The updated expiration date.
+     */
+    expires_at: string;
+    /**
+     * Current status of the batch.
+     */
+    status: string;
 };
 
 export type ExternalLink = {
@@ -4366,6 +5074,61 @@ export type FreeipaProfileRequest = {
      * Indicates when the user has agreed with the policy.
      */
     agreement_date?: string;
+};
+
+export type GenerateAssignmentsRequest = {
+    /**
+     * Specific proposal UUIDs to generate assignments for. If empty, generates for all submitted proposals needing reviewers.
+     */
+    proposal_uuids?: Array<string>;
+    /**
+     * Number of reviewers to assign per proposal. If not specified, uses call's minimum_number_of_reviewers setting.
+     */
+    reviewers_per_proposal?: number;
+};
+
+export type GenerateAssignmentsResponse = {
+    batches_created: number;
+    items_created: number;
+    proposals_processed: number;
+    /**
+     * Proposals that were skipped with reasons
+     */
+    skipped_proposals: Array<{
+        [key: string]: unknown;
+    }>;
+};
+
+export type GenerateSuggestionsRequestRequest = {
+    /**
+     * What content to match reviewers against
+     */
+    source?: GenerateSuggestionsRequestSourceEnum;
+    /**
+     * Specific proposal UUIDs to match against (for selected_proposals source)
+     */
+    proposal_uuids?: Array<string>;
+    /**
+     * Custom keywords to search for (for custom_keywords source)
+     */
+    keywords?: Array<string>;
+    /**
+     * How to search for custom keywords
+     */
+    keyword_search_mode?: KeywordSearchModeEnum;
+    /**
+     * Minimum affinity score for suggestions (0.0-1.0)
+     */
+    min_affinity_threshold?: number;
+};
+
+export type GenerateSuggestionsRequestSourceEnum = 'call_description' | 'all_proposals' | 'selected_proposals' | 'custom_keywords';
+
+export type GenerateSuggestionsResponse = {
+    suggestions_created: number;
+    reviewers_evaluated: number;
+    source_used: string;
+    suggestions: Array<string>;
 };
 
 export type GoogleCalendar = {
@@ -4683,6 +5446,19 @@ export type ImpactLevelDisplayEnum = 'No impact' | 'Degraded performance' | 'Par
 
 export type ImpactLevelEnum = 1 | 2 | 3 | 4;
 
+export type ImportPublicationsRequest = {
+    /**
+     * Source to import publications from
+     */
+    source?: ImportPublicationsSourceEnum;
+    /**
+     * DOI of publication to import (required if source is 'doi')
+     */
+    doi?: string;
+};
+
+export type ImportPublicationsSourceEnum = 'orcid' | 'doi';
+
 export type ImportResourceRequest = {
     /**
      * Backend identifier of the resource
@@ -4817,6 +5593,50 @@ export type Invitation = {
     execution_state: ExecutionStateEnum;
 };
 
+export type InvitationAcceptError = {
+    error: string;
+    message: string;
+    profile_url?: string;
+};
+
+export type InvitationAcceptRequest = {
+    /**
+     * Optional list of self-declared conflicts with proposals. Each conflict creates a ConflictOfInterest record with detection_method='self_disclosed'.
+     */
+    declared_conflicts?: Array<SelfDeclaredConflictRequest>;
+};
+
+export type InvitationAcceptResponse = {
+    detail: string;
+    /**
+     * UUIDs of created conflict records
+     */
+    declared_conflicts?: Array<string>;
+};
+
+export type InvitationAuthError = {
+    error: string;
+};
+
+export type InvitationCoiConfiguration = {
+    /**
+     * COI types requiring automatic recusal
+     */
+    recusal_required_types: Array<string>;
+    /**
+     * COI types where a management plan can be submitted
+     */
+    management_allowed_types: Array<string>;
+    /**
+     * COI types that only need disclosure
+     */
+    disclosure_only_types: Array<string>;
+    /**
+     * How much proposal info is disclosed to reviewers
+     */
+    proposal_disclosure_level: string;
+};
+
 export type InvitationCheck = {
     /**
      * Email address to check for existing invitations
@@ -4826,6 +5646,25 @@ export type InvitationCheck = {
      * Whether civil number verification is required
      */
     civil_number_required?: boolean;
+};
+
+export type InvitationDeclineRequest = {
+    /**
+     * Reason for declining the invitation
+     */
+    reason: string;
+};
+
+export type InvitationDeclineResponse = {
+    detail: string;
+};
+
+export type InvitationProposalDisclosureEnum = 'titles_only' | 'titles_and_summaries' | 'full_details';
+
+export type InvitationProposalSummary = {
+    uuid: string;
+    name: string;
+    summary?: string | null;
 };
 
 export type InvitationRequest = {
@@ -4856,6 +5695,8 @@ export type InvitationRequest = {
 export type InvitationState = 'project' | 'requested' | 'rejected' | 'pending' | 'accepted' | 'canceled' | 'expired';
 
 export type InvitationStateEnum = 'project' | 'requested' | 'rejected' | 'pending' | 'accepted' | 'canceled' | 'expired';
+
+export type InvitationStatusEnum = 'pending' | 'accepted' | 'declined' | 'expired';
 
 export type InvitationUpdate = {
     /**
@@ -5440,6 +6281,8 @@ export type KeycloakUserGroupMembershipRequest = {
 
 export type KeycloakUserGroupMembershipState = 'pending' | 'active';
 
+export type KeywordSearchModeEnum = 'expertise_only' | 'full_text';
+
 export type KindEnum = 'default' | 'course' | 'public';
 
 export type LexisLink = {
@@ -5851,6 +6694,30 @@ export type MarketplaceServiceProviderUser = {
      * Designates whether this user should be treated as active. Unselect this instead of deleting accounts.
      */
     is_active?: boolean;
+};
+
+export type MatchingAlgorithm = 'minmax' | 'fairflow' | 'hungarian';
+
+export type MatchingConfiguration = {
+    readonly uuid: string;
+    readonly call_uuid: string;
+    readonly call_name: string;
+    affinity_method?: AffinityMethodEnum;
+    keyword_weight?: number;
+    text_weight?: number;
+    min_reviewers_per_proposal?: number;
+    max_reviewers_per_proposal?: number;
+    min_proposals_per_reviewer?: number;
+    max_proposals_per_reviewer?: number;
+    algorithm?: MatchingAlgorithm;
+    /**
+     * Minimum affinity score for FairFlow algorithm
+     */
+    min_affinity_threshold?: number;
+    use_reviewer_bids?: boolean;
+    bid_weight?: number;
+    readonly created: string;
+    readonly modified: string;
 };
 
 export type MergedPluginOptions = {
@@ -6665,6 +7532,10 @@ export type MergedSecretOptionsRequest = {
     node_disk_driver?: NodeDiskDriverEnum;
 };
 
+export type MessageResponse = {
+    message: string;
+};
+
 export type MessageTemplate = {
     readonly url: string;
     readonly uuid: string;
@@ -6743,6 +7614,47 @@ export type MoveResourceRequest = {
      * Target project URL where the resource should be moved
      */
     project: ProjectHyperlinkRequest;
+};
+
+export type MyAssignmentBatch = {
+    uuid: string;
+    call_uuid: string;
+    call_name: string;
+    status: string;
+    status_display: string;
+    sent_at: string;
+    expires_at: string | null;
+    is_expired: boolean;
+    items_count: number;
+    items_pending_count: number;
+    manager_notes: string;
+};
+
+export type MyAssignmentBatchDetail = {
+    uuid: string;
+    call_uuid: string;
+    call_name: string;
+    status: string;
+    status_display: string;
+    sent_at: string;
+    expires_at: string | null;
+    is_expired: boolean;
+    items_count: number;
+    items_pending_count: number;
+    manager_notes: string;
+    items: Array<MyAssignmentItem>;
+};
+
+export type MyAssignmentItem = {
+    uuid: string;
+    proposal_uuid: string;
+    proposal_name: string;
+    proposal_slug: string;
+    proposal_summary: string;
+    status: string;
+    status_display: string;
+    affinity_score: number | null;
+    has_coi: boolean;
 };
 
 export type NameUuid = {
@@ -10691,6 +11603,28 @@ export type OptionFieldRequest = {
 
 export type OptionFieldTypeEnum = 'boolean' | 'integer' | 'money' | 'string' | 'text' | 'html_text' | 'select_string' | 'select_string_multi' | 'select_openstack_tenant' | 'select_multiple_openstack_tenants' | 'select_openstack_instance' | 'select_multiple_openstack_instances' | 'date' | 'time' | 'conditional_cascade' | 'component_multiplier' | 'single_datacenter_k8s_config' | 'multi_datacenter_k8s_config';
 
+export type OrcidCallbackRequest = {
+    /**
+     * Authorization code from ORCID OAuth callback
+     */
+    code: string;
+    /**
+     * State token for CSRF protection
+     */
+    state?: string;
+};
+
+export type OrcidDisconnectResponse = {
+    detail: string;
+};
+
+export type OrcidSyncResponse = {
+    imported: {
+        [key: string]: unknown;
+    };
+    last_sync: string;
+};
+
 export type OrderAttachment = {
     attachment?: string | null;
 };
@@ -10907,6 +11841,20 @@ export type PatchedAllocationRequest = {
     groupname?: string | null;
 };
 
+export type PatchedAssignmentBatchRequest = {
+    /**
+     * Optional notes from call manager to reviewer.
+     */
+    manager_notes?: string;
+};
+
+export type PatchedAssignmentItemRequest = {
+    /**
+     * Reason provided by reviewer for declining.
+     */
+    decline_reason?: string;
+};
+
 export type PatchedAwsInstanceRequest = {
     name?: string;
     description?: string;
@@ -10943,6 +11891,76 @@ export type PatchedBroadcastMessageRequest = {
     send_at?: string | null;
 };
 
+export type PatchedCallAssignmentConfigurationRequest = {
+    /**
+     * Automatically assign next-best reviewer when someone declines. If False, manager must manually approve reassignments.
+     */
+    auto_reassign_on_decline?: boolean;
+    /**
+     * Maximum automatic reassignment attempts before requiring manual intervention.
+     */
+    max_auto_reassign_attempts?: number;
+    /**
+     * Days until assignment invitation expires if not responded to.
+     */
+    assignment_expiration_days?: number;
+    /**
+     * Days before expiry to send reminder notification.
+     */
+    send_reminder_before_expiry_days?: number;
+};
+
+export type PatchedCallCoiConfigurationRequest = {
+    /**
+     * Years to look back for co-authorship detection
+     */
+    coauthorship_lookback_years?: number;
+    /**
+     * Minimum shared papers to trigger COI
+     */
+    coauthorship_threshold_papers?: number;
+    /**
+     * Years to look back for former institution detection
+     */
+    institutional_lookback_years?: number;
+    /**
+     * Detect same-department as COI
+     */
+    include_same_department?: boolean;
+    /**
+     * Detect same-institution as COI
+     */
+    include_same_institution?: boolean;
+    /**
+     * COI types requiring automatic recusal
+     */
+    recusal_required_types?: Array<string>;
+    /**
+     * COI types allowing management plan
+     */
+    management_allowed_types?: Array<string>;
+    /**
+     * COI types requiring disclosure only
+     */
+    disclosure_only_types?: Array<string>;
+    /**
+     * Enable automated co-authorship detection
+     */
+    auto_detect_coauthorship?: boolean;
+    /**
+     * Enable automated institutional affiliation detection
+     */
+    auto_detect_institutional?: boolean;
+    /**
+     * Enable detection of reviewer named in proposals
+     */
+    auto_detect_named_personnel?: boolean;
+    /**
+     * Level of proposal information disclosed in reviewer invitations
+     */
+    invitation_proposal_disclosure?: InvitationProposalDisclosureEnum;
+};
+
 export type PatchedCallManagingOrganisationRequest = {
     description?: string;
     image?: (Blob | File) | null;
@@ -10958,6 +11976,13 @@ export type PatchedCallResourceTemplateRequest = {
      */
     is_required?: boolean;
     requested_offering?: string;
+};
+
+export type PatchedCallReviewerPoolUpdateRequest = {
+    /**
+     * Maximum number of proposals that can be assigned to this reviewer
+     */
+    max_assignments?: number;
 };
 
 export type PatchedCategoryColumnRequest = {
@@ -11042,6 +12067,15 @@ export type PatchedComponentUserUsageLimitRequest = {
     component?: string;
     user?: string;
     limit?: string;
+};
+
+export type PatchedConflictOfInterestRequest = {
+    status?: ConflictOfInterestStatusEnum;
+    review_notes?: string;
+    /**
+     * If waived, how is it managed
+     */
+    management_plan?: string;
 };
 
 export type PatchedCreateCustomerCreditRequest = {
@@ -11382,6 +12416,23 @@ export type PatchedMarketplaceCategoryRequest = {
      */
     default_tenant_category?: boolean;
     group?: string | null;
+};
+
+export type PatchedMatchingConfigurationRequest = {
+    affinity_method?: AffinityMethodEnum;
+    keyword_weight?: number;
+    text_weight?: number;
+    min_reviewers_per_proposal?: number;
+    max_reviewers_per_proposal?: number;
+    min_proposals_per_reviewer?: number;
+    max_proposals_per_reviewer?: number;
+    algorithm?: MatchingAlgorithm;
+    /**
+     * Minimum affinity score for FairFlow algorithm
+     */
+    min_affinity_threshold?: number;
+    use_reviewer_bids?: boolean;
+    bid_weight?: number;
 };
 
 export type PatchedMessageTemplateRequest = {
@@ -11910,11 +12961,11 @@ export type PatchedProtectedCallRequest = {
     backend_id?: string;
     external_url?: string | null;
     /**
-     * Whether proposal submitters can see reviewer identities
+     * Whether proposal applicants can see reviewer identities
      */
     reviewer_identity_visible_to_submitters?: boolean;
     /**
-     * Whether proposal submitters can see review comments and scores
+     * Whether proposal applicants can see review comments and scores
      */
     reviews_visible_to_submitters?: boolean;
     created_by?: string | null;
@@ -12178,6 +13229,118 @@ export type PatchedResourceUpdateRequest = {
      * The date is inclusive. Once reached, a resource will be scheduled for termination.
      */
     end_date?: string | null;
+};
+
+export type PatchedReviewerAffiliationRequest = {
+    organization?: string | null;
+    /**
+     * Organization name (used when not linked to Waldur org)
+     */
+    organization_name?: string;
+    /**
+     * ROR, GRID, or other external identifier
+     */
+    organization_identifier?: string;
+    department?: string;
+    position_title?: string;
+    start_date?: string | null;
+    /**
+     * Leave empty for current affiliation
+     */
+    end_date?: string | null;
+    is_primary?: boolean;
+    affiliation_type?: AffiliationTypeEnum;
+};
+
+export type PatchedReviewerBidRequest = {
+    proposal?: string;
+    /**
+     * Reviewer's preference for reviewing this proposal
+     */
+    bid?: BidEnum;
+    /**
+     * Optional comment explaining the bid
+     */
+    comment?: string;
+};
+
+export type PatchedReviewerExpertiseRequest = {
+    /**
+     * Free-text keyword
+     */
+    expertise_keyword?: string;
+    expertise_category?: string | null;
+    proficiency_level?: ProficiencyLevelEnum;
+    years_experience?: number | null;
+    /**
+     * When last worked in this area
+     */
+    last_active_date?: string | null;
+};
+
+export type PatchedReviewerProfileCreateRequest = {
+    /**
+     * ORCID identifier (format: 0000-0000-0000-0000)
+     */
+    orcid_id?: string | null;
+    /**
+     * Professional biography / summary
+     */
+    biography?: string;
+    /**
+     * List of name variants used in publications
+     */
+    alternative_names?: unknown;
+    /**
+     * Whether reviewer is currently accepting review requests
+     */
+    available_for_reviews?: boolean;
+};
+
+export type PatchedReviewerProfileRequest = {
+    /**
+     * ORCID identifier (format: 0000-0000-0000-0000)
+     */
+    orcid_id?: string | null;
+    /**
+     * Professional biography / summary
+     */
+    biography?: string;
+    /**
+     * List of name variants used in publications
+     */
+    alternative_names?: unknown;
+    /**
+     * Whether reviewer is currently accepting review requests
+     */
+    available_for_reviews?: boolean;
+};
+
+export type PatchedReviewerPublicationRequest = {
+    title?: string;
+    /**
+     * Digital Object Identifier
+     */
+    doi?: string | null;
+    publication_year?: number;
+    /**
+     * Journal or conference name
+     */
+    venue?: string;
+    venue_type?: VenueTypeEnum;
+    abstract?: string;
+    /**
+     * List of co-author names and identifiers
+     */
+    coauthors?: unknown;
+    /**
+     * External identifiers: {"semantic_scholar": "...", "pubmed": "..."}
+     */
+    external_ids?: unknown;
+    /**
+     * User can exclude old papers from expertise matching
+     */
+    is_excluded_from_matching?: boolean;
 };
 
 export type PatchedRobotAccountRequest = {
@@ -12741,6 +13904,8 @@ export type Priority = {
     description?: string;
     icon_url?: string;
 };
+
+export type ProficiencyLevelEnum = 'expert' | 'familiar' | 'basic';
 
 export type Project = {
     readonly url?: string;
@@ -13433,7 +14598,7 @@ export type ProposalReviewRequest = {
     comment_team?: string | null;
 };
 
-export type ProposalReviewStateEnum = 'created' | 'in_review' | 'submitted' | 'rejected';
+export type ProposalReviewStateEnum = 'in_review' | 'submitted' | 'rejected';
 
 export type ProposalStates = 'draft' | 'submitted' | 'in_review' | 'accepted' | 'rejected' | 'canceled';
 
@@ -13448,6 +14613,29 @@ export type ProposalUpdateProjectDetailsRequest = {
      */
     duration_in_days?: number | null;
     oecd_fos_2007_code?: OecdFos2007CodeEnum | BlankEnum | NullEnum | null;
+};
+
+export type ProposedAssignment = {
+    readonly url: string;
+    readonly uuid: string;
+    readonly call: string;
+    readonly reviewer: string;
+    readonly reviewer_uuid: string;
+    readonly reviewer_name: string;
+    readonly proposal: string;
+    readonly proposal_uuid: string;
+    readonly proposal_name: string;
+    readonly affinity_score: number;
+    algorithm_used: MatchingAlgorithm;
+    /**
+     * Assignment rank (1 = best match)
+     */
+    readonly rank: number;
+    readonly is_deployed: boolean;
+    readonly deployed_at: string | null;
+    readonly deployed_by: string | null;
+    readonly deployed_by_name: string;
+    readonly created: string;
 };
 
 export type ProtectedCall = {
@@ -13475,11 +14663,11 @@ export type ProtectedCall = {
     backend_id?: string;
     external_url?: string | null;
     /**
-     * Whether proposal submitters can see reviewer identities
+     * Whether proposal applicants can see reviewer identities
      */
     reviewer_identity_visible_to_submitters?: boolean;
     /**
-     * Whether proposal submitters can see review comments and scores
+     * Whether proposal applicants can see review comments and scores
      */
     reviews_visible_to_submitters?: boolean;
     created_by?: string | null;
@@ -13507,11 +14695,11 @@ export type ProtectedCallRequest = {
     backend_id?: string;
     external_url?: string | null;
     /**
-     * Whether proposal submitters can see reviewer identities
+     * Whether proposal applicants can see reviewer identities
      */
     reviewer_identity_visible_to_submitters?: boolean;
     /**
-     * Whether proposal submitters can see review comments and scores
+     * Whether proposal applicants can see review comments and scores
      */
     reviews_visible_to_submitters?: boolean;
     created_by?: string | null;
@@ -13925,13 +15113,46 @@ export type PublicCall = {
     backend_id?: string;
     external_url?: string | null;
     /**
-     * Whether proposal submitters can see reviewer identities. If False, reviewers appear as 'Reviewer 1', 'Reviewer 2', etc.
+     * Whether proposal applicants can see reviewer identities. If False, reviewers appear as 'Reviewer 1', 'Reviewer 2', etc.
      */
     reviewer_identity_visible_to_submitters?: boolean;
     /**
-     * Whether proposal submitters can see review comments and scores. If False, submitters only see final approval/rejection status.
+     * Whether proposal applicants can see review comments and scores. If False, applicants only see final approval/rejection status.
      */
     reviews_visible_to_submitters?: boolean;
+};
+
+export type PublicInvitation = {
+    readonly call_name: string;
+    readonly call_uuid: string;
+    readonly invitation_status: string;
+    readonly expires_at: string | null;
+    readonly is_expired: boolean;
+    readonly max_assignments: number | null;
+    /**
+     * Name of the person who sent the invitation
+     */
+    readonly invited_by_name: string | null;
+    /**
+     * User's profile status: 'published', 'unpublished', 'missing', or null if not authenticated
+     */
+    readonly profile_status: string | null;
+    /**
+     * Whether the invitation requires creating a reviewer profile
+     */
+    readonly requires_profile: boolean;
+    /**
+     * COI configuration for this call
+     */
+    coi_configuration: InvitationCoiConfiguration | null;
+    /**
+     * Available COI types as list of [value, label] tuples
+     */
+    readonly coi_types: Array<Array<string>>;
+    /**
+     * Proposals for which conflicts can be declared
+     */
+    readonly proposals: Array<InvitationProposalSummary>;
 };
 
 export type PublicMaintenanceAnnouncement = {
@@ -15303,12 +16524,31 @@ export type RancherWorkloadRequest = {
     scale: number;
 };
 
+export type ReassignItemRequest = {
+    /**
+     * UUID of the pool entry for the new reviewer
+     */
+    reviewer_pool_entry_uuid: string;
+    /**
+     * Notes to include in the reassignment notification
+     */
+    manager_notes?: string;
+};
+
+export type ReassignItemResponse = {
+    detail: string;
+    new_item_uuid: string;
+    new_batch_uuid: string;
+};
+
 export type ReferenceNumberRequest = {
     /**
      * Reference number associated with the invoice.
      */
     reference_number?: string;
 };
+
+export type RelationshipTypeEnum = 'employment' | 'consulting' | 'equity' | 'board' | 'royalties' | 'gifts' | 'other';
 
 export type RemoteAllocation = {
     readonly url?: string;
@@ -16118,6 +17358,359 @@ export type ReviewSubmitRequest = {
     summary_private_comment?: string;
 };
 
+export type ReviewerAffiliation = {
+    readonly uuid: string;
+    organization?: string | null;
+    /**
+     * Organization name (used when not linked to Waldur org)
+     */
+    organization_name: string;
+    /**
+     * Return organization name from linked Customer or from the text field.
+     */
+    readonly organization_name_display: string;
+    /**
+     * ROR, GRID, or other external identifier
+     */
+    organization_identifier?: string;
+    department?: string;
+    position_title?: string;
+    start_date?: string | null;
+    /**
+     * Leave empty for current affiliation
+     */
+    end_date?: string | null;
+    is_primary?: boolean;
+    affiliation_type?: AffiliationTypeEnum;
+    readonly created: string;
+};
+
+export type ReviewerAffiliationRequest = {
+    organization?: string | null;
+    /**
+     * Organization name (used when not linked to Waldur org)
+     */
+    organization_name: string;
+    /**
+     * ROR, GRID, or other external identifier
+     */
+    organization_identifier?: string;
+    department?: string;
+    position_title?: string;
+    start_date?: string | null;
+    /**
+     * Leave empty for current affiliation
+     */
+    end_date?: string | null;
+    is_primary?: boolean;
+    affiliation_type?: AffiliationTypeEnum;
+};
+
+export type ReviewerBid = {
+    readonly uuid: string;
+    readonly call: string;
+    readonly call_uuid: string;
+    readonly reviewer: string;
+    readonly reviewer_uuid: string;
+    readonly reviewer_name: string;
+    proposal: string;
+    readonly proposal_uuid: string;
+    readonly proposal_name: string;
+    /**
+     * Reviewer's preference for reviewing this proposal
+     */
+    bid: BidEnum;
+    readonly bid_display: string;
+    /**
+     * Optional comment explaining the bid
+     */
+    comment?: string;
+    readonly submitted_at: string;
+    readonly modified_at: string;
+};
+
+export type ReviewerBidRequest = {
+    proposal: string;
+    /**
+     * Reviewer's preference for reviewing this proposal
+     */
+    bid: BidEnum;
+    /**
+     * Optional comment explaining the bid
+     */
+    comment?: string;
+};
+
+export type ReviewerBidSubmitRequest = {
+    proposal_uuid: string;
+    bid: BidEnum;
+    comment?: string;
+};
+
+export type ReviewerBulkBidRequest = {
+    bids: Array<ReviewerBidSubmitRequest>;
+};
+
+export type ReviewerExpertise = {
+    readonly uuid: string;
+    /**
+     * Free-text keyword
+     */
+    expertise_keyword: string;
+    expertise_category?: string | null;
+    readonly expertise_category_name: string;
+    proficiency_level?: ProficiencyLevelEnum;
+    years_experience?: number | null;
+    /**
+     * When last worked in this area
+     */
+    last_active_date?: string | null;
+    readonly created: string;
+};
+
+export type ReviewerExpertiseRequest = {
+    /**
+     * Free-text keyword
+     */
+    expertise_keyword: string;
+    expertise_category?: string | null;
+    proficiency_level?: ProficiencyLevelEnum;
+    years_experience?: number | null;
+    /**
+     * When last worked in this area
+     */
+    last_active_date?: string | null;
+};
+
+export type ReviewerInvitationRequest = {
+    /**
+     * List of reviewer profile UUIDs to invite
+     */
+    reviewer_uuids: Array<string>;
+    max_assignments?: number;
+    /**
+     * Custom message to include in invitation email
+     */
+    invitation_message?: string;
+};
+
+export type ReviewerProfile = {
+    readonly url: string;
+    readonly uuid: string;
+    readonly user: string;
+    readonly user_uuid: string;
+    readonly user_full_name: string;
+    /**
+     * Email address
+     */
+    readonly user_email: string;
+    /**
+     * ORCID identifier (format: 0000-0000-0000-0000)
+     */
+    orcid_id?: string | null;
+    /**
+     * Check if ORCID is connected (has access token).
+     */
+    readonly orcid_connected: boolean;
+    readonly orcid_last_sync: string | null;
+    /**
+     * Professional biography / summary
+     */
+    biography?: string;
+    /**
+     * List of name variants used in publications
+     */
+    alternative_names?: unknown;
+    readonly affiliations: Array<ReviewerAffiliation>;
+    readonly expertise_set: Array<ReviewerExpertise>;
+    readonly publications: Array<ReviewerPublication>;
+    stats: ReviewerStats;
+    /**
+     * Calculate profile completeness percentage and missing fields.
+     */
+    readonly profile_completeness: {
+        [key: string]: unknown;
+    };
+    /**
+     * Whether profile is discoverable by call managers
+     */
+    readonly is_published: boolean;
+    /**
+     * When the profile was published
+     */
+    readonly published_at: string | null;
+    /**
+     * Whether reviewer is currently accepting review requests
+     */
+    available_for_reviews?: boolean;
+    readonly created: string;
+    readonly modified: string;
+};
+
+export type ReviewerProfileCreateRequest = {
+    /**
+     * ORCID identifier (format: 0000-0000-0000-0000)
+     */
+    orcid_id?: string | null;
+    /**
+     * Professional biography / summary
+     */
+    biography?: string;
+    /**
+     * List of name variants used in publications
+     */
+    alternative_names?: unknown;
+    /**
+     * Whether reviewer is currently accepting review requests
+     */
+    available_for_reviews?: boolean;
+};
+
+export type ReviewerProfileRequest = {
+    /**
+     * ORCID identifier (format: 0000-0000-0000-0000)
+     */
+    orcid_id?: string | null;
+    /**
+     * Professional biography / summary
+     */
+    biography?: string;
+    /**
+     * List of name variants used in publications
+     */
+    alternative_names?: unknown;
+    /**
+     * Whether reviewer is currently accepting review requests
+     */
+    available_for_reviews?: boolean;
+};
+
+export type ReviewerPublication = {
+    readonly uuid: string;
+    title: string;
+    /**
+     * Digital Object Identifier
+     */
+    doi?: string | null;
+    publication_year: number;
+    /**
+     * Journal or conference name
+     */
+    venue: string;
+    venue_type?: VenueTypeEnum;
+    abstract?: string;
+    /**
+     * List of co-author names and identifiers
+     */
+    coauthors?: unknown;
+    /**
+     * External identifiers: {"semantic_scholar": "...", "pubmed": "..."}
+     */
+    external_ids?: unknown;
+    /**
+     * User can exclude old papers from expertise matching
+     */
+    is_excluded_from_matching?: boolean;
+    readonly created: string;
+};
+
+export type ReviewerPublicationRequest = {
+    title: string;
+    /**
+     * Digital Object Identifier
+     */
+    doi?: string | null;
+    publication_year: number;
+    /**
+     * Journal or conference name
+     */
+    venue: string;
+    venue_type?: VenueTypeEnum;
+    abstract?: string;
+    /**
+     * List of co-author names and identifiers
+     */
+    coauthors?: unknown;
+    /**
+     * External identifiers: {"semantic_scholar": "...", "pubmed": "..."}
+     */
+    external_ids?: unknown;
+    /**
+     * User can exclude old papers from expertise matching
+     */
+    is_excluded_from_matching?: boolean;
+};
+
+export type ReviewerStats = {
+    readonly uuid: string;
+    readonly total_reviews_completed: number;
+    readonly total_reviews_declined: number;
+    readonly total_reviews_timeout: number;
+    readonly average_review_time_days: number | null;
+    readonly average_score_given: number | null;
+    readonly last_review_date: string | null;
+    readonly quality_rating: number | null;
+    readonly quality_rating_count: number;
+};
+
+export type ReviewerSuggestion = {
+    readonly url: string;
+    readonly uuid: string;
+    readonly call: string;
+    readonly call_uuid: string;
+    readonly call_name: string;
+    readonly reviewer: string;
+    readonly reviewer_uuid: string;
+    readonly reviewer_name: string;
+    /**
+     * Email address
+     */
+    readonly reviewer_email: string;
+    /**
+     * Professional biography / summary
+     */
+    readonly reviewer_biography: string;
+    /**
+     * Combined affinity score (0-1)
+     */
+    readonly affinity_score: number;
+    /**
+     * Keyword matching score
+     */
+    readonly keyword_score: number | null;
+    /**
+     * TF-IDF text similarity score
+     */
+    readonly text_score: number | null;
+    status?: ReviewerSuggestionStatusEnum;
+    readonly status_display: string;
+    readonly reviewed_by: string | null;
+    readonly reviewed_by_name: string;
+    readonly reviewed_at: string | null;
+    rejection_reason?: string;
+    /**
+     * Keywords from reviewer's expertise that matched the source text
+     */
+    readonly matched_keywords: unknown;
+    /**
+     * Top proposals with highest affinity: [{uuid, name, slug, affinity}, ...]
+     */
+    readonly top_matching_proposals: unknown;
+    /**
+     * What content was used to generate this suggestion
+     */
+    source_type: SourceTypeEnum;
+    readonly source_type_display: string;
+    readonly created: string;
+};
+
+export type ReviewerSuggestionRequest = {
+    status?: ReviewerSuggestionStatusEnum;
+    rejection_reason?: string;
+};
+
+export type ReviewerSuggestionStatusEnum = 'pending' | 'confirmed' | 'rejected' | 'invited';
+
 export type RmqConnection = {
     /**
      * An IPv4 or IPv6 address.
@@ -16640,6 +18233,41 @@ export type SectionRequest = {
     is_standalone?: boolean;
 };
 
+export type SelfDeclaredConflictRequest = {
+    proposal_uuid: string;
+    coi_type: CoiTypeEnum;
+    severity?: CoiSeverityLevel;
+    description?: string;
+};
+
+export type SendAllAssignmentBatchesRequest = {
+    /**
+     * Specific batch UUIDs to send. If empty, sends all draft batches.
+     */
+    batch_uuids?: Array<string>;
+};
+
+export type SendAllAssignmentBatchesResponse = {
+    batches_sent: number;
+    skipped: number;
+};
+
+export type SendAssignmentBatchRequest = {
+    /**
+     * Optional notes to include in the invitation email
+     */
+    manager_notes?: string;
+};
+
+export type SendAssignmentBatchResponse = {
+    detail: string;
+    expires_at: string;
+};
+
+export type SendInvitationsResponse = {
+    invitations_sent: number;
+};
+
 export type ServiceAccountState = 'OK' | 'Closed' | 'Erred';
 
 export type ServiceProvider = {
@@ -16833,8 +18461,6 @@ export type SettingsMetadataResponse = {
         [key: string]: unknown;
     }>;
 };
-
-export type SeverityEnum = 'safe' | 'low' | 'medium' | 'high' | 'critical';
 
 export type SilenceActionRequest = {
     /**
@@ -17233,6 +18859,8 @@ export type SoftwareVersion = {
     readonly target_count: number;
 };
 
+export type SourceTypeEnum = 'call_description' | 'all_proposals' | 'selected_proposals' | 'custom_keywords';
+
 export type SshKey = {
     readonly url?: string;
     readonly uuid?: string;
@@ -17298,6 +18926,22 @@ export type SubresourceOffering = {
      * Type of the offering
      */
     readonly type: string;
+};
+
+export type SuggestAlternativeReviewers = {
+    /**
+     * List of alternative reviewers with affinity scores
+     */
+    suggestions: Array<{
+        [key: string]: unknown;
+    }>;
+};
+
+export type SuggestionRejectRequest = {
+    /**
+     * Reason for rejecting the suggestion
+     */
+    reason?: string;
 };
 
 export type SupportStats = {
@@ -17439,6 +19083,12 @@ export type TokenRequest = {
 export type TotalCustomerCost = {
     readonly total: number;
     readonly price: number;
+};
+
+export type TriggerCoiDetectionJobTypeEnum = 'full_call' | 'incremental';
+
+export type TriggerCoiDetectionRequest = {
+    job_type?: TriggerCoiDetectionJobTypeEnum;
 };
 
 export type UnsilenceActionResponse = {
@@ -17919,6 +19569,8 @@ export type UsernameGenerationPolicyEnum = 'service_provider' | 'anonymized' | '
 export type ValidationDecisionEnum = 'approved' | 'rejected' | 'pending';
 
 export type ValidationMethodEnum = 'ariregister' | 'wirtschaftscompass' | 'bolagsverket' | 'breg';
+
+export type VenueTypeEnum = 'journal' | 'conference' | 'preprint' | 'book' | 'thesis' | 'report' | 'other';
 
 export type Version = {
     /**
@@ -19610,6 +21262,21 @@ export type ConstanceSettingsRequestForm = {
     ENABLE_MOCK_SERVICE_ACCOUNT_BACKEND?: boolean;
     ENABLE_MOCK_COURSE_ACCOUNT_BACKEND?: boolean;
     PROPOSAL_REVIEW_DURATION?: number;
+    ORCID_CLIENT_ID?: string;
+    ORCID_CLIENT_SECRET?: string;
+    ORCID_REDIRECT_URI?: string;
+    ORCID_API_URL?: string;
+    ORCID_AUTH_URL?: string;
+    ORCID_SANDBOX_MODE?: boolean;
+    SEMANTIC_SCHOLAR_API_KEY?: string;
+    CROSSREF_MAILTO?: string;
+    REVIEWER_PROFILES_ENABLED?: boolean;
+    COI_DETECTION_ENABLED?: boolean;
+    COI_DISCLOSURE_REQUIRED?: boolean;
+    AUTOMATED_MATCHING_ENABLED?: boolean;
+    COI_COAUTHORSHIP_LOOKBACK_YEARS?: number;
+    COI_COAUTHORSHIP_THRESHOLD_PAPERS?: number;
+    COI_INSTITUTIONAL_LOOKBACK_YEARS?: number;
     USER_TABLE_COLUMNS?: string;
     AUTO_APPROVE_USER_TOS?: boolean;
     FREEIPA_ENABLED?: boolean;
@@ -19789,6 +21456,21 @@ export type ConstanceSettingsRequestMultipart = {
     ENABLE_MOCK_SERVICE_ACCOUNT_BACKEND?: boolean;
     ENABLE_MOCK_COURSE_ACCOUNT_BACKEND?: boolean;
     PROPOSAL_REVIEW_DURATION?: number;
+    ORCID_CLIENT_ID?: string;
+    ORCID_CLIENT_SECRET?: string;
+    ORCID_REDIRECT_URI?: string;
+    ORCID_API_URL?: string;
+    ORCID_AUTH_URL?: string;
+    ORCID_SANDBOX_MODE?: boolean;
+    SEMANTIC_SCHOLAR_API_KEY?: string;
+    CROSSREF_MAILTO?: string;
+    REVIEWER_PROFILES_ENABLED?: boolean;
+    COI_DETECTION_ENABLED?: boolean;
+    COI_DISCLOSURE_REQUIRED?: boolean;
+    AUTOMATED_MATCHING_ENABLED?: boolean;
+    COI_COAUTHORSHIP_LOOKBACK_YEARS?: number;
+    COI_COAUTHORSHIP_THRESHOLD_PAPERS?: number;
+    COI_INSTITUTIONAL_LOOKBACK_YEARS?: number;
     USER_TABLE_COLUMNS?: string;
     AUTO_APPROVE_USER_TOS?: boolean;
     FREEIPA_ENABLED?: boolean;
@@ -20639,6 +22321,405 @@ export type AdminAnnouncementsUpdateResponses = {
 };
 
 export type AdminAnnouncementsUpdateResponse = AdminAnnouncementsUpdateResponses[keyof AdminAnnouncementsUpdateResponses];
+
+export type AssignmentBatchesListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        call_uuid?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-expires_at' | '-sent_at' | '-status' | 'created' | 'expires_at' | 'sent_at' | 'status'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        reviewer_pool_entry_uuid?: string;
+        reviewer_uuid?: string;
+        sent_after?: string;
+        sent_before?: string;
+        source?: Array<'algorithm' | 'manual'>;
+        status?: Array<'cancelled' | 'draft' | 'expired' | 'responded' | 'sent'>;
+    };
+    url: '/api/assignment-batches/';
+};
+
+export type AssignmentBatchesListResponses = {
+    200: Array<AssignmentBatchList>;
+};
+
+export type AssignmentBatchesListResponse = AssignmentBatchesListResponses[keyof AssignmentBatchesListResponses];
+
+export type AssignmentBatchesCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        call_uuid?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-expires_at' | '-sent_at' | '-status' | 'created' | 'expires_at' | 'sent_at' | 'status'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        reviewer_pool_entry_uuid?: string;
+        reviewer_uuid?: string;
+        sent_after?: string;
+        sent_before?: string;
+        source?: Array<'algorithm' | 'manual'>;
+        status?: Array<'cancelled' | 'draft' | 'expired' | 'responded' | 'sent'>;
+    };
+    url: '/api/assignment-batches/';
+};
+
+export type AssignmentBatchesCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type AssignmentBatchesCreateData = {
+    body?: AssignmentBatchRequest;
+    path?: never;
+    query?: never;
+    url: '/api/assignment-batches/';
+};
+
+export type AssignmentBatchesCreateResponses = {
+    201: AssignmentBatch;
+};
+
+export type AssignmentBatchesCreateResponse = AssignmentBatchesCreateResponses[keyof AssignmentBatchesCreateResponses];
+
+export type AssignmentBatchesDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/assignment-batches/{uuid}/';
+};
+
+export type AssignmentBatchesDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type AssignmentBatchesDestroyResponse = AssignmentBatchesDestroyResponses[keyof AssignmentBatchesDestroyResponses];
+
+export type AssignmentBatchesRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/assignment-batches/{uuid}/';
+};
+
+export type AssignmentBatchesRetrieveResponses = {
+    200: AssignmentBatch;
+};
+
+export type AssignmentBatchesRetrieveResponse = AssignmentBatchesRetrieveResponses[keyof AssignmentBatchesRetrieveResponses];
+
+export type AssignmentBatchesPartialUpdateData = {
+    body?: PatchedAssignmentBatchRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/assignment-batches/{uuid}/';
+};
+
+export type AssignmentBatchesPartialUpdateResponses = {
+    200: AssignmentBatch;
+};
+
+export type AssignmentBatchesPartialUpdateResponse = AssignmentBatchesPartialUpdateResponses[keyof AssignmentBatchesPartialUpdateResponses];
+
+export type AssignmentBatchesUpdateData = {
+    body?: AssignmentBatchRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/assignment-batches/{uuid}/';
+};
+
+export type AssignmentBatchesUpdateResponses = {
+    200: AssignmentBatch;
+};
+
+export type AssignmentBatchesUpdateResponse = AssignmentBatchesUpdateResponses[keyof AssignmentBatchesUpdateResponses];
+
+export type AssignmentBatchesCancelData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/assignment-batches/{uuid}/cancel/';
+};
+
+export type AssignmentBatchesCancelResponses = {
+    200: MessageResponse;
+};
+
+export type AssignmentBatchesCancelResponse = AssignmentBatchesCancelResponses[keyof AssignmentBatchesCancelResponses];
+
+export type AssignmentBatchesExtendDeadlineData = {
+    body: ExtendDeadlineRequestRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/assignment-batches/{uuid}/extend-deadline/';
+};
+
+export type AssignmentBatchesExtendDeadlineResponses = {
+    200: ExtendDeadlineResponse;
+};
+
+export type AssignmentBatchesExtendDeadlineResponse = AssignmentBatchesExtendDeadlineResponses[keyof AssignmentBatchesExtendDeadlineResponses];
+
+export type AssignmentBatchesSendData = {
+    body?: SendAssignmentBatchRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/assignment-batches/{uuid}/send/';
+};
+
+export type AssignmentBatchesSendResponses = {
+    200: SendAssignmentBatchResponse;
+};
+
+export type AssignmentBatchesSendResponse = AssignmentBatchesSendResponses[keyof AssignmentBatchesSendResponses];
+
+export type AssignmentItemsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        batch_uuid?: string;
+        call_uuid?: string;
+        has_coi?: boolean;
+        min_affinity_score?: number;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-affinity_score' | '-created' | '-responded_at' | '-status' | 'affinity_score' | 'created' | 'responded_at' | 'status'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        proposal_uuid?: string;
+        reviewer_uuid?: string;
+        status?: Array<'accepted' | 'coi_blocked' | 'declined' | 'expired' | 'pending' | 'reassigned'>;
+    };
+    url: '/api/assignment-items/';
+};
+
+export type AssignmentItemsListResponses = {
+    200: Array<AssignmentItem>;
+};
+
+export type AssignmentItemsListResponse = AssignmentItemsListResponses[keyof AssignmentItemsListResponses];
+
+export type AssignmentItemsCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        batch_uuid?: string;
+        call_uuid?: string;
+        has_coi?: boolean;
+        min_affinity_score?: number;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-affinity_score' | '-created' | '-responded_at' | '-status' | 'affinity_score' | 'created' | 'responded_at' | 'status'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        proposal_uuid?: string;
+        reviewer_uuid?: string;
+        status?: Array<'accepted' | 'coi_blocked' | 'declined' | 'expired' | 'pending' | 'reassigned'>;
+    };
+    url: '/api/assignment-items/';
+};
+
+export type AssignmentItemsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type AssignmentItemsCreateData = {
+    body?: AssignmentItemRequest;
+    path?: never;
+    query?: never;
+    url: '/api/assignment-items/';
+};
+
+export type AssignmentItemsCreateResponses = {
+    201: AssignmentItem;
+};
+
+export type AssignmentItemsCreateResponse = AssignmentItemsCreateResponses[keyof AssignmentItemsCreateResponses];
+
+export type AssignmentItemsDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/assignment-items/{uuid}/';
+};
+
+export type AssignmentItemsDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type AssignmentItemsDestroyResponse = AssignmentItemsDestroyResponses[keyof AssignmentItemsDestroyResponses];
+
+export type AssignmentItemsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/assignment-items/{uuid}/';
+};
+
+export type AssignmentItemsRetrieveResponses = {
+    200: AssignmentItem;
+};
+
+export type AssignmentItemsRetrieveResponse = AssignmentItemsRetrieveResponses[keyof AssignmentItemsRetrieveResponses];
+
+export type AssignmentItemsPartialUpdateData = {
+    body?: PatchedAssignmentItemRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/assignment-items/{uuid}/';
+};
+
+export type AssignmentItemsPartialUpdateResponses = {
+    200: AssignmentItem;
+};
+
+export type AssignmentItemsPartialUpdateResponse = AssignmentItemsPartialUpdateResponses[keyof AssignmentItemsPartialUpdateResponses];
+
+export type AssignmentItemsUpdateData = {
+    body?: AssignmentItemRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/assignment-items/{uuid}/';
+};
+
+export type AssignmentItemsUpdateResponses = {
+    200: AssignmentItem;
+};
+
+export type AssignmentItemsUpdateResponse = AssignmentItemsUpdateResponses[keyof AssignmentItemsUpdateResponses];
+
+export type AssignmentItemsAcceptData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/assignment-items/{uuid}/accept/';
+};
+
+export type AssignmentItemsAcceptResponses = {
+    200: AssignmentItemResponse;
+};
+
+export type AssignmentItemsAcceptResponse = AssignmentItemsAcceptResponses[keyof AssignmentItemsAcceptResponses];
+
+export type AssignmentItemsDeclineData = {
+    body?: AssignmentItemDeclineRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/assignment-items/{uuid}/decline/';
+};
+
+export type AssignmentItemsDeclineResponses = {
+    200: AssignmentItemResponse;
+};
+
+export type AssignmentItemsDeclineResponse = AssignmentItemsDeclineResponses[keyof AssignmentItemsDeclineResponses];
+
+export type AssignmentItemsReassignData = {
+    body: ReassignItemRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/assignment-items/{uuid}/reassign/';
+};
+
+export type AssignmentItemsReassignResponses = {
+    200: ReassignItemResponse;
+};
+
+export type AssignmentItemsReassignResponse = AssignmentItemsReassignResponses[keyof AssignmentItemsReassignResponses];
+
+export type AssignmentItemsSuggestAlternativesRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/assignment-items/{uuid}/suggest_alternatives/';
+};
+
+export type AssignmentItemsSuggestAlternativesRetrieveResponses = {
+    200: SuggestAlternativeReviewers;
+};
+
+export type AssignmentItemsSuggestAlternativesRetrieveResponse = AssignmentItemsSuggestAlternativesRetrieveResponses[keyof AssignmentItemsSuggestAlternativesRetrieveResponses];
 
 export type AuthTokensListData = {
     body?: never;
@@ -24574,6 +26655,127 @@ export type BroadcastMessagesRecipientsCountResponses = {
     200: unknown;
 };
 
+export type CallAssignmentConfigurationsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/call-assignment-configurations/';
+};
+
+export type CallAssignmentConfigurationsListResponses = {
+    200: Array<CallAssignmentConfiguration>;
+};
+
+export type CallAssignmentConfigurationsListResponse = CallAssignmentConfigurationsListResponses[keyof CallAssignmentConfigurationsListResponses];
+
+export type CallAssignmentConfigurationsCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/call-assignment-configurations/';
+};
+
+export type CallAssignmentConfigurationsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type CallAssignmentConfigurationsCreateData = {
+    body?: CallAssignmentConfigurationRequest;
+    path?: never;
+    query?: never;
+    url: '/api/call-assignment-configurations/';
+};
+
+export type CallAssignmentConfigurationsCreateResponses = {
+    201: CallAssignmentConfiguration;
+};
+
+export type CallAssignmentConfigurationsCreateResponse = CallAssignmentConfigurationsCreateResponses[keyof CallAssignmentConfigurationsCreateResponses];
+
+export type CallAssignmentConfigurationsDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/call-assignment-configurations/{uuid}/';
+};
+
+export type CallAssignmentConfigurationsDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type CallAssignmentConfigurationsDestroyResponse = CallAssignmentConfigurationsDestroyResponses[keyof CallAssignmentConfigurationsDestroyResponses];
+
+export type CallAssignmentConfigurationsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/call-assignment-configurations/{uuid}/';
+};
+
+export type CallAssignmentConfigurationsRetrieveResponses = {
+    200: CallAssignmentConfiguration;
+};
+
+export type CallAssignmentConfigurationsRetrieveResponse = CallAssignmentConfigurationsRetrieveResponses[keyof CallAssignmentConfigurationsRetrieveResponses];
+
+export type CallAssignmentConfigurationsPartialUpdateData = {
+    body?: PatchedCallAssignmentConfigurationRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/call-assignment-configurations/{uuid}/';
+};
+
+export type CallAssignmentConfigurationsPartialUpdateResponses = {
+    200: CallAssignmentConfiguration;
+};
+
+export type CallAssignmentConfigurationsPartialUpdateResponse = CallAssignmentConfigurationsPartialUpdateResponses[keyof CallAssignmentConfigurationsPartialUpdateResponses];
+
+export type CallAssignmentConfigurationsUpdateData = {
+    body?: CallAssignmentConfigurationRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/call-assignment-configurations/{uuid}/';
+};
+
+export type CallAssignmentConfigurationsUpdateResponses = {
+    200: CallAssignmentConfiguration;
+};
+
+export type CallAssignmentConfigurationsUpdateResponse = CallAssignmentConfigurationsUpdateResponses[keyof CallAssignmentConfigurationsUpdateResponses];
+
 export type CallManagingOrganisationsListData = {
     body?: never;
     path?: never;
@@ -24967,6 +27169,137 @@ export type CallProposalProjectRoleMappingsUpdateResponses = {
 };
 
 export type CallProposalProjectRoleMappingsUpdateResponse = CallProposalProjectRoleMappingsUpdateResponses[keyof CallProposalProjectRoleMappingsUpdateResponses];
+
+export type CallReviewerPoolsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        call_uuid?: string;
+        invitation_status?: Array<'accepted' | 'declined' | 'expired' | 'pending'>;
+        my_invitations?: boolean;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-current_assignments' | '-expertise_match_score' | '-invited_at' | 'created' | 'current_assignments' | 'expertise_match_score' | 'invited_at'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        reviewer_uuid?: string;
+    };
+    url: '/api/call-reviewer-pools/';
+};
+
+export type CallReviewerPoolsListResponses = {
+    200: Array<CallReviewerPool>;
+};
+
+export type CallReviewerPoolsListResponse = CallReviewerPoolsListResponses[keyof CallReviewerPoolsListResponses];
+
+export type CallReviewerPoolsCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        call_uuid?: string;
+        invitation_status?: Array<'accepted' | 'declined' | 'expired' | 'pending'>;
+        my_invitations?: boolean;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-current_assignments' | '-expertise_match_score' | '-invited_at' | 'created' | 'current_assignments' | 'expertise_match_score' | 'invited_at'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        reviewer_uuid?: string;
+    };
+    url: '/api/call-reviewer-pools/';
+};
+
+export type CallReviewerPoolsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type CallReviewerPoolsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/call-reviewer-pools/{uuid}/';
+};
+
+export type CallReviewerPoolsRetrieveResponses = {
+    200: CallReviewerPool;
+};
+
+export type CallReviewerPoolsRetrieveResponse = CallReviewerPoolsRetrieveResponses[keyof CallReviewerPoolsRetrieveResponses];
+
+export type CallReviewerPoolsPartialUpdateData = {
+    body?: PatchedCallReviewerPoolUpdateRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/call-reviewer-pools/{uuid}/';
+};
+
+export type CallReviewerPoolsPartialUpdateResponses = {
+    200: CallReviewerPoolUpdate;
+};
+
+export type CallReviewerPoolsPartialUpdateResponse = CallReviewerPoolsPartialUpdateResponses[keyof CallReviewerPoolsPartialUpdateResponses];
+
+export type CallReviewerPoolsAcceptData = {
+    body: Array<SelfDeclaredConflictRequest>;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/call-reviewer-pools/{uuid}/accept/';
+};
+
+export type CallReviewerPoolsAcceptErrors = {
+    400: InvitationAcceptError;
+};
+
+export type CallReviewerPoolsAcceptError = CallReviewerPoolsAcceptErrors[keyof CallReviewerPoolsAcceptErrors];
+
+export type CallReviewerPoolsAcceptResponses = {
+    200: InvitationAcceptResponse;
+};
+
+export type CallReviewerPoolsAcceptResponse = CallReviewerPoolsAcceptResponses[keyof CallReviewerPoolsAcceptResponses];
+
+export type CallReviewerPoolsDeclineData = {
+    body: InvitationDeclineRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/call-reviewer-pools/{uuid}/decline/';
+};
+
+export type CallReviewerPoolsDeclineResponses = {
+    200: InvitationDeclineResponse;
+};
+
+export type CallReviewerPoolsDeclineResponse = CallReviewerPoolsDeclineResponses[keyof CallReviewerPoolsDeclineResponses];
 
 export type CallRoundsListData = {
     body?: never;
@@ -25785,6 +28118,177 @@ export type ChecklistsAdminChecklistQuestionsResponses = {
 
 export type ChecklistsAdminChecklistQuestionsResponse = ChecklistsAdminChecklistQuestionsResponses[keyof ChecklistsAdminChecklistQuestionsResponses];
 
+export type CoiDetectionJobsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        call_uuid?: string;
+        job_type?: 'full_call' | 'incremental' | 'single_pair';
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-completed_at' | '-created' | '-started_at' | '-state' | 'completed_at' | 'created' | 'started_at' | 'state'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        state?: Array<'cancelled' | 'completed' | 'failed' | 'pending' | 'running'>;
+    };
+    url: '/api/coi-detection-jobs/';
+};
+
+export type CoiDetectionJobsListResponses = {
+    200: Array<CoiDetectionJob>;
+};
+
+export type CoiDetectionJobsListResponse = CoiDetectionJobsListResponses[keyof CoiDetectionJobsListResponses];
+
+export type CoiDetectionJobsCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        call_uuid?: string;
+        job_type?: 'full_call' | 'incremental' | 'single_pair';
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-completed_at' | '-created' | '-started_at' | '-state' | 'completed_at' | 'created' | 'started_at' | 'state'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        state?: Array<'cancelled' | 'completed' | 'failed' | 'pending' | 'running'>;
+    };
+    url: '/api/coi-detection-jobs/';
+};
+
+export type CoiDetectionJobsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type CoiDetectionJobsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/coi-detection-jobs/{uuid}/';
+};
+
+export type CoiDetectionJobsRetrieveResponses = {
+    200: CoiDetectionJob;
+};
+
+export type CoiDetectionJobsRetrieveResponse = CoiDetectionJobsRetrieveResponses[keyof CoiDetectionJobsRetrieveResponses];
+
+export type CoiDisclosuresListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        call_uuid?: string;
+        certified?: boolean;
+        is_current?: boolean;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-certification_date' | '-created' | '-valid_until' | 'certification_date' | 'created' | 'valid_until'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        reviewer_uuid?: string;
+    };
+    url: '/api/coi-disclosures/';
+};
+
+export type CoiDisclosuresListResponses = {
+    200: Array<CoiDisclosureForm>;
+};
+
+export type CoiDisclosuresListResponse = CoiDisclosuresListResponses[keyof CoiDisclosuresListResponses];
+
+export type CoiDisclosuresCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        call_uuid?: string;
+        certified?: boolean;
+        is_current?: boolean;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-certification_date' | '-created' | '-valid_until' | 'certification_date' | 'created' | 'valid_until'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        reviewer_uuid?: string;
+    };
+    url: '/api/coi-disclosures/';
+};
+
+export type CoiDisclosuresCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type CoiDisclosuresCreateData = {
+    body: CoiDisclosureFormRequest;
+    path?: never;
+    query?: never;
+    url: '/api/coi-disclosures/';
+};
+
+export type CoiDisclosuresCreateResponses = {
+    201: CoiDisclosureForm;
+};
+
+export type CoiDisclosuresCreateResponse = CoiDisclosuresCreateResponses[keyof CoiDisclosuresCreateResponses];
+
+export type CoiDisclosuresRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/coi-disclosures/{uuid}/';
+};
+
+export type CoiDisclosuresRetrieveResponses = {
+    200: CoiDisclosureForm;
+};
+
+export type CoiDisclosuresRetrieveResponse = CoiDisclosuresRetrieveResponses[keyof CoiDisclosuresRetrieveResponses];
+
 export type ComponentUserUsageLimitsListData = {
     body?: never;
     path?: never;
@@ -25960,6 +28464,171 @@ export type ConfigurationRetrieveResponses = {
 };
 
 export type ConfigurationRetrieveResponse = ConfigurationRetrieveResponses[keyof ConfigurationRetrieveResponses];
+
+export type ConflictsOfInterestListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        call_uuid?: string;
+        coi_type?: Array<'COAUTH_OLD' | 'COAUTH_RECENT' | 'COLLAB_ACTIVE' | 'COLLAB_GRANT' | 'COMPET' | 'CONF_ATTEND' | 'FIN_DIRECT' | 'INST_CONSORT' | 'INST_DEPT' | 'INST_FORMER' | 'INST_SAME' | 'REL_EDITORIAL' | 'REL_FAMILY' | 'REL_MENTOR' | 'REL_SUPERVISOR' | 'ROLE_CONF' | 'ROLE_NAMED' | 'SOC_MEMBER'>;
+        detection_method?: Array<'automated' | 'manager_identified' | 'reported' | 'self_disclosed'>;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-detected_at' | '-severity' | '-status' | 'created' | 'detected_at' | 'severity' | 'status'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        proposal_uuid?: string;
+        reviewer_name?: string;
+        reviewer_uuid?: string;
+        round_uuid?: string;
+        severity?: 'apparent' | 'potential' | 'real';
+        status?: Array<'dismissed' | 'pending' | 'recused' | 'waived'>;
+    };
+    url: '/api/conflicts-of-interest/';
+};
+
+export type ConflictsOfInterestListResponses = {
+    200: Array<ConflictOfInterest>;
+};
+
+export type ConflictsOfInterestListResponse = ConflictsOfInterestListResponses[keyof ConflictsOfInterestListResponses];
+
+export type ConflictsOfInterestCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        call_uuid?: string;
+        coi_type?: Array<'COAUTH_OLD' | 'COAUTH_RECENT' | 'COLLAB_ACTIVE' | 'COLLAB_GRANT' | 'COMPET' | 'CONF_ATTEND' | 'FIN_DIRECT' | 'INST_CONSORT' | 'INST_DEPT' | 'INST_FORMER' | 'INST_SAME' | 'REL_EDITORIAL' | 'REL_FAMILY' | 'REL_MENTOR' | 'REL_SUPERVISOR' | 'ROLE_CONF' | 'ROLE_NAMED' | 'SOC_MEMBER'>;
+        detection_method?: Array<'automated' | 'manager_identified' | 'reported' | 'self_disclosed'>;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-detected_at' | '-severity' | '-status' | 'created' | 'detected_at' | 'severity' | 'status'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        proposal_uuid?: string;
+        reviewer_name?: string;
+        reviewer_uuid?: string;
+        round_uuid?: string;
+        severity?: 'apparent' | 'potential' | 'real';
+        status?: Array<'dismissed' | 'pending' | 'recused' | 'waived'>;
+    };
+    url: '/api/conflicts-of-interest/';
+};
+
+export type ConflictsOfInterestCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type ConflictsOfInterestRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/conflicts-of-interest/{uuid}/';
+};
+
+export type ConflictsOfInterestRetrieveResponses = {
+    200: ConflictOfInterest;
+};
+
+export type ConflictsOfInterestRetrieveResponse = ConflictsOfInterestRetrieveResponses[keyof ConflictsOfInterestRetrieveResponses];
+
+export type ConflictsOfInterestPartialUpdateData = {
+    body?: PatchedConflictOfInterestRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/conflicts-of-interest/{uuid}/';
+};
+
+export type ConflictsOfInterestPartialUpdateResponses = {
+    200: ConflictOfInterest;
+};
+
+export type ConflictsOfInterestPartialUpdateResponse = ConflictsOfInterestPartialUpdateResponses[keyof ConflictsOfInterestPartialUpdateResponses];
+
+export type ConflictsOfInterestUpdateData = {
+    body?: ConflictOfInterestRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/conflicts-of-interest/{uuid}/';
+};
+
+export type ConflictsOfInterestUpdateResponses = {
+    200: ConflictOfInterest;
+};
+
+export type ConflictsOfInterestUpdateResponse = ConflictsOfInterestUpdateResponses[keyof ConflictsOfInterestUpdateResponses];
+
+export type ConflictsOfInterestDismissData = {
+    body: CoiStatusUpdateRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/conflicts-of-interest/{uuid}/dismiss/';
+};
+
+export type ConflictsOfInterestDismissResponses = {
+    200: ConflictOfInterest;
+};
+
+export type ConflictsOfInterestDismissResponse = ConflictsOfInterestDismissResponses[keyof ConflictsOfInterestDismissResponses];
+
+export type ConflictsOfInterestRecuseData = {
+    body: CoiStatusUpdateRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/conflicts-of-interest/{uuid}/recuse/';
+};
+
+export type ConflictsOfInterestRecuseResponses = {
+    200: ConflictOfInterest;
+};
+
+export type ConflictsOfInterestRecuseResponse = ConflictsOfInterestRecuseResponses[keyof ConflictsOfInterestRecuseResponses];
+
+export type ConflictsOfInterestWaiveData = {
+    body: CoiStatusUpdateRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/conflicts-of-interest/{uuid}/waive/';
+};
+
+export type ConflictsOfInterestWaiveResponses = {
+    200: ConflictOfInterest;
+};
+
+export type ConflictsOfInterestWaiveResponse = ConflictsOfInterestWaiveResponses[keyof ConflictsOfInterestWaiveResponses];
 
 export type CustomerCreditsListData = {
     body?: never;
@@ -28110,6 +30779,86 @@ export type EventsScopeTypesCountResponses = {
      */
     200: unknown;
 };
+
+export type ExpertiseCategoriesListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        code?: string;
+        level?: number;
+        name?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-code' | '-level' | '-name' | 'code' | 'level' | 'name'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        parent_uuid?: string;
+    };
+    url: '/api/expertise-categories/';
+};
+
+export type ExpertiseCategoriesListResponses = {
+    200: Array<ExpertiseCategory>;
+};
+
+export type ExpertiseCategoriesListResponse = ExpertiseCategoriesListResponses[keyof ExpertiseCategoriesListResponses];
+
+export type ExpertiseCategoriesCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        code?: string;
+        level?: number;
+        name?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-code' | '-level' | '-name' | 'code' | 'level' | 'name'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        parent_uuid?: string;
+    };
+    url: '/api/expertise-categories/';
+};
+
+export type ExpertiseCategoriesCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type ExpertiseCategoriesRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/expertise-categories/{uuid}/';
+};
+
+export type ExpertiseCategoriesRetrieveResponses = {
+    200: ExpertiseCategory;
+};
+
+export type ExpertiseCategoriesRetrieveResponse = ExpertiseCategoriesRetrieveResponses[keyof ExpertiseCategoriesRetrieveResponses];
 
 export type ExternalLinksListData = {
     body?: never;
@@ -45866,6 +48615,51 @@ export type MetadataSettingsRetrieveResponses = {
 
 export type MetadataSettingsRetrieveResponse = MetadataSettingsRetrieveResponses[keyof MetadataSettingsRetrieveResponses];
 
+export type MyAssignmentBatchesListData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/my-assignment-batches/';
+};
+
+export type MyAssignmentBatchesListResponses = {
+    200: Array<MyAssignmentBatch>;
+};
+
+export type MyAssignmentBatchesListResponse = MyAssignmentBatchesListResponses[keyof MyAssignmentBatchesListResponses];
+
+export type MyAssignmentBatchesCountData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/my-assignment-batches/';
+};
+
+export type MyAssignmentBatchesCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type MyAssignmentBatchesRetrieveData = {
+    body?: never;
+    path: {
+        /**
+         * UUID of the assignment batch
+         */
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/my-assignment-batches/{uuid}/';
+};
+
+export type MyAssignmentBatchesRetrieveResponses = {
+    200: MyAssignmentBatchDetail;
+};
+
+export type MyAssignmentBatchesRetrieveResponse = MyAssignmentBatchesRetrieveResponses[keyof MyAssignmentBatchesRetrieveResponses];
+
 export type NotificationMessagesListData = {
     body?: never;
     path?: never;
@@ -56863,6 +59657,8 @@ export type ProposalProposalsListData = {
     path?: never;
     query?: {
         call_uuid?: string;
+        created_by_uuid?: string;
+        my_proposals?: boolean;
         name?: string;
         /**
          * Ordering
@@ -56880,6 +59676,7 @@ export type ProposalProposalsListData = {
          */
         page_size?: number;
         round?: string;
+        round_uuid?: string;
         state?: Array<'accepted' | 'canceled' | 'draft' | 'in_review' | 'rejected' | 'submitted'>;
     };
     url: '/api/proposal-proposals/';
@@ -56896,6 +59693,8 @@ export type ProposalProposalsCountData = {
     path?: never;
     query?: {
         call_uuid?: string;
+        created_by_uuid?: string;
+        my_proposals?: boolean;
         name?: string;
         /**
          * Ordering
@@ -56913,6 +59712,7 @@ export type ProposalProposalsCountData = {
          */
         page_size?: number;
         round?: string;
+        round_uuid?: string;
         state?: Array<'accepted' | 'canceled' | 'draft' | 'in_review' | 'rejected' | 'submitted'>;
     };
     url: '/api/proposal-proposals/';
@@ -57635,7 +60435,7 @@ export type ProposalProtectedCallsActivateData = {
 };
 
 export type ProposalProtectedCallsActivateResponses = {
-    200: ProtectedCall;
+    200: MessageResponse;
 };
 
 export type ProposalProtectedCallsActivateResponse = ProposalProtectedCallsActivateResponses[keyof ProposalProtectedCallsActivateResponses];
@@ -57662,6 +60462,26 @@ export type ProposalProtectedCallsAddUserResponses = {
 
 export type ProposalProtectedCallsAddUserResponse = ProposalProtectedCallsAddUserResponses[keyof ProposalProtectedCallsAddUserResponses];
 
+export type ProposalProtectedCallsAffinityMatrixRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * Filter by reviewer source: 'pool' (accepted reviewers), 'suggestions' (suggested reviewers), or 'all' (both). Default: 'pool'
+         */
+        scope?: 'all' | 'pool' | 'suggestions';
+    };
+    url: '/api/proposal-protected-calls/{uuid}/affinity-matrix/';
+};
+
+export type ProposalProtectedCallsAffinityMatrixRetrieveResponses = {
+    200: AffinityMatrixResponse;
+};
+
+export type ProposalProtectedCallsAffinityMatrixRetrieveResponse = ProposalProtectedCallsAffinityMatrixRetrieveResponses[keyof ProposalProtectedCallsAffinityMatrixRetrieveResponses];
+
 export type ProposalProtectedCallsArchiveData = {
     body?: never;
     path: {
@@ -57672,7 +60492,7 @@ export type ProposalProtectedCallsArchiveData = {
 };
 
 export type ProposalProtectedCallsArchiveResponses = {
-    200: ProtectedCall;
+    200: MessageResponse;
 };
 
 export type ProposalProtectedCallsArchiveResponse = ProposalProtectedCallsArchiveResponses[keyof ProposalProtectedCallsArchiveResponses];
@@ -57693,6 +60513,36 @@ export type ProposalProtectedCallsAttachDocumentsResponses = {
     200: unknown;
 };
 
+export type ProposalProtectedCallsCoiConfigurationRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-protected-calls/{uuid}/coi-configuration/';
+};
+
+export type ProposalProtectedCallsCoiConfigurationRetrieveResponses = {
+    200: CallCoiConfiguration;
+};
+
+export type ProposalProtectedCallsCoiConfigurationRetrieveResponse = ProposalProtectedCallsCoiConfigurationRetrieveResponses[keyof ProposalProtectedCallsCoiConfigurationRetrieveResponses];
+
+export type ProposalProtectedCallsCoiConfigurationPartialUpdateData = {
+    body?: PatchedCallCoiConfigurationRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-protected-calls/{uuid}/coi-configuration/';
+};
+
+export type ProposalProtectedCallsCoiConfigurationPartialUpdateResponses = {
+    200: CallCoiConfiguration;
+};
+
+export type ProposalProtectedCallsCoiConfigurationPartialUpdateResponse = ProposalProtectedCallsCoiConfigurationPartialUpdateResponses[keyof ProposalProtectedCallsCoiConfigurationPartialUpdateResponses];
+
 export type ProposalProtectedCallsComplianceOverviewRetrieveData = {
     body?: never;
     path: {
@@ -57707,6 +60557,89 @@ export type ProposalProtectedCallsComplianceOverviewRetrieveResponses = {
 };
 
 export type ProposalProtectedCallsComplianceOverviewRetrieveResponse = ProposalProtectedCallsComplianceOverviewRetrieveResponses[keyof ProposalProtectedCallsComplianceOverviewRetrieveResponses];
+
+export type ProposalProtectedCallsComputeAffinitiesData = {
+    body: ProtectedCallRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-protected-calls/{uuid}/compute-affinities/';
+};
+
+export type ProposalProtectedCallsComputeAffinitiesResponses = {
+    200: ComputeAffinitiesResponse;
+};
+
+export type ProposalProtectedCallsComputeAffinitiesResponse = ProposalProtectedCallsComputeAffinitiesResponses[keyof ProposalProtectedCallsComputeAffinitiesResponses];
+
+export type ProposalProtectedCallsConflictSummaryRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-protected-calls/{uuid}/conflict-summary/';
+};
+
+export type ProposalProtectedCallsConflictSummaryRetrieveResponses = {
+    200: ConflictSummaryResponse;
+};
+
+export type ProposalProtectedCallsConflictSummaryRetrieveResponse = ProposalProtectedCallsConflictSummaryRetrieveResponses[keyof ProposalProtectedCallsConflictSummaryRetrieveResponses];
+
+export type ProposalProtectedCallsConflictsListData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        customer?: string;
+        customer_keyword?: string;
+        customer_uuid?: string;
+        has_active_round?: boolean;
+        name?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-manager__customer__name' | '-name' | 'created' | 'manager__customer__name' | 'name'>;
+        offering_uuid?: string;
+        offerings_provider_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        state?: Array<'active' | 'archived' | 'draft'>;
+    };
+    url: '/api/proposal-protected-calls/{uuid}/conflicts/';
+};
+
+export type ProposalProtectedCallsConflictsListResponses = {
+    200: Array<ConflictOfInterest>;
+};
+
+export type ProposalProtectedCallsConflictsListResponse = ProposalProtectedCallsConflictsListResponses[keyof ProposalProtectedCallsConflictsListResponses];
+
+export type ProposalProtectedCallsCreateManualAssignmentData = {
+    body: CreateManualAssignmentRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-protected-calls/{uuid}/create-manual-assignment/';
+};
+
+export type ProposalProtectedCallsCreateManualAssignmentResponses = {
+    200: CreateManualAssignmentResponse;
+};
+
+export type ProposalProtectedCallsCreateManualAssignmentResponse = ProposalProtectedCallsCreateManualAssignmentResponses[keyof ProposalProtectedCallsCreateManualAssignmentResponses];
 
 export type ProposalProtectedCallsDeleteUserData = {
     body: UserRoleDeleteRequest;
@@ -57739,6 +60672,66 @@ export type ProposalProtectedCallsDetachDocumentsResponses = {
      */
     200: unknown;
 };
+
+export type ProposalProtectedCallsDetectConflictsData = {
+    body?: TriggerCoiDetectionRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-protected-calls/{uuid}/detect-conflicts/';
+};
+
+export type ProposalProtectedCallsDetectConflictsResponses = {
+    200: CoiDetectionJob;
+};
+
+export type ProposalProtectedCallsDetectConflictsResponse = ProposalProtectedCallsDetectConflictsResponses[keyof ProposalProtectedCallsDetectConflictsResponses];
+
+export type ProposalProtectedCallsGenerateAssignmentsData = {
+    body?: GenerateAssignmentsRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-protected-calls/{uuid}/generate-assignments/';
+};
+
+export type ProposalProtectedCallsGenerateAssignmentsResponses = {
+    200: GenerateAssignmentsResponse;
+};
+
+export type ProposalProtectedCallsGenerateAssignmentsResponse = ProposalProtectedCallsGenerateAssignmentsResponses[keyof ProposalProtectedCallsGenerateAssignmentsResponses];
+
+export type ProposalProtectedCallsGenerateSuggestionsData = {
+    body?: GenerateSuggestionsRequestRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-protected-calls/{uuid}/generate-suggestions/';
+};
+
+export type ProposalProtectedCallsGenerateSuggestionsResponses = {
+    200: GenerateSuggestionsResponse;
+};
+
+export type ProposalProtectedCallsGenerateSuggestionsResponse = ProposalProtectedCallsGenerateSuggestionsResponses[keyof ProposalProtectedCallsGenerateSuggestionsResponses];
+
+export type ProposalProtectedCallsInviteByEmailData = {
+    body: EmailInvitationRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-protected-calls/{uuid}/invite-by-email/';
+};
+
+export type ProposalProtectedCallsInviteByEmailResponses = {
+    200: CallReviewerPool;
+};
+
+export type ProposalProtectedCallsInviteByEmailResponse = ProposalProtectedCallsInviteByEmailResponses[keyof ProposalProtectedCallsInviteByEmailResponses];
 
 export type ProposalProtectedCallsListUsersListData = {
     body?: never;
@@ -57803,6 +60796,36 @@ export type ProposalProtectedCallsListUsersListResponses = {
 };
 
 export type ProposalProtectedCallsListUsersListResponse = ProposalProtectedCallsListUsersListResponses[keyof ProposalProtectedCallsListUsersListResponses];
+
+export type ProposalProtectedCallsMatchingConfigurationRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-protected-calls/{uuid}/matching-configuration/';
+};
+
+export type ProposalProtectedCallsMatchingConfigurationRetrieveResponses = {
+    200: MatchingConfiguration;
+};
+
+export type ProposalProtectedCallsMatchingConfigurationRetrieveResponse = ProposalProtectedCallsMatchingConfigurationRetrieveResponses[keyof ProposalProtectedCallsMatchingConfigurationRetrieveResponses];
+
+export type ProposalProtectedCallsMatchingConfigurationPartialUpdateData = {
+    body?: PatchedMatchingConfigurationRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-protected-calls/{uuid}/matching-configuration/';
+};
+
+export type ProposalProtectedCallsMatchingConfigurationPartialUpdateResponses = {
+    200: MatchingConfiguration;
+};
+
+export type ProposalProtectedCallsMatchingConfigurationPartialUpdateResponse = ProposalProtectedCallsMatchingConfigurationPartialUpdateResponses[keyof ProposalProtectedCallsMatchingConfigurationPartialUpdateResponses];
 
 export type ProposalProtectedCallsOfferingsListData = {
     body?: never;
@@ -57956,6 +60979,44 @@ export type ProposalProtectedCallsProposalsComplianceAnswersListResponses = {
 
 export type ProposalProtectedCallsProposalsComplianceAnswersListResponse = ProposalProtectedCallsProposalsComplianceAnswersListResponses[keyof ProposalProtectedCallsProposalsComplianceAnswersListResponses];
 
+export type ProposalProtectedCallsProposedAssignmentsListData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        customer?: string;
+        customer_keyword?: string;
+        customer_uuid?: string;
+        has_active_round?: boolean;
+        name?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-manager__customer__name' | '-name' | 'created' | 'manager__customer__name' | 'name'>;
+        offering_uuid?: string;
+        offerings_provider_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        state?: Array<'active' | 'archived' | 'draft'>;
+    };
+    url: '/api/proposal-protected-calls/{uuid}/proposed-assignments/';
+};
+
+export type ProposalProtectedCallsProposedAssignmentsListResponses = {
+    200: Array<ProposedAssignment>;
+};
+
+export type ProposalProtectedCallsProposedAssignmentsListResponse = ProposalProtectedCallsProposedAssignmentsListResponses[keyof ProposalProtectedCallsProposedAssignmentsListResponses];
+
 export type ProposalProtectedCallsResourceTemplatesListData = {
     body?: never;
     path: {
@@ -58079,6 +61140,68 @@ export type ProposalProtectedCallsReviewProposalComplianceResponses = {
 
 export type ProposalProtectedCallsReviewProposalComplianceResponse = ProposalProtectedCallsReviewProposalComplianceResponses[keyof ProposalProtectedCallsReviewProposalComplianceResponses];
 
+export type ProposalProtectedCallsReviewerPoolListData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/proposal-protected-calls/{uuid}/reviewer-pool/';
+};
+
+export type ProposalProtectedCallsReviewerPoolListResponses = {
+    200: Array<CallReviewerPool>;
+};
+
+export type ProposalProtectedCallsReviewerPoolListResponse = ProposalProtectedCallsReviewerPoolListResponses[keyof ProposalProtectedCallsReviewerPoolListResponses];
+
+export type ProposalProtectedCallsInviteReviewersData = {
+    body: ReviewerInvitationRequest;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        customer?: string;
+        customer_keyword?: string;
+        customer_uuid?: string;
+        has_active_round?: boolean;
+        name?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-manager__customer__name' | '-name' | 'created' | 'manager__customer__name' | 'name'>;
+        offering_uuid?: string;
+        offerings_provider_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        state?: Array<'active' | 'archived' | 'draft'>;
+    };
+    url: '/api/proposal-protected-calls/{uuid}/reviewer-pool/';
+};
+
+export type ProposalProtectedCallsInviteReviewersResponses = {
+    200: Array<CallReviewerPool>;
+};
+
+export type ProposalProtectedCallsInviteReviewersResponse = ProposalProtectedCallsInviteReviewersResponses[keyof ProposalProtectedCallsInviteReviewersResponses];
+
 export type ProposalProtectedCallsRoundsListData = {
     body?: never;
     path: {
@@ -58200,6 +61323,74 @@ export type ProposalProtectedCallsRoundsCloseResponses = {
 };
 
 export type ProposalProtectedCallsRoundsCloseResponse = ProposalProtectedCallsRoundsCloseResponses[keyof ProposalProtectedCallsRoundsCloseResponses];
+
+export type ProposalProtectedCallsSendAllAssignmentsData = {
+    body?: SendAllAssignmentBatchesRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-protected-calls/{uuid}/send-all-assignments/';
+};
+
+export type ProposalProtectedCallsSendAllAssignmentsResponses = {
+    200: SendAllAssignmentBatchesResponse;
+};
+
+export type ProposalProtectedCallsSendAllAssignmentsResponse = ProposalProtectedCallsSendAllAssignmentsResponses[keyof ProposalProtectedCallsSendAllAssignmentsResponses];
+
+export type ProposalProtectedCallsSendInvitationsData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-protected-calls/{uuid}/send-invitations/';
+};
+
+export type ProposalProtectedCallsSendInvitationsResponses = {
+    200: SendInvitationsResponse;
+};
+
+export type ProposalProtectedCallsSendInvitationsResponse = ProposalProtectedCallsSendInvitationsResponses[keyof ProposalProtectedCallsSendInvitationsResponses];
+
+export type ProposalProtectedCallsSuggestionsListData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        customer?: string;
+        customer_keyword?: string;
+        customer_uuid?: string;
+        has_active_round?: boolean;
+        name?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-manager__customer__name' | '-name' | 'created' | 'manager__customer__name' | 'name'>;
+        offering_uuid?: string;
+        offerings_provider_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        state?: Array<'active' | 'archived' | 'draft'>;
+    };
+    url: '/api/proposal-protected-calls/{uuid}/suggestions/';
+};
+
+export type ProposalProtectedCallsSuggestionsListResponses = {
+    200: Array<ReviewerSuggestion>;
+};
+
+export type ProposalProtectedCallsSuggestionsListResponse = ProposalProtectedCallsSuggestionsListResponses[keyof ProposalProtectedCallsSuggestionsListResponses];
 
 export type ProposalProtectedCallsUpdateUserData = {
     body: UserRoleUpdateRequest;
@@ -58658,7 +61849,8 @@ export type ProposalReviewsListData = {
         proposal_name?: string;
         proposal_uuid?: string;
         reviewer_uuid?: string;
-        state?: Array<'created' | 'in_review' | 'rejected' | 'submitted'>;
+        round_uuid?: string;
+        state?: Array<'in_review' | 'rejected' | 'submitted'>;
     };
     url: '/api/proposal-reviews/';
 };
@@ -58693,7 +61885,8 @@ export type ProposalReviewsCountData = {
         proposal_name?: string;
         proposal_uuid?: string;
         reviewer_uuid?: string;
-        state?: Array<'created' | 'in_review' | 'rejected' | 'submitted'>;
+        round_uuid?: string;
+        state?: Array<'in_review' | 'rejected' | 'submitted'>;
     };
     url: '/api/proposal-reviews/';
 };
@@ -58780,22 +61973,6 @@ export type ProposalReviewsUpdateResponses = {
 };
 
 export type ProposalReviewsUpdateResponse = ProposalReviewsUpdateResponses[keyof ProposalReviewsUpdateResponses];
-
-export type ProposalReviewsAcceptData = {
-    body?: never;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/proposal-reviews/{uuid}/accept/';
-};
-
-export type ProposalReviewsAcceptResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
-};
 
 export type ProposalReviewsRejectData = {
     body?: never;
@@ -62275,6 +65452,1241 @@ export type RemoteWaldurApiSyncResourceProjectPermissionsResponses = {
      */
     200: unknown;
 };
+
+export type ReviewerBidsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Reviewer's preference for reviewing this proposal
+         *
+         *
+         */
+        bid?: Array<'conflict' | 'eager' | 'not_willing' | 'willing'>;
+        call_uuid?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-bid' | '-modified_at' | '-submitted_at' | 'bid' | 'modified_at' | 'submitted_at'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        proposal_uuid?: string;
+        reviewer_uuid?: string;
+    };
+    url: '/api/reviewer-bids/';
+};
+
+export type ReviewerBidsListResponses = {
+    200: Array<ReviewerBid>;
+};
+
+export type ReviewerBidsListResponse = ReviewerBidsListResponses[keyof ReviewerBidsListResponses];
+
+export type ReviewerBidsCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Reviewer's preference for reviewing this proposal
+         *
+         *
+         */
+        bid?: Array<'conflict' | 'eager' | 'not_willing' | 'willing'>;
+        call_uuid?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-bid' | '-modified_at' | '-submitted_at' | 'bid' | 'modified_at' | 'submitted_at'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        proposal_uuid?: string;
+        reviewer_uuid?: string;
+    };
+    url: '/api/reviewer-bids/';
+};
+
+export type ReviewerBidsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type ReviewerBidsCreateData = {
+    body: ReviewerBidRequest;
+    path?: never;
+    query?: never;
+    url: '/api/reviewer-bids/';
+};
+
+export type ReviewerBidsCreateResponses = {
+    201: ReviewerBid;
+};
+
+export type ReviewerBidsCreateResponse = ReviewerBidsCreateResponses[keyof ReviewerBidsCreateResponses];
+
+export type ReviewerBidsDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/reviewer-bids/{uuid}/';
+};
+
+export type ReviewerBidsDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type ReviewerBidsDestroyResponse = ReviewerBidsDestroyResponses[keyof ReviewerBidsDestroyResponses];
+
+export type ReviewerBidsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/reviewer-bids/{uuid}/';
+};
+
+export type ReviewerBidsRetrieveResponses = {
+    200: ReviewerBid;
+};
+
+export type ReviewerBidsRetrieveResponse = ReviewerBidsRetrieveResponses[keyof ReviewerBidsRetrieveResponses];
+
+export type ReviewerBidsPartialUpdateData = {
+    body?: PatchedReviewerBidRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/reviewer-bids/{uuid}/';
+};
+
+export type ReviewerBidsPartialUpdateResponses = {
+    200: ReviewerBid;
+};
+
+export type ReviewerBidsPartialUpdateResponse = ReviewerBidsPartialUpdateResponses[keyof ReviewerBidsPartialUpdateResponses];
+
+export type ReviewerBidsUpdateData = {
+    body: ReviewerBidRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/reviewer-bids/{uuid}/';
+};
+
+export type ReviewerBidsUpdateResponses = {
+    200: ReviewerBid;
+};
+
+export type ReviewerBidsUpdateResponse = ReviewerBidsUpdateResponses[keyof ReviewerBidsUpdateResponses];
+
+export type ReviewerBidsBulkSubmitData = {
+    body: ReviewerBulkBidRequest;
+    path?: never;
+    query?: never;
+    url: '/api/reviewer-bids/bulk-submit/';
+};
+
+export type ReviewerBidsBulkSubmitResponses = {
+    200: {
+        submitted?: number;
+    };
+};
+
+export type ReviewerBidsBulkSubmitResponse = ReviewerBidsBulkSubmitResponses[keyof ReviewerBidsBulkSubmitResponses];
+
+export type ReviewerBidsMyBidsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Reviewer's preference for reviewing this proposal
+         *
+         *
+         */
+        bid?: Array<'conflict' | 'eager' | 'not_willing' | 'willing'>;
+        call_uuid?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-bid' | '-modified_at' | '-submitted_at' | 'bid' | 'modified_at' | 'submitted_at'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        proposal_uuid?: string;
+        reviewer_uuid?: string;
+    };
+    url: '/api/reviewer-bids/my-bids/';
+};
+
+export type ReviewerBidsMyBidsListResponses = {
+    200: Array<ReviewerBid>;
+};
+
+export type ReviewerBidsMyBidsListResponse = ReviewerBidsMyBidsListResponses[keyof ReviewerBidsMyBidsListResponses];
+
+export type ReviewerBidsMyBidsCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Reviewer's preference for reviewing this proposal
+         *
+         *
+         */
+        bid?: Array<'conflict' | 'eager' | 'not_willing' | 'willing'>;
+        call_uuid?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-bid' | '-modified_at' | '-submitted_at' | 'bid' | 'modified_at' | 'submitted_at'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        proposal_uuid?: string;
+        reviewer_uuid?: string;
+    };
+    url: '/api/reviewer-bids/my-bids/';
+};
+
+export type ReviewerBidsMyBidsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type ReviewerBidsSubmitData = {
+    body: ReviewerBidSubmitRequest;
+    path?: never;
+    query?: never;
+    url: '/api/reviewer-bids/submit/';
+};
+
+export type ReviewerBidsSubmitResponses = {
+    200: ReviewerBid;
+};
+
+export type ReviewerBidsSubmitResponse = ReviewerBidsSubmitResponses[keyof ReviewerBidsSubmitResponses];
+
+export type ReviewerInvitationsRetrieveData = {
+    body?: never;
+    path: {
+        token: string;
+    };
+    query?: never;
+    url: '/api/reviewer-invitations/{token}/';
+};
+
+export type ReviewerInvitationsRetrieveResponses = {
+    200: PublicInvitation;
+};
+
+export type ReviewerInvitationsRetrieveResponse = ReviewerInvitationsRetrieveResponses[keyof ReviewerInvitationsRetrieveResponses];
+
+export type ReviewerInvitationsAcceptData = {
+    body?: InvitationAcceptRequest;
+    path: {
+        token: string;
+    };
+    query?: never;
+    url: '/api/reviewer-invitations/{token}/accept/';
+};
+
+export type ReviewerInvitationsAcceptErrors = {
+    400: InvitationAcceptError;
+    401: InvitationAuthError;
+};
+
+export type ReviewerInvitationsAcceptError = ReviewerInvitationsAcceptErrors[keyof ReviewerInvitationsAcceptErrors];
+
+export type ReviewerInvitationsAcceptResponses = {
+    200: InvitationAcceptResponse;
+};
+
+export type ReviewerInvitationsAcceptResponse = ReviewerInvitationsAcceptResponses[keyof ReviewerInvitationsAcceptResponses];
+
+export type ReviewerInvitationsDeclineData = {
+    body: InvitationDeclineRequest;
+    path: {
+        token: string;
+    };
+    query?: never;
+    url: '/api/reviewer-invitations/{token}/decline/';
+};
+
+export type ReviewerInvitationsDeclineResponses = {
+    200: InvitationDeclineResponse;
+};
+
+export type ReviewerInvitationsDeclineResponse = ReviewerInvitationsDeclineResponses[keyof ReviewerInvitationsDeclineResponses];
+
+export type ReviewerProfilesListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        expertise_category_uuid?: string;
+        expertise_keyword?: string;
+        has_orcid?: boolean;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-user_email' | '-user_name' | 'created' | 'user_email' | 'user_name'>;
+        orcid_id?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        user_email?: string;
+        user_name?: string;
+        user_uuid?: string;
+    };
+    url: '/api/reviewer-profiles/';
+};
+
+export type ReviewerProfilesListResponses = {
+    200: Array<ReviewerProfile>;
+};
+
+export type ReviewerProfilesListResponse = ReviewerProfilesListResponses[keyof ReviewerProfilesListResponses];
+
+export type ReviewerProfilesCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        expertise_category_uuid?: string;
+        expertise_keyword?: string;
+        has_orcid?: boolean;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-user_email' | '-user_name' | 'created' | 'user_email' | 'user_name'>;
+        orcid_id?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        user_email?: string;
+        user_name?: string;
+        user_uuid?: string;
+    };
+    url: '/api/reviewer-profiles/';
+};
+
+export type ReviewerProfilesCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type ReviewerProfilesCreateData = {
+    body?: ReviewerProfileRequest;
+    path?: never;
+    query?: never;
+    url: '/api/reviewer-profiles/';
+};
+
+export type ReviewerProfilesCreateResponses = {
+    201: ReviewerProfile;
+};
+
+export type ReviewerProfilesCreateResponse = ReviewerProfilesCreateResponses[keyof ReviewerProfilesCreateResponses];
+
+export type NestedReviewerProfileAffiliationsListData = {
+    body?: never;
+    path: {
+        /**
+         * UUID of the parent reviewer profile
+         */
+        reviewer_profile_uuid: string;
+    };
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/reviewer-profiles/{reviewer_profile_uuid}/affiliations/';
+};
+
+export type NestedReviewerProfileAffiliationsListResponses = {
+    200: Array<ReviewerAffiliation>;
+};
+
+export type NestedReviewerProfileAffiliationsListResponse = NestedReviewerProfileAffiliationsListResponses[keyof NestedReviewerProfileAffiliationsListResponses];
+
+export type NestedReviewerProfileAffiliationsCreateData = {
+    body: ReviewerAffiliationRequest;
+    path: {
+        /**
+         * UUID of the parent reviewer profile
+         */
+        reviewer_profile_uuid: string;
+    };
+    query?: never;
+    url: '/api/reviewer-profiles/{reviewer_profile_uuid}/affiliations/';
+};
+
+export type NestedReviewerProfileAffiliationsCreateResponses = {
+    201: ReviewerAffiliation;
+};
+
+export type NestedReviewerProfileAffiliationsCreateResponse = NestedReviewerProfileAffiliationsCreateResponses[keyof NestedReviewerProfileAffiliationsCreateResponses];
+
+export type NestedReviewerProfileAffiliationsDestroyData = {
+    body?: never;
+    path: {
+        /**
+         * UUID of the parent reviewer profile
+         */
+        reviewer_profile_uuid: string;
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/reviewer-profiles/{reviewer_profile_uuid}/affiliations/{uuid}/';
+};
+
+export type NestedReviewerProfileAffiliationsDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type NestedReviewerProfileAffiliationsDestroyResponse = NestedReviewerProfileAffiliationsDestroyResponses[keyof NestedReviewerProfileAffiliationsDestroyResponses];
+
+export type NestedReviewerProfileAffiliationsRetrieveData = {
+    body?: never;
+    path: {
+        /**
+         * UUID of the parent reviewer profile
+         */
+        reviewer_profile_uuid: string;
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/reviewer-profiles/{reviewer_profile_uuid}/affiliations/{uuid}/';
+};
+
+export type NestedReviewerProfileAffiliationsRetrieveResponses = {
+    200: ReviewerAffiliation;
+};
+
+export type NestedReviewerProfileAffiliationsRetrieveResponse = NestedReviewerProfileAffiliationsRetrieveResponses[keyof NestedReviewerProfileAffiliationsRetrieveResponses];
+
+export type NestedReviewerProfileAffiliationsPartialUpdateData = {
+    body?: PatchedReviewerAffiliationRequest;
+    path: {
+        /**
+         * UUID of the parent reviewer profile
+         */
+        reviewer_profile_uuid: string;
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/reviewer-profiles/{reviewer_profile_uuid}/affiliations/{uuid}/';
+};
+
+export type NestedReviewerProfileAffiliationsPartialUpdateResponses = {
+    200: ReviewerAffiliation;
+};
+
+export type NestedReviewerProfileAffiliationsPartialUpdateResponse = NestedReviewerProfileAffiliationsPartialUpdateResponses[keyof NestedReviewerProfileAffiliationsPartialUpdateResponses];
+
+export type NestedReviewerProfileAffiliationsUpdateData = {
+    body: ReviewerAffiliationRequest;
+    path: {
+        /**
+         * UUID of the parent reviewer profile
+         */
+        reviewer_profile_uuid: string;
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/reviewer-profiles/{reviewer_profile_uuid}/affiliations/{uuid}/';
+};
+
+export type NestedReviewerProfileAffiliationsUpdateResponses = {
+    200: ReviewerAffiliation;
+};
+
+export type NestedReviewerProfileAffiliationsUpdateResponse = NestedReviewerProfileAffiliationsUpdateResponses[keyof NestedReviewerProfileAffiliationsUpdateResponses];
+
+export type NestedReviewerProfileExpertiseListData = {
+    body?: never;
+    path: {
+        /**
+         * UUID of the parent reviewer profile
+         */
+        reviewer_profile_uuid: string;
+    };
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/reviewer-profiles/{reviewer_profile_uuid}/expertise/';
+};
+
+export type NestedReviewerProfileExpertiseListResponses = {
+    200: Array<ReviewerExpertise>;
+};
+
+export type NestedReviewerProfileExpertiseListResponse = NestedReviewerProfileExpertiseListResponses[keyof NestedReviewerProfileExpertiseListResponses];
+
+export type NestedReviewerProfileExpertiseCreateData = {
+    body: ReviewerExpertiseRequest;
+    path: {
+        /**
+         * UUID of the parent reviewer profile
+         */
+        reviewer_profile_uuid: string;
+    };
+    query?: never;
+    url: '/api/reviewer-profiles/{reviewer_profile_uuid}/expertise/';
+};
+
+export type NestedReviewerProfileExpertiseCreateResponses = {
+    201: ReviewerExpertise;
+};
+
+export type NestedReviewerProfileExpertiseCreateResponse = NestedReviewerProfileExpertiseCreateResponses[keyof NestedReviewerProfileExpertiseCreateResponses];
+
+export type NestedReviewerProfileExpertiseDestroyData = {
+    body?: never;
+    path: {
+        /**
+         * UUID of the parent reviewer profile
+         */
+        reviewer_profile_uuid: string;
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/reviewer-profiles/{reviewer_profile_uuid}/expertise/{uuid}/';
+};
+
+export type NestedReviewerProfileExpertiseDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type NestedReviewerProfileExpertiseDestroyResponse = NestedReviewerProfileExpertiseDestroyResponses[keyof NestedReviewerProfileExpertiseDestroyResponses];
+
+export type NestedReviewerProfileExpertiseRetrieveData = {
+    body?: never;
+    path: {
+        /**
+         * UUID of the parent reviewer profile
+         */
+        reviewer_profile_uuid: string;
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/reviewer-profiles/{reviewer_profile_uuid}/expertise/{uuid}/';
+};
+
+export type NestedReviewerProfileExpertiseRetrieveResponses = {
+    200: ReviewerExpertise;
+};
+
+export type NestedReviewerProfileExpertiseRetrieveResponse = NestedReviewerProfileExpertiseRetrieveResponses[keyof NestedReviewerProfileExpertiseRetrieveResponses];
+
+export type NestedReviewerProfileExpertisePartialUpdateData = {
+    body?: PatchedReviewerExpertiseRequest;
+    path: {
+        /**
+         * UUID of the parent reviewer profile
+         */
+        reviewer_profile_uuid: string;
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/reviewer-profiles/{reviewer_profile_uuid}/expertise/{uuid}/';
+};
+
+export type NestedReviewerProfileExpertisePartialUpdateResponses = {
+    200: ReviewerExpertise;
+};
+
+export type NestedReviewerProfileExpertisePartialUpdateResponse = NestedReviewerProfileExpertisePartialUpdateResponses[keyof NestedReviewerProfileExpertisePartialUpdateResponses];
+
+export type NestedReviewerProfileExpertiseUpdateData = {
+    body: ReviewerExpertiseRequest;
+    path: {
+        /**
+         * UUID of the parent reviewer profile
+         */
+        reviewer_profile_uuid: string;
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/reviewer-profiles/{reviewer_profile_uuid}/expertise/{uuid}/';
+};
+
+export type NestedReviewerProfileExpertiseUpdateResponses = {
+    200: ReviewerExpertise;
+};
+
+export type NestedReviewerProfileExpertiseUpdateResponse = NestedReviewerProfileExpertiseUpdateResponses[keyof NestedReviewerProfileExpertiseUpdateResponses];
+
+export type NestedReviewerProfilePublicationsListData = {
+    body?: never;
+    path: {
+        /**
+         * UUID of the parent reviewer profile
+         */
+        reviewer_profile_uuid: string;
+    };
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/reviewer-profiles/{reviewer_profile_uuid}/publications/';
+};
+
+export type NestedReviewerProfilePublicationsListResponses = {
+    200: Array<ReviewerPublication>;
+};
+
+export type NestedReviewerProfilePublicationsListResponse = NestedReviewerProfilePublicationsListResponses[keyof NestedReviewerProfilePublicationsListResponses];
+
+export type NestedReviewerProfilePublicationsCreateData = {
+    body: ReviewerPublicationRequest;
+    path: {
+        /**
+         * UUID of the parent reviewer profile
+         */
+        reviewer_profile_uuid: string;
+    };
+    query?: never;
+    url: '/api/reviewer-profiles/{reviewer_profile_uuid}/publications/';
+};
+
+export type NestedReviewerProfilePublicationsCreateResponses = {
+    201: ReviewerPublication;
+};
+
+export type NestedReviewerProfilePublicationsCreateResponse = NestedReviewerProfilePublicationsCreateResponses[keyof NestedReviewerProfilePublicationsCreateResponses];
+
+export type NestedReviewerProfilePublicationsDestroyData = {
+    body?: never;
+    path: {
+        /**
+         * UUID of the parent reviewer profile
+         */
+        reviewer_profile_uuid: string;
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/reviewer-profiles/{reviewer_profile_uuid}/publications/{uuid}/';
+};
+
+export type NestedReviewerProfilePublicationsDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type NestedReviewerProfilePublicationsDestroyResponse = NestedReviewerProfilePublicationsDestroyResponses[keyof NestedReviewerProfilePublicationsDestroyResponses];
+
+export type NestedReviewerProfilePublicationsRetrieveData = {
+    body?: never;
+    path: {
+        /**
+         * UUID of the parent reviewer profile
+         */
+        reviewer_profile_uuid: string;
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/reviewer-profiles/{reviewer_profile_uuid}/publications/{uuid}/';
+};
+
+export type NestedReviewerProfilePublicationsRetrieveResponses = {
+    200: ReviewerPublication;
+};
+
+export type NestedReviewerProfilePublicationsRetrieveResponse = NestedReviewerProfilePublicationsRetrieveResponses[keyof NestedReviewerProfilePublicationsRetrieveResponses];
+
+export type NestedReviewerProfilePublicationsPartialUpdateData = {
+    body?: PatchedReviewerPublicationRequest;
+    path: {
+        /**
+         * UUID of the parent reviewer profile
+         */
+        reviewer_profile_uuid: string;
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/reviewer-profiles/{reviewer_profile_uuid}/publications/{uuid}/';
+};
+
+export type NestedReviewerProfilePublicationsPartialUpdateResponses = {
+    200: ReviewerPublication;
+};
+
+export type NestedReviewerProfilePublicationsPartialUpdateResponse = NestedReviewerProfilePublicationsPartialUpdateResponses[keyof NestedReviewerProfilePublicationsPartialUpdateResponses];
+
+export type NestedReviewerProfilePublicationsUpdateData = {
+    body: ReviewerPublicationRequest;
+    path: {
+        /**
+         * UUID of the parent reviewer profile
+         */
+        reviewer_profile_uuid: string;
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/reviewer-profiles/{reviewer_profile_uuid}/publications/{uuid}/';
+};
+
+export type NestedReviewerProfilePublicationsUpdateResponses = {
+    200: ReviewerPublication;
+};
+
+export type NestedReviewerProfilePublicationsUpdateResponse = NestedReviewerProfilePublicationsUpdateResponses[keyof NestedReviewerProfilePublicationsUpdateResponses];
+
+export type ReviewerProfilesDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/reviewer-profiles/{uuid}/';
+};
+
+export type ReviewerProfilesDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type ReviewerProfilesDestroyResponse = ReviewerProfilesDestroyResponses[keyof ReviewerProfilesDestroyResponses];
+
+export type ReviewerProfilesRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/reviewer-profiles/{uuid}/';
+};
+
+export type ReviewerProfilesRetrieveResponses = {
+    200: ReviewerProfile;
+};
+
+export type ReviewerProfilesRetrieveResponse = ReviewerProfilesRetrieveResponses[keyof ReviewerProfilesRetrieveResponses];
+
+export type ReviewerProfilesPartialUpdateData = {
+    body?: PatchedReviewerProfileRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/reviewer-profiles/{uuid}/';
+};
+
+export type ReviewerProfilesPartialUpdateResponses = {
+    200: ReviewerProfile;
+};
+
+export type ReviewerProfilesPartialUpdateResponse = ReviewerProfilesPartialUpdateResponses[keyof ReviewerProfilesPartialUpdateResponses];
+
+export type ReviewerProfilesUpdateData = {
+    body?: ReviewerProfileRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/reviewer-profiles/{uuid}/';
+};
+
+export type ReviewerProfilesUpdateResponses = {
+    200: ReviewerProfile;
+};
+
+export type ReviewerProfilesUpdateResponse = ReviewerProfilesUpdateResponses[keyof ReviewerProfilesUpdateResponses];
+
+export type ReviewerProfilesAffiliationsListData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/reviewer-profiles/{uuid}/affiliations/';
+};
+
+export type ReviewerProfilesAffiliationsListResponses = {
+    200: Array<ReviewerAffiliation>;
+};
+
+export type ReviewerProfilesAffiliationsListResponse = ReviewerProfilesAffiliationsListResponses[keyof ReviewerProfilesAffiliationsListResponses];
+
+export type ReviewerProfilesAffiliationsCreateData = {
+    body: ReviewerAffiliationRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/reviewer-profiles/{uuid}/affiliations/';
+};
+
+export type ReviewerProfilesAffiliationsCreateResponses = {
+    200: ReviewerAffiliation;
+};
+
+export type ReviewerProfilesAffiliationsCreateResponse = ReviewerProfilesAffiliationsCreateResponses[keyof ReviewerProfilesAffiliationsCreateResponses];
+
+export type ReviewerProfilesConnectOrcidRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/reviewer-profiles/{uuid}/connect-orcid/';
+};
+
+export type ReviewerProfilesConnectOrcidRetrieveResponses = {
+    200: {
+        authorization_url?: string;
+    };
+};
+
+export type ReviewerProfilesConnectOrcidRetrieveResponse = ReviewerProfilesConnectOrcidRetrieveResponses[keyof ReviewerProfilesConnectOrcidRetrieveResponses];
+
+export type ReviewerProfilesConnectOrcidCallbackData = {
+    body: OrcidCallbackRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/reviewer-profiles/{uuid}/connect-orcid/callback/';
+};
+
+export type ReviewerProfilesConnectOrcidCallbackResponses = {
+    200: ReviewerProfile;
+};
+
+export type ReviewerProfilesConnectOrcidCallbackResponse = ReviewerProfilesConnectOrcidCallbackResponses[keyof ReviewerProfilesConnectOrcidCallbackResponses];
+
+export type ReviewerProfilesDisconnectOrcidData = {
+    body?: ReviewerProfileRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/reviewer-profiles/{uuid}/disconnect-orcid/';
+};
+
+export type ReviewerProfilesDisconnectOrcidResponses = {
+    200: OrcidDisconnectResponse;
+};
+
+export type ReviewerProfilesDisconnectOrcidResponse = ReviewerProfilesDisconnectOrcidResponses[keyof ReviewerProfilesDisconnectOrcidResponses];
+
+export type ReviewerProfilesExpertiseListData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/reviewer-profiles/{uuid}/expertise/';
+};
+
+export type ReviewerProfilesExpertiseListResponses = {
+    200: Array<ReviewerExpertise>;
+};
+
+export type ReviewerProfilesExpertiseListResponse = ReviewerProfilesExpertiseListResponses[keyof ReviewerProfilesExpertiseListResponses];
+
+export type ReviewerProfilesExpertiseCreateData = {
+    body: ReviewerExpertiseRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/reviewer-profiles/{uuid}/expertise/';
+};
+
+export type ReviewerProfilesExpertiseCreateResponses = {
+    200: ReviewerExpertise;
+};
+
+export type ReviewerProfilesExpertiseCreateResponse = ReviewerProfilesExpertiseCreateResponses[keyof ReviewerProfilesExpertiseCreateResponses];
+
+export type ReviewerProfilesImportPublicationsData = {
+    body?: ImportPublicationsRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/reviewer-profiles/{uuid}/import-publications/';
+};
+
+export type ReviewerProfilesImportPublicationsResponses = {
+    200: {
+        imported_count?: number;
+    };
+};
+
+export type ReviewerProfilesImportPublicationsResponse = ReviewerProfilesImportPublicationsResponses[keyof ReviewerProfilesImportPublicationsResponses];
+
+export type ReviewerProfilesPublicationsListData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/reviewer-profiles/{uuid}/publications/';
+};
+
+export type ReviewerProfilesPublicationsListResponses = {
+    200: Array<ReviewerPublication>;
+};
+
+export type ReviewerProfilesPublicationsListResponse = ReviewerProfilesPublicationsListResponses[keyof ReviewerProfilesPublicationsListResponses];
+
+export type ReviewerProfilesPublicationsCreateData = {
+    body: ReviewerPublicationRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/reviewer-profiles/{uuid}/publications/';
+};
+
+export type ReviewerProfilesPublicationsCreateResponses = {
+    200: ReviewerPublication;
+};
+
+export type ReviewerProfilesPublicationsCreateResponse = ReviewerProfilesPublicationsCreateResponses[keyof ReviewerProfilesPublicationsCreateResponses];
+
+export type ReviewerProfilesSyncOrcidData = {
+    body?: ReviewerProfileRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/reviewer-profiles/{uuid}/sync-orcid/';
+};
+
+export type ReviewerProfilesSyncOrcidResponses = {
+    200: OrcidSyncResponse;
+};
+
+export type ReviewerProfilesSyncOrcidResponse = ReviewerProfilesSyncOrcidResponses[keyof ReviewerProfilesSyncOrcidResponses];
+
+export type ReviewerProfilesMeRetrieveData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/reviewer-profiles/me/';
+};
+
+export type ReviewerProfilesMeRetrieveResponses = {
+    200: ReviewerProfile;
+};
+
+export type ReviewerProfilesMeRetrieveResponse = ReviewerProfilesMeRetrieveResponses[keyof ReviewerProfilesMeRetrieveResponses];
+
+export type ReviewerProfilesMeCountData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/reviewer-profiles/me/';
+};
+
+export type ReviewerProfilesMeCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type ReviewerProfilesMePartialUpdateData = {
+    body?: PatchedReviewerProfileCreateRequest;
+    path?: never;
+    query?: never;
+    url: '/api/reviewer-profiles/me/';
+};
+
+export type ReviewerProfilesMePartialUpdateResponses = {
+    200: ReviewerProfile;
+};
+
+export type ReviewerProfilesMePartialUpdateResponse = ReviewerProfilesMePartialUpdateResponses[keyof ReviewerProfilesMePartialUpdateResponses];
+
+export type ReviewerProfilesMeData = {
+    body?: ReviewerProfileCreateRequest;
+    path?: never;
+    query?: never;
+    url: '/api/reviewer-profiles/me/';
+};
+
+export type ReviewerProfilesMeResponses = {
+    200: ReviewerProfile;
+};
+
+export type ReviewerProfilesMeResponse = ReviewerProfilesMeResponses[keyof ReviewerProfilesMeResponses];
+
+export type ReviewerProfilesPublishData = {
+    body?: ReviewerProfileRequest;
+    path?: never;
+    query?: never;
+    url: '/api/reviewer-profiles/publish/';
+};
+
+export type ReviewerProfilesPublishResponses = {
+    200: {
+        is_published?: boolean;
+        published_at?: string;
+        warning?: string;
+    };
+};
+
+export type ReviewerProfilesPublishResponse = ReviewerProfilesPublishResponses[keyof ReviewerProfilesPublishResponses];
+
+export type ReviewerProfilesUnpublishData = {
+    body?: ReviewerProfileRequest;
+    path?: never;
+    query?: never;
+    url: '/api/reviewer-profiles/unpublish/';
+};
+
+export type ReviewerProfilesUnpublishResponses = {
+    200: {
+        is_published?: boolean;
+        detail?: string;
+    };
+};
+
+export type ReviewerProfilesUnpublishResponse = ReviewerProfilesUnpublishResponses[keyof ReviewerProfilesUnpublishResponses];
+
+export type ReviewerSuggestionsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        call_uuid?: string;
+        min_affinity_score?: number;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-affinity_score' | '-created' | '-reviewed_at' | '-status' | 'affinity_score' | 'created' | 'reviewed_at' | 'status'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        reviewer_uuid?: string;
+        status?: Array<'confirmed' | 'invited' | 'pending' | 'rejected'>;
+    };
+    url: '/api/reviewer-suggestions/';
+};
+
+export type ReviewerSuggestionsListResponses = {
+    200: Array<ReviewerSuggestion>;
+};
+
+export type ReviewerSuggestionsListResponse = ReviewerSuggestionsListResponses[keyof ReviewerSuggestionsListResponses];
+
+export type ReviewerSuggestionsCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        call_uuid?: string;
+        min_affinity_score?: number;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-affinity_score' | '-created' | '-reviewed_at' | '-status' | 'affinity_score' | 'created' | 'reviewed_at' | 'status'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        reviewer_uuid?: string;
+        status?: Array<'confirmed' | 'invited' | 'pending' | 'rejected'>;
+    };
+    url: '/api/reviewer-suggestions/';
+};
+
+export type ReviewerSuggestionsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type ReviewerSuggestionsDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/reviewer-suggestions/{uuid}/';
+};
+
+export type ReviewerSuggestionsDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type ReviewerSuggestionsDestroyResponse = ReviewerSuggestionsDestroyResponses[keyof ReviewerSuggestionsDestroyResponses];
+
+export type ReviewerSuggestionsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/reviewer-suggestions/{uuid}/';
+};
+
+export type ReviewerSuggestionsRetrieveResponses = {
+    200: ReviewerSuggestion;
+};
+
+export type ReviewerSuggestionsRetrieveResponse = ReviewerSuggestionsRetrieveResponses[keyof ReviewerSuggestionsRetrieveResponses];
+
+export type ReviewerSuggestionsConfirmData = {
+    body?: ReviewerSuggestionRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/reviewer-suggestions/{uuid}/confirm/';
+};
+
+export type ReviewerSuggestionsConfirmResponses = {
+    200: ReviewerSuggestion;
+};
+
+export type ReviewerSuggestionsConfirmResponse = ReviewerSuggestionsConfirmResponses[keyof ReviewerSuggestionsConfirmResponses];
+
+export type ReviewerSuggestionsRejectData = {
+    body?: SuggestionRejectRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/reviewer-suggestions/{uuid}/reject/';
+};
+
+export type ReviewerSuggestionsRejectResponses = {
+    200: ReviewerSuggestion;
+};
+
+export type ReviewerSuggestionsRejectResponse = ReviewerSuggestionsRejectResponses[keyof ReviewerSuggestionsRejectResponses];
 
 export type RolesListData = {
     body?: never;
