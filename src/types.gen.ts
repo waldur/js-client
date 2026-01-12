@@ -9612,10 +9612,6 @@ export type OnboardingCompanyValidationRequestRequest = {
      * Company name (optional)
      */
     legal_name?: string;
-    /**
-     * Indicates if the validation is to be performed manually
-     */
-    is_manual_validation?: boolean;
 };
 
 export type OnboardingJustification = {
@@ -17682,6 +17678,89 @@ export type RmqConnection = {
     readonly vhost: string;
 };
 
+export type RmqPurgeResponse = {
+    /**
+     * Number of queues that were purged
+     */
+    readonly purged_queues: number;
+    /**
+     * Total number of messages that were purged
+     */
+    readonly purged_messages: number;
+};
+
+export type RmqQueueStats = {
+    /**
+     * Queue name (e.g., 'subscription_{uuid}_offering_{uuid}_{type}')
+     */
+    readonly name: string;
+    /**
+     * Total number of messages in the queue
+     */
+    readonly messages: number;
+    /**
+     * Number of messages ready for delivery
+     */
+    readonly messages_ready: number;
+    /**
+     * Number of messages awaiting acknowledgement
+     */
+    readonly messages_unacknowledged: number;
+    /**
+     * Number of active consumers for this queue
+     */
+    readonly consumers: number;
+    /**
+     * Parsed subscription UUID from queue name
+     */
+    readonly subscription_uuid: string | null;
+    /**
+     * Parsed offering UUID from queue name
+     */
+    readonly offering_uuid: string | null;
+    /**
+     * Parsed object type from queue name (e.g., 'resource', 'order')
+     */
+    readonly object_type: string | null;
+};
+
+export type RmqStatsError = {
+    /**
+     * Error message describing what went wrong
+     */
+    readonly error: string;
+};
+
+export type RmqStatsResponse = {
+    /**
+     * List of vhosts with their subscription queues
+     */
+    readonly vhosts: Array<RmqVhostStats>;
+    /**
+     * Total messages across all subscription queues
+     */
+    readonly total_messages: number;
+    /**
+     * Total number of subscription queues
+     */
+    readonly total_queues: number;
+};
+
+export type RmqStatsUser = {
+    /**
+     * Waldur user UUID
+     */
+    readonly uuid: string;
+    /**
+     * Waldur username
+     */
+    readonly username: string;
+    /**
+     * User's full name
+     */
+    readonly full_name: string;
+};
+
 export type RmqSubscription = {
     readonly created: string;
     readonly uuid: string;
@@ -17700,6 +17779,25 @@ export type RmqVHostStatsItem = {
     readonly name: string;
     waldur_user: RmqWaldurUser;
     readonly subscriptions: Array<RmqSubscription>;
+};
+
+export type RmqVhostStats = {
+    /**
+     * Virtual host name (corresponds to Waldur user UUID)
+     */
+    readonly name: string;
+    /**
+     * Waldur user associated with this vhost
+     */
+    user: RmqStatsUser | null;
+    /**
+     * List of subscription queues in this vhost
+     */
+    readonly queues: Array<RmqQueueStats>;
+    /**
+     * Total messages across all queues in this vhost
+     */
+    readonly total_messages: number;
 };
 
 export type RmqWaldurUser = {
@@ -19034,6 +19132,7 @@ export type ToSConsentDashboard = {
     readonly revoked_consents_over_time: Array<TimeSeriesToSData>;
     readonly tos_version_adoption: Array<VersionAdoption>;
     readonly active_users_over_time: Array<TimeSeriesToSData>;
+    readonly accepted_consents_over_time: Array<TimeSeriesToSData>;
 };
 
 export type TokenRequest = {
@@ -62125,6 +62224,46 @@ export type QueryResponses = {
 };
 
 export type QueryResponse = QueryResponses[keyof QueryResponses];
+
+export type RabbitmqStatsDestroyData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/rabbitmq-stats/';
+};
+
+export type RabbitmqStatsDestroyErrors = {
+    400: RmqStatsError;
+    404: RmqStatsError;
+    503: RmqStatsError;
+};
+
+export type RabbitmqStatsDestroyError = RabbitmqStatsDestroyErrors[keyof RabbitmqStatsDestroyErrors];
+
+export type RabbitmqStatsDestroyResponses = {
+    200: RmqPurgeResponse;
+};
+
+export type RabbitmqStatsDestroyResponse = RabbitmqStatsDestroyResponses[keyof RabbitmqStatsDestroyResponses];
+
+export type RabbitmqStatsRetrieveData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/rabbitmq-stats/';
+};
+
+export type RabbitmqStatsRetrieveErrors = {
+    503: RmqStatsError;
+};
+
+export type RabbitmqStatsRetrieveError = RabbitmqStatsRetrieveErrors[keyof RabbitmqStatsRetrieveErrors];
+
+export type RabbitmqStatsRetrieveResponses = {
+    200: RmqStatsResponse;
+};
+
+export type RabbitmqStatsRetrieveResponse = RabbitmqStatsRetrieveResponses[keyof RabbitmqStatsRetrieveResponses];
 
 export type RabbitmqUserStatsListData = {
     body?: never;
