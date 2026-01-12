@@ -701,6 +701,15 @@ export type AvailableChecklist = {
     readonly category_uuid: string | null;
 };
 
+export type AvailableChecklistsResponse = {
+    customer_checklist: {
+        [key: string]: unknown;
+    } | null;
+    intent_checklist: {
+        [key: string]: unknown;
+    } | null;
+};
+
 export type AwsImage = {
     readonly url: string;
     readonly uuid: string;
@@ -2708,7 +2717,7 @@ export type ChecklistTemplate = {
     initial_visible_questions: Array<Question>;
 };
 
-export type ChecklistTypeEnum = 'project_compliance' | 'proposal_compliance' | 'offering_compliance' | 'project_metadata' | 'customer_onboarding';
+export type ChecklistTypeEnum = 'project_compliance' | 'proposal_compliance' | 'offering_compliance' | 'project_metadata' | 'onboarding_customer' | 'onboarding_intent';
 
 export type ClusterSecurityGroup = {
     readonly uuid: string;
@@ -3243,7 +3252,8 @@ export type ConstanceSettings = {
     MAINTENANCE_ANNOUNCEMENT_NOTIFY_SYSTEM?: Array<string>;
     ENFORCE_USER_CONSENT_FOR_OFFERINGS?: boolean;
     DISABLED_OFFERING_TYPES?: Array<string>;
-    ONBOARDING_COUNTRY?: string;
+    ONBOARDING_SUPPORTED_COUNTRIES?: Array<string>;
+    ONBOARDING_VALIDATION_METHODS?: Array<string>;
     ONBOARDING_VERIFICATION_EXPIRY_HOURS?: number;
     ONBOARDING_ARIREGISTER_BASE_URL?: string;
     ONBOARDING_ARIREGISTER_USERNAME?: string;
@@ -3437,7 +3447,8 @@ export type ConstanceSettingsRequest = {
     MAINTENANCE_ANNOUNCEMENT_NOTIFY_SYSTEM?: Array<string>;
     ENFORCE_USER_CONSENT_FOR_OFFERINGS?: boolean;
     DISABLED_OFFERING_TYPES?: Array<string>;
-    ONBOARDING_COUNTRY?: string;
+    ONBOARDING_SUPPORTED_COUNTRIES?: Array<string>;
+    ONBOARDING_VALIDATION_METHODS?: Array<string>;
     ONBOARDING_VERIFICATION_EXPIRY_HOURS?: number;
     ONBOARDING_ARIREGISTER_BASE_URL?: string;
     ONBOARDING_ARIREGISTER_USERNAME?: string;
@@ -9586,9 +9597,13 @@ export type OfferingUserUpdateRestrictionRequest = {
 
 export type OnboardingCompanyValidationRequestRequest = {
     /**
-     * ISO country code (e.g., 'EE' for Estonia)
+     * Automatic validation method (e.g., 'ariregister', 'wirtschaftscompass', 'bolagsverket'). Leave empty for manual validation.
      */
-    country: string;
+    validation_method?: ValidationMethodEnum | BlankEnum;
+    /**
+     * ISO country code (e.g., 'EE', 'AT') - optional, for display context
+     */
+    country?: string;
     /**
      * Official company registration code
      */
@@ -9601,43 +9616,6 @@ export type OnboardingCompanyValidationRequestRequest = {
      * Indicates if the validation is to be performed manually
      */
     is_manual_validation?: boolean;
-};
-
-export type OnboardingCountryChecklistConfiguration = {
-    readonly url: string;
-    readonly uuid: string;
-    /**
-     * ISO country code (e.g., 'EE' for Estonia)
-     */
-    country: string;
-    /**
-     * Checklist to use for this country's onboarding
-     */
-    checklist: string;
-    readonly checklist_name: string;
-    readonly checklist_uuid: string;
-    readonly questions: Array<QuestionAdmin>;
-    /**
-     * Whether this country configuration is active
-     */
-    is_active?: boolean;
-    readonly created: string;
-    readonly modified: string;
-};
-
-export type OnboardingCountryChecklistConfigurationRequest = {
-    /**
-     * ISO country code (e.g., 'EE' for Estonia)
-     */
-    country: string;
-    /**
-     * Checklist to use for this country's onboarding
-     */
-    checklist: string;
-    /**
-     * Whether this country configuration is active
-     */
-    is_active?: boolean;
 };
 
 export type OnboardingJustification = {
@@ -9781,9 +9759,9 @@ export type OnboardingVerification = {
     readonly user: string;
     readonly user_full_name: string;
     /**
-     * ISO country code (e.g., 'EE' for Estonia)
+     * ISO country code (e.g., 'EE', 'AT') for context. Can be inferred from validation_method.
      */
-    country: string;
+    country?: string;
     /**
      * Official company registration code (required for automatic validation)
      */
@@ -9850,9 +9828,9 @@ export type OnboardingVerification = {
 
 export type OnboardingVerificationRequest = {
     /**
-     * ISO country code (e.g., 'EE' for Estonia)
+     * ISO country code (e.g., 'EE', 'AT') for context. Can be inferred from validation_method.
      */
-    country: string;
+    country?: string;
     /**
      * Official company registration code (required for automatic validation)
      */
@@ -12630,21 +12608,6 @@ export type PatchedOfferingUserServiceProviderCommentRequest = {
     service_provider_comment_url?: string;
 };
 
-export type PatchedOnboardingCountryChecklistConfigurationRequest = {
-    /**
-     * ISO country code (e.g., 'EE' for Estonia)
-     */
-    country?: string;
-    /**
-     * Checklist to use for this country's onboarding
-     */
-    checklist?: string;
-    /**
-     * Whether this country configuration is active
-     */
-    is_active?: boolean;
-};
-
 export type PatchedOnboardingJustificationRequest = {
     verification?: string;
     /**
@@ -12667,7 +12630,7 @@ export type PatchedOnboardingQuestionMetadataRequest = {
 
 export type PatchedOnboardingVerificationRequest = {
     /**
-     * ISO country code (e.g., 'EE' for Estonia)
+     * ISO country code (e.g., 'EE', 'AT') for context. Can be inferred from validation_method.
      */
     country?: string;
     /**
@@ -21304,7 +21267,8 @@ export type ConstanceSettingsRequestForm = {
     MAINTENANCE_ANNOUNCEMENT_NOTIFY_SYSTEM?: Array<string>;
     ENFORCE_USER_CONSENT_FOR_OFFERINGS?: boolean;
     DISABLED_OFFERING_TYPES?: Array<string>;
-    ONBOARDING_COUNTRY?: string;
+    ONBOARDING_SUPPORTED_COUNTRIES?: Array<string>;
+    ONBOARDING_VALIDATION_METHODS?: Array<string>;
     ONBOARDING_VERIFICATION_EXPIRY_HOURS?: number;
     ONBOARDING_ARIREGISTER_BASE_URL?: string;
     ONBOARDING_ARIREGISTER_USERNAME?: string;
@@ -21498,7 +21462,8 @@ export type ConstanceSettingsRequestMultipart = {
     MAINTENANCE_ANNOUNCEMENT_NOTIFY_SYSTEM?: Array<string>;
     ENFORCE_USER_CONSENT_FOR_OFFERINGS?: boolean;
     DISABLED_OFFERING_TYPES?: Array<string>;
-    ONBOARDING_COUNTRY?: string;
+    ONBOARDING_SUPPORTED_COUNTRIES?: Array<string>;
+    ONBOARDING_VALIDATION_METHODS?: Array<string>;
     ONBOARDING_VERIFICATION_EXPIRY_HOURS?: number;
     ONBOARDING_ARIREGISTER_BASE_URL?: string;
     ONBOARDING_ARIREGISTER_USERNAME?: string;
@@ -27434,13 +27399,13 @@ export type ChecklistsAdminListData = {
          *
          *
          */
-        checklist_type?: 'customer_onboarding' | 'offering_compliance' | 'project_compliance' | 'project_metadata' | 'proposal_compliance';
+        checklist_type?: 'offering_compliance' | 'onboarding_customer' | 'onboarding_intent' | 'project_compliance' | 'project_metadata' | 'proposal_compliance';
         /**
          * Filter by multiple checklist types
          *
          *
          */
-        checklist_type__in?: Array<'customer_onboarding' | 'offering_compliance' | 'project_compliance' | 'project_metadata' | 'proposal_compliance'>;
+        checklist_type__in?: Array<'offering_compliance' | 'onboarding_customer' | 'onboarding_intent' | 'project_compliance' | 'project_metadata' | 'proposal_compliance'>;
         /**
          * A page number within the paginated result set.
          */
@@ -27468,13 +27433,13 @@ export type ChecklistsAdminCountData = {
          *
          *
          */
-        checklist_type?: 'customer_onboarding' | 'offering_compliance' | 'project_compliance' | 'project_metadata' | 'proposal_compliance';
+        checklist_type?: 'offering_compliance' | 'onboarding_customer' | 'onboarding_intent' | 'project_compliance' | 'project_metadata' | 'proposal_compliance';
         /**
          * Filter by multiple checklist types
          *
          *
          */
-        checklist_type__in?: Array<'customer_onboarding' | 'offering_compliance' | 'project_compliance' | 'project_metadata' | 'proposal_compliance'>;
+        checklist_type__in?: Array<'offering_compliance' | 'onboarding_customer' | 'onboarding_intent' | 'project_compliance' | 'project_metadata' | 'proposal_compliance'>;
         /**
          * A page number within the paginated result set.
          */
@@ -27885,7 +27850,7 @@ export type ChecklistsAdminQuestionsListData = {
          *
          *
          */
-        checklist_type?: 'customer_onboarding' | 'offering_compliance' | 'project_compliance' | 'project_metadata' | 'proposal_compliance';
+        checklist_type?: 'offering_compliance' | 'onboarding_customer' | 'onboarding_intent' | 'project_compliance' | 'project_metadata' | 'proposal_compliance';
         checklist_uuid?: string;
         /**
          * Filter questions that have onboarding metadata mapping
@@ -27918,7 +27883,7 @@ export type ChecklistsAdminQuestionsCountData = {
          *
          *
          */
-        checklist_type?: 'customer_onboarding' | 'offering_compliance' | 'project_compliance' | 'project_metadata' | 'proposal_compliance';
+        checklist_type?: 'offering_compliance' | 'onboarding_customer' | 'onboarding_intent' | 'project_compliance' | 'project_metadata' | 'proposal_compliance';
         checklist_uuid?: string;
         /**
          * Filter questions that have onboarding metadata mapping
@@ -28093,13 +28058,13 @@ export type ChecklistsAdminChecklistQuestionsData = {
          *
          *
          */
-        checklist_type?: 'customer_onboarding' | 'offering_compliance' | 'project_compliance' | 'project_metadata' | 'proposal_compliance';
+        checklist_type?: 'offering_compliance' | 'onboarding_customer' | 'onboarding_intent' | 'project_compliance' | 'project_metadata' | 'proposal_compliance';
         /**
          * Filter by multiple checklist types
          *
          *
          */
-        checklist_type__in?: Array<'customer_onboarding' | 'offering_compliance' | 'project_compliance' | 'project_metadata' | 'proposal_compliance'>;
+        checklist_type__in?: Array<'offering_compliance' | 'onboarding_customer' | 'onboarding_intent' | 'project_compliance' | 'project_metadata' | 'proposal_compliance'>;
         /**
          * A page number within the paginated result set.
          */
@@ -49026,131 +48991,6 @@ export type NotificationMessagesEnableResponses = {
     200: unknown;
 };
 
-export type OnboardingCountryConfigsListData = {
-    body?: never;
-    path?: never;
-    query?: {
-        country?: string;
-        is_active?: boolean;
-        /**
-         * A page number within the paginated result set.
-         */
-        page?: number;
-        /**
-         * Number of results to return per page.
-         */
-        page_size?: number;
-    };
-    url: '/api/onboarding-country-configs/';
-};
-
-export type OnboardingCountryConfigsListResponses = {
-    200: Array<OnboardingCountryChecklistConfiguration>;
-};
-
-export type OnboardingCountryConfigsListResponse = OnboardingCountryConfigsListResponses[keyof OnboardingCountryConfigsListResponses];
-
-export type OnboardingCountryConfigsCountData = {
-    body?: never;
-    path?: never;
-    query?: {
-        country?: string;
-        is_active?: boolean;
-        /**
-         * A page number within the paginated result set.
-         */
-        page?: number;
-        /**
-         * Number of results to return per page.
-         */
-        page_size?: number;
-    };
-    url: '/api/onboarding-country-configs/';
-};
-
-export type OnboardingCountryConfigsCountResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
-};
-
-export type OnboardingCountryConfigsCreateData = {
-    body: OnboardingCountryChecklistConfigurationRequest;
-    path?: never;
-    query?: never;
-    url: '/api/onboarding-country-configs/';
-};
-
-export type OnboardingCountryConfigsCreateResponses = {
-    201: OnboardingCountryChecklistConfiguration;
-};
-
-export type OnboardingCountryConfigsCreateResponse = OnboardingCountryConfigsCreateResponses[keyof OnboardingCountryConfigsCreateResponses];
-
-export type OnboardingCountryConfigsDestroyData = {
-    body?: never;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/onboarding-country-configs/{uuid}/';
-};
-
-export type OnboardingCountryConfigsDestroyResponses = {
-    /**
-     * No response body
-     */
-    204: void;
-};
-
-export type OnboardingCountryConfigsDestroyResponse = OnboardingCountryConfigsDestroyResponses[keyof OnboardingCountryConfigsDestroyResponses];
-
-export type OnboardingCountryConfigsRetrieveData = {
-    body?: never;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/onboarding-country-configs/{uuid}/';
-};
-
-export type OnboardingCountryConfigsRetrieveResponses = {
-    200: OnboardingCountryChecklistConfiguration;
-};
-
-export type OnboardingCountryConfigsRetrieveResponse = OnboardingCountryConfigsRetrieveResponses[keyof OnboardingCountryConfigsRetrieveResponses];
-
-export type OnboardingCountryConfigsPartialUpdateData = {
-    body?: PatchedOnboardingCountryChecklistConfigurationRequest;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/onboarding-country-configs/{uuid}/';
-};
-
-export type OnboardingCountryConfigsPartialUpdateResponses = {
-    200: OnboardingCountryChecklistConfiguration;
-};
-
-export type OnboardingCountryConfigsPartialUpdateResponse = OnboardingCountryConfigsPartialUpdateResponses[keyof OnboardingCountryConfigsPartialUpdateResponses];
-
-export type OnboardingCountryConfigsUpdateData = {
-    body: OnboardingCountryChecklistConfigurationRequest;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/onboarding-country-configs/{uuid}/';
-};
-
-export type OnboardingCountryConfigsUpdateResponses = {
-    200: OnboardingCountryChecklistConfiguration;
-};
-
-export type OnboardingCountryConfigsUpdateResponse = OnboardingCountryConfigsUpdateResponses[keyof OnboardingCountryConfigsUpdateResponses];
-
 export type OnboardingJustificationsListData = {
     body?: never;
     path?: never;
@@ -49545,7 +49385,7 @@ export type OnboardingVerificationsCountResponses = {
 };
 
 export type OnboardingVerificationsCreateData = {
-    body: OnboardingVerificationRequest;
+    body?: OnboardingVerificationRequest;
     path?: never;
     query?: never;
     url: '/api/onboarding-verifications/';
@@ -49606,7 +49446,7 @@ export type OnboardingVerificationsPartialUpdateResponses = {
 export type OnboardingVerificationsPartialUpdateResponse = OnboardingVerificationsPartialUpdateResponses[keyof OnboardingVerificationsPartialUpdateResponses];
 
 export type OnboardingVerificationsUpdateData = {
-    body: OnboardingVerificationRequest;
+    body?: OnboardingVerificationRequest;
     path: {
         uuid: string;
     };
@@ -49627,22 +49467,15 @@ export type OnboardingVerificationsChecklistRetrieveData = {
     };
     query?: {
         /**
-         * If true, returns all questions including hidden ones (for dynamic form visibility). Default: false.
+         * Type of checklist to retrieve (customer or intent). Defaults to intent.
+         */
+        checklist_type?: 'customer' | 'intent';
+        /**
+         * If true, returns all questions including hidden ones.
          */
         include_all?: boolean;
     };
     url: '/api/onboarding-verifications/{uuid}/checklist/';
-};
-
-export type OnboardingVerificationsChecklistRetrieveErrors = {
-    /**
-     * No checklist configured
-     */
-    400: unknown;
-    /**
-     * Object not found
-     */
-    404: unknown;
 };
 
 export type OnboardingVerificationsChecklistRetrieveResponses = {
@@ -49656,19 +49489,13 @@ export type OnboardingVerificationsCompletionStatusRetrieveData = {
     path: {
         uuid: string;
     };
-    query?: never;
+    query?: {
+        /**
+         * Type of checklist to retrieve (customer or intent). Defaults to intent.
+         */
+        checklist_type?: 'customer' | 'intent';
+    };
     url: '/api/onboarding-verifications/{uuid}/completion_status/';
-};
-
-export type OnboardingVerificationsCompletionStatusRetrieveErrors = {
-    /**
-     * No checklist configured
-     */
-    400: unknown;
-    /**
-     * Object not found
-     */
-    404: unknown;
 };
 
 export type OnboardingVerificationsCompletionStatusRetrieveResponses = {
@@ -49716,22 +49543,48 @@ export type OnboardingVerificationsSubmitAnswersData = {
     url: '/api/onboarding-verifications/{uuid}/submit_answers/';
 };
 
-export type OnboardingVerificationsSubmitAnswersErrors = {
-    /**
-     * Validation error or no checklist configured
-     */
-    400: unknown;
-    /**
-     * Object not found
-     */
-    404: unknown;
-};
-
 export type OnboardingVerificationsSubmitAnswersResponses = {
-    200: AnswerSubmitResponse;
+    200: OnboardingVerification;
 };
 
 export type OnboardingVerificationsSubmitAnswersResponse = OnboardingVerificationsSubmitAnswersResponses[keyof OnboardingVerificationsSubmitAnswersResponses];
+
+export type OnboardingVerificationsAvailableChecklistsRetrieveData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Type of checklist to retrieve (customer, intent, or all). Defaults to all.
+         */
+        checklist_type?: 'customer' | 'intent' | 'all';
+    };
+    url: '/api/onboarding-verifications/available_checklists/';
+};
+
+export type OnboardingVerificationsAvailableChecklistsRetrieveResponses = {
+    200: AvailableChecklistsResponse;
+};
+
+export type OnboardingVerificationsAvailableChecklistsRetrieveResponse = OnboardingVerificationsAvailableChecklistsRetrieveResponses[keyof OnboardingVerificationsAvailableChecklistsRetrieveResponses];
+
+export type OnboardingVerificationsAvailableChecklistsCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Type of checklist to retrieve (customer, intent, or all). Defaults to all.
+         */
+        checklist_type?: 'customer' | 'intent' | 'all';
+    };
+    url: '/api/onboarding-verifications/available_checklists/';
+};
+
+export type OnboardingVerificationsAvailableChecklistsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type OnboardingVerificationsChecklistTemplateRetrieveData = {
     body?: never;
@@ -49782,7 +49635,7 @@ export type OnboardingVerificationsChecklistTemplateCountResponses = {
 };
 
 export type OnboardingVerificationsStartVerificationData = {
-    body: OnboardingCompanyValidationRequestRequest;
+    body?: OnboardingCompanyValidationRequestRequest;
     path?: never;
     query?: never;
     url: '/api/onboarding-verifications/start_verification/';
