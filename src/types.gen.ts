@@ -5406,6 +5406,10 @@ export type IdentityProvider = {
      * Space-separated list of extra fields to persist.
      */
     extra_fields?: string | null;
+    /**
+     * List of allowed redirect URLs for OAuth authentication. URLs must be exact matches (origin only: scheme + domain + port). HTTPS required except for localhost. No wildcards, paths, query params, or fragments. Example: ["https://portal1.example.com", "https://portal2.example.com:8443"]. If empty, falls back to HOMEPORT_URL setting.
+     */
+    allowed_redirects?: unknown;
 };
 
 export type IdentityProviderRequest = {
@@ -5455,6 +5459,10 @@ export type IdentityProviderRequest = {
      * Space-separated list of extra fields to persist.
      */
     extra_fields?: string | null;
+    /**
+     * List of allowed redirect URLs for OAuth authentication. URLs must be exact matches (origin only: scheme + domain + port). HTTPS required except for localhost. No wildcards, paths, query params, or fragments. Example: ["https://portal1.example.com", "https://portal2.example.com:8443"]. If empty, falls back to HOMEPORT_URL setting.
+     */
+    allowed_redirects?: unknown;
 };
 
 export type ImageCreateRequest = {
@@ -12276,6 +12284,10 @@ export type PatchedIdentityProviderRequest = {
      * Space-separated list of extra fields to persist.
      */
     extra_fields?: string | null;
+    /**
+     * List of allowed redirect URLs for OAuth authentication. URLs must be exact matches (origin only: scheme + domain + port). HTTPS required except for localhost. No wildcards, paths, query params, or fragments. Example: ["https://portal1.example.com", "https://portal2.example.com:8443"]. If empty, falls back to HOMEPORT_URL setting.
+     */
+    allowed_redirects?: unknown;
 };
 
 export type PatchedInvitationUpdateRequest = {
@@ -19341,16 +19353,19 @@ export type UserAction = {
      * UI-Router state name for navigation
      */
     route_name?: string;
-    /**
-     * Parameters for route navigation
-     */
-    route_params?: string;
+    readonly route_params: {
+        [key: string]: unknown;
+    };
     project_name?: string;
     project_uuid?: string | null;
     organization_name?: string;
     organization_uuid?: string | null;
     offering_name?: string;
+    offering_uuid?: string | null;
     offering_type?: string;
+    resource_name?: string;
+    resource_uuid?: string | null;
+    order_type?: string;
 };
 
 export type UserActionExecution = {
