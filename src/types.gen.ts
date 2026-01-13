@@ -6762,6 +6762,10 @@ export type MergedPluginOptions = {
      */
     auto_approve_remote_orders?: boolean;
     /**
+     * Resource expiration threshold in days.
+     */
+    resource_expiration_threshold?: number;
+    /**
      * Service provider can create offering user
      */
     service_provider_can_create_offering_user?: boolean;
@@ -7004,6 +7008,10 @@ export type MergedPluginOptionsRequest = {
      * If set to True, an order can be processed without approval
      */
     auto_approve_remote_orders?: boolean;
+    /**
+     * Resource expiration threshold in days.
+     */
+    resource_expiration_threshold?: number;
     /**
      * Service provider can create offering user
      */
@@ -15418,6 +15426,7 @@ export type QuestionAdmin = {
     readonly url: string;
     readonly checklist_name: string;
     readonly checklist_uuid: string;
+    readonly checklist_type: string;
     checklist: string;
 };
 
@@ -51588,17 +51597,6 @@ export type OpenportalUnmanagedProjectsMoveProjectData = {
     url: '/api/openportal-unmanaged-projects/{uuid}/move_project/';
 };
 
-export type OpenportalUnmanagedProjectsMoveProjectErrors = {
-    /**
-     * Validation error when trying to move a terminated project
-     */
-    400: {
-        non_field_errors?: Array<string>;
-    };
-};
-
-export type OpenportalUnmanagedProjectsMoveProjectError = OpenportalUnmanagedProjectsMoveProjectErrors[keyof OpenportalUnmanagedProjectsMoveProjectErrors];
-
 export type OpenportalUnmanagedProjectsMoveProjectResponses = {
     200: Project;
 };
@@ -54907,7 +54905,12 @@ export type OpenstackRoutersListData = {
          * Number of results to return per page.
          */
         page_size?: number;
-        state?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
+        /**
+         * State
+         *
+         *
+         */
+        state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
         /**
          * Tenant URL
          */
@@ -54946,7 +54949,12 @@ export type OpenstackRoutersCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
-        state?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
+        /**
+         * State
+         *
+         *
+         */
+        state?: Array<'CREATING' | 'CREATION_SCHEDULED' | 'DELETING' | 'DELETION_SCHEDULED' | 'ERRED' | 'OK' | 'UPDATE_SCHEDULED' | 'UPDATING'>;
         /**
          * Tenant URL
          */
@@ -59215,17 +59223,6 @@ export type ProjectsMoveProjectData = {
     query?: never;
     url: '/api/projects/{uuid}/move_project/';
 };
-
-export type ProjectsMoveProjectErrors = {
-    /**
-     * Validation error when trying to move a terminated project
-     */
-    400: {
-        non_field_errors?: Array<string>;
-    };
-};
-
-export type ProjectsMoveProjectError = ProjectsMoveProjectErrors[keyof ProjectsMoveProjectErrors];
 
 export type ProjectsMoveProjectResponses = {
     200: Project;
