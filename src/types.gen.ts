@@ -2578,6 +2578,31 @@ export type ChatRequestRequest = {
     input: string;
 };
 
+export type ChatResponse = {
+    /**
+     * Component Alias (e.g. 'markdown', 'code').
+     */
+    k?: string;
+    /**
+     * Content payload.
+     */
+    c?: string;
+    /**
+     * Tag or language for dynamic blocks.
+     */
+    t?: string;
+    /**
+     * System metadata.
+     */
+    m?: {
+        [key: string]: unknown;
+    };
+    /**
+     * Error message.
+     */
+    e?: string;
+};
+
 export type CheckUniqueBackendIdRequest = {
     /**
      * Backend identifier to check
@@ -27462,19 +27487,6 @@ export type CeleryStatsRetrieveResponses = {
 
 export type CeleryStatsRetrieveResponse = CeleryStatsRetrieveResponses[keyof CeleryStatsRetrieveResponses];
 
-export type ChatInvokeData = {
-    body?: never;
-    path?: never;
-    query?: never;
-    url: '/api/chat/invoke/';
-};
-
-export type ChatInvokeResponses = {
-    200: string;
-};
-
-export type ChatInvokeResponse = ChatInvokeResponses[keyof ChatInvokeResponses];
-
 export type ChatStreamData = {
     body: ChatRequestRequest;
     path?: never;
@@ -27483,11 +27495,10 @@ export type ChatStreamData = {
 };
 
 export type ChatStreamResponses = {
-    /**
-     * LLM chat streamed response.
-     */
-    200: unknown;
+    200: ChatResponse;
 };
+
+export type ChatStreamResponse = ChatStreamResponses[keyof ChatStreamResponses];
 
 export type ChecklistsAdminListData = {
     body?: never;
