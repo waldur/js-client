@@ -15,6 +15,48 @@ export type AccessSubnetRequest = {
 
 export type AccountNameGenerationPolicyEnum = 'project_slug';
 
+export type ActiveQueriesStats = {
+    /**
+     * Number of currently active queries
+     */
+    readonly count: number;
+    /**
+     * Duration of the longest running query in seconds
+     */
+    readonly longest_duration_seconds: number;
+    /**
+     * Number of queries waiting on locks
+     */
+    readonly waiting_on_locks: number;
+    /**
+     * List of active queries
+     */
+    readonly queries: Array<ActiveQuery>;
+};
+
+export type ActiveQuery = {
+    /**
+     * Process ID
+     */
+    readonly pid: number;
+    /**
+     * Query duration in seconds
+     */
+    readonly duration_seconds: number;
+    /**
+     * Query state
+     */
+    readonly state: string;
+    /**
+     * Type of event the query is waiting for
+     */
+    readonly wait_event_type: string | null;
+    /**
+     * First 100 characters of the query
+     */
+    readonly query_preview: string;
+};
+
 export type AdminAnnouncement = {
     readonly uuid?: string;
     description?: string;
@@ -74,6 +116,75 @@ export type AffinityMatrixResponse = {
 
 export type AffinityMethodEnum = 'keyword' | 'tfidf' | 'combined';
 
+export type AgentConnectionInfo = {
+    /**
+     * Agent identity UUID
+     */
+    readonly uuid: string;
+    /**
+     * Agent name
+     */
+    readonly name: string;
+    /**
+     * Associated offering UUID
+     */
+    readonly offering_uuid: string;
+    /**
+     * Associated offering name
+     */
+    readonly offering_name: string;
+    /**
+     * Agent version
+     */
+    readonly version: string | null;
+    /**
+     * When the agent was last restarted
+     */
+    readonly last_restarted: string;
+    /**
+     * Services running within this agent
+     */
+    readonly services: Array<AgentServiceStatus>;
+    /**
+     * Event subscriptions with connection status
+     */
+    readonly event_subscriptions: Array<AgentEventSubscriptionWithConnection>;
+    /**
+     * RabbitMQ queues for this agent's offering
+     */
+    readonly queues: Array<AgentQueueInfo>;
+};
+
+export type AgentConnectionStatsResponse = {
+    /**
+     * List of agents with connection status
+     */
+    readonly agents: Array<AgentConnectionInfo>;
+    /**
+     * Summary statistics
+     */
+    summary: AgentConnectionSummary;
+};
+
+export type AgentConnectionSummary = {
+    /**
+     * Total number of registered agents
+     */
+    readonly total_agents: number;
+    /**
+     * Number of agents with active RMQ connections
+     */
+    readonly connected_agents: number;
+    /**
+     * Number of agents without active connections
+     */
+    readonly disconnected_agents: number;
+    /**
+     * Total messages across all agent queues
+     */
+    readonly total_queued_messages: number;
+};
+
 export type AgentEventSubscriptionCreateRequest = {
     /**
      * The type of object to observe for events
@@ -85,9 +196,31 @@ export type AgentEventSubscriptionCreateRequest = {
     description?: string;
 };
 
+export type AgentEventSubscriptionWithConnection = {
+    /**
+     * Event subscription UUID
+     */
+    readonly uuid: string;
+    /**
+     * When the subscription was created
+     */
+    readonly created: string;
+    /**
+     * List of observable object configurations
+     */
+    readonly observable_objects: unknown;
+    /**
+     * RabbitMQ connection status for this subscription
+     */
+    rmq_connection: AgentRmqConnection | null;
+};
+
 export type AgentIdentity = {
     readonly uuid: string;
     readonly url: string;
+    /**
+     * UUID of an offering with type 'Marketplace.Slurm'. Only site-agent offerings are accepted.
+     */
     offering: string;
     name: string;
     version?: string | null;
@@ -107,6 +240,9 @@ export type AgentIdentity = {
 };
 
 export type AgentIdentityRequest = {
+    /**
+     * UUID of an offering with type 'Marketplace.Slurm'. Only site-agent offerings are accepted.
+     */
     offering: string;
     name: string;
     version?: string | null;
@@ -147,6 +283,52 @@ export type AgentProcessorCreateRequest = {
     backend_version?: string | null;
 };
 
+export type AgentQueueInfo = {
+    /**
+     * Queue name
+     */
+    readonly name: string;
+    /**
+     * Number of messages in queue
+     */
+    readonly messages: number;
+    /**
+     * Number of active consumers
+     */
+    readonly consumers: number;
+    /**
+     * Parsed object type from queue name
+     */
+    readonly object_type: string | null;
+};
+
+export type AgentRmqConnection = {
+    /**
+     * Whether the agent has an active connection
+     */
+    readonly connected: boolean;
+    /**
+     * Client IP address of active connection
+     */
+    readonly source_ip: string | null;
+    /**
+     * Connection establishment timestamp
+     */
+    readonly connected_at: string | null;
+    /**
+     * Connection state: 'running', 'blocked', 'blocking'
+     */
+    readonly state: string | null;
+    /**
+     * Bytes received on this connection
+     */
+    readonly recv_oct: number | null;
+    /**
+     * Bytes sent on this connection
+     */
+    readonly send_oct: number | null;
+};
+
 export type AgentService = {
     readonly uuid: string;
     readonly url: string;
@@ -173,6 +355,71 @@ export type AgentServiceStatisticsRequest = {
      * Statistics data to be stored for the service
      */
     statistics: unknown;
+};
+
+export type AgentServiceStatus = {
+    /**
+     * Service UUID
+     */
+    readonly uuid: string;
+    /**
+     * Service name
+     */
+    readonly name: string;
+    /**
+     * Service state: ACTIVE, IDLE, or ERROR
+     */
+    readonly state: string;
+    /**
+     * Last modification timestamp
+     */
+    readonly modified: string;
+};
+
+export type AgentStatsResponse = {
+    /**
+     * Statistics about agent identities
+     */
+    identities: {
+        [key: string]: unknown;
+    };
+    /**
+     * Statistics about agent services
+     */
+    services: {
+        [key: string]: unknown;
+    };
+    /**
+     * Statistics about agent processors
+     */
+    processors: {
+        [key: string]: unknown;
+    };
+};
+
+export type AgentTaskStatsResponse = {
+    /**
+     * Currently running agent-related tasks
+     */
+    active_tasks: Array<{
+        [key: string]: unknown;
+    }>;
+    /**
+     * Scheduled agent-related tasks
+     */
+    scheduled_tasks: Array<{
+        [key: string]: unknown;
+    }>;
+    /**
+     * Reserved agent-related tasks
+     */
+    reserved_tasks: Array<{
+        [key: string]: unknown;
+    }>;
+    /**
+     * Error message if task inspection failed
+     */
+    error?: string;
 };
 
 export type AgentTypeEnum = 'Order processing' | 'Usage reporting' | 'Glauth sync' | 'Resource sync' | 'Event processing' | 'unknown';
@@ -1772,6 +2019,25 @@ export type CoiStatusUpdateRequest = {
 
 export type CoiStatusUpdateStatusEnum = 'dismissed' | 'waived' | 'recused';
 
+export type CachePerformance = {
+    /**
+     * Buffer cache hit ratio percentage (should be >99%)
+     */
+    readonly buffer_cache_hit_ratio: number | null;
+    /**
+     * Index cache hit ratio percentage
+     */
+    readonly index_hit_ratio: number | null;
+    /**
+     * Configured shared_buffers setting
+     */
+    readonly shared_buffers: string;
+    /**
+     * Configured effective_cache_size setting
+     */
+    readonly effective_cache_size: string;
+};
+
 export type CallAssignmentConfiguration = {
     readonly uuid: string;
     readonly call: string;
@@ -2744,6 +3010,34 @@ export type ChecklistTemplate = {
 
 export type ChecklistTypeEnum = 'project_compliance' | 'proposal_compliance' | 'offering_compliance' | 'project_metadata' | 'onboarding_customer' | 'onboarding_intent';
 
+export type CleanupRequestRequest = {
+    /**
+     * If true, only return what would be deleted without actually deleting
+     */
+    dry_run?: boolean;
+    /**
+     * Delete entries older than this many hours
+     */
+    older_than_hours?: number;
+};
+
+export type CleanupResponse = {
+    /**
+     * Number of items deleted (or would be deleted in dry run)
+     */
+    deleted_count: number;
+    /**
+     * Whether this was a dry run
+     */
+    dry_run: boolean;
+    /**
+     * List of deleted (or to-be-deleted) items
+     */
+    items: Array<{
+        [key: string]: unknown;
+    }>;
+};
+
 export type ClusterSecurityGroup = {
     readonly uuid: string;
     readonly name: string;
@@ -3107,6 +3401,33 @@ export type ConflictSummaryResponse = {
     by_type: {
         [key: string]: number;
     };
+};
+
+export type ConnectionStats = {
+    /**
+     * Number of active connections
+     */
+    readonly active: number;
+    /**
+     * Number of idle connections
+     */
+    readonly idle: number;
+    /**
+     * Number of connections idle in transaction
+     */
+    readonly idle_in_transaction: number;
+    /**
+     * Number of connections waiting for a lock
+     */
+    readonly waiting: number;
+    /**
+     * Maximum allowed connections
+     */
+    readonly max_connections: number;
+    /**
+     * Percentage of max connections in use
+     */
+    readonly utilization_percent: number;
 };
 
 export type ConsoleUrl = {
@@ -4239,6 +4560,68 @@ export type DataVolumeRequest = {
     mount_point: string;
 };
 
+export type DatabaseSizeStats = {
+    /**
+     * Name of the database
+     */
+    readonly database_name: string;
+    /**
+     * Total database size in bytes
+     */
+    readonly total_size_bytes: number;
+    /**
+     * Size of data excluding indexes in bytes
+     */
+    readonly data_size_bytes: number;
+    /**
+     * Total size of all indexes in bytes
+     */
+    readonly index_size_bytes: number;
+};
+
+export type DatabaseStatsResponse = {
+    /**
+     * Top largest tables by size
+     */
+    readonly table_stats: Array<TableSize>;
+    /**
+     * Connection statistics
+     */
+    connections: ConnectionStats;
+    /**
+     * Database size information
+     */
+    database_size: DatabaseSizeStats;
+    /**
+     * Cache hit ratios and memory settings
+     */
+    cache_performance: CachePerformance;
+    /**
+     * Transaction commit/rollback statistics
+     */
+    transactions: TransactionStats;
+    /**
+     * Current lock statistics
+     */
+    locks: LockStats;
+    /**
+     * Vacuum and maintenance statistics
+     */
+    maintenance: MaintenanceStats;
+    /**
+     * Currently running queries
+     */
+    active_queries: ActiveQueriesStats;
+    /**
+     * Query performance indicators
+     */
+    query_performance: QueryPerformance;
+    /**
+     * Replication status (if applicable)
+     */
+    replication: ReplicationStats;
+};
+
 export type DecidingEntityEnum = 'by_call_manager' | 'automatic';
 
 export type DeleteAttachmentsRequest = {
@@ -4693,6 +5076,9 @@ export type EventSubscription = {
      */
     readonly user_username: string;
     readonly user_full_name: string;
+    /**
+     * List of objects to observe. Each item must have 'object_type' (one of: order, user_role, resource, offering_user, importable_resources, service_account, course_account, resource_periodic_limits) and optionally 'object_id' (integer). Example: [{"object_type": "resource"}, {"object_type": "order", "object_id": 123}]
+     */
     observable_objects?: unknown;
     readonly created: string;
     readonly modified: string;
@@ -4704,6 +5090,9 @@ export type EventSubscription = {
 
 export type EventSubscriptionRequest = {
     description?: string;
+    /**
+     * List of objects to observe. Each item must have 'object_type' (one of: order, user_role, resource, offering_user, importable_resources, service_account, course_account, resource_periodic_limits) and optionally 'object_id' (integer). Example: [{"object_type": "resource"}, {"object_type": "order", "object_id": 123}]
+     */
     observable_objects?: unknown;
 };
 
@@ -6374,6 +6763,21 @@ export type LinkToInvoiceRequest = {
     invoice: string;
 };
 
+export type LockStats = {
+    /**
+     * Total number of locks currently held
+     */
+    readonly total_locks: number;
+    /**
+     * Number of locks being waited for
+     */
+    readonly waiting_locks: number;
+    /**
+     * Number of AccessExclusive locks (blocks all access)
+     */
+    readonly access_exclusive_locks: number;
+};
+
 export type Logout = {
     /**
      * URL to redirect to after logout
@@ -6544,6 +6948,29 @@ export type MaintenanceAnnouncementTemplateRequest = {
      * Service provider announcing the maintenance
      */
     service_provider: string;
+};
+
+export type MaintenanceStats = {
+    /**
+     * Age of the oldest transaction in transactions
+     */
+    readonly oldest_transaction_age: number | null;
+    /**
+     * Number of tables with high dead tuple ratio
+     */
+    readonly tables_needing_vacuum: number;
+    /**
+     * Total estimated dead tuples across all tables
+     */
+    readonly total_dead_tuples: number;
+    /**
+     * Total estimated live tuples across all tables
+     */
+    readonly total_live_tuples: number;
+    /**
+     * Ratio of dead tuples to total tuples
+     */
+    readonly dead_tuple_ratio_percent: number | null;
 };
 
 export type MaintenanceTypeEnum = 1 | 2 | 3 | 4 | 5;
@@ -15300,6 +15727,33 @@ export type PullMarketplaceScriptResourceRequest = {
 
 export type QosStrategyEnum = 'threshold' | 'progressive';
 
+export type QueryPerformance = {
+    /**
+     * Total sequential scans (potentially expensive)
+     */
+    readonly seq_scan_count: number;
+    /**
+     * Total rows fetched by sequential scans
+     */
+    readonly seq_scan_rows: number;
+    /**
+     * Total index scans
+     */
+    readonly index_scan_count: number;
+    /**
+     * Total rows fetched by index scans
+     */
+    readonly index_scan_rows: number;
+    /**
+     * Number of temporary files created
+     */
+    readonly temp_files_count: number;
+    /**
+     * Total size of temporary files in bytes
+     */
+    readonly temp_files_bytes: number;
+};
+
 export type QueryRequest = {
     /**
      * Search query string
@@ -16810,6 +17264,21 @@ export type RemoveSoftwareCatalogRequest = {
     offering_catalog_uuid: string;
 };
 
+export type ReplicationStats = {
+    /**
+     * Whether this database is a replica
+     */
+    readonly is_replica: boolean;
+    /**
+     * Write-ahead log size in bytes
+     */
+    readonly wal_bytes: number | null;
+    /**
+     * Replication lag in bytes (only for replicas)
+     */
+    readonly replication_lag_bytes: number | null;
+};
+
 export type ReportSection = {
     /**
      * Section header text
@@ -17716,12 +18185,200 @@ export type ReviewerSuggestionRequest = {
 
 export type ReviewerSuggestionStatusEnum = 'pending' | 'confirmed' | 'rejected' | 'invited';
 
-export type RmqConnection = {
+export type RmqClientProperties = {
     /**
-     * An IPv4 or IPv6 address.
+     * Client product name (e.g., 'pika', 'amqp-client')
      */
-    source_ip: string;
+    readonly product: string | null;
+    /**
+     * Client library version
+     */
+    readonly version: string | null;
+    /**
+     * Client platform (e.g., 'Python 3.11')
+     */
+    readonly platform: string | null;
+};
+
+export type RmqEnrichedConnection = {
+    /**
+     * Client IP address
+     */
+    readonly source_ip: string;
+    /**
+     * Virtual host name
+     */
     readonly vhost: string;
+    /**
+     * Connection establishment timestamp
+     */
+    readonly connected_at: string | null;
+    /**
+     * Connection state: 'running', 'blocked', 'blocking'
+     */
+    readonly state: string;
+    /**
+     * Bytes received on this connection
+     */
+    readonly recv_oct: number;
+    /**
+     * Bytes sent on this connection
+     */
+    readonly send_oct: number;
+    /**
+     * Number of channels on this connection
+     */
+    readonly channels: number;
+    /**
+     * Heartbeat timeout in seconds
+     */
+    readonly timeout: number | null;
+    /**
+     * Client identification properties
+     */
+    client_properties: RmqClientProperties | null;
+};
+
+export type RmqEnrichedUserStatsItem = {
+    /**
+     * RabbitMQ username (corresponds to EventSubscription UUID)
+     */
+    readonly username: string;
+    /**
+     * List of active connections with detailed statistics
+     */
+    readonly connections: Array<RmqEnrichedConnection>;
+};
+
+export type RmqListener = {
+    /**
+     * Protocol name (e.g., 'amqp', 'http', 'clustering')
+     */
+    readonly protocol: string;
+    /**
+     * Listening port number
+     */
+    readonly port: number;
+};
+
+export type RmqMessageStats = {
+    /**
+     * Total messages published
+     */
+    readonly publish: number;
+    /**
+     * Messages published per second
+     */
+    readonly publish_rate: number;
+    /**
+     * Total messages delivered to consumers
+     */
+    readonly deliver: number;
+    /**
+     * Messages delivered per second
+     */
+    readonly deliver_rate: number;
+    /**
+     * Total messages confirmed by broker
+     */
+    readonly confirm: number;
+    /**
+     * Messages confirmed per second
+     */
+    readonly confirm_rate: number;
+    /**
+     * Total messages acknowledged by consumers
+     */
+    readonly ack: number;
+    /**
+     * Messages acknowledged per second
+     */
+    readonly ack_rate: number;
+};
+
+export type RmqObjectTotals = {
+    /**
+     * Total active connections
+     */
+    readonly connections: number;
+    /**
+     * Total active channels
+     */
+    readonly channels: number;
+    /**
+     * Total exchanges
+     */
+    readonly exchanges: number;
+    /**
+     * Total queues
+     */
+    readonly queues: number;
+    /**
+     * Total active consumers
+     */
+    readonly consumers: number;
+};
+
+export type RmqOverview = {
+    /**
+     * Name of the RabbitMQ cluster
+     */
+    readonly cluster_name: string;
+    /**
+     * RabbitMQ server version
+     */
+    readonly rabbitmq_version: string;
+    /**
+     * Erlang/OTP runtime version
+     */
+    readonly erlang_version: string;
+    /**
+     * Message throughput statistics with rates
+     */
+    message_stats: RmqMessageStats;
+    /**
+     * Global queue message counts
+     */
+    queue_totals: RmqQueueTotals;
+    /**
+     * Counts of connections, channels, queues, etc.
+     */
+    object_totals: RmqObjectTotals;
+    /**
+     * Current RabbitMQ node name
+     */
+    readonly node: string;
+    /**
+     * Active protocol listeners
+     */
+    readonly listeners: Array<RmqListener>;
+};
+
+export type RmqPurgeRequestRequest = {
+    /**
+     * Virtual host name containing the queue(s)
+     */
+    vhost?: string;
+    /**
+     * Specific queue name (requires vhost)
+     */
+    queue_name?: string;
+    /**
+     * Glob pattern to match queue names (e.g., '*_resource'). Requires vhost.
+     */
+    queue_pattern?: string;
+    /**
+     * If true, purge all subscription queues across all vhosts
+     */
+    purge_all_subscription_queues?: boolean;
+    /**
+     * If true, delete the queue(s) entirely instead of just purging messages
+     */
+    delete_queue?: boolean;
+    /**
+     * If true, delete all subscription queues across all vhosts
+     */
+    delete_all_subscription_queues?: boolean;
 };
 
 export type RmqPurgeResponse = {
@@ -17733,6 +18390,10 @@ export type RmqPurgeResponse = {
      * Total number of messages that were purged
      */
     readonly purged_messages: number;
+    /**
+     * Number of queues that were deleted
+     */
+    readonly deleted_queues: number;
 };
 
 export type RmqQueueStats = {
@@ -17768,6 +18429,61 @@ export type RmqQueueStats = {
      * Parsed object type from queue name (e.g., 'resource', 'order')
      */
     readonly object_type: string | null;
+    /**
+     * Message TTL in milliseconds
+     */
+    readonly message_ttl: number | null;
+    /**
+     * Maximum number of messages in queue
+     */
+    readonly max_length: number | null;
+    /**
+     * Maximum total size of messages in bytes
+     */
+    readonly max_length_bytes: number | null;
+    /**
+     * Queue TTL - auto-delete after idle in milliseconds
+     */
+    readonly expires: number | null;
+    /**
+     * Behavior when full: 'drop-head', 'reject-publish', or 'reject-publish-dlx'
+     */
+    readonly overflow: string | null;
+    /**
+     * Dead letter exchange name
+     */
+    readonly dead_letter_exchange: string | null;
+    /**
+     * Dead letter routing key
+     */
+    readonly dead_letter_routing_key: string | null;
+    /**
+     * Maximum priority level (1-255)
+     */
+    readonly max_priority: number | null;
+    /**
+     * Queue mode: 'default' or 'lazy'
+     */
+    readonly queue_mode: string | null;
+    /**
+     * Queue type: 'classic', 'quorum', or 'stream'
+     */
+    readonly queue_type: string | null;
+};
+
+export type RmqQueueTotals = {
+    /**
+     * Total messages across all queues
+     */
+    readonly messages: number;
+    /**
+     * Messages ready for delivery
+     */
+    readonly messages_ready: number;
+    /**
+     * Messages awaiting acknowledgement
+     */
+    readonly messages_unacknowledged: number;
 };
 
 export type RmqStatsError = {
@@ -17814,11 +18530,6 @@ export type RmqSubscription = {
      * An IPv4 or IPv6 address.
      */
     source_ip: string;
-};
-
-export type RmqUserStatsItem = {
-    readonly username: string;
-    readonly connections: Array<RmqConnection>;
 };
 
 export type RmqVHostStatsItem = {
@@ -19191,6 +19902,25 @@ export type TokenRequest = {
 export type TotalCustomerCost = {
     readonly total: number;
     readonly price: number;
+};
+
+export type TransactionStats = {
+    /**
+     * Total committed transactions
+     */
+    readonly committed: number;
+    /**
+     * Total rolled back transactions
+     */
+    readonly rolled_back: number;
+    /**
+     * Percentage of transactions that were rolled back
+     */
+    readonly rollback_ratio_percent: number;
+    /**
+     * Total number of deadlocks detected
+     */
+    readonly deadlocks: number;
 };
 
 export type TriggerCoiDetectionJobTypeEnum = 'full_call' | 'incremental';
@@ -29819,18 +30549,18 @@ export type DailyQuotasRetrieveResponses = {
 
 export type DailyQuotasRetrieveResponse = DailyQuotasRetrieveResponses[keyof DailyQuotasRetrieveResponses];
 
-export type DatabaseStatsListData = {
+export type DatabaseStatsRetrieveData = {
     body?: never;
     path?: never;
     query?: never;
     url: '/api/database-stats/';
 };
 
-export type DatabaseStatsListResponses = {
-    200: Array<TableSize>;
+export type DatabaseStatsRetrieveResponses = {
+    200: DatabaseStatsResponse;
 };
 
-export type DatabaseStatsListResponse = DatabaseStatsListResponses[keyof DatabaseStatsListResponses];
+export type DatabaseStatsRetrieveResponse = DatabaseStatsRetrieveResponses[keyof DatabaseStatsRetrieveResponses];
 
 export type DigitaloceanDropletsListData = {
     body?: never;
@@ -46173,6 +46903,26 @@ export type MarketplaceServiceProvidersUpdateUserResponses = {
 
 export type MarketplaceServiceProvidersUpdateUserResponse = MarketplaceServiceProvidersUpdateUserResponses[keyof MarketplaceServiceProvidersUpdateUserResponses];
 
+export type MarketplaceSiteAgentConnectionStatsRetrieveData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/marketplace-site-agent-connection-stats/';
+};
+
+export type MarketplaceSiteAgentConnectionStatsRetrieveErrors = {
+    /**
+     * RabbitMQ unavailable
+     */
+    503: unknown;
+};
+
+export type MarketplaceSiteAgentConnectionStatsRetrieveResponses = {
+    200: AgentConnectionStatsResponse;
+};
+
+export type MarketplaceSiteAgentConnectionStatsRetrieveResponse = MarketplaceSiteAgentConnectionStatsRetrieveResponses[keyof MarketplaceSiteAgentConnectionStatsRetrieveResponses];
+
 export type MarketplaceSiteAgentIdentitiesListData = {
     body?: never;
     path?: never;
@@ -46183,6 +46933,10 @@ export type MarketplaceSiteAgentIdentitiesListData = {
         last_restarted?: string;
         name?: string;
         offering_uuid?: string;
+        /**
+         * Has no services
+         */
+        orphaned?: boolean;
         /**
          * A page number within the paginated result set.
          */
@@ -46212,6 +46966,10 @@ export type MarketplaceSiteAgentIdentitiesCountData = {
         last_restarted?: string;
         name?: string;
         offering_uuid?: string;
+        /**
+         * Has no services
+         */
+        orphaned?: boolean;
         /**
          * A page number within the paginated result set.
          */
@@ -46325,6 +47083,19 @@ export type MarketplaceSiteAgentIdentitiesRegisterServiceResponses = {
 
 export type MarketplaceSiteAgentIdentitiesRegisterServiceResponse = MarketplaceSiteAgentIdentitiesRegisterServiceResponses[keyof MarketplaceSiteAgentIdentitiesRegisterServiceResponses];
 
+export type MarketplaceSiteAgentIdentitiesCleanupOrphanedData = {
+    body?: CleanupRequestRequest;
+    path?: never;
+    query?: never;
+    url: '/api/marketplace-site-agent-identities/cleanup_orphaned/';
+};
+
+export type MarketplaceSiteAgentIdentitiesCleanupOrphanedResponses = {
+    200: CleanupResponse;
+};
+
+export type MarketplaceSiteAgentIdentitiesCleanupOrphanedResponse = MarketplaceSiteAgentIdentitiesCleanupOrphanedResponses[keyof MarketplaceSiteAgentIdentitiesCleanupOrphanedResponses];
+
 export type MarketplaceSiteAgentProcessorsListData = {
     body?: never;
     path?: never;
@@ -46336,6 +47107,10 @@ export type MarketplaceSiteAgentProcessorsListData = {
          */
         last_run?: string;
         /**
+         * Last run before
+         */
+        last_run_before?: string;
+        /**
          * A page number within the paginated result set.
          */
         page?: number;
@@ -46344,6 +47119,10 @@ export type MarketplaceSiteAgentProcessorsListData = {
          */
         page_size?: number;
         service_uuid?: string;
+        /**
+         * Last run more than 1 hour ago
+         */
+        stale?: boolean;
     };
     url: '/api/marketplace-site-agent-processors/';
 };
@@ -46365,6 +47144,10 @@ export type MarketplaceSiteAgentProcessorsCountData = {
          */
         last_run?: string;
         /**
+         * Last run before
+         */
+        last_run_before?: string;
+        /**
          * A page number within the paginated result set.
          */
         page?: number;
@@ -46373,6 +47156,10 @@ export type MarketplaceSiteAgentProcessorsCountData = {
          */
         page_size?: number;
         service_uuid?: string;
+        /**
+         * Last run more than 1 hour ago
+         */
+        stale?: boolean;
     };
     url: '/api/marketplace-site-agent-processors/';
 };
@@ -46383,6 +47170,24 @@ export type MarketplaceSiteAgentProcessorsCountResponses = {
      */
     200: unknown;
 };
+
+export type MarketplaceSiteAgentProcessorsDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-site-agent-processors/{uuid}/';
+};
+
+export type MarketplaceSiteAgentProcessorsDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type MarketplaceSiteAgentProcessorsDestroyResponse = MarketplaceSiteAgentProcessorsDestroyResponses[keyof MarketplaceSiteAgentProcessorsDestroyResponses];
 
 export type MarketplaceSiteAgentProcessorsRetrieveData = {
     body?: never;
@@ -46406,6 +47211,14 @@ export type MarketplaceSiteAgentServicesListData = {
         identity_uuid?: string;
         mode?: string;
         /**
+         * Modified after
+         */
+        modified_after?: string;
+        /**
+         * Modified before
+         */
+        modified_before?: string;
+        /**
          * A page number within the paginated result set.
          */
         page?: number;
@@ -46413,6 +47226,10 @@ export type MarketplaceSiteAgentServicesListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Inactive for more than 24 hours
+         */
+        stale?: boolean;
         state?: Array<1 | 2 | 3>;
     };
     url: '/api/marketplace-site-agent-services/';
@@ -46431,6 +47248,14 @@ export type MarketplaceSiteAgentServicesCountData = {
         identity_uuid?: string;
         mode?: string;
         /**
+         * Modified after
+         */
+        modified_after?: string;
+        /**
+         * Modified before
+         */
+        modified_before?: string;
+        /**
          * A page number within the paginated result set.
          */
         page?: number;
@@ -46438,6 +47263,10 @@ export type MarketplaceSiteAgentServicesCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Inactive for more than 24 hours
+         */
+        stale?: boolean;
         state?: Array<1 | 2 | 3>;
     };
     url: '/api/marketplace-site-agent-services/';
@@ -46449,6 +47278,24 @@ export type MarketplaceSiteAgentServicesCountResponses = {
      */
     200: unknown;
 };
+
+export type MarketplaceSiteAgentServicesDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-site-agent-services/{uuid}/';
+};
+
+export type MarketplaceSiteAgentServicesDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type MarketplaceSiteAgentServicesDestroyResponse = MarketplaceSiteAgentServicesDestroyResponses[keyof MarketplaceSiteAgentServicesDestroyResponses];
 
 export type MarketplaceSiteAgentServicesRetrieveData = {
     body?: never;
@@ -46495,6 +47342,45 @@ export type MarketplaceSiteAgentServicesSetStatisticsResponses = {
 };
 
 export type MarketplaceSiteAgentServicesSetStatisticsResponse = MarketplaceSiteAgentServicesSetStatisticsResponses[keyof MarketplaceSiteAgentServicesSetStatisticsResponses];
+
+export type MarketplaceSiteAgentServicesCleanupStaleData = {
+    body?: CleanupRequestRequest;
+    path?: never;
+    query?: never;
+    url: '/api/marketplace-site-agent-services/cleanup_stale/';
+};
+
+export type MarketplaceSiteAgentServicesCleanupStaleResponses = {
+    200: CleanupResponse;
+};
+
+export type MarketplaceSiteAgentServicesCleanupStaleResponse = MarketplaceSiteAgentServicesCleanupStaleResponses[keyof MarketplaceSiteAgentServicesCleanupStaleResponses];
+
+export type MarketplaceSiteAgentStatsRetrieveData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/marketplace-site-agent-stats/';
+};
+
+export type MarketplaceSiteAgentStatsRetrieveResponses = {
+    200: AgentStatsResponse;
+};
+
+export type MarketplaceSiteAgentStatsRetrieveResponse = MarketplaceSiteAgentStatsRetrieveResponses[keyof MarketplaceSiteAgentStatsRetrieveResponses];
+
+export type MarketplaceSiteAgentTaskStatsRetrieveData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/marketplace-site-agent-task-stats/';
+};
+
+export type MarketplaceSiteAgentTaskStatsRetrieveResponses = {
+    200: AgentTaskStatsResponse;
+};
+
+export type MarketplaceSiteAgentTaskStatsRetrieveResponse = MarketplaceSiteAgentTaskStatsRetrieveResponses[keyof MarketplaceSiteAgentTaskStatsRetrieveResponses];
 
 export type MarketplaceSlurmPeriodicUsagePoliciesListData = {
     body?: never;
@@ -62248,26 +63134,24 @@ export type QueryResponses = {
 
 export type QueryResponse = QueryResponses[keyof QueryResponses];
 
-export type RabbitmqStatsDestroyData = {
+export type RabbitmqOverviewRetrieveData = {
     body?: never;
     path?: never;
     query?: never;
-    url: '/api/rabbitmq-stats/';
+    url: '/api/rabbitmq-overview/';
 };
 
-export type RabbitmqStatsDestroyErrors = {
-    400: RmqStatsError;
-    404: RmqStatsError;
+export type RabbitmqOverviewRetrieveErrors = {
     503: RmqStatsError;
 };
 
-export type RabbitmqStatsDestroyError = RabbitmqStatsDestroyErrors[keyof RabbitmqStatsDestroyErrors];
+export type RabbitmqOverviewRetrieveError = RabbitmqOverviewRetrieveErrors[keyof RabbitmqOverviewRetrieveErrors];
 
-export type RabbitmqStatsDestroyResponses = {
-    200: RmqPurgeResponse;
+export type RabbitmqOverviewRetrieveResponses = {
+    200: RmqOverview;
 };
 
-export type RabbitmqStatsDestroyResponse = RabbitmqStatsDestroyResponses[keyof RabbitmqStatsDestroyResponses];
+export type RabbitmqOverviewRetrieveResponse = RabbitmqOverviewRetrieveResponses[keyof RabbitmqOverviewRetrieveResponses];
 
 export type RabbitmqStatsRetrieveData = {
     body?: never;
@@ -62288,6 +63172,27 @@ export type RabbitmqStatsRetrieveResponses = {
 
 export type RabbitmqStatsRetrieveResponse = RabbitmqStatsRetrieveResponses[keyof RabbitmqStatsRetrieveResponses];
 
+export type RabbitmqStatsData = {
+    body?: RmqPurgeRequestRequest;
+    path?: never;
+    query?: never;
+    url: '/api/rabbitmq-stats/';
+};
+
+export type RabbitmqStatsErrors = {
+    400: RmqStatsError;
+    404: RmqStatsError;
+    503: RmqStatsError;
+};
+
+export type RabbitmqStatsError = RabbitmqStatsErrors[keyof RabbitmqStatsErrors];
+
+export type RabbitmqStatsResponses = {
+    200: RmqPurgeResponse;
+};
+
+export type RabbitmqStatsResponse = RabbitmqStatsResponses[keyof RabbitmqStatsResponses];
+
 export type RabbitmqUserStatsListData = {
     body?: never;
     path?: never;
@@ -62305,7 +63210,7 @@ export type RabbitmqUserStatsListData = {
 };
 
 export type RabbitmqUserStatsListResponses = {
-    200: Array<RmqUserStatsItem>;
+    200: Array<RmqEnrichedUserStatsItem>;
 };
 
 export type RabbitmqUserStatsListResponse = RabbitmqUserStatsListResponses[keyof RabbitmqUserStatsListResponses];
