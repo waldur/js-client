@@ -3598,7 +3598,6 @@ export type ConstanceSettings = {
     MAINTENANCE_ANNOUNCEMENT_NOTIFY_SYSTEM?: Array<string>;
     ENFORCE_USER_CONSENT_FOR_OFFERINGS?: boolean;
     DISABLED_OFFERING_TYPES?: Array<string>;
-    ONBOARDING_SUPPORTED_COUNTRIES?: Array<string>;
     ONBOARDING_VALIDATION_METHODS?: Array<string>;
     ONBOARDING_VERIFICATION_EXPIRY_HOURS?: number;
     ONBOARDING_ARIREGISTER_BASE_URL?: string;
@@ -3793,7 +3792,6 @@ export type ConstanceSettingsRequest = {
     MAINTENANCE_ANNOUNCEMENT_NOTIFY_SYSTEM?: Array<string>;
     ENFORCE_USER_CONSENT_FOR_OFFERINGS?: boolean;
     DISABLED_OFFERING_TYPES?: Array<string>;
-    ONBOARDING_SUPPORTED_COUNTRIES?: Array<string>;
     ONBOARDING_VALIDATION_METHODS?: Array<string>;
     ONBOARDING_VERIFICATION_EXPIRY_HOURS?: number;
     ONBOARDING_ARIREGISTER_BASE_URL?: string;
@@ -10012,6 +10010,12 @@ export type OfferingUser = {
      * Check if the offering user has a connected compliance checklist completion.
      */
     readonly has_compliance_checklist?: boolean;
+    /**
+     * User consent data including uuid, version, and agreement_date
+     */
+    readonly consent_data?: {
+        [key: string]: string;
+    } | null;
 };
 
 export type OfferingUserRequest = {
@@ -10200,7 +10204,7 @@ export type OnboardingRunValidationRequestRequest = {
     /**
      * Personal identifier (temporary workaround for Estonian civil_number)
      */
-    person_identifier?: string;
+    civil_number?: string;
     /**
      * User's first name (temporary workaround for Austrian validation)
      */
@@ -14232,6 +14236,19 @@ export type PermissionRequest = {
     readonly role_name: string;
     readonly role_description: string;
     readonly project_name_template: string;
+};
+
+export type PersonIdentifierFieldsResponse = {
+    /**
+     * The validation method identifier
+     */
+    validation_method: string;
+    /**
+     * Field specification for person identification. For simple identifiers: {type: 'string', field: 'civil_number', ...}. For composite identifiers: {type: 'object', fields: {...}}
+     */
+    person_identifier_fields: {
+        [key: string]: unknown;
+    };
 };
 
 export type PlanComponent = {
@@ -22145,7 +22162,6 @@ export type ConstanceSettingsRequestForm = {
     MAINTENANCE_ANNOUNCEMENT_NOTIFY_SYSTEM?: Array<string>;
     ENFORCE_USER_CONSENT_FOR_OFFERINGS?: boolean;
     DISABLED_OFFERING_TYPES?: Array<string>;
-    ONBOARDING_SUPPORTED_COUNTRIES?: Array<string>;
     ONBOARDING_VALIDATION_METHODS?: Array<string>;
     ONBOARDING_VERIFICATION_EXPIRY_HOURS?: number;
     ONBOARDING_ARIREGISTER_BASE_URL?: string;
@@ -22340,7 +22356,6 @@ export type ConstanceSettingsRequestMultipart = {
     MAINTENANCE_ANNOUNCEMENT_NOTIFY_SYSTEM?: Array<string>;
     ENFORCE_USER_CONSENT_FOR_OFFERINGS?: boolean;
     DISABLED_OFFERING_TYPES?: Array<string>;
-    ONBOARDING_SUPPORTED_COUNTRIES?: Array<string>;
     ONBOARDING_VALIDATION_METHODS?: Array<string>;
     ONBOARDING_VERIFICATION_EXPIRY_HOURS?: number;
     ONBOARDING_ARIREGISTER_BASE_URL?: string;
@@ -38084,7 +38099,7 @@ export type MarketplaceOfferingUsersListData = {
          * Created after
          */
         created?: string;
-        field?: Array<'created' | 'customer_name' | 'customer_uuid' | 'has_compliance_checklist' | 'has_consent' | 'is_restricted' | 'modified' | 'offering' | 'offering_name' | 'offering_uuid' | 'requires_reconsent' | 'service_provider_comment' | 'service_provider_comment_url' | 'state' | 'url' | 'user' | 'user_email' | 'user_full_name' | 'user_username' | 'user_uuid' | 'username' | 'uuid'>;
+        field?: Array<'consent_data' | 'created' | 'customer_name' | 'customer_uuid' | 'has_compliance_checklist' | 'has_consent' | 'is_restricted' | 'modified' | 'offering' | 'offering_name' | 'offering_uuid' | 'requires_reconsent' | 'service_provider_comment' | 'service_provider_comment_url' | 'state' | 'url' | 'user' | 'user_email' | 'user_full_name' | 'user_username' | 'user_uuid' | 'username' | 'uuid'>;
         /**
          * User Has Consent
          */
@@ -38267,7 +38282,7 @@ export type MarketplaceOfferingUsersRetrieveData = {
         uuid: string;
     };
     query?: {
-        field?: Array<'created' | 'customer_name' | 'customer_uuid' | 'has_compliance_checklist' | 'has_consent' | 'is_restricted' | 'modified' | 'offering' | 'offering_name' | 'offering_uuid' | 'requires_reconsent' | 'service_provider_comment' | 'service_provider_comment_url' | 'state' | 'url' | 'user' | 'user_email' | 'user_full_name' | 'user_username' | 'user_uuid' | 'username' | 'uuid'>;
+        field?: Array<'consent_data' | 'created' | 'customer_name' | 'customer_uuid' | 'has_compliance_checklist' | 'has_consent' | 'is_restricted' | 'modified' | 'offering' | 'offering_name' | 'offering_uuid' | 'requires_reconsent' | 'service_provider_comment' | 'service_provider_comment_url' | 'state' | 'url' | 'user' | 'user_email' | 'user_full_name' | 'user_username' | 'user_uuid' | 'username' | 'uuid'>;
     };
     url: '/api/marketplace-offering-users/{uuid}/';
 };
@@ -50666,6 +50681,24 @@ export type OnboardingVerificationsStartVerificationResponses = {
 };
 
 export type OnboardingVerificationsStartVerificationResponse = OnboardingVerificationsStartVerificationResponses[keyof OnboardingVerificationsStartVerificationResponses];
+
+export type OnboardingPersonIdentifierFieldsRetrieveData = {
+    body?: never;
+    path?: never;
+    query: {
+        /**
+         * Validation method identifier
+         */
+        validation_method: 'ariregister' | 'bolagsverket' | 'breg' | 'wirtschaftscompass';
+    };
+    url: '/api/onboarding/person-identifier-fields/';
+};
+
+export type OnboardingPersonIdentifierFieldsRetrieveResponses = {
+    200: PersonIdentifierFieldsResponse;
+};
+
+export type OnboardingPersonIdentifierFieldsRetrieveResponse = OnboardingPersonIdentifierFieldsRetrieveResponses[keyof OnboardingPersonIdentifierFieldsRetrieveResponses];
 
 export type OnboardingSupportedCountriesRetrieveData = {
     body?: never;
