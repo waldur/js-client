@@ -3626,6 +3626,12 @@ export type ConstanceSettings = {
     SOFTWARE_CATALOG_UPDATE_EXISTING_PACKAGES?: boolean;
     SOFTWARE_CATALOG_CLEANUP_ENABLED?: boolean;
     SOFTWARE_CATALOG_RETENTION_DAYS?: number;
+    USER_ACTIONS_ENABLED?: boolean;
+    USER_ACTIONS_PENDING_ORDER_HOURS?: number;
+    USER_ACTIONS_HIGH_URGENCY_NOTIFICATION?: boolean;
+    USER_ACTIONS_NOTIFICATION_THRESHOLD?: number;
+    USER_ACTIONS_EXECUTION_RETENTION_DAYS?: number;
+    USER_ACTIONS_DEFAULT_EXPIRATION_REMINDERS?: Array<string>;
 };
 
 export type ConstanceSettingsRequest = {
@@ -3820,6 +3826,12 @@ export type ConstanceSettingsRequest = {
     SOFTWARE_CATALOG_UPDATE_EXISTING_PACKAGES?: boolean;
     SOFTWARE_CATALOG_CLEANUP_ENABLED?: boolean;
     SOFTWARE_CATALOG_RETENTION_DAYS?: number;
+    USER_ACTIONS_ENABLED?: boolean;
+    USER_ACTIONS_PENDING_ORDER_HOURS?: number;
+    USER_ACTIONS_HIGH_URGENCY_NOTIFICATION?: boolean;
+    USER_ACTIONS_NOTIFICATION_THRESHOLD?: number;
+    USER_ACTIONS_EXECUTION_RETENTION_DAYS?: number;
+    USER_ACTIONS_DEFAULT_EXPIRATION_REMINDERS?: Array<string>;
 };
 
 export type ContainerFormatEnum = 'bare' | 'ovf' | 'aki' | 'ami' | 'ari';
@@ -19924,6 +19936,17 @@ export type TokenRequest = {
     token: string;
 };
 
+export type ToolExecuteRequest = {
+    /**
+     * Name of the tool to execute.
+     */
+    tool: string;
+    /**
+     * Tool arguments.
+     */
+    arguments?: unknown;
+};
+
 export type TotalCustomerCost = {
     readonly total: number;
     readonly price: number;
@@ -22198,6 +22221,12 @@ export type ConstanceSettingsRequestForm = {
     SOFTWARE_CATALOG_UPDATE_EXISTING_PACKAGES?: boolean;
     SOFTWARE_CATALOG_CLEANUP_ENABLED?: boolean;
     SOFTWARE_CATALOG_RETENTION_DAYS?: number;
+    USER_ACTIONS_ENABLED?: boolean;
+    USER_ACTIONS_PENDING_ORDER_HOURS?: number;
+    USER_ACTIONS_HIGH_URGENCY_NOTIFICATION?: boolean;
+    USER_ACTIONS_NOTIFICATION_THRESHOLD?: number;
+    USER_ACTIONS_EXECUTION_RETENTION_DAYS?: number;
+    USER_ACTIONS_DEFAULT_EXPIRATION_REMINDERS?: Array<string>;
 };
 
 export type ConstanceSettingsRequestMultipart = {
@@ -22392,6 +22421,12 @@ export type ConstanceSettingsRequestMultipart = {
     SOFTWARE_CATALOG_UPDATE_EXISTING_PACKAGES?: boolean;
     SOFTWARE_CATALOG_CLEANUP_ENABLED?: boolean;
     SOFTWARE_CATALOG_RETENTION_DAYS?: number;
+    USER_ACTIONS_ENABLED?: boolean;
+    USER_ACTIONS_PENDING_ORDER_HOURS?: number;
+    USER_ACTIONS_HIGH_URGENCY_NOTIFICATION?: boolean;
+    USER_ACTIONS_NOTIFICATION_THRESHOLD?: number;
+    USER_ACTIONS_EXECUTION_RETENTION_DAYS?: number;
+    USER_ACTIONS_DEFAULT_EXPIRATION_REMINDERS?: Array<string>;
 };
 
 export type PaymentRequestForm = {
@@ -28263,6 +28298,34 @@ export type CeleryStatsRetrieveResponses = {
 };
 
 export type CeleryStatsRetrieveResponse = CeleryStatsRetrieveResponses[keyof CeleryStatsRetrieveResponses];
+
+export type ChatToolsExecuteData = {
+    body: ToolExecuteRequest;
+    path?: never;
+    query?: never;
+    url: '/api/chat-tools/execute/';
+};
+
+export type ChatToolsExecuteResponses = {
+    200: {
+        [key: string]: unknown;
+    };
+};
+
+export type ChatToolsExecuteResponse = ChatToolsExecuteResponses[keyof ChatToolsExecuteResponses];
+
+export type ChatInvokeData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/chat/invoke/';
+};
+
+export type ChatInvokeResponses = {
+    200: string;
+};
+
+export type ChatInvokeResponse = ChatInvokeResponses[keyof ChatInvokeResponses];
 
 export type ChatStreamData = {
     body: ChatRequestRequest;
