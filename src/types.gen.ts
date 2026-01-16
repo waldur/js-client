@@ -7243,6 +7243,10 @@ export type MergedPluginOptions = {
      */
     maximal_resource_count_per_project?: number;
     /**
+     * Attribute name to enforce uniqueness per value. E.g., 'storage_data_type' ensures only one resource per storage type per project.
+     */
+    unique_resource_per_attribute?: string;
+    /**
      * Required user role in a project for provisioning of resources
      */
     required_team_role_for_provisioning?: string;
@@ -7489,6 +7493,10 @@ export type MergedPluginOptionsRequest = {
      * Maximal number of offering resources allowed per project
      */
     maximal_resource_count_per_project?: number;
+    /**
+     * Attribute name to enforce uniqueness per value. E.g., 'storage_data_type' ensures only one resource per storage type per project.
+     */
+    unique_resource_per_attribute?: string;
     /**
      * Required user role in a project for provisioning of resources
      */
