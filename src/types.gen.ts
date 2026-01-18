@@ -3010,6 +3010,82 @@ export type ChecklistTemplate = {
 
 export type ChecklistTypeEnum = 'project_compliance' | 'proposal_compliance' | 'offering_compliance' | 'project_metadata' | 'onboarding_customer' | 'onboarding_intent';
 
+export type CircuitBreakerConfig = {
+    /**
+     * Number of failures before opening circuit
+     */
+    readonly failure_threshold: number;
+    /**
+     * Seconds to wait before attempting recovery
+     */
+    readonly recovery_timeout: number;
+    /**
+     * Successful calls needed in half-open state to close
+     */
+    readonly success_threshold: number;
+};
+
+export type CircuitBreakerReset = {
+    /**
+     * Operation status
+     */
+    readonly status: string;
+    /**
+     * New circuit breaker state after reset
+     */
+    readonly state: string;
+};
+
+export type CircuitBreakerStateChange = {
+    /**
+     * Unix timestamp of state change
+     */
+    readonly timestamp: number;
+    /**
+     * Previous state
+     */
+    readonly from_state: string | null;
+    /**
+     * New state
+     */
+    readonly to_state: string;
+    /**
+     * Reason for state change
+     */
+    readonly reason: string;
+};
+
+export type CircuitBreakerStatus = {
+    /**
+     * Current state: closed, open, or half_open
+     */
+    readonly state: string;
+    /**
+     * Number of consecutive failures
+     */
+    readonly failure_count: number;
+    /**
+     * Successful calls since last state change
+     */
+    readonly success_count: number;
+    /**
+     * Unix timestamp of last failure
+     */
+    readonly last_failure_time: number | null;
+    /**
+     * Unix timestamp of last state change
+     */
+    readonly last_state_change: number | null;
+    /**
+     * Circuit breaker configuration
+     */
+    config: CircuitBreakerConfig;
+    /**
+     * Recent state transitions (last 50)
+     */
+    readonly state_history: Array<CircuitBreakerStateChange>;
+};
+
 export type CleanupRequestRequest = {
     /**
      * If true, only return what would be deleted without actually deleting
@@ -4556,6 +4632,29 @@ export type CustomerUser = {
     image?: string | null;
 };
 
+export type DlqQueue = {
+    /**
+     * Virtual host name
+     */
+    readonly vhost: string;
+    /**
+     * DLQ queue name
+     */
+    readonly queue_name: string;
+    /**
+     * Total messages in DLQ
+     */
+    readonly messages: number;
+    /**
+     * Messages ready for delivery
+     */
+    readonly messages_ready: number;
+    /**
+     * Number of consumers attached
+     */
+    readonly consumers: number;
+};
+
 export type DataVolume = {
     size: number;
     volume_type?: string | null;
@@ -4630,6 +4729,25 @@ export type DatabaseStatsResponse = {
      * Replication status (if applicable)
      */
     replication: ReplicationStats;
+};
+
+export type DeadLetterQueue = {
+    /**
+     * Total messages across all DLQs
+     */
+    readonly total_dlq_messages: number;
+    /**
+     * Number of DLQ queues found
+     */
+    readonly dlq_count: number;
+    /**
+     * List of DLQ queues with their statistics
+     */
+    readonly dlq_queues: Array<DlqQueue>;
+    /**
+     * Informational note about DLQs
+     */
+    readonly note: string;
 };
 
 export type DecidingEntityEnum = 'by_call_manager' | 'automatic';
@@ -8033,6 +8151,32 @@ export type MessageResponse = {
     message: string;
 };
 
+export type MessageStateCache = {
+    /**
+     * Cache TTL in seconds
+     */
+    readonly cache_ttl: number;
+    /**
+     * Cache description
+     */
+    readonly description: string;
+    /**
+     * Applied filters
+     */
+    filter: MessageStateCacheFilter;
+};
+
+export type MessageStateCacheFilter = {
+    /**
+     * Filter by resource UUID
+     */
+    readonly resource_uuid: string | null;
+    /**
+     * Filter by message type
+     */
+    readonly message_type: string | null;
+};
+
 export type MessageTemplate = {
     readonly url: string;
     readonly uuid: string;
@@ -8045,6 +8189,13 @@ export type MessageTemplateRequest = {
     name: string;
     subject: string;
     body: string;
+};
+
+export type MetricsReset = {
+    /**
+     * Operation status
+     */
+    readonly status: string;
 };
 
 export type MigrationCreate = {
@@ -15758,6 +15909,98 @@ export type PublicOfferingDetails = {
     readonly promotion_campaigns?: Array<NestedCampaign>;
 };
 
+export type PublishingMetrics = {
+    /**
+     * Total messages successfully sent
+     */
+    readonly messages_sent: number;
+    /**
+     * Total failed message attempts
+     */
+    readonly messages_failed: number;
+    /**
+     * Messages that required retry
+     */
+    readonly messages_retried: number;
+    /**
+     * Messages skipped due to circuit breaker
+     */
+    readonly messages_skipped: number;
+    /**
+     * Number of times circuit breaker opened
+     */
+    readonly circuit_breaker_trips: number;
+    /**
+     * Messages rejected by rate limiter
+     */
+    readonly rate_limiter_rejections: number;
+    /**
+     * Average message publish latency in milliseconds
+     */
+    readonly avg_publish_time_ms: number;
+    /**
+     * Unix timestamp of last publish attempt
+     */
+    readonly last_publish_time: number | null;
+};
+
+export type PubsubCircuitBreakerSummary = {
+    /**
+     * Current state: closed, open, or half_open
+     */
+    readonly state: string;
+    /**
+     * Whether circuit breaker is in healthy state (closed)
+     */
+    readonly healthy: boolean;
+    /**
+     * Number of consecutive failures
+     */
+    readonly failure_count: number;
+};
+
+export type PubsubMetricsSummary = {
+    /**
+     * Total messages sent
+     */
+    readonly messages_sent: number;
+    /**
+     * Total messages failed
+     */
+    readonly messages_failed: number;
+    /**
+     * Failure rate as percentage string
+     */
+    readonly failure_rate: string;
+    /**
+     * Average publish latency in milliseconds
+     */
+    readonly avg_latency_ms: number;
+};
+
+export type PubsubOverview = {
+    /**
+     * Overall health: healthy, degraded, or critical
+     */
+    readonly health_status: string;
+    /**
+     * List of current issues affecting health
+     */
+    readonly issues: Array<string>;
+    /**
+     * Circuit breaker summary
+     */
+    circuit_breaker: PubsubCircuitBreakerSummary;
+    /**
+     * Publishing metrics summary
+     */
+    metrics: PubsubMetricsSummary;
+    /**
+     * Timestamp when overview was generated
+     */
+    readonly last_updated: string;
+};
+
 export type PullMarketplaceScriptResourceRequest = {
     resource_uuid: string;
 };
@@ -19783,6 +20026,25 @@ export type SubresourceOffering = {
     readonly type: string;
 };
 
+export type SubscriptionQueuesOverview = {
+    /**
+     * Total number of vhosts with subscription queues
+     */
+    readonly total_vhosts: number;
+    /**
+     * Total number of subscription queues
+     */
+    readonly total_queues: number;
+    /**
+     * Total messages across all subscription queues
+     */
+    readonly total_messages: number;
+    /**
+     * Top 10 queues by message count
+     */
+    readonly top_queues_by_messages: Array<TopQueue>;
+};
+
 export type SuggestAlternativeReviewers = {
     /**
      * List of alternative reviewers with affinity scores
@@ -19945,6 +20207,25 @@ export type ToolExecuteRequest = {
      * Tool arguments.
      */
     arguments?: unknown;
+};
+
+export type TopQueue = {
+    /**
+     * Virtual host name
+     */
+    readonly vhost: string;
+    /**
+     * Queue name
+     */
+    readonly name: string;
+    /**
+     * Number of messages in queue
+     */
+    readonly messages: number;
+    /**
+     * Number of consumers attached
+     */
+    readonly consumers: number;
 };
 
 export type TotalCustomerCost = {
@@ -30647,6 +30928,122 @@ export type DatabaseStatsRetrieveResponses = {
 };
 
 export type DatabaseStatsRetrieveResponse = DatabaseStatsRetrieveResponses[keyof DatabaseStatsRetrieveResponses];
+
+export type DebugPubsubCircuitBreakerRetrieveData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/debug/pubsub/circuit_breaker/';
+};
+
+export type DebugPubsubCircuitBreakerRetrieveResponses = {
+    200: CircuitBreakerStatus;
+};
+
+export type DebugPubsubCircuitBreakerRetrieveResponse = DebugPubsubCircuitBreakerRetrieveResponses[keyof DebugPubsubCircuitBreakerRetrieveResponses];
+
+export type DebugPubsubCircuitBreakerResetData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/debug/pubsub/circuit_breaker_reset/';
+};
+
+export type DebugPubsubCircuitBreakerResetResponses = {
+    200: CircuitBreakerReset;
+};
+
+export type DebugPubsubCircuitBreakerResetResponse = DebugPubsubCircuitBreakerResetResponses[keyof DebugPubsubCircuitBreakerResetResponses];
+
+export type DebugPubsubDeadLetterQueueRetrieveData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/debug/pubsub/dead_letter_queue/';
+};
+
+export type DebugPubsubDeadLetterQueueRetrieveErrors = {
+    503: RmqStatsError;
+};
+
+export type DebugPubsubDeadLetterQueueRetrieveError = DebugPubsubDeadLetterQueueRetrieveErrors[keyof DebugPubsubDeadLetterQueueRetrieveErrors];
+
+export type DebugPubsubDeadLetterQueueRetrieveResponses = {
+    200: DeadLetterQueue;
+};
+
+export type DebugPubsubDeadLetterQueueRetrieveResponse = DebugPubsubDeadLetterQueueRetrieveResponses[keyof DebugPubsubDeadLetterQueueRetrieveResponses];
+
+export type DebugPubsubMessageStateCacheRetrieveData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/debug/pubsub/message_state_cache/';
+};
+
+export type DebugPubsubMessageStateCacheRetrieveResponses = {
+    200: MessageStateCache;
+};
+
+export type DebugPubsubMessageStateCacheRetrieveResponse = DebugPubsubMessageStateCacheRetrieveResponses[keyof DebugPubsubMessageStateCacheRetrieveResponses];
+
+export type DebugPubsubMetricsRetrieveData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/debug/pubsub/metrics/';
+};
+
+export type DebugPubsubMetricsRetrieveResponses = {
+    200: PublishingMetrics;
+};
+
+export type DebugPubsubMetricsRetrieveResponse = DebugPubsubMetricsRetrieveResponses[keyof DebugPubsubMetricsRetrieveResponses];
+
+export type DebugPubsubMetricsResetData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/debug/pubsub/metrics_reset/';
+};
+
+export type DebugPubsubMetricsResetResponses = {
+    200: MetricsReset;
+};
+
+export type DebugPubsubMetricsResetResponse = DebugPubsubMetricsResetResponses[keyof DebugPubsubMetricsResetResponses];
+
+export type DebugPubsubOverviewRetrieveData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/debug/pubsub/overview/';
+};
+
+export type DebugPubsubOverviewRetrieveResponses = {
+    200: PubsubOverview;
+};
+
+export type DebugPubsubOverviewRetrieveResponse = DebugPubsubOverviewRetrieveResponses[keyof DebugPubsubOverviewRetrieveResponses];
+
+export type DebugPubsubQueuesRetrieveData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/debug/pubsub/queues/';
+};
+
+export type DebugPubsubQueuesRetrieveErrors = {
+    503: RmqStatsError;
+};
+
+export type DebugPubsubQueuesRetrieveError = DebugPubsubQueuesRetrieveErrors[keyof DebugPubsubQueuesRetrieveErrors];
+
+export type DebugPubsubQueuesRetrieveResponses = {
+    200: SubscriptionQueuesOverview;
+};
+
+export type DebugPubsubQueuesRetrieveResponse = DebugPubsubQueuesRetrieveResponses[keyof DebugPubsubQueuesRetrieveResponses];
 
 export type DigitaloceanDropletsListData = {
     body?: never;
