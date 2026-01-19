@@ -2897,27 +2897,6 @@ export type Checklist = {
      */
     checklist_type?: ChecklistTypeEnum;
     readonly questions_count: number;
-    readonly category_name: string;
-    readonly category_uuid: string;
-    /**
-     * Category of the checklist
-     */
-    category?: string | null;
-};
-
-export type ChecklistCategory = {
-    readonly uuid: string;
-    icon?: string | null;
-    readonly url: string;
-    name: string;
-    description?: string;
-    readonly checklists_count: number;
-};
-
-export type ChecklistCategoryRequest = {
-    icon?: (Blob | File) | null;
-    name: string;
-    description?: string;
 };
 
 export type ChecklistCompletion = {
@@ -2978,10 +2957,6 @@ export type ChecklistRequest = {
      * Type of compliance this checklist addresses
      */
     checklist_type?: ChecklistTypeEnum;
-    /**
-     * Category of the checklist
-     */
-    category?: string | null;
 };
 
 export type ChecklistResponse = {
@@ -12651,12 +12626,6 @@ export type PatchedCategoryHelpArticlesRequest = {
     categories?: Array<CategorySerializerForForNestedFieldsRequest>;
 };
 
-export type PatchedChecklistCategoryRequest = {
-    icon?: (Blob | File) | null;
-    name?: string;
-    description?: string;
-};
-
 export type PatchedChecklistRequest = {
     name?: string;
     description?: string;
@@ -12664,10 +12633,6 @@ export type PatchedChecklistRequest = {
      * Type of compliance this checklist addresses
      */
     checklist_type?: ChecklistTypeEnum;
-    /**
-     * Category of the checklist
-     */
-    category?: string | null;
 };
 
 export type PatchedClusterSecurityGroupRequest = {
@@ -19399,7 +19364,6 @@ export type ServiceProviderChecklistSummary = {
     readonly checklist_name: string;
     readonly questions_count: number;
     readonly offerings_count: number;
-    readonly category_name: string | null;
 };
 
 export type ServiceProviderComplianceOverview = {
@@ -21404,30 +21368,6 @@ export type PatchedCallManagingOrganisationRequestForm = {
 export type PatchedCallManagingOrganisationRequestMultipart = {
     description?: string;
     image?: (Blob | File) | null;
-};
-
-export type ChecklistCategoryRequestForm = {
-    icon?: (Blob | File) | null;
-    name: string;
-    description?: string;
-};
-
-export type ChecklistCategoryRequestMultipart = {
-    icon?: (Blob | File) | null;
-    name: string;
-    description?: string;
-};
-
-export type PatchedChecklistCategoryRequestForm = {
-    icon?: (Blob | File) | null;
-    name?: string;
-    description?: string;
-};
-
-export type PatchedChecklistCategoryRequestMultipart = {
-    icon?: (Blob | File) | null;
-    name?: string;
-    description?: string;
 };
 
 export type CustomerRequestForm = {
@@ -28702,127 +28642,6 @@ export type ChecklistsAdminCreateResponses = {
 };
 
 export type ChecklistsAdminCreateResponse = ChecklistsAdminCreateResponses[keyof ChecklistsAdminCreateResponses];
-
-export type ChecklistsAdminCategoriesListData = {
-    body?: never;
-    path?: never;
-    query?: {
-        /**
-         * A page number within the paginated result set.
-         */
-        page?: number;
-        /**
-         * Number of results to return per page.
-         */
-        page_size?: number;
-    };
-    url: '/api/checklists-admin-categories/';
-};
-
-export type ChecklistsAdminCategoriesListResponses = {
-    200: Array<ChecklistCategory>;
-};
-
-export type ChecklistsAdminCategoriesListResponse = ChecklistsAdminCategoriesListResponses[keyof ChecklistsAdminCategoriesListResponses];
-
-export type ChecklistsAdminCategoriesCountData = {
-    body?: never;
-    path?: never;
-    query?: {
-        /**
-         * A page number within the paginated result set.
-         */
-        page?: number;
-        /**
-         * Number of results to return per page.
-         */
-        page_size?: number;
-    };
-    url: '/api/checklists-admin-categories/';
-};
-
-export type ChecklistsAdminCategoriesCountResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
-};
-
-export type ChecklistsAdminCategoriesCreateData = {
-    body: ChecklistCategoryRequest;
-    path?: never;
-    query?: never;
-    url: '/api/checklists-admin-categories/';
-};
-
-export type ChecklistsAdminCategoriesCreateResponses = {
-    201: ChecklistCategory;
-};
-
-export type ChecklistsAdminCategoriesCreateResponse = ChecklistsAdminCategoriesCreateResponses[keyof ChecklistsAdminCategoriesCreateResponses];
-
-export type ChecklistsAdminCategoriesDestroyData = {
-    body?: never;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/checklists-admin-categories/{uuid}/';
-};
-
-export type ChecklistsAdminCategoriesDestroyResponses = {
-    /**
-     * No response body
-     */
-    204: void;
-};
-
-export type ChecklistsAdminCategoriesDestroyResponse = ChecklistsAdminCategoriesDestroyResponses[keyof ChecklistsAdminCategoriesDestroyResponses];
-
-export type ChecklistsAdminCategoriesRetrieveData = {
-    body?: never;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/checklists-admin-categories/{uuid}/';
-};
-
-export type ChecklistsAdminCategoriesRetrieveResponses = {
-    200: ChecklistCategory;
-};
-
-export type ChecklistsAdminCategoriesRetrieveResponse = ChecklistsAdminCategoriesRetrieveResponses[keyof ChecklistsAdminCategoriesRetrieveResponses];
-
-export type ChecklistsAdminCategoriesPartialUpdateData = {
-    body?: PatchedChecklistCategoryRequest;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/checklists-admin-categories/{uuid}/';
-};
-
-export type ChecklistsAdminCategoriesPartialUpdateResponses = {
-    200: ChecklistCategory;
-};
-
-export type ChecklistsAdminCategoriesPartialUpdateResponse = ChecklistsAdminCategoriesPartialUpdateResponses[keyof ChecklistsAdminCategoriesPartialUpdateResponses];
-
-export type ChecklistsAdminCategoriesUpdateData = {
-    body: ChecklistCategoryRequest;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/checklists-admin-categories/{uuid}/';
-};
-
-export type ChecklistsAdminCategoriesUpdateResponses = {
-    200: ChecklistCategory;
-};
-
-export type ChecklistsAdminCategoriesUpdateResponse = ChecklistsAdminCategoriesUpdateResponses[keyof ChecklistsAdminCategoriesUpdateResponses];
 
 export type ChecklistsAdminQuestionDependenciesListData = {
     body?: never;
