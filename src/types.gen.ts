@@ -6008,6 +6008,31 @@ export type ImportResourceRequest = {
     additional_details?: unknown;
 };
 
+export type ImportUsageItemRequest = {
+    customer_name?: string;
+    customer_uuid?: string;
+    name: string;
+    unit_price: string;
+    article_code?: string;
+    service_provider_name?: string;
+    offering_name?: string;
+    plan_name?: string;
+};
+
+export type ImportUsageRequest = {
+    year: number;
+    month: number;
+    items: Array<ImportUsageItemRequest>;
+};
+
+export type ImportUsageResponse = {
+    created: number;
+    skipped: number;
+    errors: Array<{
+        [key: string]: string;
+    }>;
+};
+
 export type ImportableResource = {
     /**
      * Backend identifier of the resource
@@ -6330,7 +6355,7 @@ export type InvoiceItem = {
     end?: string;
     article_code?: string;
     readonly project_name?: string;
-    readonly project_uuid?: string;
+    readonly project_uuid?: string | null;
     quantity?: string;
     details?: InvoiceItemDetails;
     resource?: string | null;
@@ -6376,12 +6401,17 @@ export type InvoiceItemDetail = {
      * Date and time when item usage has ended.
      */
     end?: string;
+    readonly price: number;
     /**
      * Stores data about scope
      */
     details?: unknown;
     readonly offering_uuid: string;
     readonly offering_component_type: string | null;
+    readonly project_uuid: string | null;
+    readonly project_name: string;
+    readonly customer_uuid: string;
+    readonly customer_name: string;
 };
 
 export type InvoiceItemDetails = {
@@ -33691,6 +33721,19 @@ export type InvoicesGrowthCountResponses = {
      */
     200: unknown;
 };
+
+export type InvoicesImportUsageData = {
+    body: ImportUsageRequest;
+    path?: never;
+    query?: never;
+    url: '/api/invoices/import_usage/';
+};
+
+export type InvoicesImportUsageResponses = {
+    200: ImportUsageResponse;
+};
+
+export type InvoicesImportUsageResponse = InvoicesImportUsageResponses[keyof InvoicesImportUsageResponses];
 
 export type KeycloakGroupsListData = {
     body?: never;
