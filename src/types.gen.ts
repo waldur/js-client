@@ -2846,7 +2846,7 @@ export type ChatRequestRequest = {
 
 export type ChatResponse = {
     /**
-     * Component Alias (e.g. 'markdown', 'code').
+     * Component Alias (e.g. 'markdown', 'code', 'table').
      */
     k?: string;
     /**
@@ -2857,6 +2857,18 @@ export type ChatResponse = {
      * Tag or language for dynamic blocks.
      */
     t?: string;
+    /**
+     * Table headers.
+     */
+    h?: Array<unknown>;
+    /**
+     * Table rows.
+     */
+    r?: Array<unknown>;
+    /**
+     * Total row count.
+     */
+    n?: number;
     /**
      * System metadata.
      */
