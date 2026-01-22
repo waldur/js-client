@@ -4739,6 +4739,8 @@ export type DeadLetterQueue = {
 
 export type DecidingEntityEnum = 'by_call_manager' | 'automatic';
 
+export type DefaultPermissionEnum = '2770' | '2775' | '2777' | '770' | '775' | '777';
+
 export type DeleteAttachmentsRequest = {
     attachment_ids: Array<string>;
 };
@@ -12228,6 +12230,7 @@ export type OptionField = {
     max?: number;
     cascade_config?: CascadeConfig;
     component_multiplier_config?: ComponentMultiplierConfig;
+    storage_folder_config?: StorageFolderConfig;
     default_configs?: K8sDefaultConfiguration;
 };
 
@@ -12242,10 +12245,11 @@ export type OptionFieldRequest = {
     max?: number;
     cascade_config?: CascadeConfigRequest;
     component_multiplier_config?: ComponentMultiplierConfigRequest;
+    storage_folder_config?: StorageFolderConfigRequest;
     default_configs?: K8sDefaultConfigurationRequest;
 };
 
-export type OptionFieldTypeEnum = 'boolean' | 'integer' | 'money' | 'string' | 'text' | 'html_text' | 'select_string' | 'select_string_multi' | 'select_openstack_tenant' | 'select_multiple_openstack_tenants' | 'select_openstack_instance' | 'select_multiple_openstack_instances' | 'date' | 'time' | 'conditional_cascade' | 'component_multiplier' | 'single_datacenter_k8s_config' | 'multi_datacenter_k8s_config';
+export type OptionFieldTypeEnum = 'boolean' | 'integer' | 'money' | 'string' | 'text' | 'html_text' | 'select_string' | 'select_string_multi' | 'select_openstack_tenant' | 'select_multiple_openstack_tenants' | 'select_openstack_instance' | 'select_multiple_openstack_instances' | 'date' | 'time' | 'conditional_cascade' | 'component_multiplier' | 'single_datacenter_k8s_config' | 'multi_datacenter_k8s_config' | 'storage_folder_manager';
 
 export type OrcidCallbackRequest = {
     /**
@@ -20005,6 +20009,40 @@ export type StateTransitionError = {
      * Error message to be displayed to the user
      */
     detail: string;
+};
+
+export type StorageDataType = {
+    key: string;
+    label: string;
+};
+
+export type StorageDataTypeRequest = {
+    key: string;
+    label: string;
+};
+
+export type StorageFolderConfig = {
+    component_type: string;
+    default_hard_quota_multiplier?: number;
+    inode_soft_multiplier?: number;
+    inode_hard_multiplier?: number;
+    storage_data_types: Array<StorageDataType>;
+    /**
+     * Default permission to auto-select
+     */
+    default_permission?: DefaultPermissionEnum;
+};
+
+export type StorageFolderConfigRequest = {
+    component_type: string;
+    default_hard_quota_multiplier?: number;
+    inode_soft_multiplier?: number;
+    inode_hard_multiplier?: number;
+    storage_data_types: Array<StorageDataTypeRequest>;
+    /**
+     * Default permission to auto-select
+     */
+    default_permission?: DefaultPermissionEnum;
 };
 
 export type StorageModeEnum = 'fixed' | 'dynamic';
