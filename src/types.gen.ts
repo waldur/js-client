@@ -10849,6 +10849,7 @@ export type OpenStackImage = {
     min_ram?: number;
     settings: string;
     backend_id: string;
+    backend_created_at?: string | null;
 };
 
 export type OpenStackInstance = {
@@ -54532,6 +54533,10 @@ export type OpenstackImagesListData = {
          */
         settings_uuid?: string;
         /**
+         * Show duplicate image names
+         */
+        show_duplicate_names?: boolean;
+        /**
          * Tenant URL
          */
         tenant?: string;
@@ -54581,6 +54586,10 @@ export type OpenstackImagesCountData = {
          * Settings UUID
          */
         settings_uuid?: string;
+        /**
+         * Show duplicate image names
+         */
+        show_duplicate_names?: boolean;
         /**
          * Tenant URL
          */
