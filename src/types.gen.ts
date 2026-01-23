@@ -13,6 +13,16 @@ export type AccessSubnetRequest = {
     customer: string;
 };
 
+export type AccessTypeEnum = 'staff' | 'support' | 'staff_and_support';
+
+export type AccessorTypeEnum = 'staff' | 'support' | 'organization_member' | 'service_provider' | 'self';
+
+export type AccessorUser = {
+    uuid: string;
+    username: string;
+    full_name: string;
+};
+
 export type AccountNameGenerationPolicyEnum = 'project_slug';
 
 export type ActiveQueriesStats = {
@@ -90,6 +100,20 @@ export type AdminAnnouncementRequest = {
 };
 
 export type AdminAnnouncementTypeEnum = 'information' | 'warning' | 'danger';
+
+export type AdminUser = {
+    user_uuid: string;
+    username: string;
+    full_name: string;
+    access_type: AccessTypeEnum;
+};
+
+export type AdministrativeAccess = {
+    description: string;
+    staff_count?: number;
+    support_count?: number;
+    users?: Array<AdminUser>;
+};
 
 export type AffiliationTypeEnum = 'employment' | 'education' | 'visiting' | 'honorary' | 'consulting';
 
@@ -2038,6 +2062,54 @@ export type CachePerformance = {
     readonly effective_cache_size: string;
 };
 
+export type CallApplicantAttributeConfig = {
+    readonly uuid: string;
+    readonly call_uuid: string;
+    readonly call_name: string;
+    expose_full_name?: boolean;
+    expose_email?: boolean;
+    expose_organization?: boolean;
+    expose_affiliations?: boolean;
+    expose_organization_type?: boolean;
+    expose_organization_country?: boolean;
+    expose_nationality?: boolean;
+    expose_nationalities?: boolean;
+    expose_country_of_residence?: boolean;
+    expose_eduperson_assurance?: boolean;
+    expose_identity_source?: boolean;
+    /**
+     * If True, reviewers see applicant identity. If False, proposals are anonymized for reviewers.
+     */
+    reviewers_see_applicant_details?: boolean;
+    /**
+     * Return list of currently exposed field names.
+     */
+    readonly exposed_fields: Array<string>;
+    /**
+     * Return True if this is a default (unsaved) config.
+     */
+    readonly is_default: boolean;
+};
+
+export type CallApplicantAttributeConfigRequest = {
+    call?: string;
+    expose_full_name?: boolean;
+    expose_email?: boolean;
+    expose_organization?: boolean;
+    expose_affiliations?: boolean;
+    expose_organization_type?: boolean;
+    expose_organization_country?: boolean;
+    expose_nationality?: boolean;
+    expose_nationalities?: boolean;
+    expose_country_of_residence?: boolean;
+    expose_eduperson_assurance?: boolean;
+    expose_identity_source?: boolean;
+    /**
+     * If True, reviewers see applicant identity. If False, proposals are anonymized for reviewers.
+     */
+    reviewers_see_applicant_details?: boolean;
+};
+
 export type CallAssignmentConfiguration = {
     readonly uuid: string;
     readonly call: string;
@@ -3657,6 +3729,9 @@ export type ConstanceSettings = {
     OIDC_BLOCK_CREATION_OF_UNINVITED_USERS?: boolean;
     DEACTIVATE_USER_IF_NO_ROLES?: boolean;
     WALDUR_AUTH_SOCIAL_ROLE_CLAIM?: string;
+    DEFAULT_OFFERING_USER_ATTRIBUTES?: Array<string>;
+    INVITATION_ALLOWED_FIELDS?: Array<string>;
+    ENABLED_USER_PROFILE_ATTRIBUTES?: Array<string>;
     MAINTENANCE_ANNOUNCEMENT_NOTIFY_BEFORE_MINUTES?: number;
     MAINTENANCE_ANNOUNCEMENT_NOTIFY_SYSTEM?: Array<string>;
     ENFORCE_USER_CONSENT_FOR_OFFERINGS?: boolean;
@@ -3695,6 +3770,9 @@ export type ConstanceSettings = {
     USER_ACTIONS_NOTIFICATION_THRESHOLD?: number;
     USER_ACTIONS_EXECUTION_RETENTION_DAYS?: number;
     USER_ACTIONS_DEFAULT_EXPIRATION_REMINDERS?: Array<string>;
+    USER_DATA_ACCESS_LOGGING_ENABLED?: boolean;
+    USER_DATA_ACCESS_LOG_RETENTION_DAYS?: number;
+    USER_DATA_ACCESS_LOG_SELF_ACCESS?: boolean;
 };
 
 export type ConstanceSettingsRequest = {
@@ -3857,6 +3935,9 @@ export type ConstanceSettingsRequest = {
     OIDC_BLOCK_CREATION_OF_UNINVITED_USERS?: boolean;
     DEACTIVATE_USER_IF_NO_ROLES?: boolean;
     WALDUR_AUTH_SOCIAL_ROLE_CLAIM?: string;
+    DEFAULT_OFFERING_USER_ATTRIBUTES?: Array<string>;
+    INVITATION_ALLOWED_FIELDS?: Array<string>;
+    ENABLED_USER_PROFILE_ATTRIBUTES?: Array<string>;
     MAINTENANCE_ANNOUNCEMENT_NOTIFY_BEFORE_MINUTES?: number;
     MAINTENANCE_ANNOUNCEMENT_NOTIFY_SYSTEM?: Array<string>;
     ENFORCE_USER_CONSENT_FOR_OFFERINGS?: boolean;
@@ -3895,6 +3976,9 @@ export type ConstanceSettingsRequest = {
     USER_ACTIONS_NOTIFICATION_THRESHOLD?: number;
     USER_ACTIONS_EXECUTION_RETENTION_DAYS?: number;
     USER_ACTIONS_DEFAULT_EXPIRATION_REMINDERS?: Array<string>;
+    USER_DATA_ACCESS_LOGGING_ENABLED?: boolean;
+    USER_DATA_ACCESS_LOG_RETENTION_DAYS?: number;
+    USER_DATA_ACCESS_LOG_SELF_ACCESS?: boolean;
 };
 
 export type ContainerFormatEnum = 'bare' | 'ovf' | 'aki' | 'ami' | 'ari';
@@ -4642,6 +4726,12 @@ export type DlqQueue = {
     readonly consumers: number;
 };
 
+export type DataAccessSummary = {
+    total_administrative_access: number | null;
+    total_organizational_access: number;
+    total_provider_access: number;
+};
+
 export type DataVolume = {
     size: number;
     volume_type?: string | null;
@@ -5095,6 +5185,11 @@ export type DryRunStateEnum = 1 | 2 | 3 | 4;
 
 export type DryRunTypeEnum = 'Create' | 'Update' | 'Terminate' | 'Restore' | 'Pull';
 
+export type EligibilityCheck = {
+    is_eligible: boolean;
+    restrictions: Array<string>;
+};
+
 export type EmailHook = {
     readonly url: string;
     readonly uuid: string;
@@ -5172,7 +5267,7 @@ export type EventMetadataResponse = {
      * Map of event group keys to lists of event type enums from EventType
      */
     event_groups: {
-        [key: string]: Array<'access_subnet_creation_succeeded' | 'access_subnet_deletion_succeeded' | 'access_subnet_update_succeeded' | 'allowed_offerings_have_been_updated' | 'attachment_created' | 'attachment_deleted' | 'attachment_updated' | 'auth_logged_in_with_saml2' | 'auth_logged_in_with_username' | 'auth_logged_in_with_oauth' | 'auth_logged_out' | 'auth_logged_out_with_saml2' | 'auth_login_failed_with_username' | 'block_creation_of_new_resources' | 'block_modification_of_existing_resources' | 'call_document_added' | 'call_document_removed' | 'create_of_credit_by_staff' | 'custom_notification' | 'customer_creation_succeeded' | 'customer_deletion_succeeded' | 'customer_update_succeeded' | 'customer_permission_review_created' | 'customer_permission_review_closed' | 'droplet_resize_scheduled' | 'droplet_resize_succeeded' | 'freeipa_profile_created' | 'freeipa_profile_deleted' | 'freeipa_profile_disabled' | 'freeipa_profile_enabled' | 'invoice_canceled' | 'invoice_created' | 'invoice_item_created' | 'invoice_item_deleted' | 'invoice_item_updated' | 'invoice_paid' | 'issue_creation_succeeded' | 'issue_deletion_succeeded' | 'issue_update_succeeded' | 'marketplace_offering_component_created' | 'marketplace_offering_component_deleted' | 'marketplace_offering_component_updated' | 'marketplace_offering_created' | 'marketplace_offering_role_created' | 'marketplace_offering_role_deleted' | 'marketplace_offering_role_updated' | 'marketplace_offering_updated' | 'marketplace_offering_user_created' | 'marketplace_offering_user_updated' | 'marketplace_offering_user_deleted' | 'marketplace_offering_user_restriction_updated' | 'marketplace_order_approved' | 'marketplace_order_completed' | 'marketplace_order_created' | 'marketplace_order_failed' | 'marketplace_order_rejected' | 'marketplace_order_terminated' | 'marketplace_order_unlinked' | 'marketplace_plan_archived' | 'marketplace_plan_component_current_price_updated' | 'marketplace_plan_component_future_price_updated' | 'marketplace_plan_component_quota_updated' | 'marketplace_plan_created' | 'marketplace_plan_updated' | 'marketplace_plan_deleted' | 'marketplace_resource_create_canceled' | 'marketplace_resource_create_failed' | 'marketplace_resource_create_requested' | 'marketplace_resource_create_succeeded' | 'marketplace_resource_downscaled' | 'marketplace_resource_erred_on_backend' | 'marketplace_resource_paused' | 'marketplace_resource_terminate_canceled' | 'marketplace_resource_terminate_failed' | 'marketplace_resource_terminate_requested' | 'marketplace_resource_terminate_succeeded' | 'marketplace_resource_unlinked' | 'marketplace_resource_update_canceled' | 'marketplace_resource_update_end_date_succeeded' | 'marketplace_resource_update_failed' | 'marketplace_resource_update_limits_failed' | 'marketplace_resource_update_limits_succeeded' | 'marketplace_resource_update_requested' | 'marketplace_resource_update_succeeded' | 'marketplace_resource_user_created' | 'marketplace_resource_user_deleted' | 'notify_external_user' | 'notify_organization_owners' | 'notify_project_team' | 'openstack_floating_ip_attached' | 'openstack_floating_ip_connected' | 'openstack_floating_ip_description_updated' | 'openstack_floating_ip_detached' | 'openstack_floating_ip_disconnected' | 'openstack_network_cleaned' | 'openstack_network_created' | 'openstack_network_deleted' | 'openstack_network_imported' | 'openstack_network_pulled' | 'openstack_network_updated' | 'openstack_port_cleaned' | 'openstack_port_created' | 'openstack_port_deleted' | 'openstack_port_imported' | 'openstack_port_pulled' | 'openstack_port_updated' | 'openstack_router_updated' | 'openstack_security_group_cleaned' | 'openstack_security_group_created' | 'openstack_security_group_deleted' | 'openstack_security_group_imported' | 'openstack_security_group_pulled' | 'openstack_security_group_rule_cleaned' | 'openstack_security_group_rule_created' | 'openstack_security_group_rule_deleted' | 'openstack_security_group_rule_imported' | 'openstack_security_group_rule_updated' | 'openstack_security_group_updated' | 'openstack_security_group_added_remotely' | 'openstack_security_group_removed_remotely' | 'openstack_security_group_added_locally' | 'openstack_security_group_removed_locally' | 'openstack_server_group_cleaned' | 'openstack_server_group_created' | 'openstack_server_group_deleted' | 'openstack_server_group_imported' | 'openstack_server_group_pulled' | 'openstack_subnet_cleaned' | 'openstack_subnet_created' | 'openstack_subnet_deleted' | 'openstack_subnet_imported' | 'openstack_subnet_pulled' | 'openstack_subnet_updated' | 'openstack_tenant_quota_limit_updated' | 'payment_added' | 'payment_created' | 'payment_removed' | 'policy_notification' | 'project_creation_succeeded' | 'project_deletion_succeeded' | 'project_deletion_triggered' | 'project_update_request_approved' | 'project_update_request_created' | 'project_update_request_rejected' | 'project_update_succeeded' | 'project_permission_review_created' | 'project_permission_review_closed' | 'proposal_canceled' | 'proposal_document_added' | 'proposal_document_removed' | 'query_executed' | 'reduction_of_customer_credit' | 'reduction_of_customer_credit_due_to_minimal_consumption' | 'reduction_of_customer_expected_consumption' | 'reduction_of_project_credit' | 'reduction_of_project_credit_due_to_minimal_consumption' | 'reduction_of_project_expected_consumption' | 'request_downscaling' | 'request_pausing' | 'resource_assign_floating_ip_failed' | 'resource_assign_floating_ip_scheduled' | 'resource_assign_floating_ip_succeeded' | 'resource_attach_failed' | 'resource_attach_scheduled' | 'resource_attach_succeeded' | 'resource_backup_creation_failed' | 'resource_backup_creation_scheduled' | 'resource_backup_creation_succeeded' | 'resource_backup_deletion_failed' | 'resource_backup_deletion_scheduled' | 'resource_backup_deletion_succeeded' | 'resource_backup_restoration_failed' | 'resource_backup_restoration_scheduled' | 'resource_backup_restoration_succeeded' | 'resource_change_flavor_failed' | 'resource_change_flavor_scheduled' | 'resource_change_flavor_succeeded' | 'resource_creation_failed' | 'resource_creation_scheduled' | 'resource_creation_succeeded' | 'resource_deletion_failed' | 'resource_deletion_scheduled' | 'resource_deletion_succeeded' | 'resource_detach_failed' | 'resource_detach_scheduled' | 'resource_detach_succeeded' | 'resource_extend_failed' | 'resource_extend_scheduled' | 'resource_extend_succeeded' | 'resource_extend_volume_failed' | 'resource_extend_volume_scheduled' | 'resource_extend_volume_succeeded' | 'resource_import_succeeded' | 'resource_pull_failed' | 'resource_pull_scheduled' | 'resource_pull_succeeded' | 'resource_restart_failed' | 'resource_restart_scheduled' | 'resource_restart_succeeded' | 'resource_retype_failed' | 'resource_retype_scheduled' | 'resource_retype_succeeded' | 'resource_robot_account_created' | 'resource_robot_account_deleted' | 'resource_robot_account_state_changed' | 'resource_robot_account_updated' | 'resource_start_failed' | 'resource_start_scheduled' | 'resource_start_succeeded' | 'resource_stop_failed' | 'resource_stop_scheduled' | 'resource_stop_succeeded' | 'resource_unassign_floating_ip_failed' | 'resource_unassign_floating_ip_scheduled' | 'resource_unassign_floating_ip_succeeded' | 'resource_update_allowed_address_pairs_failed' | 'resource_update_allowed_address_pairs_scheduled' | 'resource_update_allowed_address_pairs_succeeded' | 'resource_update_floating_ips_failed' | 'resource_update_floating_ips_scheduled' | 'resource_update_floating_ips_succeeded' | 'resource_update_ports_failed' | 'resource_update_ports_scheduled' | 'resource_update_ports_succeeded' | 'resource_update_security_groups_failed' | 'resource_update_security_groups_scheduled' | 'resource_update_security_groups_succeeded' | 'resource_update_succeeded' | 'restrict_members' | 'review_canceled' | 'role_granted' | 'role_revoked' | 'role_updated' | 'roll_back_customer_credit' | 'roll_back_project_credit' | 'service_account_created' | 'service_account_deleted' | 'service_account_updated' | 'set_to_zero_overdue_credit' | 'ssh_key_creation_succeeded' | 'ssh_key_deletion_succeeded' | 'terminate_resources' | 'token_created' | 'token_lifetime_updated' | 'update_of_credit_by_staff' | 'automatic_credit_adjustment' | 'user_activated' | 'user_creation_succeeded' | 'user_deactivated' | 'user_deactivated_no_roles' | 'user_deletion_succeeded' | 'user_details_update_succeeded' | 'user_has_been_created_by_staff' | 'user_password_updated' | 'user_password_updated_by_staff' | 'user_update_succeeded' | 'user_invitation_updated' | 'user_invitation_deleted' | 'terms_of_service_consent_granted' | 'terms_of_service_consent_revoked'>;
+        [key: string]: Array<'access_subnet_creation_succeeded' | 'access_subnet_deletion_succeeded' | 'access_subnet_update_succeeded' | 'allowed_offerings_have_been_updated' | 'attachment_created' | 'attachment_deleted' | 'attachment_updated' | 'auth_logged_in_with_saml2' | 'auth_logged_in_with_username' | 'auth_logged_in_with_oauth' | 'auth_logged_out' | 'auth_logged_out_with_saml2' | 'auth_login_failed_with_username' | 'block_creation_of_new_resources' | 'block_modification_of_existing_resources' | 'call_document_added' | 'call_document_removed' | 'create_of_credit_by_staff' | 'custom_notification' | 'customer_creation_succeeded' | 'customer_deletion_succeeded' | 'customer_update_succeeded' | 'customer_permission_review_created' | 'customer_permission_review_closed' | 'droplet_resize_scheduled' | 'droplet_resize_succeeded' | 'freeipa_profile_created' | 'freeipa_profile_deleted' | 'freeipa_profile_disabled' | 'freeipa_profile_enabled' | 'invoice_canceled' | 'invoice_created' | 'invoice_item_created' | 'invoice_item_deleted' | 'invoice_item_updated' | 'invoice_paid' | 'issue_creation_succeeded' | 'issue_deletion_succeeded' | 'issue_update_succeeded' | 'marketplace_offering_component_created' | 'marketplace_offering_component_deleted' | 'marketplace_offering_component_updated' | 'marketplace_offering_created' | 'marketplace_offering_role_created' | 'marketplace_offering_role_deleted' | 'marketplace_offering_role_updated' | 'marketplace_offering_updated' | 'marketplace_offering_user_created' | 'marketplace_offering_user_updated' | 'marketplace_offering_user_deleted' | 'marketplace_offering_user_restriction_updated' | 'marketplace_order_approved' | 'marketplace_order_completed' | 'marketplace_order_created' | 'marketplace_order_failed' | 'marketplace_order_rejected' | 'marketplace_order_terminated' | 'marketplace_order_unlinked' | 'marketplace_plan_archived' | 'marketplace_plan_component_current_price_updated' | 'marketplace_plan_component_future_price_updated' | 'marketplace_plan_component_quota_updated' | 'marketplace_plan_created' | 'marketplace_plan_updated' | 'marketplace_plan_deleted' | 'marketplace_resource_create_canceled' | 'marketplace_resource_create_failed' | 'marketplace_resource_create_requested' | 'marketplace_resource_create_succeeded' | 'marketplace_resource_downscaled' | 'marketplace_resource_erred_on_backend' | 'marketplace_resource_paused' | 'marketplace_resource_terminate_canceled' | 'marketplace_resource_terminate_failed' | 'marketplace_resource_terminate_requested' | 'marketplace_resource_terminate_succeeded' | 'marketplace_resource_unlinked' | 'marketplace_resource_update_canceled' | 'marketplace_resource_update_end_date_succeeded' | 'marketplace_resource_update_failed' | 'marketplace_resource_update_limits_failed' | 'marketplace_resource_update_limits_succeeded' | 'marketplace_resource_update_requested' | 'marketplace_resource_update_succeeded' | 'marketplace_resource_user_created' | 'marketplace_resource_user_deleted' | 'notify_external_user' | 'notify_organization_owners' | 'notify_project_team' | 'openstack_floating_ip_attached' | 'openstack_floating_ip_connected' | 'openstack_floating_ip_description_updated' | 'openstack_floating_ip_detached' | 'openstack_floating_ip_disconnected' | 'openstack_network_cleaned' | 'openstack_network_created' | 'openstack_network_deleted' | 'openstack_network_imported' | 'openstack_network_pulled' | 'openstack_network_updated' | 'openstack_port_cleaned' | 'openstack_port_created' | 'openstack_port_deleted' | 'openstack_port_imported' | 'openstack_port_pulled' | 'openstack_port_updated' | 'openstack_router_updated' | 'openstack_security_group_cleaned' | 'openstack_security_group_created' | 'openstack_security_group_deleted' | 'openstack_security_group_imported' | 'openstack_security_group_pulled' | 'openstack_security_group_rule_cleaned' | 'openstack_security_group_rule_created' | 'openstack_security_group_rule_deleted' | 'openstack_security_group_rule_imported' | 'openstack_security_group_rule_updated' | 'openstack_security_group_updated' | 'openstack_security_group_added_remotely' | 'openstack_security_group_removed_remotely' | 'openstack_security_group_added_locally' | 'openstack_security_group_removed_locally' | 'openstack_server_group_cleaned' | 'openstack_server_group_created' | 'openstack_server_group_deleted' | 'openstack_server_group_imported' | 'openstack_server_group_pulled' | 'openstack_subnet_cleaned' | 'openstack_subnet_created' | 'openstack_subnet_deleted' | 'openstack_subnet_imported' | 'openstack_subnet_pulled' | 'openstack_subnet_updated' | 'openstack_tenant_quota_limit_updated' | 'payment_added' | 'payment_created' | 'payment_removed' | 'policy_notification' | 'project_creation_succeeded' | 'project_deletion_succeeded' | 'project_deletion_triggered' | 'project_update_request_approved' | 'project_update_request_created' | 'project_update_request_rejected' | 'project_update_succeeded' | 'project_permission_review_created' | 'project_permission_review_closed' | 'proposal_canceled' | 'proposal_document_added' | 'proposal_document_removed' | 'query_executed' | 'reduction_of_customer_credit' | 'reduction_of_customer_credit_due_to_minimal_consumption' | 'reduction_of_customer_expected_consumption' | 'reduction_of_project_credit' | 'reduction_of_project_credit_due_to_minimal_consumption' | 'reduction_of_project_expected_consumption' | 'request_downscaling' | 'request_pausing' | 'resource_assign_floating_ip_failed' | 'resource_assign_floating_ip_scheduled' | 'resource_assign_floating_ip_succeeded' | 'resource_attach_failed' | 'resource_attach_scheduled' | 'resource_attach_succeeded' | 'resource_backup_creation_failed' | 'resource_backup_creation_scheduled' | 'resource_backup_creation_succeeded' | 'resource_backup_deletion_failed' | 'resource_backup_deletion_scheduled' | 'resource_backup_deletion_succeeded' | 'resource_backup_restoration_failed' | 'resource_backup_restoration_scheduled' | 'resource_backup_restoration_succeeded' | 'resource_change_flavor_failed' | 'resource_change_flavor_scheduled' | 'resource_change_flavor_succeeded' | 'resource_creation_failed' | 'resource_creation_scheduled' | 'resource_creation_succeeded' | 'resource_deletion_failed' | 'resource_deletion_scheduled' | 'resource_deletion_succeeded' | 'resource_detach_failed' | 'resource_detach_scheduled' | 'resource_detach_succeeded' | 'resource_extend_failed' | 'resource_extend_scheduled' | 'resource_extend_succeeded' | 'resource_extend_volume_failed' | 'resource_extend_volume_scheduled' | 'resource_extend_volume_succeeded' | 'resource_import_succeeded' | 'resource_pull_failed' | 'resource_pull_scheduled' | 'resource_pull_succeeded' | 'resource_restart_failed' | 'resource_restart_scheduled' | 'resource_restart_succeeded' | 'resource_retype_failed' | 'resource_retype_scheduled' | 'resource_retype_succeeded' | 'resource_robot_account_created' | 'resource_robot_account_deleted' | 'resource_robot_account_state_changed' | 'resource_robot_account_updated' | 'resource_start_failed' | 'resource_start_scheduled' | 'resource_start_succeeded' | 'resource_stop_failed' | 'resource_stop_scheduled' | 'resource_stop_succeeded' | 'resource_unassign_floating_ip_failed' | 'resource_unassign_floating_ip_scheduled' | 'resource_unassign_floating_ip_succeeded' | 'resource_update_allowed_address_pairs_failed' | 'resource_update_allowed_address_pairs_scheduled' | 'resource_update_allowed_address_pairs_succeeded' | 'resource_update_floating_ips_failed' | 'resource_update_floating_ips_scheduled' | 'resource_update_floating_ips_succeeded' | 'resource_update_ports_failed' | 'resource_update_ports_scheduled' | 'resource_update_ports_succeeded' | 'resource_update_security_groups_failed' | 'resource_update_security_groups_scheduled' | 'resource_update_security_groups_succeeded' | 'resource_update_succeeded' | 'restrict_members' | 'review_canceled' | 'role_granted' | 'role_revoked' | 'role_updated' | 'roll_back_customer_credit' | 'roll_back_project_credit' | 'service_account_created' | 'service_account_deleted' | 'service_account_updated' | 'set_to_zero_overdue_credit' | 'ssh_key_creation_succeeded' | 'ssh_key_deletion_succeeded' | 'terminate_resources' | 'token_created' | 'token_lifetime_updated' | 'update_of_credit_by_staff' | 'automatic_credit_adjustment' | 'user_activated' | 'user_creation_succeeded' | 'user_data_accessed' | 'user_deactivated' | 'user_deactivated_no_roles' | 'user_deletion_succeeded' | 'user_details_update_succeeded' | 'user_has_been_created_by_staff' | 'user_password_updated' | 'user_password_updated_by_staff' | 'user_update_succeeded' | 'user_invitation_updated' | 'user_invitation_deleted' | 'terms_of_service_consent_granted' | 'terms_of_service_consent_revoked'>;
     };
 };
 
@@ -5213,7 +5308,7 @@ export type EventSubscriptionRequest = {
     observable_objects?: unknown;
 };
 
-export type EventTypesEnum = 'access_subnet_creation_succeeded' | 'access_subnet_deletion_succeeded' | 'access_subnet_update_succeeded' | 'allowed_offerings_have_been_updated' | 'attachment_created' | 'attachment_deleted' | 'attachment_updated' | 'auth_logged_in_with_saml2' | 'auth_logged_in_with_username' | 'auth_logged_in_with_oauth' | 'auth_logged_out' | 'auth_logged_out_with_saml2' | 'auth_login_failed_with_username' | 'block_creation_of_new_resources' | 'block_modification_of_existing_resources' | 'call_document_added' | 'call_document_removed' | 'create_of_credit_by_staff' | 'custom_notification' | 'customer_creation_succeeded' | 'customer_deletion_succeeded' | 'customer_update_succeeded' | 'customer_permission_review_created' | 'customer_permission_review_closed' | 'droplet_resize_scheduled' | 'droplet_resize_succeeded' | 'freeipa_profile_created' | 'freeipa_profile_deleted' | 'freeipa_profile_disabled' | 'freeipa_profile_enabled' | 'invoice_canceled' | 'invoice_created' | 'invoice_item_created' | 'invoice_item_deleted' | 'invoice_item_updated' | 'invoice_paid' | 'issue_creation_succeeded' | 'issue_deletion_succeeded' | 'issue_update_succeeded' | 'marketplace_offering_component_created' | 'marketplace_offering_component_deleted' | 'marketplace_offering_component_updated' | 'marketplace_offering_created' | 'marketplace_offering_role_created' | 'marketplace_offering_role_deleted' | 'marketplace_offering_role_updated' | 'marketplace_offering_updated' | 'marketplace_offering_user_created' | 'marketplace_offering_user_updated' | 'marketplace_offering_user_deleted' | 'marketplace_offering_user_restriction_updated' | 'marketplace_order_approved' | 'marketplace_order_completed' | 'marketplace_order_created' | 'marketplace_order_failed' | 'marketplace_order_rejected' | 'marketplace_order_terminated' | 'marketplace_order_unlinked' | 'marketplace_plan_archived' | 'marketplace_plan_component_current_price_updated' | 'marketplace_plan_component_future_price_updated' | 'marketplace_plan_component_quota_updated' | 'marketplace_plan_created' | 'marketplace_plan_updated' | 'marketplace_plan_deleted' | 'marketplace_resource_create_canceled' | 'marketplace_resource_create_failed' | 'marketplace_resource_create_requested' | 'marketplace_resource_create_succeeded' | 'marketplace_resource_downscaled' | 'marketplace_resource_erred_on_backend' | 'marketplace_resource_paused' | 'marketplace_resource_terminate_canceled' | 'marketplace_resource_terminate_failed' | 'marketplace_resource_terminate_requested' | 'marketplace_resource_terminate_succeeded' | 'marketplace_resource_unlinked' | 'marketplace_resource_update_canceled' | 'marketplace_resource_update_end_date_succeeded' | 'marketplace_resource_update_failed' | 'marketplace_resource_update_limits_failed' | 'marketplace_resource_update_limits_succeeded' | 'marketplace_resource_update_requested' | 'marketplace_resource_update_succeeded' | 'marketplace_resource_user_created' | 'marketplace_resource_user_deleted' | 'notify_external_user' | 'notify_organization_owners' | 'notify_project_team' | 'openstack_floating_ip_attached' | 'openstack_floating_ip_connected' | 'openstack_floating_ip_description_updated' | 'openstack_floating_ip_detached' | 'openstack_floating_ip_disconnected' | 'openstack_network_cleaned' | 'openstack_network_created' | 'openstack_network_deleted' | 'openstack_network_imported' | 'openstack_network_pulled' | 'openstack_network_updated' | 'openstack_port_cleaned' | 'openstack_port_created' | 'openstack_port_deleted' | 'openstack_port_imported' | 'openstack_port_pulled' | 'openstack_port_updated' | 'openstack_router_updated' | 'openstack_security_group_cleaned' | 'openstack_security_group_created' | 'openstack_security_group_deleted' | 'openstack_security_group_imported' | 'openstack_security_group_pulled' | 'openstack_security_group_rule_cleaned' | 'openstack_security_group_rule_created' | 'openstack_security_group_rule_deleted' | 'openstack_security_group_rule_imported' | 'openstack_security_group_rule_updated' | 'openstack_security_group_updated' | 'openstack_security_group_added_remotely' | 'openstack_security_group_removed_remotely' | 'openstack_security_group_added_locally' | 'openstack_security_group_removed_locally' | 'openstack_server_group_cleaned' | 'openstack_server_group_created' | 'openstack_server_group_deleted' | 'openstack_server_group_imported' | 'openstack_server_group_pulled' | 'openstack_subnet_cleaned' | 'openstack_subnet_created' | 'openstack_subnet_deleted' | 'openstack_subnet_imported' | 'openstack_subnet_pulled' | 'openstack_subnet_updated' | 'openstack_tenant_quota_limit_updated' | 'payment_added' | 'payment_created' | 'payment_removed' | 'policy_notification' | 'project_creation_succeeded' | 'project_deletion_succeeded' | 'project_deletion_triggered' | 'project_update_request_approved' | 'project_update_request_created' | 'project_update_request_rejected' | 'project_update_succeeded' | 'project_permission_review_created' | 'project_permission_review_closed' | 'proposal_canceled' | 'proposal_document_added' | 'proposal_document_removed' | 'query_executed' | 'reduction_of_customer_credit' | 'reduction_of_customer_credit_due_to_minimal_consumption' | 'reduction_of_customer_expected_consumption' | 'reduction_of_project_credit' | 'reduction_of_project_credit_due_to_minimal_consumption' | 'reduction_of_project_expected_consumption' | 'request_downscaling' | 'request_pausing' | 'resource_assign_floating_ip_failed' | 'resource_assign_floating_ip_scheduled' | 'resource_assign_floating_ip_succeeded' | 'resource_attach_failed' | 'resource_attach_scheduled' | 'resource_attach_succeeded' | 'resource_backup_creation_failed' | 'resource_backup_creation_scheduled' | 'resource_backup_creation_succeeded' | 'resource_backup_deletion_failed' | 'resource_backup_deletion_scheduled' | 'resource_backup_deletion_succeeded' | 'resource_backup_restoration_failed' | 'resource_backup_restoration_scheduled' | 'resource_backup_restoration_succeeded' | 'resource_change_flavor_failed' | 'resource_change_flavor_scheduled' | 'resource_change_flavor_succeeded' | 'resource_creation_failed' | 'resource_creation_scheduled' | 'resource_creation_succeeded' | 'resource_deletion_failed' | 'resource_deletion_scheduled' | 'resource_deletion_succeeded' | 'resource_detach_failed' | 'resource_detach_scheduled' | 'resource_detach_succeeded' | 'resource_extend_failed' | 'resource_extend_scheduled' | 'resource_extend_succeeded' | 'resource_extend_volume_failed' | 'resource_extend_volume_scheduled' | 'resource_extend_volume_succeeded' | 'resource_import_succeeded' | 'resource_pull_failed' | 'resource_pull_scheduled' | 'resource_pull_succeeded' | 'resource_restart_failed' | 'resource_restart_scheduled' | 'resource_restart_succeeded' | 'resource_retype_failed' | 'resource_retype_scheduled' | 'resource_retype_succeeded' | 'resource_robot_account_created' | 'resource_robot_account_deleted' | 'resource_robot_account_state_changed' | 'resource_robot_account_updated' | 'resource_start_failed' | 'resource_start_scheduled' | 'resource_start_succeeded' | 'resource_stop_failed' | 'resource_stop_scheduled' | 'resource_stop_succeeded' | 'resource_unassign_floating_ip_failed' | 'resource_unassign_floating_ip_scheduled' | 'resource_unassign_floating_ip_succeeded' | 'resource_update_allowed_address_pairs_failed' | 'resource_update_allowed_address_pairs_scheduled' | 'resource_update_allowed_address_pairs_succeeded' | 'resource_update_floating_ips_failed' | 'resource_update_floating_ips_scheduled' | 'resource_update_floating_ips_succeeded' | 'resource_update_ports_failed' | 'resource_update_ports_scheduled' | 'resource_update_ports_succeeded' | 'resource_update_security_groups_failed' | 'resource_update_security_groups_scheduled' | 'resource_update_security_groups_succeeded' | 'resource_update_succeeded' | 'restrict_members' | 'review_canceled' | 'role_granted' | 'role_revoked' | 'role_updated' | 'roll_back_customer_credit' | 'roll_back_project_credit' | 'service_account_created' | 'service_account_deleted' | 'service_account_updated' | 'set_to_zero_overdue_credit' | 'ssh_key_creation_succeeded' | 'ssh_key_deletion_succeeded' | 'terminate_resources' | 'token_created' | 'token_lifetime_updated' | 'update_of_credit_by_staff' | 'automatic_credit_adjustment' | 'user_activated' | 'user_creation_succeeded' | 'user_deactivated' | 'user_deactivated_no_roles' | 'user_deletion_succeeded' | 'user_details_update_succeeded' | 'user_has_been_created_by_staff' | 'user_password_updated' | 'user_password_updated_by_staff' | 'user_update_succeeded' | 'user_invitation_updated' | 'user_invitation_deleted' | 'terms_of_service_consent_granted' | 'terms_of_service_consent_revoked';
+export type EventTypesEnum = 'access_subnet_creation_succeeded' | 'access_subnet_deletion_succeeded' | 'access_subnet_update_succeeded' | 'allowed_offerings_have_been_updated' | 'attachment_created' | 'attachment_deleted' | 'attachment_updated' | 'auth_logged_in_with_saml2' | 'auth_logged_in_with_username' | 'auth_logged_in_with_oauth' | 'auth_logged_out' | 'auth_logged_out_with_saml2' | 'auth_login_failed_with_username' | 'block_creation_of_new_resources' | 'block_modification_of_existing_resources' | 'call_document_added' | 'call_document_removed' | 'create_of_credit_by_staff' | 'custom_notification' | 'customer_creation_succeeded' | 'customer_deletion_succeeded' | 'customer_update_succeeded' | 'customer_permission_review_created' | 'customer_permission_review_closed' | 'droplet_resize_scheduled' | 'droplet_resize_succeeded' | 'freeipa_profile_created' | 'freeipa_profile_deleted' | 'freeipa_profile_disabled' | 'freeipa_profile_enabled' | 'invoice_canceled' | 'invoice_created' | 'invoice_item_created' | 'invoice_item_deleted' | 'invoice_item_updated' | 'invoice_paid' | 'issue_creation_succeeded' | 'issue_deletion_succeeded' | 'issue_update_succeeded' | 'marketplace_offering_component_created' | 'marketplace_offering_component_deleted' | 'marketplace_offering_component_updated' | 'marketplace_offering_created' | 'marketplace_offering_role_created' | 'marketplace_offering_role_deleted' | 'marketplace_offering_role_updated' | 'marketplace_offering_updated' | 'marketplace_offering_user_created' | 'marketplace_offering_user_updated' | 'marketplace_offering_user_deleted' | 'marketplace_offering_user_restriction_updated' | 'marketplace_order_approved' | 'marketplace_order_completed' | 'marketplace_order_created' | 'marketplace_order_failed' | 'marketplace_order_rejected' | 'marketplace_order_terminated' | 'marketplace_order_unlinked' | 'marketplace_plan_archived' | 'marketplace_plan_component_current_price_updated' | 'marketplace_plan_component_future_price_updated' | 'marketplace_plan_component_quota_updated' | 'marketplace_plan_created' | 'marketplace_plan_updated' | 'marketplace_plan_deleted' | 'marketplace_resource_create_canceled' | 'marketplace_resource_create_failed' | 'marketplace_resource_create_requested' | 'marketplace_resource_create_succeeded' | 'marketplace_resource_downscaled' | 'marketplace_resource_erred_on_backend' | 'marketplace_resource_paused' | 'marketplace_resource_terminate_canceled' | 'marketplace_resource_terminate_failed' | 'marketplace_resource_terminate_requested' | 'marketplace_resource_terminate_succeeded' | 'marketplace_resource_unlinked' | 'marketplace_resource_update_canceled' | 'marketplace_resource_update_end_date_succeeded' | 'marketplace_resource_update_failed' | 'marketplace_resource_update_limits_failed' | 'marketplace_resource_update_limits_succeeded' | 'marketplace_resource_update_requested' | 'marketplace_resource_update_succeeded' | 'marketplace_resource_user_created' | 'marketplace_resource_user_deleted' | 'notify_external_user' | 'notify_organization_owners' | 'notify_project_team' | 'openstack_floating_ip_attached' | 'openstack_floating_ip_connected' | 'openstack_floating_ip_description_updated' | 'openstack_floating_ip_detached' | 'openstack_floating_ip_disconnected' | 'openstack_network_cleaned' | 'openstack_network_created' | 'openstack_network_deleted' | 'openstack_network_imported' | 'openstack_network_pulled' | 'openstack_network_updated' | 'openstack_port_cleaned' | 'openstack_port_created' | 'openstack_port_deleted' | 'openstack_port_imported' | 'openstack_port_pulled' | 'openstack_port_updated' | 'openstack_router_updated' | 'openstack_security_group_cleaned' | 'openstack_security_group_created' | 'openstack_security_group_deleted' | 'openstack_security_group_imported' | 'openstack_security_group_pulled' | 'openstack_security_group_rule_cleaned' | 'openstack_security_group_rule_created' | 'openstack_security_group_rule_deleted' | 'openstack_security_group_rule_imported' | 'openstack_security_group_rule_updated' | 'openstack_security_group_updated' | 'openstack_security_group_added_remotely' | 'openstack_security_group_removed_remotely' | 'openstack_security_group_added_locally' | 'openstack_security_group_removed_locally' | 'openstack_server_group_cleaned' | 'openstack_server_group_created' | 'openstack_server_group_deleted' | 'openstack_server_group_imported' | 'openstack_server_group_pulled' | 'openstack_subnet_cleaned' | 'openstack_subnet_created' | 'openstack_subnet_deleted' | 'openstack_subnet_imported' | 'openstack_subnet_pulled' | 'openstack_subnet_updated' | 'openstack_tenant_quota_limit_updated' | 'payment_added' | 'payment_created' | 'payment_removed' | 'policy_notification' | 'project_creation_succeeded' | 'project_deletion_succeeded' | 'project_deletion_triggered' | 'project_update_request_approved' | 'project_update_request_created' | 'project_update_request_rejected' | 'project_update_succeeded' | 'project_permission_review_created' | 'project_permission_review_closed' | 'proposal_canceled' | 'proposal_document_added' | 'proposal_document_removed' | 'query_executed' | 'reduction_of_customer_credit' | 'reduction_of_customer_credit_due_to_minimal_consumption' | 'reduction_of_customer_expected_consumption' | 'reduction_of_project_credit' | 'reduction_of_project_credit_due_to_minimal_consumption' | 'reduction_of_project_expected_consumption' | 'request_downscaling' | 'request_pausing' | 'resource_assign_floating_ip_failed' | 'resource_assign_floating_ip_scheduled' | 'resource_assign_floating_ip_succeeded' | 'resource_attach_failed' | 'resource_attach_scheduled' | 'resource_attach_succeeded' | 'resource_backup_creation_failed' | 'resource_backup_creation_scheduled' | 'resource_backup_creation_succeeded' | 'resource_backup_deletion_failed' | 'resource_backup_deletion_scheduled' | 'resource_backup_deletion_succeeded' | 'resource_backup_restoration_failed' | 'resource_backup_restoration_scheduled' | 'resource_backup_restoration_succeeded' | 'resource_change_flavor_failed' | 'resource_change_flavor_scheduled' | 'resource_change_flavor_succeeded' | 'resource_creation_failed' | 'resource_creation_scheduled' | 'resource_creation_succeeded' | 'resource_deletion_failed' | 'resource_deletion_scheduled' | 'resource_deletion_succeeded' | 'resource_detach_failed' | 'resource_detach_scheduled' | 'resource_detach_succeeded' | 'resource_extend_failed' | 'resource_extend_scheduled' | 'resource_extend_succeeded' | 'resource_extend_volume_failed' | 'resource_extend_volume_scheduled' | 'resource_extend_volume_succeeded' | 'resource_import_succeeded' | 'resource_pull_failed' | 'resource_pull_scheduled' | 'resource_pull_succeeded' | 'resource_restart_failed' | 'resource_restart_scheduled' | 'resource_restart_succeeded' | 'resource_retype_failed' | 'resource_retype_scheduled' | 'resource_retype_succeeded' | 'resource_robot_account_created' | 'resource_robot_account_deleted' | 'resource_robot_account_state_changed' | 'resource_robot_account_updated' | 'resource_start_failed' | 'resource_start_scheduled' | 'resource_start_succeeded' | 'resource_stop_failed' | 'resource_stop_scheduled' | 'resource_stop_succeeded' | 'resource_unassign_floating_ip_failed' | 'resource_unassign_floating_ip_scheduled' | 'resource_unassign_floating_ip_succeeded' | 'resource_update_allowed_address_pairs_failed' | 'resource_update_allowed_address_pairs_scheduled' | 'resource_update_allowed_address_pairs_succeeded' | 'resource_update_floating_ips_failed' | 'resource_update_floating_ips_scheduled' | 'resource_update_floating_ips_succeeded' | 'resource_update_ports_failed' | 'resource_update_ports_scheduled' | 'resource_update_ports_succeeded' | 'resource_update_security_groups_failed' | 'resource_update_security_groups_scheduled' | 'resource_update_security_groups_succeeded' | 'resource_update_succeeded' | 'restrict_members' | 'review_canceled' | 'role_granted' | 'role_revoked' | 'role_updated' | 'roll_back_customer_credit' | 'roll_back_project_credit' | 'service_account_created' | 'service_account_deleted' | 'service_account_updated' | 'set_to_zero_overdue_credit' | 'ssh_key_creation_succeeded' | 'ssh_key_deletion_succeeded' | 'terminate_resources' | 'token_created' | 'token_lifetime_updated' | 'update_of_credit_by_staff' | 'automatic_credit_adjustment' | 'user_activated' | 'user_creation_succeeded' | 'user_data_accessed' | 'user_deactivated' | 'user_deactivated_no_roles' | 'user_deletion_succeeded' | 'user_details_update_succeeded' | 'user_has_been_created_by_staff' | 'user_password_updated' | 'user_password_updated_by_staff' | 'user_update_succeeded' | 'user_invitation_updated' | 'user_invitation_deleted' | 'terms_of_service_consent_granted' | 'terms_of_service_consent_revoked';
 
 export type ExecuteActionErrorResponse = {
     error: string;
@@ -5618,6 +5713,8 @@ export type FreeipaProfileRequest = {
     agreement_date?: string;
 };
 
+export type GenderEnum = 0 | 1 | 2 | 9;
+
 export type GenerateAssignmentsRequest = {
     /**
      * Specific proposal UUIDs to generate assignments for. If empty, generates for all submitted proposals needing reviewers.
@@ -5671,6 +5768,22 @@ export type GenerateSuggestionsResponse = {
     reviewers_evaluated: number;
     source_used: string;
     suggestions: Array<string>;
+};
+
+export type GlobalUserDataAccessLog = {
+    uuid: string;
+    timestamp: string;
+    accessor_type: AccessorTypeEnum;
+    accessed_fields: Array<string>;
+    user: TargetUser;
+    accessor: AccessorUser;
+    /**
+     * An IPv4 or IPv6 address.
+     */
+    ip_address: string | null;
+    context: {
+        [key: string]: unknown;
+    };
 };
 
 export type GoogleCalendar = {
@@ -10181,6 +10294,47 @@ export type OfferingUser = {
      * Email address
      */
     readonly user_email?: string;
+    readonly user_phone_number?: string;
+    readonly user_organization?: string;
+    readonly user_job_title?: string;
+    /**
+     * Person's affiliation within organization such as student, faculty, staff.
+     */
+    readonly user_affiliations?: unknown;
+    /**
+     * ISO 5218 gender code
+     */
+    user_gender?: GenderEnum | NullEnum | null;
+    /**
+     * Honorific title (Mr, Ms, Dr, Prof, etc.)
+     */
+    readonly user_personal_title?: string;
+    readonly user_place_of_birth?: string;
+    readonly user_country_of_residence?: string;
+    /**
+     * Primary citizenship (ISO 3166-1 alpha-2 code)
+     */
+    readonly user_nationality?: string;
+    /**
+     * List of all citizenships (ISO 3166-1 alpha-2 codes)
+     */
+    readonly user_nationalities?: unknown;
+    readonly user_organization_country?: string;
+    /**
+     * SCHAC URN (e.g., urn:schac:homeOrganizationType:int:university)
+     */
+    readonly user_organization_type?: string;
+    /**
+     * REFEDS assurance profile URIs from identity provider
+     */
+    readonly user_eduperson_assurance?: unknown;
+    readonly user_civil_number?: string | null;
+    readonly user_birth_date?: string | null;
+    /**
+     * Source of identity
+     * Indicates what identity provider was used.
+     */
+    readonly user_identity_source?: string;
     readonly created?: string;
     readonly modified?: string;
     readonly customer_uuid?: string;
@@ -10216,6 +10370,64 @@ export type OfferingUser = {
     readonly consent_data?: {
         [key: string]: string;
     } | null;
+};
+
+export type OfferingUserAttributeConfig = {
+    readonly uuid: string;
+    readonly created: string;
+    readonly modified: string;
+    readonly offering_uuid: string;
+    readonly offering_name: string;
+    expose_username?: boolean;
+    expose_full_name?: boolean;
+    expose_email?: boolean;
+    expose_phone_number?: boolean;
+    expose_organization?: boolean;
+    expose_job_title?: boolean;
+    expose_affiliations?: boolean;
+    expose_gender?: boolean;
+    expose_personal_title?: boolean;
+    expose_place_of_birth?: boolean;
+    expose_country_of_residence?: boolean;
+    expose_nationality?: boolean;
+    expose_nationalities?: boolean;
+    expose_organization_country?: boolean;
+    expose_organization_type?: boolean;
+    expose_eduperson_assurance?: boolean;
+    expose_civil_number?: boolean;
+    expose_birth_date?: boolean;
+    expose_identity_source?: boolean;
+    /**
+     * Return list of field names currently configured for exposure.
+     */
+    readonly exposed_fields: Array<string>;
+    /**
+     * Return True if this is a default (unsaved) config.
+     */
+    readonly is_default: boolean;
+};
+
+export type OfferingUserAttributeConfigRequest = {
+    offering?: string;
+    expose_username?: boolean;
+    expose_full_name?: boolean;
+    expose_email?: boolean;
+    expose_phone_number?: boolean;
+    expose_organization?: boolean;
+    expose_job_title?: boolean;
+    expose_affiliations?: boolean;
+    expose_gender?: boolean;
+    expose_personal_title?: boolean;
+    expose_place_of_birth?: boolean;
+    expose_country_of_residence?: boolean;
+    expose_nationality?: boolean;
+    expose_nationalities?: boolean;
+    expose_organization_country?: boolean;
+    expose_organization_type?: boolean;
+    expose_eduperson_assurance?: boolean;
+    expose_civil_number?: boolean;
+    expose_birth_date?: boolean;
+    expose_identity_source?: boolean;
 };
 
 export type OfferingUserRequest = {
@@ -12462,6 +12674,20 @@ export type OrganizationGroupsRequest = {
     organization_groups?: Array<string>;
 };
 
+export type OrganizationalAccess = {
+    scope_type: string;
+    scope_uuid: string;
+    scope_name: string;
+    users: Array<OrganizationalUser>;
+};
+
+export type OrganizationalUser = {
+    user_uuid: string;
+    username: string;
+    full_name: string;
+    role: string | null;
+};
+
 export type PaidRequest = {
     date: string;
     proof?: Blob | File;
@@ -12538,6 +12764,25 @@ export type PatchedBroadcastMessageRequest = {
     body?: string;
     query?: unknown;
     send_at?: string | null;
+};
+
+export type PatchedCallApplicantAttributeConfigRequest = {
+    call?: string;
+    expose_full_name?: boolean;
+    expose_email?: boolean;
+    expose_organization?: boolean;
+    expose_affiliations?: boolean;
+    expose_organization_type?: boolean;
+    expose_organization_country?: boolean;
+    expose_nationality?: boolean;
+    expose_nationalities?: boolean;
+    expose_country_of_residence?: boolean;
+    expose_eduperson_assurance?: boolean;
+    expose_identity_source?: boolean;
+    /**
+     * If True, reviewers see applicant identity. If False, proposals are anonymized for reviewers.
+     */
+    reviewers_see_applicant_details?: boolean;
 };
 
 export type PatchedCallAssignmentConfigurationRequest = {
@@ -13252,6 +13497,29 @@ export type PatchedOfferingUsagePolicyRequest = {
     period?: PeriodEnum;
 };
 
+export type PatchedOfferingUserAttributeConfigRequest = {
+    offering?: string;
+    expose_username?: boolean;
+    expose_full_name?: boolean;
+    expose_email?: boolean;
+    expose_phone_number?: boolean;
+    expose_organization?: boolean;
+    expose_job_title?: boolean;
+    expose_affiliations?: boolean;
+    expose_gender?: boolean;
+    expose_personal_title?: boolean;
+    expose_place_of_birth?: boolean;
+    expose_country_of_residence?: boolean;
+    expose_nationality?: boolean;
+    expose_nationalities?: boolean;
+    expose_organization_country?: boolean;
+    expose_organization_type?: boolean;
+    expose_eduperson_assurance?: boolean;
+    expose_civil_number?: boolean;
+    expose_birth_date?: boolean;
+    expose_identity_source?: boolean;
+};
+
 export type PatchedOfferingUserRequest = {
     user?: string;
     offering?: string;
@@ -13606,6 +13874,30 @@ export type PatchedProtectedCallRequest = {
      * Template for proposal slugs. Supports: {call_slug}, {round_slug}, {org_slug}, {year}, {month}, {counter}, {counter_padded}. Default: {round_slug}-{counter_padded}
      */
     proposal_slug_template?: string | null;
+    /**
+     * List of email regex patterns. User must match one.
+     */
+    user_email_patterns?: unknown;
+    /**
+     * List of allowed affiliations. User must have one.
+     */
+    user_affiliations?: unknown;
+    /**
+     * List of allowed identity sources (identity providers).
+     */
+    user_identity_sources?: unknown;
+    /**
+     * List of allowed nationality codes (ISO 3166-1 alpha-2). User must have one.
+     */
+    user_nationalities?: unknown;
+    /**
+     * List of allowed organization type URNs (SCHAC). User must match one.
+     */
+    user_organization_types?: unknown;
+    /**
+     * List of required assurance URIs (REFEDS). User must have ALL of these.
+     */
+    user_assurance_levels?: unknown;
 };
 
 export type PatchedProtectedRoundRequest = {
@@ -14274,6 +14566,33 @@ export type PatchedUserRequest = {
     last_name?: string;
     birth_date?: string | null;
     image?: (Blob | File) | null;
+    /**
+     * ISO 5218 gender code
+     */
+    gender?: GenderEnum | NullEnum | null;
+    /**
+     * Honorific title (Mr, Ms, Dr, Prof, etc.)
+     */
+    personal_title?: string;
+    place_of_birth?: string;
+    country_of_residence?: string;
+    /**
+     * Primary citizenship (ISO 3166-1 alpha-2 code)
+     */
+    nationality?: string;
+    /**
+     * List of all citizenships (ISO 3166-1 alpha-2 codes)
+     */
+    nationalities?: unknown;
+    organization_country?: string;
+    /**
+     * SCHAC URN (e.g., urn:schac:homeOrganizationType:int:university)
+     */
+    organization_type?: string;
+    /**
+     * REFEDS assurance profile URIs from identity provider
+     */
+    eduperson_assurance?: unknown;
 };
 
 export type PatchedVmwareVirtualMachineRequest = {
@@ -15316,6 +15635,10 @@ export type ProtectedCall = {
      * Whether proposal applicants can see review comments and scores
      */
     reviews_visible_to_submitters?: boolean;
+    /**
+     * Check if call has any eligibility restrictions configured.
+     */
+    readonly has_eligibility_restrictions?: boolean;
     created_by?: string | null;
     reference_code?: string;
     /**
@@ -15327,6 +15650,30 @@ export type ProtectedCall = {
      * Template for proposal slugs. Supports: {call_slug}, {round_slug}, {org_slug}, {year}, {month}, {counter}, {counter_padded}. Default: {round_slug}-{counter_padded}
      */
     proposal_slug_template?: string | null;
+    /**
+     * List of email regex patterns. User must match one.
+     */
+    user_email_patterns?: unknown;
+    /**
+     * List of allowed affiliations. User must have one.
+     */
+    user_affiliations?: unknown;
+    /**
+     * List of allowed identity sources (identity providers).
+     */
+    user_identity_sources?: unknown;
+    /**
+     * List of allowed nationality codes (ISO 3166-1 alpha-2). User must have one.
+     */
+    user_nationalities?: unknown;
+    /**
+     * List of allowed organization type URNs (SCHAC). User must match one.
+     */
+    user_organization_types?: unknown;
+    /**
+     * List of required assurance URIs (REFEDS). User must have ALL of these.
+     */
+    user_assurance_levels?: unknown;
 };
 
 export type ProtectedCallRequest = {
@@ -15358,6 +15705,30 @@ export type ProtectedCallRequest = {
      * Template for proposal slugs. Supports: {call_slug}, {round_slug}, {org_slug}, {year}, {month}, {counter}, {counter_padded}. Default: {round_slug}-{counter_padded}
      */
     proposal_slug_template?: string | null;
+    /**
+     * List of email regex patterns. User must match one.
+     */
+    user_email_patterns?: unknown;
+    /**
+     * List of allowed affiliations. User must have one.
+     */
+    user_affiliations?: unknown;
+    /**
+     * List of allowed identity sources (identity providers).
+     */
+    user_identity_sources?: unknown;
+    /**
+     * List of allowed nationality codes (ISO 3166-1 alpha-2). User must have one.
+     */
+    user_nationalities?: unknown;
+    /**
+     * List of allowed organization type URNs (SCHAC). User must match one.
+     */
+    user_organization_types?: unknown;
+    /**
+     * List of required assurance URIs (REFEDS). User must have ALL of these.
+     */
+    user_assurance_levels?: unknown;
 };
 
 export type ProtectedProposalList = {
@@ -15722,6 +16093,13 @@ export type ProviderRequestedResource = {
     proposal: string;
 };
 
+export type ProviderTeamUser = {
+    user_uuid: string;
+    username: string;
+    full_name: string;
+    role: string | null;
+};
+
 export type ProviderUser = {
     readonly uuid?: string;
     readonly full_name?: string;
@@ -15767,6 +16145,10 @@ export type PublicCall = {
      * Whether proposal applicants can see review comments and scores. If False, applicants only see final approval/rejection status.
      */
     reviews_visible_to_submitters?: boolean;
+    /**
+     * Check if call has any eligibility restrictions configured.
+     */
+    readonly has_eligibility_restrictions?: boolean;
 };
 
 export type PublicInvitation = {
@@ -19416,6 +19798,17 @@ export type ServiceProvider = {
     readonly offering_count?: number;
 };
 
+export type ServiceProviderAccess = {
+    offering_uuid: string;
+    offering_name: string;
+    provider_name: string | null;
+    provider_uuid: string | null;
+    exposed_fields: Array<string>;
+    consent_date: string | null;
+    consent_version: string | null;
+    provider_team?: Array<ProviderTeamUser>;
+};
+
 export type ServiceProviderApiSecretCode = {
     /**
      * API secret code for authenticating service provider requests
@@ -20191,6 +20584,12 @@ export type TagsRequest = {
     tags?: Array<string>;
 };
 
+export type TargetUser = {
+    uuid: string;
+    username: string;
+    full_name: string;
+};
+
 export type Template = {
     readonly url: string;
     readonly uuid: string;
@@ -20476,6 +20875,33 @@ export type User = {
     readonly identity_source?: string;
     readonly has_active_session?: boolean;
     readonly ip_address?: string | null;
+    /**
+     * ISO 5218 gender code
+     */
+    gender?: GenderEnum | NullEnum | null;
+    /**
+     * Honorific title (Mr, Ms, Dr, Prof, etc.)
+     */
+    personal_title?: string;
+    place_of_birth?: string;
+    country_of_residence?: string;
+    /**
+     * Primary citizenship (ISO 3166-1 alpha-2 code)
+     */
+    nationality?: string;
+    /**
+     * List of all citizenships (ISO 3166-1 alpha-2 codes)
+     */
+    nationalities?: unknown;
+    organization_country?: string;
+    /**
+     * SCHAC URN (e.g., urn:schac:homeOrganizationType:int:university)
+     */
+    organization_type?: string;
+    /**
+     * REFEDS assurance profile URIs from identity provider
+     */
+    eduperson_assurance?: unknown;
 };
 
 export type UserAction = {
@@ -20653,6 +21079,29 @@ export type UserConsentInfo = {
     readonly is_revoked: boolean;
 };
 
+export type UserDataAccess = {
+    administrative_access: AdministrativeAccess;
+    organizational_access: Array<OrganizationalAccess>;
+    service_provider_access: Array<ServiceProviderAccess>;
+    summary: DataAccessSummary;
+};
+
+export type UserDataAccessLog = {
+    uuid: string;
+    timestamp: string;
+    accessor_type: AccessorTypeEnum;
+    accessed_fields: Array<string>;
+    accessor_category?: string;
+    accessor?: AccessorUser;
+    /**
+     * An IPv4 or IPv6 address.
+     */
+    ip_address?: string | null;
+    context?: {
+        [key: string]: unknown;
+    };
+};
+
 export type UserEmailChangeRequest = {
     email: string;
 };
@@ -20707,6 +21156,10 @@ export type UserOfferingConsent = {
     readonly modified: string;
     readonly has_consent: boolean;
     readonly requires_reconsent: boolean;
+    /**
+     * List of user attributes that will be shared with service provider
+     */
+    readonly collected_attributes: Array<string>;
 };
 
 export type UserOfferingConsentCreate = {
@@ -20779,6 +21232,33 @@ export type UserRequest = {
     last_name?: string;
     birth_date?: string | null;
     image?: (Blob | File) | null;
+    /**
+     * ISO 5218 gender code
+     */
+    gender?: GenderEnum | NullEnum | null;
+    /**
+     * Honorific title (Mr, Ms, Dr, Prof, etc.)
+     */
+    personal_title?: string;
+    place_of_birth?: string;
+    country_of_residence?: string;
+    /**
+     * Primary citizenship (ISO 3166-1 alpha-2 code)
+     */
+    nationality?: string;
+    /**
+     * List of all citizenships (ISO 3166-1 alpha-2 codes)
+     */
+    nationalities?: unknown;
+    organization_country?: string;
+    /**
+     * SCHAC URN (e.g., urn:schac:homeOrganizationType:int:university)
+     */
+    organization_type?: string;
+    /**
+     * REFEDS assurance profile URIs from identity provider
+     */
+    eduperson_assurance?: unknown;
 };
 
 export type UserRoleCreateRequest = {
@@ -22536,6 +23016,9 @@ export type ConstanceSettingsRequestForm = {
     OIDC_BLOCK_CREATION_OF_UNINVITED_USERS?: boolean;
     DEACTIVATE_USER_IF_NO_ROLES?: boolean;
     WALDUR_AUTH_SOCIAL_ROLE_CLAIM?: string;
+    DEFAULT_OFFERING_USER_ATTRIBUTES?: Array<string>;
+    INVITATION_ALLOWED_FIELDS?: Array<string>;
+    ENABLED_USER_PROFILE_ATTRIBUTES?: Array<string>;
     MAINTENANCE_ANNOUNCEMENT_NOTIFY_BEFORE_MINUTES?: number;
     MAINTENANCE_ANNOUNCEMENT_NOTIFY_SYSTEM?: Array<string>;
     ENFORCE_USER_CONSENT_FOR_OFFERINGS?: boolean;
@@ -22574,6 +23057,9 @@ export type ConstanceSettingsRequestForm = {
     USER_ACTIONS_NOTIFICATION_THRESHOLD?: number;
     USER_ACTIONS_EXECUTION_RETENTION_DAYS?: number;
     USER_ACTIONS_DEFAULT_EXPIRATION_REMINDERS?: Array<string>;
+    USER_DATA_ACCESS_LOGGING_ENABLED?: boolean;
+    USER_DATA_ACCESS_LOG_RETENTION_DAYS?: number;
+    USER_DATA_ACCESS_LOG_SELF_ACCESS?: boolean;
 };
 
 export type ConstanceSettingsRequestMultipart = {
@@ -22736,6 +23222,9 @@ export type ConstanceSettingsRequestMultipart = {
     OIDC_BLOCK_CREATION_OF_UNINVITED_USERS?: boolean;
     DEACTIVATE_USER_IF_NO_ROLES?: boolean;
     WALDUR_AUTH_SOCIAL_ROLE_CLAIM?: string;
+    DEFAULT_OFFERING_USER_ATTRIBUTES?: Array<string>;
+    INVITATION_ALLOWED_FIELDS?: Array<string>;
+    ENABLED_USER_PROFILE_ATTRIBUTES?: Array<string>;
     MAINTENANCE_ANNOUNCEMENT_NOTIFY_BEFORE_MINUTES?: number;
     MAINTENANCE_ANNOUNCEMENT_NOTIFY_SYSTEM?: Array<string>;
     ENFORCE_USER_CONSENT_FOR_OFFERINGS?: boolean;
@@ -22774,6 +23263,9 @@ export type ConstanceSettingsRequestMultipart = {
     USER_ACTIONS_NOTIFICATION_THRESHOLD?: number;
     USER_ACTIONS_EXECUTION_RETENTION_DAYS?: number;
     USER_ACTIONS_DEFAULT_EXPIRATION_REMINDERS?: Array<string>;
+    USER_DATA_ACCESS_LOGGING_ENABLED?: boolean;
+    USER_DATA_ACCESS_LOG_RETENTION_DAYS?: number;
+    USER_DATA_ACCESS_LOG_SELF_ACCESS?: boolean;
 };
 
 export type PaymentRequestForm = {
@@ -22899,6 +23391,33 @@ export type UserRequestForm = {
     last_name?: string;
     birth_date?: string | null;
     image?: (Blob | File) | null;
+    /**
+     * ISO 5218 gender code
+     */
+    gender?: GenderEnum | NullEnum | null;
+    /**
+     * Honorific title (Mr, Ms, Dr, Prof, etc.)
+     */
+    personal_title?: string;
+    place_of_birth?: string;
+    country_of_residence?: string;
+    /**
+     * Primary citizenship (ISO 3166-1 alpha-2 code)
+     */
+    nationality?: string;
+    /**
+     * List of all citizenships (ISO 3166-1 alpha-2 codes)
+     */
+    nationalities?: unknown;
+    organization_country?: string;
+    /**
+     * SCHAC URN (e.g., urn:schac:homeOrganizationType:int:university)
+     */
+    organization_type?: string;
+    /**
+     * REFEDS assurance profile URIs from identity provider
+     */
+    eduperson_assurance?: unknown;
 };
 
 export type UserRequestMultipart = {
@@ -22948,6 +23467,33 @@ export type UserRequestMultipart = {
     last_name?: string;
     birth_date?: string | null;
     image?: (Blob | File) | null;
+    /**
+     * ISO 5218 gender code
+     */
+    gender?: GenderEnum | NullEnum | null;
+    /**
+     * Honorific title (Mr, Ms, Dr, Prof, etc.)
+     */
+    personal_title?: string;
+    place_of_birth?: string;
+    country_of_residence?: string;
+    /**
+     * Primary citizenship (ISO 3166-1 alpha-2 code)
+     */
+    nationality?: string;
+    /**
+     * List of all citizenships (ISO 3166-1 alpha-2 codes)
+     */
+    nationalities?: unknown;
+    organization_country?: string;
+    /**
+     * SCHAC URN (e.g., urn:schac:homeOrganizationType:int:university)
+     */
+    organization_type?: string;
+    /**
+     * REFEDS assurance profile URIs from identity provider
+     */
+    eduperson_assurance?: unknown;
 };
 
 export type PatchedUserRequestForm = {
@@ -22996,6 +23542,33 @@ export type PatchedUserRequestForm = {
     last_name?: string;
     birth_date?: string | null;
     image?: (Blob | File) | null;
+    /**
+     * ISO 5218 gender code
+     */
+    gender?: GenderEnum | NullEnum | null;
+    /**
+     * Honorific title (Mr, Ms, Dr, Prof, etc.)
+     */
+    personal_title?: string;
+    place_of_birth?: string;
+    country_of_residence?: string;
+    /**
+     * Primary citizenship (ISO 3166-1 alpha-2 code)
+     */
+    nationality?: string;
+    /**
+     * List of all citizenships (ISO 3166-1 alpha-2 codes)
+     */
+    nationalities?: unknown;
+    organization_country?: string;
+    /**
+     * SCHAC URN (e.g., urn:schac:homeOrganizationType:int:university)
+     */
+    organization_type?: string;
+    /**
+     * REFEDS assurance profile URIs from identity provider
+     */
+    eduperson_assurance?: unknown;
 };
 
 export type PatchedUserRequestMultipart = {
@@ -23044,6 +23617,33 @@ export type PatchedUserRequestMultipart = {
     last_name?: string;
     birth_date?: string | null;
     image?: (Blob | File) | null;
+    /**
+     * ISO 5218 gender code
+     */
+    gender?: GenderEnum | NullEnum | null;
+    /**
+     * Honorific title (Mr, Ms, Dr, Prof, etc.)
+     */
+    personal_title?: string;
+    place_of_birth?: string;
+    country_of_residence?: string;
+    /**
+     * Primary citizenship (ISO 3166-1 alpha-2 code)
+     */
+    nationality?: string;
+    /**
+     * List of all citizenships (ISO 3166-1 alpha-2 codes)
+     */
+    nationalities?: unknown;
+    organization_country?: string;
+    /**
+     * SCHAC URN (e.g., urn:schac:homeOrganizationType:int:university)
+     */
+    organization_type?: string;
+    /**
+     * REFEDS assurance profile URIs from identity provider
+     */
+    eduperson_assurance?: unknown;
 };
 
 /**
@@ -30861,6 +31461,118 @@ export type DailyQuotasRetrieveResponses = {
 
 export type DailyQuotasRetrieveResponse = DailyQuotasRetrieveResponses[keyof DailyQuotasRetrieveResponses];
 
+export type DataAccessLogsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Type of accessor
+         *
+         *
+         */
+        accessor_type?: 'organization_member' | 'self' | 'service_provider' | 'staff' | 'support';
+        accessor_uuid?: string;
+        end_date?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-accessor_type' | '-accessor_username' | '-timestamp' | '-user_username' | 'accessor_type' | 'accessor_username' | 'timestamp' | 'user_username'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        query?: string;
+        start_date?: string;
+        user_uuid?: string;
+    };
+    url: '/api/data-access-logs/';
+};
+
+export type DataAccessLogsListResponses = {
+    200: Array<GlobalUserDataAccessLog>;
+};
+
+export type DataAccessLogsListResponse = DataAccessLogsListResponses[keyof DataAccessLogsListResponses];
+
+export type DataAccessLogsCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Type of accessor
+         *
+         *
+         */
+        accessor_type?: 'organization_member' | 'self' | 'service_provider' | 'staff' | 'support';
+        accessor_uuid?: string;
+        end_date?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-accessor_type' | '-accessor_username' | '-timestamp' | '-user_username' | 'accessor_type' | 'accessor_username' | 'timestamp' | 'user_username'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        query?: string;
+        start_date?: string;
+        user_uuid?: string;
+    };
+    url: '/api/data-access-logs/';
+};
+
+export type DataAccessLogsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type DataAccessLogsDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/data-access-logs/{uuid}/';
+};
+
+export type DataAccessLogsDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type DataAccessLogsDestroyResponse = DataAccessLogsDestroyResponses[keyof DataAccessLogsDestroyResponses];
+
+export type DataAccessLogsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/data-access-logs/{uuid}/';
+};
+
+export type DataAccessLogsRetrieveResponses = {
+    200: GlobalUserDataAccessLog;
+};
+
+export type DataAccessLogsRetrieveResponse = DataAccessLogsRetrieveResponses[keyof DataAccessLogsRetrieveResponses];
+
 export type DatabaseStatsRetrieveData = {
     body?: never;
     path?: never;
@@ -38525,7 +39237,7 @@ export type MarketplaceOfferingUsersListData = {
          * Created after
          */
         created?: string;
-        field?: Array<'consent_data' | 'created' | 'customer_name' | 'customer_uuid' | 'has_compliance_checklist' | 'has_consent' | 'is_restricted' | 'modified' | 'offering' | 'offering_name' | 'offering_uuid' | 'requires_reconsent' | 'service_provider_comment' | 'service_provider_comment_url' | 'state' | 'url' | 'user' | 'user_email' | 'user_full_name' | 'user_username' | 'user_uuid' | 'username' | 'uuid'>;
+        field?: Array<'consent_data' | 'created' | 'customer_name' | 'customer_uuid' | 'has_compliance_checklist' | 'has_consent' | 'is_restricted' | 'modified' | 'offering' | 'offering_name' | 'offering_uuid' | 'requires_reconsent' | 'service_provider_comment' | 'service_provider_comment_url' | 'state' | 'url' | 'user' | 'user_affiliations' | 'user_birth_date' | 'user_civil_number' | 'user_country_of_residence' | 'user_eduperson_assurance' | 'user_email' | 'user_full_name' | 'user_gender' | 'user_identity_source' | 'user_job_title' | 'user_nationalities' | 'user_nationality' | 'user_organization' | 'user_organization_country' | 'user_organization_type' | 'user_personal_title' | 'user_phone_number' | 'user_place_of_birth' | 'user_username' | 'user_uuid' | 'username' | 'uuid'>;
         /**
          * User Has Consent
          */
@@ -38708,7 +39420,7 @@ export type MarketplaceOfferingUsersRetrieveData = {
         uuid: string;
     };
     query?: {
-        field?: Array<'consent_data' | 'created' | 'customer_name' | 'customer_uuid' | 'has_compliance_checklist' | 'has_consent' | 'is_restricted' | 'modified' | 'offering' | 'offering_name' | 'offering_uuid' | 'requires_reconsent' | 'service_provider_comment' | 'service_provider_comment_url' | 'state' | 'url' | 'user' | 'user_email' | 'user_full_name' | 'user_username' | 'user_uuid' | 'username' | 'uuid'>;
+        field?: Array<'consent_data' | 'created' | 'customer_name' | 'customer_uuid' | 'has_compliance_checklist' | 'has_consent' | 'is_restricted' | 'modified' | 'offering' | 'offering_name' | 'offering_uuid' | 'requires_reconsent' | 'service_provider_comment' | 'service_provider_comment_url' | 'state' | 'url' | 'user' | 'user_affiliations' | 'user_birth_date' | 'user_civil_number' | 'user_country_of_residence' | 'user_eduperson_assurance' | 'user_email' | 'user_full_name' | 'user_gender' | 'user_identity_source' | 'user_job_title' | 'user_nationalities' | 'user_nationality' | 'user_organization' | 'user_organization_country' | 'user_organization_type' | 'user_personal_title' | 'user_phone_number' | 'user_place_of_birth' | 'user_username' | 'user_uuid' | 'username' | 'uuid'>;
     };
     url: '/api/marketplace-offering-users/{uuid}/';
 };
@@ -41508,6 +42220,24 @@ export type MarketplaceProviderOfferingsCustomersListResponses = {
 
 export type MarketplaceProviderOfferingsCustomersListResponse = MarketplaceProviderOfferingsCustomersListResponses[keyof MarketplaceProviderOfferingsCustomersListResponses];
 
+export type MarketplaceProviderOfferingsDeleteUserAttributeConfigDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-provider-offerings/{uuid}/delete-user-attribute-config/';
+};
+
+export type MarketplaceProviderOfferingsDeleteUserAttributeConfigDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type MarketplaceProviderOfferingsDeleteUserAttributeConfigDestroyResponse = MarketplaceProviderOfferingsDeleteUserAttributeConfigDestroyResponses[keyof MarketplaceProviderOfferingsDeleteUserAttributeConfigDestroyResponses];
+
 export type MarketplaceProviderOfferingsDeleteEndpointData = {
     body: EndpointUuidRequest;
     path: {
@@ -42067,7 +42797,7 @@ export type MarketplaceProviderOfferingsListCustomerUsersListData = {
         uuid: string;
     };
     query?: {
-        field?: Array<'affiliations' | 'agree_with_policy' | 'agreement_date' | 'birth_date' | 'civil_number' | 'date_joined' | 'description' | 'email' | 'first_name' | 'full_name' | 'has_active_session' | 'identity_provider_fields' | 'identity_provider_label' | 'identity_provider_management_url' | 'identity_provider_name' | 'identity_source' | 'image' | 'ip_address' | 'is_active' | 'is_staff' | 'is_support' | 'job_title' | 'last_name' | 'native_name' | 'notifications_enabled' | 'organization' | 'permissions' | 'phone_number' | 'preferred_language' | 'registration_method' | 'requested_email' | 'slug' | 'token' | 'token_expires_at' | 'token_lifetime' | 'url' | 'username' | 'uuid'>;
+        field?: Array<'affiliations' | 'agree_with_policy' | 'agreement_date' | 'birth_date' | 'civil_number' | 'country_of_residence' | 'date_joined' | 'description' | 'eduperson_assurance' | 'email' | 'first_name' | 'full_name' | 'gender' | 'has_active_session' | 'identity_provider_fields' | 'identity_provider_label' | 'identity_provider_management_url' | 'identity_provider_name' | 'identity_source' | 'image' | 'ip_address' | 'is_active' | 'is_staff' | 'is_support' | 'job_title' | 'last_name' | 'nationalities' | 'nationality' | 'native_name' | 'notifications_enabled' | 'organization' | 'organization_country' | 'organization_type' | 'permissions' | 'personal_title' | 'phone_number' | 'place_of_birth' | 'preferred_language' | 'registration_method' | 'requested_email' | 'slug' | 'token' | 'token_expires_at' | 'token_lifetime' | 'url' | 'username' | 'uuid'>;
         /**
          * A page number within the paginated result set.
          */
@@ -42567,6 +43297,51 @@ export type MarketplaceProviderOfferingsUnpauseResponses = {
 
 export type MarketplaceProviderOfferingsUnpauseResponse = MarketplaceProviderOfferingsUnpauseResponses[keyof MarketplaceProviderOfferingsUnpauseResponses];
 
+export type MarketplaceProviderOfferingsUpdateUserAttributeConfigPartialUpdateData = {
+    body?: PatchedOfferingUserAttributeConfigRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-provider-offerings/{uuid}/update-user-attribute-config/';
+};
+
+export type MarketplaceProviderOfferingsUpdateUserAttributeConfigPartialUpdateResponses = {
+    200: OfferingUserAttributeConfig;
+};
+
+export type MarketplaceProviderOfferingsUpdateUserAttributeConfigPartialUpdateResponse = MarketplaceProviderOfferingsUpdateUserAttributeConfigPartialUpdateResponses[keyof MarketplaceProviderOfferingsUpdateUserAttributeConfigPartialUpdateResponses];
+
+export type MarketplaceProviderOfferingsUpdateUserAttributeConfigData = {
+    body?: OfferingUserAttributeConfigRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-provider-offerings/{uuid}/update-user-attribute-config/';
+};
+
+export type MarketplaceProviderOfferingsUpdateUserAttributeConfigResponses = {
+    200: OfferingUserAttributeConfig;
+};
+
+export type MarketplaceProviderOfferingsUpdateUserAttributeConfigResponse = MarketplaceProviderOfferingsUpdateUserAttributeConfigResponses[keyof MarketplaceProviderOfferingsUpdateUserAttributeConfigResponses];
+
+export type MarketplaceProviderOfferingsUpdateUserAttributeConfigUpdateData = {
+    body?: OfferingUserAttributeConfigRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-provider-offerings/{uuid}/update-user-attribute-config/';
+};
+
+export type MarketplaceProviderOfferingsUpdateUserAttributeConfigUpdateResponses = {
+    200: OfferingUserAttributeConfig;
+};
+
+export type MarketplaceProviderOfferingsUpdateUserAttributeConfigUpdateResponse = MarketplaceProviderOfferingsUpdateUserAttributeConfigUpdateResponses[keyof MarketplaceProviderOfferingsUpdateUserAttributeConfigUpdateResponses];
+
 export type MarketplaceProviderOfferingsUpdateAttributesData = {
     body?: {
         [key: string]: unknown;
@@ -42821,6 +43596,21 @@ export type MarketplaceProviderOfferingsUpdateUserResponses = {
 };
 
 export type MarketplaceProviderOfferingsUpdateUserResponse = MarketplaceProviderOfferingsUpdateUserResponses[keyof MarketplaceProviderOfferingsUpdateUserResponses];
+
+export type MarketplaceProviderOfferingsUserAttributeConfigRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-provider-offerings/{uuid}/user-attribute-config/';
+};
+
+export type MarketplaceProviderOfferingsUserAttributeConfigRetrieveResponses = {
+    200: OfferingUserAttributeConfig;
+};
+
+export type MarketplaceProviderOfferingsUserAttributeConfigRetrieveResponse = MarketplaceProviderOfferingsUserAttributeConfigRetrieveResponses[keyof MarketplaceProviderOfferingsUserAttributeConfigRetrieveResponses];
 
 export type MarketplaceProviderOfferingsUserHasResourceAccessRetrieveData = {
     body?: never;
@@ -61975,7 +62765,7 @@ export type ProposalProtectedCallsListData = {
         customer?: string;
         customer_keyword?: string;
         customer_uuid?: string;
-        field?: Array<'backend_id' | 'compliance_checklist' | 'compliance_checklist_name' | 'created' | 'created_by' | 'customer_name' | 'customer_uuid' | 'description' | 'documents' | 'end_date' | 'external_url' | 'fixed_duration_in_days' | 'manager' | 'manager_uuid' | 'name' | 'offerings' | 'proposal_slug_template' | 'reference_code' | 'resource_templates' | 'reviewer_identity_visible_to_submitters' | 'reviews_visible_to_submitters' | 'rounds' | 'slug' | 'start_date' | 'state' | 'url' | 'uuid'>;
+        field?: Array<'backend_id' | 'compliance_checklist' | 'compliance_checklist_name' | 'created' | 'created_by' | 'customer_name' | 'customer_uuid' | 'description' | 'documents' | 'end_date' | 'external_url' | 'fixed_duration_in_days' | 'has_eligibility_restrictions' | 'manager' | 'manager_uuid' | 'name' | 'offerings' | 'proposal_slug_template' | 'reference_code' | 'resource_templates' | 'reviewer_identity_visible_to_submitters' | 'reviews_visible_to_submitters' | 'rounds' | 'slug' | 'start_date' | 'state' | 'url' | 'user_affiliations' | 'user_assurance_levels' | 'user_email_patterns' | 'user_identity_sources' | 'user_nationalities' | 'user_organization_types' | 'uuid'>;
         has_active_round?: boolean;
         name?: string;
         /**
@@ -62079,7 +62869,7 @@ export type ProposalProtectedCallsRetrieveData = {
         uuid: string;
     };
     query?: {
-        field?: Array<'backend_id' | 'compliance_checklist' | 'compliance_checklist_name' | 'created' | 'created_by' | 'customer_name' | 'customer_uuid' | 'description' | 'documents' | 'end_date' | 'external_url' | 'fixed_duration_in_days' | 'manager' | 'manager_uuid' | 'name' | 'offerings' | 'proposal_slug_template' | 'reference_code' | 'resource_templates' | 'reviewer_identity_visible_to_submitters' | 'reviews_visible_to_submitters' | 'rounds' | 'slug' | 'start_date' | 'state' | 'url' | 'uuid'>;
+        field?: Array<'backend_id' | 'compliance_checklist' | 'compliance_checklist_name' | 'created' | 'created_by' | 'customer_name' | 'customer_uuid' | 'description' | 'documents' | 'end_date' | 'external_url' | 'fixed_duration_in_days' | 'has_eligibility_restrictions' | 'manager' | 'manager_uuid' | 'name' | 'offerings' | 'proposal_slug_template' | 'reference_code' | 'resource_templates' | 'reviewer_identity_visible_to_submitters' | 'reviews_visible_to_submitters' | 'rounds' | 'slug' | 'start_date' | 'state' | 'url' | 'user_affiliations' | 'user_assurance_levels' | 'user_email_patterns' | 'user_identity_sources' | 'user_nationalities' | 'user_organization_types' | 'uuid'>;
     };
     url: '/api/proposal-protected-calls/{uuid}/';
 };
@@ -62176,6 +62966,21 @@ export type ProposalProtectedCallsAffinityMatrixRetrieveResponses = {
 };
 
 export type ProposalProtectedCallsAffinityMatrixRetrieveResponse = ProposalProtectedCallsAffinityMatrixRetrieveResponses[keyof ProposalProtectedCallsAffinityMatrixRetrieveResponses];
+
+export type ProposalProtectedCallsApplicantAttributeConfigRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-protected-calls/{uuid}/applicant_attribute_config/';
+};
+
+export type ProposalProtectedCallsApplicantAttributeConfigRetrieveResponses = {
+    200: CallApplicantAttributeConfig;
+};
+
+export type ProposalProtectedCallsApplicantAttributeConfigRetrieveResponse = ProposalProtectedCallsApplicantAttributeConfigRetrieveResponses[keyof ProposalProtectedCallsApplicantAttributeConfigRetrieveResponses];
 
 export type ProposalProtectedCallsArchiveData = {
     body?: never;
@@ -62335,6 +63140,24 @@ export type ProposalProtectedCallsCreateManualAssignmentResponses = {
 };
 
 export type ProposalProtectedCallsCreateManualAssignmentResponse = ProposalProtectedCallsCreateManualAssignmentResponses[keyof ProposalProtectedCallsCreateManualAssignmentResponses];
+
+export type ProposalProtectedCallsDeleteApplicantAttributeConfigDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-protected-calls/{uuid}/delete_applicant_attribute_config/';
+};
+
+export type ProposalProtectedCallsDeleteApplicantAttributeConfigDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type ProposalProtectedCallsDeleteApplicantAttributeConfigDestroyResponse = ProposalProtectedCallsDeleteApplicantAttributeConfigDestroyResponses[keyof ProposalProtectedCallsDeleteApplicantAttributeConfigDestroyResponses];
 
 export type ProposalProtectedCallsDeleteUserData = {
     body: UserRoleDeleteRequest;
@@ -63087,6 +63910,36 @@ export type ProposalProtectedCallsSuggestionsListResponses = {
 
 export type ProposalProtectedCallsSuggestionsListResponse = ProposalProtectedCallsSuggestionsListResponses[keyof ProposalProtectedCallsSuggestionsListResponses];
 
+export type ProposalProtectedCallsUpdateApplicantAttributeConfigPartialUpdateData = {
+    body?: PatchedCallApplicantAttributeConfigRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-protected-calls/{uuid}/update_applicant_attribute_config/';
+};
+
+export type ProposalProtectedCallsUpdateApplicantAttributeConfigPartialUpdateResponses = {
+    200: CallApplicantAttributeConfig;
+};
+
+export type ProposalProtectedCallsUpdateApplicantAttributeConfigPartialUpdateResponse = ProposalProtectedCallsUpdateApplicantAttributeConfigPartialUpdateResponses[keyof ProposalProtectedCallsUpdateApplicantAttributeConfigPartialUpdateResponses];
+
+export type ProposalProtectedCallsUpdateApplicantAttributeConfigData = {
+    body?: CallApplicantAttributeConfigRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-protected-calls/{uuid}/update_applicant_attribute_config/';
+};
+
+export type ProposalProtectedCallsUpdateApplicantAttributeConfigResponses = {
+    200: CallApplicantAttributeConfig;
+};
+
+export type ProposalProtectedCallsUpdateApplicantAttributeConfigResponse = ProposalProtectedCallsUpdateApplicantAttributeConfigResponses[keyof ProposalProtectedCallsUpdateApplicantAttributeConfigResponses];
+
 export type ProposalProtectedCallsUpdateUserData = {
     body: UserRoleUpdateRequest;
     path: {
@@ -63196,7 +64049,7 @@ export type ProposalPublicCallsListData = {
         customer?: string;
         customer_keyword?: string;
         customer_uuid?: string;
-        field?: Array<'backend_id' | 'created' | 'customer_name' | 'customer_uuid' | 'description' | 'documents' | 'end_date' | 'external_url' | 'fixed_duration_in_days' | 'manager' | 'manager_uuid' | 'name' | 'offerings' | 'resource_templates' | 'reviewer_identity_visible_to_submitters' | 'reviews_visible_to_submitters' | 'rounds' | 'slug' | 'start_date' | 'state' | 'url' | 'uuid'>;
+        field?: Array<'backend_id' | 'created' | 'customer_name' | 'customer_uuid' | 'description' | 'documents' | 'end_date' | 'external_url' | 'fixed_duration_in_days' | 'has_eligibility_restrictions' | 'manager' | 'manager_uuid' | 'name' | 'offerings' | 'resource_templates' | 'reviewer_identity_visible_to_submitters' | 'reviews_visible_to_submitters' | 'rounds' | 'slug' | 'start_date' | 'state' | 'url' | 'uuid'>;
         has_active_round?: boolean;
         name?: string;
         /**
@@ -63269,7 +64122,7 @@ export type ProposalPublicCallsRetrieveData = {
         uuid: string;
     };
     query?: {
-        field?: Array<'backend_id' | 'created' | 'customer_name' | 'customer_uuid' | 'description' | 'documents' | 'end_date' | 'external_url' | 'fixed_duration_in_days' | 'manager' | 'manager_uuid' | 'name' | 'offerings' | 'resource_templates' | 'reviewer_identity_visible_to_submitters' | 'reviews_visible_to_submitters' | 'rounds' | 'slug' | 'start_date' | 'state' | 'url' | 'uuid'>;
+        field?: Array<'backend_id' | 'created' | 'customer_name' | 'customer_uuid' | 'description' | 'documents' | 'end_date' | 'external_url' | 'fixed_duration_in_days' | 'has_eligibility_restrictions' | 'manager' | 'manager_uuid' | 'name' | 'offerings' | 'resource_templates' | 'reviewer_identity_visible_to_submitters' | 'reviews_visible_to_submitters' | 'rounds' | 'slug' | 'start_date' | 'state' | 'url' | 'uuid'>;
     };
     url: '/api/proposal-public-calls/{uuid}/';
 };
@@ -63279,6 +64132,21 @@ export type ProposalPublicCallsRetrieveResponses = {
 };
 
 export type ProposalPublicCallsRetrieveResponse = ProposalPublicCallsRetrieveResponses[keyof ProposalPublicCallsRetrieveResponses];
+
+export type ProposalPublicCallsCheckEligibilityRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-public-calls/{uuid}/check_eligibility/';
+};
+
+export type ProposalPublicCallsCheckEligibilityRetrieveResponses = {
+    200: EligibilityCheck;
+};
+
+export type ProposalPublicCallsCheckEligibilityRetrieveResponse = ProposalPublicCallsCheckEligibilityRetrieveResponses[keyof ProposalPublicCallsCheckEligibilityRetrieveResponses];
 
 export type ProposalRequestedOfferingsListData = {
     body?: never;
@@ -72189,7 +73057,7 @@ export type UsersListData = {
          * Email
          */
         email?: string;
-        field?: Array<'affiliations' | 'agree_with_policy' | 'agreement_date' | 'birth_date' | 'civil_number' | 'date_joined' | 'description' | 'email' | 'first_name' | 'full_name' | 'has_active_session' | 'identity_provider_fields' | 'identity_provider_label' | 'identity_provider_management_url' | 'identity_provider_name' | 'identity_source' | 'image' | 'ip_address' | 'is_active' | 'is_staff' | 'is_support' | 'job_title' | 'last_name' | 'native_name' | 'notifications_enabled' | 'organization' | 'permissions' | 'phone_number' | 'preferred_language' | 'registration_method' | 'requested_email' | 'slug' | 'token' | 'token_expires_at' | 'token_lifetime' | 'url' | 'username' | 'uuid'>;
+        field?: Array<'affiliations' | 'agree_with_policy' | 'agreement_date' | 'birth_date' | 'civil_number' | 'country_of_residence' | 'date_joined' | 'description' | 'eduperson_assurance' | 'email' | 'first_name' | 'full_name' | 'gender' | 'has_active_session' | 'identity_provider_fields' | 'identity_provider_label' | 'identity_provider_management_url' | 'identity_provider_name' | 'identity_source' | 'image' | 'ip_address' | 'is_active' | 'is_staff' | 'is_support' | 'job_title' | 'last_name' | 'nationalities' | 'nationality' | 'native_name' | 'notifications_enabled' | 'organization' | 'organization_country' | 'organization_type' | 'permissions' | 'personal_title' | 'phone_number' | 'place_of_birth' | 'preferred_language' | 'registration_method' | 'requested_email' | 'slug' | 'token' | 'token_expires_at' | 'token_lifetime' | 'url' | 'username' | 'uuid'>;
         /**
          * Full name
          */
@@ -72422,7 +73290,7 @@ export type UsersRetrieveData = {
         uuid: string;
     };
     query?: {
-        field?: Array<'affiliations' | 'agree_with_policy' | 'agreement_date' | 'birth_date' | 'civil_number' | 'date_joined' | 'description' | 'email' | 'first_name' | 'full_name' | 'has_active_session' | 'identity_provider_fields' | 'identity_provider_label' | 'identity_provider_management_url' | 'identity_provider_name' | 'identity_source' | 'image' | 'ip_address' | 'is_active' | 'is_staff' | 'is_support' | 'job_title' | 'last_name' | 'native_name' | 'notifications_enabled' | 'organization' | 'permissions' | 'phone_number' | 'preferred_language' | 'registration_method' | 'requested_email' | 'slug' | 'token' | 'token_expires_at' | 'token_lifetime' | 'url' | 'username' | 'uuid'>;
+        field?: Array<'affiliations' | 'agree_with_policy' | 'agreement_date' | 'birth_date' | 'civil_number' | 'country_of_residence' | 'date_joined' | 'description' | 'eduperson_assurance' | 'email' | 'first_name' | 'full_name' | 'gender' | 'has_active_session' | 'identity_provider_fields' | 'identity_provider_label' | 'identity_provider_management_url' | 'identity_provider_name' | 'identity_source' | 'image' | 'ip_address' | 'is_active' | 'is_staff' | 'is_support' | 'job_title' | 'last_name' | 'nationalities' | 'nationality' | 'native_name' | 'notifications_enabled' | 'organization' | 'organization_country' | 'organization_type' | 'permissions' | 'personal_title' | 'phone_number' | 'place_of_birth' | 'preferred_language' | 'registration_method' | 'requested_email' | 'slug' | 'token' | 'token_expires_at' | 'token_lifetime' | 'url' | 'username' | 'uuid'>;
     };
     url: '/api/users/{uuid}/';
 };
@@ -72511,6 +73379,143 @@ export type UsersChangePasswordResponses = {
     200: unknown;
 };
 
+export type UsersDataAccessRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/users/{uuid}/data_access/';
+};
+
+export type UsersDataAccessRetrieveResponses = {
+    200: UserDataAccess;
+};
+
+export type UsersDataAccessRetrieveResponse = UsersDataAccessRetrieveResponses[keyof UsersDataAccessRetrieveResponses];
+
+export type UsersDataAccessHistoryListData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * Filter by accessor type (staff, support, organization_member, self)
+         */
+        accessor_type?: string;
+        /**
+         * Agreement date after
+         */
+        agreement_date?: string;
+        civil_number?: string;
+        /**
+         * Customer UUID
+         */
+        customer_uuid?: string;
+        /**
+         * Date joined after
+         */
+        date_joined?: string;
+        description?: string;
+        /**
+         * Email
+         */
+        email?: string;
+        /**
+         * Filter logs until this date (inclusive)
+         */
+        end_date?: string;
+        /**
+         * Full name
+         */
+        full_name?: string;
+        /**
+         * Is active
+         */
+        is_active?: boolean;
+        /**
+         * Is staff
+         */
+        is_staff?: boolean;
+        /**
+         * Is support
+         */
+        is_support?: boolean;
+        /**
+         * Job title
+         */
+        job_title?: string;
+        /**
+         * Date modified after
+         */
+        modified?: string;
+        /**
+         * Native name
+         */
+        native_name?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-description' | '-email' | '-full_name' | '-is_active' | '-is_staff' | '-is_support' | '-job_title' | '-native_name' | '-organization' | '-phone_number' | '-registration_method' | '-username' | 'description' | 'email' | 'full_name' | 'is_active' | 'is_staff' | 'is_support' | 'job_title' | 'native_name' | 'organization' | 'phone_number' | 'registration_method' | 'username'>;
+        /**
+         * Organization
+         */
+        organization?: string;
+        /**
+         * Organization roles
+         */
+        organization_roles?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        phone_number?: string;
+        /**
+         * Project roles
+         */
+        project_roles?: string;
+        /**
+         * Project UUID
+         */
+        project_uuid?: string;
+        /**
+         * Filter by first name, last name, civil number, username or email
+         */
+        query?: string;
+        registration_method?: string;
+        /**
+         * Filter logs from this date (inclusive)
+         */
+        start_date?: string;
+        /**
+         * User keyword
+         */
+        user_keyword?: string;
+        /**
+         * Username (exact)
+         */
+        username?: string;
+        /**
+         * Comma-separated usernames
+         */
+        username_list?: string;
+    };
+    url: '/api/users/{uuid}/data_access_history/';
+};
+
+export type UsersDataAccessHistoryListResponses = {
+    200: Array<UserDataAccessLog>;
+};
+
+export type UsersDataAccessHistoryListResponse = UsersDataAccessHistoryListResponses[keyof UsersDataAccessHistoryListResponses];
+
 export type UsersPullRemoteUserData = {
     body?: never;
     path: {
@@ -72575,7 +73580,7 @@ export type UsersMeRetrieveData = {
     body?: never;
     path?: never;
     query?: {
-        field?: Array<'affiliations' | 'agree_with_policy' | 'agreement_date' | 'birth_date' | 'civil_number' | 'date_joined' | 'description' | 'email' | 'first_name' | 'full_name' | 'has_active_session' | 'identity_provider_fields' | 'identity_provider_label' | 'identity_provider_management_url' | 'identity_provider_name' | 'identity_source' | 'image' | 'ip_address' | 'is_active' | 'is_staff' | 'is_support' | 'job_title' | 'last_name' | 'native_name' | 'notifications_enabled' | 'organization' | 'permissions' | 'phone_number' | 'preferred_language' | 'registration_method' | 'requested_email' | 'slug' | 'token' | 'token_expires_at' | 'token_lifetime' | 'url' | 'username' | 'uuid'>;
+        field?: Array<'affiliations' | 'agree_with_policy' | 'agreement_date' | 'birth_date' | 'civil_number' | 'country_of_residence' | 'date_joined' | 'description' | 'eduperson_assurance' | 'email' | 'first_name' | 'full_name' | 'gender' | 'has_active_session' | 'identity_provider_fields' | 'identity_provider_label' | 'identity_provider_management_url' | 'identity_provider_name' | 'identity_source' | 'image' | 'ip_address' | 'is_active' | 'is_staff' | 'is_support' | 'job_title' | 'last_name' | 'nationalities' | 'nationality' | 'native_name' | 'notifications_enabled' | 'organization' | 'organization_country' | 'organization_type' | 'permissions' | 'personal_title' | 'phone_number' | 'place_of_birth' | 'preferred_language' | 'registration_method' | 'requested_email' | 'slug' | 'token' | 'token_expires_at' | 'token_lifetime' | 'url' | 'username' | 'uuid'>;
     };
     url: '/api/users/me/';
 };
