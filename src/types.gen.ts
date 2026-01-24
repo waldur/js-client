@@ -20974,6 +20974,11 @@ export type UserActionSummary = {
     overdue: number;
 };
 
+export type UserActiveStatusCount = {
+    status: string;
+    count: number;
+};
+
 export type UserAffiliationCount = {
     /**
      * Affiliation name
@@ -21133,6 +21138,11 @@ export type UserInfoRequest = {
     user: string;
 };
 
+export type UserLanguageCount = {
+    language: string;
+    count: number;
+};
+
 export type UserOfferingConsent = {
     readonly uuid: string;
     readonly user_uuid: string;
@@ -21182,6 +21192,11 @@ export type UserOrganizationCount = {
     /**
      * Number of users
      */
+    count: number;
+};
+
+export type UserRegistrationTrend = {
+    month: string;
     count: number;
 };
 
@@ -73599,6 +73614,657 @@ export type UsersMeCountData = {
 };
 
 export type UsersMeCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type UsersUserActiveStatusCountListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Agreement date after
+         */
+        agreement_date?: string;
+        civil_number?: string;
+        /**
+         * Customer UUID
+         */
+        customer_uuid?: string;
+        /**
+         * Date joined after
+         */
+        date_joined?: string;
+        description?: string;
+        /**
+         * Email
+         */
+        email?: string;
+        /**
+         * Full name
+         */
+        full_name?: string;
+        /**
+         * Is active
+         */
+        is_active?: boolean;
+        /**
+         * Is staff
+         */
+        is_staff?: boolean;
+        /**
+         * Is support
+         */
+        is_support?: boolean;
+        /**
+         * Job title
+         */
+        job_title?: string;
+        /**
+         * Date modified after
+         */
+        modified?: string;
+        /**
+         * Native name
+         */
+        native_name?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-description' | '-email' | '-full_name' | '-is_active' | '-is_staff' | '-is_support' | '-job_title' | '-native_name' | '-organization' | '-phone_number' | '-registration_method' | '-username' | 'description' | 'email' | 'full_name' | 'is_active' | 'is_staff' | 'is_support' | 'job_title' | 'native_name' | 'organization' | 'phone_number' | 'registration_method' | 'username'>;
+        /**
+         * Organization
+         */
+        organization?: string;
+        /**
+         * Organization roles
+         */
+        organization_roles?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        phone_number?: string;
+        /**
+         * Project roles
+         */
+        project_roles?: string;
+        /**
+         * Project UUID
+         */
+        project_uuid?: string;
+        /**
+         * Filter by first name, last name, civil number, username or email
+         */
+        query?: string;
+        registration_method?: string;
+        /**
+         * User keyword
+         */
+        user_keyword?: string;
+        /**
+         * Username (exact)
+         */
+        username?: string;
+        /**
+         * Comma-separated usernames
+         */
+        username_list?: string;
+    };
+    url: '/api/users/user_active_status_count/';
+};
+
+export type UsersUserActiveStatusCountListResponses = {
+    200: Array<UserActiveStatusCount>;
+};
+
+export type UsersUserActiveStatusCountListResponse = UsersUserActiveStatusCountListResponses[keyof UsersUserActiveStatusCountListResponses];
+
+export type UsersUserActiveStatusCountCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Agreement date after
+         */
+        agreement_date?: string;
+        civil_number?: string;
+        /**
+         * Customer UUID
+         */
+        customer_uuid?: string;
+        /**
+         * Date joined after
+         */
+        date_joined?: string;
+        description?: string;
+        /**
+         * Email
+         */
+        email?: string;
+        /**
+         * Full name
+         */
+        full_name?: string;
+        /**
+         * Is active
+         */
+        is_active?: boolean;
+        /**
+         * Is staff
+         */
+        is_staff?: boolean;
+        /**
+         * Is support
+         */
+        is_support?: boolean;
+        /**
+         * Job title
+         */
+        job_title?: string;
+        /**
+         * Date modified after
+         */
+        modified?: string;
+        /**
+         * Native name
+         */
+        native_name?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-description' | '-email' | '-full_name' | '-is_active' | '-is_staff' | '-is_support' | '-job_title' | '-native_name' | '-organization' | '-phone_number' | '-registration_method' | '-username' | 'description' | 'email' | 'full_name' | 'is_active' | 'is_staff' | 'is_support' | 'job_title' | 'native_name' | 'organization' | 'phone_number' | 'registration_method' | 'username'>;
+        /**
+         * Organization
+         */
+        organization?: string;
+        /**
+         * Organization roles
+         */
+        organization_roles?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        phone_number?: string;
+        /**
+         * Project roles
+         */
+        project_roles?: string;
+        /**
+         * Project UUID
+         */
+        project_uuid?: string;
+        /**
+         * Filter by first name, last name, civil number, username or email
+         */
+        query?: string;
+        registration_method?: string;
+        /**
+         * User keyword
+         */
+        user_keyword?: string;
+        /**
+         * Username (exact)
+         */
+        username?: string;
+        /**
+         * Comma-separated usernames
+         */
+        username_list?: string;
+    };
+    url: '/api/users/user_active_status_count/';
+};
+
+export type UsersUserActiveStatusCountCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type UsersUserLanguageCountListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Agreement date after
+         */
+        agreement_date?: string;
+        civil_number?: string;
+        /**
+         * Customer UUID
+         */
+        customer_uuid?: string;
+        /**
+         * Date joined after
+         */
+        date_joined?: string;
+        description?: string;
+        /**
+         * Email
+         */
+        email?: string;
+        /**
+         * Full name
+         */
+        full_name?: string;
+        /**
+         * Is active
+         */
+        is_active?: boolean;
+        /**
+         * Is staff
+         */
+        is_staff?: boolean;
+        /**
+         * Is support
+         */
+        is_support?: boolean;
+        /**
+         * Job title
+         */
+        job_title?: string;
+        /**
+         * Date modified after
+         */
+        modified?: string;
+        /**
+         * Native name
+         */
+        native_name?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-description' | '-email' | '-full_name' | '-is_active' | '-is_staff' | '-is_support' | '-job_title' | '-native_name' | '-organization' | '-phone_number' | '-registration_method' | '-username' | 'description' | 'email' | 'full_name' | 'is_active' | 'is_staff' | 'is_support' | 'job_title' | 'native_name' | 'organization' | 'phone_number' | 'registration_method' | 'username'>;
+        /**
+         * Organization
+         */
+        organization?: string;
+        /**
+         * Organization roles
+         */
+        organization_roles?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        phone_number?: string;
+        /**
+         * Project roles
+         */
+        project_roles?: string;
+        /**
+         * Project UUID
+         */
+        project_uuid?: string;
+        /**
+         * Filter by first name, last name, civil number, username or email
+         */
+        query?: string;
+        registration_method?: string;
+        /**
+         * User keyword
+         */
+        user_keyword?: string;
+        /**
+         * Username (exact)
+         */
+        username?: string;
+        /**
+         * Comma-separated usernames
+         */
+        username_list?: string;
+    };
+    url: '/api/users/user_language_count/';
+};
+
+export type UsersUserLanguageCountListResponses = {
+    200: Array<UserLanguageCount>;
+};
+
+export type UsersUserLanguageCountListResponse = UsersUserLanguageCountListResponses[keyof UsersUserLanguageCountListResponses];
+
+export type UsersUserLanguageCountCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Agreement date after
+         */
+        agreement_date?: string;
+        civil_number?: string;
+        /**
+         * Customer UUID
+         */
+        customer_uuid?: string;
+        /**
+         * Date joined after
+         */
+        date_joined?: string;
+        description?: string;
+        /**
+         * Email
+         */
+        email?: string;
+        /**
+         * Full name
+         */
+        full_name?: string;
+        /**
+         * Is active
+         */
+        is_active?: boolean;
+        /**
+         * Is staff
+         */
+        is_staff?: boolean;
+        /**
+         * Is support
+         */
+        is_support?: boolean;
+        /**
+         * Job title
+         */
+        job_title?: string;
+        /**
+         * Date modified after
+         */
+        modified?: string;
+        /**
+         * Native name
+         */
+        native_name?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-description' | '-email' | '-full_name' | '-is_active' | '-is_staff' | '-is_support' | '-job_title' | '-native_name' | '-organization' | '-phone_number' | '-registration_method' | '-username' | 'description' | 'email' | 'full_name' | 'is_active' | 'is_staff' | 'is_support' | 'job_title' | 'native_name' | 'organization' | 'phone_number' | 'registration_method' | 'username'>;
+        /**
+         * Organization
+         */
+        organization?: string;
+        /**
+         * Organization roles
+         */
+        organization_roles?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        phone_number?: string;
+        /**
+         * Project roles
+         */
+        project_roles?: string;
+        /**
+         * Project UUID
+         */
+        project_uuid?: string;
+        /**
+         * Filter by first name, last name, civil number, username or email
+         */
+        query?: string;
+        registration_method?: string;
+        /**
+         * User keyword
+         */
+        user_keyword?: string;
+        /**
+         * Username (exact)
+         */
+        username?: string;
+        /**
+         * Comma-separated usernames
+         */
+        username_list?: string;
+    };
+    url: '/api/users/user_language_count/';
+};
+
+export type UsersUserLanguageCountCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type UsersUserRegistrationTrendListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Agreement date after
+         */
+        agreement_date?: string;
+        civil_number?: string;
+        /**
+         * Customer UUID
+         */
+        customer_uuid?: string;
+        /**
+         * Date joined after
+         */
+        date_joined?: string;
+        description?: string;
+        /**
+         * Email
+         */
+        email?: string;
+        /**
+         * Full name
+         */
+        full_name?: string;
+        /**
+         * Is active
+         */
+        is_active?: boolean;
+        /**
+         * Is staff
+         */
+        is_staff?: boolean;
+        /**
+         * Is support
+         */
+        is_support?: boolean;
+        /**
+         * Job title
+         */
+        job_title?: string;
+        /**
+         * Date modified after
+         */
+        modified?: string;
+        /**
+         * Native name
+         */
+        native_name?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-description' | '-email' | '-full_name' | '-is_active' | '-is_staff' | '-is_support' | '-job_title' | '-native_name' | '-organization' | '-phone_number' | '-registration_method' | '-username' | 'description' | 'email' | 'full_name' | 'is_active' | 'is_staff' | 'is_support' | 'job_title' | 'native_name' | 'organization' | 'phone_number' | 'registration_method' | 'username'>;
+        /**
+         * Organization
+         */
+        organization?: string;
+        /**
+         * Organization roles
+         */
+        organization_roles?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        phone_number?: string;
+        /**
+         * Project roles
+         */
+        project_roles?: string;
+        /**
+         * Project UUID
+         */
+        project_uuid?: string;
+        /**
+         * Filter by first name, last name, civil number, username or email
+         */
+        query?: string;
+        registration_method?: string;
+        /**
+         * User keyword
+         */
+        user_keyword?: string;
+        /**
+         * Username (exact)
+         */
+        username?: string;
+        /**
+         * Comma-separated usernames
+         */
+        username_list?: string;
+    };
+    url: '/api/users/user_registration_trend/';
+};
+
+export type UsersUserRegistrationTrendListResponses = {
+    200: Array<UserRegistrationTrend>;
+};
+
+export type UsersUserRegistrationTrendListResponse = UsersUserRegistrationTrendListResponses[keyof UsersUserRegistrationTrendListResponses];
+
+export type UsersUserRegistrationTrendCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Agreement date after
+         */
+        agreement_date?: string;
+        civil_number?: string;
+        /**
+         * Customer UUID
+         */
+        customer_uuid?: string;
+        /**
+         * Date joined after
+         */
+        date_joined?: string;
+        description?: string;
+        /**
+         * Email
+         */
+        email?: string;
+        /**
+         * Full name
+         */
+        full_name?: string;
+        /**
+         * Is active
+         */
+        is_active?: boolean;
+        /**
+         * Is staff
+         */
+        is_staff?: boolean;
+        /**
+         * Is support
+         */
+        is_support?: boolean;
+        /**
+         * Job title
+         */
+        job_title?: string;
+        /**
+         * Date modified after
+         */
+        modified?: string;
+        /**
+         * Native name
+         */
+        native_name?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-description' | '-email' | '-full_name' | '-is_active' | '-is_staff' | '-is_support' | '-job_title' | '-native_name' | '-organization' | '-phone_number' | '-registration_method' | '-username' | 'description' | 'email' | 'full_name' | 'is_active' | 'is_staff' | 'is_support' | 'job_title' | 'native_name' | 'organization' | 'phone_number' | 'registration_method' | 'username'>;
+        /**
+         * Organization
+         */
+        organization?: string;
+        /**
+         * Organization roles
+         */
+        organization_roles?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        phone_number?: string;
+        /**
+         * Project roles
+         */
+        project_roles?: string;
+        /**
+         * Project UUID
+         */
+        project_uuid?: string;
+        /**
+         * Filter by first name, last name, civil number, username or email
+         */
+        query?: string;
+        registration_method?: string;
+        /**
+         * User keyword
+         */
+        user_keyword?: string;
+        /**
+         * Username (exact)
+         */
+        username?: string;
+        /**
+         * Comma-separated usernames
+         */
+        username_list?: string;
+    };
+    url: '/api/users/user_registration_trend/';
+};
+
+export type UsersUserRegistrationTrendCountResponses = {
     /**
      * No response body
      */
