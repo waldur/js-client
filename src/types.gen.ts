@@ -4726,6 +4726,33 @@ export type DlqQueue = {
     readonly consumers: number;
 };
 
+export type DailyOrderStats = {
+    /**
+     * Date of the statistics
+     */
+    date: string;
+    /**
+     * Total number of orders
+     */
+    total: number;
+    /**
+     * Total cost of orders
+     */
+    total_cost: string | null;
+    /**
+     * Order counts grouped by state
+     */
+    by_state: {
+        [key: string]: number;
+    };
+    /**
+     * Order counts grouped by type
+     */
+    by_type: {
+        [key: string]: number;
+    };
+};
+
 export type DataAccessSummary = {
     total_administrative_access: number | null;
     total_organizational_access: number;
@@ -12639,6 +12666,64 @@ export type OrderErrorDetailsRequest = {
 
 export type OrderState = 'pending-consumer' | 'pending-provider' | 'pending-project' | 'pending-start-date' | 'executing' | 'done' | 'erred' | 'canceled' | 'rejected';
 
+export type OrderStatsResponse = {
+    /**
+     * Summary statistics
+     */
+    summary: OrderStatsSummary;
+    /**
+     * Total order counts grouped by state
+     */
+    by_state: {
+        [key: string]: number;
+    };
+    /**
+     * Total order counts grouped by type
+     */
+    by_type: {
+        [key: string]: number;
+    };
+    /**
+     * Daily breakdown
+     */
+    daily: Array<DailyOrderStats>;
+};
+
+export type OrderStatsSummary = {
+    /**
+     * Total number of orders
+     */
+    total: number;
+    /**
+     * Total cost of orders
+     */
+    total_cost: string | null;
+    /**
+     * Number of pending orders
+     */
+    pending: number;
+    /**
+     * Number of executing orders
+     */
+    executing: number;
+    /**
+     * Number of completed orders
+     */
+    done: number;
+    /**
+     * Number of erred orders
+     */
+    erred: number;
+    /**
+     * Number of canceled orders
+     */
+    canceled: number;
+    /**
+     * Number of rejected orders
+     */
+    rejected: number;
+};
+
 export type OrderUuid = {
     /**
      * UUID of the created or updated order
@@ -14769,7 +14854,9 @@ export type PersonIdentifierFieldsResponse = {
 };
 
 export type PlanComponent = {
+    readonly offering_uuid: string;
     readonly offering_name: string;
+    readonly plan_uuid: string;
     readonly plan_name: string;
     plan_unit: BillingUnit;
     /**
@@ -15784,6 +15871,35 @@ export type ProtectedRoundRequest = {
 
 export type ProtocolEnum = 'tcp' | 'udp' | 'icmp';
 
+export type ProviderCustomerStats = {
+    /**
+     * Total number of customers
+     */
+    total: number;
+    /**
+     * New customers this month
+     */
+    new_this_month: number;
+    /**
+     * Top customers by revenue
+     */
+    top_by_revenue: Array<{
+        [key: string]: unknown;
+    }>;
+    /**
+     * Top customers by resource count
+     */
+    top_by_resources: Array<{
+        [key: string]: unknown;
+    }>;
+    /**
+     * Monthly customer counts
+     */
+    monthly: Array<{
+        [key: string]: unknown;
+    }>;
+};
+
 export type ProviderOffering = {
     readonly uuid?: string;
     readonly customer_uuid?: string;
@@ -15988,6 +16104,15 @@ export type ProviderOfferingDetailsRequest = {
     compliance_checklist?: string | null;
 };
 
+export type ProviderOfferingStats = {
+    /**
+     * Offering statistics including resources, revenue, and utilization
+     */
+    offerings: Array<{
+        [key: string]: unknown;
+    }>;
+};
+
 export type ProviderPlanDetails = {
     readonly url: string;
     readonly uuid: string;
@@ -16091,6 +16216,31 @@ export type ProviderRequestedResource = {
     readonly created_by_name: string;
     readonly proposal_name: string;
     proposal: string;
+};
+
+export type ProviderResourceStats = {
+    /**
+     * Total number of resources
+     */
+    total: number;
+    /**
+     * Resource counts grouped by state
+     */
+    by_state: {
+        [key: string]: number;
+    };
+    /**
+     * Resource counts grouped by offering
+     */
+    by_offering: Array<{
+        [key: string]: unknown;
+    }>;
+    /**
+     * Monthly resource counts
+     */
+    monthly: Array<{
+        [key: string]: unknown;
+    }>;
 };
 
 export type ProviderTeamUser = {
@@ -18250,6 +18400,65 @@ export type ResourceLimitPeriod = {
      * Total amount for this period
      */
     total?: string;
+};
+
+export type ResourceMissingUsage = {
+    /**
+     * UUID of the resource
+     */
+    uuid: string;
+    /**
+     * Name of the resource
+     */
+    name: string;
+    /**
+     * Current state of the resource
+     */
+    state: string;
+    /**
+     * Creation date of the resource
+     */
+    created: string;
+    /**
+     * Name of the offering
+     */
+    offering_name: string;
+    /**
+     * UUID of the offering
+     */
+    offering_uuid: string;
+    /**
+     * Name of the service provider
+     */
+    provider_name: string;
+    /**
+     * UUID of the service provider
+     */
+    provider_uuid: string;
+    /**
+     * Name of the customer organization
+     */
+    customer_name: string;
+    /**
+     * UUID of the customer organization
+     */
+    customer_uuid: string;
+    /**
+     * Name of the project
+     */
+    project_name: string;
+    /**
+     * UUID of the project
+     */
+    project_uuid: string;
+    /**
+     * Date of the last usage report
+     */
+    last_usage_date: string | null;
+    /**
+     * Number of days since last usage report
+     */
+    days_since_last_report: number | null;
 };
 
 export type ResourceOffering = {
@@ -50296,6 +50505,67 @@ export type MarketplaceStatsOfferingsCounterStatsCountResponses = {
     200: unknown;
 };
 
+export type MarketplaceStatsOrderStatsRetrieveData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Filter by customer UUID.
+         */
+        customer_uuid?: string;
+        /**
+         * End date in YYYY-MM-DD format. Defaults to today.
+         */
+        end?: string;
+        /**
+         * Filter by service provider UUID.
+         */
+        provider_uuid?: string;
+        /**
+         * Start date in YYYY-MM-DD format. Defaults to 30 days ago.
+         */
+        start?: string;
+    };
+    url: '/api/marketplace-stats/order_stats/';
+};
+
+export type MarketplaceStatsOrderStatsRetrieveResponses = {
+    200: OrderStatsResponse;
+};
+
+export type MarketplaceStatsOrderStatsRetrieveResponse = MarketplaceStatsOrderStatsRetrieveResponses[keyof MarketplaceStatsOrderStatsRetrieveResponses];
+
+export type MarketplaceStatsOrderStatsCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Filter by customer UUID.
+         */
+        customer_uuid?: string;
+        /**
+         * End date in YYYY-MM-DD format. Defaults to today.
+         */
+        end?: string;
+        /**
+         * Filter by service provider UUID.
+         */
+        provider_uuid?: string;
+        /**
+         * Start date in YYYY-MM-DD format. Defaults to 30 days ago.
+         */
+        start?: string;
+    };
+    url: '/api/marketplace-stats/order_stats/';
+};
+
+export type MarketplaceStatsOrderStatsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type MarketplaceStatsOrganizationProjectCountListData = {
     body?: never;
     path?: never;
@@ -50494,6 +50764,117 @@ export type MarketplaceStatsProjectsUsagesGroupedByOecdCountResponses = {
     200: unknown;
 };
 
+export type MarketplaceStatsProviderCustomersRetrieveData = {
+    body?: never;
+    path?: never;
+    query: {
+        /**
+         * Service provider UUID.
+         */
+        provider_uuid: string;
+    };
+    url: '/api/marketplace-stats/provider_customers/';
+};
+
+export type MarketplaceStatsProviderCustomersRetrieveResponses = {
+    200: ProviderCustomerStats;
+};
+
+export type MarketplaceStatsProviderCustomersRetrieveResponse = MarketplaceStatsProviderCustomersRetrieveResponses[keyof MarketplaceStatsProviderCustomersRetrieveResponses];
+
+export type MarketplaceStatsProviderCustomersCountData = {
+    body?: never;
+    path?: never;
+    query: {
+        /**
+         * Service provider UUID.
+         */
+        provider_uuid: string;
+    };
+    url: '/api/marketplace-stats/provider_customers/';
+};
+
+export type MarketplaceStatsProviderCustomersCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type MarketplaceStatsProviderOfferingsRetrieveData = {
+    body?: never;
+    path?: never;
+    query: {
+        /**
+         * Service provider UUID.
+         */
+        provider_uuid: string;
+    };
+    url: '/api/marketplace-stats/provider_offerings/';
+};
+
+export type MarketplaceStatsProviderOfferingsRetrieveResponses = {
+    200: ProviderOfferingStats;
+};
+
+export type MarketplaceStatsProviderOfferingsRetrieveResponse = MarketplaceStatsProviderOfferingsRetrieveResponses[keyof MarketplaceStatsProviderOfferingsRetrieveResponses];
+
+export type MarketplaceStatsProviderOfferingsCountData = {
+    body?: never;
+    path?: never;
+    query: {
+        /**
+         * Service provider UUID.
+         */
+        provider_uuid: string;
+    };
+    url: '/api/marketplace-stats/provider_offerings/';
+};
+
+export type MarketplaceStatsProviderOfferingsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type MarketplaceStatsProviderResourcesRetrieveData = {
+    body?: never;
+    path?: never;
+    query: {
+        /**
+         * Service provider UUID.
+         */
+        provider_uuid: string;
+    };
+    url: '/api/marketplace-stats/provider_resources/';
+};
+
+export type MarketplaceStatsProviderResourcesRetrieveResponses = {
+    200: ProviderResourceStats;
+};
+
+export type MarketplaceStatsProviderResourcesRetrieveResponse = MarketplaceStatsProviderResourcesRetrieveResponses[keyof MarketplaceStatsProviderResourcesRetrieveResponses];
+
+export type MarketplaceStatsProviderResourcesCountData = {
+    body?: never;
+    path?: never;
+    query: {
+        /**
+         * Service provider UUID.
+         */
+        provider_uuid: string;
+    };
+    url: '/api/marketplace-stats/provider_resources/';
+};
+
+export type MarketplaceStatsProviderResourcesCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type MarketplaceStatsResourceProvisioningStatsListData = {
     body?: never;
     path?: never;
@@ -50586,6 +50967,67 @@ export type MarketplaceStatsResourcesLimitsCountData = {
 };
 
 export type MarketplaceStatsResourcesLimitsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type MarketplaceStatsResourcesMissingUsageListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Billing period in YYYY-MM format. Defaults to current month.
+         */
+        billing_period?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Filter by service provider UUID.
+         */
+        provider_uuid?: string;
+    };
+    url: '/api/marketplace-stats/resources_missing_usage/';
+};
+
+export type MarketplaceStatsResourcesMissingUsageListResponses = {
+    200: Array<ResourceMissingUsage>;
+};
+
+export type MarketplaceStatsResourcesMissingUsageListResponse = MarketplaceStatsResourcesMissingUsageListResponses[keyof MarketplaceStatsResourcesMissingUsageListResponses];
+
+export type MarketplaceStatsResourcesMissingUsageCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Billing period in YYYY-MM format. Defaults to current month.
+         */
+        billing_period?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Filter by service provider UUID.
+         */
+        provider_uuid?: string;
+    };
+    url: '/api/marketplace-stats/resources_missing_usage/';
+};
+
+export type MarketplaceStatsResourcesMissingUsageCountResponses = {
     /**
      * No response body
      */
