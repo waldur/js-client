@@ -4274,6 +4274,8 @@ export type CreateRouterRequest = {
     name: string;
 };
 
+export type CurrentQosStatusEnum = 'normal' | 'notification' | 'slowdown' | 'blocked';
+
 export type Customer = {
     readonly url?: string;
     readonly uuid?: string;
@@ -5441,6 +5443,8 @@ export type ExecuteActionResponse = {
         [key: string]: unknown;
     };
 };
+
+export type ExecutionModeEnum = 'production' | 'emulator';
 
 export type ExecutionStateEnum = 'Scheduled' | 'Processing' | 'OK' | 'Erred';
 
@@ -7801,6 +7805,10 @@ export type MergedPluginOptions = {
      */
     enable_display_of_order_actions_for_service_provider?: boolean;
     /**
+     * Enable SLURM periodic usage policy configuration. When enabled, allows configuring QoS-based threshold enforcement, carryover logic, and fairshare decay for site-agent managed SLURM offerings.
+     */
+    slurm_periodic_policy_enabled?: boolean;
+    /**
      * If set to False, all orders require manual provider approval, including for service provider owners and staff
      */
     auto_approve_marketplace_script?: boolean;
@@ -8051,6 +8059,10 @@ export type MergedPluginOptionsRequest = {
      * Enable display of order actions for service provider
      */
     enable_display_of_order_actions_for_service_provider?: boolean;
+    /**
+     * Enable SLURM periodic usage policy configuration. When enabled, allows configuring QoS-based threshold enforcement, carryover logic, and fairshare decay for site-agent managed SLURM offerings.
+     */
+    slurm_periodic_policy_enabled?: boolean;
     /**
      * If set to False, all orders require manual provider approval, including for service provider owners and staff
      */
@@ -20306,6 +20318,25 @@ export type SilenceActionResponse = {
     duration_days?: number | null;
 };
 
+export type SiteAgentConfigGenerationRequest = {
+    /**
+     * List of SLURM offering UUIDs to include in configuration
+     */
+    offering_uuids: Array<string>;
+    /**
+     * Include SLURM periodic usage policy settings in configuration
+     */
+    include_policy_settings?: boolean;
+    /**
+     * Waldur API URL (defaults to current server URL)
+     */
+    waldur_api_url?: string;
+    /**
+     * Timezone for the site agent
+     */
+    timezone?: string;
+};
+
 export type SlurmAllocation = {
     readonly url?: string;
     readonly uuid?: string;
@@ -20390,6 +20421,60 @@ export type SlurmAssociation = {
     readonly uuid: string;
     username: string;
     allocation: string;
+};
+
+export type SlurmCommand = {
+    /**
+     * Command type: fairshare, limits, qos, reset_usage
+     */
+    type: string;
+    /**
+     * Human-readable description
+     */
+    description: string;
+    /**
+     * Actual shell command
+     */
+    command: string;
+    /**
+     * Command parameters
+     */
+    parameters: {
+        [key: string]: unknown;
+    };
+};
+
+export type SlurmCommandHistory = {
+    readonly uuid: string;
+    /**
+     * Type of command: fairshare, limits, qos, reset_usage
+     */
+    command_type: string;
+    /**
+     * Human-readable description of what the command does
+     */
+    description: string;
+    /**
+     * Actual shell command that was/would be executed
+     */
+    shell_command: string;
+    /**
+     * Command parameters as key-value pairs
+     */
+    parameters?: unknown;
+    readonly executed_at: string;
+    /**
+     * Whether command was executed in production or emulator mode
+     */
+    execution_mode?: ExecutionModeEnum;
+    /**
+     * Whether the command execution was successful
+     */
+    success?: boolean;
+    /**
+     * Error message if command execution failed
+     */
+    error_message?: string;
 };
 
 export type SlurmPeriodicUsagePolicy = {
@@ -20496,6 +20581,98 @@ export type SlurmPeriodicUsagePolicyRequest = {
      * QoS management strategy
      */
     qos_strategy?: QosStrategyEnum;
+};
+
+export type SlurmPolicyCarryover = {
+    previous_usage: number;
+    days_elapsed: number;
+    half_life: number;
+    decay_factor: number;
+    effective_usage: number;
+    base_allocation: number;
+    unused_carryover: number;
+    total_allocation: number;
+};
+
+export type SlurmPolicyDateProjection = {
+    days: number | null;
+    date: string | null;
+    status: SlurmPolicyDateProjectionStatusEnum;
+};
+
+export type SlurmPolicyDateProjectionStatusEnum = 'never' | 'exceeded' | 'projected';
+
+export type SlurmPolicyDateProjections = {
+    notification: SlurmPolicyDateProjection;
+    slowdown: SlurmPolicyDateProjection;
+    blocked: SlurmPolicyDateProjection;
+};
+
+export type SlurmPolicyPreviewRequestRequest = {
+    /**
+     * Base allocation for the period (in node-hours or billing units)
+     */
+    allocation?: number;
+    /**
+     * Grace ratio for overconsumption allowance (0.2 = 20%)
+     */
+    grace_ratio?: number;
+    /**
+     * Usage from the previous period
+     */
+    previous_usage?: number;
+    /**
+     * Decay half-life in days for fairshare calculations
+     */
+    fairshare_decay_half_life?: number;
+    /**
+     * Whether unused allocation carries over to next period
+     */
+    carryover_enabled?: boolean;
+    /**
+     * Days elapsed since previous period (90 for quarterly)
+     */
+    days_elapsed?: number;
+    /**
+     * Optional resource UUID to use for current usage data
+     */
+    resource_uuid?: string | null;
+    /**
+     * Current usage in this period (manual input or from resource)
+     */
+    current_usage?: number;
+    /**
+     * Average daily usage rate for projections
+     */
+    daily_usage_rate?: number;
+};
+
+export type SlurmPolicyPreviewResponse = {
+    base_allocation: number;
+    effective_allocation: number;
+    carryover_enabled: boolean;
+    carryover: SlurmPolicyCarryover | null;
+    thresholds: SlurmPolicyThresholds;
+    grace_ratio: number;
+    half_life: number;
+    current_usage?: number;
+    daily_usage_rate?: number;
+    usage_percentage?: number;
+    current_qos_status?: CurrentQosStatusEnum;
+    date_projections?: SlurmPolicyDateProjections;
+    preview_commands?: Array<SlurmCommand>;
+    command_history?: Array<SlurmCommandHistory>;
+    billing_period_start?: string;
+    billing_period_end?: string;
+};
+
+export type SlurmPolicyThresholds = {
+    allocation: number;
+    grace_ratio: number;
+    notification_ratio: number;
+    notification_threshold: number;
+    slowdown_threshold: number;
+    blocked_threshold: number;
 };
 
 export type SmaxWebHookReceiver = {
@@ -48667,6 +48844,21 @@ export type MarketplaceServiceProvidersDeleteUserResponses = {
     200: unknown;
 };
 
+export type MarketplaceServiceProvidersGenerateSiteAgentConfigData = {
+    body: SiteAgentConfigGenerationRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-service-providers/{uuid}/generate_site_agent_config/';
+};
+
+export type MarketplaceServiceProvidersGenerateSiteAgentConfigResponses = {
+    200: Blob | File;
+};
+
+export type MarketplaceServiceProvidersGenerateSiteAgentConfigResponse = MarketplaceServiceProvidersGenerateSiteAgentConfigResponses[keyof MarketplaceServiceProvidersGenerateSiteAgentConfigResponses];
+
 export type MarketplaceServiceProvidersListUsersListData = {
     body?: never;
     path: {
@@ -49487,6 +49679,19 @@ export type MarketplaceSlurmPeriodicUsagePoliciesActionsCountResponses = {
      */
     200: unknown;
 };
+
+export type MarketplaceSlurmPeriodicUsagePoliciesPreviewImpactData = {
+    body?: SlurmPolicyPreviewRequestRequest;
+    path?: never;
+    query?: never;
+    url: '/api/marketplace-slurm-periodic-usage-policies/preview_impact/';
+};
+
+export type MarketplaceSlurmPeriodicUsagePoliciesPreviewImpactResponses = {
+    200: SlurmPolicyPreviewResponse;
+};
+
+export type MarketplaceSlurmPeriodicUsagePoliciesPreviewImpactResponse = MarketplaceSlurmPeriodicUsagePoliciesPreviewImpactResponses[keyof MarketplaceSlurmPeriodicUsagePoliciesPreviewImpactResponses];
 
 export type MarketplaceSoftwareCatalogsListData = {
     body?: never;
