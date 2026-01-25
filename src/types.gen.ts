@@ -5132,6 +5132,42 @@ export type DiscoverCustomFieldsRequestRequest = {
     request_type_id?: string;
 };
 
+export type DiscoverMetadataRequestRequest = {
+    /**
+     * OIDC discovery URL (e.g., https://idp.example.com/.well-known/openid-configuration)
+     */
+    discovery_url: string;
+    /**
+     * Whether to verify SSL certificate
+     */
+    verify_ssl?: boolean;
+};
+
+export type DiscoverMetadataResponse = {
+    /**
+     * List of claims supported by the OIDC provider
+     */
+    claims_supported: Array<string>;
+    /**
+     * List of scopes supported by the OIDC provider
+     */
+    scopes_supported: Array<string>;
+    /**
+     * OIDC endpoints (authorization, token, userinfo, logout)
+     */
+    endpoints: {
+        [key: string]: string;
+    };
+    /**
+     * Waldur User fields with suggested OIDC claim mappings
+     */
+    waldur_fields: Array<WaldurFieldSuggestion>;
+    /**
+     * Recommended scopes to request based on claim mappings
+     */
+    suggested_scopes: Array<string>;
+};
+
 export type DiscoverPrioritiesRequestRequest = {
     /**
      * Atlassian API URL (e.g., https://your-domain.atlassian.net)
@@ -5325,6 +5361,54 @@ export type EventSubscription = {
      * An IPv4 or IPv6 address.
      */
     source_ip: string | null;
+};
+
+export type EventSubscriptionQueue = {
+    readonly uuid: string;
+    readonly url: string;
+    readonly event_subscription: string;
+    readonly event_subscription_uuid: string;
+    /**
+     * UUID of the offering this queue receives events for
+     */
+    offering_uuid: string;
+    /**
+     * Observable object type (e.g., 'resource', 'order')
+     */
+    object_type: string;
+    readonly queue_name: string;
+    readonly vhost: string;
+    readonly created: string;
+};
+
+export type EventSubscriptionQueueCreateRequest = {
+    /**
+     * UUID of the offering to receive events for
+     */
+    offering_uuid: string;
+    /**
+     * Type of observable object (e.g., 'resource', 'order')
+     */
+    object_type: ObservableObjectTypeEnum;
+};
+
+export type EventSubscriptionQueuesOverview = {
+    /**
+     * Total number of vhosts with subscription queues
+     */
+    readonly total_vhosts: number;
+    /**
+     * Total number of subscription queues
+     */
+    readonly total_queues: number;
+    /**
+     * Total messages across all subscription queues
+     */
+    readonly total_messages: number;
+    /**
+     * Top 10 queues by message count
+     */
+    readonly top_queues_by_messages: Array<TopQueue>;
 };
 
 export type EventSubscriptionRequest = {
@@ -20690,25 +20774,6 @@ export type SubresourceOffering = {
     readonly type: string;
 };
 
-export type SubscriptionQueuesOverview = {
-    /**
-     * Total number of vhosts with subscription queues
-     */
-    readonly total_vhosts: number;
-    /**
-     * Total number of subscription queues
-     */
-    readonly total_queues: number;
-    /**
-     * Total messages across all subscription queues
-     */
-    readonly total_messages: number;
-    /**
-     * Top 10 queues by message count
-     */
-    readonly top_queues_by_messages: Array<TopQueue>;
-};
-
 export type SuggestAlternativeReviewers = {
     /**
      * List of alternative reviewers with affinity scores
@@ -21962,6 +22027,25 @@ export type VolumeTypeMapping = {
 export type VolumeTypeMappingRequest = {
     src_type_uuid: string;
     dst_type_uuid: string;
+};
+
+export type WaldurFieldSuggestion = {
+    /**
+     * Waldur User model field name
+     */
+    field: string;
+    /**
+     * Human-readable field description
+     */
+    description: string;
+    /**
+     * OIDC claims that could map to this field, ordered by likelihood
+     */
+    suggested_claims: Array<string>;
+    /**
+     * Claims from this IdP that match the suggestions
+     */
+    available_claims: Array<string>;
 };
 
 export type WebHook = {
@@ -31921,7 +32005,7 @@ export type DebugPubsubQueuesRetrieveErrors = {
 export type DebugPubsubQueuesRetrieveError = DebugPubsubQueuesRetrieveErrors[keyof DebugPubsubQueuesRetrieveErrors];
 
 export type DebugPubsubQueuesRetrieveResponses = {
-    200: SubscriptionQueuesOverview;
+    200: EventSubscriptionQueuesOverview;
 };
 
 export type DebugPubsubQueuesRetrieveResponse = DebugPubsubQueuesRetrieveResponses[keyof DebugPubsubQueuesRetrieveResponses];
@@ -34082,6 +34166,43 @@ export type IdentityProvidersUpdateResponses = {
 };
 
 export type IdentityProvidersUpdateResponse = IdentityProvidersUpdateResponses[keyof IdentityProvidersUpdateResponses];
+
+export type IdentityProvidersDiscoverMetadataData = {
+    body: DiscoverMetadataRequestRequest;
+    path?: never;
+    query?: never;
+    url: '/api/identity-providers/discover_metadata/';
+};
+
+export type IdentityProvidersDiscoverMetadataResponses = {
+    200: DiscoverMetadataResponse;
+};
+
+export type IdentityProvidersDiscoverMetadataResponse = IdentityProvidersDiscoverMetadataResponses[keyof IdentityProvidersDiscoverMetadataResponses];
+
+export type IdentityProvidersGenerateMappingData = {
+    body: DiscoverMetadataRequestRequest;
+    path?: never;
+    query?: never;
+    url: '/api/identity-providers/generate-mapping/';
+};
+
+export type IdentityProvidersGenerateMappingResponses = {
+    200: {
+        /**
+         * Suggested mapping of Waldur fields to OIDC claims
+         */
+        attribute_mapping?: {
+            [key: string]: string;
+        };
+        /**
+         * Suggested scopes to request (space-separated)
+         */
+        extra_scope?: string;
+    };
+};
+
+export type IdentityProvidersGenerateMappingResponse = IdentityProvidersGenerateMappingResponses[keyof IdentityProvidersGenerateMappingResponses];
 
 export type InvoiceItemsListData = {
     body?: never;
@@ -48747,6 +48868,22 @@ export type MarketplaceSiteAgentIdentitiesUpdateResponses = {
 };
 
 export type MarketplaceSiteAgentIdentitiesUpdateResponse = MarketplaceSiteAgentIdentitiesUpdateResponses[keyof MarketplaceSiteAgentIdentitiesUpdateResponses];
+
+export type MarketplaceSiteAgentIdentitiesCreateQueueData = {
+    body: EventSubscriptionQueueCreateRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-site-agent-identities/{uuid}/create_queue/';
+};
+
+export type MarketplaceSiteAgentIdentitiesCreateQueueResponses = {
+    200: EventSubscriptionQueue;
+    201: EventSubscriptionQueue;
+};
+
+export type MarketplaceSiteAgentIdentitiesCreateQueueResponse = MarketplaceSiteAgentIdentitiesCreateQueueResponses[keyof MarketplaceSiteAgentIdentitiesCreateQueueResponses];
 
 export type MarketplaceSiteAgentIdentitiesRegisterEventSubscriptionData = {
     body: AgentEventSubscriptionCreateRequest;
