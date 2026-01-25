@@ -3732,6 +3732,8 @@ export type ConstanceSettings = {
     DEFAULT_OFFERING_USER_ATTRIBUTES?: Array<string>;
     INVITATION_ALLOWED_FIELDS?: Array<string>;
     ENABLED_USER_PROFILE_ATTRIBUTES?: Array<string>;
+    MANDATORY_USER_ATTRIBUTES?: Array<string>;
+    ENFORCE_MANDATORY_USER_ATTRIBUTES?: boolean;
     MAINTENANCE_ANNOUNCEMENT_NOTIFY_BEFORE_MINUTES?: number;
     MAINTENANCE_ANNOUNCEMENT_NOTIFY_SYSTEM?: Array<string>;
     ENFORCE_USER_CONSENT_FOR_OFFERINGS?: boolean;
@@ -3938,6 +3940,8 @@ export type ConstanceSettingsRequest = {
     DEFAULT_OFFERING_USER_ATTRIBUTES?: Array<string>;
     INVITATION_ALLOWED_FIELDS?: Array<string>;
     ENABLED_USER_PROFILE_ATTRIBUTES?: Array<string>;
+    MANDATORY_USER_ATTRIBUTES?: Array<string>;
+    ENFORCE_MANDATORY_USER_ATTRIBUTES?: boolean;
     MAINTENANCE_ANNOUNCEMENT_NOTIFY_BEFORE_MINUTES?: number;
     MAINTENANCE_ANNOUNCEMENT_NOTIFY_SYSTEM?: Array<string>;
     ENFORCE_USER_CONSENT_FOR_OFFERINGS?: boolean;
@@ -15043,6 +15047,25 @@ export type Priority = {
 
 export type ProficiencyLevelEnum = 'expert' | 'familiar' | 'basic';
 
+export type ProfileCompleteness = {
+    /**
+     * Whether all mandatory profile fields are filled.
+     */
+    is_complete: boolean;
+    /**
+     * List of mandatory fields that are missing.
+     */
+    missing_fields: Array<string>;
+    /**
+     * List of all mandatory fields.
+     */
+    mandatory_fields: Array<string>;
+    /**
+     * Whether enforcement of mandatory attributes is enabled.
+     */
+    enforcement_enabled: boolean;
+};
+
 export type Project = {
     readonly url?: string;
     readonly uuid?: string;
@@ -23327,6 +23350,8 @@ export type ConstanceSettingsRequestForm = {
     DEFAULT_OFFERING_USER_ATTRIBUTES?: Array<string>;
     INVITATION_ALLOWED_FIELDS?: Array<string>;
     ENABLED_USER_PROFILE_ATTRIBUTES?: Array<string>;
+    MANDATORY_USER_ATTRIBUTES?: Array<string>;
+    ENFORCE_MANDATORY_USER_ATTRIBUTES?: boolean;
     MAINTENANCE_ANNOUNCEMENT_NOTIFY_BEFORE_MINUTES?: number;
     MAINTENANCE_ANNOUNCEMENT_NOTIFY_SYSTEM?: Array<string>;
     ENFORCE_USER_CONSENT_FOR_OFFERINGS?: boolean;
@@ -23533,6 +23558,8 @@ export type ConstanceSettingsRequestMultipart = {
     DEFAULT_OFFERING_USER_ATTRIBUTES?: Array<string>;
     INVITATION_ALLOWED_FIELDS?: Array<string>;
     ENABLED_USER_PROFILE_ATTRIBUTES?: Array<string>;
+    MANDATORY_USER_ATTRIBUTES?: Array<string>;
+    ENFORCE_MANDATORY_USER_ATTRIBUTES?: boolean;
     MAINTENANCE_ANNOUNCEMENT_NOTIFY_BEFORE_MINUTES?: number;
     MAINTENANCE_ANNOUNCEMENT_NOTIFY_SYSTEM?: Array<string>;
     ENFORCE_USER_CONSENT_FOR_OFFERINGS?: boolean;
@@ -74193,6 +74220,33 @@ export type UsersMeCountData = {
 };
 
 export type UsersMeCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type UsersProfileCompletenessRetrieveData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/users/profile_completeness/';
+};
+
+export type UsersProfileCompletenessRetrieveResponses = {
+    200: ProfileCompleteness;
+};
+
+export type UsersProfileCompletenessRetrieveResponse = UsersProfileCompletenessRetrieveResponses[keyof UsersProfileCompletenessRetrieveResponses];
+
+export type UsersProfileCompletenessCountData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/users/profile_completeness/';
+};
+
+export type UsersProfileCompletenessCountResponses = {
     /**
      * No response body
      */
