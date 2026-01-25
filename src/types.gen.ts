@@ -5372,10 +5372,7 @@ export type EventSubscriptionQueue = {
     readonly url: string;
     readonly event_subscription: string;
     readonly event_subscription_uuid: string;
-    /**
-     * UUID of the offering this queue receives events for
-     */
-    offering_uuid: string;
+    readonly offering_uuid: string;
     /**
      * Observable object type (e.g., 'resource', 'order')
      */
@@ -32737,6 +32734,102 @@ export type EmailLogsRetrieveResponses = {
 
 export type EmailLogsRetrieveResponse = EmailLogsRetrieveResponses[keyof EmailLogsRetrieveResponses];
 
+export type EventSubscriptionQueuesListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        event_subscription_uuid?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | 'created'>;
+        object_type?: string;
+        offering_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/event-subscription-queues/';
+};
+
+export type EventSubscriptionQueuesListResponses = {
+    200: Array<EventSubscriptionQueue>;
+};
+
+export type EventSubscriptionQueuesListResponse = EventSubscriptionQueuesListResponses[keyof EventSubscriptionQueuesListResponses];
+
+export type EventSubscriptionQueuesCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        event_subscription_uuid?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | 'created'>;
+        object_type?: string;
+        offering_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/event-subscription-queues/';
+};
+
+export type EventSubscriptionQueuesCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type EventSubscriptionQueuesDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/event-subscription-queues/{uuid}/';
+};
+
+export type EventSubscriptionQueuesDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type EventSubscriptionQueuesDestroyResponse = EventSubscriptionQueuesDestroyResponses[keyof EventSubscriptionQueuesDestroyResponses];
+
+export type EventSubscriptionQueuesRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/event-subscription-queues/{uuid}/';
+};
+
+export type EventSubscriptionQueuesRetrieveResponses = {
+    200: EventSubscriptionQueue;
+};
+
+export type EventSubscriptionQueuesRetrieveResponse = EventSubscriptionQueuesRetrieveResponses[keyof EventSubscriptionQueuesRetrieveResponses];
+
 export type EventSubscriptionsListData = {
     body?: never;
     path?: never;
@@ -32843,6 +32936,22 @@ export type EventSubscriptionsRetrieveResponses = {
 };
 
 export type EventSubscriptionsRetrieveResponse = EventSubscriptionsRetrieveResponses[keyof EventSubscriptionsRetrieveResponses];
+
+export type EventSubscriptionsCreateQueueData = {
+    body: EventSubscriptionQueueCreateRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/event-subscriptions/{uuid}/create_queue/';
+};
+
+export type EventSubscriptionsCreateQueueResponses = {
+    200: EventSubscriptionQueue;
+    201: EventSubscriptionQueue;
+};
+
+export type EventSubscriptionsCreateQueueResponse = EventSubscriptionsCreateQueueResponses[keyof EventSubscriptionsCreateQueueResponses];
 
 export type EventsListData = {
     body?: never;
@@ -48895,22 +49004,6 @@ export type MarketplaceSiteAgentIdentitiesUpdateResponses = {
 };
 
 export type MarketplaceSiteAgentIdentitiesUpdateResponse = MarketplaceSiteAgentIdentitiesUpdateResponses[keyof MarketplaceSiteAgentIdentitiesUpdateResponses];
-
-export type MarketplaceSiteAgentIdentitiesCreateQueueData = {
-    body: EventSubscriptionQueueCreateRequest;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/marketplace-site-agent-identities/{uuid}/create_queue/';
-};
-
-export type MarketplaceSiteAgentIdentitiesCreateQueueResponses = {
-    200: EventSubscriptionQueue;
-    201: EventSubscriptionQueue;
-};
-
-export type MarketplaceSiteAgentIdentitiesCreateQueueResponse = MarketplaceSiteAgentIdentitiesCreateQueueResponses[keyof MarketplaceSiteAgentIdentitiesCreateQueueResponses];
 
 export type MarketplaceSiteAgentIdentitiesRegisterEventSubscriptionData = {
     body: AgentEventSubscriptionCreateRequest;
