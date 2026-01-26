@@ -4746,6 +4746,10 @@ export type DailyOrderStats = {
      */
     total_cost: string | null;
     /**
+     * Revenue from create/update orders
+     */
+    revenue: string | null;
+    /**
      * Order counts grouped by state
      */
     by_state: {
@@ -12795,6 +12799,10 @@ export type OrderStatsSummary = {
      * Total cost of orders
      */
     total_cost: string | null;
+    /**
+     * Total revenue from create/update orders
+     */
+    total_revenue: string | null;
     /**
      * Number of pending orders
      */
