@@ -9297,6 +9297,16 @@ export type NestedSoftwareVersion = {
     version: string;
     release_date?: string | null;
     readonly targets: Array<NestedSoftwareTarget>;
+    readonly module: {
+        [key: string]: unknown;
+    };
+    readonly modulename: string;
+    readonly required_modules: Array<unknown>;
+    readonly extensions: Array<unknown>;
+    readonly toolchain: {
+        [key: string]: unknown;
+    };
+    readonly toolchain_families_compatibility: Array<unknown>;
 };
 
 export type NestedSoftwareVersionRequest = {
@@ -18814,6 +18824,18 @@ export type ResourceUserRequest = {
     user: string;
 };
 
+export type ResourceVersion = {
+    id: number;
+    revision_date: string;
+    readonly revision_user: {
+        [key: string]: unknown;
+    } | null;
+    revision_comment: string;
+    readonly serialized_data: {
+        [key: string]: unknown;
+    };
+};
+
 export type ResourcesLimits = {
     /**
      * UUID of the offering
@@ -20874,6 +20896,16 @@ export type SoftwareVersion = {
     readonly package_name: string;
     readonly catalog_type: string;
     readonly target_count: number;
+    readonly module: {
+        [key: string]: unknown;
+    };
+    readonly modulename: string;
+    readonly required_modules: Array<unknown>;
+    readonly extensions: Array<unknown>;
+    readonly toolchain: {
+        [key: string]: unknown;
+    };
+    readonly toolchain_families_compatibility: Array<unknown>;
 };
 
 export type SourceTypeEnum = 'call_description' | 'all_proposals' | 'selected_proposals' | 'custom_keywords';
@@ -45089,6 +45121,225 @@ export type MarketplaceProviderResourcesGlauthUsersConfigRetrieveResponses = {
 
 export type MarketplaceProviderResourcesGlauthUsersConfigRetrieveResponse = MarketplaceProviderResourcesGlauthUsersConfigRetrieveResponses[keyof MarketplaceProviderResourcesGlauthUsersConfigRetrieveResponses];
 
+export type MarketplaceProviderResourcesHistoryListData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * Backend ID
+         */
+        backend_id?: string;
+        /**
+         * Category UUID
+         */
+        category_uuid?: string;
+        /**
+         * Filter by exact number of components
+         */
+        component_count?: number;
+        /**
+         * Created after
+         */
+        created?: string;
+        /**
+         * Filter versions created after this timestamp (ISO 8601)
+         */
+        created_after?: string;
+        /**
+         * Filter versions created before this timestamp (ISO 8601)
+         */
+        created_before?: string;
+        /**
+         * Customer URL
+         */
+        customer?: string;
+        /**
+         * Customer UUID
+         */
+        customer_uuid?: string;
+        /**
+         * Downscaled
+         */
+        downscaled?: boolean;
+        /**
+         * Has termination date
+         */
+        has_terminate_date?: boolean;
+        /**
+         * Filter by attached state
+         */
+        is_attached?: boolean;
+        /**
+         * LEXIS links supported
+         */
+        lexis_links_supported?: boolean;
+        /**
+         * Filter by limit-based offerings
+         */
+        limit_based?: boolean;
+        /**
+         * Filter by exact number of limit-based components
+         */
+        limit_component_count?: number;
+        /**
+         * Modified after
+         */
+        modified?: string;
+        /**
+         * Name
+         */
+        name?: string;
+        /**
+         * Name (exact)
+         */
+        name_exact?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-end_date' | '-name' | '-project_name' | '-state' | 'created' | 'end_date' | 'name' | 'project_name' | 'state'>;
+        offering?: string;
+        /**
+         * Offering billable
+         */
+        offering_billable?: boolean;
+        /**
+         * Offering shared
+         */
+        offering_shared?: boolean;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        offering_slug?: Array<string>;
+        /**
+         * Offering type
+         */
+        offering_type?: string;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        offering_uuid?: Array<string>;
+        /**
+         * Filter resources with only limit-based components
+         */
+        only_limit_based?: boolean;
+        /**
+         * Filter resources with only usage-based components
+         */
+        only_usage_based?: boolean;
+        /**
+         * Order state
+         *
+         *
+         */
+        order_state?: Array<'canceled' | 'done' | 'erred' | 'executing' | 'pending-consumer' | 'pending-project' | 'pending-provider' | 'pending-start-date' | 'rejected'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        parent_offering_uuid?: string;
+        /**
+         * Paused
+         */
+        paused?: boolean;
+        /**
+         * Plan UUID
+         */
+        plan_uuid?: string;
+        /**
+         * Project name
+         */
+        project_name?: string;
+        /**
+         * Project UUID
+         */
+        project_uuid?: string;
+        /**
+         * Provider UUID
+         */
+        provider_uuid?: string;
+        /**
+         * Search by resource UUID, name, slug, backend ID, effective ID, IPs or hypervisor
+         */
+        query?: string;
+        /**
+         * Restrict member access
+         */
+        restrict_member_access?: boolean;
+        /**
+         * Runtime state
+         */
+        runtime_state?: string;
+        /**
+         * Service manager UUID
+         */
+        service_manager_uuid?: string;
+        /**
+         * Resource state
+         *
+         *
+         */
+        state?: Array<'Creating' | 'Erred' | 'OK' | 'Terminated' | 'Terminating' | 'Updating'>;
+        /**
+         * Filter by usage-based offerings
+         */
+        usage_based?: boolean;
+        /**
+         * Include only resources visible to service providers
+         */
+        visible_to_providers?: boolean;
+        /**
+         * Visible to username
+         */
+        visible_to_username?: string;
+    };
+    url: '/api/marketplace-provider-resources/{uuid}/history/';
+};
+
+export type MarketplaceProviderResourcesHistoryListResponses = {
+    200: Array<ResourceVersion>;
+};
+
+export type MarketplaceProviderResourcesHistoryListResponse = MarketplaceProviderResourcesHistoryListResponses[keyof MarketplaceProviderResourcesHistoryListResponses];
+
+export type MarketplaceProviderResourcesHistoryAtRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query: {
+        /**
+         * ISO 8601 timestamp to query the resource state at
+         */
+        timestamp: string;
+    };
+    url: '/api/marketplace-provider-resources/{uuid}/history/at/';
+};
+
+export type MarketplaceProviderResourcesHistoryAtRetrieveErrors = {
+    400: {
+        [key: string]: unknown;
+    };
+    404: {
+        [key: string]: unknown;
+    };
+};
+
+export type MarketplaceProviderResourcesHistoryAtRetrieveError = MarketplaceProviderResourcesHistoryAtRetrieveErrors[keyof MarketplaceProviderResourcesHistoryAtRetrieveErrors];
+
+export type MarketplaceProviderResourcesHistoryAtRetrieveResponses = {
+    200: ResourceVersion;
+};
+
+export type MarketplaceProviderResourcesHistoryAtRetrieveResponse = MarketplaceProviderResourcesHistoryAtRetrieveResponses[keyof MarketplaceProviderResourcesHistoryAtRetrieveResponses];
+
 export type MarketplaceProviderResourcesMoveResourceData = {
     body: MoveResourceRequest;
     path: {
@@ -46659,6 +46910,225 @@ export type MarketplaceResourcesGlauthUsersConfigRetrieveResponses = {
 };
 
 export type MarketplaceResourcesGlauthUsersConfigRetrieveResponse = MarketplaceResourcesGlauthUsersConfigRetrieveResponses[keyof MarketplaceResourcesGlauthUsersConfigRetrieveResponses];
+
+export type MarketplaceResourcesHistoryListData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * Backend ID
+         */
+        backend_id?: string;
+        /**
+         * Category UUID
+         */
+        category_uuid?: string;
+        /**
+         * Filter by exact number of components
+         */
+        component_count?: number;
+        /**
+         * Created after
+         */
+        created?: string;
+        /**
+         * Filter versions created after this timestamp (ISO 8601)
+         */
+        created_after?: string;
+        /**
+         * Filter versions created before this timestamp (ISO 8601)
+         */
+        created_before?: string;
+        /**
+         * Customer URL
+         */
+        customer?: string;
+        /**
+         * Customer UUID
+         */
+        customer_uuid?: string;
+        /**
+         * Downscaled
+         */
+        downscaled?: boolean;
+        /**
+         * Has termination date
+         */
+        has_terminate_date?: boolean;
+        /**
+         * Filter by attached state
+         */
+        is_attached?: boolean;
+        /**
+         * LEXIS links supported
+         */
+        lexis_links_supported?: boolean;
+        /**
+         * Filter by limit-based offerings
+         */
+        limit_based?: boolean;
+        /**
+         * Filter by exact number of limit-based components
+         */
+        limit_component_count?: number;
+        /**
+         * Modified after
+         */
+        modified?: string;
+        /**
+         * Name
+         */
+        name?: string;
+        /**
+         * Name (exact)
+         */
+        name_exact?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-end_date' | '-name' | '-project_name' | '-state' | 'created' | 'end_date' | 'name' | 'project_name' | 'state'>;
+        offering?: string;
+        /**
+         * Offering billable
+         */
+        offering_billable?: boolean;
+        /**
+         * Offering shared
+         */
+        offering_shared?: boolean;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        offering_slug?: Array<string>;
+        /**
+         * Offering type
+         */
+        offering_type?: string;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        offering_uuid?: Array<string>;
+        /**
+         * Filter resources with only limit-based components
+         */
+        only_limit_based?: boolean;
+        /**
+         * Filter resources with only usage-based components
+         */
+        only_usage_based?: boolean;
+        /**
+         * Order state
+         *
+         *
+         */
+        order_state?: Array<'canceled' | 'done' | 'erred' | 'executing' | 'pending-consumer' | 'pending-project' | 'pending-provider' | 'pending-start-date' | 'rejected'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        parent_offering_uuid?: string;
+        /**
+         * Paused
+         */
+        paused?: boolean;
+        /**
+         * Plan UUID
+         */
+        plan_uuid?: string;
+        /**
+         * Project name
+         */
+        project_name?: string;
+        /**
+         * Project UUID
+         */
+        project_uuid?: string;
+        /**
+         * Provider UUID
+         */
+        provider_uuid?: string;
+        /**
+         * Search by resource UUID, name, slug, backend ID, effective ID, IPs or hypervisor
+         */
+        query?: string;
+        /**
+         * Restrict member access
+         */
+        restrict_member_access?: boolean;
+        /**
+         * Runtime state
+         */
+        runtime_state?: string;
+        /**
+         * Service manager UUID
+         */
+        service_manager_uuid?: string;
+        /**
+         * Resource state
+         *
+         *
+         */
+        state?: Array<'Creating' | 'Erred' | 'OK' | 'Terminated' | 'Terminating' | 'Updating'>;
+        /**
+         * Filter by usage-based offerings
+         */
+        usage_based?: boolean;
+        /**
+         * Include only resources visible to service providers
+         */
+        visible_to_providers?: boolean;
+        /**
+         * Visible to username
+         */
+        visible_to_username?: string;
+    };
+    url: '/api/marketplace-resources/{uuid}/history/';
+};
+
+export type MarketplaceResourcesHistoryListResponses = {
+    200: Array<ResourceVersion>;
+};
+
+export type MarketplaceResourcesHistoryListResponse = MarketplaceResourcesHistoryListResponses[keyof MarketplaceResourcesHistoryListResponses];
+
+export type MarketplaceResourcesHistoryAtRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query: {
+        /**
+         * ISO 8601 timestamp to query the resource state at
+         */
+        timestamp: string;
+    };
+    url: '/api/marketplace-resources/{uuid}/history/at/';
+};
+
+export type MarketplaceResourcesHistoryAtRetrieveErrors = {
+    400: {
+        [key: string]: unknown;
+    };
+    404: {
+        [key: string]: unknown;
+    };
+};
+
+export type MarketplaceResourcesHistoryAtRetrieveError = MarketplaceResourcesHistoryAtRetrieveErrors[keyof MarketplaceResourcesHistoryAtRetrieveErrors];
+
+export type MarketplaceResourcesHistoryAtRetrieveResponses = {
+    200: ResourceVersion;
+};
+
+export type MarketplaceResourcesHistoryAtRetrieveResponse = MarketplaceResourcesHistoryAtRetrieveResponses[keyof MarketplaceResourcesHistoryAtRetrieveResponses];
 
 export type MarketplaceResourcesMoveResourceData = {
     body: MoveResourceRequest;
@@ -49867,6 +50337,14 @@ export type MarketplaceSoftwarePackagesListData = {
          */
         description?: string;
         /**
+         * Filter packages having extensions with a specific name
+         */
+        extension_name?: string;
+        /**
+         * Filter packages having extensions of a specific type (e.g., 'python')
+         */
+        extension_type?: string;
+        /**
          * Filter packages that have a specific version
          */
         has_version?: string;
@@ -49934,6 +50412,14 @@ export type MarketplaceSoftwarePackagesCountData = {
          * Filter packages by description (case-insensitive partial match)
          */
         description?: string;
+        /**
+         * Filter packages having extensions with a specific name
+         */
+        extension_name?: string;
+        /**
+         * Filter packages having extensions of a specific type (e.g., 'python')
+         */
+        extension_type?: string;
         /**
          * Filter packages that have a specific version
          */
