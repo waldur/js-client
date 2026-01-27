@@ -2930,6 +2930,10 @@ export type ChatResponse = {
      */
     t?: string;
     /**
+     * Error message.
+     */
+    e?: string;
+    /**
      * Table headers.
      */
     h?: Array<unknown>;
@@ -2947,10 +2951,6 @@ export type ChatResponse = {
     m?: {
         [key: string]: unknown;
     };
-    /**
-     * Error message.
-     */
-    e?: string;
 };
 
 export type CheckUniqueBackendIdRequest = {
@@ -3581,6 +3581,7 @@ export type ConstanceSettings = {
     THUMBNAIL_SIZE?: string;
     ANONYMOUS_USER_CAN_VIEW_OFFERINGS?: boolean;
     ANONYMOUS_USER_CAN_VIEW_PLANS?: boolean;
+    RESTRICTED_OFFERING_VISIBILITY_MODE?: string;
     NOTIFY_STAFF_ABOUT_APPROVALS?: boolean;
     NOTIFY_ABOUT_RESOURCE_CHANGE?: boolean;
     DISABLE_SENDING_NOTIFICATIONS_ABOUT_RESOURCE_UPDATE?: boolean;
@@ -3756,6 +3757,9 @@ export type ConstanceSettings = {
     LLM_INFERENCES_API_URL?: string;
     LLM_INFERENCES_API_TOKEN?: string;
     LLM_INFERENCES_MODEL?: string;
+    LLM_TOKEN_LIMIT_DAILY?: number;
+    LLM_TOKEN_LIMIT_WEEKLY?: number;
+    LLM_TOKEN_LIMIT_MONTHLY?: number;
     SOFTWARE_CATALOG_EESSI_UPDATE_ENABLED?: boolean;
     SOFTWARE_CATALOG_EESSI_VERSION?: string;
     SOFTWARE_CATALOG_EESSI_API_URL?: string;
@@ -3766,6 +3770,11 @@ export type ConstanceSettings = {
     SOFTWARE_CATALOG_UPDATE_EXISTING_PACKAGES?: boolean;
     SOFTWARE_CATALOG_CLEANUP_ENABLED?: boolean;
     SOFTWARE_CATALOG_RETENTION_DAYS?: number;
+    TABLE_GROWTH_MONITORING_ENABLED?: boolean;
+    TABLE_GROWTH_WEEKLY_THRESHOLD_PERCENT?: number;
+    TABLE_GROWTH_MONTHLY_THRESHOLD_PERCENT?: number;
+    TABLE_GROWTH_RETENTION_DAYS?: number;
+    TABLE_GROWTH_MIN_SIZE_BYTES?: number;
     USER_ACTIONS_ENABLED?: boolean;
     USER_ACTIONS_PENDING_ORDER_HOURS?: number;
     USER_ACTIONS_HIGH_URGENCY_NOTIFICATION?: boolean;
@@ -3789,6 +3798,7 @@ export type ConstanceSettingsRequest = {
     THUMBNAIL_SIZE?: string;
     ANONYMOUS_USER_CAN_VIEW_OFFERINGS?: boolean;
     ANONYMOUS_USER_CAN_VIEW_PLANS?: boolean;
+    RESTRICTED_OFFERING_VISIBILITY_MODE?: string;
     NOTIFY_STAFF_ABOUT_APPROVALS?: boolean;
     NOTIFY_ABOUT_RESOURCE_CHANGE?: boolean;
     DISABLE_SENDING_NOTIFICATIONS_ABOUT_RESOURCE_UPDATE?: boolean;
@@ -3964,6 +3974,9 @@ export type ConstanceSettingsRequest = {
     LLM_INFERENCES_API_URL?: string;
     LLM_INFERENCES_API_TOKEN?: string;
     LLM_INFERENCES_MODEL?: string;
+    LLM_TOKEN_LIMIT_DAILY?: number;
+    LLM_TOKEN_LIMIT_WEEKLY?: number;
+    LLM_TOKEN_LIMIT_MONTHLY?: number;
     SOFTWARE_CATALOG_EESSI_UPDATE_ENABLED?: boolean;
     SOFTWARE_CATALOG_EESSI_VERSION?: string;
     SOFTWARE_CATALOG_EESSI_API_URL?: string;
@@ -3974,6 +3987,11 @@ export type ConstanceSettingsRequest = {
     SOFTWARE_CATALOG_UPDATE_EXISTING_PACKAGES?: boolean;
     SOFTWARE_CATALOG_CLEANUP_ENABLED?: boolean;
     SOFTWARE_CATALOG_RETENTION_DAYS?: number;
+    TABLE_GROWTH_MONITORING_ENABLED?: boolean;
+    TABLE_GROWTH_WEEKLY_THRESHOLD_PERCENT?: number;
+    TABLE_GROWTH_MONTHLY_THRESHOLD_PERCENT?: number;
+    TABLE_GROWTH_RETENTION_DAYS?: number;
+    TABLE_GROWTH_MIN_SIZE_BYTES?: number;
     USER_ACTIONS_ENABLED?: boolean;
     USER_ACTIONS_PENDING_ORDER_HOURS?: number;
     USER_ACTIONS_HIGH_URGENCY_NOTIFICATION?: boolean;
@@ -4730,6 +4748,23 @@ export type DlqQueue = {
      * Number of consumers attached
      */
     readonly consumers: number;
+};
+
+export type DailyMaintenanceStats = {
+    /**
+     * Date
+     */
+    date: string;
+    /**
+     * Number of maintenances on this day
+     */
+    count: number;
+    /**
+     * Maintenance counts grouped by state
+     */
+    by_state: {
+        [key: string]: number;
+    };
 };
 
 export type DailyOrderStats = {
@@ -7330,6 +7365,33 @@ export type MaintenanceAnnouncementTemplateRequest = {
     service_provider: string;
 };
 
+export type MaintenanceProviderStats = {
+    /**
+     * Service provider UUID
+     */
+    uuid: string;
+    /**
+     * Service provider name
+     */
+    name: string;
+    /**
+     * Total maintenances
+     */
+    total: number;
+    /**
+     * Active maintenances
+     */
+    active: number;
+    /**
+     * Scheduled maintenances
+     */
+    scheduled: number;
+    /**
+     * Completed maintenances
+     */
+    completed: number;
+};
+
 export type MaintenanceStats = {
     /**
      * Age of the oldest transaction in transactions
@@ -7351,6 +7413,66 @@ export type MaintenanceStats = {
      * Ratio of dead tuples to total tuples
      */
     readonly dead_tuple_ratio_percent: number | null;
+};
+
+export type MaintenanceStatsResponse = {
+    /**
+     * Summary statistics
+     */
+    summary: MaintenanceStatsSummary;
+    /**
+     * Total counts grouped by state
+     */
+    by_state: {
+        [key: string]: number;
+    };
+    /**
+     * Total counts grouped by maintenance type
+     */
+    by_type: {
+        [key: string]: number;
+    };
+    /**
+     * Total counts grouped by max impact level
+     */
+    by_impact_level: {
+        [key: string]: number;
+    };
+    /**
+     * Daily breakdown
+     */
+    daily: Array<DailyMaintenanceStats>;
+    /**
+     * Statistics per provider
+     */
+    providers: Array<MaintenanceProviderStats>;
+};
+
+export type MaintenanceStatsSummary = {
+    /**
+     * Total number of maintenance announcements
+     */
+    total: number;
+    /**
+     * Number of currently active maintenances
+     */
+    active: number;
+    /**
+     * Number of scheduled maintenances
+     */
+    scheduled: number;
+    /**
+     * Number of completed maintenances
+     */
+    completed: number;
+    /**
+     * Average duration of completed maintenances in hours
+     */
+    average_duration_hours: number | null;
+    /**
+     * Percentage of maintenances completed on time
+     */
+    on_time_completion_rate: number | null;
 };
 
 export type MaintenanceTypeEnum = 1 | 2 | 3 | 4 | 5;
@@ -9506,6 +9628,7 @@ export type Offering = {
     readonly billing_type_classification?: string;
     compliance_checklist?: string | null;
     readonly user_has_consent?: boolean;
+    readonly is_accessible?: boolean;
     googlecalendar?: GoogleCalendar;
 };
 
@@ -16595,6 +16718,7 @@ export type PublicOfferingDetails = {
     readonly billing_type_classification?: string;
     compliance_checklist?: string | null;
     readonly user_has_consent?: boolean;
+    readonly is_accessible?: boolean;
     readonly google_calendar_is_public?: boolean | null;
     /**
      * Get the Google Calendar link for an offering.
@@ -20326,6 +20450,25 @@ export type SetOfferingsUsernameRequest = {
     username: string;
 };
 
+export type SetTokenQuotaRequest = {
+    /**
+     * UUID of the user to set quota for.
+     */
+    user_uuid: string;
+    /**
+     * Daily token limit. Omit or null = system default, -1 = unlimited.
+     */
+    daily_limit?: number | null;
+    /**
+     * Weekly token limit. Omit or null = system default, -1 = unlimited.
+     */
+    weekly_limit?: number | null;
+    /**
+     * Monthly token limit. Omit or null = system default, -1 = unlimited.
+     */
+    monthly_limit?: number | null;
+};
+
 export type SettingsMetadataResponse = {
     /**
      * List of settings sections with configuration items
@@ -21046,6 +21189,76 @@ export type SupportedCountriesResponse = {
 
 export type SyncStatusEnum = 'in_sync' | 'out_of_sync' | 'sync_failed';
 
+export type TableGrowthStats = {
+    /**
+     * Name of the database table
+     */
+    table_name: string;
+    /**
+     * Current total size including indexes in bytes
+     */
+    current_total_size: number;
+    /**
+     * Current data-only size in bytes
+     */
+    current_data_size: number;
+    /**
+     * Current estimated row count
+     */
+    current_row_estimate: number | null;
+    /**
+     * Total size from 7 days ago in bytes
+     */
+    week_ago_total_size: number | null;
+    /**
+     * Row estimate from 7 days ago
+     */
+    week_ago_row_estimate: number | null;
+    /**
+     * Total size from 30 days ago in bytes
+     */
+    month_ago_total_size: number | null;
+    /**
+     * Row estimate from 30 days ago
+     */
+    month_ago_row_estimate: number | null;
+    /**
+     * Percentage growth over the past week
+     */
+    weekly_growth_percent: number | null;
+    /**
+     * Percentage growth over the past month
+     */
+    monthly_growth_percent: number | null;
+    /**
+     * Percentage row count growth over the past week
+     */
+    weekly_row_growth_percent: number | null;
+    /**
+     * Percentage row count growth over the past month
+     */
+    monthly_row_growth_percent: number | null;
+};
+
+export type TableGrowthStatsResponse = {
+    /**
+     * Current date of the statistics
+     */
+    date: string;
+    /**
+     * Configured weekly growth alert threshold
+     */
+    weekly_threshold_percent: number;
+    /**
+     * Configured monthly growth alert threshold
+     */
+    monthly_threshold_percent: number;
+    /**
+     * Table growth statistics sorted by growth rate
+     */
+    tables: Array<TableGrowthStats>;
+};
+
 export type TableSize = {
     /**
      * Name of the database table
@@ -21187,6 +21400,60 @@ export type ToSConsentDashboard = {
     readonly tos_version_adoption: Array<VersionAdoption>;
     readonly active_users_over_time: Array<TimeSeriesToSData>;
     readonly accepted_consents_over_time: Array<TimeSeriesToSData>;
+};
+
+export type TokenQuotaUsageResponse = {
+    /**
+     * Daily token limit (non-negative integer). Null uses system default. -1 means unlimited.
+     */
+    daily_limit?: number | null;
+    daily_usage?: number;
+    /**
+     * Get remaining daily tokens.
+     */
+    readonly daily_remaining: number | null;
+    /**
+     * Calculate next midnight (00:00:00).
+     */
+    readonly daily_reset_at: string;
+    /**
+     * Get system default daily token limit from constance config.
+     */
+    readonly daily_system_default: number;
+    /**
+     * Weekly token limit (non-negative integer). Null uses system default. -1 means unlimited.
+     */
+    weekly_limit?: number | null;
+    weekly_usage?: number;
+    /**
+     * Get remaining weekly tokens.
+     */
+    readonly weekly_remaining: number | null;
+    /**
+     * Calculate next Monday at midnight.
+     */
+    readonly weekly_reset_at: string;
+    /**
+     * Get system default weekly token limit from constance config.
+     */
+    readonly weekly_system_default: number;
+    /**
+     * Monthly token limit (non-negative integer). Null uses system default. -1 means unlimited.
+     */
+    monthly_limit?: number | null;
+    monthly_usage?: number;
+    /**
+     * Get remaining monthly tokens.
+     */
+    readonly monthly_remaining: number | null;
+    /**
+     * Calculate first day of next month at midnight.
+     */
+    readonly monthly_reset_at: string;
+    /**
+     * Get system default monthly token limit from constance config.
+     */
+    readonly monthly_system_default: number;
 };
 
 export type TokenRequest = {
@@ -23411,6 +23678,7 @@ export type ConstanceSettingsRequestForm = {
     THUMBNAIL_SIZE?: string;
     ANONYMOUS_USER_CAN_VIEW_OFFERINGS?: boolean;
     ANONYMOUS_USER_CAN_VIEW_PLANS?: boolean;
+    RESTRICTED_OFFERING_VISIBILITY_MODE?: string;
     NOTIFY_STAFF_ABOUT_APPROVALS?: boolean;
     NOTIFY_ABOUT_RESOURCE_CHANGE?: boolean;
     DISABLE_SENDING_NOTIFICATIONS_ABOUT_RESOURCE_UPDATE?: boolean;
@@ -23586,6 +23854,9 @@ export type ConstanceSettingsRequestForm = {
     LLM_INFERENCES_API_URL?: string;
     LLM_INFERENCES_API_TOKEN?: string;
     LLM_INFERENCES_MODEL?: string;
+    LLM_TOKEN_LIMIT_DAILY?: number;
+    LLM_TOKEN_LIMIT_WEEKLY?: number;
+    LLM_TOKEN_LIMIT_MONTHLY?: number;
     SOFTWARE_CATALOG_EESSI_UPDATE_ENABLED?: boolean;
     SOFTWARE_CATALOG_EESSI_VERSION?: string;
     SOFTWARE_CATALOG_EESSI_API_URL?: string;
@@ -23596,6 +23867,11 @@ export type ConstanceSettingsRequestForm = {
     SOFTWARE_CATALOG_UPDATE_EXISTING_PACKAGES?: boolean;
     SOFTWARE_CATALOG_CLEANUP_ENABLED?: boolean;
     SOFTWARE_CATALOG_RETENTION_DAYS?: number;
+    TABLE_GROWTH_MONITORING_ENABLED?: boolean;
+    TABLE_GROWTH_WEEKLY_THRESHOLD_PERCENT?: number;
+    TABLE_GROWTH_MONTHLY_THRESHOLD_PERCENT?: number;
+    TABLE_GROWTH_RETENTION_DAYS?: number;
+    TABLE_GROWTH_MIN_SIZE_BYTES?: number;
     USER_ACTIONS_ENABLED?: boolean;
     USER_ACTIONS_PENDING_ORDER_HOURS?: number;
     USER_ACTIONS_HIGH_URGENCY_NOTIFICATION?: boolean;
@@ -23619,6 +23895,7 @@ export type ConstanceSettingsRequestMultipart = {
     THUMBNAIL_SIZE?: string;
     ANONYMOUS_USER_CAN_VIEW_OFFERINGS?: boolean;
     ANONYMOUS_USER_CAN_VIEW_PLANS?: boolean;
+    RESTRICTED_OFFERING_VISIBILITY_MODE?: string;
     NOTIFY_STAFF_ABOUT_APPROVALS?: boolean;
     NOTIFY_ABOUT_RESOURCE_CHANGE?: boolean;
     DISABLE_SENDING_NOTIFICATIONS_ABOUT_RESOURCE_UPDATE?: boolean;
@@ -23794,6 +24071,9 @@ export type ConstanceSettingsRequestMultipart = {
     LLM_INFERENCES_API_URL?: string;
     LLM_INFERENCES_API_TOKEN?: string;
     LLM_INFERENCES_MODEL?: string;
+    LLM_TOKEN_LIMIT_DAILY?: number;
+    LLM_TOKEN_LIMIT_WEEKLY?: number;
+    LLM_TOKEN_LIMIT_MONTHLY?: number;
     SOFTWARE_CATALOG_EESSI_UPDATE_ENABLED?: boolean;
     SOFTWARE_CATALOG_EESSI_VERSION?: string;
     SOFTWARE_CATALOG_EESSI_API_URL?: string;
@@ -23804,6 +24084,11 @@ export type ConstanceSettingsRequestMultipart = {
     SOFTWARE_CATALOG_UPDATE_EXISTING_PACKAGES?: boolean;
     SOFTWARE_CATALOG_CLEANUP_ENABLED?: boolean;
     SOFTWARE_CATALOG_RETENTION_DAYS?: number;
+    TABLE_GROWTH_MONITORING_ENABLED?: boolean;
+    TABLE_GROWTH_WEEKLY_THRESHOLD_PERCENT?: number;
+    TABLE_GROWTH_MONTHLY_THRESHOLD_PERCENT?: number;
+    TABLE_GROWTH_RETENTION_DAYS?: number;
+    TABLE_GROWTH_MIN_SIZE_BYTES?: number;
     USER_ACTIONS_ENABLED?: boolean;
     USER_ACTIONS_PENDING_ORDER_HOURS?: number;
     USER_ACTIONS_HIGH_URGENCY_NOTIFICATION?: boolean;
@@ -28210,7 +28495,7 @@ export type BookingOfferingsListData = {
     body?: never;
     path?: never;
     query?: {
-        field?: Array<'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'billing_type_classification' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'googlecalendar' | 'has_compliance_requirements' | 'image' | 'integration_guide' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_options' | 'roles' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'tags' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'user_has_consent' | 'uuid' | 'vendor_details'>;
+        field?: Array<'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'billing_type_classification' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'googlecalendar' | 'has_compliance_requirements' | 'image' | 'integration_guide' | 'is_accessible' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_options' | 'roles' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'tags' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'user_has_consent' | 'uuid' | 'vendor_details'>;
         /**
          * A page number within the paginated result set.
          */
@@ -28258,7 +28543,7 @@ export type BookingOfferingsRetrieveData = {
         uuid: string;
     };
     query?: {
-        field?: Array<'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'billing_type_classification' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'googlecalendar' | 'has_compliance_requirements' | 'image' | 'integration_guide' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_options' | 'roles' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'tags' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'user_has_consent' | 'uuid' | 'vendor_details'>;
+        field?: Array<'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'billing_type_classification' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'googlecalendar' | 'has_compliance_requirements' | 'image' | 'integration_guide' | 'is_accessible' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_options' | 'roles' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'tags' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'user_has_consent' | 'uuid' | 'vendor_details'>;
     };
     url: '/api/booking-offerings/{uuid}/';
 };
@@ -29793,6 +30078,38 @@ export type CeleryStatsRetrieveResponses = {
 
 export type CeleryStatsRetrieveResponse = CeleryStatsRetrieveResponses[keyof CeleryStatsRetrieveResponses];
 
+export type ChatQuotaSetQuotaData = {
+    body: SetTokenQuotaRequest;
+    path?: never;
+    query?: never;
+    url: '/api/chat-quota/set_quota/';
+};
+
+export type ChatQuotaSetQuotaResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type ChatQuotaUsageRetrieveData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * UUID of user to view quota for (staff/support only). Omit to view your own quota.
+         */
+        user_uuid?: string;
+    };
+    url: '/api/chat-quota/usage/';
+};
+
+export type ChatQuotaUsageRetrieveResponses = {
+    200: TokenQuotaUsageResponse;
+};
+
+export type ChatQuotaUsageRetrieveResponse = ChatQuotaUsageRetrieveResponses[keyof ChatQuotaUsageRetrieveResponses];
+
 export type ChatToolsExecuteData = {
     body: ToolExecuteRequest;
     path?: never;
@@ -29807,19 +30124,6 @@ export type ChatToolsExecuteResponses = {
 };
 
 export type ChatToolsExecuteResponse = ChatToolsExecuteResponses[keyof ChatToolsExecuteResponses];
-
-export type ChatInvokeData = {
-    body?: never;
-    path?: never;
-    query?: never;
-    url: '/api/chat/invoke/';
-};
-
-export type ChatInvokeResponses = {
-    200: string;
-};
-
-export type ChatInvokeResponse = ChatInvokeResponses[keyof ChatInvokeResponses];
 
 export type ChatStreamData = {
     body: ChatRequestRequest;
@@ -36446,6 +36750,59 @@ export type MaintenanceAnnouncementsUnscheduleResponses = {
 };
 
 export type MaintenanceAnnouncementsUnscheduleResponse = MaintenanceAnnouncementsUnscheduleResponses[keyof MaintenanceAnnouncementsUnscheduleResponses];
+
+export type MaintenanceAnnouncementsMaintenanceStatsRetrieveData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * End date in YYYY-MM-DD format. Defaults to 30 days in the future.
+         */
+        end?: string;
+        /**
+         * Filter by service provider UUID.
+         */
+        provider_uuid?: string;
+        /**
+         * Start date in YYYY-MM-DD format. Defaults to 90 days ago.
+         */
+        start?: string;
+    };
+    url: '/api/maintenance-announcements/maintenance_stats/';
+};
+
+export type MaintenanceAnnouncementsMaintenanceStatsRetrieveResponses = {
+    200: MaintenanceStatsResponse;
+};
+
+export type MaintenanceAnnouncementsMaintenanceStatsRetrieveResponse = MaintenanceAnnouncementsMaintenanceStatsRetrieveResponses[keyof MaintenanceAnnouncementsMaintenanceStatsRetrieveResponses];
+
+export type MaintenanceAnnouncementsMaintenanceStatsCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * End date in YYYY-MM-DD format. Defaults to 30 days in the future.
+         */
+        end?: string;
+        /**
+         * Filter by service provider UUID.
+         */
+        provider_uuid?: string;
+        /**
+         * Start date in YYYY-MM-DD format. Defaults to 90 days ago.
+         */
+        start?: string;
+    };
+    url: '/api/maintenance-announcements/maintenance_stats/';
+};
+
+export type MaintenanceAnnouncementsMaintenanceStatsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type ManagedRancherClusterResourcesListData = {
     body?: never;
@@ -45797,7 +46154,7 @@ export type MarketplacePublicOfferingsListData = {
          * Description contains
          */
         description?: string;
-        field?: Array<'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'billing_type_classification' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'has_compliance_requirements' | 'image' | 'integration_guide' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'project' | 'project_name' | 'project_uuid' | 'promotion_campaigns' | 'quotas' | 'resource_options' | 'roles' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'tags' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'user_has_consent' | 'uuid' | 'vendor_details'>;
+        field?: Array<'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'billing_type_classification' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'has_compliance_requirements' | 'image' | 'integration_guide' | 'is_accessible' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'project' | 'project_name' | 'project_uuid' | 'promotion_campaigns' | 'quotas' | 'resource_options' | 'roles' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'tags' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'user_has_consent' | 'uuid' | 'vendor_details'>;
         /**
          * Has Active Terms of Service
          */
@@ -46094,7 +46451,7 @@ export type MarketplacePublicOfferingsRetrieveData = {
         uuid: string;
     };
     query?: {
-        field?: Array<'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'billing_type_classification' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'has_compliance_requirements' | 'image' | 'integration_guide' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'project' | 'project_name' | 'project_uuid' | 'promotion_campaigns' | 'quotas' | 'resource_options' | 'roles' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'tags' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'user_has_consent' | 'uuid' | 'vendor_details'>;
+        field?: Array<'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'billing_type_classification' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'has_compliance_requirements' | 'image' | 'integration_guide' | 'is_accessible' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'project' | 'project_name' | 'project_uuid' | 'promotion_campaigns' | 'quotas' | 'resource_options' | 'roles' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'tags' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'user_has_consent' | 'uuid' | 'vendor_details'>;
     };
     url: '/api/marketplace-public-offerings/{uuid}/';
 };
@@ -71664,6 +72021,65 @@ export type SlurmJobsUnlinkResponses = {
 };
 
 export type SlurmJobsUnlinkResponse = SlurmJobsUnlinkResponses[keyof SlurmJobsUnlinkResponses];
+
+export type StatsCeleryRetrieveData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/stats/celery/';
+};
+
+export type StatsCeleryRetrieveResponses = {
+    200: CeleryStatsResponse;
+};
+
+export type StatsCeleryRetrieveResponse = StatsCeleryRetrieveResponses[keyof StatsCeleryRetrieveResponses];
+
+export type StatsDatabaseRetrieveData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/stats/database/';
+};
+
+export type StatsDatabaseRetrieveResponses = {
+    200: DatabaseStatsResponse;
+};
+
+export type StatsDatabaseRetrieveResponse = StatsDatabaseRetrieveResponses[keyof StatsDatabaseRetrieveResponses];
+
+export type StatsQueryData = {
+    body: QueryRequest;
+    path?: never;
+    query?: never;
+    url: '/api/stats/query/';
+};
+
+export type StatsQueryErrors = {
+    /**
+     * No response body
+     */
+    400: unknown;
+};
+
+export type StatsQueryResponses = {
+    200: Array<unknown>;
+};
+
+export type StatsQueryResponse = StatsQueryResponses[keyof StatsQueryResponses];
+
+export type StatsTableGrowthRetrieveData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/stats/table-growth/';
+};
+
+export type StatsTableGrowthRetrieveResponses = {
+    200: TableGrowthStatsResponse;
+};
+
+export type StatsTableGrowthRetrieveResponse = StatsTableGrowthRetrieveResponses[keyof StatsTableGrowthRetrieveResponses];
 
 export type SupportAttachmentsListData = {
     body?: never;
