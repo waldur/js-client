@@ -9300,7 +9300,6 @@ export type NestedSoftwareVersion = {
     readonly module: {
         [key: string]: unknown;
     };
-    readonly modulename: string;
     readonly required_modules: Array<unknown>;
     readonly extensions: Array<unknown>;
     readonly toolchain: {
@@ -20899,7 +20898,6 @@ export type SoftwareVersion = {
     readonly module: {
         [key: string]: unknown;
     };
-    readonly modulename: string;
     readonly required_modules: Array<unknown>;
     readonly extensions: Array<unknown>;
     readonly toolchain: {
