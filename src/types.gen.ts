@@ -9780,6 +9780,7 @@ export type OfferingCreateRequest = {
     options?: OfferingOptionsRequest;
     resource_options?: OfferingOptionsRequest;
     components?: Array<OfferingComponentRequest>;
+    plugin_options?: MergedPluginOptionsRequest;
     vendor_details?: string;
     getting_started?: string;
     integration_guide?: string;
@@ -23275,6 +23276,7 @@ export type OfferingCreateRequestForm = {
     options?: OfferingOptionsRequest;
     resource_options?: OfferingOptionsRequest;
     components?: Array<OfferingComponentRequest>;
+    plugin_options?: MergedPluginOptionsRequest;
     vendor_details?: string;
     getting_started?: string;
     integration_guide?: string;
@@ -23324,6 +23326,7 @@ export type OfferingCreateRequestMultipart = {
     options?: OfferingOptionsRequest;
     resource_options?: OfferingOptionsRequest;
     components?: Array<OfferingComponentRequest>;
+    plugin_options?: MergedPluginOptionsRequest;
     vendor_details?: string;
     getting_started?: string;
     integration_guide?: string;
