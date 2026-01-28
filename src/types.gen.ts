@@ -4565,6 +4565,25 @@ export type CustomerMemberCount = {
     readonly has_resources: boolean;
 };
 
+export type CustomerMemberSummary = {
+    /**
+     * Total number of organizations
+     */
+    total_organizations: number;
+    /**
+     * Total number of members across all organizations
+     */
+    total_members: number;
+    /**
+     * Number of organizations with active resources
+     */
+    organizations_with_resources: number;
+    /**
+     * Average number of members per organization
+     */
+    average_members_per_org: number;
+};
+
 export type CustomerOecdCodeStats = {
     /**
      * Name from the record
@@ -9748,6 +9767,21 @@ export type OfferingCost = {
      * Total cost for the offering
      */
     cost: number;
+};
+
+export type OfferingCostsSummary = {
+    /**
+     * Total cost of all active resources across all offerings
+     */
+    total_cost: string;
+    /**
+     * Number of offerings with active resources
+     */
+    offering_count: number;
+    /**
+     * Average cost per offering
+     */
+    average_cost: string;
 };
 
 export type OfferingCountryStats = {
@@ -15336,6 +15370,21 @@ export type ProjectAttachRequest = {
     project_uuid: string;
 };
 
+export type ProjectClassificationSummary = {
+    /**
+     * Total number of projects
+     */
+    total_projects: number;
+    /**
+     * Number of academic projects (industry_flag=False)
+     */
+    academic_projects: number;
+    /**
+     * Number of industry projects (industry_flag=True)
+     */
+    industry_projects: number;
+};
+
 export type ProjectCredit = {
     readonly uuid: string;
     readonly url: string;
@@ -18958,6 +19007,25 @@ export type ResourceVersion = {
     readonly serialized_data: {
         [key: string]: unknown;
     };
+};
+
+export type ResourcesGeographySummary = {
+    /**
+     * Total number of active resources
+     */
+    total_resources: number;
+    /**
+     * Number of countries with active resources
+     */
+    countries_count: number;
+    /**
+     * Number of organization groups with active resources
+     */
+    org_groups_count: number;
+    /**
+     * Number of offerings with active resources
+     */
+    offerings_count: number;
 };
 
 export type ResourcesLimits = {
@@ -51774,6 +51842,60 @@ export type MarketplaceStatsCustomerMemberCountCountResponses = {
     200: unknown;
 };
 
+export type MarketplaceStatsCustomerMemberSummaryRetrieveData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/marketplace-stats/customer_member_summary/';
+};
+
+export type MarketplaceStatsCustomerMemberSummaryRetrieveResponses = {
+    200: CustomerMemberSummary;
+};
+
+export type MarketplaceStatsCustomerMemberSummaryRetrieveResponse = MarketplaceStatsCustomerMemberSummaryRetrieveResponses[keyof MarketplaceStatsCustomerMemberSummaryRetrieveResponses];
+
+export type MarketplaceStatsCustomerMemberSummaryCountData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/marketplace-stats/customer_member_summary/';
+};
+
+export type MarketplaceStatsCustomerMemberSummaryCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type MarketplaceStatsOfferingCostsSummaryRetrieveData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/marketplace-stats/offering_costs_summary/';
+};
+
+export type MarketplaceStatsOfferingCostsSummaryRetrieveResponses = {
+    200: OfferingCostsSummary;
+};
+
+export type MarketplaceStatsOfferingCostsSummaryRetrieveResponse = MarketplaceStatsOfferingCostsSummaryRetrieveResponses[keyof MarketplaceStatsOfferingCostsSummaryRetrieveResponses];
+
+export type MarketplaceStatsOfferingCostsSummaryCountData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/marketplace-stats/offering_costs_summary/';
+};
+
+export type MarketplaceStatsOfferingCostsSummaryCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type MarketplaceStatsOfferingsCounterStatsListData = {
     body?: never;
     path?: never;
@@ -51964,6 +52086,33 @@ export type MarketplaceStatsOrganizationResourceCountCountData = {
 };
 
 export type MarketplaceStatsOrganizationResourceCountCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type MarketplaceStatsProjectClassificationSummaryRetrieveData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/marketplace-stats/project_classification_summary/';
+};
+
+export type MarketplaceStatsProjectClassificationSummaryRetrieveResponses = {
+    200: ProjectClassificationSummary;
+};
+
+export type MarketplaceStatsProjectClassificationSummaryRetrieveResponse = MarketplaceStatsProjectClassificationSummaryRetrieveResponses[keyof MarketplaceStatsProjectClassificationSummaryRetrieveResponses];
+
+export type MarketplaceStatsProjectClassificationSummaryCountData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/marketplace-stats/project_classification_summary/';
+};
+
+export type MarketplaceStatsProjectClassificationSummaryCountResponses = {
     /**
      * No response body
      */
@@ -52236,6 +52385,33 @@ export type MarketplaceStatsResourceProvisioningStatsCountData = {
 };
 
 export type MarketplaceStatsResourceProvisioningStatsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type MarketplaceStatsResourcesGeographySummaryRetrieveData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/marketplace-stats/resources_geography_summary/';
+};
+
+export type MarketplaceStatsResourcesGeographySummaryRetrieveResponses = {
+    200: ResourcesGeographySummary;
+};
+
+export type MarketplaceStatsResourcesGeographySummaryRetrieveResponse = MarketplaceStatsResourcesGeographySummaryRetrieveResponses[keyof MarketplaceStatsResourcesGeographySummaryRetrieveResponses];
+
+export type MarketplaceStatsResourcesGeographySummaryCountData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/marketplace-stats/resources_geography_summary/';
+};
+
+export type MarketplaceStatsResourcesGeographySummaryCountResponses = {
     /**
      * No response body
      */
