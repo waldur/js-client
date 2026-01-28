@@ -18974,6 +18974,91 @@ export type ResourceUpdateRequest = {
     end_date?: string | null;
 };
 
+export type ResourceUsageByAffiliation = {
+    /**
+     * User affiliation value
+     */
+    affiliation: string;
+    /**
+     * Component type
+     */
+    component_type: string;
+    /**
+     * Total usage
+     */
+    total_usage: string;
+    /**
+     * Total cost
+     */
+    total_cost: string;
+    /**
+     * Number of resources
+     */
+    resource_count: number;
+};
+
+export type ResourceUsageByCustomer = {
+    /**
+     * UUID of the customer
+     */
+    customer_uuid: string;
+    /**
+     * Name of the customer
+     */
+    customer_name: string;
+    /**
+     * Abbreviation of the customer
+     */
+    customer_abbreviation: string | null;
+    /**
+     * Number of OK resources
+     */
+    resources_ok: number;
+    /**
+     * Number of erred resources
+     */
+    resources_erred: number;
+    /**
+     * Total number of active resources
+     */
+    resources_total: number;
+    /**
+     * Total cost of resources
+     */
+    total_cost: string;
+    /**
+     * Component usages keyed by component type
+     */
+    usages: {
+        [key: string]: string;
+    };
+    /**
+     * Resource limits keyed by limit name
+     */
+    limits: {
+        [key: string]: number;
+    };
+};
+
+export type ResourceUsageByOrgType = {
+    /**
+     * SCHAC organization type URN
+     */
+    organization_type: string | null;
+    /**
+     * Component type (e.g., cpu, gpu)
+     */
+    component_type: string;
+    /**
+     * Total usage for this component
+     */
+    usage: string;
+    /**
+     * Number of resources
+     */
+    resource_count: number;
+};
+
 export type ResourceUser = {
     readonly uuid: string;
     resource: string;
@@ -52385,6 +52470,141 @@ export type MarketplaceStatsResourceProvisioningStatsCountData = {
 };
 
 export type MarketplaceStatsResourceProvisioningStatsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type MarketplaceStatsResourceUsageByCreatorAffiliationListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-stats/resource_usage_by_creator_affiliation/';
+};
+
+export type MarketplaceStatsResourceUsageByCreatorAffiliationListResponses = {
+    200: Array<ResourceUsageByAffiliation>;
+};
+
+export type MarketplaceStatsResourceUsageByCreatorAffiliationListResponse = MarketplaceStatsResourceUsageByCreatorAffiliationListResponses[keyof MarketplaceStatsResourceUsageByCreatorAffiliationListResponses];
+
+export type MarketplaceStatsResourceUsageByCreatorAffiliationCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-stats/resource_usage_by_creator_affiliation/';
+};
+
+export type MarketplaceStatsResourceUsageByCreatorAffiliationCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type MarketplaceStatsResourceUsageByCustomerListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-stats/resource_usage_by_customer/';
+};
+
+export type MarketplaceStatsResourceUsageByCustomerListResponses = {
+    200: Array<ResourceUsageByCustomer>;
+};
+
+export type MarketplaceStatsResourceUsageByCustomerListResponse = MarketplaceStatsResourceUsageByCustomerListResponses[keyof MarketplaceStatsResourceUsageByCustomerListResponses];
+
+export type MarketplaceStatsResourceUsageByCustomerCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-stats/resource_usage_by_customer/';
+};
+
+export type MarketplaceStatsResourceUsageByCustomerCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type MarketplaceStatsResourceUsageByOrganizationTypeListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-stats/resource_usage_by_organization_type/';
+};
+
+export type MarketplaceStatsResourceUsageByOrganizationTypeListResponses = {
+    200: Array<ResourceUsageByOrgType>;
+};
+
+export type MarketplaceStatsResourceUsageByOrganizationTypeListResponse = MarketplaceStatsResourceUsageByOrganizationTypeListResponses[keyof MarketplaceStatsResourceUsageByOrganizationTypeListResponses];
+
+export type MarketplaceStatsResourceUsageByOrganizationTypeCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-stats/resource_usage_by_organization_type/';
+};
+
+export type MarketplaceStatsResourceUsageByOrganizationTypeCountResponses = {
     /**
      * No response body
      */
