@@ -448,6 +448,33 @@ export type AgentTaskStatsResponse = {
 
 export type AgentTypeEnum = 'Order processing' | 'Usage reporting' | 'Glauth sync' | 'Resource sync' | 'Event processing' | 'unknown';
 
+export type AggregatedUsageTrend = {
+    /**
+     * Period in YYYY-MM format
+     */
+    period: string;
+    /**
+     * Year
+     */
+    year: number;
+    /**
+     * Month (1-12)
+     */
+    month: number;
+    /**
+     * Total usage across all components
+     */
+    total_usage: string;
+    /**
+     * Number of distinct resources with usage
+     */
+    resource_count: number;
+    /**
+     * Number of component usage records
+     */
+    component_count: number;
+};
+
 export type AgreementTypeEnum = 'TOS' | 'PP';
 
 export type Allocation = {
@@ -12740,6 +12767,7 @@ export type OptionField = {
     component_multiplier_config?: ComponentMultiplierConfig;
     storage_folder_config?: StorageFolderConfig;
     default_configs?: K8sDefaultConfiguration;
+    validators?: Array<OptionValidator>;
 };
 
 export type OptionFieldRequest = {
@@ -12755,9 +12783,22 @@ export type OptionFieldRequest = {
     component_multiplier_config?: ComponentMultiplierConfigRequest;
     storage_folder_config?: StorageFolderConfigRequest;
     default_configs?: K8sDefaultConfigurationRequest;
+    validators?: Array<OptionValidatorRequest>;
 };
 
 export type OptionFieldTypeEnum = 'boolean' | 'integer' | 'money' | 'string' | 'text' | 'html_text' | 'select_string' | 'select_string_multi' | 'select_openstack_tenant' | 'select_multiple_openstack_tenants' | 'select_openstack_instance' | 'select_multiple_openstack_instances' | 'date' | 'time' | 'conditional_cascade' | 'component_multiplier' | 'single_datacenter_k8s_config' | 'multi_datacenter_k8s_config' | 'storage_folder_manager';
+
+export type OptionValidator = {
+    type: OptionValidatorTypeEnum;
+    target_field: string;
+};
+
+export type OptionValidatorRequest = {
+    type: OptionValidatorTypeEnum;
+    target_field: string;
+};
+
+export type OptionValidatorTypeEnum = 'gt' | 'gte' | 'lt' | 'lte';
 
 export type OrcidCallbackRequest = {
     /**
@@ -51341,6 +51382,51 @@ export type MarketplaceSoftwareVersionsUpdateResponses = {
 };
 
 export type MarketplaceSoftwareVersionsUpdateResponse = MarketplaceSoftwareVersionsUpdateResponses[keyof MarketplaceSoftwareVersionsUpdateResponses];
+
+export type MarketplaceStatsAggregatedUsageTrendsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-stats/aggregated_usage_trends/';
+};
+
+export type MarketplaceStatsAggregatedUsageTrendsListResponses = {
+    200: Array<AggregatedUsageTrend>;
+};
+
+export type MarketplaceStatsAggregatedUsageTrendsListResponse = MarketplaceStatsAggregatedUsageTrendsListResponses[keyof MarketplaceStatsAggregatedUsageTrendsListResponses];
+
+export type MarketplaceStatsAggregatedUsageTrendsCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-stats/aggregated_usage_trends/';
+};
+
+export type MarketplaceStatsAggregatedUsageTrendsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type MarketplaceStatsComponentUsagesListData = {
     body?: never;
