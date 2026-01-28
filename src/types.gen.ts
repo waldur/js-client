@@ -19123,18 +19123,6 @@ export type ResourceUserRequest = {
     user: string;
 };
 
-export type ResourceVersion = {
-    id: number;
-    revision_date: string;
-    readonly revision_user: {
-        [key: string]: unknown;
-    } | null;
-    revision_comment: string;
-    readonly serialized_data: {
-        [key: string]: unknown;
-    };
-};
-
 export type ResourcesGeographySummary = {
     /**
      * Total number of active resources
@@ -22318,6 +22306,33 @@ export type VersionAdoption = {
      * Number of users on this version
      */
     readonly users_count: number;
+};
+
+export type VersionHistory = {
+    /**
+     * Version ID
+     */
+    id: number;
+    /**
+     * When this revision was created
+     */
+    revision_date: string;
+    /**
+     * User who created this revision
+     */
+    readonly revision_user: {
+        [key: string]: unknown;
+    } | null;
+    /**
+     * Comment describing the revision
+     */
+    revision_comment: string;
+    /**
+     * Serialized model fields at this revision
+     */
+    readonly serialized_data: {
+        [key: string]: unknown;
+    };
 };
 
 export type VisibilityEnum = 'private' | 'public';
@@ -32229,6 +32244,113 @@ export type CustomersDeleteUserResponses = {
     200: unknown;
 };
 
+export type CustomersHistoryListData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * Abbreviation
+         */
+        abbreviation?: string;
+        agreement_number?: string;
+        archived?: boolean;
+        backend_id?: string;
+        /**
+         * Contact details
+         */
+        contact_details?: string;
+        /**
+         * Filter versions created after this timestamp (ISO 8601)
+         */
+        created_after?: string;
+        /**
+         * Filter versions created before this timestamp (ISO 8601)
+         */
+        created_before?: string;
+        /**
+         * Name
+         */
+        name?: string;
+        /**
+         * Name (exact)
+         */
+        name_exact?: string;
+        /**
+         * Native name
+         */
+        native_name?: string;
+        /**
+         * Which field to use when ordering the results.
+         */
+        o?: string;
+        /**
+         * Organization group name
+         */
+        organization_group_name?: string;
+        /**
+         * Organization group UUID
+         */
+        organization_group_uuid?: Array<string>;
+        /**
+         * Return a list of customers where current user is owner.
+         */
+        owned_by_current_user?: boolean;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Filter by name, native name, abbreviation, domain, UUID, registration code or agreement number
+         */
+        query?: string;
+        registration_code?: string;
+    };
+    url: '/api/customers/{uuid}/history/';
+};
+
+export type CustomersHistoryListResponses = {
+    200: Array<VersionHistory>;
+};
+
+export type CustomersHistoryListResponse = CustomersHistoryListResponses[keyof CustomersHistoryListResponses];
+
+export type CustomersHistoryAtRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query: {
+        /**
+         * ISO 8601 timestamp to query the object state at
+         */
+        timestamp: string;
+    };
+    url: '/api/customers/{uuid}/history/at/';
+};
+
+export type CustomersHistoryAtRetrieveErrors = {
+    400: {
+        [key: string]: unknown;
+    };
+    404: {
+        [key: string]: unknown;
+    };
+};
+
+export type CustomersHistoryAtRetrieveError = CustomersHistoryAtRetrieveErrors[keyof CustomersHistoryAtRetrieveErrors];
+
+export type CustomersHistoryAtRetrieveResponses = {
+    200: VersionHistory;
+};
+
+export type CustomersHistoryAtRetrieveResponse = CustomersHistoryAtRetrieveResponses[keyof CustomersHistoryAtRetrieveResponses];
+
 export type CustomersListUsersListData = {
     body?: never;
     path: {
@@ -35546,6 +35668,83 @@ export type InvoicesRetrieveResponses = {
 
 export type InvoicesRetrieveResponse = InvoicesRetrieveResponses[keyof InvoicesRetrieveResponses];
 
+export type InvoicesHistoryListData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        created?: string;
+        /**
+         * Filter versions created after this timestamp (ISO 8601)
+         */
+        created_after?: string;
+        /**
+         * Filter versions created before this timestamp (ISO 8601)
+         */
+        created_before?: string;
+        customer?: string;
+        customer_uuid?: string;
+        end_date?: string;
+        month?: number;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-month' | '-year' | 'created' | 'month' | 'year'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        start_date?: string;
+        state?: Array<'canceled' | 'created' | 'paid' | 'pending'>;
+        year?: number;
+    };
+    url: '/api/invoices/{uuid}/history/';
+};
+
+export type InvoicesHistoryListResponses = {
+    200: Array<VersionHistory>;
+};
+
+export type InvoicesHistoryListResponse = InvoicesHistoryListResponses[keyof InvoicesHistoryListResponses];
+
+export type InvoicesHistoryAtRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query: {
+        /**
+         * ISO 8601 timestamp to query the object state at
+         */
+        timestamp: string;
+    };
+    url: '/api/invoices/{uuid}/history/at/';
+};
+
+export type InvoicesHistoryAtRetrieveErrors = {
+    400: {
+        [key: string]: unknown;
+    };
+    404: {
+        [key: string]: unknown;
+    };
+};
+
+export type InvoicesHistoryAtRetrieveError = InvoicesHistoryAtRetrieveErrors[keyof InvoicesHistoryAtRetrieveErrors];
+
+export type InvoicesHistoryAtRetrieveResponses = {
+    200: VersionHistory;
+};
+
+export type InvoicesHistoryAtRetrieveResponse = InvoicesHistoryAtRetrieveResponses[keyof InvoicesHistoryAtRetrieveResponses];
+
 export type InvoicesItemsRetrieveData = {
     body?: never;
     path: {
@@ -36106,6 +36305,103 @@ export type KeysRetrieveResponses = {
 };
 
 export type KeysRetrieveResponse = KeysRetrieveResponses[keyof KeysRetrieveResponses];
+
+export type KeysHistoryListData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * Created after
+         */
+        created?: string;
+        /**
+         * Filter versions created after this timestamp (ISO 8601)
+         */
+        created_after?: string;
+        /**
+         * Filter versions created before this timestamp (ISO 8601)
+         */
+        created_before?: string;
+        fingerprint_md5?: string;
+        fingerprint_sha256?: string;
+        fingerprint_sha512?: string;
+        is_shared?: boolean;
+        /**
+         * Modified after
+         */
+        modified?: string;
+        /**
+         * Name
+         */
+        name?: string;
+        /**
+         * Name (exact)
+         */
+        name_exact?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-name' | 'name'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * User UUID
+         */
+        user_uuid?: string;
+        /**
+         * UUID
+         */
+        uuid?: string;
+    };
+    url: '/api/keys/{uuid}/history/';
+};
+
+export type KeysHistoryListResponses = {
+    200: Array<VersionHistory>;
+};
+
+export type KeysHistoryListResponse = KeysHistoryListResponses[keyof KeysHistoryListResponses];
+
+export type KeysHistoryAtRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query: {
+        /**
+         * ISO 8601 timestamp to query the object state at
+         */
+        timestamp: string;
+    };
+    url: '/api/keys/{uuid}/history/at/';
+};
+
+export type KeysHistoryAtRetrieveErrors = {
+    400: {
+        [key: string]: unknown;
+    };
+    404: {
+        [key: string]: unknown;
+    };
+};
+
+export type KeysHistoryAtRetrieveError = KeysHistoryAtRetrieveErrors[keyof KeysHistoryAtRetrieveErrors];
+
+export type KeysHistoryAtRetrieveResponses = {
+    200: VersionHistory;
+};
+
+export type KeysHistoryAtRetrieveResponse = KeysHistoryAtRetrieveResponses[keyof KeysHistoryAtRetrieveResponses];
 
 export type LexisLinksListData = {
     body?: never;
@@ -41833,6 +42129,79 @@ export type MarketplacePlansDeleteOrganizationGroupsResponses = {
 
 export type MarketplacePlansDeleteOrganizationGroupsResponse = MarketplacePlansDeleteOrganizationGroupsResponses[keyof MarketplacePlansDeleteOrganizationGroupsResponses];
 
+export type MarketplacePlansHistoryListData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * Filter versions created after this timestamp (ISO 8601)
+         */
+        created_after?: string;
+        /**
+         * Filter versions created before this timestamp (ISO 8601)
+         */
+        created_before?: string;
+        offering?: string;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        offering_slug?: Array<string>;
+        /**
+         * Offering UUID
+         */
+        offering_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        parent_offering_uuid?: string;
+    };
+    url: '/api/marketplace-plans/{uuid}/history/';
+};
+
+export type MarketplacePlansHistoryListResponses = {
+    200: Array<VersionHistory>;
+};
+
+export type MarketplacePlansHistoryListResponse = MarketplacePlansHistoryListResponses[keyof MarketplacePlansHistoryListResponses];
+
+export type MarketplacePlansHistoryAtRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query: {
+        /**
+         * ISO 8601 timestamp to query the object state at
+         */
+        timestamp: string;
+    };
+    url: '/api/marketplace-plans/{uuid}/history/at/';
+};
+
+export type MarketplacePlansHistoryAtRetrieveErrors = {
+    400: {
+        [key: string]: unknown;
+    };
+    404: {
+        [key: string]: unknown;
+    };
+};
+
+export type MarketplacePlansHistoryAtRetrieveError = MarketplacePlansHistoryAtRetrieveErrors[keyof MarketplacePlansHistoryAtRetrieveErrors];
+
+export type MarketplacePlansHistoryAtRetrieveResponses = {
+    200: VersionHistory;
+};
+
+export type MarketplacePlansHistoryAtRetrieveResponse = MarketplacePlansHistoryAtRetrieveResponses[keyof MarketplacePlansHistoryAtRetrieveResponses];
+
 export type MarketplacePlansUpdateDiscountsData = {
     body: DiscountsUpdateRequest;
     path: {
@@ -43638,6 +44007,214 @@ export type MarketplaceProviderOfferingsGlauthUsersConfigRetrieveResponses = {
 };
 
 export type MarketplaceProviderOfferingsGlauthUsersConfigRetrieveResponse = MarketplaceProviderOfferingsGlauthUsersConfigRetrieveResponses[keyof MarketplaceProviderOfferingsGlauthUsersConfigRetrieveResponses];
+
+export type MarketplaceProviderOfferingsHistoryListData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * Accessible via calls
+         */
+        accessible_via_calls?: boolean;
+        /**
+         * Allowed customer UUID
+         */
+        allowed_customer_uuid?: string;
+        /**
+         * Offering attributes (JSON)
+         */
+        attributes?: string;
+        /**
+         * Billable
+         */
+        billable?: boolean;
+        can_create_offering_user?: boolean;
+        /**
+         * Category group UUID
+         */
+        category_group_uuid?: string;
+        /**
+         * Category UUID
+         */
+        category_uuid?: string;
+        /**
+         * Created after
+         */
+        created?: string;
+        /**
+         * Filter versions created after this timestamp (ISO 8601)
+         */
+        created_after?: string;
+        /**
+         * Filter versions created before this timestamp (ISO 8601)
+         */
+        created_before?: string;
+        /**
+         * Customer URL
+         */
+        customer?: string;
+        /**
+         * Customer UUID
+         */
+        customer_uuid?: string;
+        /**
+         * Description contains
+         */
+        description?: string;
+        /**
+         * Has Active Terms of Service
+         */
+        has_active_terms_of_service?: boolean;
+        /**
+         * Has Terms of Service
+         */
+        has_terms_of_service?: boolean;
+        /**
+         * Keyword
+         */
+        keyword?: string;
+        /**
+         * Modified after
+         */
+        modified?: string;
+        /**
+         * Name
+         */
+        name?: string;
+        /**
+         * Name (exact)
+         */
+        name_exact?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-name' | '-state' | '-total_cost' | '-total_cost_estimated' | '-total_customers' | '-type' | 'created' | 'name' | 'state' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type'>;
+        /**
+         * Organization group UUID
+         */
+        organization_group_uuid?: Array<string>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Parent offering UUID
+         */
+        parent_uuid?: string;
+        /**
+         * Project UUID
+         */
+        project_uuid?: string;
+        /**
+         * Search by offering name, slug or description
+         */
+        query?: string;
+        /**
+         * Resource customer UUID
+         */
+        resource_customer_uuid?: string;
+        /**
+         * Resource project UUID
+         */
+        resource_project_uuid?: string;
+        /**
+         * Scope UUID
+         */
+        scope_uuid?: string;
+        /**
+         * Service manager UUID
+         */
+        service_manager_uuid?: string;
+        /**
+         * Shared
+         */
+        shared?: boolean;
+        /**
+         * Offering state
+         *
+         *
+         */
+        state?: Array<'Active' | 'Archived' | 'Draft' | 'Paused' | 'Unavailable'>;
+        /**
+         * Tag UUID (OR logic)
+         */
+        tag?: Array<string>;
+        /**
+         * Tag name (OR logic)
+         */
+        tag_name?: Array<string>;
+        /**
+         * Tag names with AND logic (comma-separated)
+         */
+        tag_names_and?: string;
+        /**
+         * Tag UUIDs with AND logic (comma-separated)
+         */
+        tags_and?: string;
+        /**
+         * Offering type
+         */
+        type?: Array<string>;
+        /**
+         * User Has Consent
+         */
+        user_has_consent?: boolean;
+        /**
+         * User Has Offering User
+         */
+        user_has_offering_user?: boolean;
+        /**
+         * Comma-separated offering UUIDs
+         */
+        uuid_list?: string;
+    };
+    url: '/api/marketplace-provider-offerings/{uuid}/history/';
+};
+
+export type MarketplaceProviderOfferingsHistoryListResponses = {
+    200: Array<VersionHistory>;
+};
+
+export type MarketplaceProviderOfferingsHistoryListResponse = MarketplaceProviderOfferingsHistoryListResponses[keyof MarketplaceProviderOfferingsHistoryListResponses];
+
+export type MarketplaceProviderOfferingsHistoryAtRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query: {
+        /**
+         * ISO 8601 timestamp to query the object state at
+         */
+        timestamp: string;
+    };
+    url: '/api/marketplace-provider-offerings/{uuid}/history/at/';
+};
+
+export type MarketplaceProviderOfferingsHistoryAtRetrieveErrors = {
+    400: {
+        [key: string]: unknown;
+    };
+    404: {
+        [key: string]: unknown;
+    };
+};
+
+export type MarketplaceProviderOfferingsHistoryAtRetrieveError = MarketplaceProviderOfferingsHistoryAtRetrieveErrors[keyof MarketplaceProviderOfferingsHistoryAtRetrieveErrors];
+
+export type MarketplaceProviderOfferingsHistoryAtRetrieveResponses = {
+    200: VersionHistory;
+};
+
+export type MarketplaceProviderOfferingsHistoryAtRetrieveResponse = MarketplaceProviderOfferingsHistoryAtRetrieveResponses[keyof MarketplaceProviderOfferingsHistoryAtRetrieveResponses];
 
 export type MarketplaceProviderOfferingsImportResourceData = {
     body: ImportResourceRequest;
@@ -45856,7 +46433,7 @@ export type MarketplaceProviderResourcesHistoryListData = {
 };
 
 export type MarketplaceProviderResourcesHistoryListResponses = {
-    200: Array<ResourceVersion>;
+    200: Array<VersionHistory>;
 };
 
 export type MarketplaceProviderResourcesHistoryListResponse = MarketplaceProviderResourcesHistoryListResponses[keyof MarketplaceProviderResourcesHistoryListResponses];
@@ -45868,7 +46445,7 @@ export type MarketplaceProviderResourcesHistoryAtRetrieveData = {
     };
     query: {
         /**
-         * ISO 8601 timestamp to query the resource state at
+         * ISO 8601 timestamp to query the object state at
          */
         timestamp: string;
     };
@@ -45887,7 +46464,7 @@ export type MarketplaceProviderResourcesHistoryAtRetrieveErrors = {
 export type MarketplaceProviderResourcesHistoryAtRetrieveError = MarketplaceProviderResourcesHistoryAtRetrieveErrors[keyof MarketplaceProviderResourcesHistoryAtRetrieveErrors];
 
 export type MarketplaceProviderResourcesHistoryAtRetrieveResponses = {
-    200: ResourceVersion;
+    200: VersionHistory;
 };
 
 export type MarketplaceProviderResourcesHistoryAtRetrieveResponse = MarketplaceProviderResourcesHistoryAtRetrieveResponses[keyof MarketplaceProviderResourcesHistoryAtRetrieveResponses];
@@ -47646,7 +48223,7 @@ export type MarketplaceResourcesHistoryListData = {
 };
 
 export type MarketplaceResourcesHistoryListResponses = {
-    200: Array<ResourceVersion>;
+    200: Array<VersionHistory>;
 };
 
 export type MarketplaceResourcesHistoryListResponse = MarketplaceResourcesHistoryListResponses[keyof MarketplaceResourcesHistoryListResponses];
@@ -47658,7 +48235,7 @@ export type MarketplaceResourcesHistoryAtRetrieveData = {
     };
     query: {
         /**
-         * ISO 8601 timestamp to query the resource state at
+         * ISO 8601 timestamp to query the object state at
          */
         timestamp: string;
     };
@@ -47677,7 +48254,7 @@ export type MarketplaceResourcesHistoryAtRetrieveErrors = {
 export type MarketplaceResourcesHistoryAtRetrieveError = MarketplaceResourcesHistoryAtRetrieveErrors[keyof MarketplaceResourcesHistoryAtRetrieveErrors];
 
 export type MarketplaceResourcesHistoryAtRetrieveResponses = {
-    200: ResourceVersion;
+    200: VersionHistory;
 };
 
 export type MarketplaceResourcesHistoryAtRetrieveResponse = MarketplaceResourcesHistoryAtRetrieveResponses[keyof MarketplaceResourcesHistoryAtRetrieveResponses];
@@ -75827,6 +76404,155 @@ export type UsersDataAccessHistoryListResponses = {
 };
 
 export type UsersDataAccessHistoryListResponse = UsersDataAccessHistoryListResponses[keyof UsersDataAccessHistoryListResponses];
+
+export type UsersHistoryListData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * Agreement date after
+         */
+        agreement_date?: string;
+        civil_number?: string;
+        /**
+         * Filter versions created after this timestamp (ISO 8601)
+         */
+        created_after?: string;
+        /**
+         * Filter versions created before this timestamp (ISO 8601)
+         */
+        created_before?: string;
+        /**
+         * Customer UUID
+         */
+        customer_uuid?: string;
+        /**
+         * Date joined after
+         */
+        date_joined?: string;
+        description?: string;
+        /**
+         * Email
+         */
+        email?: string;
+        /**
+         * Full name
+         */
+        full_name?: string;
+        /**
+         * Is active
+         */
+        is_active?: boolean;
+        /**
+         * Is staff
+         */
+        is_staff?: boolean;
+        /**
+         * Is support
+         */
+        is_support?: boolean;
+        /**
+         * Job title
+         */
+        job_title?: string;
+        /**
+         * Date modified after
+         */
+        modified?: string;
+        /**
+         * Native name
+         */
+        native_name?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-description' | '-email' | '-full_name' | '-is_active' | '-is_staff' | '-is_support' | '-job_title' | '-native_name' | '-organization' | '-phone_number' | '-registration_method' | '-username' | 'description' | 'email' | 'full_name' | 'is_active' | 'is_staff' | 'is_support' | 'job_title' | 'native_name' | 'organization' | 'phone_number' | 'registration_method' | 'username'>;
+        /**
+         * Organization
+         */
+        organization?: string;
+        /**
+         * Organization roles
+         */
+        organization_roles?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        phone_number?: string;
+        /**
+         * Project roles
+         */
+        project_roles?: string;
+        /**
+         * Project UUID
+         */
+        project_uuid?: string;
+        /**
+         * Filter by first name, last name, civil number, username or email
+         */
+        query?: string;
+        registration_method?: string;
+        /**
+         * User keyword
+         */
+        user_keyword?: string;
+        /**
+         * Username (exact)
+         */
+        username?: string;
+        /**
+         * Comma-separated usernames
+         */
+        username_list?: string;
+    };
+    url: '/api/users/{uuid}/history/';
+};
+
+export type UsersHistoryListResponses = {
+    200: Array<VersionHistory>;
+};
+
+export type UsersHistoryListResponse = UsersHistoryListResponses[keyof UsersHistoryListResponses];
+
+export type UsersHistoryAtRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query: {
+        /**
+         * ISO 8601 timestamp to query the object state at
+         */
+        timestamp: string;
+    };
+    url: '/api/users/{uuid}/history/at/';
+};
+
+export type UsersHistoryAtRetrieveErrors = {
+    400: {
+        [key: string]: unknown;
+    };
+    404: {
+        [key: string]: unknown;
+    };
+};
+
+export type UsersHistoryAtRetrieveError = UsersHistoryAtRetrieveErrors[keyof UsersHistoryAtRetrieveErrors];
+
+export type UsersHistoryAtRetrieveResponses = {
+    200: VersionHistory;
+};
+
+export type UsersHistoryAtRetrieveResponse = UsersHistoryAtRetrieveResponses[keyof UsersHistoryAtRetrieveResponses];
 
 export type UsersPullRemoteUserData = {
     body?: never;
