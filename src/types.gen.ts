@@ -22097,6 +22097,17 @@ export type UserInfoRequest = {
     user: string;
 };
 
+export type UserJobTitleCount = {
+    /**
+     * Job title
+     */
+    job_title: string | null;
+    /**
+     * Number of users
+     */
+    count: number;
+};
+
 export type UserLanguageCount = {
     language: string;
     count: number;
@@ -22148,6 +22159,17 @@ export type UserOrganizationCount = {
      * Organization name
      */
     organization: string;
+    /**
+     * Number of users
+     */
+    count: number;
+};
+
+export type UserOrganizationTypeCount = {
+    /**
+     * Organization type (SCHAC URN)
+     */
+    organization_type: string | null;
     /**
      * Number of users
      */
@@ -53587,6 +53609,51 @@ export type MarketplaceStatsUserIdentitySourceCountCountResponses = {
     200: unknown;
 };
 
+export type MarketplaceStatsUserJobTitleCountListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-stats/user_job_title_count/';
+};
+
+export type MarketplaceStatsUserJobTitleCountListResponses = {
+    200: Array<UserJobTitleCount>;
+};
+
+export type MarketplaceStatsUserJobTitleCountListResponse = MarketplaceStatsUserJobTitleCountListResponses[keyof MarketplaceStatsUserJobTitleCountListResponses];
+
+export type MarketplaceStatsUserJobTitleCountCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-stats/user_job_title_count/';
+};
+
+export type MarketplaceStatsUserJobTitleCountCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type MarketplaceStatsUserOrganizationCountListData = {
     body?: never;
     path?: never;
@@ -53626,6 +53693,51 @@ export type MarketplaceStatsUserOrganizationCountCountData = {
 };
 
 export type MarketplaceStatsUserOrganizationCountCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type MarketplaceStatsUserOrganizationTypeCountListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-stats/user_organization_type_count/';
+};
+
+export type MarketplaceStatsUserOrganizationTypeCountListResponses = {
+    200: Array<UserOrganizationTypeCount>;
+};
+
+export type MarketplaceStatsUserOrganizationTypeCountListResponse = MarketplaceStatsUserOrganizationTypeCountListResponses[keyof MarketplaceStatsUserOrganizationTypeCountListResponses];
+
+export type MarketplaceStatsUserOrganizationTypeCountCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-stats/user_organization_type_count/';
+};
+
+export type MarketplaceStatsUserOrganizationTypeCountCountResponses = {
     /**
      * No response body
      */
