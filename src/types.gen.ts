@@ -3746,6 +3746,10 @@ export type ConstanceSettings = {
     FREEIPA_GROUPNAME_PREFIX?: string;
     FREEIPA_BLACKLISTED_USERNAMES?: Array<string>;
     FREEIPA_GROUP_SYNCHRONIZATION_ENABLED?: boolean;
+    SCIM_MEMBERSHIP_SYNC_ENABLED?: boolean;
+    SCIM_API_URL?: string;
+    SCIM_API_KEY?: string;
+    SCIM_URN_NAMESPACE?: string;
     KEYCLOAK_ICON?: string | null;
     COUNTRIES?: Array<string>;
     OIDC_AUTH_URL?: string;
@@ -3964,6 +3968,10 @@ export type ConstanceSettingsRequest = {
     FREEIPA_GROUPNAME_PREFIX?: string;
     FREEIPA_BLACKLISTED_USERNAMES?: Array<string>;
     FREEIPA_GROUP_SYNCHRONIZATION_ENABLED?: boolean;
+    SCIM_MEMBERSHIP_SYNC_ENABLED?: boolean;
+    SCIM_API_URL?: string;
+    SCIM_API_KEY?: string;
+    SCIM_URN_NAMESPACE?: string;
     KEYCLOAK_ICON?: (Blob | File) | null;
     COUNTRIES?: Array<string>;
     OIDC_AUTH_URL?: string;
@@ -5916,6 +5924,8 @@ export type FreeipaProfileRequest = {
      */
     agreement_date?: string;
 };
+
+export type FrequencyEnum = 'weekly' | 'biweekly' | 'monthly';
 
 export type GenderEnum = 0 | 1 | 2 | 9;
 
@@ -14145,6 +14155,23 @@ export type PatchedProjectCreditRequest = {
     mark_unused_credit_as_spent_on_project_termination?: boolean;
 };
 
+export type PatchedProjectDigestConfigRequest = {
+    is_enabled?: boolean;
+    frequency?: FrequencyEnum;
+    /**
+     * List of section keys to include. Empty means all.
+     */
+    enabled_sections?: string;
+    /**
+     * For weekly/biweekly: 0=Sunday..6=Saturday
+     */
+    day_of_week?: number;
+    /**
+     * For monthly: day of month (1-28)
+     */
+    day_of_month?: number;
+};
+
 export type PatchedProjectEstimatedCostPolicyRequest = {
     scope?: string;
     actions?: string;
@@ -15517,6 +15544,55 @@ export type ProjectDetailsResponse = {
     readonly fully_completed_projects: number;
     readonly projects_requiring_review: number;
     readonly project_details: Array<ProjectDetail>;
+};
+
+export type ProjectDigestConfig = {
+    readonly uuid: string;
+    is_enabled?: boolean;
+    frequency?: FrequencyEnum;
+    /**
+     * List of section keys to include. Empty means all.
+     */
+    enabled_sections?: string;
+    /**
+     * For weekly/biweekly: 0=Sunday..6=Saturday
+     */
+    day_of_week?: number;
+    /**
+     * For monthly: day of month (1-28)
+     */
+    day_of_month?: number;
+    readonly last_sent_at: string | null;
+    readonly available_sections: Array<{
+        [key: string]: string;
+    }>;
+};
+
+export type ProjectDigestConfigRequest = {
+    is_enabled?: boolean;
+    frequency?: FrequencyEnum;
+    /**
+     * List of section keys to include. Empty means all.
+     */
+    enabled_sections?: string;
+    /**
+     * For weekly/biweekly: 0=Sunday..6=Saturday
+     */
+    day_of_week?: number;
+    /**
+     * For monthly: day of month (1-28)
+     */
+    day_of_month?: number;
+};
+
+export type ProjectDigestPreviewRequest = {
+    project_uuid: string;
+};
+
+export type ProjectDigestPreviewResponse = {
+    subject: string;
+    html_body: string;
+    text_body: string;
 };
 
 export type ProjectEstimatedCostPolicy = {
@@ -20400,6 +20476,10 @@ export type Saml2Provider = {
     url: string;
 };
 
+export type ScimSyncAllResponse = {
+    detail: string;
+};
+
 export type Screenshot = {
     readonly url: string;
     readonly uuid: string;
@@ -24195,6 +24275,10 @@ export type ConstanceSettingsRequestForm = {
     FREEIPA_GROUPNAME_PREFIX?: string;
     FREEIPA_BLACKLISTED_USERNAMES?: Array<string>;
     FREEIPA_GROUP_SYNCHRONIZATION_ENABLED?: boolean;
+    SCIM_MEMBERSHIP_SYNC_ENABLED?: boolean;
+    SCIM_API_URL?: string;
+    SCIM_API_KEY?: string;
+    SCIM_URN_NAMESPACE?: string;
     KEYCLOAK_ICON?: (Blob | File) | null;
     COUNTRIES?: Array<string>;
     OIDC_AUTH_URL?: string;
@@ -24413,6 +24497,10 @@ export type ConstanceSettingsRequestMultipart = {
     FREEIPA_GROUPNAME_PREFIX?: string;
     FREEIPA_BLACKLISTED_USERNAMES?: Array<string>;
     FREEIPA_GROUP_SYNCHRONIZATION_ENABLED?: boolean;
+    SCIM_MEMBERSHIP_SYNC_ENABLED?: boolean;
+    SCIM_API_URL?: string;
+    SCIM_API_KEY?: string;
+    SCIM_URN_NAMESPACE?: string;
     KEYCLOAK_ICON?: (Blob | File) | null;
     COUNTRIES?: Array<string>;
     OIDC_AUTH_URL?: string;
@@ -32585,6 +32673,52 @@ export type CustomersListUsersListResponses = {
 
 export type CustomersListUsersListResponse = CustomersListUsersListResponses[keyof CustomersListUsersListResponses];
 
+export type CustomersProjectDigestConfigRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/customers/{uuid}/project-digest-config/';
+};
+
+export type CustomersProjectDigestConfigRetrieveResponses = {
+    200: ProjectDigestConfig;
+};
+
+export type CustomersProjectDigestConfigRetrieveResponse = CustomersProjectDigestConfigRetrieveResponses[keyof CustomersProjectDigestConfigRetrieveResponses];
+
+export type CustomersProjectDigestConfigPreviewData = {
+    body: ProjectDigestPreviewRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/customers/{uuid}/project-digest-config/preview/';
+};
+
+export type CustomersProjectDigestConfigPreviewResponses = {
+    200: ProjectDigestPreviewResponse;
+};
+
+export type CustomersProjectDigestConfigPreviewResponse = CustomersProjectDigestConfigPreviewResponses[keyof CustomersProjectDigestConfigPreviewResponses];
+
+export type CustomersProjectDigestConfigSendTestData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/customers/{uuid}/project-digest-config/send-test/';
+};
+
+export type CustomersProjectDigestConfigSendTestResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type CustomersStatsRetrieveData = {
     body?: never;
     path: {
@@ -32604,6 +32738,36 @@ export type CustomersStatsRetrieveResponses = {
 };
 
 export type CustomersStatsRetrieveResponse = CustomersStatsRetrieveResponses[keyof CustomersStatsRetrieveResponses];
+
+export type CustomersUpdateProjectDigestConfigPartialUpdateData = {
+    body?: PatchedProjectDigestConfigRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/customers/{uuid}/update-project-digest-config/';
+};
+
+export type CustomersUpdateProjectDigestConfigPartialUpdateResponses = {
+    200: ProjectDigestConfig;
+};
+
+export type CustomersUpdateProjectDigestConfigPartialUpdateResponse = CustomersUpdateProjectDigestConfigPartialUpdateResponses[keyof CustomersUpdateProjectDigestConfigPartialUpdateResponses];
+
+export type CustomersUpdateProjectDigestConfigUpdateData = {
+    body?: ProjectDigestConfigRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/customers/{uuid}/update-project-digest-config/';
+};
+
+export type CustomersUpdateProjectDigestConfigUpdateResponses = {
+    200: ProjectDigestConfig;
+};
+
+export type CustomersUpdateProjectDigestConfigUpdateResponse = CustomersUpdateProjectDigestConfigUpdateResponses[keyof CustomersUpdateProjectDigestConfigUpdateResponses];
 
 export type CustomersUpdateOrganizationGroupsData = {
     body?: OrganizationGroupsRequest;
@@ -77057,6 +77221,19 @@ export type UsersProfileCompletenessCountResponses = {
      */
     200: unknown;
 };
+
+export type UsersScimSyncAllData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/users/scim_sync_all/';
+};
+
+export type UsersScimSyncAllResponses = {
+    200: ScimSyncAllResponse;
+};
+
+export type UsersScimSyncAllResponse = UsersScimSyncAllResponses[keyof UsersScimSyncAllResponses];
 
 export type UsersUserActiveStatusCountListData = {
     body?: never;
