@@ -14874,9 +14874,9 @@ export type PatchedSlurmPeriodicUsagePolicyRequest = {
      */
     tres_billing_weights?: unknown;
     /**
-     * Fairshare decay half-life in days (matches SLURM PriorityDecayHalfLife)
+     * Maximum percentage of base allocation that can carry over from unused previous period (0-100)
      */
-    fairshare_decay_half_life?: number;
+    carryover_factor?: number;
     /**
      * Grace period ratio (0.2 = 20% overconsumption allowed)
      */
@@ -20968,6 +20968,10 @@ export type SlurmCommandResultRequest = {
      * Execution mode of the command
      */
     mode?: ModeEnum;
+    /**
+     * List of shell commands actually executed by the site agent
+     */
+    commands_executed?: Array<string>;
 };
 
 export type SlurmPeriodicUsagePolicy = {
@@ -21007,9 +21011,9 @@ export type SlurmPeriodicUsagePolicy = {
      */
     tres_billing_weights?: unknown;
     /**
-     * Fairshare decay half-life in days (matches SLURM PriorityDecayHalfLife)
+     * Maximum percentage of base allocation that can carry over from unused previous period (0-100)
      */
-    fairshare_decay_half_life?: number;
+    carryover_factor?: number;
     /**
      * Grace period ratio (0.2 = 20% overconsumption allowed)
      */
@@ -21055,9 +21059,9 @@ export type SlurmPeriodicUsagePolicyRequest = {
      */
     tres_billing_weights?: unknown;
     /**
-     * Fairshare decay half-life in days (matches SLURM PriorityDecayHalfLife)
+     * Maximum percentage of base allocation that can carry over from unused previous period (0-100)
      */
-    fairshare_decay_half_life?: number;
+    carryover_factor?: number;
     /**
      * Grace period ratio (0.2 = 20% overconsumption allowed)
      */
@@ -21078,12 +21082,11 @@ export type SlurmPeriodicUsagePolicyRequest = {
 
 export type SlurmPolicyCarryover = {
     previous_usage: number;
-    days_elapsed: number;
-    half_life: number;
-    decay_factor: number;
-    effective_usage: number;
+    carryover_factor: number;
     base_allocation: number;
-    unused_carryover: number;
+    unused: number;
+    carryover_cap: number;
+    carryover: number;
     total_allocation: number;
 };
 
@@ -21203,17 +21206,13 @@ export type SlurmPolicyPreviewRequestRequest = {
      */
     previous_usage?: number;
     /**
-     * Decay half-life in days for fairshare calculations
+     * Maximum percentage of base allocation that can carry over (0-100)
      */
-    fairshare_decay_half_life?: number;
+    carryover_factor?: number;
     /**
      * Whether unused allocation carries over to next period
      */
     carryover_enabled?: boolean;
-    /**
-     * Days elapsed since previous period (90 for quarterly)
-     */
-    days_elapsed?: number;
     /**
      * Optional resource UUID to use for current usage data
      */
@@ -21235,7 +21234,7 @@ export type SlurmPolicyPreviewResponse = {
     carryover: SlurmPolicyCarryover | null;
     thresholds: SlurmPolicyThresholds;
     grace_ratio: number;
-    half_life: number;
+    carryover_factor: number;
     current_usage?: number;
     daily_usage_rate?: number;
     usage_percentage?: number;
