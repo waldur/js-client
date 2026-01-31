@@ -4540,7 +4540,7 @@ export type CustomerEstimatedCostPolicy = {
      */
     options?: unknown;
     limit_cost: number;
-    period?: PeriodEnum;
+    period?: PolicyPeriodEnum;
     readonly period_name: string;
     readonly customer_credit: number;
     billing_price_estimate: NestedPriceEstimate;
@@ -4554,7 +4554,7 @@ export type CustomerEstimatedCostPolicyRequest = {
      */
     options?: unknown;
     limit_cost: number;
-    period?: PeriodEnum;
+    period?: PolicyPeriodEnum;
 };
 
 export type CustomerIndustryFlagStats = {
@@ -6149,6 +6149,8 @@ export type GroupInvitationRequest = {
      */
     user_identity_sources?: unknown;
 };
+
+export type GrowthPeriodEnum = 'weekly' | 'monthly';
 
 export type GuestOsEnum = 'DOS' | 'WIN_31' | 'WIN_95' | 'WIN_98' | 'WIN_ME' | 'WIN_NT' | 'WIN_2000_PRO' | 'WIN_2000_SERV' | 'WIN_2000_ADV_SERV' | 'WIN_XP_HOME' | 'WIN_XP_PRO' | 'WIN_XP_PRO_64' | 'WIN_NET_WEB' | 'WIN_NET_STANDARD' | 'WIN_NET_ENTERPRISE' | 'WIN_NET_DATACENTER' | 'WIN_NET_BUSINESS' | 'WIN_NET_STANDARD_64' | 'WIN_NET_ENTERPRISE_64' | 'WIN_LONGHORN' | 'WIN_LONGHORN_64' | 'WIN_NET_DATACENTER_64' | 'WIN_VISTA' | 'WIN_VISTA_64' | 'WINDOWS_7' | 'WINDOWS_7_64' | 'WINDOWS_7_SERVER_64' | 'WINDOWS_8' | 'WINDOWS_8_64' | 'WINDOWS_8_SERVER_64' | 'WINDOWS_9' | 'WINDOWS_9_64' | 'WINDOWS_9_SERVER_64' | 'WINDOWS_HYPERV' | 'FREEBSD' | 'FREEBSD_64' | 'REDHAT' | 'RHEL_2' | 'RHEL_3' | 'RHEL_3_64' | 'RHEL_4' | 'RHEL_4_64' | 'RHEL_5' | 'RHEL_5_64' | 'RHEL_6' | 'RHEL_6_64' | 'RHEL_7' | 'RHEL_7_64' | 'CENTOS' | 'CENTOS_64' | 'CENTOS_6' | 'CENTOS_6_64' | 'CENTOS_7' | 'CENTOS_7_64' | 'ORACLE_LINUX' | 'ORACLE_LINUX_64' | 'ORACLE_LINUX_6' | 'ORACLE_LINUX_6_64' | 'ORACLE_LINUX_7' | 'ORACLE_LINUX_7_64' | 'SUSE' | 'SUSE_64' | 'SLES' | 'SLES_64' | 'SLES_10' | 'SLES_10_64' | 'SLES_11' | 'SLES_11_64' | 'SLES_12' | 'SLES_12_64' | 'NLD_9' | 'OES' | 'SJDS' | 'MANDRAKE' | 'MANDRIVA' | 'MANDRIVA_64' | 'TURBO_LINUX' | 'TURBO_LINUX_64' | 'UBUNTU' | 'UBUNTU_64' | 'DEBIAN_4' | 'DEBIAN_4_64' | 'DEBIAN_5' | 'DEBIAN_5_64' | 'DEBIAN_6' | 'DEBIAN_6_64' | 'DEBIAN_7' | 'DEBIAN_7_64' | 'DEBIAN_8' | 'DEBIAN_8_64' | 'DEBIAN_9' | 'DEBIAN_9_64' | 'DEBIAN_10' | 'DEBIAN_10_64' | 'ASIANUX_3' | 'ASIANUX_3_64' | 'ASIANUX_4' | 'ASIANUX_4_64' | 'ASIANUX_5_64' | 'ASIANUX_7_64' | 'OPENSUSE' | 'OPENSUSE_64' | 'FEDORA' | 'FEDORA_64' | 'COREOS_64' | 'VMWARE_PHOTON_64' | 'OTHER_24X_LINUX' | 'OTHER_24X_LINUX_64' | 'OTHER_26X_LINUX' | 'OTHER_26X_LINUX_64' | 'OTHER_3X_LINUX' | 'OTHER_3X_LINUX_64' | 'OTHER_LINUX' | 'GENERIC_LINUX' | 'OTHER_LINUX_64' | 'SOLARIS_6' | 'SOLARIS_7' | 'SOLARIS_8' | 'SOLARIS_9' | 'SOLARIS_10' | 'SOLARIS_10_64' | 'SOLARIS_11_64' | 'OS2' | 'ECOMSTATION' | 'ECOMSTATION_2' | 'NETWARE_4' | 'NETWARE_5' | 'NETWARE_6' | 'OPENSERVER_5' | 'OPENSERVER_6' | 'UNIXWARE_7' | 'DARWIN' | 'DARWIN_64' | 'DARWIN_10' | 'DARWIN_10_64' | 'DARWIN_11' | 'DARWIN_11_64' | 'DARWIN_12_64' | 'DARWIN_13_64' | 'DARWIN_14_64' | 'DARWIN_15_64' | 'DARWIN_16_64' | 'VMKERNEL' | 'VMKERNEL_5' | 'VMKERNEL_6' | 'VMKERNEL_65' | 'OTHER' | 'OTHER_64';
 
@@ -8890,14 +8892,14 @@ export type NestedColumnRequest = {
 export type NestedCustomerUsagePolicyComponent = {
     readonly type: string;
     limit: number;
-    period?: PeriodEnum;
+    period?: PolicyPeriodEnum;
     readonly period_name: string;
     component: string;
 };
 
 export type NestedCustomerUsagePolicyComponentRequest = {
     limit: number;
-    period?: PeriodEnum;
+    period?: PolicyPeriodEnum;
     component: string;
 };
 
@@ -9908,7 +9910,7 @@ export type OfferingEstimatedCostPolicy = {
      */
     options?: unknown;
     limit_cost: number;
-    period?: PeriodEnum;
+    period?: PolicyPeriodEnum;
     readonly period_name: string;
     organization_groups?: Array<string>;
     /**
@@ -9925,7 +9927,7 @@ export type OfferingEstimatedCostPolicyRequest = {
      */
     options?: unknown;
     limit_cost: number;
-    period?: PeriodEnum;
+    period?: PolicyPeriodEnum;
     organization_groups?: Array<string>;
     /**
      * If True, policy applies to all customers. Mutually exclusive with organization_groups.
@@ -10593,7 +10595,7 @@ export type OfferingUsagePolicy = {
      */
     apply_to_all?: boolean;
     component_limits_set: Array<NestedOfferingComponentLimit>;
-    period?: PeriodEnum;
+    period?: PolicyPeriodEnum;
     readonly period_name: string;
 };
 
@@ -10610,7 +10612,7 @@ export type OfferingUsagePolicyRequest = {
      */
     apply_to_all?: boolean;
     component_limits_set: Array<NestedOfferingComponentLimitRequest>;
-    period?: PeriodEnum;
+    period?: PolicyPeriodEnum;
 };
 
 export type OfferingUser = {
@@ -13426,7 +13428,7 @@ export type PatchedCustomerEstimatedCostPolicyRequest = {
      */
     options?: unknown;
     limit_cost?: number;
-    period?: PeriodEnum;
+    period?: PolicyPeriodEnum;
 };
 
 export type PatchedCustomerRequest = {
@@ -13800,7 +13802,7 @@ export type PatchedOfferingEstimatedCostPolicyRequest = {
      */
     options?: unknown;
     limit_cost?: number;
-    period?: PeriodEnum;
+    period?: PolicyPeriodEnum;
     organization_groups?: Array<string>;
     /**
      * If True, policy applies to all customers. Mutually exclusive with organization_groups.
@@ -13929,7 +13931,7 @@ export type PatchedOfferingUsagePolicyRequest = {
      */
     apply_to_all?: boolean;
     component_limits_set?: Array<NestedOfferingComponentLimitRequest>;
-    period?: PeriodEnum;
+    period?: PolicyPeriodEnum;
 };
 
 export type PatchedOfferingUserAttributeConfigRequest = {
@@ -14180,7 +14182,7 @@ export type PatchedProjectEstimatedCostPolicyRequest = {
      */
     options?: unknown;
     limit_cost?: number;
-    period?: PeriodEnum;
+    period?: PolicyPeriodEnum;
 };
 
 export type PatchedProjectInfoRequest = {
@@ -14860,7 +14862,7 @@ export type PatchedSlurmPeriodicUsagePolicyRequest = {
      */
     apply_to_all?: boolean;
     component_limits_set?: Array<NestedOfferingComponentLimitRequest>;
-    period?: PeriodEnum;
+    period?: PolicyPeriodEnum;
     /**
      * SLURM limit type to apply
      */
@@ -15143,8 +15145,6 @@ export type PaymentUrlRequest = {
     payment_url?: string;
 };
 
-export type PeriodEnum = 1 | 2 | 3 | 4;
-
 export type Permission = {
     readonly user_uuid?: string;
     readonly user_name?: string;
@@ -15318,6 +15318,8 @@ export type PluginOfferingType = {
 };
 
 export type PolicyEnum = 'affinity';
+
+export type PolicyPeriodEnum = 1 | 2 | 3 | 4;
 
 export type PolicyTypeEnum = 'access_as_shared' | 'access_as_external';
 
@@ -15612,7 +15614,7 @@ export type ProjectEstimatedCostPolicy = {
      */
     options?: unknown;
     limit_cost: number;
-    period?: PeriodEnum;
+    period?: PolicyPeriodEnum;
     readonly period_name: string;
     readonly project_credit: number | null;
     readonly customer_credit: number | null;
@@ -15627,7 +15629,7 @@ export type ProjectEstimatedCostPolicyRequest = {
      */
     options?: unknown;
     limit_cost: number;
-    period?: PeriodEnum;
+    period?: PolicyPeriodEnum;
 };
 
 export type ProjectHyperlinkRequest = {
@@ -20996,7 +20998,7 @@ export type SlurmPeriodicUsagePolicy = {
      */
     apply_to_all?: boolean;
     component_limits_set: Array<NestedOfferingComponentLimit>;
-    period?: PeriodEnum;
+    period?: PolicyPeriodEnum;
     readonly period_name: string;
     /**
      * SLURM limit type to apply
@@ -21045,7 +21047,7 @@ export type SlurmPeriodicUsagePolicyRequest = {
      */
     apply_to_all?: boolean;
     component_limits_set: Array<NestedOfferingComponentLimitRequest>;
-    period?: PeriodEnum;
+    period?: PolicyPeriodEnum;
     /**
      * SLURM limit type to apply
      */
@@ -21597,6 +21599,25 @@ export type SupportedCountriesResponse = {
 
 export type SyncStatusEnum = 'in_sync' | 'out_of_sync' | 'sync_failed';
 
+export type TableGrowthAlert = {
+    /**
+     * Name of the table triggering the alert
+     */
+    table_name: string;
+    /**
+     * Growth period that exceeded the threshold
+     */
+    period: GrowthPeriodEnum;
+    /**
+     * Actual growth percentage observed
+     */
+    growth_percent: number;
+    /**
+     * Configured threshold that was exceeded
+     */
+    threshold: number;
+};
+
 export type TableGrowthStats = {
     /**
      * Name of the database table
@@ -21665,6 +21686,10 @@ export type TableGrowthStatsResponse = {
      * Table growth statistics sorted by growth rate
      */
     tables: Array<TableGrowthStats>;
+    /**
+     * List of tables that exceeded configured growth thresholds
+     */
+    alerts: Array<TableGrowthAlert>;
 };
 
 export type TableSize = {
