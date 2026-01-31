@@ -581,6 +581,578 @@ export type AnswerSubmitResponse = {
     completion: ChecklistCompletion;
 };
 
+export type ArrowBillingLine = {
+    vendor_name: string;
+    subscription_reference: string;
+    /**
+     * Arrow license reference. Used to fetch consumption data.
+     */
+    license_reference: string;
+    offer_sku: string;
+    classification: string;
+    quantity: string | null;
+    sell_price: string | null;
+    buy_price: string | null;
+};
+
+export type ArrowBillingSync = {
+    readonly uuid: string;
+    readonly url: string;
+    readonly customer_mapping: string;
+    readonly customer_mapping_uuid: string;
+    /**
+     * Arrow customer ID (e.g., 'XSP661245')
+     */
+    readonly arrow_reference: string;
+    readonly waldur_customer_name: string;
+    /**
+     * Arrow statement ID
+     */
+    readonly statement_reference: string;
+    /**
+     * Report period in YYYY-MM format
+     */
+    readonly report_period: string;
+    /**
+     * Arrow billing state (pending/validated)
+     */
+    readonly arrow_state: string;
+    /**
+     * Waldur sync state
+     */
+    state: ArrowBillingSyncStateEnum;
+    readonly state_display: string;
+    /**
+     * Total buy amount
+     */
+    readonly buy_total: string;
+    /**
+     * Total sell amount
+     */
+    readonly sell_total: string;
+    /**
+     * Currency code
+     */
+    readonly currency: string;
+    readonly invoice_uuid: string;
+    /**
+     * Error message if sync failed
+     */
+    readonly error_message: string;
+    /**
+     * When billing was last synced
+     */
+    readonly synced_at: string | null;
+    /**
+     * When Arrow validated the billing
+     */
+    readonly validated_at: string | null;
+    /**
+     * When reconciliation was applied
+     */
+    readonly reconciled_at: string | null;
+    readonly items: Array<ArrowBillingSyncItem>;
+    readonly created: string;
+    readonly modified: string;
+};
+
+export type ArrowBillingSyncItem = {
+    readonly uuid: string;
+    /**
+     * Arrow line ID
+     */
+    readonly arrow_line_reference: string;
+    readonly invoice_item_uuid: string;
+    /**
+     * Original price for reconciliation tracking
+     */
+    readonly original_price: string;
+    readonly compensation_item_uuid: string;
+    /**
+     * Vendor name (e.g., Microsoft)
+     */
+    readonly vendor_name: string;
+    /**
+     * Arrow subscription reference
+     */
+    readonly subscription_reference: string;
+    /**
+     * Classification (IAAS/SAAS)
+     */
+    readonly classification: string;
+    /**
+     * Line item description
+     */
+    readonly description: string;
+    /**
+     * Quantity
+     */
+    readonly quantity: string;
+    readonly created: string;
+};
+
+export type ArrowBillingSyncItemDetail = {
+    readonly uuid: string;
+    readonly url: string;
+    readonly billing_sync: string;
+    readonly billing_sync_uuid: string;
+    /**
+     * Report period in YYYY-MM format
+     */
+    readonly report_period: string;
+    /**
+     * Arrow line ID
+     */
+    readonly arrow_line_reference: string;
+    readonly invoice_item_uuid: string;
+    /**
+     * Original price for reconciliation tracking
+     */
+    readonly original_price: string;
+    readonly compensation_item_uuid: string;
+    readonly has_compensation: boolean;
+    /**
+     * Vendor name (e.g., Microsoft)
+     */
+    readonly vendor_name: string;
+    /**
+     * Arrow subscription reference
+     */
+    readonly subscription_reference: string;
+    /**
+     * Classification (IAAS/SAAS)
+     */
+    readonly classification: string;
+    /**
+     * Line item description
+     */
+    readonly description: string;
+    /**
+     * Quantity
+     */
+    readonly quantity: string;
+    readonly created: string;
+};
+
+export type ArrowBillingSyncStateEnum = 1 | 2 | 3 | 4;
+
+export type ArrowConsumptionLine = {
+    /**
+     * Arrow license reference (same as resource backend_id).
+     */
+    license_reference: string;
+    resource_name: string | null;
+    /**
+     * UUID of the Waldur resource.
+     */
+    resource_uuid: string | null;
+    period: string;
+    sell_price: string | null;
+    buy_price: string | null;
+    /**
+     * Error message if fetch failed.
+     */
+    error?: string | null;
+};
+
+export type ArrowConsumptionRecord = {
+    readonly uuid: string;
+    readonly url: string;
+    readonly resource: string;
+    readonly resource_uuid: string;
+    readonly resource_name: string;
+    readonly project_uuid: string;
+    readonly project_name: string;
+    readonly customer_uuid: string;
+    readonly customer_name: string;
+    /**
+     * Arrow license reference (e.g., 'XSP12345')
+     */
+    readonly license_reference: string;
+    /**
+     * First day of the billing month
+     */
+    readonly billing_period: string;
+    /**
+     * Consumed sell amount from Consumption API
+     */
+    readonly consumed_sell: string;
+    /**
+     * Consumed buy amount from Consumption API
+     */
+    readonly consumed_buy: string;
+    /**
+     * Final sell amount from billing export
+     */
+    readonly final_sell: string | null;
+    /**
+     * Final buy amount from billing export
+     */
+    readonly final_buy: string | null;
+    readonly invoice_item_uuid: string;
+    readonly compensation_item_uuid: string;
+    /**
+     * When consumption was last synced from API
+     */
+    readonly last_sync_at: string | null;
+    /**
+     * When billing export data arrived
+     */
+    readonly finalized_at: string | null;
+    /**
+     * When reconciliation was applied
+     */
+    readonly reconciled_at: string | null;
+    readonly is_finalized: boolean;
+    readonly is_reconciled: boolean;
+    readonly adjustment_amount: string | null;
+    /**
+     * Raw consumption data for debugging
+     */
+    readonly raw_data: unknown;
+    readonly created: string;
+    readonly modified: string;
+};
+
+export type ArrowCredentialsRequest = {
+    /**
+     * Arrow API base URL
+     */
+    api_url: string;
+    /**
+     * Arrow API Key
+     */
+    api_key: string;
+};
+
+export type ArrowCredentialsValidationResponse = {
+    valid: boolean;
+    message?: string;
+    error?: string;
+    partner_info?: {
+        [key: string]: unknown;
+    };
+};
+
+export type ArrowCustomerDiscovery = {
+    reference: string;
+    companyName: string;
+    email?: string;
+    city?: string;
+    countryCode?: string;
+};
+
+export type ArrowCustomerMapping = {
+    readonly uuid: string;
+    readonly url: string;
+    settings: string;
+    readonly settings_uuid: string;
+    /**
+     * Arrow customer ID (e.g., 'XSP661245')
+     */
+    arrow_reference: string;
+    /**
+     * Arrow company name
+     */
+    arrow_company_name?: string;
+    waldur_customer: string;
+    readonly waldur_customer_uuid: string;
+    readonly waldur_customer_name: string;
+    /**
+     * Whether this mapping is active
+     */
+    is_active?: boolean;
+    readonly created: string;
+    readonly modified: string;
+};
+
+export type ArrowCustomerMappingCreate = {
+    readonly uuid: string;
+    readonly url: string;
+    settings: string;
+    readonly settings_uuid: string;
+    /**
+     * Arrow customer ID (e.g., 'XSP661245')
+     */
+    arrow_reference: string;
+    /**
+     * Arrow company name
+     */
+    arrow_company_name?: string;
+    waldur_customer: string;
+    readonly waldur_customer_uuid: string;
+    readonly waldur_customer_name: string;
+    /**
+     * Whether this mapping is active
+     */
+    is_active?: boolean;
+    readonly created: string;
+    readonly modified: string;
+};
+
+export type ArrowCustomerMappingCreateRequest = {
+    settings: string;
+    /**
+     * Arrow customer ID (e.g., 'XSP661245')
+     */
+    arrow_reference: string;
+    /**
+     * Arrow company name
+     */
+    arrow_company_name?: string;
+    waldur_customer: string;
+    /**
+     * Whether this mapping is active
+     */
+    is_active?: boolean;
+};
+
+export type ArrowCustomerMappingRequest = {
+    settings: string;
+    /**
+     * Arrow customer ID (e.g., 'XSP661245')
+     */
+    arrow_reference: string;
+    /**
+     * Arrow company name
+     */
+    arrow_company_name?: string;
+    waldur_customer: string;
+    /**
+     * Whether this mapping is active
+     */
+    is_active?: boolean;
+};
+
+export type ArrowLicense = {
+    /**
+     * Arrow license reference (e.g., XSP12345). Use this as resource backend_id.
+     */
+    license_reference: string;
+    vendor_name: string;
+    offer_name: string;
+    offer_sku: string;
+    friendly_name: string;
+};
+
+export type ArrowSettings = {
+    readonly uuid: string;
+    readonly url: string;
+    /**
+     * Arrow API base URL
+     */
+    api_url: string;
+    /**
+     * Arrow API Key (leave empty on update to keep current)
+     */
+    api_key?: string;
+    /**
+     * Billing export template reference
+     */
+    export_type_reference?: string;
+    /**
+     * Filter for IaaS/SaaS classification
+     */
+    classification_filter?: string;
+    /**
+     * Whether this settings record is active
+     */
+    is_active?: boolean;
+    /**
+     * Whether automatic billing sync is enabled
+     */
+    sync_enabled?: boolean;
+    /**
+     * Arrow partner reference (discovered from API)
+     */
+    readonly partner_reference: string;
+    /**
+     * Arrow partner name (discovered from API)
+     */
+    readonly partner_name: string;
+    /**
+     * Which price to use for invoice items: sell or buy
+     */
+    invoice_price_source?: InvoicePriceSourceEnum;
+    readonly created: string;
+    readonly modified: string;
+};
+
+export type ArrowSettingsCreate = {
+    readonly uuid: string;
+    readonly url: string;
+    /**
+     * Arrow API base URL
+     */
+    api_url: string;
+    /**
+     * Billing export template reference
+     */
+    export_type_reference?: string;
+    /**
+     * Filter for IaaS/SaaS classification
+     */
+    classification_filter?: string;
+    /**
+     * Whether this settings record is active
+     */
+    is_active?: boolean;
+    /**
+     * Whether automatic billing sync is enabled
+     */
+    sync_enabled?: boolean;
+    /**
+     * Arrow partner reference (discovered from API)
+     */
+    readonly partner_reference: string;
+    /**
+     * Arrow partner name (discovered from API)
+     */
+    readonly partner_name: string;
+    /**
+     * Which price to use for invoice items: sell or buy
+     */
+    invoice_price_source?: InvoicePriceSourceEnum;
+    readonly created: string;
+    readonly modified: string;
+};
+
+export type ArrowSettingsCreateRequest = {
+    /**
+     * Arrow API base URL
+     */
+    api_url: string;
+    /**
+     * Arrow API Key (required for creation)
+     */
+    api_key: string;
+    /**
+     * Billing export template reference
+     */
+    export_type_reference?: string;
+    /**
+     * Filter for IaaS/SaaS classification
+     */
+    classification_filter?: string;
+    /**
+     * Whether this settings record is active
+     */
+    is_active?: boolean;
+    /**
+     * Whether automatic billing sync is enabled
+     */
+    sync_enabled?: boolean;
+    /**
+     * Which price to use for invoice items: sell or buy
+     */
+    invoice_price_source?: InvoicePriceSourceEnum;
+};
+
+export type ArrowSettingsRequest = {
+    /**
+     * Arrow API base URL
+     */
+    api_url: string;
+    /**
+     * Arrow API Key (leave empty on update to keep current)
+     */
+    api_key?: string;
+    /**
+     * Billing export template reference
+     */
+    export_type_reference?: string;
+    /**
+     * Filter for IaaS/SaaS classification
+     */
+    classification_filter?: string;
+    /**
+     * Whether this settings record is active
+     */
+    is_active?: boolean;
+    /**
+     * Whether automatic billing sync is enabled
+     */
+    sync_enabled?: boolean;
+    /**
+     * Which price to use for invoice items: sell or buy
+     */
+    invoice_price_source?: InvoicePriceSourceEnum;
+};
+
+export type ArrowVendorOfferingMapping = {
+    readonly uuid: string;
+    readonly url: string;
+    settings: string;
+    readonly settings_uuid: string;
+    /**
+     * Arrow vendor name (e.g., 'Microsoft', 'Amazon Web Services')
+     */
+    arrow_vendor_name: string;
+    /**
+     * Waldur marketplace offering for this vendor
+     */
+    offering: string;
+    readonly offering_uuid: string;
+    readonly offering_name: string;
+    readonly offering_type: string;
+    /**
+     * Whether this mapping is active
+     */
+    is_active?: boolean;
+    readonly created: string;
+    readonly modified: string;
+};
+
+export type ArrowVendorOfferingMappingCreate = {
+    readonly uuid: string;
+    readonly url: string;
+    settings: string;
+    readonly settings_uuid: string;
+    /**
+     * Arrow vendor name (e.g., 'Microsoft', 'Amazon Web Services')
+     */
+    arrow_vendor_name: string;
+    offering: string;
+    readonly offering_uuid: string;
+    readonly offering_name: string;
+    readonly offering_type: string;
+    /**
+     * Whether this mapping is active
+     */
+    is_active?: boolean;
+    readonly created: string;
+    readonly modified: string;
+};
+
+export type ArrowVendorOfferingMappingCreateRequest = {
+    settings: string;
+    /**
+     * Arrow vendor name (e.g., 'Microsoft', 'Amazon Web Services')
+     */
+    arrow_vendor_name: string;
+    offering: string;
+    /**
+     * Whether this mapping is active
+     */
+    is_active?: boolean;
+};
+
+export type ArrowVendorOfferingMappingRequest = {
+    settings: string;
+    /**
+     * Arrow vendor name (e.g., 'Microsoft', 'Amazon Web Services')
+     */
+    arrow_vendor_name: string;
+    /**
+     * Waldur marketplace offering for this vendor
+     */
+    offering: string;
+    /**
+     * Whether this mapping is active
+     */
+    is_active?: boolean;
+};
+
 export type AssignmentBatch = {
     readonly url: string;
     readonly uuid: string;
@@ -987,6 +1559,13 @@ export type AuthToken = {
      * Token lifetime in seconds.
      */
     readonly user_token_lifetime: number | null;
+};
+
+export type AvailableArrowCustomersResponse = {
+    settings_uuid: string;
+    arrow_customers: Array<ArrowCustomerDiscovery>;
+    waldur_customers: Array<WaldurCustomerBrief>;
+    suggestions: Array<CustomerMappingSuggestion>;
 };
 
 export type AvailableChecklist = {
@@ -3173,6 +3752,29 @@ export type CircuitBreakerStatus = {
     readonly state_history: Array<CircuitBreakerStateChange>;
 };
 
+export type CleanupConsumptionRequestRequest = {
+    /**
+     * YYYY-MM format
+     */
+    period_from?: string;
+    /**
+     * YYYY-MM format
+     */
+    period_to?: string;
+    resource_uuid?: string;
+    only_finalized?: boolean;
+    only_unfinalized?: boolean;
+    dry_run?: boolean;
+};
+
+export type CleanupConsumptionResponse = {
+    dry_run: boolean;
+    records_to_delete: number;
+    records_deleted: number;
+    compensation_items_affected: number;
+    invoice_items_affected: number;
+};
+
 export type CleanupRequestRequest = {
     /**
      * If true, only return what would be deleted without actually deleting
@@ -3816,6 +4418,11 @@ export type ConstanceSettings = {
     USER_DATA_ACCESS_LOGGING_ENABLED?: boolean;
     USER_DATA_ACCESS_LOG_RETENTION_DAYS?: number;
     USER_DATA_ACCESS_LOG_SELF_ACCESS?: boolean;
+    ARROW_AUTO_RECONCILIATION?: boolean;
+    ARROW_SYNC_INTERVAL_HOURS?: number;
+    ARROW_CONSUMPTION_SYNC_ENABLED?: boolean;
+    ARROW_CONSUMPTION_SYNC_INTERVAL_HOURS?: number;
+    ARROW_BILLING_CHECK_INTERVAL_HOURS?: number;
     SLURM_POLICY_EVALUATION_LOG_RETENTION_DAYS?: number;
 };
 
@@ -4038,7 +4645,29 @@ export type ConstanceSettingsRequest = {
     USER_DATA_ACCESS_LOGGING_ENABLED?: boolean;
     USER_DATA_ACCESS_LOG_RETENTION_DAYS?: number;
     USER_DATA_ACCESS_LOG_SELF_ACCESS?: boolean;
+    ARROW_AUTO_RECONCILIATION?: boolean;
+    ARROW_SYNC_INTERVAL_HOURS?: number;
+    ARROW_CONSUMPTION_SYNC_ENABLED?: boolean;
+    ARROW_CONSUMPTION_SYNC_INTERVAL_HOURS?: number;
+    ARROW_BILLING_CHECK_INTERVAL_HOURS?: number;
     SLURM_POLICY_EVALUATION_LOG_RETENTION_DAYS?: number;
+};
+
+export type ConsumptionStatisticsResponse = {
+    total_records: number;
+    pending_records: number;
+    finalized_records: number;
+    reconciled_records: number;
+    total_consumed_sell: string;
+    total_adjustments: string;
+    period_breakdown: Array<PeriodBreakdown>;
+};
+
+export type ConsumptionStatusResponse = {
+    global_sync_enabled: boolean;
+    settings_sync_enabled: boolean;
+    settings_uuid: string | null;
+    last_sync_run: string | null;
 };
 
 export type ContainerFormatEnum = 'bare' | 'ovf' | 'aki' | 'ami' | 'ari';
@@ -4441,6 +5070,44 @@ export type Customer = {
     billing_price_estimate?: NestedPriceEstimate;
 };
 
+export type CustomerBillingSummaryBillingSync = {
+    uuid: string;
+    report_period: string;
+    state: string;
+    sell_total: string | null;
+    items_count: number;
+    created: string;
+};
+
+export type CustomerBillingSummaryConsumptionRecord = {
+    uuid: string;
+    license_reference: string;
+    resource_name: string | null;
+    billing_period: string;
+    consumed_sell: string;
+    final_sell: string | null;
+    is_finalized: boolean;
+    is_reconciled: boolean;
+};
+
+export type CustomerBillingSummaryResponse = {
+    customer_mapping_uuid: string;
+    arrow_reference: string;
+    arrow_company_name: string;
+    waldur_customer_uuid: string;
+    waldur_customer_name: string;
+    total_consumption_records: number;
+    total_consumed_sell: string;
+    total_final_sell: string | null;
+    pending_records: number;
+    finalized_records: number;
+    reconciled_records: number;
+    total_billing_syncs: number;
+    total_billing_sell: string | null;
+    recent_consumption_records: Array<CustomerBillingSummaryConsumptionRecord>;
+    recent_billing_syncs: Array<CustomerBillingSummaryBillingSync>;
+};
+
 export type CustomerComponentUsagePolicy = {
     readonly uuid: string;
     readonly url: string;
@@ -4578,6 +5245,18 @@ export type CustomerIndustryFlagStats = {
      * Industry classification flag
      */
     is_industry: string;
+};
+
+export type CustomerMappingInputRequest = {
+    arrow_reference: string;
+    waldur_customer_uuid: string;
+};
+
+export type CustomerMappingSuggestion = {
+    arrow_customer: ArrowCustomerDiscovery;
+    suggested_waldur_customer?: WaldurCustomerBrief;
+    confidence?: number;
+    existing_mapping?: boolean;
 };
 
 export type CustomerMemberCount = {
@@ -5234,6 +5913,42 @@ export type DiscoverCustomFieldsRequestRequest = {
     request_type_id?: string;
 };
 
+export type DiscoverCustomersRequestRequest = {
+    /**
+     * Arrow API base URL
+     */
+    api_url: string;
+    /**
+     * Arrow API Key
+     */
+    api_key: string;
+};
+
+export type DiscoverCustomersResponse = {
+    arrow_customers: Array<ArrowCustomerDiscovery>;
+    waldur_customers: Array<WaldurCustomerBrief>;
+    suggestions: Array<CustomerMappingSuggestion>;
+};
+
+export type DiscoverLicensesResponse = {
+    customer_mapping_uuid: string;
+    arrow_reference: string;
+    waldur_customer_name: string;
+    /**
+     * Arrow licenses from billing export for this customer.
+     */
+    arrow_licenses: Array<ArrowLicense>;
+    /**
+     * Waldur resources for this customer.
+     */
+    waldur_resources: Array<WaldurResourceForLinking>;
+    /**
+     * Suggested matches based on name similarity.
+     */
+    suggestions: Array<LicenseSuggestion>;
+    error: string | null;
+};
+
 export type DiscoverMetadataRequestRequest = {
     /**
      * OIDC discovery URL (e.g., https://idp.example.com/.well-known/openid-configuration)
@@ -5797,6 +6512,86 @@ export type Feedback = {
     readonly issue_summary: string;
 };
 
+export type FetchBillingExportRequestRequest = {
+    /**
+     * YYYY-MM format
+     */
+    period_from: string;
+    /**
+     * YYYY-MM format
+     */
+    period_to: string;
+    classification?: string;
+};
+
+export type FetchBillingExportResponse = {
+    period_from: string;
+    period_to: string;
+    classification: string;
+    row_count: number;
+    data: Array<{
+        [key: string]: unknown;
+    }>;
+};
+
+export type FetchConsumptionRequestRequest = {
+    license_reference: string;
+    /**
+     * YYYY-MM format
+     */
+    period: string;
+};
+
+export type FetchConsumptionResponse = {
+    license_reference: string;
+    period: string;
+    row_count: number;
+    data: Array<{
+        [key: string]: unknown;
+    }>;
+};
+
+export type FetchCustomerArrowDataResponse = {
+    customer_mapping_uuid: string;
+    arrow_reference: string;
+    arrow_company_name: string;
+    waldur_customer_name: string;
+    period: string;
+    billing_available: boolean;
+    billing_lines: Array<ArrowBillingLine>;
+    billing_total_sell: string | null;
+    billing_total_buy: string | null;
+    consumption_lines: Array<ArrowConsumptionLine>;
+    consumption_total_sell: string | null;
+    consumption_total_buy: string | null;
+    /**
+     * Total number of resources for this customer in Waldur.
+     */
+    total_customer_resources: number;
+    /**
+     * Number of resources with backend_id set (Arrow license reference).
+     */
+    resources_with_backend_id: number;
+    /**
+     * Number of resources for which consumption was successfully fetched.
+     */
+    matched_resources: number;
+    error: string | null;
+};
+
+export type FetchLicenseInfoRequestRequest = {
+    license_reference: string;
+};
+
+export type FetchLicenseInfoResponse = {
+    /**
+     * Raw license data from Arrow API
+     */
+    data: {
+        [key: string]: unknown;
+    };
+};
+
 export type FinancialReport = {
     name: string;
     readonly uuid: string;
@@ -6325,6 +7120,34 @@ export type ImpactLevelDisplayEnum = 'No impact' | 'Degraded performance' | 'Par
 
 export type ImpactLevelEnum = 1 | 2 | 3 | 4;
 
+export type ImportLicenseRequestRequest = {
+    /**
+     * Arrow license reference (e.g., XSP12345). Will be set as backend_id.
+     */
+    license_reference: string;
+    /**
+     * Name for the new resource. Defaults to license_reference if not provided.
+     */
+    license_name?: string;
+    /**
+     * UUID of the Waldur offering to create the resource under.
+     */
+    offering_uuid: string;
+    /**
+     * UUID of the project to create the resource in.
+     */
+    project_uuid: string;
+};
+
+export type ImportLicenseResponse = {
+    resource_uuid: string;
+    resource_name: string;
+    license_reference: string;
+    offering_name: string;
+    project_name: string;
+    success: boolean;
+};
+
 export type ImportPublicationsRequest = {
     /**
      * Source to import publications from
@@ -6750,6 +7573,7 @@ export type InvoiceItemDetail = {
      */
     details?: unknown;
     readonly offering_uuid: string;
+    readonly offering_name: string | null;
     readonly offering_component_type: string | null;
     readonly project_uuid: string | null;
     readonly project_name: string;
@@ -6854,6 +7678,8 @@ export type InvoiceItemUpdateRequest = {
      */
     end?: string;
 };
+
+export type InvoicePriceSourceEnum = 'sell' | 'buy';
 
 export type InvoiceStateEnum = 'pending' | 'created' | 'paid' | 'canceled';
 
@@ -7223,12 +8049,42 @@ export type LexisLinkRequest = {
     heappe_project_id?: number | null;
 };
 
+export type LicenseSuggestion = {
+    resource_uuid: string;
+    resource_name: string;
+    license_reference: string;
+    license_name: string;
+    /**
+     * Confidence score (0-1) based on name similarity.
+     */
+    confidence: number;
+};
+
 export type LimitPeriodEnum = 'month' | 'quarterly' | 'annual' | 'total';
 
 export type LimitTypeEnum = 'GrpTRESMins' | 'MaxTRESMins' | 'GrpTRES';
 
 export type LinkOpenstackRequest = {
     instance: string;
+};
+
+export type LinkResourceRequestRequest = {
+    /**
+     * UUID of the Waldur resource to link.
+     */
+    resource_uuid: string;
+    /**
+     * Arrow license reference to set as backend_id (e.g., XSP12345).
+     */
+    license_reference: string;
+};
+
+export type LinkResourceResponse = {
+    resource_uuid: string;
+    resource_name: string;
+    license_reference: string;
+    previous_backend_id: string;
+    success: boolean;
 };
 
 export type LinkToInvoice = {
@@ -13153,6 +14009,70 @@ export type PatchedAllocationRequest = {
     groupname?: string | null;
 };
 
+export type PatchedArrowCustomerMappingRequest = {
+    settings?: string;
+    /**
+     * Arrow customer ID (e.g., 'XSP661245')
+     */
+    arrow_reference?: string;
+    /**
+     * Arrow company name
+     */
+    arrow_company_name?: string;
+    waldur_customer?: string;
+    /**
+     * Whether this mapping is active
+     */
+    is_active?: boolean;
+};
+
+export type PatchedArrowSettingsRequest = {
+    /**
+     * Arrow API base URL
+     */
+    api_url?: string;
+    /**
+     * Arrow API Key (leave empty on update to keep current)
+     */
+    api_key?: string;
+    /**
+     * Billing export template reference
+     */
+    export_type_reference?: string;
+    /**
+     * Filter for IaaS/SaaS classification
+     */
+    classification_filter?: string;
+    /**
+     * Whether this settings record is active
+     */
+    is_active?: boolean;
+    /**
+     * Whether automatic billing sync is enabled
+     */
+    sync_enabled?: boolean;
+    /**
+     * Which price to use for invoice items: sell or buy
+     */
+    invoice_price_source?: InvoicePriceSourceEnum;
+};
+
+export type PatchedArrowVendorOfferingMappingRequest = {
+    settings?: string;
+    /**
+     * Arrow vendor name (e.g., 'Microsoft', 'Amazon Web Services')
+     */
+    arrow_vendor_name?: string;
+    /**
+     * Waldur marketplace offering for this vendor
+     */
+    offering?: string;
+    /**
+     * Whether this mapping is active
+     */
+    is_active?: boolean;
+};
+
 export type PatchedAssignmentBatchRequest = {
     /**
      * Optional notes from call manager to reviewer.
@@ -15145,6 +16065,24 @@ export type PaymentUrlRequest = {
     payment_url?: string;
 };
 
+export type PendingRecord = {
+    uuid: string;
+    resource_uuid: string;
+    resource_name: string;
+    license_reference: string;
+    billing_period: string;
+    consumed_sell: string;
+    last_sync_at: string | null;
+};
+
+export type PeriodBreakdown = {
+    period: string;
+    count: number;
+    consumed_sell: string;
+    finalized_count: number;
+    reconciled_count: number;
+};
+
 export type Permission = {
     readonly user_uuid?: string;
     readonly user_name?: string;
@@ -15322,6 +16260,29 @@ export type PolicyEnum = 'affinity';
 export type PolicyPeriodEnum = 1 | 2 | 3 | 4;
 
 export type PolicyTypeEnum = 'access_as_shared' | 'access_as_external';
+
+export type PreviewSettingsRequestRequest = {
+    /**
+     * Arrow API base URL
+     */
+    api_url: string;
+    /**
+     * Arrow API Key
+     */
+    api_key: string;
+    export_type_reference?: string;
+    classification_filter?: string;
+    sync_enabled?: boolean;
+};
+
+export type PreviewSettingsResponse = {
+    api_url: string;
+    partner_name: string;
+    partner_reference: string;
+    export_type_reference: string;
+    classification_filter: string;
+    sync_enabled: boolean;
+};
 
 export type PricesUpdateRequest = {
     prices: {
@@ -18305,6 +19266,16 @@ export type ReassignItemResponse = {
     new_batch_uuid: string;
 };
 
+export type ReconcileRequestRequest = {
+    year: number;
+    month: number;
+    settings_uuid?: string;
+    /**
+     * Force reconciliation even if not validated
+     */
+    force?: boolean;
+};
+
 export type ReferenceNumberRequest = {
     /**
      * Reference number associated with the invoice.
@@ -20478,6 +21449,27 @@ export type Saml2Provider = {
     url: string;
 };
 
+export type SaveSettingsRequestRequest = {
+    /**
+     * Arrow API base URL
+     */
+    api_url: string;
+    /**
+     * Arrow API Key
+     */
+    api_key: string;
+    export_type_reference?: string;
+    classification_filter?: string;
+    sync_enabled?: boolean;
+    customer_mappings?: Array<CustomerMappingInputRequest>;
+};
+
+export type SaveSettingsResponse = {
+    settings_uuid: string;
+    mappings_created: number;
+    message: string;
+};
+
 export type ScimSyncAllResponse = {
     detail: string;
 };
@@ -21597,6 +22589,90 @@ export type SupportedCountriesResponse = {
     supported_countries: Array<string>;
 };
 
+export type SyncFromArrowRequestRequest = {
+    settings_uuid?: string;
+};
+
+export type SyncPauseRequestRequest = {
+    settings_uuid?: string;
+    pause_global?: boolean;
+};
+
+export type SyncPauseResponse = {
+    /**
+     * List of paused items
+     */
+    paused?: Array<string>;
+    /**
+     * List of resumed items
+     */
+    resumed?: Array<string>;
+};
+
+export type SyncResourceHistoricalConsumptionRequestRequest = {
+    /**
+     * UUID of the resource to sync
+     */
+    resource_uuid: string;
+    /**
+     * Start period in YYYY-MM format. Defaults to 12 months ago.
+     */
+    period_from?: string;
+    /**
+     * End period in YYYY-MM format. Defaults to current month.
+     */
+    period_to?: string;
+};
+
+export type SyncResourceHistoricalConsumptionResponse = {
+    resource_uuid: string;
+    resource_name: string;
+    periods_synced: number;
+    periods_skipped: number;
+    errors: Array<{
+        [key: string]: unknown;
+    }>;
+};
+
+export type SyncResourcesRequestRequest = {
+    /**
+     * Start period in YYYY-MM format (default: 6 months ago, Arrow max)
+     */
+    period_from?: string;
+    /**
+     * End period in YYYY-MM format (default: current month)
+     */
+    period_to?: string;
+    settings_uuid?: string;
+    /**
+     * Offering UUID for creating new resources
+     */
+    offering_uuid?: string;
+    /**
+     * Project UUID for creating new resources (ignored if force_import=True)
+     */
+    project_uuid?: string;
+    /**
+     * If True, auto-create Waldur Customers and Projects from Arrow data. Each Arrow customer gets a Waldur Customer with an 'Arrow Azure Subscriptions' project.
+     */
+    force_import?: boolean;
+};
+
+export type SyncResourcesResponse = {
+    synced: number;
+    created: number;
+    updated: number;
+    orders_created?: number;
+    customers_created?: number;
+    projects_created?: number;
+    mappings_created?: number;
+    invoices_created?: number;
+    invoice_items_created?: number;
+    errors?: Array<{
+        [key: string]: unknown;
+    }>;
+};
+
 export type SyncStatusEnum = 'in_sync' | 'out_of_sync' | 'sync_failed';
 
 export type TableGrowthAlert = {
@@ -21954,6 +23030,22 @@ export type TriggerCoiDetectionJobTypeEnum = 'full_call' | 'incremental';
 
 export type TriggerCoiDetectionRequest = {
     job_type?: TriggerCoiDetectionJobTypeEnum;
+};
+
+export type TriggerConsumptionSyncRequestRequest = {
+    year: number;
+    month: number;
+    settings_uuid?: string;
+    /**
+     * Sync specific resource only
+     */
+    resource_uuid?: string;
+};
+
+export type TriggerSyncRequestRequest = {
+    year: number;
+    month: number;
+    settings_uuid?: string;
 };
 
 export type UnsilenceActionResponse = {
@@ -22556,6 +23648,11 @@ export type ValidationDecisionEnum = 'approved' | 'rejected' | 'pending';
 
 export type ValidationMethodEnum = 'ariregister' | 'wirtschaftscompass' | 'bolagsverket' | 'breg';
 
+export type VendorNameChoice = {
+    value: string;
+    label: string;
+};
+
 export type VenueTypeEnum = 'journal' | 'conference' | 'preprint' | 'book' | 'thesis' | 'report' | 'other';
 
 export type Version = {
@@ -23013,6 +24110,12 @@ export type VolumeTypeMappingRequest = {
     dst_type_uuid: string;
 };
 
+export type WaldurCustomerBrief = {
+    uuid: string;
+    name: string;
+    abbreviation?: string;
+};
+
 export type WaldurFieldSuggestion = {
     /**
      * Waldur User model field name
@@ -23030,6 +24133,18 @@ export type WaldurFieldSuggestion = {
      * Claims from this IdP that match the suggestions
      */
     available_claims: Array<string>;
+};
+
+export type WaldurResourceForLinking = {
+    uuid: string;
+    name: string;
+    /**
+     * Current backend_id (Arrow license reference if linked).
+     */
+    backend_id: string;
+    project_name: string;
+    offering_name: string;
+    state: string;
 };
 
 export type WebHook = {
@@ -24369,6 +25484,11 @@ export type ConstanceSettingsRequestForm = {
     USER_DATA_ACCESS_LOGGING_ENABLED?: boolean;
     USER_DATA_ACCESS_LOG_RETENTION_DAYS?: number;
     USER_DATA_ACCESS_LOG_SELF_ACCESS?: boolean;
+    ARROW_AUTO_RECONCILIATION?: boolean;
+    ARROW_SYNC_INTERVAL_HOURS?: number;
+    ARROW_CONSUMPTION_SYNC_ENABLED?: boolean;
+    ARROW_CONSUMPTION_SYNC_INTERVAL_HOURS?: number;
+    ARROW_BILLING_CHECK_INTERVAL_HOURS?: number;
     SLURM_POLICY_EVALUATION_LOG_RETENTION_DAYS?: number;
 };
 
@@ -24591,6 +25711,11 @@ export type ConstanceSettingsRequestMultipart = {
     USER_DATA_ACCESS_LOGGING_ENABLED?: boolean;
     USER_DATA_ACCESS_LOG_RETENTION_DAYS?: number;
     USER_DATA_ACCESS_LOG_SELF_ACCESS?: boolean;
+    ARROW_AUTO_RECONCILIATION?: boolean;
+    ARROW_SYNC_INTERVAL_HOURS?: number;
+    ARROW_CONSUMPTION_SYNC_ENABLED?: boolean;
+    ARROW_CONSUMPTION_SYNC_INTERVAL_HOURS?: number;
+    ARROW_BILLING_CHECK_INTERVAL_HOURS?: number;
     SLURM_POLICY_EVALUATION_LOG_RETENTION_DAYS?: number;
 };
 
@@ -25495,6 +26620,1135 @@ export type AdminAnnouncementsUpdateResponses = {
 };
 
 export type AdminAnnouncementsUpdateResponse = AdminAnnouncementsUpdateResponses[keyof AdminAnnouncementsUpdateResponses];
+
+export type AdminArrowBillingSyncItemsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        arrow_line_reference?: string;
+        billing_sync?: string;
+        billing_sync_uuid?: string;
+        classification?: string;
+        has_compensation?: boolean;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        report_period?: string;
+        subscription_reference?: string;
+        vendor_name?: string;
+    };
+    url: '/api/admin/arrow/billing-sync-items/';
+};
+
+export type AdminArrowBillingSyncItemsListResponses = {
+    200: Array<ArrowBillingSyncItemDetail>;
+};
+
+export type AdminArrowBillingSyncItemsListResponse = AdminArrowBillingSyncItemsListResponses[keyof AdminArrowBillingSyncItemsListResponses];
+
+export type AdminArrowBillingSyncItemsCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        arrow_line_reference?: string;
+        billing_sync?: string;
+        billing_sync_uuid?: string;
+        classification?: string;
+        has_compensation?: boolean;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        report_period?: string;
+        subscription_reference?: string;
+        vendor_name?: string;
+    };
+    url: '/api/admin/arrow/billing-sync-items/';
+};
+
+export type AdminArrowBillingSyncItemsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type AdminArrowBillingSyncItemsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/admin/arrow/billing-sync-items/{uuid}/';
+};
+
+export type AdminArrowBillingSyncItemsRetrieveResponses = {
+    200: ArrowBillingSyncItemDetail;
+};
+
+export type AdminArrowBillingSyncItemsRetrieveResponse = AdminArrowBillingSyncItemsRetrieveResponses[keyof AdminArrowBillingSyncItemsRetrieveResponses];
+
+export type AdminArrowBillingSyncsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        arrow_state?: string;
+        customer_mapping?: string;
+        customer_mapping_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        report_period?: string;
+        report_period_from?: string;
+        report_period_to?: string;
+        settings_uuid?: string;
+        state?: number;
+        statement_reference?: string;
+    };
+    url: '/api/admin/arrow/billing-syncs/';
+};
+
+export type AdminArrowBillingSyncsListResponses = {
+    200: Array<ArrowBillingSync>;
+};
+
+export type AdminArrowBillingSyncsListResponse = AdminArrowBillingSyncsListResponses[keyof AdminArrowBillingSyncsListResponses];
+
+export type AdminArrowBillingSyncsCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        arrow_state?: string;
+        customer_mapping?: string;
+        customer_mapping_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        report_period?: string;
+        report_period_from?: string;
+        report_period_to?: string;
+        settings_uuid?: string;
+        state?: number;
+        statement_reference?: string;
+    };
+    url: '/api/admin/arrow/billing-syncs/';
+};
+
+export type AdminArrowBillingSyncsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type AdminArrowBillingSyncsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/admin/arrow/billing-syncs/{uuid}/';
+};
+
+export type AdminArrowBillingSyncsRetrieveResponses = {
+    200: ArrowBillingSync;
+};
+
+export type AdminArrowBillingSyncsRetrieveResponse = AdminArrowBillingSyncsRetrieveResponses[keyof AdminArrowBillingSyncsRetrieveResponses];
+
+export type AdminArrowBillingSyncsCleanupConsumptionData = {
+    body?: CleanupConsumptionRequestRequest;
+    path?: never;
+    query?: never;
+    url: '/api/admin/arrow/billing-syncs/cleanup_consumption/';
+};
+
+export type AdminArrowBillingSyncsCleanupConsumptionResponses = {
+    200: CleanupConsumptionResponse;
+};
+
+export type AdminArrowBillingSyncsCleanupConsumptionResponse = AdminArrowBillingSyncsCleanupConsumptionResponses[keyof AdminArrowBillingSyncsCleanupConsumptionResponses];
+
+export type AdminArrowBillingSyncsConsumptionStatisticsRetrieveData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/admin/arrow/billing-syncs/consumption_statistics/';
+};
+
+export type AdminArrowBillingSyncsConsumptionStatisticsRetrieveResponses = {
+    200: ConsumptionStatisticsResponse;
+};
+
+export type AdminArrowBillingSyncsConsumptionStatisticsRetrieveResponse = AdminArrowBillingSyncsConsumptionStatisticsRetrieveResponses[keyof AdminArrowBillingSyncsConsumptionStatisticsRetrieveResponses];
+
+export type AdminArrowBillingSyncsConsumptionStatisticsCountData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/admin/arrow/billing-syncs/consumption_statistics/';
+};
+
+export type AdminArrowBillingSyncsConsumptionStatisticsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type AdminArrowBillingSyncsConsumptionStatusRetrieveData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/admin/arrow/billing-syncs/consumption_status/';
+};
+
+export type AdminArrowBillingSyncsConsumptionStatusRetrieveResponses = {
+    200: ConsumptionStatusResponse;
+};
+
+export type AdminArrowBillingSyncsConsumptionStatusRetrieveResponse = AdminArrowBillingSyncsConsumptionStatusRetrieveResponses[keyof AdminArrowBillingSyncsConsumptionStatusRetrieveResponses];
+
+export type AdminArrowBillingSyncsConsumptionStatusCountData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/admin/arrow/billing-syncs/consumption_status/';
+};
+
+export type AdminArrowBillingSyncsConsumptionStatusCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type AdminArrowBillingSyncsFetchBillingExportData = {
+    body: FetchBillingExportRequestRequest;
+    path?: never;
+    query?: never;
+    url: '/api/admin/arrow/billing-syncs/fetch_billing_export/';
+};
+
+export type AdminArrowBillingSyncsFetchBillingExportResponses = {
+    200: FetchBillingExportResponse;
+};
+
+export type AdminArrowBillingSyncsFetchBillingExportResponse = AdminArrowBillingSyncsFetchBillingExportResponses[keyof AdminArrowBillingSyncsFetchBillingExportResponses];
+
+export type AdminArrowBillingSyncsFetchConsumptionData = {
+    body: FetchConsumptionRequestRequest;
+    path?: never;
+    query?: never;
+    url: '/api/admin/arrow/billing-syncs/fetch_consumption/';
+};
+
+export type AdminArrowBillingSyncsFetchConsumptionResponses = {
+    200: FetchConsumptionResponse;
+};
+
+export type AdminArrowBillingSyncsFetchConsumptionResponse = AdminArrowBillingSyncsFetchConsumptionResponses[keyof AdminArrowBillingSyncsFetchConsumptionResponses];
+
+export type AdminArrowBillingSyncsFetchLicenseInfoData = {
+    body: FetchLicenseInfoRequestRequest;
+    path?: never;
+    query?: never;
+    url: '/api/admin/arrow/billing-syncs/fetch_license_info/';
+};
+
+export type AdminArrowBillingSyncsFetchLicenseInfoResponses = {
+    200: FetchLicenseInfoResponse;
+};
+
+export type AdminArrowBillingSyncsFetchLicenseInfoResponse = AdminArrowBillingSyncsFetchLicenseInfoResponses[keyof AdminArrowBillingSyncsFetchLicenseInfoResponses];
+
+export type AdminArrowBillingSyncsPauseSyncData = {
+    body?: SyncPauseRequestRequest;
+    path?: never;
+    query?: never;
+    url: '/api/admin/arrow/billing-syncs/pause_sync/';
+};
+
+export type AdminArrowBillingSyncsPauseSyncResponses = {
+    200: SyncPauseResponse;
+};
+
+export type AdminArrowBillingSyncsPauseSyncResponse = AdminArrowBillingSyncsPauseSyncResponses[keyof AdminArrowBillingSyncsPauseSyncResponses];
+
+export type AdminArrowBillingSyncsPendingRecordsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        arrow_state?: string;
+        customer_mapping?: string;
+        customer_mapping_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        report_period?: string;
+        report_period_from?: string;
+        report_period_to?: string;
+        settings_uuid?: string;
+        state?: number;
+        statement_reference?: string;
+    };
+    url: '/api/admin/arrow/billing-syncs/pending_records/';
+};
+
+export type AdminArrowBillingSyncsPendingRecordsListResponses = {
+    200: Array<PendingRecord>;
+};
+
+export type AdminArrowBillingSyncsPendingRecordsListResponse = AdminArrowBillingSyncsPendingRecordsListResponses[keyof AdminArrowBillingSyncsPendingRecordsListResponses];
+
+export type AdminArrowBillingSyncsPendingRecordsCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        arrow_state?: string;
+        customer_mapping?: string;
+        customer_mapping_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        report_period?: string;
+        report_period_from?: string;
+        report_period_to?: string;
+        settings_uuid?: string;
+        state?: number;
+        statement_reference?: string;
+    };
+    url: '/api/admin/arrow/billing-syncs/pending_records/';
+};
+
+export type AdminArrowBillingSyncsPendingRecordsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type AdminArrowBillingSyncsReconcileData = {
+    body: ReconcileRequestRequest;
+    path?: never;
+    query?: never;
+    url: '/api/admin/arrow/billing-syncs/reconcile/';
+};
+
+export type AdminArrowBillingSyncsReconcileResponses = {
+    /**
+     * No response body
+     */
+    202: unknown;
+};
+
+export type AdminArrowBillingSyncsResumeSyncData = {
+    body?: SyncPauseRequestRequest;
+    path?: never;
+    query?: never;
+    url: '/api/admin/arrow/billing-syncs/resume_sync/';
+};
+
+export type AdminArrowBillingSyncsResumeSyncResponses = {
+    200: SyncPauseResponse;
+};
+
+export type AdminArrowBillingSyncsResumeSyncResponse = AdminArrowBillingSyncsResumeSyncResponses[keyof AdminArrowBillingSyncsResumeSyncResponses];
+
+export type AdminArrowBillingSyncsSyncResourceHistoricalConsumptionData = {
+    body: SyncResourceHistoricalConsumptionRequestRequest;
+    path?: never;
+    query?: never;
+    url: '/api/admin/arrow/billing-syncs/sync_resource_historical_consumption/';
+};
+
+export type AdminArrowBillingSyncsSyncResourceHistoricalConsumptionResponses = {
+    200: SyncResourceHistoricalConsumptionResponse;
+};
+
+export type AdminArrowBillingSyncsSyncResourceHistoricalConsumptionResponse = AdminArrowBillingSyncsSyncResourceHistoricalConsumptionResponses[keyof AdminArrowBillingSyncsSyncResourceHistoricalConsumptionResponses];
+
+export type AdminArrowBillingSyncsSyncResourcesData = {
+    body?: SyncResourcesRequestRequest;
+    path?: never;
+    query?: never;
+    url: '/api/admin/arrow/billing-syncs/sync_resources/';
+};
+
+export type AdminArrowBillingSyncsSyncResourcesResponses = {
+    200: SyncResourcesResponse;
+};
+
+export type AdminArrowBillingSyncsSyncResourcesResponse = AdminArrowBillingSyncsSyncResourcesResponses[keyof AdminArrowBillingSyncsSyncResourcesResponses];
+
+export type AdminArrowBillingSyncsTriggerConsumptionSyncData = {
+    body: TriggerConsumptionSyncRequestRequest;
+    path?: never;
+    query?: never;
+    url: '/api/admin/arrow/billing-syncs/trigger_consumption_sync/';
+};
+
+export type AdminArrowBillingSyncsTriggerConsumptionSyncResponses = {
+    /**
+     * No response body
+     */
+    202: unknown;
+};
+
+export type AdminArrowBillingSyncsTriggerReconciliationData = {
+    body: ReconcileRequestRequest;
+    path?: never;
+    query?: never;
+    url: '/api/admin/arrow/billing-syncs/trigger_reconciliation/';
+};
+
+export type AdminArrowBillingSyncsTriggerReconciliationResponses = {
+    /**
+     * No response body
+     */
+    202: unknown;
+};
+
+export type AdminArrowBillingSyncsTriggerSyncData = {
+    body: TriggerSyncRequestRequest;
+    path?: never;
+    query?: never;
+    url: '/api/admin/arrow/billing-syncs/trigger_sync/';
+};
+
+export type AdminArrowBillingSyncsTriggerSyncResponses = {
+    /**
+     * No response body
+     */
+    202: unknown;
+};
+
+export type AdminArrowConsumptionRecordsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        billing_period?: string;
+        billing_period_from?: string;
+        billing_period_to?: string;
+        customer_uuid?: string;
+        is_finalized?: boolean;
+        is_reconciled?: boolean;
+        license_reference?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        project_uuid?: string;
+        resource?: string;
+        resource_uuid?: string;
+    };
+    url: '/api/admin/arrow/consumption-records/';
+};
+
+export type AdminArrowConsumptionRecordsListResponses = {
+    200: Array<ArrowConsumptionRecord>;
+};
+
+export type AdminArrowConsumptionRecordsListResponse = AdminArrowConsumptionRecordsListResponses[keyof AdminArrowConsumptionRecordsListResponses];
+
+export type AdminArrowConsumptionRecordsCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        billing_period?: string;
+        billing_period_from?: string;
+        billing_period_to?: string;
+        customer_uuid?: string;
+        is_finalized?: boolean;
+        is_reconciled?: boolean;
+        license_reference?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        project_uuid?: string;
+        resource?: string;
+        resource_uuid?: string;
+    };
+    url: '/api/admin/arrow/consumption-records/';
+};
+
+export type AdminArrowConsumptionRecordsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type AdminArrowConsumptionRecordsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/admin/arrow/consumption-records/{uuid}/';
+};
+
+export type AdminArrowConsumptionRecordsRetrieveResponses = {
+    200: ArrowConsumptionRecord;
+};
+
+export type AdminArrowConsumptionRecordsRetrieveResponse = AdminArrowConsumptionRecordsRetrieveResponses[keyof AdminArrowConsumptionRecordsRetrieveResponses];
+
+export type AdminArrowCustomerMappingsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        arrow_company_name?: string;
+        arrow_reference?: string;
+        is_active?: boolean;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        settings?: string;
+        settings_uuid?: string;
+        waldur_customer?: string;
+        waldur_customer_uuid?: string;
+    };
+    url: '/api/admin/arrow/customer-mappings/';
+};
+
+export type AdminArrowCustomerMappingsListResponses = {
+    200: Array<ArrowCustomerMapping>;
+};
+
+export type AdminArrowCustomerMappingsListResponse = AdminArrowCustomerMappingsListResponses[keyof AdminArrowCustomerMappingsListResponses];
+
+export type AdminArrowCustomerMappingsCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        arrow_company_name?: string;
+        arrow_reference?: string;
+        is_active?: boolean;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        settings?: string;
+        settings_uuid?: string;
+        waldur_customer?: string;
+        waldur_customer_uuid?: string;
+    };
+    url: '/api/admin/arrow/customer-mappings/';
+};
+
+export type AdminArrowCustomerMappingsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type AdminArrowCustomerMappingsCreateData = {
+    body: ArrowCustomerMappingCreateRequest;
+    path?: never;
+    query?: never;
+    url: '/api/admin/arrow/customer-mappings/';
+};
+
+export type AdminArrowCustomerMappingsCreateResponses = {
+    201: ArrowCustomerMappingCreate;
+};
+
+export type AdminArrowCustomerMappingsCreateResponse = AdminArrowCustomerMappingsCreateResponses[keyof AdminArrowCustomerMappingsCreateResponses];
+
+export type AdminArrowCustomerMappingsDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/admin/arrow/customer-mappings/{uuid}/';
+};
+
+export type AdminArrowCustomerMappingsDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type AdminArrowCustomerMappingsDestroyResponse = AdminArrowCustomerMappingsDestroyResponses[keyof AdminArrowCustomerMappingsDestroyResponses];
+
+export type AdminArrowCustomerMappingsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/admin/arrow/customer-mappings/{uuid}/';
+};
+
+export type AdminArrowCustomerMappingsRetrieveResponses = {
+    200: ArrowCustomerMapping;
+};
+
+export type AdminArrowCustomerMappingsRetrieveResponse = AdminArrowCustomerMappingsRetrieveResponses[keyof AdminArrowCustomerMappingsRetrieveResponses];
+
+export type AdminArrowCustomerMappingsPartialUpdateData = {
+    body?: PatchedArrowCustomerMappingRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/admin/arrow/customer-mappings/{uuid}/';
+};
+
+export type AdminArrowCustomerMappingsPartialUpdateResponses = {
+    200: ArrowCustomerMapping;
+};
+
+export type AdminArrowCustomerMappingsPartialUpdateResponse = AdminArrowCustomerMappingsPartialUpdateResponses[keyof AdminArrowCustomerMappingsPartialUpdateResponses];
+
+export type AdminArrowCustomerMappingsUpdateData = {
+    body: ArrowCustomerMappingRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/admin/arrow/customer-mappings/{uuid}/';
+};
+
+export type AdminArrowCustomerMappingsUpdateResponses = {
+    200: ArrowCustomerMapping;
+};
+
+export type AdminArrowCustomerMappingsUpdateResponse = AdminArrowCustomerMappingsUpdateResponses[keyof AdminArrowCustomerMappingsUpdateResponses];
+
+export type AdminArrowCustomerMappingsBillingSummaryRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/admin/arrow/customer-mappings/{uuid}/billing_summary/';
+};
+
+export type AdminArrowCustomerMappingsBillingSummaryRetrieveResponses = {
+    200: CustomerBillingSummaryResponse;
+};
+
+export type AdminArrowCustomerMappingsBillingSummaryRetrieveResponse = AdminArrowCustomerMappingsBillingSummaryRetrieveResponses[keyof AdminArrowCustomerMappingsBillingSummaryRetrieveResponses];
+
+export type AdminArrowCustomerMappingsDiscoverLicensesRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/admin/arrow/customer-mappings/{uuid}/discover_licenses/';
+};
+
+export type AdminArrowCustomerMappingsDiscoverLicensesRetrieveResponses = {
+    200: DiscoverLicensesResponse;
+};
+
+export type AdminArrowCustomerMappingsDiscoverLicensesRetrieveResponse = AdminArrowCustomerMappingsDiscoverLicensesRetrieveResponses[keyof AdminArrowCustomerMappingsDiscoverLicensesRetrieveResponses];
+
+export type AdminArrowCustomerMappingsFetchArrowDataRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/admin/arrow/customer-mappings/{uuid}/fetch_arrow_data/';
+};
+
+export type AdminArrowCustomerMappingsFetchArrowDataRetrieveResponses = {
+    200: FetchCustomerArrowDataResponse;
+};
+
+export type AdminArrowCustomerMappingsFetchArrowDataRetrieveResponse = AdminArrowCustomerMappingsFetchArrowDataRetrieveResponses[keyof AdminArrowCustomerMappingsFetchArrowDataRetrieveResponses];
+
+export type AdminArrowCustomerMappingsImportLicenseData = {
+    body: ImportLicenseRequestRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/admin/arrow/customer-mappings/{uuid}/import_license/';
+};
+
+export type AdminArrowCustomerMappingsImportLicenseResponses = {
+    200: ImportLicenseResponse;
+};
+
+export type AdminArrowCustomerMappingsImportLicenseResponse = AdminArrowCustomerMappingsImportLicenseResponses[keyof AdminArrowCustomerMappingsImportLicenseResponses];
+
+export type AdminArrowCustomerMappingsLinkResourceData = {
+    body: LinkResourceRequestRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/admin/arrow/customer-mappings/{uuid}/link_resource/';
+};
+
+export type AdminArrowCustomerMappingsLinkResourceResponses = {
+    200: LinkResourceResponse;
+};
+
+export type AdminArrowCustomerMappingsLinkResourceResponse = AdminArrowCustomerMappingsLinkResourceResponses[keyof AdminArrowCustomerMappingsLinkResourceResponses];
+
+export type AdminArrowCustomerMappingsAvailableCustomersRetrieveData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/admin/arrow/customer-mappings/available_customers/';
+};
+
+export type AdminArrowCustomerMappingsAvailableCustomersRetrieveResponses = {
+    200: AvailableArrowCustomersResponse;
+};
+
+export type AdminArrowCustomerMappingsAvailableCustomersRetrieveResponse = AdminArrowCustomerMappingsAvailableCustomersRetrieveResponses[keyof AdminArrowCustomerMappingsAvailableCustomersRetrieveResponses];
+
+export type AdminArrowCustomerMappingsAvailableCustomersCountData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/admin/arrow/customer-mappings/available_customers/';
+};
+
+export type AdminArrowCustomerMappingsAvailableCustomersCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type AdminArrowCustomerMappingsSyncFromArrowData = {
+    body?: SyncFromArrowRequestRequest;
+    path?: never;
+    query?: never;
+    url: '/api/admin/arrow/customer-mappings/sync_from_arrow/';
+};
+
+export type AdminArrowCustomerMappingsSyncFromArrowResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type AdminArrowSettingsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        is_active?: boolean;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        sync_enabled?: boolean;
+    };
+    url: '/api/admin/arrow/settings/';
+};
+
+export type AdminArrowSettingsListResponses = {
+    200: Array<ArrowSettings>;
+};
+
+export type AdminArrowSettingsListResponse = AdminArrowSettingsListResponses[keyof AdminArrowSettingsListResponses];
+
+export type AdminArrowSettingsCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        is_active?: boolean;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        sync_enabled?: boolean;
+    };
+    url: '/api/admin/arrow/settings/';
+};
+
+export type AdminArrowSettingsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type AdminArrowSettingsCreateData = {
+    body: ArrowSettingsCreateRequest;
+    path?: never;
+    query?: never;
+    url: '/api/admin/arrow/settings/';
+};
+
+export type AdminArrowSettingsCreateResponses = {
+    201: ArrowSettingsCreate;
+};
+
+export type AdminArrowSettingsCreateResponse = AdminArrowSettingsCreateResponses[keyof AdminArrowSettingsCreateResponses];
+
+export type AdminArrowSettingsDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/admin/arrow/settings/{uuid}/';
+};
+
+export type AdminArrowSettingsDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type AdminArrowSettingsDestroyResponse = AdminArrowSettingsDestroyResponses[keyof AdminArrowSettingsDestroyResponses];
+
+export type AdminArrowSettingsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/admin/arrow/settings/{uuid}/';
+};
+
+export type AdminArrowSettingsRetrieveResponses = {
+    200: ArrowSettings;
+};
+
+export type AdminArrowSettingsRetrieveResponse = AdminArrowSettingsRetrieveResponses[keyof AdminArrowSettingsRetrieveResponses];
+
+export type AdminArrowSettingsPartialUpdateData = {
+    body?: PatchedArrowSettingsRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/admin/arrow/settings/{uuid}/';
+};
+
+export type AdminArrowSettingsPartialUpdateResponses = {
+    200: ArrowSettings;
+};
+
+export type AdminArrowSettingsPartialUpdateResponse = AdminArrowSettingsPartialUpdateResponses[keyof AdminArrowSettingsPartialUpdateResponses];
+
+export type AdminArrowSettingsUpdateData = {
+    body: ArrowSettingsRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/admin/arrow/settings/{uuid}/';
+};
+
+export type AdminArrowSettingsUpdateResponses = {
+    200: ArrowSettings;
+};
+
+export type AdminArrowSettingsUpdateResponse = AdminArrowSettingsUpdateResponses[keyof AdminArrowSettingsUpdateResponses];
+
+export type AdminArrowSettingsDiscoverCustomersData = {
+    body: DiscoverCustomersRequestRequest;
+    path?: never;
+    query?: never;
+    url: '/api/admin/arrow/settings/discover_customers/';
+};
+
+export type AdminArrowSettingsDiscoverCustomersResponses = {
+    200: DiscoverCustomersResponse;
+};
+
+export type AdminArrowSettingsDiscoverCustomersResponse = AdminArrowSettingsDiscoverCustomersResponses[keyof AdminArrowSettingsDiscoverCustomersResponses];
+
+export type AdminArrowSettingsPreviewSettingsData = {
+    body: PreviewSettingsRequestRequest;
+    path?: never;
+    query?: never;
+    url: '/api/admin/arrow/settings/preview_settings/';
+};
+
+export type AdminArrowSettingsPreviewSettingsResponses = {
+    200: PreviewSettingsResponse;
+};
+
+export type AdminArrowSettingsPreviewSettingsResponse = AdminArrowSettingsPreviewSettingsResponses[keyof AdminArrowSettingsPreviewSettingsResponses];
+
+export type AdminArrowSettingsSaveSettingsData = {
+    body: SaveSettingsRequestRequest;
+    path?: never;
+    query?: never;
+    url: '/api/admin/arrow/settings/save_settings/';
+};
+
+export type AdminArrowSettingsSaveSettingsResponses = {
+    201: SaveSettingsResponse;
+};
+
+export type AdminArrowSettingsSaveSettingsResponse = AdminArrowSettingsSaveSettingsResponses[keyof AdminArrowSettingsSaveSettingsResponses];
+
+export type AdminArrowSettingsValidateCredentialsData = {
+    body: ArrowCredentialsRequest;
+    path?: never;
+    query?: never;
+    url: '/api/admin/arrow/settings/validate_credentials/';
+};
+
+export type AdminArrowSettingsValidateCredentialsResponses = {
+    200: ArrowCredentialsValidationResponse;
+};
+
+export type AdminArrowSettingsValidateCredentialsResponse = AdminArrowSettingsValidateCredentialsResponses[keyof AdminArrowSettingsValidateCredentialsResponses];
+
+export type AdminArrowVendorOfferingMappingsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        arrow_vendor_name?: string;
+        is_active?: boolean;
+        offering?: string;
+        offering_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        settings?: string;
+        settings_uuid?: string;
+    };
+    url: '/api/admin/arrow/vendor-offering-mappings/';
+};
+
+export type AdminArrowVendorOfferingMappingsListResponses = {
+    200: Array<ArrowVendorOfferingMapping>;
+};
+
+export type AdminArrowVendorOfferingMappingsListResponse = AdminArrowVendorOfferingMappingsListResponses[keyof AdminArrowVendorOfferingMappingsListResponses];
+
+export type AdminArrowVendorOfferingMappingsCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        arrow_vendor_name?: string;
+        is_active?: boolean;
+        offering?: string;
+        offering_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        settings?: string;
+        settings_uuid?: string;
+    };
+    url: '/api/admin/arrow/vendor-offering-mappings/';
+};
+
+export type AdminArrowVendorOfferingMappingsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type AdminArrowVendorOfferingMappingsCreateData = {
+    body: ArrowVendorOfferingMappingCreateRequest;
+    path?: never;
+    query?: never;
+    url: '/api/admin/arrow/vendor-offering-mappings/';
+};
+
+export type AdminArrowVendorOfferingMappingsCreateResponses = {
+    201: ArrowVendorOfferingMappingCreate;
+};
+
+export type AdminArrowVendorOfferingMappingsCreateResponse = AdminArrowVendorOfferingMappingsCreateResponses[keyof AdminArrowVendorOfferingMappingsCreateResponses];
+
+export type AdminArrowVendorOfferingMappingsDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/admin/arrow/vendor-offering-mappings/{uuid}/';
+};
+
+export type AdminArrowVendorOfferingMappingsDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type AdminArrowVendorOfferingMappingsDestroyResponse = AdminArrowVendorOfferingMappingsDestroyResponses[keyof AdminArrowVendorOfferingMappingsDestroyResponses];
+
+export type AdminArrowVendorOfferingMappingsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/admin/arrow/vendor-offering-mappings/{uuid}/';
+};
+
+export type AdminArrowVendorOfferingMappingsRetrieveResponses = {
+    200: ArrowVendorOfferingMapping;
+};
+
+export type AdminArrowVendorOfferingMappingsRetrieveResponse = AdminArrowVendorOfferingMappingsRetrieveResponses[keyof AdminArrowVendorOfferingMappingsRetrieveResponses];
+
+export type AdminArrowVendorOfferingMappingsPartialUpdateData = {
+    body?: PatchedArrowVendorOfferingMappingRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/admin/arrow/vendor-offering-mappings/{uuid}/';
+};
+
+export type AdminArrowVendorOfferingMappingsPartialUpdateResponses = {
+    200: ArrowVendorOfferingMapping;
+};
+
+export type AdminArrowVendorOfferingMappingsPartialUpdateResponse = AdminArrowVendorOfferingMappingsPartialUpdateResponses[keyof AdminArrowVendorOfferingMappingsPartialUpdateResponses];
+
+export type AdminArrowVendorOfferingMappingsUpdateData = {
+    body: ArrowVendorOfferingMappingRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/admin/arrow/vendor-offering-mappings/{uuid}/';
+};
+
+export type AdminArrowVendorOfferingMappingsUpdateResponses = {
+    200: ArrowVendorOfferingMapping;
+};
+
+export type AdminArrowVendorOfferingMappingsUpdateResponse = AdminArrowVendorOfferingMappingsUpdateResponses[keyof AdminArrowVendorOfferingMappingsUpdateResponses];
+
+export type AdminArrowVendorOfferingMappingsVendorChoicesListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        arrow_vendor_name?: string;
+        is_active?: boolean;
+        offering?: string;
+        offering_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        settings?: string;
+        settings_uuid?: string;
+    };
+    url: '/api/admin/arrow/vendor-offering-mappings/vendor_choices/';
+};
+
+export type AdminArrowVendorOfferingMappingsVendorChoicesListResponses = {
+    200: Array<VendorNameChoice>;
+};
+
+export type AdminArrowVendorOfferingMappingsVendorChoicesListResponse = AdminArrowVendorOfferingMappingsVendorChoicesListResponses[keyof AdminArrowVendorOfferingMappingsVendorChoicesListResponses];
+
+export type AdminArrowVendorOfferingMappingsVendorChoicesCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        arrow_vendor_name?: string;
+        is_active?: boolean;
+        offering?: string;
+        offering_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        settings?: string;
+        settings_uuid?: string;
+    };
+    url: '/api/admin/arrow/vendor-offering-mappings/vendor_choices/';
+};
+
+export type AdminArrowVendorOfferingMappingsVendorChoicesCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type AssignmentBatchesListData = {
     body?: never;
