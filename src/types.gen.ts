@@ -15080,10 +15080,7 @@ export type PatchedProjectCreditRequest = {
 export type PatchedProjectDigestConfigRequest = {
     is_enabled?: boolean;
     frequency?: FrequencyEnum;
-    /**
-     * List of section keys to include. Empty means all.
-     */
-    enabled_sections?: string;
+    enabled_sections?: Array<string>;
     /**
      * For weekly/biweekly: 0=Sunday..6=Saturday
      */
@@ -16513,10 +16510,7 @@ export type ProjectDigestConfig = {
     readonly uuid: string;
     is_enabled?: boolean;
     frequency?: FrequencyEnum;
-    /**
-     * List of section keys to include. Empty means all.
-     */
-    enabled_sections?: string;
+    enabled_sections?: Array<string>;
     /**
      * For weekly/biweekly: 0=Sunday..6=Saturday
      */
@@ -16534,10 +16528,7 @@ export type ProjectDigestConfig = {
 export type ProjectDigestConfigRequest = {
     is_enabled?: boolean;
     frequency?: FrequencyEnum;
-    /**
-     * List of section keys to include. Empty means all.
-     */
-    enabled_sections?: string;
+    enabled_sections?: Array<string>;
     /**
      * For weekly/biweekly: 0=Sunday..6=Saturday
      */
