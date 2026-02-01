@@ -48,3 +48,24 @@ jobs:
             git push
             npm publish --tag dev
           fi
+
+      - name: Deprecate old dev versions
+        if: ${{ !startsWith(github.ref, 'refs/tags/') }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_DEPRECATE_TOKEN }}
+        run: |
+          if [ -z "$NODE_AUTH_TOKEN" ]; then
+            echo "NPM_DEPRECATE_TOKEN secret not set, skipping deprecation"
+            exit 0
+          fi
+          node -e "
+            const { execSync } = require('child_process');
+            const versions = JSON.parse(execSync('npm view waldur-js-client versions --json').toString());
+            const devVersions = versions.filter(v => v.includes('-dev.'));
+            const toDeprecate = devVersions.slice(0, -6);
+            for (const v of toDeprecate) {
+              console.log('Deprecating ' + v);
+              execSync('npm deprecate waldur-js-client@' + v + ' \"Outdated dev version. Use the dev tag for the latest dev release.\"');
+            }
+            console.log('Deprecated ' + toDeprecate.length + ' old dev versions, keeping ' + Math.min(devVersions.length, 6) + ' recent ones.');
+          "
