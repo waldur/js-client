@@ -17978,8 +17978,16 @@ export type PubsubOverview = {
     readonly last_updated: string;
 };
 
+export type PullConflictResponse = {
+    detail: string;
+};
+
 export type PullMarketplaceScriptResourceRequest = {
     resource_uuid: string;
+};
+
+export type PullResponse = {
+    detail: string;
 };
 
 export type QosStrategyEnum = 'threshold' | 'progressive';
@@ -21354,6 +21362,14 @@ export type RoundReviewer = {
 
 export type RoundStatus = 'scheduled' | 'open' | 'ended';
 
+export type RouterSetErredResponse = {
+    detail: string;
+};
+
+export type RouterSetOkResponse = {
+    detail: string;
+};
+
 export type Rule = {
     name: string;
     readonly uuid: string;
@@ -21718,6 +21734,15 @@ export type ServiceSettings = {
 
 export type ServiceSettingsStateEnum = 'CREATION_SCHEDULED' | 'CREATING' | 'UPDATE_SCHEDULED' | 'UPDATING' | 'DELETION_SCHEDULED' | 'DELETING' | 'OK' | 'ERRED';
 
+export type SetErredRequest = {
+    error_message?: string;
+    error_traceback?: string;
+};
+
+export type SetErredResponse = {
+    detail: string;
+};
+
 export type SetMtu = {
     mtu: number;
 };
@@ -21735,6 +21760,10 @@ export type SetOfferingsUsernameRequest = {
      * Username for offering access
      */
     username: string;
+};
+
+export type SetOkResponse = {
+    detail: string;
 };
 
 export type SetTokenQuotaRequest = {
@@ -28719,18 +28748,16 @@ export type AwsInstancesPullData = {
 };
 
 export type AwsInstancesPullErrors = {
-    /**
-     * No response body
-     */
-    409: unknown;
+    409: PullConflictResponse;
 };
 
+export type AwsInstancesPullError = AwsInstancesPullErrors[keyof AwsInstancesPullErrors];
+
 export type AwsInstancesPullResponses = {
-    /**
-     * No response body
-     */
-    202: unknown;
+    202: PullResponse;
 };
+
+export type AwsInstancesPullResponse = AwsInstancesPullResponses[keyof AwsInstancesPullResponses];
 
 export type AwsInstancesResizeData = {
     body: AwsInstanceResizeRequest;
@@ -28762,6 +28789,36 @@ export type AwsInstancesRestartResponses = {
      */
     200: unknown;
 };
+
+export type AwsInstancesSetErredData = {
+    body?: SetErredRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/aws-instances/{uuid}/set_erred/';
+};
+
+export type AwsInstancesSetErredResponses = {
+    200: SetErredResponse;
+};
+
+export type AwsInstancesSetErredResponse = AwsInstancesSetErredResponses[keyof AwsInstancesSetErredResponses];
+
+export type AwsInstancesSetOkData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/aws-instances/{uuid}/set_ok/';
+};
+
+export type AwsInstancesSetOkResponses = {
+    200: SetOkResponse;
+};
+
+export type AwsInstancesSetOkResponse = AwsInstancesSetOkResponses[keyof AwsInstancesSetOkResponses];
 
 export type AwsInstancesStartData = {
     body?: never;
@@ -29132,18 +29189,46 @@ export type AwsVolumesPullData = {
 };
 
 export type AwsVolumesPullErrors = {
-    /**
-     * No response body
-     */
-    409: unknown;
+    409: PullConflictResponse;
 };
 
+export type AwsVolumesPullError = AwsVolumesPullErrors[keyof AwsVolumesPullErrors];
+
 export type AwsVolumesPullResponses = {
-    /**
-     * No response body
-     */
-    202: unknown;
+    202: PullResponse;
 };
+
+export type AwsVolumesPullResponse = AwsVolumesPullResponses[keyof AwsVolumesPullResponses];
+
+export type AwsVolumesSetErredData = {
+    body?: SetErredRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/aws-volumes/{uuid}/set_erred/';
+};
+
+export type AwsVolumesSetErredResponses = {
+    200: SetErredResponse;
+};
+
+export type AwsVolumesSetErredResponse = AwsVolumesSetErredResponses[keyof AwsVolumesSetErredResponses];
+
+export type AwsVolumesSetOkData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/aws-volumes/{uuid}/set_ok/';
+};
+
+export type AwsVolumesSetOkResponses = {
+    200: SetOkResponse;
+};
+
+export type AwsVolumesSetOkResponse = AwsVolumesSetOkResponses[keyof AwsVolumesSetOkResponses];
 
 export type AwsVolumesUnlinkData = {
     body?: never;
@@ -29639,18 +29724,46 @@ export type AzurePublicIpsPullData = {
 };
 
 export type AzurePublicIpsPullErrors = {
-    /**
-     * No response body
-     */
-    409: unknown;
+    409: PullConflictResponse;
 };
 
+export type AzurePublicIpsPullError = AzurePublicIpsPullErrors[keyof AzurePublicIpsPullErrors];
+
 export type AzurePublicIpsPullResponses = {
-    /**
-     * No response body
-     */
-    202: unknown;
+    202: PullResponse;
 };
+
+export type AzurePublicIpsPullResponse = AzurePublicIpsPullResponses[keyof AzurePublicIpsPullResponses];
+
+export type AzurePublicIpsSetErredData = {
+    body?: SetErredRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/azure-public-ips/{uuid}/set_erred/';
+};
+
+export type AzurePublicIpsSetErredResponses = {
+    200: SetErredResponse;
+};
+
+export type AzurePublicIpsSetErredResponse = AzurePublicIpsSetErredResponses[keyof AzurePublicIpsSetErredResponses];
+
+export type AzurePublicIpsSetOkData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/azure-public-ips/{uuid}/set_ok/';
+};
+
+export type AzurePublicIpsSetOkResponses = {
+    200: SetOkResponse;
+};
+
+export type AzurePublicIpsSetOkResponse = AzurePublicIpsSetOkResponses[keyof AzurePublicIpsSetOkResponses];
 
 export type AzurePublicIpsUnlinkData = {
     body?: never;
@@ -30121,18 +30234,46 @@ export type AzureSqlDatabasesPullData = {
 };
 
 export type AzureSqlDatabasesPullErrors = {
-    /**
-     * No response body
-     */
-    409: unknown;
+    409: PullConflictResponse;
 };
 
+export type AzureSqlDatabasesPullError = AzureSqlDatabasesPullErrors[keyof AzureSqlDatabasesPullErrors];
+
 export type AzureSqlDatabasesPullResponses = {
-    /**
-     * No response body
-     */
-    202: unknown;
+    202: PullResponse;
 };
+
+export type AzureSqlDatabasesPullResponse = AzureSqlDatabasesPullResponses[keyof AzureSqlDatabasesPullResponses];
+
+export type AzureSqlDatabasesSetErredData = {
+    body?: SetErredRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/azure-sql-databases/{uuid}/set_erred/';
+};
+
+export type AzureSqlDatabasesSetErredResponses = {
+    200: SetErredResponse;
+};
+
+export type AzureSqlDatabasesSetErredResponse = AzureSqlDatabasesSetErredResponses[keyof AzureSqlDatabasesSetErredResponses];
+
+export type AzureSqlDatabasesSetOkData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/azure-sql-databases/{uuid}/set_ok/';
+};
+
+export type AzureSqlDatabasesSetOkResponses = {
+    200: SetOkResponse;
+};
+
+export type AzureSqlDatabasesSetOkResponse = AzureSqlDatabasesSetOkResponses[keyof AzureSqlDatabasesSetOkResponses];
 
 export type AzureSqlDatabasesUnlinkData = {
     body?: never;
@@ -30453,18 +30594,46 @@ export type AzureSqlServersPullData = {
 };
 
 export type AzureSqlServersPullErrors = {
-    /**
-     * No response body
-     */
-    409: unknown;
+    409: PullConflictResponse;
 };
 
+export type AzureSqlServersPullError = AzureSqlServersPullErrors[keyof AzureSqlServersPullErrors];
+
 export type AzureSqlServersPullResponses = {
-    /**
-     * No response body
-     */
-    202: unknown;
+    202: PullResponse;
 };
+
+export type AzureSqlServersPullResponse = AzureSqlServersPullResponses[keyof AzureSqlServersPullResponses];
+
+export type AzureSqlServersSetErredData = {
+    body?: SetErredRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/azure-sql-servers/{uuid}/set_erred/';
+};
+
+export type AzureSqlServersSetErredResponses = {
+    200: SetErredResponse;
+};
+
+export type AzureSqlServersSetErredResponse = AzureSqlServersSetErredResponses[keyof AzureSqlServersSetErredResponses];
+
+export type AzureSqlServersSetOkData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/azure-sql-servers/{uuid}/set_ok/';
+};
+
+export type AzureSqlServersSetOkResponses = {
+    200: SetOkResponse;
+};
+
+export type AzureSqlServersSetOkResponse = AzureSqlServersSetOkResponses[keyof AzureSqlServersSetOkResponses];
 
 export type AzureSqlServersUnlinkData = {
     body?: never;
@@ -30770,18 +30939,16 @@ export type AzureVirtualmachinesPullData = {
 };
 
 export type AzureVirtualmachinesPullErrors = {
-    /**
-     * No response body
-     */
-    409: unknown;
+    409: PullConflictResponse;
 };
 
+export type AzureVirtualmachinesPullError = AzureVirtualmachinesPullErrors[keyof AzureVirtualmachinesPullErrors];
+
 export type AzureVirtualmachinesPullResponses = {
-    /**
-     * No response body
-     */
-    202: unknown;
+    202: PullResponse;
 };
+
+export type AzureVirtualmachinesPullResponse = AzureVirtualmachinesPullResponses[keyof AzureVirtualmachinesPullResponses];
 
 export type AzureVirtualmachinesRestartData = {
     body?: never;
@@ -30798,6 +30965,36 @@ export type AzureVirtualmachinesRestartResponses = {
      */
     200: unknown;
 };
+
+export type AzureVirtualmachinesSetErredData = {
+    body?: SetErredRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/azure-virtualmachines/{uuid}/set_erred/';
+};
+
+export type AzureVirtualmachinesSetErredResponses = {
+    200: SetErredResponse;
+};
+
+export type AzureVirtualmachinesSetErredResponse = AzureVirtualmachinesSetErredResponses[keyof AzureVirtualmachinesSetErredResponses];
+
+export type AzureVirtualmachinesSetOkData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/azure-virtualmachines/{uuid}/set_ok/';
+};
+
+export type AzureVirtualmachinesSetOkResponses = {
+    200: SetOkResponse;
+};
+
+export type AzureVirtualmachinesSetOkResponse = AzureVirtualmachinesSetOkResponses[keyof AzureVirtualmachinesSetOkResponses];
 
 export type AzureVirtualmachinesStartData = {
     body?: never;
@@ -35751,18 +35948,16 @@ export type DigitaloceanDropletsPullData = {
 };
 
 export type DigitaloceanDropletsPullErrors = {
-    /**
-     * No response body
-     */
-    409: unknown;
+    409: PullConflictResponse;
 };
 
+export type DigitaloceanDropletsPullError = DigitaloceanDropletsPullErrors[keyof DigitaloceanDropletsPullErrors];
+
 export type DigitaloceanDropletsPullResponses = {
-    /**
-     * No response body
-     */
-    202: unknown;
+    202: PullResponse;
 };
+
+export type DigitaloceanDropletsPullResponse = DigitaloceanDropletsPullResponses[keyof DigitaloceanDropletsPullResponses];
 
 export type DigitaloceanDropletsResizeData = {
     body: DigitalOceanDropletResizeRequest;
@@ -35794,6 +35989,36 @@ export type DigitaloceanDropletsRestartResponses = {
      */
     200: unknown;
 };
+
+export type DigitaloceanDropletsSetErredData = {
+    body?: SetErredRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/digitalocean-droplets/{uuid}/set_erred/';
+};
+
+export type DigitaloceanDropletsSetErredResponses = {
+    200: SetErredResponse;
+};
+
+export type DigitaloceanDropletsSetErredResponse = DigitaloceanDropletsSetErredResponses[keyof DigitaloceanDropletsSetErredResponses];
+
+export type DigitaloceanDropletsSetOkData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/digitalocean-droplets/{uuid}/set_ok/';
+};
+
+export type DigitaloceanDropletsSetOkResponses = {
+    200: SetOkResponse;
+};
+
+export type DigitaloceanDropletsSetOkResponse = DigitaloceanDropletsSetOkResponses[keyof DigitaloceanDropletsSetOkResponses];
 
 export type DigitaloceanDropletsStartData = {
     body?: never;
@@ -58306,18 +58531,31 @@ export type OpenportalAllocationsPullData = {
 };
 
 export type OpenportalAllocationsPullErrors = {
-    /**
-     * No response body
-     */
-    409: unknown;
+    409: PullConflictResponse;
 };
 
+export type OpenportalAllocationsPullError = OpenportalAllocationsPullErrors[keyof OpenportalAllocationsPullErrors];
+
 export type OpenportalAllocationsPullResponses = {
-    /**
-     * No response body
-     */
-    202: unknown;
+    202: PullResponse;
 };
+
+export type OpenportalAllocationsPullResponse = OpenportalAllocationsPullResponses[keyof OpenportalAllocationsPullResponses];
+
+export type OpenportalAllocationsSetErredData = {
+    body?: SetErredRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openportal-allocations/{uuid}/set_erred/';
+};
+
+export type OpenportalAllocationsSetErredResponses = {
+    200: SetErredResponse;
+};
+
+export type OpenportalAllocationsSetErredResponse = OpenportalAllocationsSetErredResponses[keyof OpenportalAllocationsSetErredResponses];
 
 export type OpenportalAllocationsSetLimitsData = {
     body: AllocationSetLimitsRequest;
@@ -58333,6 +58571,21 @@ export type OpenportalAllocationsSetLimitsResponses = {
 };
 
 export type OpenportalAllocationsSetLimitsResponse = OpenportalAllocationsSetLimitsResponses[keyof OpenportalAllocationsSetLimitsResponses];
+
+export type OpenportalAllocationsSetOkData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openportal-allocations/{uuid}/set_ok/';
+};
+
+export type OpenportalAllocationsSetOkResponses = {
+    200: SetOkResponse;
+};
+
+export type OpenportalAllocationsSetOkResponse = OpenportalAllocationsSetOkResponses[keyof OpenportalAllocationsSetOkResponses];
 
 export type OpenportalAllocationsUnlinkData = {
     body?: never;
@@ -59221,18 +59474,31 @@ export type OpenportalRemoteAllocationsPullData = {
 };
 
 export type OpenportalRemoteAllocationsPullErrors = {
-    /**
-     * No response body
-     */
-    409: unknown;
+    409: PullConflictResponse;
 };
 
+export type OpenportalRemoteAllocationsPullError = OpenportalRemoteAllocationsPullErrors[keyof OpenportalRemoteAllocationsPullErrors];
+
 export type OpenportalRemoteAllocationsPullResponses = {
-    /**
-     * No response body
-     */
-    202: unknown;
+    202: PullResponse;
 };
+
+export type OpenportalRemoteAllocationsPullResponse = OpenportalRemoteAllocationsPullResponses[keyof OpenportalRemoteAllocationsPullResponses];
+
+export type OpenportalRemoteAllocationsSetErredData = {
+    body?: SetErredRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openportal-remote-allocations/{uuid}/set_erred/';
+};
+
+export type OpenportalRemoteAllocationsSetErredResponses = {
+    200: SetErredResponse;
+};
+
+export type OpenportalRemoteAllocationsSetErredResponse = OpenportalRemoteAllocationsSetErredResponses[keyof OpenportalRemoteAllocationsSetErredResponses];
 
 export type OpenportalRemoteAllocationsSetLimitsData = {
     body: RemoteAllocationSetLimitsRequest;
@@ -59248,6 +59514,21 @@ export type OpenportalRemoteAllocationsSetLimitsResponses = {
 };
 
 export type OpenportalRemoteAllocationsSetLimitsResponse = OpenportalRemoteAllocationsSetLimitsResponses[keyof OpenportalRemoteAllocationsSetLimitsResponses];
+
+export type OpenportalRemoteAllocationsSetOkData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openportal-remote-allocations/{uuid}/set_ok/';
+};
+
+export type OpenportalRemoteAllocationsSetOkResponses = {
+    200: SetOkResponse;
+};
+
+export type OpenportalRemoteAllocationsSetOkResponse = OpenportalRemoteAllocationsSetOkResponses[keyof OpenportalRemoteAllocationsSetOkResponses];
 
 export type OpenportalRemoteAllocationsUnlinkData = {
     body?: never;
@@ -60363,18 +60644,16 @@ export type OpenstackBackupsPullData = {
 };
 
 export type OpenstackBackupsPullErrors = {
-    /**
-     * No response body
-     */
-    409: unknown;
+    409: PullConflictResponse;
 };
 
+export type OpenstackBackupsPullError = OpenstackBackupsPullErrors[keyof OpenstackBackupsPullErrors];
+
 export type OpenstackBackupsPullResponses = {
-    /**
-     * No response body
-     */
-    202: unknown;
+    202: PullResponse;
 };
+
+export type OpenstackBackupsPullResponse = OpenstackBackupsPullResponses[keyof OpenstackBackupsPullResponses];
 
 export type OpenstackBackupsRestoreData = {
     body: OpenStackBackupRestorationCreateRequest;
@@ -60390,6 +60669,36 @@ export type OpenstackBackupsRestoreResponses = {
 };
 
 export type OpenstackBackupsRestoreResponse = OpenstackBackupsRestoreResponses[keyof OpenstackBackupsRestoreResponses];
+
+export type OpenstackBackupsSetErredData = {
+    body?: SetErredRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openstack-backups/{uuid}/set_erred/';
+};
+
+export type OpenstackBackupsSetErredResponses = {
+    200: SetErredResponse;
+};
+
+export type OpenstackBackupsSetErredResponse = OpenstackBackupsSetErredResponses[keyof OpenstackBackupsSetErredResponses];
+
+export type OpenstackBackupsSetOkData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openstack-backups/{uuid}/set_ok/';
+};
+
+export type OpenstackBackupsSetOkResponses = {
+    200: SetOkResponse;
+};
+
+export type OpenstackBackupsSetOkResponse = OpenstackBackupsSetOkResponses[keyof OpenstackBackupsSetOkResponses];
 
 export type OpenstackBackupsUnlinkData = {
     body?: never;
@@ -60894,18 +61203,46 @@ export type OpenstackFloatingIpsPullData = {
 };
 
 export type OpenstackFloatingIpsPullErrors = {
-    /**
-     * No response body
-     */
-    409: unknown;
+    409: PullConflictResponse;
 };
 
+export type OpenstackFloatingIpsPullError = OpenstackFloatingIpsPullErrors[keyof OpenstackFloatingIpsPullErrors];
+
 export type OpenstackFloatingIpsPullResponses = {
-    /**
-     * No response body
-     */
-    202: unknown;
+    202: PullResponse;
 };
+
+export type OpenstackFloatingIpsPullResponse = OpenstackFloatingIpsPullResponses[keyof OpenstackFloatingIpsPullResponses];
+
+export type OpenstackFloatingIpsSetErredData = {
+    body?: SetErredRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openstack-floating-ips/{uuid}/set_erred/';
+};
+
+export type OpenstackFloatingIpsSetErredResponses = {
+    200: SetErredResponse;
+};
+
+export type OpenstackFloatingIpsSetErredResponse = OpenstackFloatingIpsSetErredResponses[keyof OpenstackFloatingIpsSetErredResponses];
+
+export type OpenstackFloatingIpsSetOkData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openstack-floating-ips/{uuid}/set_ok/';
+};
+
+export type OpenstackFloatingIpsSetOkResponses = {
+    200: SetOkResponse;
+};
+
+export type OpenstackFloatingIpsSetOkResponse = OpenstackFloatingIpsSetOkResponses[keyof OpenstackFloatingIpsSetOkResponses];
 
 export type OpenstackFloatingIpsUnlinkData = {
     body?: never;
@@ -61604,18 +61941,16 @@ export type OpenstackInstancesPullData = {
 };
 
 export type OpenstackInstancesPullErrors = {
-    /**
-     * No response body
-     */
-    409: unknown;
+    409: PullConflictResponse;
 };
 
+export type OpenstackInstancesPullError = OpenstackInstancesPullErrors[keyof OpenstackInstancesPullErrors];
+
 export type OpenstackInstancesPullResponses = {
-    /**
-     * No response body
-     */
-    202: unknown;
+    202: PullResponse;
 };
+
+export type OpenstackInstancesPullResponse = OpenstackInstancesPullResponses[keyof OpenstackInstancesPullResponses];
 
 export type OpenstackInstancesRestartData = {
     body?: never;
@@ -61632,6 +61967,36 @@ export type OpenstackInstancesRestartResponses = {
      */
     200: unknown;
 };
+
+export type OpenstackInstancesSetErredData = {
+    body?: SetErredRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openstack-instances/{uuid}/set_erred/';
+};
+
+export type OpenstackInstancesSetErredResponses = {
+    200: SetErredResponse;
+};
+
+export type OpenstackInstancesSetErredResponse = OpenstackInstancesSetErredResponses[keyof OpenstackInstancesSetErredResponses];
+
+export type OpenstackInstancesSetOkData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openstack-instances/{uuid}/set_ok/';
+};
+
+export type OpenstackInstancesSetOkResponses = {
+    200: SetOkResponse;
+};
+
+export type OpenstackInstancesSetOkResponse = OpenstackInstancesSetOkResponses[keyof OpenstackInstancesSetOkResponses];
 
 export type OpenstackInstancesStartData = {
     body?: never;
@@ -62612,18 +62977,16 @@ export type OpenstackNetworksPullData = {
 };
 
 export type OpenstackNetworksPullErrors = {
-    /**
-     * No response body
-     */
-    409: unknown;
+    409: PullConflictResponse;
 };
 
+export type OpenstackNetworksPullError = OpenstackNetworksPullErrors[keyof OpenstackNetworksPullErrors];
+
 export type OpenstackNetworksPullResponses = {
-    /**
-     * No response body
-     */
-    202: unknown;
+    202: PullResponse;
 };
+
+export type OpenstackNetworksPullResponse = OpenstackNetworksPullResponses[keyof OpenstackNetworksPullResponses];
 
 export type OpenstackNetworksRbacPolicyCreateData = {
     body: DeprecatedNetworkRbacPolicyRequest;
@@ -62662,6 +63025,21 @@ export type OpenstackNetworksRbacPolicyDeleteDestroyResponses = {
 
 export type OpenstackNetworksRbacPolicyDeleteDestroyResponse = OpenstackNetworksRbacPolicyDeleteDestroyResponses[keyof OpenstackNetworksRbacPolicyDeleteDestroyResponses];
 
+export type OpenstackNetworksSetErredData = {
+    body?: SetErredRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openstack-networks/{uuid}/set_erred/';
+};
+
+export type OpenstackNetworksSetErredResponses = {
+    200: SetErredResponse;
+};
+
+export type OpenstackNetworksSetErredResponse = OpenstackNetworksSetErredResponses[keyof OpenstackNetworksSetErredResponses];
+
 export type OpenstackNetworksSetMtuData = {
     body: SetMtuRequest;
     path: {
@@ -62676,6 +63054,21 @@ export type OpenstackNetworksSetMtuResponses = {
 };
 
 export type OpenstackNetworksSetMtuResponse = OpenstackNetworksSetMtuResponses[keyof OpenstackNetworksSetMtuResponses];
+
+export type OpenstackNetworksSetOkData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openstack-networks/{uuid}/set_ok/';
+};
+
+export type OpenstackNetworksSetOkResponses = {
+    200: SetOkResponse;
+};
+
+export type OpenstackNetworksSetOkResponse = OpenstackNetworksSetOkResponses[keyof OpenstackNetworksSetOkResponses];
 
 export type OpenstackNetworksUnlinkData = {
     body?: never;
@@ -62997,18 +63390,46 @@ export type OpenstackPortsPullData = {
 };
 
 export type OpenstackPortsPullErrors = {
-    /**
-     * No response body
-     */
-    409: unknown;
+    409: PullConflictResponse;
 };
 
+export type OpenstackPortsPullError = OpenstackPortsPullErrors[keyof OpenstackPortsPullErrors];
+
 export type OpenstackPortsPullResponses = {
-    /**
-     * No response body
-     */
-    202: unknown;
+    202: PullResponse;
 };
+
+export type OpenstackPortsPullResponse = OpenstackPortsPullResponses[keyof OpenstackPortsPullResponses];
+
+export type OpenstackPortsSetErredData = {
+    body?: SetErredRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openstack-ports/{uuid}/set_erred/';
+};
+
+export type OpenstackPortsSetErredResponses = {
+    200: SetErredResponse;
+};
+
+export type OpenstackPortsSetErredResponse = OpenstackPortsSetErredResponses[keyof OpenstackPortsSetErredResponses];
+
+export type OpenstackPortsSetOkData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openstack-ports/{uuid}/set_ok/';
+};
+
+export type OpenstackPortsSetOkResponses = {
+    200: SetOkResponse;
+};
+
+export type OpenstackPortsSetOkResponse = OpenstackPortsSetOkResponses[keyof OpenstackPortsSetOkResponses];
 
 export type OpenstackPortsUnlinkData = {
     body?: never;
@@ -63229,6 +63650,36 @@ export type OpenstackRoutersRemoveRouterInterfaceResponses = {
      */
     200: unknown;
 };
+
+export type OpenstackRoutersSetErredData = {
+    body?: SetErredRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openstack-routers/{uuid}/set_erred/';
+};
+
+export type OpenstackRoutersSetErredResponses = {
+    200: RouterSetErredResponse;
+};
+
+export type OpenstackRoutersSetErredResponse = OpenstackRoutersSetErredResponses[keyof OpenstackRoutersSetErredResponses];
+
+export type OpenstackRoutersSetOkData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openstack-routers/{uuid}/set_ok/';
+};
+
+export type OpenstackRoutersSetOkResponses = {
+    200: RouterSetOkResponse;
+};
+
+export type OpenstackRoutersSetOkResponse = OpenstackRoutersSetOkResponses[keyof OpenstackRoutersSetOkResponses];
 
 export type OpenstackRoutersSetRoutesData = {
     body: OpenStackRouterSetRoutesRequest;
@@ -63538,18 +63989,46 @@ export type OpenstackSecurityGroupsPullData = {
 };
 
 export type OpenstackSecurityGroupsPullErrors = {
-    /**
-     * No response body
-     */
-    409: unknown;
+    409: PullConflictResponse;
 };
 
+export type OpenstackSecurityGroupsPullError = OpenstackSecurityGroupsPullErrors[keyof OpenstackSecurityGroupsPullErrors];
+
 export type OpenstackSecurityGroupsPullResponses = {
-    /**
-     * No response body
-     */
-    202: unknown;
+    202: PullResponse;
 };
+
+export type OpenstackSecurityGroupsPullResponse = OpenstackSecurityGroupsPullResponses[keyof OpenstackSecurityGroupsPullResponses];
+
+export type OpenstackSecurityGroupsSetErredData = {
+    body?: SetErredRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openstack-security-groups/{uuid}/set_erred/';
+};
+
+export type OpenstackSecurityGroupsSetErredResponses = {
+    200: SetErredResponse;
+};
+
+export type OpenstackSecurityGroupsSetErredResponse = OpenstackSecurityGroupsSetErredResponses[keyof OpenstackSecurityGroupsSetErredResponses];
+
+export type OpenstackSecurityGroupsSetOkData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openstack-security-groups/{uuid}/set_ok/';
+};
+
+export type OpenstackSecurityGroupsSetOkResponses = {
+    200: SetOkResponse;
+};
+
+export type OpenstackSecurityGroupsSetOkResponse = OpenstackSecurityGroupsSetOkResponses[keyof OpenstackSecurityGroupsSetOkResponses];
 
 export type OpenstackSecurityGroupsSetRulesData = {
     body: Array<OpenStackSecurityGroupRuleUpdateRequest>;
@@ -63883,18 +64362,46 @@ export type OpenstackServerGroupsPullData = {
 };
 
 export type OpenstackServerGroupsPullErrors = {
-    /**
-     * No response body
-     */
-    409: unknown;
+    409: PullConflictResponse;
 };
 
+export type OpenstackServerGroupsPullError = OpenstackServerGroupsPullErrors[keyof OpenstackServerGroupsPullErrors];
+
 export type OpenstackServerGroupsPullResponses = {
-    /**
-     * No response body
-     */
-    202: unknown;
+    202: PullResponse;
 };
+
+export type OpenstackServerGroupsPullResponse = OpenstackServerGroupsPullResponses[keyof OpenstackServerGroupsPullResponses];
+
+export type OpenstackServerGroupsSetErredData = {
+    body?: SetErredRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openstack-server-groups/{uuid}/set_erred/';
+};
+
+export type OpenstackServerGroupsSetErredResponses = {
+    200: SetErredResponse;
+};
+
+export type OpenstackServerGroupsSetErredResponse = OpenstackServerGroupsSetErredResponses[keyof OpenstackServerGroupsSetErredResponses];
+
+export type OpenstackServerGroupsSetOkData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openstack-server-groups/{uuid}/set_ok/';
+};
+
+export type OpenstackServerGroupsSetOkResponses = {
+    200: SetOkResponse;
+};
+
+export type OpenstackServerGroupsSetOkResponse = OpenstackServerGroupsSetOkResponses[keyof OpenstackServerGroupsSetOkResponses];
 
 export type OpenstackServerGroupsUnlinkData = {
     body?: never;
@@ -64233,18 +64740,16 @@ export type OpenstackSnapshotsPullData = {
 };
 
 export type OpenstackSnapshotsPullErrors = {
-    /**
-     * No response body
-     */
-    409: unknown;
+    409: PullConflictResponse;
 };
 
+export type OpenstackSnapshotsPullError = OpenstackSnapshotsPullErrors[keyof OpenstackSnapshotsPullErrors];
+
 export type OpenstackSnapshotsPullResponses = {
-    /**
-     * No response body
-     */
-    202: unknown;
+    202: PullResponse;
 };
+
+export type OpenstackSnapshotsPullResponse = OpenstackSnapshotsPullResponses[keyof OpenstackSnapshotsPullResponses];
 
 export type OpenstackSnapshotsRestorationsListData = {
     body?: never;
@@ -64284,6 +64789,36 @@ export type OpenstackSnapshotsRestoreResponses = {
 };
 
 export type OpenstackSnapshotsRestoreResponse = OpenstackSnapshotsRestoreResponses[keyof OpenstackSnapshotsRestoreResponses];
+
+export type OpenstackSnapshotsSetErredData = {
+    body?: SetErredRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openstack-snapshots/{uuid}/set_erred/';
+};
+
+export type OpenstackSnapshotsSetErredResponses = {
+    200: SetErredResponse;
+};
+
+export type OpenstackSnapshotsSetErredResponse = OpenstackSnapshotsSetErredResponses[keyof OpenstackSnapshotsSetErredResponses];
+
+export type OpenstackSnapshotsSetOkData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openstack-snapshots/{uuid}/set_ok/';
+};
+
+export type OpenstackSnapshotsSetOkResponses = {
+    200: SetOkResponse;
+};
+
+export type OpenstackSnapshotsSetOkResponse = OpenstackSnapshotsSetOkResponses[keyof OpenstackSnapshotsSetOkResponses];
 
 export type OpenstackSnapshotsUnlinkData = {
     body?: never;
@@ -64656,18 +65191,46 @@ export type OpenstackSubnetsPullData = {
 };
 
 export type OpenstackSubnetsPullErrors = {
-    /**
-     * No response body
-     */
-    409: unknown;
+    409: PullConflictResponse;
 };
 
+export type OpenstackSubnetsPullError = OpenstackSubnetsPullErrors[keyof OpenstackSubnetsPullErrors];
+
 export type OpenstackSubnetsPullResponses = {
-    /**
-     * No response body
-     */
-    202: unknown;
+    202: PullResponse;
 };
+
+export type OpenstackSubnetsPullResponse = OpenstackSubnetsPullResponses[keyof OpenstackSubnetsPullResponses];
+
+export type OpenstackSubnetsSetErredData = {
+    body?: SetErredRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openstack-subnets/{uuid}/set_erred/';
+};
+
+export type OpenstackSubnetsSetErredResponses = {
+    200: SetErredResponse;
+};
+
+export type OpenstackSubnetsSetErredResponse = OpenstackSubnetsSetErredResponses[keyof OpenstackSubnetsSetErredResponses];
+
+export type OpenstackSubnetsSetOkData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openstack-subnets/{uuid}/set_ok/';
+};
+
+export type OpenstackSubnetsSetOkResponses = {
+    200: SetOkResponse;
+};
+
+export type OpenstackSubnetsSetOkResponse = OpenstackSubnetsSetOkResponses[keyof OpenstackSubnetsSetOkResponses];
 
 export type OpenstackSubnetsUnlinkData = {
     body?: never;
@@ -65210,18 +65773,16 @@ export type OpenstackTenantsPullData = {
 };
 
 export type OpenstackTenantsPullErrors = {
-    /**
-     * No response body
-     */
-    409: unknown;
+    409: PullConflictResponse;
 };
 
+export type OpenstackTenantsPullError = OpenstackTenantsPullErrors[keyof OpenstackTenantsPullErrors];
+
 export type OpenstackTenantsPullResponses = {
-    /**
-     * No response body
-     */
-    202: unknown;
+    202: PullResponse;
 };
+
+export type OpenstackTenantsPullResponse = OpenstackTenantsPullResponses[keyof OpenstackTenantsPullResponses];
 
 export type OpenstackTenantsPullFloatingIpsData = {
     body?: never;
@@ -65300,6 +65861,36 @@ export type OpenstackTenantsPushSecurityGroupsResponses = {
      */
     200: unknown;
 };
+
+export type OpenstackTenantsSetErredData = {
+    body?: SetErredRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openstack-tenants/{uuid}/set_erred/';
+};
+
+export type OpenstackTenantsSetErredResponses = {
+    200: SetErredResponse;
+};
+
+export type OpenstackTenantsSetErredResponse = OpenstackTenantsSetErredResponses[keyof OpenstackTenantsSetErredResponses];
+
+export type OpenstackTenantsSetOkData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openstack-tenants/{uuid}/set_ok/';
+};
+
+export type OpenstackTenantsSetOkResponses = {
+    200: SetOkResponse;
+};
+
+export type OpenstackTenantsSetOkResponse = OpenstackTenantsSetOkResponses[keyof OpenstackTenantsSetOkResponses];
 
 export type OpenstackTenantsSetQuotasData = {
     body?: OpenStackTenantQuotaRequest;
@@ -65950,18 +66541,16 @@ export type OpenstackVolumesPullData = {
 };
 
 export type OpenstackVolumesPullErrors = {
-    /**
-     * No response body
-     */
-    409: unknown;
+    409: PullConflictResponse;
 };
 
+export type OpenstackVolumesPullError = OpenstackVolumesPullErrors[keyof OpenstackVolumesPullErrors];
+
 export type OpenstackVolumesPullResponses = {
-    /**
-     * No response body
-     */
-    202: unknown;
+    202: PullResponse;
 };
+
+export type OpenstackVolumesPullResponse = OpenstackVolumesPullResponses[keyof OpenstackVolumesPullResponses];
 
 export type OpenstackVolumesRetypeData = {
     body: OpenStackVolumeRetypeRequest;
@@ -65978,6 +66567,36 @@ export type OpenstackVolumesRetypeResponses = {
      */
     200: unknown;
 };
+
+export type OpenstackVolumesSetErredData = {
+    body?: SetErredRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openstack-volumes/{uuid}/set_erred/';
+};
+
+export type OpenstackVolumesSetErredResponses = {
+    200: SetErredResponse;
+};
+
+export type OpenstackVolumesSetErredResponse = OpenstackVolumesSetErredResponses[keyof OpenstackVolumesSetErredResponses];
+
+export type OpenstackVolumesSetOkData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openstack-volumes/{uuid}/set_ok/';
+};
+
+export type OpenstackVolumesSetOkResponses = {
+    200: SetOkResponse;
+};
+
+export type OpenstackVolumesSetOkResponse = OpenstackVolumesSetOkResponses[keyof OpenstackVolumesSetOkResponses];
 
 export type OpenstackVolumesSnapshotData = {
     body: OpenStackSnapshotRequest;
@@ -70863,18 +71482,46 @@ export type RancherAppsPullData = {
 };
 
 export type RancherAppsPullErrors = {
-    /**
-     * No response body
-     */
-    409: unknown;
+    409: PullConflictResponse;
 };
 
+export type RancherAppsPullError = RancherAppsPullErrors[keyof RancherAppsPullErrors];
+
 export type RancherAppsPullResponses = {
-    /**
-     * No response body
-     */
-    202: unknown;
+    202: PullResponse;
 };
+
+export type RancherAppsPullResponse = RancherAppsPullResponses[keyof RancherAppsPullResponses];
+
+export type RancherAppsSetErredData = {
+    body?: SetErredRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/rancher-apps/{uuid}/set_erred/';
+};
+
+export type RancherAppsSetErredResponses = {
+    200: SetErredResponse;
+};
+
+export type RancherAppsSetErredResponse = RancherAppsSetErredResponses[keyof RancherAppsSetErredResponses];
+
+export type RancherAppsSetOkData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/rancher-apps/{uuid}/set_ok/';
+};
+
+export type RancherAppsSetOkResponses = {
+    200: SetOkResponse;
+};
+
+export type RancherAppsSetOkResponse = RancherAppsSetOkResponses[keyof RancherAppsSetOkResponses];
 
 export type RancherAppsUnlinkData = {
     body?: never;
@@ -71479,18 +72126,46 @@ export type RancherClustersPullData = {
 };
 
 export type RancherClustersPullErrors = {
-    /**
-     * No response body
-     */
-    409: unknown;
+    409: PullConflictResponse;
 };
 
+export type RancherClustersPullError = RancherClustersPullErrors[keyof RancherClustersPullErrors];
+
 export type RancherClustersPullResponses = {
-    /**
-     * No response body
-     */
-    202: unknown;
+    202: PullResponse;
 };
+
+export type RancherClustersPullResponse = RancherClustersPullResponses[keyof RancherClustersPullResponses];
+
+export type RancherClustersSetErredData = {
+    body?: SetErredRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/rancher-clusters/{uuid}/set_erred/';
+};
+
+export type RancherClustersSetErredResponses = {
+    200: SetErredResponse;
+};
+
+export type RancherClustersSetErredResponse = RancherClustersSetErredResponses[keyof RancherClustersSetErredResponses];
+
+export type RancherClustersSetOkData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/rancher-clusters/{uuid}/set_ok/';
+};
+
+export type RancherClustersSetOkResponses = {
+    200: SetOkResponse;
+};
+
+export type RancherClustersSetOkResponse = RancherClustersSetOkResponses[keyof RancherClustersSetOkResponses];
 
 export type RancherClustersUnlinkData = {
     body?: never;
@@ -71681,18 +72356,46 @@ export type RancherHpasPullData = {
 };
 
 export type RancherHpasPullErrors = {
-    /**
-     * No response body
-     */
-    409: unknown;
+    409: PullConflictResponse;
 };
 
+export type RancherHpasPullError = RancherHpasPullErrors[keyof RancherHpasPullErrors];
+
 export type RancherHpasPullResponses = {
-    /**
-     * No response body
-     */
-    202: unknown;
+    202: PullResponse;
 };
+
+export type RancherHpasPullResponse = RancherHpasPullResponses[keyof RancherHpasPullResponses];
+
+export type RancherHpasSetErredData = {
+    body?: SetErredRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/rancher-hpas/{uuid}/set_erred/';
+};
+
+export type RancherHpasSetErredResponses = {
+    200: SetErredResponse;
+};
+
+export type RancherHpasSetErredResponse = RancherHpasSetErredResponses[keyof RancherHpasSetErredResponses];
+
+export type RancherHpasSetOkData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/rancher-hpas/{uuid}/set_ok/';
+};
+
+export type RancherHpasSetOkResponses = {
+    200: SetOkResponse;
+};
+
+export type RancherHpasSetOkResponse = RancherHpasSetOkResponses[keyof RancherHpasSetOkResponses];
 
 export type RancherHpasUnlinkData = {
     body?: never;
@@ -72030,18 +72733,46 @@ export type RancherIngressesPullData = {
 };
 
 export type RancherIngressesPullErrors = {
-    /**
-     * No response body
-     */
-    409: unknown;
+    409: PullConflictResponse;
 };
 
+export type RancherIngressesPullError = RancherIngressesPullErrors[keyof RancherIngressesPullErrors];
+
 export type RancherIngressesPullResponses = {
-    /**
-     * No response body
-     */
-    202: unknown;
+    202: PullResponse;
 };
+
+export type RancherIngressesPullResponse = RancherIngressesPullResponses[keyof RancherIngressesPullResponses];
+
+export type RancherIngressesSetErredData = {
+    body?: SetErredRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/rancher-ingresses/{uuid}/set_erred/';
+};
+
+export type RancherIngressesSetErredResponses = {
+    200: SetErredResponse;
+};
+
+export type RancherIngressesSetErredResponse = RancherIngressesSetErredResponses[keyof RancherIngressesSetErredResponses];
+
+export type RancherIngressesSetOkData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/rancher-ingresses/{uuid}/set_ok/';
+};
+
+export type RancherIngressesSetOkResponses = {
+    200: SetOkResponse;
+};
+
+export type RancherIngressesSetOkResponse = RancherIngressesSetOkResponses[keyof RancherIngressesSetOkResponses];
 
 export type RancherIngressesUnlinkData = {
     body?: never;
@@ -72359,18 +73090,46 @@ export type RancherNodesPullData = {
 };
 
 export type RancherNodesPullErrors = {
-    /**
-     * No response body
-     */
-    409: unknown;
+    409: PullConflictResponse;
 };
 
+export type RancherNodesPullError = RancherNodesPullErrors[keyof RancherNodesPullErrors];
+
 export type RancherNodesPullResponses = {
-    /**
-     * No response body
-     */
-    202: unknown;
+    202: PullResponse;
 };
+
+export type RancherNodesPullResponse = RancherNodesPullResponses[keyof RancherNodesPullResponses];
+
+export type RancherNodesSetErredData = {
+    body?: SetErredRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/rancher-nodes/{uuid}/set_erred/';
+};
+
+export type RancherNodesSetErredResponses = {
+    200: SetErredResponse;
+};
+
+export type RancherNodesSetErredResponse = RancherNodesSetErredResponses[keyof RancherNodesSetErredResponses];
+
+export type RancherNodesSetOkData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/rancher-nodes/{uuid}/set_ok/';
+};
+
+export type RancherNodesSetOkResponses = {
+    200: SetOkResponse;
+};
+
+export type RancherNodesSetOkResponse = RancherNodesSetOkResponses[keyof RancherNodesSetOkResponses];
 
 export type RancherNodesUnlinkData = {
     body?: never;
@@ -72881,18 +73640,46 @@ export type RancherServicesPullData = {
 };
 
 export type RancherServicesPullErrors = {
-    /**
-     * No response body
-     */
-    409: unknown;
+    409: PullConflictResponse;
 };
 
+export type RancherServicesPullError = RancherServicesPullErrors[keyof RancherServicesPullErrors];
+
 export type RancherServicesPullResponses = {
-    /**
-     * No response body
-     */
-    202: unknown;
+    202: PullResponse;
 };
+
+export type RancherServicesPullResponse = RancherServicesPullResponses[keyof RancherServicesPullResponses];
+
+export type RancherServicesSetErredData = {
+    body?: SetErredRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/rancher-services/{uuid}/set_erred/';
+};
+
+export type RancherServicesSetErredResponses = {
+    200: SetErredResponse;
+};
+
+export type RancherServicesSetErredResponse = RancherServicesSetErredResponses[keyof RancherServicesSetErredResponses];
+
+export type RancherServicesSetOkData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/rancher-services/{uuid}/set_ok/';
+};
+
+export type RancherServicesSetOkResponses = {
+    200: SetOkResponse;
+};
+
+export type RancherServicesSetOkResponse = RancherServicesSetOkResponses[keyof RancherServicesSetOkResponses];
 
 export type RancherServicesUnlinkData = {
     body?: never;
@@ -75630,18 +76417,31 @@ export type SlurmAllocationsPullData = {
 };
 
 export type SlurmAllocationsPullErrors = {
-    /**
-     * No response body
-     */
-    409: unknown;
+    409: PullConflictResponse;
 };
 
+export type SlurmAllocationsPullError = SlurmAllocationsPullErrors[keyof SlurmAllocationsPullErrors];
+
 export type SlurmAllocationsPullResponses = {
-    /**
-     * No response body
-     */
-    202: unknown;
+    202: PullResponse;
 };
+
+export type SlurmAllocationsPullResponse = SlurmAllocationsPullResponses[keyof SlurmAllocationsPullResponses];
+
+export type SlurmAllocationsSetErredData = {
+    body?: SetErredRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/slurm-allocations/{uuid}/set_erred/';
+};
+
+export type SlurmAllocationsSetErredResponses = {
+    200: SetErredResponse;
+};
+
+export type SlurmAllocationsSetErredResponse = SlurmAllocationsSetErredResponses[keyof SlurmAllocationsSetErredResponses];
 
 export type SlurmAllocationsSetLimitsData = {
     body: SlurmAllocationSetLimitsRequest;
@@ -75657,6 +76457,21 @@ export type SlurmAllocationsSetLimitsResponses = {
 };
 
 export type SlurmAllocationsSetLimitsResponse = SlurmAllocationsSetLimitsResponses[keyof SlurmAllocationsSetLimitsResponses];
+
+export type SlurmAllocationsSetOkData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/slurm-allocations/{uuid}/set_ok/';
+};
+
+export type SlurmAllocationsSetOkResponses = {
+    200: SetOkResponse;
+};
+
+export type SlurmAllocationsSetOkResponse = SlurmAllocationsSetOkResponses[keyof SlurmAllocationsSetOkResponses];
 
 export type SlurmAllocationsUnlinkData = {
     body?: never;
@@ -75874,18 +76689,46 @@ export type SlurmJobsPullData = {
 };
 
 export type SlurmJobsPullErrors = {
-    /**
-     * No response body
-     */
-    409: unknown;
+    409: PullConflictResponse;
 };
 
+export type SlurmJobsPullError = SlurmJobsPullErrors[keyof SlurmJobsPullErrors];
+
 export type SlurmJobsPullResponses = {
-    /**
-     * No response body
-     */
-    202: unknown;
+    202: PullResponse;
 };
+
+export type SlurmJobsPullResponse = SlurmJobsPullResponses[keyof SlurmJobsPullResponses];
+
+export type SlurmJobsSetErredData = {
+    body?: SetErredRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/slurm-jobs/{uuid}/set_erred/';
+};
+
+export type SlurmJobsSetErredResponses = {
+    200: SetErredResponse;
+};
+
+export type SlurmJobsSetErredResponse = SlurmJobsSetErredResponses[keyof SlurmJobsSetErredResponses];
+
+export type SlurmJobsSetOkData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/slurm-jobs/{uuid}/set_ok/';
+};
+
+export type SlurmJobsSetOkResponses = {
+    200: SetOkResponse;
+};
+
+export type SlurmJobsSetOkResponse = SlurmJobsSetOkResponses[keyof SlurmJobsSetOkResponses];
 
 export type SlurmJobsUnlinkData = {
     body?: never;
@@ -80626,18 +81469,46 @@ export type VmwareDisksPullData = {
 };
 
 export type VmwareDisksPullErrors = {
-    /**
-     * No response body
-     */
-    409: unknown;
+    409: PullConflictResponse;
 };
 
+export type VmwareDisksPullError = VmwareDisksPullErrors[keyof VmwareDisksPullErrors];
+
 export type VmwareDisksPullResponses = {
-    /**
-     * No response body
-     */
-    202: unknown;
+    202: PullResponse;
 };
+
+export type VmwareDisksPullResponse = VmwareDisksPullResponses[keyof VmwareDisksPullResponses];
+
+export type VmwareDisksSetErredData = {
+    body?: SetErredRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/vmware-disks/{uuid}/set_erred/';
+};
+
+export type VmwareDisksSetErredResponses = {
+    200: SetErredResponse;
+};
+
+export type VmwareDisksSetErredResponse = VmwareDisksSetErredResponses[keyof VmwareDisksSetErredResponses];
+
+export type VmwareDisksSetOkData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/vmware-disks/{uuid}/set_ok/';
+};
+
+export type VmwareDisksSetOkResponses = {
+    200: SetOkResponse;
+};
+
+export type VmwareDisksSetOkResponse = VmwareDisksSetOkResponses[keyof VmwareDisksSetOkResponses];
 
 export type VmwareDisksUnlinkData = {
     body?: never;
@@ -81127,18 +81998,46 @@ export type VmwarePortsPullData = {
 };
 
 export type VmwarePortsPullErrors = {
-    /**
-     * No response body
-     */
-    409: unknown;
+    409: PullConflictResponse;
 };
 
+export type VmwarePortsPullError = VmwarePortsPullErrors[keyof VmwarePortsPullErrors];
+
 export type VmwarePortsPullResponses = {
-    /**
-     * No response body
-     */
-    202: unknown;
+    202: PullResponse;
 };
+
+export type VmwarePortsPullResponse = VmwarePortsPullResponses[keyof VmwarePortsPullResponses];
+
+export type VmwarePortsSetErredData = {
+    body?: SetErredRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/vmware-ports/{uuid}/set_erred/';
+};
+
+export type VmwarePortsSetErredResponses = {
+    200: SetErredResponse;
+};
+
+export type VmwarePortsSetErredResponse = VmwarePortsSetErredResponses[keyof VmwarePortsSetErredResponses];
+
+export type VmwarePortsSetOkData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/vmware-ports/{uuid}/set_ok/';
+};
+
+export type VmwarePortsSetOkResponses = {
+    200: SetOkResponse;
+};
+
+export type VmwarePortsSetOkResponse = VmwarePortsSetOkResponses[keyof VmwarePortsSetOkResponses];
 
 export type VmwarePortsUnlinkData = {
     body?: never;
@@ -81579,18 +82478,16 @@ export type VmwareVirtualMachinePullData = {
 };
 
 export type VmwareVirtualMachinePullErrors = {
-    /**
-     * No response body
-     */
-    409: unknown;
+    409: PullConflictResponse;
 };
 
+export type VmwareVirtualMachinePullError = VmwareVirtualMachinePullErrors[keyof VmwareVirtualMachinePullErrors];
+
 export type VmwareVirtualMachinePullResponses = {
-    /**
-     * No response body
-     */
-    202: unknown;
+    202: PullResponse;
 };
+
+export type VmwareVirtualMachinePullResponse = VmwareVirtualMachinePullResponses[keyof VmwareVirtualMachinePullResponses];
 
 export type VmwareVirtualMachineRebootGuestData = {
     body?: never;
@@ -81623,6 +82520,36 @@ export type VmwareVirtualMachineResetResponses = {
      */
     200: unknown;
 };
+
+export type VmwareVirtualMachineSetErredData = {
+    body?: SetErredRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/vmware-virtual-machine/{uuid}/set_erred/';
+};
+
+export type VmwareVirtualMachineSetErredResponses = {
+    200: SetErredResponse;
+};
+
+export type VmwareVirtualMachineSetErredResponse = VmwareVirtualMachineSetErredResponses[keyof VmwareVirtualMachineSetErredResponses];
+
+export type VmwareVirtualMachineSetOkData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/vmware-virtual-machine/{uuid}/set_ok/';
+};
+
+export type VmwareVirtualMachineSetOkResponses = {
+    200: SetOkResponse;
+};
+
+export type VmwareVirtualMachineSetOkResponse = VmwareVirtualMachineSetOkResponses[keyof VmwareVirtualMachineSetOkResponses];
 
 export type VmwareVirtualMachineShutdownGuestData = {
     body?: never;
