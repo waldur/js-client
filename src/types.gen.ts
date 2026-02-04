@@ -1561,6 +1561,11 @@ export type AuthToken = {
     readonly user_token_lifetime: number | null;
 };
 
+export type AvailabilityZoneResponse = {
+    name: string;
+    state: string;
+};
+
 export type AvailableArrowCustomersResponse = {
     settings_uuid: string;
     arrow_customers: Array<ArrowCustomerDiscovery>;
@@ -4959,6 +4964,13 @@ export type CreateRouterRequest = {
     name: string;
 };
 
+export type CredentialsValidationResponse = {
+    valid: boolean;
+    message?: string;
+    error?: string;
+    server_info?: ServerInfo | null;
+};
+
 export type CurrentQosStatusEnum = 'normal' | 'notification' | 'slowdown' | 'blocked';
 
 export type Customer = {
@@ -5930,6 +5942,84 @@ export type DiscoverCustomersResponse = {
     suggestions: Array<CustomerMappingSuggestion>;
 };
 
+export type DiscoverExternalNetworksRequestRequest = {
+    /**
+     * Keystone auth URL (e.g., https://cloud.example.com:5000/v3)
+     */
+    auth_url: string;
+    username: string;
+    password: string;
+    /**
+     * Keystone user domain name
+     */
+    user_domain_name?: string;
+    /**
+     * Keystone project domain name
+     */
+    project_domain_name?: string;
+    /**
+     * Keystone project (tenant) name
+     */
+    project_name?: string;
+    verify_ssl?: boolean;
+    /**
+     * PEM-encoded CA certificate for SSL verification
+     */
+    certificate?: string;
+};
+
+export type DiscoverFlavorsRequestRequest = {
+    /**
+     * Keystone auth URL (e.g., https://cloud.example.com:5000/v3)
+     */
+    auth_url: string;
+    username: string;
+    password: string;
+    /**
+     * Keystone user domain name
+     */
+    user_domain_name?: string;
+    /**
+     * Keystone project domain name
+     */
+    project_domain_name?: string;
+    /**
+     * Keystone project (tenant) name
+     */
+    project_name?: string;
+    verify_ssl?: boolean;
+    /**
+     * PEM-encoded CA certificate for SSL verification
+     */
+    certificate?: string;
+};
+
+export type DiscoverInstanceAvailabilityZonesRequestRequest = {
+    /**
+     * Keystone auth URL (e.g., https://cloud.example.com:5000/v3)
+     */
+    auth_url: string;
+    username: string;
+    password: string;
+    /**
+     * Keystone user domain name
+     */
+    user_domain_name?: string;
+    /**
+     * Keystone project domain name
+     */
+    project_domain_name?: string;
+    /**
+     * Keystone project (tenant) name
+     */
+    project_name?: string;
+    verify_ssl?: boolean;
+    /**
+     * PEM-encoded CA certificate for SSL verification
+     */
+    certificate?: string;
+};
+
 export type DiscoverLicensesResponse = {
     customer_mapping_uuid: string;
     arrow_reference: string;
@@ -6038,6 +6128,58 @@ export type DiscoverRequestTypesRequestRequest = {
      * Service Desk project ID or key
      */
     project_id: string;
+};
+
+export type DiscoverVolumeAvailabilityZonesRequestRequest = {
+    /**
+     * Keystone auth URL (e.g., https://cloud.example.com:5000/v3)
+     */
+    auth_url: string;
+    username: string;
+    password: string;
+    /**
+     * Keystone user domain name
+     */
+    user_domain_name?: string;
+    /**
+     * Keystone project domain name
+     */
+    project_domain_name?: string;
+    /**
+     * Keystone project (tenant) name
+     */
+    project_name?: string;
+    verify_ssl?: boolean;
+    /**
+     * PEM-encoded CA certificate for SSL verification
+     */
+    certificate?: string;
+};
+
+export type DiscoverVolumeTypesRequestRequest = {
+    /**
+     * Keystone auth URL (e.g., https://cloud.example.com:5000/v3)
+     */
+    auth_url: string;
+    username: string;
+    password: string;
+    /**
+     * Keystone user domain name
+     */
+    user_domain_name?: string;
+    /**
+     * Keystone project domain name
+     */
+    project_domain_name?: string;
+    /**
+     * Keystone project (tenant) name
+     */
+    project_name?: string;
+    verify_ssl?: boolean;
+    /**
+     * PEM-encoded CA certificate for SSL verification
+     */
+    certificate?: string;
 };
 
 export type DiskFormatEnum = 'qcow2' | 'raw' | 'vhd' | 'vmdk' | 'vdi' | 'iso' | 'aki' | 'ami' | 'ari';
@@ -6482,6 +6624,54 @@ export type ExternalLinkRequest = {
     image?: (Blob | File) | null;
 };
 
+export type ExternalNetwork = {
+    readonly url?: string;
+    readonly uuid?: string;
+    name?: string;
+    settings?: string;
+    backend_id?: string;
+    is_shared?: boolean;
+    is_default?: boolean;
+    status?: string;
+    description?: string;
+    readonly subnets?: Array<ExternalSubnet>;
+};
+
+export type ExternalNetworkResponse = {
+    id: string;
+    name: string;
+    is_shared: boolean;
+    subnets: Array<ExternalNetworkSubnetResponse>;
+};
+
+export type ExternalNetworkSubnetResponse = {
+    id: string;
+    name: string;
+    cidr: string;
+    gateway_ip: string;
+    ip_version: number;
+};
+
+export type ExternalSubnet = {
+    readonly uuid?: string;
+    name?: string;
+    backend_id?: string;
+    cidr?: string;
+    /**
+     * An IPv4 or IPv6 address.
+     */
+    gateway_ip?: string | null;
+    ip_version?: number;
+    enable_dhcp?: boolean;
+    allocation_pools?: unknown;
+    dns_nameservers?: unknown;
+    /**
+     * Public CIDR mapped to this subnet (for carrier-grade NAT overlay)
+     */
+    public_ip_range?: string;
+    description?: string;
+};
+
 export type FeatureMetadataResponse = {
     /**
      * List of feature sections with descriptions
@@ -6684,6 +6874,20 @@ export type FirecrestJobRequest = {
      * Batch script file
      */
     file: Blob | File;
+};
+
+export type FlavorResponse = {
+    id: string;
+    name: string;
+    vcpus: number;
+    /**
+     * RAM in MB
+     */
+    ram: number;
+    /**
+     * Disk in GB
+     */
+    disk: number;
 };
 
 export type FreeipaProfile = {
@@ -12117,6 +12321,32 @@ export type OpenStackCreatePortRequest = {
     tenant?: string;
 };
 
+export type OpenStackCredentialsRequest = {
+    /**
+     * Keystone auth URL (e.g., https://cloud.example.com:5000/v3)
+     */
+    auth_url: string;
+    username: string;
+    password: string;
+    /**
+     * Keystone user domain name
+     */
+    user_domain_name?: string;
+    /**
+     * Keystone project domain name
+     */
+    project_domain_name?: string;
+    /**
+     * Keystone project (tenant) name
+     */
+    project_name?: string;
+    verify_ssl?: boolean;
+    /**
+     * PEM-encoded CA certificate for SSL verification
+     */
+    certificate?: string;
+};
+
 export type OpenStackFixedIp = {
     /**
      * IP address to assign to the port
@@ -13415,6 +13645,8 @@ export type OpenStackTenant = {
      * ID of external network connected to OpenStack tenant
      */
     readonly external_network_id?: string;
+    readonly external_network_ref_uuid?: string;
+    readonly external_network_ref_name?: string;
     /**
      * Username of the tenant user
      */
@@ -16257,6 +16489,44 @@ export type PolicyEnum = 'affinity';
 export type PolicyPeriodEnum = 1 | 2 | 3 | 4;
 
 export type PolicyTypeEnum = 'access_as_shared' | 'access_as_external';
+
+export type PreviewServiceAttributesRequestRequest = {
+    /**
+     * Keystone auth URL (e.g., https://cloud.example.com:5000/v3)
+     */
+    auth_url: string;
+    username: string;
+    password: string;
+    /**
+     * Keystone user domain name
+     */
+    user_domain_name?: string;
+    /**
+     * Keystone project domain name
+     */
+    project_domain_name?: string;
+    /**
+     * Keystone project (tenant) name
+     */
+    project_name?: string;
+    verify_ssl?: boolean;
+    /**
+     * PEM-encoded CA certificate for SSL verification
+     */
+    certificate?: string;
+    /**
+     * Selected external network ID
+     */
+    external_network_id?: string;
+    /**
+     * Selected instance availability zone name
+     */
+    instance_availability_zone?: string;
+    /**
+     * Selected volume availability zone name
+     */
+    volume_availability_zone?: string;
+};
 
 export type PreviewSettingsRequestRequest = {
     /**
@@ -21558,7 +21828,24 @@ export type SendInvitationsResponse = {
     invitations_sent: number;
 };
 
+export type ServerInfo = {
+    auth_url: string;
+    identity_api_version: string;
+    user_domain_name: string;
+    project_name: string;
+    project_id: string;
+};
+
 export type ServiceAccountState = 'OK' | 'Closed' | 'Erred';
+
+export type ServiceAttributesPreview = {
+    service_attributes: {
+        [key: string]: unknown;
+    };
+    plugin_options: {
+        [key: string]: unknown;
+    };
+};
 
 export type ServiceProvider = {
     readonly url?: string;
@@ -24128,6 +24415,12 @@ export type VolumeTypeMapping = {
 export type VolumeTypeMappingRequest = {
     src_type_uuid: string;
     dst_type_uuid: string;
+};
+
+export type VolumeTypeResponse = {
+    id: string;
+    name: string;
+    description?: string;
 };
 
 export type WaldurCustomerBrief = {
@@ -60718,6 +61011,101 @@ export type OpenstackBackupsUnlinkResponses = {
 
 export type OpenstackBackupsUnlinkResponse = OpenstackBackupsUnlinkResponses[keyof OpenstackBackupsUnlinkResponses];
 
+export type OpenstackExternalNetworksListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        field?: Array<'backend_id' | 'description' | 'is_default' | 'is_shared' | 'name' | 'settings' | 'status' | 'subnets' | 'url' | 'uuid'>;
+        /**
+         * Name
+         */
+        name?: string;
+        /**
+         * Name (exact)
+         */
+        name_exact?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Settings URL
+         */
+        settings?: string;
+        /**
+         * Settings UUID
+         */
+        settings_uuid?: string;
+    };
+    url: '/api/openstack-external-networks/';
+};
+
+export type OpenstackExternalNetworksListResponses = {
+    200: Array<ExternalNetwork>;
+};
+
+export type OpenstackExternalNetworksListResponse = OpenstackExternalNetworksListResponses[keyof OpenstackExternalNetworksListResponses];
+
+export type OpenstackExternalNetworksCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Name
+         */
+        name?: string;
+        /**
+         * Name (exact)
+         */
+        name_exact?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Settings URL
+         */
+        settings?: string;
+        /**
+         * Settings UUID
+         */
+        settings_uuid?: string;
+    };
+    url: '/api/openstack-external-networks/';
+};
+
+export type OpenstackExternalNetworksCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type OpenstackExternalNetworksRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        field?: Array<'backend_id' | 'description' | 'is_default' | 'is_shared' | 'name' | 'settings' | 'status' | 'subnets' | 'url' | 'uuid'>;
+    };
+    url: '/api/openstack-external-networks/{uuid}/';
+};
+
+export type OpenstackExternalNetworksRetrieveResponses = {
+    200: ExternalNetwork;
+};
+
+export type OpenstackExternalNetworksRetrieveResponse = OpenstackExternalNetworksRetrieveResponses[keyof OpenstackExternalNetworksRetrieveResponses];
+
 export type OpenstackFlavorsListData = {
     body?: never;
     path?: never;
@@ -65290,7 +65678,7 @@ export type OpenstackTenantsListData = {
          * External IP
          */
         external_ip?: string;
-        field?: Array<'availability_zone' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'default_volume_type_name' | 'description' | 'error_message' | 'error_traceback' | 'external_network_id' | 'internal_network_id' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_type' | 'security_groups' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'skip_creation_of_default_router' | 'skip_creation_of_default_subnet' | 'state' | 'subnet_cidr' | 'url' | 'uuid'>;
+        field?: Array<'availability_zone' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'default_volume_type_name' | 'description' | 'error_message' | 'error_traceback' | 'external_network_id' | 'external_network_ref_name' | 'external_network_ref_uuid' | 'internal_network_id' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_type' | 'security_groups' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'skip_creation_of_default_router' | 'skip_creation_of_default_subnet' | 'state' | 'subnet_cidr' | 'url' | 'uuid'>;
         /**
          * Name
          */
@@ -65450,7 +65838,7 @@ export type OpenstackTenantsRetrieveData = {
         uuid: string;
     };
     query?: {
-        field?: Array<'availability_zone' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'default_volume_type_name' | 'description' | 'error_message' | 'error_traceback' | 'external_network_id' | 'internal_network_id' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_type' | 'security_groups' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'skip_creation_of_default_router' | 'skip_creation_of_default_subnet' | 'state' | 'subnet_cidr' | 'url' | 'uuid'>;
+        field?: Array<'availability_zone' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'default_volume_type_name' | 'description' | 'error_message' | 'error_traceback' | 'external_network_id' | 'external_network_ref_name' | 'external_network_ref_uuid' | 'internal_network_id' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_type' | 'security_groups' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'skip_creation_of_default_router' | 'skip_creation_of_default_subnet' | 'state' | 'subnet_cidr' | 'url' | 'uuid'>;
     };
     url: '/api/openstack-tenants/{uuid}/';
 };
@@ -66630,6 +67018,257 @@ export type OpenstackVolumesUnlinkResponses = {
 };
 
 export type OpenstackVolumesUnlinkResponse = OpenstackVolumesUnlinkResponses[keyof OpenstackVolumesUnlinkResponses];
+
+export type OpenstackDiscoveryListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/openstack/discovery/';
+};
+
+export type OpenstackDiscoveryListResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type OpenstackDiscoveryCreateData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/openstack/discovery/';
+};
+
+export type OpenstackDiscoveryCreateResponses = {
+    /**
+     * No response body
+     */
+    201: unknown;
+};
+
+export type OpenstackDiscoveryDestroyData = {
+    body?: never;
+    path: {
+        /**
+         * A unique integer value identifying this Service provider.
+         */
+        id: number;
+    };
+    query?: never;
+    url: '/api/openstack/discovery/{id}/';
+};
+
+export type OpenstackDiscoveryDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type OpenstackDiscoveryDestroyResponse = OpenstackDiscoveryDestroyResponses[keyof OpenstackDiscoveryDestroyResponses];
+
+export type OpenstackDiscoveryRetrieveData = {
+    body?: never;
+    path: {
+        /**
+         * A unique integer value identifying this Service provider.
+         */
+        id: number;
+    };
+    query?: never;
+    url: '/api/openstack/discovery/{id}/';
+};
+
+export type OpenstackDiscoveryRetrieveResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type OpenstackDiscoveryPartialUpdateData = {
+    body?: never;
+    path: {
+        /**
+         * A unique integer value identifying this Service provider.
+         */
+        id: number;
+    };
+    query?: never;
+    url: '/api/openstack/discovery/{id}/';
+};
+
+export type OpenstackDiscoveryPartialUpdateResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type OpenstackDiscoveryUpdateData = {
+    body?: never;
+    path: {
+        /**
+         * A unique integer value identifying this Service provider.
+         */
+        id: number;
+    };
+    query?: never;
+    url: '/api/openstack/discovery/{id}/';
+};
+
+export type OpenstackDiscoveryUpdateResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type OpenstackDiscoveryDiscoverExternalNetworksData = {
+    body: DiscoverExternalNetworksRequestRequest;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/openstack/discovery/discover_external_networks/';
+};
+
+export type OpenstackDiscoveryDiscoverExternalNetworksResponses = {
+    200: Array<ExternalNetworkResponse>;
+};
+
+export type OpenstackDiscoveryDiscoverExternalNetworksResponse = OpenstackDiscoveryDiscoverExternalNetworksResponses[keyof OpenstackDiscoveryDiscoverExternalNetworksResponses];
+
+export type OpenstackDiscoveryDiscoverFlavorsData = {
+    body: DiscoverFlavorsRequestRequest;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/openstack/discovery/discover_flavors/';
+};
+
+export type OpenstackDiscoveryDiscoverFlavorsResponses = {
+    200: Array<FlavorResponse>;
+};
+
+export type OpenstackDiscoveryDiscoverFlavorsResponse = OpenstackDiscoveryDiscoverFlavorsResponses[keyof OpenstackDiscoveryDiscoverFlavorsResponses];
+
+export type OpenstackDiscoveryDiscoverInstanceAvailabilityZonesData = {
+    body: DiscoverInstanceAvailabilityZonesRequestRequest;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/openstack/discovery/discover_instance_availability_zones/';
+};
+
+export type OpenstackDiscoveryDiscoverInstanceAvailabilityZonesResponses = {
+    200: Array<AvailabilityZoneResponse>;
+};
+
+export type OpenstackDiscoveryDiscoverInstanceAvailabilityZonesResponse = OpenstackDiscoveryDiscoverInstanceAvailabilityZonesResponses[keyof OpenstackDiscoveryDiscoverInstanceAvailabilityZonesResponses];
+
+export type OpenstackDiscoveryDiscoverVolumeAvailabilityZonesData = {
+    body: DiscoverVolumeAvailabilityZonesRequestRequest;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/openstack/discovery/discover_volume_availability_zones/';
+};
+
+export type OpenstackDiscoveryDiscoverVolumeAvailabilityZonesResponses = {
+    200: Array<AvailabilityZoneResponse>;
+};
+
+export type OpenstackDiscoveryDiscoverVolumeAvailabilityZonesResponse = OpenstackDiscoveryDiscoverVolumeAvailabilityZonesResponses[keyof OpenstackDiscoveryDiscoverVolumeAvailabilityZonesResponses];
+
+export type OpenstackDiscoveryDiscoverVolumeTypesData = {
+    body: DiscoverVolumeTypesRequestRequest;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/openstack/discovery/discover_volume_types/';
+};
+
+export type OpenstackDiscoveryDiscoverVolumeTypesResponses = {
+    200: Array<VolumeTypeResponse>;
+};
+
+export type OpenstackDiscoveryDiscoverVolumeTypesResponse = OpenstackDiscoveryDiscoverVolumeTypesResponses[keyof OpenstackDiscoveryDiscoverVolumeTypesResponses];
+
+export type OpenstackDiscoveryPreviewServiceAttributesData = {
+    body: PreviewServiceAttributesRequestRequest;
+    path?: never;
+    query?: never;
+    url: '/api/openstack/discovery/preview_service_attributes/';
+};
+
+export type OpenstackDiscoveryPreviewServiceAttributesResponses = {
+    200: ServiceAttributesPreview;
+};
+
+export type OpenstackDiscoveryPreviewServiceAttributesResponse = OpenstackDiscoveryPreviewServiceAttributesResponses[keyof OpenstackDiscoveryPreviewServiceAttributesResponses];
+
+export type OpenstackDiscoveryValidateCredentialsData = {
+    body: OpenStackCredentialsRequest;
+    path?: never;
+    query?: never;
+    url: '/api/openstack/discovery/validate_credentials/';
+};
+
+export type OpenstackDiscoveryValidateCredentialsResponses = {
+    200: CredentialsValidationResponse;
+};
+
+export type OpenstackDiscoveryValidateCredentialsResponse = OpenstackDiscoveryValidateCredentialsResponses[keyof OpenstackDiscoveryValidateCredentialsResponses];
 
 export type OrganizationGroupsListData = {
     body?: never;
