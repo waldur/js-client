@@ -9810,6 +9810,8 @@ export type MyAssignmentItem = {
     has_coi: boolean;
 };
 
+export type NameEnum = 'EESSI' | 'Spack';
+
 export type NameUuid = {
     /**
      * Name of the entity
@@ -22599,6 +22601,21 @@ export type SoftwareCatalog = {
     readonly last_successful_update: string | null;
     update_errors?: string;
     readonly package_count: number;
+    readonly version_count: number;
+    readonly target_count: number;
+};
+
+export type SoftwareCatalogDiscover = {
+    name: string;
+    catalog_type: string;
+    latest_version: string;
+    existing: boolean;
+    existing_version: string | null;
+    update_available: boolean;
+};
+
+export type SoftwareCatalogImportRequest = {
+    name: NameEnum;
 };
 
 export type SoftwareCatalogRequest = {
@@ -34830,6 +34847,10 @@ export type CustomersListData = {
          * Contact details
          */
         contact_details?: string;
+        /**
+         * Return a list of customers where current user has project create permission.
+         */
+        current_user_has_project_create_permission?: boolean;
         field?: Array<'abbreviation' | 'access_subnets' | 'accounting_start_date' | 'address' | 'agreement_number' | 'archived' | 'backend_id' | 'bank_account' | 'bank_name' | 'billing_price_estimate' | 'blocked' | 'call_managing_organization_uuid' | 'contact_details' | 'country' | 'country_name' | 'created' | 'customer_credit' | 'customer_unallocated_credit' | 'default_tax_percent' | 'description' | 'display_billing_info_in_projects' | 'display_name' | 'domain' | 'email' | 'grace_period_days' | 'homepage' | 'image' | 'is_service_provider' | 'latitude' | 'longitude' | 'max_service_accounts' | 'name' | 'native_name' | 'notification_emails' | 'organization_groups' | 'payment_profiles' | 'phone_number' | 'postal' | 'project_metadata_checklist' | 'projects_count' | 'registration_code' | 'service_provider' | 'service_provider_uuid' | 'slug' | 'sponsor_number' | 'url' | 'user_affiliations' | 'user_email_patterns' | 'user_identity_sources' | 'users_count' | 'uuid' | 'vat_code'>;
         /**
          * Name
@@ -34897,6 +34918,10 @@ export type CustomersCountData = {
          * Contact details
          */
         contact_details?: string;
+        /**
+         * Return a list of customers where current user has project create permission.
+         */
+        current_user_has_project_create_permission?: boolean;
         /**
          * Name
          */
@@ -35287,6 +35312,10 @@ export type CustomersHistoryListData = {
          */
         created_before?: string;
         /**
+         * Return a list of customers where current user has project create permission.
+         */
+        current_user_has_project_create_permission?: boolean;
+        /**
          * Name
          */
         name?: string;
@@ -35575,6 +35604,10 @@ export type CustomersCountriesListData = {
          */
         contact_details?: string;
         /**
+         * Return a list of customers where current user has project create permission.
+         */
+        current_user_has_project_create_permission?: boolean;
+        /**
          * Name
          */
         name?: string;
@@ -35640,6 +35673,10 @@ export type CustomersCountriesCountData = {
          * Contact details
          */
         contact_details?: string;
+        /**
+         * Return a list of customers where current user has project create permission.
+         */
+        current_user_has_project_create_permission?: boolean;
         /**
          * Name
          */
@@ -37400,6 +37437,10 @@ export type FinancialReportsListData = {
          */
         contact_details?: string;
         /**
+         * Return a list of customers where current user has project create permission.
+         */
+        current_user_has_project_create_permission?: boolean;
+        /**
          * Name
          */
         name?: string;
@@ -37465,6 +37506,10 @@ export type FinancialReportsCountData = {
          * Contact details
          */
         contact_details?: string;
+        /**
+         * Return a list of customers where current user has project create permission.
+         */
+        current_user_has_project_create_permission?: boolean;
         /**
          * Name
          */
@@ -52802,6 +52847,10 @@ export type MarketplaceServiceProvidersCustomersListData = {
          * Contact details
          */
         contact_details?: string;
+        /**
+         * Return a list of customers where current user has project create permission.
+         */
+        current_user_has_project_create_permission?: boolean;
         field?: Array<'abbreviation' | 'billing_price_estimate' | 'email' | 'name' | 'payment_profiles' | 'phone_number' | 'projects' | 'projects_count' | 'slug' | 'users' | 'users_count' | 'uuid'>;
         /**
          * Name
@@ -53306,6 +53355,10 @@ export type MarketplaceServiceProvidersUserCustomersListData = {
          * Contact details
          */
         contact_details?: string;
+        /**
+         * Return a list of customers where current user has project create permission.
+         */
+        current_user_has_project_create_permission?: boolean;
         field?: Array<'abbreviation' | 'billing_price_estimate' | 'email' | 'name' | 'payment_profiles' | 'phone_number' | 'projects' | 'projects_count' | 'slug' | 'users' | 'users_count' | 'uuid'>;
         /**
          * Name
@@ -54685,6 +54738,97 @@ export type MarketplaceSoftwareCatalogsUpdateResponses = {
 };
 
 export type MarketplaceSoftwareCatalogsUpdateResponse = MarketplaceSoftwareCatalogsUpdateResponses[keyof MarketplaceSoftwareCatalogsUpdateResponses];
+
+export type MarketplaceSoftwareCatalogsUpdateCatalogData = {
+    body: SoftwareCatalogRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-software-catalogs/{uuid}/update_catalog/';
+};
+
+export type MarketplaceSoftwareCatalogsUpdateCatalogResponses = {
+    /**
+     * No response body
+     */
+    202: unknown;
+};
+
+export type MarketplaceSoftwareCatalogsDiscoverListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        name?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-modified' | '-name' | '-version' | 'created' | 'modified' | 'name' | 'version'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        version?: string;
+    };
+    url: '/api/marketplace-software-catalogs/discover/';
+};
+
+export type MarketplaceSoftwareCatalogsDiscoverListResponses = {
+    200: Array<SoftwareCatalogDiscover>;
+};
+
+export type MarketplaceSoftwareCatalogsDiscoverListResponse = MarketplaceSoftwareCatalogsDiscoverListResponses[keyof MarketplaceSoftwareCatalogsDiscoverListResponses];
+
+export type MarketplaceSoftwareCatalogsDiscoverCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        name?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-modified' | '-name' | '-version' | 'created' | 'modified' | 'name' | 'version'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        version?: string;
+    };
+    url: '/api/marketplace-software-catalogs/discover/';
+};
+
+export type MarketplaceSoftwareCatalogsDiscoverCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type MarketplaceSoftwareCatalogsImportCatalogData = {
+    body: SoftwareCatalogImportRequest;
+    path?: never;
+    query?: never;
+    url: '/api/marketplace-software-catalogs/import_catalog/';
+};
+
+export type MarketplaceSoftwareCatalogsImportCatalogResponses = {
+    /**
+     * No response body
+     */
+    202: unknown;
+};
 
 export type MarketplaceSoftwarePackagesListData = {
     body?: never;
