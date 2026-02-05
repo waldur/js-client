@@ -9067,6 +9067,10 @@ export type MergedPluginOptions = {
      * Label used by UI for showing value of the backend_id
      */
     backend_id_display_label?: string;
+    /**
+     * List of disabled marketplace resource actions for this offering.
+     */
+    disabled_resource_actions?: Array<string>;
 };
 
 export type MergedPluginOptionsRequest = {
@@ -9322,6 +9326,10 @@ export type MergedPluginOptionsRequest = {
      * Label used by UI for showing value of the backend_id
      */
     backend_id_display_label?: string;
+    /**
+     * List of disabled marketplace resource actions for this offering.
+     */
+    disabled_resource_actions?: Array<string>;
 };
 
 export type MergedSecretOptions = {
@@ -22333,6 +22341,10 @@ export type SlurmPeriodicUsagePolicy = {
      * QoS management strategy
      */
     qos_strategy?: QosStrategyEnum;
+    /**
+     * Warnings about misconfiguration, e.g. missing site agent queue registration.
+     */
+    readonly warnings: Array<string>;
 };
 
 export type SlurmPeriodicUsagePolicyRequest = {
