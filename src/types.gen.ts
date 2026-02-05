@@ -7931,7 +7931,7 @@ export type InvoiceItemUpdateRequest = {
 
 export type InvoicePriceSourceEnum = 'sell' | 'buy';
 
-export type InvoiceStateEnum = 'pending' | 'created' | 'paid' | 'canceled';
+export type InvoiceStateEnum = 'pending' | 'pending_finalization' | 'created' | 'paid' | 'canceled';
 
 export type InvoiceStatsOffering = {
     readonly offering_name: string;
@@ -39243,7 +39243,7 @@ export type InvoicesListData = {
          */
         page_size?: number;
         start_date?: string;
-        state?: Array<'canceled' | 'created' | 'paid' | 'pending'>;
+        state?: Array<'canceled' | 'created' | 'paid' | 'pending' | 'pending_finalization'>;
         year?: number;
     };
     url: '/api/invoices/';
@@ -39279,7 +39279,7 @@ export type InvoicesCountData = {
          */
         page_size?: number;
         start_date?: string;
-        state?: Array<'canceled' | 'created' | 'paid' | 'pending'>;
+        state?: Array<'canceled' | 'created' | 'paid' | 'pending' | 'pending_finalization'>;
         year?: number;
     };
     url: '/api/invoices/';
@@ -39343,7 +39343,7 @@ export type InvoicesHistoryListData = {
          */
         page_size?: number;
         start_date?: string;
-        state?: Array<'canceled' | 'created' | 'paid' | 'pending'>;
+        state?: Array<'canceled' | 'created' | 'paid' | 'pending' | 'pending_finalization'>;
         year?: number;
     };
     url: '/api/invoices/{uuid}/history/';
@@ -39520,7 +39520,7 @@ export type InvoicesStatsListData = {
         page_size?: number;
         provider_uuid?: string;
         start_date?: string;
-        state?: Array<'canceled' | 'created' | 'paid' | 'pending'>;
+        state?: Array<'canceled' | 'created' | 'paid' | 'pending' | 'pending_finalization'>;
         year?: number;
     };
     url: '/api/invoices/{uuid}/stats/';
