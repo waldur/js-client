@@ -3130,6 +3130,31 @@ export type CascadeStepRequest = {
 
 export type CascadeStepTypeEnum = 'select_string' | 'select_string_multi';
 
+export type CatalogSummary = {
+    readonly uuid?: string;
+    /**
+     * Catalog name (e.g., EESSI, Spack)
+     */
+    name?: string;
+    /**
+     * Catalog version (e.g., 2023.06, 0.21.0)
+     */
+    version?: string;
+    description?: string;
+};
+
+export type CatalogSummaryRequest = {
+    /**
+     * Catalog name (e.g., EESSI, Spack)
+     */
+    name: string;
+    /**
+     * Catalog version (e.g., 2023.06, 0.21.0)
+     */
+    version: string;
+    description?: string;
+};
+
 export type CatalogTypeEnum = 'binary_runtime' | 'source_package' | 'package_manager';
 
 export type CategoryColumn = {
@@ -3526,6 +3551,14 @@ export type ChatRequestRequest = {
      * User input text for the chat model.
      */
     input: string;
+    /**
+     * Existing thread UUID. If omitted, a new thread is created when storage is enabled.
+     */
+    thread_uuid?: string | null;
+    /**
+     * Thread UUID whose name should be set to the assistant's response. Skips message persistence for this call.
+     */
+    update_thread_name?: string | null;
 };
 
 export type ChatResponse = {
@@ -3563,6 +3596,15 @@ export type ChatResponse = {
     m?: {
         [key: string]: unknown;
     };
+};
+
+export type ChatSession = {
+    readonly uuid?: string;
+    readonly user?: string;
+    readonly user_username?: string;
+    readonly user_full_name?: string;
+    readonly created?: string;
+    readonly modified?: string;
 };
 
 export type CheckUniqueBackendIdRequest = {
@@ -4399,6 +4441,8 @@ export type ConstanceSettings = {
     LLM_TOKEN_LIMIT_DAILY?: number;
     LLM_TOKEN_LIMIT_WEEKLY?: number;
     LLM_TOKEN_LIMIT_MONTHLY?: number;
+    LLM_CHAT_SESSION_RETENTION_DAYS?: number;
+    LLM_CHAT_STORAGE_ENABLED?: boolean;
     SOFTWARE_CATALOG_EESSI_UPDATE_ENABLED?: boolean;
     SOFTWARE_CATALOG_EESSI_VERSION?: string;
     SOFTWARE_CATALOG_EESSI_API_URL?: string;
@@ -4626,6 +4670,8 @@ export type ConstanceSettingsRequest = {
     LLM_TOKEN_LIMIT_DAILY?: number;
     LLM_TOKEN_LIMIT_WEEKLY?: number;
     LLM_TOKEN_LIMIT_MONTHLY?: number;
+    LLM_CHAT_SESSION_RETENTION_DAYS?: number;
+    LLM_CHAT_STORAGE_ENABLED?: boolean;
     SOFTWARE_CATALOG_EESSI_UPDATE_ENABLED?: boolean;
     SOFTWARE_CATALOG_EESSI_VERSION?: string;
     SOFTWARE_CATALOG_EESSI_API_URL?: string;
@@ -6282,14 +6328,14 @@ export type Event = {
     readonly context?: unknown;
 };
 
-export type EventGroupsEnum = 'access_subnets' | 'auth' | 'call' | 'credits' | 'customers' | 'invoices' | 'offering_accounting' | 'permissions' | 'projects' | 'proposal' | 'providers' | 'resources' | 'review' | 'ssh' | 'support' | 'users' | 'terms_of_service';
+export type EventGroupsEnum = 'access_subnets' | 'auth' | 'call' | 'chat' | 'credits' | 'customers' | 'invoices' | 'offering_accounting' | 'onboarding' | 'permissions' | 'projects' | 'proposal' | 'providers' | 'resources' | 'review' | 'ssh' | 'support' | 'users' | 'terms_of_service';
 
 export type EventMetadataResponse = {
     /**
      * Map of event group keys to lists of event type enums from EventType
      */
     event_groups: {
-        [key: string]: Array<'access_subnet_creation_succeeded' | 'access_subnet_deletion_succeeded' | 'access_subnet_update_succeeded' | 'allowed_offerings_have_been_updated' | 'attachment_created' | 'attachment_deleted' | 'attachment_updated' | 'auth_logged_in_with_saml2' | 'auth_logged_in_with_username' | 'auth_logged_in_with_oauth' | 'auth_logged_out' | 'auth_logged_out_with_saml2' | 'auth_login_failed_with_username' | 'block_creation_of_new_resources' | 'block_modification_of_existing_resources' | 'call_document_added' | 'call_document_removed' | 'create_of_credit_by_staff' | 'custom_notification' | 'customer_creation_succeeded' | 'customer_deletion_succeeded' | 'customer_update_succeeded' | 'customer_permission_review_created' | 'customer_permission_review_closed' | 'droplet_resize_scheduled' | 'droplet_resize_succeeded' | 'freeipa_profile_created' | 'freeipa_profile_deleted' | 'freeipa_profile_disabled' | 'freeipa_profile_enabled' | 'invoice_canceled' | 'invoice_created' | 'invoice_item_created' | 'invoice_item_deleted' | 'invoice_item_updated' | 'invoice_paid' | 'issue_creation_succeeded' | 'issue_deletion_succeeded' | 'issue_update_succeeded' | 'marketplace_offering_component_created' | 'marketplace_offering_component_deleted' | 'marketplace_offering_component_updated' | 'marketplace_offering_created' | 'marketplace_offering_role_created' | 'marketplace_offering_role_deleted' | 'marketplace_offering_role_updated' | 'marketplace_offering_updated' | 'marketplace_offering_user_created' | 'marketplace_offering_user_updated' | 'marketplace_offering_user_deleted' | 'marketplace_offering_user_restriction_updated' | 'marketplace_order_approved' | 'marketplace_order_completed' | 'marketplace_order_created' | 'marketplace_order_failed' | 'marketplace_order_rejected' | 'marketplace_order_terminated' | 'marketplace_order_unlinked' | 'marketplace_plan_archived' | 'marketplace_plan_component_current_price_updated' | 'marketplace_plan_component_future_price_updated' | 'marketplace_plan_component_quota_updated' | 'marketplace_plan_created' | 'marketplace_plan_updated' | 'marketplace_plan_deleted' | 'marketplace_resource_create_canceled' | 'marketplace_resource_create_failed' | 'marketplace_resource_create_requested' | 'marketplace_resource_create_succeeded' | 'marketplace_resource_downscaled' | 'marketplace_resource_erred_on_backend' | 'marketplace_resource_paused' | 'marketplace_resource_terminate_canceled' | 'marketplace_resource_terminate_failed' | 'marketplace_resource_terminate_requested' | 'marketplace_resource_terminate_succeeded' | 'marketplace_resource_unlinked' | 'marketplace_resource_update_canceled' | 'marketplace_resource_update_end_date_succeeded' | 'marketplace_resource_update_failed' | 'marketplace_resource_update_limits_failed' | 'marketplace_resource_update_limits_succeeded' | 'marketplace_resource_update_requested' | 'marketplace_resource_update_succeeded' | 'marketplace_resource_user_created' | 'marketplace_resource_user_deleted' | 'notify_external_user' | 'notify_organization_owners' | 'notify_project_team' | 'openstack_floating_ip_attached' | 'openstack_floating_ip_connected' | 'openstack_floating_ip_description_updated' | 'openstack_floating_ip_detached' | 'openstack_floating_ip_disconnected' | 'openstack_network_cleaned' | 'openstack_network_created' | 'openstack_network_deleted' | 'openstack_network_imported' | 'openstack_network_pulled' | 'openstack_network_updated' | 'openstack_port_cleaned' | 'openstack_port_created' | 'openstack_port_deleted' | 'openstack_port_imported' | 'openstack_port_pulled' | 'openstack_port_updated' | 'openstack_router_updated' | 'openstack_security_group_cleaned' | 'openstack_security_group_created' | 'openstack_security_group_deleted' | 'openstack_security_group_imported' | 'openstack_security_group_pulled' | 'openstack_security_group_rule_cleaned' | 'openstack_security_group_rule_created' | 'openstack_security_group_rule_deleted' | 'openstack_security_group_rule_imported' | 'openstack_security_group_rule_updated' | 'openstack_security_group_updated' | 'openstack_security_group_added_remotely' | 'openstack_security_group_removed_remotely' | 'openstack_security_group_added_locally' | 'openstack_security_group_removed_locally' | 'openstack_server_group_cleaned' | 'openstack_server_group_created' | 'openstack_server_group_deleted' | 'openstack_server_group_imported' | 'openstack_server_group_pulled' | 'openstack_subnet_cleaned' | 'openstack_subnet_created' | 'openstack_subnet_deleted' | 'openstack_subnet_imported' | 'openstack_subnet_pulled' | 'openstack_subnet_updated' | 'openstack_tenant_quota_limit_updated' | 'payment_added' | 'payment_created' | 'payment_removed' | 'policy_notification' | 'project_creation_succeeded' | 'project_deletion_succeeded' | 'project_deletion_triggered' | 'project_update_request_approved' | 'project_update_request_created' | 'project_update_request_rejected' | 'project_update_succeeded' | 'project_permission_review_created' | 'project_permission_review_closed' | 'proposal_canceled' | 'proposal_document_added' | 'proposal_document_removed' | 'query_executed' | 'reduction_of_customer_credit' | 'reduction_of_customer_credit_due_to_minimal_consumption' | 'reduction_of_customer_expected_consumption' | 'reduction_of_project_credit' | 'reduction_of_project_credit_due_to_minimal_consumption' | 'reduction_of_project_expected_consumption' | 'request_downscaling' | 'request_pausing' | 'resource_assign_floating_ip_failed' | 'resource_assign_floating_ip_scheduled' | 'resource_assign_floating_ip_succeeded' | 'resource_attach_failed' | 'resource_attach_scheduled' | 'resource_attach_succeeded' | 'resource_backup_creation_failed' | 'resource_backup_creation_scheduled' | 'resource_backup_creation_succeeded' | 'resource_backup_deletion_failed' | 'resource_backup_deletion_scheduled' | 'resource_backup_deletion_succeeded' | 'resource_backup_restoration_failed' | 'resource_backup_restoration_scheduled' | 'resource_backup_restoration_succeeded' | 'resource_change_flavor_failed' | 'resource_change_flavor_scheduled' | 'resource_change_flavor_succeeded' | 'resource_creation_failed' | 'resource_creation_scheduled' | 'resource_creation_succeeded' | 'resource_deletion_failed' | 'resource_deletion_scheduled' | 'resource_deletion_succeeded' | 'resource_detach_failed' | 'resource_detach_scheduled' | 'resource_detach_succeeded' | 'resource_extend_failed' | 'resource_extend_scheduled' | 'resource_extend_succeeded' | 'resource_extend_volume_failed' | 'resource_extend_volume_scheduled' | 'resource_extend_volume_succeeded' | 'resource_import_succeeded' | 'resource_pull_failed' | 'resource_pull_scheduled' | 'resource_pull_succeeded' | 'resource_restart_failed' | 'resource_restart_scheduled' | 'resource_restart_succeeded' | 'resource_retype_failed' | 'resource_retype_scheduled' | 'resource_retype_succeeded' | 'resource_robot_account_created' | 'resource_robot_account_deleted' | 'resource_robot_account_state_changed' | 'resource_robot_account_updated' | 'resource_start_failed' | 'resource_start_scheduled' | 'resource_start_succeeded' | 'resource_stop_failed' | 'resource_stop_scheduled' | 'resource_stop_succeeded' | 'resource_unassign_floating_ip_failed' | 'resource_unassign_floating_ip_scheduled' | 'resource_unassign_floating_ip_succeeded' | 'resource_update_allowed_address_pairs_failed' | 'resource_update_allowed_address_pairs_scheduled' | 'resource_update_allowed_address_pairs_succeeded' | 'resource_update_floating_ips_failed' | 'resource_update_floating_ips_scheduled' | 'resource_update_floating_ips_succeeded' | 'resource_update_ports_failed' | 'resource_update_ports_scheduled' | 'resource_update_ports_succeeded' | 'resource_update_security_groups_failed' | 'resource_update_security_groups_scheduled' | 'resource_update_security_groups_succeeded' | 'resource_update_succeeded' | 'restrict_members' | 'review_canceled' | 'role_granted' | 'role_revoked' | 'role_updated' | 'roll_back_customer_credit' | 'roll_back_project_credit' | 'service_account_created' | 'service_account_deleted' | 'service_account_updated' | 'set_to_zero_overdue_credit' | 'slurm_policy_evaluation' | 'ssh_key_creation_succeeded' | 'ssh_key_deletion_succeeded' | 'terminate_resources' | 'token_created' | 'token_lifetime_updated' | 'update_of_credit_by_staff' | 'automatic_credit_adjustment' | 'user_activated' | 'user_creation_succeeded' | 'user_data_accessed' | 'user_deactivated' | 'user_deactivated_no_roles' | 'user_deletion_succeeded' | 'user_details_update_succeeded' | 'user_has_been_created_by_staff' | 'user_password_updated' | 'user_password_updated_by_staff' | 'user_update_succeeded' | 'user_invitation_updated' | 'user_invitation_deleted' | 'terms_of_service_consent_granted' | 'terms_of_service_consent_revoked'>;
+        [key: string]: Array<'access_subnet_creation_succeeded' | 'access_subnet_deletion_succeeded' | 'access_subnet_update_succeeded' | 'allowed_offerings_have_been_updated' | 'attachment_created' | 'attachment_deleted' | 'attachment_updated' | 'auth_logged_in_with_saml2' | 'auth_logged_in_with_username' | 'auth_logged_in_with_oauth' | 'auth_logged_out' | 'auth_logged_out_with_saml2' | 'auth_login_failed_with_username' | 'block_creation_of_new_resources' | 'block_modification_of_existing_resources' | 'call_document_added' | 'call_document_removed' | 'create_of_credit_by_staff' | 'custom_notification' | 'customer_creation_succeeded' | 'customer_deletion_succeeded' | 'customer_update_succeeded' | 'customer_permission_review_created' | 'customer_permission_review_closed' | 'droplet_resize_scheduled' | 'droplet_resize_succeeded' | 'freeipa_profile_created' | 'freeipa_profile_deleted' | 'freeipa_profile_disabled' | 'freeipa_profile_enabled' | 'invoice_canceled' | 'invoice_created' | 'invoice_item_created' | 'invoice_item_deleted' | 'invoice_item_updated' | 'invoice_paid' | 'issue_creation_succeeded' | 'issue_deletion_succeeded' | 'issue_update_succeeded' | 'marketplace_offering_component_created' | 'marketplace_offering_component_deleted' | 'marketplace_offering_component_updated' | 'marketplace_offering_created' | 'marketplace_offering_role_created' | 'marketplace_offering_role_deleted' | 'marketplace_offering_role_updated' | 'marketplace_offering_updated' | 'marketplace_offering_user_created' | 'marketplace_offering_user_updated' | 'marketplace_offering_user_deleted' | 'marketplace_offering_user_restriction_updated' | 'marketplace_order_approved' | 'marketplace_order_completed' | 'marketplace_order_created' | 'marketplace_order_failed' | 'marketplace_order_rejected' | 'marketplace_order_terminated' | 'marketplace_order_unlinked' | 'marketplace_plan_archived' | 'marketplace_plan_component_current_price_updated' | 'marketplace_plan_component_future_price_updated' | 'marketplace_plan_component_quota_updated' | 'marketplace_plan_created' | 'marketplace_plan_updated' | 'marketplace_plan_deleted' | 'marketplace_resource_create_canceled' | 'marketplace_resource_create_failed' | 'marketplace_resource_create_requested' | 'marketplace_resource_create_succeeded' | 'marketplace_resource_downscaled' | 'marketplace_resource_erred_on_backend' | 'marketplace_resource_paused' | 'marketplace_resource_terminate_canceled' | 'marketplace_resource_terminate_failed' | 'marketplace_resource_terminate_requested' | 'marketplace_resource_terminate_succeeded' | 'marketplace_resource_unlinked' | 'marketplace_resource_update_canceled' | 'marketplace_resource_update_end_date_succeeded' | 'marketplace_resource_update_failed' | 'marketplace_resource_update_limits_failed' | 'marketplace_resource_update_limits_succeeded' | 'marketplace_resource_update_requested' | 'marketplace_resource_update_succeeded' | 'marketplace_resource_user_created' | 'marketplace_resource_user_deleted' | 'notify_external_user' | 'notify_organization_owners' | 'notify_project_team' | 'openstack_floating_ip_attached' | 'openstack_floating_ip_connected' | 'openstack_floating_ip_description_updated' | 'openstack_floating_ip_detached' | 'openstack_floating_ip_disconnected' | 'openstack_network_cleaned' | 'openstack_network_created' | 'openstack_network_deleted' | 'openstack_network_imported' | 'openstack_network_pulled' | 'openstack_network_updated' | 'openstack_port_cleaned' | 'openstack_port_created' | 'openstack_port_deleted' | 'openstack_port_imported' | 'openstack_port_pulled' | 'openstack_port_updated' | 'openstack_router_updated' | 'openstack_security_group_cleaned' | 'openstack_security_group_created' | 'openstack_security_group_deleted' | 'openstack_security_group_imported' | 'openstack_security_group_pulled' | 'openstack_security_group_rule_cleaned' | 'openstack_security_group_rule_created' | 'openstack_security_group_rule_deleted' | 'openstack_security_group_rule_imported' | 'openstack_security_group_rule_updated' | 'openstack_security_group_updated' | 'openstack_security_group_added_remotely' | 'openstack_security_group_removed_remotely' | 'openstack_security_group_added_locally' | 'openstack_security_group_removed_locally' | 'openstack_server_group_cleaned' | 'openstack_server_group_created' | 'openstack_server_group_deleted' | 'openstack_server_group_imported' | 'openstack_server_group_pulled' | 'openstack_subnet_cleaned' | 'openstack_subnet_created' | 'openstack_subnet_deleted' | 'openstack_subnet_imported' | 'openstack_subnet_pulled' | 'openstack_subnet_updated' | 'openstack_tenant_quota_limit_updated' | 'payment_added' | 'payment_created' | 'payment_removed' | 'policy_notification' | 'project_creation_succeeded' | 'project_deletion_succeeded' | 'project_deletion_triggered' | 'project_update_request_approved' | 'project_update_request_created' | 'project_update_request_rejected' | 'project_update_succeeded' | 'project_permission_review_created' | 'project_permission_review_closed' | 'proposal_canceled' | 'proposal_document_added' | 'proposal_document_removed' | 'query_executed' | 'reduction_of_customer_credit' | 'reduction_of_customer_credit_due_to_minimal_consumption' | 'reduction_of_customer_expected_consumption' | 'reduction_of_project_credit' | 'reduction_of_project_credit_due_to_minimal_consumption' | 'reduction_of_project_expected_consumption' | 'request_downscaling' | 'request_pausing' | 'resource_assign_floating_ip_failed' | 'resource_assign_floating_ip_scheduled' | 'resource_assign_floating_ip_succeeded' | 'resource_attach_failed' | 'resource_attach_scheduled' | 'resource_attach_succeeded' | 'resource_backup_creation_failed' | 'resource_backup_creation_scheduled' | 'resource_backup_creation_succeeded' | 'resource_backup_deletion_failed' | 'resource_backup_deletion_scheduled' | 'resource_backup_deletion_succeeded' | 'resource_backup_restoration_failed' | 'resource_backup_restoration_scheduled' | 'resource_backup_restoration_succeeded' | 'resource_change_flavor_failed' | 'resource_change_flavor_scheduled' | 'resource_change_flavor_succeeded' | 'resource_creation_failed' | 'resource_creation_scheduled' | 'resource_creation_succeeded' | 'resource_deletion_failed' | 'resource_deletion_scheduled' | 'resource_deletion_succeeded' | 'resource_detach_failed' | 'resource_detach_scheduled' | 'resource_detach_succeeded' | 'resource_extend_failed' | 'resource_extend_scheduled' | 'resource_extend_succeeded' | 'resource_extend_volume_failed' | 'resource_extend_volume_scheduled' | 'resource_extend_volume_succeeded' | 'resource_import_succeeded' | 'resource_pull_failed' | 'resource_pull_scheduled' | 'resource_pull_succeeded' | 'resource_restart_failed' | 'resource_restart_scheduled' | 'resource_restart_succeeded' | 'resource_retype_failed' | 'resource_retype_scheduled' | 'resource_retype_succeeded' | 'resource_robot_account_created' | 'resource_robot_account_deleted' | 'resource_robot_account_state_changed' | 'resource_robot_account_updated' | 'resource_start_failed' | 'resource_start_scheduled' | 'resource_start_succeeded' | 'resource_stop_failed' | 'resource_stop_scheduled' | 'resource_stop_succeeded' | 'resource_unassign_floating_ip_failed' | 'resource_unassign_floating_ip_scheduled' | 'resource_unassign_floating_ip_succeeded' | 'resource_update_allowed_address_pairs_failed' | 'resource_update_allowed_address_pairs_scheduled' | 'resource_update_allowed_address_pairs_succeeded' | 'resource_update_floating_ips_failed' | 'resource_update_floating_ips_scheduled' | 'resource_update_floating_ips_succeeded' | 'resource_update_ports_failed' | 'resource_update_ports_scheduled' | 'resource_update_ports_succeeded' | 'resource_update_security_groups_failed' | 'resource_update_security_groups_scheduled' | 'resource_update_security_groups_succeeded' | 'resource_update_succeeded' | 'restrict_members' | 'review_canceled' | 'role_granted' | 'role_revoked' | 'role_updated' | 'roll_back_customer_credit' | 'roll_back_project_credit' | 'service_account_created' | 'service_account_deleted' | 'service_account_updated' | 'set_to_zero_overdue_credit' | 'slurm_policy_evaluation' | 'ssh_key_creation_succeeded' | 'ssh_key_deletion_succeeded' | 'terminate_resources' | 'token_created' | 'token_lifetime_updated' | 'update_of_credit_by_staff' | 'automatic_credit_adjustment' | 'user_activated' | 'user_creation_succeeded' | 'user_data_accessed' | 'user_deactivated' | 'user_deactivated_no_roles' | 'user_deletion_succeeded' | 'user_details_update_succeeded' | 'user_has_been_created_by_staff' | 'user_password_updated' | 'user_password_updated_by_staff' | 'user_update_succeeded' | 'user_invitation_updated' | 'user_invitation_deleted' | 'terms_of_service_consent_granted' | 'terms_of_service_consent_revoked' | 'chat_session_accessed' | 'chat_thread_accessed' | 'onboarding_verification_deleted' | 'onboarding_verification_deleted_by_task'>;
     };
 };
 
@@ -6375,7 +6421,7 @@ export type EventSubscriptionRequest = {
     observable_objects?: unknown;
 };
 
-export type EventTypesEnum = 'access_subnet_creation_succeeded' | 'access_subnet_deletion_succeeded' | 'access_subnet_update_succeeded' | 'allowed_offerings_have_been_updated' | 'attachment_created' | 'attachment_deleted' | 'attachment_updated' | 'auth_logged_in_with_saml2' | 'auth_logged_in_with_username' | 'auth_logged_in_with_oauth' | 'auth_logged_out' | 'auth_logged_out_with_saml2' | 'auth_login_failed_with_username' | 'block_creation_of_new_resources' | 'block_modification_of_existing_resources' | 'call_document_added' | 'call_document_removed' | 'create_of_credit_by_staff' | 'custom_notification' | 'customer_creation_succeeded' | 'customer_deletion_succeeded' | 'customer_update_succeeded' | 'customer_permission_review_created' | 'customer_permission_review_closed' | 'droplet_resize_scheduled' | 'droplet_resize_succeeded' | 'freeipa_profile_created' | 'freeipa_profile_deleted' | 'freeipa_profile_disabled' | 'freeipa_profile_enabled' | 'invoice_canceled' | 'invoice_created' | 'invoice_item_created' | 'invoice_item_deleted' | 'invoice_item_updated' | 'invoice_paid' | 'issue_creation_succeeded' | 'issue_deletion_succeeded' | 'issue_update_succeeded' | 'marketplace_offering_component_created' | 'marketplace_offering_component_deleted' | 'marketplace_offering_component_updated' | 'marketplace_offering_created' | 'marketplace_offering_role_created' | 'marketplace_offering_role_deleted' | 'marketplace_offering_role_updated' | 'marketplace_offering_updated' | 'marketplace_offering_user_created' | 'marketplace_offering_user_updated' | 'marketplace_offering_user_deleted' | 'marketplace_offering_user_restriction_updated' | 'marketplace_order_approved' | 'marketplace_order_completed' | 'marketplace_order_created' | 'marketplace_order_failed' | 'marketplace_order_rejected' | 'marketplace_order_terminated' | 'marketplace_order_unlinked' | 'marketplace_plan_archived' | 'marketplace_plan_component_current_price_updated' | 'marketplace_plan_component_future_price_updated' | 'marketplace_plan_component_quota_updated' | 'marketplace_plan_created' | 'marketplace_plan_updated' | 'marketplace_plan_deleted' | 'marketplace_resource_create_canceled' | 'marketplace_resource_create_failed' | 'marketplace_resource_create_requested' | 'marketplace_resource_create_succeeded' | 'marketplace_resource_downscaled' | 'marketplace_resource_erred_on_backend' | 'marketplace_resource_paused' | 'marketplace_resource_terminate_canceled' | 'marketplace_resource_terminate_failed' | 'marketplace_resource_terminate_requested' | 'marketplace_resource_terminate_succeeded' | 'marketplace_resource_unlinked' | 'marketplace_resource_update_canceled' | 'marketplace_resource_update_end_date_succeeded' | 'marketplace_resource_update_failed' | 'marketplace_resource_update_limits_failed' | 'marketplace_resource_update_limits_succeeded' | 'marketplace_resource_update_requested' | 'marketplace_resource_update_succeeded' | 'marketplace_resource_user_created' | 'marketplace_resource_user_deleted' | 'notify_external_user' | 'notify_organization_owners' | 'notify_project_team' | 'openstack_floating_ip_attached' | 'openstack_floating_ip_connected' | 'openstack_floating_ip_description_updated' | 'openstack_floating_ip_detached' | 'openstack_floating_ip_disconnected' | 'openstack_network_cleaned' | 'openstack_network_created' | 'openstack_network_deleted' | 'openstack_network_imported' | 'openstack_network_pulled' | 'openstack_network_updated' | 'openstack_port_cleaned' | 'openstack_port_created' | 'openstack_port_deleted' | 'openstack_port_imported' | 'openstack_port_pulled' | 'openstack_port_updated' | 'openstack_router_updated' | 'openstack_security_group_cleaned' | 'openstack_security_group_created' | 'openstack_security_group_deleted' | 'openstack_security_group_imported' | 'openstack_security_group_pulled' | 'openstack_security_group_rule_cleaned' | 'openstack_security_group_rule_created' | 'openstack_security_group_rule_deleted' | 'openstack_security_group_rule_imported' | 'openstack_security_group_rule_updated' | 'openstack_security_group_updated' | 'openstack_security_group_added_remotely' | 'openstack_security_group_removed_remotely' | 'openstack_security_group_added_locally' | 'openstack_security_group_removed_locally' | 'openstack_server_group_cleaned' | 'openstack_server_group_created' | 'openstack_server_group_deleted' | 'openstack_server_group_imported' | 'openstack_server_group_pulled' | 'openstack_subnet_cleaned' | 'openstack_subnet_created' | 'openstack_subnet_deleted' | 'openstack_subnet_imported' | 'openstack_subnet_pulled' | 'openstack_subnet_updated' | 'openstack_tenant_quota_limit_updated' | 'payment_added' | 'payment_created' | 'payment_removed' | 'policy_notification' | 'project_creation_succeeded' | 'project_deletion_succeeded' | 'project_deletion_triggered' | 'project_update_request_approved' | 'project_update_request_created' | 'project_update_request_rejected' | 'project_update_succeeded' | 'project_permission_review_created' | 'project_permission_review_closed' | 'proposal_canceled' | 'proposal_document_added' | 'proposal_document_removed' | 'query_executed' | 'reduction_of_customer_credit' | 'reduction_of_customer_credit_due_to_minimal_consumption' | 'reduction_of_customer_expected_consumption' | 'reduction_of_project_credit' | 'reduction_of_project_credit_due_to_minimal_consumption' | 'reduction_of_project_expected_consumption' | 'request_downscaling' | 'request_pausing' | 'resource_assign_floating_ip_failed' | 'resource_assign_floating_ip_scheduled' | 'resource_assign_floating_ip_succeeded' | 'resource_attach_failed' | 'resource_attach_scheduled' | 'resource_attach_succeeded' | 'resource_backup_creation_failed' | 'resource_backup_creation_scheduled' | 'resource_backup_creation_succeeded' | 'resource_backup_deletion_failed' | 'resource_backup_deletion_scheduled' | 'resource_backup_deletion_succeeded' | 'resource_backup_restoration_failed' | 'resource_backup_restoration_scheduled' | 'resource_backup_restoration_succeeded' | 'resource_change_flavor_failed' | 'resource_change_flavor_scheduled' | 'resource_change_flavor_succeeded' | 'resource_creation_failed' | 'resource_creation_scheduled' | 'resource_creation_succeeded' | 'resource_deletion_failed' | 'resource_deletion_scheduled' | 'resource_deletion_succeeded' | 'resource_detach_failed' | 'resource_detach_scheduled' | 'resource_detach_succeeded' | 'resource_extend_failed' | 'resource_extend_scheduled' | 'resource_extend_succeeded' | 'resource_extend_volume_failed' | 'resource_extend_volume_scheduled' | 'resource_extend_volume_succeeded' | 'resource_import_succeeded' | 'resource_pull_failed' | 'resource_pull_scheduled' | 'resource_pull_succeeded' | 'resource_restart_failed' | 'resource_restart_scheduled' | 'resource_restart_succeeded' | 'resource_retype_failed' | 'resource_retype_scheduled' | 'resource_retype_succeeded' | 'resource_robot_account_created' | 'resource_robot_account_deleted' | 'resource_robot_account_state_changed' | 'resource_robot_account_updated' | 'resource_start_failed' | 'resource_start_scheduled' | 'resource_start_succeeded' | 'resource_stop_failed' | 'resource_stop_scheduled' | 'resource_stop_succeeded' | 'resource_unassign_floating_ip_failed' | 'resource_unassign_floating_ip_scheduled' | 'resource_unassign_floating_ip_succeeded' | 'resource_update_allowed_address_pairs_failed' | 'resource_update_allowed_address_pairs_scheduled' | 'resource_update_allowed_address_pairs_succeeded' | 'resource_update_floating_ips_failed' | 'resource_update_floating_ips_scheduled' | 'resource_update_floating_ips_succeeded' | 'resource_update_ports_failed' | 'resource_update_ports_scheduled' | 'resource_update_ports_succeeded' | 'resource_update_security_groups_failed' | 'resource_update_security_groups_scheduled' | 'resource_update_security_groups_succeeded' | 'resource_update_succeeded' | 'restrict_members' | 'review_canceled' | 'role_granted' | 'role_revoked' | 'role_updated' | 'roll_back_customer_credit' | 'roll_back_project_credit' | 'service_account_created' | 'service_account_deleted' | 'service_account_updated' | 'set_to_zero_overdue_credit' | 'slurm_policy_evaluation' | 'ssh_key_creation_succeeded' | 'ssh_key_deletion_succeeded' | 'terminate_resources' | 'token_created' | 'token_lifetime_updated' | 'update_of_credit_by_staff' | 'automatic_credit_adjustment' | 'user_activated' | 'user_creation_succeeded' | 'user_data_accessed' | 'user_deactivated' | 'user_deactivated_no_roles' | 'user_deletion_succeeded' | 'user_details_update_succeeded' | 'user_has_been_created_by_staff' | 'user_password_updated' | 'user_password_updated_by_staff' | 'user_update_succeeded' | 'user_invitation_updated' | 'user_invitation_deleted' | 'terms_of_service_consent_granted' | 'terms_of_service_consent_revoked';
+export type EventTypesEnum = 'access_subnet_creation_succeeded' | 'access_subnet_deletion_succeeded' | 'access_subnet_update_succeeded' | 'allowed_offerings_have_been_updated' | 'attachment_created' | 'attachment_deleted' | 'attachment_updated' | 'auth_logged_in_with_saml2' | 'auth_logged_in_with_username' | 'auth_logged_in_with_oauth' | 'auth_logged_out' | 'auth_logged_out_with_saml2' | 'auth_login_failed_with_username' | 'block_creation_of_new_resources' | 'block_modification_of_existing_resources' | 'call_document_added' | 'call_document_removed' | 'create_of_credit_by_staff' | 'custom_notification' | 'customer_creation_succeeded' | 'customer_deletion_succeeded' | 'customer_update_succeeded' | 'customer_permission_review_created' | 'customer_permission_review_closed' | 'droplet_resize_scheduled' | 'droplet_resize_succeeded' | 'freeipa_profile_created' | 'freeipa_profile_deleted' | 'freeipa_profile_disabled' | 'freeipa_profile_enabled' | 'invoice_canceled' | 'invoice_created' | 'invoice_item_created' | 'invoice_item_deleted' | 'invoice_item_updated' | 'invoice_paid' | 'issue_creation_succeeded' | 'issue_deletion_succeeded' | 'issue_update_succeeded' | 'marketplace_offering_component_created' | 'marketplace_offering_component_deleted' | 'marketplace_offering_component_updated' | 'marketplace_offering_created' | 'marketplace_offering_role_created' | 'marketplace_offering_role_deleted' | 'marketplace_offering_role_updated' | 'marketplace_offering_updated' | 'marketplace_offering_user_created' | 'marketplace_offering_user_updated' | 'marketplace_offering_user_deleted' | 'marketplace_offering_user_restriction_updated' | 'marketplace_order_approved' | 'marketplace_order_completed' | 'marketplace_order_created' | 'marketplace_order_failed' | 'marketplace_order_rejected' | 'marketplace_order_terminated' | 'marketplace_order_unlinked' | 'marketplace_plan_archived' | 'marketplace_plan_component_current_price_updated' | 'marketplace_plan_component_future_price_updated' | 'marketplace_plan_component_quota_updated' | 'marketplace_plan_created' | 'marketplace_plan_updated' | 'marketplace_plan_deleted' | 'marketplace_resource_create_canceled' | 'marketplace_resource_create_failed' | 'marketplace_resource_create_requested' | 'marketplace_resource_create_succeeded' | 'marketplace_resource_downscaled' | 'marketplace_resource_erred_on_backend' | 'marketplace_resource_paused' | 'marketplace_resource_terminate_canceled' | 'marketplace_resource_terminate_failed' | 'marketplace_resource_terminate_requested' | 'marketplace_resource_terminate_succeeded' | 'marketplace_resource_unlinked' | 'marketplace_resource_update_canceled' | 'marketplace_resource_update_end_date_succeeded' | 'marketplace_resource_update_failed' | 'marketplace_resource_update_limits_failed' | 'marketplace_resource_update_limits_succeeded' | 'marketplace_resource_update_requested' | 'marketplace_resource_update_succeeded' | 'marketplace_resource_user_created' | 'marketplace_resource_user_deleted' | 'notify_external_user' | 'notify_organization_owners' | 'notify_project_team' | 'openstack_floating_ip_attached' | 'openstack_floating_ip_connected' | 'openstack_floating_ip_description_updated' | 'openstack_floating_ip_detached' | 'openstack_floating_ip_disconnected' | 'openstack_network_cleaned' | 'openstack_network_created' | 'openstack_network_deleted' | 'openstack_network_imported' | 'openstack_network_pulled' | 'openstack_network_updated' | 'openstack_port_cleaned' | 'openstack_port_created' | 'openstack_port_deleted' | 'openstack_port_imported' | 'openstack_port_pulled' | 'openstack_port_updated' | 'openstack_router_updated' | 'openstack_security_group_cleaned' | 'openstack_security_group_created' | 'openstack_security_group_deleted' | 'openstack_security_group_imported' | 'openstack_security_group_pulled' | 'openstack_security_group_rule_cleaned' | 'openstack_security_group_rule_created' | 'openstack_security_group_rule_deleted' | 'openstack_security_group_rule_imported' | 'openstack_security_group_rule_updated' | 'openstack_security_group_updated' | 'openstack_security_group_added_remotely' | 'openstack_security_group_removed_remotely' | 'openstack_security_group_added_locally' | 'openstack_security_group_removed_locally' | 'openstack_server_group_cleaned' | 'openstack_server_group_created' | 'openstack_server_group_deleted' | 'openstack_server_group_imported' | 'openstack_server_group_pulled' | 'openstack_subnet_cleaned' | 'openstack_subnet_created' | 'openstack_subnet_deleted' | 'openstack_subnet_imported' | 'openstack_subnet_pulled' | 'openstack_subnet_updated' | 'openstack_tenant_quota_limit_updated' | 'payment_added' | 'payment_created' | 'payment_removed' | 'policy_notification' | 'project_creation_succeeded' | 'project_deletion_succeeded' | 'project_deletion_triggered' | 'project_update_request_approved' | 'project_update_request_created' | 'project_update_request_rejected' | 'project_update_succeeded' | 'project_permission_review_created' | 'project_permission_review_closed' | 'proposal_canceled' | 'proposal_document_added' | 'proposal_document_removed' | 'query_executed' | 'reduction_of_customer_credit' | 'reduction_of_customer_credit_due_to_minimal_consumption' | 'reduction_of_customer_expected_consumption' | 'reduction_of_project_credit' | 'reduction_of_project_credit_due_to_minimal_consumption' | 'reduction_of_project_expected_consumption' | 'request_downscaling' | 'request_pausing' | 'resource_assign_floating_ip_failed' | 'resource_assign_floating_ip_scheduled' | 'resource_assign_floating_ip_succeeded' | 'resource_attach_failed' | 'resource_attach_scheduled' | 'resource_attach_succeeded' | 'resource_backup_creation_failed' | 'resource_backup_creation_scheduled' | 'resource_backup_creation_succeeded' | 'resource_backup_deletion_failed' | 'resource_backup_deletion_scheduled' | 'resource_backup_deletion_succeeded' | 'resource_backup_restoration_failed' | 'resource_backup_restoration_scheduled' | 'resource_backup_restoration_succeeded' | 'resource_change_flavor_failed' | 'resource_change_flavor_scheduled' | 'resource_change_flavor_succeeded' | 'resource_creation_failed' | 'resource_creation_scheduled' | 'resource_creation_succeeded' | 'resource_deletion_failed' | 'resource_deletion_scheduled' | 'resource_deletion_succeeded' | 'resource_detach_failed' | 'resource_detach_scheduled' | 'resource_detach_succeeded' | 'resource_extend_failed' | 'resource_extend_scheduled' | 'resource_extend_succeeded' | 'resource_extend_volume_failed' | 'resource_extend_volume_scheduled' | 'resource_extend_volume_succeeded' | 'resource_import_succeeded' | 'resource_pull_failed' | 'resource_pull_scheduled' | 'resource_pull_succeeded' | 'resource_restart_failed' | 'resource_restart_scheduled' | 'resource_restart_succeeded' | 'resource_retype_failed' | 'resource_retype_scheduled' | 'resource_retype_succeeded' | 'resource_robot_account_created' | 'resource_robot_account_deleted' | 'resource_robot_account_state_changed' | 'resource_robot_account_updated' | 'resource_start_failed' | 'resource_start_scheduled' | 'resource_start_succeeded' | 'resource_stop_failed' | 'resource_stop_scheduled' | 'resource_stop_succeeded' | 'resource_unassign_floating_ip_failed' | 'resource_unassign_floating_ip_scheduled' | 'resource_unassign_floating_ip_succeeded' | 'resource_update_allowed_address_pairs_failed' | 'resource_update_allowed_address_pairs_scheduled' | 'resource_update_allowed_address_pairs_succeeded' | 'resource_update_floating_ips_failed' | 'resource_update_floating_ips_scheduled' | 'resource_update_floating_ips_succeeded' | 'resource_update_ports_failed' | 'resource_update_ports_scheduled' | 'resource_update_ports_succeeded' | 'resource_update_security_groups_failed' | 'resource_update_security_groups_scheduled' | 'resource_update_security_groups_succeeded' | 'resource_update_succeeded' | 'restrict_members' | 'review_canceled' | 'role_granted' | 'role_revoked' | 'role_updated' | 'roll_back_customer_credit' | 'roll_back_project_credit' | 'service_account_created' | 'service_account_deleted' | 'service_account_updated' | 'set_to_zero_overdue_credit' | 'slurm_policy_evaluation' | 'ssh_key_creation_succeeded' | 'ssh_key_deletion_succeeded' | 'terminate_resources' | 'token_created' | 'token_lifetime_updated' | 'update_of_credit_by_staff' | 'automatic_credit_adjustment' | 'user_activated' | 'user_creation_succeeded' | 'user_data_accessed' | 'user_deactivated' | 'user_deactivated_no_roles' | 'user_deletion_succeeded' | 'user_details_update_succeeded' | 'user_has_been_created_by_staff' | 'user_password_updated' | 'user_password_updated_by_staff' | 'user_update_succeeded' | 'user_invitation_updated' | 'user_invitation_deleted' | 'terms_of_service_consent_granted' | 'terms_of_service_consent_revoked' | 'chat_session_accessed' | 'chat_thread_accessed' | 'onboarding_verification_deleted' | 'onboarding_verification_deleted_by_task';
 
 export type ExecuteActionErrorResponse = {
     error: string;
@@ -8840,7 +8886,7 @@ export type MergedPluginOptions = {
      */
     is_resource_termination_date_required?: boolean;
     /**
-     * If set, it will be used as a latest date for resource termination
+     * If set, it will be used as a latest date for resource termination. Format: YYYY-MM-DD
      */
     latest_date_for_resource_termination?: string;
     /**
@@ -9099,7 +9145,7 @@ export type MergedPluginOptionsRequest = {
      */
     is_resource_termination_date_required?: boolean;
     /**
-     * If set, it will be used as a latest date for resource termination
+     * If set, it will be used as a latest date for resource termination. Format: YYYY-MM-DD
      */
     latest_date_for_resource_termination?: string;
     /**
@@ -9658,9 +9704,28 @@ export type MergedSecretOptionsRequest = {
     node_disk_driver?: NodeDiskDriverEnum;
 };
 
+export type Message = {
+    readonly uuid: string;
+    thread: string;
+    role: MessageRoleEnum;
+    content: string;
+    readonly sequence_index: number;
+    replaces?: string | null;
+    readonly created: string;
+};
+
+export type MessageRequest = {
+    thread: string;
+    role: MessageRoleEnum;
+    content: string;
+    replaces?: string | null;
+};
+
 export type MessageResponse = {
     message: string;
 };
+
+export type MessageRoleEnum = 'user' | 'assistant';
 
 export type MessageStateCache = {
     /**
@@ -10466,12 +10531,7 @@ export type NestedSecurityGroupRuleRequest = {
 
 export type NestedSoftwareCatalog = {
     readonly uuid?: string;
-    readonly catalog?: {
-        uuid?: string;
-        name?: string;
-        version?: string;
-        description?: string;
-    };
+    catalog?: CatalogSummary;
     /**
      * List of enabled CPU families: ['x86_64', 'aarch64']
      */
@@ -10481,12 +10541,7 @@ export type NestedSoftwareCatalog = {
      */
     enabled_cpu_microarchitectures?: unknown;
     readonly package_count?: number;
-    readonly partition?: {
-        uuid?: string;
-        partition_name?: string;
-        priority_tier?: number;
-        qos?: string;
-    };
+    partition?: PartitionSummary | null;
 };
 
 export type NestedSoftwareCatalogRequest = {
@@ -14228,6 +14283,37 @@ export type PaidRequest = {
     proof?: Blob | File;
 };
 
+export type PartitionSummary = {
+    readonly uuid?: string;
+    /**
+     * Name of the SLURM partition
+     */
+    partition_name?: string;
+    /**
+     * Priority tier for scheduling and preemption
+     */
+    priority_tier?: number | null;
+    /**
+     * Quality of Service (QOS) name
+     */
+    qos?: string;
+};
+
+export type PartitionSummaryRequest = {
+    /**
+     * Name of the SLURM partition
+     */
+    partition_name: string;
+    /**
+     * Priority tier for scheduling and preemption
+     */
+    priority_tier?: number | null;
+    /**
+     * Quality of Service (QOS) name
+     */
+    qos?: string;
+};
+
 export type PasswordChangeRequest = {
     new_password: string;
 };
@@ -16121,6 +16207,11 @@ export type PatchedTemplateRequest = {
     name?: string;
     description?: string;
     issue_type?: IssueTypeEnum;
+};
+
+export type PatchedThreadSessionRequest = {
+    name?: string;
+    is_archived?: boolean;
 };
 
 export type PatchedUserAgreementRequest = {
@@ -23205,6 +23296,21 @@ export type TenantSecurityGroupUpdateRequest = {
     rules?: Array<OpenStackSecurityGroupRuleUpdateByNameRequest>;
 };
 
+export type ThreadSession = {
+    readonly uuid?: string;
+    name?: string;
+    readonly chat_session?: string;
+    readonly flags?: unknown;
+    is_archived?: boolean;
+    readonly message_count?: number;
+    readonly created?: string;
+};
+
+export type ThreadSessionRequest = {
+    name?: string;
+    is_archived?: boolean;
+};
+
 export type TimeSeriesToSData = {
     /**
      * Date of the data point
@@ -25802,6 +25908,8 @@ export type ConstanceSettingsRequestForm = {
     LLM_TOKEN_LIMIT_DAILY?: number;
     LLM_TOKEN_LIMIT_WEEKLY?: number;
     LLM_TOKEN_LIMIT_MONTHLY?: number;
+    LLM_CHAT_SESSION_RETENTION_DAYS?: number;
+    LLM_CHAT_STORAGE_ENABLED?: boolean;
     SOFTWARE_CATALOG_EESSI_UPDATE_ENABLED?: boolean;
     SOFTWARE_CATALOG_EESSI_VERSION?: string;
     SOFTWARE_CATALOG_EESSI_API_URL?: string;
@@ -26029,6 +26137,8 @@ export type ConstanceSettingsRequestMultipart = {
     LLM_TOKEN_LIMIT_DAILY?: number;
     LLM_TOKEN_LIMIT_WEEKLY?: number;
     LLM_TOKEN_LIMIT_MONTHLY?: number;
+    LLM_CHAT_SESSION_RETENTION_DAYS?: number;
+    LLM_CHAT_STORAGE_ENABLED?: boolean;
     SOFTWARE_CATALOG_EESSI_UPDATE_ENABLED?: boolean;
     SOFTWARE_CATALOG_EESSI_VERSION?: string;
     SOFTWARE_CATALOG_EESSI_API_URL?: string;
@@ -33336,6 +33446,123 @@ export type CeleryStatsRetrieveResponses = {
 
 export type CeleryStatsRetrieveResponse = CeleryStatsRetrieveResponses[keyof CeleryStatsRetrieveResponses];
 
+export type ChatMessagesListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        thread?: string;
+    };
+    url: '/api/chat-messages/';
+};
+
+export type ChatMessagesListResponses = {
+    200: Array<Message>;
+};
+
+export type ChatMessagesListResponse = ChatMessagesListResponses[keyof ChatMessagesListResponses];
+
+export type ChatMessagesCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        thread?: string;
+    };
+    url: '/api/chat-messages/';
+};
+
+export type ChatMessagesCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type ChatMessagesCreateData = {
+    body: MessageRequest;
+    path?: never;
+    query?: never;
+    url: '/api/chat-messages/';
+};
+
+export type ChatMessagesCreateResponses = {
+    201: Message;
+};
+
+export type ChatMessagesCreateResponse = ChatMessagesCreateResponses[keyof ChatMessagesCreateResponses];
+
+export type ChatMessagesRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/chat-messages/{uuid}/';
+};
+
+export type ChatMessagesRetrieveResponses = {
+    200: Message;
+};
+
+export type ChatMessagesRetrieveResponse = ChatMessagesRetrieveResponses[keyof ChatMessagesRetrieveResponses];
+
+export type ChatMessagesEditData = {
+    body?: {
+        content?: string;
+    };
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/chat-messages/{uuid}/edit/';
+};
+
+export type ChatMessagesEditResponses = {
+    200: Message;
+};
+
+export type ChatMessagesEditResponse = ChatMessagesEditResponses[keyof ChatMessagesEditResponses];
+
+export type ChatMessagesHistoryListData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        thread?: string;
+    };
+    url: '/api/chat-messages/{uuid}/history/';
+};
+
+export type ChatMessagesHistoryListResponses = {
+    200: Array<Message>;
+};
+
+export type ChatMessagesHistoryListResponse = ChatMessagesHistoryListResponses[keyof ChatMessagesHistoryListResponses];
+
 export type ChatQuotaSetQuotaData = {
     body: SetTokenQuotaRequest;
     path?: never;
@@ -33367,6 +33594,242 @@ export type ChatQuotaUsageRetrieveResponses = {
 };
 
 export type ChatQuotaUsageRetrieveResponse = ChatQuotaUsageRetrieveResponses[keyof ChatQuotaUsageRetrieveResponses];
+
+export type ChatSessionsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        field?: Array<'created' | 'modified' | 'user' | 'user_full_name' | 'user_username' | 'uuid'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/chat-sessions/';
+};
+
+export type ChatSessionsListResponses = {
+    200: Array<ChatSession>;
+};
+
+export type ChatSessionsListResponse = ChatSessionsListResponses[keyof ChatSessionsListResponses];
+
+export type ChatSessionsCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/chat-sessions/';
+};
+
+export type ChatSessionsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type ChatSessionsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        field?: Array<'created' | 'modified' | 'user' | 'user_full_name' | 'user_username' | 'uuid'>;
+    };
+    url: '/api/chat-sessions/{uuid}/';
+};
+
+export type ChatSessionsRetrieveResponses = {
+    200: ChatSession;
+};
+
+export type ChatSessionsRetrieveResponse = ChatSessionsRetrieveResponses[keyof ChatSessionsRetrieveResponses];
+
+export type ChatSessionsCurrentRetrieveData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/chat-sessions/current/';
+};
+
+export type ChatSessionsCurrentRetrieveResponses = {
+    200: ChatSession;
+};
+
+export type ChatSessionsCurrentRetrieveResponse = ChatSessionsCurrentRetrieveResponses[keyof ChatSessionsCurrentRetrieveResponses];
+
+export type ChatSessionsCurrentCountData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/chat-sessions/current/';
+};
+
+export type ChatSessionsCurrentCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type ChatThreadsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        field?: Array<'chat_session' | 'created' | 'flags' | 'is_archived' | 'message_count' | 'name' | 'uuid'>;
+        is_archived?: boolean;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        user?: string;
+    };
+    url: '/api/chat-threads/';
+};
+
+export type ChatThreadsListResponses = {
+    200: Array<ThreadSession>;
+};
+
+export type ChatThreadsListResponse = ChatThreadsListResponses[keyof ChatThreadsListResponses];
+
+export type ChatThreadsCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        is_archived?: boolean;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        user?: string;
+    };
+    url: '/api/chat-threads/';
+};
+
+export type ChatThreadsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type ChatThreadsCreateData = {
+    body?: ThreadSessionRequest;
+    path?: never;
+    query?: never;
+    url: '/api/chat-threads/';
+};
+
+export type ChatThreadsCreateResponses = {
+    201: ThreadSession;
+};
+
+export type ChatThreadsCreateResponse = ChatThreadsCreateResponses[keyof ChatThreadsCreateResponses];
+
+export type ChatThreadsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        field?: Array<'chat_session' | 'created' | 'flags' | 'is_archived' | 'message_count' | 'name' | 'uuid'>;
+    };
+    url: '/api/chat-threads/{uuid}/';
+};
+
+export type ChatThreadsRetrieveResponses = {
+    200: ThreadSession;
+};
+
+export type ChatThreadsRetrieveResponse = ChatThreadsRetrieveResponses[keyof ChatThreadsRetrieveResponses];
+
+export type ChatThreadsPartialUpdateData = {
+    body?: PatchedThreadSessionRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/chat-threads/{uuid}/';
+};
+
+export type ChatThreadsPartialUpdateResponses = {
+    200: ThreadSession;
+};
+
+export type ChatThreadsPartialUpdateResponse = ChatThreadsPartialUpdateResponses[keyof ChatThreadsPartialUpdateResponses];
+
+export type ChatThreadsUpdateData = {
+    body?: ThreadSessionRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/chat-threads/{uuid}/';
+};
+
+export type ChatThreadsUpdateResponses = {
+    200: ThreadSession;
+};
+
+export type ChatThreadsUpdateResponse = ChatThreadsUpdateResponses[keyof ChatThreadsUpdateResponses];
+
+export type ChatThreadsArchiveData = {
+    body?: ThreadSessionRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/chat-threads/{uuid}/archive/';
+};
+
+export type ChatThreadsArchiveResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type ChatThreadsArchiveResponse = ChatThreadsArchiveResponses[keyof ChatThreadsArchiveResponses];
+
+export type ChatThreadsUnarchiveData = {
+    body?: ThreadSessionRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/chat-threads/{uuid}/unarchive/';
+};
+
+export type ChatThreadsUnarchiveResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type ChatThreadsUnarchiveResponse = ChatThreadsUnarchiveResponses[keyof ChatThreadsUnarchiveResponses];
 
 export type ChatToolsExecuteData = {
     body: ToolExecuteRequest;
