@@ -14050,6 +14050,10 @@ export type OrcidSyncResponse = {
     last_sync: string;
 };
 
+export type OrderApproveByProviderRequest = {
+    attributes?: unknown;
+};
+
 export type OrderAttachment = {
     attachment?: string | null;
 };
@@ -45437,7 +45441,7 @@ export type MarketplaceOrdersApproveByConsumerResponses = {
 export type MarketplaceOrdersApproveByConsumerResponse = MarketplaceOrdersApproveByConsumerResponses[keyof MarketplaceOrdersApproveByConsumerResponses];
 
 export type MarketplaceOrdersApproveByProviderData = {
-    body?: never;
+    body?: OrderApproveByProviderRequest;
     path: {
         uuid: string;
     };

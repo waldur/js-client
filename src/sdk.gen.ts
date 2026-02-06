@@ -16365,7 +16365,11 @@ export const marketplaceOrdersApproveByProvider = <ThrowOnError extends boolean 
             }
         ],
         url: '/api/marketplace-orders/{uuid}/approve_by_provider/',
-        ...options
+        ...options,
+        headers: {
+            'Content-Type': 'application/json',
+            ...options.headers
+        }
     });
 };
 
