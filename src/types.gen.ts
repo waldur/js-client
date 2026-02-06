@@ -7668,6 +7668,32 @@ export type InvitationDeclineResponse = {
     detail: string;
 };
 
+export type InvitationDuplicate = {
+    email: string;
+    role: string;
+    existing_invitation_uuid?: string | null;
+};
+
+export type InvitationDuplicateCheckItemRequest = {
+    email: string;
+    /**
+     * UUID of the role to grant to the invited user
+     */
+    role: string;
+};
+
+export type InvitationDuplicateCheckRequest = {
+    /**
+     * URL of the scope (Customer or Project) for this invitation list
+     */
+    scope: string;
+    invitations: Array<InvitationDuplicateCheckItemRequest>;
+};
+
+export type InvitationDuplicateCheckResponse = {
+    duplicates: Array<InvitationDuplicate>;
+};
+
 export type InvitationProposalDisclosureEnum = 'titles_only' | 'titles_and_summaries' | 'full_details';
 
 export type InvitationProposalSummary = {
@@ -19942,6 +19968,35 @@ export type RemoveSoftwareCatalogRequest = {
     offering_catalog_uuid: string;
 };
 
+export type RenewalEstimateComponent = {
+    component_type: string;
+    component_name: string;
+    billing_type: string;
+    billing_period: string | null;
+    current_limit: number;
+    new_limit: number;
+    unit_price: string;
+    measured_unit: string;
+    period_description: string;
+    total: string;
+};
+
+export type RenewalEstimateRequestRequest = {
+    extension_months: number;
+    limits?: {
+        [key: string]: number;
+    };
+};
+
+export type RenewalEstimateResponse = {
+    components: Array<RenewalEstimateComponent>;
+    subscription_total: string;
+    limit_change_total: string;
+    total: string;
+    remaining_days: number;
+    new_end_date: string;
+};
+
 export type ReplicationStats = {
     /**
      * Whether this database is a replica
@@ -21959,6 +22014,11 @@ export type SendAssignmentBatchResponse = {
 
 export type SendInvitationsResponse = {
     invitations_sent: number;
+};
+
+export type SendNotificationResponse = {
+    status: string;
+    message: string;
 };
 
 export type ServerInfo = {
@@ -51750,6 +51810,21 @@ export type MarketplaceResourcesDetailsRetrieveResponses = {
 
 export type MarketplaceResourcesDetailsRetrieveResponse = MarketplaceResourcesDetailsRetrieveResponses[keyof MarketplaceResourcesDetailsRetrieveResponses];
 
+export type MarketplaceResourcesEstimateRenewalData = {
+    body: RenewalEstimateRequestRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-resources/{uuid}/estimate_renewal/';
+};
+
+export type MarketplaceResourcesEstimateRenewalResponses = {
+    200: RenewalEstimateResponse;
+};
+
+export type MarketplaceResourcesEstimateRenewalResponse = MarketplaceResourcesEstimateRenewalResponses[keyof MarketplaceResourcesEstimateRenewalResponses];
+
 export type MarketplaceResourcesGlauthUsersConfigRetrieveData = {
     body?: never;
     path: {
@@ -79885,6 +79960,10 @@ export type UserActionsListData = {
          */
         page_size?: number;
         urgency?: 'high' | 'low' | 'medium';
+        /**
+         * Filter by user UUID (staff only).
+         */
+        user_uuid?: string;
     };
     url: '/api/user-actions/';
 };
@@ -79919,6 +79998,10 @@ export type UserActionsCountData = {
          */
         page_size?: number;
         urgency?: 'high' | 'low' | 'medium';
+        /**
+         * Filter by user UUID (staff only).
+         */
+        user_uuid?: string;
     };
     url: '/api/user-actions/';
 };
@@ -80611,6 +80694,19 @@ export type UserInvitationsApproveResponses = {
      */
     200: unknown;
 };
+
+export type UserInvitationsCheckDuplicatesData = {
+    body: InvitationDuplicateCheckRequest;
+    path?: never;
+    query?: never;
+    url: '/api/user-invitations/check-duplicates/';
+};
+
+export type UserInvitationsCheckDuplicatesResponses = {
+    200: InvitationDuplicateCheckResponse;
+};
+
+export type UserInvitationsCheckDuplicatesResponse = UserInvitationsCheckDuplicatesResponses[keyof UserInvitationsCheckDuplicatesResponses];
 
 export type UserInvitationsRejectData = {
     body: TokenRequest;
@@ -81568,6 +81664,21 @@ export type UsersRefreshTokenResponses = {
 
 export type UsersRefreshTokenResponse = UsersRefreshTokenResponses[keyof UsersRefreshTokenResponses];
 
+export type UsersSendNotificationData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/users/{uuid}/send_notification/';
+};
+
+export type UsersSendNotificationResponses = {
+    202: SendNotificationResponse;
+};
+
+export type UsersSendNotificationResponse = UsersSendNotificationResponses[keyof UsersSendNotificationResponses];
+
 export type UsersTokenRetrieveData = {
     body?: never;
     path: {
@@ -81582,6 +81693,21 @@ export type UsersTokenRetrieveResponses = {
 };
 
 export type UsersTokenRetrieveResponse = UsersTokenRetrieveResponses[keyof UsersTokenRetrieveResponses];
+
+export type UsersUpdateActionsData = {
+    body?: UpdateActionsRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/users/{uuid}/update_actions/';
+};
+
+export type UsersUpdateActionsResponses = {
+    202: UpdateActionsResponse;
+};
+
+export type UsersUpdateActionsResponse = UsersUpdateActionsResponses[keyof UsersUpdateActionsResponses];
 
 export type UsersConfirmEmailData = {
     body: ConfirmEmailRequestRequest;
