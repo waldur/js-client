@@ -1509,6 +1509,13 @@ export type AttachmentRequest = {
     file: Blob | File;
 };
 
+export type AttributeSourceDetail = {
+    source: string;
+    timestamp: string;
+    age_days: number;
+    is_stale: boolean;
+};
+
 export type AuthMethodEnum = 'api_token' | 'personal_access_token' | 'basic';
 
 export type AuthResult = {
@@ -4474,6 +4481,9 @@ export type ConstanceSettings = {
     ARROW_CONSUMPTION_SYNC_INTERVAL_HOURS?: number;
     ARROW_BILLING_CHECK_INTERVAL_HOURS?: number;
     SLURM_POLICY_EVALUATION_LOG_RETENTION_DAYS?: number;
+    FEDERATED_IDENTITY_SYNC_ENABLED?: boolean;
+    FEDERATED_IDENTITY_SYNC_ALLOWED_ATTRIBUTES?: Array<string>;
+    FEDERATED_IDENTITY_DEACTIVATION_POLICY?: string;
 };
 
 export type ConstanceSettingsRequest = {
@@ -4704,6 +4714,9 @@ export type ConstanceSettingsRequest = {
     ARROW_CONSUMPTION_SYNC_INTERVAL_HOURS?: number;
     ARROW_BILLING_CHECK_INTERVAL_HOURS?: number;
     SLURM_POLICY_EVALUATION_LOG_RETENTION_DAYS?: number;
+    FEDERATED_IDENTITY_SYNC_ENABLED?: boolean;
+    FEDERATED_IDENTITY_SYNC_ALLOWED_ATTRIBUTES?: Array<string>;
+    FEDERATED_IDENTITY_DEACTIVATION_POLICY?: string;
 };
 
 export type ConsumptionStatisticsResponse = {
@@ -7345,6 +7358,92 @@ export type IpMappingRequest = {
      * External IP
      */
     external_ip: string;
+};
+
+export type IsdUserCount = {
+    isd: string;
+    user_count: number;
+    stale_user_count: number;
+    oldest_sync: string | null;
+};
+
+export type IdentityBridgeRemoveRequest = {
+    /**
+     * CUID / username of the user to remove from the ISD.
+     */
+    username: string;
+    /**
+     * ISD source identifier, e.g. 'isd:puhuri'. Must match ^[a-z]+:[a-zA-Z0-9._-]+$.
+     */
+    source: string;
+};
+
+export type IdentityBridgeRemoveResponse = {
+    uuid: string;
+    deactivated: boolean;
+};
+
+export type IdentityBridgeRequestRequest = {
+    /**
+     * CUID / username of the user to create or update.
+     */
+    username: string;
+    /**
+     * ISD source identifier, e.g. 'isd:puhuri'. Must match ^[a-z]+:[a-zA-Z0-9._-]+$.
+     */
+    source: string;
+    first_name?: string;
+    last_name?: string;
+    email?: string;
+    organization?: string;
+    affiliations?: Array<string>;
+    civil_number?: string;
+    phone_number?: string;
+    identity_source?: string;
+    gender?: number | null;
+    personal_title?: string;
+    birth_date?: string | null;
+    place_of_birth?: string;
+    country_of_residence?: string;
+    nationality?: string;
+    nationalities?: Array<string>;
+    organization_country?: string;
+    organization_type?: string;
+    eduperson_assurance?: Array<string>;
+};
+
+export type IdentityBridgeResponse = {
+    uuid: string;
+    created: boolean;
+    updated_fields: Array<string>;
+};
+
+export type IdentityBridgeStats = {
+    enabled: boolean;
+    deactivation_policy: string;
+    allowed_attributes: Array<string>;
+    total_federated_users: number;
+    total_active_federated_users: number;
+    users_per_isd: Array<IsdUserCount>;
+    stale_threshold_days: number;
+    identity_managers: Array<IdentityManager>;
+};
+
+export type IdentityBridgeUserStatus = {
+    active_isds: Array<string>;
+    managed_isds: Array<string>;
+    attribute_sources: {
+        [key: string]: AttributeSourceDetail;
+    };
+    stale_attributes: Array<string>;
+    effective_bridge_fields: Array<string>;
+    is_federated: boolean;
+};
+
+export type IdentityManager = {
+    uuid: string;
+    full_name: string;
+    managed_isds: Array<string>;
 };
 
 export type IdentityProvider = {
@@ -11949,6 +12048,10 @@ export type OfferingUser = {
      * Indicates what identity provider was used.
      */
     readonly user_identity_source?: string;
+    /**
+     * List of ISDs that have asserted this user exists. User is deactivated when this becomes empty.
+     */
+    readonly user_active_isds?: unknown;
     readonly created?: string;
     readonly modified?: string;
     readonly customer_uuid?: string;
@@ -16507,6 +16610,14 @@ export type PatchedUserRequest = {
      * REFEDS assurance profile URIs from identity provider
      */
     eduperson_assurance?: unknown;
+    /**
+     * Designates whether the user is allowed to manage remote user identities.
+     */
+    is_identity_manager?: boolean;
+    /**
+     * List of ISD source identifiers this user can manage via Identity Bridge. E.g., ['isd:puhuri', 'isd:fenix']. Non-empty list implies identity manager role.
+     */
+    managed_isds?: unknown;
 };
 
 export type PatchedVmwareVirtualMachineRequest = {
@@ -23882,6 +23993,22 @@ export type User = {
      * REFEDS assurance profile URIs from identity provider
      */
     eduperson_assurance?: unknown;
+    /**
+     * Designates whether the user is allowed to manage remote user identities.
+     */
+    is_identity_manager?: boolean;
+    /**
+     * Per-attribute source and freshness tracking. Format: {'field_name': {'source': 'isd:<name>', 'timestamp': 'ISO8601'}}.
+     */
+    readonly attribute_sources?: unknown;
+    /**
+     * List of ISD source identifiers this user can manage via Identity Bridge. E.g., ['isd:puhuri', 'isd:fenix']. Non-empty list implies identity manager role.
+     */
+    managed_isds?: unknown;
+    /**
+     * List of ISDs that have asserted this user exists. User is deactivated when this becomes empty.
+     */
+    readonly active_isds?: unknown;
 };
 
 export type UserAction = {
@@ -24280,6 +24407,14 @@ export type UserRequest = {
      * REFEDS assurance profile URIs from identity provider
      */
     eduperson_assurance?: unknown;
+    /**
+     * Designates whether the user is allowed to manage remote user identities.
+     */
+    is_identity_manager?: boolean;
+    /**
+     * List of ISD source identifiers this user can manage via Identity Bridge. E.g., ['isd:puhuri', 'isd:fenix']. Non-empty list implies identity manager role.
+     */
+    managed_isds?: unknown;
 };
 
 export type UserRoleCreateRequest = {
@@ -26182,6 +26317,9 @@ export type ConstanceSettingsRequestForm = {
     ARROW_CONSUMPTION_SYNC_INTERVAL_HOURS?: number;
     ARROW_BILLING_CHECK_INTERVAL_HOURS?: number;
     SLURM_POLICY_EVALUATION_LOG_RETENTION_DAYS?: number;
+    FEDERATED_IDENTITY_SYNC_ENABLED?: boolean;
+    FEDERATED_IDENTITY_SYNC_ALLOWED_ATTRIBUTES?: Array<string>;
+    FEDERATED_IDENTITY_DEACTIVATION_POLICY?: string;
 };
 
 export type ConstanceSettingsRequestMultipart = {
@@ -26412,6 +26550,9 @@ export type ConstanceSettingsRequestMultipart = {
     ARROW_CONSUMPTION_SYNC_INTERVAL_HOURS?: number;
     ARROW_BILLING_CHECK_INTERVAL_HOURS?: number;
     SLURM_POLICY_EVALUATION_LOG_RETENTION_DAYS?: number;
+    FEDERATED_IDENTITY_SYNC_ENABLED?: boolean;
+    FEDERATED_IDENTITY_SYNC_ALLOWED_ATTRIBUTES?: Array<string>;
+    FEDERATED_IDENTITY_DEACTIVATION_POLICY?: string;
 };
 
 export type PaymentRequestForm = {
@@ -26568,6 +26709,14 @@ export type UserRequestForm = {
      * REFEDS assurance profile URIs from identity provider
      */
     eduperson_assurance?: unknown;
+    /**
+     * Designates whether the user is allowed to manage remote user identities.
+     */
+    is_identity_manager?: boolean;
+    /**
+     * List of ISD source identifiers this user can manage via Identity Bridge. E.g., ['isd:puhuri', 'isd:fenix']. Non-empty list implies identity manager role.
+     */
+    managed_isds?: unknown;
 };
 
 export type UserRequestMultipart = {
@@ -26648,6 +26797,14 @@ export type UserRequestMultipart = {
      * REFEDS assurance profile URIs from identity provider
      */
     eduperson_assurance?: unknown;
+    /**
+     * Designates whether the user is allowed to manage remote user identities.
+     */
+    is_identity_manager?: boolean;
+    /**
+     * List of ISD source identifiers this user can manage via Identity Bridge. E.g., ['isd:puhuri', 'isd:fenix']. Non-empty list implies identity manager role.
+     */
+    managed_isds?: unknown;
 };
 
 export type PatchedUserRequestForm = {
@@ -26727,6 +26884,14 @@ export type PatchedUserRequestForm = {
      * REFEDS assurance profile URIs from identity provider
      */
     eduperson_assurance?: unknown;
+    /**
+     * Designates whether the user is allowed to manage remote user identities.
+     */
+    is_identity_manager?: boolean;
+    /**
+     * List of ISD source identifiers this user can manage via Identity Bridge. E.g., ['isd:puhuri', 'isd:fenix']. Non-empty list implies identity manager role.
+     */
+    managed_isds?: unknown;
 };
 
 export type PatchedUserRequestMultipart = {
@@ -26806,6 +26971,14 @@ export type PatchedUserRequestMultipart = {
      * REFEDS assurance profile URIs from identity provider
      */
     eduperson_assurance?: unknown;
+    /**
+     * Designates whether the user is allowed to manage remote user identities.
+     */
+    is_identity_manager?: boolean;
+    /**
+     * List of ISD source identifiers this user can manage via Identity Bridge. E.g., ['isd:puhuri', 'isd:fenix']. Non-empty list implies identity manager role.
+     */
+    managed_isds?: unknown;
 };
 
 /**
@@ -38935,6 +39108,45 @@ export type HooksWebUpdateResponses = {
 
 export type HooksWebUpdateResponse = HooksWebUpdateResponses[keyof HooksWebUpdateResponses];
 
+export type IdentityBridgeData = {
+    body: IdentityBridgeRequestRequest;
+    path?: never;
+    query?: never;
+    url: '/api/identity-bridge/';
+};
+
+export type IdentityBridgeResponses = {
+    200: IdentityBridgeResponse;
+};
+
+export type IdentityBridgeResponse2 = IdentityBridgeResponses[keyof IdentityBridgeResponses];
+
+export type IdentityBridgeRemoveData = {
+    body: IdentityBridgeRemoveRequest;
+    path?: never;
+    query?: never;
+    url: '/api/identity-bridge/remove/';
+};
+
+export type IdentityBridgeRemoveResponses = {
+    200: IdentityBridgeRemoveResponse;
+};
+
+export type IdentityBridgeRemoveResponse2 = IdentityBridgeRemoveResponses[keyof IdentityBridgeRemoveResponses];
+
+export type IdentityBridgeStatsRetrieveData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/identity-bridge/stats/';
+};
+
+export type IdentityBridgeStatsRetrieveResponses = {
+    200: IdentityBridgeStats;
+};
+
+export type IdentityBridgeStatsRetrieveResponse = IdentityBridgeStatsRetrieveResponses[keyof IdentityBridgeStatsRetrieveResponses];
+
 export type IdentityProvidersListData = {
     body?: never;
     path?: never;
@@ -44698,7 +44910,7 @@ export type MarketplaceOfferingUsersListData = {
          * Created after
          */
         created?: string;
-        field?: Array<'consent_data' | 'created' | 'customer_name' | 'customer_uuid' | 'has_compliance_checklist' | 'has_consent' | 'is_restricted' | 'modified' | 'offering' | 'offering_name' | 'offering_uuid' | 'requires_reconsent' | 'service_provider_comment' | 'service_provider_comment_url' | 'state' | 'url' | 'user' | 'user_affiliations' | 'user_birth_date' | 'user_civil_number' | 'user_country_of_residence' | 'user_eduperson_assurance' | 'user_email' | 'user_full_name' | 'user_gender' | 'user_identity_source' | 'user_job_title' | 'user_nationalities' | 'user_nationality' | 'user_organization' | 'user_organization_country' | 'user_organization_type' | 'user_personal_title' | 'user_phone_number' | 'user_place_of_birth' | 'user_username' | 'user_uuid' | 'username' | 'uuid'>;
+        field?: Array<'consent_data' | 'created' | 'customer_name' | 'customer_uuid' | 'has_compliance_checklist' | 'has_consent' | 'is_restricted' | 'modified' | 'offering' | 'offering_name' | 'offering_uuid' | 'requires_reconsent' | 'service_provider_comment' | 'service_provider_comment_url' | 'state' | 'url' | 'user' | 'user_active_isds' | 'user_affiliations' | 'user_birth_date' | 'user_civil_number' | 'user_country_of_residence' | 'user_eduperson_assurance' | 'user_email' | 'user_full_name' | 'user_gender' | 'user_identity_source' | 'user_job_title' | 'user_nationalities' | 'user_nationality' | 'user_organization' | 'user_organization_country' | 'user_organization_type' | 'user_personal_title' | 'user_phone_number' | 'user_place_of_birth' | 'user_username' | 'user_uuid' | 'username' | 'uuid'>;
         /**
          * User Has Consent
          */
@@ -44881,7 +45093,7 @@ export type MarketplaceOfferingUsersRetrieveData = {
         uuid: string;
     };
     query?: {
-        field?: Array<'consent_data' | 'created' | 'customer_name' | 'customer_uuid' | 'has_compliance_checklist' | 'has_consent' | 'is_restricted' | 'modified' | 'offering' | 'offering_name' | 'offering_uuid' | 'requires_reconsent' | 'service_provider_comment' | 'service_provider_comment_url' | 'state' | 'url' | 'user' | 'user_affiliations' | 'user_birth_date' | 'user_civil_number' | 'user_country_of_residence' | 'user_eduperson_assurance' | 'user_email' | 'user_full_name' | 'user_gender' | 'user_identity_source' | 'user_job_title' | 'user_nationalities' | 'user_nationality' | 'user_organization' | 'user_organization_country' | 'user_organization_type' | 'user_personal_title' | 'user_phone_number' | 'user_place_of_birth' | 'user_username' | 'user_uuid' | 'username' | 'uuid'>;
+        field?: Array<'consent_data' | 'created' | 'customer_name' | 'customer_uuid' | 'has_compliance_checklist' | 'has_consent' | 'is_restricted' | 'modified' | 'offering' | 'offering_name' | 'offering_uuid' | 'requires_reconsent' | 'service_provider_comment' | 'service_provider_comment_url' | 'state' | 'url' | 'user' | 'user_active_isds' | 'user_affiliations' | 'user_birth_date' | 'user_civil_number' | 'user_country_of_residence' | 'user_eduperson_assurance' | 'user_email' | 'user_full_name' | 'user_gender' | 'user_identity_source' | 'user_job_title' | 'user_nationalities' | 'user_nationality' | 'user_organization' | 'user_organization_country' | 'user_organization_type' | 'user_personal_title' | 'user_phone_number' | 'user_place_of_birth' | 'user_username' | 'user_uuid' | 'username' | 'uuid'>;
     };
     url: '/api/marketplace-offering-users/{uuid}/';
 };
@@ -48569,7 +48781,7 @@ export type MarketplaceProviderOfferingsListCustomerUsersListData = {
         uuid: string;
     };
     query?: {
-        field?: Array<'affiliations' | 'agree_with_policy' | 'agreement_date' | 'birth_date' | 'civil_number' | 'country_of_residence' | 'date_joined' | 'description' | 'eduperson_assurance' | 'email' | 'first_name' | 'full_name' | 'gender' | 'has_active_session' | 'identity_provider_fields' | 'identity_provider_label' | 'identity_provider_management_url' | 'identity_provider_name' | 'identity_source' | 'image' | 'ip_address' | 'is_active' | 'is_staff' | 'is_support' | 'job_title' | 'last_name' | 'nationalities' | 'nationality' | 'native_name' | 'notifications_enabled' | 'organization' | 'organization_country' | 'organization_registry_code' | 'organization_type' | 'permissions' | 'personal_title' | 'phone_number' | 'place_of_birth' | 'preferred_language' | 'registration_method' | 'requested_email' | 'slug' | 'token' | 'token_expires_at' | 'token_lifetime' | 'url' | 'username' | 'uuid'>;
+        field?: Array<'active_isds' | 'affiliations' | 'agree_with_policy' | 'agreement_date' | 'attribute_sources' | 'birth_date' | 'civil_number' | 'country_of_residence' | 'date_joined' | 'description' | 'eduperson_assurance' | 'email' | 'first_name' | 'full_name' | 'gender' | 'has_active_session' | 'identity_provider_fields' | 'identity_provider_label' | 'identity_provider_management_url' | 'identity_provider_name' | 'identity_source' | 'image' | 'ip_address' | 'is_active' | 'is_identity_manager' | 'is_staff' | 'is_support' | 'job_title' | 'last_name' | 'managed_isds' | 'nationalities' | 'nationality' | 'native_name' | 'notifications_enabled' | 'organization' | 'organization_country' | 'organization_registry_code' | 'organization_type' | 'permissions' | 'personal_title' | 'phone_number' | 'place_of_birth' | 'preferred_language' | 'registration_method' | 'requested_email' | 'slug' | 'token' | 'token_expires_at' | 'token_lifetime' | 'url' | 'username' | 'uuid'>;
         /**
          * A page number within the paginated result set.
          */
@@ -81222,7 +81434,7 @@ export type UsersListData = {
          * Email
          */
         email?: string;
-        field?: Array<'affiliations' | 'agree_with_policy' | 'agreement_date' | 'birth_date' | 'civil_number' | 'country_of_residence' | 'date_joined' | 'description' | 'eduperson_assurance' | 'email' | 'first_name' | 'full_name' | 'gender' | 'has_active_session' | 'identity_provider_fields' | 'identity_provider_label' | 'identity_provider_management_url' | 'identity_provider_name' | 'identity_source' | 'image' | 'ip_address' | 'is_active' | 'is_staff' | 'is_support' | 'job_title' | 'last_name' | 'nationalities' | 'nationality' | 'native_name' | 'notifications_enabled' | 'organization' | 'organization_country' | 'organization_registry_code' | 'organization_type' | 'permissions' | 'personal_title' | 'phone_number' | 'place_of_birth' | 'preferred_language' | 'registration_method' | 'requested_email' | 'slug' | 'token' | 'token_expires_at' | 'token_lifetime' | 'url' | 'username' | 'uuid'>;
+        field?: Array<'active_isds' | 'affiliations' | 'agree_with_policy' | 'agreement_date' | 'attribute_sources' | 'birth_date' | 'civil_number' | 'country_of_residence' | 'date_joined' | 'description' | 'eduperson_assurance' | 'email' | 'first_name' | 'full_name' | 'gender' | 'has_active_session' | 'identity_provider_fields' | 'identity_provider_label' | 'identity_provider_management_url' | 'identity_provider_name' | 'identity_source' | 'image' | 'ip_address' | 'is_active' | 'is_identity_manager' | 'is_staff' | 'is_support' | 'job_title' | 'last_name' | 'managed_isds' | 'nationalities' | 'nationality' | 'native_name' | 'notifications_enabled' | 'organization' | 'organization_country' | 'organization_registry_code' | 'organization_type' | 'permissions' | 'personal_title' | 'phone_number' | 'place_of_birth' | 'preferred_language' | 'registration_method' | 'requested_email' | 'slug' | 'token' | 'token_expires_at' | 'token_lifetime' | 'url' | 'username' | 'uuid'>;
         /**
          * Full name
          */
@@ -81455,7 +81667,7 @@ export type UsersRetrieveData = {
         uuid: string;
     };
     query?: {
-        field?: Array<'affiliations' | 'agree_with_policy' | 'agreement_date' | 'birth_date' | 'civil_number' | 'country_of_residence' | 'date_joined' | 'description' | 'eduperson_assurance' | 'email' | 'first_name' | 'full_name' | 'gender' | 'has_active_session' | 'identity_provider_fields' | 'identity_provider_label' | 'identity_provider_management_url' | 'identity_provider_name' | 'identity_source' | 'image' | 'ip_address' | 'is_active' | 'is_staff' | 'is_support' | 'job_title' | 'last_name' | 'nationalities' | 'nationality' | 'native_name' | 'notifications_enabled' | 'organization' | 'organization_country' | 'organization_registry_code' | 'organization_type' | 'permissions' | 'personal_title' | 'phone_number' | 'place_of_birth' | 'preferred_language' | 'registration_method' | 'requested_email' | 'slug' | 'token' | 'token_expires_at' | 'token_lifetime' | 'url' | 'username' | 'uuid'>;
+        field?: Array<'active_isds' | 'affiliations' | 'agree_with_policy' | 'agreement_date' | 'attribute_sources' | 'birth_date' | 'civil_number' | 'country_of_residence' | 'date_joined' | 'description' | 'eduperson_assurance' | 'email' | 'first_name' | 'full_name' | 'gender' | 'has_active_session' | 'identity_provider_fields' | 'identity_provider_label' | 'identity_provider_management_url' | 'identity_provider_name' | 'identity_source' | 'image' | 'ip_address' | 'is_active' | 'is_identity_manager' | 'is_staff' | 'is_support' | 'job_title' | 'last_name' | 'managed_isds' | 'nationalities' | 'nationality' | 'native_name' | 'notifications_enabled' | 'organization' | 'organization_country' | 'organization_registry_code' | 'organization_type' | 'permissions' | 'personal_title' | 'phone_number' | 'place_of_birth' | 'preferred_language' | 'registration_method' | 'requested_email' | 'slug' | 'token' | 'token_expires_at' | 'token_lifetime' | 'url' | 'username' | 'uuid'>;
     };
     url: '/api/users/{uuid}/';
 };
@@ -81830,6 +82042,21 @@ export type UsersHistoryAtRetrieveResponses = {
 
 export type UsersHistoryAtRetrieveResponse = UsersHistoryAtRetrieveResponses[keyof UsersHistoryAtRetrieveResponses];
 
+export type UsersIdentityBridgeStatusRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/users/{uuid}/identity_bridge_status/';
+};
+
+export type UsersIdentityBridgeStatusRetrieveResponses = {
+    200: IdentityBridgeUserStatus;
+};
+
+export type UsersIdentityBridgeStatusRetrieveResponse = UsersIdentityBridgeStatusRetrieveResponses[keyof UsersIdentityBridgeStatusRetrieveResponses];
+
 export type UsersPullRemoteUserData = {
     body?: never;
     path: {
@@ -81924,7 +82151,7 @@ export type UsersMeRetrieveData = {
     body?: never;
     path?: never;
     query?: {
-        field?: Array<'affiliations' | 'agree_with_policy' | 'agreement_date' | 'birth_date' | 'civil_number' | 'country_of_residence' | 'date_joined' | 'description' | 'eduperson_assurance' | 'email' | 'first_name' | 'full_name' | 'gender' | 'has_active_session' | 'identity_provider_fields' | 'identity_provider_label' | 'identity_provider_management_url' | 'identity_provider_name' | 'identity_source' | 'image' | 'ip_address' | 'is_active' | 'is_staff' | 'is_support' | 'job_title' | 'last_name' | 'nationalities' | 'nationality' | 'native_name' | 'notifications_enabled' | 'organization' | 'organization_country' | 'organization_registry_code' | 'organization_type' | 'permissions' | 'personal_title' | 'phone_number' | 'place_of_birth' | 'preferred_language' | 'registration_method' | 'requested_email' | 'slug' | 'token' | 'token_expires_at' | 'token_lifetime' | 'url' | 'username' | 'uuid'>;
+        field?: Array<'active_isds' | 'affiliations' | 'agree_with_policy' | 'agreement_date' | 'attribute_sources' | 'birth_date' | 'civil_number' | 'country_of_residence' | 'date_joined' | 'description' | 'eduperson_assurance' | 'email' | 'first_name' | 'full_name' | 'gender' | 'has_active_session' | 'identity_provider_fields' | 'identity_provider_label' | 'identity_provider_management_url' | 'identity_provider_name' | 'identity_source' | 'image' | 'ip_address' | 'is_active' | 'is_identity_manager' | 'is_staff' | 'is_support' | 'job_title' | 'last_name' | 'managed_isds' | 'nationalities' | 'nationality' | 'native_name' | 'notifications_enabled' | 'organization' | 'organization_country' | 'organization_registry_code' | 'organization_type' | 'permissions' | 'personal_title' | 'phone_number' | 'place_of_birth' | 'preferred_language' | 'registration_method' | 'requested_email' | 'slug' | 'token' | 'token_expires_at' | 'token_lifetime' | 'url' | 'username' | 'uuid'>;
     };
     url: '/api/users/me/';
 };
