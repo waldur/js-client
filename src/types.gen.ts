@@ -4411,6 +4411,7 @@ export type ConstanceSettings = {
     OIDC_BLOCK_CREATION_OF_UNINVITED_USERS?: boolean;
     DEACTIVATE_USER_IF_NO_ROLES?: boolean;
     WALDUR_AUTH_SOCIAL_ROLE_CLAIM?: string;
+    REMOTE_EDUTEAMS_REFRESH_TOKEN?: string;
     DEFAULT_OFFERING_USER_ATTRIBUTES?: Array<string>;
     INVITATION_ALLOWED_FIELDS?: Array<string>;
     ENABLED_USER_PROFILE_ATTRIBUTES?: Array<string>;
@@ -4640,6 +4641,7 @@ export type ConstanceSettingsRequest = {
     OIDC_BLOCK_CREATION_OF_UNINVITED_USERS?: boolean;
     DEACTIVATE_USER_IF_NO_ROLES?: boolean;
     WALDUR_AUTH_SOCIAL_ROLE_CLAIM?: string;
+    REMOTE_EDUTEAMS_REFRESH_TOKEN?: string;
     DEFAULT_OFFERING_USER_ATTRIBUTES?: Array<string>;
     INVITATION_ALLOWED_FIELDS?: Array<string>;
     ENABLED_USER_PROFILE_ATTRIBUTES?: Array<string>;
@@ -25974,6 +25976,7 @@ export type ConstanceSettingsRequestForm = {
     OIDC_BLOCK_CREATION_OF_UNINVITED_USERS?: boolean;
     DEACTIVATE_USER_IF_NO_ROLES?: boolean;
     WALDUR_AUTH_SOCIAL_ROLE_CLAIM?: string;
+    REMOTE_EDUTEAMS_REFRESH_TOKEN?: string;
     DEFAULT_OFFERING_USER_ATTRIBUTES?: Array<string>;
     INVITATION_ALLOWED_FIELDS?: Array<string>;
     ENABLED_USER_PROFILE_ATTRIBUTES?: Array<string>;
@@ -26203,6 +26206,7 @@ export type ConstanceSettingsRequestMultipart = {
     OIDC_BLOCK_CREATION_OF_UNINVITED_USERS?: boolean;
     DEACTIVATE_USER_IF_NO_ROLES?: boolean;
     WALDUR_AUTH_SOCIAL_ROLE_CLAIM?: string;
+    REMOTE_EDUTEAMS_REFRESH_TOKEN?: string;
     DEFAULT_OFFERING_USER_ATTRIBUTES?: Array<string>;
     INVITATION_ALLOWED_FIELDS?: Array<string>;
     ENABLED_USER_PROFILE_ATTRIBUTES?: Array<string>;
