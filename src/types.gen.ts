@@ -4484,6 +4484,7 @@ export type ConstanceSettings = {
     FEDERATED_IDENTITY_SYNC_ENABLED?: boolean;
     FEDERATED_IDENTITY_SYNC_ALLOWED_ATTRIBUTES?: Array<string>;
     FEDERATED_IDENTITY_DEACTIVATION_POLICY?: string;
+    ENABLE_PROJECT_DIGEST?: boolean;
 };
 
 export type ConstanceSettingsRequest = {
@@ -4717,6 +4718,7 @@ export type ConstanceSettingsRequest = {
     FEDERATED_IDENTITY_SYNC_ENABLED?: boolean;
     FEDERATED_IDENTITY_SYNC_ALLOWED_ATTRIBUTES?: Array<string>;
     FEDERATED_IDENTITY_DEACTIVATION_POLICY?: string;
+    ENABLE_PROJECT_DIGEST?: boolean;
 };
 
 export type ConsumptionStatisticsResponse = {
@@ -26320,6 +26322,7 @@ export type ConstanceSettingsRequestForm = {
     FEDERATED_IDENTITY_SYNC_ENABLED?: boolean;
     FEDERATED_IDENTITY_SYNC_ALLOWED_ATTRIBUTES?: Array<string>;
     FEDERATED_IDENTITY_DEACTIVATION_POLICY?: string;
+    ENABLE_PROJECT_DIGEST?: boolean;
 };
 
 export type ConstanceSettingsRequestMultipart = {
@@ -26553,6 +26556,7 @@ export type ConstanceSettingsRequestMultipart = {
     FEDERATED_IDENTITY_SYNC_ENABLED?: boolean;
     FEDERATED_IDENTITY_SYNC_ALLOWED_ATTRIBUTES?: Array<string>;
     FEDERATED_IDENTITY_DEACTIVATION_POLICY?: string;
+    ENABLE_PROJECT_DIGEST?: boolean;
 };
 
 export type PaymentRequestForm = {
