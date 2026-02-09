@@ -5219,9 +5219,7 @@ export type CustomerContactUpdate = {
      */
     email?: string;
     phone_number?: string;
-    address?: string;
-    postal?: string;
-    country?: string;
+    homepage?: string;
     /**
      * Comma-separated list of notification email addresses
      */
@@ -5235,9 +5233,7 @@ export type CustomerContactUpdateRequest = {
      */
     email?: string;
     phone_number?: string;
-    address?: string;
-    postal?: string;
-    country?: string;
+    homepage?: string;
     /**
      * Comma-separated list of notification email addresses
      */
