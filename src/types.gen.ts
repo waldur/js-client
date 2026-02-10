@@ -4258,6 +4258,7 @@ export type ConstanceSettings = {
     SITE_DESCRIPTION?: string;
     HOMEPORT_URL?: string;
     RANCHER_USERNAME_INPUT_LABEL?: string;
+    DISCLAIMER_AREA_TEXT?: string;
     SITE_ADDRESS?: string;
     SITE_EMAIL?: string;
     SITE_PHONE?: string;
@@ -4319,6 +4320,7 @@ export type ConstanceSettings = {
     LOGIN_PAGE_NEWS?: Array<unknown>;
     FAVICON?: string | null;
     OFFERING_LOGO_PLACEHOLDER?: string | null;
+    DISCLAIMER_AREA_LOGO?: string | null;
     WALDUR_SUPPORT_ENABLED?: boolean;
     WALDUR_SUPPORT_ACTIVE_BACKEND_TYPE?: string;
     WALDUR_SUPPORT_DISPLAY_REQUEST_TYPE?: boolean;
@@ -4492,6 +4494,7 @@ export type ConstanceSettingsRequest = {
     SITE_DESCRIPTION?: string;
     HOMEPORT_URL?: string;
     RANCHER_USERNAME_INPUT_LABEL?: string;
+    DISCLAIMER_AREA_TEXT?: string;
     SITE_ADDRESS?: string;
     SITE_EMAIL?: string;
     SITE_PHONE?: string;
@@ -4553,6 +4556,7 @@ export type ConstanceSettingsRequest = {
     LOGIN_PAGE_NEWS?: Array<unknown>;
     FAVICON?: (Blob | File) | null;
     OFFERING_LOGO_PLACEHOLDER?: (Blob | File) | null;
+    DISCLAIMER_AREA_LOGO?: (Blob | File) | null;
     WALDUR_SUPPORT_ENABLED?: boolean;
     WALDUR_SUPPORT_ACTIVE_BACKEND_TYPE?: string;
     WALDUR_SUPPORT_DISPLAY_REQUEST_TYPE?: boolean;
@@ -9189,6 +9193,14 @@ export type MergedPluginOptions = {
      */
     can_restore_resource?: boolean;
     /**
+     * If set to True, service providers can send messages with attachments to consumers on pending orders, and consumers can respond.
+     */
+    enable_provider_consumer_messaging?: boolean;
+    /**
+     * If set to True, send email notifications when providers or consumers exchange messages on pending orders.
+     */
+    notify_about_provider_consumer_messages?: boolean;
+    /**
      * If set, it will be used as a default MTU for the first network in a tenant
      */
     default_internal_network_mtu?: number;
@@ -9447,6 +9459,14 @@ export type MergedPluginOptionsRequest = {
      * If set to True, resource can be restored.
      */
     can_restore_resource?: boolean;
+    /**
+     * If set to True, service providers can send messages with attachments to consumers on pending orders, and consumers can respond.
+     */
+    enable_provider_consumer_messaging?: boolean;
+    /**
+     * If set to True, send email notifications when providers or consumers exchange messages on pending orders.
+     */
+    notify_about_provider_consumer_messages?: boolean;
     /**
      * If set, it will be used as a default MTU for the first network in a tenant
      */
@@ -14259,6 +14279,11 @@ export type OrderBackendIdRequest = {
     backend_id: string;
 };
 
+export type OrderConsumerInfoRequest = {
+    consumer_message?: string;
+    consumer_message_attachment?: Blob | File;
+};
+
 export type OrderCreateRequest = {
     offering: string;
     plan?: string;
@@ -14390,12 +14415,27 @@ export type OrderDetails = {
     readonly termination_comment?: string | null;
     backend_id?: string;
     readonly order_subtype?: string | null;
+    provider_message?: string;
+    provider_message_url?: string;
+    provider_message_attachment?: string | null;
+    consumer_message?: string;
+    consumer_message_attachment?: string | null;
     issue?: IssueReference | null;
 };
 
 export type OrderErrorDetailsRequest = {
     error_message?: string;
     error_traceback?: string;
+};
+
+export type OrderInfoResponse = {
+    readonly detail: string;
+};
+
+export type OrderProviderInfoRequest = {
+    provider_message?: string;
+    provider_message_url?: string;
+    provider_message_attachment?: Blob | File;
 };
 
 export type OrderState = 'pending-consumer' | 'pending-provider' | 'pending-project' | 'pending-start-date' | 'executing' | 'done' | 'erred' | 'canceled' | 'rejected';
@@ -25667,6 +25707,28 @@ export type OfferingFileRequestMultipart = {
     file: Blob | File;
 };
 
+export type OrderConsumerInfoRequestForm = {
+    consumer_message?: string;
+    consumer_message_attachment?: Blob | File;
+};
+
+export type OrderConsumerInfoRequestMultipart = {
+    consumer_message?: string;
+    consumer_message_attachment?: Blob | File;
+};
+
+export type OrderProviderInfoRequestForm = {
+    provider_message?: string;
+    provider_message_url?: string;
+    provider_message_attachment?: Blob | File;
+};
+
+export type OrderProviderInfoRequestMultipart = {
+    provider_message?: string;
+    provider_message_url?: string;
+    provider_message_attachment?: Blob | File;
+};
+
 export type OrderAttachmentRequestForm = {
     attachment?: (Blob | File) | null;
 };
@@ -26092,6 +26154,7 @@ export type ConstanceSettingsRequestForm = {
     SITE_DESCRIPTION?: string;
     HOMEPORT_URL?: string;
     RANCHER_USERNAME_INPUT_LABEL?: string;
+    DISCLAIMER_AREA_TEXT?: string;
     SITE_ADDRESS?: string;
     SITE_EMAIL?: string;
     SITE_PHONE?: string;
@@ -26153,6 +26216,7 @@ export type ConstanceSettingsRequestForm = {
     LOGIN_PAGE_NEWS?: Array<unknown>;
     FAVICON?: (Blob | File) | null;
     OFFERING_LOGO_PLACEHOLDER?: (Blob | File) | null;
+    DISCLAIMER_AREA_LOGO?: (Blob | File) | null;
     WALDUR_SUPPORT_ENABLED?: boolean;
     WALDUR_SUPPORT_ACTIVE_BACKEND_TYPE?: string;
     WALDUR_SUPPORT_DISPLAY_REQUEST_TYPE?: boolean;
@@ -26326,6 +26390,7 @@ export type ConstanceSettingsRequestMultipart = {
     SITE_DESCRIPTION?: string;
     HOMEPORT_URL?: string;
     RANCHER_USERNAME_INPUT_LABEL?: string;
+    DISCLAIMER_AREA_TEXT?: string;
     SITE_ADDRESS?: string;
     SITE_EMAIL?: string;
     SITE_PHONE?: string;
@@ -26387,6 +26452,7 @@ export type ConstanceSettingsRequestMultipart = {
     LOGIN_PAGE_NEWS?: Array<unknown>;
     FAVICON?: (Blob | File) | null;
     OFFERING_LOGO_PLACEHOLDER?: (Blob | File) | null;
+    DISCLAIMER_AREA_LOGO?: (Blob | File) | null;
     WALDUR_SUPPORT_ENABLED?: boolean;
     WALDUR_SUPPORT_ACTIVE_BACKEND_TYPE?: string;
     WALDUR_SUPPORT_DISPLAY_REQUEST_TYPE?: boolean;
@@ -45532,7 +45598,7 @@ export type MarketplaceOrdersListData = {
          * Customer UUID
          */
         customer_uuid?: string;
-        field?: Array<'accepting_terms_of_service' | 'activation_price' | 'attachment' | 'attributes' | 'backend_id' | 'callback_url' | 'can_terminate' | 'category_icon' | 'category_title' | 'category_uuid' | 'completed_at' | 'consumer_reviewed_at' | 'consumer_reviewed_by' | 'consumer_reviewed_by_full_name' | 'consumer_reviewed_by_username' | 'cost' | 'created' | 'created_by_civil_number' | 'created_by_full_name' | 'created_by_username' | 'customer_name' | 'customer_slug' | 'customer_uuid' | 'error_message' | 'error_traceback' | 'fixed_price' | 'issue' | 'limits' | 'marketplace_resource_uuid' | 'modified' | 'new_cost_estimate' | 'new_plan_name' | 'new_plan_uuid' | 'offering' | 'offering_billable' | 'offering_description' | 'offering_image' | 'offering_name' | 'offering_plugin_options' | 'offering_shared' | 'offering_thumbnail' | 'offering_type' | 'offering_uuid' | 'old_cost_estimate' | 'old_plan_name' | 'old_plan_uuid' | 'order_subtype' | 'output' | 'plan' | 'plan_description' | 'plan_name' | 'plan_unit' | 'plan_uuid' | 'project_description' | 'project_name' | 'project_slug' | 'project_uuid' | 'provider_name' | 'provider_reviewed_at' | 'provider_reviewed_by' | 'provider_reviewed_by_full_name' | 'provider_reviewed_by_username' | 'provider_slug' | 'provider_uuid' | 'request_comment' | 'resource_name' | 'resource_type' | 'resource_uuid' | 'slug' | 'start_date' | 'state' | 'termination_comment' | 'type' | 'url' | 'uuid'>;
+        field?: Array<'accepting_terms_of_service' | 'activation_price' | 'attachment' | 'attributes' | 'backend_id' | 'callback_url' | 'can_terminate' | 'category_icon' | 'category_title' | 'category_uuid' | 'completed_at' | 'consumer_message' | 'consumer_message_attachment' | 'consumer_reviewed_at' | 'consumer_reviewed_by' | 'consumer_reviewed_by_full_name' | 'consumer_reviewed_by_username' | 'cost' | 'created' | 'created_by_civil_number' | 'created_by_full_name' | 'created_by_username' | 'customer_name' | 'customer_slug' | 'customer_uuid' | 'error_message' | 'error_traceback' | 'fixed_price' | 'issue' | 'limits' | 'marketplace_resource_uuid' | 'modified' | 'new_cost_estimate' | 'new_plan_name' | 'new_plan_uuid' | 'offering' | 'offering_billable' | 'offering_description' | 'offering_image' | 'offering_name' | 'offering_plugin_options' | 'offering_shared' | 'offering_thumbnail' | 'offering_type' | 'offering_uuid' | 'old_cost_estimate' | 'old_plan_name' | 'old_plan_uuid' | 'order_subtype' | 'output' | 'plan' | 'plan_description' | 'plan_name' | 'plan_unit' | 'plan_uuid' | 'project_description' | 'project_name' | 'project_slug' | 'project_uuid' | 'provider_message' | 'provider_message_attachment' | 'provider_message_url' | 'provider_name' | 'provider_reviewed_at' | 'provider_reviewed_by' | 'provider_reviewed_by_full_name' | 'provider_reviewed_by_username' | 'provider_slug' | 'provider_uuid' | 'request_comment' | 'resource_name' | 'resource_type' | 'resource_uuid' | 'slug' | 'start_date' | 'state' | 'termination_comment' | 'type' | 'url' | 'uuid'>;
         /**
          * Modified after
          */
@@ -45759,7 +45825,7 @@ export type MarketplaceOrdersRetrieveData = {
         uuid: string;
     };
     query?: {
-        field?: Array<'accepting_terms_of_service' | 'activation_price' | 'attachment' | 'attributes' | 'backend_id' | 'callback_url' | 'can_terminate' | 'category_icon' | 'category_title' | 'category_uuid' | 'completed_at' | 'consumer_reviewed_at' | 'consumer_reviewed_by' | 'consumer_reviewed_by_full_name' | 'consumer_reviewed_by_username' | 'cost' | 'created' | 'created_by_civil_number' | 'created_by_full_name' | 'created_by_username' | 'customer_name' | 'customer_slug' | 'customer_uuid' | 'error_message' | 'error_traceback' | 'fixed_price' | 'issue' | 'limits' | 'marketplace_resource_uuid' | 'modified' | 'new_cost_estimate' | 'new_plan_name' | 'new_plan_uuid' | 'offering' | 'offering_billable' | 'offering_description' | 'offering_image' | 'offering_name' | 'offering_plugin_options' | 'offering_shared' | 'offering_thumbnail' | 'offering_type' | 'offering_uuid' | 'old_cost_estimate' | 'old_plan_name' | 'old_plan_uuid' | 'order_subtype' | 'output' | 'plan' | 'plan_description' | 'plan_name' | 'plan_unit' | 'plan_uuid' | 'project_description' | 'project_name' | 'project_slug' | 'project_uuid' | 'provider_name' | 'provider_reviewed_at' | 'provider_reviewed_by' | 'provider_reviewed_by_full_name' | 'provider_reviewed_by_username' | 'provider_slug' | 'provider_uuid' | 'request_comment' | 'resource_name' | 'resource_type' | 'resource_uuid' | 'slug' | 'start_date' | 'state' | 'termination_comment' | 'type' | 'url' | 'uuid'>;
+        field?: Array<'accepting_terms_of_service' | 'activation_price' | 'attachment' | 'attributes' | 'backend_id' | 'callback_url' | 'can_terminate' | 'category_icon' | 'category_title' | 'category_uuid' | 'completed_at' | 'consumer_message' | 'consumer_message_attachment' | 'consumer_reviewed_at' | 'consumer_reviewed_by' | 'consumer_reviewed_by_full_name' | 'consumer_reviewed_by_username' | 'cost' | 'created' | 'created_by_civil_number' | 'created_by_full_name' | 'created_by_username' | 'customer_name' | 'customer_slug' | 'customer_uuid' | 'error_message' | 'error_traceback' | 'fixed_price' | 'issue' | 'limits' | 'marketplace_resource_uuid' | 'modified' | 'new_cost_estimate' | 'new_plan_name' | 'new_plan_uuid' | 'offering' | 'offering_billable' | 'offering_description' | 'offering_image' | 'offering_name' | 'offering_plugin_options' | 'offering_shared' | 'offering_thumbnail' | 'offering_type' | 'offering_uuid' | 'old_cost_estimate' | 'old_plan_name' | 'old_plan_uuid' | 'order_subtype' | 'output' | 'plan' | 'plan_description' | 'plan_name' | 'plan_unit' | 'plan_uuid' | 'project_description' | 'project_name' | 'project_slug' | 'project_uuid' | 'provider_message' | 'provider_message_attachment' | 'provider_message_url' | 'provider_name' | 'provider_reviewed_at' | 'provider_reviewed_by' | 'provider_reviewed_by_full_name' | 'provider_reviewed_by_username' | 'provider_slug' | 'provider_uuid' | 'request_comment' | 'resource_name' | 'resource_type' | 'resource_uuid' | 'slug' | 'start_date' | 'state' | 'termination_comment' | 'type' | 'url' | 'uuid'>;
     };
     url: '/api/marketplace-orders/{uuid}/';
 };
@@ -45810,7 +45876,7 @@ export type MarketplaceOrdersApproveByConsumerData = {
 };
 
 export type MarketplaceOrdersApproveByConsumerResponses = {
-    200: string;
+    200: OrderInfoResponse;
 };
 
 export type MarketplaceOrdersApproveByConsumerResponse = MarketplaceOrdersApproveByConsumerResponses[keyof MarketplaceOrdersApproveByConsumerResponses];
@@ -45825,7 +45891,7 @@ export type MarketplaceOrdersApproveByProviderData = {
 };
 
 export type MarketplaceOrdersApproveByProviderResponses = {
-    200: string;
+    200: OrderInfoResponse;
 };
 
 export type MarketplaceOrdersApproveByProviderResponse = MarketplaceOrdersApproveByProviderResponses[keyof MarketplaceOrdersApproveByProviderResponses];
@@ -45927,6 +45993,36 @@ export type MarketplaceOrdersSetBackendIdResponses = {
 };
 
 export type MarketplaceOrdersSetBackendIdResponse = MarketplaceOrdersSetBackendIdResponses[keyof MarketplaceOrdersSetBackendIdResponses];
+
+export type MarketplaceOrdersSetConsumerInfoData = {
+    body?: OrderConsumerInfoRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-orders/{uuid}/set_consumer_info/';
+};
+
+export type MarketplaceOrdersSetConsumerInfoResponses = {
+    200: OrderInfoResponse;
+};
+
+export type MarketplaceOrdersSetConsumerInfoResponse = MarketplaceOrdersSetConsumerInfoResponses[keyof MarketplaceOrdersSetConsumerInfoResponses];
+
+export type MarketplaceOrdersSetProviderInfoData = {
+    body?: OrderProviderInfoRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-orders/{uuid}/set_provider_info/';
+};
+
+export type MarketplaceOrdersSetProviderInfoResponses = {
+    200: OrderInfoResponse;
+};
+
+export type MarketplaceOrdersSetProviderInfoResponse = MarketplaceOrdersSetProviderInfoResponses[keyof MarketplaceOrdersSetProviderInfoResponses];
 
 export type MarketplaceOrdersSetStateDoneData = {
     body?: never;
@@ -49084,7 +49180,7 @@ export type MarketplaceProviderOfferingsOrdersListData = {
         uuid: string;
     };
     query?: {
-        field?: Array<'accepting_terms_of_service' | 'activation_price' | 'attachment' | 'attributes' | 'backend_id' | 'callback_url' | 'can_terminate' | 'category_icon' | 'category_title' | 'category_uuid' | 'completed_at' | 'consumer_reviewed_at' | 'consumer_reviewed_by' | 'consumer_reviewed_by_full_name' | 'consumer_reviewed_by_username' | 'cost' | 'created' | 'created_by_civil_number' | 'created_by_full_name' | 'created_by_username' | 'customer_name' | 'customer_slug' | 'customer_uuid' | 'error_message' | 'error_traceback' | 'fixed_price' | 'issue' | 'limits' | 'marketplace_resource_uuid' | 'modified' | 'new_cost_estimate' | 'new_plan_name' | 'new_plan_uuid' | 'offering' | 'offering_billable' | 'offering_description' | 'offering_image' | 'offering_name' | 'offering_plugin_options' | 'offering_shared' | 'offering_thumbnail' | 'offering_type' | 'offering_uuid' | 'old_cost_estimate' | 'old_plan_name' | 'old_plan_uuid' | 'order_subtype' | 'output' | 'plan' | 'plan_description' | 'plan_name' | 'plan_unit' | 'plan_uuid' | 'project_description' | 'project_name' | 'project_slug' | 'project_uuid' | 'provider_name' | 'provider_reviewed_at' | 'provider_reviewed_by' | 'provider_reviewed_by_full_name' | 'provider_reviewed_by_username' | 'provider_slug' | 'provider_uuid' | 'request_comment' | 'resource_name' | 'resource_type' | 'resource_uuid' | 'slug' | 'start_date' | 'state' | 'termination_comment' | 'type' | 'url' | 'uuid'>;
+        field?: Array<'accepting_terms_of_service' | 'activation_price' | 'attachment' | 'attributes' | 'backend_id' | 'callback_url' | 'can_terminate' | 'category_icon' | 'category_title' | 'category_uuid' | 'completed_at' | 'consumer_message' | 'consumer_message_attachment' | 'consumer_reviewed_at' | 'consumer_reviewed_by' | 'consumer_reviewed_by_full_name' | 'consumer_reviewed_by_username' | 'cost' | 'created' | 'created_by_civil_number' | 'created_by_full_name' | 'created_by_username' | 'customer_name' | 'customer_slug' | 'customer_uuid' | 'error_message' | 'error_traceback' | 'fixed_price' | 'issue' | 'limits' | 'marketplace_resource_uuid' | 'modified' | 'new_cost_estimate' | 'new_plan_name' | 'new_plan_uuid' | 'offering' | 'offering_billable' | 'offering_description' | 'offering_image' | 'offering_name' | 'offering_plugin_options' | 'offering_shared' | 'offering_thumbnail' | 'offering_type' | 'offering_uuid' | 'old_cost_estimate' | 'old_plan_name' | 'old_plan_uuid' | 'order_subtype' | 'output' | 'plan' | 'plan_description' | 'plan_name' | 'plan_unit' | 'plan_uuid' | 'project_description' | 'project_name' | 'project_slug' | 'project_uuid' | 'provider_message' | 'provider_message_attachment' | 'provider_message_url' | 'provider_name' | 'provider_reviewed_at' | 'provider_reviewed_by' | 'provider_reviewed_by_full_name' | 'provider_reviewed_by_username' | 'provider_slug' | 'provider_uuid' | 'request_comment' | 'resource_name' | 'resource_type' | 'resource_uuid' | 'slug' | 'start_date' | 'state' | 'termination_comment' | 'type' | 'url' | 'uuid'>;
         /**
          * A page number within the paginated result set.
          */
@@ -58917,6 +59013,12 @@ export type OnboardingJustificationsListData = {
     path?: never;
     query?: {
         /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-modified' | '-validated_at' | 'created' | 'modified' | 'validated_at'>;
+        /**
          * A page number within the paginated result set.
          */
         page?: number;
@@ -58925,9 +59027,19 @@ export type OnboardingJustificationsListData = {
          */
         page_size?: number;
         /**
+         * Filter by legal name, legal person identifier
+         */
+        query?: string;
+        /**
          * User UUID
          */
         user_uuid?: string;
+        /**
+         * Review decision
+         *
+         *
+         */
+        validation_decision?: Array<'Approved' | 'Pending Review' | 'Rejected'>;
         /**
          * Verification UUID
          */
@@ -58947,6 +59059,12 @@ export type OnboardingJustificationsCountData = {
     path?: never;
     query?: {
         /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-modified' | '-validated_at' | 'created' | 'modified' | 'validated_at'>;
+        /**
          * A page number within the paginated result set.
          */
         page?: number;
@@ -58955,9 +59073,19 @@ export type OnboardingJustificationsCountData = {
          */
         page_size?: number;
         /**
+         * Filter by legal name, legal person identifier
+         */
+        query?: string;
+        /**
          * User UUID
          */
         user_uuid?: string;
+        /**
+         * Review decision
+         *
+         *
+         */
+        validation_decision?: Array<'Approved' | 'Pending Review' | 'Rejected'>;
         /**
          * Verification UUID
          */
@@ -59252,6 +59380,12 @@ export type OnboardingVerificationsListData = {
         legal_name?: string;
         legal_person_identifier?: string;
         /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-expires_at' | '-modified' | '-validated_at' | 'created' | 'expires_at' | 'modified' | 'validated_at'>;
+        /**
          * A page number within the paginated result set.
          */
         page?: number;
@@ -59259,11 +59393,26 @@ export type OnboardingVerificationsListData = {
          * Number of results to return per page.
          */
         page_size?: number;
-        status?: string;
+        /**
+         * Filter by legal name, legal person identifier
+         */
+        query?: string;
+        /**
+         * Verification status
+         *
+         *
+         */
+        status?: Array<'Escalated for manual validation' | 'Expired' | 'Failed' | 'Pending' | 'Verified'>;
         /**
          * User UUID
          */
         user_uuid?: string;
+        /**
+         * Validation method
+         *
+         *
+         */
+        validation_method?: Array<'Austrian Business Register (WirtschaftsCompass)' | 'Estonian Business Register (ariregister)' | 'Norwegian Business Register (Brreg)' | 'Swedish Business Register (Bolagsverket)'>;
     };
     url: '/api/onboarding-verifications/';
 };
@@ -59282,6 +59431,12 @@ export type OnboardingVerificationsCountData = {
         legal_name?: string;
         legal_person_identifier?: string;
         /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-expires_at' | '-modified' | '-validated_at' | 'created' | 'expires_at' | 'modified' | 'validated_at'>;
+        /**
          * A page number within the paginated result set.
          */
         page?: number;
@@ -59289,11 +59444,26 @@ export type OnboardingVerificationsCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
-        status?: string;
+        /**
+         * Filter by legal name, legal person identifier
+         */
+        query?: string;
+        /**
+         * Verification status
+         *
+         *
+         */
+        status?: Array<'Escalated for manual validation' | 'Expired' | 'Failed' | 'Pending' | 'Verified'>;
         /**
          * User UUID
          */
         user_uuid?: string;
+        /**
+         * Validation method
+         *
+         *
+         */
+        validation_method?: Array<'Austrian Business Register (WirtschaftsCompass)' | 'Estonian Business Register (ariregister)' | 'Norwegian Business Register (Brreg)' | 'Swedish Business Register (Bolagsverket)'>;
     };
     url: '/api/onboarding-verifications/';
 };
@@ -70113,7 +70283,7 @@ export type PromotionsCampaignsOrdersListData = {
         uuid: string;
     };
     query?: {
-        field?: Array<'accepting_terms_of_service' | 'activation_price' | 'attachment' | 'attributes' | 'backend_id' | 'callback_url' | 'can_terminate' | 'category_icon' | 'category_title' | 'category_uuid' | 'completed_at' | 'consumer_reviewed_at' | 'consumer_reviewed_by' | 'consumer_reviewed_by_full_name' | 'consumer_reviewed_by_username' | 'cost' | 'created' | 'created_by_civil_number' | 'created_by_full_name' | 'created_by_username' | 'customer_name' | 'customer_slug' | 'customer_uuid' | 'error_message' | 'error_traceback' | 'fixed_price' | 'issue' | 'limits' | 'marketplace_resource_uuid' | 'modified' | 'new_cost_estimate' | 'new_plan_name' | 'new_plan_uuid' | 'offering' | 'offering_billable' | 'offering_description' | 'offering_image' | 'offering_name' | 'offering_plugin_options' | 'offering_shared' | 'offering_thumbnail' | 'offering_type' | 'offering_uuid' | 'old_cost_estimate' | 'old_plan_name' | 'old_plan_uuid' | 'order_subtype' | 'output' | 'plan' | 'plan_description' | 'plan_name' | 'plan_unit' | 'plan_uuid' | 'project_description' | 'project_name' | 'project_slug' | 'project_uuid' | 'provider_name' | 'provider_reviewed_at' | 'provider_reviewed_by' | 'provider_reviewed_by_full_name' | 'provider_reviewed_by_username' | 'provider_slug' | 'provider_uuid' | 'request_comment' | 'resource_name' | 'resource_type' | 'resource_uuid' | 'slug' | 'start_date' | 'state' | 'termination_comment' | 'type' | 'url' | 'uuid'>;
+        field?: Array<'accepting_terms_of_service' | 'activation_price' | 'attachment' | 'attributes' | 'backend_id' | 'callback_url' | 'can_terminate' | 'category_icon' | 'category_title' | 'category_uuid' | 'completed_at' | 'consumer_message' | 'consumer_message_attachment' | 'consumer_reviewed_at' | 'consumer_reviewed_by' | 'consumer_reviewed_by_full_name' | 'consumer_reviewed_by_username' | 'cost' | 'created' | 'created_by_civil_number' | 'created_by_full_name' | 'created_by_username' | 'customer_name' | 'customer_slug' | 'customer_uuid' | 'error_message' | 'error_traceback' | 'fixed_price' | 'issue' | 'limits' | 'marketplace_resource_uuid' | 'modified' | 'new_cost_estimate' | 'new_plan_name' | 'new_plan_uuid' | 'offering' | 'offering_billable' | 'offering_description' | 'offering_image' | 'offering_name' | 'offering_plugin_options' | 'offering_shared' | 'offering_thumbnail' | 'offering_type' | 'offering_uuid' | 'old_cost_estimate' | 'old_plan_name' | 'old_plan_uuid' | 'order_subtype' | 'output' | 'plan' | 'plan_description' | 'plan_name' | 'plan_unit' | 'plan_uuid' | 'project_description' | 'project_name' | 'project_slug' | 'project_uuid' | 'provider_message' | 'provider_message_attachment' | 'provider_message_url' | 'provider_name' | 'provider_reviewed_at' | 'provider_reviewed_by' | 'provider_reviewed_by_full_name' | 'provider_reviewed_by_username' | 'provider_slug' | 'provider_uuid' | 'request_comment' | 'resource_name' | 'resource_type' | 'resource_uuid' | 'slug' | 'start_date' | 'state' | 'termination_comment' | 'type' | 'url' | 'uuid'>;
         /**
          * A page number within the paginated result set.
          */
