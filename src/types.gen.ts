@@ -3553,6 +3553,8 @@ export type CeleryWorkerStats = {
     };
 };
 
+export type ChatRequestModeEnum = 'reload';
+
 export type ChatRequestRequest = {
     /**
      * User input text for the chat model.
@@ -3566,6 +3568,10 @@ export type ChatRequestRequest = {
      * Thread UUID whose name should be set to the assistant's response. Skips message persistence for this call.
      */
     update_thread_name?: string | null;
+    /**
+     * 'reload': replace the last assistant response. Omit for normal new-message behavior.
+     */
+    mode?: ChatRequestModeEnum | NullEnum | null;
 };
 
 export type ChatResponse = {
@@ -4431,6 +4437,7 @@ export type ConstanceSettings = {
     OIDC_CACHE_TIMEOUT?: number;
     OIDC_ACCESS_TOKEN_ENABLED?: boolean;
     OIDC_BLOCK_CREATION_OF_UNINVITED_USERS?: boolean;
+    OIDC_MATCHMAKING_BY_EMAIL?: boolean;
     DEACTIVATE_USER_IF_NO_ROLES?: boolean;
     WALDUR_AUTH_SOCIAL_ROLE_CLAIM?: string;
     REMOTE_EDUTEAMS_REFRESH_TOKEN?: string;
@@ -4668,6 +4675,7 @@ export type ConstanceSettingsRequest = {
     OIDC_CACHE_TIMEOUT?: number;
     OIDC_ACCESS_TOKEN_ENABLED?: boolean;
     OIDC_BLOCK_CREATION_OF_UNINVITED_USERS?: boolean;
+    OIDC_MATCHMAKING_BY_EMAIL?: boolean;
     DEACTIVATE_USER_IF_NO_ROLES?: boolean;
     WALDUR_AUTH_SOCIAL_ROLE_CLAIM?: string;
     REMOTE_EDUTEAMS_REFRESH_TOKEN?: string;
@@ -9987,19 +9995,12 @@ export type MergedSecretOptionsRequest = {
 
 export type Message = {
     readonly uuid: string;
-    thread: string;
+    readonly thread: string;
     role: MessageRoleEnum;
     content: string;
     readonly sequence_index: number;
-    replaces?: string | null;
+    readonly replaces: string;
     readonly created: string;
-};
-
-export type MessageRequest = {
-    thread: string;
-    role: MessageRoleEnum;
-    content: string;
-    replaces?: string | null;
 };
 
 export type MessageResponse = {
@@ -10097,8 +10098,6 @@ export type MigrationDetailsRequest = {
 };
 
 export type MinimalConsumptionLogicEnum = 'fixed' | 'linear';
-
-export type ModeEnum = 'production' | 'emulator';
 
 export type MoveOfferingRequest = {
     /**
@@ -14456,12 +14455,15 @@ export type OrderDetails = {
     provider_message_attachment?: string | null;
     consumer_message?: string;
     consumer_message_attachment?: string | null;
+    readonly consumer_rejection_comment?: string;
+    readonly provider_rejection_comment?: string;
     issue?: IssueReference | null;
 };
 
 export type OrderErrorDetailsRequest = {
     error_message?: string;
     error_traceback?: string;
+    consumer_rejection_comment?: string;
 };
 
 export type OrderInfoResponse = {
@@ -14472,6 +14474,10 @@ export type OrderProviderInfoRequest = {
     provider_message?: string;
     provider_message_url?: string;
     provider_message_attachment?: Blob | File;
+};
+
+export type OrderProviderRejectionRequest = {
+    provider_rejection_comment?: string;
 };
 
 export type OrderState = 'pending-consumer' | 'pending-provider' | 'pending-project' | 'pending-start-date' | 'executing' | 'done' | 'erred' | 'canceled' | 'rejected';
@@ -16570,11 +16576,6 @@ export type PatchedTemplateRequest = {
     name?: string;
     description?: string;
     issue_type?: IssueTypeEnum;
-};
-
-export type PatchedThreadSessionRequest = {
-    name?: string;
-    is_archived?: boolean;
 };
 
 export type PatchedUserAgreementRequest = {
@@ -22770,6 +22771,8 @@ export type SlurmCommandHistory = {
     error_message?: string;
 };
 
+export type SlurmCommandResultModeEnum = 'production' | 'emulator';
+
 export type SlurmCommandResultRequest = {
     /**
      * UUID of the resource the command was applied to
@@ -22786,7 +22789,7 @@ export type SlurmCommandResultRequest = {
     /**
      * Execution mode of the command
      */
-    mode?: ModeEnum;
+    mode?: SlurmCommandResultModeEnum;
     /**
      * List of shell commands actually executed by the site agent
      */
@@ -23720,7 +23723,10 @@ export type ThreadSession = {
     readonly flags?: unknown;
     is_archived?: boolean;
     readonly message_count?: number;
+    readonly user_username?: string;
+    readonly user_full_name?: string;
     readonly created?: string;
+    readonly modified?: string;
 };
 
 export type ThreadSessionRequest = {
@@ -26358,6 +26364,7 @@ export type ConstanceSettingsRequestForm = {
     OIDC_CACHE_TIMEOUT?: number;
     OIDC_ACCESS_TOKEN_ENABLED?: boolean;
     OIDC_BLOCK_CREATION_OF_UNINVITED_USERS?: boolean;
+    OIDC_MATCHMAKING_BY_EMAIL?: boolean;
     DEACTIVATE_USER_IF_NO_ROLES?: boolean;
     WALDUR_AUTH_SOCIAL_ROLE_CLAIM?: string;
     REMOTE_EDUTEAMS_REFRESH_TOKEN?: string;
@@ -26595,6 +26602,7 @@ export type ConstanceSettingsRequestMultipart = {
     OIDC_CACHE_TIMEOUT?: number;
     OIDC_ACCESS_TOKEN_ENABLED?: boolean;
     OIDC_BLOCK_CREATION_OF_UNINVITED_USERS?: boolean;
+    OIDC_MATCHMAKING_BY_EMAIL?: boolean;
     DEACTIVATE_USER_IF_NO_ROLES?: boolean;
     WALDUR_AUTH_SOCIAL_ROLE_CLAIM?: string;
     REMOTE_EDUTEAMS_REFRESH_TOKEN?: string;
@@ -33993,6 +34001,7 @@ export type ChatMessagesListData = {
     body?: never;
     path?: never;
     query?: {
+        include_history?: boolean;
         /**
          * A page number within the paginated result set.
          */
@@ -34012,58 +34021,6 @@ export type ChatMessagesListResponses = {
 
 export type ChatMessagesListResponse = ChatMessagesListResponses[keyof ChatMessagesListResponses];
 
-export type ChatMessagesCountData = {
-    body?: never;
-    path?: never;
-    query?: {
-        /**
-         * A page number within the paginated result set.
-         */
-        page?: number;
-        /**
-         * Number of results to return per page.
-         */
-        page_size?: number;
-        thread?: string;
-    };
-    url: '/api/chat-messages/';
-};
-
-export type ChatMessagesCountResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
-};
-
-export type ChatMessagesCreateData = {
-    body: MessageRequest;
-    path?: never;
-    query?: never;
-    url: '/api/chat-messages/';
-};
-
-export type ChatMessagesCreateResponses = {
-    201: Message;
-};
-
-export type ChatMessagesCreateResponse = ChatMessagesCreateResponses[keyof ChatMessagesCreateResponses];
-
-export type ChatMessagesRetrieveData = {
-    body?: never;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/chat-messages/{uuid}/';
-};
-
-export type ChatMessagesRetrieveResponses = {
-    200: Message;
-};
-
-export type ChatMessagesRetrieveResponse = ChatMessagesRetrieveResponses[keyof ChatMessagesRetrieveResponses];
-
 export type ChatMessagesEditData = {
     body?: {
         content?: string;
@@ -34080,31 +34037,6 @@ export type ChatMessagesEditResponses = {
 };
 
 export type ChatMessagesEditResponse = ChatMessagesEditResponses[keyof ChatMessagesEditResponses];
-
-export type ChatMessagesHistoryListData = {
-    body?: never;
-    path: {
-        uuid: string;
-    };
-    query?: {
-        /**
-         * A page number within the paginated result set.
-         */
-        page?: number;
-        /**
-         * Number of results to return per page.
-         */
-        page_size?: number;
-        thread?: string;
-    };
-    url: '/api/chat-messages/{uuid}/history/';
-};
-
-export type ChatMessagesHistoryListResponses = {
-    200: Array<Message>;
-};
-
-export type ChatMessagesHistoryListResponse = ChatMessagesHistoryListResponses[keyof ChatMessagesHistoryListResponses];
 
 export type ChatQuotaSetQuotaData = {
     body: SetTokenQuotaRequest;
@@ -34161,29 +34093,6 @@ export type ChatSessionsListResponses = {
 
 export type ChatSessionsListResponse = ChatSessionsListResponses[keyof ChatSessionsListResponses];
 
-export type ChatSessionsCountData = {
-    body?: never;
-    path?: never;
-    query?: {
-        /**
-         * A page number within the paginated result set.
-         */
-        page?: number;
-        /**
-         * Number of results to return per page.
-         */
-        page_size?: number;
-    };
-    url: '/api/chat-sessions/';
-};
-
-export type ChatSessionsCountResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
-};
-
 export type ChatSessionsRetrieveData = {
     body?: never;
     path: {
@@ -34214,26 +34123,20 @@ export type ChatSessionsCurrentRetrieveResponses = {
 
 export type ChatSessionsCurrentRetrieveResponse = ChatSessionsCurrentRetrieveResponses[keyof ChatSessionsCurrentRetrieveResponses];
 
-export type ChatSessionsCurrentCountData = {
-    body?: never;
-    path?: never;
-    query?: never;
-    url: '/api/chat-sessions/current/';
-};
-
-export type ChatSessionsCurrentCountResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
-};
-
 export type ChatThreadsListData = {
     body?: never;
     path?: never;
     query?: {
-        field?: Array<'chat_session' | 'created' | 'flags' | 'is_archived' | 'message_count' | 'name' | 'uuid'>;
+        created?: string;
+        field?: Array<'chat_session' | 'created' | 'flags' | 'is_archived' | 'message_count' | 'modified' | 'name' | 'user_full_name' | 'user_username' | 'uuid'>;
         is_archived?: boolean;
+        modified?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-modified' | 'created' | 'modified'>;
         /**
          * A page number within the paginated result set.
          */
@@ -34242,6 +34145,7 @@ export type ChatThreadsListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        query?: string;
         user?: string;
     };
     url: '/api/chat-threads/';
@@ -34253,51 +34157,13 @@ export type ChatThreadsListResponses = {
 
 export type ChatThreadsListResponse = ChatThreadsListResponses[keyof ChatThreadsListResponses];
 
-export type ChatThreadsCountData = {
-    body?: never;
-    path?: never;
-    query?: {
-        is_archived?: boolean;
-        /**
-         * A page number within the paginated result set.
-         */
-        page?: number;
-        /**
-         * Number of results to return per page.
-         */
-        page_size?: number;
-        user?: string;
-    };
-    url: '/api/chat-threads/';
-};
-
-export type ChatThreadsCountResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
-};
-
-export type ChatThreadsCreateData = {
-    body?: ThreadSessionRequest;
-    path?: never;
-    query?: never;
-    url: '/api/chat-threads/';
-};
-
-export type ChatThreadsCreateResponses = {
-    201: ThreadSession;
-};
-
-export type ChatThreadsCreateResponse = ChatThreadsCreateResponses[keyof ChatThreadsCreateResponses];
-
 export type ChatThreadsRetrieveData = {
     body?: never;
     path: {
         uuid: string;
     };
     query?: {
-        field?: Array<'chat_session' | 'created' | 'flags' | 'is_archived' | 'message_count' | 'name' | 'uuid'>;
+        field?: Array<'chat_session' | 'created' | 'flags' | 'is_archived' | 'message_count' | 'modified' | 'name' | 'user_full_name' | 'user_username' | 'uuid'>;
     };
     url: '/api/chat-threads/{uuid}/';
 };
@@ -34307,36 +34173,6 @@ export type ChatThreadsRetrieveResponses = {
 };
 
 export type ChatThreadsRetrieveResponse = ChatThreadsRetrieveResponses[keyof ChatThreadsRetrieveResponses];
-
-export type ChatThreadsPartialUpdateData = {
-    body?: PatchedThreadSessionRequest;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/chat-threads/{uuid}/';
-};
-
-export type ChatThreadsPartialUpdateResponses = {
-    200: ThreadSession;
-};
-
-export type ChatThreadsPartialUpdateResponse = ChatThreadsPartialUpdateResponses[keyof ChatThreadsPartialUpdateResponses];
-
-export type ChatThreadsUpdateData = {
-    body?: ThreadSessionRequest;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/chat-threads/{uuid}/';
-};
-
-export type ChatThreadsUpdateResponses = {
-    200: ThreadSession;
-};
-
-export type ChatThreadsUpdateResponse = ChatThreadsUpdateResponses[keyof ChatThreadsUpdateResponses];
 
 export type ChatThreadsArchiveData = {
     body?: ThreadSessionRequest;
@@ -45643,7 +45479,7 @@ export type MarketplaceOrdersListData = {
          * Customer UUID
          */
         customer_uuid?: string;
-        field?: Array<'accepting_terms_of_service' | 'activation_price' | 'attachment' | 'attributes' | 'backend_id' | 'callback_url' | 'can_terminate' | 'category_icon' | 'category_title' | 'category_uuid' | 'completed_at' | 'consumer_message' | 'consumer_message_attachment' | 'consumer_reviewed_at' | 'consumer_reviewed_by' | 'consumer_reviewed_by_full_name' | 'consumer_reviewed_by_username' | 'cost' | 'created' | 'created_by_civil_number' | 'created_by_email' | 'created_by_full_name' | 'created_by_organization' | 'created_by_organization_registry_code' | 'created_by_username' | 'customer_name' | 'customer_slug' | 'customer_uuid' | 'error_message' | 'error_traceback' | 'fixed_price' | 'issue' | 'limits' | 'marketplace_resource_uuid' | 'modified' | 'new_cost_estimate' | 'new_plan_name' | 'new_plan_uuid' | 'offering' | 'offering_billable' | 'offering_description' | 'offering_image' | 'offering_name' | 'offering_plugin_options' | 'offering_shared' | 'offering_thumbnail' | 'offering_type' | 'offering_uuid' | 'old_cost_estimate' | 'old_plan_name' | 'old_plan_uuid' | 'order_subtype' | 'output' | 'plan' | 'plan_description' | 'plan_name' | 'plan_unit' | 'plan_uuid' | 'project_description' | 'project_name' | 'project_slug' | 'project_uuid' | 'provider_message' | 'provider_message_attachment' | 'provider_message_url' | 'provider_name' | 'provider_reviewed_at' | 'provider_reviewed_by' | 'provider_reviewed_by_full_name' | 'provider_reviewed_by_username' | 'provider_slug' | 'provider_uuid' | 'request_comment' | 'resource_name' | 'resource_type' | 'resource_uuid' | 'slug' | 'start_date' | 'state' | 'termination_comment' | 'type' | 'url' | 'uuid'>;
+        field?: Array<'accepting_terms_of_service' | 'activation_price' | 'attachment' | 'attributes' | 'backend_id' | 'callback_url' | 'can_terminate' | 'category_icon' | 'category_title' | 'category_uuid' | 'completed_at' | 'consumer_message' | 'consumer_message_attachment' | 'consumer_rejection_comment' | 'consumer_reviewed_at' | 'consumer_reviewed_by' | 'consumer_reviewed_by_full_name' | 'consumer_reviewed_by_username' | 'cost' | 'created' | 'created_by_civil_number' | 'created_by_email' | 'created_by_full_name' | 'created_by_organization' | 'created_by_organization_registry_code' | 'created_by_username' | 'customer_name' | 'customer_slug' | 'customer_uuid' | 'error_message' | 'error_traceback' | 'fixed_price' | 'issue' | 'limits' | 'marketplace_resource_uuid' | 'modified' | 'new_cost_estimate' | 'new_plan_name' | 'new_plan_uuid' | 'offering' | 'offering_billable' | 'offering_description' | 'offering_image' | 'offering_name' | 'offering_plugin_options' | 'offering_shared' | 'offering_thumbnail' | 'offering_type' | 'offering_uuid' | 'old_cost_estimate' | 'old_plan_name' | 'old_plan_uuid' | 'order_subtype' | 'output' | 'plan' | 'plan_description' | 'plan_name' | 'plan_unit' | 'plan_uuid' | 'project_description' | 'project_name' | 'project_slug' | 'project_uuid' | 'provider_message' | 'provider_message_attachment' | 'provider_message_url' | 'provider_name' | 'provider_rejection_comment' | 'provider_reviewed_at' | 'provider_reviewed_by' | 'provider_reviewed_by_full_name' | 'provider_reviewed_by_username' | 'provider_slug' | 'provider_uuid' | 'request_comment' | 'resource_name' | 'resource_type' | 'resource_uuid' | 'slug' | 'start_date' | 'state' | 'termination_comment' | 'type' | 'url' | 'uuid'>;
         /**
          * Modified after
          */
@@ -45870,7 +45706,7 @@ export type MarketplaceOrdersRetrieveData = {
         uuid: string;
     };
     query?: {
-        field?: Array<'accepting_terms_of_service' | 'activation_price' | 'attachment' | 'attributes' | 'backend_id' | 'callback_url' | 'can_terminate' | 'category_icon' | 'category_title' | 'category_uuid' | 'completed_at' | 'consumer_message' | 'consumer_message_attachment' | 'consumer_reviewed_at' | 'consumer_reviewed_by' | 'consumer_reviewed_by_full_name' | 'consumer_reviewed_by_username' | 'cost' | 'created' | 'created_by_civil_number' | 'created_by_email' | 'created_by_full_name' | 'created_by_organization' | 'created_by_organization_registry_code' | 'created_by_username' | 'customer_name' | 'customer_slug' | 'customer_uuid' | 'error_message' | 'error_traceback' | 'fixed_price' | 'issue' | 'limits' | 'marketplace_resource_uuid' | 'modified' | 'new_cost_estimate' | 'new_plan_name' | 'new_plan_uuid' | 'offering' | 'offering_billable' | 'offering_description' | 'offering_image' | 'offering_name' | 'offering_plugin_options' | 'offering_shared' | 'offering_thumbnail' | 'offering_type' | 'offering_uuid' | 'old_cost_estimate' | 'old_plan_name' | 'old_plan_uuid' | 'order_subtype' | 'output' | 'plan' | 'plan_description' | 'plan_name' | 'plan_unit' | 'plan_uuid' | 'project_description' | 'project_name' | 'project_slug' | 'project_uuid' | 'provider_message' | 'provider_message_attachment' | 'provider_message_url' | 'provider_name' | 'provider_reviewed_at' | 'provider_reviewed_by' | 'provider_reviewed_by_full_name' | 'provider_reviewed_by_username' | 'provider_slug' | 'provider_uuid' | 'request_comment' | 'resource_name' | 'resource_type' | 'resource_uuid' | 'slug' | 'start_date' | 'state' | 'termination_comment' | 'type' | 'url' | 'uuid'>;
+        field?: Array<'accepting_terms_of_service' | 'activation_price' | 'attachment' | 'attributes' | 'backend_id' | 'callback_url' | 'can_terminate' | 'category_icon' | 'category_title' | 'category_uuid' | 'completed_at' | 'consumer_message' | 'consumer_message_attachment' | 'consumer_rejection_comment' | 'consumer_reviewed_at' | 'consumer_reviewed_by' | 'consumer_reviewed_by_full_name' | 'consumer_reviewed_by_username' | 'cost' | 'created' | 'created_by_civil_number' | 'created_by_email' | 'created_by_full_name' | 'created_by_organization' | 'created_by_organization_registry_code' | 'created_by_username' | 'customer_name' | 'customer_slug' | 'customer_uuid' | 'error_message' | 'error_traceback' | 'fixed_price' | 'issue' | 'limits' | 'marketplace_resource_uuid' | 'modified' | 'new_cost_estimate' | 'new_plan_name' | 'new_plan_uuid' | 'offering' | 'offering_billable' | 'offering_description' | 'offering_image' | 'offering_name' | 'offering_plugin_options' | 'offering_shared' | 'offering_thumbnail' | 'offering_type' | 'offering_uuid' | 'old_cost_estimate' | 'old_plan_name' | 'old_plan_uuid' | 'order_subtype' | 'output' | 'plan' | 'plan_description' | 'plan_name' | 'plan_unit' | 'plan_uuid' | 'project_description' | 'project_name' | 'project_slug' | 'project_uuid' | 'provider_message' | 'provider_message_attachment' | 'provider_message_url' | 'provider_name' | 'provider_rejection_comment' | 'provider_reviewed_at' | 'provider_reviewed_by' | 'provider_reviewed_by_full_name' | 'provider_reviewed_by_username' | 'provider_slug' | 'provider_uuid' | 'request_comment' | 'resource_name' | 'resource_type' | 'resource_uuid' | 'slug' | 'start_date' | 'state' | 'termination_comment' | 'type' | 'url' | 'uuid'>;
     };
     url: '/api/marketplace-orders/{uuid}/';
 };
@@ -46007,7 +45843,7 @@ export type MarketplaceOrdersRejectByConsumerResponses = {
 };
 
 export type MarketplaceOrdersRejectByProviderData = {
-    body?: never;
+    body?: OrderProviderRejectionRequest;
     path: {
         uuid: string;
     };
@@ -49225,7 +49061,7 @@ export type MarketplaceProviderOfferingsOrdersListData = {
         uuid: string;
     };
     query?: {
-        field?: Array<'accepting_terms_of_service' | 'activation_price' | 'attachment' | 'attributes' | 'backend_id' | 'callback_url' | 'can_terminate' | 'category_icon' | 'category_title' | 'category_uuid' | 'completed_at' | 'consumer_message' | 'consumer_message_attachment' | 'consumer_reviewed_at' | 'consumer_reviewed_by' | 'consumer_reviewed_by_full_name' | 'consumer_reviewed_by_username' | 'cost' | 'created' | 'created_by_civil_number' | 'created_by_email' | 'created_by_full_name' | 'created_by_organization' | 'created_by_organization_registry_code' | 'created_by_username' | 'customer_name' | 'customer_slug' | 'customer_uuid' | 'error_message' | 'error_traceback' | 'fixed_price' | 'issue' | 'limits' | 'marketplace_resource_uuid' | 'modified' | 'new_cost_estimate' | 'new_plan_name' | 'new_plan_uuid' | 'offering' | 'offering_billable' | 'offering_description' | 'offering_image' | 'offering_name' | 'offering_plugin_options' | 'offering_shared' | 'offering_thumbnail' | 'offering_type' | 'offering_uuid' | 'old_cost_estimate' | 'old_plan_name' | 'old_plan_uuid' | 'order_subtype' | 'output' | 'plan' | 'plan_description' | 'plan_name' | 'plan_unit' | 'plan_uuid' | 'project_description' | 'project_name' | 'project_slug' | 'project_uuid' | 'provider_message' | 'provider_message_attachment' | 'provider_message_url' | 'provider_name' | 'provider_reviewed_at' | 'provider_reviewed_by' | 'provider_reviewed_by_full_name' | 'provider_reviewed_by_username' | 'provider_slug' | 'provider_uuid' | 'request_comment' | 'resource_name' | 'resource_type' | 'resource_uuid' | 'slug' | 'start_date' | 'state' | 'termination_comment' | 'type' | 'url' | 'uuid'>;
+        field?: Array<'accepting_terms_of_service' | 'activation_price' | 'attachment' | 'attributes' | 'backend_id' | 'callback_url' | 'can_terminate' | 'category_icon' | 'category_title' | 'category_uuid' | 'completed_at' | 'consumer_message' | 'consumer_message_attachment' | 'consumer_rejection_comment' | 'consumer_reviewed_at' | 'consumer_reviewed_by' | 'consumer_reviewed_by_full_name' | 'consumer_reviewed_by_username' | 'cost' | 'created' | 'created_by_civil_number' | 'created_by_email' | 'created_by_full_name' | 'created_by_organization' | 'created_by_organization_registry_code' | 'created_by_username' | 'customer_name' | 'customer_slug' | 'customer_uuid' | 'error_message' | 'error_traceback' | 'fixed_price' | 'issue' | 'limits' | 'marketplace_resource_uuid' | 'modified' | 'new_cost_estimate' | 'new_plan_name' | 'new_plan_uuid' | 'offering' | 'offering_billable' | 'offering_description' | 'offering_image' | 'offering_name' | 'offering_plugin_options' | 'offering_shared' | 'offering_thumbnail' | 'offering_type' | 'offering_uuid' | 'old_cost_estimate' | 'old_plan_name' | 'old_plan_uuid' | 'order_subtype' | 'output' | 'plan' | 'plan_description' | 'plan_name' | 'plan_unit' | 'plan_uuid' | 'project_description' | 'project_name' | 'project_slug' | 'project_uuid' | 'provider_message' | 'provider_message_attachment' | 'provider_message_url' | 'provider_name' | 'provider_rejection_comment' | 'provider_reviewed_at' | 'provider_reviewed_by' | 'provider_reviewed_by_full_name' | 'provider_reviewed_by_username' | 'provider_slug' | 'provider_uuid' | 'request_comment' | 'resource_name' | 'resource_type' | 'resource_uuid' | 'slug' | 'start_date' | 'state' | 'termination_comment' | 'type' | 'url' | 'uuid'>;
         /**
          * A page number within the paginated result set.
          */
@@ -70329,7 +70165,7 @@ export type PromotionsCampaignsOrdersListData = {
         uuid: string;
     };
     query?: {
-        field?: Array<'accepting_terms_of_service' | 'activation_price' | 'attachment' | 'attributes' | 'backend_id' | 'callback_url' | 'can_terminate' | 'category_icon' | 'category_title' | 'category_uuid' | 'completed_at' | 'consumer_message' | 'consumer_message_attachment' | 'consumer_reviewed_at' | 'consumer_reviewed_by' | 'consumer_reviewed_by_full_name' | 'consumer_reviewed_by_username' | 'cost' | 'created' | 'created_by_civil_number' | 'created_by_email' | 'created_by_full_name' | 'created_by_organization' | 'created_by_organization_registry_code' | 'created_by_username' | 'customer_name' | 'customer_slug' | 'customer_uuid' | 'error_message' | 'error_traceback' | 'fixed_price' | 'issue' | 'limits' | 'marketplace_resource_uuid' | 'modified' | 'new_cost_estimate' | 'new_plan_name' | 'new_plan_uuid' | 'offering' | 'offering_billable' | 'offering_description' | 'offering_image' | 'offering_name' | 'offering_plugin_options' | 'offering_shared' | 'offering_thumbnail' | 'offering_type' | 'offering_uuid' | 'old_cost_estimate' | 'old_plan_name' | 'old_plan_uuid' | 'order_subtype' | 'output' | 'plan' | 'plan_description' | 'plan_name' | 'plan_unit' | 'plan_uuid' | 'project_description' | 'project_name' | 'project_slug' | 'project_uuid' | 'provider_message' | 'provider_message_attachment' | 'provider_message_url' | 'provider_name' | 'provider_reviewed_at' | 'provider_reviewed_by' | 'provider_reviewed_by_full_name' | 'provider_reviewed_by_username' | 'provider_slug' | 'provider_uuid' | 'request_comment' | 'resource_name' | 'resource_type' | 'resource_uuid' | 'slug' | 'start_date' | 'state' | 'termination_comment' | 'type' | 'url' | 'uuid'>;
+        field?: Array<'accepting_terms_of_service' | 'activation_price' | 'attachment' | 'attributes' | 'backend_id' | 'callback_url' | 'can_terminate' | 'category_icon' | 'category_title' | 'category_uuid' | 'completed_at' | 'consumer_message' | 'consumer_message_attachment' | 'consumer_rejection_comment' | 'consumer_reviewed_at' | 'consumer_reviewed_by' | 'consumer_reviewed_by_full_name' | 'consumer_reviewed_by_username' | 'cost' | 'created' | 'created_by_civil_number' | 'created_by_email' | 'created_by_full_name' | 'created_by_organization' | 'created_by_organization_registry_code' | 'created_by_username' | 'customer_name' | 'customer_slug' | 'customer_uuid' | 'error_message' | 'error_traceback' | 'fixed_price' | 'issue' | 'limits' | 'marketplace_resource_uuid' | 'modified' | 'new_cost_estimate' | 'new_plan_name' | 'new_plan_uuid' | 'offering' | 'offering_billable' | 'offering_description' | 'offering_image' | 'offering_name' | 'offering_plugin_options' | 'offering_shared' | 'offering_thumbnail' | 'offering_type' | 'offering_uuid' | 'old_cost_estimate' | 'old_plan_name' | 'old_plan_uuid' | 'order_subtype' | 'output' | 'plan' | 'plan_description' | 'plan_name' | 'plan_unit' | 'plan_uuid' | 'project_description' | 'project_name' | 'project_slug' | 'project_uuid' | 'provider_message' | 'provider_message_attachment' | 'provider_message_url' | 'provider_name' | 'provider_rejection_comment' | 'provider_reviewed_at' | 'provider_reviewed_by' | 'provider_reviewed_by_full_name' | 'provider_reviewed_by_username' | 'provider_slug' | 'provider_uuid' | 'request_comment' | 'resource_name' | 'resource_type' | 'resource_uuid' | 'slug' | 'start_date' | 'state' | 'termination_comment' | 'type' | 'url' | 'uuid'>;
         /**
          * A page number within the paginated result set.
          */
