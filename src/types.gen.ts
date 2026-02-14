@@ -9223,6 +9223,10 @@ export type MergedPluginOptions = {
      */
     notify_about_provider_consumer_messages?: boolean;
     /**
+     * If set to True, offering cannot be deleted while it has non-terminated resources.
+     */
+    restrict_deletion_with_active_resources?: boolean;
+    /**
      * If set, it will be used as a default MTU for the first network in a tenant
      */
     default_internal_network_mtu?: number;
@@ -9489,6 +9493,10 @@ export type MergedPluginOptionsRequest = {
      * If set to True, send email notifications when providers or consumers exchange messages on pending orders.
      */
     notify_about_provider_consumer_messages?: boolean;
+    /**
+     * If set to True, offering cannot be deleted while it has non-terminated resources.
+     */
+    restrict_deletion_with_active_resources?: boolean;
     /**
      * If set, it will be used as a default MTU for the first network in a tenant
      */
