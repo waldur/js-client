@@ -4501,6 +4501,8 @@ export type ConstanceSettings = {
     SOFTWARE_CATALOG_UPDATE_EXISTING_PACKAGES?: boolean;
     SOFTWARE_CATALOG_CLEANUP_ENABLED?: boolean;
     SOFTWARE_CATALOG_RETENTION_DAYS?: number;
+    SYSTEM_LOG_ENABLED?: boolean;
+    SYSTEM_LOG_MAX_ROWS_PER_SOURCE?: number;
     TABLE_GROWTH_MONITORING_ENABLED?: boolean;
     TABLE_GROWTH_WEEKLY_THRESHOLD_PERCENT?: number;
     TABLE_GROWTH_MONTHLY_THRESHOLD_PERCENT?: number;
@@ -4739,6 +4741,8 @@ export type ConstanceSettingsRequest = {
     SOFTWARE_CATALOG_UPDATE_EXISTING_PACKAGES?: boolean;
     SOFTWARE_CATALOG_CLEANUP_ENABLED?: boolean;
     SOFTWARE_CATALOG_RETENTION_DAYS?: number;
+    SYSTEM_LOG_ENABLED?: boolean;
+    SYSTEM_LOG_MAX_ROWS_PER_SOURCE?: number;
     TABLE_GROWTH_MONITORING_ENABLED?: boolean;
     TABLE_GROWTH_WEEKLY_THRESHOLD_PERCENT?: number;
     TABLE_GROWTH_MONTHLY_THRESHOLD_PERCENT?: number;
@@ -23577,6 +23581,42 @@ export type SyncResourcesResponse = {
 
 export type SyncStatusEnum = 'in_sync' | 'out_of_sync' | 'sync_failed';
 
+export type SystemLog = {
+    readonly id: number;
+    readonly created: string;
+    source: SystemLogSourceEnum;
+    /**
+     * Pod name (K8s) or container name (Docker)
+     */
+    readonly instance: string;
+    readonly level: string;
+    readonly level_number: number;
+    readonly logger_name: string;
+    readonly message: string;
+    readonly context: unknown;
+};
+
+export type SystemLogInstance = {
+    readonly source: string;
+    readonly instance: string;
+    readonly last_seen: string;
+    readonly count: number;
+};
+
+export type SystemLogSourceEnum = 'api' | 'worker' | 'beat';
+
+export type SystemLogStatsInstance = {
+    readonly source: string;
+    readonly instance: string;
+    readonly count: number;
+};
+
+export type SystemLogStatsResponse = {
+    readonly instances: Array<SystemLogStatsInstance>;
+    readonly total_size_bytes: number;
+    readonly total_size_mb: number;
+};
+
 export type TableGrowthAlert = {
     /**
      * Name of the table triggering the alert
@@ -26469,6 +26509,8 @@ export type ConstanceSettingsRequestForm = {
     SOFTWARE_CATALOG_UPDATE_EXISTING_PACKAGES?: boolean;
     SOFTWARE_CATALOG_CLEANUP_ENABLED?: boolean;
     SOFTWARE_CATALOG_RETENTION_DAYS?: number;
+    SYSTEM_LOG_ENABLED?: boolean;
+    SYSTEM_LOG_MAX_ROWS_PER_SOURCE?: number;
     TABLE_GROWTH_MONITORING_ENABLED?: boolean;
     TABLE_GROWTH_WEEKLY_THRESHOLD_PERCENT?: number;
     TABLE_GROWTH_MONTHLY_THRESHOLD_PERCENT?: number;
@@ -26707,6 +26749,8 @@ export type ConstanceSettingsRequestMultipart = {
     SOFTWARE_CATALOG_UPDATE_EXISTING_PACKAGES?: boolean;
     SOFTWARE_CATALOG_CLEANUP_ENABLED?: boolean;
     SOFTWARE_CATALOG_RETENTION_DAYS?: number;
+    SYSTEM_LOG_ENABLED?: boolean;
+    SYSTEM_LOG_MAX_ROWS_PER_SOURCE?: number;
     TABLE_GROWTH_MONITORING_ENABLED?: boolean;
     TABLE_GROWTH_WEEKLY_THRESHOLD_PERCENT?: number;
     TABLE_GROWTH_MONTHLY_THRESHOLD_PERCENT?: number;
@@ -80290,6 +80334,209 @@ export type SyncIssuesResponses = {
      * No response body
      */
     202: unknown;
+};
+
+export type SystemLogsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        created_from?: number;
+        created_to?: number;
+        instance?: string;
+        level?: 'CRITICAL' | 'ERROR' | 'INFO' | 'WARNING';
+        /**
+         * Min level: 20=INFO, 30=WARNING, 40=ERROR, 50=CRITICAL
+         */
+        level_gte?: number;
+        logger_name?: string;
+        message?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-instance' | '-level_number' | 'created' | 'instance' | 'level_number'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        source?: 'api' | 'beat' | 'worker';
+    };
+    url: '/api/system-logs/';
+};
+
+export type SystemLogsListResponses = {
+    200: Array<SystemLog>;
+};
+
+export type SystemLogsListResponse = SystemLogsListResponses[keyof SystemLogsListResponses];
+
+export type SystemLogsCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        created_from?: number;
+        created_to?: number;
+        instance?: string;
+        level?: 'CRITICAL' | 'ERROR' | 'INFO' | 'WARNING';
+        /**
+         * Min level: 20=INFO, 30=WARNING, 40=ERROR, 50=CRITICAL
+         */
+        level_gte?: number;
+        logger_name?: string;
+        message?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-instance' | '-level_number' | 'created' | 'instance' | 'level_number'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        source?: 'api' | 'beat' | 'worker';
+    };
+    url: '/api/system-logs/';
+};
+
+export type SystemLogsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type SystemLogsRetrieveData = {
+    body?: never;
+    path: {
+        /**
+         * A unique integer value identifying this system log.
+         */
+        id: number;
+    };
+    query?: never;
+    url: '/api/system-logs/{id}/';
+};
+
+export type SystemLogsRetrieveResponses = {
+    200: SystemLog;
+};
+
+export type SystemLogsRetrieveResponse = SystemLogsRetrieveResponses[keyof SystemLogsRetrieveResponses];
+
+export type SystemLogsInstancesListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        created_from?: number;
+        created_to?: number;
+        instance?: string;
+        level?: 'CRITICAL' | 'ERROR' | 'INFO' | 'WARNING';
+        /**
+         * Min level: 20=INFO, 30=WARNING, 40=ERROR, 50=CRITICAL
+         */
+        level_gte?: number;
+        logger_name?: string;
+        message?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-instance' | '-level_number' | 'created' | 'instance' | 'level_number'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        source?: 'api' | 'beat' | 'worker';
+    };
+    url: '/api/system-logs/instances/';
+};
+
+export type SystemLogsInstancesListResponses = {
+    200: Array<SystemLogInstance>;
+};
+
+export type SystemLogsInstancesListResponse = SystemLogsInstancesListResponses[keyof SystemLogsInstancesListResponses];
+
+export type SystemLogsInstancesCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        created_from?: number;
+        created_to?: number;
+        instance?: string;
+        level?: 'CRITICAL' | 'ERROR' | 'INFO' | 'WARNING';
+        /**
+         * Min level: 20=INFO, 30=WARNING, 40=ERROR, 50=CRITICAL
+         */
+        level_gte?: number;
+        logger_name?: string;
+        message?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<'-created' | '-instance' | '-level_number' | 'created' | 'instance' | 'level_number'>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        source?: 'api' | 'beat' | 'worker';
+    };
+    url: '/api/system-logs/instances/';
+};
+
+export type SystemLogsInstancesCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type SystemLogsStatsRetrieveData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/system-logs/stats/';
+};
+
+export type SystemLogsStatsRetrieveResponses = {
+    200: SystemLogStatsResponse;
+};
+
+export type SystemLogsStatsRetrieveResponse = SystemLogsStatsRetrieveResponses[keyof SystemLogsStatsRetrieveResponses];
+
+export type SystemLogsStatsCountData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/system-logs/stats/';
+};
+
+export type SystemLogsStatsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
 };
 
 export type UserActionExecutionsListData = {
