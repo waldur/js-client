@@ -974,6 +974,10 @@ export type ArrowSettings = {
      * Which price to use for invoice items: sell or buy
      */
     invoice_price_source?: InvoicePriceSourceEnum;
+    /**
+     * Prefix for invoice item names (e.g. 'Arrow consumption')
+     */
+    invoice_item_prefix?: string;
     readonly created: string;
     readonly modified: string;
 };
@@ -1013,6 +1017,10 @@ export type ArrowSettingsCreate = {
      * Which price to use for invoice items: sell or buy
      */
     invoice_price_source?: InvoicePriceSourceEnum;
+    /**
+     * Prefix for invoice item names (e.g. 'Arrow consumption')
+     */
+    invoice_item_prefix?: string;
     readonly created: string;
     readonly modified: string;
 };
@@ -1046,6 +1054,10 @@ export type ArrowSettingsCreateRequest = {
      * Which price to use for invoice items: sell or buy
      */
     invoice_price_source?: InvoicePriceSourceEnum;
+    /**
+     * Prefix for invoice item names (e.g. 'Arrow consumption')
+     */
+    invoice_item_prefix?: string;
 };
 
 export type ArrowSettingsRequest = {
@@ -1077,6 +1089,10 @@ export type ArrowSettingsRequest = {
      * Which price to use for invoice items: sell or buy
      */
     invoice_price_source?: InvoicePriceSourceEnum;
+    /**
+     * Prefix for invoice item names (e.g. 'Arrow consumption')
+     */
+    invoice_item_prefix?: string;
 };
 
 export type ArrowVendorOfferingMapping = {
@@ -1088,13 +1104,13 @@ export type ArrowVendorOfferingMapping = {
      * Arrow vendor name (e.g., 'Microsoft', 'Amazon Web Services')
      */
     arrow_vendor_name: string;
-    /**
-     * Waldur marketplace offering for this vendor
-     */
     offering: string;
     readonly offering_uuid: string;
     readonly offering_name: string;
     readonly offering_type: string;
+    plan?: string | null;
+    readonly plan_uuid: string;
+    readonly plan_name: string;
     /**
      * Whether this mapping is active
      */
@@ -1116,6 +1132,9 @@ export type ArrowVendorOfferingMappingCreate = {
     readonly offering_uuid: string;
     readonly offering_name: string;
     readonly offering_type: string;
+    plan?: string | null;
+    readonly plan_uuid: string;
+    readonly plan_name: string;
     /**
      * Whether this mapping is active
      */
@@ -1131,6 +1150,7 @@ export type ArrowVendorOfferingMappingCreateRequest = {
      */
     arrow_vendor_name: string;
     offering: string;
+    plan?: string | null;
     /**
      * Whether this mapping is active
      */
@@ -1143,10 +1163,8 @@ export type ArrowVendorOfferingMappingRequest = {
      * Arrow vendor name (e.g., 'Microsoft', 'Amazon Web Services')
      */
     arrow_vendor_name: string;
-    /**
-     * Waldur marketplace offering for this vendor
-     */
     offering: string;
+    plan?: string | null;
     /**
      * Whether this mapping is active
      */
@@ -6057,6 +6075,7 @@ export type DiscoverCustomersResponse = {
     arrow_customers: Array<ArrowCustomerDiscovery>;
     waldur_customers: Array<WaldurCustomerBrief>;
     suggestions: Array<CustomerMappingSuggestion>;
+    export_types: Array<ExportTypeCompatibility>;
 };
 
 export type DiscoverExternalNetworksRequestRequest = {
@@ -6703,6 +6722,19 @@ export type ExportTermsOfServiceDataRequest = {
     is_active: boolean;
     requires_reconsent: boolean;
     grace_period_days: number | null;
+};
+
+export type ExportTypeCompatibility = {
+    reference: string;
+    name: string;
+    required_fields_total: number;
+    required_fields_found: number;
+    important_fields_total: number;
+    important_fields_found: number;
+    missing_required_fields: Array<string>;
+    missing_important_fields: Array<string>;
+    compatible: boolean;
+    recommended: boolean;
 };
 
 export type ExtendDeadlineRequestRequest = {
@@ -14728,6 +14760,10 @@ export type PatchedArrowSettingsRequest = {
      * Which price to use for invoice items: sell or buy
      */
     invoice_price_source?: InvoicePriceSourceEnum;
+    /**
+     * Prefix for invoice item names (e.g. 'Arrow consumption')
+     */
+    invoice_item_prefix?: string;
 };
 
 export type PatchedArrowVendorOfferingMappingRequest = {
@@ -14736,10 +14772,8 @@ export type PatchedArrowVendorOfferingMappingRequest = {
      * Arrow vendor name (e.g., 'Microsoft', 'Amazon Web Services')
      */
     arrow_vendor_name?: string;
-    /**
-     * Waldur marketplace offering for this vendor
-     */
     offering?: string;
+    plan?: string | null;
     /**
      * Whether this mapping is active
      */
@@ -23477,6 +23511,14 @@ export type SyncResourceHistoricalConsumptionRequestRequest = {
      * End period in YYYY-MM format. Defaults to current month.
      */
     period_to?: string;
+    /**
+     * If True, sync even for finalized periods.
+     */
+    force?: boolean;
+    /**
+     * If True, preview consumption data without saving.
+     */
+    dry_run?: boolean;
 };
 
 export type SyncResourceHistoricalConsumptionResponse = {
@@ -23484,7 +23526,12 @@ export type SyncResourceHistoricalConsumptionResponse = {
     resource_name: string;
     periods_synced: number;
     periods_skipped: number;
+    periods_no_data?: number;
     errors: Array<{
+        [key: string]: unknown;
+    }>;
+    dry_run?: boolean;
+    preview_periods?: Array<{
         [key: string]: unknown;
     }>;
 };
@@ -23919,6 +23966,10 @@ export type TriggerSyncRequestRequest = {
     year: number;
     month: number;
     settings_uuid?: string;
+    /**
+     * If set, only sync billing lines for this resource.
+     */
+    resource_uuid?: string;
 };
 
 export type UnsilenceActionResponse = {
