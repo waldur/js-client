@@ -14364,7 +14364,7 @@ export type OrderCreateRequest = {
     /**
      * Attributes structure depends on the offering type specified in the parent object. Can also be a generic object for offerings without a specific attributes schema.
      */
-    attributes?: AzureVirtualMachineCreateOrderAttributes | AzureSqlServerCreateOrderAttributes | MarketplaceOpenPortalCreateOrderAttributes | MarketplaceOpenPortalRemoteCreateOrderAttributes | OpenStackTenantCreateOrderAttributes | OpenStackInstanceCreateOrderAttributes | OpenStackVolumeCreateOrderAttributes | SlurmInvoicesSlurmPackageCreateOrderAttributes | VMwareVirtualMachineCreateOrderAttributes | GenericOrderAttributes;
+    attributes?: GenericOrderAttributes;
     limits?: {
         [key: string]: number;
     };
@@ -25198,163 +25198,6 @@ export type WebHookRequest = {
 
 export type WidgetEnum = 'csv' | 'filesize' | 'attached_instance';
 
-export type AzureVirtualMachineCreateOrderAttributes = {
-    name: string;
-    description?: string;
-    size: string;
-    image: string;
-    location: string;
-};
-
-export type AzureSqlServerCreateOrderAttributes = {
-    name: string;
-    description?: string;
-    location: string;
-};
-
-export type MarketplaceOpenPortalCreateOrderAttributes = {
-    name: string;
-    description?: string;
-};
-
-export type MarketplaceOpenPortalRemoteCreateOrderAttributes = {
-    name: string;
-    description?: string;
-};
-
-export type OpenStackTenantCreateOrderAttributes = {
-    name: string;
-    description?: string;
-    subnet_cidr?: string;
-    skip_connection_extnet?: boolean;
-    skip_creation_of_default_router?: boolean;
-    skip_creation_of_default_subnet?: boolean;
-    /**
-     * Optional availability group. Will be used for all instances provisioned in this tenant
-     */
-    availability_zone?: string;
-    security_groups?: Array<OpenStackTenantSecurityGroupRequest>;
-};
-
-export type OpenStackCreateInstancePortRequest = {
-    fixed_ips?: Array<OpenStackFixedIpRequest>;
-    /**
-     * Subnet to which this port belongs
-     */
-    subnet?: string | null;
-    port?: string;
-};
-
-export type OpenStackDataVolumeRequest = {
-    size: number;
-    volume_type?: string | null;
-};
-
-export type OpenStackServerGroupHyperlinkRequest = {
-    url: string;
-};
-
-export type OpenStackInstanceCreateOrderAttributes = {
-    name: string;
-    description?: string;
-    /**
-     * The flavor to use for the instance
-     */
-    flavor: string;
-    /**
-     * The OS image to use for the instance
-     */
-    image: string;
-    /**
-     * List of security groups to apply to the instance
-     */
-    security_groups?: Array<OpenStackSecurityGroupHyperlinkRequest>;
-    /**
-     * Server group for instance scheduling policy
-     */
-    server_group?: OpenStackServerGroupHyperlinkRequest;
-    /**
-     * Network ports to attach to the instance
-     */
-    ports: Array<OpenStackCreateInstancePortRequest>;
-    /**
-     * Floating IPs to assign to the instance
-     */
-    floating_ips?: Array<OpenStackCreateFloatingIpRequest>;
-    /**
-     * Size of the system volume in MiB. Minimum size is 1024 MiB (1 GiB)
-     */
-    system_volume_size: number;
-    /**
-     * Volume type for the system volume
-     */
-    system_volume_type?: string | null;
-    /**
-     * Size of the data volume in MiB. Minimum size is 1024 MiB (1 GiB)
-     */
-    data_volume_size?: number;
-    /**
-     * Volume type for the data volume
-     */
-    data_volume_type?: string | null;
-    ssh_public_key?: string;
-    /**
-     * Additional data that will be added to instance on provisioning
-     */
-    user_data?: string;
-    /**
-     * Availability zone where this instance is located
-     */
-    availability_zone?: string | null;
-    /**
-     * If True, instance will be connected directly to external network
-     */
-    connect_directly_to_external_network?: boolean;
-    /**
-     * Additional data volumes to attach to the instance
-     */
-    data_volumes?: Array<OpenStackDataVolumeRequest>;
-};
-
-export type OpenStackVolumeCreateOrderAttributes = {
-    name: string;
-    description?: string;
-    /**
-     * Image that this volume was created from, if any
-     */
-    image?: string | null;
-    /**
-     * Size in MiB
-     */
-    size?: number | null;
-    /**
-     * Availability zone where this volume is located
-     */
-    availability_zone?: string | null;
-    /**
-     * Type of the volume (e.g. SSD, HDD)
-     */
-    type?: string | null;
-};
-
-export type SlurmInvoicesSlurmPackageCreateOrderAttributes = {
-    name: string;
-    description?: string;
-};
-
-export type VMwareVirtualMachineCreateOrderAttributes = {
-    name: string;
-    description?: string;
-    guest_os?: 'DOS' | 'WIN_31' | 'WIN_95' | 'WIN_98' | 'WIN_ME' | 'WIN_NT' | 'WIN_2000_PRO' | 'WIN_2000_SERV' | 'WIN_2000_ADV_SERV' | 'WIN_XP_HOME' | 'WIN_XP_PRO' | 'WIN_XP_PRO_64' | 'WIN_NET_WEB' | 'WIN_NET_STANDARD' | 'WIN_NET_ENTERPRISE' | 'WIN_NET_DATACENTER' | 'WIN_NET_BUSINESS' | 'WIN_NET_STANDARD_64' | 'WIN_NET_ENTERPRISE_64' | 'WIN_LONGHORN' | 'WIN_LONGHORN_64' | 'WIN_NET_DATACENTER_64' | 'WIN_VISTA' | 'WIN_VISTA_64' | 'WINDOWS_7' | 'WINDOWS_7_64' | 'WINDOWS_7_SERVER_64' | 'WINDOWS_8' | 'WINDOWS_8_64' | 'WINDOWS_8_SERVER_64' | 'WINDOWS_9' | 'WINDOWS_9_64' | 'WINDOWS_9_SERVER_64' | 'WINDOWS_HYPERV' | 'FREEBSD' | 'FREEBSD_64' | 'REDHAT' | 'RHEL_2' | 'RHEL_3' | 'RHEL_3_64' | 'RHEL_4' | 'RHEL_4_64' | 'RHEL_5' | 'RHEL_5_64' | 'RHEL_6' | 'RHEL_6_64' | 'RHEL_7' | 'RHEL_7_64' | 'CENTOS' | 'CENTOS_64' | 'CENTOS_6' | 'CENTOS_6_64' | 'CENTOS_7' | 'CENTOS_7_64' | 'ORACLE_LINUX' | 'ORACLE_LINUX_64' | 'ORACLE_LINUX_6' | 'ORACLE_LINUX_6_64' | 'ORACLE_LINUX_7' | 'ORACLE_LINUX_7_64' | 'SUSE' | 'SUSE_64' | 'SLES' | 'SLES_64' | 'SLES_10' | 'SLES_10_64' | 'SLES_11' | 'SLES_11_64' | 'SLES_12' | 'SLES_12_64' | 'NLD_9' | 'OES' | 'SJDS' | 'MANDRAKE' | 'MANDRIVA' | 'MANDRIVA_64' | 'TURBO_LINUX' | 'TURBO_LINUX_64' | 'UBUNTU' | 'UBUNTU_64' | 'DEBIAN_4' | 'DEBIAN_4_64' | 'DEBIAN_5' | 'DEBIAN_5_64' | 'DEBIAN_6' | 'DEBIAN_6_64' | 'DEBIAN_7' | 'DEBIAN_7_64' | 'DEBIAN_8' | 'DEBIAN_8_64' | 'DEBIAN_9' | 'DEBIAN_9_64' | 'DEBIAN_10' | 'DEBIAN_10_64' | 'ASIANUX_3' | 'ASIANUX_3_64' | 'ASIANUX_4' | 'ASIANUX_4_64' | 'ASIANUX_5_64' | 'ASIANUX_7_64' | 'OPENSUSE' | 'OPENSUSE_64' | 'FEDORA' | 'FEDORA_64' | 'COREOS_64' | 'VMWARE_PHOTON_64' | 'OTHER_24X_LINUX' | 'OTHER_24X_LINUX_64' | 'OTHER_26X_LINUX' | 'OTHER_26X_LINUX_64' | 'OTHER_3X_LINUX' | 'OTHER_3X_LINUX_64' | 'OTHER_LINUX' | 'GENERIC_LINUX' | 'OTHER_LINUX_64' | 'SOLARIS_6' | 'SOLARIS_7' | 'SOLARIS_8' | 'SOLARIS_9' | 'SOLARIS_10' | 'SOLARIS_10_64' | 'SOLARIS_11_64' | 'OS2' | 'ECOMSTATION' | 'ECOMSTATION_2' | 'NETWARE_4' | 'NETWARE_5' | 'NETWARE_6' | 'OPENSERVER_5' | 'OPENSERVER_6' | 'UNIXWARE_7' | 'DARWIN' | 'DARWIN_64' | 'DARWIN_10' | 'DARWIN_10_64' | 'DARWIN_11' | 'DARWIN_11_64' | 'DARWIN_12_64' | 'DARWIN_13_64' | 'DARWIN_14_64' | 'DARWIN_15_64' | 'DARWIN_16_64' | 'VMKERNEL' | 'VMKERNEL_5' | 'VMKERNEL_6' | 'VMKERNEL_65' | 'OTHER' | 'OTHER_64' | null;
-    /**
-     * Number of cores per socket in a VM
-     */
-    cores_per_socket?: number;
-    template?: string | null;
-    cluster?: string | null;
-    datastore?: string | null;
-};
-
 export type GenericOrderAttributes = {
     /**
      * The name of the resource to be created. Will be displayed in the portal.
@@ -34164,11 +34007,11 @@ export type ChatQuotaSetQuotaResponses = {
 export type ChatQuotaUsageRetrieveData = {
     body?: never;
     path?: never;
-    query?: {
+    query: {
         /**
          * UUID of user to view quota for (staff/support only). Omit to view your own quota.
          */
-        user_uuid?: string;
+        user_uuid: string;
     };
     url: '/api/chat-quota/usage/';
 };
@@ -45572,6 +45415,34 @@ export type MarketplaceOfferingUsersChecklistTemplateCountResponses = {
     200: unknown;
 };
 
+export type MarketplaceOfferingUsersProfileFieldWarningsRetrieveData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/marketplace-offering-users/profile_field_warnings/';
+};
+
+export type MarketplaceOfferingUsersProfileFieldWarningsRetrieveResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type MarketplaceOfferingUsersProfileFieldWarningsCountData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/marketplace-offering-users/profile_field_warnings/';
+};
+
+export type MarketplaceOfferingUsersProfileFieldWarningsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type MarketplaceOrdersListData = {
     body?: never;
     path?: never;
@@ -46522,7 +46393,7 @@ export type MarketplacePlansUsageStatsListData = {
     path?: never;
     query?: {
         /**
-         * Filter by service provider's customer UUID.
+         * Filter by offering customer provider UUID.
          */
         customer_provider_uuid?: string;
         /**
@@ -46562,7 +46433,7 @@ export type MarketplacePlansUsageStatsCountData = {
     path?: never;
     query?: {
         /**
-         * Filter by service provider's customer UUID.
+         * Filter by offering customer provider UUID.
          */
         customer_provider_uuid?: string;
         /**
@@ -47132,7 +47003,7 @@ export type MarketplaceProviderOfferingsListData = {
         /**
          * Organization group UUID
          */
-        organization_group_uuid?: Array<string>;
+        organization_group_uuid?: string;
         /**
          * A page number within the paginated result set.
          */
@@ -47299,7 +47170,7 @@ export type MarketplaceProviderOfferingsCountData = {
         /**
          * Organization group UUID
          */
-        organization_group_uuid?: Array<string>;
+        organization_group_uuid?: string;
         /**
          * A page number within the paginated result set.
          */
@@ -47633,7 +47504,7 @@ export type MarketplaceProviderOfferingsComponentStatsListData = {
         /**
          * Organization group UUID
          */
-        organization_group_uuid?: Array<string>;
+        organization_group_uuid?: string;
         /**
          * A page number within the paginated result set.
          */
@@ -47811,7 +47682,7 @@ export type MarketplaceProviderOfferingsCostsListData = {
         /**
          * Organization group UUID
          */
-        organization_group_uuid?: Array<string>;
+        organization_group_uuid?: string;
         /**
          * A page number within the paginated result set.
          */
@@ -48001,7 +47872,7 @@ export type MarketplaceProviderOfferingsCustomersListData = {
         /**
          * Organization group UUID
          */
-        organization_group_uuid?: Array<string>;
+        organization_group_uuid?: string;
         /**
          * A page number within the paginated result set.
          */
@@ -48347,7 +48218,7 @@ export type MarketplaceProviderOfferingsHistoryListData = {
         /**
          * Organization group UUID
          */
-        organization_group_uuid?: Array<string>;
+        organization_group_uuid?: string;
         /**
          * A page number within the paginated result set.
          */
@@ -48586,7 +48457,7 @@ export type MarketplaceProviderOfferingsListCourseAccountsListData = {
         /**
          * Organization group UUID
          */
-        organization_group_uuid?: Array<string>;
+        organization_group_uuid?: string;
         /**
          * A page number within the paginated result set.
          */
@@ -48780,7 +48651,7 @@ export type MarketplaceProviderOfferingsListCustomerServiceAccountsListData = {
         /**
          * Organization group UUID
          */
-        organization_group_uuid?: Array<string>;
+        organization_group_uuid?: string;
         /**
          * A page number within the paginated result set.
          */
@@ -48974,7 +48845,7 @@ export type MarketplaceProviderOfferingsListProjectServiceAccountsListData = {
         /**
          * Organization group UUID
          */
-        organization_group_uuid?: Array<string>;
+        organization_group_uuid?: string;
         /**
          * A page number within the paginated result set.
          */
@@ -49805,7 +49676,7 @@ export type MarketplaceProviderOfferingsGroupsListData = {
         /**
          * Organization group UUID
          */
-        organization_group_uuid?: Array<string>;
+        organization_group_uuid?: string;
         /**
          * A page number within the paginated result set.
          */
@@ -49972,7 +49843,7 @@ export type MarketplaceProviderOfferingsGroupsCountData = {
         /**
          * Organization group UUID
          */
-        organization_group_uuid?: Array<string>;
+        organization_group_uuid?: string;
         /**
          * A page number within the paginated result set.
          */
@@ -51251,7 +51122,7 @@ export type MarketplacePublicOfferingsListData = {
         /**
          * Organization group UUID
          */
-        organization_group_uuid?: Array<string>;
+        organization_group_uuid?: string;
         /**
          * A page number within the paginated result set.
          */
@@ -51418,7 +51289,7 @@ export type MarketplacePublicOfferingsCountData = {
         /**
          * Organization group UUID
          */
-        organization_group_uuid?: Array<string>;
+        organization_group_uuid?: string;
         /**
          * A page number within the paginated result set.
          */
@@ -54154,7 +54025,7 @@ export type MarketplaceServiceProvidersOfferingsListData = {
         /**
          * Organization group UUID
          */
-        organization_group_uuid?: Array<string>;
+        organization_group_uuid?: string;
         /**
          * A page number within the paginated result set.
          */
