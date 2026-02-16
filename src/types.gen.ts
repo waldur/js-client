@@ -55972,6 +55972,10 @@ export type MarketplaceSoftwarePackagesListData = {
          */
         has_version?: string;
         /**
+         * Filter packages that are extensions of other packages
+         */
+        is_extension?: boolean;
+        /**
          * Filter packages by name (case-insensitive partial match)
          */
         name?: string;
@@ -56047,6 +56051,10 @@ export type MarketplaceSoftwarePackagesCountData = {
          * Filter packages that have a specific version
          */
         has_version?: string;
+        /**
+         * Filter packages that are extensions of other packages
+         */
+        is_extension?: boolean;
         /**
          * Filter packages by name (case-insensitive partial match)
          */
