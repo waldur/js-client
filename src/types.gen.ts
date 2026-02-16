@@ -4467,6 +4467,7 @@ export type ConstanceSettings = {
     MAINTENANCE_ANNOUNCEMENT_NOTIFY_BEFORE_MINUTES?: number;
     MAINTENANCE_ANNOUNCEMENT_NOTIFY_SYSTEM?: Array<string>;
     ENFORCE_USER_CONSENT_FOR_OFFERINGS?: boolean;
+    ENFORCE_OFFERING_USER_PROFILE_COMPLETENESS?: boolean;
     DISABLED_OFFERING_TYPES?: Array<string>;
     ONBOARDING_VALIDATION_METHODS?: Array<string>;
     ONBOARDING_VERIFICATION_EXPIRY_HOURS?: number;
@@ -4707,6 +4708,7 @@ export type ConstanceSettingsRequest = {
     MAINTENANCE_ANNOUNCEMENT_NOTIFY_BEFORE_MINUTES?: number;
     MAINTENANCE_ANNOUNCEMENT_NOTIFY_SYSTEM?: Array<string>;
     ENFORCE_USER_CONSENT_FOR_OFFERINGS?: boolean;
+    ENFORCE_OFFERING_USER_PROFILE_COMPLETENESS?: boolean;
     DISABLED_OFFERING_TYPES?: Array<string>;
     ONBOARDING_VALIDATION_METHODS?: Array<string>;
     ONBOARDING_VERIFICATION_EXPIRY_HOURS?: number;
@@ -12175,6 +12177,8 @@ export type OfferingUser = {
     readonly consent_data?: {
         [key: string]: string;
     } | null;
+    readonly is_profile_complete?: boolean;
+    readonly missing_profile_attributes?: Array<string>;
 };
 
 export type OfferingUserAttributeConfig = {
@@ -26475,6 +26479,7 @@ export type ConstanceSettingsRequestForm = {
     MAINTENANCE_ANNOUNCEMENT_NOTIFY_BEFORE_MINUTES?: number;
     MAINTENANCE_ANNOUNCEMENT_NOTIFY_SYSTEM?: Array<string>;
     ENFORCE_USER_CONSENT_FOR_OFFERINGS?: boolean;
+    ENFORCE_OFFERING_USER_PROFILE_COMPLETENESS?: boolean;
     DISABLED_OFFERING_TYPES?: Array<string>;
     ONBOARDING_VALIDATION_METHODS?: Array<string>;
     ONBOARDING_VERIFICATION_EXPIRY_HOURS?: number;
@@ -26715,6 +26720,7 @@ export type ConstanceSettingsRequestMultipart = {
     MAINTENANCE_ANNOUNCEMENT_NOTIFY_BEFORE_MINUTES?: number;
     MAINTENANCE_ANNOUNCEMENT_NOTIFY_SYSTEM?: Array<string>;
     ENFORCE_USER_CONSENT_FOR_OFFERINGS?: boolean;
+    ENFORCE_OFFERING_USER_PROFILE_COMPLETENESS?: boolean;
     DISABLED_OFFERING_TYPES?: Array<string>;
     ONBOARDING_VALIDATION_METHODS?: Array<string>;
     ONBOARDING_VERIFICATION_EXPIRY_HOURS?: number;
@@ -44960,7 +44966,11 @@ export type MarketplaceOfferingUsersListData = {
          * Created after
          */
         created?: string;
-        field?: Array<'consent_data' | 'created' | 'customer_name' | 'customer_uuid' | 'has_compliance_checklist' | 'has_consent' | 'is_restricted' | 'modified' | 'offering' | 'offering_name' | 'offering_uuid' | 'requires_reconsent' | 'service_provider_comment' | 'service_provider_comment_url' | 'state' | 'url' | 'user' | 'user_active_isds' | 'user_affiliations' | 'user_birth_date' | 'user_civil_number' | 'user_country_of_residence' | 'user_eduperson_assurance' | 'user_email' | 'user_first_name' | 'user_full_name' | 'user_gender' | 'user_identity_source' | 'user_job_title' | 'user_last_name' | 'user_nationalities' | 'user_nationality' | 'user_organization' | 'user_organization_country' | 'user_organization_type' | 'user_personal_title' | 'user_phone_number' | 'user_place_of_birth' | 'user_username' | 'user_uuid' | 'username' | 'uuid'>;
+        field?: Array<'consent_data' | 'created' | 'customer_name' | 'customer_uuid' | 'has_compliance_checklist' | 'has_consent' | 'is_profile_complete' | 'is_restricted' | 'missing_profile_attributes' | 'modified' | 'offering' | 'offering_name' | 'offering_uuid' | 'requires_reconsent' | 'service_provider_comment' | 'service_provider_comment_url' | 'state' | 'url' | 'user' | 'user_active_isds' | 'user_affiliations' | 'user_birth_date' | 'user_civil_number' | 'user_country_of_residence' | 'user_eduperson_assurance' | 'user_email' | 'user_first_name' | 'user_full_name' | 'user_gender' | 'user_identity_source' | 'user_job_title' | 'user_last_name' | 'user_nationalities' | 'user_nationality' | 'user_organization' | 'user_organization_country' | 'user_organization_type' | 'user_personal_title' | 'user_phone_number' | 'user_place_of_birth' | 'user_username' | 'user_uuid' | 'username' | 'uuid'>;
+        /**
+         * User has complete profile for the offering
+         */
+        has_complete_profile?: boolean;
         /**
          * User Has Consent
          */
@@ -45037,6 +45047,10 @@ export type MarketplaceOfferingUsersCountData = {
          * Created after
          */
         created?: string;
+        /**
+         * User has complete profile for the offering
+         */
+        has_complete_profile?: boolean;
         /**
          * User Has Consent
          */
@@ -45143,7 +45157,7 @@ export type MarketplaceOfferingUsersRetrieveData = {
         uuid: string;
     };
     query?: {
-        field?: Array<'consent_data' | 'created' | 'customer_name' | 'customer_uuid' | 'has_compliance_checklist' | 'has_consent' | 'is_restricted' | 'modified' | 'offering' | 'offering_name' | 'offering_uuid' | 'requires_reconsent' | 'service_provider_comment' | 'service_provider_comment_url' | 'state' | 'url' | 'user' | 'user_active_isds' | 'user_affiliations' | 'user_birth_date' | 'user_civil_number' | 'user_country_of_residence' | 'user_eduperson_assurance' | 'user_email' | 'user_first_name' | 'user_full_name' | 'user_gender' | 'user_identity_source' | 'user_job_title' | 'user_last_name' | 'user_nationalities' | 'user_nationality' | 'user_organization' | 'user_organization_country' | 'user_organization_type' | 'user_personal_title' | 'user_phone_number' | 'user_place_of_birth' | 'user_username' | 'user_uuid' | 'username' | 'uuid'>;
+        field?: Array<'consent_data' | 'created' | 'customer_name' | 'customer_uuid' | 'has_compliance_checklist' | 'has_consent' | 'is_profile_complete' | 'is_restricted' | 'missing_profile_attributes' | 'modified' | 'offering' | 'offering_name' | 'offering_uuid' | 'requires_reconsent' | 'service_provider_comment' | 'service_provider_comment_url' | 'state' | 'url' | 'user' | 'user_active_isds' | 'user_affiliations' | 'user_birth_date' | 'user_civil_number' | 'user_country_of_residence' | 'user_eduperson_assurance' | 'user_email' | 'user_first_name' | 'user_full_name' | 'user_gender' | 'user_identity_source' | 'user_job_title' | 'user_last_name' | 'user_nationalities' | 'user_nationality' | 'user_organization' | 'user_organization_country' | 'user_organization_type' | 'user_personal_title' | 'user_phone_number' | 'user_place_of_birth' | 'user_username' | 'user_uuid' | 'username' | 'uuid'>;
     };
     url: '/api/marketplace-offering-users/{uuid}/';
 };
