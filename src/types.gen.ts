@@ -35646,6 +35646,10 @@ export type CustomersListData = {
          * Abbreviation
          */
         abbreviation?: string;
+        /**
+         * Filter by whether accounting is running.
+         */
+        accounting_is_running?: boolean;
         agreement_number?: string;
         archived?: boolean;
         backend_id?: string;
@@ -35658,6 +35662,18 @@ export type CustomersListData = {
          */
         current_user_has_project_create_permission?: boolean;
         field?: Array<'abbreviation' | 'access_subnets' | 'accounting_start_date' | 'address' | 'agreement_number' | 'archived' | 'backend_id' | 'bank_account' | 'bank_name' | 'billing_price_estimate' | 'blocked' | 'call_managing_organization_uuid' | 'contact_details' | 'country' | 'country_name' | 'created' | 'customer_credit' | 'customer_unallocated_credit' | 'default_tax_percent' | 'description' | 'display_billing_info_in_projects' | 'display_name' | 'domain' | 'email' | 'grace_period_days' | 'homepage' | 'image' | 'is_service_provider' | 'latitude' | 'longitude' | 'max_service_accounts' | 'name' | 'native_name' | 'notification_emails' | 'organization_groups' | 'payment_profiles' | 'phone_number' | 'postal' | 'project_metadata_checklist' | 'projects_count' | 'registration_code' | 'service_provider' | 'service_provider_uuid' | 'slug' | 'sponsor_number' | 'url' | 'user_affiliations' | 'user_email_patterns' | 'user_identity_sources' | 'users_count' | 'uuid' | 'vat_code'>;
+        /**
+         * Filter by customers with resources.
+         */
+        has_resources?: string;
+        /**
+         * Filter by customers that are call managing organizations.
+         */
+        is_call_managing_organization?: boolean;
+        /**
+         * Filter by customers that are service providers.
+         */
+        is_service_provider?: boolean;
         /**
          * Name
          */
@@ -35699,6 +35715,14 @@ export type CustomersListData = {
          */
         query?: string;
         registration_code?: string;
+        /**
+         * Filter by service provider UUID.
+         */
+        service_provider_uuid?: string;
+        /**
+         * Filter by user UUID.
+         */
+        user_uuid?: string;
     };
     url: '/api/customers/';
 };
@@ -35717,6 +35741,10 @@ export type CustomersCountData = {
          * Abbreviation
          */
         abbreviation?: string;
+        /**
+         * Filter by whether accounting is running.
+         */
+        accounting_is_running?: boolean;
         agreement_number?: string;
         archived?: boolean;
         backend_id?: string;
@@ -35728,6 +35756,18 @@ export type CustomersCountData = {
          * Return a list of customers where current user has project create permission.
          */
         current_user_has_project_create_permission?: boolean;
+        /**
+         * Filter by customers with resources.
+         */
+        has_resources?: string;
+        /**
+         * Filter by customers that are call managing organizations.
+         */
+        is_call_managing_organization?: boolean;
+        /**
+         * Filter by customers that are service providers.
+         */
+        is_service_provider?: boolean;
         /**
          * Name
          */
@@ -35769,6 +35809,14 @@ export type CustomersCountData = {
          */
         query?: string;
         registration_code?: string;
+        /**
+         * Filter by service provider UUID.
+         */
+        service_provider_uuid?: string;
+        /**
+         * Filter by user UUID.
+         */
+        user_uuid?: string;
     };
     url: '/api/customers/';
 };
@@ -36117,6 +36165,10 @@ export type CustomersHistoryListData = {
          * Abbreviation
          */
         abbreviation?: string;
+        /**
+         * Filter by whether accounting is running.
+         */
+        accounting_is_running?: boolean;
         agreement_number?: string;
         archived?: boolean;
         backend_id?: string;
@@ -36136,6 +36188,18 @@ export type CustomersHistoryListData = {
          * Return a list of customers where current user has project create permission.
          */
         current_user_has_project_create_permission?: boolean;
+        /**
+         * Filter by customers with resources.
+         */
+        has_resources?: string;
+        /**
+         * Filter by customers that are call managing organizations.
+         */
+        is_call_managing_organization?: boolean;
+        /**
+         * Filter by customers that are service providers.
+         */
+        is_service_provider?: boolean;
         /**
          * Name
          */
@@ -36177,6 +36241,14 @@ export type CustomersHistoryListData = {
          */
         query?: string;
         registration_code?: string;
+        /**
+         * Filter by service provider UUID.
+         */
+        service_provider_uuid?: string;
+        /**
+         * Filter by user UUID.
+         */
+        user_uuid?: string;
     };
     url: '/api/customers/{uuid}/history/';
 };
@@ -36417,6 +36489,10 @@ export type CustomersCountriesListData = {
          * Abbreviation
          */
         abbreviation?: string;
+        /**
+         * Filter by whether accounting is running.
+         */
+        accounting_is_running?: boolean;
         agreement_number?: string;
         archived?: boolean;
         backend_id?: string;
@@ -36428,6 +36504,18 @@ export type CustomersCountriesListData = {
          * Return a list of customers where current user has project create permission.
          */
         current_user_has_project_create_permission?: boolean;
+        /**
+         * Filter by customers with resources.
+         */
+        has_resources?: string;
+        /**
+         * Filter by customers that are call managing organizations.
+         */
+        is_call_managing_organization?: boolean;
+        /**
+         * Filter by customers that are service providers.
+         */
+        is_service_provider?: boolean;
         /**
          * Name
          */
@@ -36469,6 +36557,14 @@ export type CustomersCountriesListData = {
          */
         query?: string;
         registration_code?: string;
+        /**
+         * Filter by service provider UUID.
+         */
+        service_provider_uuid?: string;
+        /**
+         * Filter by user UUID.
+         */
+        user_uuid?: string;
     };
     url: '/api/customers/countries/';
 };
@@ -36487,6 +36583,10 @@ export type CustomersCountriesCountData = {
          * Abbreviation
          */
         abbreviation?: string;
+        /**
+         * Filter by whether accounting is running.
+         */
+        accounting_is_running?: boolean;
         agreement_number?: string;
         archived?: boolean;
         backend_id?: string;
@@ -36498,6 +36598,18 @@ export type CustomersCountriesCountData = {
          * Return a list of customers where current user has project create permission.
          */
         current_user_has_project_create_permission?: boolean;
+        /**
+         * Filter by customers with resources.
+         */
+        has_resources?: string;
+        /**
+         * Filter by customers that are call managing organizations.
+         */
+        is_call_managing_organization?: boolean;
+        /**
+         * Filter by customers that are service providers.
+         */
+        is_service_provider?: boolean;
         /**
          * Name
          */
@@ -36539,6 +36651,14 @@ export type CustomersCountriesCountData = {
          */
         query?: string;
         registration_code?: string;
+        /**
+         * Filter by service provider UUID.
+         */
+        service_provider_uuid?: string;
+        /**
+         * Filter by user UUID.
+         */
+        user_uuid?: string;
     };
     url: '/api/customers/countries/';
 };
@@ -37780,6 +37900,14 @@ export type EventsListData = {
          * Customer UUID
          */
         customer_uuid?: string;
+        /**
+         * Filter by event type. Can be specified multiple times.
+         */
+        event_type?: Array<string>;
+        /**
+         * Filter by feature (event group). Can be specified multiple times.
+         */
+        feature?: Array<string>;
         field?: Array<'context' | 'created' | 'event_type' | 'message' | 'uuid'>;
         message?: string;
         /**
@@ -37800,6 +37928,10 @@ export type EventsListData = {
          * Project UUID
          */
         project_uuid?: string;
+        /**
+         * Filter by scope URL.
+         */
+        scope?: string;
         /**
          * User UUID
          */
@@ -37824,6 +37956,14 @@ export type EventsCountData = {
          * Customer UUID
          */
         customer_uuid?: string;
+        /**
+         * Filter by event type. Can be specified multiple times.
+         */
+        event_type?: Array<string>;
+        /**
+         * Filter by feature (event group). Can be specified multiple times.
+         */
+        feature?: Array<string>;
         message?: string;
         /**
          * Ordering
@@ -37844,6 +37984,10 @@ export type EventsCountData = {
          */
         project_uuid?: string;
         /**
+         * Filter by scope URL.
+         */
+        scope?: string;
+        /**
          * User UUID
          */
         user_uuid?: string;
@@ -37863,6 +38007,14 @@ export type EventsStatsListData = {
     path?: never;
     query?: {
         /**
+         * Filter by event type. Can be specified multiple times.
+         */
+        event_type?: Array<string>;
+        /**
+         * Filter by feature (event group). Can be specified multiple times.
+         */
+        feature?: Array<string>;
+        /**
          * A page number within the paginated result set.
          */
         page?: number;
@@ -37870,6 +38022,10 @@ export type EventsStatsListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Filter by scope URL.
+         */
+        scope?: string;
     };
     url: '/api/events-stats/';
 };
@@ -37885,6 +38041,14 @@ export type EventsStatsCountData = {
     path?: never;
     query?: {
         /**
+         * Filter by event type. Can be specified multiple times.
+         */
+        event_type?: Array<string>;
+        /**
+         * Filter by feature (event group). Can be specified multiple times.
+         */
+        feature?: Array<string>;
+        /**
          * A page number within the paginated result set.
          */
         page?: number;
@@ -37892,6 +38056,10 @@ export type EventsStatsCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Filter by scope URL.
+         */
+        scope?: string;
     };
     url: '/api/events-stats/';
 };
@@ -38250,6 +38418,10 @@ export type FinancialReportsListData = {
          * Abbreviation
          */
         abbreviation?: string;
+        /**
+         * Filter by whether accounting is running.
+         */
+        accounting_is_running?: boolean;
         agreement_number?: string;
         archived?: boolean;
         backend_id?: string;
@@ -38261,6 +38433,10 @@ export type FinancialReportsListData = {
          * Return a list of customers where current user has project create permission.
          */
         current_user_has_project_create_permission?: boolean;
+        /**
+         * Filter by month.
+         */
+        month?: number;
         /**
          * Name
          */
@@ -38302,6 +38478,10 @@ export type FinancialReportsListData = {
          */
         query?: string;
         registration_code?: string;
+        /**
+         * Filter by year.
+         */
+        year?: number;
     };
     url: '/api/financial-reports/';
 };
@@ -38320,6 +38500,10 @@ export type FinancialReportsCountData = {
          * Abbreviation
          */
         abbreviation?: string;
+        /**
+         * Filter by whether accounting is running.
+         */
+        accounting_is_running?: boolean;
         agreement_number?: string;
         archived?: boolean;
         backend_id?: string;
@@ -38331,6 +38515,10 @@ export type FinancialReportsCountData = {
          * Return a list of customers where current user has project create permission.
          */
         current_user_has_project_create_permission?: boolean;
+        /**
+         * Filter by month.
+         */
+        month?: number;
         /**
          * Name
          */
@@ -38372,6 +38560,10 @@ export type FinancialReportsCountData = {
          */
         query?: string;
         registration_code?: string;
+        /**
+         * Filter by year.
+         */
+        year?: number;
     };
     url: '/api/financial-reports/';
 };
@@ -38666,6 +38858,14 @@ export type HooksListData = {
     path?: never;
     query?: {
         /**
+         * Filter by author UUID.
+         */
+        author_uuid?: string;
+        /**
+         * Filter by active status.
+         */
+        is_active?: boolean;
+        /**
          * A page number within the paginated result set.
          */
         page?: number;
@@ -38688,6 +38888,14 @@ export type HooksCountData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Filter by author UUID.
+         */
+        author_uuid?: string;
+        /**
+         * Filter by active status.
+         */
+        is_active?: boolean;
         /**
          * A page number within the paginated result set.
          */
@@ -39607,6 +39815,10 @@ export type InvoicesListData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Filter by whether accounting is running.
+         */
+        accounting_is_running?: boolean;
         created?: string;
         customer?: string;
         customer_uuid?: string;
@@ -39644,6 +39856,10 @@ export type InvoicesCountData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Filter by whether accounting is running.
+         */
+        accounting_is_running?: boolean;
         created?: string;
         customer?: string;
         customer_uuid?: string;
@@ -39700,6 +39916,10 @@ export type InvoicesHistoryListData = {
         uuid: string;
     };
     query?: {
+        /**
+         * Filter by whether accounting is running.
+         */
+        accounting_is_running?: boolean;
         created?: string;
         /**
          * Filter versions created after this timestamp (ISO 8601)
@@ -39884,6 +40104,10 @@ export type InvoicesStatsListData = {
         uuid: string;
     };
     query?: {
+        /**
+         * Filter by whether accounting is running.
+         */
+        accounting_is_running?: boolean;
         created?: string;
         customer?: string;
         customer_uuid?: string;
@@ -41766,6 +41990,10 @@ export type MarketplaceCategoryComponentUsagesListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Filter by scope URL.
+         */
+        scope?: string;
     };
     url: '/api/marketplace-category-component-usages/';
 };
@@ -41796,6 +42024,10 @@ export type MarketplaceCategoryComponentUsagesCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Filter by scope URL.
+         */
+        scope?: string;
     };
     url: '/api/marketplace-category-component-usages/';
 };
@@ -44172,6 +44404,10 @@ export type MarketplaceOfferingReferralsListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Filter by scope URL.
+         */
+        scope?: string;
     };
     url: '/api/marketplace-offering-referrals/';
 };
@@ -44200,6 +44436,10 @@ export type MarketplaceOfferingReferralsCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Filter by scope URL.
+         */
+        scope?: string;
     };
     url: '/api/marketplace-offering-referrals/';
 };
@@ -46979,6 +47219,10 @@ export type MarketplaceProviderOfferingsListData = {
          */
         has_terms_of_service?: boolean;
         /**
+         * Filter by importable offerings.
+         */
+        importable?: string;
+        /**
          * Keyword
          */
         keyword?: string;
@@ -47145,6 +47389,10 @@ export type MarketplaceProviderOfferingsCountData = {
          * Has Terms of Service
          */
         has_terms_of_service?: boolean;
+        /**
+         * Filter by importable offerings.
+         */
+        importable?: string;
         /**
          * Keyword
          */
@@ -47480,6 +47728,10 @@ export type MarketplaceProviderOfferingsComponentStatsListData = {
          */
         has_terms_of_service?: boolean;
         /**
+         * Filter by importable offerings.
+         */
+        importable?: string;
+        /**
          * Keyword
          */
         keyword?: string;
@@ -47657,6 +47909,10 @@ export type MarketplaceProviderOfferingsCostsListData = {
          * Has Terms of Service
          */
         has_terms_of_service?: boolean;
+        /**
+         * Filter by importable offerings.
+         */
+        importable?: string;
         /**
          * Keyword
          */
@@ -47847,6 +48103,10 @@ export type MarketplaceProviderOfferingsCustomersListData = {
          * Has Terms of Service
          */
         has_terms_of_service?: boolean;
+        /**
+         * Filter by importable offerings.
+         */
+        importable?: string;
         /**
          * Keyword
          */
@@ -48194,6 +48454,10 @@ export type MarketplaceProviderOfferingsHistoryListData = {
          */
         has_terms_of_service?: boolean;
         /**
+         * Filter by importable offerings.
+         */
+        importable?: string;
+        /**
          * Keyword
          */
         keyword?: string;
@@ -48433,6 +48697,10 @@ export type MarketplaceProviderOfferingsListCourseAccountsListData = {
          */
         has_terms_of_service?: boolean;
         /**
+         * Filter by importable offerings.
+         */
+        importable?: string;
+        /**
          * Keyword
          */
         keyword?: string;
@@ -48627,6 +48895,10 @@ export type MarketplaceProviderOfferingsListCustomerServiceAccountsListData = {
          */
         has_terms_of_service?: boolean;
         /**
+         * Filter by importable offerings.
+         */
+        importable?: string;
+        /**
          * Keyword
          */
         keyword?: string;
@@ -48820,6 +49092,10 @@ export type MarketplaceProviderOfferingsListProjectServiceAccountsListData = {
          * Has Terms of Service
          */
         has_terms_of_service?: boolean;
+        /**
+         * Filter by importable offerings.
+         */
+        importable?: string;
         /**
          * Keyword
          */
@@ -50094,6 +50370,10 @@ export type MarketplaceProviderResourcesListData = {
          */
         runtime_state?: string;
         /**
+         * Filter by scope URL.
+         */
+        scope?: string;
+        /**
          * Service manager UUID
          */
         service_manager_uuid?: string;
@@ -50271,6 +50551,10 @@ export type MarketplaceProviderResourcesCountData = {
          * Runtime state
          */
         runtime_state?: string;
+        /**
+         * Filter by scope URL.
+         */
+        scope?: string;
         /**
          * Service manager UUID
          */
@@ -50544,6 +50828,10 @@ export type MarketplaceProviderResourcesHistoryListData = {
          * Runtime state
          */
         runtime_state?: string;
+        /**
+         * Filter by scope URL.
+         */
+        scope?: string;
         /**
          * Service manager UUID
          */
@@ -51906,6 +52194,10 @@ export type MarketplaceResourcesListData = {
          */
         runtime_state?: string;
         /**
+         * Filter by scope URL.
+         */
+        scope?: string;
+        /**
          * Service manager UUID
          */
         service_manager_uuid?: string;
@@ -52083,6 +52375,10 @@ export type MarketplaceResourcesCountData = {
          * Runtime state
          */
         runtime_state?: string;
+        /**
+         * Filter by scope URL.
+         */
+        scope?: string;
         /**
          * Service manager UUID
          */
@@ -52371,6 +52667,10 @@ export type MarketplaceResourcesHistoryListData = {
          * Runtime state
          */
         runtime_state?: string;
+        /**
+         * Filter by scope URL.
+         */
+        scope?: string;
         /**
          * Service manager UUID
          */
@@ -61121,6 +61421,10 @@ export type OpenportalUnmanagedProjectsListData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Filter by whether accounting is running.
+         */
+        accounting_is_running?: boolean;
         backend_id?: string;
         /**
          * Return a list of projects where current user is admin.
@@ -61201,6 +61505,10 @@ export type OpenportalUnmanagedProjectsListData = {
          * Slug
          */
         slug?: string;
+        /**
+         * Filter by user UUID.
+         */
+        user_uuid?: string;
     };
     url: '/api/openportal-unmanaged-projects/';
 };
@@ -61215,6 +61523,10 @@ export type OpenportalUnmanagedProjectsCountData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Filter by whether accounting is running.
+         */
+        accounting_is_running?: boolean;
         backend_id?: string;
         /**
          * Return a list of projects where current user is admin.
@@ -61294,6 +61606,10 @@ export type OpenportalUnmanagedProjectsCountData = {
          * Slug
          */
         slug?: string;
+        /**
+         * Filter by user UUID.
+         */
+        user_uuid?: string;
     };
     url: '/api/openportal-unmanaged-projects/';
 };
@@ -63195,6 +63511,10 @@ export type OpenstackInstancesListData = {
          */
         name_exact?: string;
         /**
+         * Ordering. Sort by start time.
+         */
+        o?: 'start_time' | '-start_time';
+        /**
          * A page number within the paginated result set.
          */
         page?: number;
@@ -63311,6 +63631,10 @@ export type OpenstackInstancesCountData = {
          * Name (exact)
          */
         name_exact?: string;
+        /**
+         * Ordering. Sort by start time.
+         */
+        o?: 'start_time' | '-start_time';
         /**
          * A page number within the paginated result set.
          */
@@ -69331,6 +69655,10 @@ export type ProjectsListData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Filter by whether accounting is running.
+         */
+        accounting_is_running?: boolean;
         backend_id?: string;
         /**
          * Return a list of projects where current user is admin.
@@ -69411,6 +69739,10 @@ export type ProjectsListData = {
          * Slug
          */
         slug?: string;
+        /**
+         * Filter by user UUID.
+         */
+        user_uuid?: string;
     };
     url: '/api/projects/';
 };
@@ -69425,6 +69757,10 @@ export type ProjectsCountData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Filter by whether accounting is running.
+         */
+        accounting_is_running?: boolean;
         backend_id?: string;
         /**
          * Return a list of projects where current user is admin.
@@ -69504,6 +69840,10 @@ export type ProjectsCountData = {
          * Slug
          */
         slug?: string;
+        /**
+         * Filter by user UUID.
+         */
+        user_uuid?: string;
     };
     url: '/api/projects/';
 };
@@ -77780,6 +78120,10 @@ export type ServiceSettingsListData = {
          */
         page_size?: number;
         /**
+         * Filter by scope URL.
+         */
+        scope?: string;
+        /**
          * Scope UUID
          */
         scope_uuid?: string;
@@ -77836,6 +78180,10 @@ export type ServiceSettingsCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Filter by scope URL.
+         */
+        scope?: string;
         /**
          * Scope UUID
          */
@@ -78754,6 +79102,10 @@ export type SupportCommentsListData = {
          * Remote ID is set.
          */
         remote_id_is_set?: boolean;
+        /**
+         * Filter by resource URL.
+         */
+        resource?: string;
     };
     url: '/api/support-comments/';
 };
@@ -78792,6 +79144,10 @@ export type SupportCommentsCountData = {
          * Remote ID is set.
          */
         remote_id_is_set?: boolean;
+        /**
+         * Filter by resource URL.
+         */
+        resource?: string;
     };
     url: '/api/support-comments/';
 };
@@ -79151,6 +79507,10 @@ export type SupportIssuesListData = {
         reporter_name?: string;
         resolution_year_month?: string;
         /**
+         * Filter by resource URL.
+         */
+        resource?: string;
+        /**
          * Resource external IP
          */
         resource_external_ip?: string;
@@ -79213,6 +79573,10 @@ export type SupportIssuesCountData = {
         reporter?: string;
         reporter_name?: string;
         resolution_year_month?: string;
+        /**
+         * Filter by resource URL.
+         */
+        resource?: string;
         /**
          * Resource external IP
          */
@@ -80917,6 +81281,10 @@ export type UserGroupInvitationsListData = {
         page_size?: number;
         role_name?: string;
         role_uuid?: string;
+        /**
+         * Filter by scope URL.
+         */
+        scope?: string;
         scope_type?: string;
     };
     url: '/api/user-group-invitations/';
@@ -80951,6 +81319,10 @@ export type UserGroupInvitationsCountData = {
         page_size?: number;
         role_name?: string;
         role_uuid?: string;
+        /**
+         * Filter by scope URL.
+         */
+        scope?: string;
         scope_type?: string;
     };
     url: '/api/user-group-invitations/';
@@ -81118,6 +81490,10 @@ export type UserInvitationsListData = {
         page_size?: number;
         role_name?: string;
         role_uuid?: string;
+        /**
+         * Filter by scope URL.
+         */
+        scope?: string;
         scope_description?: string;
         scope_name?: string;
         scope_type?: string;
@@ -81156,6 +81532,10 @@ export type UserInvitationsCountData = {
         page_size?: number;
         role_name?: string;
         role_uuid?: string;
+        /**
+         * Filter by scope URL.
+         */
+        scope?: string;
         scope_description?: string;
         scope_name?: string;
         scope_type?: string;
@@ -81403,6 +81783,10 @@ export type UserPermissionRequestsListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Filter by scope URL.
+         */
+        scope?: string;
         state?: Array<'approved' | 'canceled' | 'draft' | 'pending' | 'rejected'>;
     };
     url: '/api/user-permission-requests/';
@@ -81435,6 +81819,10 @@ export type UserPermissionRequestsCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Filter by scope URL.
+         */
+        scope?: string;
         state?: Array<'approved' | 'canceled' | 'draft' | 'pending' | 'rejected'>;
     };
     url: '/api/user-permission-requests/';
