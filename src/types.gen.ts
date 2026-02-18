@@ -13913,7 +13913,7 @@ export type OpenStackServerGroup = {
     readonly tenant_name?: string;
     readonly tenant_uuid?: string;
     /**
-     * Server group policy determining the rules for scheduling servers in this group
+     * affinity — all instances are placed on the same hypervisor. anti-affinity — all instances are placed on different hypervisors. soft-affinity — instances are placed on the same hypervisor if possible, but not enforced. soft-anti-affinity — instances are placed on different hypervisors if possible, but not enforced.
      */
     policy?: PolicyEnum | BlankEnum;
     readonly display_name?: string;
@@ -13936,7 +13936,7 @@ export type OpenStackServerGroupRequest = {
     name: string;
     description?: string;
     /**
-     * Server group policy determining the rules for scheduling servers in this group
+     * affinity — all instances are placed on the same hypervisor. anti-affinity — all instances are placed on different hypervisors. soft-affinity — instances are placed on the same hypervisor if possible, but not enforced. soft-anti-affinity — instances are placed on different hypervisors if possible, but not enforced.
      */
     policy?: PolicyEnum | BlankEnum;
 };
@@ -17185,7 +17185,7 @@ export type PluginOfferingType = {
     available_limits: Array<string>;
 };
 
-export type PolicyEnum = 'affinity';
+export type PolicyEnum = 'affinity' | 'anti-affinity' | 'soft-affinity' | 'soft-anti-affinity';
 
 export type PolicyPeriodEnum = 1 | 2 | 3 | 4;
 
