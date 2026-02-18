@@ -38434,6 +38434,10 @@ export type FinancialReportsListData = {
          */
         current_user_has_project_create_permission?: boolean;
         /**
+         * Filter by customer UUID.
+         */
+        customer_uuid?: string;
+        /**
          * Filter by month.
          */
         month?: number;
@@ -38515,6 +38519,10 @@ export type FinancialReportsCountData = {
          * Return a list of customers where current user has project create permission.
          */
         current_user_has_project_create_permission?: boolean;
+        /**
+         * Filter by customer UUID.
+         */
+        customer_uuid?: string;
         /**
          * Filter by month.
          */
