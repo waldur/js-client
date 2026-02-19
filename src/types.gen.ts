@@ -7438,7 +7438,7 @@ export type IdentityBridgeRemoveRequest = {
     source: string;
 };
 
-export type IdentityBridgeRemoveResponse = {
+export type IdentityBridgeRemoveResult = {
     uuid: string;
     deactivated: boolean;
 };
@@ -7472,7 +7472,7 @@ export type IdentityBridgeRequestRequest = {
     eduperson_assurance?: Array<string>;
 };
 
-export type IdentityBridgeResponse = {
+export type IdentityBridgeResult = {
     uuid: string;
     created: boolean;
     updated_fields: Array<string>;
@@ -39508,10 +39508,10 @@ export type IdentityBridgeData = {
 };
 
 export type IdentityBridgeResponses = {
-    200: IdentityBridgeResponse;
+    200: IdentityBridgeResult;
 };
 
-export type IdentityBridgeResponse2 = IdentityBridgeResponses[keyof IdentityBridgeResponses];
+export type IdentityBridgeResponse = IdentityBridgeResponses[keyof IdentityBridgeResponses];
 
 export type IdentityBridgeRemoveData = {
     body: IdentityBridgeRemoveRequest;
@@ -39521,10 +39521,10 @@ export type IdentityBridgeRemoveData = {
 };
 
 export type IdentityBridgeRemoveResponses = {
-    200: IdentityBridgeRemoveResponse;
+    200: IdentityBridgeRemoveResult;
 };
 
-export type IdentityBridgeRemoveResponse2 = IdentityBridgeRemoveResponses[keyof IdentityBridgeRemoveResponses];
+export type IdentityBridgeRemoveResponse = IdentityBridgeRemoveResponses[keyof IdentityBridgeRemoveResponses];
 
 export type IdentityBridgeStatsRetrieveData = {
     body?: never;
