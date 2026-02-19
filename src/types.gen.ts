@@ -9166,6 +9166,49 @@ export type MarketplaceServiceProviderUser = {
      * Designates whether this user should be treated as active. Unselect this instead of deleting accounts.
      */
     is_active?: boolean;
+    job_title?: string;
+    /**
+     * ISO 5218 gender code
+     */
+    gender?: GenderEnum | NullEnum | null;
+    /**
+     * Honorific title (Mr, Ms, Dr, Prof, etc.)
+     */
+    personal_title?: string;
+    place_of_birth?: string;
+    country_of_residence?: string;
+    /**
+     * Primary citizenship (ISO 3166-1 alpha-2 code)
+     */
+    nationality?: string;
+    /**
+     * List of all citizenships (ISO 3166-1 alpha-2 codes)
+     */
+    nationalities?: unknown;
+    organization_country?: string;
+    /**
+     * SCHAC URN (e.g., urn:schac:homeOrganizationType:int:university)
+     */
+    organization_type?: string;
+    /**
+     * Company registration code of the user's organization, if known
+     */
+    organization_registry_code?: string;
+    /**
+     * REFEDS assurance profile URIs from identity provider
+     */
+    eduperson_assurance?: unknown;
+    civil_number?: string | null;
+    birth_date?: string | null;
+    /**
+     * Source of identity
+     * Indicates what identity provider was used.
+     */
+    identity_source?: string;
+    /**
+     * List of ISDs that have asserted this user exists. User is deactivated when this becomes empty.
+     */
+    active_isds?: unknown;
 };
 
 export type MatchingAlgorithm = 'minmax' | 'fairflow' | 'hungarian';
@@ -12278,6 +12321,10 @@ export type OfferingUser = {
      */
     readonly user_organization_type?: string;
     /**
+     * Company registration code of the user's organization, if known
+     */
+    readonly user_organization_registry_code?: string;
+    /**
      * REFEDS assurance profile URIs from identity provider
      */
     readonly user_eduperson_assurance?: unknown;
@@ -12352,10 +12399,12 @@ export type OfferingUserAttributeConfig = {
     expose_nationalities?: boolean;
     expose_organization_country?: boolean;
     expose_organization_type?: boolean;
+    expose_organization_registry_code?: boolean;
     expose_eduperson_assurance?: boolean;
     expose_civil_number?: boolean;
     expose_birth_date?: boolean;
     expose_identity_source?: boolean;
+    expose_active_isds?: boolean;
     /**
      * Return list of field names currently configured for exposure.
      */
@@ -12383,10 +12432,12 @@ export type OfferingUserAttributeConfigRequest = {
     expose_nationalities?: boolean;
     expose_organization_country?: boolean;
     expose_organization_type?: boolean;
+    expose_organization_registry_code?: boolean;
     expose_eduperson_assurance?: boolean;
     expose_civil_number?: boolean;
     expose_birth_date?: boolean;
     expose_identity_source?: boolean;
+    expose_active_isds?: boolean;
 };
 
 export type OfferingUserRequest = {
@@ -15793,10 +15844,12 @@ export type PatchedOfferingUserAttributeConfigRequest = {
     expose_nationalities?: boolean;
     expose_organization_country?: boolean;
     expose_organization_type?: boolean;
+    expose_organization_registry_code?: boolean;
     expose_eduperson_assurance?: boolean;
     expose_civil_number?: boolean;
     expose_birth_date?: boolean;
     expose_identity_source?: boolean;
+    expose_active_isds?: boolean;
 };
 
 export type PatchedOfferingUserRequest = {
@@ -45281,7 +45334,7 @@ export type MarketplaceOfferingUsersListData = {
          * Created after
          */
         created?: string;
-        field?: Array<'consent_data' | 'created' | 'customer_name' | 'customer_uuid' | 'has_compliance_checklist' | 'has_consent' | 'is_profile_complete' | 'is_restricted' | 'missing_profile_attributes' | 'modified' | 'offering' | 'offering_name' | 'offering_uuid' | 'requires_reconsent' | 'service_provider_comment' | 'service_provider_comment_url' | 'state' | 'url' | 'user' | 'user_active_isds' | 'user_affiliations' | 'user_birth_date' | 'user_civil_number' | 'user_country_of_residence' | 'user_eduperson_assurance' | 'user_email' | 'user_first_name' | 'user_full_name' | 'user_gender' | 'user_identity_source' | 'user_job_title' | 'user_last_name' | 'user_nationalities' | 'user_nationality' | 'user_organization' | 'user_organization_country' | 'user_organization_type' | 'user_personal_title' | 'user_phone_number' | 'user_place_of_birth' | 'user_username' | 'user_uuid' | 'username' | 'uuid'>;
+        field?: Array<'consent_data' | 'created' | 'customer_name' | 'customer_uuid' | 'has_compliance_checklist' | 'has_consent' | 'is_profile_complete' | 'is_restricted' | 'missing_profile_attributes' | 'modified' | 'offering' | 'offering_name' | 'offering_uuid' | 'requires_reconsent' | 'service_provider_comment' | 'service_provider_comment_url' | 'state' | 'url' | 'user' | 'user_active_isds' | 'user_affiliations' | 'user_birth_date' | 'user_civil_number' | 'user_country_of_residence' | 'user_eduperson_assurance' | 'user_email' | 'user_first_name' | 'user_full_name' | 'user_gender' | 'user_identity_source' | 'user_job_title' | 'user_last_name' | 'user_nationalities' | 'user_nationality' | 'user_organization' | 'user_organization_country' | 'user_organization_registry_code' | 'user_organization_type' | 'user_personal_title' | 'user_phone_number' | 'user_place_of_birth' | 'user_username' | 'user_uuid' | 'username' | 'uuid'>;
         /**
          * User has complete profile for the offering
          */
@@ -45472,7 +45525,7 @@ export type MarketplaceOfferingUsersRetrieveData = {
         uuid: string;
     };
     query?: {
-        field?: Array<'consent_data' | 'created' | 'customer_name' | 'customer_uuid' | 'has_compliance_checklist' | 'has_consent' | 'is_profile_complete' | 'is_restricted' | 'missing_profile_attributes' | 'modified' | 'offering' | 'offering_name' | 'offering_uuid' | 'requires_reconsent' | 'service_provider_comment' | 'service_provider_comment_url' | 'state' | 'url' | 'user' | 'user_active_isds' | 'user_affiliations' | 'user_birth_date' | 'user_civil_number' | 'user_country_of_residence' | 'user_eduperson_assurance' | 'user_email' | 'user_first_name' | 'user_full_name' | 'user_gender' | 'user_identity_source' | 'user_job_title' | 'user_last_name' | 'user_nationalities' | 'user_nationality' | 'user_organization' | 'user_organization_country' | 'user_organization_type' | 'user_personal_title' | 'user_phone_number' | 'user_place_of_birth' | 'user_username' | 'user_uuid' | 'username' | 'uuid'>;
+        field?: Array<'consent_data' | 'created' | 'customer_name' | 'customer_uuid' | 'has_compliance_checklist' | 'has_consent' | 'is_profile_complete' | 'is_restricted' | 'missing_profile_attributes' | 'modified' | 'offering' | 'offering_name' | 'offering_uuid' | 'requires_reconsent' | 'service_provider_comment' | 'service_provider_comment_url' | 'state' | 'url' | 'user' | 'user_active_isds' | 'user_affiliations' | 'user_birth_date' | 'user_civil_number' | 'user_country_of_residence' | 'user_eduperson_assurance' | 'user_email' | 'user_first_name' | 'user_full_name' | 'user_gender' | 'user_identity_source' | 'user_job_title' | 'user_last_name' | 'user_nationalities' | 'user_nationality' | 'user_organization' | 'user_organization_country' | 'user_organization_registry_code' | 'user_organization_type' | 'user_personal_title' | 'user_phone_number' | 'user_place_of_birth' | 'user_username' | 'user_uuid' | 'username' | 'uuid'>;
     };
     url: '/api/marketplace-offering-users/{uuid}/';
 };
@@ -54968,7 +55021,7 @@ export type MarketplaceServiceProvidersUsersListData = {
          * Email
          */
         email?: string;
-        field?: Array<'affiliations' | 'email' | 'first_name' | 'full_name' | 'is_active' | 'last_name' | 'organization' | 'phone_number' | 'projects_count' | 'registration_method' | 'username' | 'uuid'>;
+        field?: Array<'active_isds' | 'affiliations' | 'birth_date' | 'civil_number' | 'country_of_residence' | 'eduperson_assurance' | 'email' | 'first_name' | 'full_name' | 'gender' | 'identity_source' | 'is_active' | 'job_title' | 'last_name' | 'nationalities' | 'nationality' | 'organization' | 'organization_country' | 'organization_registry_code' | 'organization_type' | 'personal_title' | 'phone_number' | 'place_of_birth' | 'projects_count' | 'registration_method' | 'username' | 'uuid'>;
         /**
          * Full name
          */
