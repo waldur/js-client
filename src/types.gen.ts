@@ -4345,6 +4345,7 @@ export type ConstanceSettings = {
     SIDEBAR_LOGO_DARK?: string | null;
     SIDEBAR_LOGO_MOBILE?: string | null;
     SIDEBAR_STYLE?: string;
+    FONT_FAMILY?: string;
     LOGIN_LOGO?: string | null;
     LOGIN_LOGO_MULTILINGUAL?: {
         [key: string]: string | null;
@@ -4491,6 +4492,7 @@ export type ConstanceSettings = {
     LLM_TOKEN_LIMIT_MONTHLY?: number;
     LLM_CHAT_SESSION_RETENTION_DAYS?: number;
     LLM_CHAT_STORAGE_ENABLED?: boolean;
+    LLM_CHAT_HISTORY_LIMIT?: number;
     SOFTWARE_CATALOG_EESSI_UPDATE_ENABLED?: boolean;
     SOFTWARE_CATALOG_EESSI_VERSION?: string;
     SOFTWARE_CATALOG_EESSI_API_URL?: string;
@@ -4585,6 +4587,7 @@ export type ConstanceSettingsRequest = {
     SIDEBAR_LOGO_DARK?: (Blob | File) | null;
     SIDEBAR_LOGO_MOBILE?: (Blob | File) | null;
     SIDEBAR_STYLE?: string;
+    FONT_FAMILY?: string;
     LOGIN_LOGO?: (Blob | File) | null;
     LOGIN_LOGO_MULTILINGUAL?: {
         [key: string]: (Blob | File) | null;
@@ -4731,6 +4734,7 @@ export type ConstanceSettingsRequest = {
     LLM_TOKEN_LIMIT_MONTHLY?: number;
     LLM_CHAT_SESSION_RETENTION_DAYS?: number;
     LLM_CHAT_STORAGE_ENABLED?: boolean;
+    LLM_CHAT_HISTORY_LIMIT?: number;
     SOFTWARE_CATALOG_EESSI_UPDATE_ENABLED?: boolean;
     SOFTWARE_CATALOG_EESSI_VERSION?: string;
     SOFTWARE_CATALOG_EESSI_API_URL?: string;
@@ -26479,6 +26483,7 @@ export type ConstanceSettingsRequestForm = {
     SIDEBAR_LOGO_DARK?: (Blob | File) | null;
     SIDEBAR_LOGO_MOBILE?: (Blob | File) | null;
     SIDEBAR_STYLE?: string;
+    FONT_FAMILY?: string;
     LOGIN_LOGO?: (Blob | File) | null;
     LOGIN_LOGO_MULTILINGUAL?: {
         [key: string]: (Blob | File) | null;
@@ -26625,6 +26630,7 @@ export type ConstanceSettingsRequestForm = {
     LLM_TOKEN_LIMIT_MONTHLY?: number;
     LLM_CHAT_SESSION_RETENTION_DAYS?: number;
     LLM_CHAT_STORAGE_ENABLED?: boolean;
+    LLM_CHAT_HISTORY_LIMIT?: number;
     SOFTWARE_CATALOG_EESSI_UPDATE_ENABLED?: boolean;
     SOFTWARE_CATALOG_EESSI_VERSION?: string;
     SOFTWARE_CATALOG_EESSI_API_URL?: string;
@@ -26719,6 +26725,7 @@ export type ConstanceSettingsRequestMultipart = {
     SIDEBAR_LOGO_DARK?: (Blob | File) | null;
     SIDEBAR_LOGO_MOBILE?: (Blob | File) | null;
     SIDEBAR_STYLE?: string;
+    FONT_FAMILY?: string;
     LOGIN_LOGO?: (Blob | File) | null;
     LOGIN_LOGO_MULTILINGUAL?: {
         [key: string]: (Blob | File) | null;
@@ -26865,6 +26872,7 @@ export type ConstanceSettingsRequestMultipart = {
     LLM_TOKEN_LIMIT_MONTHLY?: number;
     LLM_CHAT_SESSION_RETENTION_DAYS?: number;
     LLM_CHAT_STORAGE_ENABLED?: boolean;
+    LLM_CHAT_HISTORY_LIMIT?: number;
     SOFTWARE_CATALOG_EESSI_UPDATE_ENABLED?: boolean;
     SOFTWARE_CATALOG_EESSI_VERSION?: string;
     SOFTWARE_CATALOG_EESSI_API_URL?: string;
@@ -56465,6 +56473,10 @@ export type MarketplaceSoftwarePackagesListData = {
          */
         name?: string;
         /**
+         * Filter packages by exact name (case-insensitive)
+         */
+        name_exact?: string;
+        /**
          * Ordering
          *
          *
@@ -56544,6 +56556,10 @@ export type MarketplaceSoftwarePackagesCountData = {
          * Filter packages by name (case-insensitive partial match)
          */
         name?: string;
+        /**
+         * Filter packages by exact name (case-insensitive)
+         */
+        name_exact?: string;
         /**
          * Ordering
          *
