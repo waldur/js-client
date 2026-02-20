@@ -8069,6 +8069,16 @@ export type InvoiceCost = {
     readonly price: number;
     readonly year: number;
     readonly month: number;
+    items?: Array<InvoiceCostItem>;
+};
+
+export type InvoiceCostItem = {
+    readonly name: string;
+    readonly unit_price: string;
+    readonly unit: string;
+    readonly quantity: string;
+    readonly measured_unit: string;
+    readonly price: number;
 };
 
 export type InvoiceGrowth = {
