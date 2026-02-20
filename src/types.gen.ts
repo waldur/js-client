@@ -2478,13 +2478,22 @@ export type BookingResource = {
     readonly parent_uuid?: string;
     readonly parent_name?: string;
     backend_metadata?: BackendMetadata;
+    /**
+     * Returns True if the resource has usage-based components that track variable consumption.
+     */
     readonly is_usage_based?: boolean;
+    /**
+     * Returns True if the resource has limit-based components with user-adjustable quotas.
+     */
     readonly is_limit_based?: boolean;
     name?: string;
     /**
      * URL-friendly identifier. Only editable by staff users.
      */
     slug?: string;
+    /**
+     * Dictionary mapping component types to their latest reported usage amounts.
+     */
     readonly current_usages?: {
         [key: string]: number;
     };
@@ -2496,6 +2505,9 @@ export type BookingResource = {
     end_date?: string | null;
     readonly end_date_requested_by?: string | null;
     readonly username?: string | null;
+    /**
+     * Dictionary mapping limit-based component types to their consumed usage. For monthly periods, maps from current_usages; for longer periods, aggregates historical usage.
+     */
     readonly limit_usage?: {
         [key: string]: number;
     };
@@ -20835,13 +20847,22 @@ export type Resource = {
     readonly parent_uuid?: string;
     readonly parent_name?: string;
     backend_metadata?: BackendMetadata;
+    /**
+     * Returns True if the resource has usage-based components that track variable consumption.
+     */
     readonly is_usage_based?: boolean;
+    /**
+     * Returns True if the resource has limit-based components with user-adjustable quotas.
+     */
     readonly is_limit_based?: boolean;
     name?: string;
     /**
      * URL-friendly identifier. Only editable by staff users.
      */
     slug?: string;
+    /**
+     * Dictionary mapping component types to their latest reported usage amounts.
+     */
     readonly current_usages?: {
         [key: string]: number;
     };
@@ -20853,6 +20874,9 @@ export type Resource = {
     end_date?: string | null;
     readonly end_date_requested_by?: string | null;
     readonly username?: string | null;
+    /**
+     * Dictionary mapping limit-based component types to their consumed usage. For monthly periods, maps from current_usages; for longer periods, aggregates historical usage.
+     */
     readonly limit_usage?: {
         [key: string]: number;
     };
