@@ -3591,7 +3591,7 @@ export type ChatRequestRequest = {
      */
     input: string;
     /**
-     * Existing thread UUID. If omitted, a new thread is created when storage is enabled.
+     * Existing thread UUID. If omitted, a new thread is created.
      */
     thread_uuid?: string | null;
     /**
@@ -4158,6 +4158,10 @@ export type ComponentUserUsage = {
     readonly billing_period?: string;
 };
 
+export type ComponentUserUsageBulkCreateRequest = {
+    usages: Array<ComponentUserUsageCreateRequest>;
+};
+
 export type ComponentUserUsageCreateRequest = {
     usage?: string;
     username: string;
@@ -4503,7 +4507,6 @@ export type ConstanceSettings = {
     LLM_TOKEN_LIMIT_WEEKLY?: number;
     LLM_TOKEN_LIMIT_MONTHLY?: number;
     LLM_CHAT_SESSION_RETENTION_DAYS?: number;
-    LLM_CHAT_STORAGE_ENABLED?: boolean;
     LLM_CHAT_HISTORY_LIMIT?: number;
     SOFTWARE_CATALOG_EESSI_UPDATE_ENABLED?: boolean;
     SOFTWARE_CATALOG_EESSI_VERSION?: string;
@@ -4745,7 +4748,6 @@ export type ConstanceSettingsRequest = {
     LLM_TOKEN_LIMIT_WEEKLY?: number;
     LLM_TOKEN_LIMIT_MONTHLY?: number;
     LLM_CHAT_SESSION_RETENTION_DAYS?: number;
-    LLM_CHAT_STORAGE_ENABLED?: boolean;
     LLM_CHAT_HISTORY_LIMIT?: number;
     SOFTWARE_CATALOG_EESSI_UPDATE_ENABLED?: boolean;
     SOFTWARE_CATALOG_EESSI_VERSION?: string;
@@ -26663,7 +26665,6 @@ export type ConstanceSettingsRequestForm = {
     LLM_TOKEN_LIMIT_WEEKLY?: number;
     LLM_TOKEN_LIMIT_MONTHLY?: number;
     LLM_CHAT_SESSION_RETENTION_DAYS?: number;
-    LLM_CHAT_STORAGE_ENABLED?: boolean;
     LLM_CHAT_HISTORY_LIMIT?: number;
     SOFTWARE_CATALOG_EESSI_UPDATE_ENABLED?: boolean;
     SOFTWARE_CATALOG_EESSI_VERSION?: string;
@@ -26905,7 +26906,6 @@ export type ConstanceSettingsRequestMultipart = {
     LLM_TOKEN_LIMIT_WEEKLY?: number;
     LLM_TOKEN_LIMIT_MONTHLY?: number;
     LLM_CHAT_SESSION_RETENTION_DAYS?: number;
-    LLM_CHAT_STORAGE_ENABLED?: boolean;
     LLM_CHAT_HISTORY_LIMIT?: number;
     SOFTWARE_CATALOG_EESSI_UPDATE_ENABLED?: boolean;
     SOFTWARE_CATALOG_EESSI_VERSION?: string;
@@ -42945,6 +42945,22 @@ export type MarketplaceComponentUsagesSetUserUsageData = {
 };
 
 export type MarketplaceComponentUsagesSetUserUsageResponses = {
+    /**
+     * No response body
+     */
+    201: unknown;
+};
+
+export type MarketplaceComponentUsagesSetUserUsagesData = {
+    body: ComponentUserUsageBulkCreateRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-component-usages/{uuid}/set_user_usages/';
+};
+
+export type MarketplaceComponentUsagesSetUserUsagesResponses = {
     /**
      * No response body
      */
