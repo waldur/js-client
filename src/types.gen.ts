@@ -7783,6 +7783,8 @@ export type ImportableResource = {
     description: string;
 };
 
+export type InjectionSeverityEnum = 'none' | 'low' | 'medium' | 'high' | 'critical';
+
 export type InstanceFlavorChangeRequest = {
     /**
      * The new flavor to use for the instance. Flavor change can only be done when instance is stopped.
@@ -10187,7 +10189,7 @@ export type Message = {
     readonly created: string;
     readonly is_flagged: boolean;
     readonly injection_score: number;
-    readonly injection_severity: string;
+    injection_severity: InjectionSeverityEnum;
     readonly injection_categories: unknown;
 };
 
@@ -24152,7 +24154,7 @@ export type ThreadSession = {
     is_archived?: boolean;
     readonly message_count?: number;
     readonly is_flagged?: boolean;
-    readonly max_severity?: string;
+    max_severity?: InjectionSeverityEnum;
     readonly user_username?: string;
     readonly user_full_name?: string;
     readonly created?: string;
@@ -27430,8 +27432,6 @@ export type CallReviewerPoolOEnum = '-created' | '-current_assignments' | '-expe
 export type ChatSessionFieldEnum = 'created' | 'modified' | 'user' | 'user_full_name' | 'user_username' | 'uuid';
 
 export type ThreadSessionFieldEnum = 'chat_session' | 'created' | 'flags' | 'is_archived' | 'is_flagged' | 'max_severity' | 'message_count' | 'modified' | 'name' | 'user_full_name' | 'user_username' | 'uuid';
-
-export type ThreadSessionMaxSeverityEnum = 'critical' | 'high' | 'low' | 'medium' | 'none';
 
 export type ThreadSessionOEnum = '-created' | '-modified' | 'created' | 'modified';
 
@@ -34698,7 +34698,7 @@ export type ChatThreadsListData = {
         field?: Array<ThreadSessionFieldEnum>;
         is_archived?: boolean;
         is_flagged?: boolean;
-        max_severity?: ThreadSessionMaxSeverityEnum;
+        max_severity?: InjectionSeverityEnum;
         modified?: string;
         /**
          * Ordering
