@@ -4322,7 +4322,7 @@ export type ConstanceSettings = {
     THUMBNAIL_SIZE?: string;
     ANONYMOUS_USER_CAN_VIEW_OFFERINGS?: boolean;
     ANONYMOUS_USER_CAN_VIEW_PLANS?: boolean;
-    RESTRICTED_OFFERING_VISIBILITY_MODE?: string;
+    RESTRICTED_OFFERING_VISIBILITY_MODE?: RestrictedofferingvisibilitymodeEnum;
     ALLOW_SERVICE_PROVIDER_OFFERING_MANAGEMENT?: boolean;
     NOTIFY_STAFF_ABOUT_APPROVALS?: boolean;
     NOTIFY_ABOUT_RESOURCE_CHANGE?: boolean;
@@ -4331,7 +4331,7 @@ export type ConstanceSettings = {
     ENABLE_STALE_RESOURCE_NOTIFICATIONS?: boolean;
     TELEMETRY_URL?: string;
     TELEMETRY_VERSION?: number;
-    SCRIPT_RUN_MODE?: string;
+    SCRIPT_RUN_MODE?: ScriptrunmodeEnum;
     DOCKER_CLIENT?: string;
     DOCKER_RUN_OPTIONS?: string;
     DOCKER_SCRIPT_DIR?: string;
@@ -4343,7 +4343,7 @@ export type ConstanceSettings = {
     K8S_JOB_TIMEOUT?: number;
     ENABLE_STRICT_CHECK_ACCEPTING_INVITATION?: boolean;
     INVITATION_DISABLE_MULTIPLE_ROLES?: boolean;
-    DEFAULT_IDP?: string;
+    DEFAULT_IDP?: DefaultidpEnum | BlankEnum;
     DOCS_URL?: string;
     SHORT_PAGE_TITLE?: string;
     FULL_PAGE_TITLE?: string;
@@ -4364,13 +4364,13 @@ export type ConstanceSettings = {
     SIDEBAR_LOGO?: string | null;
     SIDEBAR_LOGO_DARK?: string | null;
     SIDEBAR_LOGO_MOBILE?: string | null;
-    SIDEBAR_STYLE?: string;
-    FONT_FAMILY?: string;
+    SIDEBAR_STYLE?: SidebarstyleEnum;
+    FONT_FAMILY?: FontfamilyEnum;
     LOGIN_LOGO?: string | null;
     LOGIN_LOGO_MULTILINGUAL?: {
         [key: string]: string | null;
     };
-    LOGIN_PAGE_LAYOUT?: string;
+    LOGIN_PAGE_LAYOUT?: LoginpagelayoutEnum;
     LOGIN_PAGE_VIDEO_URL?: string;
     LOGIN_PAGE_STATS?: Array<unknown>;
     LOGIN_PAGE_CAROUSEL_SLIDES?: Array<unknown>;
@@ -4379,7 +4379,7 @@ export type ConstanceSettings = {
     OFFERING_LOGO_PLACEHOLDER?: string | null;
     DISCLAIMER_AREA_LOGO?: string | null;
     WALDUR_SUPPORT_ENABLED?: boolean;
-    WALDUR_SUPPORT_ACTIVE_BACKEND_TYPE?: string;
+    WALDUR_SUPPORT_ACTIVE_BACKEND_TYPE?: WaldursupportactivebackendtypeEnum;
     WALDUR_SUPPORT_DISPLAY_REQUEST_TYPE?: boolean;
     ATLASSIAN_MAP_WALDUR_USERS_TO_SERVICEDESK_AGENTS?: boolean;
     ATLASSIAN_API_URL?: string;
@@ -4416,7 +4416,7 @@ export type ConstanceSettings = {
     ZAMMAD_API_URL?: string;
     ZAMMAD_TOKEN?: string;
     ZAMMAD_GROUP?: string;
-    ZAMMAD_ARTICLE_TYPE?: string;
+    ZAMMAD_ARTICLE_TYPE?: ZammadarticletypeEnum;
     ZAMMAD_COMMENT_MARKER?: string;
     ZAMMAD_COMMENT_PREFIX?: string;
     ZAMMAD_COMMENT_COOLDOWN_DURATION?: number;
@@ -4479,17 +4479,17 @@ export type ConstanceSettings = {
     DEACTIVATE_USER_IF_NO_ROLES?: boolean;
     WALDUR_AUTH_SOCIAL_ROLE_CLAIM?: string;
     REMOTE_EDUTEAMS_REFRESH_TOKEN?: string;
-    DEFAULT_OFFERING_USER_ATTRIBUTES?: Array<string>;
-    INVITATION_ALLOWED_FIELDS?: Array<string>;
-    ENABLED_USER_PROFILE_ATTRIBUTES?: Array<string>;
-    MANDATORY_USER_ATTRIBUTES?: Array<string>;
+    DEFAULT_OFFERING_USER_ATTRIBUTES?: Array<UserAttributeEnum | BlankEnum>;
+    INVITATION_ALLOWED_FIELDS?: Array<UserAttributeEnum | BlankEnum>;
+    ENABLED_USER_PROFILE_ATTRIBUTES?: Array<UserAttributeEnum | BlankEnum>;
+    MANDATORY_USER_ATTRIBUTES?: Array<UserAttributeEnum | BlankEnum>;
     ENFORCE_MANDATORY_USER_ATTRIBUTES?: boolean;
     MAINTENANCE_ANNOUNCEMENT_NOTIFY_BEFORE_MINUTES?: number;
-    MAINTENANCE_ANNOUNCEMENT_NOTIFY_SYSTEM?: Array<string>;
+    MAINTENANCE_ANNOUNCEMENT_NOTIFY_SYSTEM?: Array<NotifySystemEnum | BlankEnum>;
     ENFORCE_USER_CONSENT_FOR_OFFERINGS?: boolean;
     ENFORCE_OFFERING_USER_PROFILE_COMPLETENESS?: boolean;
-    DISABLED_OFFERING_TYPES?: Array<string>;
-    ONBOARDING_VALIDATION_METHODS?: Array<string>;
+    DISABLED_OFFERING_TYPES?: Array<OfferingTypeEnum | BlankEnum>;
+    ONBOARDING_VALIDATION_METHODS?: Array<OnboardingValidationEnum | BlankEnum>;
     ONBOARDING_VERIFICATION_EXPIRY_HOURS?: number;
     ONBOARDING_ARIREGISTER_BASE_URL?: string;
     ONBOARDING_ARIREGISTER_USERNAME?: string;
@@ -4546,8 +4546,8 @@ export type ConstanceSettings = {
     ARROW_BILLING_CHECK_INTERVAL_HOURS?: number;
     SLURM_POLICY_EVALUATION_LOG_RETENTION_DAYS?: number;
     FEDERATED_IDENTITY_SYNC_ENABLED?: boolean;
-    FEDERATED_IDENTITY_SYNC_ALLOWED_ATTRIBUTES?: Array<string>;
-    FEDERATED_IDENTITY_DEACTIVATION_POLICY?: string;
+    FEDERATED_IDENTITY_SYNC_ALLOWED_ATTRIBUTES?: Array<UserAttributeEnum | BlankEnum>;
+    FEDERATED_IDENTITY_DEACTIVATION_POLICY?: FederatedidentitydeactivationpolicyEnum;
     ENABLE_PROJECT_DIGEST?: boolean;
 };
 
@@ -4564,7 +4564,7 @@ export type ConstanceSettingsRequest = {
     THUMBNAIL_SIZE?: string;
     ANONYMOUS_USER_CAN_VIEW_OFFERINGS?: boolean;
     ANONYMOUS_USER_CAN_VIEW_PLANS?: boolean;
-    RESTRICTED_OFFERING_VISIBILITY_MODE?: string;
+    RESTRICTED_OFFERING_VISIBILITY_MODE?: RestrictedofferingvisibilitymodeEnum;
     ALLOW_SERVICE_PROVIDER_OFFERING_MANAGEMENT?: boolean;
     NOTIFY_STAFF_ABOUT_APPROVALS?: boolean;
     NOTIFY_ABOUT_RESOURCE_CHANGE?: boolean;
@@ -4573,7 +4573,7 @@ export type ConstanceSettingsRequest = {
     ENABLE_STALE_RESOURCE_NOTIFICATIONS?: boolean;
     TELEMETRY_URL?: string;
     TELEMETRY_VERSION?: number;
-    SCRIPT_RUN_MODE?: string;
+    SCRIPT_RUN_MODE?: ScriptrunmodeEnum;
     DOCKER_CLIENT?: string;
     DOCKER_RUN_OPTIONS?: string;
     DOCKER_SCRIPT_DIR?: string;
@@ -4585,7 +4585,7 @@ export type ConstanceSettingsRequest = {
     K8S_JOB_TIMEOUT?: number;
     ENABLE_STRICT_CHECK_ACCEPTING_INVITATION?: boolean;
     INVITATION_DISABLE_MULTIPLE_ROLES?: boolean;
-    DEFAULT_IDP?: string;
+    DEFAULT_IDP?: DefaultidpEnum | BlankEnum;
     DOCS_URL?: string;
     SHORT_PAGE_TITLE?: string;
     FULL_PAGE_TITLE?: string;
@@ -4606,13 +4606,13 @@ export type ConstanceSettingsRequest = {
     SIDEBAR_LOGO?: (Blob | File) | null;
     SIDEBAR_LOGO_DARK?: (Blob | File) | null;
     SIDEBAR_LOGO_MOBILE?: (Blob | File) | null;
-    SIDEBAR_STYLE?: string;
-    FONT_FAMILY?: string;
+    SIDEBAR_STYLE?: SidebarstyleEnum;
+    FONT_FAMILY?: FontfamilyEnum;
     LOGIN_LOGO?: (Blob | File) | null;
     LOGIN_LOGO_MULTILINGUAL?: {
         [key: string]: (Blob | File) | null;
     };
-    LOGIN_PAGE_LAYOUT?: string;
+    LOGIN_PAGE_LAYOUT?: LoginpagelayoutEnum;
     LOGIN_PAGE_VIDEO_URL?: string;
     LOGIN_PAGE_STATS?: Array<unknown>;
     LOGIN_PAGE_CAROUSEL_SLIDES?: Array<unknown>;
@@ -4621,7 +4621,7 @@ export type ConstanceSettingsRequest = {
     OFFERING_LOGO_PLACEHOLDER?: (Blob | File) | null;
     DISCLAIMER_AREA_LOGO?: (Blob | File) | null;
     WALDUR_SUPPORT_ENABLED?: boolean;
-    WALDUR_SUPPORT_ACTIVE_BACKEND_TYPE?: string;
+    WALDUR_SUPPORT_ACTIVE_BACKEND_TYPE?: WaldursupportactivebackendtypeEnum;
     WALDUR_SUPPORT_DISPLAY_REQUEST_TYPE?: boolean;
     ATLASSIAN_MAP_WALDUR_USERS_TO_SERVICEDESK_AGENTS?: boolean;
     ATLASSIAN_API_URL?: string;
@@ -4658,7 +4658,7 @@ export type ConstanceSettingsRequest = {
     ZAMMAD_API_URL?: string;
     ZAMMAD_TOKEN?: string;
     ZAMMAD_GROUP?: string;
-    ZAMMAD_ARTICLE_TYPE?: string;
+    ZAMMAD_ARTICLE_TYPE?: ZammadarticletypeEnum;
     ZAMMAD_COMMENT_MARKER?: string;
     ZAMMAD_COMMENT_PREFIX?: string;
     ZAMMAD_COMMENT_COOLDOWN_DURATION?: number;
@@ -4721,17 +4721,17 @@ export type ConstanceSettingsRequest = {
     DEACTIVATE_USER_IF_NO_ROLES?: boolean;
     WALDUR_AUTH_SOCIAL_ROLE_CLAIM?: string;
     REMOTE_EDUTEAMS_REFRESH_TOKEN?: string;
-    DEFAULT_OFFERING_USER_ATTRIBUTES?: Array<string>;
-    INVITATION_ALLOWED_FIELDS?: Array<string>;
-    ENABLED_USER_PROFILE_ATTRIBUTES?: Array<string>;
-    MANDATORY_USER_ATTRIBUTES?: Array<string>;
+    DEFAULT_OFFERING_USER_ATTRIBUTES?: Array<UserAttributeEnum | BlankEnum>;
+    INVITATION_ALLOWED_FIELDS?: Array<UserAttributeEnum | BlankEnum>;
+    ENABLED_USER_PROFILE_ATTRIBUTES?: Array<UserAttributeEnum | BlankEnum>;
+    MANDATORY_USER_ATTRIBUTES?: Array<UserAttributeEnum | BlankEnum>;
     ENFORCE_MANDATORY_USER_ATTRIBUTES?: boolean;
     MAINTENANCE_ANNOUNCEMENT_NOTIFY_BEFORE_MINUTES?: number;
-    MAINTENANCE_ANNOUNCEMENT_NOTIFY_SYSTEM?: Array<string>;
+    MAINTENANCE_ANNOUNCEMENT_NOTIFY_SYSTEM?: Array<NotifySystemEnum | BlankEnum>;
     ENFORCE_USER_CONSENT_FOR_OFFERINGS?: boolean;
     ENFORCE_OFFERING_USER_PROFILE_COMPLETENESS?: boolean;
-    DISABLED_OFFERING_TYPES?: Array<string>;
-    ONBOARDING_VALIDATION_METHODS?: Array<string>;
+    DISABLED_OFFERING_TYPES?: Array<OfferingTypeEnum | BlankEnum>;
+    ONBOARDING_VALIDATION_METHODS?: Array<OnboardingValidationEnum | BlankEnum>;
     ONBOARDING_VERIFICATION_EXPIRY_HOURS?: number;
     ONBOARDING_ARIREGISTER_BASE_URL?: string;
     ONBOARDING_ARIREGISTER_USERNAME?: string;
@@ -4788,8 +4788,8 @@ export type ConstanceSettingsRequest = {
     ARROW_BILLING_CHECK_INTERVAL_HOURS?: number;
     SLURM_POLICY_EVALUATION_LOG_RETENTION_DAYS?: number;
     FEDERATED_IDENTITY_SYNC_ENABLED?: boolean;
-    FEDERATED_IDENTITY_SYNC_ALLOWED_ATTRIBUTES?: Array<string>;
-    FEDERATED_IDENTITY_DEACTIVATION_POLICY?: string;
+    FEDERATED_IDENTITY_SYNC_ALLOWED_ATTRIBUTES?: Array<UserAttributeEnum | BlankEnum>;
+    FEDERATED_IDENTITY_DEACTIVATION_POLICY?: FederatedidentitydeactivationpolicyEnum;
     ENABLE_PROJECT_DIGEST?: boolean;
 };
 
@@ -5637,6 +5637,8 @@ export type CustomerUser = {
     readonly expiration_time?: string | null;
     image?: string | null;
 };
+
+export type DefaultidpEnum = 'tara' | 'eduteams' | 'keycloak';
 
 export type DlqQueue = {
     /**
@@ -6848,6 +6850,10 @@ export type ExternalSubnet = {
     public_ip_range?: string;
     description?: string;
 };
+
+export type FederatedidentitydeactivationpolicyEnum = 'all_isds_removed' | 'any_isd_removed';
+
+export type FontfamilyEnum = 'Inter' | 'Maven Pro';
 
 export type FeatureMetadataResponse = {
     /**
@@ -8638,6 +8644,8 @@ export type KeywordSearchModeEnum = 'expertise_only' | 'full_text';
 
 export type KindEnum = 'default' | 'course' | 'public';
 
+export type LoginpagelayoutEnum = 'split-screen' | 'centered-card' | 'minimal' | 'full-hero' | 'gradient' | 'stacked' | 'right-split' | 'glassmorphism' | 'neumorphism' | 'animated-gradient' | 'video-background' | 'bottom-sheet' | 'tabbed' | 'wizard' | 'stats' | 'news' | 'carousel' | 'logo-watermark' | 'brand-pattern' | 'duotone' | 'diagonal' | 'time-based' | 'seasonal' | 'weather';
+
 export type LexisLink = {
     readonly url: string;
     readonly uuid: string;
@@ -9365,6 +9373,10 @@ export type MergedPluginOptions = {
      */
     restrict_deletion_with_active_resources?: boolean;
     /**
+     * Python format string for generating resource names. Available variables: {customer_name}, {customer_slug}, {project_name}, {project_slug}, {offering_name}, {offering_slug}, {plan_name}, {counter}, {attributes[KEY]}.
+     */
+    resource_name_pattern?: string;
+    /**
      * If set, it will be used as a default MTU for the first network in a tenant
      */
     default_internal_network_mtu?: number;
@@ -9655,6 +9667,10 @@ export type MergedPluginOptionsRequest = {
      * If set to True, offering cannot be deleted while it has non-terminated resources.
      */
     restrict_deletion_with_active_resources?: boolean;
+    /**
+     * Python format string for generating resource names. Available variables: {customer_name}, {customer_slug}, {project_name}, {project_slug}, {offering_name}, {offering_slug}, {plan_name}, {counter}, {attributes[KEY]}.
+     */
+    resource_name_pattern?: string;
     /**
      * If set, it will be used as a default MTU for the first network in a tenant
      */
@@ -11178,6 +11194,8 @@ export type NotificationTemplateUpdateSerializersRequest = {
     content: string;
 };
 
+export type NotifySystemEnum = 'AdminAnnouncement' | 'BroadcastMessage';
+
 export type NullEnum = unknown;
 
 export type ObservableObjectTypeEnum = 'order' | 'user_role' | 'resource' | 'offering_user' | 'importable_resources' | 'service_account' | 'course_account' | 'resource_periodic_limits';
@@ -12264,6 +12282,8 @@ export type OfferingThumbnailRequest = {
     thumbnail: Blob | File;
 };
 
+export type OfferingTypeEnum = 'Support.OfferingTemplate' | 'Marketplace.Booking' | 'Marketplace.Basic' | 'OpenStack.Tenant' | 'OpenStack.Instance' | 'OpenStack.Volume' | 'Marketplace.Rancher' | 'VMware.VirtualMachine' | 'Waldur.RemoteOffering' | 'Marketplace.Script' | 'SlurmInvoices.SlurmPackage' | 'Marketplace.Slurm';
+
 export type OfferingUuidRequest = {
     offering_uuid: string;
 };
@@ -12696,6 +12716,8 @@ export type OnboardingRunValidationRequestRequest = {
      */
     birth_date?: string | null;
 };
+
+export type OnboardingValidationEnum = 'ariregister' | 'wirtschaftscompass' | 'bolagsverket';
 
 export type OnboardingVerification = {
     readonly uuid: string;
@@ -19496,6 +19518,8 @@ export type QuotasUpdateRequest = {
     };
 };
 
+export type RestrictedofferingvisibilitymodeEnum = 'show_all' | 'show_restricted_disabled' | 'hide_inaccessible' | 'require_membership';
+
 export type RancherApplication = {
     readonly url?: string;
     readonly uuid?: string;
@@ -21204,6 +21228,8 @@ export type ResourceState = 'Creating' | 'OK' | 'Erred' | 'Updating' | 'Terminat
 export type ResourceSuggestNameRequest = {
     project: string;
     offering: string;
+    plan?: string | null;
+    attributes?: unknown;
 };
 
 export type ResourceSwitchPlanRequest = {
@@ -22565,6 +22591,10 @@ export type RuntimeStates = {
      */
     readonly label: string;
 };
+
+export type ScriptrunmodeEnum = 'docker' | 'k8s';
+
+export type SidebarstyleEnum = 'primary' | 'accent' | 'accent-light' | 'dark' | 'light' | 'auto';
 
 export type Saml2Login = {
     idp: string;
@@ -24634,6 +24664,8 @@ export type UserAgreementRequest = {
     language: string;
 };
 
+export type UserAttributeEnum = 'username' | 'full_name' | 'email' | 'phone_number' | 'organization' | 'job_title' | 'affiliations' | 'gender' | 'personal_title' | 'birth_date' | 'place_of_birth' | 'country_of_residence' | 'nationality' | 'nationalities' | 'organization_country' | 'organization_type' | 'organization_registry_code' | 'eduperson_assurance' | 'civil_number' | 'identity_source';
+
 export type UserAuthMethodCount = {
     /**
      * Authentication method
@@ -25449,6 +25481,8 @@ export type VolumeTypeResponse = {
     description?: string;
 };
 
+export type WaldursupportactivebackendtypeEnum = 'atlassian' | 'zammad' | 'smax';
+
 export type WaldurCustomerBrief = {
     uuid: string;
     name: string;
@@ -25530,6 +25564,8 @@ export type WebHookRequest = {
 };
 
 export type WidgetEnum = 'csv' | 'filesize' | 'attached_instance';
+
+export type ZammadarticletypeEnum = 'email' | 'phone' | 'web' | 'note' | 'sms' | 'chat' | 'fax' | 'twitter status' | 'twitter direct-message' | 'facebook feed post' | 'facebook feed comment' | 'telegram personal-message';
 
 export type GenericOrderAttributes = {
     /**
@@ -26490,7 +26526,7 @@ export type ConstanceSettingsRequestForm = {
     THUMBNAIL_SIZE?: string;
     ANONYMOUS_USER_CAN_VIEW_OFFERINGS?: boolean;
     ANONYMOUS_USER_CAN_VIEW_PLANS?: boolean;
-    RESTRICTED_OFFERING_VISIBILITY_MODE?: string;
+    RESTRICTED_OFFERING_VISIBILITY_MODE?: RestrictedofferingvisibilitymodeEnum;
     ALLOW_SERVICE_PROVIDER_OFFERING_MANAGEMENT?: boolean;
     NOTIFY_STAFF_ABOUT_APPROVALS?: boolean;
     NOTIFY_ABOUT_RESOURCE_CHANGE?: boolean;
@@ -26499,7 +26535,7 @@ export type ConstanceSettingsRequestForm = {
     ENABLE_STALE_RESOURCE_NOTIFICATIONS?: boolean;
     TELEMETRY_URL?: string;
     TELEMETRY_VERSION?: number;
-    SCRIPT_RUN_MODE?: string;
+    SCRIPT_RUN_MODE?: ScriptrunmodeEnum;
     DOCKER_CLIENT?: string;
     DOCKER_RUN_OPTIONS?: string;
     DOCKER_SCRIPT_DIR?: string;
@@ -26511,7 +26547,7 @@ export type ConstanceSettingsRequestForm = {
     K8S_JOB_TIMEOUT?: number;
     ENABLE_STRICT_CHECK_ACCEPTING_INVITATION?: boolean;
     INVITATION_DISABLE_MULTIPLE_ROLES?: boolean;
-    DEFAULT_IDP?: string;
+    DEFAULT_IDP?: DefaultidpEnum | BlankEnum;
     DOCS_URL?: string;
     SHORT_PAGE_TITLE?: string;
     FULL_PAGE_TITLE?: string;
@@ -26532,13 +26568,13 @@ export type ConstanceSettingsRequestForm = {
     SIDEBAR_LOGO?: (Blob | File) | null;
     SIDEBAR_LOGO_DARK?: (Blob | File) | null;
     SIDEBAR_LOGO_MOBILE?: (Blob | File) | null;
-    SIDEBAR_STYLE?: string;
-    FONT_FAMILY?: string;
+    SIDEBAR_STYLE?: SidebarstyleEnum;
+    FONT_FAMILY?: FontfamilyEnum;
     LOGIN_LOGO?: (Blob | File) | null;
     LOGIN_LOGO_MULTILINGUAL?: {
         [key: string]: (Blob | File) | null;
     };
-    LOGIN_PAGE_LAYOUT?: string;
+    LOGIN_PAGE_LAYOUT?: LoginpagelayoutEnum;
     LOGIN_PAGE_VIDEO_URL?: string;
     LOGIN_PAGE_STATS?: Array<unknown>;
     LOGIN_PAGE_CAROUSEL_SLIDES?: Array<unknown>;
@@ -26547,7 +26583,7 @@ export type ConstanceSettingsRequestForm = {
     OFFERING_LOGO_PLACEHOLDER?: (Blob | File) | null;
     DISCLAIMER_AREA_LOGO?: (Blob | File) | null;
     WALDUR_SUPPORT_ENABLED?: boolean;
-    WALDUR_SUPPORT_ACTIVE_BACKEND_TYPE?: string;
+    WALDUR_SUPPORT_ACTIVE_BACKEND_TYPE?: WaldursupportactivebackendtypeEnum;
     WALDUR_SUPPORT_DISPLAY_REQUEST_TYPE?: boolean;
     ATLASSIAN_MAP_WALDUR_USERS_TO_SERVICEDESK_AGENTS?: boolean;
     ATLASSIAN_API_URL?: string;
@@ -26584,7 +26620,7 @@ export type ConstanceSettingsRequestForm = {
     ZAMMAD_API_URL?: string;
     ZAMMAD_TOKEN?: string;
     ZAMMAD_GROUP?: string;
-    ZAMMAD_ARTICLE_TYPE?: string;
+    ZAMMAD_ARTICLE_TYPE?: ZammadarticletypeEnum;
     ZAMMAD_COMMENT_MARKER?: string;
     ZAMMAD_COMMENT_PREFIX?: string;
     ZAMMAD_COMMENT_COOLDOWN_DURATION?: number;
@@ -26647,17 +26683,17 @@ export type ConstanceSettingsRequestForm = {
     DEACTIVATE_USER_IF_NO_ROLES?: boolean;
     WALDUR_AUTH_SOCIAL_ROLE_CLAIM?: string;
     REMOTE_EDUTEAMS_REFRESH_TOKEN?: string;
-    DEFAULT_OFFERING_USER_ATTRIBUTES?: Array<string>;
-    INVITATION_ALLOWED_FIELDS?: Array<string>;
-    ENABLED_USER_PROFILE_ATTRIBUTES?: Array<string>;
-    MANDATORY_USER_ATTRIBUTES?: Array<string>;
+    DEFAULT_OFFERING_USER_ATTRIBUTES?: Array<UserAttributeEnum | BlankEnum>;
+    INVITATION_ALLOWED_FIELDS?: Array<UserAttributeEnum | BlankEnum>;
+    ENABLED_USER_PROFILE_ATTRIBUTES?: Array<UserAttributeEnum | BlankEnum>;
+    MANDATORY_USER_ATTRIBUTES?: Array<UserAttributeEnum | BlankEnum>;
     ENFORCE_MANDATORY_USER_ATTRIBUTES?: boolean;
     MAINTENANCE_ANNOUNCEMENT_NOTIFY_BEFORE_MINUTES?: number;
-    MAINTENANCE_ANNOUNCEMENT_NOTIFY_SYSTEM?: Array<string>;
+    MAINTENANCE_ANNOUNCEMENT_NOTIFY_SYSTEM?: Array<NotifySystemEnum | BlankEnum>;
     ENFORCE_USER_CONSENT_FOR_OFFERINGS?: boolean;
     ENFORCE_OFFERING_USER_PROFILE_COMPLETENESS?: boolean;
-    DISABLED_OFFERING_TYPES?: Array<string>;
-    ONBOARDING_VALIDATION_METHODS?: Array<string>;
+    DISABLED_OFFERING_TYPES?: Array<OfferingTypeEnum | BlankEnum>;
+    ONBOARDING_VALIDATION_METHODS?: Array<OnboardingValidationEnum | BlankEnum>;
     ONBOARDING_VERIFICATION_EXPIRY_HOURS?: number;
     ONBOARDING_ARIREGISTER_BASE_URL?: string;
     ONBOARDING_ARIREGISTER_USERNAME?: string;
@@ -26714,8 +26750,8 @@ export type ConstanceSettingsRequestForm = {
     ARROW_BILLING_CHECK_INTERVAL_HOURS?: number;
     SLURM_POLICY_EVALUATION_LOG_RETENTION_DAYS?: number;
     FEDERATED_IDENTITY_SYNC_ENABLED?: boolean;
-    FEDERATED_IDENTITY_SYNC_ALLOWED_ATTRIBUTES?: Array<string>;
-    FEDERATED_IDENTITY_DEACTIVATION_POLICY?: string;
+    FEDERATED_IDENTITY_SYNC_ALLOWED_ATTRIBUTES?: Array<UserAttributeEnum | BlankEnum>;
+    FEDERATED_IDENTITY_DEACTIVATION_POLICY?: FederatedidentitydeactivationpolicyEnum;
     ENABLE_PROJECT_DIGEST?: boolean;
 };
 
@@ -26732,7 +26768,7 @@ export type ConstanceSettingsRequestMultipart = {
     THUMBNAIL_SIZE?: string;
     ANONYMOUS_USER_CAN_VIEW_OFFERINGS?: boolean;
     ANONYMOUS_USER_CAN_VIEW_PLANS?: boolean;
-    RESTRICTED_OFFERING_VISIBILITY_MODE?: string;
+    RESTRICTED_OFFERING_VISIBILITY_MODE?: RestrictedofferingvisibilitymodeEnum;
     ALLOW_SERVICE_PROVIDER_OFFERING_MANAGEMENT?: boolean;
     NOTIFY_STAFF_ABOUT_APPROVALS?: boolean;
     NOTIFY_ABOUT_RESOURCE_CHANGE?: boolean;
@@ -26741,7 +26777,7 @@ export type ConstanceSettingsRequestMultipart = {
     ENABLE_STALE_RESOURCE_NOTIFICATIONS?: boolean;
     TELEMETRY_URL?: string;
     TELEMETRY_VERSION?: number;
-    SCRIPT_RUN_MODE?: string;
+    SCRIPT_RUN_MODE?: ScriptrunmodeEnum;
     DOCKER_CLIENT?: string;
     DOCKER_RUN_OPTIONS?: string;
     DOCKER_SCRIPT_DIR?: string;
@@ -26753,7 +26789,7 @@ export type ConstanceSettingsRequestMultipart = {
     K8S_JOB_TIMEOUT?: number;
     ENABLE_STRICT_CHECK_ACCEPTING_INVITATION?: boolean;
     INVITATION_DISABLE_MULTIPLE_ROLES?: boolean;
-    DEFAULT_IDP?: string;
+    DEFAULT_IDP?: DefaultidpEnum | BlankEnum;
     DOCS_URL?: string;
     SHORT_PAGE_TITLE?: string;
     FULL_PAGE_TITLE?: string;
@@ -26774,13 +26810,13 @@ export type ConstanceSettingsRequestMultipart = {
     SIDEBAR_LOGO?: (Blob | File) | null;
     SIDEBAR_LOGO_DARK?: (Blob | File) | null;
     SIDEBAR_LOGO_MOBILE?: (Blob | File) | null;
-    SIDEBAR_STYLE?: string;
-    FONT_FAMILY?: string;
+    SIDEBAR_STYLE?: SidebarstyleEnum;
+    FONT_FAMILY?: FontfamilyEnum;
     LOGIN_LOGO?: (Blob | File) | null;
     LOGIN_LOGO_MULTILINGUAL?: {
         [key: string]: (Blob | File) | null;
     };
-    LOGIN_PAGE_LAYOUT?: string;
+    LOGIN_PAGE_LAYOUT?: LoginpagelayoutEnum;
     LOGIN_PAGE_VIDEO_URL?: string;
     LOGIN_PAGE_STATS?: Array<unknown>;
     LOGIN_PAGE_CAROUSEL_SLIDES?: Array<unknown>;
@@ -26789,7 +26825,7 @@ export type ConstanceSettingsRequestMultipart = {
     OFFERING_LOGO_PLACEHOLDER?: (Blob | File) | null;
     DISCLAIMER_AREA_LOGO?: (Blob | File) | null;
     WALDUR_SUPPORT_ENABLED?: boolean;
-    WALDUR_SUPPORT_ACTIVE_BACKEND_TYPE?: string;
+    WALDUR_SUPPORT_ACTIVE_BACKEND_TYPE?: WaldursupportactivebackendtypeEnum;
     WALDUR_SUPPORT_DISPLAY_REQUEST_TYPE?: boolean;
     ATLASSIAN_MAP_WALDUR_USERS_TO_SERVICEDESK_AGENTS?: boolean;
     ATLASSIAN_API_URL?: string;
@@ -26826,7 +26862,7 @@ export type ConstanceSettingsRequestMultipart = {
     ZAMMAD_API_URL?: string;
     ZAMMAD_TOKEN?: string;
     ZAMMAD_GROUP?: string;
-    ZAMMAD_ARTICLE_TYPE?: string;
+    ZAMMAD_ARTICLE_TYPE?: ZammadarticletypeEnum;
     ZAMMAD_COMMENT_MARKER?: string;
     ZAMMAD_COMMENT_PREFIX?: string;
     ZAMMAD_COMMENT_COOLDOWN_DURATION?: number;
@@ -26889,17 +26925,17 @@ export type ConstanceSettingsRequestMultipart = {
     DEACTIVATE_USER_IF_NO_ROLES?: boolean;
     WALDUR_AUTH_SOCIAL_ROLE_CLAIM?: string;
     REMOTE_EDUTEAMS_REFRESH_TOKEN?: string;
-    DEFAULT_OFFERING_USER_ATTRIBUTES?: Array<string>;
-    INVITATION_ALLOWED_FIELDS?: Array<string>;
-    ENABLED_USER_PROFILE_ATTRIBUTES?: Array<string>;
-    MANDATORY_USER_ATTRIBUTES?: Array<string>;
+    DEFAULT_OFFERING_USER_ATTRIBUTES?: Array<UserAttributeEnum | BlankEnum>;
+    INVITATION_ALLOWED_FIELDS?: Array<UserAttributeEnum | BlankEnum>;
+    ENABLED_USER_PROFILE_ATTRIBUTES?: Array<UserAttributeEnum | BlankEnum>;
+    MANDATORY_USER_ATTRIBUTES?: Array<UserAttributeEnum | BlankEnum>;
     ENFORCE_MANDATORY_USER_ATTRIBUTES?: boolean;
     MAINTENANCE_ANNOUNCEMENT_NOTIFY_BEFORE_MINUTES?: number;
-    MAINTENANCE_ANNOUNCEMENT_NOTIFY_SYSTEM?: Array<string>;
+    MAINTENANCE_ANNOUNCEMENT_NOTIFY_SYSTEM?: Array<NotifySystemEnum | BlankEnum>;
     ENFORCE_USER_CONSENT_FOR_OFFERINGS?: boolean;
     ENFORCE_OFFERING_USER_PROFILE_COMPLETENESS?: boolean;
-    DISABLED_OFFERING_TYPES?: Array<string>;
-    ONBOARDING_VALIDATION_METHODS?: Array<string>;
+    DISABLED_OFFERING_TYPES?: Array<OfferingTypeEnum | BlankEnum>;
+    ONBOARDING_VALIDATION_METHODS?: Array<OnboardingValidationEnum | BlankEnum>;
     ONBOARDING_VERIFICATION_EXPIRY_HOURS?: number;
     ONBOARDING_ARIREGISTER_BASE_URL?: string;
     ONBOARDING_ARIREGISTER_USERNAME?: string;
@@ -26956,8 +26992,8 @@ export type ConstanceSettingsRequestMultipart = {
     ARROW_BILLING_CHECK_INTERVAL_HOURS?: number;
     SLURM_POLICY_EVALUATION_LOG_RETENTION_DAYS?: number;
     FEDERATED_IDENTITY_SYNC_ENABLED?: boolean;
-    FEDERATED_IDENTITY_SYNC_ALLOWED_ATTRIBUTES?: Array<string>;
-    FEDERATED_IDENTITY_DEACTIVATION_POLICY?: string;
+    FEDERATED_IDENTITY_SYNC_ALLOWED_ATTRIBUTES?: Array<UserAttributeEnum | BlankEnum>;
+    FEDERATED_IDENTITY_DEACTIVATION_POLICY?: FederatedidentitydeactivationpolicyEnum;
     ENABLE_PROJECT_DIGEST?: boolean;
 };
 

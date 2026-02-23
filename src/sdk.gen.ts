@@ -21225,7 +21225,7 @@ export const marketplaceResourcesUpdateOptions = <ThrowOnError extends boolean =
 
 /**
  * Suggest a resource name
- * Generates a suggested name for a new resource based on the project and offering.
+ * Generates a suggested name for a new resource based on the project and offering. If the offering has a `resource_name_pattern` in `plugin_options`, it is used as a Python format string with variables: `{customer_name}`, `{customer_slug}`, `{project_name}`, `{project_slug}`, `{offering_name}`, `{offering_slug}`, `{plan_name}`, `{counter}`, and `{attributes[KEY]}` for any order form value.
  */
 export const marketplaceResourcesSuggestName = <ThrowOnError extends boolean = false>(options: Options<MarketplaceResourcesSuggestNameData, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).post<MarketplaceResourcesSuggestNameResponses, unknown, ThrowOnError>({
