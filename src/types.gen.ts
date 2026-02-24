@@ -27593,11 +27593,11 @@ export type MarketplaceServiceProviderUserOEnum = '-description' | '-email' | '-
 
 export type AgentServiceStateEnum = 1 | 2 | 3;
 
-export type SoftwareCatalogOEnum = '-created' | '-modified' | '-name' | '-version' | 'created' | 'modified' | 'name' | 'version';
+export type SoftwareCatalogOEnum = '-catalog_type' | '-created' | '-modified' | '-name' | '-version' | 'catalog_type' | 'created' | 'modified' | 'name' | 'version';
 
 export type SoftwarePackageOEnum = '-catalog_name' | '-catalog_version' | '-created' | '-modified' | '-name' | 'catalog_name' | 'catalog_version' | 'created' | 'modified' | 'name';
 
-export type SoftwareTargetOEnum = '-cpu_family' | '-cpu_microarchitecture' | '-created' | '-package_name' | 'cpu_family' | 'cpu_microarchitecture' | 'created' | 'package_name';
+export type SoftwareTargetOEnum = '-cpu_family' | '-cpu_microarchitecture' | '-created' | '-package_name' | '-target_name' | '-target_type' | 'cpu_family' | 'cpu_microarchitecture' | 'created' | 'package_name' | 'target_name' | 'target_type';
 
 export type SoftwareVersionOEnum = '-created' | '-package_name' | '-release_date' | '-version' | 'created' | 'package_name' | 'release_date' | 'version';
 
@@ -56584,6 +56584,20 @@ export type MarketplaceSoftwareCatalogsListData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Filter catalogs by auto-update status
+         */
+        auto_update_enabled?: boolean;
+        /**
+         * Filter by catalog type (binary_runtime, source_package, package_manager)
+         *
+         *
+         */
+        catalog_type?: CatalogTypeEnum;
+        /**
+         * Filter catalogs by description (case-insensitive partial match)
+         */
+        description?: string;
         name?: string;
         /**
          * Ordering
@@ -56614,6 +56628,20 @@ export type MarketplaceSoftwareCatalogsCountData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Filter catalogs by auto-update status
+         */
+        auto_update_enabled?: boolean;
+        /**
+         * Filter by catalog type (binary_runtime, source_package, package_manager)
+         *
+         *
+         */
+        catalog_type?: CatalogTypeEnum;
+        /**
+         * Filter catalogs by description (case-insensitive partial match)
+         */
+        description?: string;
         name?: string;
         /**
          * Ordering
@@ -56737,6 +56765,20 @@ export type MarketplaceSoftwareCatalogsDiscoverListData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Filter catalogs by auto-update status
+         */
+        auto_update_enabled?: boolean;
+        /**
+         * Filter by catalog type (binary_runtime, source_package, package_manager)
+         *
+         *
+         */
+        catalog_type?: CatalogTypeEnum;
+        /**
+         * Filter catalogs by description (case-insensitive partial match)
+         */
+        description?: string;
         name?: string;
         /**
          * Ordering
@@ -56767,6 +56809,20 @@ export type MarketplaceSoftwareCatalogsDiscoverCountData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Filter catalogs by auto-update status
+         */
+        auto_update_enabled?: boolean;
+        /**
+         * Filter by catalog type (binary_runtime, source_package, package_manager)
+         *
+         *
+         */
+        catalog_type?: CatalogTypeEnum;
+        /**
+         * Filter catalogs by description (case-insensitive partial match)
+         */
+        description?: string;
         name?: string;
         /**
          * Ordering
@@ -56817,6 +56873,12 @@ export type MarketplaceSoftwarePackagesListData = {
          */
         catalog_name?: string;
         /**
+         * Filter packages by catalog type (binary_runtime, source_package, package_manager)
+         *
+         *
+         */
+        catalog_type?: CatalogTypeEnum;
+        /**
          * Filter packages from a specific software catalog
          */
         catalog_uuid?: string;
@@ -56824,6 +56886,10 @@ export type MarketplaceSoftwarePackagesListData = {
          * Filter packages by catalog version (case-insensitive partial match)
          */
         catalog_version?: string;
+        /**
+         * Filter packages by category (e.g., bio, hpc, chemistry)
+         */
+        category?: string;
         /**
          * Filter packages available for specific CPU family (e.g., x86_64, aarch64)
          */
@@ -56853,6 +56919,10 @@ export type MarketplaceSoftwarePackagesListData = {
          */
         is_extension?: boolean;
         /**
+         * Filter packages by license (e.g., GPL-3.0, MIT)
+         */
+        license?: string;
+        /**
          * Filter packages by name (case-insensitive partial match)
          */
         name?: string;
@@ -56879,9 +56949,21 @@ export type MarketplaceSoftwarePackagesListData = {
          */
         page_size?: number;
         /**
+         * Filter extension packages belonging to a specific parent package
+         */
+        parent_software_uuid?: string;
+        /**
          * Query packages by name, description, or version (case-insensitive partial match)
          */
         query?: string;
+        /**
+         * Filter packages compatible with a specific toolchain family (e.g., foss_2022b)
+         */
+        toolchain_families_compatibility?: string;
+        /**
+         * Filter packages by toolchain name (e.g., foss, gfbf)
+         */
+        toolchain_name?: string;
     };
     url: '/api/marketplace-software-packages/';
 };
@@ -56901,6 +56983,12 @@ export type MarketplaceSoftwarePackagesCountData = {
          */
         catalog_name?: string;
         /**
+         * Filter packages by catalog type (binary_runtime, source_package, package_manager)
+         *
+         *
+         */
+        catalog_type?: CatalogTypeEnum;
+        /**
          * Filter packages from a specific software catalog
          */
         catalog_uuid?: string;
@@ -56908,6 +56996,10 @@ export type MarketplaceSoftwarePackagesCountData = {
          * Filter packages by catalog version (case-insensitive partial match)
          */
         catalog_version?: string;
+        /**
+         * Filter packages by category (e.g., bio, hpc, chemistry)
+         */
+        category?: string;
         /**
          * Filter packages available for specific CPU family (e.g., x86_64, aarch64)
          */
@@ -56937,6 +57029,10 @@ export type MarketplaceSoftwarePackagesCountData = {
          */
         is_extension?: boolean;
         /**
+         * Filter packages by license (e.g., GPL-3.0, MIT)
+         */
+        license?: string;
+        /**
          * Filter packages by name (case-insensitive partial match)
          */
         name?: string;
@@ -56963,9 +57059,21 @@ export type MarketplaceSoftwarePackagesCountData = {
          */
         page_size?: number;
         /**
+         * Filter extension packages belonging to a specific parent package
+         */
+        parent_software_uuid?: string;
+        /**
          * Query packages by name, description, or version (case-insensitive partial match)
          */
         query?: string;
+        /**
+         * Filter packages compatible with a specific toolchain family (e.g., foss_2022b)
+         */
+        toolchain_families_compatibility?: string;
+        /**
+         * Filter packages by toolchain name (e.g., foss, gfbf)
+         */
+        toolchain_name?: string;
     };
     url: '/api/marketplace-software-packages/';
 };
@@ -57077,6 +57185,18 @@ export type MarketplaceSoftwareTargetsListData = {
          */
         page_size?: number;
         path?: string;
+        /**
+         * Filter targets by name (e.g., x86_64, aarch64)
+         */
+        target_name?: string;
+        /**
+         * Filter targets by subtype (e.g., microarchitecture, distribution)
+         */
+        target_subtype?: string;
+        /**
+         * Filter targets by type (e.g., architecture, platform, variant)
+         */
+        target_type?: string;
         version_uuid?: string;
     };
     url: '/api/marketplace-software-targets/';
@@ -57112,6 +57232,18 @@ export type MarketplaceSoftwareTargetsCountData = {
          */
         page_size?: number;
         path?: string;
+        /**
+         * Filter targets by name (e.g., x86_64, aarch64)
+         */
+        target_name?: string;
+        /**
+         * Filter targets by subtype (e.g., microarchitecture, distribution)
+         */
+        target_subtype?: string;
+        /**
+         * Filter targets by type (e.g., architecture, platform, variant)
+         */
+        target_type?: string;
         version_uuid?: string;
     };
     url: '/api/marketplace-software-targets/';
@@ -57204,6 +57336,12 @@ export type MarketplaceSoftwareVersionsListData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Filter versions by catalog type (binary_runtime, source_package, package_manager)
+         *
+         *
+         */
+        catalog_type?: CatalogTypeEnum;
         catalog_uuid?: string;
         cpu_family?: string;
         cpu_microarchitecture?: string;
@@ -57224,7 +57362,31 @@ export type MarketplaceSoftwareVersionsListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Filter versions by release date range (release_date_after, release_date_before)
+         */
+        release_date_after?: string;
+        /**
+         * Filter versions by release date range (release_date_after, release_date_before)
+         */
+        release_date_before?: string;
+        /**
+         * Filter versions compatible with a specific toolchain family (e.g., foss_2022b)
+         */
+        toolchain_families_compatibility?: string;
+        /**
+         * Filter versions by toolchain name (e.g., foss, gfbf)
+         */
+        toolchain_name?: string;
+        /**
+         * Filter versions by toolchain version (e.g., 2023b)
+         */
+        toolchain_version?: string;
         version?: string;
+        /**
+         * Filter versions by exact version string
+         */
+        version_exact?: string;
     };
     url: '/api/marketplace-software-versions/';
 };
@@ -57239,6 +57401,12 @@ export type MarketplaceSoftwareVersionsCountData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Filter versions by catalog type (binary_runtime, source_package, package_manager)
+         *
+         *
+         */
+        catalog_type?: CatalogTypeEnum;
         catalog_uuid?: string;
         cpu_family?: string;
         cpu_microarchitecture?: string;
@@ -57259,7 +57427,31 @@ export type MarketplaceSoftwareVersionsCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Filter versions by release date range (release_date_after, release_date_before)
+         */
+        release_date_after?: string;
+        /**
+         * Filter versions by release date range (release_date_after, release_date_before)
+         */
+        release_date_before?: string;
+        /**
+         * Filter versions compatible with a specific toolchain family (e.g., foss_2022b)
+         */
+        toolchain_families_compatibility?: string;
+        /**
+         * Filter versions by toolchain name (e.g., foss, gfbf)
+         */
+        toolchain_name?: string;
+        /**
+         * Filter versions by toolchain version (e.g., 2023b)
+         */
+        toolchain_version?: string;
         version?: string;
+        /**
+         * Filter versions by exact version string
+         */
+        version_exact?: string;
     };
     url: '/api/marketplace-software-versions/';
 };
@@ -83007,6 +83199,24 @@ export type UserPermissionRequestsCountResponses = {
      */
     200: unknown;
 };
+
+export type UserPermissionRequestsDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/user-permission-requests/{uuid}/';
+};
+
+export type UserPermissionRequestsDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type UserPermissionRequestsDestroyResponse = UserPermissionRequestsDestroyResponses[keyof UserPermissionRequestsDestroyResponses];
 
 export type UserPermissionRequestsRetrieveData = {
     body?: never;
