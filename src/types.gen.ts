@@ -27481,6 +27481,8 @@ export type CustomerCreditOEnum = '-customer_name' | '-end_date' | '-expected_co
 
 export type CustomerPermissionReviewOEnum = '-closed' | '-created' | 'closed' | 'created';
 
+export type CustomerQuotasQuotaNameEnum = 'estimated_price' | 'nc_resource_count' | 'os_cpu_count' | 'os_ram_size' | 'os_storage_size' | 'vpc_cpu_count' | 'vpc_floating_ip_count' | 'vpc_instance_count' | 'vpc_ram_size' | 'vpc_storage_size';
+
 export type CustomerFieldEnum = 'abbreviation' | 'access_subnets' | 'accounting_start_date' | 'address' | 'agreement_number' | 'archived' | 'backend_id' | 'bank_account' | 'bank_name' | 'billing_price_estimate' | 'blocked' | 'call_managing_organization_uuid' | 'contact_details' | 'country' | 'country_name' | 'created' | 'customer_credit' | 'customer_unallocated_credit' | 'default_tax_percent' | 'description' | 'display_billing_info_in_projects' | 'display_name' | 'domain' | 'email' | 'grace_period_days' | 'homepage' | 'image' | 'is_service_provider' | 'latitude' | 'longitude' | 'max_service_accounts' | 'name' | 'native_name' | 'notification_emails' | 'organization_groups' | 'payment_profiles' | 'phone_number' | 'postal' | 'project_metadata_checklist' | 'projects_count' | 'registration_code' | 'service_provider' | 'service_provider_uuid' | 'slug' | 'sponsor_number' | 'url' | 'user_affiliations' | 'user_email_patterns' | 'user_identity_sources' | 'users_count' | 'uuid' | 'vat_code';
 
 export type CustomerUserFieldEnum = 'email' | 'expiration_time' | 'full_name' | 'image' | 'projects' | 'role_name' | 'url' | 'username' | 'uuid';
@@ -36249,7 +36251,7 @@ export type CustomerPermissionsReviewsCloseResponses = {
 export type CustomerQuotasListData = {
     body?: never;
     path?: never;
-    query?: {
+    query: {
         /**
          * A page number within the paginated result set.
          */
@@ -36258,6 +36260,10 @@ export type CustomerQuotasListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Name of the quota
+         */
+        quota_name: CustomerQuotasQuotaNameEnum;
     };
     url: '/api/customer-quotas/';
 };
@@ -36271,7 +36277,7 @@ export type CustomerQuotasListResponse = CustomerQuotasListResponses[keyof Custo
 export type CustomerQuotasCountData = {
     body?: never;
     path?: never;
-    query?: {
+    query: {
         /**
          * A page number within the paginated result set.
          */
@@ -36280,6 +36286,10 @@ export type CustomerQuotasCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Name of the quota
+         */
+        quota_name: CustomerQuotasQuotaNameEnum;
     };
     url: '/api/customer-quotas/';
 };
@@ -70898,7 +70908,7 @@ export type ProjectPermissionsReviewsCloseResponses = {
 export type ProjectQuotasListData = {
     body?: never;
     path?: never;
-    query?: {
+    query: {
         /**
          * A page number within the paginated result set.
          */
@@ -70907,6 +70917,10 @@ export type ProjectQuotasListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Name of the quota
+         */
+        quota_name: CustomerQuotasQuotaNameEnum;
     };
     url: '/api/project-quotas/';
 };
@@ -70920,7 +70934,7 @@ export type ProjectQuotasListResponse = ProjectQuotasListResponses[keyof Project
 export type ProjectQuotasCountData = {
     body?: never;
     path?: never;
-    query?: {
+    query: {
         /**
          * A page number within the paginated result set.
          */
@@ -70929,6 +70943,10 @@ export type ProjectQuotasCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Name of the quota
+         */
+        quota_name: CustomerQuotasQuotaNameEnum;
     };
     url: '/api/project-quotas/';
 };
