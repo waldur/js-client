@@ -36251,7 +36251,7 @@ export type CustomerPermissionsReviewsCloseResponses = {
 export type CustomerQuotasListData = {
     body?: never;
     path?: never;
-    query: {
+    query?: {
         /**
          * A page number within the paginated result set.
          */
@@ -36263,7 +36263,7 @@ export type CustomerQuotasListData = {
         /**
          * Name of the quota
          */
-        quota_name: CustomerQuotasQuotaNameEnum;
+        quota_name?: CustomerQuotasQuotaNameEnum;
     };
     url: '/api/customer-quotas/';
 };
@@ -36277,7 +36277,7 @@ export type CustomerQuotasListResponse = CustomerQuotasListResponses[keyof Custo
 export type CustomerQuotasCountData = {
     body?: never;
     path?: never;
-    query: {
+    query?: {
         /**
          * A page number within the paginated result set.
          */
@@ -36289,7 +36289,7 @@ export type CustomerQuotasCountData = {
         /**
          * Name of the quota
          */
-        quota_name: CustomerQuotasQuotaNameEnum;
+        quota_name?: CustomerQuotasQuotaNameEnum;
     };
     url: '/api/customer-quotas/';
 };
@@ -70908,7 +70908,7 @@ export type ProjectPermissionsReviewsCloseResponses = {
 export type ProjectQuotasListData = {
     body?: never;
     path?: never;
-    query: {
+    query?: {
         /**
          * A page number within the paginated result set.
          */
@@ -70920,7 +70920,7 @@ export type ProjectQuotasListData = {
         /**
          * Name of the quota
          */
-        quota_name: CustomerQuotasQuotaNameEnum;
+        quota_name?: CustomerQuotasQuotaNameEnum;
     };
     url: '/api/project-quotas/';
 };
@@ -70934,7 +70934,7 @@ export type ProjectQuotasListResponse = ProjectQuotasListResponses[keyof Project
 export type ProjectQuotasCountData = {
     body?: never;
     path?: never;
-    query: {
+    query?: {
         /**
          * A page number within the paginated result set.
          */
@@ -70946,7 +70946,7 @@ export type ProjectQuotasCountData = {
         /**
          * Name of the quota
          */
-        quota_name: CustomerQuotasQuotaNameEnum;
+        quota_name?: CustomerQuotasQuotaNameEnum;
     };
     url: '/api/project-quotas/';
 };

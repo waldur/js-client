@@ -7515,8 +7515,8 @@ export const customerPermissionsReviewsClose = <ThrowOnError extends boolean = f
 /**
  * List customer quotas.
  */
-export const customerQuotasList = <ThrowOnError extends boolean = false>(options: Options<CustomerQuotasListData, ThrowOnError>) => {
-    return (options.client ?? _heyApiClient).get<CustomerQuotasListResponses, unknown, ThrowOnError>({
+export const customerQuotasList = <ThrowOnError extends boolean = false>(options?: Options<CustomerQuotasListData, ThrowOnError>) => {
+    return (options?.client ?? _heyApiClient).get<CustomerQuotasListResponses, unknown, ThrowOnError>({
         security: [
             {
                 name: 'Authorization',
@@ -7535,8 +7535,8 @@ export const customerQuotasList = <ThrowOnError extends boolean = false>(options
 /**
  * Get number of items in the collection matching the request parameters.
  */
-export const customerQuotasCount = <ThrowOnError extends boolean = false>(options: Options<CustomerQuotasCountData, ThrowOnError>) => {
-    return (options.client ?? _heyApiClient).head<CustomerQuotasCountResponses, unknown, ThrowOnError>({
+export const customerQuotasCount = <ThrowOnError extends boolean = false>(options?: Options<CustomerQuotasCountData, ThrowOnError>) => {
+    return (options?.client ?? _heyApiClient).head<CustomerQuotasCountResponses, unknown, ThrowOnError>({
         security: [
             {
                 name: 'Authorization',
@@ -35215,8 +35215,8 @@ export const projectPermissionsReviewsClose = <ThrowOnError extends boolean = fa
 /**
  * List project quotas.
  */
-export const projectQuotasList = <ThrowOnError extends boolean = false>(options: Options<ProjectQuotasListData, ThrowOnError>) => {
-    return (options.client ?? _heyApiClient).get<ProjectQuotasListResponses, unknown, ThrowOnError>({
+export const projectQuotasList = <ThrowOnError extends boolean = false>(options?: Options<ProjectQuotasListData, ThrowOnError>) => {
+    return (options?.client ?? _heyApiClient).get<ProjectQuotasListResponses, unknown, ThrowOnError>({
         security: [
             {
                 name: 'Authorization',
@@ -35235,8 +35235,8 @@ export const projectQuotasList = <ThrowOnError extends boolean = false>(options:
 /**
  * Get number of items in the collection matching the request parameters.
  */
-export const projectQuotasCount = <ThrowOnError extends boolean = false>(options: Options<ProjectQuotasCountData, ThrowOnError>) => {
-    return (options.client ?? _heyApiClient).head<ProjectQuotasCountResponses, unknown, ThrowOnError>({
+export const projectQuotasCount = <ThrowOnError extends boolean = false>(options?: Options<ProjectQuotasCountData, ThrowOnError>) => {
+    return (options?.client ?? _heyApiClient).head<ProjectQuotasCountResponses, unknown, ThrowOnError>({
         security: [
             {
                 name: 'Authorization',
