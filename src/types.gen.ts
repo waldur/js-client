@@ -3595,10 +3595,6 @@ export type ChatRequestRequest = {
      */
     thread_uuid?: string | null;
     /**
-     * Thread UUID whose name should be set to the assistant's response. Skips message persistence for this call.
-     */
-    update_thread_name?: string | null;
-    /**
      * 'reload': replace the last assistant response. 'edit': edit a user message and re-stream. Omit for normal new-message behavior.
      */
     mode?: ChatRequestModeEnum | NullEnum | null;
