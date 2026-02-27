@@ -78894,45 +78894,6 @@ export type ReviewerProfilesUpdateResponses = {
 
 export type ReviewerProfilesUpdateResponse = ReviewerProfilesUpdateResponses[keyof ReviewerProfilesUpdateResponses];
 
-export type ReviewerProfilesAffiliationsListData = {
-    body?: never;
-    path: {
-        uuid: string;
-    };
-    query?: {
-        /**
-         * A page number within the paginated result set.
-         */
-        page?: number;
-        /**
-         * Number of results to return per page.
-         */
-        page_size?: number;
-    };
-    url: '/api/reviewer-profiles/{uuid}/affiliations/';
-};
-
-export type ReviewerProfilesAffiliationsListResponses = {
-    200: Array<ReviewerAffiliation>;
-};
-
-export type ReviewerProfilesAffiliationsListResponse = ReviewerProfilesAffiliationsListResponses[keyof ReviewerProfilesAffiliationsListResponses];
-
-export type ReviewerProfilesAffiliationsCreateData = {
-    body: ReviewerAffiliationRequest;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/reviewer-profiles/{uuid}/affiliations/';
-};
-
-export type ReviewerProfilesAffiliationsCreateResponses = {
-    200: ReviewerAffiliation;
-};
-
-export type ReviewerProfilesAffiliationsCreateResponse = ReviewerProfilesAffiliationsCreateResponses[keyof ReviewerProfilesAffiliationsCreateResponses];
-
 export type ReviewerProfilesConnectOrcidRetrieveData = {
     body?: never;
     path: {
@@ -78980,45 +78941,6 @@ export type ReviewerProfilesDisconnectOrcidResponses = {
 
 export type ReviewerProfilesDisconnectOrcidResponse = ReviewerProfilesDisconnectOrcidResponses[keyof ReviewerProfilesDisconnectOrcidResponses];
 
-export type ReviewerProfilesExpertiseListData = {
-    body?: never;
-    path: {
-        uuid: string;
-    };
-    query?: {
-        /**
-         * A page number within the paginated result set.
-         */
-        page?: number;
-        /**
-         * Number of results to return per page.
-         */
-        page_size?: number;
-    };
-    url: '/api/reviewer-profiles/{uuid}/expertise/';
-};
-
-export type ReviewerProfilesExpertiseListResponses = {
-    200: Array<ReviewerExpertise>;
-};
-
-export type ReviewerProfilesExpertiseListResponse = ReviewerProfilesExpertiseListResponses[keyof ReviewerProfilesExpertiseListResponses];
-
-export type ReviewerProfilesExpertiseCreateData = {
-    body: ReviewerExpertiseRequest;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/reviewer-profiles/{uuid}/expertise/';
-};
-
-export type ReviewerProfilesExpertiseCreateResponses = {
-    200: ReviewerExpertise;
-};
-
-export type ReviewerProfilesExpertiseCreateResponse = ReviewerProfilesExpertiseCreateResponses[keyof ReviewerProfilesExpertiseCreateResponses];
-
 export type ReviewerProfilesImportPublicationsData = {
     body?: ImportPublicationsRequest;
     path: {
@@ -79035,45 +78957,6 @@ export type ReviewerProfilesImportPublicationsResponses = {
 };
 
 export type ReviewerProfilesImportPublicationsResponse = ReviewerProfilesImportPublicationsResponses[keyof ReviewerProfilesImportPublicationsResponses];
-
-export type ReviewerProfilesPublicationsListData = {
-    body?: never;
-    path: {
-        uuid: string;
-    };
-    query?: {
-        /**
-         * A page number within the paginated result set.
-         */
-        page?: number;
-        /**
-         * Number of results to return per page.
-         */
-        page_size?: number;
-    };
-    url: '/api/reviewer-profiles/{uuid}/publications/';
-};
-
-export type ReviewerProfilesPublicationsListResponses = {
-    200: Array<ReviewerPublication>;
-};
-
-export type ReviewerProfilesPublicationsListResponse = ReviewerProfilesPublicationsListResponses[keyof ReviewerProfilesPublicationsListResponses];
-
-export type ReviewerProfilesPublicationsCreateData = {
-    body: ReviewerPublicationRequest;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/reviewer-profiles/{uuid}/publications/';
-};
-
-export type ReviewerProfilesPublicationsCreateResponses = {
-    200: ReviewerPublication;
-};
-
-export type ReviewerProfilesPublicationsCreateResponse = ReviewerProfilesPublicationsCreateResponses[keyof ReviewerProfilesPublicationsCreateResponses];
 
 export type ReviewerProfilesSyncOrcidData = {
     body?: ReviewerProfileRequest;
