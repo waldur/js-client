@@ -4326,6 +4326,7 @@ export type ConstanceSettings = {
     DISABLE_SENDING_NOTIFICATIONS_ABOUT_RESOURCE_UPDATE?: boolean;
     MARKETPLACE_LANDING_PAGE?: string;
     ENABLE_STALE_RESOURCE_NOTIFICATIONS?: boolean;
+    ENABLE_ISSUES_FOR_USER_SSH_KEY_CHANGES?: boolean;
     TELEMETRY_URL?: string;
     TELEMETRY_VERSION?: number;
     SCRIPT_RUN_MODE?: ScriptrunmodeEnum;
@@ -4546,6 +4547,8 @@ export type ConstanceSettings = {
     FEDERATED_IDENTITY_SYNC_ALLOWED_ATTRIBUTES?: Array<UserAttributeEnum | BlankEnum>;
     FEDERATED_IDENTITY_DEACTIVATION_POLICY?: FederatedidentitydeactivationpolicyEnum;
     ENABLE_PROJECT_DIGEST?: boolean;
+    SSH_KEY_ALLOWED_TYPES?: Array<SshkeyallowedtypesEnum | BlankEnum>;
+    SSH_KEY_MIN_RSA_KEY_SIZE?: number;
 };
 
 export type ConstanceSettingsRequest = {
@@ -4568,6 +4571,7 @@ export type ConstanceSettingsRequest = {
     DISABLE_SENDING_NOTIFICATIONS_ABOUT_RESOURCE_UPDATE?: boolean;
     MARKETPLACE_LANDING_PAGE?: string;
     ENABLE_STALE_RESOURCE_NOTIFICATIONS?: boolean;
+    ENABLE_ISSUES_FOR_USER_SSH_KEY_CHANGES?: boolean;
     TELEMETRY_URL?: string;
     TELEMETRY_VERSION?: number;
     SCRIPT_RUN_MODE?: ScriptrunmodeEnum;
@@ -4788,6 +4792,8 @@ export type ConstanceSettingsRequest = {
     FEDERATED_IDENTITY_SYNC_ALLOWED_ATTRIBUTES?: Array<UserAttributeEnum | BlankEnum>;
     FEDERATED_IDENTITY_DEACTIVATION_POLICY?: FederatedidentitydeactivationpolicyEnum;
     ENABLE_PROJECT_DIGEST?: boolean;
+    SSH_KEY_ALLOWED_TYPES?: Array<SshkeyallowedtypesEnum | BlankEnum>;
+    SSH_KEY_MIN_RSA_KEY_SIZE?: number;
 };
 
 export type ConsumptionStatisticsResponse = {
@@ -22593,6 +22599,8 @@ export type ScriptrunmodeEnum = 'docker' | 'k8s';
 
 export type SidebarstyleEnum = 'primary' | 'accent' | 'accent-light' | 'dark' | 'light' | 'auto';
 
+export type SshkeyallowedtypesEnum = 'ssh-ed25519' | 'ecdsa-sha2-nistp256' | 'ecdsa-sha2-nistp384' | 'ecdsa-sha2-nistp521' | 'ssh-rsa' | 'sk-ssh-ed25519@openssh.com' | 'sk-ecdsa-sha2-nistp256@openssh.com';
+
 export type Saml2Login = {
     idp: string;
 };
@@ -26531,6 +26539,7 @@ export type ConstanceSettingsRequestForm = {
     DISABLE_SENDING_NOTIFICATIONS_ABOUT_RESOURCE_UPDATE?: boolean;
     MARKETPLACE_LANDING_PAGE?: string;
     ENABLE_STALE_RESOURCE_NOTIFICATIONS?: boolean;
+    ENABLE_ISSUES_FOR_USER_SSH_KEY_CHANGES?: boolean;
     TELEMETRY_URL?: string;
     TELEMETRY_VERSION?: number;
     SCRIPT_RUN_MODE?: ScriptrunmodeEnum;
@@ -26751,6 +26760,8 @@ export type ConstanceSettingsRequestForm = {
     FEDERATED_IDENTITY_SYNC_ALLOWED_ATTRIBUTES?: Array<UserAttributeEnum | BlankEnum>;
     FEDERATED_IDENTITY_DEACTIVATION_POLICY?: FederatedidentitydeactivationpolicyEnum;
     ENABLE_PROJECT_DIGEST?: boolean;
+    SSH_KEY_ALLOWED_TYPES?: Array<SshkeyallowedtypesEnum | BlankEnum>;
+    SSH_KEY_MIN_RSA_KEY_SIZE?: number;
 };
 
 export type ConstanceSettingsRequestMultipart = {
@@ -26773,6 +26784,7 @@ export type ConstanceSettingsRequestMultipart = {
     DISABLE_SENDING_NOTIFICATIONS_ABOUT_RESOURCE_UPDATE?: boolean;
     MARKETPLACE_LANDING_PAGE?: string;
     ENABLE_STALE_RESOURCE_NOTIFICATIONS?: boolean;
+    ENABLE_ISSUES_FOR_USER_SSH_KEY_CHANGES?: boolean;
     TELEMETRY_URL?: string;
     TELEMETRY_VERSION?: number;
     SCRIPT_RUN_MODE?: ScriptrunmodeEnum;
@@ -26993,6 +27005,8 @@ export type ConstanceSettingsRequestMultipart = {
     FEDERATED_IDENTITY_SYNC_ALLOWED_ATTRIBUTES?: Array<UserAttributeEnum | BlankEnum>;
     FEDERATED_IDENTITY_DEACTIVATION_POLICY?: FederatedidentitydeactivationpolicyEnum;
     ENABLE_PROJECT_DIGEST?: boolean;
+    SSH_KEY_ALLOWED_TYPES?: Array<SshkeyallowedtypesEnum | BlankEnum>;
+    SSH_KEY_MIN_RSA_KEY_SIZE?: number;
 };
 
 export type PaymentRequestForm = {
