@@ -246,6 +246,7 @@ export type AgentIdentity = {
      * UUID of an offering with a site-agent compatible type.
      */
     offering: string;
+    readonly created_by: string;
     name: string;
     version?: string | null;
     dependencies?: unknown;
