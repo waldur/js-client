@@ -1587,6 +1587,8 @@ export type AuthToken = {
     readonly user_token_lifetime: number | null;
 };
 
+export type AuthTypeEnum = 'password' | 'v3applicationcredential';
+
 export type AvailabilityZoneResponse = {
     name: string;
     state: string;
@@ -6130,6 +6132,10 @@ export type DiscoverExternalNetworksRequestRequest = {
      * Keystone project (tenant) name
      */
     project_name?: string;
+    /**
+     * Authentication method: password or v3applicationcredential
+     */
+    auth_type?: AuthTypeEnum;
     verify_ssl?: boolean;
     /**
      * PEM-encoded CA certificate for SSL verification
@@ -6156,6 +6162,10 @@ export type DiscoverFlavorsRequestRequest = {
      * Keystone project (tenant) name
      */
     project_name?: string;
+    /**
+     * Authentication method: password or v3applicationcredential
+     */
+    auth_type?: AuthTypeEnum;
     verify_ssl?: boolean;
     /**
      * PEM-encoded CA certificate for SSL verification
@@ -6182,6 +6192,10 @@ export type DiscoverInstanceAvailabilityZonesRequestRequest = {
      * Keystone project (tenant) name
      */
     project_name?: string;
+    /**
+     * Authentication method: password or v3applicationcredential
+     */
+    auth_type?: AuthTypeEnum;
     verify_ssl?: boolean;
     /**
      * PEM-encoded CA certificate for SSL verification
@@ -6318,6 +6332,10 @@ export type DiscoverVolumeAvailabilityZonesRequestRequest = {
      * Keystone project (tenant) name
      */
     project_name?: string;
+    /**
+     * Authentication method: password or v3applicationcredential
+     */
+    auth_type?: AuthTypeEnum;
     verify_ssl?: boolean;
     /**
      * PEM-encoded CA certificate for SSL verification
@@ -6344,6 +6362,10 @@ export type DiscoverVolumeTypesRequestRequest = {
      * Keystone project (tenant) name
      */
     project_name?: string;
+    /**
+     * Authentication method: password or v3applicationcredential
+     */
+    auth_type?: AuthTypeEnum;
     verify_ssl?: boolean;
     /**
      * PEM-encoded CA certificate for SSL verification
@@ -7812,6 +7834,7 @@ export type IntegrationStatus = {
 };
 
 export type IntegrationStatusDetails = {
+    agent_type: AgentTypeEnum;
     readonly status: string;
     /**
      * Time of latest backend request
@@ -11795,7 +11818,7 @@ export type OfferingKeycloakGroup = {
      * Level this role applies at, e.g. 'cluster', 'project'. Empty means offering-wide.
      */
     readonly role_scope_type: string;
-    resource: string | null;
+    resource?: string | null;
     readonly resource_uuid: string;
     readonly resource_name: string | null;
     /**
@@ -13032,6 +13055,10 @@ export type OpenStackCredentialsRequest = {
      * Keystone project (tenant) name
      */
     project_name?: string;
+    /**
+     * Authentication method: password or v3applicationcredential
+     */
+    auth_type?: AuthTypeEnum;
     verify_ssl?: boolean;
     /**
      * PEM-encoded CA certificate for SSL verification
@@ -17328,6 +17355,10 @@ export type PreviewServiceAttributesRequestRequest = {
      * Keystone project (tenant) name
      */
     project_name?: string;
+    /**
+     * Authentication method: password or v3applicationcredential
+     */
+    auth_type?: AuthTypeEnum;
     verify_ssl?: boolean;
     /**
      * PEM-encoded CA certificate for SSL verification
@@ -17854,7 +17885,7 @@ export type ProjectTemplate = {
     /**
      * The offering for which this template applies.
      */
-    offering: string | null;
+    offering?: string | null;
     provider: string;
     provider_data: Customer;
     portal: string;
@@ -17899,7 +17930,7 @@ export type ProjectTemplateRequest = {
     /**
      * The offering for which this template applies.
      */
-    offering: string | null;
+    offering?: string | null;
     provider: string;
     portal: string;
     /**
@@ -21804,7 +21835,7 @@ export type RmqClientProperties = {
      */
     readonly version: string | null;
     /**
-     * Client platform (e.g., 'Python 3.11')
+     * Client platform (e.g., 'Python 3.12')
      */
     readonly platform: string | null;
 };
@@ -23825,8 +23856,8 @@ export type SupportUser = {
     readonly url: string;
     readonly uuid: string;
     name: string;
-    backend_id: string | null;
-    user: string | null;
+    backend_id?: string | null;
+    user?: string | null;
     backend_name?: string | null;
 };
 
@@ -54977,6 +55008,10 @@ export type MarketplaceServiceProvidersCustomerProjectsListData = {
          * Slug
          */
         slug?: string;
+        /**
+         * Filter projects where the given user has a role.
+         */
+        user_uuid?: string;
     };
     url: '/api/marketplace-service-providers/{service_provider_uuid}/customer_projects/';
 };
@@ -55485,6 +55520,10 @@ export type MarketplaceServiceProvidersProjectsListData = {
          * Slug
          */
         slug?: string;
+        /**
+         * Filter projects where the given user has a role.
+         */
+        user_uuid?: string;
     };
     url: '/api/marketplace-service-providers/{service_provider_uuid}/projects/';
 };
@@ -63050,7 +63089,7 @@ export type OpenportalUnmanagedProjectsListData = {
          */
         slug?: string;
         /**
-         * Filter by user UUID.
+         * Filter projects where the given user has a role.
          */
         user_uuid?: string;
     };
@@ -63151,7 +63190,7 @@ export type OpenportalUnmanagedProjectsCountData = {
          */
         slug?: string;
         /**
-         * Filter by user UUID.
+         * Filter projects where the given user has a role.
          */
         user_uuid?: string;
     };
@@ -71292,7 +71331,7 @@ export type ProjectsListData = {
          */
         slug?: string;
         /**
-         * Filter by user UUID.
+         * Filter projects where the given user has a role.
          */
         user_uuid?: string;
     };
@@ -71393,7 +71432,7 @@ export type ProjectsCountData = {
          */
         slug?: string;
         /**
-         * Filter by user UUID.
+         * Filter projects where the given user has a role.
          */
         user_uuid?: string;
     };
