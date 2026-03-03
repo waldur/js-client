@@ -9325,6 +9325,10 @@ export type MergedPluginOptions = {
      */
     service_provider_can_create_offering_user?: boolean;
     /**
+     * If set to True, offering users will be automatically marked for deletion by the cleanup task when users lose project access. If False (default), deletion must be triggered manually by the service provider.
+     */
+    offering_user_auto_deletion?: boolean;
+    /**
      * Maximum resource termination offset in days
      */
     max_resource_termination_offset_in_days?: number;
@@ -9619,6 +9623,10 @@ export type MergedPluginOptionsRequest = {
      * Service provider can create offering user
      */
     service_provider_can_create_offering_user?: boolean;
+    /**
+     * If set to True, offering users will be automatically marked for deletion by the cleanup task when users lose project access. If False (default), deletion must be triggered manually by the service provider.
+     */
+    offering_user_auto_deletion?: boolean;
     /**
      * Maximum resource termination offset in days
      */
@@ -24110,6 +24118,13 @@ export type TableGrowthStatsResponse = {
      * List of tables that exceeded configured growth thresholds
      */
     alerts: Array<TableGrowthAlert>;
+};
+
+export type TableGrowthTriggerResponse = {
+    /**
+     * Status message about the triggered task
+     */
+    detail: string;
 };
 
 export type TableSize = {
@@ -80456,6 +80471,19 @@ export type StatsTableGrowthRetrieveResponses = {
 };
 
 export type StatsTableGrowthRetrieveResponse = StatsTableGrowthRetrieveResponses[keyof StatsTableGrowthRetrieveResponses];
+
+export type StatsTableGrowthData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/stats/table-growth/';
+};
+
+export type StatsTableGrowthResponses = {
+    202: TableGrowthTriggerResponse;
+};
+
+export type StatsTableGrowthResponse = StatsTableGrowthResponses[keyof StatsTableGrowthResponses];
 
 export type SupportAttachmentsListData = {
     body?: never;
