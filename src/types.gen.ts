@@ -56764,6 +56764,21 @@ export type MarketplaceSlurmPeriodicUsagePoliciesEvaluationLogsListResponses = {
 
 export type MarketplaceSlurmPeriodicUsagePoliciesEvaluationLogsListResponse = MarketplaceSlurmPeriodicUsagePoliciesEvaluationLogsListResponses[keyof MarketplaceSlurmPeriodicUsagePoliciesEvaluationLogsListResponses];
 
+export type MarketplaceSlurmPeriodicUsagePoliciesForcePeriodResetData = {
+    body?: SlurmPolicyEvaluateRequestRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-slurm-periodic-usage-policies/{uuid}/force-period-reset/';
+};
+
+export type MarketplaceSlurmPeriodicUsagePoliciesForcePeriodResetResponses = {
+    200: SlurmPolicyEvaluateResponse;
+};
+
+export type MarketplaceSlurmPeriodicUsagePoliciesForcePeriodResetResponse = MarketplaceSlurmPeriodicUsagePoliciesForcePeriodResetResponses[keyof MarketplaceSlurmPeriodicUsagePoliciesForcePeriodResetResponses];
+
 export type MarketplaceSlurmPeriodicUsagePoliciesReportCommandResultData = {
     body: SlurmCommandResultRequest;
     path: {
