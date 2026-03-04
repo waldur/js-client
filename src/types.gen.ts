@@ -4490,6 +4490,7 @@ export type ConstanceSettings = {
     OIDC_ACCESS_TOKEN_ENABLED?: boolean;
     OIDC_BLOCK_CREATION_OF_UNINVITED_USERS?: boolean;
     OIDC_MATCHMAKING_BY_EMAIL?: boolean;
+    OIDC_DEFAULT_LOGOUT_URL?: string;
     DEACTIVATE_USER_IF_NO_ROLES?: boolean;
     WALDUR_AUTH_SOCIAL_ROLE_CLAIM?: string;
     REMOTE_EDUTEAMS_REFRESH_TOKEN?: string;
@@ -4735,6 +4736,7 @@ export type ConstanceSettingsRequest = {
     OIDC_ACCESS_TOKEN_ENABLED?: boolean;
     OIDC_BLOCK_CREATION_OF_UNINVITED_USERS?: boolean;
     OIDC_MATCHMAKING_BY_EMAIL?: boolean;
+    OIDC_DEFAULT_LOGOUT_URL?: string;
     DEACTIVATE_USER_IF_NO_ROLES?: boolean;
     WALDUR_AUTH_SOCIAL_ROLE_CLAIM?: string;
     REMOTE_EDUTEAMS_REFRESH_TOKEN?: string;
@@ -7409,6 +7411,10 @@ export type GoogleCredentials = {
     image?: string | null;
     readonly organization_groups?: Array<OrganizationGroup>;
     readonly offering_count?: number;
+    /**
+     * List of allowed domains for offering endpoints. Only staff can modify this field.
+     */
+    allowed_domains?: unknown;
     readonly calendar_token?: string;
     readonly calendar_refresh_token?: string;
     readonly google_auth_url?: string;
@@ -10806,6 +10812,16 @@ export type NestedOfferingFile = {
 export type NestedOfferingFileRequest = {
     name: string;
     file: Blob | File;
+};
+
+export type NestedParentSoftware = {
+    readonly uuid: string;
+    name: string;
+    readonly url: string;
+};
+
+export type NestedParentSoftwareRequest = {
+    name: string;
 };
 
 export type NestedPartition = {
@@ -17562,6 +17578,10 @@ export type PatchedServiceProviderRequest = {
     description?: string;
     enable_notifications?: boolean;
     image?: (Blob | File) | null;
+    /**
+     * List of allowed domains for offering endpoints. Only staff can modify this field.
+     */
+    allowed_domains?: unknown;
 };
 
 export type PatchedSlurmAllocationRequest = {
@@ -17667,10 +17687,6 @@ export type PatchedSoftwarePackageRequest = {
      * Whether this package is an extension of another package
      */
     is_extension?: boolean;
-    /**
-     * Parent package for extensions (e.g., Python package within Python)
-     */
-    parent_software?: string | null;
 };
 
 export type PatchedTagRequest = {
@@ -23566,6 +23582,10 @@ export type ServiceProvider = {
     image?: string | null;
     readonly organization_groups?: Array<OrganizationGroup>;
     readonly offering_count?: number;
+    /**
+     * List of allowed domains for offering endpoints. Only staff can modify this field.
+     */
+    allowed_domains?: unknown;
 };
 
 export type ServiceProviderAccess = {
@@ -23625,6 +23645,10 @@ export type ServiceProviderRequest = {
     enable_notifications?: boolean;
     customer: string;
     image?: (Blob | File) | null;
+    /**
+     * List of allowed domains for offering endpoints. Only staff can modify this field.
+     */
+    allowed_domains?: unknown;
 };
 
 export type ServiceProviderRevenues = {
@@ -24392,10 +24416,7 @@ export type SoftwarePackage = {
      * Whether this package is an extension of another package
      */
     is_extension?: boolean;
-    /**
-     * Parent package for extensions (e.g., Python package within Python)
-     */
-    parent_software?: string | null;
+    readonly parent_softwares: Array<NestedParentSoftware>;
     readonly catalog_name: string;
     readonly catalog_version: string;
     readonly catalog_type: string;
@@ -24426,10 +24447,6 @@ export type SoftwarePackageRequest = {
      * Whether this package is an extension of another package
      */
     is_extension?: boolean;
-    /**
-     * Parent package for extensions (e.g., Python package within Python)
-     */
-    parent_software?: string | null;
 };
 
 export type SoftwareTarget = {
@@ -27277,6 +27294,10 @@ export type ServiceProviderRequestForm = {
     enable_notifications?: boolean;
     customer: string;
     image?: (Blob | File) | null;
+    /**
+     * List of allowed domains for offering endpoints. Only staff can modify this field.
+     */
+    allowed_domains?: unknown;
 };
 
 export type ServiceProviderRequestMultipart = {
@@ -27284,18 +27305,30 @@ export type ServiceProviderRequestMultipart = {
     enable_notifications?: boolean;
     customer: string;
     image?: (Blob | File) | null;
+    /**
+     * List of allowed domains for offering endpoints. Only staff can modify this field.
+     */
+    allowed_domains?: unknown;
 };
 
 export type PatchedServiceProviderRequestForm = {
     description?: string;
     enable_notifications?: boolean;
     image?: (Blob | File) | null;
+    /**
+     * List of allowed domains for offering endpoints. Only staff can modify this field.
+     */
+    allowed_domains?: unknown;
 };
 
 export type PatchedServiceProviderRequestMultipart = {
     description?: string;
     enable_notifications?: boolean;
     image?: (Blob | File) | null;
+    /**
+     * List of allowed domains for offering endpoints. Only staff can modify this field.
+     */
+    allowed_domains?: unknown;
 };
 
 export type OnboardingJustificationDocumentationRequestForm = {
@@ -27680,6 +27713,7 @@ export type ConstanceSettingsRequestForm = {
     OIDC_ACCESS_TOKEN_ENABLED?: boolean;
     OIDC_BLOCK_CREATION_OF_UNINVITED_USERS?: boolean;
     OIDC_MATCHMAKING_BY_EMAIL?: boolean;
+    OIDC_DEFAULT_LOGOUT_URL?: string;
     DEACTIVATE_USER_IF_NO_ROLES?: boolean;
     WALDUR_AUTH_SOCIAL_ROLE_CLAIM?: string;
     REMOTE_EDUTEAMS_REFRESH_TOKEN?: string;
@@ -27925,6 +27959,7 @@ export type ConstanceSettingsRequestMultipart = {
     OIDC_ACCESS_TOKEN_ENABLED?: boolean;
     OIDC_BLOCK_CREATION_OF_UNINVITED_USERS?: boolean;
     OIDC_MATCHMAKING_BY_EMAIL?: boolean;
+    OIDC_DEFAULT_LOGOUT_URL?: string;
     DEACTIVATE_USER_IF_NO_ROLES?: boolean;
     WALDUR_AUTH_SOCIAL_ROLE_CLAIM?: string;
     REMOTE_EDUTEAMS_REFRESH_TOKEN?: string;
@@ -28506,7 +28541,7 @@ export type EventFieldEnum = 'context' | 'created' | 'event_type' | 'message' | 
 
 export type ExpertiseCategoryOEnum = '-code' | '-level' | '-name' | 'code' | 'level' | 'name';
 
-export type GoogleCredentialsFieldEnum = 'calendar_refresh_token' | 'calendar_token' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_country' | 'customer_image' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'enable_notifications' | 'google_auth_url' | 'image' | 'offering_count' | 'organization_groups' | 'url' | 'uuid';
+export type GoogleCredentialsFieldEnum = 'allowed_domains' | 'calendar_refresh_token' | 'calendar_token' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_country' | 'customer_image' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'enable_notifications' | 'google_auth_url' | 'image' | 'offering_count' | 'organization_groups' | 'url' | 'uuid';
 
 export type WebHookContentTypeEnum1 = 1 | 2;
 
@@ -28582,7 +28617,7 @@ export type PublicOfferingDetailsFieldEnum = 'access_url' | 'attributes' | 'back
 
 export type RobotAccountDetailsFieldEnum = 'backend_id' | 'created' | 'customer_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'fingerprints' | 'keys' | 'modified' | 'offering_plugin_options' | 'project_name' | 'project_uuid' | 'provider_name' | 'provider_uuid' | 'resource' | 'resource_name' | 'resource_uuid' | 'responsible_user' | 'state' | 'type' | 'url' | 'user_keys' | 'username' | 'users' | 'uuid';
 
-export type ServiceProviderFieldEnum = 'created' | 'customer' | 'customer_abbreviation' | 'customer_country' | 'customer_image' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'enable_notifications' | 'image' | 'offering_count' | 'organization_groups' | 'url' | 'uuid';
+export type ServiceProviderFieldEnum = 'allowed_domains' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_country' | 'customer_image' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'enable_notifications' | 'image' | 'offering_count' | 'organization_groups' | 'url' | 'uuid';
 
 export type MarketplaceProviderCustomerProjectFieldEnum = 'billing_price_estimate' | 'description' | 'end_date' | 'name' | 'resources_count' | 'users_count' | 'uuid';
 
