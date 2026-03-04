@@ -10831,6 +10831,14 @@ export type NestedPartition = {
      */
     partition_name?: string;
     /**
+     * CPU architecture of the partition (e.g., x86_64/amd/zen3)
+     */
+    cpu_arch?: string;
+    /**
+     * GPU architecture of the partition (e.g., nvidia/cc90, amd/gfx90a)
+     */
+    gpu_arch?: string;
+    /**
      * Default task binding policy (SLURM cpu_bind)
      */
     cpu_bind?: number | null;
@@ -10913,6 +10921,14 @@ export type NestedPartitionRequest = {
      * Name of the SLURM partition
      */
     partition_name: string;
+    /**
+     * CPU architecture of the partition (e.g., x86_64/amd/zen3)
+     */
+    cpu_arch?: string;
+    /**
+     * GPU architecture of the partition (e.g., nvidia/cc90, amd/gfx90a)
+     */
+    gpu_arch?: string;
     /**
      * Default task binding policy (SLURM cpu_bind)
      */
@@ -11305,6 +11321,10 @@ export type NestedSoftwareTarget = {
      * Target-specific metadata (build options, system requirements, etc.)
      */
     metadata?: unknown;
+    /**
+     * List of GPU architectures this target supports (e.g., ['nvidia/cc70', 'nvidia/cc90'])
+     */
+    gpu_architectures?: unknown;
 };
 
 export type NestedSoftwareTargetRequest = {
@@ -11328,6 +11348,10 @@ export type NestedSoftwareTargetRequest = {
      * Target-specific metadata (build options, system requirements, etc.)
      */
     metadata?: unknown;
+    /**
+     * List of GPU architectures this target supports (e.g., ['nvidia/cc70', 'nvidia/cc90'])
+     */
+    gpu_architectures?: unknown;
 };
 
 export type NestedSoftwareVersion = {
@@ -12153,6 +12177,14 @@ export type OfferingPartition = {
      */
     partition_name: string;
     /**
+     * CPU architecture of the partition (e.g., x86_64/amd/zen3)
+     */
+    cpu_arch?: string;
+    /**
+     * GPU architecture of the partition (e.g., nvidia/cc90, amd/gfx90a)
+     */
+    gpu_arch?: string;
+    /**
      * Default task binding policy (SLURM cpu_bind)
      */
     cpu_bind?: number | null;
@@ -12236,6 +12268,14 @@ export type OfferingPartitionRequest = {
      * Name of the SLURM partition
      */
     partition_name: string;
+    /**
+     * CPU architecture of the partition (e.g., x86_64/amd/zen3)
+     */
+    cpu_arch?: string;
+    /**
+     * GPU architecture of the partition (e.g., nvidia/cc90, amd/gfx90a)
+     */
+    gpu_arch?: string;
     /**
      * Default task binding policy (SLURM cpu_bind)
      */
@@ -15706,6 +15746,14 @@ export type PartitionSummary = {
      * Quality of Service (QOS) name
      */
     qos?: string;
+    /**
+     * CPU architecture of the partition (e.g., x86_64/amd/zen3)
+     */
+    cpu_arch?: string;
+    /**
+     * GPU architecture of the partition (e.g., nvidia/cc90, amd/gfx90a)
+     */
+    gpu_arch?: string;
 };
 
 export type PartitionSummaryRequest = {
@@ -15721,6 +15769,14 @@ export type PartitionSummaryRequest = {
      * Quality of Service (QOS) name
      */
     qos?: string;
+    /**
+     * CPU architecture of the partition (e.g., x86_64/amd/zen3)
+     */
+    cpu_arch?: string;
+    /**
+     * GPU architecture of the partition (e.g., nvidia/cc90, amd/gfx90a)
+     */
+    gpu_arch?: string;
 };
 
 export type PasswordChangeRequest = {
@@ -16516,6 +16572,14 @@ export type PatchedOfferingPartitionUpdateRequest = {
      * Name of the SLURM partition
      */
     partition_name?: string;
+    /**
+     * CPU architecture of the partition (e.g., x86_64/amd/zen3)
+     */
+    cpu_arch?: string;
+    /**
+     * GPU architecture of the partition (e.g., nvidia/cc90, amd/gfx90a)
+     */
+    gpu_arch?: string;
     /**
      * Default task binding policy (SLURM cpu_bind)
      */
@@ -24474,6 +24538,10 @@ export type SoftwareTarget = {
      * Target-specific metadata (build options, system requirements, etc.)
      */
     readonly metadata: unknown;
+    /**
+     * List of GPU architectures this target supports (e.g., ['nvidia/cc70', 'nvidia/cc90'])
+     */
+    readonly gpu_architectures: unknown;
 };
 
 export type SoftwareVersion = {
@@ -57996,6 +58064,14 @@ export type MarketplaceSoftwarePackagesListData = {
          */
         extension_type?: string;
         /**
+         * Filter packages by GPU architecture (e.g., nvidia/cc90)
+         */
+        gpu_arch?: string;
+        /**
+         * Filter packages that have GPU-enabled builds
+         */
+        has_gpu?: boolean;
+        /**
          * Filter packages that have a specific version
          */
         has_version?: string;
@@ -58105,6 +58181,14 @@ export type MarketplaceSoftwarePackagesCountData = {
          * Filter packages having extensions of a specific type (e.g., 'python')
          */
         extension_type?: string;
+        /**
+         * Filter packages by GPU architecture (e.g., nvidia/cc90)
+         */
+        gpu_arch?: string;
+        /**
+         * Filter packages that have GPU-enabled builds
+         */
+        has_gpu?: boolean;
         /**
          * Filter packages that have a specific version
          */
@@ -58254,6 +58338,14 @@ export type MarketplaceSoftwareTargetsListData = {
         cpu_family?: string;
         cpu_microarchitecture?: string;
         /**
+         * Filter targets by GPU architecture (e.g., nvidia/cc90)
+         */
+        gpu_arch?: string;
+        /**
+         * Filter targets that have GPU architectures
+         */
+        has_gpu?: boolean;
+        /**
          * Ordering
          *
          *
@@ -58300,6 +58392,14 @@ export type MarketplaceSoftwareTargetsCountData = {
         catalog_uuid?: string;
         cpu_family?: string;
         cpu_microarchitecture?: string;
+        /**
+         * Filter targets by GPU architecture (e.g., nvidia/cc90)
+         */
+        gpu_arch?: string;
+        /**
+         * Filter targets that have GPU architectures
+         */
+        has_gpu?: boolean;
         /**
          * Ordering
          *
@@ -58431,6 +58531,14 @@ export type MarketplaceSoftwareVersionsListData = {
         cpu_family?: string;
         cpu_microarchitecture?: string;
         /**
+         * Filter versions by GPU architecture (e.g., nvidia/cc90)
+         */
+        gpu_arch?: string;
+        /**
+         * Filter versions that have GPU-enabled builds
+         */
+        has_gpu?: boolean;
+        /**
          * Ordering
          *
          *
@@ -58495,6 +58603,14 @@ export type MarketplaceSoftwareVersionsCountData = {
         catalog_uuid?: string;
         cpu_family?: string;
         cpu_microarchitecture?: string;
+        /**
+         * Filter versions by GPU architecture (e.g., nvidia/cc90)
+         */
+        gpu_arch?: string;
+        /**
+         * Filter versions that have GPU-enabled builds
+         */
+        has_gpu?: boolean;
         /**
          * Ordering
          *
