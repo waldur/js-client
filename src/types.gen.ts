@@ -512,6 +512,7 @@ export type Allocation = {
     readonly is_active?: boolean;
     readonly marketplace_offering_uuid?: string | null;
     readonly marketplace_offering_name?: string | null;
+    readonly marketplace_offering_type?: string | null;
     readonly marketplace_offering_plugin_options?: {
         [key: string]: unknown;
     } | null;
@@ -1689,6 +1690,7 @@ export type AwsInstance = {
     readonly image_name?: string;
     readonly marketplace_offering_uuid?: string | null;
     readonly marketplace_offering_name?: string | null;
+    readonly marketplace_offering_type?: string | null;
     readonly marketplace_offering_plugin_options?: {
         [key: string]: unknown;
     } | null;
@@ -1786,6 +1788,7 @@ export type AwsVolume = {
     readonly runtime_state?: string;
     readonly marketplace_offering_uuid?: string | null;
     readonly marketplace_offering_name?: string | null;
+    readonly marketplace_offering_type?: string | null;
     readonly marketplace_offering_plugin_options?: {
         [key: string]: unknown;
     } | null;
@@ -1874,6 +1877,7 @@ export type AzurePublicIp = {
     resource_group?: string;
     readonly marketplace_offering_uuid?: string | null;
     readonly marketplace_offering_name?: string | null;
+    readonly marketplace_offering_type?: string | null;
     readonly marketplace_offering_plugin_options?: {
         [key: string]: unknown;
     } | null;
@@ -1924,6 +1928,7 @@ export type AzureResourceGroup = {
     location?: string;
     readonly marketplace_offering_uuid?: string | null;
     readonly marketplace_offering_name?: string | null;
+    readonly marketplace_offering_type?: string | null;
     readonly marketplace_offering_plugin_options?: {
         [key: string]: unknown;
     } | null;
@@ -1983,6 +1988,7 @@ export type AzureSqlDatabase = {
     readonly server_marketplace_uuid?: string;
     readonly marketplace_offering_uuid?: string | null;
     readonly marketplace_offering_name?: string | null;
+    readonly marketplace_offering_type?: string | null;
     readonly marketplace_offering_plugin_options?: {
         [key: string]: unknown;
     } | null;
@@ -2050,6 +2056,7 @@ export type AzureSqlServer = {
     readonly location_name?: string;
     readonly marketplace_offering_uuid?: string | null;
     readonly marketplace_offering_name?: string | null;
+    readonly marketplace_offering_type?: string | null;
     readonly marketplace_offering_plugin_options?: {
         [key: string]: unknown;
     } | null;
@@ -2140,6 +2147,7 @@ export type AzureVirtualMachine = {
     readonly size_name?: string;
     readonly marketplace_offering_uuid?: string | null;
     readonly marketplace_offering_name?: string | null;
+    readonly marketplace_offering_type?: string | null;
     readonly marketplace_offering_plugin_options?: {
         [key: string]: unknown;
     } | null;
@@ -5064,6 +5072,106 @@ export type CreateFeedbackRequest = {
     token: string;
 };
 
+export type CreateHealthMonitor = {
+    readonly url: string;
+    readonly uuid: string;
+    /**
+     * Pool this health monitor belongs to
+     */
+    pool: string;
+    name?: string;
+    type: LoadBalancerProtocolEnum;
+    /**
+     * Interval between health checks in seconds
+     */
+    delay: number;
+    /**
+     * Time in seconds to timeout a health check
+     */
+    timeout: number;
+    /**
+     * Number of retries before marking member as down
+     */
+    max_retries: number;
+    readonly project: string;
+    readonly service_settings: string;
+};
+
+export type CreateHealthMonitorRequest = {
+    /**
+     * Pool this health monitor belongs to
+     */
+    pool: string;
+    name?: string;
+    type: LoadBalancerProtocolEnum;
+    /**
+     * Interval between health checks in seconds
+     */
+    delay: number;
+    /**
+     * Time in seconds to timeout a health check
+     */
+    timeout: number;
+    /**
+     * Number of retries before marking member as down
+     */
+    max_retries: number;
+};
+
+export type CreateListener = {
+    readonly url: string;
+    readonly uuid: string;
+    /**
+     * Load balancer this listener belongs to
+     */
+    load_balancer: string;
+    name: string;
+    protocol: LoadBalancerProtocolEnum;
+    /**
+     * Port on which the listener listens
+     */
+    protocol_port: number;
+    default_pool?: string | null;
+    readonly project: string;
+    readonly service_settings: string;
+};
+
+export type CreateListenerRequest = {
+    /**
+     * Load balancer this listener belongs to
+     */
+    load_balancer: string;
+    name: string;
+    protocol: LoadBalancerProtocolEnum;
+    /**
+     * Port on which the listener listens
+     */
+    protocol_port: number;
+    default_pool?: string | null;
+};
+
+export type CreateLoadBalancer = {
+    readonly url: string;
+    readonly uuid: string;
+    /**
+     * OpenStack tenant this load balancer belongs to
+     */
+    tenant: string;
+    name: string;
+    vip_subnet_id: string;
+    readonly project: string;
+    readonly service_settings: string;
+};
+
+export type CreateLoadBalancerRequest = {
+    /**
+     * OpenStack tenant this load balancer belongs to
+     */
+    tenant: string;
+    name: string;
+    vip_subnet_id: string;
+};
+
 export type CreateManualAssignmentRequest = {
     /**
      * UUID of the reviewer pool entry to assign proposals to
@@ -5088,6 +5196,70 @@ export type CreateManualAssignmentResponse = {
     skipped_proposals: Array<{
         [key: string]: unknown;
     }>;
+};
+
+export type CreatePool = {
+    readonly url: string;
+    readonly uuid: string;
+    /**
+     * Load balancer this pool belongs to
+     */
+    load_balancer: string;
+    name: string;
+    protocol: LoadBalancerProtocolEnum;
+    lb_algorithm?: LbAlgorithmEnum;
+    readonly project: string;
+    readonly service_settings: string;
+};
+
+export type CreatePoolMember = {
+    readonly url: string;
+    readonly uuid: string;
+    /**
+     * Pool this member belongs to
+     */
+    pool: string;
+    name?: string;
+    /**
+     * An IPv4 or IPv6 address.
+     */
+    address: string;
+    /**
+     * Port on the backend server
+     */
+    protocol_port: number;
+    subnet_id: string;
+    weight?: number;
+    readonly project: string;
+    readonly service_settings: string;
+};
+
+export type CreatePoolMemberRequest = {
+    /**
+     * Pool this member belongs to
+     */
+    pool: string;
+    name?: string;
+    /**
+     * An IPv4 or IPv6 address.
+     */
+    address: string;
+    /**
+     * Port on the backend server
+     */
+    protocol_port: number;
+    subnet_id: string;
+    weight?: number;
+};
+
+export type CreatePoolRequest = {
+    /**
+     * Load balancer this pool belongs to
+     */
+    load_balancer: string;
+    name: string;
+    protocol: LoadBalancerProtocolEnum;
+    lb_algorithm?: LbAlgorithmEnum;
 };
 
 export type CreateRouter = {
@@ -5972,6 +6144,7 @@ export type DigitalOceanDroplet = {
     readonly region_name?: string;
     readonly marketplace_offering_uuid?: string | null;
     readonly marketplace_offering_name?: string | null;
+    readonly marketplace_offering_type?: string | null;
     readonly marketplace_offering_plugin_options?: {
         [key: string]: unknown;
     } | null;
@@ -8678,6 +8851,8 @@ export type KindEnum = 'default' | 'course' | 'public';
 
 export type LoginpagelayoutEnum = 'split-screen' | 'centered-card' | 'minimal' | 'full-hero' | 'gradient' | 'stacked' | 'right-split' | 'glassmorphism' | 'neumorphism' | 'animated-gradient' | 'video-background' | 'bottom-sheet' | 'tabbed' | 'wizard' | 'stats' | 'news' | 'carousel' | 'logo-watermark' | 'brand-pattern' | 'duotone' | 'diagonal' | 'time-based' | 'seasonal' | 'weather';
 
+export type LbAlgorithmEnum = 'ROUND_ROBIN' | 'LEAST_CONNECTIONS' | 'SOURCE_IP' | 'SOURCE_IP_PORT';
+
 export type LexisLink = {
     readonly url: string;
     readonly uuid: string;
@@ -8751,6 +8926,16 @@ export type LinkToInvoice = {
 
 export type LinkToInvoiceRequest = {
     invoice: string;
+};
+
+export type LoadBalancerAttachFloatingIpRequest = {
+    floating_ip: string;
+};
+
+export type LoadBalancerProtocolEnum = 'TCP' | 'UDP';
+
+export type LoadBalancerUpdateVipSecurityGroupsRequest = {
+    security_groups: Array<string>;
 };
 
 export type LockStats = {
@@ -11009,7 +11194,7 @@ export type NestedSecurityGroupRule = {
     /**
      * The network protocol (TCP, UDP, ICMP, or empty for any protocol)
      */
-    protocol?: ProtocolEnum | BlankEnum;
+    protocol?: SecurityGroupRuleProtocolEnum | BlankEnum;
     /**
      * Starting port number in the range (1-65535)
      */
@@ -11040,7 +11225,7 @@ export type NestedSecurityGroupRuleRequest = {
     /**
      * The network protocol (TCP, UDP, ICMP, or empty for any protocol)
      */
-    protocol?: ProtocolEnum | BlankEnum;
+    protocol?: SecurityGroupRuleProtocolEnum | BlankEnum;
     /**
      * Starting port number in the range (1-65535)
      */
@@ -12952,6 +13137,7 @@ export type OpenStackBackup = {
     readonly tenant_uuid?: string;
     readonly marketplace_offering_uuid?: string | null;
     readonly marketplace_offering_name?: string | null;
+    readonly marketplace_offering_type?: string | null;
     readonly marketplace_offering_plugin_options?: {
         [key: string]: unknown;
     } | null;
@@ -13176,6 +13362,7 @@ export type OpenStackFloatingIp = {
     readonly instance_url?: string | null;
     readonly marketplace_offering_uuid?: string | null;
     readonly marketplace_offering_name?: string | null;
+    readonly marketplace_offering_type?: string | null;
     readonly marketplace_offering_plugin_options?: {
         [key: string]: unknown;
     } | null;
@@ -13204,6 +13391,63 @@ export type OpenStackFloatingIpRequest = {
      * Optional router to use for external network detection
      */
     router?: string | null;
+};
+
+export type OpenStackHealthMonitor = {
+    readonly url?: string;
+    readonly uuid?: string;
+    name?: string;
+    description?: string;
+    readonly service_name?: string;
+    service_settings?: string;
+    readonly service_settings_uuid?: string;
+    readonly service_settings_state?: string;
+    readonly service_settings_error_message?: string;
+    project?: string;
+    readonly project_name?: string;
+    readonly project_uuid?: string;
+    readonly customer?: string;
+    readonly customer_uuid?: string;
+    readonly customer_name?: string;
+    readonly customer_native_name?: string;
+    readonly customer_abbreviation?: string;
+    error_message?: string;
+    error_traceback?: string;
+    readonly resource_type?: string;
+    state?: CoreStates;
+    readonly created?: string;
+    readonly modified?: string;
+    /**
+     * Health monitor ID in Octavia
+     */
+    backend_id?: string | null;
+    readonly access_url?: string | null;
+    /**
+     * Pool this health monitor belongs to
+     */
+    pool?: string;
+    readonly pool_name?: string;
+    readonly pool_uuid?: string;
+    readonly load_balancer_uuid?: string;
+    readonly type?: string;
+    readonly delay?: number;
+    readonly timeout?: number;
+    readonly max_retries?: number;
+    readonly provisioning_status?: string;
+    readonly operating_status?: string;
+    readonly marketplace_offering_uuid?: string | null;
+    readonly marketplace_offering_name?: string | null;
+    readonly marketplace_offering_type?: string | null;
+    readonly marketplace_offering_plugin_options?: {
+        [key: string]: unknown;
+    } | null;
+    readonly marketplace_category_uuid?: string | null;
+    readonly marketplace_category_name?: string | null;
+    readonly marketplace_resource_uuid?: string | null;
+    readonly marketplace_plan_uuid?: string | null;
+    readonly marketplace_resource_state?: string | null;
+    readonly is_usage_based?: boolean | null;
+    readonly is_limit_based?: boolean | null;
 };
 
 export type OpenStackImage = {
@@ -13337,6 +13581,7 @@ export type OpenStackInstance = {
     rancher_cluster?: RancherClusterReference | null;
     readonly marketplace_offering_uuid?: string | null;
     readonly marketplace_offering_name?: string | null;
+    readonly marketplace_offering_type?: string | null;
     readonly marketplace_offering_plugin_options?: {
         [key: string]: unknown;
     } | null;
@@ -13347,6 +13592,41 @@ export type OpenStackInstance = {
     readonly marketplace_resource_state?: string | null;
     readonly is_usage_based?: boolean | null;
     readonly is_limit_based?: boolean | null;
+};
+
+export type OpenStackInstanceAggregate = {
+    /**
+     * Group key value
+     */
+    group_key: string;
+    /**
+     * Human-readable group label
+     */
+    group_label: string;
+    /**
+     * Number of instances
+     */
+    instance_count: number;
+    /**
+     * Total vCPUs
+     */
+    total_cores: number;
+    /**
+     * Total RAM in MiB
+     */
+    total_ram_mb: number;
+    /**
+     * Total disk in MiB
+     */
+    total_disk_mb: number;
+    /**
+     * Total attached volume size in MiB
+     */
+    total_volume_size_mb: number;
+    /**
+     * Total number of floating IPs
+     */
+    total_floating_ips: number;
 };
 
 export type OpenStackInstanceAllowedAddressPairsUpdateRequest = {
@@ -13379,6 +13659,125 @@ export type OpenStackInstancePortsUpdateRequest = {
     ports: Array<OpenStackCreatePortRequest>;
 };
 
+export type OpenStackInstanceReport = {
+    /**
+     * Instance UUID
+     */
+    uuid: string;
+    /**
+     * Instance name
+     */
+    name: string;
+    /**
+     * Creation timestamp
+     */
+    created: string;
+    /**
+     * Number of vCPUs
+     */
+    cores: number;
+    /**
+     * RAM in MiB
+     */
+    ram: number;
+    /**
+     * Root disk in MiB
+     */
+    disk: number;
+    /**
+     * Flavor name
+     */
+    flavor_name: string;
+    /**
+     * Flavor disk in MiB
+     */
+    flavor_disk: number;
+    /**
+     * Image name
+     */
+    image_name: string;
+    /**
+     * Hypervisor hostname
+     */
+    hypervisor_hostname: string;
+    /**
+     * Runtime state (e.g. ACTIVE, SHUTOFF)
+     */
+    runtime_state: string;
+    /**
+     * Provisioning state
+     */
+    state: string;
+    /**
+     * Availability zone name
+     */
+    availability_zone_name: string | null;
+    /**
+     * Last start time of the VM
+     */
+    start_time: string | null;
+    /**
+     * Cluster UUID
+     */
+    service_settings_uuid: string;
+    /**
+     * Cluster name
+     */
+    service_settings_name: string;
+    /**
+     * Tenant UUID
+     */
+    tenant_uuid: string;
+    /**
+     * Tenant name
+     */
+    tenant_name: string;
+    /**
+     * Project UUID
+     */
+    project_uuid: string;
+    /**
+     * Project name
+     */
+    project_name: string;
+    /**
+     * Customer UUID
+     */
+    customer_uuid: string;
+    /**
+     * Customer name
+     */
+    customer_name: string;
+    /**
+     * Customer abbreviation
+     */
+    customer_abbreviation: string;
+    /**
+     * Number of attached volumes
+     */
+    volume_count: number;
+    /**
+     * Total attached volume size in MiB
+     */
+    total_volume_size_mb: number;
+    /**
+     * Number of floating IPs
+     */
+    floating_ip_count: number;
+    /**
+     * Number of ports
+     */
+    port_count: number;
+    /**
+     * List of internal IP addresses
+     */
+    internal_ips: Array<string>;
+    /**
+     * List of external IP addresses
+     */
+    external_ips: Array<string>;
+};
+
 export type OpenStackInstanceRequest = {
     name: string;
     description?: string;
@@ -13389,6 +13788,148 @@ export type OpenStackInstanceSecurityGroupsUpdateRequest = {
      * List of security groups to be assigned to the instance.
      */
     security_groups: Array<string>;
+};
+
+export type OpenStackListener = {
+    readonly url?: string;
+    readonly uuid?: string;
+    name?: string;
+    description?: string;
+    readonly service_name?: string;
+    service_settings?: string;
+    readonly service_settings_uuid?: string;
+    readonly service_settings_state?: string;
+    readonly service_settings_error_message?: string;
+    project?: string;
+    readonly project_name?: string;
+    readonly project_uuid?: string;
+    readonly customer?: string;
+    readonly customer_uuid?: string;
+    readonly customer_name?: string;
+    readonly customer_native_name?: string;
+    readonly customer_abbreviation?: string;
+    error_message?: string;
+    error_traceback?: string;
+    readonly resource_type?: string;
+    state?: CoreStates;
+    readonly created?: string;
+    readonly modified?: string;
+    /**
+     * Listener ID in Octavia
+     */
+    backend_id?: string | null;
+    readonly access_url?: string | null;
+    /**
+     * Load balancer this listener belongs to
+     */
+    load_balancer?: string;
+    readonly load_balancer_name?: string;
+    readonly load_balancer_uuid?: string;
+    readonly protocol?: string;
+    readonly protocol_port?: number;
+    /**
+     * Default pool for this listener
+     */
+    default_pool?: string | null;
+    readonly provisioning_status?: string;
+    readonly operating_status?: string;
+    readonly marketplace_offering_uuid?: string | null;
+    readonly marketplace_offering_name?: string | null;
+    readonly marketplace_offering_type?: string | null;
+    readonly marketplace_offering_plugin_options?: {
+        [key: string]: unknown;
+    } | null;
+    readonly marketplace_category_uuid?: string | null;
+    readonly marketplace_category_name?: string | null;
+    readonly marketplace_resource_uuid?: string | null;
+    readonly marketplace_plan_uuid?: string | null;
+    readonly marketplace_resource_state?: string | null;
+    readonly is_usage_based?: boolean | null;
+    readonly is_limit_based?: boolean | null;
+};
+
+export type OpenStackLoadBalancer = {
+    readonly url?: string;
+    readonly uuid?: string;
+    name?: string;
+    description?: string;
+    readonly service_name?: string;
+    service_settings?: string;
+    readonly service_settings_uuid?: string;
+    readonly service_settings_state?: string;
+    readonly service_settings_error_message?: string;
+    project?: string;
+    readonly project_name?: string;
+    readonly project_uuid?: string;
+    readonly customer?: string;
+    readonly customer_uuid?: string;
+    readonly customer_name?: string;
+    readonly customer_native_name?: string;
+    readonly customer_abbreviation?: string;
+    error_message?: string;
+    error_traceback?: string;
+    readonly resource_type?: string;
+    state?: CoreStates;
+    readonly created?: string;
+    readonly modified?: string;
+    /**
+     * Load balancer ID in Octavia
+     */
+    backend_id?: string | null;
+    readonly access_url?: string | null;
+    /**
+     * OpenStack tenant this load balancer belongs to
+     */
+    tenant?: string;
+    readonly tenant_name?: string;
+    readonly tenant_uuid?: string;
+    /**
+     * An IPv4 or IPv6 address.
+     */
+    vip_address?: string;
+    readonly vip_subnet_id?: string;
+    readonly vip_port_id?: string;
+    /**
+     * Floating IP attached to the VIP port
+     */
+    attached_floating_ip?: string | null;
+    readonly provider?: string;
+    readonly provisioning_status?: string;
+    readonly operating_status?: string;
+    readonly marketplace_offering_uuid?: string | null;
+    readonly marketplace_offering_name?: string | null;
+    readonly marketplace_offering_type?: string | null;
+    readonly marketplace_offering_plugin_options?: {
+        [key: string]: unknown;
+    } | null;
+    readonly marketplace_category_uuid?: string | null;
+    readonly marketplace_category_name?: string | null;
+    readonly marketplace_resource_uuid?: string | null;
+    readonly marketplace_plan_uuid?: string | null;
+    readonly marketplace_resource_state?: string | null;
+    readonly is_usage_based?: boolean | null;
+    readonly is_limit_based?: boolean | null;
+};
+
+export type OpenStackLoadBalancerRequest = {
+    name: string;
+    description?: string;
+    service_settings: string;
+    project: string;
+    error_message?: string;
+    error_traceback?: string;
+    /**
+     * Load balancer ID in Octavia
+     */
+    backend_id?: string | null;
+    /**
+     * OpenStack tenant this load balancer belongs to
+     */
+    tenant: string;
+    /**
+     * Floating IP attached to the VIP port
+     */
+    attached_floating_ip?: string | null;
 };
 
 export type OpenStackNestedFloatingIp = {
@@ -13631,6 +14172,7 @@ export type OpenStackNetwork = {
     readonly rbac_policies?: Array<NetworkRbacPolicy>;
     readonly marketplace_offering_uuid?: string | null;
     readonly marketplace_offering_name?: string | null;
+    readonly marketplace_offering_type?: string | null;
     readonly marketplace_offering_plugin_options?: {
         [key: string]: unknown;
     } | null;
@@ -13646,6 +14188,140 @@ export type OpenStackNetwork = {
 export type OpenStackNetworkRequest = {
     name: string;
     description?: string;
+};
+
+export type OpenStackPool = {
+    readonly url?: string;
+    readonly uuid?: string;
+    name?: string;
+    description?: string;
+    readonly service_name?: string;
+    service_settings?: string;
+    readonly service_settings_uuid?: string;
+    readonly service_settings_state?: string;
+    readonly service_settings_error_message?: string;
+    project?: string;
+    readonly project_name?: string;
+    readonly project_uuid?: string;
+    readonly customer?: string;
+    readonly customer_uuid?: string;
+    readonly customer_name?: string;
+    readonly customer_native_name?: string;
+    readonly customer_abbreviation?: string;
+    error_message?: string;
+    error_traceback?: string;
+    readonly resource_type?: string;
+    state?: CoreStates;
+    readonly created?: string;
+    readonly modified?: string;
+    /**
+     * Pool ID in Octavia
+     */
+    backend_id?: string | null;
+    readonly access_url?: string | null;
+    /**
+     * Load balancer this pool belongs to
+     */
+    load_balancer?: string;
+    readonly load_balancer_name?: string;
+    readonly load_balancer_uuid?: string;
+    readonly protocol?: string;
+    readonly lb_algorithm?: string;
+    readonly provisioning_status?: string;
+    readonly operating_status?: string;
+    readonly marketplace_offering_uuid?: string | null;
+    readonly marketplace_offering_name?: string | null;
+    readonly marketplace_offering_type?: string | null;
+    readonly marketplace_offering_plugin_options?: {
+        [key: string]: unknown;
+    } | null;
+    readonly marketplace_category_uuid?: string | null;
+    readonly marketplace_category_name?: string | null;
+    readonly marketplace_resource_uuid?: string | null;
+    readonly marketplace_plan_uuid?: string | null;
+    readonly marketplace_resource_state?: string | null;
+    readonly is_usage_based?: boolean | null;
+    readonly is_limit_based?: boolean | null;
+};
+
+export type OpenStackPoolMember = {
+    readonly url?: string;
+    readonly uuid?: string;
+    name?: string;
+    description?: string;
+    readonly service_name?: string;
+    service_settings?: string;
+    readonly service_settings_uuid?: string;
+    readonly service_settings_state?: string;
+    readonly service_settings_error_message?: string;
+    project?: string;
+    readonly project_name?: string;
+    readonly project_uuid?: string;
+    readonly customer?: string;
+    readonly customer_uuid?: string;
+    readonly customer_name?: string;
+    readonly customer_native_name?: string;
+    readonly customer_abbreviation?: string;
+    error_message?: string;
+    error_traceback?: string;
+    readonly resource_type?: string;
+    state?: CoreStates;
+    readonly created?: string;
+    readonly modified?: string;
+    /**
+     * Member ID in Octavia
+     */
+    backend_id?: string | null;
+    readonly access_url?: string | null;
+    /**
+     * Pool this member belongs to
+     */
+    pool?: string;
+    readonly pool_name?: string;
+    readonly pool_uuid?: string;
+    readonly load_balancer_uuid?: string;
+    /**
+     * An IPv4 or IPv6 address.
+     */
+    address?: string;
+    readonly protocol_port?: number;
+    /**
+     * Subnet ID for the member (required for creation)
+     */
+    subnet_id?: string;
+    readonly weight?: number;
+    readonly provisioning_status?: string;
+    readonly operating_status?: string;
+    readonly marketplace_offering_uuid?: string | null;
+    readonly marketplace_offering_name?: string | null;
+    readonly marketplace_offering_type?: string | null;
+    readonly marketplace_offering_plugin_options?: {
+        [key: string]: unknown;
+    } | null;
+    readonly marketplace_category_uuid?: string | null;
+    readonly marketplace_category_name?: string | null;
+    readonly marketplace_resource_uuid?: string | null;
+    readonly marketplace_plan_uuid?: string | null;
+    readonly marketplace_resource_state?: string | null;
+    readonly is_usage_based?: boolean | null;
+    readonly is_limit_based?: boolean | null;
+};
+
+export type OpenStackPoolRequest = {
+    name: string;
+    description?: string;
+    service_settings: string;
+    project: string;
+    error_message?: string;
+    error_traceback?: string;
+    /**
+     * Pool ID in Octavia
+     */
+    backend_id?: string | null;
+    /**
+     * Load balancer this pool belongs to
+     */
+    load_balancer: string;
 };
 
 export type OpenStackPort = {
@@ -13719,6 +14395,7 @@ export type OpenStackPort = {
     readonly status?: string | null;
     readonly marketplace_offering_uuid?: string | null;
     readonly marketplace_offering_name?: string | null;
+    readonly marketplace_offering_type?: string | null;
     readonly marketplace_offering_plugin_options?: {
         [key: string]: unknown;
     } | null;
@@ -13816,6 +14493,7 @@ export type OpenStackRouter = {
     readonly ports?: Array<OpenStackNestedPort>;
     readonly marketplace_offering_uuid?: string | null;
     readonly marketplace_offering_name?: string | null;
+    readonly marketplace_offering_type?: string | null;
     readonly marketplace_offering_plugin_options?: {
         [key: string]: unknown;
     } | null;
@@ -13880,6 +14558,7 @@ export type OpenStackSecurityGroup = {
     rules?: Array<OpenStackSecurityGroupRuleCreate>;
     readonly marketplace_offering_uuid?: string | null;
     readonly marketplace_offering_name?: string | null;
+    readonly marketplace_offering_type?: string | null;
     readonly marketplace_offering_plugin_options?: {
         [key: string]: unknown;
     } | null;
@@ -13914,7 +14593,7 @@ export type OpenStackSecurityGroupRuleCreate = {
     /**
      * The network protocol (TCP, UDP, ICMP, or empty for any protocol)
      */
-    protocol?: ProtocolEnum | BlankEnum;
+    protocol?: SecurityGroupRuleProtocolEnum | BlankEnum;
     /**
      * Starting port number in the range (1-65535)
      */
@@ -13949,7 +14628,7 @@ export type OpenStackSecurityGroupRuleCreateRequest = {
     /**
      * The network protocol (TCP, UDP, ICMP, or empty for any protocol)
      */
-    protocol?: ProtocolEnum | BlankEnum;
+    protocol?: SecurityGroupRuleProtocolEnum | BlankEnum;
     /**
      * Starting port number in the range (1-65535)
      */
@@ -13981,7 +14660,7 @@ export type OpenStackSecurityGroupRuleUpdateByNameRequest = {
     /**
      * The network protocol (TCP, UDP, ICMP, or empty for any protocol)
      */
-    protocol?: ProtocolEnum | BlankEnum;
+    protocol?: SecurityGroupRuleProtocolEnum | BlankEnum;
     /**
      * Starting port number in the range (1-65535)
      */
@@ -14011,7 +14690,7 @@ export type OpenStackSecurityGroupRuleUpdateRequest = {
     /**
      * The network protocol (TCP, UDP, ICMP, or empty for any protocol)
      */
-    protocol?: ProtocolEnum | BlankEnum;
+    protocol?: SecurityGroupRuleProtocolEnum | BlankEnum;
     /**
      * Starting port number in the range (1-65535)
      */
@@ -14078,6 +14757,7 @@ export type OpenStackServerGroup = {
     readonly instances?: Array<OpenStackNestedInstance>;
     readonly marketplace_offering_uuid?: string | null;
     readonly marketplace_offering_name?: string | null;
+    readonly marketplace_offering_type?: string | null;
     readonly marketplace_offering_plugin_options?: {
         [key: string]: unknown;
     } | null;
@@ -14149,6 +14829,7 @@ export type OpenStackSnapshot = {
     kept_until?: string | null;
     readonly marketplace_offering_uuid?: string | null;
     readonly marketplace_offering_name?: string | null;
+    readonly marketplace_offering_type?: string | null;
     readonly marketplace_offering_plugin_options?: {
         [key: string]: unknown;
     } | null;
@@ -14284,6 +14965,7 @@ export type OpenStackSubNet = {
     readonly is_connected?: boolean;
     readonly marketplace_offering_uuid?: string | null;
     readonly marketplace_offering_name?: string | null;
+    readonly marketplace_offering_type?: string | null;
     readonly marketplace_offering_plugin_options?: {
         [key: string]: unknown;
     } | null;
@@ -14397,6 +15079,7 @@ export type OpenStackTenant = {
     skip_creation_of_default_router?: boolean;
     readonly marketplace_offering_uuid?: string | null;
     readonly marketplace_offering_name?: string | null;
+    readonly marketplace_offering_type?: string | null;
     readonly marketplace_offering_plugin_options?: {
         [key: string]: unknown;
     } | null;
@@ -14548,6 +15231,7 @@ export type OpenStackVolume = {
     readonly extend_enabled?: boolean;
     readonly marketplace_offering_uuid?: string | null;
     readonly marketplace_offering_name?: string | null;
+    readonly marketplace_offering_type?: string | null;
     readonly marketplace_offering_plugin_options?: {
         [key: string]: unknown;
     } | null;
@@ -16041,9 +16725,47 @@ export type PatchedOpenStackInstanceRequest = {
     description?: string;
 };
 
+export type PatchedOpenStackLoadBalancerRequest = {
+    name?: string;
+    description?: string;
+    service_settings?: string;
+    project?: string;
+    error_message?: string;
+    error_traceback?: string;
+    /**
+     * Load balancer ID in Octavia
+     */
+    backend_id?: string | null;
+    /**
+     * OpenStack tenant this load balancer belongs to
+     */
+    tenant?: string;
+    /**
+     * Floating IP attached to the VIP port
+     */
+    attached_floating_ip?: string | null;
+};
+
 export type PatchedOpenStackNetworkRequest = {
     name?: string;
     description?: string;
+};
+
+export type PatchedOpenStackPoolRequest = {
+    name?: string;
+    description?: string;
+    service_settings?: string;
+    project?: string;
+    error_message?: string;
+    error_traceback?: string;
+    /**
+     * Pool ID in Octavia
+     */
+    backend_id?: string | null;
+    /**
+     * Load balancer this pool belongs to
+     */
+    load_balancer?: string;
 };
 
 export type PatchedOpenStackPortRequest = {
@@ -16960,6 +17682,23 @@ export type PatchedTemplateRequest = {
     name?: string;
     description?: string;
     issue_type?: IssueTypeEnum;
+};
+
+export type PatchedUpdateHealthMonitorRequest = {
+    name?: string;
+    delay?: number;
+    timeout?: number;
+    max_retries?: number;
+};
+
+export type PatchedUpdateListenerRequest = {
+    name?: string;
+    default_pool?: string | null;
+};
+
+export type PatchedUpdatePoolMemberRequest = {
+    name?: string;
+    weight?: number;
 };
 
 export type PatchedUserAgreementRequest = {
@@ -18419,8 +19158,6 @@ export type ProtectedRoundRequest = {
     minimum_number_of_reviewers?: number | null;
 };
 
-export type ProtocolEnum = 'tcp' | 'udp' | 'icmp';
-
 export type ProviderCustomerStats = {
     /**
      * Total number of customers
@@ -19609,6 +20346,7 @@ export type RancherApplication = {
     readonly external_url?: string | null;
     readonly marketplace_offering_uuid?: string | null;
     readonly marketplace_offering_name?: string | null;
+    readonly marketplace_offering_type?: string | null;
     readonly marketplace_offering_plugin_options?: {
         [key: string]: unknown;
     } | null;
@@ -19767,6 +20505,7 @@ export type RancherCluster = {
     readonly router_ips?: Array<unknown>;
     readonly marketplace_offering_uuid?: string | null;
     readonly marketplace_offering_name?: string | null;
+    readonly marketplace_offering_type?: string | null;
     readonly marketplace_offering_plugin_options?: {
         [key: string]: unknown;
     } | null;
@@ -19809,7 +20548,7 @@ export type RancherClusterSecurityGroupRule = {
     /**
      * The network protocol (TCP, UDP, ICMP, or empty for any protocol)
      */
-    protocol?: ProtocolEnum | BlankEnum;
+    protocol?: SecurityGroupRuleProtocolEnum | BlankEnum;
     /**
      * Starting port number in the range (1-65535)
      */
@@ -19837,7 +20576,7 @@ export type RancherClusterSecurityGroupRuleRequest = {
     /**
      * The network protocol (TCP, UDP, ICMP, or empty for any protocol)
      */
-    protocol?: ProtocolEnum | BlankEnum;
+    protocol?: SecurityGroupRuleProtocolEnum | BlankEnum;
     /**
      * Starting port number in the range (1-65535)
      */
@@ -19981,6 +20720,7 @@ export type RancherIngress = {
     rules?: unknown;
     readonly marketplace_offering_uuid?: string | null;
     readonly marketplace_offering_name?: string | null;
+    readonly marketplace_offering_type?: string | null;
     readonly marketplace_offering_plugin_options?: {
         [key: string]: unknown;
     } | null;
@@ -20185,6 +20925,7 @@ export type RancherService = {
     target_workloads?: Array<RancherNestedWorkload>;
     readonly marketplace_offering_uuid?: string | null;
     readonly marketplace_offering_name?: string | null;
+    readonly marketplace_offering_type?: string | null;
     readonly marketplace_offering_plugin_options?: {
         [key: string]: unknown;
     } | null;
@@ -20234,6 +20975,7 @@ export type RancherServiceCreate = {
     target_workloads?: Array<RancherWorkloadCreate>;
     readonly marketplace_offering_uuid: string | null;
     readonly marketplace_offering_name: string | null;
+    readonly marketplace_offering_type: string | null;
     readonly marketplace_offering_plugin_options: {
         [key: string]: unknown;
     } | null;
@@ -20470,6 +21212,7 @@ export type RemoteAllocation = {
     readonly is_active?: boolean;
     readonly marketplace_offering_uuid?: string | null;
     readonly marketplace_offering_name?: string | null;
+    readonly marketplace_offering_type?: string | null;
     readonly marketplace_offering_plugin_options?: {
         [key: string]: unknown;
     } | null;
@@ -22745,6 +23488,8 @@ export type SectionRequest = {
     is_standalone?: boolean;
 };
 
+export type SecurityGroupRuleProtocolEnum = 'tcp' | 'udp' | 'icmp';
+
 export type SelfDeclaredConflictRequest = {
     proposal_uuid: string;
     coi_type: CoiTypeEnum;
@@ -23112,6 +23857,7 @@ export type SlurmAllocation = {
     readonly is_active?: boolean;
     readonly marketplace_offering_uuid?: string | null;
     readonly marketplace_offering_name?: string | null;
+    readonly marketplace_offering_type?: string | null;
     readonly marketplace_offering_plugin_options?: {
         [key: string]: unknown;
     } | null;
@@ -24454,6 +25200,30 @@ export type UpdateActionsResponse = {
     provider_action_type?: string | null;
 };
 
+export type UpdateHealthMonitor = {
+    name?: string;
+    delay?: number;
+    timeout?: number;
+    max_retries?: number;
+};
+
+export type UpdateHealthMonitorRequest = {
+    name?: string;
+    delay?: number;
+    timeout?: number;
+    max_retries?: number;
+};
+
+export type UpdateListener = {
+    name?: string;
+    default_pool?: string | null;
+};
+
+export type UpdateListenerRequest = {
+    name?: string;
+    default_pool?: string | null;
+};
+
 export type UpdateOfferingComponentRequest = {
     uuid: string;
     billing_type: BillingTypeEnum;
@@ -24486,6 +25256,16 @@ export type UpdateOfferingComponentRequest = {
     overage_component?: string | null;
     min_prepaid_duration?: number | null;
     max_prepaid_duration?: number | null;
+};
+
+export type UpdatePoolMember = {
+    name?: string;
+    weight?: number;
+};
+
+export type UpdatePoolMemberRequest = {
+    name?: string;
+    weight?: number;
 };
 
 export type UrgencyEnum = 'low' | 'medium' | 'high';
@@ -25243,6 +26023,7 @@ export type VmwareDisk = {
     readonly vm_name?: string;
     readonly marketplace_offering_uuid?: string | null;
     readonly marketplace_offering_name?: string | null;
+    readonly marketplace_offering_type?: string | null;
     readonly marketplace_offering_plugin_options?: {
         [key: string]: unknown;
     } | null;
@@ -25369,6 +26150,7 @@ export type VmwarePort = {
     readonly network_name?: string;
     readonly marketplace_offering_uuid?: string | null;
     readonly marketplace_offering_name?: string | null;
+    readonly marketplace_offering_type?: string | null;
     readonly marketplace_offering_plugin_options?: {
         [key: string]: unknown;
     } | null;
@@ -25478,6 +26260,7 @@ export type VmwareVirtualMachine = {
     readonly tools_installed?: boolean;
     readonly marketplace_offering_uuid?: string | null;
     readonly marketplace_offering_name?: string | null;
+    readonly marketplace_offering_type?: string | null;
     readonly marketplace_offering_plugin_options?: {
         [key: string]: unknown;
     } | null;
@@ -27653,19 +28436,19 @@ export type AssignmentBatchListOEnum = '-created' | '-expires_at' | '-sent_at' |
 
 export type AssignmentItemOEnum = '-affinity_score' | '-created' | '-responded_at' | '-status' | 'affinity_score' | 'created' | 'responded_at' | 'status';
 
-export type AwsInstanceFieldEnum = 'access_url' | 'backend_id' | 'cores' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'disk' | 'error_message' | 'error_traceback' | 'external_ips' | 'image' | 'image_name' | 'internal_ips' | 'is_limit_based' | 'is_usage_based' | 'key_fingerprint' | 'key_name' | 'latitude' | 'longitude' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'min_disk' | 'min_ram' | 'modified' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'ram' | 'region' | 'resource_type' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'size' | 'ssh_public_key' | 'start_time' | 'state' | 'url' | 'user_data' | 'uuid';
+export type AwsInstanceFieldEnum = 'access_url' | 'backend_id' | 'cores' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'disk' | 'error_message' | 'error_traceback' | 'external_ips' | 'image' | 'image_name' | 'internal_ips' | 'is_limit_based' | 'is_usage_based' | 'key_fingerprint' | 'key_name' | 'latitude' | 'longitude' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'min_disk' | 'min_ram' | 'modified' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'ram' | 'region' | 'resource_type' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'size' | 'ssh_public_key' | 'start_time' | 'state' | 'url' | 'user_data' | 'uuid';
 
-export type AwsVolumeFieldEnum = 'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'device' | 'error_message' | 'error_traceback' | 'instance' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'region' | 'resource_type' | 'runtime_state' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'size' | 'state' | 'url' | 'uuid' | 'volume_type';
+export type AwsVolumeFieldEnum = 'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'device' | 'error_message' | 'error_traceback' | 'instance' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'region' | 'resource_type' | 'runtime_state' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'size' | 'state' | 'url' | 'uuid' | 'volume_type';
 
-export type AzurePublicIpFieldEnum = 'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'is_limit_based' | 'is_usage_based' | 'location' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'resource_group' | 'resource_type' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'url' | 'uuid';
+export type AzurePublicIpFieldEnum = 'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'is_limit_based' | 'is_usage_based' | 'location' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'resource_group' | 'resource_type' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'url' | 'uuid';
 
-export type AzureResourceGroupFieldEnum = 'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'is_limit_based' | 'is_usage_based' | 'location' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'url' | 'uuid';
+export type AzureResourceGroupFieldEnum = 'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'is_limit_based' | 'is_usage_based' | 'location' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'url' | 'uuid';
 
-export type AzureSqlDatabaseFieldEnum = 'access_url' | 'backend_id' | 'charset' | 'collation' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'is_limit_based' | 'is_usage_based' | 'location_name' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'resource_group_name' | 'resource_type' | 'server' | 'server_marketplace_uuid' | 'server_name' | 'server_uuid' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'url' | 'uuid';
+export type AzureSqlDatabaseFieldEnum = 'access_url' | 'backend_id' | 'charset' | 'collation' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'is_limit_based' | 'is_usage_based' | 'location_name' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'resource_group_name' | 'resource_type' | 'server' | 'server_marketplace_uuid' | 'server_name' | 'server_uuid' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'url' | 'uuid';
 
-export type AzureSqlServerFieldEnum = 'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'fqdn' | 'is_limit_based' | 'is_usage_based' | 'location' | 'location_name' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'password' | 'project' | 'project_name' | 'project_uuid' | 'resource_group' | 'resource_group_name' | 'resource_type' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'storage_mb' | 'url' | 'username' | 'uuid';
+export type AzureSqlServerFieldEnum = 'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'fqdn' | 'is_limit_based' | 'is_usage_based' | 'location' | 'location_name' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'password' | 'project' | 'project_name' | 'project_uuid' | 'resource_group' | 'resource_group_name' | 'resource_type' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'storage_mb' | 'url' | 'username' | 'uuid';
 
-export type AzureVirtualMachineFieldEnum = 'access_url' | 'backend_id' | 'cores' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'disk' | 'error_message' | 'error_traceback' | 'external_ips' | 'image' | 'image_name' | 'internal_ips' | 'is_limit_based' | 'is_usage_based' | 'key_fingerprint' | 'key_name' | 'latitude' | 'location' | 'location_name' | 'longitude' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'min_disk' | 'min_ram' | 'modified' | 'name' | 'password' | 'project' | 'project_name' | 'project_uuid' | 'ram' | 'resource_group' | 'resource_group_name' | 'resource_type' | 'runtime_state' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'size' | 'size_name' | 'ssh_public_key' | 'start_time' | 'state' | 'url' | 'user_data' | 'username' | 'uuid';
+export type AzureVirtualMachineFieldEnum = 'access_url' | 'backend_id' | 'cores' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'disk' | 'error_message' | 'error_traceback' | 'external_ips' | 'image' | 'image_name' | 'internal_ips' | 'is_limit_based' | 'is_usage_based' | 'key_fingerprint' | 'key_name' | 'latitude' | 'location' | 'location_name' | 'longitude' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'min_disk' | 'min_ram' | 'modified' | 'name' | 'password' | 'project' | 'project_name' | 'project_uuid' | 'ram' | 'resource_group' | 'resource_group_name' | 'resource_type' | 'runtime_state' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'size' | 'size_name' | 'ssh_public_key' | 'start_time' | 'state' | 'url' | 'user_data' | 'username' | 'uuid';
 
 export type BackendResourceReqOEnum = '-created' | 'created';
 
@@ -27713,7 +28496,7 @@ export type CustomerUserOEnum = 'concatenated_name' | '-concatenated_name';
 
 export type GlobalUserDataAccessLogOEnum = '-accessor_type' | '-accessor_username' | '-timestamp' | '-user_username' | 'accessor_type' | 'accessor_username' | 'timestamp' | 'user_username';
 
-export type DigitalOceanDropletFieldEnum = 'access_url' | 'backend_id' | 'cores' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'disk' | 'error_message' | 'error_traceback' | 'external_ips' | 'image' | 'image_name' | 'internal_ips' | 'is_limit_based' | 'is_usage_based' | 'key_fingerprint' | 'key_name' | 'latitude' | 'longitude' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'min_disk' | 'min_ram' | 'modified' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'ram' | 'region' | 'region_name' | 'resource_type' | 'runtime_state' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'size' | 'ssh_public_key' | 'start_time' | 'state' | 'url' | 'user_data' | 'uuid';
+export type DigitalOceanDropletFieldEnum = 'access_url' | 'backend_id' | 'cores' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'disk' | 'error_message' | 'error_traceback' | 'external_ips' | 'image' | 'image_name' | 'internal_ips' | 'is_limit_based' | 'is_usage_based' | 'key_fingerprint' | 'key_name' | 'latitude' | 'longitude' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'min_disk' | 'min_ram' | 'modified' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'ram' | 'region' | 'region_name' | 'resource_type' | 'runtime_state' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'size' | 'ssh_public_key' | 'start_time' | 'state' | 'url' | 'user_data' | 'uuid';
 
 export type DigitalOceanImageOEnum = '-distribution' | '-type' | 'distribution' | 'type';
 
@@ -27825,6 +28608,8 @@ export type SoftwareTargetOEnum = '-cpu_family' | '-cpu_microarchitecture' | '-c
 
 export type SoftwareVersionOEnum = '-created' | '-package_name' | '-release_date' | '-version' | 'created' | 'package_name' | 'release_date' | 'version';
 
+export type OpenStackInstanceAggregateGroupByEnum = 'availability_zone' | 'customer' | 'flavor_name' | 'hypervisor_hostname' | 'image_name' | 'runtime_state' | 'service_settings';
+
 export type UserOfferingConsentOEnum = '-agreement_date' | '-created' | '-modified' | '-revocation_date' | 'agreement_date' | 'created' | 'modified' | 'revocation_date';
 
 export type OnboardingJustificationOEnum = '-created' | '-modified' | '-validated_at' | 'created' | 'modified' | 'validated_at';
@@ -27841,11 +28626,11 @@ export type ChecklistResponseChecklistTypeEnum = 'customer' | 'intent';
 
 export type AvailableChecklistsResponseChecklistTypeEnum = 'customer' | 'intent' | 'all';
 
-export type AllocationFieldEnum = 'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'groupname' | 'is_active' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'node_limit' | 'node_usage' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'url' | 'uuid';
+export type AllocationFieldEnum = 'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'groupname' | 'is_active' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'node_limit' | 'node_usage' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'url' | 'uuid';
 
-export type RemoteAllocationFieldEnum = 'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'is_active' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'node_limit' | 'node_usage' | 'project' | 'project_name' | 'project_uuid' | 'remote_project_identifier' | 'resource_type' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'url' | 'uuid';
+export type RemoteAllocationFieldEnum = 'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'is_active' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'node_limit' | 'node_usage' | 'project' | 'project_name' | 'project_uuid' | 'remote_project_identifier' | 'resource_type' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'url' | 'uuid';
 
-export type OpenStackBackupFieldEnum = 'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'instance' | 'instance_floating_ips' | 'instance_marketplace_uuid' | 'instance_name' | 'instance_ports' | 'instance_security_groups' | 'is_limit_based' | 'is_usage_based' | 'kept_until' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'metadata' | 'modified' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'restorations' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'tenant_uuid' | 'url' | 'uuid';
+export type OpenStackBackupFieldEnum = 'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'instance' | 'instance_floating_ips' | 'instance_marketplace_uuid' | 'instance_name' | 'instance_ports' | 'instance_security_groups' | 'is_limit_based' | 'is_usage_based' | 'kept_until' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'metadata' | 'modified' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'restorations' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'tenant_uuid' | 'url' | 'uuid';
 
 export type ExternalNetworkFieldEnum = 'backend_id' | 'description' | 'is_default' | 'is_shared' | 'name' | 'settings' | 'status' | 'subnets' | 'url' | 'uuid';
 
@@ -27853,31 +28638,41 @@ export type OpenStackFlavorFieldEnum = 'backend_id' | 'cores' | 'disk' | 'displa
 
 export type OpenStackFlavorOEnum = '-cores' | '-disk' | '-ram' | 'cores' | 'disk' | 'ram';
 
-export type OpenStackFloatingIpFieldEnum = 'access_url' | 'address' | 'backend_id' | 'backend_network_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'external_address' | 'instance_name' | 'instance_url' | 'instance_uuid' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'port' | 'port_fixed_ips' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'router' | 'runtime_state' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'tenant' | 'tenant_name' | 'tenant_uuid' | 'url' | 'uuid';
+export type OpenStackFloatingIpFieldEnum = 'access_url' | 'address' | 'backend_id' | 'backend_network_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'external_address' | 'instance_name' | 'instance_url' | 'instance_uuid' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'port' | 'port_fixed_ips' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'router' | 'runtime_state' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'tenant' | 'tenant_name' | 'tenant_uuid' | 'url' | 'uuid';
 
-export type OpenStackInstanceFieldEnum = 'access_url' | 'action' | 'action_details' | 'availability_zone' | 'availability_zone_name' | 'backend_id' | 'connect_directly_to_external_network' | 'cores' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'disk' | 'error_message' | 'error_traceback' | 'external_address' | 'external_ips' | 'flavor_disk' | 'flavor_name' | 'floating_ips' | 'hypervisor_hostname' | 'image_name' | 'internal_ips' | 'is_limit_based' | 'is_usage_based' | 'key_fingerprint' | 'key_name' | 'latitude' | 'longitude' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'min_disk' | 'min_ram' | 'modified' | 'name' | 'ports' | 'project' | 'project_name' | 'project_uuid' | 'ram' | 'rancher_cluster' | 'resource_type' | 'runtime_state' | 'security_groups' | 'server_group' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'ssh_public_key' | 'start_time' | 'state' | 'tenant' | 'tenant_uuid' | 'url' | 'user_data' | 'uuid' | 'volumes';
+export type OpenStackHealthMonitorFieldEnum = 'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'delay' | 'description' | 'error_message' | 'error_traceback' | 'is_limit_based' | 'is_usage_based' | 'load_balancer_uuid' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'max_retries' | 'modified' | 'name' | 'operating_status' | 'pool' | 'pool_name' | 'pool_uuid' | 'project' | 'project_name' | 'project_uuid' | 'provisioning_status' | 'resource_type' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'timeout' | 'type' | 'url' | 'uuid';
+
+export type OpenStackInstanceFieldEnum = 'access_url' | 'action' | 'action_details' | 'availability_zone' | 'availability_zone_name' | 'backend_id' | 'connect_directly_to_external_network' | 'cores' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'disk' | 'error_message' | 'error_traceback' | 'external_address' | 'external_ips' | 'flavor_disk' | 'flavor_name' | 'floating_ips' | 'hypervisor_hostname' | 'image_name' | 'internal_ips' | 'is_limit_based' | 'is_usage_based' | 'key_fingerprint' | 'key_name' | 'latitude' | 'longitude' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'min_disk' | 'min_ram' | 'modified' | 'name' | 'ports' | 'project' | 'project_name' | 'project_uuid' | 'ram' | 'rancher_cluster' | 'resource_type' | 'runtime_state' | 'security_groups' | 'server_group' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'ssh_public_key' | 'start_time' | 'state' | 'tenant' | 'tenant_uuid' | 'url' | 'user_data' | 'uuid' | 'volumes';
 
 export type OpenStackInstanceOEnum = 'start_time' | '-start_time';
 
-export type OpenStackNetworkFieldEnum = 'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'is_external' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'mtu' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'rbac_policies' | 'resource_type' | 'segmentation_id' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'subnets' | 'tenant' | 'tenant_name' | 'tenant_uuid' | 'type' | 'url' | 'uuid';
+export type OpenStackListenerFieldEnum = 'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'default_pool' | 'description' | 'error_message' | 'error_traceback' | 'is_limit_based' | 'is_usage_based' | 'load_balancer' | 'load_balancer_name' | 'load_balancer_uuid' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'operating_status' | 'project' | 'project_name' | 'project_uuid' | 'protocol' | 'protocol_port' | 'provisioning_status' | 'resource_type' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'url' | 'uuid';
 
-export type OpenStackPortFieldEnum = 'access_url' | 'admin_state_up' | 'allowed_address_pairs' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'device_id' | 'device_owner' | 'error_message' | 'error_traceback' | 'fixed_ips' | 'floating_ips' | 'is_limit_based' | 'is_usage_based' | 'mac_address' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'network' | 'network_name' | 'network_uuid' | 'port_security_enabled' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'security_groups' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'status' | 'target_tenant' | 'tenant' | 'tenant_name' | 'tenant_uuid' | 'url' | 'uuid';
+export type OpenStackLoadBalancerFieldEnum = 'access_url' | 'attached_floating_ip' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'operating_status' | 'project' | 'project_name' | 'project_uuid' | 'provider' | 'provisioning_status' | 'resource_type' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'tenant' | 'tenant_name' | 'tenant_uuid' | 'url' | 'uuid' | 'vip_address' | 'vip_port_id' | 'vip_subnet_id';
+
+export type OpenStackNetworkFieldEnum = 'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'is_external' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'mtu' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'rbac_policies' | 'resource_type' | 'segmentation_id' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'subnets' | 'tenant' | 'tenant_name' | 'tenant_uuid' | 'type' | 'url' | 'uuid';
+
+export type OpenStackPoolMemberFieldEnum = 'access_url' | 'address' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'is_limit_based' | 'is_usage_based' | 'load_balancer_uuid' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'operating_status' | 'pool' | 'pool_name' | 'pool_uuid' | 'project' | 'project_name' | 'project_uuid' | 'protocol_port' | 'provisioning_status' | 'resource_type' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'subnet_id' | 'url' | 'uuid' | 'weight';
+
+export type OpenStackPoolFieldEnum = 'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'is_limit_based' | 'is_usage_based' | 'lb_algorithm' | 'load_balancer' | 'load_balancer_name' | 'load_balancer_uuid' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'operating_status' | 'project' | 'project_name' | 'project_uuid' | 'protocol' | 'provisioning_status' | 'resource_type' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'url' | 'uuid';
+
+export type OpenStackPortFieldEnum = 'access_url' | 'admin_state_up' | 'allowed_address_pairs' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'device_id' | 'device_owner' | 'error_message' | 'error_traceback' | 'fixed_ips' | 'floating_ips' | 'is_limit_based' | 'is_usage_based' | 'mac_address' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'network' | 'network_name' | 'network_uuid' | 'port_security_enabled' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'security_groups' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'status' | 'target_tenant' | 'tenant' | 'tenant_name' | 'tenant_uuid' | 'url' | 'uuid';
 
 export type OpenStackPortOEnum = '-admin_state_up' | '-created' | '-device_owner' | '-instance_name' | '-mac_address' | '-name' | '-network_name' | '-status' | '-subnet_name' | 'admin_state_up' | 'created' | 'device_owner' | 'instance_name' | 'mac_address' | 'name' | 'network_name' | 'status' | 'subnet_name';
 
-export type OpenStackRouterFieldEnum = 'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'fixed_ips' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'offering_external_ips' | 'ports' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'routes' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'tenant' | 'tenant_name' | 'tenant_uuid' | 'url' | 'uuid';
+export type OpenStackRouterFieldEnum = 'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'fixed_ips' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'offering_external_ips' | 'ports' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'routes' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'tenant' | 'tenant_name' | 'tenant_uuid' | 'url' | 'uuid';
 
-export type OpenStackSecurityGroupFieldEnum = 'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'rules' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'tenant' | 'tenant_name' | 'tenant_uuid' | 'url' | 'uuid';
+export type OpenStackSecurityGroupFieldEnum = 'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'rules' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'tenant' | 'tenant_name' | 'tenant_uuid' | 'url' | 'uuid';
 
-export type OpenStackServerGroupFieldEnum = 'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'display_name' | 'error_message' | 'error_traceback' | 'instances' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'policy' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'tenant' | 'tenant_name' | 'tenant_uuid' | 'url' | 'uuid';
+export type OpenStackServerGroupFieldEnum = 'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'display_name' | 'error_message' | 'error_traceback' | 'instances' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'policy' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'tenant' | 'tenant_name' | 'tenant_uuid' | 'url' | 'uuid';
 
-export type OpenStackSnapshotFieldEnum = 'access_url' | 'action' | 'action_details' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'is_limit_based' | 'is_usage_based' | 'kept_until' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'metadata' | 'modified' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'restorations' | 'runtime_state' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'size' | 'source_volume' | 'source_volume_marketplace_uuid' | 'source_volume_name' | 'state' | 'url' | 'uuid';
+export type OpenStackSnapshotFieldEnum = 'access_url' | 'action' | 'action_details' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'is_limit_based' | 'is_usage_based' | 'kept_until' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'metadata' | 'modified' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'restorations' | 'runtime_state' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'size' | 'source_volume' | 'source_volume_marketplace_uuid' | 'source_volume_name' | 'state' | 'url' | 'uuid';
 
-export type OpenStackSubNetFieldEnum = 'access_url' | 'allocation_pools' | 'backend_id' | 'cidr' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'disable_gateway' | 'dns_nameservers' | 'enable_dhcp' | 'error_message' | 'error_traceback' | 'gateway_ip' | 'host_routes' | 'ip_version' | 'is_connected' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'network' | 'network_name' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'tenant' | 'tenant_name' | 'url' | 'uuid';
+export type OpenStackSubNetFieldEnum = 'access_url' | 'allocation_pools' | 'backend_id' | 'cidr' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'disable_gateway' | 'dns_nameservers' | 'enable_dhcp' | 'error_message' | 'error_traceback' | 'gateway_ip' | 'host_routes' | 'ip_version' | 'is_connected' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'network' | 'network_name' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'tenant' | 'tenant_name' | 'url' | 'uuid';
 
-export type OpenStackTenantFieldEnum = 'availability_zone' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'default_volume_type_name' | 'description' | 'error_message' | 'error_traceback' | 'external_network_id' | 'external_network_ref_name' | 'external_network_ref_uuid' | 'internal_network_id' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_type' | 'security_groups' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'skip_creation_of_default_router' | 'skip_creation_of_default_subnet' | 'state' | 'subnet_cidr' | 'url' | 'uuid';
+export type OpenStackTenantFieldEnum = 'availability_zone' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'default_volume_type_name' | 'description' | 'error_message' | 'error_traceback' | 'external_network_id' | 'external_network_ref_name' | 'external_network_ref_uuid' | 'internal_network_id' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_type' | 'security_groups' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'skip_creation_of_default_router' | 'skip_creation_of_default_subnet' | 'state' | 'subnet_cidr' | 'url' | 'uuid';
 
-export type OpenStackVolumeFieldEnum = 'access_url' | 'action' | 'action_details' | 'availability_zone' | 'availability_zone_name' | 'backend_id' | 'bootable' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'device' | 'error_message' | 'error_traceback' | 'extend_enabled' | 'image' | 'image_metadata' | 'image_name' | 'instance' | 'instance_marketplace_uuid' | 'instance_name' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'metadata' | 'modified' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'runtime_state' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'size' | 'source_snapshot' | 'state' | 'tenant' | 'tenant_uuid' | 'type' | 'type_name' | 'url' | 'uuid';
+export type OpenStackVolumeFieldEnum = 'access_url' | 'action' | 'action_details' | 'availability_zone' | 'availability_zone_name' | 'backend_id' | 'bootable' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'device' | 'error_message' | 'error_traceback' | 'extend_enabled' | 'image' | 'image_metadata' | 'image_name' | 'instance' | 'instance_marketplace_uuid' | 'instance_name' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'metadata' | 'modified' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'runtime_state' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'size' | 'source_snapshot' | 'state' | 'tenant' | 'tenant_uuid' | 'type' | 'type_name' | 'url' | 'uuid';
 
 export type PaymentProfileOEnum = '-is_active' | '-name' | '-payment_type' | 'is_active' | 'name' | 'payment_type';
 
@@ -27905,17 +28700,17 @@ export type ProposalReviewOEnum = '-created' | '-state' | 'created' | 'state';
 
 export type InvoiceItemOEnum1 = '-invoice_customer_name' | '-project_name' | '-resource_offering_name' | '-unit_price' | 'invoice_customer_name' | 'project_name' | 'resource_offering_name' | 'unit_price';
 
-export type RancherApplicationFieldEnum = 'access_url' | 'answers' | 'backend_id' | 'catalog_name' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'external_url' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'namespace' | 'namespace_name' | 'project' | 'project_name' | 'project_uuid' | 'rancher_project' | 'rancher_project_name' | 'resource_type' | 'runtime_state' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'template' | 'template_name' | 'url' | 'uuid' | 'version';
+export type RancherApplicationFieldEnum = 'access_url' | 'answers' | 'backend_id' | 'catalog_name' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'external_url' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'namespace' | 'namespace_name' | 'project' | 'project_name' | 'project_uuid' | 'rancher_project' | 'rancher_project_name' | 'resource_type' | 'runtime_state' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'template' | 'template_name' | 'url' | 'uuid' | 'version';
 
-export type RancherClusterFieldEnum = 'access_url' | 'backend_id' | 'capacity' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'install_longhorn' | 'is_limit_based' | 'is_usage_based' | 'kubernetes_version' | 'management_security_group' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'nodes' | 'project' | 'project_name' | 'project_uuid' | 'public_ips' | 'requested' | 'resource_type' | 'router_ips' | 'runtime_state' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'ssh_public_key' | 'state' | 'tenant' | 'tenant_uuid' | 'url' | 'uuid' | 'vm_project';
+export type RancherClusterFieldEnum = 'access_url' | 'backend_id' | 'capacity' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'install_longhorn' | 'is_limit_based' | 'is_usage_based' | 'kubernetes_version' | 'management_security_group' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'nodes' | 'project' | 'project_name' | 'project_uuid' | 'public_ips' | 'requested' | 'resource_type' | 'router_ips' | 'runtime_state' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'ssh_public_key' | 'state' | 'tenant' | 'tenant_uuid' | 'url' | 'uuid' | 'vm_project';
 
-export type RancherIngressFieldEnum = 'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'namespace' | 'namespace_name' | 'project' | 'project_name' | 'project_uuid' | 'rancher_project' | 'rancher_project_name' | 'resource_type' | 'rules' | 'runtime_state' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'url' | 'uuid';
+export type RancherIngressFieldEnum = 'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'namespace' | 'namespace_name' | 'project' | 'project_name' | 'project_uuid' | 'rancher_project' | 'rancher_project_name' | 'resource_type' | 'rules' | 'runtime_state' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'url' | 'uuid';
 
 export type RancherNamespaceOEnum = '-cluster_name' | '-name' | '-project_name' | 'cluster_name' | 'name' | 'project_name';
 
 export type RoleTemplateOEnum = '-name' | '-scope_type' | 'name' | 'scope_type';
 
-export type RancherServiceFieldEnum = 'access_url' | 'backend_id' | 'cluster_ip' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'namespace' | 'namespace_name' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'runtime_state' | 'selector' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'target_workloads' | 'url' | 'uuid';
+export type RancherServiceFieldEnum = 'access_url' | 'backend_id' | 'cluster_ip' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'namespace' | 'namespace_name' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'runtime_state' | 'selector' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'target_workloads' | 'url' | 'uuid';
 
 export type RancherTemplateOEnum = '-catalog_name' | '-name' | 'catalog_name' | 'name';
 
@@ -27931,7 +28726,7 @@ export type RoleDetailsFieldEnum = 'content_type' | 'description' | 'description
 
 export type ServiceSettingsFieldEnum = 'customer' | 'customer_name' | 'customer_native_name' | 'error_message' | 'name' | 'options' | 'scope' | 'scope_uuid' | 'shared' | 'state' | 'terms_of_services' | 'type' | 'url' | 'uuid';
 
-export type SlurmAllocationFieldEnum = 'access_url' | 'backend_id' | 'cpu_limit' | 'cpu_usage' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'gateway' | 'gpu_limit' | 'gpu_usage' | 'is_active' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'ram_limit' | 'ram_usage' | 'resource_type' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'url' | 'username' | 'uuid';
+export type SlurmAllocationFieldEnum = 'access_url' | 'backend_id' | 'cpu_limit' | 'cpu_usage' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'gateway' | 'gpu_limit' | 'gpu_usage' | 'is_active' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'ram_limit' | 'ram_usage' | 'resource_type' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'url' | 'username' | 'uuid';
 
 export type FirecrestJobFieldEnum = 'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'file' | 'modified' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'report' | 'resource_type' | 'runtime_state' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'url' | 'user' | 'user_username' | 'user_uuid' | 'uuid';
 
@@ -27945,11 +28740,11 @@ export type SystemLogOEnum = '-created' | '-instance' | '-level_number' | 'creat
 
 export type InvitationOEnum = '-created' | '-created_by' | '-email' | '-state' | 'created' | 'created_by' | 'email' | 'state';
 
-export type VmwareDiskFieldEnum = 'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'size' | 'state' | 'url' | 'uuid' | 'vm' | 'vm_name' | 'vm_uuid';
+export type VmwareDiskFieldEnum = 'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'size' | 'state' | 'url' | 'uuid' | 'vm' | 'vm_name' | 'vm_uuid';
 
-export type VmwarePortFieldEnum = 'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'is_limit_based' | 'is_usage_based' | 'mac_address' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'network' | 'network_name' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'url' | 'uuid' | 'vm' | 'vm_name' | 'vm_uuid';
+export type VmwarePortFieldEnum = 'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'is_limit_based' | 'is_usage_based' | 'mac_address' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'network' | 'network_name' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'url' | 'uuid' | 'vm' | 'vm_name' | 'vm_uuid';
 
-export type VmwareVirtualMachineFieldEnum = 'access_url' | 'backend_id' | 'cluster' | 'cluster_name' | 'cores' | 'cores_per_socket' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'datastore' | 'datastore_name' | 'description' | 'disk' | 'disks' | 'error_message' | 'error_traceback' | 'folder' | 'folder_name' | 'guest_os' | 'guest_os_name' | 'guest_power_state' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'networks' | 'ports' | 'project' | 'project_name' | 'project_uuid' | 'ram' | 'resource_type' | 'runtime_state' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'template' | 'template_name' | 'tools_installed' | 'tools_state' | 'url' | 'uuid';
+export type VmwareVirtualMachineFieldEnum = 'access_url' | 'backend_id' | 'cluster' | 'cluster_name' | 'cores' | 'cores_per_socket' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'datastore' | 'datastore_name' | 'description' | 'disk' | 'disks' | 'error_message' | 'error_traceback' | 'folder' | 'folder_name' | 'guest_os' | 'guest_os_name' | 'guest_power_state' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'networks' | 'ports' | 'project' | 'project_name' | 'project_uuid' | 'ram' | 'resource_type' | 'runtime_state' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'template' | 'template_name' | 'tools_installed' | 'tools_state' | 'url' | 'uuid';
 
 /**
  * A page number within the paginated result set.
@@ -58523,6 +59318,328 @@ export type MarketplaceStatsOfferingsCounterStatsCountResponses = {
     200: unknown;
 };
 
+export type MarketplaceStatsOpenstackInstancesListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Filter by availability zone name.
+         */
+        availability_zone_name?: string;
+        /**
+         * Maximum number of vCPUs.
+         */
+        cores_max?: number;
+        /**
+         * Minimum number of vCPUs.
+         */
+        cores_min?: number;
+        /**
+         * Filter by customer UUID.
+         */
+        customer_uuid?: string;
+        /**
+         * Maximum disk in MiB.
+         */
+        disk_max?: number;
+        /**
+         * Minimum disk in MiB.
+         */
+        disk_min?: number;
+        /**
+         * Filter by flavor name (case-insensitive partial match).
+         */
+        flavor_name?: string;
+        /**
+         * Filter by hypervisor hostname (case-insensitive partial match).
+         */
+        hypervisor_hostname?: string;
+        /**
+         * Filter by image name (case-insensitive partial match).
+         */
+        image_name?: string;
+        /**
+         * Filter by instance name (case-insensitive partial match).
+         */
+        name?: string;
+        /**
+         * Ordering field. Prefix with - for descending. Options: name, cores, ram, disk, created, runtime_state, flavor_name, hypervisor_hostname, customer_name, project_name, cluster_name, start_time.
+         */
+        o?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Filter by project UUID.
+         */
+        project_uuid?: string;
+        /**
+         * Maximum RAM in MiB.
+         */
+        ram_max?: number;
+        /**
+         * Minimum RAM in MiB.
+         */
+        ram_min?: number;
+        /**
+         * Filter by runtime state (e.g. ACTIVE, SHUTOFF).
+         */
+        runtime_state?: string;
+        /**
+         * Filter by cluster (service settings) UUID.
+         */
+        service_settings_uuid?: string;
+        /**
+         * Filter by provisioning state (e.g. OK, ERRED). Supports multiple values.
+         */
+        state?: string;
+        /**
+         * Filter by tenant UUID.
+         */
+        tenant_uuid?: string;
+    };
+    url: '/api/marketplace-stats/openstack_instances/';
+};
+
+export type MarketplaceStatsOpenstackInstancesListResponses = {
+    200: Array<OpenStackInstanceReport>;
+};
+
+export type MarketplaceStatsOpenstackInstancesListResponse = MarketplaceStatsOpenstackInstancesListResponses[keyof MarketplaceStatsOpenstackInstancesListResponses];
+
+export type MarketplaceStatsOpenstackInstancesCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Filter by availability zone name.
+         */
+        availability_zone_name?: string;
+        /**
+         * Maximum number of vCPUs.
+         */
+        cores_max?: number;
+        /**
+         * Minimum number of vCPUs.
+         */
+        cores_min?: number;
+        /**
+         * Filter by customer UUID.
+         */
+        customer_uuid?: string;
+        /**
+         * Maximum disk in MiB.
+         */
+        disk_max?: number;
+        /**
+         * Minimum disk in MiB.
+         */
+        disk_min?: number;
+        /**
+         * Filter by flavor name (case-insensitive partial match).
+         */
+        flavor_name?: string;
+        /**
+         * Filter by hypervisor hostname (case-insensitive partial match).
+         */
+        hypervisor_hostname?: string;
+        /**
+         * Filter by image name (case-insensitive partial match).
+         */
+        image_name?: string;
+        /**
+         * Filter by instance name (case-insensitive partial match).
+         */
+        name?: string;
+        /**
+         * Ordering field. Prefix with - for descending. Options: name, cores, ram, disk, created, runtime_state, flavor_name, hypervisor_hostname, customer_name, project_name, cluster_name, start_time.
+         */
+        o?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Filter by project UUID.
+         */
+        project_uuid?: string;
+        /**
+         * Maximum RAM in MiB.
+         */
+        ram_max?: number;
+        /**
+         * Minimum RAM in MiB.
+         */
+        ram_min?: number;
+        /**
+         * Filter by runtime state (e.g. ACTIVE, SHUTOFF).
+         */
+        runtime_state?: string;
+        /**
+         * Filter by cluster (service settings) UUID.
+         */
+        service_settings_uuid?: string;
+        /**
+         * Filter by provisioning state (e.g. OK, ERRED). Supports multiple values.
+         */
+        state?: string;
+        /**
+         * Filter by tenant UUID.
+         */
+        tenant_uuid?: string;
+    };
+    url: '/api/marketplace-stats/openstack_instances/';
+};
+
+export type MarketplaceStatsOpenstackInstancesCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type MarketplaceStatsOpenstackInstancesAggregateListData = {
+    body?: never;
+    path?: never;
+    query: {
+        /**
+         * Filter by customer UUID.
+         */
+        customer_uuid?: string;
+        /**
+         * Filter by flavor name (case-insensitive partial match).
+         */
+        flavor_name?: string;
+        /**
+         * Dimension to group by.
+         */
+        group_by: OpenStackInstanceAggregateGroupByEnum;
+        /**
+         * Filter by hypervisor hostname (case-insensitive partial match).
+         */
+        hypervisor_hostname?: string;
+        /**
+         * Filter by image name (case-insensitive partial match).
+         */
+        image_name?: string;
+        /**
+         * Filter by instance name (case-insensitive partial match).
+         */
+        name?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Filter by project UUID.
+         */
+        project_uuid?: string;
+        /**
+         * Filter by runtime state (e.g. ACTIVE, SHUTOFF).
+         */
+        runtime_state?: string;
+        /**
+         * Filter by cluster (service settings) UUID.
+         */
+        service_settings_uuid?: string;
+        /**
+         * Filter by provisioning state (e.g. OK, ERRED).
+         */
+        state?: string;
+        /**
+         * Filter by tenant UUID.
+         */
+        tenant_uuid?: string;
+    };
+    url: '/api/marketplace-stats/openstack_instances_aggregate/';
+};
+
+export type MarketplaceStatsOpenstackInstancesAggregateListResponses = {
+    200: Array<OpenStackInstanceAggregate>;
+};
+
+export type MarketplaceStatsOpenstackInstancesAggregateListResponse = MarketplaceStatsOpenstackInstancesAggregateListResponses[keyof MarketplaceStatsOpenstackInstancesAggregateListResponses];
+
+export type MarketplaceStatsOpenstackInstancesAggregateCountData = {
+    body?: never;
+    path?: never;
+    query: {
+        /**
+         * Filter by customer UUID.
+         */
+        customer_uuid?: string;
+        /**
+         * Filter by flavor name (case-insensitive partial match).
+         */
+        flavor_name?: string;
+        /**
+         * Dimension to group by.
+         */
+        group_by: OpenStackInstanceAggregateGroupByEnum;
+        /**
+         * Filter by hypervisor hostname (case-insensitive partial match).
+         */
+        hypervisor_hostname?: string;
+        /**
+         * Filter by image name (case-insensitive partial match).
+         */
+        image_name?: string;
+        /**
+         * Filter by instance name (case-insensitive partial match).
+         */
+        name?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Filter by project UUID.
+         */
+        project_uuid?: string;
+        /**
+         * Filter by runtime state (e.g. ACTIVE, SHUTOFF).
+         */
+        runtime_state?: string;
+        /**
+         * Filter by cluster (service settings) UUID.
+         */
+        service_settings_uuid?: string;
+        /**
+         * Filter by provisioning state (e.g. OK, ERRED).
+         */
+        state?: string;
+        /**
+         * Filter by tenant UUID.
+         */
+        tenant_uuid?: string;
+    };
+    url: '/api/marketplace-stats/openstack_instances_aggregate/';
+};
+
+export type MarketplaceStatsOpenstackInstancesAggregateCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type MarketplaceStatsOrderStatsRetrieveData = {
     body?: never;
     path?: never;
@@ -64814,6 +65931,190 @@ export type OpenstackFloatingIpsUpdateDescriptionResponses = {
     200: unknown;
 };
 
+export type OpenstackHealthMonitorsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        field?: Array<OpenStackHealthMonitorFieldEnum>;
+        /**
+         * Load balancer UUID
+         */
+        load_balancer_uuid?: string;
+        /**
+         * Name
+         */
+        name?: string;
+        /**
+         * Name (exact)
+         */
+        name_exact?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Pool URL
+         */
+        pool?: string;
+        /**
+         * Pool UUID
+         */
+        pool_uuid?: string;
+        /**
+         * State
+         *
+         *
+         */
+        state?: Array<CoreStates>;
+        /**
+         * Tenant UUID
+         */
+        tenant_uuid?: string;
+    };
+    url: '/api/openstack-health-monitors/';
+};
+
+export type OpenstackHealthMonitorsListResponses = {
+    200: Array<OpenStackHealthMonitor>;
+};
+
+export type OpenstackHealthMonitorsListResponse = OpenstackHealthMonitorsListResponses[keyof OpenstackHealthMonitorsListResponses];
+
+export type OpenstackHealthMonitorsCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Load balancer UUID
+         */
+        load_balancer_uuid?: string;
+        /**
+         * Name
+         */
+        name?: string;
+        /**
+         * Name (exact)
+         */
+        name_exact?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Pool URL
+         */
+        pool?: string;
+        /**
+         * Pool UUID
+         */
+        pool_uuid?: string;
+        /**
+         * State
+         *
+         *
+         */
+        state?: Array<CoreStates>;
+        /**
+         * Tenant UUID
+         */
+        tenant_uuid?: string;
+    };
+    url: '/api/openstack-health-monitors/';
+};
+
+export type OpenstackHealthMonitorsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type OpenstackHealthMonitorsCreateData = {
+    body: CreateHealthMonitorRequest;
+    path?: never;
+    query?: never;
+    url: '/api/openstack-health-monitors/';
+};
+
+export type OpenstackHealthMonitorsCreateResponses = {
+    201: CreateHealthMonitor;
+};
+
+export type OpenstackHealthMonitorsCreateResponse = OpenstackHealthMonitorsCreateResponses[keyof OpenstackHealthMonitorsCreateResponses];
+
+export type OpenstackHealthMonitorsDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openstack-health-monitors/{uuid}/';
+};
+
+export type OpenstackHealthMonitorsDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type OpenstackHealthMonitorsDestroyResponse = OpenstackHealthMonitorsDestroyResponses[keyof OpenstackHealthMonitorsDestroyResponses];
+
+export type OpenstackHealthMonitorsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        field?: Array<OpenStackHealthMonitorFieldEnum>;
+    };
+    url: '/api/openstack-health-monitors/{uuid}/';
+};
+
+export type OpenstackHealthMonitorsRetrieveResponses = {
+    200: OpenStackHealthMonitor;
+};
+
+export type OpenstackHealthMonitorsRetrieveResponse = OpenstackHealthMonitorsRetrieveResponses[keyof OpenstackHealthMonitorsRetrieveResponses];
+
+export type OpenstackHealthMonitorsPartialUpdateData = {
+    body?: PatchedUpdateHealthMonitorRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openstack-health-monitors/{uuid}/';
+};
+
+export type OpenstackHealthMonitorsPartialUpdateResponses = {
+    200: UpdateHealthMonitor;
+};
+
+export type OpenstackHealthMonitorsPartialUpdateResponse = OpenstackHealthMonitorsPartialUpdateResponses[keyof OpenstackHealthMonitorsPartialUpdateResponses];
+
+export type OpenstackHealthMonitorsUpdateData = {
+    body?: UpdateHealthMonitorRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openstack-health-monitors/{uuid}/';
+};
+
+export type OpenstackHealthMonitorsUpdateResponses = {
+    200: UpdateHealthMonitor;
+};
+
+export type OpenstackHealthMonitorsUpdateResponse = OpenstackHealthMonitorsUpdateResponses[keyof OpenstackHealthMonitorsUpdateResponses];
+
 export type OpenstackImagesListData = {
     body?: never;
     path?: never;
@@ -65650,6 +66951,398 @@ export type OpenstackInstancesUpdateSecurityGroupsData = {
 };
 
 export type OpenstackInstancesUpdateSecurityGroupsResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type OpenstackListenersListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        field?: Array<OpenStackListenerFieldEnum>;
+        /**
+         * Load balancer URL
+         */
+        load_balancer?: string;
+        /**
+         * Load balancer UUID
+         */
+        load_balancer_uuid?: string;
+        /**
+         * Name
+         */
+        name?: string;
+        /**
+         * Name (exact)
+         */
+        name_exact?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * State
+         *
+         *
+         */
+        state?: Array<CoreStates>;
+        /**
+         * Tenant UUID
+         */
+        tenant_uuid?: string;
+    };
+    url: '/api/openstack-listeners/';
+};
+
+export type OpenstackListenersListResponses = {
+    200: Array<OpenStackListener>;
+};
+
+export type OpenstackListenersListResponse = OpenstackListenersListResponses[keyof OpenstackListenersListResponses];
+
+export type OpenstackListenersCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Load balancer URL
+         */
+        load_balancer?: string;
+        /**
+         * Load balancer UUID
+         */
+        load_balancer_uuid?: string;
+        /**
+         * Name
+         */
+        name?: string;
+        /**
+         * Name (exact)
+         */
+        name_exact?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * State
+         *
+         *
+         */
+        state?: Array<CoreStates>;
+        /**
+         * Tenant UUID
+         */
+        tenant_uuid?: string;
+    };
+    url: '/api/openstack-listeners/';
+};
+
+export type OpenstackListenersCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type OpenstackListenersCreateData = {
+    body: CreateListenerRequest;
+    path?: never;
+    query?: never;
+    url: '/api/openstack-listeners/';
+};
+
+export type OpenstackListenersCreateResponses = {
+    201: CreateListener;
+};
+
+export type OpenstackListenersCreateResponse = OpenstackListenersCreateResponses[keyof OpenstackListenersCreateResponses];
+
+export type OpenstackListenersDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openstack-listeners/{uuid}/';
+};
+
+export type OpenstackListenersDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type OpenstackListenersDestroyResponse = OpenstackListenersDestroyResponses[keyof OpenstackListenersDestroyResponses];
+
+export type OpenstackListenersRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        field?: Array<OpenStackListenerFieldEnum>;
+    };
+    url: '/api/openstack-listeners/{uuid}/';
+};
+
+export type OpenstackListenersRetrieveResponses = {
+    200: OpenStackListener;
+};
+
+export type OpenstackListenersRetrieveResponse = OpenstackListenersRetrieveResponses[keyof OpenstackListenersRetrieveResponses];
+
+export type OpenstackListenersPartialUpdateData = {
+    body?: PatchedUpdateListenerRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openstack-listeners/{uuid}/';
+};
+
+export type OpenstackListenersPartialUpdateResponses = {
+    200: UpdateListener;
+};
+
+export type OpenstackListenersPartialUpdateResponse = OpenstackListenersPartialUpdateResponses[keyof OpenstackListenersPartialUpdateResponses];
+
+export type OpenstackListenersUpdateData = {
+    body?: UpdateListenerRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openstack-listeners/{uuid}/';
+};
+
+export type OpenstackListenersUpdateResponses = {
+    200: UpdateListener;
+};
+
+export type OpenstackListenersUpdateResponse = OpenstackListenersUpdateResponses[keyof OpenstackListenersUpdateResponses];
+
+export type OpenstackLoadbalancersListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        field?: Array<OpenStackLoadBalancerFieldEnum>;
+        /**
+         * Name
+         */
+        name?: string;
+        /**
+         * Name (exact)
+         */
+        name_exact?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * State
+         *
+         *
+         */
+        state?: Array<CoreStates>;
+        /**
+         * Tenant URL
+         */
+        tenant?: string;
+        /**
+         * Tenant UUID
+         */
+        tenant_uuid?: string;
+    };
+    url: '/api/openstack-loadbalancers/';
+};
+
+export type OpenstackLoadbalancersListResponses = {
+    200: Array<OpenStackLoadBalancer>;
+};
+
+export type OpenstackLoadbalancersListResponse = OpenstackLoadbalancersListResponses[keyof OpenstackLoadbalancersListResponses];
+
+export type OpenstackLoadbalancersCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Name
+         */
+        name?: string;
+        /**
+         * Name (exact)
+         */
+        name_exact?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * State
+         *
+         *
+         */
+        state?: Array<CoreStates>;
+        /**
+         * Tenant URL
+         */
+        tenant?: string;
+        /**
+         * Tenant UUID
+         */
+        tenant_uuid?: string;
+    };
+    url: '/api/openstack-loadbalancers/';
+};
+
+export type OpenstackLoadbalancersCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type OpenstackLoadbalancersCreateData = {
+    body: CreateLoadBalancerRequest;
+    path?: never;
+    query?: never;
+    url: '/api/openstack-loadbalancers/';
+};
+
+export type OpenstackLoadbalancersCreateResponses = {
+    201: CreateLoadBalancer;
+};
+
+export type OpenstackLoadbalancersCreateResponse = OpenstackLoadbalancersCreateResponses[keyof OpenstackLoadbalancersCreateResponses];
+
+export type OpenstackLoadbalancersDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openstack-loadbalancers/{uuid}/';
+};
+
+export type OpenstackLoadbalancersDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type OpenstackLoadbalancersDestroyResponse = OpenstackLoadbalancersDestroyResponses[keyof OpenstackLoadbalancersDestroyResponses];
+
+export type OpenstackLoadbalancersRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        field?: Array<OpenStackLoadBalancerFieldEnum>;
+    };
+    url: '/api/openstack-loadbalancers/{uuid}/';
+};
+
+export type OpenstackLoadbalancersRetrieveResponses = {
+    200: OpenStackLoadBalancer;
+};
+
+export type OpenstackLoadbalancersRetrieveResponse = OpenstackLoadbalancersRetrieveResponses[keyof OpenstackLoadbalancersRetrieveResponses];
+
+export type OpenstackLoadbalancersPartialUpdateData = {
+    body?: PatchedOpenStackLoadBalancerRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openstack-loadbalancers/{uuid}/';
+};
+
+export type OpenstackLoadbalancersPartialUpdateResponses = {
+    200: OpenStackLoadBalancer;
+};
+
+export type OpenstackLoadbalancersPartialUpdateResponse = OpenstackLoadbalancersPartialUpdateResponses[keyof OpenstackLoadbalancersPartialUpdateResponses];
+
+export type OpenstackLoadbalancersUpdateData = {
+    body: OpenStackLoadBalancerRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openstack-loadbalancers/{uuid}/';
+};
+
+export type OpenstackLoadbalancersUpdateResponses = {
+    200: OpenStackLoadBalancer;
+};
+
+export type OpenstackLoadbalancersUpdateResponse = OpenstackLoadbalancersUpdateResponses[keyof OpenstackLoadbalancersUpdateResponses];
+
+export type OpenstackLoadbalancersAttachFloatingIpData = {
+    body: LoadBalancerAttachFloatingIpRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openstack-loadbalancers/{uuid}/attach_floating_ip/';
+};
+
+export type OpenstackLoadbalancersAttachFloatingIpResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type OpenstackLoadbalancersDetachFloatingIpData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openstack-loadbalancers/{uuid}/detach_floating_ip/';
+};
+
+export type OpenstackLoadbalancersDetachFloatingIpResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type OpenstackLoadbalancersUpdateVipSecurityGroupsData = {
+    body: LoadBalancerUpdateVipSecurityGroupsRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openstack-loadbalancers/{uuid}/update_vip_security_groups/';
+};
+
+export type OpenstackLoadbalancersUpdateVipSecurityGroupsResponses = {
     /**
      * No response body
      */
@@ -66631,6 +68324,366 @@ export type OpenstackNetworksUnlinkResponses = {
 };
 
 export type OpenstackNetworksUnlinkResponse = OpenstackNetworksUnlinkResponses[keyof OpenstackNetworksUnlinkResponses];
+
+export type OpenstackPoolMembersListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        field?: Array<OpenStackPoolMemberFieldEnum>;
+        /**
+         * Load balancer UUID
+         */
+        load_balancer_uuid?: string;
+        /**
+         * Name
+         */
+        name?: string;
+        /**
+         * Name (exact)
+         */
+        name_exact?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Pool URL
+         */
+        pool?: string;
+        /**
+         * Pool UUID
+         */
+        pool_uuid?: string;
+        /**
+         * State
+         *
+         *
+         */
+        state?: Array<CoreStates>;
+        /**
+         * Tenant UUID
+         */
+        tenant_uuid?: string;
+    };
+    url: '/api/openstack-pool-members/';
+};
+
+export type OpenstackPoolMembersListResponses = {
+    200: Array<OpenStackPoolMember>;
+};
+
+export type OpenstackPoolMembersListResponse = OpenstackPoolMembersListResponses[keyof OpenstackPoolMembersListResponses];
+
+export type OpenstackPoolMembersCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Load balancer UUID
+         */
+        load_balancer_uuid?: string;
+        /**
+         * Name
+         */
+        name?: string;
+        /**
+         * Name (exact)
+         */
+        name_exact?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Pool URL
+         */
+        pool?: string;
+        /**
+         * Pool UUID
+         */
+        pool_uuid?: string;
+        /**
+         * State
+         *
+         *
+         */
+        state?: Array<CoreStates>;
+        /**
+         * Tenant UUID
+         */
+        tenant_uuid?: string;
+    };
+    url: '/api/openstack-pool-members/';
+};
+
+export type OpenstackPoolMembersCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type OpenstackPoolMembersCreateData = {
+    body: CreatePoolMemberRequest;
+    path?: never;
+    query?: never;
+    url: '/api/openstack-pool-members/';
+};
+
+export type OpenstackPoolMembersCreateResponses = {
+    201: CreatePoolMember;
+};
+
+export type OpenstackPoolMembersCreateResponse = OpenstackPoolMembersCreateResponses[keyof OpenstackPoolMembersCreateResponses];
+
+export type OpenstackPoolMembersDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openstack-pool-members/{uuid}/';
+};
+
+export type OpenstackPoolMembersDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type OpenstackPoolMembersDestroyResponse = OpenstackPoolMembersDestroyResponses[keyof OpenstackPoolMembersDestroyResponses];
+
+export type OpenstackPoolMembersRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        field?: Array<OpenStackPoolMemberFieldEnum>;
+    };
+    url: '/api/openstack-pool-members/{uuid}/';
+};
+
+export type OpenstackPoolMembersRetrieveResponses = {
+    200: OpenStackPoolMember;
+};
+
+export type OpenstackPoolMembersRetrieveResponse = OpenstackPoolMembersRetrieveResponses[keyof OpenstackPoolMembersRetrieveResponses];
+
+export type OpenstackPoolMembersPartialUpdateData = {
+    body?: PatchedUpdatePoolMemberRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openstack-pool-members/{uuid}/';
+};
+
+export type OpenstackPoolMembersPartialUpdateResponses = {
+    200: UpdatePoolMember;
+};
+
+export type OpenstackPoolMembersPartialUpdateResponse = OpenstackPoolMembersPartialUpdateResponses[keyof OpenstackPoolMembersPartialUpdateResponses];
+
+export type OpenstackPoolMembersUpdateData = {
+    body?: UpdatePoolMemberRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openstack-pool-members/{uuid}/';
+};
+
+export type OpenstackPoolMembersUpdateResponses = {
+    200: UpdatePoolMember;
+};
+
+export type OpenstackPoolMembersUpdateResponse = OpenstackPoolMembersUpdateResponses[keyof OpenstackPoolMembersUpdateResponses];
+
+export type OpenstackPoolsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        field?: Array<OpenStackPoolFieldEnum>;
+        /**
+         * Load balancer URL
+         */
+        load_balancer?: string;
+        /**
+         * Load balancer UUID
+         */
+        load_balancer_uuid?: string;
+        /**
+         * Name
+         */
+        name?: string;
+        /**
+         * Name (exact)
+         */
+        name_exact?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * State
+         *
+         *
+         */
+        state?: Array<CoreStates>;
+        /**
+         * Tenant UUID
+         */
+        tenant_uuid?: string;
+    };
+    url: '/api/openstack-pools/';
+};
+
+export type OpenstackPoolsListResponses = {
+    200: Array<OpenStackPool>;
+};
+
+export type OpenstackPoolsListResponse = OpenstackPoolsListResponses[keyof OpenstackPoolsListResponses];
+
+export type OpenstackPoolsCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Load balancer URL
+         */
+        load_balancer?: string;
+        /**
+         * Load balancer UUID
+         */
+        load_balancer_uuid?: string;
+        /**
+         * Name
+         */
+        name?: string;
+        /**
+         * Name (exact)
+         */
+        name_exact?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * State
+         *
+         *
+         */
+        state?: Array<CoreStates>;
+        /**
+         * Tenant UUID
+         */
+        tenant_uuid?: string;
+    };
+    url: '/api/openstack-pools/';
+};
+
+export type OpenstackPoolsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type OpenstackPoolsCreateData = {
+    body: CreatePoolRequest;
+    path?: never;
+    query?: never;
+    url: '/api/openstack-pools/';
+};
+
+export type OpenstackPoolsCreateResponses = {
+    201: CreatePool;
+};
+
+export type OpenstackPoolsCreateResponse = OpenstackPoolsCreateResponses[keyof OpenstackPoolsCreateResponses];
+
+export type OpenstackPoolsDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openstack-pools/{uuid}/';
+};
+
+export type OpenstackPoolsDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type OpenstackPoolsDestroyResponse = OpenstackPoolsDestroyResponses[keyof OpenstackPoolsDestroyResponses];
+
+export type OpenstackPoolsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        field?: Array<OpenStackPoolFieldEnum>;
+    };
+    url: '/api/openstack-pools/{uuid}/';
+};
+
+export type OpenstackPoolsRetrieveResponses = {
+    200: OpenStackPool;
+};
+
+export type OpenstackPoolsRetrieveResponse = OpenstackPoolsRetrieveResponses[keyof OpenstackPoolsRetrieveResponses];
+
+export type OpenstackPoolsPartialUpdateData = {
+    body?: PatchedOpenStackPoolRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openstack-pools/{uuid}/';
+};
+
+export type OpenstackPoolsPartialUpdateResponses = {
+    200: OpenStackPool;
+};
+
+export type OpenstackPoolsPartialUpdateResponse = OpenstackPoolsPartialUpdateResponses[keyof OpenstackPoolsPartialUpdateResponses];
+
+export type OpenstackPoolsUpdateData = {
+    body: OpenStackPoolRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openstack-pools/{uuid}/';
+};
+
+export type OpenstackPoolsUpdateResponses = {
+    200: OpenStackPool;
+};
+
+export type OpenstackPoolsUpdateResponse = OpenstackPoolsUpdateResponses[keyof OpenstackPoolsUpdateResponses];
 
 export type OpenstackPortsListData = {
     body?: never;
