@@ -5001,7 +5001,7 @@ export type CourseAccount = {
     readonly username: string;
     readonly customer_uuid: string;
     readonly customer_name: string;
-    state: ServiceAccountState;
+    state: CourseAccountStateEnum;
     email?: string;
     description?: string;
     readonly error_message: string;
@@ -5018,6 +5018,8 @@ export type CourseAccountRequest = {
     email?: string;
     description?: string;
 };
+
+export type CourseAccountStateEnum = 'OK' | 'Closed' | 'Erred' | 'Pending';
 
 export type CourseAccountsBulkCreateRequest = {
     course_accounts: Array<CourseAccountCreateNestedRequest>;
@@ -44657,7 +44659,7 @@ export type MarketplaceCourseAccountsListData = {
          *
          *
          */
-        state?: Array<ServiceAccountState>;
+        state?: Array<CourseAccountStateEnum>;
         /**
          * Username
          */
@@ -44719,7 +44721,7 @@ export type MarketplaceCourseAccountsCountData = {
          *
          *
          */
-        state?: Array<ServiceAccountState>;
+        state?: Array<CourseAccountStateEnum>;
         /**
          * Username
          */
@@ -44828,7 +44830,7 @@ export type MarketplaceCourseAccountsCreateBulkData = {
          *
          *
          */
-        state?: Array<ServiceAccountState>;
+        state?: Array<CourseAccountStateEnum>;
         /**
          * Username
          */
@@ -55827,7 +55829,7 @@ export type MarketplaceServiceProvidersCourseAccountsListData = {
          *
          *
          */
-        state?: Array<ServiceAccountState>;
+        state?: Array<CourseAccountStateEnum>;
         /**
          * Username
          */
