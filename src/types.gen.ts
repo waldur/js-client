@@ -248,7 +248,7 @@ export type AgentIdentity = {
      * UUID of an offering with a site-agent compatible type.
      */
     offering: string;
-    readonly created_by: string;
+    readonly created_by: string | null;
     name: string;
     version?: string | null;
     dependencies?: unknown;
@@ -5849,7 +5849,7 @@ export type CustomerServiceAccount = {
     email?: string;
     readonly expires_at: string | null;
     preferred_identifier?: string;
-    customer: string;
+    customer: string | null;
     readonly customer_uuid: string;
     readonly customer_name: string;
 };
@@ -5860,7 +5860,7 @@ export type CustomerServiceAccountRequest = {
     error_traceback?: string;
     email?: string;
     preferred_identifier?: string;
-    customer: string;
+    customer: string | null;
 };
 
 export type CustomerUser = {
@@ -10490,7 +10490,7 @@ export type Message = {
     role: MessageRoleEnum;
     content: string;
     readonly sequence_index: number;
-    readonly replaces: string;
+    readonly replaces: string | null;
     readonly created: string;
     readonly is_flagged: boolean;
     severity: InjectionSeverityEnum;
@@ -16288,7 +16288,7 @@ export type PatchedCustomerServiceAccountRequest = {
     error_traceback?: string;
     email?: string;
     preferred_identifier?: string;
-    customer?: string;
+    customer?: string | null;
 };
 
 export type PatchedDigitalOceanDropletRequest = {
@@ -17111,7 +17111,7 @@ export type PatchedProjectServiceAccountRequest = {
     error_traceback?: string;
     email?: string;
     preferred_identifier?: string;
-    project?: string;
+    project?: string | null;
 };
 
 export type PatchedProjectTemplateRequest = {
@@ -18754,7 +18754,7 @@ export type ProjectServiceAccount = {
     email?: string;
     readonly expires_at: string | null;
     preferred_identifier?: string;
-    project: string;
+    project: string | null;
     readonly project_uuid: string;
     readonly project_name: string;
     readonly customer_uuid: string;
@@ -18768,7 +18768,7 @@ export type ProjectServiceAccountRequest = {
     error_traceback?: string;
     email?: string;
     preferred_identifier?: string;
-    project: string;
+    project: string | null;
 };
 
 export type ProjectTemplate = {
