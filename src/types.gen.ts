@@ -3619,7 +3619,7 @@ export type ChatRequestRequest = {
 
 export type ChatResponse = {
     /**
-     * Component Alias (e.g. 'markdown', 'code', 'table').
+     * Component key (e.g. 'markdown', 'code', 'table', 'vm_order').
      */
     k?: string;
     /**
@@ -3647,7 +3647,7 @@ export type ChatResponse = {
      */
     n?: number;
     /**
-     * System metadata.
+     * System metadata (thread_uuid, message UUIDs).
      */
     m?: {
         [key: string]: unknown;
@@ -3656,6 +3656,62 @@ export type ChatResponse = {
      * PII detection warning message.
      */
     w?: string;
+    /**
+     * vm_order status: 'form' | 'project_form' | 'preview' | 'success' | 'error'.
+     */
+    status?: string;
+    /**
+     * VM name.
+     */
+    name?: string;
+    /**
+     * Flavor display string (e.g. 'm1.small (2 vCPU, 4GB RAM)').
+     */
+    flavor?: string;
+    /**
+     * Image name.
+     */
+    image?: string;
+    /**
+     * Intro text or form instructions.
+     */
+    content?: string;
+    /**
+     * Project name.
+     */
+    project?: string;
+    /**
+     * Organization/customer name.
+     */
+    organization?: string;
+    /**
+     * Project UUID.
+     */
+    project_uuid?: string;
+    /**
+     * Order UUID (present on success).
+     */
+    order_id?: string;
+    /**
+     * Success message (present on success).
+     */
+    message?: string;
+    /**
+     * Error detail (present on error).
+     */
+    error?: string;
+    /**
+     * Available flavor options [{name, cores, ram}]. Present when status='form'.
+     */
+    flavors?: Array<unknown>;
+    /**
+     * Available image options [{name, min_disk, min_ram}]. Present when status='form'.
+     */
+    images?: Array<unknown>;
+    /**
+     * Available project options [{name, organization, uuid}]. Present when status='project_form'.
+     */
+    projects?: Array<unknown>;
 };
 
 export type ChatSession = {
@@ -55933,7 +55989,7 @@ export type MarketplaceServiceProvidersCustomerProjectsListData = {
         /**
          * Filter projects where the given user has a role.
          */
-        user_uuid?: string;
+        user_uuid_with_active_role?: string;
     };
     url: '/api/marketplace-service-providers/{service_provider_uuid}/customer_projects/';
 };
@@ -56445,7 +56501,7 @@ export type MarketplaceServiceProvidersProjectsListData = {
         /**
          * Filter projects where the given user has a role.
          */
-        user_uuid?: string;
+        user_uuid_with_active_role?: string;
     };
     url: '/api/marketplace-service-providers/{service_provider_uuid}/projects/';
 };
@@ -64396,9 +64452,13 @@ export type OpenportalUnmanagedProjectsListData = {
          */
         slug?: string;
         /**
-         * Filter projects where the given user has a role.
+         * Filter by user UUID.
          */
         user_uuid?: string;
+        /**
+         * Filter projects where the given user has a role.
+         */
+        user_uuid_with_active_role?: string;
     };
     url: '/api/openportal-unmanaged-projects/';
 };
@@ -64497,9 +64557,13 @@ export type OpenportalUnmanagedProjectsCountData = {
          */
         slug?: string;
         /**
-         * Filter projects where the given user has a role.
+         * Filter by user UUID.
          */
         user_uuid?: string;
+        /**
+         * Filter projects where the given user has a role.
+         */
+        user_uuid_with_active_role?: string;
     };
     url: '/api/openportal-unmanaged-projects/';
 };
@@ -73574,9 +73638,13 @@ export type ProjectsListData = {
          */
         slug?: string;
         /**
-         * Filter projects where the given user has a role.
+         * Filter by user UUID.
          */
         user_uuid?: string;
+        /**
+         * Filter projects where the given user has a role.
+         */
+        user_uuid_with_active_role?: string;
     };
     url: '/api/projects/';
 };
@@ -73675,9 +73743,13 @@ export type ProjectsCountData = {
          */
         slug?: string;
         /**
-         * Filter projects where the given user has a role.
+         * Filter by user UUID.
          */
         user_uuid?: string;
+        /**
+         * Filter projects where the given user has a role.
+         */
+        user_uuid_with_active_role?: string;
     };
     url: '/api/projects/';
 };
@@ -80205,22 +80277,6 @@ export type RemoteWaldurApiPullOfferingDetailsData = {
 };
 
 export type RemoteWaldurApiPullOfferingDetailsResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
-};
-
-export type RemoteWaldurApiPullOfferingInvoicesData = {
-    body?: never;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/remote-waldur-api/pull_offering_invoices/{uuid}/';
-};
-
-export type RemoteWaldurApiPullOfferingInvoicesResponses = {
     /**
      * No response body
      */
