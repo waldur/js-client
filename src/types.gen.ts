@@ -11550,6 +11550,8 @@ export type Offering = {
     description?: string;
     full_description?: string;
     privacy_policy_link?: string;
+    helpdesk_url?: string;
+    documentation_url?: string;
     /**
      * Publicly accessible offering access URL
      */
@@ -11793,6 +11795,8 @@ export type OfferingCreateRequest = {
     description?: string;
     full_description?: string;
     privacy_policy_link?: string;
+    helpdesk_url?: string;
+    documentation_url?: string;
     /**
      * Publicly accessible offering access URL
      */
@@ -12213,6 +12217,8 @@ export type OfferingOverviewUpdateRequest = {
     description?: string;
     full_description?: string;
     privacy_policy_link?: string;
+    helpdesk_url?: string;
+    documentation_url?: string;
     /**
      * Publicly accessible offering access URL
      */
@@ -19397,6 +19403,8 @@ export type ProviderOfferingDetails = {
     description?: string;
     full_description?: string;
     privacy_policy_link?: string;
+    helpdesk_url?: string;
+    documentation_url?: string;
     /**
      * Publicly accessible offering access URL
      */
@@ -19500,6 +19508,8 @@ export type ProviderOfferingDetailsRequest = {
     description?: string;
     full_description?: string;
     privacy_policy_link?: string;
+    helpdesk_url?: string;
+    documentation_url?: string;
     /**
      * Publicly accessible offering access URL
      */
@@ -19818,6 +19828,8 @@ export type PublicOfferingDetails = {
     description?: string;
     full_description?: string;
     privacy_policy_link?: string;
+    helpdesk_url?: string;
+    documentation_url?: string;
     /**
      * Publicly accessible offering access URL
      */
@@ -27247,6 +27259,8 @@ export type OfferingCreateRequestForm = {
     description?: string;
     full_description?: string;
     privacy_policy_link?: string;
+    helpdesk_url?: string;
+    documentation_url?: string;
     /**
      * Publicly accessible offering access URL
      */
@@ -27301,6 +27315,8 @@ export type OfferingCreateRequestMultipart = {
     description?: string;
     full_description?: string;
     privacy_policy_link?: string;
+    helpdesk_url?: string;
+    documentation_url?: string;
     /**
      * Publicly accessible offering access URL
      */
@@ -28616,7 +28632,7 @@ export type AzureVirtualMachineFieldEnum = 'access_url' | 'backend_id' | 'cores'
 
 export type BackendResourceReqOEnum = '-created' | 'created';
 
-export type OfferingFieldEnum = 'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'billing_type_classification' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'googlecalendar' | 'has_compliance_requirements' | 'image' | 'integration_guide' | 'is_accessible' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_options' | 'roles' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'tags' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'user_has_consent' | 'uuid' | 'vendor_details';
+export type OfferingFieldEnum = 'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'billing_type_classification' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'documentation_url' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'googlecalendar' | 'has_compliance_requirements' | 'helpdesk_url' | 'image' | 'integration_guide' | 'is_accessible' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_options' | 'roles' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'tags' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'user_has_consent' | 'uuid' | 'vendor_details';
 
 export type BookingResourceFieldEnum = 'attributes' | 'available_actions' | 'backend_id' | 'backend_metadata' | 'can_terminate' | 'category_icon' | 'category_title' | 'category_uuid' | 'consumer_reviewed_by' | 'consumer_reviewed_by_full_name' | 'consumer_reviewed_by_username' | 'created' | 'created_by' | 'created_by_full_name' | 'created_by_username' | 'creation_order' | 'current_usages' | 'customer_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'downscaled' | 'effective_id' | 'end_date' | 'end_date_requested_by' | 'endpoints' | 'error_message' | 'error_traceback' | 'is_limit_based' | 'is_usage_based' | 'last_sync' | 'limit_usage' | 'limits' | 'modified' | 'name' | 'offering' | 'offering_backend_id' | 'offering_billable' | 'offering_components' | 'offering_description' | 'offering_image' | 'offering_name' | 'offering_plugin_options' | 'offering_shared' | 'offering_slug' | 'offering_state' | 'offering_thumbnail' | 'offering_type' | 'offering_uuid' | 'options' | 'order_in_progress' | 'parent_name' | 'parent_offering_name' | 'parent_offering_slug' | 'parent_offering_uuid' | 'parent_uuid' | 'paused' | 'plan' | 'plan_description' | 'plan_name' | 'plan_unit' | 'plan_uuid' | 'project' | 'project_description' | 'project_end_date' | 'project_end_date_requested_by' | 'project_name' | 'project_slug' | 'project_uuid' | 'provider_description' | 'provider_name' | 'provider_slug' | 'provider_uuid' | 'renewal_date' | 'report' | 'resource_type' | 'resource_uuid' | 'restrict_member_access' | 'scope' | 'service_settings_uuid' | 'slots' | 'slug' | 'state' | 'url' | 'user_requires_reconsent' | 'username' | 'uuid';
 
@@ -28730,7 +28746,7 @@ export type OrderDetailsOEnum = '-consumer_reviewed_at' | '-cost' | '-created' |
 
 export type RemoteProjectUpdateRequestStateEnum = 'approved' | 'canceled' | 'draft' | 'pending' | 'rejected';
 
-export type ProviderOfferingDetailsFieldEnum = 'access_url' | 'attributes' | 'backend_id' | 'backend_id_rules' | 'backend_metadata' | 'billable' | 'billing_type_classification' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'has_compliance_requirements' | 'image' | 'integration_guide' | 'integration_status' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_options' | 'roles' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'tags' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'uuid' | 'vendor_details';
+export type ProviderOfferingDetailsFieldEnum = 'access_url' | 'attributes' | 'backend_id' | 'backend_id_rules' | 'backend_metadata' | 'billable' | 'billing_type_classification' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'documentation_url' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'has_compliance_requirements' | 'helpdesk_url' | 'image' | 'integration_guide' | 'integration_status' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_options' | 'roles' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'tags' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'uuid' | 'vendor_details';
 
 export type ProviderOfferingDetailsOEnum = '-created' | '-name' | '-state' | '-total_cost' | '-total_cost_estimated' | '-total_customers' | '-type' | 'created' | 'name' | 'state' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type';
 
@@ -28742,7 +28758,7 @@ export type UserFieldEnum = 'active_isds' | 'affiliations' | 'agree_with_policy'
 
 export type ResourceOEnum = '-created' | '-end_date' | '-name' | '-project_name' | '-state' | 'created' | 'end_date' | 'name' | 'project_name' | 'state';
 
-export type PublicOfferingDetailsFieldEnum = 'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'billing_type_classification' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'has_compliance_requirements' | 'image' | 'integration_guide' | 'is_accessible' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'project' | 'project_name' | 'project_uuid' | 'promotion_campaigns' | 'quotas' | 'resource_options' | 'roles' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'tags' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'user_has_consent' | 'uuid' | 'vendor_details';
+export type PublicOfferingDetailsFieldEnum = 'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'billing_type_classification' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'documentation_url' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'has_compliance_requirements' | 'helpdesk_url' | 'image' | 'integration_guide' | 'is_accessible' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'project' | 'project_name' | 'project_uuid' | 'promotion_campaigns' | 'quotas' | 'resource_options' | 'roles' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'tags' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'user_has_consent' | 'uuid' | 'vendor_details';
 
 export type RobotAccountDetailsFieldEnum = 'backend_id' | 'created' | 'customer_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'fingerprints' | 'keys' | 'modified' | 'offering_plugin_options' | 'project_name' | 'project_uuid' | 'provider_name' | 'provider_uuid' | 'resource' | 'resource_name' | 'resource_uuid' | 'responsible_user' | 'state' | 'type' | 'url' | 'user_keys' | 'username' | 'users' | 'uuid';
 
@@ -54988,12 +55004,24 @@ export type MarketplaceRobotAccountsListData = {
          */
         resource_uuid?: string;
         /**
+         * Responsible user UUID
+         */
+        responsible_user_uuid?: string;
+        /**
          * Robot account state
          *
          *
          */
         state?: RemoteResourceSyncStatusRemoteStateEnum;
         type?: string;
+        /**
+         * Connected user email contains
+         */
+        user_email?: string;
+        /**
+         * Username contains
+         */
+        username?: string;
     };
     url: '/api/marketplace-robot-accounts/';
 };
@@ -55045,12 +55073,24 @@ export type MarketplaceRobotAccountsCountData = {
          */
         resource_uuid?: string;
         /**
+         * Responsible user UUID
+         */
+        responsible_user_uuid?: string;
+        /**
          * Robot account state
          *
          *
          */
         state?: RemoteResourceSyncStatusRemoteStateEnum;
         type?: string;
+        /**
+         * Connected user email contains
+         */
+        user_email?: string;
+        /**
+         * Username contains
+         */
+        username?: string;
     };
     url: '/api/marketplace-robot-accounts/';
 };
