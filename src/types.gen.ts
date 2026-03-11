@@ -1531,12 +1531,62 @@ export type AttachmentRequest = {
     file: Blob | File;
 };
 
+export type Attribute = {
+    readonly url: string;
+    readonly uuid: string;
+    key: string;
+    readonly created: string;
+    title: string;
+    section: string;
+    readonly section_title: string;
+    type: AttributeTypeEnum;
+    /**
+     * A value must be provided for the attribute.
+     */
+    required?: boolean;
+    default?: unknown;
+};
+
+export type AttributeOption = {
+    readonly url: string;
+    readonly uuid: string;
+    readonly id: number;
+    key: string;
+    title: string;
+    attribute: string;
+    readonly attribute_title: string;
+    /**
+     * Return True if this option is the default for its attribute.
+     */
+    readonly is_default: boolean;
+};
+
+export type AttributeOptionRequest = {
+    key: string;
+    title: string;
+    attribute: string;
+};
+
+export type AttributeRequest = {
+    key: string;
+    title: string;
+    section: string;
+    type: AttributeTypeEnum;
+    /**
+     * A value must be provided for the attribute.
+     */
+    required?: boolean;
+    default?: unknown;
+};
+
 export type AttributeSourceDetail = {
     source: string;
     timestamp: string;
     age_days: number;
     is_stale: boolean;
 };
+
+export type AttributeTypeEnum = 'boolean' | 'string' | 'text' | 'integer' | 'choice' | 'list';
 
 export type AuthMethodEnum = 'api_token' | 'personal_access_token' | 'basic';
 
@@ -10705,9 +10755,10 @@ export type NestedAgentServiceRequest = {
 };
 
 export type NestedAttribute = {
+    readonly uuid?: string;
     key?: string;
     title?: string;
-    type?: NestedAttributeTypeEnum;
+    type?: AttributeTypeEnum;
     options?: Array<NestedAttributeOption>;
     /**
      * A value must be provided for the attribute.
@@ -10717,8 +10768,13 @@ export type NestedAttribute = {
 };
 
 export type NestedAttributeOption = {
+    readonly uuid?: string;
     key?: string;
     title?: string;
+    /**
+     * Return True if this option is the default for its attribute.
+     */
+    readonly is_default?: boolean;
 };
 
 export type NestedAttributeOptionRequest = {
@@ -10729,7 +10785,7 @@ export type NestedAttributeOptionRequest = {
 export type NestedAttributeRequest = {
     key: string;
     title: string;
-    type: NestedAttributeTypeEnum;
+    type: AttributeTypeEnum;
     options: Array<NestedAttributeOptionRequest>;
     /**
      * A value must be provided for the attribute.
@@ -10737,8 +10793,6 @@ export type NestedAttributeRequest = {
     required?: boolean;
     default?: unknown;
 };
-
-export type NestedAttributeTypeEnum = 'boolean' | 'string' | 'text' | 'integer' | 'choice' | 'list';
 
 export type NestedCampaign = {
     readonly uuid?: string;
@@ -15946,6 +16000,24 @@ export type PatchedAssignmentItemRequest = {
      * Reason provided by reviewer for declining.
      */
     decline_reason?: string;
+};
+
+export type PatchedAttributeOptionRequest = {
+    key?: string;
+    title?: string;
+    attribute?: string;
+};
+
+export type PatchedAttributeRequest = {
+    key?: string;
+    title?: string;
+    section?: string;
+    type?: AttributeTypeEnum;
+    /**
+     * A value must be provided for the attribute.
+     */
+    required?: boolean;
+    default?: unknown;
 };
 
 export type PatchedAwsInstanceRequest = {
@@ -43492,6 +43564,264 @@ export type ManagedRancherClusterResourcesAddNodeResponses = {
 };
 
 export type ManagedRancherClusterResourcesAddNodeResponse = ManagedRancherClusterResourcesAddNodeResponses[keyof ManagedRancherClusterResourcesAddNodeResponses];
+
+export type MarketplaceAttributeOptionsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Attribute URL
+         */
+        attribute?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-attribute-options/';
+};
+
+export type MarketplaceAttributeOptionsListResponses = {
+    200: Array<AttributeOption>;
+};
+
+export type MarketplaceAttributeOptionsListResponse = MarketplaceAttributeOptionsListResponses[keyof MarketplaceAttributeOptionsListResponses];
+
+export type MarketplaceAttributeOptionsCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Attribute URL
+         */
+        attribute?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-attribute-options/';
+};
+
+export type MarketplaceAttributeOptionsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type MarketplaceAttributeOptionsCreateData = {
+    body: AttributeOptionRequest;
+    path?: never;
+    query?: never;
+    url: '/api/marketplace-attribute-options/';
+};
+
+export type MarketplaceAttributeOptionsCreateResponses = {
+    201: AttributeOption;
+};
+
+export type MarketplaceAttributeOptionsCreateResponse = MarketplaceAttributeOptionsCreateResponses[keyof MarketplaceAttributeOptionsCreateResponses];
+
+export type MarketplaceAttributeOptionsDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-attribute-options/{uuid}/';
+};
+
+export type MarketplaceAttributeOptionsDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type MarketplaceAttributeOptionsDestroyResponse = MarketplaceAttributeOptionsDestroyResponses[keyof MarketplaceAttributeOptionsDestroyResponses];
+
+export type MarketplaceAttributeOptionsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-attribute-options/{uuid}/';
+};
+
+export type MarketplaceAttributeOptionsRetrieveResponses = {
+    200: AttributeOption;
+};
+
+export type MarketplaceAttributeOptionsRetrieveResponse = MarketplaceAttributeOptionsRetrieveResponses[keyof MarketplaceAttributeOptionsRetrieveResponses];
+
+export type MarketplaceAttributeOptionsPartialUpdateData = {
+    body?: PatchedAttributeOptionRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-attribute-options/{uuid}/';
+};
+
+export type MarketplaceAttributeOptionsPartialUpdateResponses = {
+    200: AttributeOption;
+};
+
+export type MarketplaceAttributeOptionsPartialUpdateResponse = MarketplaceAttributeOptionsPartialUpdateResponses[keyof MarketplaceAttributeOptionsPartialUpdateResponses];
+
+export type MarketplaceAttributeOptionsUpdateData = {
+    body: AttributeOptionRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-attribute-options/{uuid}/';
+};
+
+export type MarketplaceAttributeOptionsUpdateResponses = {
+    200: AttributeOption;
+};
+
+export type MarketplaceAttributeOptionsUpdateResponse = MarketplaceAttributeOptionsUpdateResponses[keyof MarketplaceAttributeOptionsUpdateResponses];
+
+export type MarketplaceAttributesListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Section URL
+         */
+        section?: string;
+    };
+    url: '/api/marketplace-attributes/';
+};
+
+export type MarketplaceAttributesListResponses = {
+    200: Array<Attribute>;
+};
+
+export type MarketplaceAttributesListResponse = MarketplaceAttributesListResponses[keyof MarketplaceAttributesListResponses];
+
+export type MarketplaceAttributesCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Section URL
+         */
+        section?: string;
+    };
+    url: '/api/marketplace-attributes/';
+};
+
+export type MarketplaceAttributesCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type MarketplaceAttributesCreateData = {
+    body: AttributeRequest;
+    path?: never;
+    query?: never;
+    url: '/api/marketplace-attributes/';
+};
+
+export type MarketplaceAttributesCreateResponses = {
+    201: Attribute;
+};
+
+export type MarketplaceAttributesCreateResponse = MarketplaceAttributesCreateResponses[keyof MarketplaceAttributesCreateResponses];
+
+export type MarketplaceAttributesDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-attributes/{uuid}/';
+};
+
+export type MarketplaceAttributesDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type MarketplaceAttributesDestroyResponse = MarketplaceAttributesDestroyResponses[keyof MarketplaceAttributesDestroyResponses];
+
+export type MarketplaceAttributesRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-attributes/{uuid}/';
+};
+
+export type MarketplaceAttributesRetrieveResponses = {
+    200: Attribute;
+};
+
+export type MarketplaceAttributesRetrieveResponse = MarketplaceAttributesRetrieveResponses[keyof MarketplaceAttributesRetrieveResponses];
+
+export type MarketplaceAttributesPartialUpdateData = {
+    body?: PatchedAttributeRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-attributes/{uuid}/';
+};
+
+export type MarketplaceAttributesPartialUpdateResponses = {
+    200: Attribute;
+};
+
+export type MarketplaceAttributesPartialUpdateResponse = MarketplaceAttributesPartialUpdateResponses[keyof MarketplaceAttributesPartialUpdateResponses];
+
+export type MarketplaceAttributesUpdateData = {
+    body: AttributeRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-attributes/{uuid}/';
+};
+
+export type MarketplaceAttributesUpdateResponses = {
+    200: Attribute;
+};
+
+export type MarketplaceAttributesUpdateResponse = MarketplaceAttributesUpdateResponses[keyof MarketplaceAttributesUpdateResponses];
 
 export type MarketplaceBookingsListData = {
     body?: never;
