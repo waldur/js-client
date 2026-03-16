@@ -4629,6 +4629,7 @@ export type ConstanceSettings = {
     LLM_INFERENCES_API_URL?: string;
     LLM_INFERENCES_API_TOKEN?: string;
     LLM_INFERENCES_MODEL?: string;
+    LLM_COMPLETION_KWARGS?: string;
     LLM_TOKEN_LIMIT_DAILY?: number;
     LLM_TOKEN_LIMIT_WEEKLY?: number;
     LLM_TOKEN_LIMIT_MONTHLY?: number;
@@ -4673,6 +4674,7 @@ export type ConstanceSettings = {
     ENABLE_PROJECT_DIGEST?: boolean;
     SSH_KEY_ALLOWED_TYPES?: Array<SshkeyallowedtypesEnum | BlankEnum>;
     SSH_KEY_MIN_RSA_KEY_SIZE?: number;
+    ENABLED_REPORTING_SCREENS?: Array<EnabledreportingscreensEnum | BlankEnum>;
 };
 
 export type ConstanceSettingsRequest = {
@@ -4875,6 +4877,7 @@ export type ConstanceSettingsRequest = {
     LLM_INFERENCES_API_URL?: string;
     LLM_INFERENCES_API_TOKEN?: string;
     LLM_INFERENCES_MODEL?: string;
+    LLM_COMPLETION_KWARGS?: string;
     LLM_TOKEN_LIMIT_DAILY?: number;
     LLM_TOKEN_LIMIT_WEEKLY?: number;
     LLM_TOKEN_LIMIT_MONTHLY?: number;
@@ -4919,6 +4922,7 @@ export type ConstanceSettingsRequest = {
     ENABLE_PROJECT_DIGEST?: boolean;
     SSH_KEY_ALLOWED_TYPES?: Array<SshkeyallowedtypesEnum | BlankEnum>;
     SSH_KEY_MIN_RSA_KEY_SIZE?: number;
+    ENABLED_REPORTING_SCREENS?: Array<EnabledreportingscreensEnum | BlankEnum>;
 };
 
 export type ConsumptionStatisticsResponse = {
@@ -6687,6 +6691,8 @@ export type DryRunRequest = {
 export type DryRunStateEnum = 1 | 2 | 3 | 4;
 
 export type DryRunTypeEnum = 'Create' | 'Update' | 'Terminate' | 'Restore' | 'Pull';
+
+export type EnabledreportingscreensEnum = 'resource-usage' | 'user-usage' | 'quotas' | 'usage-monitoring' | 'usage-trends' | 'organization-summary' | 'project-detail' | 'resources-geography' | 'project-classification' | 'usage-by-customer' | 'usage-by-org-type' | 'usage-by-creator' | 'call-performance' | 'review-progress' | 'resource-demand' | 'capacity' | 'provider-overview' | 'provider-revenue' | 'provider-orders' | 'provider-resources' | 'provider-customers' | 'provider-offerings' | 'openstack-instances' | 'user-demographics' | 'user-organizations' | 'user-affiliations' | 'user-roles' | 'growth' | 'revenue' | 'pricelist' | 'orders' | 'offering-costs' | 'maintenance-overview' | 'provisioning-stats';
 
 export type EligibilityCheck = {
     is_eligible: boolean;
@@ -10540,6 +10546,7 @@ export type Message = {
     readonly thread: string;
     role: MessageRoleEnum;
     content: string;
+    readonly tool_calls: unknown;
     readonly sequence_index: number;
     readonly replaces: string | null;
     readonly created: string;
@@ -27966,6 +27973,7 @@ export type ConstanceSettingsRequestForm = {
     LLM_INFERENCES_API_URL?: string;
     LLM_INFERENCES_API_TOKEN?: string;
     LLM_INFERENCES_MODEL?: string;
+    LLM_COMPLETION_KWARGS?: string;
     LLM_TOKEN_LIMIT_DAILY?: number;
     LLM_TOKEN_LIMIT_WEEKLY?: number;
     LLM_TOKEN_LIMIT_MONTHLY?: number;
@@ -28010,6 +28018,7 @@ export type ConstanceSettingsRequestForm = {
     ENABLE_PROJECT_DIGEST?: boolean;
     SSH_KEY_ALLOWED_TYPES?: Array<SshkeyallowedtypesEnum | BlankEnum>;
     SSH_KEY_MIN_RSA_KEY_SIZE?: number;
+    ENABLED_REPORTING_SCREENS?: Array<EnabledreportingscreensEnum | BlankEnum>;
 };
 
 export type ConstanceSettingsRequestMultipart = {
@@ -28212,6 +28221,7 @@ export type ConstanceSettingsRequestMultipart = {
     LLM_INFERENCES_API_URL?: string;
     LLM_INFERENCES_API_TOKEN?: string;
     LLM_INFERENCES_MODEL?: string;
+    LLM_COMPLETION_KWARGS?: string;
     LLM_TOKEN_LIMIT_DAILY?: number;
     LLM_TOKEN_LIMIT_WEEKLY?: number;
     LLM_TOKEN_LIMIT_MONTHLY?: number;
@@ -28256,6 +28266,7 @@ export type ConstanceSettingsRequestMultipart = {
     ENABLE_PROJECT_DIGEST?: boolean;
     SSH_KEY_ALLOWED_TYPES?: Array<SshkeyallowedtypesEnum | BlankEnum>;
     SSH_KEY_MIN_RSA_KEY_SIZE?: number;
+    ENABLED_REPORTING_SCREENS?: Array<EnabledreportingscreensEnum | BlankEnum>;
 };
 
 export type PaymentRequestForm = {
