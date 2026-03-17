@@ -2528,7 +2528,7 @@ export type BookingResource = {
     readonly project_name?: string;
     readonly project_description?: string;
     /**
-     * The date is inclusive. Once reached (plus any grace period), all project resources will be scheduled for termination.
+     * The date is inclusive. Once reached, all project resource will be scheduled for termination.
      */
     readonly project_end_date?: string | null;
     /**
@@ -9515,7 +9515,7 @@ export type MarketplaceProviderCustomerProject = {
     name?: string;
     description?: string;
     /**
-     * The date is inclusive. Once reached (plus any grace period), all project resources will be scheduled for termination.
+     * The date is inclusive. Once reached, all project resource will be scheduled for termination.
      */
     end_date?: string | null;
     readonly resources_count?: number;
@@ -21917,7 +21917,7 @@ export type Resource = {
     readonly project_name?: string;
     readonly project_description?: string;
     /**
-     * The date is inclusive. Once reached (plus any grace period), all project resources will be scheduled for termination.
+     * The date is inclusive. Once reached, all project resource will be scheduled for termination.
      */
     readonly project_end_date?: string | null;
     /**
