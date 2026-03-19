@@ -10574,6 +10574,7 @@ export type Message = {
     readonly thread: string;
     role: MessageRoleEnum;
     content: string;
+    readonly content_display: string;
     readonly tool_calls: unknown;
     readonly sequence_index: number;
     readonly replaces: string | null;
@@ -48602,6 +48603,22 @@ export type MarketplaceOrdersRejectByProviderData = {
 };
 
 export type MarketplaceOrdersRejectByProviderResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type MarketplaceOrdersRetryData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-orders/{uuid}/retry/';
+};
+
+export type MarketplaceOrdersRetryResponses = {
     /**
      * No response body
      */
