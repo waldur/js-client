@@ -18698,6 +18698,10 @@ export type ProjectEndDateChangeRequest = {
      * The requested new end date for the project
      */
     requested_end_date: string;
+    /**
+     * Optional comment from the requester
+     */
+    comment?: string | null;
     readonly created: string;
     readonly created_by_uuid: string | null;
     readonly created_by_full_name: string | null;
@@ -18719,6 +18723,10 @@ export type ProjectEndDateChangeRequestCreate = {
      * The requested new end date for the project
      */
     requested_end_date: string;
+    /**
+     * Optional comment from the requester
+     */
+    comment?: string | null;
     readonly uuid: string;
     readonly state: string;
 };
@@ -18729,18 +18737,10 @@ export type ProjectEndDateChangeRequestCreateRequest = {
      * The requested new end date for the project
      */
     requested_end_date: string;
-};
-
-export type ProjectEndDateChangeRequestRequest = {
-    project: string;
     /**
-     * The requested new end date for the project
+     * Optional comment from the requester
      */
-    requested_end_date: string;
-    /**
-     * Optional comment provided during review
-     */
-    review_comment?: string | null;
+    comment?: string | null;
 };
 
 export type ProjectEstimatedCostPolicy = {
@@ -74332,7 +74332,7 @@ export type ProjectEndDateChangeRequestsApproveResponses = {
 };
 
 export type ProjectEndDateChangeRequestsCancelData = {
-    body: ProjectEndDateChangeRequestRequest;
+    body?: never;
     path: {
         uuid: string;
     };

@@ -36633,11 +36633,7 @@ export const projectEndDateChangeRequestsCancel = <ThrowOnError extends boolean 
             }
         ],
         url: '/api/project-end-date-change-requests/{uuid}/cancel/',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options.headers
-        }
+        ...options
     });
 };
 
