@@ -18483,6 +18483,10 @@ export type Project = {
      */
     end_date?: string | null;
     readonly end_date_requested_by?: string | null;
+    /**
+     * Timestamp of the last end_date change.
+     */
+    readonly end_date_updated_at?: string | null;
     oecd_fos_2007_code?: OecdFos2007CodeEnum | BlankEnum | NullEnum | null;
     /**
      * Human-readable label for the OECD FOS 2007 classification code
@@ -22089,6 +22093,13 @@ export type ResourceDownscaledRequest = {
 };
 
 export type ResourceEndDateByProviderRequest = {
+    /**
+     * The date is inclusive. Once reached, a resource will be scheduled for termination.
+     */
+    end_date?: string | null;
+};
+
+export type ResourceEndDateRequest = {
     /**
      * The date is inclusive. Once reached, a resource will be scheduled for termination.
      */
@@ -28940,7 +28951,7 @@ export type ProviderOfferingDetailsOEnum = '-created' | '-name' | '-state' | '-t
 
 export type ProviderOfferingCustomerFieldEnum = 'abbreviation' | 'email' | 'name' | 'phone_number' | 'slug' | 'uuid';
 
-export type ProjectFieldEnum = 'backend_id' | 'billing_price_estimate' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_display_billing_info_in_projects' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'effective_end_date' | 'end_date' | 'end_date_requested_by' | 'grace_period_days' | 'image' | 'is_in_grace_period' | 'is_industry' | 'is_removed' | 'kind' | 'marketplace_resource_count' | 'max_service_accounts' | 'name' | 'oecd_fos_2007_code' | 'oecd_fos_2007_label' | 'project_credit' | 'resources_count' | 'slug' | 'staff_notes' | 'start_date' | 'termination_metadata' | 'type' | 'type_name' | 'type_uuid' | 'url' | 'user_affiliations' | 'user_email_patterns' | 'user_identity_sources' | 'uuid';
+export type ProjectFieldEnum = 'backend_id' | 'billing_price_estimate' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_display_billing_info_in_projects' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'effective_end_date' | 'end_date' | 'end_date_requested_by' | 'end_date_updated_at' | 'grace_period_days' | 'image' | 'is_in_grace_period' | 'is_industry' | 'is_removed' | 'kind' | 'marketplace_resource_count' | 'max_service_accounts' | 'name' | 'oecd_fos_2007_code' | 'oecd_fos_2007_label' | 'project_credit' | 'resources_count' | 'slug' | 'staff_notes' | 'start_date' | 'termination_metadata' | 'type' | 'type_name' | 'type_uuid' | 'url' | 'user_affiliations' | 'user_email_patterns' | 'user_identity_sources' | 'uuid';
 
 export type UserFieldEnum = 'active_isds' | 'affiliations' | 'agree_with_policy' | 'agreement_date' | 'attribute_sources' | 'birth_date' | 'civil_number' | 'country_of_residence' | 'date_joined' | 'description' | 'eduperson_assurance' | 'email' | 'first_name' | 'full_name' | 'gender' | 'has_active_session' | 'has_usable_password' | 'identity_provider_fields' | 'identity_provider_label' | 'identity_provider_management_url' | 'identity_provider_name' | 'identity_source' | 'image' | 'ip_address' | 'is_active' | 'is_identity_manager' | 'is_staff' | 'is_support' | 'job_title' | 'last_name' | 'managed_isds' | 'nationalities' | 'nationality' | 'native_name' | 'notifications_enabled' | 'organization' | 'organization_country' | 'organization_registry_code' | 'organization_type' | 'permissions' | 'personal_title' | 'phone_number' | 'place_of_birth' | 'preferred_language' | 'registration_method' | 'requested_email' | 'slug' | 'token' | 'token_expires_at' | 'token_lifetime' | 'url' | 'username' | 'uuid';
 
@@ -53725,6 +53736,22 @@ export type MarketplaceProviderResourcesSetDownscaledResponses = {
 
 export type MarketplaceProviderResourcesSetDownscaledResponse = MarketplaceProviderResourcesSetDownscaledResponses[keyof MarketplaceProviderResourcesSetDownscaledResponses];
 
+export type MarketplaceProviderResourcesSetEndDateData = {
+    body?: ResourceEndDateRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-provider-resources/{uuid}/set_end_date/';
+};
+
+export type MarketplaceProviderResourcesSetEndDateResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type MarketplaceProviderResourcesSetEndDateByProviderData = {
     body?: ResourceEndDateByProviderRequest;
     path: {
@@ -55566,6 +55593,22 @@ export type MarketplaceResourcesSetDownscaledResponses = {
 };
 
 export type MarketplaceResourcesSetDownscaledResponse = MarketplaceResourcesSetDownscaledResponses[keyof MarketplaceResourcesSetDownscaledResponses];
+
+export type MarketplaceResourcesSetEndDateData = {
+    body?: ResourceEndDateRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-resources/{uuid}/set_end_date/';
+};
+
+export type MarketplaceResourcesSetEndDateResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type MarketplaceResourcesSetEndDateByStaffData = {
     body?: ResourceEndDateByProviderRequest;
