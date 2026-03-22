@@ -2542,8 +2542,8 @@ export type BookingResource = {
     /**
      * Effective project end date including grace period. After this date, resources will be terminated.
      */
-    readonly project_effective_end_date?: string;
-    readonly project_end_date_requested_by?: string;
+    readonly project_effective_end_date?: string | null;
+    readonly project_end_date_requested_by?: string | null;
     readonly customer_uuid?: string;
     readonly customer_name?: string;
     readonly offering_slug?: string;
@@ -18522,7 +18522,7 @@ export type Project = {
     /**
      * Effective end date including grace period. After this date, project resources will be terminated.
      */
-    readonly effective_end_date?: string;
+    readonly effective_end_date?: string | null;
     /**
      * True if the project is past its end date but still within the grace period.
      */
@@ -22010,8 +22010,8 @@ export type Resource = {
     /**
      * Effective project end date including grace period. After this date, resources will be terminated.
      */
-    readonly project_effective_end_date?: string;
-    readonly project_end_date_requested_by?: string;
+    readonly project_effective_end_date?: string | null;
+    readonly project_end_date_requested_by?: string | null;
     readonly customer_uuid?: string;
     readonly customer_name?: string;
     readonly offering_slug?: string;
