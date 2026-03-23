@@ -3781,6 +3781,10 @@ export type ChatResponse = {
      * Available project options [{name, organization, uuid}]. Present when status='project_form'.
      */
     projects?: Array<unknown>;
+    /**
+     * Available offering options [{uuid, name}]. Present when status='offering_form'.
+     */
+    offerings?: Array<unknown>;
 };
 
 export type ChatSession = {
@@ -18591,6 +18595,17 @@ export type ProjectClassificationSummary = {
     industry_projects: number;
 };
 
+export type ProjectCreationTrend = {
+    /**
+     * Month in YYYY-MM format
+     */
+    month: string;
+    /**
+     * Number of items created
+     */
+    count: number;
+};
+
 export type ProjectCredit = {
     readonly uuid: string;
     readonly url: string;
@@ -25480,6 +25495,25 @@ export type TopQueue = {
     readonly consumers: number;
 };
 
+export type TopServiceProviderByResources = {
+    /**
+     * UUID of the service provider
+     */
+    customer_uuid: string;
+    /**
+     * Name of the service provider
+     */
+    customer_name: string;
+    /**
+     * Number of active resources
+     */
+    resources_count: number;
+    /**
+     * Number of distinct projects
+     */
+    projects_count: number;
+};
+
 export type TotalCustomerCost = {
     readonly total: number;
     readonly price: number;
@@ -25994,6 +26028,17 @@ export type UserLanguageCount = {
     count: number;
 };
 
+export type UserNationalityStats = {
+    /**
+     * Nationality code
+     */
+    nationality: string;
+    /**
+     * Number of users
+     */
+    count: number;
+};
+
 export type UserOfferingConsent = {
     readonly uuid: string;
     readonly user_uuid: string;
@@ -26148,6 +26193,17 @@ export type UserRequest = {
      * List of ISD source identifiers this user can manage via Identity Bridge. E.g., ['isd:puhuri', 'isd:fenix']. Non-empty list implies identity manager role.
      */
     managed_isds?: unknown;
+};
+
+export type UserResidenceCountryStats = {
+    /**
+     * Country of residence code
+     */
+    country_of_residence: string;
+    /**
+     * Number of users
+     */
+    count: number;
 };
 
 export type UserRoleCreateRequest = {
@@ -59920,6 +59976,10 @@ export type MarketplaceStatsCountActiveResourcesGroupedByOfferingListData = {
     path?: never;
     query?: {
         /**
+         * Limit number of results (e.g. top N offerings). No limit by default.
+         */
+        limit?: number;
+        /**
          * A page number within the paginated result set.
          */
         page?: number;
@@ -59941,6 +60001,10 @@ export type MarketplaceStatsCountActiveResourcesGroupedByOfferingCountData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Limit number of results (e.g. top N offerings). No limit by default.
+         */
+        limit?: number;
         /**
          * A page number within the paginated result set.
          */
@@ -60964,6 +61028,51 @@ export type MarketplaceStatsProjectClassificationSummaryCountResponses = {
     200: unknown;
 };
 
+export type MarketplaceStatsProjectCreationTrendListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-stats/project_creation_trend/';
+};
+
+export type MarketplaceStatsProjectCreationTrendListResponses = {
+    200: Array<ProjectCreationTrend>;
+};
+
+export type MarketplaceStatsProjectCreationTrendListResponse = MarketplaceStatsProjectCreationTrendListResponses[keyof MarketplaceStatsProjectCreationTrendListResponses];
+
+export type MarketplaceStatsProjectCreationTrendCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-stats/project_creation_trend/';
+};
+
+export type MarketplaceStatsProjectCreationTrendCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type MarketplaceStatsProjectsLimitsGroupedByIndustryFlagRetrieveData = {
     body?: never;
     path?: never;
@@ -61177,6 +61286,51 @@ export type MarketplaceStatsProviderResourcesCountData = {
 };
 
 export type MarketplaceStatsProviderResourcesCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type MarketplaceStatsResourceCreationTrendListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-stats/resource_creation_trend/';
+};
+
+export type MarketplaceStatsResourceCreationTrendListResponses = {
+    200: Array<ProjectCreationTrend>;
+};
+
+export type MarketplaceStatsResourceCreationTrendListResponse = MarketplaceStatsResourceCreationTrendListResponses[keyof MarketplaceStatsResourceCreationTrendListResponses];
+
+export type MarketplaceStatsResourceCreationTrendCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-stats/resource_creation_trend/';
+};
+
+export type MarketplaceStatsResourceCreationTrendCountResponses = {
     /**
      * No response body
      */
@@ -61504,6 +61658,59 @@ export type MarketplaceStatsResourcesMissingUsageCountResponses = {
     200: unknown;
 };
 
+export type MarketplaceStatsTopServiceProvidersByResourcesListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Number of top providers to return. Default is 5.
+         */
+        limit?: number;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-stats/top_service_providers_by_resources/';
+};
+
+export type MarketplaceStatsTopServiceProvidersByResourcesListResponses = {
+    200: Array<TopServiceProviderByResources>;
+};
+
+export type MarketplaceStatsTopServiceProvidersByResourcesListResponse = MarketplaceStatsTopServiceProvidersByResourcesListResponses[keyof MarketplaceStatsTopServiceProvidersByResourcesListResponses];
+
+export type MarketplaceStatsTopServiceProvidersByResourcesCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Number of top providers to return. Default is 5.
+         */
+        limit?: number;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-stats/top_service_providers_by_resources/';
+};
+
+export type MarketplaceStatsTopServiceProvidersByResourcesCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type MarketplaceStatsTotalCostOfActiveResourcesPerOfferingListData = {
     body?: never;
     path?: never;
@@ -61729,6 +61936,51 @@ export type MarketplaceStatsUserJobTitleCountCountResponses = {
     200: unknown;
 };
 
+export type MarketplaceStatsUserNationalityListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-stats/user_nationality/';
+};
+
+export type MarketplaceStatsUserNationalityListResponses = {
+    200: Array<UserNationalityStats>;
+};
+
+export type MarketplaceStatsUserNationalityListResponse = MarketplaceStatsUserNationalityListResponses[keyof MarketplaceStatsUserNationalityListResponses];
+
+export type MarketplaceStatsUserNationalityCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-stats/user_nationality/';
+};
+
+export type MarketplaceStatsUserNationalityCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type MarketplaceStatsUserOrganizationCountListData = {
     body?: never;
     path?: never;
@@ -61813,6 +62065,51 @@ export type MarketplaceStatsUserOrganizationTypeCountCountData = {
 };
 
 export type MarketplaceStatsUserOrganizationTypeCountCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type MarketplaceStatsUserResidenceCountryListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-stats/user_residence_country/';
+};
+
+export type MarketplaceStatsUserResidenceCountryListResponses = {
+    200: Array<UserResidenceCountryStats>;
+};
+
+export type MarketplaceStatsUserResidenceCountryListResponse = MarketplaceStatsUserResidenceCountryListResponses[keyof MarketplaceStatsUserResidenceCountryListResponses];
+
+export type MarketplaceStatsUserResidenceCountryCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-stats/user_residence_country/';
+};
+
+export type MarketplaceStatsUserResidenceCountryCountResponses = {
     /**
      * No response body
      */
