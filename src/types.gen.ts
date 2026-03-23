@@ -3085,7 +3085,7 @@ export type CallReviewerPool = {
      */
     expertise_match_score?: number | null;
     readonly invited_by_name: string;
-    readonly invitation_token: string;
+    readonly invitation_link: string | null;
     readonly invitation_expires_at: string | null;
     readonly created: string;
     /**
