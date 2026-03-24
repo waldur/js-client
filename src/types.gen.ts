@@ -22107,6 +22107,10 @@ export type ResourceDownscaledRequest = {
     downscaled?: boolean;
 };
 
+export type ResourceEffectiveIdRequest = {
+    effective_id?: string;
+};
+
 export type ResourceEndDateByProviderRequest = {
     /**
      * The date is inclusive. Once reached, a resource will be scheduled for termination.
@@ -53791,6 +53795,21 @@ export type MarketplaceProviderResourcesSetDownscaledResponses = {
 };
 
 export type MarketplaceProviderResourcesSetDownscaledResponse = MarketplaceProviderResourcesSetDownscaledResponses[keyof MarketplaceProviderResourcesSetDownscaledResponses];
+
+export type MarketplaceProviderResourcesSetEffectiveIdData = {
+    body?: ResourceEffectiveIdRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-provider-resources/{uuid}/set_effective_id/';
+};
+
+export type MarketplaceProviderResourcesSetEffectiveIdResponses = {
+    200: ResourceResponseStatus;
+};
+
+export type MarketplaceProviderResourcesSetEffectiveIdResponse = MarketplaceProviderResourcesSetEffectiveIdResponses[keyof MarketplaceProviderResourcesSetEffectiveIdResponses];
 
 export type MarketplaceProviderResourcesSetEndDateData = {
     body?: ResourceEndDateRequest;
