@@ -11778,6 +11778,22 @@ export type OfferingComponent = {
     overage_component?: string | null;
     min_prepaid_duration?: number | null;
     max_prepaid_duration?: number | null;
+    /**
+     * Step size in months for the initial prepaid duration at order creation. If set, only multiples of this value (starting from min_prepaid_duration) are valid. Defaults to 1 (any value between min and max).
+     */
+    prepaid_duration_step?: number | null;
+    /**
+     * Minimum number of months allowed for a renewal.
+     */
+    min_renewal_duration?: number | null;
+    /**
+     * Maximum number of months allowed for a renewal.
+     */
+    max_renewal_duration?: number | null;
+    /**
+     * Step size in months for renewal. Only multiples of this value (starting from min_renewal_duration) are valid. Defaults to 1.
+     */
+    renewal_duration_step?: number | null;
 };
 
 export type OfferingComponentLimitRequest = {
@@ -11826,6 +11842,22 @@ export type OfferingComponentRequest = {
     overage_component?: string | null;
     min_prepaid_duration?: number | null;
     max_prepaid_duration?: number | null;
+    /**
+     * Step size in months for the initial prepaid duration at order creation. If set, only multiples of this value (starting from min_prepaid_duration) are valid. Defaults to 1 (any value between min and max).
+     */
+    prepaid_duration_step?: number | null;
+    /**
+     * Minimum number of months allowed for a renewal.
+     */
+    min_renewal_duration?: number | null;
+    /**
+     * Maximum number of months allowed for a renewal.
+     */
+    max_renewal_duration?: number | null;
+    /**
+     * Step size in months for renewal. Only multiples of this value (starting from min_renewal_duration) are valid. Defaults to 1.
+     */
+    renewal_duration_step?: number | null;
 };
 
 export type OfferingComponentStat = {
@@ -25641,6 +25673,22 @@ export type UpdateOfferingComponentRequest = {
     overage_component?: string | null;
     min_prepaid_duration?: number | null;
     max_prepaid_duration?: number | null;
+    /**
+     * Step size in months for the initial prepaid duration at order creation. If set, only multiples of this value (starting from min_prepaid_duration) are valid. Defaults to 1 (any value between min and max).
+     */
+    prepaid_duration_step?: number | null;
+    /**
+     * Minimum number of months allowed for a renewal.
+     */
+    min_renewal_duration?: number | null;
+    /**
+     * Maximum number of months allowed for a renewal.
+     */
+    max_renewal_duration?: number | null;
+    /**
+     * Step size in months for renewal. Only multiples of this value (starting from min_renewal_duration) are valid. Defaults to 1.
+     */
+    renewal_duration_step?: number | null;
 };
 
 export type UpdatePoolMember = {
