@@ -7814,6 +7814,10 @@ export type IsdUserCount = {
     oldest_sync: string | null;
 };
 
+export type IdentityBridgeAllowedFields = {
+    allowed_fields: Array<string>;
+};
+
 export type IdentityBridgeRemoveRequest = {
     /**
      * CUID / username of the user to remove from the ISD.
@@ -41480,6 +41484,19 @@ export type IdentityBridgeResponses = {
 };
 
 export type IdentityBridgeResponse = IdentityBridgeResponses[keyof IdentityBridgeResponses];
+
+export type IdentityBridgeAllowedFieldsRetrieveData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/identity-bridge/allowed-fields/';
+};
+
+export type IdentityBridgeAllowedFieldsRetrieveResponses = {
+    200: IdentityBridgeAllowedFields;
+};
+
+export type IdentityBridgeAllowedFieldsRetrieveResponse = IdentityBridgeAllowedFieldsRetrieveResponses[keyof IdentityBridgeAllowedFieldsRetrieveResponses];
 
 export type IdentityBridgeRemoveData = {
     body: IdentityBridgeRemoveRequest;
