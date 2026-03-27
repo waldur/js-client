@@ -29095,7 +29095,7 @@ export type SoftwareCatalogOEnum = '-catalog_type' | '-created' | '-modified' | 
 
 export type SoftwarePackageOEnum = '-catalog_name' | '-catalog_version' | '-created' | '-modified' | '-name' | 'catalog_name' | 'catalog_version' | 'created' | 'modified' | 'name';
 
-export type SoftwareTargetOEnum = '-cpu_family' | '-cpu_microarchitecture' | '-created' | '-package_name' | '-target_name' | '-target_type' | 'cpu_family' | 'cpu_microarchitecture' | 'created' | 'package_name' | 'target_name' | 'target_type';
+export type SoftwareTargetOEnum = '-cpu_microarchitecture' | '-created' | '-package_name' | '-target_name' | '-target_type' | 'cpu_microarchitecture' | 'created' | 'package_name' | 'target_name' | 'target_type';
 
 export type SoftwareVersionOEnum = '-created' | '-package_name' | '-release_date' | '-version' | 'created' | 'package_name' | 'release_date' | 'version';
 
@@ -59496,6 +59496,9 @@ export type MarketplaceSoftwareTargetsListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Filter targets by location/path (case-insensitive partial match)
+         */
         path?: string;
         /**
          * Filter targets by name (e.g., x86_64, aarch64)
@@ -59551,6 +59554,9 @@ export type MarketplaceSoftwareTargetsCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Filter targets by location/path (case-insensitive partial match)
+         */
         path?: string;
         /**
          * Filter targets by name (e.g., x86_64, aarch64)
