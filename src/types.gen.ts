@@ -4470,6 +4470,8 @@ export type ConstanceSettings = {
     NOTIFY_ABOUT_RESOURCE_CHANGE?: boolean;
     DISABLE_SENDING_NOTIFICATIONS_ABOUT_RESOURCE_UPDATE?: boolean;
     MARKETPLACE_LANDING_PAGE?: string;
+    MARKETPLACE_LAYOUT_MODE?: MarketplacelayoutmodeEnum;
+    MARKETPLACE_CARD_STYLE?: MarketplacecardstyleEnum;
     ENABLE_STALE_RESOURCE_NOTIFICATIONS?: boolean;
     ENABLE_ISSUES_FOR_USER_SSH_KEY_CHANGES?: boolean;
     TELEMETRY_URL?: string;
@@ -4719,6 +4721,8 @@ export type ConstanceSettingsRequest = {
     NOTIFY_ABOUT_RESOURCE_CHANGE?: boolean;
     DISABLE_SENDING_NOTIFICATIONS_ABOUT_RESOURCE_UPDATE?: boolean;
     MARKETPLACE_LANDING_PAGE?: string;
+    MARKETPLACE_LAYOUT_MODE?: MarketplacelayoutmodeEnum;
+    MARKETPLACE_CARD_STYLE?: MarketplacecardstyleEnum;
     ENABLE_STALE_RESOURCE_NOTIFICATIONS?: boolean;
     ENABLE_ISSUES_FOR_USER_SSH_KEY_CHANGES?: boolean;
     TELEMETRY_URL?: string;
@@ -9116,6 +9120,10 @@ export type Logout = {
      */
     readonly logout_url: string;
 };
+
+export type MarketplacecardstyleEnum = 'compact' | 'detailed' | 'list' | 'minimal';
+
+export type MarketplacelayoutmodeEnum = 'classic' | 'sidebar' | 'carousel';
 
 export type MaintenanceActionResponse = {
     /**
@@ -28014,6 +28022,8 @@ export type ConstanceSettingsRequestForm = {
     NOTIFY_ABOUT_RESOURCE_CHANGE?: boolean;
     DISABLE_SENDING_NOTIFICATIONS_ABOUT_RESOURCE_UPDATE?: boolean;
     MARKETPLACE_LANDING_PAGE?: string;
+    MARKETPLACE_LAYOUT_MODE?: MarketplacelayoutmodeEnum;
+    MARKETPLACE_CARD_STYLE?: MarketplacecardstyleEnum;
     ENABLE_STALE_RESOURCE_NOTIFICATIONS?: boolean;
     ENABLE_ISSUES_FOR_USER_SSH_KEY_CHANGES?: boolean;
     TELEMETRY_URL?: string;
@@ -28263,6 +28273,8 @@ export type ConstanceSettingsRequestMultipart = {
     NOTIFY_ABOUT_RESOURCE_CHANGE?: boolean;
     DISABLE_SENDING_NOTIFICATIONS_ABOUT_RESOURCE_UPDATE?: boolean;
     MARKETPLACE_LANDING_PAGE?: string;
+    MARKETPLACE_LAYOUT_MODE?: MarketplacelayoutmodeEnum;
+    MARKETPLACE_CARD_STYLE?: MarketplacecardstyleEnum;
     ENABLE_STALE_RESOURCE_NOTIFICATIONS?: boolean;
     ENABLE_ISSUES_FOR_USER_SSH_KEY_CHANGES?: boolean;
     TELEMETRY_URL?: string;
