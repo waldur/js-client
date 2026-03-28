@@ -49413,6 +49413,7 @@ export type MarketplaceProjectEstimatedCostPoliciesListData = {
         page_size?: number;
         project?: string;
         project_uuid?: string;
+        query?: string;
         scope?: string;
         scope_uuid?: string;
     };
@@ -49441,6 +49442,7 @@ export type MarketplaceProjectEstimatedCostPoliciesCountData = {
         page_size?: number;
         project?: string;
         project_uuid?: string;
+        query?: string;
         scope?: string;
         scope_uuid?: string;
     };
