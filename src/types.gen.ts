@@ -5597,6 +5597,7 @@ export type CustomerComponentUsagePolicy = {
      * Fields for saving actions extra data. Keys are name of actions.
      */
     options?: unknown;
+    readonly affected_resources_count: number;
     component_limits_set: Array<NestedCustomerUsagePolicyComponent>;
 };
 
@@ -5707,6 +5708,7 @@ export type CustomerEstimatedCostPolicy = {
      * Fields for saving actions extra data. Keys are name of actions.
      */
     options?: unknown;
+    readonly affected_resources_count: number;
     limit_cost: number;
     period?: PolicyPeriodEnum;
     readonly period_name: string;
@@ -12000,6 +12002,7 @@ export type OfferingEstimatedCostPolicy = {
      * Fields for saving actions extra data. Keys are name of actions.
      */
     options?: unknown;
+    readonly affected_resources_count: number;
     limit_cost: number;
     period?: PolicyPeriodEnum;
     readonly period_name: string;
@@ -12789,6 +12792,7 @@ export type OfferingUsagePolicy = {
      * Fields for saving actions extra data. Keys are name of actions.
      */
     options?: unknown;
+    readonly affected_resources_count: number;
     organization_groups?: Array<string>;
     /**
      * If True, policy applies to all customers. Mutually exclusive with organization_groups.
@@ -18822,6 +18826,7 @@ export type ProjectEstimatedCostPolicy = {
      * Fields for saving actions extra data. Keys are name of actions.
      */
     options?: unknown;
+    readonly affected_resources_count: number;
     limit_cost: number;
     period?: PolicyPeriodEnum;
     readonly period_name: string;
@@ -24415,6 +24420,7 @@ export type SlurmPeriodicUsagePolicy = {
      * Fields for saving actions extra data. Keys are name of actions.
      */
     options?: unknown;
+    readonly affected_resources_count: number;
     organization_groups?: Array<string>;
     /**
      * If True, policy applies to all customers. Mutually exclusive with organization_groups.
