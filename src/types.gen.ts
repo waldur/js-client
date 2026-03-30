@@ -3009,6 +3009,26 @@ export type CallManagingOrganisationStat = {
     readonly offering_requests_pending: number;
 };
 
+export type CallPerformanceStat = {
+    readonly call_uuid: string;
+    readonly call_name: string;
+    readonly managing_organization_name: string;
+    readonly state: string;
+    readonly total_proposals: number;
+    readonly proposals_draft: number;
+    readonly proposals_submitted: number;
+    readonly proposals_in_review: number;
+    readonly proposals_accepted: number;
+    readonly proposals_rejected: number;
+    readonly proposals_canceled: number;
+    readonly acceptance_rate: number;
+    readonly total_reviews: number;
+    readonly reviews_completed: number;
+    readonly average_score: number | null;
+    readonly active_rounds: number;
+    readonly last_submission_date: string | null;
+};
+
 export type CallResourceTemplate = {
     readonly uuid?: string;
     readonly url?: string;
@@ -4661,6 +4681,7 @@ export type ConstanceSettings = {
     AI_ASSISTANT_SESSION_RETENTION_DAYS?: number;
     AI_ASSISTANT_HISTORY_LIMIT?: number;
     AI_ASSISTANT_INJECTION_ALLOWLIST?: string;
+    AI_ASSISTANT_NAME?: string;
     SOFTWARE_CATALOG_EESSI_UPDATE_ENABLED?: boolean;
     SOFTWARE_CATALOG_EESSI_VERSION?: string;
     SOFTWARE_CATALOG_EESSI_API_URL?: string;
@@ -4912,6 +4933,7 @@ export type ConstanceSettingsRequest = {
     AI_ASSISTANT_SESSION_RETENTION_DAYS?: number;
     AI_ASSISTANT_HISTORY_LIMIT?: number;
     AI_ASSISTANT_INJECTION_ALLOWLIST?: string;
+    AI_ASSISTANT_NAME?: string;
     SOFTWARE_CATALOG_EESSI_UPDATE_ENABLED?: boolean;
     SOFTWARE_CATALOG_EESSI_VERSION?: string;
     SOFTWARE_CATALOG_EESSI_API_URL?: string;
@@ -22152,6 +22174,23 @@ export type ResourceBackendMetadataRequest = {
     backend_metadata: unknown;
 };
 
+export type ResourceDemandStat = {
+    readonly offering_uuid: string;
+    readonly offering_name: string;
+    readonly offering_type: string;
+    readonly provider_name: string;
+    readonly proposal_count: number;
+    readonly request_count: number;
+    readonly approved_count: number;
+    readonly pending_count: number;
+    readonly total_requested_limits: {
+        [key: string]: number;
+    };
+    readonly total_approved_limits: {
+        [key: string]: number;
+    };
+};
+
 export type ResourceDownscaledRequest = {
     downscaled?: boolean;
 };
@@ -22630,6 +22669,20 @@ export type ReviewCommentRequest = {
      * Optional comment for review
      */
     comment?: string;
+};
+
+export type ReviewProgressStat = {
+    readonly reviewer_uuid: string;
+    readonly reviewer_name: string;
+    readonly reviewer_email: string;
+    readonly total_assigned: number;
+    readonly pending: number;
+    readonly in_progress: number;
+    readonly completed: number;
+    readonly declined: number;
+    readonly average_score: number | null;
+    readonly average_review_time_days: number | null;
+    readonly completion_rate: number;
 };
 
 export type ReviewStrategyEnum = 'after_round' | 'after_proposal';
@@ -28219,6 +28272,7 @@ export type ConstanceSettingsRequestForm = {
     AI_ASSISTANT_SESSION_RETENTION_DAYS?: number;
     AI_ASSISTANT_HISTORY_LIMIT?: number;
     AI_ASSISTANT_INJECTION_ALLOWLIST?: string;
+    AI_ASSISTANT_NAME?: string;
     SOFTWARE_CATALOG_EESSI_UPDATE_ENABLED?: boolean;
     SOFTWARE_CATALOG_EESSI_VERSION?: string;
     SOFTWARE_CATALOG_EESSI_API_URL?: string;
@@ -28470,6 +28524,7 @@ export type ConstanceSettingsRequestMultipart = {
     AI_ASSISTANT_SESSION_RETENTION_DAYS?: number;
     AI_ASSISTANT_HISTORY_LIMIT?: number;
     AI_ASSISTANT_INJECTION_ALLOWLIST?: string;
+    AI_ASSISTANT_NAME?: string;
     SOFTWARE_CATALOG_EESSI_UPDATE_ENABLED?: boolean;
     SOFTWARE_CATALOG_EESSI_VERSION?: string;
     SOFTWARE_CATALOG_EESSI_API_URL?: string;
@@ -35863,6 +35918,195 @@ export type CallManagingOrganisationsUpdateUserResponses = {
 };
 
 export type CallManagingOrganisationsUpdateUserResponse = CallManagingOrganisationsUpdateUserResponses[keyof CallManagingOrganisationsUpdateUserResponses];
+
+export type CallManagingOrganisationsGlobalStatsPerformanceListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        customer?: string;
+        customer_keyword?: string;
+        customer_uuid?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<CallManagingOrganisationOEnum>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/call-managing-organisations/global_stats_performance/';
+};
+
+export type CallManagingOrganisationsGlobalStatsPerformanceListResponses = {
+    200: Array<CallPerformanceStat>;
+};
+
+export type CallManagingOrganisationsGlobalStatsPerformanceListResponse = CallManagingOrganisationsGlobalStatsPerformanceListResponses[keyof CallManagingOrganisationsGlobalStatsPerformanceListResponses];
+
+export type CallManagingOrganisationsGlobalStatsPerformanceCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        customer?: string;
+        customer_keyword?: string;
+        customer_uuid?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<CallManagingOrganisationOEnum>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/call-managing-organisations/global_stats_performance/';
+};
+
+export type CallManagingOrganisationsGlobalStatsPerformanceCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type CallManagingOrganisationsGlobalStatsResourceDemandListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        customer?: string;
+        customer_keyword?: string;
+        customer_uuid?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<CallManagingOrganisationOEnum>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/call-managing-organisations/global_stats_resource_demand/';
+};
+
+export type CallManagingOrganisationsGlobalStatsResourceDemandListResponses = {
+    200: Array<ResourceDemandStat>;
+};
+
+export type CallManagingOrganisationsGlobalStatsResourceDemandListResponse = CallManagingOrganisationsGlobalStatsResourceDemandListResponses[keyof CallManagingOrganisationsGlobalStatsResourceDemandListResponses];
+
+export type CallManagingOrganisationsGlobalStatsResourceDemandCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        customer?: string;
+        customer_keyword?: string;
+        customer_uuid?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<CallManagingOrganisationOEnum>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/call-managing-organisations/global_stats_resource_demand/';
+};
+
+export type CallManagingOrganisationsGlobalStatsResourceDemandCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type CallManagingOrganisationsGlobalStatsReviewProgressListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        customer?: string;
+        customer_keyword?: string;
+        customer_uuid?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<CallManagingOrganisationOEnum>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/call-managing-organisations/global_stats_review_progress/';
+};
+
+export type CallManagingOrganisationsGlobalStatsReviewProgressListResponses = {
+    200: Array<ReviewProgressStat>;
+};
+
+export type CallManagingOrganisationsGlobalStatsReviewProgressListResponse = CallManagingOrganisationsGlobalStatsReviewProgressListResponses[keyof CallManagingOrganisationsGlobalStatsReviewProgressListResponses];
+
+export type CallManagingOrganisationsGlobalStatsReviewProgressCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        customer?: string;
+        customer_keyword?: string;
+        customer_uuid?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<CallManagingOrganisationOEnum>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/call-managing-organisations/global_stats_review_progress/';
+};
+
+export type CallManagingOrganisationsGlobalStatsReviewProgressCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type CallProposalProjectRoleMappingsListData = {
     body?: never;
