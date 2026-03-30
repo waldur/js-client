@@ -10591,7 +10591,7 @@ export type Message = {
     readonly uuid: string;
     readonly thread: string;
     role: MessageRoleEnum;
-    content: string;
+    content?: string;
     readonly content_display: string;
     readonly tool_calls: unknown;
     readonly sequence_index: number;
@@ -36402,6 +36402,22 @@ export type ChatThreadsArchiveResponses = {
 };
 
 export type ChatThreadsArchiveResponse = ChatThreadsArchiveResponses[keyof ChatThreadsArchiveResponses];
+
+export type ChatThreadsCancelData = {
+    body?: ThreadSessionRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/chat-threads/{uuid}/cancel/';
+};
+
+export type ChatThreadsCancelResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type ChatThreadsUnarchiveData = {
     body?: ThreadSessionRequest;
