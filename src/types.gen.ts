@@ -1177,6 +1177,79 @@ export type ArrowVendorOfferingMappingRequest = {
     is_active?: boolean;
 };
 
+export type ArticleCodeUpdateApplyRequest = {
+    /**
+     * Substring to search for in article codes.
+     */
+    search: string;
+    /**
+     * Replacement string.
+     */
+    replace?: string;
+    /**
+     * Filter by offering category UUID.
+     */
+    offering_category_uuid?: string;
+    /**
+     * Filter by service provider (customer) UUID.
+     */
+    offering_customer_uuid?: string;
+    /**
+     * Filter by offering state.
+     */
+    offering_state?: OfferingState;
+    /**
+     * Filter by offering name (case-insensitive substring match).
+     */
+    offering_name?: string;
+    /**
+     * UUIDs of components to update (from preview results).
+     */
+    component_uuids: Array<string>;
+};
+
+export type ArticleCodeUpdateApplyResponse = {
+    updated_count: number;
+};
+
+export type ArticleCodeUpdatePreviewItem = {
+    component_uuid: string;
+    component_type: string;
+    component_name: string;
+    offering_uuid: string;
+    offering_name: string;
+    offering_customer_name: string;
+    old_article_code: string;
+    new_article_code: string;
+};
+
+export type ArticleCodeUpdatePreviewRequest = {
+    /**
+     * Substring to search for in article codes.
+     */
+    search: string;
+    /**
+     * Replacement string.
+     */
+    replace?: string;
+    /**
+     * Filter by offering category UUID.
+     */
+    offering_category_uuid?: string;
+    /**
+     * Filter by service provider (customer) UUID.
+     */
+    offering_customer_uuid?: string;
+    /**
+     * Filter by offering state.
+     */
+    offering_state?: OfferingState;
+    /**
+     * Filter by offering name (case-insensitive substring match).
+     */
+    offering_name?: string;
+};
+
 export type AssignmentBatch = {
     readonly url: string;
     readonly uuid: string;
@@ -44192,6 +44265,41 @@ export type ManagedRancherClusterResourcesAddNodeResponses = {
 };
 
 export type ManagedRancherClusterResourcesAddNodeResponse = ManagedRancherClusterResourcesAddNodeResponses[keyof ManagedRancherClusterResourcesAddNodeResponses];
+
+export type MarketplaceArticleCodeUpdateApplyData = {
+    body: ArticleCodeUpdateApplyRequest;
+    path?: never;
+    query?: never;
+    url: '/api/marketplace-article-code-update/apply/';
+};
+
+export type MarketplaceArticleCodeUpdateApplyResponses = {
+    200: ArticleCodeUpdateApplyResponse;
+};
+
+export type MarketplaceArticleCodeUpdateApplyResponse = MarketplaceArticleCodeUpdateApplyResponses[keyof MarketplaceArticleCodeUpdateApplyResponses];
+
+export type MarketplaceArticleCodeUpdatePreviewData = {
+    body: ArticleCodeUpdatePreviewRequest;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-article-code-update/preview/';
+};
+
+export type MarketplaceArticleCodeUpdatePreviewResponses = {
+    200: Array<ArticleCodeUpdatePreviewItem>;
+};
+
+export type MarketplaceArticleCodeUpdatePreviewResponse = MarketplaceArticleCodeUpdatePreviewResponses[keyof MarketplaceArticleCodeUpdatePreviewResponses];
 
 export type MarketplaceAttributeOptionsListData = {
     body?: never;
