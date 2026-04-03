@@ -4713,6 +4713,7 @@ export type ConstanceSettings = {
     OIDC_CACHE_TIMEOUT?: number;
     OIDC_ACCESS_TOKEN_ENABLED?: boolean;
     OIDC_BLOCK_CREATION_OF_UNINVITED_USERS?: boolean;
+    OIDC_BLOCK_CREATION_OF_UNINVITED_USERS_RESPONSE_MESSAGE?: string;
     OIDC_MATCHMAKING_BY_EMAIL?: boolean;
     OIDC_DEFAULT_LOGOUT_URL?: string;
     DEACTIVATE_USER_IF_NO_ROLES?: boolean;
@@ -4965,6 +4966,7 @@ export type ConstanceSettingsRequest = {
     OIDC_CACHE_TIMEOUT?: number;
     OIDC_ACCESS_TOKEN_ENABLED?: boolean;
     OIDC_BLOCK_CREATION_OF_UNINVITED_USERS?: boolean;
+    OIDC_BLOCK_CREATION_OF_UNINVITED_USERS_RESPONSE_MESSAGE?: string;
     OIDC_MATCHMAKING_BY_EMAIL?: boolean;
     OIDC_DEFAULT_LOGOUT_URL?: string;
     DEACTIVATE_USER_IF_NO_ROLES?: boolean;
@@ -28304,6 +28306,7 @@ export type ConstanceSettingsRequestForm = {
     OIDC_CACHE_TIMEOUT?: number;
     OIDC_ACCESS_TOKEN_ENABLED?: boolean;
     OIDC_BLOCK_CREATION_OF_UNINVITED_USERS?: boolean;
+    OIDC_BLOCK_CREATION_OF_UNINVITED_USERS_RESPONSE_MESSAGE?: string;
     OIDC_MATCHMAKING_BY_EMAIL?: boolean;
     OIDC_DEFAULT_LOGOUT_URL?: string;
     DEACTIVATE_USER_IF_NO_ROLES?: boolean;
@@ -28556,6 +28559,7 @@ export type ConstanceSettingsRequestMultipart = {
     OIDC_CACHE_TIMEOUT?: number;
     OIDC_ACCESS_TOKEN_ENABLED?: boolean;
     OIDC_BLOCK_CREATION_OF_UNINVITED_USERS?: boolean;
+    OIDC_BLOCK_CREATION_OF_UNINVITED_USERS_RESPONSE_MESSAGE?: string;
     OIDC_MATCHMAKING_BY_EMAIL?: boolean;
     OIDC_DEFAULT_LOGOUT_URL?: string;
     DEACTIVATE_USER_IF_NO_ROLES?: boolean;
@@ -35000,6 +35004,10 @@ export type BookingResourcesListData = {
          */
         query?: string;
         /**
+         * Resource attributes (JSON)
+         */
+        resource_attributes?: string;
+        /**
          * Restrict member access
          */
         restrict_member_access?: boolean;
@@ -35186,6 +35194,10 @@ export type BookingResourcesCountData = {
          * Search by resource UUID, name, slug, backend ID, effective ID, IPs or hypervisor
          */
         query?: string;
+        /**
+         * Resource attributes (JSON)
+         */
+        resource_attributes?: string;
         /**
          * Restrict member access
          */
@@ -53517,6 +53529,10 @@ export type MarketplaceProviderResourcesListData = {
          */
         query?: string;
         /**
+         * Resource attributes (JSON)
+         */
+        resource_attributes?: string;
+        /**
          * Restrict member access
          */
         restrict_member_access?: boolean;
@@ -53706,6 +53722,10 @@ export type MarketplaceProviderResourcesCountData = {
          * Search by resource UUID, name, slug, backend ID, effective ID, IPs or hypervisor
          */
         query?: string;
+        /**
+         * Resource attributes (JSON)
+         */
+        resource_attributes?: string;
         /**
          * Restrict member access
          */
@@ -53987,6 +54007,10 @@ export type MarketplaceProviderResourcesHistoryListData = {
          * Search by resource UUID, name, slug, backend ID, effective ID, IPs or hypervisor
          */
         query?: string;
+        /**
+         * Resource attributes (JSON)
+         */
+        resource_attributes?: string;
         /**
          * Restrict member access
          */
@@ -55423,6 +55447,10 @@ export type MarketplaceResourcesListData = {
          */
         query?: string;
         /**
+         * Resource attributes (JSON)
+         */
+        resource_attributes?: string;
+        /**
          * Restrict member access
          */
         restrict_member_access?: boolean;
@@ -55612,6 +55640,10 @@ export type MarketplaceResourcesCountData = {
          * Search by resource UUID, name, slug, backend ID, effective ID, IPs or hypervisor
          */
         query?: string;
+        /**
+         * Resource attributes (JSON)
+         */
+        resource_attributes?: string;
         /**
          * Restrict member access
          */
@@ -55908,6 +55940,10 @@ export type MarketplaceResourcesHistoryListData = {
          * Search by resource UUID, name, slug, backend ID, effective ID, IPs or hypervisor
          */
         query?: string;
+        /**
+         * Resource attributes (JSON)
+         */
+        resource_attributes?: string;
         /**
          * Restrict member access
          */
