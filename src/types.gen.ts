@@ -10694,6 +10694,8 @@ export type Message = {
     readonly sequence_index: number;
     readonly replaces: string | null;
     readonly created: string;
+    readonly input_tokens: number | null;
+    readonly output_tokens: number | null;
     readonly is_flagged: boolean;
     severity: InjectionSeverityEnum;
     readonly injection_categories: unknown;
@@ -18210,6 +18212,10 @@ export type PatchedUserRequest = {
      * List of ISD source identifiers this user can manage via Identity Bridge. E.g., ['isd:puhuri', 'isd:fenix']. Non-empty list implies identity manager role.
      */
     managed_isds?: unknown;
+    /**
+     * Reason why the user was deactivated. Visible to staff and support.
+     */
+    deactivation_reason?: string;
 };
 
 export type PatchedVmwareVirtualMachineRequest = {
@@ -25531,6 +25537,11 @@ export type ThreadSession = {
     readonly flags?: unknown;
     is_archived?: boolean;
     readonly message_count?: number;
+    readonly input_tokens?: number | null;
+    readonly output_tokens?: number | null;
+    readonly total_tokens?: number | null;
+    readonly title_gen_input_tokens?: number | null;
+    readonly title_gen_output_tokens?: number | null;
     readonly is_flagged?: boolean;
     max_severity?: InjectionSeverityEnum;
     readonly user_username?: string;
@@ -25972,6 +25983,10 @@ export type User = {
      * List of ISDs that have asserted this user exists. User is deactivated when this becomes empty.
      */
     readonly active_isds?: unknown;
+    /**
+     * Reason why the user was deactivated. Visible to staff and support.
+     */
+    deactivation_reason?: string;
 };
 
 export type UserAction = {
@@ -26391,6 +26406,10 @@ export type UserRequest = {
      * List of ISD source identifiers this user can manage via Identity Bridge. E.g., ['isd:puhuri', 'isd:fenix']. Non-empty list implies identity manager role.
      */
     managed_isds?: unknown;
+    /**
+     * Reason why the user was deactivated. Visible to staff and support.
+     */
+    deactivation_reason?: string;
 };
 
 export type UserResidenceCountryStats = {
@@ -28805,6 +28824,10 @@ export type UserRequestForm = {
      * List of ISD source identifiers this user can manage via Identity Bridge. E.g., ['isd:puhuri', 'isd:fenix']. Non-empty list implies identity manager role.
      */
     managed_isds?: unknown;
+    /**
+     * Reason why the user was deactivated. Visible to staff and support.
+     */
+    deactivation_reason?: string;
 };
 
 export type UserRequestMultipart = {
@@ -28893,6 +28916,10 @@ export type UserRequestMultipart = {
      * List of ISD source identifiers this user can manage via Identity Bridge. E.g., ['isd:puhuri', 'isd:fenix']. Non-empty list implies identity manager role.
      */
     managed_isds?: unknown;
+    /**
+     * Reason why the user was deactivated. Visible to staff and support.
+     */
+    deactivation_reason?: string;
 };
 
 export type PatchedUserRequestForm = {
@@ -28980,6 +29007,10 @@ export type PatchedUserRequestForm = {
      * List of ISD source identifiers this user can manage via Identity Bridge. E.g., ['isd:puhuri', 'isd:fenix']. Non-empty list implies identity manager role.
      */
     managed_isds?: unknown;
+    /**
+     * Reason why the user was deactivated. Visible to staff and support.
+     */
+    deactivation_reason?: string;
 };
 
 export type PatchedUserRequestMultipart = {
@@ -29067,6 +29098,10 @@ export type PatchedUserRequestMultipart = {
      * List of ISD source identifiers this user can manage via Identity Bridge. E.g., ['isd:puhuri', 'isd:fenix']. Non-empty list implies identity manager role.
      */
     managed_isds?: unknown;
+    /**
+     * Reason why the user was deactivated. Visible to staff and support.
+     */
+    deactivation_reason?: string;
 };
 
 export type AdminAnnouncementFieldEnum = 'active_from' | 'active_to' | 'created' | 'description' | 'is_active' | 'maintenance_affected_offerings' | 'maintenance_external_reference_url' | 'maintenance_name' | 'maintenance_scheduled_end' | 'maintenance_scheduled_start' | 'maintenance_service_provider' | 'maintenance_state' | 'maintenance_type' | 'maintenance_uuid' | 'type' | 'uuid';
@@ -29113,9 +29148,9 @@ export type CallReviewerPoolOEnum = '-created' | '-current_assignments' | '-expe
 
 export type ChatSessionFieldEnum = 'created' | 'modified' | 'user' | 'user_full_name' | 'user_username' | 'uuid';
 
-export type ThreadSessionFieldEnum = 'chat_session' | 'created' | 'flags' | 'is_archived' | 'is_flagged' | 'max_severity' | 'message_count' | 'modified' | 'name' | 'user_full_name' | 'user_username' | 'uuid';
+export type ThreadSessionFieldEnum = 'chat_session' | 'created' | 'flags' | 'input_tokens' | 'is_archived' | 'is_flagged' | 'max_severity' | 'message_count' | 'modified' | 'name' | 'output_tokens' | 'title_gen_input_tokens' | 'title_gen_output_tokens' | 'total_tokens' | 'user_full_name' | 'user_username' | 'uuid';
 
-export type ThreadSessionOEnum = '-created' | '-modified' | 'created' | 'modified';
+export type ThreadSessionOEnum = '-created' | '-input_tokens' | '-modified' | '-output_tokens' | '-total_tokens' | 'created' | 'input_tokens' | 'modified' | 'output_tokens' | 'total_tokens';
 
 export type CoiDetectionJobOEnum = '-completed_at' | '-created' | '-started_at' | '-state' | 'completed_at' | 'created' | 'started_at' | 'state';
 
@@ -29215,7 +29250,7 @@ export type ProviderOfferingCustomerFieldEnum = 'abbreviation' | 'email' | 'name
 
 export type ProjectFieldEnum = 'backend_id' | 'billing_price_estimate' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_display_billing_info_in_projects' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'effective_end_date' | 'end_date' | 'end_date_requested_by' | 'end_date_updated_at' | 'grace_period_days' | 'image' | 'is_in_grace_period' | 'is_industry' | 'is_removed' | 'kind' | 'marketplace_resource_count' | 'max_service_accounts' | 'name' | 'oecd_fos_2007_code' | 'oecd_fos_2007_label' | 'project_credit' | 'resources_count' | 'slug' | 'staff_notes' | 'start_date' | 'termination_metadata' | 'type' | 'type_name' | 'type_uuid' | 'url' | 'user_affiliations' | 'user_email_patterns' | 'user_identity_sources' | 'uuid';
 
-export type UserFieldEnum = 'active_isds' | 'affiliations' | 'agree_with_policy' | 'agreement_date' | 'attribute_sources' | 'birth_date' | 'civil_number' | 'country_of_residence' | 'date_joined' | 'description' | 'eduperson_assurance' | 'email' | 'first_name' | 'full_name' | 'gender' | 'has_active_session' | 'has_usable_password' | 'identity_provider_fields' | 'identity_provider_label' | 'identity_provider_management_url' | 'identity_provider_name' | 'identity_source' | 'image' | 'ip_address' | 'is_active' | 'is_identity_manager' | 'is_staff' | 'is_support' | 'job_title' | 'last_name' | 'managed_isds' | 'nationalities' | 'nationality' | 'native_name' | 'notifications_enabled' | 'organization' | 'organization_country' | 'organization_registry_code' | 'organization_type' | 'permissions' | 'personal_title' | 'phone_number' | 'place_of_birth' | 'preferred_language' | 'registration_method' | 'requested_email' | 'slug' | 'token' | 'token_expires_at' | 'token_lifetime' | 'url' | 'username' | 'uuid';
+export type UserFieldEnum = 'active_isds' | 'affiliations' | 'agree_with_policy' | 'agreement_date' | 'attribute_sources' | 'birth_date' | 'civil_number' | 'country_of_residence' | 'date_joined' | 'deactivation_reason' | 'description' | 'eduperson_assurance' | 'email' | 'first_name' | 'full_name' | 'gender' | 'has_active_session' | 'has_usable_password' | 'identity_provider_fields' | 'identity_provider_label' | 'identity_provider_management_url' | 'identity_provider_name' | 'identity_source' | 'image' | 'ip_address' | 'is_active' | 'is_identity_manager' | 'is_staff' | 'is_support' | 'job_title' | 'last_name' | 'managed_isds' | 'nationalities' | 'nationality' | 'native_name' | 'notifications_enabled' | 'organization' | 'organization_country' | 'organization_registry_code' | 'organization_type' | 'permissions' | 'personal_title' | 'phone_number' | 'place_of_birth' | 'preferred_language' | 'registration_method' | 'requested_email' | 'slug' | 'token' | 'token_expires_at' | 'token_lifetime' | 'url' | 'username' | 'uuid';
 
 export type ResourceOEnum = '-created' | '-end_date' | '-name' | '-project_name' | '-state' | 'created' | 'end_date' | 'name' | 'project_name' | 'state';
 
@@ -29372,6 +29407,8 @@ export type SlurmAllocationFieldEnum = 'access_url' | 'backend_id' | 'cpu_limit'
 export type FirecrestJobFieldEnum = 'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'file' | 'modified' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'report' | 'resource_type' | 'runtime_state' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'url' | 'user' | 'user_username' | 'user_uuid' | 'uuid';
 
 export type AttachmentFieldEnum = 'backend_id' | 'created' | 'destroy_is_available' | 'file' | 'file_name' | 'file_size' | 'issue' | 'issue_key' | 'mime_type' | 'url' | 'uuid';
+
+export type CommentOEnum = '-created' | '-modified' | 'created' | 'modified';
 
 export type IssueOEnum = '-assignee_name' | '-caller_first_name' | '-caller_last_name' | '-created' | '-customer_name' | '-key' | '-modified' | '-priority' | '-project_name' | '-remote_id' | '-reporter_name' | '-status' | '-summary' | '-type' | 'assignee_name' | 'caller_first_name' | 'caller_last_name' | 'created' | 'customer_name' | 'key' | 'modified' | 'priority' | 'project_name' | 'remote_id' | 'reporter_name' | 'status' | 'summary' | 'type';
 
@@ -36667,6 +36704,8 @@ export type ChatThreadsListData = {
     query?: {
         created?: string;
         field?: Array<ThreadSessionFieldEnum>;
+        input_tokens_max?: number;
+        input_tokens_min?: number;
         is_archived?: boolean;
         is_flagged?: boolean;
         max_severity?: InjectionSeverityEnum;
@@ -36677,6 +36716,8 @@ export type ChatThreadsListData = {
          *
          */
         o?: Array<ThreadSessionOEnum>;
+        output_tokens_max?: number;
+        output_tokens_min?: number;
         /**
          * A page number within the paginated result set.
          */
@@ -36686,6 +36727,8 @@ export type ChatThreadsListData = {
          */
         page_size?: number;
         query?: string;
+        total_tokens_max?: number;
+        total_tokens_min?: number;
         user?: string;
     };
     url: '/api/chat-threads/';
@@ -84802,7 +84845,7 @@ export type SupportCommentsListData = {
          *
          *
          */
-        o?: Array<ThreadSessionOEnum>;
+        o?: Array<CommentOEnum>;
         /**
          * A page number within the paginated result set.
          */
@@ -84844,7 +84887,7 @@ export type SupportCommentsCountData = {
          *
          *
          */
-        o?: Array<ThreadSessionOEnum>;
+        o?: Array<CommentOEnum>;
         /**
          * A page number within the paginated result set.
          */
