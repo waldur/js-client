@@ -5328,101 +5328,91 @@ export type CreateFeedbackRequest = {
 export type CreateHealthMonitor = {
     readonly url: string;
     readonly uuid: string;
+    name?: string;
+    /**
+     * Interval between health checks in seconds
+     */
+    delay?: number;
+    /**
+     * Time in seconds to timeout a health check
+     */
+    timeout?: number;
+    max_retries?: number;
+    max_retries_down?: number;
     /**
      * Pool this health monitor belongs to
      */
     pool: string;
-    name?: string;
     type: LoadBalancerProtocolEnum;
-    /**
-     * Interval between health checks in seconds
-     */
-    delay: number;
-    /**
-     * Time in seconds to timeout a health check
-     */
-    timeout: number;
-    /**
-     * Number of retries before marking member as down
-     */
-    max_retries: number;
-    readonly project: string;
-    readonly service_settings: string;
 };
 
 export type CreateHealthMonitorRequest = {
+    name?: string;
+    /**
+     * Interval between health checks in seconds
+     */
+    delay?: number;
+    /**
+     * Time in seconds to timeout a health check
+     */
+    timeout?: number;
+    max_retries?: number;
+    max_retries_down?: number;
     /**
      * Pool this health monitor belongs to
      */
     pool: string;
-    name?: string;
     type: LoadBalancerProtocolEnum;
-    /**
-     * Interval between health checks in seconds
-     */
-    delay: number;
-    /**
-     * Time in seconds to timeout a health check
-     */
-    timeout: number;
-    /**
-     * Number of retries before marking member as down
-     */
-    max_retries: number;
 };
 
 export type CreateListener = {
+    name?: string;
+    default_pool?: string | null;
     readonly url: string;
     readonly uuid: string;
     /**
      * Load balancer this listener belongs to
      */
     load_balancer: string;
-    name: string;
     protocol: LoadBalancerProtocolEnum;
     /**
      * Port on which the listener listens
      */
     protocol_port: number;
-    default_pool?: string | null;
-    readonly project: string;
-    readonly service_settings: string;
 };
 
 export type CreateListenerRequest = {
+    name?: string;
+    default_pool?: string | null;
     /**
      * Load balancer this listener belongs to
      */
     load_balancer: string;
-    name: string;
     protocol: LoadBalancerProtocolEnum;
     /**
      * Port on which the listener listens
      */
     protocol_port: number;
-    default_pool?: string | null;
 };
 
 export type CreateLoadBalancer = {
     readonly url: string;
     readonly uuid: string;
+    name: string;
     /**
      * OpenStack tenant this load balancer belongs to
      */
     tenant: string;
-    name: string;
-    vip_subnet_id: string;
-    readonly project: string;
-    readonly service_settings: string;
+    vip_subnet: string;
 };
 
 export type CreateLoadBalancerRequest = {
+    name: string;
     /**
      * OpenStack tenant this load balancer belongs to
      */
     tenant: string;
-    name: string;
-    vip_subnet_id: string;
+    vip_subnet: string;
 };
 
 export type CreateManualAssignmentRequest = {
@@ -5454,25 +5444,23 @@ export type CreateManualAssignmentResponse = {
 export type CreatePool = {
     readonly url: string;
     readonly uuid: string;
+    name: string;
     /**
      * Load balancer this pool belongs to
      */
     load_balancer: string;
-    name: string;
     protocol: LoadBalancerProtocolEnum;
-    lb_algorithm?: LbAlgorithmEnum;
-    readonly project: string;
-    readonly service_settings: string;
 };
 
 export type CreatePoolMember = {
     readonly url: string;
     readonly uuid: string;
+    name?: string;
+    weight?: number;
     /**
      * Pool this member belongs to
      */
     pool: string;
-    name?: string;
     /**
      * An IPv4 or IPv6 address.
      */
@@ -5481,18 +5469,16 @@ export type CreatePoolMember = {
      * Port on the backend server
      */
     protocol_port: number;
-    subnet_id: string;
-    weight?: number;
-    readonly project: string;
-    readonly service_settings: string;
+    subnet: string;
 };
 
 export type CreatePoolMemberRequest = {
+    name?: string;
+    weight?: number;
     /**
      * Pool this member belongs to
      */
     pool: string;
-    name?: string;
     /**
      * An IPv4 or IPv6 address.
      */
@@ -5501,18 +5487,16 @@ export type CreatePoolMemberRequest = {
      * Port on the backend server
      */
     protocol_port: number;
-    subnet_id: string;
-    weight?: number;
+    subnet: string;
 };
 
 export type CreatePoolRequest = {
+    name: string;
     /**
      * Load balancer this pool belongs to
      */
     load_balancer: string;
-    name: string;
     protocol: LoadBalancerProtocolEnum;
-    lb_algorithm?: LbAlgorithmEnum;
 };
 
 export type CreateRouter = {
@@ -5643,6 +5627,13 @@ export type Customer = {
      * Comma-separated list of notification email addresses
      */
     notification_emails?: string;
+    city?: string;
+    state?: string;
+    parish?: string;
+    street?: string;
+    house_nr?: string;
+    apartment_nr?: string;
+    household?: string;
     readonly payment_profiles?: Array<PaymentProfile>;
     readonly customer_credit?: number | null;
     readonly customer_unallocated_credit?: number | null;
@@ -6028,6 +6019,13 @@ export type CustomerRequest = {
      * Comma-separated list of notification email addresses
      */
     notification_emails?: string;
+    city?: string;
+    state?: string;
+    parish?: string;
+    street?: string;
+    house_nr?: string;
+    apartment_nr?: string;
+    household?: string;
 };
 
 export type CustomerServiceAccount = {
@@ -9124,8 +9122,6 @@ export type KindEnum = 'default' | 'course' | 'public';
 
 export type LoginpagelayoutEnum = 'split-screen' | 'centered-card' | 'minimal' | 'full-hero' | 'gradient' | 'stacked' | 'right-split' | 'glassmorphism' | 'neumorphism' | 'animated-gradient' | 'video-background' | 'bottom-sheet' | 'tabbed' | 'wizard' | 'stats' | 'news' | 'carousel' | 'logo-watermark' | 'brand-pattern' | 'duotone' | 'diagonal' | 'time-based' | 'seasonal' | 'weather';
 
-export type LbAlgorithmEnum = 'ROUND_ROBIN' | 'LEAST_CONNECTIONS' | 'SOURCE_IP' | 'SOURCE_IP_PORT';
-
 export type LexisLink = {
     readonly url: string;
     readonly uuid: string;
@@ -9201,15 +9197,18 @@ export type LinkToInvoiceRequest = {
     invoice: string;
 };
 
+export type LoadBalancerAsyncOperationResponse = {
+    /**
+     * Message that execution of the operation was scheduled.
+     */
+    status: string;
+};
+
 export type LoadBalancerAttachFloatingIpRequest = {
     floating_ip: string;
 };
 
 export type LoadBalancerProtocolEnum = 'TCP' | 'UDP';
-
-export type LoadBalancerUpdateVipSecurityGroupsRequest = {
-    security_groups: Array<string>;
-};
 
 export type LockStats = {
     /**
@@ -9899,6 +9898,10 @@ export type MergedPluginOptions = {
      */
     snapshot_size_limit_gb?: number;
     /**
+     * If True, Octavia LBaaS (load balancers) is intended to be available for tenants from this offering.
+     */
+    lbaas_enabled?: boolean;
+    /**
      * HEAppE cluster id
      */
     heappe_cluster_id?: string;
@@ -10197,6 +10200,10 @@ export type MergedPluginOptionsRequest = {
      * Default limit for snapshot size in GB
      */
     snapshot_size_limit_gb?: number;
+    /**
+     * If True, Octavia LBaaS (load balancers) is intended to be available for tenants from this offering.
+     */
+    lbaas_enabled?: boolean;
     /**
      * HEAppE cluster id
      */
@@ -14263,8 +14270,8 @@ export type OpenStackLoadBalancer = {
      * An IPv4 or IPv6 address.
      */
     vip_address?: string;
-    readonly vip_subnet_id?: string;
-    readonly vip_port_id?: string;
+    readonly vip_subnet?: string | null;
+    readonly vip_port?: string | null;
     /**
      * Floating IP attached to the VIP port
      */
@@ -14285,27 +14292,6 @@ export type OpenStackLoadBalancer = {
     readonly marketplace_resource_state?: string | null;
     readonly is_usage_based?: boolean | null;
     readonly is_limit_based?: boolean | null;
-};
-
-export type OpenStackLoadBalancerRequest = {
-    name: string;
-    description?: string;
-    service_settings: string;
-    project: string;
-    error_message?: string;
-    error_traceback?: string;
-    /**
-     * Load balancer ID in Octavia
-     */
-    backend_id?: string | null;
-    /**
-     * OpenStack tenant this load balancer belongs to
-     */
-    tenant: string;
-    /**
-     * Floating IP attached to the VIP port
-     */
-    attached_floating_ip?: string | null;
 };
 
 export type OpenStackNestedFloatingIp = {
@@ -14661,10 +14647,7 @@ export type OpenStackPoolMember = {
      */
     address?: string;
     readonly protocol_port?: number;
-    /**
-     * Subnet ID for the member (required for creation)
-     */
-    subnet_id?: string;
+    readonly subnet?: string | null;
     readonly weight?: number;
     readonly provisioning_status?: string;
     readonly operating_status?: string;
@@ -14681,23 +14664,6 @@ export type OpenStackPoolMember = {
     readonly marketplace_resource_state?: string | null;
     readonly is_usage_based?: boolean | null;
     readonly is_limit_based?: boolean | null;
-};
-
-export type OpenStackPoolRequest = {
-    name: string;
-    description?: string;
-    service_settings: string;
-    project: string;
-    error_message?: string;
-    error_traceback?: string;
-    /**
-     * Pool ID in Octavia
-     */
-    backend_id?: string | null;
-    /**
-     * Load balancer this pool belongs to
-     */
-    load_balancer: string;
 };
 
 export type OpenStackPort = {
@@ -16561,6 +16527,13 @@ export type PatchedCustomerRequest = {
      * Comma-separated list of notification email addresses
      */
     notification_emails?: string;
+    city?: string;
+    state?: string;
+    parish?: string;
+    street?: string;
+    house_nr?: string;
+    apartment_nr?: string;
+    household?: string;
 };
 
 export type PatchedCustomerServiceAccountRequest = {
@@ -17144,47 +17117,9 @@ export type PatchedOpenStackInstanceRequest = {
     description?: string;
 };
 
-export type PatchedOpenStackLoadBalancerRequest = {
-    name?: string;
-    description?: string;
-    service_settings?: string;
-    project?: string;
-    error_message?: string;
-    error_traceback?: string;
-    /**
-     * Load balancer ID in Octavia
-     */
-    backend_id?: string | null;
-    /**
-     * OpenStack tenant this load balancer belongs to
-     */
-    tenant?: string;
-    /**
-     * Floating IP attached to the VIP port
-     */
-    attached_floating_ip?: string | null;
-};
-
 export type PatchedOpenStackNetworkRequest = {
     name?: string;
     description?: string;
-};
-
-export type PatchedOpenStackPoolRequest = {
-    name?: string;
-    description?: string;
-    service_settings?: string;
-    project?: string;
-    error_message?: string;
-    error_traceback?: string;
-    /**
-     * Pool ID in Octavia
-     */
-    backend_id?: string | null;
-    /**
-     * Load balancer this pool belongs to
-     */
-    load_balancer?: string;
 };
 
 export type PatchedOpenStackPortRequest = {
@@ -18105,9 +18040,16 @@ export type PatchedTemplateRequest = {
 
 export type PatchedUpdateHealthMonitorRequest = {
     name?: string;
+    /**
+     * Interval between health checks in seconds
+     */
     delay?: number;
+    /**
+     * Time in seconds to timeout a health check
+     */
     timeout?: number;
     max_retries?: number;
+    max_retries_down?: number;
 };
 
 export type PatchedUpdateListenerRequest = {
@@ -18115,9 +18057,17 @@ export type PatchedUpdateListenerRequest = {
     default_pool?: string | null;
 };
 
+export type PatchedUpdateLoadBalancerRequest = {
+    name?: string;
+};
+
 export type PatchedUpdatePoolMemberRequest = {
     name?: string;
     weight?: number;
+};
+
+export type PatchedUpdatePoolRequest = {
+    name?: string;
 };
 
 export type PatchedUserAgreementRequest = {
@@ -25832,17 +25782,33 @@ export type UpdateActionsResponse = {
 };
 
 export type UpdateHealthMonitor = {
+    readonly url: string;
+    readonly uuid: string;
     name?: string;
+    /**
+     * Interval between health checks in seconds
+     */
     delay?: number;
+    /**
+     * Time in seconds to timeout a health check
+     */
     timeout?: number;
     max_retries?: number;
+    max_retries_down?: number;
 };
 
 export type UpdateHealthMonitorRequest = {
     name?: string;
+    /**
+     * Interval between health checks in seconds
+     */
     delay?: number;
+    /**
+     * Time in seconds to timeout a health check
+     */
     timeout?: number;
     max_retries?: number;
+    max_retries_down?: number;
 };
 
 export type UpdateListener = {
@@ -25853,6 +25819,16 @@ export type UpdateListener = {
 export type UpdateListenerRequest = {
     name?: string;
     default_pool?: string | null;
+};
+
+export type UpdateLoadBalancer = {
+    readonly url: string;
+    readonly uuid: string;
+    name: string;
+};
+
+export type UpdateLoadBalancerRequest = {
+    name: string;
 };
 
 export type UpdateOfferingComponentRequest = {
@@ -25905,7 +25881,15 @@ export type UpdateOfferingComponentRequest = {
     renewal_duration_step?: number | null;
 };
 
+export type UpdatePool = {
+    readonly url: string;
+    readonly uuid: string;
+    name: string;
+};
+
 export type UpdatePoolMember = {
+    readonly url: string;
+    readonly uuid: string;
     name?: string;
     weight?: number;
 };
@@ -25913,6 +25897,10 @@ export type UpdatePoolMember = {
 export type UpdatePoolMemberRequest = {
     name?: string;
     weight?: number;
+};
+
+export type UpdatePoolRequest = {
+    name: string;
 };
 
 export type UrgencyEnum = 'low' | 'medium' | 'high';
@@ -27357,6 +27345,13 @@ export type CustomerRequestForm = {
      * Comma-separated list of notification email addresses
      */
     notification_emails?: string;
+    city?: string;
+    state?: string;
+    parish?: string;
+    street?: string;
+    house_nr?: string;
+    apartment_nr?: string;
+    household?: string;
 };
 
 export type CustomerRequestMultipart = {
@@ -27435,6 +27430,13 @@ export type CustomerRequestMultipart = {
      * Comma-separated list of notification email addresses
      */
     notification_emails?: string;
+    city?: string;
+    state?: string;
+    parish?: string;
+    street?: string;
+    house_nr?: string;
+    apartment_nr?: string;
+    household?: string;
 };
 
 export type PatchedCustomerRequestForm = {
@@ -27513,6 +27515,13 @@ export type PatchedCustomerRequestForm = {
      * Comma-separated list of notification email addresses
      */
     notification_emails?: string;
+    city?: string;
+    state?: string;
+    parish?: string;
+    street?: string;
+    house_nr?: string;
+    apartment_nr?: string;
+    household?: string;
 };
 
 export type PatchedCustomerRequestMultipart = {
@@ -27591,6 +27600,13 @@ export type PatchedCustomerRequestMultipart = {
      * Comma-separated list of notification email addresses
      */
     notification_emails?: string;
+    city?: string;
+    state?: string;
+    parish?: string;
+    street?: string;
+    house_nr?: string;
+    apartment_nr?: string;
+    household?: string;
 };
 
 export type ExternalLinkRequestForm = {
@@ -29227,7 +29243,7 @@ export type CustomerPermissionReviewOEnum = '-closed' | '-created' | 'closed' | 
 
 export type CustomerQuotasQuotaNameEnum = 'estimated_price' | 'nc_resource_count' | 'os_cpu_count' | 'os_ram_size' | 'os_storage_size' | 'vpc_cpu_count' | 'vpc_floating_ip_count' | 'vpc_instance_count' | 'vpc_ram_size' | 'vpc_storage_size';
 
-export type CustomerFieldEnum = 'abbreviation' | 'access_subnets' | 'accounting_start_date' | 'address' | 'agreement_number' | 'archived' | 'backend_id' | 'bank_account' | 'bank_name' | 'billing_price_estimate' | 'blocked' | 'call_managing_organization_uuid' | 'contact_details' | 'country' | 'country_name' | 'created' | 'customer_credit' | 'customer_unallocated_credit' | 'default_tax_percent' | 'description' | 'display_billing_info_in_projects' | 'display_name' | 'domain' | 'email' | 'grace_period_days' | 'homepage' | 'image' | 'is_service_provider' | 'latitude' | 'longitude' | 'max_service_accounts' | 'name' | 'native_name' | 'notification_emails' | 'organization_groups' | 'payment_profiles' | 'phone_number' | 'postal' | 'project_metadata_checklist' | 'projects_count' | 'registration_code' | 'service_provider' | 'service_provider_uuid' | 'slug' | 'sponsor_number' | 'url' | 'user_affiliations' | 'user_email_patterns' | 'user_identity_sources' | 'users_count' | 'uuid' | 'vat_code';
+export type CustomerFieldEnum = 'abbreviation' | 'access_subnets' | 'accounting_start_date' | 'address' | 'agreement_number' | 'apartment_nr' | 'archived' | 'backend_id' | 'bank_account' | 'bank_name' | 'billing_price_estimate' | 'blocked' | 'call_managing_organization_uuid' | 'city' | 'contact_details' | 'country' | 'country_name' | 'created' | 'customer_credit' | 'customer_unallocated_credit' | 'default_tax_percent' | 'description' | 'display_billing_info_in_projects' | 'display_name' | 'domain' | 'email' | 'grace_period_days' | 'homepage' | 'house_nr' | 'household' | 'image' | 'is_service_provider' | 'latitude' | 'longitude' | 'max_service_accounts' | 'name' | 'native_name' | 'notification_emails' | 'organization_groups' | 'parish' | 'payment_profiles' | 'phone_number' | 'postal' | 'project_metadata_checklist' | 'projects_count' | 'registration_code' | 'service_provider' | 'service_provider_uuid' | 'slug' | 'sponsor_number' | 'state' | 'street' | 'url' | 'user_affiliations' | 'user_email_patterns' | 'user_identity_sources' | 'users_count' | 'uuid' | 'vat_code';
 
 export type CustomerUserFieldEnum = 'email' | 'expiration_time' | 'full_name' | 'image' | 'projects' | 'role_name' | 'url' | 'username' | 'uuid';
 
@@ -29387,11 +29403,11 @@ export type OpenStackInstanceOEnum = 'start_time' | '-start_time';
 
 export type OpenStackListenerFieldEnum = 'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'default_pool' | 'description' | 'error_message' | 'error_traceback' | 'is_limit_based' | 'is_usage_based' | 'load_balancer' | 'load_balancer_name' | 'load_balancer_uuid' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'operating_status' | 'project' | 'project_name' | 'project_uuid' | 'protocol' | 'protocol_port' | 'provisioning_status' | 'resource_type' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'url' | 'uuid';
 
-export type OpenStackLoadBalancerFieldEnum = 'access_url' | 'attached_floating_ip' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'operating_status' | 'project' | 'project_name' | 'project_uuid' | 'provider' | 'provisioning_status' | 'resource_type' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'tenant' | 'tenant_name' | 'tenant_uuid' | 'url' | 'uuid' | 'vip_address' | 'vip_port_id' | 'vip_subnet_id';
+export type OpenStackLoadBalancerFieldEnum = 'access_url' | 'attached_floating_ip' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'operating_status' | 'project' | 'project_name' | 'project_uuid' | 'provider' | 'provisioning_status' | 'resource_type' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'tenant' | 'tenant_name' | 'tenant_uuid' | 'url' | 'uuid' | 'vip_address' | 'vip_port' | 'vip_subnet';
 
 export type OpenStackNetworkFieldEnum = 'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'is_external' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'mtu' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'rbac_policies' | 'resource_type' | 'segmentation_id' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'subnets' | 'tenant' | 'tenant_name' | 'tenant_uuid' | 'type' | 'url' | 'uuid';
 
-export type OpenStackPoolMemberFieldEnum = 'access_url' | 'address' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'is_limit_based' | 'is_usage_based' | 'load_balancer_uuid' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'operating_status' | 'pool' | 'pool_name' | 'pool_uuid' | 'project' | 'project_name' | 'project_uuid' | 'protocol_port' | 'provisioning_status' | 'resource_type' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'subnet_id' | 'url' | 'uuid' | 'weight';
+export type OpenStackPoolMemberFieldEnum = 'access_url' | 'address' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'is_limit_based' | 'is_usage_based' | 'load_balancer_uuid' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'operating_status' | 'pool' | 'pool_name' | 'pool_uuid' | 'project' | 'project_name' | 'project_uuid' | 'protocol_port' | 'provisioning_status' | 'resource_type' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'subnet' | 'url' | 'uuid' | 'weight';
 
 export type OpenStackPoolFieldEnum = 'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'is_limit_based' | 'is_usage_based' | 'lb_algorithm' | 'load_balancer' | 'load_balancer_name' | 'load_balancer_uuid' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'operating_status' | 'project' | 'project_name' | 'project_uuid' | 'protocol' | 'provisioning_status' | 'resource_type' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'url' | 'uuid';
 
@@ -69375,7 +69391,7 @@ export type OpenstackLoadbalancersRetrieveResponses = {
 export type OpenstackLoadbalancersRetrieveResponse = OpenstackLoadbalancersRetrieveResponses[keyof OpenstackLoadbalancersRetrieveResponses];
 
 export type OpenstackLoadbalancersPartialUpdateData = {
-    body?: PatchedOpenStackLoadBalancerRequest;
+    body?: PatchedUpdateLoadBalancerRequest;
     path: {
         uuid: string;
     };
@@ -69384,13 +69400,13 @@ export type OpenstackLoadbalancersPartialUpdateData = {
 };
 
 export type OpenstackLoadbalancersPartialUpdateResponses = {
-    200: OpenStackLoadBalancer;
+    200: UpdateLoadBalancer;
 };
 
 export type OpenstackLoadbalancersPartialUpdateResponse = OpenstackLoadbalancersPartialUpdateResponses[keyof OpenstackLoadbalancersPartialUpdateResponses];
 
 export type OpenstackLoadbalancersUpdateData = {
-    body: OpenStackLoadBalancerRequest;
+    body: UpdateLoadBalancerRequest;
     path: {
         uuid: string;
     };
@@ -69399,7 +69415,7 @@ export type OpenstackLoadbalancersUpdateData = {
 };
 
 export type OpenstackLoadbalancersUpdateResponses = {
-    200: OpenStackLoadBalancer;
+    200: UpdateLoadBalancer;
 };
 
 export type OpenstackLoadbalancersUpdateResponse = OpenstackLoadbalancersUpdateResponses[keyof OpenstackLoadbalancersUpdateResponses];
@@ -69414,11 +69430,10 @@ export type OpenstackLoadbalancersAttachFloatingIpData = {
 };
 
 export type OpenstackLoadbalancersAttachFloatingIpResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    202: LoadBalancerAsyncOperationResponse;
 };
+
+export type OpenstackLoadbalancersAttachFloatingIpResponse = OpenstackLoadbalancersAttachFloatingIpResponses[keyof OpenstackLoadbalancersAttachFloatingIpResponses];
 
 export type OpenstackLoadbalancersDetachFloatingIpData = {
     body?: never;
@@ -69430,27 +69445,28 @@ export type OpenstackLoadbalancersDetachFloatingIpData = {
 };
 
 export type OpenstackLoadbalancersDetachFloatingIpResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    202: LoadBalancerAsyncOperationResponse;
 };
 
-export type OpenstackLoadbalancersUpdateVipSecurityGroupsData = {
-    body: LoadBalancerUpdateVipSecurityGroupsRequest;
+export type OpenstackLoadbalancersDetachFloatingIpResponse = OpenstackLoadbalancersDetachFloatingIpResponses[keyof OpenstackLoadbalancersDetachFloatingIpResponses];
+
+export type OpenstackLoadbalancersUnlinkData = {
+    body?: never;
     path: {
         uuid: string;
     };
     query?: never;
-    url: '/api/openstack-loadbalancers/{uuid}/update_vip_security_groups/';
+    url: '/api/openstack-loadbalancers/{uuid}/unlink/';
 };
 
-export type OpenstackLoadbalancersUpdateVipSecurityGroupsResponses = {
+export type OpenstackLoadbalancersUnlinkResponses = {
     /**
      * No response body
      */
-    200: unknown;
+    204: void;
 };
+
+export type OpenstackLoadbalancersUnlinkResponse = OpenstackLoadbalancersUnlinkResponses[keyof OpenstackLoadbalancersUnlinkResponses];
 
 export type OpenstackMarketplaceTenantsListData = {
     body?: never;
@@ -70759,7 +70775,7 @@ export type OpenstackPoolsRetrieveResponses = {
 export type OpenstackPoolsRetrieveResponse = OpenstackPoolsRetrieveResponses[keyof OpenstackPoolsRetrieveResponses];
 
 export type OpenstackPoolsPartialUpdateData = {
-    body?: PatchedOpenStackPoolRequest;
+    body?: PatchedUpdatePoolRequest;
     path: {
         uuid: string;
     };
@@ -70768,13 +70784,13 @@ export type OpenstackPoolsPartialUpdateData = {
 };
 
 export type OpenstackPoolsPartialUpdateResponses = {
-    200: OpenStackPool;
+    200: UpdatePool;
 };
 
 export type OpenstackPoolsPartialUpdateResponse = OpenstackPoolsPartialUpdateResponses[keyof OpenstackPoolsPartialUpdateResponses];
 
 export type OpenstackPoolsUpdateData = {
-    body: OpenStackPoolRequest;
+    body: UpdatePoolRequest;
     path: {
         uuid: string;
     };
@@ -70783,7 +70799,7 @@ export type OpenstackPoolsUpdateData = {
 };
 
 export type OpenstackPoolsUpdateResponses = {
-    200: OpenStackPool;
+    200: UpdatePool;
 };
 
 export type OpenstackPoolsUpdateResponse = OpenstackPoolsUpdateResponses[keyof OpenstackPoolsUpdateResponses];
