@@ -2548,7 +2548,7 @@ export type BasicUser = {
 
 export type BidEnum = 'eager' | 'willing' | 'not_willing' | 'conflict';
 
-export type BillingModeEnum = 'monthly' | 'prepaid';
+export type BillingModeEnum = 'monthly' | 'prepaid' | 'usage';
 
 export type BillingTypeEnum = 'fixed' | 'usage' | 'limit' | 'one' | 'few';
 
@@ -12779,6 +12779,16 @@ export type OfferingSoftwareCatalogRequest = {
 };
 
 export type OfferingState = 'Draft' | 'Active' | 'Paused' | 'Archived' | 'Unavailable';
+
+export type OfferingStateCounter = {
+    state: string;
+    count: number;
+};
+
+export type OfferingStateCounters = {
+    resources: Array<OfferingStateCounter>;
+    users: Array<OfferingStateCounter>;
+};
 
 export type OfferingStats = {
     /**
@@ -25178,7 +25188,7 @@ export type SupportedCountriesResponse = {
 
 export type SwitchBillingModeRequest = {
     /**
-     * Switch all builtin components to monthly (LIMIT) or prepaid (ONE_TIME + is_prepaid) billing.
+     * Switch all builtin components to monthly (LIMIT), prepaid (ONE_TIME + is_prepaid), or usage-based billing.
      */
     billing_mode: BillingModeEnum;
 };
@@ -52722,6 +52732,21 @@ export type MarketplaceProviderOfferingsSetBackendMetadataResponses = {
      */
     200: unknown;
 };
+
+export type MarketplaceProviderOfferingsStateCountersRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-provider-offerings/{uuid}/state_counters/';
+};
+
+export type MarketplaceProviderOfferingsStateCountersRetrieveResponses = {
+    200: OfferingStateCounters;
+};
+
+export type MarketplaceProviderOfferingsStateCountersRetrieveResponse = MarketplaceProviderOfferingsStateCountersRetrieveResponses[keyof MarketplaceProviderOfferingsStateCountersRetrieveResponses];
 
 export type MarketplaceProviderOfferingsStatsRetrieveData = {
     body?: never;
