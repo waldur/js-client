@@ -35151,6 +35151,10 @@ export type BookingResourcesListData = {
          */
         service_manager_uuid?: string;
         /**
+         * Slug
+         */
+        slug?: string;
+        /**
          * Resource state
          *
          *
@@ -35341,6 +35345,10 @@ export type BookingResourcesCountData = {
          * Service manager UUID
          */
         service_manager_uuid?: string;
+        /**
+         * Slug
+         */
+        slug?: string;
         /**
          * Resource state
          *
@@ -38469,6 +38477,10 @@ export type CustomersListData = {
          */
         service_provider_uuid?: string;
         /**
+         * Slug
+         */
+        slug?: string;
+        /**
          * Filter by user UUID.
          */
         user_uuid?: string;
@@ -38562,6 +38574,10 @@ export type CustomersCountData = {
          * Filter by service provider UUID.
          */
         service_provider_uuid?: string;
+        /**
+         * Slug
+         */
+        slug?: string;
         /**
          * Filter by user UUID.
          */
@@ -38995,6 +39011,10 @@ export type CustomersHistoryListData = {
          */
         service_provider_uuid?: string;
         /**
+         * Slug
+         */
+        slug?: string;
+        /**
          * Filter by user UUID.
          */
         user_uuid?: string;
@@ -39311,6 +39331,10 @@ export type CustomersCountriesListData = {
          */
         service_provider_uuid?: string;
         /**
+         * Slug
+         */
+        slug?: string;
+        /**
          * Filter by user UUID.
          */
         user_uuid?: string;
@@ -39404,6 +39428,10 @@ export type CustomersCountriesCountData = {
          * Filter by service provider UUID.
          */
         service_provider_uuid?: string;
+        /**
+         * Slug
+         */
+        slug?: string;
         /**
          * Filter by user UUID.
          */
@@ -41232,6 +41260,10 @@ export type FinancialReportsListData = {
         query?: string;
         registration_code?: string;
         /**
+         * Slug
+         */
+        slug?: string;
+        /**
          * Filter by year.
          */
         year?: number;
@@ -41317,6 +41349,10 @@ export type FinancialReportsCountData = {
          */
         query?: string;
         registration_code?: string;
+        /**
+         * Slug
+         */
+        slug?: string;
         /**
          * Filter by year.
          */
@@ -48955,6 +48991,10 @@ export type MarketplaceOrdersListData = {
          */
         service_manager_uuid?: string;
         /**
+         * Slug
+         */
+        slug?: string;
+        /**
          * Order state
          *
          *
@@ -49068,6 +49108,10 @@ export type MarketplaceOrdersCountData = {
          * Service manager UUID
          */
         service_manager_uuid?: string;
+        /**
+         * Slug
+         */
+        slug?: string;
         /**
          * Order state
          *
@@ -50509,6 +50553,10 @@ export type MarketplaceProviderOfferingsListData = {
          */
         shared?: boolean;
         /**
+         * Slug
+         */
+        slug?: string;
+        /**
          * Offering state
          *
          *
@@ -50687,6 +50735,10 @@ export type MarketplaceProviderOfferingsCountData = {
          * Shared
          */
         shared?: boolean;
+        /**
+         * Slug
+         */
+        slug?: string;
         /**
          * Offering state
          *
@@ -51034,6 +51086,10 @@ export type MarketplaceProviderOfferingsComponentStatsListData = {
          */
         shared?: boolean;
         /**
+         * Slug
+         */
+        slug?: string;
+        /**
          * Start date in format YYYY-MM.
          */
         start?: string;
@@ -51223,6 +51279,10 @@ export type MarketplaceProviderOfferingsCostsListData = {
          * Shared
          */
         shared?: boolean;
+        /**
+         * Slug
+         */
+        slug?: string;
         /**
          * Start date in format YYYY-MM.
          */
@@ -51425,6 +51485,10 @@ export type MarketplaceProviderOfferingsCustomersListData = {
          * Shared
          */
         shared?: boolean;
+        /**
+         * Slug
+         */
+        slug?: string;
         /**
          * Offering state
          *
@@ -51780,6 +51844,10 @@ export type MarketplaceProviderOfferingsHistoryListData = {
          */
         shared?: boolean;
         /**
+         * Slug
+         */
+        slug?: string;
+        /**
          * Offering state
          *
          *
@@ -52031,6 +52099,10 @@ export type MarketplaceProviderOfferingsListCourseAccountsListData = {
          */
         shared?: boolean;
         /**
+         * Slug
+         */
+        slug?: string;
+        /**
          * Offering state
          *
          *
@@ -52237,6 +52309,10 @@ export type MarketplaceProviderOfferingsListCustomerServiceAccountsListData = {
          */
         shared?: boolean;
         /**
+         * Slug
+         */
+        slug?: string;
+        /**
          * Offering state
          *
          *
@@ -52442,6 +52518,10 @@ export type MarketplaceProviderOfferingsListProjectServiceAccountsListData = {
          * Shared
          */
         shared?: boolean;
+        /**
+         * Slug
+         */
+        slug?: string;
         /**
          * Offering state
          *
@@ -53313,6 +53393,10 @@ export type MarketplaceProviderOfferingsGroupsListData = {
          */
         shared?: boolean;
         /**
+         * Slug
+         */
+        slug?: string;
+        /**
          * Offering state
          *
          *
@@ -53487,6 +53571,10 @@ export type MarketplaceProviderOfferingsGroupsCountData = {
          * Shared
          */
         shared?: boolean;
+        /**
+         * Slug
+         */
+        slug?: string;
         /**
          * Offering state
          *
@@ -53717,6 +53805,10 @@ export type MarketplaceProviderResourcesListData = {
          */
         service_manager_uuid?: string;
         /**
+         * Slug
+         */
+        slug?: string;
+        /**
          * Resource state
          *
          *
@@ -53910,6 +54002,10 @@ export type MarketplaceProviderResourcesCountData = {
          * Service manager UUID
          */
         service_manager_uuid?: string;
+        /**
+         * Slug
+         */
+        slug?: string;
         /**
          * Resource state
          *
@@ -54195,6 +54291,10 @@ export type MarketplaceProviderResourcesHistoryListData = {
          * Service manager UUID
          */
         service_manager_uuid?: string;
+        /**
+         * Slug
+         */
+        slug?: string;
         /**
          * Resource state
          *
@@ -54865,6 +54965,10 @@ export type MarketplacePublicOfferingsListData = {
          */
         shared?: boolean;
         /**
+         * Slug
+         */
+        slug?: string;
+        /**
          * Offering state
          *
          *
@@ -55039,6 +55143,10 @@ export type MarketplacePublicOfferingsCountData = {
          * Shared
          */
         shared?: boolean;
+        /**
+         * Slug
+         */
+        slug?: string;
         /**
          * Offering state
          *
@@ -55635,6 +55743,10 @@ export type MarketplaceResourcesListData = {
          */
         service_manager_uuid?: string;
         /**
+         * Slug
+         */
+        slug?: string;
+        /**
          * Resource state
          *
          *
@@ -55828,6 +55940,10 @@ export type MarketplaceResourcesCountData = {
          * Service manager UUID
          */
         service_manager_uuid?: string;
+        /**
+         * Slug
+         */
+        slug?: string;
         /**
          * Resource state
          *
@@ -56128,6 +56244,10 @@ export type MarketplaceResourcesHistoryListData = {
          * Service manager UUID
          */
         service_manager_uuid?: string;
+        /**
+         * Slug
+         */
+        slug?: string;
         /**
          * Resource state
          *
@@ -57696,6 +57816,10 @@ export type MarketplaceServiceProvidersCustomersListData = {
          */
         query?: string;
         registration_code?: string;
+        /**
+         * Slug
+         */
+        slug?: string;
     };
     url: '/api/marketplace-service-providers/{service_provider_uuid}/customers/';
 };
@@ -57903,6 +58027,10 @@ export type MarketplaceServiceProvidersOfferingsListData = {
          * Shared
          */
         shared?: boolean;
+        /**
+         * Slug
+         */
+        slug?: string;
         /**
          * Offering state
          *
@@ -58240,6 +58368,10 @@ export type MarketplaceServiceProvidersUserCustomersListData = {
          */
         query?: string;
         registration_code?: string;
+        /**
+         * Slug
+         */
+        slug?: string;
         /**
          * UUID of the user to get related customers for.
          */
@@ -76745,6 +76877,10 @@ export type ProposalProposalsListData = {
         page_size?: number;
         round?: string;
         round_uuid?: string;
+        /**
+         * Slug
+         */
+        slug?: string;
         state?: Array<ProposalStates>;
     };
     url: '/api/proposal-proposals/';
@@ -76781,6 +76917,10 @@ export type ProposalProposalsCountData = {
         page_size?: number;
         round?: string;
         round_uuid?: string;
+        /**
+         * Slug
+         */
+        slug?: string;
         state?: Array<ProposalStates>;
     };
     url: '/api/proposal-proposals/';
@@ -77367,6 +77507,10 @@ export type ProposalProtectedCallsListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Slug
+         */
+        slug?: string;
         state?: Array<CallStates>;
     };
     url: '/api/proposal-protected-calls/';
@@ -77403,6 +77547,10 @@ export type ProposalProtectedCallsCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Slug
+         */
+        slug?: string;
         state?: Array<CallStates>;
     };
     url: '/api/proposal-protected-calls/';
@@ -77698,6 +77846,10 @@ export type ProposalProtectedCallsConflictsListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Slug
+         */
+        slug?: string;
         state?: Array<CallStates>;
     };
     url: '/api/proposal-protected-calls/{uuid}/conflicts/';
@@ -78069,6 +78221,10 @@ export type ProposalProtectedCallsProposalsComplianceAnswersListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Slug
+         */
+        slug?: string;
         state?: Array<CallStates>;
     };
     url: '/api/proposal-protected-calls/{uuid}/proposals/{proposal_uuid}/compliance-answers/';
@@ -78107,6 +78263,10 @@ export type ProposalProtectedCallsProposedAssignmentsListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Slug
+         */
+        slug?: string;
         state?: Array<CallStates>;
     };
     url: '/api/proposal-protected-calls/{uuid}/proposed-assignments/';
@@ -78292,6 +78452,10 @@ export type ProposalProtectedCallsInviteReviewersData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Slug
+         */
+        slug?: string;
         state?: Array<CallStates>;
     };
     url: '/api/proposal-protected-calls/{uuid}/reviewer-pool/';
@@ -78482,6 +78646,10 @@ export type ProposalProtectedCallsSuggestionsListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Slug
+         */
+        slug?: string;
         state?: Array<CallStates>;
     };
     url: '/api/proposal-protected-calls/{uuid}/suggestions/';
@@ -78570,6 +78738,10 @@ export type ProposalProtectedCallsAvailableComplianceChecklistsListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Slug
+         */
+        slug?: string;
         state?: Array<CallStates>;
     };
     url: '/api/proposal-protected-calls/available_compliance_checklists/';
@@ -78613,6 +78785,10 @@ export type ProposalProtectedCallsAvailableComplianceChecklistsCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Slug
+         */
+        slug?: string;
         state?: Array<CallStates>;
     };
     url: '/api/proposal-protected-calls/available_compliance_checklists/';
@@ -78651,6 +78827,10 @@ export type ProposalPublicCallsListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Slug
+         */
+        slug?: string;
         state?: Array<CallStates>;
     };
     url: '/api/proposal-public-calls/';
@@ -78687,6 +78867,10 @@ export type ProposalPublicCallsCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Slug
+         */
+        slug?: string;
         state?: Array<CallStates>;
     };
     url: '/api/proposal-public-calls/';
