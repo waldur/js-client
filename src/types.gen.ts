@@ -49324,6 +49324,21 @@ export type MarketplaceOrdersRejectByProviderResponses = {
     200: unknown;
 };
 
+export type MarketplaceOrdersResourceRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-orders/{uuid}/resource/';
+};
+
+export type MarketplaceOrdersResourceRetrieveResponses = {
+    200: Resource;
+};
+
+export type MarketplaceOrdersResourceRetrieveResponse = MarketplaceOrdersResourceRetrieveResponses[keyof MarketplaceOrdersResourceRetrieveResponses];
+
 export type MarketplaceOrdersRetryData = {
     body?: never;
     path: {
