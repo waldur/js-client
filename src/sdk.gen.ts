@@ -57141,7 +57141,11 @@ export const userGroupInvitationsSubmitRequest = <ThrowOnError extends boolean =
             }
         ],
         url: '/api/user-group-invitations/{uuid}/submit_request/',
-        ...options
+        ...options,
+        headers: {
+            'Content-Type': 'application/json',
+            ...options.headers
+        }
     });
 };
 

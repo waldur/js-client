@@ -25168,6 +25168,17 @@ export type SubNetMappingRequest = {
     dst_cidr: string;
 };
 
+export type SubmitRequestRequest = {
+    /**
+     * Custom project name to use instead of auto-generated one
+     */
+    project_name?: string;
+    /**
+     * Custom project description
+     */
+    project_description?: string;
+};
+
 export type SubmitRequestResponse = {
     /**
      * UUID of the created permission request
@@ -87725,7 +87736,7 @@ export type UserGroupInvitationsProjectsListResponses = {
 export type UserGroupInvitationsProjectsListResponse = UserGroupInvitationsProjectsListResponses[keyof UserGroupInvitationsProjectsListResponses];
 
 export type UserGroupInvitationsSubmitRequestData = {
-    body?: never;
+    body?: SubmitRequestRequest;
     path: {
         uuid: string;
     };
