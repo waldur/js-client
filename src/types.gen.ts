@@ -7768,6 +7768,14 @@ export type GroupInvitation = {
      * Custom description text displayed to users viewing this invitation.
      */
     custom_text?: string;
+    /**
+     * Allow users to submit multiple permission requests for this invitation.
+     */
+    allow_multiple_requests?: boolean;
+    /**
+     * Allow users to provide custom project name and description when accepting the invitation. If disabled, the project name is auto-generated from the template.
+     */
+    allow_custom_project_details?: boolean;
 };
 
 export type GroupInvitationRequest = {
@@ -7809,6 +7817,14 @@ export type GroupInvitationRequest = {
      * Custom description text displayed to users viewing this invitation.
      */
     custom_text?: string;
+    /**
+     * Allow users to submit multiple permission requests for this invitation.
+     */
+    allow_multiple_requests?: boolean;
+    /**
+     * Allow users to provide custom project name and description when accepting the invitation. If disabled, the project name is auto-generated from the template.
+     */
+    allow_custom_project_details?: boolean;
 };
 
 export type GroupInvitationUpdate = {
@@ -7850,6 +7866,14 @@ export type GroupInvitationUpdate = {
      * Custom description text displayed to users viewing this invitation.
      */
     custom_text?: string;
+    /**
+     * Allow users to submit multiple permission requests for this invitation.
+     */
+    allow_multiple_requests?: boolean;
+    /**
+     * Allow users to provide custom project name and description when accepting the invitation. If disabled, the project name is auto-generated from the template.
+     */
+    allow_custom_project_details?: boolean;
 };
 
 export type GroupInvitationUpdateRequest = {
@@ -7891,6 +7915,14 @@ export type GroupInvitationUpdateRequest = {
      * Custom description text displayed to users viewing this invitation.
      */
     custom_text?: string;
+    /**
+     * Allow users to submit multiple permission requests for this invitation.
+     */
+    allow_multiple_requests?: boolean;
+    /**
+     * Allow users to provide custom project name and description when accepting the invitation. If disabled, the project name is auto-generated from the template.
+     */
+    allow_custom_project_details?: boolean;
 };
 
 export type GrowthPeriodEnum = 'weekly' | 'monthly';
@@ -16621,6 +16653,14 @@ export type PatchedGroupInvitationUpdateRequest = {
      * Custom description text displayed to users viewing this invitation.
      */
     custom_text?: string;
+    /**
+     * Allow users to submit multiple permission requests for this invitation.
+     */
+    allow_multiple_requests?: boolean;
+    /**
+     * Allow users to provide custom project name and description when accepting the invitation. If disabled, the project name is auto-generated from the template.
+     */
+    allow_custom_project_details?: boolean;
 };
 
 export type PatchedIdentityProviderRequest = {
