@@ -18408,6 +18408,14 @@ export type PermissionRequest = {
     readonly role_name: string;
     readonly role_description: string;
     readonly project_name_template: string;
+    /**
+     * Custom project name provided by user during invitation acceptance.
+     */
+    project_name?: string;
+    /**
+     * Custom project description provided by user during invitation acceptance.
+     */
+    project_description?: string;
 };
 
 export type PersonIdentifierFieldsResponse = {
