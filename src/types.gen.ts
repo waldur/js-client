@@ -7576,7 +7576,7 @@ export type FreeipaProfileRequest = {
 
 export type FrequencyEnum = 'weekly' | 'biweekly' | 'monthly';
 
-export type GenderEnum = 0 | 1 | 2 | 9;
+export type GenderEnum = 'male' | 'female' | 'unknown';
 
 export type GenerateAssignmentsRequest = {
     /**
@@ -9737,9 +9737,9 @@ export type MarketplaceServiceProviderUser = {
     is_active?: boolean;
     job_title?: string;
     /**
-     * ISO 5218 gender code
+     * User's gender (male, female, or unknown)
      */
-    gender?: GenderEnum | NullEnum | null;
+    gender?: GenderEnum | BlankEnum | NullEnum | null;
     /**
      * Honorific title (Mr, Ms, Dr, Prof, etc.)
      */
@@ -13011,9 +13011,9 @@ export type OfferingUser = {
      */
     readonly user_affiliations?: unknown;
     /**
-     * ISO 5218 gender code
+     * User's gender (male, female, or unknown)
      */
-    user_gender?: GenderEnum | NullEnum | null;
+    user_gender?: GenderEnum | BlankEnum | NullEnum | null;
     /**
      * Honorific title (Mr, Ms, Dr, Prof, etc.)
      */
@@ -18190,9 +18190,9 @@ export type PatchedUserRequest = {
     birth_date?: string | null;
     image?: (Blob | File) | null;
     /**
-     * ISO 5218 gender code
+     * User's gender (male, female, or unknown)
      */
-    gender?: GenderEnum | NullEnum | null;
+    gender?: GenderEnum | BlankEnum | NullEnum | null;
     /**
      * Honorific title (Mr, Ms, Dr, Prof, etc.)
      */
@@ -26039,9 +26039,9 @@ export type User = {
     readonly has_usable_password?: boolean;
     readonly ip_address?: string | null;
     /**
-     * ISO 5218 gender code
+     * User's gender (male, female, or unknown)
      */
-    gender?: GenderEnum | NullEnum | null;
+    gender?: GenderEnum | BlankEnum | NullEnum | null;
     /**
      * Honorific title (Mr, Ms, Dr, Prof, etc.)
      */
@@ -26470,9 +26470,9 @@ export type UserRequest = {
     birth_date?: string | null;
     image?: (Blob | File) | null;
     /**
-     * ISO 5218 gender code
+     * User's gender (male, female, or unknown)
      */
-    gender?: GenderEnum | NullEnum | null;
+    gender?: GenderEnum | BlankEnum | NullEnum | null;
     /**
      * Honorific title (Mr, Ms, Dr, Prof, etc.)
      */
@@ -28922,9 +28922,9 @@ export type UserRequestForm = {
     birth_date?: string | null;
     image?: (Blob | File) | null;
     /**
-     * ISO 5218 gender code
+     * User's gender (male, female, or unknown)
      */
-    gender?: GenderEnum | NullEnum | null;
+    gender?: GenderEnum | BlankEnum | NullEnum | null;
     /**
      * Honorific title (Mr, Ms, Dr, Prof, etc.)
      */
@@ -29014,9 +29014,9 @@ export type UserRequestMultipart = {
     birth_date?: string | null;
     image?: (Blob | File) | null;
     /**
-     * ISO 5218 gender code
+     * User's gender (male, female, or unknown)
      */
-    gender?: GenderEnum | NullEnum | null;
+    gender?: GenderEnum | BlankEnum | NullEnum | null;
     /**
      * Honorific title (Mr, Ms, Dr, Prof, etc.)
      */
@@ -29105,9 +29105,9 @@ export type PatchedUserRequestForm = {
     birth_date?: string | null;
     image?: (Blob | File) | null;
     /**
-     * ISO 5218 gender code
+     * User's gender (male, female, or unknown)
      */
-    gender?: GenderEnum | NullEnum | null;
+    gender?: GenderEnum | BlankEnum | NullEnum | null;
     /**
      * Honorific title (Mr, Ms, Dr, Prof, etc.)
      */
@@ -29196,9 +29196,9 @@ export type PatchedUserRequestMultipart = {
     birth_date?: string | null;
     image?: (Blob | File) | null;
     /**
-     * ISO 5218 gender code
+     * User's gender (male, female, or unknown)
      */
-    gender?: GenderEnum | NullEnum | null;
+    gender?: GenderEnum | BlankEnum | NullEnum | null;
     /**
      * Honorific title (Mr, Ms, Dr, Prof, etc.)
      */
