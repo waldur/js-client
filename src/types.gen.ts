@@ -11323,6 +11323,8 @@ export type NestedPlanComponent = {
      * Discount rate in percentage.
      */
     discount_rate?: number | null;
+    readonly discounted_price?: string | null;
+    readonly discount_description?: string | null;
 };
 
 export type NestedPlanComponentRequest = {
