@@ -2441,13 +2441,13 @@ export type BaseProviderPlan = {
     readonly organization_groups?: Array<OrganizationGroup>;
     readonly components?: Array<NestedPlanComponent>;
     readonly prices?: {
-        [key: string]: number;
+        [key: string]: string;
     };
     readonly future_prices?: {
-        [key: string]: number;
+        [key: string]: string;
     };
     readonly quotas?: {
-        [key: string]: number;
+        [key: string]: string;
     };
     readonly resources_count?: number;
     readonly plan_type?: string;
@@ -2494,13 +2494,13 @@ export type BasePublicPlan = {
     readonly organization_groups?: Array<OrganizationGroup>;
     readonly components?: Array<NestedPlanComponent>;
     readonly prices?: {
-        [key: string]: number;
+        [key: string]: string;
     };
     readonly future_prices?: {
-        [key: string]: number;
+        [key: string]: string;
     };
     readonly quotas?: {
-        [key: string]: number;
+        [key: string]: string;
     };
     readonly resources_count?: number;
     readonly plan_type?: string;
@@ -19992,13 +19992,13 @@ export type ProviderPlanDetails = {
     readonly components: Array<NestedPlanComponent>;
     offering: string;
     readonly prices: {
-        [key: string]: number;
+        [key: string]: string;
     };
     readonly future_prices: {
-        [key: string]: number;
+        [key: string]: string;
     };
     readonly quotas: {
-        [key: string]: number;
+        [key: string]: string;
     };
     readonly resources_count: number;
     readonly plan_type: string;
