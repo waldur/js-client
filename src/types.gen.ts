@@ -15822,9 +15822,11 @@ export type OrderDetails = {
     readonly cost?: string | null;
     state?: OrderState;
     readonly output?: string;
+    readonly output_updated_at?: string | null;
     readonly marketplace_resource_uuid?: string;
     readonly error_message?: string;
     readonly error_traceback?: string;
+    readonly error_updated_at?: string | null;
     callback_url?: string | null;
     /**
      * Completion time
@@ -18360,19 +18362,19 @@ export type PermissionMetadataResponse = {
      * Map of role keys to role enum values from RoleEnum
      */
     roles: {
-        [key: string]: 'CUSTOMER.OWNER' | 'CUSTOMER.SUPPORT' | 'CUSTOMER.MANAGER' | 'PROJECT.ADMIN' | 'PROJECT.MANAGER' | 'PROJECT.MEMBER' | 'OFFERING.MANAGER' | 'CALL.REVIEWER' | 'CALL.MANAGER' | 'PROPOSAL.MEMBER' | 'PROPOSAL.MANAGER';
+        [key: string]: 'CUSTOMER.OWNER' | 'CUSTOMER.SUPPORT' | 'CUSTOMER.MANAGER' | 'CUSTOMER.READER' | 'PROJECT.ADMIN' | 'PROJECT.MANAGER' | 'PROJECT.MEMBER' | 'OFFERING.MANAGER' | 'CALL.REVIEWER' | 'CALL.MANAGER' | 'PROPOSAL.MEMBER' | 'PROPOSAL.MANAGER';
     };
     /**
      * Map of permission keys to permission enum values from PermissionEnum
      */
     permissions: {
-        [key: string]: 'SERVICE_PROVIDER.REGISTER' | 'OFFERING.CREATE' | 'OFFERING.DELETE' | 'OFFERING.UPDATE_THUMBNAIL' | 'OFFERING.UPDATE' | 'OFFERING.UPDATE_ATTRIBUTES' | 'OFFERING.UPDATE_LOCATION' | 'OFFERING.UPDATE_DESCRIPTION' | 'OFFERING.UPDATE_OPTIONS' | 'OFFERING.UPDATE_INTEGRATION' | 'OFFERING.ADD_ENDPOINT' | 'OFFERING.DELETE_ENDPOINT' | 'OFFERING.UPDATE_COMPONENTS' | 'OFFERING.PAUSE' | 'OFFERING.UNPAUSE' | 'OFFERING.ARCHIVE' | 'OFFERING.DRY_RUN_SCRIPT' | 'OFFERING.MANAGE_CAMPAIGN' | 'OFFERING.MANAGE_USER_GROUP' | 'OFFERING.CREATE_PLAN' | 'OFFERING.UPDATE_PLAN' | 'OFFERING.ARCHIVE_PLAN' | 'OFFERING.CREATE_SCREENSHOT' | 'OFFERING.UPDATE_SCREENSHOT' | 'OFFERING.DELETE_SCREENSHOT' | 'OFFERING.CREATE_USER' | 'OFFERING.UPDATE_USER' | 'OFFERING.DELETE_USER' | 'OFFERING.MANAGE_USER_ROLE' | 'RESOURCE.CREATE_ROBOT_ACCOUNT' | 'RESOURCE.UPDATE_ROBOT_ACCOUNT' | 'RESOURCE.DELETE_ROBOT_ACCOUNT' | 'ORDER.LIST' | 'ORDER.APPROVE_PRIVATE' | 'ORDER.APPROVE' | 'ORDER.REJECT' | 'ORDER.DESTROY' | 'ORDER.CANCEL' | 'RESOURCE.LIST' | 'RESOURCE.UPDATE' | 'RESOURCE.TERMINATE' | 'RESOURCE.LIST_IMPORTABLE' | 'RESOURCE.SET_END_DATE' | 'RESOURCE.SET_USAGE' | 'RESOURCE.SET_PLAN' | 'RESOURCE.SET_LIMITS' | 'RESOURCE.SET_BACKEND_ID' | 'RESOURCE.SUBMIT_REPORT' | 'RESOURCE.SET_BACKEND_METADATA' | 'RESOURCE.SET_STATE' | 'RESOURCE.UPDATE_OPTIONS' | 'RESOURCE.ACCEPT_BOOKING_REQUEST' | 'RESOURCE.REJECT_BOOKING_REQUEST' | 'RESOURCE.MANAGE_USERS' | 'RESOURCE.CONSUMPTION_LIMITATION' | 'OFFERING.MANAGE_BACKEND_RESOURCES' | 'SERVICE_PROVIDER.GET_API_SECRET_CODE' | 'SERVICE_PROVIDER.GENERATE_API_SECRET_CODE' | 'SERVICE_PROVIDER.LIST_CUSTOMERS' | 'SERVICE_PROVIDER.LIST_CUSTOMER_PROJECTS' | 'SERVICE_PROVIDER.LIST_PROJECTS' | 'SERVICE_PROVIDER.LIST_PROJECT_PERMISSIONS' | 'SERVICE_PROVIDER.LIST_KEYS' | 'SERVICE_PROVIDER.LIST_USERS' | 'SERVICE_PROVIDER.LIST_USER_CUSTOMERS' | 'SERVICE_PROVIDER.LIST_SERVICE_ACCOUNTS' | 'SERVICE_PROVIDER.LIST_COURSE_ACCOUNTS' | 'SERVICE_PROVIDER.SET_OFFERINGS_USERNAME' | 'SERVICE_PROVIDER.GET_STATISTICS' | 'SERVICE_PROVIDER.GET_REVENUE' | 'SERVICE_PROVIDER.GET_ROBOT_ACCOUNT_CUSTOMERS' | 'SERVICE_PROVIDER.GET_ROBOT_ACCOUNT_PROJECTS' | 'PROJECT.CREATE_PERMISSION' | 'CUSTOMER.CREATE_PERMISSION' | 'OFFERING.CREATE_PERMISSION' | 'CALL.CREATE_PERMISSION' | 'PROPOSAL.MANAGE' | 'PROPOSAL.MANAGE_REVIEW' | 'PROJECT.UPDATE_PERMISSION' | 'CUSTOMER.UPDATE_PERMISSION' | 'OFFERING.UPDATE_PERMISSION' | 'CALL.UPDATE_PERMISSION' | 'PROPOSAL.UPDATE_PERMISSION' | 'PROJECT.DELETE_PERMISSION' | 'CUSTOMER.DELETE_PERMISSION' | 'OFFERING.DELETE_PERMISSION' | 'CALL.DELETE_PERMISSION' | 'PROPOSAL.DELETE_PERMISSION' | 'LEXIS_LINK.CREATE' | 'LEXIS_LINK.DELETE' | 'PROJECT.LIST' | 'PROJECT.CREATE' | 'PROJECT.DELETE' | 'PROJECT.UPDATE' | 'PROJECT.UPDATE_METADATA' | 'PROJECT.REVIEW_MEMBERSHIP' | 'CUSTOMER.UPDATE' | 'CUSTOMER.CONTACT_UPDATE' | 'CUSTOMER.LIST_USERS' | 'OFFERING.ACCEPT_CALL_REQUEST' | 'CALL.APPROVE_AND_REJECT_PROPOSALS' | 'CALL.CLOSE_ROUNDS' | 'ACCESS_SUBNET.CREATE' | 'ACCESS_SUBNET.UPDATE' | 'ACCESS_SUBNET.DELETE' | 'OFFERINGUSER.UPDATE_RESTRICTION' | 'INVITATION.LIST' | 'CUSTOMER.LIST_PERMISSION_REVIEWS' | 'CALL.LIST' | 'CALL.CREATE' | 'CALL.UPDATE' | 'ROUND.LIST' | 'PROPOSAL.LIST' | 'SERVICE_ACCOUNT.MANAGE' | 'PROJECT.COURSE_ACCOUNT_MANAGE' | 'SERVICE_PROVIDER.OPENSTACK_IMAGE_MANAGEMENT' | 'OPENSTACK_INSTANCE.CONSOLE_ACCESS' | 'OPENSTACK_INSTANCE.MANAGE_POWER' | 'OPENSTACK_INSTANCE.MANAGE' | 'STAFF.ACCESS' | 'SUPPORT.ACCESS';
+        [key: string]: 'SERVICE_PROVIDER.REGISTER' | 'OFFERING.CREATE' | 'OFFERING.DELETE' | 'OFFERING.UPDATE_THUMBNAIL' | 'OFFERING.UPDATE' | 'OFFERING.UPDATE_ATTRIBUTES' | 'OFFERING.UPDATE_LOCATION' | 'OFFERING.UPDATE_DESCRIPTION' | 'OFFERING.UPDATE_OPTIONS' | 'OFFERING.UPDATE_INTEGRATION' | 'OFFERING.ADD_ENDPOINT' | 'OFFERING.DELETE_ENDPOINT' | 'OFFERING.UPDATE_COMPONENTS' | 'OFFERING.PAUSE' | 'OFFERING.UNPAUSE' | 'OFFERING.ARCHIVE' | 'OFFERING.DRY_RUN_SCRIPT' | 'OFFERING.MANAGE_CAMPAIGN' | 'OFFERING.MANAGE_USER_GROUP' | 'OFFERING.CREATE_PLAN' | 'OFFERING.UPDATE_PLAN' | 'OFFERING.ARCHIVE_PLAN' | 'OFFERING.CREATE_SCREENSHOT' | 'OFFERING.UPDATE_SCREENSHOT' | 'OFFERING.DELETE_SCREENSHOT' | 'OFFERING.CREATE_USER' | 'OFFERING.UPDATE_USER' | 'OFFERING.DELETE_USER' | 'OFFERING.MANAGE_USER_ROLE' | 'RESOURCE.CREATE_ROBOT_ACCOUNT' | 'RESOURCE.UPDATE_ROBOT_ACCOUNT' | 'RESOURCE.DELETE_ROBOT_ACCOUNT' | 'ORDER.LIST' | 'ORDER.CREATE' | 'ORDER.APPROVE_PRIVATE' | 'ORDER.APPROVE' | 'ORDER.REJECT' | 'ORDER.DESTROY' | 'ORDER.CANCEL' | 'RESOURCE.LIST' | 'RESOURCE.UPDATE' | 'RESOURCE.TERMINATE' | 'RESOURCE.LIST_IMPORTABLE' | 'RESOURCE.SET_END_DATE' | 'RESOURCE.SET_USAGE' | 'RESOURCE.SET_PLAN' | 'RESOURCE.SET_LIMITS' | 'RESOURCE.SET_BACKEND_ID' | 'RESOURCE.SUBMIT_REPORT' | 'RESOURCE.SET_BACKEND_METADATA' | 'RESOURCE.SET_STATE' | 'RESOURCE.UPDATE_OPTIONS' | 'RESOURCE.ACCEPT_BOOKING_REQUEST' | 'RESOURCE.REJECT_BOOKING_REQUEST' | 'RESOURCE.MANAGE_USERS' | 'RESOURCE.CONSUMPTION_LIMITATION' | 'OFFERING.MANAGE_BACKEND_RESOURCES' | 'SERVICE_PROVIDER.GET_API_SECRET_CODE' | 'SERVICE_PROVIDER.GENERATE_API_SECRET_CODE' | 'SERVICE_PROVIDER.LIST_CUSTOMERS' | 'SERVICE_PROVIDER.LIST_CUSTOMER_PROJECTS' | 'SERVICE_PROVIDER.LIST_PROJECTS' | 'SERVICE_PROVIDER.LIST_PROJECT_PERMISSIONS' | 'SERVICE_PROVIDER.LIST_KEYS' | 'SERVICE_PROVIDER.LIST_USERS' | 'SERVICE_PROVIDER.LIST_USER_CUSTOMERS' | 'SERVICE_PROVIDER.LIST_SERVICE_ACCOUNTS' | 'SERVICE_PROVIDER.LIST_COURSE_ACCOUNTS' | 'SERVICE_PROVIDER.SET_OFFERINGS_USERNAME' | 'SERVICE_PROVIDER.GET_STATISTICS' | 'SERVICE_PROVIDER.GET_REVENUE' | 'SERVICE_PROVIDER.GET_ROBOT_ACCOUNT_CUSTOMERS' | 'SERVICE_PROVIDER.GET_ROBOT_ACCOUNT_PROJECTS' | 'PROJECT.CREATE_PERMISSION' | 'CUSTOMER.CREATE_PERMISSION' | 'OFFERING.CREATE_PERMISSION' | 'CALL.CREATE_PERMISSION' | 'PROPOSAL.MANAGE' | 'PROPOSAL.MANAGE_REVIEW' | 'PROJECT.UPDATE_PERMISSION' | 'CUSTOMER.UPDATE_PERMISSION' | 'OFFERING.UPDATE_PERMISSION' | 'CALL.UPDATE_PERMISSION' | 'PROPOSAL.UPDATE_PERMISSION' | 'PROJECT.DELETE_PERMISSION' | 'CUSTOMER.DELETE_PERMISSION' | 'OFFERING.DELETE_PERMISSION' | 'CALL.DELETE_PERMISSION' | 'PROPOSAL.DELETE_PERMISSION' | 'LEXIS_LINK.CREATE' | 'LEXIS_LINK.DELETE' | 'PROJECT.LIST' | 'PROJECT.CREATE' | 'PROJECT.DELETE' | 'PROJECT.UPDATE' | 'PROJECT.UPDATE_METADATA' | 'PROJECT.REVIEW_MEMBERSHIP' | 'CUSTOMER.UPDATE' | 'CUSTOMER.CONTACT_UPDATE' | 'CUSTOMER.LIST_USERS' | 'OFFERING.ACCEPT_CALL_REQUEST' | 'CALL.APPROVE_AND_REJECT_PROPOSALS' | 'CALL.CLOSE_ROUNDS' | 'ACCESS_SUBNET.CREATE' | 'ACCESS_SUBNET.UPDATE' | 'ACCESS_SUBNET.DELETE' | 'OFFERINGUSER.UPDATE_RESTRICTION' | 'INVITATION.LIST' | 'CUSTOMER.LIST_PERMISSION_REVIEWS' | 'CALL.LIST' | 'CALL.CREATE' | 'CALL.UPDATE' | 'ROUND.LIST' | 'PROPOSAL.LIST' | 'SERVICE_ACCOUNT.MANAGE' | 'PROJECT.COURSE_ACCOUNT_MANAGE' | 'SERVICE_PROVIDER.OPENSTACK_IMAGE_MANAGEMENT' | 'OPENSTACK_INSTANCE.CONSOLE_ACCESS' | 'OPENSTACK_INSTANCE.MANAGE_POWER' | 'OPENSTACK_INSTANCE.MANAGE' | 'STAFF.ACCESS' | 'SUPPORT.ACCESS';
     };
     /**
      * Map of resource types to create permission enums
      */
     permission_map: {
-        [key: string]: 'SERVICE_PROVIDER.REGISTER' | 'OFFERING.CREATE' | 'OFFERING.DELETE' | 'OFFERING.UPDATE_THUMBNAIL' | 'OFFERING.UPDATE' | 'OFFERING.UPDATE_ATTRIBUTES' | 'OFFERING.UPDATE_LOCATION' | 'OFFERING.UPDATE_DESCRIPTION' | 'OFFERING.UPDATE_OPTIONS' | 'OFFERING.UPDATE_INTEGRATION' | 'OFFERING.ADD_ENDPOINT' | 'OFFERING.DELETE_ENDPOINT' | 'OFFERING.UPDATE_COMPONENTS' | 'OFFERING.PAUSE' | 'OFFERING.UNPAUSE' | 'OFFERING.ARCHIVE' | 'OFFERING.DRY_RUN_SCRIPT' | 'OFFERING.MANAGE_CAMPAIGN' | 'OFFERING.MANAGE_USER_GROUP' | 'OFFERING.CREATE_PLAN' | 'OFFERING.UPDATE_PLAN' | 'OFFERING.ARCHIVE_PLAN' | 'OFFERING.CREATE_SCREENSHOT' | 'OFFERING.UPDATE_SCREENSHOT' | 'OFFERING.DELETE_SCREENSHOT' | 'OFFERING.CREATE_USER' | 'OFFERING.UPDATE_USER' | 'OFFERING.DELETE_USER' | 'OFFERING.MANAGE_USER_ROLE' | 'RESOURCE.CREATE_ROBOT_ACCOUNT' | 'RESOURCE.UPDATE_ROBOT_ACCOUNT' | 'RESOURCE.DELETE_ROBOT_ACCOUNT' | 'ORDER.LIST' | 'ORDER.APPROVE_PRIVATE' | 'ORDER.APPROVE' | 'ORDER.REJECT' | 'ORDER.DESTROY' | 'ORDER.CANCEL' | 'RESOURCE.LIST' | 'RESOURCE.UPDATE' | 'RESOURCE.TERMINATE' | 'RESOURCE.LIST_IMPORTABLE' | 'RESOURCE.SET_END_DATE' | 'RESOURCE.SET_USAGE' | 'RESOURCE.SET_PLAN' | 'RESOURCE.SET_LIMITS' | 'RESOURCE.SET_BACKEND_ID' | 'RESOURCE.SUBMIT_REPORT' | 'RESOURCE.SET_BACKEND_METADATA' | 'RESOURCE.SET_STATE' | 'RESOURCE.UPDATE_OPTIONS' | 'RESOURCE.ACCEPT_BOOKING_REQUEST' | 'RESOURCE.REJECT_BOOKING_REQUEST' | 'RESOURCE.MANAGE_USERS' | 'RESOURCE.CONSUMPTION_LIMITATION' | 'OFFERING.MANAGE_BACKEND_RESOURCES' | 'SERVICE_PROVIDER.GET_API_SECRET_CODE' | 'SERVICE_PROVIDER.GENERATE_API_SECRET_CODE' | 'SERVICE_PROVIDER.LIST_CUSTOMERS' | 'SERVICE_PROVIDER.LIST_CUSTOMER_PROJECTS' | 'SERVICE_PROVIDER.LIST_PROJECTS' | 'SERVICE_PROVIDER.LIST_PROJECT_PERMISSIONS' | 'SERVICE_PROVIDER.LIST_KEYS' | 'SERVICE_PROVIDER.LIST_USERS' | 'SERVICE_PROVIDER.LIST_USER_CUSTOMERS' | 'SERVICE_PROVIDER.LIST_SERVICE_ACCOUNTS' | 'SERVICE_PROVIDER.LIST_COURSE_ACCOUNTS' | 'SERVICE_PROVIDER.SET_OFFERINGS_USERNAME' | 'SERVICE_PROVIDER.GET_STATISTICS' | 'SERVICE_PROVIDER.GET_REVENUE' | 'SERVICE_PROVIDER.GET_ROBOT_ACCOUNT_CUSTOMERS' | 'SERVICE_PROVIDER.GET_ROBOT_ACCOUNT_PROJECTS' | 'PROJECT.CREATE_PERMISSION' | 'CUSTOMER.CREATE_PERMISSION' | 'OFFERING.CREATE_PERMISSION' | 'CALL.CREATE_PERMISSION' | 'PROPOSAL.MANAGE' | 'PROPOSAL.MANAGE_REVIEW' | 'PROJECT.UPDATE_PERMISSION' | 'CUSTOMER.UPDATE_PERMISSION' | 'OFFERING.UPDATE_PERMISSION' | 'CALL.UPDATE_PERMISSION' | 'PROPOSAL.UPDATE_PERMISSION' | 'PROJECT.DELETE_PERMISSION' | 'CUSTOMER.DELETE_PERMISSION' | 'OFFERING.DELETE_PERMISSION' | 'CALL.DELETE_PERMISSION' | 'PROPOSAL.DELETE_PERMISSION' | 'LEXIS_LINK.CREATE' | 'LEXIS_LINK.DELETE' | 'PROJECT.LIST' | 'PROJECT.CREATE' | 'PROJECT.DELETE' | 'PROJECT.UPDATE' | 'PROJECT.UPDATE_METADATA' | 'PROJECT.REVIEW_MEMBERSHIP' | 'CUSTOMER.UPDATE' | 'CUSTOMER.CONTACT_UPDATE' | 'CUSTOMER.LIST_USERS' | 'OFFERING.ACCEPT_CALL_REQUEST' | 'CALL.APPROVE_AND_REJECT_PROPOSALS' | 'CALL.CLOSE_ROUNDS' | 'ACCESS_SUBNET.CREATE' | 'ACCESS_SUBNET.UPDATE' | 'ACCESS_SUBNET.DELETE' | 'OFFERINGUSER.UPDATE_RESTRICTION' | 'INVITATION.LIST' | 'CUSTOMER.LIST_PERMISSION_REVIEWS' | 'CALL.LIST' | 'CALL.CREATE' | 'CALL.UPDATE' | 'ROUND.LIST' | 'PROPOSAL.LIST' | 'SERVICE_ACCOUNT.MANAGE' | 'PROJECT.COURSE_ACCOUNT_MANAGE' | 'SERVICE_PROVIDER.OPENSTACK_IMAGE_MANAGEMENT' | 'OPENSTACK_INSTANCE.CONSOLE_ACCESS' | 'OPENSTACK_INSTANCE.MANAGE_POWER' | 'OPENSTACK_INSTANCE.MANAGE' | 'STAFF.ACCESS' | 'SUPPORT.ACCESS';
+        [key: string]: 'SERVICE_PROVIDER.REGISTER' | 'OFFERING.CREATE' | 'OFFERING.DELETE' | 'OFFERING.UPDATE_THUMBNAIL' | 'OFFERING.UPDATE' | 'OFFERING.UPDATE_ATTRIBUTES' | 'OFFERING.UPDATE_LOCATION' | 'OFFERING.UPDATE_DESCRIPTION' | 'OFFERING.UPDATE_OPTIONS' | 'OFFERING.UPDATE_INTEGRATION' | 'OFFERING.ADD_ENDPOINT' | 'OFFERING.DELETE_ENDPOINT' | 'OFFERING.UPDATE_COMPONENTS' | 'OFFERING.PAUSE' | 'OFFERING.UNPAUSE' | 'OFFERING.ARCHIVE' | 'OFFERING.DRY_RUN_SCRIPT' | 'OFFERING.MANAGE_CAMPAIGN' | 'OFFERING.MANAGE_USER_GROUP' | 'OFFERING.CREATE_PLAN' | 'OFFERING.UPDATE_PLAN' | 'OFFERING.ARCHIVE_PLAN' | 'OFFERING.CREATE_SCREENSHOT' | 'OFFERING.UPDATE_SCREENSHOT' | 'OFFERING.DELETE_SCREENSHOT' | 'OFFERING.CREATE_USER' | 'OFFERING.UPDATE_USER' | 'OFFERING.DELETE_USER' | 'OFFERING.MANAGE_USER_ROLE' | 'RESOURCE.CREATE_ROBOT_ACCOUNT' | 'RESOURCE.UPDATE_ROBOT_ACCOUNT' | 'RESOURCE.DELETE_ROBOT_ACCOUNT' | 'ORDER.LIST' | 'ORDER.CREATE' | 'ORDER.APPROVE_PRIVATE' | 'ORDER.APPROVE' | 'ORDER.REJECT' | 'ORDER.DESTROY' | 'ORDER.CANCEL' | 'RESOURCE.LIST' | 'RESOURCE.UPDATE' | 'RESOURCE.TERMINATE' | 'RESOURCE.LIST_IMPORTABLE' | 'RESOURCE.SET_END_DATE' | 'RESOURCE.SET_USAGE' | 'RESOURCE.SET_PLAN' | 'RESOURCE.SET_LIMITS' | 'RESOURCE.SET_BACKEND_ID' | 'RESOURCE.SUBMIT_REPORT' | 'RESOURCE.SET_BACKEND_METADATA' | 'RESOURCE.SET_STATE' | 'RESOURCE.UPDATE_OPTIONS' | 'RESOURCE.ACCEPT_BOOKING_REQUEST' | 'RESOURCE.REJECT_BOOKING_REQUEST' | 'RESOURCE.MANAGE_USERS' | 'RESOURCE.CONSUMPTION_LIMITATION' | 'OFFERING.MANAGE_BACKEND_RESOURCES' | 'SERVICE_PROVIDER.GET_API_SECRET_CODE' | 'SERVICE_PROVIDER.GENERATE_API_SECRET_CODE' | 'SERVICE_PROVIDER.LIST_CUSTOMERS' | 'SERVICE_PROVIDER.LIST_CUSTOMER_PROJECTS' | 'SERVICE_PROVIDER.LIST_PROJECTS' | 'SERVICE_PROVIDER.LIST_PROJECT_PERMISSIONS' | 'SERVICE_PROVIDER.LIST_KEYS' | 'SERVICE_PROVIDER.LIST_USERS' | 'SERVICE_PROVIDER.LIST_USER_CUSTOMERS' | 'SERVICE_PROVIDER.LIST_SERVICE_ACCOUNTS' | 'SERVICE_PROVIDER.LIST_COURSE_ACCOUNTS' | 'SERVICE_PROVIDER.SET_OFFERINGS_USERNAME' | 'SERVICE_PROVIDER.GET_STATISTICS' | 'SERVICE_PROVIDER.GET_REVENUE' | 'SERVICE_PROVIDER.GET_ROBOT_ACCOUNT_CUSTOMERS' | 'SERVICE_PROVIDER.GET_ROBOT_ACCOUNT_PROJECTS' | 'PROJECT.CREATE_PERMISSION' | 'CUSTOMER.CREATE_PERMISSION' | 'OFFERING.CREATE_PERMISSION' | 'CALL.CREATE_PERMISSION' | 'PROPOSAL.MANAGE' | 'PROPOSAL.MANAGE_REVIEW' | 'PROJECT.UPDATE_PERMISSION' | 'CUSTOMER.UPDATE_PERMISSION' | 'OFFERING.UPDATE_PERMISSION' | 'CALL.UPDATE_PERMISSION' | 'PROPOSAL.UPDATE_PERMISSION' | 'PROJECT.DELETE_PERMISSION' | 'CUSTOMER.DELETE_PERMISSION' | 'OFFERING.DELETE_PERMISSION' | 'CALL.DELETE_PERMISSION' | 'PROPOSAL.DELETE_PERMISSION' | 'LEXIS_LINK.CREATE' | 'LEXIS_LINK.DELETE' | 'PROJECT.LIST' | 'PROJECT.CREATE' | 'PROJECT.DELETE' | 'PROJECT.UPDATE' | 'PROJECT.UPDATE_METADATA' | 'PROJECT.REVIEW_MEMBERSHIP' | 'CUSTOMER.UPDATE' | 'CUSTOMER.CONTACT_UPDATE' | 'CUSTOMER.LIST_USERS' | 'OFFERING.ACCEPT_CALL_REQUEST' | 'CALL.APPROVE_AND_REJECT_PROPOSALS' | 'CALL.CLOSE_ROUNDS' | 'ACCESS_SUBNET.CREATE' | 'ACCESS_SUBNET.UPDATE' | 'ACCESS_SUBNET.DELETE' | 'OFFERINGUSER.UPDATE_RESTRICTION' | 'INVITATION.LIST' | 'CUSTOMER.LIST_PERMISSION_REVIEWS' | 'CALL.LIST' | 'CALL.CREATE' | 'CALL.UPDATE' | 'ROUND.LIST' | 'PROPOSAL.LIST' | 'SERVICE_ACCOUNT.MANAGE' | 'PROJECT.COURSE_ACCOUNT_MANAGE' | 'SERVICE_PROVIDER.OPENSTACK_IMAGE_MANAGEMENT' | 'OPENSTACK_INSTANCE.CONSOLE_ACCESS' | 'OPENSTACK_INSTANCE.MANAGE_POWER' | 'OPENSTACK_INSTANCE.MANAGE' | 'STAFF.ACCESS' | 'SUPPORT.ACCESS';
     };
     /**
      * Grouped permission descriptions for UI
@@ -29391,7 +29393,7 @@ export type OfferingUserFieldEnum = 'consent_data' | 'created' | 'customer_name'
 
 export type OfferingUserOEnum = '-created' | '-modified' | '-username' | 'created' | 'modified' | 'username';
 
-export type OrderDetailsFieldEnum = 'accepting_terms_of_service' | 'activation_price' | 'attachment' | 'attributes' | 'backend_id' | 'callback_url' | 'can_terminate' | 'category_icon' | 'category_title' | 'category_uuid' | 'completed_at' | 'consumer_message' | 'consumer_message_attachment' | 'consumer_rejection_comment' | 'consumer_reviewed_at' | 'consumer_reviewed_by' | 'consumer_reviewed_by_full_name' | 'consumer_reviewed_by_username' | 'cost' | 'created' | 'created_by_civil_number' | 'created_by_email' | 'created_by_full_name' | 'created_by_organization' | 'created_by_organization_registry_code' | 'created_by_username' | 'customer_name' | 'customer_slug' | 'customer_uuid' | 'error_message' | 'error_traceback' | 'fixed_price' | 'issue' | 'limits' | 'marketplace_resource_uuid' | 'modified' | 'new_cost_estimate' | 'new_plan_name' | 'new_plan_uuid' | 'offering' | 'offering_billable' | 'offering_description' | 'offering_image' | 'offering_name' | 'offering_plugin_options' | 'offering_shared' | 'offering_thumbnail' | 'offering_type' | 'offering_uuid' | 'old_cost_estimate' | 'old_plan_name' | 'old_plan_uuid' | 'order_subtype' | 'output' | 'plan' | 'plan_description' | 'plan_name' | 'plan_unit' | 'plan_uuid' | 'project_description' | 'project_name' | 'project_slug' | 'project_uuid' | 'provider_description' | 'provider_message' | 'provider_message_attachment' | 'provider_message_url' | 'provider_name' | 'provider_rejection_comment' | 'provider_reviewed_at' | 'provider_reviewed_by' | 'provider_reviewed_by_full_name' | 'provider_reviewed_by_username' | 'provider_slug' | 'provider_uuid' | 'request_comment' | 'resource_name' | 'resource_type' | 'resource_uuid' | 'slug' | 'start_date' | 'state' | 'termination_comment' | 'type' | 'url' | 'uuid';
+export type OrderDetailsFieldEnum = 'accepting_terms_of_service' | 'activation_price' | 'attachment' | 'attributes' | 'backend_id' | 'callback_url' | 'can_terminate' | 'category_icon' | 'category_title' | 'category_uuid' | 'completed_at' | 'consumer_message' | 'consumer_message_attachment' | 'consumer_rejection_comment' | 'consumer_reviewed_at' | 'consumer_reviewed_by' | 'consumer_reviewed_by_full_name' | 'consumer_reviewed_by_username' | 'cost' | 'created' | 'created_by_civil_number' | 'created_by_email' | 'created_by_full_name' | 'created_by_organization' | 'created_by_organization_registry_code' | 'created_by_username' | 'customer_name' | 'customer_slug' | 'customer_uuid' | 'error_message' | 'error_traceback' | 'error_updated_at' | 'fixed_price' | 'issue' | 'limits' | 'marketplace_resource_uuid' | 'modified' | 'new_cost_estimate' | 'new_plan_name' | 'new_plan_uuid' | 'offering' | 'offering_billable' | 'offering_description' | 'offering_image' | 'offering_name' | 'offering_plugin_options' | 'offering_shared' | 'offering_thumbnail' | 'offering_type' | 'offering_uuid' | 'old_cost_estimate' | 'old_plan_name' | 'old_plan_uuid' | 'order_subtype' | 'output' | 'output_updated_at' | 'plan' | 'plan_description' | 'plan_name' | 'plan_unit' | 'plan_uuid' | 'project_description' | 'project_name' | 'project_slug' | 'project_uuid' | 'provider_description' | 'provider_message' | 'provider_message_attachment' | 'provider_message_url' | 'provider_name' | 'provider_rejection_comment' | 'provider_reviewed_at' | 'provider_reviewed_by' | 'provider_reviewed_by_full_name' | 'provider_reviewed_by_username' | 'provider_slug' | 'provider_uuid' | 'request_comment' | 'resource_name' | 'resource_type' | 'resource_uuid' | 'slug' | 'start_date' | 'state' | 'termination_comment' | 'type' | 'url' | 'uuid';
 
 export type OrderDetailsOEnum = '-consumer_reviewed_at' | '-cost' | '-created' | '-state' | 'consumer_reviewed_at' | 'cost' | 'created' | 'state';
 
@@ -68472,6 +68474,22 @@ export type OpenstackHealthMonitorsUpdateResponses = {
 
 export type OpenstackHealthMonitorsUpdateResponse = OpenstackHealthMonitorsUpdateResponses[keyof OpenstackHealthMonitorsUpdateResponses];
 
+export type OpenstackHealthMonitorsPullData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openstack-health-monitors/{uuid}/pull/';
+};
+
+export type OpenstackHealthMonitorsPullResponses = {
+    /**
+     * No response body
+     */
+    202: unknown;
+};
+
 export type OpenstackImagesListData = {
     body?: never;
     path?: never;
@@ -69490,6 +69508,22 @@ export type OpenstackListenersUpdateResponses = {
 
 export type OpenstackListenersUpdateResponse = OpenstackListenersUpdateResponses[keyof OpenstackListenersUpdateResponses];
 
+export type OpenstackListenersPullData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openstack-listeners/{uuid}/pull/';
+};
+
+export type OpenstackListenersPullResponses = {
+    /**
+     * No response body
+     */
+    202: unknown;
+};
+
 export type OpenstackLoadbalancersListData = {
     body?: never;
     path?: never;
@@ -69687,6 +69721,22 @@ export type OpenstackLoadbalancersDetachFloatingIpResponses = {
 };
 
 export type OpenstackLoadbalancersDetachFloatingIpResponse = OpenstackLoadbalancersDetachFloatingIpResponses[keyof OpenstackLoadbalancersDetachFloatingIpResponses];
+
+export type OpenstackLoadbalancersPullData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openstack-loadbalancers/{uuid}/pull/';
+};
+
+export type OpenstackLoadbalancersPullResponses = {
+    /**
+     * No response body
+     */
+    202: unknown;
+};
 
 export type OpenstackLoadbalancersUnlinkData = {
     body?: never;
@@ -70866,6 +70916,22 @@ export type OpenstackPoolMembersUpdateResponses = {
 
 export type OpenstackPoolMembersUpdateResponse = OpenstackPoolMembersUpdateResponses[keyof OpenstackPoolMembersUpdateResponses];
 
+export type OpenstackPoolMembersPullData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openstack-pool-members/{uuid}/pull/';
+};
+
+export type OpenstackPoolMembersPullResponses = {
+    /**
+     * No response body
+     */
+    202: unknown;
+};
+
 export type OpenstackPoolsListData = {
     body?: never;
     path?: never;
@@ -71041,6 +71107,22 @@ export type OpenstackPoolsUpdateResponses = {
 };
 
 export type OpenstackPoolsUpdateResponse = OpenstackPoolsUpdateResponses[keyof OpenstackPoolsUpdateResponses];
+
+export type OpenstackPoolsPullData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openstack-pools/{uuid}/pull/';
+};
+
+export type OpenstackPoolsPullResponses = {
+    /**
+     * No response body
+     */
+    202: unknown;
+};
 
 export type OpenstackPortsListData = {
     body?: never;
