@@ -2447,7 +2447,7 @@ export type BaseProviderPlan = {
         [key: string]: string;
     };
     readonly quotas?: {
-        [key: string]: string;
+        [key: string]: number;
     };
     readonly resources_count?: number;
     readonly plan_type?: string;
@@ -2500,7 +2500,7 @@ export type BasePublicPlan = {
         [key: string]: string;
     };
     readonly quotas?: {
-        [key: string]: string;
+        [key: string]: number;
     };
     readonly resources_count?: number;
     readonly plan_type?: string;
@@ -5835,7 +5835,7 @@ export type CustomerEstimatedCostPolicy = {
     limit_cost: number;
     period?: PolicyPeriodEnum;
     readonly period_name: string;
-    readonly customer_credit: number;
+    readonly customer_credit: string | null;
     billing_price_estimate: NestedPriceEstimate;
 };
 
@@ -19032,8 +19032,8 @@ export type ProjectEstimatedCostPolicy = {
     limit_cost: number;
     period?: PolicyPeriodEnum;
     readonly period_name: string;
-    readonly project_credit: number | null;
-    readonly customer_credit: number | null;
+    readonly project_credit: string | null;
+    readonly customer_credit: string | null;
     billing_price_estimate: NestedPriceEstimate;
 };
 
@@ -20033,7 +20033,7 @@ export type ProviderPlanDetails = {
         [key: string]: string;
     };
     readonly quotas: {
-        [key: string]: string;
+        [key: string]: number;
     };
     readonly resources_count: number;
     readonly plan_type: string;
