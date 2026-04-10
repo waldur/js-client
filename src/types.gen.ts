@@ -5450,6 +5450,7 @@ export type CreatePool = {
      */
     load_balancer: string;
     protocol: LoadBalancerProtocolEnum;
+    lb_algorithm?: LbAlgorithmEnum;
 };
 
 export type CreatePoolMember = {
@@ -5497,6 +5498,7 @@ export type CreatePoolRequest = {
      */
     load_balancer: string;
     protocol: LoadBalancerProtocolEnum;
+    lb_algorithm?: LbAlgorithmEnum;
 };
 
 export type CreateRouter = {
@@ -9154,6 +9156,8 @@ export type KindEnum = 'default' | 'course' | 'public';
 
 export type LoginpagelayoutEnum = 'split-screen' | 'centered-card' | 'minimal' | 'full-hero' | 'gradient' | 'stacked' | 'right-split' | 'glassmorphism' | 'neumorphism' | 'animated-gradient' | 'video-background' | 'bottom-sheet' | 'tabbed' | 'wizard' | 'stats' | 'news' | 'carousel' | 'logo-watermark' | 'brand-pattern' | 'duotone' | 'diagonal' | 'time-based' | 'seasonal' | 'weather';
 
+export type LbAlgorithmEnum = 'ROUND_ROBIN' | 'LEAST_CONNECTIONS' | 'SOURCE_IP' | 'SOURCE_IP_PORT';
+
 export type LexisLink = {
     readonly url: string;
     readonly uuid: string;
@@ -9241,6 +9245,10 @@ export type LoadBalancerAttachFloatingIpRequest = {
 };
 
 export type LoadBalancerProtocolEnum = 'TCP' | 'UDP';
+
+export type LoadBalancerSetSecurityGroupsRequest = {
+    security_groups: Array<string>;
+};
 
 export type LockStats = {
     /**
@@ -14323,6 +14331,12 @@ export type OpenStackLoadBalancer = {
     readonly provider?: string;
     readonly provisioning_status?: string;
     readonly operating_status?: string;
+    /**
+     * Security groups assigned to the VIP port.
+     */
+    readonly vip_security_groups?: Array<{
+        [key: string]: unknown;
+    }>;
     readonly marketplace_offering_uuid?: string | null;
     readonly marketplace_offering_name?: string | null;
     readonly marketplace_offering_type?: string | null;
@@ -29481,7 +29495,7 @@ export type OpenStackInstanceOEnum = 'start_time' | '-start_time';
 
 export type OpenStackListenerFieldEnum = 'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'default_pool' | 'description' | 'error_message' | 'error_traceback' | 'is_limit_based' | 'is_usage_based' | 'load_balancer' | 'load_balancer_name' | 'load_balancer_uuid' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'operating_status' | 'project' | 'project_name' | 'project_uuid' | 'protocol' | 'protocol_port' | 'provisioning_status' | 'resource_type' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'url' | 'uuid';
 
-export type OpenStackLoadBalancerFieldEnum = 'access_url' | 'attached_floating_ip' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'operating_status' | 'project' | 'project_name' | 'project_uuid' | 'provider' | 'provisioning_status' | 'resource_type' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'tenant' | 'tenant_name' | 'tenant_uuid' | 'url' | 'uuid' | 'vip_address' | 'vip_port' | 'vip_subnet';
+export type OpenStackLoadBalancerFieldEnum = 'access_url' | 'attached_floating_ip' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'operating_status' | 'project' | 'project_name' | 'project_uuid' | 'provider' | 'provisioning_status' | 'resource_type' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'tenant' | 'tenant_name' | 'tenant_uuid' | 'url' | 'uuid' | 'vip_address' | 'vip_port' | 'vip_security_groups' | 'vip_subnet';
 
 export type OpenStackNetworkFieldEnum = 'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'is_external' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'mtu' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'rbac_policies' | 'resource_type' | 'segmentation_id' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'subnets' | 'tenant' | 'tenant_name' | 'tenant_uuid' | 'type' | 'url' | 'uuid';
 
@@ -69737,6 +69751,21 @@ export type OpenstackLoadbalancersPullResponses = {
      */
     202: unknown;
 };
+
+export type OpenstackLoadbalancersSetSecurityGroupsData = {
+    body: LoadBalancerSetSecurityGroupsRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openstack-loadbalancers/{uuid}/set_security_groups/';
+};
+
+export type OpenstackLoadbalancersSetSecurityGroupsResponses = {
+    202: LoadBalancerAsyncOperationResponse;
+};
+
+export type OpenstackLoadbalancersSetSecurityGroupsResponse = OpenstackLoadbalancersSetSecurityGroupsResponses[keyof OpenstackLoadbalancersSetSecurityGroupsResponses];
 
 export type OpenstackLoadbalancersUnlinkData = {
     body?: never;
