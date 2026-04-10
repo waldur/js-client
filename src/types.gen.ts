@@ -4297,6 +4297,26 @@ export type ComponentUsageItemRequest = {
     recurring?: boolean;
 };
 
+export type ComponentUsageMonthly = {
+    readonly offering_uuid?: string;
+    readonly offering_name?: string;
+    readonly offering_type?: string;
+    readonly service_provider_uuid?: string;
+    readonly service_provider_name?: string;
+    readonly category_uuid?: string;
+    readonly category_title?: string;
+    readonly component_type?: string;
+    readonly component_name?: string;
+    readonly measured_unit?: string;
+    readonly billing_type?: string;
+    readonly limit_amount?: number;
+    readonly limit_period?: string;
+    billing_period?: string;
+    total_consumed?: string;
+    total_allocated?: string;
+    usage_percent?: string | null;
+};
+
 export type ComponentUsagesPerMonthStats = {
     /**
      * Total usage amount
@@ -6832,7 +6852,7 @@ export type DryRunStateEnum = 1 | 2 | 3 | 4;
 
 export type DryRunTypeEnum = 'Create' | 'Update' | 'Terminate' | 'Restore' | 'Pull';
 
-export type EnabledreportingscreensEnum = 'resource-usage' | 'user-usage' | 'quotas' | 'usage-monitoring' | 'usage-trends' | 'organization-summary' | 'project-detail' | 'resources-geography' | 'project-classification' | 'usage-by-customer' | 'usage-by-org-type' | 'usage-by-creator' | 'call-performance' | 'review-progress' | 'resource-demand' | 'capacity' | 'provider-overview' | 'provider-revenue' | 'provider-orders' | 'provider-resources' | 'provider-customers' | 'provider-offerings' | 'openstack-instances' | 'user-analytics' | 'user-demographics' | 'user-organizations' | 'user-affiliations' | 'user-roles' | 'growth' | 'revenue' | 'pricelist' | 'orders' | 'offering-costs' | 'maintenance-overview' | 'provisioning-stats';
+export type EnabledreportingscreensEnum = 'resource-usage' | 'user-usage' | 'quotas' | 'usage-monitoring' | 'usage-trends' | 'organization-summary' | 'project-detail' | 'resources-geography' | 'project-classification' | 'usage-by-customer' | 'usage-by-org-type' | 'usage-by-creator' | 'call-performance' | 'review-progress' | 'resource-demand' | 'capacity' | 'provider-overview' | 'provider-revenue' | 'provider-orders' | 'provider-resources' | 'provider-customers' | 'provider-offerings' | 'openstack-instances' | 'offering-usage' | 'user-analytics' | 'user-demographics' | 'user-organizations' | 'user-affiliations' | 'user-roles' | 'growth' | 'revenue' | 'pricelist' | 'orders' | 'offering-costs' | 'maintenance-overview' | 'provisioning-stats';
 
 export type EligibilityCheck = {
     is_eligible: boolean;
@@ -11144,6 +11164,7 @@ export type NestedParentSoftware = {
     readonly uuid: string;
     name: string;
     readonly url: string;
+    readonly versions: Array<string>;
 };
 
 export type NestedParentSoftwareRequest = {
@@ -29379,6 +29400,8 @@ export type CategoryComponentUsageFieldEnum = 'category_title' | 'category_uuid'
 
 export type CategoryGroupFieldEnum = 'description' | 'icon' | 'title' | 'url' | 'uuid';
 
+export type ComponentUsageMonthlyFieldEnum = 'billing_period' | 'billing_type' | 'category_title' | 'category_uuid' | 'component_name' | 'component_type' | 'limit_amount' | 'limit_period' | 'measured_unit' | 'offering_name' | 'offering_type' | 'offering_uuid' | 'service_provider_name' | 'service_provider_uuid' | 'total_allocated' | 'total_consumed' | 'usage_percent';
+
 export type ComponentUsageFieldEnum = 'billing_period' | 'created' | 'customer_name' | 'customer_uuid' | 'date' | 'description' | 'measured_unit' | 'modified_by' | 'name' | 'offering_name' | 'offering_uuid' | 'project_name' | 'project_uuid' | 'recurring' | 'resource_name' | 'resource_uuid' | 'type' | 'usage' | 'uuid';
 
 export type ComponentUsageOEnum = '-billing_period' | '-usage' | 'billing_period' | 'usage';
@@ -45646,6 +45669,78 @@ export type MarketplaceCategoryHelpArticlesUpdateResponses = {
 };
 
 export type MarketplaceCategoryHelpArticlesUpdateResponse = MarketplaceCategoryHelpArticlesUpdateResponses[keyof MarketplaceCategoryHelpArticlesUpdateResponses];
+
+export type MarketplaceComponentUsageMonthlyListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        billing_period?: string;
+        billing_type?: string;
+        component_type?: string;
+        customer_uuid?: string;
+        end?: string;
+        field?: Array<ComponentUsageMonthlyFieldEnum>;
+        /**
+         * Which field to use when ordering the results.
+         */
+        o?: string;
+        offering_type?: string;
+        offering_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        project_uuid?: string;
+        start?: string;
+    };
+    url: '/api/marketplace-component-usage-monthly/';
+};
+
+export type MarketplaceComponentUsageMonthlyListResponses = {
+    200: Array<ComponentUsageMonthly>;
+};
+
+export type MarketplaceComponentUsageMonthlyListResponse = MarketplaceComponentUsageMonthlyListResponses[keyof MarketplaceComponentUsageMonthlyListResponses];
+
+export type MarketplaceComponentUsageMonthlyCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        billing_period?: string;
+        billing_type?: string;
+        component_type?: string;
+        customer_uuid?: string;
+        end?: string;
+        /**
+         * Which field to use when ordering the results.
+         */
+        o?: string;
+        offering_type?: string;
+        offering_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        project_uuid?: string;
+        start?: string;
+    };
+    url: '/api/marketplace-component-usage-monthly/';
+};
+
+export type MarketplaceComponentUsageMonthlyCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type MarketplaceComponentUsagesListData = {
     body?: never;
