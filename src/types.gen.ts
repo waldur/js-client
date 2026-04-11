@@ -3843,7 +3843,7 @@ export type ChatRequestRequest = {
 
 export type ChatResponse = {
     /**
-     * Component key (e.g. 'markdown', 'code', 'table', 'vm_order').
+     * Component key (e.g. 'markdown', 'code', 'vm_order', 'resource_list').
      */
     k?: string;
     /**
@@ -3858,18 +3858,6 @@ export type ChatResponse = {
      * Error message.
      */
     e?: string;
-    /**
-     * Table headers.
-     */
-    h?: Array<unknown>;
-    /**
-     * Table rows.
-     */
-    r?: Array<unknown>;
-    /**
-     * Total row count.
-     */
-    n?: number;
     /**
      * System metadata (thread_uuid, message UUIDs).
      */
@@ -3909,7 +3897,7 @@ export type ChatResponse = {
      */
     organization?: string;
     /**
-     * Project UUID.
+     * Project UUID. Present when k='vm_order' or k='resource_list'.
      */
     project_uuid?: string;
     /**
@@ -3940,6 +3928,18 @@ export type ChatResponse = {
      * Available offering options [{uuid, name}]. Present when status='offering_form'.
      */
     offerings?: Array<unknown>;
+    /**
+     * Customer/organization UUID filter hint. Present when k='resource_list'.
+     */
+    customer_uuid?: string;
+    /**
+     * Category UUID filter hint. Present when k='resource_list'.
+     */
+    category_uuid?: string;
+    /**
+     * State display name filters (e.g. ['OK', 'Erred']). Present when k='resource_list'.
+     */
+    state?: Array<unknown>;
 };
 
 export type ChatSession = {
