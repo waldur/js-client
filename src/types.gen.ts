@@ -2506,7 +2506,7 @@ export type BaseProviderPlan = {
     };
     readonly resources_count?: number;
     readonly plan_type?: string;
-    readonly minimal_price?: number;
+    readonly minimal_price?: string;
 };
 
 export type BaseProviderPlanRequest = {
@@ -2559,7 +2559,7 @@ export type BasePublicPlan = {
     };
     readonly resources_count?: number;
     readonly plan_type?: string;
-    readonly minimal_price?: number;
+    readonly minimal_price?: string;
 };
 
 export type BasePublicPlanRequest = {
@@ -20107,7 +20107,7 @@ export type ProviderPlanDetails = {
     };
     readonly resources_count: number;
     readonly plan_type: string;
-    readonly minimal_price: number;
+    readonly minimal_price: string;
 };
 
 export type ProviderPlanDetailsRequest = {
