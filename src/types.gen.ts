@@ -119,6 +119,61 @@ export type AdministrativeAccess = {
     users?: Array<AdminUser>;
 };
 
+export type AffiliatedOrganization = {
+    readonly uuid?: string;
+    readonly url?: string;
+    name?: string;
+    /**
+     * Unique short identifier, e.g. CERN, EMBL.
+     */
+    code?: string;
+    abbreviation?: string;
+    description?: string;
+    email?: string;
+    homepage?: string;
+    country?: string;
+    address?: string;
+    readonly created?: string;
+    readonly modified?: string;
+    /**
+     * Number of active projects affiliated with this organization
+     */
+    readonly projects_count?: number;
+};
+
+export type AffiliatedOrganizationReportRow = {
+    org_uuid: string | null;
+    org_name: string;
+    org_abbreviation: string;
+    projects_count: number;
+    resources_count: number;
+    estimated_cost: string;
+};
+
+export type AffiliatedOrganizationRequest = {
+    name: string;
+    /**
+     * Unique short identifier, e.g. CERN, EMBL.
+     */
+    code: string;
+    abbreviation?: string;
+    description?: string;
+    email?: string;
+    homepage?: string;
+    country?: string;
+    address?: string;
+};
+
+export type AffiliatedOrganizationStats = {
+    active_projects_count: number;
+    resources_count: number;
+    estimated_monthly_cost: string;
+};
+
+export type AffiliatedOrganizationsUpdateRequest = {
+    affiliated_organizations?: Array<string>;
+};
+
 export type AffiliationTypeEnum = 'employment' | 'education' | 'visiting' | 'honorary' | 'consulting';
 
 export type AffinityMatrixEntry = {
@@ -16163,6 +16218,20 @@ export type PatchedAdminAnnouncementRequest = {
     type?: AdminAnnouncementTypeEnum;
 };
 
+export type PatchedAffiliatedOrganizationRequest = {
+    name?: string;
+    /**
+     * Unique short identifier, e.g. CERN, EMBL.
+     */
+    code?: string;
+    abbreviation?: string;
+    description?: string;
+    email?: string;
+    homepage?: string;
+    country?: string;
+    address?: string;
+};
+
 export type PatchedAllocationRequest = {
     name?: string;
     description?: string;
@@ -18787,6 +18856,7 @@ export type Project = {
      * List of allowed identity sources (identity providers).
      */
     user_identity_sources?: unknown;
+    readonly affiliated_organizations?: Array<AffiliatedOrganization>;
     readonly project_credit?: number | null;
     readonly marketplace_resource_count?: {
         [key: string]: number;
@@ -29442,7 +29512,7 @@ export type ProviderOfferingDetailsOEnum = '-created' | '-name' | '-state' | '-t
 
 export type ProviderOfferingCustomerFieldEnum = 'abbreviation' | 'email' | 'name' | 'phone_number' | 'slug' | 'uuid';
 
-export type ProjectFieldEnum = 'backend_id' | 'billing_price_estimate' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_display_billing_info_in_projects' | 'customer_grace_period_days' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'effective_end_date' | 'end_date' | 'end_date_requested_by' | 'end_date_updated_at' | 'grace_period_days' | 'image' | 'is_in_grace_period' | 'is_industry' | 'is_removed' | 'kind' | 'marketplace_resource_count' | 'max_service_accounts' | 'name' | 'oecd_fos_2007_code' | 'oecd_fos_2007_label' | 'project_credit' | 'resources_count' | 'slug' | 'staff_notes' | 'start_date' | 'termination_metadata' | 'type' | 'type_name' | 'type_uuid' | 'url' | 'user_affiliations' | 'user_email_patterns' | 'user_identity_sources' | 'uuid';
+export type ProjectFieldEnum = 'affiliated_organizations' | 'backend_id' | 'billing_price_estimate' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_display_billing_info_in_projects' | 'customer_grace_period_days' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'effective_end_date' | 'end_date' | 'end_date_requested_by' | 'end_date_updated_at' | 'grace_period_days' | 'image' | 'is_in_grace_period' | 'is_industry' | 'is_removed' | 'kind' | 'marketplace_resource_count' | 'max_service_accounts' | 'name' | 'oecd_fos_2007_code' | 'oecd_fos_2007_label' | 'project_credit' | 'resources_count' | 'slug' | 'staff_notes' | 'start_date' | 'termination_metadata' | 'type' | 'type_name' | 'type_uuid' | 'url' | 'user_affiliations' | 'user_email_patterns' | 'user_identity_sources' | 'uuid';
 
 export type UserFieldEnum = 'active_isds' | 'affiliations' | 'agree_with_policy' | 'agreement_date' | 'attribute_sources' | 'birth_date' | 'civil_number' | 'country_of_residence' | 'date_joined' | 'deactivation_reason' | 'description' | 'eduperson_assurance' | 'email' | 'first_name' | 'full_name' | 'gender' | 'has_active_session' | 'has_usable_password' | 'identity_provider_fields' | 'identity_provider_label' | 'identity_provider_management_url' | 'identity_provider_name' | 'identity_source' | 'image' | 'ip_address' | 'is_active' | 'is_identity_manager' | 'is_staff' | 'is_support' | 'job_title' | 'last_name' | 'managed_isds' | 'nationalities' | 'nationality' | 'native_name' | 'notifications_enabled' | 'organization' | 'organization_country' | 'organization_registry_code' | 'organization_type' | 'permissions' | 'personal_title' | 'phone_number' | 'place_of_birth' | 'preferred_language' | 'registration_method' | 'requested_email' | 'slug' | 'token' | 'token_expires_at' | 'token_lifetime' | 'url' | 'username' | 'uuid';
 
@@ -31265,6 +31335,299 @@ export type AdminArrowVendorOfferingMappingsVendorChoicesCountData = {
 };
 
 export type AdminArrowVendorOfferingMappingsVendorChoicesCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type AffiliatedOrganizationsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Abbreviation
+         */
+        abbreviation?: string;
+        /**
+         * Code
+         */
+        code?: string;
+        /**
+         * Country
+         */
+        country?: string;
+        /**
+         * Name
+         */
+        name?: string;
+        /**
+         * Name (exact)
+         */
+        name_exact?: string;
+        /**
+         * Which field to use when ordering the results.
+         */
+        o?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Search
+         */
+        query?: string;
+    };
+    url: '/api/affiliated-organizations/';
+};
+
+export type AffiliatedOrganizationsListResponses = {
+    200: Array<AffiliatedOrganization>;
+};
+
+export type AffiliatedOrganizationsListResponse = AffiliatedOrganizationsListResponses[keyof AffiliatedOrganizationsListResponses];
+
+export type AffiliatedOrganizationsCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Abbreviation
+         */
+        abbreviation?: string;
+        /**
+         * Code
+         */
+        code?: string;
+        /**
+         * Country
+         */
+        country?: string;
+        /**
+         * Name
+         */
+        name?: string;
+        /**
+         * Name (exact)
+         */
+        name_exact?: string;
+        /**
+         * Which field to use when ordering the results.
+         */
+        o?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Search
+         */
+        query?: string;
+    };
+    url: '/api/affiliated-organizations/';
+};
+
+export type AffiliatedOrganizationsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type AffiliatedOrganizationsCreateData = {
+    body: AffiliatedOrganizationRequest;
+    path?: never;
+    query?: never;
+    url: '/api/affiliated-organizations/';
+};
+
+export type AffiliatedOrganizationsCreateResponses = {
+    201: AffiliatedOrganization;
+};
+
+export type AffiliatedOrganizationsCreateResponse = AffiliatedOrganizationsCreateResponses[keyof AffiliatedOrganizationsCreateResponses];
+
+export type AffiliatedOrganizationsDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/affiliated-organizations/{uuid}/';
+};
+
+export type AffiliatedOrganizationsDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type AffiliatedOrganizationsDestroyResponse = AffiliatedOrganizationsDestroyResponses[keyof AffiliatedOrganizationsDestroyResponses];
+
+export type AffiliatedOrganizationsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/affiliated-organizations/{uuid}/';
+};
+
+export type AffiliatedOrganizationsRetrieveResponses = {
+    200: AffiliatedOrganization;
+};
+
+export type AffiliatedOrganizationsRetrieveResponse = AffiliatedOrganizationsRetrieveResponses[keyof AffiliatedOrganizationsRetrieveResponses];
+
+export type AffiliatedOrganizationsPartialUpdateData = {
+    body?: PatchedAffiliatedOrganizationRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/affiliated-organizations/{uuid}/';
+};
+
+export type AffiliatedOrganizationsPartialUpdateResponses = {
+    200: AffiliatedOrganization;
+};
+
+export type AffiliatedOrganizationsPartialUpdateResponse = AffiliatedOrganizationsPartialUpdateResponses[keyof AffiliatedOrganizationsPartialUpdateResponses];
+
+export type AffiliatedOrganizationsUpdateData = {
+    body: AffiliatedOrganizationRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/affiliated-organizations/{uuid}/';
+};
+
+export type AffiliatedOrganizationsUpdateResponses = {
+    200: AffiliatedOrganization;
+};
+
+export type AffiliatedOrganizationsUpdateResponse = AffiliatedOrganizationsUpdateResponses[keyof AffiliatedOrganizationsUpdateResponses];
+
+export type AffiliatedOrganizationsStatsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/affiliated-organizations/{uuid}/stats/';
+};
+
+export type AffiliatedOrganizationsStatsRetrieveResponses = {
+    200: AffiliatedOrganizationStats;
+};
+
+export type AffiliatedOrganizationsStatsRetrieveResponse = AffiliatedOrganizationsStatsRetrieveResponses[keyof AffiliatedOrganizationsStatsRetrieveResponses];
+
+export type AffiliatedOrganizationsReportListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Abbreviation
+         */
+        abbreviation?: string;
+        /**
+         * Code
+         */
+        code?: string;
+        /**
+         * Country
+         */
+        country?: string;
+        /**
+         * Name
+         */
+        name?: string;
+        /**
+         * Name (exact)
+         */
+        name_exact?: string;
+        /**
+         * Which field to use when ordering the results.
+         */
+        o?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Search
+         */
+        query?: string;
+    };
+    url: '/api/affiliated-organizations/report/';
+};
+
+export type AffiliatedOrganizationsReportListResponses = {
+    200: Array<AffiliatedOrganizationReportRow>;
+};
+
+export type AffiliatedOrganizationsReportListResponse = AffiliatedOrganizationsReportListResponses[keyof AffiliatedOrganizationsReportListResponses];
+
+export type AffiliatedOrganizationsReportCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Abbreviation
+         */
+        abbreviation?: string;
+        /**
+         * Code
+         */
+        code?: string;
+        /**
+         * Country
+         */
+        country?: string;
+        /**
+         * Name
+         */
+        name?: string;
+        /**
+         * Name (exact)
+         */
+        name_exact?: string;
+        /**
+         * Which field to use when ordering the results.
+         */
+        o?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Search
+         */
+        query?: string;
+    };
+    url: '/api/affiliated-organizations/report/';
+};
+
+export type AffiliatedOrganizationsReportCountResponses = {
     /**
      * No response body
      */
@@ -57842,6 +58205,14 @@ export type MarketplaceServiceProvidersCustomerProjectsListData = {
         service_provider_uuid: string;
     };
     query: {
+        /**
+         * Affiliated organization name
+         */
+        affiliated_organization_name?: string;
+        /**
+         * Affiliated organization UUID
+         */
+        affiliated_organization_uuid?: Array<string>;
         backend_id?: string;
         /**
          * Return a list of projects where current user is admin.
@@ -57884,6 +58255,10 @@ export type MarketplaceServiceProvidersCustomerProjectsListData = {
          */
         description?: string;
         field?: Array<MarketplaceProviderCustomerProjectFieldEnum>;
+        /**
+         * Filter projects that have at least one affiliated organization.
+         */
+        has_affiliated_organization?: boolean;
         /**
          * Is removed
          */
@@ -58398,6 +58773,14 @@ export type MarketplaceServiceProvidersProjectsListData = {
         service_provider_uuid: string;
     };
     query?: {
+        /**
+         * Affiliated organization name
+         */
+        affiliated_organization_name?: string;
+        /**
+         * Affiliated organization UUID
+         */
+        affiliated_organization_uuid?: Array<string>;
         backend_id?: string;
         /**
          * Return a list of projects where current user is admin.
@@ -58440,6 +58823,10 @@ export type MarketplaceServiceProvidersProjectsListData = {
          */
         description?: string;
         field?: Array<ProjectFieldEnum>;
+        /**
+         * Filter projects that have at least one affiliated organization.
+         */
+        has_affiliated_organization?: boolean;
         /**
          * Is removed
          */
@@ -66606,6 +66993,14 @@ export type OpenportalUnmanagedProjectsListData = {
          * Filter by whether accounting is running.
          */
         accounting_is_running?: boolean;
+        /**
+         * Affiliated organization name
+         */
+        affiliated_organization_name?: string;
+        /**
+         * Affiliated organization UUID
+         */
+        affiliated_organization_uuid?: Array<string>;
         backend_id?: string;
         /**
          * Return a list of projects where current user is admin.
@@ -66648,6 +67043,10 @@ export type OpenportalUnmanagedProjectsListData = {
          */
         description?: string;
         field?: Array<ProjectFieldEnum>;
+        /**
+         * Filter projects that have at least one affiliated organization.
+         */
+        has_affiliated_organization?: boolean;
         /**
          * Include soft-deleted (terminated) projects. Only available to staff and support users, or users with organizational roles who can see their terminated projects.
          */
@@ -66720,6 +67119,14 @@ export type OpenportalUnmanagedProjectsCountData = {
          * Filter by whether accounting is running.
          */
         accounting_is_running?: boolean;
+        /**
+         * Affiliated organization name
+         */
+        affiliated_organization_name?: string;
+        /**
+         * Affiliated organization UUID
+         */
+        affiliated_organization_uuid?: Array<string>;
         backend_id?: string;
         /**
          * Return a list of projects where current user is admin.
@@ -66761,6 +67168,10 @@ export type OpenportalUnmanagedProjectsCountData = {
          * Description
          */
         description?: string;
+        /**
+         * Filter projects that have at least one affiliated organization.
+         */
+        has_affiliated_organization?: boolean;
         /**
          * Include soft-deleted (terminated) projects. Only available to staff and support users, or users with organizational roles who can see their terminated projects.
          */
@@ -67138,6 +67549,22 @@ export type OpenportalUnmanagedProjectsSubmitAnswersResponses = {
 };
 
 export type OpenportalUnmanagedProjectsSubmitAnswersResponse = OpenportalUnmanagedProjectsSubmitAnswersResponses[keyof OpenportalUnmanagedProjectsSubmitAnswersResponses];
+
+export type OpenportalUnmanagedProjectsUpdateAffiliatedOrganizationsData = {
+    body?: AffiliatedOrganizationsUpdateRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openportal-unmanaged-projects/{uuid}/update_affiliated_organizations/';
+};
+
+export type OpenportalUnmanagedProjectsUpdateAffiliatedOrganizationsResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type OpenportalUnmanagedProjectsUpdateUserData = {
     body: UserRoleUpdateRequest;
@@ -76201,6 +76628,14 @@ export type ProjectsListData = {
          * Filter by whether accounting is running.
          */
         accounting_is_running?: boolean;
+        /**
+         * Affiliated organization name
+         */
+        affiliated_organization_name?: string;
+        /**
+         * Affiliated organization UUID
+         */
+        affiliated_organization_uuid?: Array<string>;
         backend_id?: string;
         /**
          * Return a list of projects where current user is admin.
@@ -76243,6 +76678,10 @@ export type ProjectsListData = {
          */
         description?: string;
         field?: Array<ProjectFieldEnum>;
+        /**
+         * Filter projects that have at least one affiliated organization.
+         */
+        has_affiliated_organization?: boolean;
         /**
          * Include soft-deleted (terminated) projects. Only available to staff and support users, or users with organizational roles who can see their terminated projects.
          */
@@ -76315,6 +76754,14 @@ export type ProjectsCountData = {
          * Filter by whether accounting is running.
          */
         accounting_is_running?: boolean;
+        /**
+         * Affiliated organization name
+         */
+        affiliated_organization_name?: string;
+        /**
+         * Affiliated organization UUID
+         */
+        affiliated_organization_uuid?: Array<string>;
         backend_id?: string;
         /**
          * Return a list of projects where current user is admin.
@@ -76356,6 +76803,10 @@ export type ProjectsCountData = {
          * Description
          */
         description?: string;
+        /**
+         * Filter projects that have at least one affiliated organization.
+         */
+        has_affiliated_organization?: boolean;
         /**
          * Include soft-deleted (terminated) projects. Only available to staff and support users, or users with organizational roles who can see their terminated projects.
          */
@@ -76823,6 +77274,22 @@ export type ProjectsSyncUserRolesData = {
 };
 
 export type ProjectsSyncUserRolesResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type ProjectsUpdateAffiliatedOrganizationsData = {
+    body?: AffiliatedOrganizationsUpdateRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/projects/{uuid}/update_affiliated_organizations/';
+};
+
+export type ProjectsUpdateAffiliatedOrganizationsResponses = {
     /**
      * No response body
      */
