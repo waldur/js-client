@@ -3940,6 +3940,18 @@ export type ChatResponse = {
      * State display name filters (e.g. ['OK', 'Erred']). Present when k='resource_list'.
      */
     state?: Array<unknown>;
+    /**
+     * Table headers - list of column names. Present when k='table'.
+     */
+    h?: Array<unknown>;
+    /**
+     * Table rows - list of row data (each row is a list of strings). Present when k='table'.
+     */
+    r?: Array<unknown>;
+    /**
+     * Total count of rows in the table (used for pagination display). Present when k='table'.
+     */
+    n?: number | null;
 };
 
 export type ChatSession = {
