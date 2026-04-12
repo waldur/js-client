@@ -4638,6 +4638,7 @@ export type ConstanceSettings = {
     CURRENCY_NAME?: string;
     THUMBNAIL_SIZE?: string;
     ANONYMOUS_USER_CAN_VIEW_OFFERINGS?: boolean;
+    SHOW_OFFERING_COVER_IMAGE?: boolean;
     ANONYMOUS_USER_CAN_VIEW_PLANS?: boolean;
     RESTRICTED_OFFERING_VISIBILITY_MODE?: RestrictedofferingvisibilitymodeEnum;
     ALLOW_SERVICE_PROVIDER_OFFERING_MANAGEMENT?: boolean;
@@ -4894,6 +4895,7 @@ export type ConstanceSettingsRequest = {
     CURRENCY_NAME?: string;
     THUMBNAIL_SIZE?: string;
     ANONYMOUS_USER_CAN_VIEW_OFFERINGS?: boolean;
+    SHOW_OFFERING_COVER_IMAGE?: boolean;
     ANONYMOUS_USER_CAN_VIEW_PLANS?: boolean;
     RESTRICTED_OFFERING_VISIBILITY_MODE?: RestrictedofferingvisibilitymodeEnum;
     ALLOW_SERVICE_PROVIDER_OFFERING_MANAGEMENT?: boolean;
@@ -28424,6 +28426,7 @@ export type ConstanceSettingsRequestForm = {
     CURRENCY_NAME?: string;
     THUMBNAIL_SIZE?: string;
     ANONYMOUS_USER_CAN_VIEW_OFFERINGS?: boolean;
+    SHOW_OFFERING_COVER_IMAGE?: boolean;
     ANONYMOUS_USER_CAN_VIEW_PLANS?: boolean;
     RESTRICTED_OFFERING_VISIBILITY_MODE?: RestrictedofferingvisibilitymodeEnum;
     ALLOW_SERVICE_PROVIDER_OFFERING_MANAGEMENT?: boolean;
@@ -28680,6 +28683,7 @@ export type ConstanceSettingsRequestMultipart = {
     CURRENCY_NAME?: string;
     THUMBNAIL_SIZE?: string;
     ANONYMOUS_USER_CAN_VIEW_OFFERINGS?: boolean;
+    SHOW_OFFERING_COVER_IMAGE?: boolean;
     ANONYMOUS_USER_CAN_VIEW_PLANS?: boolean;
     RESTRICTED_OFFERING_VISIBILITY_MODE?: RestrictedofferingvisibilitymodeEnum;
     ALLOW_SERVICE_PROVIDER_OFFERING_MANAGEMENT?: boolean;
