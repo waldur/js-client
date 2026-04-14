@@ -8022,6 +8022,64 @@ export type GuestOsEnum = 'DOS' | 'WIN_31' | 'WIN_95' | 'WIN_98' | 'WIN_ME' | 'W
 
 export type GuestPowerStateEnum = 'RUNNING' | 'SHUTTING_DOWN' | 'RESETTING' | 'STANDBY' | 'NOT_RUNNING' | 'UNAVAILABLE';
 
+export type Hypervisor = {
+    readonly url: string;
+    readonly uuid: string;
+    name: string;
+    settings: string;
+    backend_id: string;
+    /**
+     * Hypervisor type, e.g. KVM, QEMU, VMware
+     */
+    hypervisor_type?: string;
+    /**
+     * Total vCPUs
+     */
+    vcpus?: number;
+    /**
+     * Used vCPUs
+     */
+    vcpus_used?: number;
+    /**
+     * Total RAM in MiB
+     */
+    memory_mb?: number;
+    /**
+     * Used RAM in MiB
+     */
+    memory_mb_used?: number;
+    /**
+     * Total disk in GiB
+     */
+    local_gb?: number;
+    /**
+     * Used disk in GiB
+     */
+    local_gb_used?: number;
+    /**
+     * Number of running VMs
+     */
+    running_vms?: number;
+    /**
+     * Hypervisor state, e.g. up or down
+     */
+    state?: string;
+    /**
+     * Hypervisor status, e.g. enabled or disabled
+     */
+    status?: string;
+};
+
+export type HypervisorSummary = {
+    total_vcpus: number;
+    used_vcpus: number;
+    total_memory_mb: number;
+    used_memory_mb: number;
+    total_local_gb: number;
+    used_local_gb: number;
+    total_running_vms: number;
+};
+
 export type IpMapping = {
     /**
      * Floating IP
@@ -22517,54 +22575,18 @@ export type ResourceLimitPeriod = {
 };
 
 export type ResourceMissingUsage = {
-    /**
-     * UUID of the resource
-     */
-    uuid: string;
-    /**
-     * Name of the resource
-     */
+    readonly uuid: string;
     name: string;
-    /**
-     * Current state of the resource
-     */
-    state: string;
-    /**
-     * Creation date of the resource
-     */
-    created: string;
-    /**
-     * Name of the offering
-     */
-    offering_name: string;
-    /**
-     * UUID of the offering
-     */
-    offering_uuid: string;
-    /**
-     * Name of the service provider
-     */
-    provider_name: string;
-    /**
-     * UUID of the service provider
-     */
-    provider_uuid: string;
-    /**
-     * Name of the customer organization
-     */
-    customer_name: string;
-    /**
-     * UUID of the customer organization
-     */
-    customer_uuid: string;
-    /**
-     * Name of the project
-     */
-    project_name: string;
-    /**
-     * UUID of the project
-     */
-    project_uuid: string;
+    readonly state: string;
+    readonly created: string;
+    readonly offering_name: string;
+    readonly offering_uuid: string;
+    readonly provider_name: string;
+    readonly provider_uuid: string;
+    readonly customer_name: string;
+    readonly customer_uuid: string;
+    readonly project_name: string;
+    readonly project_uuid: string;
     /**
      * Date of the last usage report
      */
@@ -22572,7 +22594,7 @@ export type ResourceMissingUsage = {
     /**
      * Number of days since last usage report
      */
-    days_since_last_report: number | null;
+    readonly days_since_last_report: number | null;
 };
 
 export type ResourceOffering = {
@@ -69045,6 +69067,131 @@ export type OpenstackHealthMonitorsPullResponses = {
      * No response body
      */
     202: unknown;
+};
+
+export type OpenstackHypervisorsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        hypervisor_type?: string;
+        /**
+         * Name
+         */
+        name?: string;
+        /**
+         * Name (exact)
+         */
+        name_exact?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Settings URL
+         */
+        settings?: string;
+        /**
+         * Settings UUID
+         */
+        settings_uuid?: string;
+        state?: string;
+        status?: string;
+    };
+    url: '/api/openstack-hypervisors/';
+};
+
+export type OpenstackHypervisorsListResponses = {
+    200: Array<Hypervisor>;
+};
+
+export type OpenstackHypervisorsListResponse = OpenstackHypervisorsListResponses[keyof OpenstackHypervisorsListResponses];
+
+export type OpenstackHypervisorsCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        hypervisor_type?: string;
+        /**
+         * Name
+         */
+        name?: string;
+        /**
+         * Name (exact)
+         */
+        name_exact?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Settings URL
+         */
+        settings?: string;
+        /**
+         * Settings UUID
+         */
+        settings_uuid?: string;
+        state?: string;
+        status?: string;
+    };
+    url: '/api/openstack-hypervisors/';
+};
+
+export type OpenstackHypervisorsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type OpenstackHypervisorsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openstack-hypervisors/{uuid}/';
+};
+
+export type OpenstackHypervisorsRetrieveResponses = {
+    200: Hypervisor;
+};
+
+export type OpenstackHypervisorsRetrieveResponse = OpenstackHypervisorsRetrieveResponses[keyof OpenstackHypervisorsRetrieveResponses];
+
+export type OpenstackHypervisorsSummaryRetrieveData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/openstack-hypervisors/summary/';
+};
+
+export type OpenstackHypervisorsSummaryRetrieveResponses = {
+    200: HypervisorSummary;
+};
+
+export type OpenstackHypervisorsSummaryRetrieveResponse = OpenstackHypervisorsSummaryRetrieveResponses[keyof OpenstackHypervisorsSummaryRetrieveResponses];
+
+export type OpenstackHypervisorsSummaryCountData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/openstack-hypervisors/summary/';
+};
+
+export type OpenstackHypervisorsSummaryCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
 };
 
 export type OpenstackImagesListData = {
