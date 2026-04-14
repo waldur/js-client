@@ -8092,6 +8092,7 @@ export type IdentityBridgeRequestRequest = {
     personal_title?: string;
     birth_date?: string | null;
     place_of_birth?: string;
+    address?: string;
     country_of_residence?: string;
     nationality?: string;
     nationalities?: Array<string>;
@@ -9842,6 +9843,7 @@ export type MarketplaceServiceProviderUser = {
      */
     personal_title?: string;
     place_of_birth?: string;
+    address?: string;
     country_of_residence?: string;
     /**
      * Primary citizenship (ISO 3166-1 alpha-2 code)
@@ -13117,6 +13119,7 @@ export type OfferingUser = {
      */
     readonly user_personal_title?: string;
     readonly user_place_of_birth?: string;
+    readonly user_address?: string;
     readonly user_country_of_residence?: string;
     /**
      * Primary citizenship (ISO 3166-1 alpha-2 code)
@@ -13205,6 +13208,7 @@ export type OfferingUserAttributeConfig = {
     expose_gender?: boolean;
     expose_personal_title?: boolean;
     expose_place_of_birth?: boolean;
+    expose_address?: boolean;
     expose_country_of_residence?: boolean;
     expose_nationality?: boolean;
     expose_nationalities?: boolean;
@@ -13238,6 +13242,7 @@ export type OfferingUserAttributeConfigRequest = {
     expose_gender?: boolean;
     expose_personal_title?: boolean;
     expose_place_of_birth?: boolean;
+    expose_address?: boolean;
     expose_country_of_residence?: boolean;
     expose_nationality?: boolean;
     expose_nationalities?: boolean;
@@ -17194,6 +17199,7 @@ export type PatchedOfferingUserAttributeConfigRequest = {
     expose_gender?: boolean;
     expose_personal_title?: boolean;
     expose_place_of_birth?: boolean;
+    expose_address?: boolean;
     expose_country_of_residence?: boolean;
     expose_nationality?: boolean;
     expose_nationalities?: boolean;
@@ -18318,6 +18324,7 @@ export type PatchedUserRequest = {
      */
     personal_title?: string;
     place_of_birth?: string;
+    address?: string;
     country_of_residence?: string;
     /**
      * Primary citizenship (ISO 3166-1 alpha-2 code)
@@ -26187,6 +26194,7 @@ export type User = {
      */
     personal_title?: string;
     place_of_birth?: string;
+    address?: string;
     country_of_residence?: string;
     /**
      * Primary citizenship (ISO 3166-1 alpha-2 code)
@@ -26618,6 +26626,7 @@ export type UserRequest = {
      */
     personal_title?: string;
     place_of_birth?: string;
+    address?: string;
     country_of_residence?: string;
     /**
      * Primary citizenship (ISO 3166-1 alpha-2 code)
@@ -29072,6 +29081,7 @@ export type UserRequestForm = {
      */
     personal_title?: string;
     place_of_birth?: string;
+    address?: string;
     country_of_residence?: string;
     /**
      * Primary citizenship (ISO 3166-1 alpha-2 code)
@@ -29164,6 +29174,7 @@ export type UserRequestMultipart = {
      */
     personal_title?: string;
     place_of_birth?: string;
+    address?: string;
     country_of_residence?: string;
     /**
      * Primary citizenship (ISO 3166-1 alpha-2 code)
@@ -29255,6 +29266,7 @@ export type PatchedUserRequestForm = {
      */
     personal_title?: string;
     place_of_birth?: string;
+    address?: string;
     country_of_residence?: string;
     /**
      * Primary citizenship (ISO 3166-1 alpha-2 code)
@@ -29346,6 +29358,7 @@ export type PatchedUserRequestMultipart = {
      */
     personal_title?: string;
     place_of_birth?: string;
+    address?: string;
     country_of_residence?: string;
     /**
      * Primary citizenship (ISO 3166-1 alpha-2 code)
@@ -29512,7 +29525,7 @@ export type OfferingTermsOfServiceOEnum = '-created' | '-modified' | '-version' 
 
 export type UserChecklistCompletionOEnum = '-is_completed' | '-modified' | 'is_completed' | 'modified';
 
-export type OfferingUserFieldEnum = 'consent_data' | 'created' | 'customer_name' | 'customer_uuid' | 'has_compliance_checklist' | 'has_consent' | 'is_profile_complete' | 'is_restricted' | 'missing_profile_attributes' | 'modified' | 'offering' | 'offering_name' | 'offering_uuid' | 'requires_reconsent' | 'service_provider_comment' | 'service_provider_comment_url' | 'state' | 'url' | 'user' | 'user_active_isds' | 'user_affiliations' | 'user_birth_date' | 'user_civil_number' | 'user_country_of_residence' | 'user_eduperson_assurance' | 'user_email' | 'user_first_name' | 'user_full_name' | 'user_gender' | 'user_identity_source' | 'user_job_title' | 'user_last_name' | 'user_nationalities' | 'user_nationality' | 'user_organization' | 'user_organization_country' | 'user_organization_registry_code' | 'user_organization_type' | 'user_personal_title' | 'user_phone_number' | 'user_place_of_birth' | 'user_username' | 'user_uuid' | 'username' | 'uuid';
+export type OfferingUserFieldEnum = 'consent_data' | 'created' | 'customer_name' | 'customer_uuid' | 'has_compliance_checklist' | 'has_consent' | 'is_profile_complete' | 'is_restricted' | 'missing_profile_attributes' | 'modified' | 'offering' | 'offering_name' | 'offering_uuid' | 'requires_reconsent' | 'service_provider_comment' | 'service_provider_comment_url' | 'state' | 'url' | 'user' | 'user_active_isds' | 'user_address' | 'user_affiliations' | 'user_birth_date' | 'user_civil_number' | 'user_country_of_residence' | 'user_eduperson_assurance' | 'user_email' | 'user_first_name' | 'user_full_name' | 'user_gender' | 'user_identity_source' | 'user_job_title' | 'user_last_name' | 'user_nationalities' | 'user_nationality' | 'user_organization' | 'user_organization_country' | 'user_organization_registry_code' | 'user_organization_type' | 'user_personal_title' | 'user_phone_number' | 'user_place_of_birth' | 'user_username' | 'user_uuid' | 'username' | 'uuid';
 
 export type OfferingUserOEnum = '-created' | '-modified' | '-username' | 'created' | 'modified' | 'username';
 
@@ -29530,7 +29543,7 @@ export type ProviderOfferingCustomerFieldEnum = 'abbreviation' | 'email' | 'name
 
 export type ProjectFieldEnum = 'affiliated_organizations' | 'backend_id' | 'billing_price_estimate' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_display_billing_info_in_projects' | 'customer_grace_period_days' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'effective_end_date' | 'end_date' | 'end_date_requested_by' | 'end_date_updated_at' | 'grace_period_days' | 'image' | 'is_in_grace_period' | 'is_industry' | 'is_removed' | 'kind' | 'marketplace_resource_count' | 'max_service_accounts' | 'name' | 'oecd_fos_2007_code' | 'oecd_fos_2007_label' | 'project_credit' | 'resources_count' | 'slug' | 'staff_notes' | 'start_date' | 'termination_metadata' | 'type' | 'type_name' | 'type_uuid' | 'url' | 'user_affiliations' | 'user_email_patterns' | 'user_identity_sources' | 'uuid';
 
-export type UserFieldEnum = 'active_isds' | 'affiliations' | 'agree_with_policy' | 'agreement_date' | 'attribute_sources' | 'birth_date' | 'civil_number' | 'country_of_residence' | 'date_joined' | 'deactivation_reason' | 'description' | 'eduperson_assurance' | 'email' | 'first_name' | 'full_name' | 'gender' | 'has_active_session' | 'has_usable_password' | 'identity_provider_fields' | 'identity_provider_label' | 'identity_provider_management_url' | 'identity_provider_name' | 'identity_source' | 'image' | 'ip_address' | 'is_active' | 'is_identity_manager' | 'is_staff' | 'is_support' | 'job_title' | 'last_name' | 'managed_isds' | 'nationalities' | 'nationality' | 'native_name' | 'notifications_enabled' | 'organization' | 'organization_country' | 'organization_registry_code' | 'organization_type' | 'permissions' | 'personal_title' | 'phone_number' | 'place_of_birth' | 'preferred_language' | 'registration_method' | 'requested_email' | 'slug' | 'token' | 'token_expires_at' | 'token_lifetime' | 'url' | 'username' | 'uuid';
+export type UserFieldEnum = 'active_isds' | 'address' | 'affiliations' | 'agree_with_policy' | 'agreement_date' | 'attribute_sources' | 'birth_date' | 'civil_number' | 'country_of_residence' | 'date_joined' | 'deactivation_reason' | 'description' | 'eduperson_assurance' | 'email' | 'first_name' | 'full_name' | 'gender' | 'has_active_session' | 'has_usable_password' | 'identity_provider_fields' | 'identity_provider_label' | 'identity_provider_management_url' | 'identity_provider_name' | 'identity_source' | 'image' | 'ip_address' | 'is_active' | 'is_identity_manager' | 'is_staff' | 'is_support' | 'job_title' | 'last_name' | 'managed_isds' | 'nationalities' | 'nationality' | 'native_name' | 'notifications_enabled' | 'organization' | 'organization_country' | 'organization_registry_code' | 'organization_type' | 'permissions' | 'personal_title' | 'phone_number' | 'place_of_birth' | 'preferred_language' | 'registration_method' | 'requested_email' | 'slug' | 'token' | 'token_expires_at' | 'token_lifetime' | 'url' | 'username' | 'uuid';
 
 export type ResourceOEnum = '-created' | '-end_date' | '-name' | '-project_name' | '-state' | 'created' | 'end_date' | 'name' | 'project_name' | 'state';
 
@@ -29550,7 +29563,7 @@ export type ProviderOfferingFieldEnum = 'billing_price_estimate' | 'category_tit
 
 export type ProjectPermissionLogFieldEnum = 'created' | 'created_by' | 'created_by_full_name' | 'created_by_username' | 'customer_name' | 'customer_uuid' | 'expiration_time' | 'project' | 'project_created' | 'project_end_date' | 'project_name' | 'project_uuid' | 'role' | 'role_name' | 'user' | 'user_email' | 'user_full_name' | 'user_native_name' | 'user_username' | 'user_uuid';
 
-export type MarketplaceServiceProviderUserFieldEnum = 'active_isds' | 'affiliations' | 'birth_date' | 'civil_number' | 'country_of_residence' | 'eduperson_assurance' | 'email' | 'first_name' | 'full_name' | 'gender' | 'identity_source' | 'is_active' | 'job_title' | 'last_name' | 'nationalities' | 'nationality' | 'organization' | 'organization_country' | 'organization_registry_code' | 'organization_type' | 'personal_title' | 'phone_number' | 'place_of_birth' | 'projects_count' | 'registration_method' | 'username' | 'uuid';
+export type MarketplaceServiceProviderUserFieldEnum = 'active_isds' | 'address' | 'affiliations' | 'birth_date' | 'civil_number' | 'country_of_residence' | 'eduperson_assurance' | 'email' | 'first_name' | 'full_name' | 'gender' | 'identity_source' | 'is_active' | 'job_title' | 'last_name' | 'nationalities' | 'nationality' | 'organization' | 'organization_country' | 'organization_registry_code' | 'organization_type' | 'personal_title' | 'phone_number' | 'place_of_birth' | 'projects_count' | 'registration_method' | 'username' | 'uuid';
 
 export type MarketplaceServiceProviderUserOEnum = '-description' | '-email' | '-full_name' | '-is_active' | '-is_staff' | '-is_support' | '-job_title' | '-native_name' | '-organization' | '-phone_number' | '-registration_method' | '-username' | 'description' | 'email' | 'full_name' | 'is_active' | 'is_staff' | 'is_support' | 'job_title' | 'native_name' | 'organization' | 'phone_number' | 'registration_method' | 'username';
 
@@ -61380,10 +61393,6 @@ export type MarketplaceStatsCountActiveResourcesGroupedByOfferingListData = {
     path?: never;
     query?: {
         /**
-         * Limit number of results (e.g. top N offerings). No limit by default.
-         */
-        limit?: number;
-        /**
          * A page number within the paginated result set.
          */
         page?: number;
@@ -61405,10 +61414,6 @@ export type MarketplaceStatsCountActiveResourcesGroupedByOfferingCountData = {
     body?: never;
     path?: never;
     query?: {
-        /**
-         * Limit number of results (e.g. top N offerings). No limit by default.
-         */
-        limit?: number;
         /**
          * A page number within the paginated result set.
          */
