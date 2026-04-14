@@ -8129,6 +8129,8 @@ export type IdentityBridgeRemoveResult = {
     deactivated: boolean;
 };
 
+export type IdentityBridgeRequestGenderEnum = 'male' | 'female' | 'unknown';
+
 export type IdentityBridgeRequestRequest = {
     /**
      * CUID / username of the user to create or update.
@@ -8146,7 +8148,7 @@ export type IdentityBridgeRequestRequest = {
     civil_number?: string;
     phone_number?: string;
     identity_source?: string;
-    gender?: number | null;
+    gender?: IdentityBridgeRequestGenderEnum | NullEnum | null;
     personal_title?: string;
     birth_date?: string | null;
     place_of_birth?: string;
