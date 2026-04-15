@@ -6268,17 +6268,29 @@ export type DailyOrderStats = {
 };
 
 export type DailyProjectUsageReport = {
+    /**
+     * local_username → Usage
+     */
     reports: {
         [key: string]: Usage;
     };
+    /**
+     * component_name → local_username → Usage. e.g. { "cpu": { "chris.aiproject": { "seconds": 41055 } } }
+     */
     components?: {
         [key: string]: {
             [key: string]: Usage;
         };
     };
+    /**
+     * local_username → job count
+     */
     user_job_counts?: {
         [key: string]: number;
     };
+    /**
+     * local_username → wait seconds
+     */
     user_wait_seconds?: {
         [key: string]: number;
     };
@@ -6289,10 +6301,19 @@ export type DailyProjectUsageReport = {
 
 export type DailyStorageReport = {
     project: string;
+    /**
+     * RFC3339 timestamp
+     */
     generated_at: string;
+    /**
+     * Volume → Quota
+     */
     project_quotas: {
         [key: string]: OpenPortalQuota;
     };
+    /**
+     * UserIdentifier → (Volume → Quota)
+     */
     user_quotas: {
         [key: string]: {
             [key: string]: OpenPortalQuota;
@@ -13694,7 +13715,13 @@ export type OnboardingVerificationRequest = {
 export type OnboardingVerificationStatusEnum = 'pending' | 'verified' | 'failed' | 'escalated' | 'expired';
 
 export type OpenPortalQuota = {
+    /**
+     * Size limit. "unlimited" or a size string e.g. "1024.00 GB"
+     */
     limit: string;
+    /**
+     * Size usage e.g. "24.00 KB". Absent when the server has no usage data.
+     */
     usage?: string;
 };
 
@@ -19455,18 +19482,33 @@ export type ProjectServiceAccountRequest = {
 
 export type ProjectStorageReport = {
     project: string;
+    /**
+     * RFC3339 timestamp
+     */
     generated_at: string;
+    /**
+     * Volume → Quota
+     */
     project_quotas: {
         [key: string]: OpenPortalQuota;
     };
+    /**
+     * UserIdentifier → (Volume → Quota)
+     */
     user_quotas: {
         [key: string]: {
             [key: string]: OpenPortalQuota;
         };
     };
+    /**
+     * UserIdentifier → local_username
+     */
     users: {
         [key: string]: string;
     };
+    /**
+     * "YYYY-MM-DD" → DailyStorageReportJson. Absent from JSON when there are no daily snapshots.
+     */
     daily_reports?: {
         [key: string]: DailyStorageReport;
     };
@@ -19560,10 +19602,19 @@ export type ProjectType = {
 };
 
 export type ProjectUsageReport = {
+    /**
+     * ProjectIdentifier string e.g. "aiproject.brics"
+     */
     project: string;
+    /**
+     * "YYYY-MM-DD" → DailyProjectUsageReportJson
+     */
     reports: {
         [key: string]: DailyProjectUsageReport;
     };
+    /**
+     * UserIdentifier → local_username. e.g. { "chris.aiproject.brics": "chris.aiproject" }
+     */
     users: {
         [key: string]: string;
     };
@@ -26437,7 +26488,7 @@ export type UserAgreementRequest = {
     language: string;
 };
 
-export type UserAttributeEnum = 'username' | 'full_name' | 'email' | 'phone_number' | 'organization' | 'job_title' | 'affiliations' | 'gender' | 'personal_title' | 'birth_date' | 'place_of_birth' | 'country_of_residence' | 'nationality' | 'nationalities' | 'organization_country' | 'organization_type' | 'organization_registry_code' | 'eduperson_assurance' | 'civil_number' | 'identity_source';
+export type UserAttributeEnum = 'username' | 'first_name' | 'last_name' | 'full_name' | 'email' | 'phone_number' | 'organization' | 'job_title' | 'affiliations' | 'gender' | 'personal_title' | 'birth_date' | 'place_of_birth' | 'country_of_residence' | 'nationality' | 'nationalities' | 'organization_country' | 'organization_type' | 'organization_registry_code' | 'eduperson_assurance' | 'civil_number' | 'identity_source';
 
 export type UserAuthMethodCount = {
     /**
