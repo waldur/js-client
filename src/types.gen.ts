@@ -2938,7 +2938,7 @@ export type CachedProjectStorageReport = {
     month: number;
     project_identifier: string;
     resource: string;
-    report: unknown;
+    report: ProjectStorageReport;
 };
 
 export type CachedProjectUsageReport = {
@@ -2948,7 +2948,7 @@ export type CachedProjectUsageReport = {
     project_identifier: string;
     resource: string;
     is_complete?: boolean;
-    report: unknown;
+    report: ProjectUsageReport;
 };
 
 export type CallApplicantAttributeConfig = {
@@ -6264,6 +6264,39 @@ export type DailyOrderStats = {
      */
     by_type: {
         [key: string]: number;
+    };
+};
+
+export type DailyProjectUsageReport = {
+    reports: {
+        [key: string]: Usage;
+    };
+    components?: {
+        [key: string]: {
+            [key: string]: Usage;
+        };
+    };
+    user_job_counts?: {
+        [key: string]: number;
+    };
+    user_wait_seconds?: {
+        [key: string]: number;
+    };
+    num_jobs?: number;
+    total_wait_seconds?: number;
+    is_complete: boolean;
+};
+
+export type DailyStorageReport = {
+    project: string;
+    generated_at: string;
+    project_quotas: {
+        [key: string]: OpenPortalQuota;
+    };
+    user_quotas: {
+        [key: string]: {
+            [key: string]: OpenPortalQuota;
+        };
     };
 };
 
@@ -13660,6 +13693,11 @@ export type OnboardingVerificationRequest = {
 
 export type OnboardingVerificationStatusEnum = 'pending' | 'verified' | 'failed' | 'escalated' | 'expired';
 
+export type OpenPortalQuota = {
+    limit: string;
+    usage?: string;
+};
+
 export type OpenStackAllowedAddressPair = {
     mac_address?: string;
 };
@@ -19415,6 +19453,25 @@ export type ProjectServiceAccountRequest = {
     project: string | null;
 };
 
+export type ProjectStorageReport = {
+    project: string;
+    generated_at: string;
+    project_quotas: {
+        [key: string]: OpenPortalQuota;
+    };
+    user_quotas: {
+        [key: string]: {
+            [key: string]: OpenPortalQuota;
+        };
+    };
+    users: {
+        [key: string]: string;
+    };
+    daily_reports?: {
+        [key: string]: DailyStorageReport;
+    };
+};
+
 export type ProjectTemplate = {
     readonly uuid: string;
     name: string;
@@ -19500,6 +19557,16 @@ export type ProjectType = {
     readonly url: string;
     name: string;
     description?: string;
+};
+
+export type ProjectUsageReport = {
+    project: string;
+    reports: {
+        [key: string]: DailyProjectUsageReport;
+    };
+    users: {
+        [key: string]: string;
+    };
 };
 
 export type ProjectUser = {
@@ -26127,6 +26194,10 @@ export type UpdatePoolRequest = {
 };
 
 export type UrgencyEnum = 'low' | 'medium' | 'high';
+
+export type Usage = {
+    seconds: number;
+};
 
 export type User = {
     readonly url?: string;
