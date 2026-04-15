@@ -2585,6 +2585,16 @@ export type BasicCustomer = {
     name: string;
 };
 
+export type BasicCustomerRequest = {
+    name: string;
+};
+
+export type BasicProject = {
+    readonly url: string;
+    readonly uuid: string;
+    name: string;
+};
+
 export type BasicUser = {
     readonly url?: string;
     readonly uuid?: string;
@@ -2920,6 +2930,25 @@ export type CachePerformance = {
      * Configured effective_cache_size setting
      */
     readonly effective_cache_size: string;
+};
+
+export type CachedProjectStorageReport = {
+    readonly id: number;
+    year: number;
+    month: number;
+    project_identifier: string;
+    resource: string;
+    report: unknown;
+};
+
+export type CachedProjectUsageReport = {
+    readonly id: number;
+    year: number;
+    month: number;
+    project_identifier: string;
+    resource: string;
+    is_complete?: boolean;
+    report: unknown;
 };
 
 export type CallApplicantAttributeConfig = {
@@ -9729,7 +9758,7 @@ export type ManagedProject = {
      */
     readonly details: unknown;
     project: string;
-    project_data: Project;
+    project_data: BasicProject;
     project_template: string;
     project_template_data: ProjectTemplate;
     /**
@@ -18945,6 +18974,18 @@ export type Project = {
     billing_price_estimate?: NestedPriceEstimate;
 };
 
+export type ProjectAccountingSummary = {
+    readonly project_uuid: string;
+    readonly project_name: string;
+    readonly customer_uuid: string;
+    readonly customer_name: string;
+    readonly start_date: string | null;
+    readonly end_date: string | null;
+    readonly total_credits: string;
+    readonly total_spend: string;
+    readonly current_month_spend: string;
+};
+
 export type ProjectAnswer = {
     readonly project_uuid: string;
     readonly project_name: string;
@@ -19382,17 +19423,17 @@ export type ProjectTemplate = {
      */
     offering?: string | null;
     provider: string;
-    provider_data: Customer;
+    provider_data: BasicCustomer;
     portal: string;
     /**
      * The key that is used to authenticate requests for this class.
      */
     key?: string | null;
     customer: string;
-    customer_data: Customer;
+    customer_data: BasicCustomer;
     shortname?: string | null;
     offerings: Array<string>;
-    readonly offerings_data: Array<ProviderOfferingDetails>;
+    readonly offerings_data: Array<ResourceOffering>;
     /**
      * The credit limit beyond which requests need to be approved by a local admin. If this is None, then no local approval is required. If this is set to 0, then all requests (including creating the project) need to be approved.
      */
@@ -20093,56 +20134,6 @@ export type ProviderOfferingDetails = {
      * Get the Google Calendar link for an offering.
      */
     readonly google_calendar_link?: string | null;
-};
-
-export type ProviderOfferingDetailsRequest = {
-    name: string;
-    /**
-     * URL-friendly identifier. Only editable by staff users.
-     */
-    slug?: string;
-    description?: string;
-    full_description?: string;
-    privacy_policy_link?: string;
-    helpdesk_url?: string;
-    documentation_url?: string;
-    /**
-     * Publicly accessible offering access URL
-     */
-    access_url?: string;
-    customer?: string | null;
-    category: string;
-    attributes?: unknown;
-    components?: Array<OfferingComponentRequest>;
-    vendor_details?: string;
-    getting_started?: string;
-    integration_guide?: string;
-    thumbnail?: (Blob | File) | null;
-    plans?: Array<BaseProviderPlanRequest>;
-    type: string;
-    /**
-     * Accessible to all customers.
-     */
-    shared?: boolean;
-    /**
-     * Purchase and usage is invoiced.
-     */
-    billable?: boolean;
-    datacite_doi?: string;
-    latitude?: number | null;
-    longitude?: number | null;
-    /**
-     * Country code (ISO 3166-1 alpha-2)
-     */
-    country?: CountryEnum | BlankEnum;
-    backend_id?: string;
-    /**
-     * Validation rules for resource backend_id: format regex and uniqueness scope.
-     */
-    backend_id_rules?: unknown;
-    image?: (Blob | File) | null;
-    backend_metadata?: unknown;
-    compliance_checklist?: string | null;
 };
 
 export type ProviderOfferingStats = {
@@ -22602,6 +22593,10 @@ export type ResourceMissingUsage = {
 export type ResourceOffering = {
     name: string;
     readonly uuid: string;
+};
+
+export type ResourceOfferingRequest = {
+    name: string;
 };
 
 export type ResourceOptionsRequest = {
@@ -65590,6 +65585,72 @@ export type OnboardingSupportedCountriesRetrieveResponses = {
 
 export type OnboardingSupportedCountriesRetrieveResponse = OnboardingSupportedCountriesRetrieveResponses[keyof OnboardingSupportedCountriesRetrieveResponses];
 
+export type OpenportalAccountingSummaryListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        customer_uuid?: string;
+        is_active?: boolean;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        project_uuid?: string;
+    };
+    url: '/api/openportal-accounting-summary/';
+};
+
+export type OpenportalAccountingSummaryListResponses = {
+    200: Array<ProjectAccountingSummary>;
+};
+
+export type OpenportalAccountingSummaryListResponse = OpenportalAccountingSummaryListResponses[keyof OpenportalAccountingSummaryListResponses];
+
+export type OpenportalAccountingSummaryCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        customer_uuid?: string;
+        is_active?: boolean;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        project_uuid?: string;
+    };
+    url: '/api/openportal-accounting-summary/';
+};
+
+export type OpenportalAccountingSummaryCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type OpenportalAccountingSummaryRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openportal-accounting-summary/{uuid}/';
+};
+
+export type OpenportalAccountingSummaryRetrieveResponses = {
+    200: ProjectAccountingSummary;
+};
+
+export type OpenportalAccountingSummaryRetrieveResponse = OpenportalAccountingSummaryRetrieveResponses[keyof OpenportalAccountingSummaryRetrieveResponses];
+
 export type OpenportalAllocationUserUsageListData = {
     body?: never;
     path?: never;
@@ -66094,6 +66155,10 @@ export type OpenportalManagedProjectsListData = {
         identifier?: string;
         local_identifier?: string;
         /**
+         * Which field to use when ordering the results.
+         */
+        o?: string;
+        /**
          * A page number within the paginated result set.
          */
         page?: number;
@@ -66105,6 +66170,7 @@ export type OpenportalManagedProjectsListData = {
         project_template?: string;
         project_template_uuid?: string;
         project_uuid?: string;
+        query?: string;
         state?: Array<RemoteProjectUpdateRequestStateEnum>;
     };
     url: '/api/openportal-managed-projects/';
@@ -66123,6 +66189,10 @@ export type OpenportalManagedProjectsCountData = {
         identifier?: string;
         local_identifier?: string;
         /**
+         * Which field to use when ordering the results.
+         */
+        o?: string;
+        /**
          * A page number within the paginated result set.
          */
         page?: number;
@@ -66134,6 +66204,7 @@ export type OpenportalManagedProjectsCountData = {
         project_template?: string;
         project_template_uuid?: string;
         project_uuid?: string;
+        query?: string;
         state?: Array<RemoteProjectUpdateRequestStateEnum>;
     };
     url: '/api/openportal-managed-projects/';
@@ -66308,6 +66379,79 @@ export type OpenportalManagedProjectsRejectResponses = {
     200: unknown;
 };
 
+export type OpenportalProjectStorageReportsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        month?: number;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        project_identifier?: string;
+        project_uuid?: string;
+        resource?: string;
+        year?: number;
+    };
+    url: '/api/openportal-project-storage-reports/';
+};
+
+export type OpenportalProjectStorageReportsListResponses = {
+    200: Array<CachedProjectStorageReport>;
+};
+
+export type OpenportalProjectStorageReportsListResponse = OpenportalProjectStorageReportsListResponses[keyof OpenportalProjectStorageReportsListResponses];
+
+export type OpenportalProjectStorageReportsCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        month?: number;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        project_identifier?: string;
+        project_uuid?: string;
+        resource?: string;
+        year?: number;
+    };
+    url: '/api/openportal-project-storage-reports/';
+};
+
+export type OpenportalProjectStorageReportsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type OpenportalProjectStorageReportsRetrieveData = {
+    body?: never;
+    path: {
+        /**
+         * A unique integer value identifying this cached project storage report.
+         */
+        id: number;
+    };
+    query?: never;
+    url: '/api/openportal-project-storage-reports/{id}/';
+};
+
+export type OpenportalProjectStorageReportsRetrieveResponses = {
+    200: CachedProjectStorageReport;
+};
+
+export type OpenportalProjectStorageReportsRetrieveResponse = OpenportalProjectStorageReportsRetrieveResponses[keyof OpenportalProjectStorageReportsRetrieveResponses];
+
 export type OpenportalProjectTemplateListData = {
     body?: never;
     path?: never;
@@ -66452,6 +66596,81 @@ export type OpenportalProjectTemplateDeleteDestroyResponses = {
 };
 
 export type OpenportalProjectTemplateDeleteDestroyResponse = OpenportalProjectTemplateDeleteDestroyResponses[keyof OpenportalProjectTemplateDeleteDestroyResponses];
+
+export type OpenportalProjectUsageReportsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        is_complete?: boolean;
+        month?: number;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        project_identifier?: string;
+        project_uuid?: string;
+        resource?: string;
+        year?: number;
+    };
+    url: '/api/openportal-project-usage-reports/';
+};
+
+export type OpenportalProjectUsageReportsListResponses = {
+    200: Array<CachedProjectUsageReport>;
+};
+
+export type OpenportalProjectUsageReportsListResponse = OpenportalProjectUsageReportsListResponses[keyof OpenportalProjectUsageReportsListResponses];
+
+export type OpenportalProjectUsageReportsCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        is_complete?: boolean;
+        month?: number;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        project_identifier?: string;
+        project_uuid?: string;
+        resource?: string;
+        year?: number;
+    };
+    url: '/api/openportal-project-usage-reports/';
+};
+
+export type OpenportalProjectUsageReportsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type OpenportalProjectUsageReportsRetrieveData = {
+    body?: never;
+    path: {
+        /**
+         * A unique integer value identifying this cached project usage report.
+         */
+        id: number;
+    };
+    query?: never;
+    url: '/api/openportal-project-usage-reports/{id}/';
+};
+
+export type OpenportalProjectUsageReportsRetrieveResponses = {
+    200: CachedProjectUsageReport;
+};
+
+export type OpenportalProjectUsageReportsRetrieveResponse = OpenportalProjectUsageReportsRetrieveResponses[keyof OpenportalProjectUsageReportsRetrieveResponses];
 
 export type OpenportalProjectinfoListData = {
     body?: never;
