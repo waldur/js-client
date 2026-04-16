@@ -3981,18 +3981,6 @@ export type ChatResponse = {
      * State display name filters (e.g. ['OK', 'Erred']). Present when k='resource_list'.
      */
     state?: Array<unknown>;
-    /**
-     * Table headers - list of column names. Present when k='table'.
-     */
-    h?: Array<unknown>;
-    /**
-     * Table rows - list of row data (each row is a list of strings). Present when k='table'.
-     */
-    r?: Array<unknown>;
-    /**
-     * Total count of rows in the table (used for pagination display). Present when k='table'.
-     */
-    n?: number | null;
 };
 
 export type ChatSession = {
@@ -10994,9 +10982,13 @@ export type Message = {
     readonly uuid: string;
     readonly thread: string;
     role: MessageRoleEnum;
-    content?: string;
-    readonly content_display: string;
-    readonly tool_calls: unknown;
+    readonly blocks: Array<{
+        id: string;
+        key: 'markdown' | 'code' | 'mermaid' | 'vm_order' | 'resource_list' | 'homeport_nav' | 'tool';
+        status: string;
+        [key: string]: unknown | string | ('markdown' | 'code' | 'mermaid' | 'vm_order' | 'resource_list' | 'homeport_nav' | 'tool');
+    }>;
+    readonly warning: string;
     readonly sequence_index: number;
     readonly replaces: string | null;
     readonly created: string;
@@ -12187,7 +12179,7 @@ export type OfferingComponent = {
      * The conversion factor from backend units to measured_unit
      */
     unit_factor?: number;
-    limit_period?: LimitPeriodEnum | BlankEnum | NullEnum | null;
+    limit_period?: LimitPeriodEnum | NullEnum | null;
     limit_amount?: number | null;
     article_code?: string;
     max_value?: number | null;
@@ -12253,7 +12245,7 @@ export type OfferingComponentRequest = {
      * The conversion factor from backend units to measured_unit
      */
     unit_factor?: number;
-    limit_period?: LimitPeriodEnum | BlankEnum | NullEnum | null;
+    limit_period?: LimitPeriodEnum | NullEnum | null;
     limit_amount?: number | null;
     article_code?: string;
     max_value?: number | null;
@@ -26233,7 +26225,7 @@ export type UpdateOfferingComponentRequest = {
      * The conversion factor from backend units to measured_unit
      */
     unit_factor?: number;
-    limit_period?: LimitPeriodEnum | BlankEnum | NullEnum | null;
+    limit_period?: LimitPeriodEnum | NullEnum | null;
     limit_amount?: number | null;
     article_code?: string;
     max_value?: number | null;
@@ -29624,6 +29616,8 @@ export type ChatSessionFieldEnum = 'created' | 'modified' | 'user' | 'user_full_
 export type ThreadSessionFieldEnum = 'chat_session' | 'created' | 'flags' | 'input_tokens' | 'is_archived' | 'is_flagged' | 'max_severity' | 'message_count' | 'modified' | 'name' | 'output_tokens' | 'title_gen_input_tokens' | 'title_gen_output_tokens' | 'total_tokens' | 'user_full_name' | 'user_username' | 'uuid';
 
 export type ThreadSessionOEnum = '-created' | '-input_tokens' | '-modified' | '-output_tokens' | '-total_tokens' | 'created' | 'input_tokens' | 'modified' | 'output_tokens' | 'total_tokens';
+
+export type ThreadSessionScopeEnum = 'own';
 
 export type CoiDetectionJobOEnum = '-completed_at' | '-created' | '-started_at' | '-state' | 'completed_at' | 'created' | 'started_at' | 'state';
 
@@ -37503,6 +37497,7 @@ export type ChatThreadsListData = {
          */
         page_size?: number;
         query?: string;
+        scope?: ThreadSessionScopeEnum;
         total_tokens_max?: number;
         total_tokens_min?: number;
         user?: string;
