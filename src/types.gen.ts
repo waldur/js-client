@@ -562,7 +562,7 @@ export type Allocation = {
     readonly created?: string;
     readonly modified?: string;
     readonly backend_id?: string;
-    readonly access_url?: string | null;
+    access_url?: Array<string> | string | null;
     node_limit?: number;
     groupname?: string | null;
     readonly node_usage?: string;
@@ -1809,6 +1809,18 @@ export type AvailableChecklistsResponse = {
     } | null;
 };
 
+export type AvailableExternalNetwork = {
+    backend_id: string;
+    name: string;
+    description: string;
+    source: AvailableExternalNetworkSourceEnum;
+    subnets: Array<{
+        [key: string]: unknown;
+    }>;
+};
+
+export type AvailableExternalNetworkSourceEnum = 'global' | 'rbac';
+
 export type AvailableScope = {
     permission: string;
     description: string;
@@ -1846,7 +1858,7 @@ export type AwsInstance = {
     readonly created?: string;
     readonly modified?: string;
     readonly backend_id?: string;
-    readonly access_url?: string | null;
+    access_url?: Array<string> | string | null;
     readonly start_time?: string | null;
     /**
      * Number of cores in a VM
@@ -1968,7 +1980,7 @@ export type AwsVolume = {
     readonly created?: string;
     readonly modified?: string;
     readonly backend_id?: string;
-    readonly access_url?: string | null;
+    access_url?: Array<string> | string | null;
     /**
      * Size of volume in gigabytes
      */
@@ -2063,7 +2075,7 @@ export type AzurePublicIp = {
     readonly created?: string;
     readonly modified?: string;
     readonly backend_id?: string;
-    readonly access_url?: string | null;
+    access_url?: Array<string> | string | null;
     location?: string;
     resource_group?: string;
     readonly marketplace_offering_uuid?: string | null;
@@ -2115,7 +2127,7 @@ export type AzureResourceGroup = {
     readonly created?: string;
     readonly modified?: string;
     readonly backend_id?: string;
-    readonly access_url?: string | null;
+    access_url?: Array<string> | string | null;
     location?: string;
     readonly marketplace_offering_uuid?: string | null;
     readonly marketplace_offering_name?: string | null;
@@ -2168,7 +2180,7 @@ export type AzureSqlDatabase = {
     readonly created?: string;
     readonly modified?: string;
     readonly backend_id?: string;
-    readonly access_url?: string | null;
+    access_url?: Array<string> | string | null;
     server?: string;
     charset?: string | null;
     collation?: string | null;
@@ -2237,7 +2249,7 @@ export type AzureSqlServer = {
     readonly created?: string;
     readonly modified?: string;
     readonly backend_id?: string;
-    readonly access_url?: string | null;
+    access_url?: Array<string> | string | null;
     readonly resource_group?: string;
     readonly username?: string;
     readonly password?: string;
@@ -2294,7 +2306,7 @@ export type AzureVirtualMachine = {
     readonly created?: string;
     readonly modified?: string;
     readonly backend_id?: string;
-    readonly access_url?: string | null;
+    access_url?: Array<string> | string | null;
     readonly start_time?: string | null;
     /**
      * Number of cores in a VM
@@ -5362,8 +5374,8 @@ export type CourseAccount = {
     readonly project_uuid: string;
     readonly project_name: string;
     readonly project_slug: string;
-    readonly project_start_date: string;
-    readonly project_end_date: string;
+    readonly project_start_date: string | null;
+    readonly project_end_date: string | null;
     readonly user_uuid: string;
     readonly username: string;
     readonly customer_uuid: string;
@@ -6534,7 +6546,7 @@ export type DigitalOceanDroplet = {
     readonly created?: string;
     readonly modified?: string;
     readonly backend_id?: string;
-    readonly access_url?: string | null;
+    access_url?: Array<string> | string | null;
     readonly start_time?: string | null;
     /**
      * Number of cores in a VM
@@ -7659,7 +7671,7 @@ export type FirecrestJob = {
     readonly created?: string;
     readonly modified?: string;
     readonly backend_id?: string;
-    readonly access_url?: string | null;
+    access_url?: Array<string> | string | null;
     runtime_state?: string;
     /**
      * Batch script file
@@ -13802,7 +13814,7 @@ export type OpenStackBackup = {
     readonly created?: string;
     readonly modified?: string;
     readonly backend_id?: string;
-    readonly access_url?: string | null;
+    access_url?: Array<string> | string | null;
     /**
      * Guaranteed time of backup retention. If null - keep forever.
      */
@@ -14019,7 +14031,7 @@ export type OpenStackFloatingIp = {
     readonly created?: string;
     readonly modified?: string;
     readonly backend_id?: string;
-    readonly access_url?: string | null;
+    access_url?: Array<string> | string | null;
     readonly runtime_state?: string;
     /**
      * The public IPv4 address of the floating IP
@@ -14105,7 +14117,7 @@ export type OpenStackHealthMonitor = {
      * Health monitor ID in Octavia
      */
     backend_id?: string | null;
-    readonly access_url?: string | null;
+    access_url?: Array<string> | string | null;
     /**
      * Pool this health monitor belongs to
      */
@@ -14182,7 +14194,7 @@ export type OpenStackInstance = {
      * Instance ID in the OpenStack backend
      */
     readonly backend_id?: string | null;
-    readonly access_url?: string | null;
+    access_url?: Array<string> | string | null;
     readonly start_time?: string | null;
     /**
      * Number of cores in a VM
@@ -14502,7 +14514,7 @@ export type OpenStackListener = {
      * Listener ID in Octavia
      */
     backend_id?: string | null;
-    readonly access_url?: string | null;
+    access_url?: Array<string> | string | null;
     /**
      * Load balancer this listener belongs to
      */
@@ -14560,7 +14572,7 @@ export type OpenStackLoadBalancer = {
      * Load balancer ID in Octavia
      */
     backend_id?: string | null;
-    readonly access_url?: string | null;
+    access_url?: Array<string> | string | null;
     /**
      * OpenStack tenant this load balancer belongs to
      */
@@ -14814,7 +14826,7 @@ export type OpenStackNetwork = {
     readonly created?: string;
     readonly modified?: string;
     readonly backend_id?: string;
-    readonly access_url?: string | null;
+    access_url?: Array<string> | string | null;
     /**
      * OpenStack tenant this network belongs to
      */
@@ -14887,7 +14899,7 @@ export type OpenStackPool = {
      * Pool ID in Octavia
      */
     backend_id?: string | null;
-    readonly access_url?: string | null;
+    access_url?: Array<string> | string | null;
     /**
      * Load balancer this pool belongs to
      */
@@ -14941,7 +14953,7 @@ export type OpenStackPoolMember = {
      * Member ID in Octavia
      */
     backend_id?: string | null;
-    readonly access_url?: string | null;
+    access_url?: Array<string> | string | null;
     /**
      * Pool this member belongs to
      */
@@ -15001,7 +15013,7 @@ export type OpenStackPort = {
      * Port ID in OpenStack
      */
     readonly backend_id?: string | null;
-    readonly access_url?: string | null;
+    access_url?: Array<string> | string | null;
     fixed_ips?: Array<OpenStackFixedIp>;
     /**
      * MAC address of the port
@@ -15130,7 +15142,7 @@ export type OpenStackRouter = {
      * Router ID in OpenStack
      */
     backend_id?: string | null;
-    readonly access_url?: string | null;
+    access_url?: Array<string> | string | null;
     /**
      * OpenStack tenant this router belongs to
      */
@@ -15140,6 +15152,18 @@ export type OpenStackRouter = {
     routes?: Array<OpenStackStaticRoute>;
     readonly fixed_ips?: Array<OpenStackFixedIp>;
     readonly ports?: Array<OpenStackNestedPort>;
+    /**
+     * Backend ID of the external network used as gateway
+     */
+    external_network_id?: string;
+    readonly external_network_uuid?: string | null;
+    readonly external_network_name?: string | null;
+    readonly has_external_gateway?: boolean;
+    /**
+     * Whether SNAT is enabled on the external gateway. None means OpenStack default (True).
+     */
+    enable_snat?: boolean | null;
+    readonly external_fixed_ips?: unknown;
     readonly marketplace_offering_uuid?: string | null;
     readonly marketplace_offering_name?: string | null;
     readonly marketplace_offering_type?: string | null;
@@ -15200,7 +15224,7 @@ export type OpenStackSecurityGroup = {
     readonly created?: string;
     readonly modified?: string;
     readonly backend_id?: string;
-    readonly access_url?: string | null;
+    access_url?: Array<string> | string | null;
     readonly tenant?: string;
     readonly tenant_name?: string;
     readonly tenant_uuid?: string;
@@ -15394,7 +15418,7 @@ export type OpenStackServerGroup = {
     readonly created?: string;
     readonly modified?: string;
     readonly backend_id?: string;
-    readonly access_url?: string | null;
+    access_url?: Array<string> | string | null;
     readonly tenant?: string;
     readonly tenant_name?: string;
     readonly tenant_uuid?: string;
@@ -15456,7 +15480,7 @@ export type OpenStackSnapshot = {
      * Snapshot ID in the OpenStack backend
      */
     readonly backend_id?: string | null;
-    readonly access_url?: string | null;
+    access_url?: Array<string> | string | null;
     /**
      * Volume from which this snapshot was created
      */
@@ -15577,7 +15601,7 @@ export type OpenStackSubNet = {
     readonly created?: string;
     readonly modified?: string;
     readonly backend_id?: string;
-    readonly access_url?: string | null;
+    access_url?: Array<string> | string | null;
     readonly tenant?: string;
     readonly tenant_name?: string;
     /**
@@ -15697,7 +15721,7 @@ export type OpenStackTenant = {
      * ID of tenant in the OpenStack backend
      */
     readonly backend_id?: string | null;
-    readonly access_url?: string | null;
+    access_url?: Array<string> | string | null;
     /**
      * Optional availability group. Will be used for all instances provisioned in this tenant
      */
@@ -15826,7 +15850,7 @@ export type OpenStackVolume = {
      * Volume ID in the OpenStack backend
      */
     readonly backend_id?: string | null;
-    readonly access_url?: string | null;
+    access_url?: Array<string> | string | null;
     /**
      * Snapshot that this volume was created from, if any
      */
@@ -18647,13 +18671,13 @@ export type PermissionMetadataResponse = {
      * Map of permission keys to permission enum values from PermissionEnum
      */
     permissions: {
-        [key: string]: 'SERVICE_PROVIDER.REGISTER' | 'OFFERING.CREATE' | 'OFFERING.DELETE' | 'OFFERING.UPDATE_THUMBNAIL' | 'OFFERING.UPDATE' | 'OFFERING.UPDATE_ATTRIBUTES' | 'OFFERING.UPDATE_LOCATION' | 'OFFERING.UPDATE_DESCRIPTION' | 'OFFERING.UPDATE_OPTIONS' | 'OFFERING.UPDATE_INTEGRATION' | 'OFFERING.ADD_ENDPOINT' | 'OFFERING.DELETE_ENDPOINT' | 'OFFERING.UPDATE_COMPONENTS' | 'OFFERING.PAUSE' | 'OFFERING.UNPAUSE' | 'OFFERING.ARCHIVE' | 'OFFERING.DRY_RUN_SCRIPT' | 'OFFERING.MANAGE_CAMPAIGN' | 'OFFERING.MANAGE_USER_GROUP' | 'OFFERING.CREATE_PLAN' | 'OFFERING.UPDATE_PLAN' | 'OFFERING.ARCHIVE_PLAN' | 'OFFERING.CREATE_SCREENSHOT' | 'OFFERING.UPDATE_SCREENSHOT' | 'OFFERING.DELETE_SCREENSHOT' | 'OFFERING.CREATE_USER' | 'OFFERING.UPDATE_USER' | 'OFFERING.DELETE_USER' | 'OFFERING.MANAGE_USER_ROLE' | 'RESOURCE.CREATE_ROBOT_ACCOUNT' | 'RESOURCE.UPDATE_ROBOT_ACCOUNT' | 'RESOURCE.DELETE_ROBOT_ACCOUNT' | 'ORDER.LIST' | 'ORDER.CREATE' | 'ORDER.APPROVE_PRIVATE' | 'ORDER.APPROVE' | 'ORDER.REJECT' | 'ORDER.DESTROY' | 'ORDER.CANCEL' | 'RESOURCE.LIST' | 'RESOURCE.UPDATE' | 'RESOURCE.TERMINATE' | 'RESOURCE.LIST_IMPORTABLE' | 'RESOURCE.SET_END_DATE' | 'RESOURCE.SET_USAGE' | 'RESOURCE.SET_PLAN' | 'RESOURCE.SET_LIMITS' | 'RESOURCE.SET_BACKEND_ID' | 'RESOURCE.SUBMIT_REPORT' | 'RESOURCE.SET_BACKEND_METADATA' | 'RESOURCE.SET_STATE' | 'RESOURCE.UPDATE_OPTIONS' | 'RESOURCE.ACCEPT_BOOKING_REQUEST' | 'RESOURCE.REJECT_BOOKING_REQUEST' | 'RESOURCE.MANAGE_USERS' | 'RESOURCE.CONSUMPTION_LIMITATION' | 'OFFERING.MANAGE_BACKEND_RESOURCES' | 'SERVICE_PROVIDER.GET_API_SECRET_CODE' | 'SERVICE_PROVIDER.GENERATE_API_SECRET_CODE' | 'SERVICE_PROVIDER.LIST_CUSTOMERS' | 'SERVICE_PROVIDER.LIST_CUSTOMER_PROJECTS' | 'SERVICE_PROVIDER.LIST_PROJECTS' | 'SERVICE_PROVIDER.LIST_PROJECT_PERMISSIONS' | 'SERVICE_PROVIDER.LIST_KEYS' | 'SERVICE_PROVIDER.LIST_USERS' | 'SERVICE_PROVIDER.LIST_USER_CUSTOMERS' | 'SERVICE_PROVIDER.LIST_SERVICE_ACCOUNTS' | 'SERVICE_PROVIDER.LIST_COURSE_ACCOUNTS' | 'SERVICE_PROVIDER.SET_OFFERINGS_USERNAME' | 'SERVICE_PROVIDER.GET_STATISTICS' | 'SERVICE_PROVIDER.GET_REVENUE' | 'SERVICE_PROVIDER.GET_ROBOT_ACCOUNT_CUSTOMERS' | 'SERVICE_PROVIDER.GET_ROBOT_ACCOUNT_PROJECTS' | 'PROJECT.CREATE_PERMISSION' | 'CUSTOMER.CREATE_PERMISSION' | 'OFFERING.CREATE_PERMISSION' | 'CALL.CREATE_PERMISSION' | 'PROPOSAL.MANAGE' | 'PROPOSAL.MANAGE_REVIEW' | 'PROJECT.UPDATE_PERMISSION' | 'CUSTOMER.UPDATE_PERMISSION' | 'OFFERING.UPDATE_PERMISSION' | 'CALL.UPDATE_PERMISSION' | 'PROPOSAL.UPDATE_PERMISSION' | 'PROJECT.DELETE_PERMISSION' | 'CUSTOMER.DELETE_PERMISSION' | 'OFFERING.DELETE_PERMISSION' | 'CALL.DELETE_PERMISSION' | 'PROPOSAL.DELETE_PERMISSION' | 'LEXIS_LINK.CREATE' | 'LEXIS_LINK.DELETE' | 'PROJECT.LIST' | 'PROJECT.CREATE' | 'PROJECT.DELETE' | 'PROJECT.UPDATE' | 'PROJECT.UPDATE_METADATA' | 'PROJECT.REVIEW_MEMBERSHIP' | 'CUSTOMER.UPDATE' | 'CUSTOMER.CONTACT_UPDATE' | 'CUSTOMER.LIST_USERS' | 'OFFERING.ACCEPT_CALL_REQUEST' | 'CALL.APPROVE_AND_REJECT_PROPOSALS' | 'CALL.CLOSE_ROUNDS' | 'ACCESS_SUBNET.CREATE' | 'ACCESS_SUBNET.UPDATE' | 'ACCESS_SUBNET.DELETE' | 'OFFERINGUSER.UPDATE_RESTRICTION' | 'INVITATION.LIST' | 'CUSTOMER.LIST_PERMISSION_REVIEWS' | 'CALL.LIST' | 'CALL.CREATE' | 'CALL.UPDATE' | 'ROUND.LIST' | 'PROPOSAL.LIST' | 'SERVICE_ACCOUNT.MANAGE' | 'PROJECT.COURSE_ACCOUNT_MANAGE' | 'SERVICE_PROVIDER.OPENSTACK_IMAGE_MANAGEMENT' | 'OPENSTACK_INSTANCE.CONSOLE_ACCESS' | 'OPENSTACK_INSTANCE.MANAGE_POWER' | 'OPENSTACK_INSTANCE.MANAGE' | 'STAFF.ACCESS' | 'SUPPORT.ACCESS';
+        [key: string]: 'SERVICE_PROVIDER.REGISTER' | 'OFFERING.CREATE' | 'OFFERING.DELETE' | 'OFFERING.UPDATE_THUMBNAIL' | 'OFFERING.UPDATE' | 'OFFERING.UPDATE_ATTRIBUTES' | 'OFFERING.UPDATE_LOCATION' | 'OFFERING.UPDATE_DESCRIPTION' | 'OFFERING.UPDATE_OPTIONS' | 'OFFERING.UPDATE_INTEGRATION' | 'OFFERING.ADD_ENDPOINT' | 'OFFERING.DELETE_ENDPOINT' | 'OFFERING.UPDATE_COMPONENTS' | 'OFFERING.PAUSE' | 'OFFERING.UNPAUSE' | 'OFFERING.ARCHIVE' | 'OFFERING.DRY_RUN_SCRIPT' | 'OFFERING.MANAGE_CAMPAIGN' | 'OFFERING.MANAGE_USER_GROUP' | 'OFFERING.CREATE_PLAN' | 'OFFERING.UPDATE_PLAN' | 'OFFERING.ARCHIVE_PLAN' | 'OFFERING.CREATE_SCREENSHOT' | 'OFFERING.UPDATE_SCREENSHOT' | 'OFFERING.DELETE_SCREENSHOT' | 'OFFERING.CREATE_USER' | 'OFFERING.UPDATE_USER' | 'OFFERING.DELETE_USER' | 'OFFERING.MANAGE_USER_ROLE' | 'RESOURCE.CREATE_ROBOT_ACCOUNT' | 'RESOURCE.UPDATE_ROBOT_ACCOUNT' | 'RESOURCE.DELETE_ROBOT_ACCOUNT' | 'ORDER.LIST' | 'ORDER.CREATE' | 'ORDER.APPROVE_PRIVATE' | 'ORDER.APPROVE' | 'ORDER.REJECT' | 'ORDER.DESTROY' | 'ORDER.CANCEL' | 'RESOURCE.LIST' | 'RESOURCE.UPDATE' | 'RESOURCE.TERMINATE' | 'RESOURCE.LIST_IMPORTABLE' | 'RESOURCE.SET_END_DATE' | 'RESOURCE.SET_USAGE' | 'RESOURCE.SET_PLAN' | 'RESOURCE.SET_LIMITS' | 'RESOURCE.SET_BACKEND_ID' | 'RESOURCE.SUBMIT_REPORT' | 'RESOURCE.SET_BACKEND_METADATA' | 'RESOURCE.SET_STATE' | 'RESOURCE.UPDATE_OPTIONS' | 'RESOURCE.ACCEPT_BOOKING_REQUEST' | 'RESOURCE.REJECT_BOOKING_REQUEST' | 'RESOURCE.MANAGE_USERS' | 'RESOURCE.CONSUMPTION_LIMITATION' | 'OFFERING.MANAGE_BACKEND_RESOURCES' | 'SERVICE_PROVIDER.GET_API_SECRET_CODE' | 'SERVICE_PROVIDER.GENERATE_API_SECRET_CODE' | 'SERVICE_PROVIDER.LIST_CUSTOMERS' | 'SERVICE_PROVIDER.LIST_CUSTOMER_PROJECTS' | 'SERVICE_PROVIDER.LIST_PROJECTS' | 'SERVICE_PROVIDER.LIST_PROJECT_PERMISSIONS' | 'SERVICE_PROVIDER.LIST_KEYS' | 'SERVICE_PROVIDER.LIST_USERS' | 'SERVICE_PROVIDER.LIST_USER_CUSTOMERS' | 'SERVICE_PROVIDER.LIST_SERVICE_ACCOUNTS' | 'SERVICE_PROVIDER.LIST_COURSE_ACCOUNTS' | 'SERVICE_PROVIDER.SET_OFFERINGS_USERNAME' | 'SERVICE_PROVIDER.GET_STATISTICS' | 'SERVICE_PROVIDER.GET_REVENUE' | 'SERVICE_PROVIDER.GET_ROBOT_ACCOUNT_CUSTOMERS' | 'SERVICE_PROVIDER.GET_ROBOT_ACCOUNT_PROJECTS' | 'PROJECT.CREATE_PERMISSION' | 'CUSTOMER.CREATE_PERMISSION' | 'OFFERING.CREATE_PERMISSION' | 'CALL.CREATE_PERMISSION' | 'PROPOSAL.MANAGE' | 'PROPOSAL.MANAGE_REVIEW' | 'PROJECT.UPDATE_PERMISSION' | 'CUSTOMER.UPDATE_PERMISSION' | 'OFFERING.UPDATE_PERMISSION' | 'CALL.UPDATE_PERMISSION' | 'PROPOSAL.UPDATE_PERMISSION' | 'PROJECT.DELETE_PERMISSION' | 'CUSTOMER.DELETE_PERMISSION' | 'OFFERING.DELETE_PERMISSION' | 'CALL.DELETE_PERMISSION' | 'PROPOSAL.DELETE_PERMISSION' | 'LEXIS_LINK.CREATE' | 'LEXIS_LINK.DELETE' | 'PROJECT.LIST' | 'PROJECT.CREATE' | 'PROJECT.DELETE' | 'PROJECT.UPDATE' | 'PROJECT.UPDATE_METADATA' | 'PROJECT.REVIEW_MEMBERSHIP' | 'CUSTOMER.UPDATE' | 'CUSTOMER.CONTACT_UPDATE' | 'CUSTOMER.LIST_USERS' | 'OFFERING.ACCEPT_CALL_REQUEST' | 'CALL.APPROVE_AND_REJECT_PROPOSALS' | 'CALL.CLOSE_ROUNDS' | 'ACCESS_SUBNET.CREATE' | 'ACCESS_SUBNET.UPDATE' | 'ACCESS_SUBNET.DELETE' | 'OFFERINGUSER.UPDATE_RESTRICTION' | 'INVITATION.LIST' | 'CUSTOMER.LIST_PERMISSION_REVIEWS' | 'CALL.LIST' | 'CALL.CREATE' | 'CALL.UPDATE' | 'ROUND.LIST' | 'PROPOSAL.LIST' | 'SERVICE_ACCOUNT.MANAGE' | 'PROJECT.COURSE_ACCOUNT_MANAGE' | 'SERVICE_PROVIDER.OPENSTACK_IMAGE_MANAGEMENT' | 'OPENSTACK_INSTANCE.CONSOLE_ACCESS' | 'OPENSTACK_INSTANCE.MANAGE_POWER' | 'OPENSTACK_INSTANCE.MANAGE' | 'OPENSTACK_ROUTER.MANAGE_GATEWAY' | 'STAFF.ACCESS' | 'SUPPORT.ACCESS';
     };
     /**
      * Map of resource types to create permission enums
      */
     permission_map: {
-        [key: string]: 'SERVICE_PROVIDER.REGISTER' | 'OFFERING.CREATE' | 'OFFERING.DELETE' | 'OFFERING.UPDATE_THUMBNAIL' | 'OFFERING.UPDATE' | 'OFFERING.UPDATE_ATTRIBUTES' | 'OFFERING.UPDATE_LOCATION' | 'OFFERING.UPDATE_DESCRIPTION' | 'OFFERING.UPDATE_OPTIONS' | 'OFFERING.UPDATE_INTEGRATION' | 'OFFERING.ADD_ENDPOINT' | 'OFFERING.DELETE_ENDPOINT' | 'OFFERING.UPDATE_COMPONENTS' | 'OFFERING.PAUSE' | 'OFFERING.UNPAUSE' | 'OFFERING.ARCHIVE' | 'OFFERING.DRY_RUN_SCRIPT' | 'OFFERING.MANAGE_CAMPAIGN' | 'OFFERING.MANAGE_USER_GROUP' | 'OFFERING.CREATE_PLAN' | 'OFFERING.UPDATE_PLAN' | 'OFFERING.ARCHIVE_PLAN' | 'OFFERING.CREATE_SCREENSHOT' | 'OFFERING.UPDATE_SCREENSHOT' | 'OFFERING.DELETE_SCREENSHOT' | 'OFFERING.CREATE_USER' | 'OFFERING.UPDATE_USER' | 'OFFERING.DELETE_USER' | 'OFFERING.MANAGE_USER_ROLE' | 'RESOURCE.CREATE_ROBOT_ACCOUNT' | 'RESOURCE.UPDATE_ROBOT_ACCOUNT' | 'RESOURCE.DELETE_ROBOT_ACCOUNT' | 'ORDER.LIST' | 'ORDER.CREATE' | 'ORDER.APPROVE_PRIVATE' | 'ORDER.APPROVE' | 'ORDER.REJECT' | 'ORDER.DESTROY' | 'ORDER.CANCEL' | 'RESOURCE.LIST' | 'RESOURCE.UPDATE' | 'RESOURCE.TERMINATE' | 'RESOURCE.LIST_IMPORTABLE' | 'RESOURCE.SET_END_DATE' | 'RESOURCE.SET_USAGE' | 'RESOURCE.SET_PLAN' | 'RESOURCE.SET_LIMITS' | 'RESOURCE.SET_BACKEND_ID' | 'RESOURCE.SUBMIT_REPORT' | 'RESOURCE.SET_BACKEND_METADATA' | 'RESOURCE.SET_STATE' | 'RESOURCE.UPDATE_OPTIONS' | 'RESOURCE.ACCEPT_BOOKING_REQUEST' | 'RESOURCE.REJECT_BOOKING_REQUEST' | 'RESOURCE.MANAGE_USERS' | 'RESOURCE.CONSUMPTION_LIMITATION' | 'OFFERING.MANAGE_BACKEND_RESOURCES' | 'SERVICE_PROVIDER.GET_API_SECRET_CODE' | 'SERVICE_PROVIDER.GENERATE_API_SECRET_CODE' | 'SERVICE_PROVIDER.LIST_CUSTOMERS' | 'SERVICE_PROVIDER.LIST_CUSTOMER_PROJECTS' | 'SERVICE_PROVIDER.LIST_PROJECTS' | 'SERVICE_PROVIDER.LIST_PROJECT_PERMISSIONS' | 'SERVICE_PROVIDER.LIST_KEYS' | 'SERVICE_PROVIDER.LIST_USERS' | 'SERVICE_PROVIDER.LIST_USER_CUSTOMERS' | 'SERVICE_PROVIDER.LIST_SERVICE_ACCOUNTS' | 'SERVICE_PROVIDER.LIST_COURSE_ACCOUNTS' | 'SERVICE_PROVIDER.SET_OFFERINGS_USERNAME' | 'SERVICE_PROVIDER.GET_STATISTICS' | 'SERVICE_PROVIDER.GET_REVENUE' | 'SERVICE_PROVIDER.GET_ROBOT_ACCOUNT_CUSTOMERS' | 'SERVICE_PROVIDER.GET_ROBOT_ACCOUNT_PROJECTS' | 'PROJECT.CREATE_PERMISSION' | 'CUSTOMER.CREATE_PERMISSION' | 'OFFERING.CREATE_PERMISSION' | 'CALL.CREATE_PERMISSION' | 'PROPOSAL.MANAGE' | 'PROPOSAL.MANAGE_REVIEW' | 'PROJECT.UPDATE_PERMISSION' | 'CUSTOMER.UPDATE_PERMISSION' | 'OFFERING.UPDATE_PERMISSION' | 'CALL.UPDATE_PERMISSION' | 'PROPOSAL.UPDATE_PERMISSION' | 'PROJECT.DELETE_PERMISSION' | 'CUSTOMER.DELETE_PERMISSION' | 'OFFERING.DELETE_PERMISSION' | 'CALL.DELETE_PERMISSION' | 'PROPOSAL.DELETE_PERMISSION' | 'LEXIS_LINK.CREATE' | 'LEXIS_LINK.DELETE' | 'PROJECT.LIST' | 'PROJECT.CREATE' | 'PROJECT.DELETE' | 'PROJECT.UPDATE' | 'PROJECT.UPDATE_METADATA' | 'PROJECT.REVIEW_MEMBERSHIP' | 'CUSTOMER.UPDATE' | 'CUSTOMER.CONTACT_UPDATE' | 'CUSTOMER.LIST_USERS' | 'OFFERING.ACCEPT_CALL_REQUEST' | 'CALL.APPROVE_AND_REJECT_PROPOSALS' | 'CALL.CLOSE_ROUNDS' | 'ACCESS_SUBNET.CREATE' | 'ACCESS_SUBNET.UPDATE' | 'ACCESS_SUBNET.DELETE' | 'OFFERINGUSER.UPDATE_RESTRICTION' | 'INVITATION.LIST' | 'CUSTOMER.LIST_PERMISSION_REVIEWS' | 'CALL.LIST' | 'CALL.CREATE' | 'CALL.UPDATE' | 'ROUND.LIST' | 'PROPOSAL.LIST' | 'SERVICE_ACCOUNT.MANAGE' | 'PROJECT.COURSE_ACCOUNT_MANAGE' | 'SERVICE_PROVIDER.OPENSTACK_IMAGE_MANAGEMENT' | 'OPENSTACK_INSTANCE.CONSOLE_ACCESS' | 'OPENSTACK_INSTANCE.MANAGE_POWER' | 'OPENSTACK_INSTANCE.MANAGE' | 'STAFF.ACCESS' | 'SUPPORT.ACCESS';
+        [key: string]: 'SERVICE_PROVIDER.REGISTER' | 'OFFERING.CREATE' | 'OFFERING.DELETE' | 'OFFERING.UPDATE_THUMBNAIL' | 'OFFERING.UPDATE' | 'OFFERING.UPDATE_ATTRIBUTES' | 'OFFERING.UPDATE_LOCATION' | 'OFFERING.UPDATE_DESCRIPTION' | 'OFFERING.UPDATE_OPTIONS' | 'OFFERING.UPDATE_INTEGRATION' | 'OFFERING.ADD_ENDPOINT' | 'OFFERING.DELETE_ENDPOINT' | 'OFFERING.UPDATE_COMPONENTS' | 'OFFERING.PAUSE' | 'OFFERING.UNPAUSE' | 'OFFERING.ARCHIVE' | 'OFFERING.DRY_RUN_SCRIPT' | 'OFFERING.MANAGE_CAMPAIGN' | 'OFFERING.MANAGE_USER_GROUP' | 'OFFERING.CREATE_PLAN' | 'OFFERING.UPDATE_PLAN' | 'OFFERING.ARCHIVE_PLAN' | 'OFFERING.CREATE_SCREENSHOT' | 'OFFERING.UPDATE_SCREENSHOT' | 'OFFERING.DELETE_SCREENSHOT' | 'OFFERING.CREATE_USER' | 'OFFERING.UPDATE_USER' | 'OFFERING.DELETE_USER' | 'OFFERING.MANAGE_USER_ROLE' | 'RESOURCE.CREATE_ROBOT_ACCOUNT' | 'RESOURCE.UPDATE_ROBOT_ACCOUNT' | 'RESOURCE.DELETE_ROBOT_ACCOUNT' | 'ORDER.LIST' | 'ORDER.CREATE' | 'ORDER.APPROVE_PRIVATE' | 'ORDER.APPROVE' | 'ORDER.REJECT' | 'ORDER.DESTROY' | 'ORDER.CANCEL' | 'RESOURCE.LIST' | 'RESOURCE.UPDATE' | 'RESOURCE.TERMINATE' | 'RESOURCE.LIST_IMPORTABLE' | 'RESOURCE.SET_END_DATE' | 'RESOURCE.SET_USAGE' | 'RESOURCE.SET_PLAN' | 'RESOURCE.SET_LIMITS' | 'RESOURCE.SET_BACKEND_ID' | 'RESOURCE.SUBMIT_REPORT' | 'RESOURCE.SET_BACKEND_METADATA' | 'RESOURCE.SET_STATE' | 'RESOURCE.UPDATE_OPTIONS' | 'RESOURCE.ACCEPT_BOOKING_REQUEST' | 'RESOURCE.REJECT_BOOKING_REQUEST' | 'RESOURCE.MANAGE_USERS' | 'RESOURCE.CONSUMPTION_LIMITATION' | 'OFFERING.MANAGE_BACKEND_RESOURCES' | 'SERVICE_PROVIDER.GET_API_SECRET_CODE' | 'SERVICE_PROVIDER.GENERATE_API_SECRET_CODE' | 'SERVICE_PROVIDER.LIST_CUSTOMERS' | 'SERVICE_PROVIDER.LIST_CUSTOMER_PROJECTS' | 'SERVICE_PROVIDER.LIST_PROJECTS' | 'SERVICE_PROVIDER.LIST_PROJECT_PERMISSIONS' | 'SERVICE_PROVIDER.LIST_KEYS' | 'SERVICE_PROVIDER.LIST_USERS' | 'SERVICE_PROVIDER.LIST_USER_CUSTOMERS' | 'SERVICE_PROVIDER.LIST_SERVICE_ACCOUNTS' | 'SERVICE_PROVIDER.LIST_COURSE_ACCOUNTS' | 'SERVICE_PROVIDER.SET_OFFERINGS_USERNAME' | 'SERVICE_PROVIDER.GET_STATISTICS' | 'SERVICE_PROVIDER.GET_REVENUE' | 'SERVICE_PROVIDER.GET_ROBOT_ACCOUNT_CUSTOMERS' | 'SERVICE_PROVIDER.GET_ROBOT_ACCOUNT_PROJECTS' | 'PROJECT.CREATE_PERMISSION' | 'CUSTOMER.CREATE_PERMISSION' | 'OFFERING.CREATE_PERMISSION' | 'CALL.CREATE_PERMISSION' | 'PROPOSAL.MANAGE' | 'PROPOSAL.MANAGE_REVIEW' | 'PROJECT.UPDATE_PERMISSION' | 'CUSTOMER.UPDATE_PERMISSION' | 'OFFERING.UPDATE_PERMISSION' | 'CALL.UPDATE_PERMISSION' | 'PROPOSAL.UPDATE_PERMISSION' | 'PROJECT.DELETE_PERMISSION' | 'CUSTOMER.DELETE_PERMISSION' | 'OFFERING.DELETE_PERMISSION' | 'CALL.DELETE_PERMISSION' | 'PROPOSAL.DELETE_PERMISSION' | 'LEXIS_LINK.CREATE' | 'LEXIS_LINK.DELETE' | 'PROJECT.LIST' | 'PROJECT.CREATE' | 'PROJECT.DELETE' | 'PROJECT.UPDATE' | 'PROJECT.UPDATE_METADATA' | 'PROJECT.REVIEW_MEMBERSHIP' | 'CUSTOMER.UPDATE' | 'CUSTOMER.CONTACT_UPDATE' | 'CUSTOMER.LIST_USERS' | 'OFFERING.ACCEPT_CALL_REQUEST' | 'CALL.APPROVE_AND_REJECT_PROPOSALS' | 'CALL.CLOSE_ROUNDS' | 'ACCESS_SUBNET.CREATE' | 'ACCESS_SUBNET.UPDATE' | 'ACCESS_SUBNET.DELETE' | 'OFFERINGUSER.UPDATE_RESTRICTION' | 'INVITATION.LIST' | 'CUSTOMER.LIST_PERMISSION_REVIEWS' | 'CALL.LIST' | 'CALL.CREATE' | 'CALL.UPDATE' | 'ROUND.LIST' | 'PROPOSAL.LIST' | 'SERVICE_ACCOUNT.MANAGE' | 'PROJECT.COURSE_ACCOUNT_MANAGE' | 'SERVICE_PROVIDER.OPENSTACK_IMAGE_MANAGEMENT' | 'OPENSTACK_INSTANCE.CONSOLE_ACCESS' | 'OPENSTACK_INSTANCE.MANAGE_POWER' | 'OPENSTACK_INSTANCE.MANAGE' | 'OPENSTACK_ROUTER.MANAGE_GATEWAY' | 'STAFF.ACCESS' | 'SUPPORT.ACCESS';
     };
     /**
      * Grouped permission descriptions for UI
@@ -21189,7 +21213,7 @@ export type RancherApplication = {
     readonly created?: string;
     readonly modified?: string;
     backend_id?: string;
-    readonly access_url?: string | null;
+    access_url?: Array<string> | string | null;
     runtime_state?: string;
     template?: string;
     rancher_project?: string;
@@ -21336,7 +21360,7 @@ export type RancherCluster = {
     readonly created?: string;
     readonly modified?: string;
     readonly backend_id?: string;
-    readonly access_url?: string | null;
+    access_url?: Array<string> | string | null;
     nodes?: Array<RancherNestedNode>;
     tenant?: string;
     readonly tenant_uuid?: string;
@@ -21569,7 +21593,7 @@ export type RancherIngress = {
     readonly created?: string;
     readonly modified?: string;
     backend_id?: string;
-    readonly access_url?: string | null;
+    access_url?: Array<string> | string | null;
     runtime_state?: string;
     rancher_project?: string;
     readonly rancher_project_name?: string;
@@ -21771,7 +21795,7 @@ export type RancherService = {
     readonly created?: string;
     readonly modified?: string;
     backend_id?: string;
-    readonly access_url?: string | null;
+    access_url?: Array<string> | string | null;
     runtime_state?: string;
     namespace?: string;
     readonly namespace_name?: string;
@@ -21821,7 +21845,7 @@ export type RancherServiceCreate = {
     readonly created: string;
     readonly modified: string;
     backend_id?: string;
-    readonly access_url: string | null;
+    access_url: Array<string> | string | null;
     runtime_state?: string;
     namespace?: string;
     readonly namespace_name: string;
@@ -22060,7 +22084,7 @@ export type RemoteAllocation = {
     readonly created?: string;
     readonly modified?: string;
     readonly backend_id?: string;
-    readonly access_url?: string | null;
+    access_url?: Array<string> | string | null;
     node_limit?: number;
     /**
      * The identifier of the project in the remote OpenPortal instance.
@@ -24619,6 +24643,23 @@ export type SetErredResponse = {
     detail: string;
 };
 
+export type SetExternalGatewayRequest = {
+    /**
+     * Backend ID (OpenStack UUID) of the external network.
+     */
+    external_network_id: string;
+    /**
+     * Whether to enable SNAT on the gateway. None means use OpenStack default (True). Requires advanced permissions.
+     */
+    enable_snat?: boolean | null;
+    /**
+     * List of fixed IP specifications for the gateway port. Each entry should have 'ip_address' and optionally 'subnet_id'. Requires advanced permissions.
+     */
+    external_fixed_ips?: Array<{
+        [key: string]: unknown;
+    }>;
+};
+
 export type SetMtu = {
     mtu: number;
 };
@@ -24726,7 +24767,7 @@ export type SlurmAllocation = {
     readonly created?: string;
     readonly modified?: string;
     readonly backend_id?: string;
-    readonly access_url?: string | null;
+    access_url?: Array<string> | string | null;
     readonly cpu_limit?: number;
     readonly cpu_usage?: number;
     readonly gpu_limit?: number;
@@ -27025,7 +27066,7 @@ export type VmwareDisk = {
     readonly created?: string;
     readonly modified?: string;
     readonly backend_id?: string;
-    readonly access_url?: string | null;
+    access_url?: Array<string> | string | null;
     /**
      * Size in MiB
      */
@@ -27153,7 +27194,7 @@ export type VmwarePort = {
     readonly created?: string;
     readonly modified?: string;
     readonly backend_id?: string;
-    readonly access_url?: string | null;
+    access_url?: Array<string> | string | null;
     readonly mac_address?: string;
     readonly vm?: string;
     readonly vm_uuid?: string;
@@ -27235,7 +27276,7 @@ export type VmwareVirtualMachine = {
     readonly created?: string;
     readonly modified?: string;
     readonly backend_id?: string;
-    readonly access_url?: string | null;
+    access_url?: Array<string> | string | null;
     guest_os?: GuestOsEnum | NullEnum | null;
     readonly guest_os_name?: string;
     /**
@@ -29770,7 +29811,7 @@ export type OpenStackPortFieldEnum = 'access_url' | 'admin_state_up' | 'allowed_
 
 export type OpenStackPortOEnum = '-admin_state_up' | '-created' | '-device_owner' | '-instance_name' | '-mac_address' | '-name' | '-network_name' | '-status' | '-subnet_name' | 'admin_state_up' | 'created' | 'device_owner' | 'instance_name' | 'mac_address' | 'name' | 'network_name' | 'status' | 'subnet_name';
 
-export type OpenStackRouterFieldEnum = 'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'fixed_ips' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'offering_external_ips' | 'ports' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'routes' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'tenant' | 'tenant_name' | 'tenant_uuid' | 'url' | 'uuid';
+export type OpenStackRouterFieldEnum = 'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'enable_snat' | 'error_message' | 'error_traceback' | 'external_fixed_ips' | 'external_network_id' | 'external_network_name' | 'external_network_uuid' | 'fixed_ips' | 'has_external_gateway' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'offering_external_ips' | 'ports' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'routes' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'tenant' | 'tenant_name' | 'tenant_uuid' | 'url' | 'uuid';
 
 export type OpenStackSecurityGroupFieldEnum = 'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'rules' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'tenant' | 'tenant_name' | 'tenant_uuid' | 'url' | 'uuid';
 
@@ -72733,6 +72774,68 @@ export type OpenstackRoutersAddRouterInterfaceResponses = {
     200: unknown;
 };
 
+export type OpenstackRoutersAvailableExternalNetworksListData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * Name
+         */
+        name?: string;
+        /**
+         * Name (exact)
+         */
+        name_exact?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * State
+         *
+         *
+         */
+        state?: Array<CoreStates>;
+        /**
+         * Tenant URL
+         */
+        tenant?: string;
+        /**
+         * Tenant UUID
+         */
+        tenant_uuid?: string;
+    };
+    url: '/api/openstack-routers/{uuid}/available_external_networks/';
+};
+
+export type OpenstackRoutersAvailableExternalNetworksListResponses = {
+    200: Array<AvailableExternalNetwork>;
+};
+
+export type OpenstackRoutersAvailableExternalNetworksListResponse = OpenstackRoutersAvailableExternalNetworksListResponses[keyof OpenstackRoutersAvailableExternalNetworksListResponses];
+
+export type OpenstackRoutersRemoveExternalGatewayData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openstack-routers/{uuid}/remove_external_gateway/';
+};
+
+export type OpenstackRoutersRemoveExternalGatewayResponses = {
+    /**
+     * No response body
+     */
+    202: unknown;
+};
+
 export type OpenstackRoutersRemoveRouterInterfaceData = {
     body?: OpenStackRouterInterfaceRequest;
     path: {
@@ -72763,6 +72866,22 @@ export type OpenstackRoutersSetErredResponses = {
 };
 
 export type OpenstackRoutersSetErredResponse = OpenstackRoutersSetErredResponses[keyof OpenstackRoutersSetErredResponses];
+
+export type OpenstackRoutersSetExternalGatewayData = {
+    body: SetExternalGatewayRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openstack-routers/{uuid}/set_external_gateway/';
+};
+
+export type OpenstackRoutersSetExternalGatewayResponses = {
+    /**
+     * No response body
+     */
+    202: unknown;
+};
 
 export type OpenstackRoutersSetOkData = {
     body?: never;
