@@ -12182,6 +12182,7 @@ export type OfferingComplianceChecklistUpdateRequest = {
 
 export type OfferingComponent = {
     readonly uuid?: string;
+    readonly offering_uuid?: string;
     billing_type?: BillingTypeEnum;
     /**
      * Unique internal name of the measured unit, for example floating_ip.
