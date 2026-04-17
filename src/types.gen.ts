@@ -2,6 +2,27 @@
 
 export type AiassistantenabledrolesEnum = 'disabled' | 'staff' | 'staff_and_support' | 'all';
 
+export type AccessProject = {
+    name: string;
+    resources: Array<AccessResource>;
+};
+
+export type AccessResource = {
+    name: string;
+    username: string;
+};
+
+export type AccessResponse = {
+    email: string;
+    status: string;
+    short_name: string;
+    projects: {
+        [key: string]: AccessProject;
+    };
+    invited_by: string;
+    reason: string;
+};
+
 export type AccessSubnet = {
     readonly uuid: string;
     inet: string;
@@ -68226,6 +68247,24 @@ export type OpenportalUserinfoMeCountResponses = {
      */
     200: unknown;
 };
+
+export type OpenportalAccessForEmailListData = {
+    body?: never;
+    path?: never;
+    query: {
+        /**
+         * Free text search query (email, short_name, project_name, or project_id)
+         */
+        q: string;
+    };
+    url: '/api/openportal/access_for_email/';
+};
+
+export type OpenportalAccessForEmailListResponses = {
+    200: Array<AccessResponse>;
+};
+
+export type OpenportalAccessForEmailListResponse = OpenportalAccessForEmailListResponses[keyof OpenportalAccessForEmailListResponses];
 
 export type OpenstackBackupsListData = {
     body?: never;
