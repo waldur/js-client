@@ -12799,6 +12799,13 @@ export type OfferingLocationUpdateRequest = {
     longitude: number;
 };
 
+export type OfferingMappingResponse = {
+    uuid: string;
+    name: string;
+    description: string;
+    slug: string;
+};
+
 export type OfferingOptions = {
     order?: Array<string>;
     options?: {
@@ -19415,6 +19422,13 @@ export type ProjectInfoRequest = {
      * A comma-separated list of allowable destinations of instances that              can be attached to this project. For example, a project may only allow              'brics.aip1.*', meaning that only instances that start with 'brics.aip1.'              can be attached to this project.
      */
     allowed_destinations?: string | null;
+};
+
+export type ProjectMappingResponse = {
+    uuid: string;
+    name: string;
+    customer_uuid: string;
+    customer_name: string;
 };
 
 export type ProjectPermissionLog = {
@@ -26732,6 +26746,13 @@ export type UserJobTitleCount = {
 export type UserLanguageCount = {
     language: string;
     count: number;
+};
+
+export type UserMappingResponse = {
+    uuid: string;
+    full_name: string;
+    email: string;
+    username: string;
 };
 
 export type UserNationalityStats = {
@@ -68345,6 +68366,60 @@ export type OpenportalAccessForEmailListResponses = {
 };
 
 export type OpenportalAccessForEmailListResponse = OpenportalAccessForEmailListResponses[keyof OpenportalAccessForEmailListResponses];
+
+export type OpenportalOfferingMappingRetrieveData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * OpenPortal destination string (repeatable).
+         */
+        identifier?: Array<string>;
+    };
+    url: '/api/openportal/offering_mapping/';
+};
+
+export type OpenportalOfferingMappingRetrieveResponses = {
+    200: OfferingMappingResponse;
+};
+
+export type OpenportalOfferingMappingRetrieveResponse = OpenportalOfferingMappingRetrieveResponses[keyof OpenportalOfferingMappingRetrieveResponses];
+
+export type OpenportalProjectMappingRetrieveData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * OpenPortal ProjectIdentifier string (repeatable).
+         */
+        identifier?: Array<string>;
+    };
+    url: '/api/openportal/project_mapping/';
+};
+
+export type OpenportalProjectMappingRetrieveResponses = {
+    200: ProjectMappingResponse;
+};
+
+export type OpenportalProjectMappingRetrieveResponse = OpenportalProjectMappingRetrieveResponses[keyof OpenportalProjectMappingRetrieveResponses];
+
+export type OpenportalUserMappingRetrieveData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * OpenPortal UserIdentifier string or email address (repeatable). All values in a single request must be the same type.
+         */
+        identifier?: Array<string>;
+    };
+    url: '/api/openportal/user_mapping/';
+};
+
+export type OpenportalUserMappingRetrieveResponses = {
+    200: UserMappingResponse;
+};
+
+export type OpenportalUserMappingRetrieveResponse = OpenportalUserMappingRetrieveResponses[keyof OpenportalUserMappingRetrieveResponses];
 
 export type OpenstackBackupsListData = {
     body?: never;
