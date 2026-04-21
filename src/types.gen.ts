@@ -191,10 +191,6 @@ export type AffiliatedOrganizationStats = {
     estimated_monthly_cost: string;
 };
 
-export type AffiliatedOrganizationsUpdateRequest = {
-    affiliated_organizations?: Array<string>;
-};
-
 export type AffiliationTypeEnum = 'employment' | 'education' | 'visiting' | 'honorary' | 'consulting';
 
 export type AffinityMatrixEntry = {
@@ -19142,6 +19138,10 @@ export type ProjectAccountingSummary = {
     readonly current_month_spend: string;
 };
 
+export type ProjectAffiliatedOrganizationsUpdateRequest = {
+    affiliated_organizations?: Array<string>;
+};
+
 export type ProjectAnswer = {
     readonly project_uuid: string;
     readonly project_name: string;
@@ -32768,10 +32768,6 @@ export type AwsInstancesListData = {
          *
          */
         state?: Array<CoreStates>;
-        /**
-         * UUID
-         */
-        uuid?: string;
     };
     url: '/api/aws-instances/';
 };
@@ -32861,10 +32857,6 @@ export type AwsInstancesCountData = {
          *
          */
         state?: Array<CoreStates>;
-        /**
-         * UUID
-         */
-        uuid?: string;
     };
     url: '/api/aws-instances/';
 };
@@ -33739,10 +33731,6 @@ export type AzurePublicIpsListData = {
          *
          */
         state?: Array<CoreStates>;
-        /**
-         * UUID
-         */
-        uuid?: string;
     };
     url: '/api/azure-public-ips/';
 };
@@ -33837,10 +33825,6 @@ export type AzurePublicIpsCountData = {
          *
          */
         state?: Array<CoreStates>;
-        /**
-         * UUID
-         */
-        uuid?: string;
     };
     url: '/api/azure-public-ips/';
 };
@@ -34247,10 +34231,6 @@ export type AzureSqlDatabasesListData = {
          *
          */
         state?: Array<CoreStates>;
-        /**
-         * UUID
-         */
-        uuid?: string;
     };
     url: '/api/azure-sql-databases/';
 };
@@ -34347,10 +34327,6 @@ export type AzureSqlDatabasesCountData = {
          *
          */
         state?: Array<CoreStates>;
-        /**
-         * UUID
-         */
-        uuid?: string;
     };
     url: '/api/azure-sql-databases/';
 };
@@ -34594,10 +34570,6 @@ export type AzureSqlServersListData = {
          *
          */
         state?: Array<CoreStates>;
-        /**
-         * UUID
-         */
-        uuid?: string;
     };
     url: '/api/azure-sql-servers/';
 };
@@ -34692,10 +34664,6 @@ export type AzureSqlServersCountData = {
          *
          */
         state?: Array<CoreStates>;
-        /**
-         * UUID
-         */
-        uuid?: string;
     };
     url: '/api/azure-sql-servers/';
 };
@@ -34954,10 +34922,6 @@ export type AzureVirtualmachinesListData = {
          *
          */
         state?: Array<CoreStates>;
-        /**
-         * UUID
-         */
-        uuid?: string;
     };
     url: '/api/azure-virtualmachines/';
 };
@@ -35052,10 +35016,6 @@ export type AzureVirtualmachinesCountData = {
          *
          */
         state?: Array<CoreStates>;
-        /**
-         * UUID
-         */
-        uuid?: string;
     };
     url: '/api/azure-virtualmachines/';
 };
@@ -40618,10 +40578,6 @@ export type DigitaloceanDropletsListData = {
          *
          */
         state?: Array<CoreStates>;
-        /**
-         * UUID
-         */
-        uuid?: string;
     };
     url: '/api/digitalocean-droplets/';
 };
@@ -40711,10 +40667,6 @@ export type DigitaloceanDropletsCountData = {
          *
          */
         state?: Array<CoreStates>;
-        /**
-         * UUID
-         */
-        uuid?: string;
     };
     url: '/api/digitalocean-droplets/';
 };
@@ -44079,10 +44031,6 @@ export type KeysListData = {
          * User UUID
          */
         user_uuid?: string;
-        /**
-         * UUID
-         */
-        uuid?: string;
     };
     url: '/api/keys/';
 };
@@ -44143,10 +44091,6 @@ export type KeysCountData = {
          * User UUID
          */
         user_uuid?: string;
-        /**
-         * UUID
-         */
-        uuid?: string;
     };
     url: '/api/keys/';
 };
@@ -44262,10 +44206,6 @@ export type KeysHistoryListData = {
          * User UUID
          */
         user_uuid?: string;
-        /**
-         * UUID
-         */
-        uuid?: string;
     };
     url: '/api/keys/{uuid}/history/';
 };
@@ -55643,7 +55583,12 @@ export type MarketplaceProviderResourcesTeamListData = {
     path: {
         uuid: string;
     };
-    query?: never;
+    query?: {
+        /**
+         * When true, return only users who have active consent for this offering.
+         */
+        has_consent?: boolean;
+    };
     url: '/api/marketplace-provider-resources/{uuid}/team/';
 };
 
@@ -57472,7 +57417,12 @@ export type MarketplaceResourcesTeamListData = {
     path: {
         uuid: string;
     };
-    query?: never;
+    query?: {
+        /**
+         * When true, return only users who have active consent for this offering.
+         */
+        has_consent?: boolean;
+    };
     url: '/api/marketplace-resources/{uuid}/team/';
 };
 
@@ -58818,10 +58768,6 @@ export type MarketplaceServiceProvidersKeysListData = {
          * User UUID
          */
         user_uuid?: string;
-        /**
-         * UUID
-         */
-        uuid?: string;
     };
     url: '/api/marketplace-service-providers/{service_provider_uuid}/keys/';
 };
@@ -66135,10 +66081,6 @@ export type OpenportalAllocationsListData = {
          *
          */
         state?: Array<CoreStates>;
-        /**
-         * UUID
-         */
-        uuid?: string;
     };
     url: '/api/openportal-allocations/';
 };
@@ -66232,10 +66174,6 @@ export type OpenportalAllocationsCountData = {
          *
          */
         state?: Array<CoreStates>;
-        /**
-         * UUID
-         */
-        uuid?: string;
     };
     url: '/api/openportal-allocations/';
 };
@@ -67236,10 +67174,6 @@ export type OpenportalRemoteAllocationsListData = {
          *
          */
         state?: Array<CoreStates>;
-        /**
-         * UUID
-         */
-        uuid?: string;
     };
     url: '/api/openportal-remote-allocations/';
 };
@@ -67333,10 +67267,6 @@ export type OpenportalRemoteAllocationsCountData = {
          *
          */
         state?: Array<CoreStates>;
-        /**
-         * UUID
-         */
-        uuid?: string;
     };
     url: '/api/openportal-remote-allocations/';
 };
@@ -68140,7 +68070,7 @@ export type OpenportalUnmanagedProjectsSubmitAnswersResponses = {
 export type OpenportalUnmanagedProjectsSubmitAnswersResponse = OpenportalUnmanagedProjectsSubmitAnswersResponses[keyof OpenportalUnmanagedProjectsSubmitAnswersResponses];
 
 export type OpenportalUnmanagedProjectsUpdateAffiliatedOrganizationsData = {
-    body?: AffiliatedOrganizationsUpdateRequest;
+    body?: ProjectAffiliatedOrganizationsUpdateRequest;
     path: {
         uuid: string;
     };
@@ -68556,10 +68486,6 @@ export type OpenstackBackupsListData = {
          * Tenant UUID
          */
         tenant_uuid?: string;
-        /**
-         * UUID
-         */
-        uuid?: string;
     };
     url: '/api/openstack-backups/';
 };
@@ -68668,10 +68594,6 @@ export type OpenstackBackupsCountData = {
          * Tenant UUID
          */
         tenant_uuid?: string;
-        /**
-         * UUID
-         */
-        uuid?: string;
     };
     url: '/api/openstack-backups/';
 };
@@ -69210,10 +69132,6 @@ export type OpenstackFloatingIpsListData = {
          * Tenant UUID
          */
         tenant_uuid?: string;
-        /**
-         * UUID
-         */
-        uuid?: string;
     };
     url: '/api/openstack-floating-ips/';
 };
@@ -69320,10 +69238,6 @@ export type OpenstackFloatingIpsCountData = {
          * Tenant UUID
          */
         tenant_uuid?: string;
-        /**
-         * UUID
-         */
-        uuid?: string;
     };
     url: '/api/openstack-floating-ips/';
 };
@@ -70179,10 +70093,6 @@ export type OpenstackInstancesListData = {
          * Tenant UUID
          */
         tenant_uuid?: string;
-        /**
-         * UUID
-         */
-        uuid?: string;
     };
     url: '/api/openstack-instances/';
 };
@@ -70300,10 +70210,6 @@ export type OpenstackInstancesCountData = {
          * Tenant UUID
          */
         tenant_uuid?: string;
-        /**
-         * UUID
-         */
-        uuid?: string;
     };
     url: '/api/openstack-instances/';
 };
@@ -71175,10 +71081,6 @@ export type OpenstackMarketplaceTenantsListData = {
          *
          */
         state?: Array<CoreStates>;
-        /**
-         * UUID
-         */
-        uuid?: string;
     };
     url: '/api/openstack-marketplace-tenants/';
 };
@@ -71271,10 +71173,6 @@ export type OpenstackMarketplaceTenantsCountData = {
          *
          */
         state?: Array<CoreStates>;
-        /**
-         * UUID
-         */
-        uuid?: string;
     };
     url: '/api/openstack-marketplace-tenants/';
 };
@@ -71739,10 +71637,6 @@ export type OpenstackNetworksListData = {
          */
         tenant_uuid?: string;
         type?: string;
-        /**
-         * UUID
-         */
-        uuid?: string;
     };
     url: '/api/openstack-networks/';
 };
@@ -71853,10 +71747,6 @@ export type OpenstackNetworksCountData = {
          */
         tenant_uuid?: string;
         type?: string;
-        /**
-         * UUID
-         */
-        uuid?: string;
     };
     url: '/api/openstack-networks/';
 };
@@ -73242,10 +73132,6 @@ export type OpenstackSecurityGroupsListData = {
          * Tenant UUID
          */
         tenant_uuid?: string;
-        /**
-         * UUID
-         */
-        uuid?: string;
     };
     url: '/api/openstack-security-groups/';
 };
@@ -73350,10 +73236,6 @@ export type OpenstackSecurityGroupsCountData = {
          * Tenant UUID
          */
         tenant_uuid?: string;
-        /**
-         * UUID
-         */
-        uuid?: string;
     };
     url: '/api/openstack-security-groups/';
 };
@@ -73606,10 +73488,6 @@ export type OpenstackServerGroupsListData = {
          * Tenant UUID
          */
         tenant_uuid?: string;
-        /**
-         * UUID
-         */
-        uuid?: string;
     };
     url: '/api/openstack-server-groups/';
 };
@@ -73710,10 +73588,6 @@ export type OpenstackServerGroupsCountData = {
          * Tenant UUID
          */
         tenant_uuid?: string;
-        /**
-         * UUID
-         */
-        uuid?: string;
     };
     url: '/api/openstack-server-groups/';
 };
@@ -73950,10 +73824,6 @@ export type OpenstackSnapshotsListData = {
          * Tenant UUID
          */
         tenant_uuid?: string;
-        /**
-         * UUID
-         */
-        uuid?: string;
     };
     url: '/api/openstack-snapshots/';
 };
@@ -74071,10 +73941,6 @@ export type OpenstackSnapshotsCountData = {
          * Tenant UUID
          */
         tenant_uuid?: string;
-        /**
-         * UUID
-         */
-        uuid?: string;
     };
     url: '/api/openstack-snapshots/';
 };
@@ -74368,10 +74234,6 @@ export type OpenstackSubnetsListData = {
          * Tenant UUID
          */
         tenant_uuid?: string;
-        /**
-         * UUID
-         */
-        uuid?: string;
     };
     url: '/api/openstack-subnets/';
 };
@@ -74490,10 +74352,6 @@ export type OpenstackSubnetsCountData = {
          * Tenant UUID
          */
         tenant_uuid?: string;
-        /**
-         * UUID
-         */
-        uuid?: string;
     };
     url: '/api/openstack-subnets/';
 };
@@ -74754,10 +74612,6 @@ export type OpenstackTenantsListData = {
          *
          */
         state?: Array<CoreStates>;
-        /**
-         * UUID
-         */
-        uuid?: string;
     };
     url: '/api/openstack-tenants/';
 };
@@ -74850,10 +74704,6 @@ export type OpenstackTenantsCountData = {
          *
          */
         state?: Array<CoreStates>;
-        /**
-         * UUID
-         */
-        uuid?: string;
     };
     url: '/api/openstack-tenants/';
 };
@@ -74996,10 +74846,6 @@ export type OpenstackTenantsBackendInstancesListData = {
          *
          */
         state?: Array<CoreStates>;
-        /**
-         * UUID
-         */
-        uuid?: string;
     };
     url: '/api/openstack-tenants/{uuid}/backend_instances/';
 };
@@ -75094,10 +74940,6 @@ export type OpenstackTenantsBackendVolumesListData = {
          *
          */
         state?: Array<CoreStates>;
-        /**
-         * UUID
-         */
-        uuid?: string;
     };
     url: '/api/openstack-tenants/{uuid}/backend_volumes/';
 };
@@ -75713,10 +75555,6 @@ export type OpenstackVolumesListData = {
          * Tenant UUID
          */
         tenant_uuid?: string;
-        /**
-         * UUID
-         */
-        uuid?: string;
     };
     url: '/api/openstack-volumes/';
 };
@@ -75842,10 +75680,6 @@ export type OpenstackVolumesCountData = {
          * Tenant UUID
          */
         tenant_uuid?: string;
-        /**
-         * UUID
-         */
-        uuid?: string;
     };
     url: '/api/openstack-volumes/';
 };
@@ -78145,7 +77979,7 @@ export type ProjectsSyncUserRolesResponses = {
 };
 
 export type ProjectsUpdateAffiliatedOrganizationsData = {
-    body?: AffiliatedOrganizationsUpdateRequest;
+    body?: ProjectAffiliatedOrganizationsUpdateRequest;
     path: {
         uuid: string;
     };
@@ -81393,10 +81227,6 @@ export type RancherAppsListData = {
          */
         state?: Array<CoreStates>;
         template_uuid?: string;
-        /**
-         * UUID
-         */
-        uuid?: string;
     };
     url: '/api/rancher-apps/';
 };
@@ -81489,10 +81319,6 @@ export type RancherAppsCountData = {
          */
         state?: Array<CoreStates>;
         template_uuid?: string;
-        /**
-         * UUID
-         */
-        uuid?: string;
     };
     url: '/api/rancher-apps/';
 };
@@ -82038,10 +81864,6 @@ export type RancherClustersListData = {
          *
          */
         state?: Array<CoreStates>;
-        /**
-         * UUID
-         */
-        uuid?: string;
     };
     url: '/api/rancher-clusters/';
 };
@@ -82134,10 +81956,6 @@ export type RancherClustersCountData = {
          *
          */
         state?: Array<CoreStates>;
-        /**
-         * UUID
-         */
-        uuid?: string;
     };
     url: '/api/rancher-clusters/';
 };
@@ -82641,10 +82459,6 @@ export type RancherIngressesListData = {
          *
          */
         state?: Array<CoreStates>;
-        /**
-         * UUID
-         */
-        uuid?: string;
     };
     url: '/api/rancher-ingresses/';
 };
@@ -82740,10 +82554,6 @@ export type RancherIngressesCountData = {
          *
          */
         state?: Array<CoreStates>;
-        /**
-         * UUID
-         */
-        uuid?: string;
     };
     url: '/api/rancher-ingresses/';
 };
@@ -83548,10 +83358,6 @@ export type RancherServicesListData = {
          *
          */
         state?: Array<CoreStates>;
-        /**
-         * UUID
-         */
-        uuid?: string;
     };
     url: '/api/rancher-services/';
 };
@@ -83647,10 +83453,6 @@ export type RancherServicesCountData = {
          *
          */
         state?: Array<CoreStates>;
-        /**
-         * UUID
-         */
-        uuid?: string;
     };
     url: '/api/rancher-services/';
 };
@@ -86202,10 +86004,6 @@ export type SlurmAllocationsListData = {
          *
          */
         state?: Array<CoreStates>;
-        /**
-         * UUID
-         */
-        uuid?: string;
     };
     url: '/api/slurm-allocations/';
 };
@@ -86299,10 +86097,6 @@ export type SlurmAllocationsCountData = {
          *
          */
         state?: Array<CoreStates>;
-        /**
-         * UUID
-         */
-        uuid?: string;
     };
     url: '/api/slurm-allocations/';
 };
@@ -91681,10 +91475,6 @@ export type VmwareDisksListData = {
          *
          */
         state?: Array<CoreStates>;
-        /**
-         * UUID
-         */
-        uuid?: string;
         vm?: string;
         vm_uuid?: string;
     };
@@ -91779,10 +91569,6 @@ export type VmwareDisksCountData = {
          *
          */
         state?: Array<CoreStates>;
-        /**
-         * UUID
-         */
-        uuid?: string;
         vm?: string;
         vm_uuid?: string;
     };
@@ -92223,10 +92009,6 @@ export type VmwarePortsListData = {
          *
          */
         state?: Array<CoreStates>;
-        /**
-         * UUID
-         */
-        uuid?: string;
         vm?: string;
         vm_uuid?: string;
     };
@@ -92323,10 +92105,6 @@ export type VmwarePortsCountData = {
          *
          */
         state?: Array<CoreStates>;
-        /**
-         * UUID
-         */
-        uuid?: string;
         vm?: string;
         vm_uuid?: string;
     };
@@ -92620,10 +92398,6 @@ export type VmwareVirtualMachineListData = {
          *
          */
         state?: Array<CoreStates>;
-        /**
-         * UUID
-         */
-        uuid?: string;
     };
     url: '/api/vmware-virtual-machine/';
 };
@@ -92717,10 +92491,6 @@ export type VmwareVirtualMachineCountData = {
          *
          */
         state?: Array<CoreStates>;
-        /**
-         * UUID
-         */
-        uuid?: string;
     };
     url: '/api/vmware-virtual-machine/';
 };
