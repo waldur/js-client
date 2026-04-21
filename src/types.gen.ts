@@ -23007,6 +23007,10 @@ export type ResourceUpdateLimitsRequest = {
         [key: string]: number;
     };
     request_comment?: string | null;
+    /**
+     * Optional PDF attachment for the limit update request.
+     */
+    attachment?: Blob | File;
 };
 
 export type ResourceUpdateRequest = {
@@ -28441,6 +28445,28 @@ export type ResourceRenewRequestMultipart = {
     request_comment?: string;
     /**
      * Optional PDF attachment for the renewal request.
+     */
+    attachment?: Blob | File;
+};
+
+export type ResourceUpdateLimitsRequestForm = {
+    limits: {
+        [key: string]: number;
+    };
+    request_comment?: string | null;
+    /**
+     * Optional PDF attachment for the limit update request.
+     */
+    attachment?: Blob | File;
+};
+
+export type ResourceUpdateLimitsRequestMultipart = {
+    limits: {
+        [key: string]: number;
+    };
+    request_comment?: string | null;
+    /**
+     * Optional PDF attachment for the limit update request.
      */
     attachment?: Blob | File;
 };
@@ -42442,14 +42468,15 @@ export type HooksListData = {
     body?: never;
     path?: never;
     query?: {
+        author_email?: string;
         /**
-         * Filter by author UUID.
+         * User full name contains
          */
+        author_fullname?: string;
+        author_username?: string;
         author_uuid?: string;
-        /**
-         * Filter by active status.
-         */
         is_active?: boolean;
+        last_published?: string;
         /**
          * A page number within the paginated result set.
          */
@@ -42458,6 +42485,10 @@ export type HooksListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Filter by author name, username and email
+         */
+        query?: string;
     };
     url: '/api/hooks/';
 };
@@ -42473,14 +42504,15 @@ export type HooksCountData = {
     body?: never;
     path?: never;
     query?: {
+        author_email?: string;
         /**
-         * Filter by author UUID.
+         * User full name contains
          */
+        author_fullname?: string;
+        author_username?: string;
         author_uuid?: string;
-        /**
-         * Filter by active status.
-         */
         is_active?: boolean;
+        last_published?: string;
         /**
          * A page number within the paginated result set.
          */
@@ -42489,6 +42521,10 @@ export type HooksCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Filter by author name, username and email
+         */
+        query?: string;
     };
     url: '/api/hooks/';
 };
