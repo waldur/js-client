@@ -8188,6 +8188,8 @@ export type HypervisorSummary = {
     total_local_gb: number;
     used_local_gb: number;
     total_running_vms: number;
+    cpu_allocation_ratio: number;
+    effective_vcpus: number;
 };
 
 export type IpMapping = {
