@@ -4895,6 +4895,7 @@ export type ConstanceSettings = {
     AI_ASSISTANT_HISTORY_LIMIT?: number;
     AI_ASSISTANT_INJECTION_ALLOWLIST?: string;
     AI_ASSISTANT_NAME?: string;
+    AI_ASSISTANT_SYSTEM_PROMPT_CUSTOM_INSTRUCTIONS?: string;
     SOFTWARE_CATALOG_EESSI_UPDATE_ENABLED?: boolean;
     SOFTWARE_CATALOG_EESSI_VERSION?: string;
     SOFTWARE_CATALOG_EESSI_API_URL?: string;
@@ -5152,6 +5153,7 @@ export type ConstanceSettingsRequest = {
     AI_ASSISTANT_HISTORY_LIMIT?: number;
     AI_ASSISTANT_INJECTION_ALLOWLIST?: string;
     AI_ASSISTANT_NAME?: string;
+    AI_ASSISTANT_SYSTEM_PROMPT_CUSTOM_INSTRUCTIONS?: string;
     SOFTWARE_CATALOG_EESSI_UPDATE_ENABLED?: boolean;
     SOFTWARE_CATALOG_EESSI_VERSION?: string;
     SOFTWARE_CATALOG_EESSI_API_URL?: string;
@@ -9687,7 +9689,7 @@ export type MaintenanceAnnouncementTemplate = {
      * Service provider announcing the maintenance
      */
     service_provider: string;
-    readonly affected_offerings: Array<MaintenanceAnnouncementOffering>;
+    readonly affected_offerings: Array<MaintenanceAnnouncementOfferingTemplate>;
 };
 
 export type MaintenanceAnnouncementTemplateRequest = {
@@ -18448,6 +18450,15 @@ export type PatchedSoftwarePackageRequest = {
     is_extension?: boolean;
 };
 
+export type PatchedSystemPromptRequest = {
+    name?: string;
+    description?: string;
+    /**
+     * Additional instructions injected into the system prompt. Use this for organisation-specific context, terminology, FAQ content, or behavioural guidelines. Supports {assistant_name} and {organization} placeholders.
+     */
+    custom_instructions?: string;
+};
+
 export type PatchedTagRequest = {
     name?: string;
     description?: string;
@@ -25792,6 +25803,31 @@ export type SystemLogStatsResponse = {
     readonly total_size_mb: number;
 };
 
+export type SystemPrompt = {
+    readonly uuid: string;
+    name: string;
+    description?: string;
+    /**
+     * Additional instructions injected into the system prompt. Use this for organisation-specific context, terminology, FAQ content, or behavioural guidelines. Supports {assistant_name} and {organization} placeholders.
+     */
+    custom_instructions?: string;
+    /**
+     * Whether this prompt is currently used by the AI Assistant. Only one prompt can be active.
+     */
+    readonly is_active: boolean;
+    readonly created: string;
+    readonly modified: string;
+};
+
+export type SystemPromptRequest = {
+    name: string;
+    description?: string;
+    /**
+     * Additional instructions injected into the system prompt. Use this for organisation-specific context, terminology, FAQ content, or behavioural guidelines. Supports {assistant_name} and {organization} placeholders.
+     */
+    custom_instructions?: string;
+};
+
 export type TableGrowthAlert = {
     /**
      * Name of the table triggering the alert
@@ -28956,6 +28992,7 @@ export type ConstanceSettingsRequestForm = {
     AI_ASSISTANT_HISTORY_LIMIT?: number;
     AI_ASSISTANT_INJECTION_ALLOWLIST?: string;
     AI_ASSISTANT_NAME?: string;
+    AI_ASSISTANT_SYSTEM_PROMPT_CUSTOM_INSTRUCTIONS?: string;
     SOFTWARE_CATALOG_EESSI_UPDATE_ENABLED?: boolean;
     SOFTWARE_CATALOG_EESSI_VERSION?: string;
     SOFTWARE_CATALOG_EESSI_API_URL?: string;
@@ -29213,6 +29250,7 @@ export type ConstanceSettingsRequestMultipart = {
     AI_ASSISTANT_HISTORY_LIMIT?: number;
     AI_ASSISTANT_INJECTION_ALLOWLIST?: string;
     AI_ASSISTANT_NAME?: string;
+    AI_ASSISTANT_SYSTEM_PROMPT_CUSTOM_INSTRUCTIONS?: string;
     SOFTWARE_CATALOG_EESSI_UPDATE_ENABLED?: boolean;
     SOFTWARE_CATALOG_EESSI_VERSION?: string;
     SOFTWARE_CATALOG_EESSI_API_URL?: string;
@@ -37577,6 +37615,157 @@ export type ChatSessionsCurrentRetrieveResponses = {
 };
 
 export type ChatSessionsCurrentRetrieveResponse = ChatSessionsCurrentRetrieveResponses[keyof ChatSessionsCurrentRetrieveResponses];
+
+export type ChatSystemPromptsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/chat-system-prompts/';
+};
+
+export type ChatSystemPromptsListResponses = {
+    200: Array<SystemPrompt>;
+};
+
+export type ChatSystemPromptsListResponse = ChatSystemPromptsListResponses[keyof ChatSystemPromptsListResponses];
+
+export type ChatSystemPromptsCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/chat-system-prompts/';
+};
+
+export type ChatSystemPromptsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type ChatSystemPromptsCreateData = {
+    body: SystemPromptRequest;
+    path?: never;
+    query?: never;
+    url: '/api/chat-system-prompts/';
+};
+
+export type ChatSystemPromptsCreateResponses = {
+    201: SystemPrompt;
+};
+
+export type ChatSystemPromptsCreateResponse = ChatSystemPromptsCreateResponses[keyof ChatSystemPromptsCreateResponses];
+
+export type ChatSystemPromptsDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/chat-system-prompts/{uuid}/';
+};
+
+export type ChatSystemPromptsDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type ChatSystemPromptsDestroyResponse = ChatSystemPromptsDestroyResponses[keyof ChatSystemPromptsDestroyResponses];
+
+export type ChatSystemPromptsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/chat-system-prompts/{uuid}/';
+};
+
+export type ChatSystemPromptsRetrieveResponses = {
+    200: SystemPrompt;
+};
+
+export type ChatSystemPromptsRetrieveResponse = ChatSystemPromptsRetrieveResponses[keyof ChatSystemPromptsRetrieveResponses];
+
+export type ChatSystemPromptsPartialUpdateData = {
+    body?: PatchedSystemPromptRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/chat-system-prompts/{uuid}/';
+};
+
+export type ChatSystemPromptsPartialUpdateResponses = {
+    200: SystemPrompt;
+};
+
+export type ChatSystemPromptsPartialUpdateResponse = ChatSystemPromptsPartialUpdateResponses[keyof ChatSystemPromptsPartialUpdateResponses];
+
+export type ChatSystemPromptsUpdateData = {
+    body: SystemPromptRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/chat-system-prompts/{uuid}/';
+};
+
+export type ChatSystemPromptsUpdateResponses = {
+    200: SystemPrompt;
+};
+
+export type ChatSystemPromptsUpdateResponse = ChatSystemPromptsUpdateResponses[keyof ChatSystemPromptsUpdateResponses];
+
+export type ChatSystemPromptsActivateData = {
+    body: SystemPromptRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/chat-system-prompts/{uuid}/activate/';
+};
+
+export type ChatSystemPromptsActivateResponses = {
+    200: SystemPrompt;
+};
+
+export type ChatSystemPromptsActivateResponse = ChatSystemPromptsActivateResponses[keyof ChatSystemPromptsActivateResponses];
+
+export type ChatSystemPromptsDeactivateData = {
+    body: SystemPromptRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/chat-system-prompts/{uuid}/deactivate/';
+};
+
+export type ChatSystemPromptsDeactivateResponses = {
+    200: SystemPrompt;
+};
+
+export type ChatSystemPromptsDeactivateResponse = ChatSystemPromptsDeactivateResponses[keyof ChatSystemPromptsDeactivateResponses];
 
 export type ChatThreadsListData = {
     body?: never;
