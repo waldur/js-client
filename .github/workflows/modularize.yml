@@ -32,8 +32,8 @@ jobs:
       - name: Push to js-client-modular
         run: |
           git clone https://x-access-token:${{ secrets.MODULAR_SDK_TOKEN }}@github.com/waldur/js-client-modular.git target
-          # Clear target repo except .git
-          find target -mindepth 1 -maxdepth 1 -not -name '.git' -exec rm -rf {} +
+          # Clear target repo except .git and .github (to preserve workflows)
+          find target -mindepth 1 -maxdepth 1 -not -name '.git' -not -name '.github' -exec rm -rf {} +
           # Move modular-sdk contents to target
           cp -a modular-sdk/. target/
           # Debug structure
