@@ -33,7 +33,7 @@ jobs:
         run: |
           git clone https://x-access-token:${{ secrets.MODULAR_SDK_TOKEN }}@github.com/waldur/js-client-modular.git target
           # Clear target repo except .git
-          find target -maxdepth 1 -not -name '.git' -not -name '.' -exec rm -rf {} +
+          find target -mindepth 1 -maxdepth 1 -not -name '.git' -exec rm -rf {} +
           # Move modular-sdk contents to target
           cp -r modular-sdk/* target/
           cd target
