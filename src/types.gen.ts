@@ -15580,6 +15580,7 @@ export type OpenStackSnapshot = {
     readonly action?: string;
     readonly action_details?: unknown;
     readonly restorations?: Array<OpenStackSnapshotRestoration>;
+    readonly backups?: Array<OpenStackSnapshotBackup>;
     /**
      * Guaranteed time of snapshot retention. If null - keep forever.
      */
@@ -15597,6 +15598,11 @@ export type OpenStackSnapshot = {
     readonly marketplace_resource_state?: string | null;
     readonly is_usage_based?: boolean | null;
     readonly is_limit_based?: boolean | null;
+};
+
+export type OpenStackSnapshotBackup = {
+    readonly uuid?: string;
+    readonly name?: string;
 };
 
 export type OpenStackSnapshotRequest = {
@@ -30110,7 +30116,7 @@ export type OpenStackSecurityGroupFieldEnum = 'access_url' | 'backend_id' | 'cre
 
 export type OpenStackServerGroupFieldEnum = 'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'display_name' | 'error_message' | 'error_traceback' | 'instances' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'policy' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'tenant' | 'tenant_name' | 'tenant_uuid' | 'url' | 'uuid';
 
-export type OpenStackSnapshotFieldEnum = 'access_url' | 'action' | 'action_details' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'is_limit_based' | 'is_usage_based' | 'kept_until' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'metadata' | 'modified' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'restorations' | 'runtime_state' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'size' | 'source_volume' | 'source_volume_marketplace_uuid' | 'source_volume_name' | 'state' | 'url' | 'uuid';
+export type OpenStackSnapshotFieldEnum = 'access_url' | 'action' | 'action_details' | 'backend_id' | 'backups' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'is_limit_based' | 'is_usage_based' | 'kept_until' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'metadata' | 'modified' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'restorations' | 'runtime_state' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'size' | 'source_volume' | 'source_volume_marketplace_uuid' | 'source_volume_name' | 'state' | 'url' | 'uuid';
 
 export type OpenStackSubNetFieldEnum = 'access_url' | 'allocation_pools' | 'backend_id' | 'cidr' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'disable_gateway' | 'dns_nameservers' | 'enable_dhcp' | 'error_message' | 'error_traceback' | 'gateway_ip' | 'host_routes' | 'ip_version' | 'is_connected' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'network' | 'network_name' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'tenant' | 'tenant_name' | 'url' | 'uuid';
 
@@ -30167,6 +30173,10 @@ export type ReviewerProfileOEnum = '-created' | '-user_email' | '-user_name' | '
 export type ReviewerSuggestionOEnum = '-affinity_score' | '-created' | '-reviewed_at' | '-status' | 'affinity_score' | 'created' | 'reviewed_at' | 'status';
 
 export type RoleDetailsFieldEnum = 'content_type' | 'description' | 'description_ar' | 'description_cs' | 'description_da' | 'description_de' | 'description_en' | 'description_es' | 'description_et' | 'description_fr' | 'description_it' | 'description_lt' | 'description_lv' | 'description_nb' | 'description_ru' | 'description_sv' | 'is_active' | 'is_system_role' | 'name' | 'permissions' | 'users_count' | 'uuid';
+
+export type ScienceDomainOEnum = '-code' | '-name' | 'code' | 'name';
+
+export type ScienceSubDomainOEnum = '-code' | '-domain_name' | '-name' | '-projects_count' | 'code' | 'domain_name' | 'name' | 'projects_count';
 
 export type ServiceSettingsFieldEnum = 'customer' | 'customer_name' | 'customer_native_name' | 'error_message' | 'name' | 'options' | 'scope' | 'scope_uuid' | 'shared' | 'state' | 'terms_of_services' | 'type' | 'url' | 'uuid';
 
@@ -86083,9 +86093,11 @@ export type ScienceDomainsListData = {
          */
         name_exact?: string;
         /**
-         * Which field to use when ordering the results.
+         * Ordering
+         *
+         *
          */
-        o?: string;
+        o?: Array<ScienceDomainOEnum>;
         /**
          * A page number within the paginated result set.
          */
@@ -86117,9 +86129,11 @@ export type ScienceDomainsCountData = {
          */
         name_exact?: string;
         /**
-         * Which field to use when ordering the results.
+         * Ordering
+         *
+         *
          */
-        o?: string;
+        o?: Array<ScienceDomainOEnum>;
         /**
          * A page number within the paginated result set.
          */
@@ -86241,9 +86255,11 @@ export type ScienceDomainsPresetsListData = {
          */
         name_exact?: string;
         /**
-         * Which field to use when ordering the results.
+         * Ordering
+         *
+         *
          */
-        o?: string;
+        o?: Array<ScienceDomainOEnum>;
         /**
          * A page number within the paginated result set.
          */
@@ -86275,9 +86291,11 @@ export type ScienceDomainsPresetsCountData = {
          */
         name_exact?: string;
         /**
-         * Which field to use when ordering the results.
+         * Ordering
+         *
+         *
          */
-        o?: string;
+        o?: Array<ScienceDomainOEnum>;
         /**
          * A page number within the paginated result set.
          */
@@ -86318,9 +86336,11 @@ export type ScienceSubDomainsListData = {
          */
         name_exact?: string;
         /**
-         * Which field to use when ordering the results.
+         * Ordering
+         *
+         *
          */
-        o?: string;
+        o?: Array<ScienceSubDomainOEnum>;
         /**
          * A page number within the paginated result set.
          */
@@ -86360,9 +86380,11 @@ export type ScienceSubDomainsCountData = {
          */
         name_exact?: string;
         /**
-         * Which field to use when ordering the results.
+         * Ordering
+         *
+         *
          */
-        o?: string;
+        o?: Array<ScienceSubDomainOEnum>;
         /**
          * A page number within the paginated result set.
          */
