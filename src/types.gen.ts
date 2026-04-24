@@ -4927,6 +4927,7 @@ export type ConstanceSettings = {
     ARROW_CONSUMPTION_SYNC_ENABLED?: boolean;
     ARROW_CONSUMPTION_SYNC_INTERVAL_HOURS?: number;
     ARROW_BILLING_CHECK_INTERVAL_HOURS?: number;
+    USAGE_POLL_RECORD_RETENTION_MONTHS?: number;
     SLURM_POLICY_EVALUATION_LOG_RETENTION_DAYS?: number;
     FEDERATED_IDENTITY_SYNC_ENABLED?: boolean;
     FEDERATED_IDENTITY_SYNC_ALLOWED_ATTRIBUTES?: Array<UserAttributeEnum | BlankEnum>;
@@ -5185,6 +5186,7 @@ export type ConstanceSettingsRequest = {
     ARROW_CONSUMPTION_SYNC_ENABLED?: boolean;
     ARROW_CONSUMPTION_SYNC_INTERVAL_HOURS?: number;
     ARROW_BILLING_CHECK_INTERVAL_HOURS?: number;
+    USAGE_POLL_RECORD_RETENTION_MONTHS?: number;
     SLURM_POLICY_EVALUATION_LOG_RETENTION_DAYS?: number;
     FEDERATED_IDENTITY_SYNC_ENABLED?: boolean;
     FEDERATED_IDENTITY_SYNC_ALLOWED_ATTRIBUTES?: Array<UserAttributeEnum | BlankEnum>;
@@ -9514,6 +9516,17 @@ export type LoadBalancerSetSecurityGroupsRequest = {
     security_groups: Array<string>;
 };
 
+export type LoadScienceDomainPresetRequest = {
+    preset: PresetEnum;
+};
+
+export type LoadScienceDomainPresetResponse = {
+    created_domains: number;
+    created_subdomains: number;
+    skipped_domains: number;
+    skipped_subdomains: number;
+};
+
 export type LockStats = {
     /**
      * Total number of locks currently held
@@ -10207,6 +10220,10 @@ export type MergedPluginOptions = {
      */
     lbaas_enabled?: boolean;
     /**
+     * Interval in minutes between usage polling for this offering (default: 60)
+     */
+    usage_poll_interval_minutes?: number;
+    /**
      * HEAppE cluster id
      */
     heappe_cluster_id?: string;
@@ -10509,6 +10526,10 @@ export type MergedPluginOptionsRequest = {
      * If True, Octavia LBaaS (load balancers) is intended to be available for tenants from this offering.
      */
     lbaas_enabled?: boolean;
+    /**
+     * Interval in minutes between usage polling for this offering (default: 60)
+     */
+    usage_poll_interval_minutes?: number;
     /**
      * HEAppE cluster id
      */
@@ -17742,6 +17763,7 @@ export type PatchedProjectRequest = {
      * List of allowed identity sources (identity providers).
      */
     user_identity_sources?: unknown;
+    science_sub_domain?: string | null;
 };
 
 export type PatchedProjectServiceAccountRequest = {
@@ -18318,6 +18340,23 @@ export type PatchedRuleRequest = {
     plan_limits?: {
         [key: string]: unknown;
     };
+};
+
+export type PatchedScienceDomainRequest = {
+    /**
+     * Domain code (e.g. '1'). Auto-derived if left blank.
+     */
+    code?: string;
+    name?: string;
+};
+
+export type PatchedScienceSubDomainRequest = {
+    /**
+     * Sub-domain code (e.g. '1.1'). Auto-derived from domain code if left blank.
+     */
+    code?: string;
+    name?: string;
+    domain?: string;
 };
 
 export type PatchedScreenshotRequest = {
@@ -18938,6 +18977,8 @@ export type PolicyPeriodEnum = 1 | 2 | 3 | 4;
 
 export type PolicyTypeEnum = 'access_as_shared' | 'access_as_external';
 
+export type PresetEnum = 'cscs' | 'oecd_fos_2007';
+
 export type PreviewServiceAttributesRequestRequest = {
     /**
      * Keystone auth URL (e.g., https://cloud.example.com:5000/v3)
@@ -19132,6 +19173,18 @@ export type Project = {
      */
     user_identity_sources?: unknown;
     readonly affiliated_organizations?: Array<AffiliatedOrganization>;
+    science_sub_domain?: string | null;
+    readonly science_sub_domain_name?: string;
+    /**
+     * Sub-domain code (e.g. '1.1'). Auto-derived from domain code if left blank.
+     */
+    readonly science_sub_domain_code?: string;
+    readonly science_domain_uuid?: string;
+    readonly science_domain_name?: string;
+    /**
+     * Domain code (e.g. '1'). Auto-derived if left blank.
+     */
+    readonly science_domain_code?: string;
     readonly project_credit?: number | null;
     readonly marketplace_resource_count?: {
         [key: string]: number;
@@ -19558,6 +19611,7 @@ export type ProjectRequest = {
      * List of allowed identity sources (identity providers).
      */
     user_identity_sources?: unknown;
+    science_sub_domain?: string | null;
 };
 
 export type ProjectServiceAccount = {
@@ -19820,6 +19874,10 @@ export type Proposal = {
     readonly call_managing_organisation_uuid: string;
     oecd_fos_2007_code?: OecdFos2007CodeEnum | BlankEnum | NullEnum | null;
     readonly oecd_fos_2007_label: string;
+    science_sub_domain?: string | null;
+    readonly science_sub_domain_name: string;
+    readonly science_domain_uuid: string;
+    readonly science_domain_name: string;
     readonly allocation_comment: string | null;
     readonly created: string;
     readonly compliance_status: {
@@ -19889,6 +19947,7 @@ export type ProposalRequest = {
     duration_in_days?: number | null;
     round_uuid: string;
     oecd_fos_2007_code?: OecdFos2007CodeEnum | BlankEnum | NullEnum | null;
+    science_sub_domain?: string | null;
 };
 
 export type ProposalReview = {
@@ -24430,6 +24489,68 @@ export type SaveSettingsResponse = {
     message: string;
 };
 
+export type ScienceDomain = {
+    readonly uuid: string;
+    readonly url: string;
+    /**
+     * Domain code (e.g. '1'). Auto-derived if left blank.
+     */
+    code?: string;
+    name: string;
+    readonly created: string;
+    readonly modified: string;
+    /**
+     * Number of sub-domains in this domain
+     */
+    readonly subdomains_count: number;
+};
+
+export type ScienceDomainPreset = {
+    name: string;
+    label: string;
+    description: string;
+};
+
+export type ScienceDomainRequest = {
+    /**
+     * Domain code (e.g. '1'). Auto-derived if left blank.
+     */
+    code?: string;
+    name: string;
+};
+
+export type ScienceSubDomain = {
+    readonly uuid: string;
+    readonly url: string;
+    /**
+     * Sub-domain code (e.g. '1.1'). Auto-derived from domain code if left blank.
+     */
+    code?: string;
+    name: string;
+    domain: string;
+    readonly domain_uuid: string;
+    readonly domain_name: string;
+    /**
+     * Domain code (e.g. '1'). Auto-derived if left blank.
+     */
+    readonly domain_code: string;
+    readonly created: string;
+    readonly modified: string;
+    /**
+     * Number of active projects using this sub-domain
+     */
+    readonly projects_count: number;
+};
+
+export type ScienceSubDomainRequest = {
+    /**
+     * Sub-domain code (e.g. '1.1'). Auto-derived from domain code if left blank.
+     */
+    code?: string;
+    name: string;
+    domain: string;
+};
+
 export type ScimSyncAllResponse = {
     detail: string;
 };
@@ -28627,6 +28748,7 @@ export type ProjectRequestForm = {
      * List of allowed identity sources (identity providers).
      */
     user_identity_sources?: unknown;
+    science_sub_domain?: string | null;
 };
 
 export type ProjectRequestMultipart = {
@@ -28677,6 +28799,7 @@ export type ProjectRequestMultipart = {
      * List of allowed identity sources (identity providers).
      */
     user_identity_sources?: unknown;
+    science_sub_domain?: string | null;
 };
 
 export type PatchedProjectRequestForm = {
@@ -28727,6 +28850,7 @@ export type PatchedProjectRequestForm = {
      * List of allowed identity sources (identity providers).
      */
     user_identity_sources?: unknown;
+    science_sub_domain?: string | null;
 };
 
 export type PatchedProjectRequestMultipart = {
@@ -28777,6 +28901,7 @@ export type PatchedProjectRequestMultipart = {
      * List of allowed identity sources (identity providers).
      */
     user_identity_sources?: unknown;
+    science_sub_domain?: string | null;
 };
 
 export type ConstanceSettingsRequestForm = {
@@ -29024,6 +29149,7 @@ export type ConstanceSettingsRequestForm = {
     ARROW_CONSUMPTION_SYNC_ENABLED?: boolean;
     ARROW_CONSUMPTION_SYNC_INTERVAL_HOURS?: number;
     ARROW_BILLING_CHECK_INTERVAL_HOURS?: number;
+    USAGE_POLL_RECORD_RETENTION_MONTHS?: number;
     SLURM_POLICY_EVALUATION_LOG_RETENTION_DAYS?: number;
     FEDERATED_IDENTITY_SYNC_ENABLED?: boolean;
     FEDERATED_IDENTITY_SYNC_ALLOWED_ATTRIBUTES?: Array<UserAttributeEnum | BlankEnum>;
@@ -29282,6 +29408,7 @@ export type ConstanceSettingsRequestMultipart = {
     ARROW_CONSUMPTION_SYNC_ENABLED?: boolean;
     ARROW_CONSUMPTION_SYNC_INTERVAL_HOURS?: number;
     ARROW_BILLING_CHECK_INTERVAL_HOURS?: number;
+    USAGE_POLL_RECORD_RETENTION_MONTHS?: number;
     SLURM_POLICY_EVALUATION_LOG_RETENTION_DAYS?: number;
     FEDERATED_IDENTITY_SYNC_ENABLED?: boolean;
     FEDERATED_IDENTITY_SYNC_ALLOWED_ATTRIBUTES?: Array<UserAttributeEnum | BlankEnum>;
@@ -29889,7 +30016,7 @@ export type ProviderOfferingDetailsOEnum = '-created' | '-name' | '-state' | '-t
 
 export type ProviderOfferingCustomerFieldEnum = 'abbreviation' | 'email' | 'name' | 'phone_number' | 'slug' | 'uuid';
 
-export type ProjectFieldEnum = 'affiliated_organizations' | 'backend_id' | 'billing_price_estimate' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_display_billing_info_in_projects' | 'customer_grace_period_days' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'effective_end_date' | 'end_date' | 'end_date_requested_by' | 'end_date_updated_at' | 'grace_period_days' | 'image' | 'is_in_grace_period' | 'is_industry' | 'is_removed' | 'kind' | 'marketplace_resource_count' | 'max_service_accounts' | 'name' | 'oecd_fos_2007_code' | 'oecd_fos_2007_label' | 'project_credit' | 'resources_count' | 'slug' | 'staff_notes' | 'start_date' | 'termination_metadata' | 'type' | 'type_name' | 'type_uuid' | 'url' | 'user_affiliations' | 'user_email_patterns' | 'user_identity_sources' | 'uuid';
+export type ProjectFieldEnum = 'affiliated_organizations' | 'backend_id' | 'billing_price_estimate' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_display_billing_info_in_projects' | 'customer_grace_period_days' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'effective_end_date' | 'end_date' | 'end_date_requested_by' | 'end_date_updated_at' | 'grace_period_days' | 'image' | 'is_in_grace_period' | 'is_industry' | 'is_removed' | 'kind' | 'marketplace_resource_count' | 'max_service_accounts' | 'name' | 'oecd_fos_2007_code' | 'oecd_fos_2007_label' | 'project_credit' | 'resources_count' | 'science_domain_code' | 'science_domain_name' | 'science_domain_uuid' | 'science_sub_domain' | 'science_sub_domain_code' | 'science_sub_domain_name' | 'slug' | 'staff_notes' | 'start_date' | 'termination_metadata' | 'type' | 'type_name' | 'type_uuid' | 'url' | 'user_affiliations' | 'user_email_patterns' | 'user_identity_sources' | 'uuid';
 
 export type UserFieldEnum = 'active_isds' | 'address' | 'affiliations' | 'agree_with_policy' | 'agreement_date' | 'attribute_sources' | 'birth_date' | 'civil_number' | 'country_of_residence' | 'date_joined' | 'deactivation_reason' | 'description' | 'eduperson_assurance' | 'email' | 'first_name' | 'full_name' | 'gender' | 'has_active_session' | 'has_usable_password' | 'identity_provider_fields' | 'identity_provider_label' | 'identity_provider_management_url' | 'identity_provider_name' | 'identity_source' | 'image' | 'ip_address' | 'is_active' | 'is_identity_manager' | 'is_staff' | 'is_support' | 'job_title' | 'last_name' | 'managed_isds' | 'nationalities' | 'nationality' | 'native_name' | 'notifications_enabled' | 'organization' | 'organization_country' | 'organization_registry_code' | 'organization_type' | 'permissions' | 'personal_title' | 'phone_number' | 'place_of_birth' | 'preferred_language' | 'registration_method' | 'requested_email' | 'slug' | 'token' | 'token_expires_at' | 'token_lifetime' | 'url' | 'username' | 'uuid';
 
@@ -58816,6 +58943,14 @@ export type MarketplaceServiceProvidersCustomerProjectsListData = {
          */
         query?: string;
         /**
+         * Science domain UUID
+         */
+        science_domain_uuid?: string;
+        /**
+         * Science sub-domain UUID
+         */
+        science_sub_domain_uuid?: string;
+        /**
          * Slug
          */
         slug?: string;
@@ -59375,6 +59510,14 @@ export type MarketplaceServiceProvidersProjectsListData = {
          * Filter by name, slug, UUID, backend ID or resource effective ID
          */
         query?: string;
+        /**
+         * Science domain UUID
+         */
+        science_domain_uuid?: string;
+        /**
+         * Science sub-domain UUID
+         */
+        science_sub_domain_uuid?: string;
         /**
          * Slug
          */
@@ -67800,6 +67943,14 @@ export type OpenportalUnmanagedProjectsListData = {
          */
         query?: string;
         /**
+         * Science domain UUID
+         */
+        science_domain_uuid?: string;
+        /**
+         * Science sub-domain UUID
+         */
+        science_sub_domain_uuid?: string;
+        /**
          * Slug
          */
         slug?: string;
@@ -67924,6 +68075,14 @@ export type OpenportalUnmanagedProjectsCountData = {
          * Filter by name, slug, UUID, backend ID or resource effective ID
          */
         query?: string;
+        /**
+         * Science domain UUID
+         */
+        science_domain_uuid?: string;
+        /**
+         * Science sub-domain UUID
+         */
+        science_sub_domain_uuid?: string;
         /**
          * Slug
          */
@@ -77614,6 +77773,14 @@ export type ProjectsListData = {
          */
         query?: string;
         /**
+         * Science domain UUID
+         */
+        science_domain_uuid?: string;
+        /**
+         * Science sub-domain UUID
+         */
+        science_sub_domain_uuid?: string;
+        /**
          * Slug
          */
         slug?: string;
@@ -77738,6 +77905,14 @@ export type ProjectsCountData = {
          * Filter by name, slug, UUID, backend ID or resource effective ID
          */
         query?: string;
+        /**
+         * Science domain UUID
+         */
+        science_domain_uuid?: string;
+        /**
+         * Science sub-domain UUID
+         */
+        science_sub_domain_uuid?: string;
         /**
          * Slug
          */
@@ -85894,6 +86069,394 @@ export type RolesUpdateDescriptionsUpdateResponses = {
 };
 
 export type RolesUpdateDescriptionsUpdateResponse = RolesUpdateDescriptionsUpdateResponses[keyof RolesUpdateDescriptionsUpdateResponses];
+
+export type ScienceDomainsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Name
+         */
+        name?: string;
+        /**
+         * Name (exact)
+         */
+        name_exact?: string;
+        /**
+         * Which field to use when ordering the results.
+         */
+        o?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/science-domains/';
+};
+
+export type ScienceDomainsListResponses = {
+    200: Array<ScienceDomain>;
+};
+
+export type ScienceDomainsListResponse = ScienceDomainsListResponses[keyof ScienceDomainsListResponses];
+
+export type ScienceDomainsCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Name
+         */
+        name?: string;
+        /**
+         * Name (exact)
+         */
+        name_exact?: string;
+        /**
+         * Which field to use when ordering the results.
+         */
+        o?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/science-domains/';
+};
+
+export type ScienceDomainsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type ScienceDomainsCreateData = {
+    body: ScienceDomainRequest;
+    path?: never;
+    query?: never;
+    url: '/api/science-domains/';
+};
+
+export type ScienceDomainsCreateResponses = {
+    201: ScienceDomain;
+};
+
+export type ScienceDomainsCreateResponse = ScienceDomainsCreateResponses[keyof ScienceDomainsCreateResponses];
+
+export type ScienceDomainsDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/science-domains/{uuid}/';
+};
+
+export type ScienceDomainsDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type ScienceDomainsDestroyResponse = ScienceDomainsDestroyResponses[keyof ScienceDomainsDestroyResponses];
+
+export type ScienceDomainsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/science-domains/{uuid}/';
+};
+
+export type ScienceDomainsRetrieveResponses = {
+    200: ScienceDomain;
+};
+
+export type ScienceDomainsRetrieveResponse = ScienceDomainsRetrieveResponses[keyof ScienceDomainsRetrieveResponses];
+
+export type ScienceDomainsPartialUpdateData = {
+    body?: PatchedScienceDomainRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/science-domains/{uuid}/';
+};
+
+export type ScienceDomainsPartialUpdateResponses = {
+    200: ScienceDomain;
+};
+
+export type ScienceDomainsPartialUpdateResponse = ScienceDomainsPartialUpdateResponses[keyof ScienceDomainsPartialUpdateResponses];
+
+export type ScienceDomainsUpdateData = {
+    body: ScienceDomainRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/science-domains/{uuid}/';
+};
+
+export type ScienceDomainsUpdateResponses = {
+    200: ScienceDomain;
+};
+
+export type ScienceDomainsUpdateResponse = ScienceDomainsUpdateResponses[keyof ScienceDomainsUpdateResponses];
+
+export type ScienceDomainsLoadPresetData = {
+    body: LoadScienceDomainPresetRequest;
+    path?: never;
+    query?: never;
+    url: '/api/science-domains/load_preset/';
+};
+
+export type ScienceDomainsLoadPresetResponses = {
+    200: LoadScienceDomainPresetResponse;
+};
+
+export type ScienceDomainsLoadPresetResponse = ScienceDomainsLoadPresetResponses[keyof ScienceDomainsLoadPresetResponses];
+
+export type ScienceDomainsPresetsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Name
+         */
+        name?: string;
+        /**
+         * Name (exact)
+         */
+        name_exact?: string;
+        /**
+         * Which field to use when ordering the results.
+         */
+        o?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/science-domains/presets/';
+};
+
+export type ScienceDomainsPresetsListResponses = {
+    200: Array<ScienceDomainPreset>;
+};
+
+export type ScienceDomainsPresetsListResponse = ScienceDomainsPresetsListResponses[keyof ScienceDomainsPresetsListResponses];
+
+export type ScienceDomainsPresetsCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Name
+         */
+        name?: string;
+        /**
+         * Name (exact)
+         */
+        name_exact?: string;
+        /**
+         * Which field to use when ordering the results.
+         */
+        o?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/science-domains/presets/';
+};
+
+export type ScienceDomainsPresetsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type ScienceSubDomainsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Domain name
+         */
+        domain_name?: string;
+        /**
+         * Domain UUID
+         */
+        domain_uuid?: string;
+        /**
+         * Name
+         */
+        name?: string;
+        /**
+         * Name (exact)
+         */
+        name_exact?: string;
+        /**
+         * Which field to use when ordering the results.
+         */
+        o?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/science-sub-domains/';
+};
+
+export type ScienceSubDomainsListResponses = {
+    200: Array<ScienceSubDomain>;
+};
+
+export type ScienceSubDomainsListResponse = ScienceSubDomainsListResponses[keyof ScienceSubDomainsListResponses];
+
+export type ScienceSubDomainsCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Domain name
+         */
+        domain_name?: string;
+        /**
+         * Domain UUID
+         */
+        domain_uuid?: string;
+        /**
+         * Name
+         */
+        name?: string;
+        /**
+         * Name (exact)
+         */
+        name_exact?: string;
+        /**
+         * Which field to use when ordering the results.
+         */
+        o?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/science-sub-domains/';
+};
+
+export type ScienceSubDomainsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type ScienceSubDomainsCreateData = {
+    body: ScienceSubDomainRequest;
+    path?: never;
+    query?: never;
+    url: '/api/science-sub-domains/';
+};
+
+export type ScienceSubDomainsCreateResponses = {
+    201: ScienceSubDomain;
+};
+
+export type ScienceSubDomainsCreateResponse = ScienceSubDomainsCreateResponses[keyof ScienceSubDomainsCreateResponses];
+
+export type ScienceSubDomainsDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/science-sub-domains/{uuid}/';
+};
+
+export type ScienceSubDomainsDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type ScienceSubDomainsDestroyResponse = ScienceSubDomainsDestroyResponses[keyof ScienceSubDomainsDestroyResponses];
+
+export type ScienceSubDomainsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/science-sub-domains/{uuid}/';
+};
+
+export type ScienceSubDomainsRetrieveResponses = {
+    200: ScienceSubDomain;
+};
+
+export type ScienceSubDomainsRetrieveResponse = ScienceSubDomainsRetrieveResponses[keyof ScienceSubDomainsRetrieveResponses];
+
+export type ScienceSubDomainsPartialUpdateData = {
+    body?: PatchedScienceSubDomainRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/science-sub-domains/{uuid}/';
+};
+
+export type ScienceSubDomainsPartialUpdateResponses = {
+    200: ScienceSubDomain;
+};
+
+export type ScienceSubDomainsPartialUpdateResponse = ScienceSubDomainsPartialUpdateResponses[keyof ScienceSubDomainsPartialUpdateResponses];
+
+export type ScienceSubDomainsUpdateData = {
+    body: ScienceSubDomainRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/science-sub-domains/{uuid}/';
+};
+
+export type ScienceSubDomainsUpdateResponses = {
+    200: ScienceSubDomain;
+};
+
+export type ScienceSubDomainsUpdateResponse = ScienceSubDomainsUpdateResponses[keyof ScienceSubDomainsUpdateResponses];
 
 export type ServiceSettingsListData = {
     body?: never;
