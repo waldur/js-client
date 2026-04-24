@@ -35,7 +35,9 @@ jobs:
           # Clear target repo except .git
           find target -mindepth 1 -maxdepth 1 -not -name '.git' -exec rm -rf {} +
           # Move modular-sdk contents to target
-          cp -r modular-sdk/* target/
+          cp -a modular-sdk/. target/
+          # Debug structure
+          ls -R target
           cd target
           git config user.name 'GitHub Actions'
           git config user.email 'github-actions@github.com'
