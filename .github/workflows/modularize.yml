@@ -24,7 +24,7 @@ jobs:
         run: npm install
 
       - name: Run split script
-        run: npx ts-node-esm scripts/split-sdk.ts
+        run: npx tsx scripts/split-sdk.ts
         env:
           SDK_SRC: src
           SDK_OUT: modular-sdk
