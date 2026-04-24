@@ -599,6 +599,10 @@ fs.writeFileSync(
 // Root structure
 console.log("Generating monorepo root structure...");
 fs.writeFileSync(
+  path.join(outDir, ".gitignore"),
+  "node_modules/\ndist/\n*.log\n.DS_Store\n",
+);
+fs.writeFileSync(
   path.join(outDir, "package.json"),
   JSON.stringify(
     {
