@@ -122,6 +122,12 @@ ensureDir(packagesDir);
 
 // ── Step 0: Load project ───────────────────────────────────────────────────────
 console.log("Loading project...");
+const monoPkg = JSON.parse(
+  fs.readFileSync(path.join(process.cwd(), "package.json"), "utf-8"),
+);
+const sdkVersion = monoPkg.version;
+console.log(`Using version: ${sdkVersion}`);
+
 const project = new Project({ skipAddingFilesFromTsConfig: true });
 const typesFile = project.addSourceFileAtPath(path.join(srcDir, "types.gen.ts"));
 const sdkFile = project.addSourceFileAtPath(path.join(srcDir, "sdk.gen.ts"));
@@ -476,7 +482,7 @@ for (const mod of ALL_MODULES) {
   }
   const pkg = {
     name: `@waldur/${mod}`,
-    version: "1.0.0",
+    version: sdkVersion,
     main: "dist/index.js",
     types: "dist/index.d.ts",
     scripts: { build: "tsc" },
@@ -560,7 +566,7 @@ fs.writeFileSync(
   JSON.stringify(
     {
       name: "waldur-js-client",
-      version: "1.0.0",
+      version: sdkVersion,
       main: "dist/index.js",
       types: "dist/index.d.ts",
       scripts: { build: "tsc" },
@@ -607,7 +613,7 @@ fs.writeFileSync(
   JSON.stringify(
     {
       name: "@waldur/monorepo",
-      version: "1.0.0",
+      version: sdkVersion,
       private: true,
       workspaces: [
         ...ALL_MODULES.map((m) => `packages/${m}`),
