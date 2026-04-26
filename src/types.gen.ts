@@ -70070,7 +70070,12 @@ export type OpenstackHypervisorsRetrieveResponse = OpenstackHypervisorsRetrieveR
 export type OpenstackHypervisorsSummaryRetrieveData = {
     body?: never;
     path?: never;
-    query?: never;
+    query: {
+        /**
+         * UUID of the OpenStack ServiceSettings to aggregate over.
+         */
+        settings_uuid: string;
+    };
     url: '/api/openstack-hypervisors/summary/';
 };
 
@@ -70083,7 +70088,12 @@ export type OpenstackHypervisorsSummaryRetrieveResponse = OpenstackHypervisorsSu
 export type OpenstackHypervisorsSummaryCountData = {
     body?: never;
     path?: never;
-    query?: never;
+    query: {
+        /**
+         * UUID of the OpenStack ServiceSettings to aggregate over.
+         */
+        settings_uuid: string;
+    };
     url: '/api/openstack-hypervisors/summary/';
 };
 

@@ -38383,8 +38383,8 @@ export const openstackHypervisorsRetrieve = <ThrowOnError extends boolean = fals
  * Get hypervisor summary statistics
  * Return aggregated vCPU, RAM and disk totals across all hypervisors matching the current filter (e.g. settings_uuid).
  */
-export const openstackHypervisorsSummaryRetrieve = <ThrowOnError extends boolean = false>(options?: Options<OpenstackHypervisorsSummaryRetrieveData, ThrowOnError>) => {
-    return (options?.client ?? _heyApiClient).get<OpenstackHypervisorsSummaryRetrieveResponses, unknown, ThrowOnError>({
+export const openstackHypervisorsSummaryRetrieve = <ThrowOnError extends boolean = false>(options: Options<OpenstackHypervisorsSummaryRetrieveData, ThrowOnError>) => {
+    return (options.client ?? _heyApiClient).get<OpenstackHypervisorsSummaryRetrieveResponses, unknown, ThrowOnError>({
         security: [
             {
                 name: 'Authorization',
@@ -38408,8 +38408,8 @@ export const openstackHypervisorsSummaryRetrieve = <ThrowOnError extends boolean
  * Get hypervisor summary statistics
  * Get number of items in the collection matching the request parameters.
  */
-export const openstackHypervisorsSummaryCount = <ThrowOnError extends boolean = false>(options?: Options<OpenstackHypervisorsSummaryCountData, ThrowOnError>) => {
-    return (options?.client ?? _heyApiClient).head<OpenstackHypervisorsSummaryCountResponses, unknown, ThrowOnError>({
+export const openstackHypervisorsSummaryCount = <ThrowOnError extends boolean = false>(options: Options<OpenstackHypervisorsSummaryCountData, ThrowOnError>) => {
+    return (options.client ?? _heyApiClient).head<OpenstackHypervisorsSummaryCountResponses, unknown, ThrowOnError>({
         security: [
             {
                 name: 'Authorization',
