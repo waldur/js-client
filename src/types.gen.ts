@@ -3989,6 +3989,18 @@ export type ChatResponse = {
      */
     offerings?: Array<unknown>;
     /**
+     * Network name (e.g. 'default'). Present when status='preview'.
+     */
+    network?: string;
+    /**
+     * SSH key name. Present when status='preview'.
+     */
+    ssh_key_name?: string;
+    /**
+     * System volume size in GB. Present when status='preview'.
+     */
+    system_volume_size?: number;
+    /**
      * Customer/organization UUID filter hint. Present when k='resource_list'.
      */
     customer_uuid?: string;
@@ -11040,9 +11052,9 @@ export type Message = {
     role: MessageRoleEnum;
     readonly blocks: Array<{
         id: string;
-        key: 'markdown' | 'code' | 'mermaid' | 'vm_order' | 'resource_list' | 'homeport_nav' | 'tool';
+        key: 'markdown' | 'code' | 'mermaid' | 'vm_order' | 'resource_list' | 'homeport_nav' | 'ask_user_form' | 'tool';
         status: string;
-        [key: string]: unknown | string | ('markdown' | 'code' | 'mermaid' | 'vm_order' | 'resource_list' | 'homeport_nav' | 'tool');
+        [key: string]: unknown | string | ('markdown' | 'code' | 'mermaid' | 'vm_order' | 'resource_list' | 'homeport_nav' | 'ask_user_form' | 'tool');
     }>;
     readonly warning: string;
     readonly sequence_index: number;
