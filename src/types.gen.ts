@@ -3032,6 +3032,66 @@ export type CallApplicantAttributeConfigRequest = {
     reviewers_see_applicant_details?: boolean;
 };
 
+export type CallApplicantVisibilityConfig = {
+    readonly uuid?: string;
+    readonly created?: string;
+    readonly modified?: string;
+    expose_full_name?: boolean;
+    expose_email?: boolean;
+    expose_username?: boolean;
+    expose_registration_method?: boolean;
+    expose_organization?: boolean;
+    expose_organization_country?: boolean;
+    expose_organization_type?: boolean;
+    expose_organization_registry_code?: boolean;
+    expose_affiliations?: boolean;
+    expose_phone_number?: boolean;
+    expose_job_title?: boolean;
+    expose_gender?: boolean;
+    expose_personal_title?: boolean;
+    expose_place_of_birth?: boolean;
+    expose_address?: boolean;
+    expose_country_of_residence?: boolean;
+    expose_nationality?: boolean;
+    expose_nationalities?: boolean;
+    expose_eduperson_assurance?: boolean;
+    expose_identity_source?: boolean;
+    expose_civil_number?: boolean;
+    expose_birth_date?: boolean;
+    expose_active_isds?: boolean;
+    readonly exposed_fields?: Array<string>;
+    /**
+     * Return True if this is a default (unsaved) config.
+     */
+    readonly is_default?: boolean;
+};
+
+export type CallApplicantVisibilityConfigRequest = {
+    expose_full_name?: boolean;
+    expose_email?: boolean;
+    expose_username?: boolean;
+    expose_registration_method?: boolean;
+    expose_organization?: boolean;
+    expose_organization_country?: boolean;
+    expose_organization_type?: boolean;
+    expose_organization_registry_code?: boolean;
+    expose_affiliations?: boolean;
+    expose_phone_number?: boolean;
+    expose_job_title?: boolean;
+    expose_gender?: boolean;
+    expose_personal_title?: boolean;
+    expose_place_of_birth?: boolean;
+    expose_address?: boolean;
+    expose_country_of_residence?: boolean;
+    expose_nationality?: boolean;
+    expose_nationalities?: boolean;
+    expose_eduperson_assurance?: boolean;
+    expose_identity_source?: boolean;
+    expose_civil_number?: boolean;
+    expose_birth_date?: boolean;
+    expose_active_isds?: boolean;
+};
+
 export type CallAssignmentConfiguration = {
     readonly uuid: string;
     readonly call: string;
@@ -4875,6 +4935,7 @@ export type ConstanceSettings = {
     WALDUR_AUTH_SOCIAL_ROLE_CLAIM?: string;
     REMOTE_EDUTEAMS_REFRESH_TOKEN?: string;
     DEFAULT_OFFERING_USER_ATTRIBUTES?: Array<UserAttributeEnum | BlankEnum>;
+    DEFAULT_CALL_USER_ATTRIBUTES?: Array<UserAttributeEnum | BlankEnum>;
     INVITATION_ALLOWED_FIELDS?: Array<UserAttributeEnum | BlankEnum>;
     ENABLED_USER_PROFILE_ATTRIBUTES?: Array<UserAttributeEnum | BlankEnum>;
     MANDATORY_USER_ATTRIBUTES?: Array<UserAttributeEnum | BlankEnum>;
@@ -5134,6 +5195,7 @@ export type ConstanceSettingsRequest = {
     WALDUR_AUTH_SOCIAL_ROLE_CLAIM?: string;
     REMOTE_EDUTEAMS_REFRESH_TOKEN?: string;
     DEFAULT_OFFERING_USER_ATTRIBUTES?: Array<UserAttributeEnum | BlankEnum>;
+    DEFAULT_CALL_USER_ATTRIBUTES?: Array<UserAttributeEnum | BlankEnum>;
     INVITATION_ALLOWED_FIELDS?: Array<UserAttributeEnum | BlankEnum>;
     ENABLED_USER_PROFILE_ATTRIBUTES?: Array<UserAttributeEnum | BlankEnum>;
     MANDATORY_USER_ATTRIBUTES?: Array<UserAttributeEnum | BlankEnum>;
@@ -13451,15 +13513,17 @@ export type OfferingUserAttributeConfig = {
     readonly uuid: string;
     readonly created: string;
     readonly modified: string;
-    readonly offering_uuid: string;
-    readonly offering_name: string;
-    expose_username?: boolean;
     expose_full_name?: boolean;
     expose_email?: boolean;
-    expose_phone_number?: boolean;
+    expose_username?: boolean;
+    expose_registration_method?: boolean;
     expose_organization?: boolean;
-    expose_job_title?: boolean;
+    expose_organization_country?: boolean;
+    expose_organization_type?: boolean;
+    expose_organization_registry_code?: boolean;
     expose_affiliations?: boolean;
+    expose_phone_number?: boolean;
+    expose_job_title?: boolean;
     expose_gender?: boolean;
     expose_personal_title?: boolean;
     expose_place_of_birth?: boolean;
@@ -13467,33 +13531,32 @@ export type OfferingUserAttributeConfig = {
     expose_country_of_residence?: boolean;
     expose_nationality?: boolean;
     expose_nationalities?: boolean;
-    expose_organization_country?: boolean;
-    expose_organization_type?: boolean;
-    expose_organization_registry_code?: boolean;
     expose_eduperson_assurance?: boolean;
+    expose_identity_source?: boolean;
     expose_civil_number?: boolean;
     expose_birth_date?: boolean;
-    expose_identity_source?: boolean;
     expose_active_isds?: boolean;
-    /**
-     * Return list of field names currently configured for exposure.
-     */
     readonly exposed_fields: Array<string>;
     /**
      * Return True if this is a default (unsaved) config.
      */
     readonly is_default: boolean;
+    readonly offering_uuid: string;
+    readonly offering_name: string;
 };
 
 export type OfferingUserAttributeConfigRequest = {
-    offering?: string;
-    expose_username?: boolean;
     expose_full_name?: boolean;
     expose_email?: boolean;
-    expose_phone_number?: boolean;
+    expose_username?: boolean;
+    expose_registration_method?: boolean;
     expose_organization?: boolean;
-    expose_job_title?: boolean;
+    expose_organization_country?: boolean;
+    expose_organization_type?: boolean;
+    expose_organization_registry_code?: boolean;
     expose_affiliations?: boolean;
+    expose_phone_number?: boolean;
+    expose_job_title?: boolean;
     expose_gender?: boolean;
     expose_personal_title?: boolean;
     expose_place_of_birth?: boolean;
@@ -13501,14 +13564,12 @@ export type OfferingUserAttributeConfigRequest = {
     expose_country_of_residence?: boolean;
     expose_nationality?: boolean;
     expose_nationalities?: boolean;
-    expose_organization_country?: boolean;
-    expose_organization_type?: boolean;
-    expose_organization_registry_code?: boolean;
     expose_eduperson_assurance?: boolean;
+    expose_identity_source?: boolean;
     expose_civil_number?: boolean;
     expose_birth_date?: boolean;
-    expose_identity_source?: boolean;
     expose_active_isds?: boolean;
+    offering?: string;
 };
 
 export type OfferingUserRequest = {
@@ -17476,14 +17537,17 @@ export type PatchedOfferingUsagePolicyRequest = {
 };
 
 export type PatchedOfferingUserAttributeConfigRequest = {
-    offering?: string;
-    expose_username?: boolean;
     expose_full_name?: boolean;
     expose_email?: boolean;
-    expose_phone_number?: boolean;
+    expose_username?: boolean;
+    expose_registration_method?: boolean;
     expose_organization?: boolean;
-    expose_job_title?: boolean;
+    expose_organization_country?: boolean;
+    expose_organization_type?: boolean;
+    expose_organization_registry_code?: boolean;
     expose_affiliations?: boolean;
+    expose_phone_number?: boolean;
+    expose_job_title?: boolean;
     expose_gender?: boolean;
     expose_personal_title?: boolean;
     expose_place_of_birth?: boolean;
@@ -17491,14 +17555,12 @@ export type PatchedOfferingUserAttributeConfigRequest = {
     expose_country_of_residence?: boolean;
     expose_nationality?: boolean;
     expose_nationalities?: boolean;
-    expose_organization_country?: boolean;
-    expose_organization_type?: boolean;
-    expose_organization_registry_code?: boolean;
     expose_eduperson_assurance?: boolean;
+    expose_identity_source?: boolean;
     expose_civil_number?: boolean;
     expose_birth_date?: boolean;
-    expose_identity_source?: boolean;
     expose_active_isds?: boolean;
+    offering?: string;
 };
 
 export type PatchedOfferingUserRequest = {
@@ -17904,6 +17966,7 @@ export type PatchedProtectedCallRequest = {
      * List of required assurance URIs (REFEDS). User must have ALL of these.
      */
     user_assurance_levels?: unknown;
+    applicant_visibility_config?: CallApplicantVisibilityConfigRequest | null;
 };
 
 export type PatchedProtectedRoundRequest = {
@@ -19886,6 +19949,71 @@ export type Proposal = {
     readonly created_by_name: string;
     readonly created_by_uuid: string;
     /**
+     * Required. 128 characters or fewer. Lowercase letters, numbers and @/./+/-/_ characters
+     */
+    readonly applicant_username: string;
+    readonly applicant_full_name: string;
+    readonly applicant_first_name: string;
+    readonly applicant_last_name: string;
+    /**
+     * Email address
+     */
+    readonly applicant_email: string;
+    /**
+     * Indicates what registration method was used.
+     */
+    readonly applicant_registration_method: string;
+    readonly applicant_phone_number: string;
+    readonly applicant_organization: string;
+    readonly applicant_organization_country: string;
+    /**
+     * SCHAC URN (e.g., urn:schac:homeOrganizationType:int:university)
+     */
+    readonly applicant_organization_type: string;
+    /**
+     * Company registration code of the user's organization, if known
+     */
+    readonly applicant_organization_registry_code: string;
+    readonly applicant_job_title: string;
+    /**
+     * Person's affiliation within organization such as student, faculty, staff.
+     */
+    readonly applicant_affiliations: unknown;
+    /**
+     * User's gender (male, female, or unknown)
+     */
+    applicant_gender: GenderEnum | BlankEnum | NullEnum | null;
+    /**
+     * Honorific title (Mr, Ms, Dr, Prof, etc.)
+     */
+    readonly applicant_personal_title: string;
+    readonly applicant_place_of_birth: string;
+    readonly applicant_address: string;
+    readonly applicant_country_of_residence: string;
+    /**
+     * Primary citizenship (ISO 3166-1 alpha-2 code)
+     */
+    readonly applicant_nationality: string;
+    /**
+     * List of all citizenships (ISO 3166-1 alpha-2 codes)
+     */
+    readonly applicant_nationalities: unknown;
+    /**
+     * REFEDS assurance profile URIs from identity provider
+     */
+    readonly applicant_eduperson_assurance: unknown;
+    /**
+     * Source of identity
+     * Indicates what identity provider was used.
+     */
+    readonly applicant_identity_source: string;
+    readonly applicant_civil_number: string | null;
+    readonly applicant_birth_date: string | null;
+    /**
+     * List of ISDs that have asserted this user exists. User is deactivated when this becomes empty.
+     */
+    readonly applicant_active_isds: unknown;
+    /**
      * Duration in days after provisioning of resources.
      */
     duration_in_days?: number | null;
@@ -20142,6 +20270,7 @@ export type ProtectedCall = {
      * List of required assurance URIs (REFEDS). User must have ALL of these.
      */
     user_assurance_levels?: unknown;
+    applicant_visibility_config?: CallApplicantVisibilityConfig | null;
 };
 
 export type ProtectedCallRequest = {
@@ -20197,6 +20326,7 @@ export type ProtectedCallRequest = {
      * List of required assurance URIs (REFEDS). User must have ALL of these.
      */
     user_assurance_levels?: unknown;
+    applicant_visibility_config?: CallApplicantVisibilityConfigRequest | null;
 };
 
 export type ProtectedProposalList = {
@@ -29107,6 +29237,7 @@ export type ConstanceSettingsRequestForm = {
     WALDUR_AUTH_SOCIAL_ROLE_CLAIM?: string;
     REMOTE_EDUTEAMS_REFRESH_TOKEN?: string;
     DEFAULT_OFFERING_USER_ATTRIBUTES?: Array<UserAttributeEnum | BlankEnum>;
+    DEFAULT_CALL_USER_ATTRIBUTES?: Array<UserAttributeEnum | BlankEnum>;
     INVITATION_ALLOWED_FIELDS?: Array<UserAttributeEnum | BlankEnum>;
     ENABLED_USER_PROFILE_ATTRIBUTES?: Array<UserAttributeEnum | BlankEnum>;
     MANDATORY_USER_ATTRIBUTES?: Array<UserAttributeEnum | BlankEnum>;
@@ -29366,6 +29497,7 @@ export type ConstanceSettingsRequestMultipart = {
     WALDUR_AUTH_SOCIAL_ROLE_CLAIM?: string;
     REMOTE_EDUTEAMS_REFRESH_TOKEN?: string;
     DEFAULT_OFFERING_USER_ATTRIBUTES?: Array<UserAttributeEnum | BlankEnum>;
+    DEFAULT_CALL_USER_ATTRIBUTES?: Array<UserAttributeEnum | BlankEnum>;
     INVITATION_ALLOWED_FIELDS?: Array<UserAttributeEnum | BlankEnum>;
     ENABLED_USER_PROFILE_ATTRIBUTES?: Array<UserAttributeEnum | BlankEnum>;
     MANDATORY_USER_ATTRIBUTES?: Array<UserAttributeEnum | BlankEnum>;
@@ -30154,7 +30286,7 @@ export type CampaignStateEnum = 'Active' | 'Draft' | 'Terminated';
 
 export type ProposalOEnum = '-created' | '-round__call__name' | '-round__cutoff_time' | '-round__start_time' | '-slug' | '-state' | 'created' | 'round__call__name' | 'round__cutoff_time' | 'round__start_time' | 'slug' | 'state';
 
-export type ProtectedCallFieldEnum = 'backend_id' | 'compliance_checklist' | 'compliance_checklist_name' | 'created' | 'created_by' | 'customer_name' | 'customer_uuid' | 'description' | 'documents' | 'end_date' | 'external_url' | 'fixed_duration_in_days' | 'has_eligibility_restrictions' | 'manager' | 'manager_uuid' | 'name' | 'offerings' | 'proposal_slug_template' | 'reference_code' | 'resource_templates' | 'reviewer_identity_visible_to_submitters' | 'reviews_visible_to_submitters' | 'rounds' | 'slug' | 'start_date' | 'state' | 'url' | 'user_affiliations' | 'user_assurance_levels' | 'user_email_patterns' | 'user_identity_sources' | 'user_nationalities' | 'user_organization_types' | 'uuid';
+export type ProtectedCallFieldEnum = 'applicant_visibility_config' | 'backend_id' | 'compliance_checklist' | 'compliance_checklist_name' | 'created' | 'created_by' | 'customer_name' | 'customer_uuid' | 'description' | 'documents' | 'end_date' | 'external_url' | 'fixed_duration_in_days' | 'has_eligibility_restrictions' | 'manager' | 'manager_uuid' | 'name' | 'offerings' | 'proposal_slug_template' | 'reference_code' | 'resource_templates' | 'reviewer_identity_visible_to_submitters' | 'reviews_visible_to_submitters' | 'rounds' | 'slug' | 'start_date' | 'state' | 'url' | 'user_affiliations' | 'user_assurance_levels' | 'user_email_patterns' | 'user_identity_sources' | 'user_nationalities' | 'user_organization_types' | 'uuid';
 
 export type ProtectedCallOEnum = '-created' | '-manager__customer__name' | '-name' | 'created' | 'manager__customer__name' | 'name';
 
