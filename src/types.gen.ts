@@ -2984,54 +2984,6 @@ export type CachedProjectUsageReport = {
     report: ProjectUsageReport;
 };
 
-export type CallApplicantAttributeConfig = {
-    readonly uuid: string;
-    readonly call_uuid: string;
-    readonly call_name: string;
-    expose_full_name?: boolean;
-    expose_email?: boolean;
-    expose_organization?: boolean;
-    expose_affiliations?: boolean;
-    expose_organization_type?: boolean;
-    expose_organization_country?: boolean;
-    expose_nationality?: boolean;
-    expose_nationalities?: boolean;
-    expose_country_of_residence?: boolean;
-    expose_eduperson_assurance?: boolean;
-    expose_identity_source?: boolean;
-    /**
-     * If True, reviewers see applicant identity. If False, proposals are anonymized for reviewers.
-     */
-    reviewers_see_applicant_details?: boolean;
-    /**
-     * Return list of currently exposed field names.
-     */
-    readonly exposed_fields: Array<string>;
-    /**
-     * Return True if this is a default (unsaved) config.
-     */
-    readonly is_default: boolean;
-};
-
-export type CallApplicantAttributeConfigRequest = {
-    call?: string;
-    expose_full_name?: boolean;
-    expose_email?: boolean;
-    expose_organization?: boolean;
-    expose_affiliations?: boolean;
-    expose_organization_type?: boolean;
-    expose_organization_country?: boolean;
-    expose_nationality?: boolean;
-    expose_nationalities?: boolean;
-    expose_country_of_residence?: boolean;
-    expose_eduperson_assurance?: boolean;
-    expose_identity_source?: boolean;
-    /**
-     * If True, reviewers see applicant identity. If False, proposals are anonymized for reviewers.
-     */
-    reviewers_see_applicant_details?: boolean;
-};
-
 export type CallApplicantVisibilityConfig = {
     readonly uuid?: string;
     readonly created?: string;
@@ -16737,25 +16689,6 @@ export type PatchedBroadcastMessageRequest = {
     send_at?: string | null;
 };
 
-export type PatchedCallApplicantAttributeConfigRequest = {
-    call?: string;
-    expose_full_name?: boolean;
-    expose_email?: boolean;
-    expose_organization?: boolean;
-    expose_affiliations?: boolean;
-    expose_organization_type?: boolean;
-    expose_organization_country?: boolean;
-    expose_nationality?: boolean;
-    expose_nationalities?: boolean;
-    expose_country_of_residence?: boolean;
-    expose_eduperson_assurance?: boolean;
-    expose_identity_source?: boolean;
-    /**
-     * If True, reviewers see applicant identity. If False, proposals are anonymized for reviewers.
-     */
-    reviewers_see_applicant_details?: boolean;
-};
-
 export type PatchedCallAssignmentConfigurationRequest = {
     /**
      * Automatically assign next-best reviewer when someone declines. If False, manager must manually approve reassignments.
@@ -26923,7 +26856,7 @@ export type UserAgreementRequest = {
     language: string;
 };
 
-export type UserAttributeEnum = 'username' | 'first_name' | 'last_name' | 'full_name' | 'email' | 'phone_number' | 'organization' | 'job_title' | 'affiliations' | 'gender' | 'personal_title' | 'birth_date' | 'place_of_birth' | 'country_of_residence' | 'nationality' | 'nationalities' | 'organization_country' | 'organization_type' | 'organization_registry_code' | 'eduperson_assurance' | 'civil_number' | 'identity_source';
+export type UserAttributeEnum = 'username' | 'registration_method' | 'first_name' | 'last_name' | 'full_name' | 'email' | 'phone_number' | 'organization' | 'job_title' | 'affiliations' | 'gender' | 'personal_title' | 'birth_date' | 'place_of_birth' | 'country_of_residence' | 'nationality' | 'nationalities' | 'organization_country' | 'organization_type' | 'organization_registry_code' | 'eduperson_assurance' | 'civil_number' | 'identity_source';
 
 export type UserAuthMethodCount = {
     /**
@@ -79683,21 +79616,6 @@ export type ProposalProtectedCallsAffinityMatrixRetrieveResponses = {
 
 export type ProposalProtectedCallsAffinityMatrixRetrieveResponse = ProposalProtectedCallsAffinityMatrixRetrieveResponses[keyof ProposalProtectedCallsAffinityMatrixRetrieveResponses];
 
-export type ProposalProtectedCallsApplicantAttributeConfigRetrieveData = {
-    body?: never;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/proposal-protected-calls/{uuid}/applicant_attribute_config/';
-};
-
-export type ProposalProtectedCallsApplicantAttributeConfigRetrieveResponses = {
-    200: CallApplicantAttributeConfig;
-};
-
-export type ProposalProtectedCallsApplicantAttributeConfigRetrieveResponse = ProposalProtectedCallsApplicantAttributeConfigRetrieveResponses[keyof ProposalProtectedCallsApplicantAttributeConfigRetrieveResponses];
-
 export type ProposalProtectedCallsArchiveData = {
     body?: never;
     path: {
@@ -79860,24 +79778,6 @@ export type ProposalProtectedCallsCreateManualAssignmentResponses = {
 };
 
 export type ProposalProtectedCallsCreateManualAssignmentResponse = ProposalProtectedCallsCreateManualAssignmentResponses[keyof ProposalProtectedCallsCreateManualAssignmentResponses];
-
-export type ProposalProtectedCallsDeleteApplicantAttributeConfigDestroyData = {
-    body?: never;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/proposal-protected-calls/{uuid}/delete_applicant_attribute_config/';
-};
-
-export type ProposalProtectedCallsDeleteApplicantAttributeConfigDestroyResponses = {
-    /**
-     * No response body
-     */
-    204: void;
-};
-
-export type ProposalProtectedCallsDeleteApplicantAttributeConfigDestroyResponse = ProposalProtectedCallsDeleteApplicantAttributeConfigDestroyResponses[keyof ProposalProtectedCallsDeleteApplicantAttributeConfigDestroyResponses];
 
 export type ProposalProtectedCallsDeleteUserData = {
     body: UserRoleDeleteRequest;
@@ -80645,36 +80545,6 @@ export type ProposalProtectedCallsSuggestionsListResponses = {
 };
 
 export type ProposalProtectedCallsSuggestionsListResponse = ProposalProtectedCallsSuggestionsListResponses[keyof ProposalProtectedCallsSuggestionsListResponses];
-
-export type ProposalProtectedCallsUpdateApplicantAttributeConfigPartialUpdateData = {
-    body?: PatchedCallApplicantAttributeConfigRequest;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/proposal-protected-calls/{uuid}/update_applicant_attribute_config/';
-};
-
-export type ProposalProtectedCallsUpdateApplicantAttributeConfigPartialUpdateResponses = {
-    200: CallApplicantAttributeConfig;
-};
-
-export type ProposalProtectedCallsUpdateApplicantAttributeConfigPartialUpdateResponse = ProposalProtectedCallsUpdateApplicantAttributeConfigPartialUpdateResponses[keyof ProposalProtectedCallsUpdateApplicantAttributeConfigPartialUpdateResponses];
-
-export type ProposalProtectedCallsUpdateApplicantAttributeConfigData = {
-    body?: CallApplicantAttributeConfigRequest;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/proposal-protected-calls/{uuid}/update_applicant_attribute_config/';
-};
-
-export type ProposalProtectedCallsUpdateApplicantAttributeConfigResponses = {
-    200: CallApplicantAttributeConfig;
-};
-
-export type ProposalProtectedCallsUpdateApplicantAttributeConfigResponse = ProposalProtectedCallsUpdateApplicantAttributeConfigResponses[keyof ProposalProtectedCallsUpdateApplicantAttributeConfigResponses];
 
 export type ProposalProtectedCallsUpdateUserData = {
     body: UserRoleUpdateRequest;
