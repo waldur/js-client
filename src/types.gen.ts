@@ -5249,6 +5249,8 @@ export type ConsumptionStatusResponse = {
 
 export type ContainerFormatEnum = 'bare' | 'ovf' | 'aki' | 'ami' | 'ari';
 
+export type ContentTypeInputEnum = 'resource' | 'resource_project';
+
 export type CoreAuthToken = {
     /**
      * Authentication token for API access
@@ -7147,7 +7149,7 @@ export type EventMetadataResponse = {
      * Map of event group keys to lists of event type enums from EventType
      */
     event_groups: {
-        [key: string]: Array<'access_subnet_creation_succeeded' | 'access_subnet_deletion_succeeded' | 'access_subnet_update_succeeded' | 'allowed_offerings_have_been_updated' | 'attachment_created' | 'attachment_deleted' | 'attachment_updated' | 'auth_logged_in_with_saml2' | 'auth_logged_in_with_username' | 'auth_logged_in_with_oauth' | 'auth_logged_out' | 'auth_logged_out_with_saml2' | 'auth_login_failed_with_username' | 'block_creation_of_new_resources' | 'block_modification_of_existing_resources' | 'call_document_added' | 'call_document_removed' | 'create_of_credit_by_staff' | 'create_of_project_credit_by_staff' | 'custom_notification' | 'customer_creation_succeeded' | 'customer_deletion_succeeded' | 'customer_update_succeeded' | 'customer_permission_review_created' | 'customer_permission_review_closed' | 'droplet_resize_scheduled' | 'droplet_resize_succeeded' | 'freeipa_profile_created' | 'freeipa_profile_deleted' | 'freeipa_profile_disabled' | 'freeipa_profile_enabled' | 'invoice_canceled' | 'invoice_created' | 'invoice_item_created' | 'invoice_item_deleted' | 'invoice_item_updated' | 'invoice_paid' | 'issue_creation_succeeded' | 'issue_deletion_succeeded' | 'issue_update_succeeded' | 'marketplace_offering_component_created' | 'marketplace_offering_component_deleted' | 'marketplace_offering_component_updated' | 'marketplace_offering_created' | 'marketplace_offering_role_created' | 'marketplace_offering_role_deleted' | 'marketplace_offering_role_updated' | 'marketplace_offering_updated' | 'marketplace_offering_user_created' | 'marketplace_offering_user_updated' | 'marketplace_offering_user_deleted' | 'marketplace_offering_user_restriction_updated' | 'marketplace_order_approved' | 'marketplace_order_completed' | 'marketplace_order_created' | 'marketplace_order_failed' | 'marketplace_order_rejected' | 'marketplace_order_terminated' | 'marketplace_order_unlinked' | 'marketplace_plan_archived' | 'marketplace_plan_component_current_price_updated' | 'marketplace_plan_component_future_price_updated' | 'marketplace_plan_component_quota_updated' | 'marketplace_plan_created' | 'marketplace_plan_updated' | 'marketplace_plan_deleted' | 'marketplace_resource_create_canceled' | 'marketplace_resource_create_failed' | 'marketplace_resource_create_requested' | 'marketplace_resource_create_succeeded' | 'marketplace_resource_downscaled' | 'marketplace_resource_erred_on_backend' | 'marketplace_resource_paused' | 'marketplace_resource_terminate_canceled' | 'marketplace_resource_terminate_failed' | 'marketplace_resource_terminate_requested' | 'marketplace_resource_terminate_succeeded' | 'marketplace_resource_unlinked' | 'marketplace_resource_update_canceled' | 'marketplace_resource_update_end_date_succeeded' | 'marketplace_resource_update_failed' | 'marketplace_resource_update_limits_failed' | 'marketplace_resource_update_limits_succeeded' | 'marketplace_resource_update_requested' | 'marketplace_resource_update_succeeded' | 'marketplace_resource_user_created' | 'marketplace_resource_user_deleted' | 'notify_external_user' | 'notify_organization_owners' | 'notify_project_team' | 'openstack_floating_ip_attached' | 'openstack_floating_ip_connected' | 'openstack_floating_ip_description_updated' | 'openstack_floating_ip_detached' | 'openstack_floating_ip_disconnected' | 'openstack_network_cleaned' | 'openstack_network_created' | 'openstack_network_deleted' | 'openstack_network_imported' | 'openstack_network_pulled' | 'openstack_network_updated' | 'openstack_port_cleaned' | 'openstack_port_created' | 'openstack_port_deleted' | 'openstack_port_imported' | 'openstack_port_pulled' | 'openstack_port_updated' | 'openstack_router_updated' | 'openstack_security_group_cleaned' | 'openstack_security_group_created' | 'openstack_security_group_deleted' | 'openstack_security_group_imported' | 'openstack_security_group_pulled' | 'openstack_security_group_rule_cleaned' | 'openstack_security_group_rule_created' | 'openstack_security_group_rule_deleted' | 'openstack_security_group_rule_imported' | 'openstack_security_group_rule_updated' | 'openstack_security_group_updated' | 'openstack_security_group_added_remotely' | 'openstack_security_group_removed_remotely' | 'openstack_security_group_added_locally' | 'openstack_security_group_removed_locally' | 'openstack_server_group_cleaned' | 'openstack_server_group_created' | 'openstack_server_group_deleted' | 'openstack_server_group_imported' | 'openstack_server_group_pulled' | 'openstack_subnet_cleaned' | 'openstack_subnet_created' | 'openstack_subnet_deleted' | 'openstack_subnet_imported' | 'openstack_subnet_pulled' | 'openstack_subnet_updated' | 'openstack_tenant_quota_limit_updated' | 'payment_added' | 'payment_created' | 'payment_removed' | 'policy_notification' | 'project_creation_succeeded' | 'project_deletion_succeeded' | 'project_deletion_triggered' | 'project_update_request_approved' | 'project_update_request_created' | 'project_update_request_rejected' | 'project_end_date_change_request_approved' | 'project_end_date_change_request_created' | 'project_end_date_change_request_rejected' | 'project_update_succeeded' | 'project_permission_review_created' | 'project_permission_review_closed' | 'proposal_canceled' | 'proposal_document_added' | 'proposal_document_removed' | 'query_executed' | 'reduction_of_customer_credit' | 'reduction_of_customer_credit_due_to_minimal_consumption' | 'reduction_of_customer_expected_consumption' | 'reduction_of_project_credit' | 'reduction_of_project_credit_due_to_minimal_consumption' | 'reduction_of_project_expected_consumption' | 'request_downscaling' | 'request_pausing' | 'request_slurm_resource_downscaling' | 'request_slurm_resource_pausing' | 'reset_downscaling' | 'reset_member_restriction' | 'reset_pausing' | 'resource_assign_floating_ip_failed' | 'resource_assign_floating_ip_scheduled' | 'resource_assign_floating_ip_succeeded' | 'resource_attach_failed' | 'resource_attach_scheduled' | 'resource_attach_succeeded' | 'resource_backup_creation_failed' | 'resource_backup_creation_scheduled' | 'resource_backup_creation_succeeded' | 'resource_backup_deletion_failed' | 'resource_backup_deletion_scheduled' | 'resource_backup_deletion_succeeded' | 'resource_backup_restoration_failed' | 'resource_backup_restoration_scheduled' | 'resource_backup_restoration_succeeded' | 'resource_change_flavor_failed' | 'resource_change_flavor_scheduled' | 'resource_change_flavor_succeeded' | 'resource_creation_failed' | 'resource_creation_scheduled' | 'resource_creation_succeeded' | 'resource_deletion_failed' | 'resource_deletion_scheduled' | 'resource_deletion_succeeded' | 'resource_detach_failed' | 'resource_detach_scheduled' | 'resource_detach_succeeded' | 'resource_extend_failed' | 'resource_extend_scheduled' | 'resource_extend_succeeded' | 'resource_extend_volume_failed' | 'resource_extend_volume_scheduled' | 'resource_extend_volume_succeeded' | 'resource_import_succeeded' | 'resource_pull_failed' | 'resource_pull_scheduled' | 'resource_pull_succeeded' | 'resource_restart_failed' | 'resource_restart_scheduled' | 'resource_restart_succeeded' | 'resource_retype_failed' | 'resource_retype_scheduled' | 'resource_retype_succeeded' | 'resource_robot_account_created' | 'resource_robot_account_deleted' | 'resource_robot_account_state_changed' | 'resource_robot_account_updated' | 'resource_start_failed' | 'resource_start_scheduled' | 'resource_start_succeeded' | 'resource_stop_failed' | 'resource_stop_scheduled' | 'resource_stop_succeeded' | 'resource_unassign_floating_ip_failed' | 'resource_unassign_floating_ip_scheduled' | 'resource_unassign_floating_ip_succeeded' | 'resource_update_allowed_address_pairs_failed' | 'resource_update_allowed_address_pairs_scheduled' | 'resource_update_allowed_address_pairs_succeeded' | 'resource_update_floating_ips_failed' | 'resource_update_floating_ips_scheduled' | 'resource_update_floating_ips_succeeded' | 'resource_update_ports_failed' | 'resource_update_ports_scheduled' | 'resource_update_ports_succeeded' | 'resource_update_security_groups_failed' | 'resource_update_security_groups_scheduled' | 'resource_update_security_groups_succeeded' | 'resource_update_succeeded' | 'restrict_members' | 'review_canceled' | 'role_granted' | 'role_revoked' | 'role_updated' | 'roll_back_customer_credit' | 'roll_back_project_credit' | 'service_account_created' | 'service_account_deleted' | 'service_account_updated' | 'set_to_zero_overdue_credit' | 'slurm_policy_evaluation' | 'ssh_key_creation_succeeded' | 'ssh_key_deletion_succeeded' | 'terminate_resources' | 'token_created' | 'token_lifetime_updated' | 'update_of_credit_by_staff' | 'update_of_project_credit_by_staff' | 'automatic_credit_adjustment' | 'user_activated' | 'user_creation_succeeded' | 'user_data_accessed' | 'user_deactivated' | 'user_deactivated_no_roles' | 'user_deletion_succeeded' | 'user_details_update_succeeded' | 'user_has_been_created_by_staff' | 'user_password_updated' | 'user_password_updated_by_staff' | 'user_password_removed_by_staff' | 'user_update_succeeded' | 'user_group_invitation_updated' | 'user_invitation_updated' | 'user_invitation_deleted' | 'terms_of_service_consent_granted' | 'terms_of_service_consent_revoked' | 'chat_session_accessed' | 'chat_thread_accessed' | 'chat_injection_detected' | 'chat_pii_detected' | 'chat_feedback_submitted' | 'onboarding_verification_deleted' | 'onboarding_verification_deleted_by_task' | 'pat_created' | 'pat_revoked' | 'pat_rotated' | 'pat_expired' | 'pat_used_from_new_ip'>;
+        [key: string]: Array<'access_subnet_creation_succeeded' | 'access_subnet_deletion_succeeded' | 'access_subnet_update_succeeded' | 'allowed_offerings_have_been_updated' | 'attachment_created' | 'attachment_deleted' | 'attachment_updated' | 'auth_logged_in_with_saml2' | 'auth_logged_in_with_username' | 'auth_logged_in_with_oauth' | 'auth_logged_out' | 'auth_logged_out_with_saml2' | 'auth_login_failed_with_username' | 'block_creation_of_new_resources' | 'block_modification_of_existing_resources' | 'call_document_added' | 'call_document_removed' | 'create_of_credit_by_staff' | 'create_of_project_credit_by_staff' | 'custom_notification' | 'customer_creation_succeeded' | 'customer_deletion_succeeded' | 'customer_update_succeeded' | 'customer_permission_review_created' | 'customer_permission_review_closed' | 'droplet_resize_scheduled' | 'droplet_resize_succeeded' | 'freeipa_profile_created' | 'freeipa_profile_deleted' | 'freeipa_profile_disabled' | 'freeipa_profile_enabled' | 'invoice_canceled' | 'invoice_created' | 'invoice_item_created' | 'invoice_item_deleted' | 'invoice_item_updated' | 'invoice_paid' | 'issue_creation_succeeded' | 'issue_deletion_succeeded' | 'issue_update_succeeded' | 'marketplace_offering_component_created' | 'marketplace_offering_component_deleted' | 'marketplace_offering_component_updated' | 'marketplace_offering_created' | 'marketplace_offering_updated' | 'marketplace_offering_user_created' | 'marketplace_offering_user_updated' | 'marketplace_offering_user_deleted' | 'marketplace_offering_user_restriction_updated' | 'marketplace_order_approved' | 'marketplace_order_completed' | 'marketplace_order_created' | 'marketplace_order_failed' | 'marketplace_order_rejected' | 'marketplace_order_terminated' | 'marketplace_order_unlinked' | 'marketplace_plan_archived' | 'marketplace_plan_component_current_price_updated' | 'marketplace_plan_component_future_price_updated' | 'marketplace_plan_component_quota_updated' | 'marketplace_plan_created' | 'marketplace_plan_updated' | 'marketplace_plan_deleted' | 'marketplace_resource_create_canceled' | 'marketplace_resource_create_failed' | 'marketplace_resource_create_requested' | 'marketplace_resource_create_succeeded' | 'marketplace_resource_downscaled' | 'marketplace_resource_erred_on_backend' | 'marketplace_resource_paused' | 'marketplace_resource_terminate_canceled' | 'marketplace_resource_terminate_failed' | 'marketplace_resource_terminate_requested' | 'marketplace_resource_terminate_succeeded' | 'marketplace_resource_unlinked' | 'marketplace_resource_update_canceled' | 'marketplace_resource_update_end_date_succeeded' | 'marketplace_resource_update_failed' | 'marketplace_resource_update_limits_failed' | 'marketplace_resource_update_limits_succeeded' | 'marketplace_resource_update_requested' | 'marketplace_resource_update_succeeded' | 'notify_external_user' | 'notify_organization_owners' | 'notify_project_team' | 'openstack_floating_ip_attached' | 'openstack_floating_ip_connected' | 'openstack_floating_ip_description_updated' | 'openstack_floating_ip_detached' | 'openstack_floating_ip_disconnected' | 'openstack_network_cleaned' | 'openstack_network_created' | 'openstack_network_deleted' | 'openstack_network_imported' | 'openstack_network_pulled' | 'openstack_network_updated' | 'openstack_port_cleaned' | 'openstack_port_created' | 'openstack_port_deleted' | 'openstack_port_imported' | 'openstack_port_pulled' | 'openstack_port_updated' | 'openstack_router_updated' | 'openstack_security_group_cleaned' | 'openstack_security_group_created' | 'openstack_security_group_deleted' | 'openstack_security_group_imported' | 'openstack_security_group_pulled' | 'openstack_security_group_rule_cleaned' | 'openstack_security_group_rule_created' | 'openstack_security_group_rule_deleted' | 'openstack_security_group_rule_imported' | 'openstack_security_group_rule_updated' | 'openstack_security_group_updated' | 'openstack_security_group_added_remotely' | 'openstack_security_group_removed_remotely' | 'openstack_security_group_added_locally' | 'openstack_security_group_removed_locally' | 'openstack_server_group_cleaned' | 'openstack_server_group_created' | 'openstack_server_group_deleted' | 'openstack_server_group_imported' | 'openstack_server_group_pulled' | 'openstack_subnet_cleaned' | 'openstack_subnet_created' | 'openstack_subnet_deleted' | 'openstack_subnet_imported' | 'openstack_subnet_pulled' | 'openstack_subnet_updated' | 'openstack_tenant_quota_limit_updated' | 'payment_added' | 'payment_created' | 'payment_removed' | 'policy_notification' | 'project_creation_succeeded' | 'project_deletion_succeeded' | 'project_deletion_triggered' | 'project_update_request_approved' | 'project_update_request_created' | 'project_update_request_rejected' | 'project_end_date_change_request_approved' | 'project_end_date_change_request_created' | 'project_end_date_change_request_rejected' | 'project_update_succeeded' | 'project_permission_review_created' | 'project_permission_review_closed' | 'proposal_canceled' | 'proposal_document_added' | 'proposal_document_removed' | 'query_executed' | 'reduction_of_customer_credit' | 'reduction_of_customer_credit_due_to_minimal_consumption' | 'reduction_of_customer_expected_consumption' | 'reduction_of_project_credit' | 'reduction_of_project_credit_due_to_minimal_consumption' | 'reduction_of_project_expected_consumption' | 'request_downscaling' | 'request_pausing' | 'request_slurm_resource_downscaling' | 'request_slurm_resource_pausing' | 'reset_downscaling' | 'reset_member_restriction' | 'reset_pausing' | 'resource_assign_floating_ip_failed' | 'resource_assign_floating_ip_scheduled' | 'resource_assign_floating_ip_succeeded' | 'resource_attach_failed' | 'resource_attach_scheduled' | 'resource_attach_succeeded' | 'resource_backup_creation_failed' | 'resource_backup_creation_scheduled' | 'resource_backup_creation_succeeded' | 'resource_backup_deletion_failed' | 'resource_backup_deletion_scheduled' | 'resource_backup_deletion_succeeded' | 'resource_backup_restoration_failed' | 'resource_backup_restoration_scheduled' | 'resource_backup_restoration_succeeded' | 'resource_change_flavor_failed' | 'resource_change_flavor_scheduled' | 'resource_change_flavor_succeeded' | 'resource_creation_failed' | 'resource_creation_scheduled' | 'resource_creation_succeeded' | 'resource_deletion_failed' | 'resource_deletion_scheduled' | 'resource_deletion_succeeded' | 'resource_detach_failed' | 'resource_detach_scheduled' | 'resource_detach_succeeded' | 'resource_extend_failed' | 'resource_extend_scheduled' | 'resource_extend_succeeded' | 'resource_extend_volume_failed' | 'resource_extend_volume_scheduled' | 'resource_extend_volume_succeeded' | 'resource_import_succeeded' | 'resource_pull_failed' | 'resource_pull_scheduled' | 'resource_pull_succeeded' | 'resource_restart_failed' | 'resource_restart_scheduled' | 'resource_restart_succeeded' | 'resource_retype_failed' | 'resource_retype_scheduled' | 'resource_retype_succeeded' | 'resource_robot_account_created' | 'resource_robot_account_deleted' | 'resource_robot_account_state_changed' | 'resource_robot_account_updated' | 'resource_start_failed' | 'resource_start_scheduled' | 'resource_start_succeeded' | 'resource_stop_failed' | 'resource_stop_scheduled' | 'resource_stop_succeeded' | 'resource_unassign_floating_ip_failed' | 'resource_unassign_floating_ip_scheduled' | 'resource_unassign_floating_ip_succeeded' | 'resource_update_allowed_address_pairs_failed' | 'resource_update_allowed_address_pairs_scheduled' | 'resource_update_allowed_address_pairs_succeeded' | 'resource_update_floating_ips_failed' | 'resource_update_floating_ips_scheduled' | 'resource_update_floating_ips_succeeded' | 'resource_update_ports_failed' | 'resource_update_ports_scheduled' | 'resource_update_ports_succeeded' | 'resource_update_security_groups_failed' | 'resource_update_security_groups_scheduled' | 'resource_update_security_groups_succeeded' | 'resource_update_succeeded' | 'restrict_members' | 'review_canceled' | 'role_granted' | 'role_revoked' | 'role_updated' | 'roll_back_customer_credit' | 'roll_back_project_credit' | 'service_account_created' | 'service_account_deleted' | 'service_account_updated' | 'set_to_zero_overdue_credit' | 'slurm_policy_evaluation' | 'ssh_key_creation_succeeded' | 'ssh_key_deletion_succeeded' | 'terminate_resources' | 'token_created' | 'token_lifetime_updated' | 'update_of_credit_by_staff' | 'update_of_project_credit_by_staff' | 'automatic_credit_adjustment' | 'user_activated' | 'user_creation_succeeded' | 'user_data_accessed' | 'user_deactivated' | 'user_deactivated_no_roles' | 'user_deletion_succeeded' | 'user_details_update_succeeded' | 'user_has_been_created_by_staff' | 'user_password_updated' | 'user_password_updated_by_staff' | 'user_password_removed_by_staff' | 'user_update_succeeded' | 'user_group_invitation_updated' | 'user_invitation_updated' | 'user_invitation_deleted' | 'terms_of_service_consent_granted' | 'terms_of_service_consent_revoked' | 'chat_session_accessed' | 'chat_thread_accessed' | 'chat_injection_detected' | 'chat_pii_detected' | 'chat_feedback_submitted' | 'onboarding_verification_deleted' | 'onboarding_verification_deleted_by_task' | 'pat_created' | 'pat_revoked' | 'pat_rotated' | 'pat_expired' | 'pat_used_from_new_ip'>;
     };
 };
 
@@ -7233,7 +7235,7 @@ export type EventSubscriptionRequest = {
     observable_objects?: unknown;
 };
 
-export type EventTypesEnum = 'access_subnet_creation_succeeded' | 'access_subnet_deletion_succeeded' | 'access_subnet_update_succeeded' | 'allowed_offerings_have_been_updated' | 'attachment_created' | 'attachment_deleted' | 'attachment_updated' | 'auth_logged_in_with_saml2' | 'auth_logged_in_with_username' | 'auth_logged_in_with_oauth' | 'auth_logged_out' | 'auth_logged_out_with_saml2' | 'auth_login_failed_with_username' | 'block_creation_of_new_resources' | 'block_modification_of_existing_resources' | 'call_document_added' | 'call_document_removed' | 'create_of_credit_by_staff' | 'create_of_project_credit_by_staff' | 'custom_notification' | 'customer_creation_succeeded' | 'customer_deletion_succeeded' | 'customer_update_succeeded' | 'customer_permission_review_created' | 'customer_permission_review_closed' | 'droplet_resize_scheduled' | 'droplet_resize_succeeded' | 'freeipa_profile_created' | 'freeipa_profile_deleted' | 'freeipa_profile_disabled' | 'freeipa_profile_enabled' | 'invoice_canceled' | 'invoice_created' | 'invoice_item_created' | 'invoice_item_deleted' | 'invoice_item_updated' | 'invoice_paid' | 'issue_creation_succeeded' | 'issue_deletion_succeeded' | 'issue_update_succeeded' | 'marketplace_offering_component_created' | 'marketplace_offering_component_deleted' | 'marketplace_offering_component_updated' | 'marketplace_offering_created' | 'marketplace_offering_role_created' | 'marketplace_offering_role_deleted' | 'marketplace_offering_role_updated' | 'marketplace_offering_updated' | 'marketplace_offering_user_created' | 'marketplace_offering_user_updated' | 'marketplace_offering_user_deleted' | 'marketplace_offering_user_restriction_updated' | 'marketplace_order_approved' | 'marketplace_order_completed' | 'marketplace_order_created' | 'marketplace_order_failed' | 'marketplace_order_rejected' | 'marketplace_order_terminated' | 'marketplace_order_unlinked' | 'marketplace_plan_archived' | 'marketplace_plan_component_current_price_updated' | 'marketplace_plan_component_future_price_updated' | 'marketplace_plan_component_quota_updated' | 'marketplace_plan_created' | 'marketplace_plan_updated' | 'marketplace_plan_deleted' | 'marketplace_resource_create_canceled' | 'marketplace_resource_create_failed' | 'marketplace_resource_create_requested' | 'marketplace_resource_create_succeeded' | 'marketplace_resource_downscaled' | 'marketplace_resource_erred_on_backend' | 'marketplace_resource_paused' | 'marketplace_resource_terminate_canceled' | 'marketplace_resource_terminate_failed' | 'marketplace_resource_terminate_requested' | 'marketplace_resource_terminate_succeeded' | 'marketplace_resource_unlinked' | 'marketplace_resource_update_canceled' | 'marketplace_resource_update_end_date_succeeded' | 'marketplace_resource_update_failed' | 'marketplace_resource_update_limits_failed' | 'marketplace_resource_update_limits_succeeded' | 'marketplace_resource_update_requested' | 'marketplace_resource_update_succeeded' | 'marketplace_resource_user_created' | 'marketplace_resource_user_deleted' | 'notify_external_user' | 'notify_organization_owners' | 'notify_project_team' | 'openstack_floating_ip_attached' | 'openstack_floating_ip_connected' | 'openstack_floating_ip_description_updated' | 'openstack_floating_ip_detached' | 'openstack_floating_ip_disconnected' | 'openstack_network_cleaned' | 'openstack_network_created' | 'openstack_network_deleted' | 'openstack_network_imported' | 'openstack_network_pulled' | 'openstack_network_updated' | 'openstack_port_cleaned' | 'openstack_port_created' | 'openstack_port_deleted' | 'openstack_port_imported' | 'openstack_port_pulled' | 'openstack_port_updated' | 'openstack_router_updated' | 'openstack_security_group_cleaned' | 'openstack_security_group_created' | 'openstack_security_group_deleted' | 'openstack_security_group_imported' | 'openstack_security_group_pulled' | 'openstack_security_group_rule_cleaned' | 'openstack_security_group_rule_created' | 'openstack_security_group_rule_deleted' | 'openstack_security_group_rule_imported' | 'openstack_security_group_rule_updated' | 'openstack_security_group_updated' | 'openstack_security_group_added_remotely' | 'openstack_security_group_removed_remotely' | 'openstack_security_group_added_locally' | 'openstack_security_group_removed_locally' | 'openstack_server_group_cleaned' | 'openstack_server_group_created' | 'openstack_server_group_deleted' | 'openstack_server_group_imported' | 'openstack_server_group_pulled' | 'openstack_subnet_cleaned' | 'openstack_subnet_created' | 'openstack_subnet_deleted' | 'openstack_subnet_imported' | 'openstack_subnet_pulled' | 'openstack_subnet_updated' | 'openstack_tenant_quota_limit_updated' | 'payment_added' | 'payment_created' | 'payment_removed' | 'policy_notification' | 'project_creation_succeeded' | 'project_deletion_succeeded' | 'project_deletion_triggered' | 'project_update_request_approved' | 'project_update_request_created' | 'project_update_request_rejected' | 'project_end_date_change_request_approved' | 'project_end_date_change_request_created' | 'project_end_date_change_request_rejected' | 'project_update_succeeded' | 'project_permission_review_created' | 'project_permission_review_closed' | 'proposal_canceled' | 'proposal_document_added' | 'proposal_document_removed' | 'query_executed' | 'reduction_of_customer_credit' | 'reduction_of_customer_credit_due_to_minimal_consumption' | 'reduction_of_customer_expected_consumption' | 'reduction_of_project_credit' | 'reduction_of_project_credit_due_to_minimal_consumption' | 'reduction_of_project_expected_consumption' | 'request_downscaling' | 'request_pausing' | 'request_slurm_resource_downscaling' | 'request_slurm_resource_pausing' | 'reset_downscaling' | 'reset_member_restriction' | 'reset_pausing' | 'resource_assign_floating_ip_failed' | 'resource_assign_floating_ip_scheduled' | 'resource_assign_floating_ip_succeeded' | 'resource_attach_failed' | 'resource_attach_scheduled' | 'resource_attach_succeeded' | 'resource_backup_creation_failed' | 'resource_backup_creation_scheduled' | 'resource_backup_creation_succeeded' | 'resource_backup_deletion_failed' | 'resource_backup_deletion_scheduled' | 'resource_backup_deletion_succeeded' | 'resource_backup_restoration_failed' | 'resource_backup_restoration_scheduled' | 'resource_backup_restoration_succeeded' | 'resource_change_flavor_failed' | 'resource_change_flavor_scheduled' | 'resource_change_flavor_succeeded' | 'resource_creation_failed' | 'resource_creation_scheduled' | 'resource_creation_succeeded' | 'resource_deletion_failed' | 'resource_deletion_scheduled' | 'resource_deletion_succeeded' | 'resource_detach_failed' | 'resource_detach_scheduled' | 'resource_detach_succeeded' | 'resource_extend_failed' | 'resource_extend_scheduled' | 'resource_extend_succeeded' | 'resource_extend_volume_failed' | 'resource_extend_volume_scheduled' | 'resource_extend_volume_succeeded' | 'resource_import_succeeded' | 'resource_pull_failed' | 'resource_pull_scheduled' | 'resource_pull_succeeded' | 'resource_restart_failed' | 'resource_restart_scheduled' | 'resource_restart_succeeded' | 'resource_retype_failed' | 'resource_retype_scheduled' | 'resource_retype_succeeded' | 'resource_robot_account_created' | 'resource_robot_account_deleted' | 'resource_robot_account_state_changed' | 'resource_robot_account_updated' | 'resource_start_failed' | 'resource_start_scheduled' | 'resource_start_succeeded' | 'resource_stop_failed' | 'resource_stop_scheduled' | 'resource_stop_succeeded' | 'resource_unassign_floating_ip_failed' | 'resource_unassign_floating_ip_scheduled' | 'resource_unassign_floating_ip_succeeded' | 'resource_update_allowed_address_pairs_failed' | 'resource_update_allowed_address_pairs_scheduled' | 'resource_update_allowed_address_pairs_succeeded' | 'resource_update_floating_ips_failed' | 'resource_update_floating_ips_scheduled' | 'resource_update_floating_ips_succeeded' | 'resource_update_ports_failed' | 'resource_update_ports_scheduled' | 'resource_update_ports_succeeded' | 'resource_update_security_groups_failed' | 'resource_update_security_groups_scheduled' | 'resource_update_security_groups_succeeded' | 'resource_update_succeeded' | 'restrict_members' | 'review_canceled' | 'role_granted' | 'role_revoked' | 'role_updated' | 'roll_back_customer_credit' | 'roll_back_project_credit' | 'service_account_created' | 'service_account_deleted' | 'service_account_updated' | 'set_to_zero_overdue_credit' | 'slurm_policy_evaluation' | 'ssh_key_creation_succeeded' | 'ssh_key_deletion_succeeded' | 'terminate_resources' | 'token_created' | 'token_lifetime_updated' | 'update_of_credit_by_staff' | 'update_of_project_credit_by_staff' | 'automatic_credit_adjustment' | 'user_activated' | 'user_creation_succeeded' | 'user_data_accessed' | 'user_deactivated' | 'user_deactivated_no_roles' | 'user_deletion_succeeded' | 'user_details_update_succeeded' | 'user_has_been_created_by_staff' | 'user_password_updated' | 'user_password_updated_by_staff' | 'user_password_removed_by_staff' | 'user_update_succeeded' | 'user_group_invitation_updated' | 'user_invitation_updated' | 'user_invitation_deleted' | 'terms_of_service_consent_granted' | 'terms_of_service_consent_revoked' | 'chat_session_accessed' | 'chat_thread_accessed' | 'chat_injection_detected' | 'chat_pii_detected' | 'chat_feedback_submitted' | 'onboarding_verification_deleted' | 'onboarding_verification_deleted_by_task' | 'pat_created' | 'pat_revoked' | 'pat_rotated' | 'pat_expired' | 'pat_used_from_new_ip';
+export type EventTypesEnum = 'access_subnet_creation_succeeded' | 'access_subnet_deletion_succeeded' | 'access_subnet_update_succeeded' | 'allowed_offerings_have_been_updated' | 'attachment_created' | 'attachment_deleted' | 'attachment_updated' | 'auth_logged_in_with_saml2' | 'auth_logged_in_with_username' | 'auth_logged_in_with_oauth' | 'auth_logged_out' | 'auth_logged_out_with_saml2' | 'auth_login_failed_with_username' | 'block_creation_of_new_resources' | 'block_modification_of_existing_resources' | 'call_document_added' | 'call_document_removed' | 'create_of_credit_by_staff' | 'create_of_project_credit_by_staff' | 'custom_notification' | 'customer_creation_succeeded' | 'customer_deletion_succeeded' | 'customer_update_succeeded' | 'customer_permission_review_created' | 'customer_permission_review_closed' | 'droplet_resize_scheduled' | 'droplet_resize_succeeded' | 'freeipa_profile_created' | 'freeipa_profile_deleted' | 'freeipa_profile_disabled' | 'freeipa_profile_enabled' | 'invoice_canceled' | 'invoice_created' | 'invoice_item_created' | 'invoice_item_deleted' | 'invoice_item_updated' | 'invoice_paid' | 'issue_creation_succeeded' | 'issue_deletion_succeeded' | 'issue_update_succeeded' | 'marketplace_offering_component_created' | 'marketplace_offering_component_deleted' | 'marketplace_offering_component_updated' | 'marketplace_offering_created' | 'marketplace_offering_updated' | 'marketplace_offering_user_created' | 'marketplace_offering_user_updated' | 'marketplace_offering_user_deleted' | 'marketplace_offering_user_restriction_updated' | 'marketplace_order_approved' | 'marketplace_order_completed' | 'marketplace_order_created' | 'marketplace_order_failed' | 'marketplace_order_rejected' | 'marketplace_order_terminated' | 'marketplace_order_unlinked' | 'marketplace_plan_archived' | 'marketplace_plan_component_current_price_updated' | 'marketplace_plan_component_future_price_updated' | 'marketplace_plan_component_quota_updated' | 'marketplace_plan_created' | 'marketplace_plan_updated' | 'marketplace_plan_deleted' | 'marketplace_resource_create_canceled' | 'marketplace_resource_create_failed' | 'marketplace_resource_create_requested' | 'marketplace_resource_create_succeeded' | 'marketplace_resource_downscaled' | 'marketplace_resource_erred_on_backend' | 'marketplace_resource_paused' | 'marketplace_resource_terminate_canceled' | 'marketplace_resource_terminate_failed' | 'marketplace_resource_terminate_requested' | 'marketplace_resource_terminate_succeeded' | 'marketplace_resource_unlinked' | 'marketplace_resource_update_canceled' | 'marketplace_resource_update_end_date_succeeded' | 'marketplace_resource_update_failed' | 'marketplace_resource_update_limits_failed' | 'marketplace_resource_update_limits_succeeded' | 'marketplace_resource_update_requested' | 'marketplace_resource_update_succeeded' | 'notify_external_user' | 'notify_organization_owners' | 'notify_project_team' | 'openstack_floating_ip_attached' | 'openstack_floating_ip_connected' | 'openstack_floating_ip_description_updated' | 'openstack_floating_ip_detached' | 'openstack_floating_ip_disconnected' | 'openstack_network_cleaned' | 'openstack_network_created' | 'openstack_network_deleted' | 'openstack_network_imported' | 'openstack_network_pulled' | 'openstack_network_updated' | 'openstack_port_cleaned' | 'openstack_port_created' | 'openstack_port_deleted' | 'openstack_port_imported' | 'openstack_port_pulled' | 'openstack_port_updated' | 'openstack_router_updated' | 'openstack_security_group_cleaned' | 'openstack_security_group_created' | 'openstack_security_group_deleted' | 'openstack_security_group_imported' | 'openstack_security_group_pulled' | 'openstack_security_group_rule_cleaned' | 'openstack_security_group_rule_created' | 'openstack_security_group_rule_deleted' | 'openstack_security_group_rule_imported' | 'openstack_security_group_rule_updated' | 'openstack_security_group_updated' | 'openstack_security_group_added_remotely' | 'openstack_security_group_removed_remotely' | 'openstack_security_group_added_locally' | 'openstack_security_group_removed_locally' | 'openstack_server_group_cleaned' | 'openstack_server_group_created' | 'openstack_server_group_deleted' | 'openstack_server_group_imported' | 'openstack_server_group_pulled' | 'openstack_subnet_cleaned' | 'openstack_subnet_created' | 'openstack_subnet_deleted' | 'openstack_subnet_imported' | 'openstack_subnet_pulled' | 'openstack_subnet_updated' | 'openstack_tenant_quota_limit_updated' | 'payment_added' | 'payment_created' | 'payment_removed' | 'policy_notification' | 'project_creation_succeeded' | 'project_deletion_succeeded' | 'project_deletion_triggered' | 'project_update_request_approved' | 'project_update_request_created' | 'project_update_request_rejected' | 'project_end_date_change_request_approved' | 'project_end_date_change_request_created' | 'project_end_date_change_request_rejected' | 'project_update_succeeded' | 'project_permission_review_created' | 'project_permission_review_closed' | 'proposal_canceled' | 'proposal_document_added' | 'proposal_document_removed' | 'query_executed' | 'reduction_of_customer_credit' | 'reduction_of_customer_credit_due_to_minimal_consumption' | 'reduction_of_customer_expected_consumption' | 'reduction_of_project_credit' | 'reduction_of_project_credit_due_to_minimal_consumption' | 'reduction_of_project_expected_consumption' | 'request_downscaling' | 'request_pausing' | 'request_slurm_resource_downscaling' | 'request_slurm_resource_pausing' | 'reset_downscaling' | 'reset_member_restriction' | 'reset_pausing' | 'resource_assign_floating_ip_failed' | 'resource_assign_floating_ip_scheduled' | 'resource_assign_floating_ip_succeeded' | 'resource_attach_failed' | 'resource_attach_scheduled' | 'resource_attach_succeeded' | 'resource_backup_creation_failed' | 'resource_backup_creation_scheduled' | 'resource_backup_creation_succeeded' | 'resource_backup_deletion_failed' | 'resource_backup_deletion_scheduled' | 'resource_backup_deletion_succeeded' | 'resource_backup_restoration_failed' | 'resource_backup_restoration_scheduled' | 'resource_backup_restoration_succeeded' | 'resource_change_flavor_failed' | 'resource_change_flavor_scheduled' | 'resource_change_flavor_succeeded' | 'resource_creation_failed' | 'resource_creation_scheduled' | 'resource_creation_succeeded' | 'resource_deletion_failed' | 'resource_deletion_scheduled' | 'resource_deletion_succeeded' | 'resource_detach_failed' | 'resource_detach_scheduled' | 'resource_detach_succeeded' | 'resource_extend_failed' | 'resource_extend_scheduled' | 'resource_extend_succeeded' | 'resource_extend_volume_failed' | 'resource_extend_volume_scheduled' | 'resource_extend_volume_succeeded' | 'resource_import_succeeded' | 'resource_pull_failed' | 'resource_pull_scheduled' | 'resource_pull_succeeded' | 'resource_restart_failed' | 'resource_restart_scheduled' | 'resource_restart_succeeded' | 'resource_retype_failed' | 'resource_retype_scheduled' | 'resource_retype_succeeded' | 'resource_robot_account_created' | 'resource_robot_account_deleted' | 'resource_robot_account_state_changed' | 'resource_robot_account_updated' | 'resource_start_failed' | 'resource_start_scheduled' | 'resource_start_succeeded' | 'resource_stop_failed' | 'resource_stop_scheduled' | 'resource_stop_succeeded' | 'resource_unassign_floating_ip_failed' | 'resource_unassign_floating_ip_scheduled' | 'resource_unassign_floating_ip_succeeded' | 'resource_update_allowed_address_pairs_failed' | 'resource_update_allowed_address_pairs_scheduled' | 'resource_update_allowed_address_pairs_succeeded' | 'resource_update_floating_ips_failed' | 'resource_update_floating_ips_scheduled' | 'resource_update_floating_ips_succeeded' | 'resource_update_ports_failed' | 'resource_update_ports_scheduled' | 'resource_update_ports_succeeded' | 'resource_update_security_groups_failed' | 'resource_update_security_groups_scheduled' | 'resource_update_security_groups_succeeded' | 'resource_update_succeeded' | 'restrict_members' | 'review_canceled' | 'role_granted' | 'role_revoked' | 'role_updated' | 'roll_back_customer_credit' | 'roll_back_project_credit' | 'service_account_created' | 'service_account_deleted' | 'service_account_updated' | 'set_to_zero_overdue_credit' | 'slurm_policy_evaluation' | 'ssh_key_creation_succeeded' | 'ssh_key_deletion_succeeded' | 'terminate_resources' | 'token_created' | 'token_lifetime_updated' | 'update_of_credit_by_staff' | 'update_of_project_credit_by_staff' | 'automatic_credit_adjustment' | 'user_activated' | 'user_creation_succeeded' | 'user_data_accessed' | 'user_deactivated' | 'user_deactivated_no_roles' | 'user_deletion_succeeded' | 'user_details_update_succeeded' | 'user_has_been_created_by_staff' | 'user_password_updated' | 'user_password_updated_by_staff' | 'user_password_removed_by_staff' | 'user_update_succeeded' | 'user_group_invitation_updated' | 'user_invitation_updated' | 'user_invitation_deleted' | 'terms_of_service_consent_granted' | 'terms_of_service_consent_revoked' | 'chat_session_accessed' | 'chat_thread_accessed' | 'chat_injection_detected' | 'chat_pii_detected' | 'chat_feedback_submitted' | 'onboarding_verification_deleted' | 'onboarding_verification_deleted_by_task' | 'pat_created' | 'pat_revoked' | 'pat_rotated' | 'pat_expired' | 'pat_used_from_new_ip';
 
 export type ExecuteActionErrorResponse = {
     error: string;
@@ -10202,6 +10204,14 @@ export type MergedPluginOptions = {
      */
     create_orders_on_resource_option_change?: boolean;
     /**
+     * Enable sub-project management within resources.
+     */
+    enable_resource_projects?: boolean;
+    /**
+     * If set to True, create orders when resource projects are created, updated or deleted.
+     */
+    create_orders_on_resource_project_change?: boolean;
+    /**
      * If set to True, resource can be restored.
      */
     can_restore_resource?: boolean;
@@ -10508,6 +10518,14 @@ export type MergedPluginOptionsRequest = {
      * If set to True, create orders when options of related resources are changed.
      */
     create_orders_on_resource_option_change?: boolean;
+    /**
+     * Enable sub-project management within resources.
+     */
+    enable_resource_projects?: boolean;
+    /**
+     * If set to True, create orders when resource projects are created, updated or deleted.
+     */
+    create_orders_on_resource_project_change?: boolean;
     /**
      * If set to True, resource can be restored.
      */
@@ -11821,14 +11839,13 @@ export type NestedRequestedOfferingRequest = {
     plan?: string | null;
 };
 
-export type NestedRole = {
-    readonly uuid?: string;
-    name?: string;
-    readonly url?: string;
-};
-
-export type NestedRoleRequest = {
-    name: string;
+export type NestedResourceProjectPermission = {
+    readonly url: string;
+    readonly uuid: string;
+    readonly name: string;
+    readonly role_name: string;
+    readonly role_uuid: string;
+    expiration_time?: string | null;
 };
 
 export type NestedRound = {
@@ -12180,7 +12197,6 @@ export type Offering = {
     readonly endpoints?: Array<NestedEndpoint>;
     readonly software_catalogs?: Array<NestedSoftwareCatalog>;
     readonly partitions?: Array<NestedPartition>;
-    readonly roles?: Array<NestedRole>;
     customer?: string | null;
     readonly customer_uuid?: string | null;
     readonly customer_name?: string | null;
@@ -12252,6 +12268,8 @@ export type Offering = {
     readonly billing_type_classification?: string;
     readonly effective_available_limits?: Array<string>;
     compliance_checklist?: string | null;
+    readonly profile_uuid?: string | null;
+    readonly profile_name?: string | null;
     readonly user_has_consent?: boolean;
     readonly is_accessible?: boolean;
     googlecalendar?: GoogleCalendar;
@@ -12773,10 +12791,6 @@ export type OfferingKeycloakGroup = {
     readonly offering_name: string;
     role: string;
     readonly role_name: string;
-    /**
-     * Level this role applies at, e.g. 'cluster', 'project'. Empty means offering-wide.
-     */
-    readonly role_scope_type: string;
     resource?: string | null;
     readonly resource_uuid: string;
     readonly resource_name: string | null;
@@ -12812,14 +12826,6 @@ export type OfferingKeycloakMembership = {
      * Sub-entity identifier within a resource, e.g. Rancher project ID within a cluster.
      */
     readonly group_scope_id: string;
-    /**
-     * Level this role applies at, e.g. 'cluster', 'project'. Empty means offering-wide.
-     */
-    readonly group_role_scope_type: string;
-    /**
-     * Human-readable label for scope_type shown to end users, e.g. 'Rancher Project', 'Cluster Namespace'. Falls back to capitalized scope_type if empty.
-     */
-    readonly group_role_scope_type_label: string;
     user?: string | null;
     state: KeycloakUserGroupMembershipState;
     readonly created: string;
@@ -13115,6 +13121,42 @@ export type OfferingPermission = {
     readonly user_email: string;
 };
 
+export type OfferingProfile = {
+    readonly uuid: string;
+    name: string;
+    description?: string;
+    readonly roles: Array<OfferingProfileRole>;
+    readonly offerings_count: number;
+    readonly created: string;
+    readonly modified: string;
+};
+
+export type OfferingProfileBindRequest = {
+    /**
+     * OfferingProfile UUID to bind to. Pass null to unbind.
+     */
+    profile?: string | null;
+};
+
+export type OfferingProfileRequest = {
+    name: string;
+    description?: string;
+};
+
+export type OfferingProfileRoleAssign = {
+    /**
+     * Role UUID to add or remove.
+     */
+    role: string;
+};
+
+export type OfferingProfileRoleAssignRequest = {
+    /**
+     * Role UUID to add or remove.
+     */
+    role: string;
+};
+
 export type OfferingReference = {
     /**
      * Name of the offering
@@ -13143,6 +13185,30 @@ export type OfferingReferral = {
 
 export type OfferingResourceOptionsUpdateRequest = {
     resource_options: OfferingOptionsRequest;
+};
+
+export type OfferingRole = {
+    readonly uuid: string;
+    name: string;
+    description?: string;
+    readonly content_type: string | null;
+    readonly offering_uuid: string | null;
+    readonly offering_name: string | null;
+    readonly is_active: boolean;
+    readonly permissions: Array<string>;
+};
+
+export type OfferingRoleRequest = {
+    name: string;
+    description?: string;
+    /**
+     * Scope on create: 'resource' or 'resource_project'.
+     */
+    content_type_input?: ContentTypeInputEnum;
+    /**
+     * Offering UUID — pin role to this single offering.
+     */
+    offering?: string;
 };
 
 export type OfferingSoftwareCatalog = {
@@ -13530,35 +13596,6 @@ export type OfferingUserRequest = {
     username?: string | null;
     offering_uuid?: string;
     user_uuid?: string;
-};
-
-export type OfferingUserRole = {
-    name: string;
-    readonly uuid: string;
-    offering: string;
-    readonly offering_uuid: string;
-    readonly offering_name: string;
-    /**
-     * Level this role applies at, e.g. 'cluster', 'project'. Empty means offering-wide.
-     */
-    scope_type?: string;
-    /**
-     * Human-readable label for scope_type shown to end users, e.g. 'Rancher Project', 'Cluster Namespace'. Falls back to capitalized scope_type if empty.
-     */
-    scope_type_label?: string;
-};
-
-export type OfferingUserRoleRequest = {
-    name: string;
-    offering: string;
-    /**
-     * Level this role applies at, e.g. 'cluster', 'project'. Empty means offering-wide.
-     */
-    scope_type?: string;
-    /**
-     * Human-readable label for scope_type shown to end users, e.g. 'Rancher Project', 'Cluster Namespace'. Falls back to capitalized scope_type if empty.
-     */
-    scope_type_label?: string;
 };
 
 export type OfferingUserServiceProviderComment = {
@@ -17429,6 +17466,24 @@ export type PatchedOfferingPartitionUpdateRequest = {
     req_resv?: boolean;
 };
 
+export type PatchedOfferingProfileRequest = {
+    name?: string;
+    description?: string;
+};
+
+export type PatchedOfferingRoleRequest = {
+    name?: string;
+    description?: string;
+    /**
+     * Scope on create: 'resource' or 'resource_project'.
+     */
+    content_type_input?: ContentTypeInputEnum;
+    /**
+     * Offering UUID — pin role to this single offering.
+     */
+    offering?: string;
+};
+
 export type PatchedOfferingSoftwareCatalogUpdateRequest = {
     offering_catalog_uuid?: string;
     catalog?: string;
@@ -17502,19 +17557,6 @@ export type PatchedOfferingUserRequest = {
     username?: string | null;
     offering_uuid?: string;
     user_uuid?: string;
-};
-
-export type PatchedOfferingUserRoleRequest = {
-    name?: string;
-    offering?: string;
-    /**
-     * Level this role applies at, e.g. 'cluster', 'project'. Empty means offering-wide.
-     */
-    scope_type?: string;
-    /**
-     * Human-readable label for scope_type shown to end users, e.g. 'Rancher Project', 'Cluster Namespace'. Falls back to capitalized scope_type if empty.
-     */
-    scope_type_label?: string;
 };
 
 export type PatchedOfferingUserServiceProviderCommentRequest = {
@@ -18142,6 +18184,16 @@ export type PatchedRequestedResourceRequest = {
     description?: string;
     requested_offering_uuid?: string;
     call_resource_template_uuid?: string;
+};
+
+export type PatchedResourceProjectRequest = {
+    resource?: string;
+    name?: string;
+    description?: string;
+    /**
+     * Dictionary mapping component types to quota values. Same format as Resource.limits.
+     */
+    limits?: unknown;
 };
 
 export type PatchedResourceUpdateRequest = {
@@ -18791,6 +18843,7 @@ export type Permission = {
     readonly scope_name?: string;
     readonly customer_uuid?: string;
     readonly customer_name?: string;
+    readonly resource_uuid?: string | null;
 };
 
 export type PermissionMetadataResponse = {
@@ -18804,13 +18857,13 @@ export type PermissionMetadataResponse = {
      * Map of permission keys to permission enum values from PermissionEnum
      */
     permissions: {
-        [key: string]: 'SERVICE_PROVIDER.REGISTER' | 'OFFERING.CREATE' | 'OFFERING.DELETE' | 'OFFERING.UPDATE_THUMBNAIL' | 'OFFERING.UPDATE' | 'OFFERING.UPDATE_ATTRIBUTES' | 'OFFERING.UPDATE_LOCATION' | 'OFFERING.UPDATE_DESCRIPTION' | 'OFFERING.UPDATE_OPTIONS' | 'OFFERING.UPDATE_INTEGRATION' | 'OFFERING.ADD_ENDPOINT' | 'OFFERING.DELETE_ENDPOINT' | 'OFFERING.UPDATE_COMPONENTS' | 'OFFERING.PAUSE' | 'OFFERING.UNPAUSE' | 'OFFERING.ARCHIVE' | 'OFFERING.DRY_RUN_SCRIPT' | 'OFFERING.MANAGE_CAMPAIGN' | 'OFFERING.MANAGE_USER_GROUP' | 'OFFERING.CREATE_PLAN' | 'OFFERING.UPDATE_PLAN' | 'OFFERING.ARCHIVE_PLAN' | 'OFFERING.CREATE_SCREENSHOT' | 'OFFERING.UPDATE_SCREENSHOT' | 'OFFERING.DELETE_SCREENSHOT' | 'OFFERING.CREATE_USER' | 'OFFERING.UPDATE_USER' | 'OFFERING.DELETE_USER' | 'OFFERING.MANAGE_USER_ROLE' | 'RESOURCE.CREATE_ROBOT_ACCOUNT' | 'RESOURCE.UPDATE_ROBOT_ACCOUNT' | 'RESOURCE.DELETE_ROBOT_ACCOUNT' | 'ORDER.LIST' | 'ORDER.CREATE' | 'ORDER.APPROVE_PRIVATE' | 'ORDER.APPROVE' | 'ORDER.REJECT' | 'ORDER.DESTROY' | 'ORDER.CANCEL' | 'ORDER.SET_CONSUMER_INFO' | 'RESOURCE.LIST' | 'RESOURCE.UPDATE' | 'RESOURCE.TERMINATE' | 'RESOURCE.LIST_IMPORTABLE' | 'RESOURCE.SET_END_DATE' | 'RESOURCE.SET_USAGE' | 'RESOURCE.SET_PLAN' | 'RESOURCE.SET_LIMITS' | 'RESOURCE.SET_BACKEND_ID' | 'RESOURCE.SUBMIT_REPORT' | 'RESOURCE.SET_BACKEND_METADATA' | 'RESOURCE.SET_STATE' | 'RESOURCE.UPDATE_OPTIONS' | 'RESOURCE.ACCEPT_BOOKING_REQUEST' | 'RESOURCE.REJECT_BOOKING_REQUEST' | 'RESOURCE.MANAGE_USERS' | 'RESOURCE.CONSUMPTION_LIMITATION' | 'OFFERING.MANAGE_BACKEND_RESOURCES' | 'SERVICE_PROVIDER.GET_API_SECRET_CODE' | 'SERVICE_PROVIDER.GENERATE_API_SECRET_CODE' | 'SERVICE_PROVIDER.LIST_CUSTOMERS' | 'SERVICE_PROVIDER.LIST_CUSTOMER_PROJECTS' | 'SERVICE_PROVIDER.LIST_PROJECTS' | 'SERVICE_PROVIDER.LIST_PROJECT_PERMISSIONS' | 'SERVICE_PROVIDER.LIST_KEYS' | 'SERVICE_PROVIDER.LIST_USERS' | 'SERVICE_PROVIDER.LIST_USER_CUSTOMERS' | 'SERVICE_PROVIDER.LIST_SERVICE_ACCOUNTS' | 'SERVICE_PROVIDER.LIST_COURSE_ACCOUNTS' | 'SERVICE_PROVIDER.SET_OFFERINGS_USERNAME' | 'SERVICE_PROVIDER.GET_STATISTICS' | 'SERVICE_PROVIDER.GET_REVENUE' | 'SERVICE_PROVIDER.GET_ROBOT_ACCOUNT_CUSTOMERS' | 'SERVICE_PROVIDER.GET_ROBOT_ACCOUNT_PROJECTS' | 'PROJECT.CREATE_PERMISSION' | 'CUSTOMER.CREATE_PERMISSION' | 'OFFERING.CREATE_PERMISSION' | 'CALL.CREATE_PERMISSION' | 'PROPOSAL.MANAGE' | 'PROPOSAL.MANAGE_REVIEW' | 'PROJECT.UPDATE_PERMISSION' | 'CUSTOMER.UPDATE_PERMISSION' | 'OFFERING.UPDATE_PERMISSION' | 'CALL.UPDATE_PERMISSION' | 'PROPOSAL.UPDATE_PERMISSION' | 'PROJECT.DELETE_PERMISSION' | 'CUSTOMER.DELETE_PERMISSION' | 'OFFERING.DELETE_PERMISSION' | 'CALL.DELETE_PERMISSION' | 'PROPOSAL.DELETE_PERMISSION' | 'LEXIS_LINK.CREATE' | 'LEXIS_LINK.DELETE' | 'PROJECT.LIST' | 'PROJECT.CREATE' | 'PROJECT.DELETE' | 'PROJECT.UPDATE' | 'PROJECT.UPDATE_METADATA' | 'PROJECT.REVIEW_MEMBERSHIP' | 'CUSTOMER.UPDATE' | 'CUSTOMER.CONTACT_UPDATE' | 'CUSTOMER.LIST_USERS' | 'OFFERING.ACCEPT_CALL_REQUEST' | 'CALL.APPROVE_AND_REJECT_PROPOSALS' | 'CALL.CLOSE_ROUNDS' | 'ACCESS_SUBNET.CREATE' | 'ACCESS_SUBNET.UPDATE' | 'ACCESS_SUBNET.DELETE' | 'OFFERINGUSER.UPDATE_RESTRICTION' | 'INVITATION.LIST' | 'CUSTOMER.LIST_PERMISSION_REVIEWS' | 'CALL.LIST' | 'CALL.CREATE' | 'CALL.UPDATE' | 'ROUND.LIST' | 'PROPOSAL.LIST' | 'SERVICE_ACCOUNT.MANAGE' | 'PROJECT.COURSE_ACCOUNT_MANAGE' | 'SERVICE_PROVIDER.OPENSTACK_IMAGE_MANAGEMENT' | 'OPENSTACK_INSTANCE.CONSOLE_ACCESS' | 'OPENSTACK_INSTANCE.MANAGE_POWER' | 'OPENSTACK_INSTANCE.MANAGE' | 'OPENSTACK_ROUTER.MANAGE_GATEWAY' | 'STAFF.ACCESS' | 'SUPPORT.ACCESS';
+        [key: string]: 'SERVICE_PROVIDER.REGISTER' | 'OFFERING.CREATE' | 'OFFERING.DELETE' | 'OFFERING.UPDATE_THUMBNAIL' | 'OFFERING.UPDATE' | 'OFFERING.UPDATE_ATTRIBUTES' | 'OFFERING.UPDATE_LOCATION' | 'OFFERING.UPDATE_DESCRIPTION' | 'OFFERING.UPDATE_OPTIONS' | 'OFFERING.UPDATE_INTEGRATION' | 'OFFERING.ADD_ENDPOINT' | 'OFFERING.DELETE_ENDPOINT' | 'OFFERING.UPDATE_COMPONENTS' | 'OFFERING.PAUSE' | 'OFFERING.UNPAUSE' | 'OFFERING.ARCHIVE' | 'OFFERING.DRY_RUN_SCRIPT' | 'OFFERING.MANAGE_CAMPAIGN' | 'OFFERING.MANAGE_USER_GROUP' | 'OFFERING.CREATE_PLAN' | 'OFFERING.UPDATE_PLAN' | 'OFFERING.ARCHIVE_PLAN' | 'OFFERING.CREATE_SCREENSHOT' | 'OFFERING.UPDATE_SCREENSHOT' | 'OFFERING.DELETE_SCREENSHOT' | 'OFFERING.CREATE_USER' | 'OFFERING.UPDATE_USER' | 'OFFERING.DELETE_USER' | 'OFFERING.MANAGE_USER_ROLE' | 'RESOURCE.CREATE_ROBOT_ACCOUNT' | 'RESOURCE.UPDATE_ROBOT_ACCOUNT' | 'RESOURCE.DELETE_ROBOT_ACCOUNT' | 'ORDER.LIST' | 'ORDER.CREATE' | 'ORDER.APPROVE_PRIVATE' | 'ORDER.APPROVE' | 'ORDER.REJECT' | 'ORDER.DESTROY' | 'ORDER.CANCEL' | 'ORDER.SET_CONSUMER_INFO' | 'RESOURCE.LIST' | 'RESOURCE.UPDATE' | 'RESOURCE.TERMINATE' | 'RESOURCE.LIST_IMPORTABLE' | 'RESOURCE.SET_END_DATE' | 'RESOURCE.SET_USAGE' | 'RESOURCE.SET_PLAN' | 'RESOURCE.SET_LIMITS' | 'RESOURCE.SET_BACKEND_ID' | 'RESOURCE.SUBMIT_REPORT' | 'RESOURCE.SET_BACKEND_METADATA' | 'RESOURCE.SET_STATE' | 'RESOURCE.UPDATE_OPTIONS' | 'RESOURCE.ACCEPT_BOOKING_REQUEST' | 'RESOURCE.REJECT_BOOKING_REQUEST' | 'RESOURCE.MANAGE_USERS' | 'RESOURCE.CREATE_PERMISSION' | 'RESOURCE.UPDATE_PERMISSION' | 'RESOURCE.DELETE_PERMISSION' | 'RESOURCE_PROJECT.CREATE_PERMISSION' | 'RESOURCE_PROJECT.UPDATE_PERMISSION' | 'RESOURCE_PROJECT.DELETE_PERMISSION' | 'RESOURCE.CONSUMPTION_LIMITATION' | 'OFFERING.MANAGE_BACKEND_RESOURCES' | 'SERVICE_PROVIDER.GET_API_SECRET_CODE' | 'SERVICE_PROVIDER.GENERATE_API_SECRET_CODE' | 'SERVICE_PROVIDER.LIST_CUSTOMERS' | 'SERVICE_PROVIDER.LIST_CUSTOMER_PROJECTS' | 'SERVICE_PROVIDER.LIST_PROJECTS' | 'SERVICE_PROVIDER.LIST_PROJECT_PERMISSIONS' | 'SERVICE_PROVIDER.LIST_KEYS' | 'SERVICE_PROVIDER.LIST_USERS' | 'SERVICE_PROVIDER.LIST_USER_CUSTOMERS' | 'SERVICE_PROVIDER.LIST_SERVICE_ACCOUNTS' | 'SERVICE_PROVIDER.LIST_COURSE_ACCOUNTS' | 'SERVICE_PROVIDER.SET_OFFERINGS_USERNAME' | 'SERVICE_PROVIDER.GET_STATISTICS' | 'SERVICE_PROVIDER.GET_REVENUE' | 'SERVICE_PROVIDER.GET_ROBOT_ACCOUNT_CUSTOMERS' | 'SERVICE_PROVIDER.GET_ROBOT_ACCOUNT_PROJECTS' | 'PROJECT.CREATE_PERMISSION' | 'CUSTOMER.CREATE_PERMISSION' | 'OFFERING.CREATE_PERMISSION' | 'CALL.CREATE_PERMISSION' | 'PROPOSAL.MANAGE' | 'PROPOSAL.MANAGE_REVIEW' | 'PROJECT.UPDATE_PERMISSION' | 'CUSTOMER.UPDATE_PERMISSION' | 'OFFERING.UPDATE_PERMISSION' | 'CALL.UPDATE_PERMISSION' | 'PROPOSAL.UPDATE_PERMISSION' | 'PROJECT.DELETE_PERMISSION' | 'CUSTOMER.DELETE_PERMISSION' | 'OFFERING.DELETE_PERMISSION' | 'CALL.DELETE_PERMISSION' | 'PROPOSAL.DELETE_PERMISSION' | 'LEXIS_LINK.CREATE' | 'LEXIS_LINK.DELETE' | 'PROJECT.LIST' | 'PROJECT.CREATE' | 'PROJECT.DELETE' | 'PROJECT.UPDATE' | 'PROJECT.UPDATE_METADATA' | 'PROJECT.REVIEW_MEMBERSHIP' | 'CUSTOMER.UPDATE' | 'CUSTOMER.CONTACT_UPDATE' | 'CUSTOMER.LIST_USERS' | 'OFFERING.ACCEPT_CALL_REQUEST' | 'CALL.APPROVE_AND_REJECT_PROPOSALS' | 'CALL.CLOSE_ROUNDS' | 'ACCESS_SUBNET.CREATE' | 'ACCESS_SUBNET.UPDATE' | 'ACCESS_SUBNET.DELETE' | 'OFFERINGUSER.UPDATE_RESTRICTION' | 'INVITATION.LIST' | 'CUSTOMER.LIST_PERMISSION_REVIEWS' | 'CALL.LIST' | 'CALL.CREATE' | 'CALL.UPDATE' | 'ROUND.LIST' | 'PROPOSAL.LIST' | 'SERVICE_ACCOUNT.MANAGE' | 'PROJECT.COURSE_ACCOUNT_MANAGE' | 'SERVICE_PROVIDER.OPENSTACK_IMAGE_MANAGEMENT' | 'OPENSTACK_INSTANCE.CONSOLE_ACCESS' | 'OPENSTACK_INSTANCE.MANAGE_POWER' | 'OPENSTACK_INSTANCE.MANAGE' | 'OPENSTACK_ROUTER.MANAGE_GATEWAY' | 'STAFF.ACCESS' | 'SUPPORT.ACCESS';
     };
     /**
      * Map of resource types to create permission enums
      */
     permission_map: {
-        [key: string]: 'SERVICE_PROVIDER.REGISTER' | 'OFFERING.CREATE' | 'OFFERING.DELETE' | 'OFFERING.UPDATE_THUMBNAIL' | 'OFFERING.UPDATE' | 'OFFERING.UPDATE_ATTRIBUTES' | 'OFFERING.UPDATE_LOCATION' | 'OFFERING.UPDATE_DESCRIPTION' | 'OFFERING.UPDATE_OPTIONS' | 'OFFERING.UPDATE_INTEGRATION' | 'OFFERING.ADD_ENDPOINT' | 'OFFERING.DELETE_ENDPOINT' | 'OFFERING.UPDATE_COMPONENTS' | 'OFFERING.PAUSE' | 'OFFERING.UNPAUSE' | 'OFFERING.ARCHIVE' | 'OFFERING.DRY_RUN_SCRIPT' | 'OFFERING.MANAGE_CAMPAIGN' | 'OFFERING.MANAGE_USER_GROUP' | 'OFFERING.CREATE_PLAN' | 'OFFERING.UPDATE_PLAN' | 'OFFERING.ARCHIVE_PLAN' | 'OFFERING.CREATE_SCREENSHOT' | 'OFFERING.UPDATE_SCREENSHOT' | 'OFFERING.DELETE_SCREENSHOT' | 'OFFERING.CREATE_USER' | 'OFFERING.UPDATE_USER' | 'OFFERING.DELETE_USER' | 'OFFERING.MANAGE_USER_ROLE' | 'RESOURCE.CREATE_ROBOT_ACCOUNT' | 'RESOURCE.UPDATE_ROBOT_ACCOUNT' | 'RESOURCE.DELETE_ROBOT_ACCOUNT' | 'ORDER.LIST' | 'ORDER.CREATE' | 'ORDER.APPROVE_PRIVATE' | 'ORDER.APPROVE' | 'ORDER.REJECT' | 'ORDER.DESTROY' | 'ORDER.CANCEL' | 'ORDER.SET_CONSUMER_INFO' | 'RESOURCE.LIST' | 'RESOURCE.UPDATE' | 'RESOURCE.TERMINATE' | 'RESOURCE.LIST_IMPORTABLE' | 'RESOURCE.SET_END_DATE' | 'RESOURCE.SET_USAGE' | 'RESOURCE.SET_PLAN' | 'RESOURCE.SET_LIMITS' | 'RESOURCE.SET_BACKEND_ID' | 'RESOURCE.SUBMIT_REPORT' | 'RESOURCE.SET_BACKEND_METADATA' | 'RESOURCE.SET_STATE' | 'RESOURCE.UPDATE_OPTIONS' | 'RESOURCE.ACCEPT_BOOKING_REQUEST' | 'RESOURCE.REJECT_BOOKING_REQUEST' | 'RESOURCE.MANAGE_USERS' | 'RESOURCE.CONSUMPTION_LIMITATION' | 'OFFERING.MANAGE_BACKEND_RESOURCES' | 'SERVICE_PROVIDER.GET_API_SECRET_CODE' | 'SERVICE_PROVIDER.GENERATE_API_SECRET_CODE' | 'SERVICE_PROVIDER.LIST_CUSTOMERS' | 'SERVICE_PROVIDER.LIST_CUSTOMER_PROJECTS' | 'SERVICE_PROVIDER.LIST_PROJECTS' | 'SERVICE_PROVIDER.LIST_PROJECT_PERMISSIONS' | 'SERVICE_PROVIDER.LIST_KEYS' | 'SERVICE_PROVIDER.LIST_USERS' | 'SERVICE_PROVIDER.LIST_USER_CUSTOMERS' | 'SERVICE_PROVIDER.LIST_SERVICE_ACCOUNTS' | 'SERVICE_PROVIDER.LIST_COURSE_ACCOUNTS' | 'SERVICE_PROVIDER.SET_OFFERINGS_USERNAME' | 'SERVICE_PROVIDER.GET_STATISTICS' | 'SERVICE_PROVIDER.GET_REVENUE' | 'SERVICE_PROVIDER.GET_ROBOT_ACCOUNT_CUSTOMERS' | 'SERVICE_PROVIDER.GET_ROBOT_ACCOUNT_PROJECTS' | 'PROJECT.CREATE_PERMISSION' | 'CUSTOMER.CREATE_PERMISSION' | 'OFFERING.CREATE_PERMISSION' | 'CALL.CREATE_PERMISSION' | 'PROPOSAL.MANAGE' | 'PROPOSAL.MANAGE_REVIEW' | 'PROJECT.UPDATE_PERMISSION' | 'CUSTOMER.UPDATE_PERMISSION' | 'OFFERING.UPDATE_PERMISSION' | 'CALL.UPDATE_PERMISSION' | 'PROPOSAL.UPDATE_PERMISSION' | 'PROJECT.DELETE_PERMISSION' | 'CUSTOMER.DELETE_PERMISSION' | 'OFFERING.DELETE_PERMISSION' | 'CALL.DELETE_PERMISSION' | 'PROPOSAL.DELETE_PERMISSION' | 'LEXIS_LINK.CREATE' | 'LEXIS_LINK.DELETE' | 'PROJECT.LIST' | 'PROJECT.CREATE' | 'PROJECT.DELETE' | 'PROJECT.UPDATE' | 'PROJECT.UPDATE_METADATA' | 'PROJECT.REVIEW_MEMBERSHIP' | 'CUSTOMER.UPDATE' | 'CUSTOMER.CONTACT_UPDATE' | 'CUSTOMER.LIST_USERS' | 'OFFERING.ACCEPT_CALL_REQUEST' | 'CALL.APPROVE_AND_REJECT_PROPOSALS' | 'CALL.CLOSE_ROUNDS' | 'ACCESS_SUBNET.CREATE' | 'ACCESS_SUBNET.UPDATE' | 'ACCESS_SUBNET.DELETE' | 'OFFERINGUSER.UPDATE_RESTRICTION' | 'INVITATION.LIST' | 'CUSTOMER.LIST_PERMISSION_REVIEWS' | 'CALL.LIST' | 'CALL.CREATE' | 'CALL.UPDATE' | 'ROUND.LIST' | 'PROPOSAL.LIST' | 'SERVICE_ACCOUNT.MANAGE' | 'PROJECT.COURSE_ACCOUNT_MANAGE' | 'SERVICE_PROVIDER.OPENSTACK_IMAGE_MANAGEMENT' | 'OPENSTACK_INSTANCE.CONSOLE_ACCESS' | 'OPENSTACK_INSTANCE.MANAGE_POWER' | 'OPENSTACK_INSTANCE.MANAGE' | 'OPENSTACK_ROUTER.MANAGE_GATEWAY' | 'STAFF.ACCESS' | 'SUPPORT.ACCESS';
+        [key: string]: 'SERVICE_PROVIDER.REGISTER' | 'OFFERING.CREATE' | 'OFFERING.DELETE' | 'OFFERING.UPDATE_THUMBNAIL' | 'OFFERING.UPDATE' | 'OFFERING.UPDATE_ATTRIBUTES' | 'OFFERING.UPDATE_LOCATION' | 'OFFERING.UPDATE_DESCRIPTION' | 'OFFERING.UPDATE_OPTIONS' | 'OFFERING.UPDATE_INTEGRATION' | 'OFFERING.ADD_ENDPOINT' | 'OFFERING.DELETE_ENDPOINT' | 'OFFERING.UPDATE_COMPONENTS' | 'OFFERING.PAUSE' | 'OFFERING.UNPAUSE' | 'OFFERING.ARCHIVE' | 'OFFERING.DRY_RUN_SCRIPT' | 'OFFERING.MANAGE_CAMPAIGN' | 'OFFERING.MANAGE_USER_GROUP' | 'OFFERING.CREATE_PLAN' | 'OFFERING.UPDATE_PLAN' | 'OFFERING.ARCHIVE_PLAN' | 'OFFERING.CREATE_SCREENSHOT' | 'OFFERING.UPDATE_SCREENSHOT' | 'OFFERING.DELETE_SCREENSHOT' | 'OFFERING.CREATE_USER' | 'OFFERING.UPDATE_USER' | 'OFFERING.DELETE_USER' | 'OFFERING.MANAGE_USER_ROLE' | 'RESOURCE.CREATE_ROBOT_ACCOUNT' | 'RESOURCE.UPDATE_ROBOT_ACCOUNT' | 'RESOURCE.DELETE_ROBOT_ACCOUNT' | 'ORDER.LIST' | 'ORDER.CREATE' | 'ORDER.APPROVE_PRIVATE' | 'ORDER.APPROVE' | 'ORDER.REJECT' | 'ORDER.DESTROY' | 'ORDER.CANCEL' | 'ORDER.SET_CONSUMER_INFO' | 'RESOURCE.LIST' | 'RESOURCE.UPDATE' | 'RESOURCE.TERMINATE' | 'RESOURCE.LIST_IMPORTABLE' | 'RESOURCE.SET_END_DATE' | 'RESOURCE.SET_USAGE' | 'RESOURCE.SET_PLAN' | 'RESOURCE.SET_LIMITS' | 'RESOURCE.SET_BACKEND_ID' | 'RESOURCE.SUBMIT_REPORT' | 'RESOURCE.SET_BACKEND_METADATA' | 'RESOURCE.SET_STATE' | 'RESOURCE.UPDATE_OPTIONS' | 'RESOURCE.ACCEPT_BOOKING_REQUEST' | 'RESOURCE.REJECT_BOOKING_REQUEST' | 'RESOURCE.MANAGE_USERS' | 'RESOURCE.CREATE_PERMISSION' | 'RESOURCE.UPDATE_PERMISSION' | 'RESOURCE.DELETE_PERMISSION' | 'RESOURCE_PROJECT.CREATE_PERMISSION' | 'RESOURCE_PROJECT.UPDATE_PERMISSION' | 'RESOURCE_PROJECT.DELETE_PERMISSION' | 'RESOURCE.CONSUMPTION_LIMITATION' | 'OFFERING.MANAGE_BACKEND_RESOURCES' | 'SERVICE_PROVIDER.GET_API_SECRET_CODE' | 'SERVICE_PROVIDER.GENERATE_API_SECRET_CODE' | 'SERVICE_PROVIDER.LIST_CUSTOMERS' | 'SERVICE_PROVIDER.LIST_CUSTOMER_PROJECTS' | 'SERVICE_PROVIDER.LIST_PROJECTS' | 'SERVICE_PROVIDER.LIST_PROJECT_PERMISSIONS' | 'SERVICE_PROVIDER.LIST_KEYS' | 'SERVICE_PROVIDER.LIST_USERS' | 'SERVICE_PROVIDER.LIST_USER_CUSTOMERS' | 'SERVICE_PROVIDER.LIST_SERVICE_ACCOUNTS' | 'SERVICE_PROVIDER.LIST_COURSE_ACCOUNTS' | 'SERVICE_PROVIDER.SET_OFFERINGS_USERNAME' | 'SERVICE_PROVIDER.GET_STATISTICS' | 'SERVICE_PROVIDER.GET_REVENUE' | 'SERVICE_PROVIDER.GET_ROBOT_ACCOUNT_CUSTOMERS' | 'SERVICE_PROVIDER.GET_ROBOT_ACCOUNT_PROJECTS' | 'PROJECT.CREATE_PERMISSION' | 'CUSTOMER.CREATE_PERMISSION' | 'OFFERING.CREATE_PERMISSION' | 'CALL.CREATE_PERMISSION' | 'PROPOSAL.MANAGE' | 'PROPOSAL.MANAGE_REVIEW' | 'PROJECT.UPDATE_PERMISSION' | 'CUSTOMER.UPDATE_PERMISSION' | 'OFFERING.UPDATE_PERMISSION' | 'CALL.UPDATE_PERMISSION' | 'PROPOSAL.UPDATE_PERMISSION' | 'PROJECT.DELETE_PERMISSION' | 'CUSTOMER.DELETE_PERMISSION' | 'OFFERING.DELETE_PERMISSION' | 'CALL.DELETE_PERMISSION' | 'PROPOSAL.DELETE_PERMISSION' | 'LEXIS_LINK.CREATE' | 'LEXIS_LINK.DELETE' | 'PROJECT.LIST' | 'PROJECT.CREATE' | 'PROJECT.DELETE' | 'PROJECT.UPDATE' | 'PROJECT.UPDATE_METADATA' | 'PROJECT.REVIEW_MEMBERSHIP' | 'CUSTOMER.UPDATE' | 'CUSTOMER.CONTACT_UPDATE' | 'CUSTOMER.LIST_USERS' | 'OFFERING.ACCEPT_CALL_REQUEST' | 'CALL.APPROVE_AND_REJECT_PROPOSALS' | 'CALL.CLOSE_ROUNDS' | 'ACCESS_SUBNET.CREATE' | 'ACCESS_SUBNET.UPDATE' | 'ACCESS_SUBNET.DELETE' | 'OFFERINGUSER.UPDATE_RESTRICTION' | 'INVITATION.LIST' | 'CUSTOMER.LIST_PERMISSION_REVIEWS' | 'CALL.LIST' | 'CALL.CREATE' | 'CALL.UPDATE' | 'ROUND.LIST' | 'PROPOSAL.LIST' | 'SERVICE_ACCOUNT.MANAGE' | 'PROJECT.COURSE_ACCOUNT_MANAGE' | 'SERVICE_PROVIDER.OPENSTACK_IMAGE_MANAGEMENT' | 'OPENSTACK_INSTANCE.CONSOLE_ACCESS' | 'OPENSTACK_INSTANCE.MANAGE_POWER' | 'OPENSTACK_INSTANCE.MANAGE' | 'OPENSTACK_ROUTER.MANAGE_GATEWAY' | 'STAFF.ACCESS' | 'SUPPORT.ACCESS';
     };
     /**
      * Grouped permission descriptions for UI
@@ -20421,7 +20474,6 @@ export type ProviderOfferingDetails = {
     readonly endpoints?: Array<NestedEndpoint>;
     readonly software_catalogs?: Array<NestedSoftwareCatalog>;
     readonly partitions?: Array<NestedPartition>;
-    readonly roles?: Array<NestedRole>;
     customer?: string | null;
     readonly customer_uuid?: string | null;
     readonly customer_name?: string | null;
@@ -20501,6 +20553,8 @@ export type ProviderOfferingDetails = {
     readonly billing_type_classification?: string;
     readonly effective_available_limits?: Array<string>;
     compliance_checklist?: string | null;
+    readonly profile_uuid?: string | null;
+    readonly profile_name?: string | null;
     readonly integration_status?: Array<IntegrationStatus> | null;
     readonly google_calendar_is_public?: boolean | null;
     /**
@@ -20797,7 +20851,6 @@ export type PublicOfferingDetails = {
     readonly endpoints?: Array<NestedEndpoint>;
     readonly software_catalogs?: Array<NestedSoftwareCatalog>;
     readonly partitions?: Array<NestedPartition>;
-    readonly roles?: Array<NestedRole>;
     customer?: string | null;
     readonly customer_uuid?: string | null;
     readonly customer_name?: string | null;
@@ -20869,6 +20922,8 @@ export type PublicOfferingDetails = {
     readonly billing_type_classification?: string;
     readonly effective_available_limits?: Array<string>;
     compliance_checklist?: string | null;
+    readonly profile_uuid?: string | null;
+    readonly profile_name?: string | null;
     readonly user_has_consent?: boolean;
     readonly is_accessible?: boolean;
     readonly google_calendar_is_public?: boolean | null;
@@ -22993,6 +23048,45 @@ export type ResourcePlanPeriod = {
     components: Array<BaseComponentUsage>;
 };
 
+export type ResourceProject = {
+    readonly uuid: string;
+    resource: string;
+    name: string;
+    description?: string;
+    readonly backend_id: string;
+    readonly state: string;
+    /**
+     * Dictionary mapping component types to quota values. Same format as Resource.limits.
+     */
+    limits?: unknown;
+    /**
+     * Dictionary mapping component types to current usage amounts. Populated by backend synchronization.
+     */
+    readonly current_usages: unknown;
+    readonly resource_uuid: string;
+    readonly resource_name: string;
+    readonly created: string;
+    readonly modified: string;
+};
+
+export type ResourceProjectBackendId = {
+    backend_id: string;
+};
+
+export type ResourceProjectBackendIdRequest = {
+    backend_id: string;
+};
+
+export type ResourceProjectRequest = {
+    resource: string;
+    name: string;
+    description?: string;
+    /**
+     * Dictionary mapping component types to quota values. Same format as Resource.limits.
+     */
+    limits?: unknown;
+};
+
 export type ResourceProvisioningStats = {
     /**
      * UUID of the offering
@@ -23146,6 +23240,25 @@ export type ResourceSwitchPlanRequest = {
     plan: string;
 };
 
+export type ResourceTeamMember = {
+    readonly url: string;
+    readonly uuid: string;
+    /**
+     * Required. 128 characters or fewer. Lowercase letters, numbers and @/./+/-/_ characters
+     */
+    username: string;
+    readonly full_name: string;
+    /**
+     * Email address
+     */
+    email?: string;
+    image?: string | null;
+    readonly role_name: string | null;
+    readonly role_uuid: string | null;
+    readonly expiration_time: string | null;
+    readonly resource_projects: Array<NestedResourceProjectPermission>;
+};
+
 export type ResourceTerminateRequest = {
     /**
      * Termination attributes
@@ -23266,29 +23379,6 @@ export type ResourceUsageByOrgType = {
      * Number of resources
      */
     resource_count: number;
-};
-
-export type ResourceUser = {
-    readonly uuid: string;
-    resource: string;
-    role: string;
-    user: string;
-    readonly resource_uuid: string;
-    readonly role_uuid: string;
-    readonly user_uuid: string;
-    readonly resource_name: string;
-    readonly role_name: string;
-    /**
-     * Required. 128 characters or fewer. Lowercase letters, numbers and @/./+/-/_ characters
-     */
-    readonly user_username: string;
-    readonly user_full_name: string;
-};
-
-export type ResourceUserRequest = {
-    resource: string;
-    role: string;
-    user: string;
 };
 
 export type ResourcesGeographySummary = {
@@ -24179,6 +24269,19 @@ export type RobotAccountRequest = {
 
 export type RobotAccountStates = 'Requested' | 'Creating' | 'OK' | 'Requested deletion' | 'Deleted' | 'Error';
 
+export type RoleAvailabilityDetails = {
+    readonly uuid: string;
+    readonly role_uuid: string;
+    readonly role_name: string;
+    readonly role_content_type: string | null;
+    readonly scope_type: string | null;
+    readonly scope_uuid: string | null;
+    readonly scope_name: string | null;
+    readonly is_profile_managed: boolean;
+    readonly profile_uuid: string | null;
+    readonly profile_name: string | null;
+};
+
 export type RoleDescription = {
     description?: string;
     /**
@@ -24445,7 +24548,7 @@ export type RoleTemplate = {
     readonly settings: string;
 };
 
-export type RoleType = 'customer' | 'service_provider' | 'call_organizer' | 'project' | 'offering' | 'call' | 'proposal';
+export type RoleType = 'customer' | 'service_provider' | 'call_organizer' | 'project' | 'offering' | 'resource' | 'resource_project' | 'call' | 'proposal';
 
 export type RoundReviewer = {
     readonly full_name: string;
@@ -27796,6 +27899,13 @@ export type WidgetEnum = 'csv' | 'filesize' | 'attached_instance';
 
 export type ZammadarticletypeEnum = 'email' | 'phone' | 'web' | 'note' | 'sms' | 'chat' | 'fax' | 'twitter status' | 'twitter direct-message' | 'facebook feed post' | 'facebook feed comment' | 'telegram personal-message';
 
+export type OfferingProfileRole = {
+    uuid: string;
+    name: string;
+    content_type: string | null;
+    description: string;
+};
+
 export type AzureVirtualMachineCreateOrderAttributes = {
     name: string;
     description?: string;
@@ -29983,7 +30093,7 @@ export type AzureVirtualMachineFieldEnum = 'access_url' | 'backend_id' | 'cores'
 
 export type BackendResourceReqOEnum = '-created' | 'created';
 
-export type OfferingFieldEnum = 'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'billing_type_classification' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'documentation_url' | 'effective_available_limits' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'googlecalendar' | 'has_compliance_requirements' | 'helpdesk_url' | 'image' | 'integration_guide' | 'is_accessible' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_options' | 'roles' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'tags' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'user_has_consent' | 'uuid' | 'vendor_details';
+export type OfferingFieldEnum = 'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'billing_type_classification' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'documentation_url' | 'effective_available_limits' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'googlecalendar' | 'has_compliance_requirements' | 'helpdesk_url' | 'image' | 'integration_guide' | 'is_accessible' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'profile_name' | 'profile_uuid' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_options' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'tags' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'user_has_consent' | 'uuid' | 'vendor_details';
 
 export type BookingResourceFieldEnum = 'attributes' | 'available_actions' | 'backend_id' | 'backend_metadata' | 'can_terminate' | 'category_icon' | 'category_title' | 'category_uuid' | 'consumer_reviewed_by' | 'consumer_reviewed_by_full_name' | 'consumer_reviewed_by_username' | 'created' | 'created_by' | 'created_by_full_name' | 'created_by_username' | 'creation_order' | 'current_usages' | 'customer_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'downscaled' | 'effective_id' | 'end_date' | 'end_date_requested_by' | 'endpoints' | 'error_message' | 'error_traceback' | 'is_limit_based' | 'is_usage_based' | 'last_sync' | 'limit_usage' | 'limits' | 'modified' | 'name' | 'offering' | 'offering_backend_id' | 'offering_billable' | 'offering_components' | 'offering_description' | 'offering_image' | 'offering_name' | 'offering_plugin_options' | 'offering_shared' | 'offering_slug' | 'offering_state' | 'offering_thumbnail' | 'offering_type' | 'offering_uuid' | 'options' | 'order_in_progress' | 'parent_name' | 'parent_offering_name' | 'parent_offering_slug' | 'parent_offering_uuid' | 'parent_uuid' | 'paused' | 'plan' | 'plan_description' | 'plan_name' | 'plan_unit' | 'plan_uuid' | 'project' | 'project_description' | 'project_effective_end_date' | 'project_end_date' | 'project_end_date_requested_by' | 'project_is_in_grace_period' | 'project_name' | 'project_slug' | 'project_uuid' | 'provider_description' | 'provider_name' | 'provider_slug' | 'provider_uuid' | 'renewal_date' | 'report' | 'resource_type' | 'resource_uuid' | 'restrict_member_access' | 'scope' | 'service_settings_uuid' | 'slots' | 'slug' | 'state' | 'url' | 'user_requires_reconsent' | 'username' | 'uuid';
 
@@ -30101,7 +30211,7 @@ export type OrderDetailsOEnum = '-consumer_reviewed_at' | '-cost' | '-created' |
 
 export type RemoteProjectUpdateRequestStateEnum = 'approved' | 'canceled' | 'draft' | 'pending' | 'rejected';
 
-export type ProviderOfferingDetailsFieldEnum = 'access_url' | 'attributes' | 'backend_id' | 'backend_id_rules' | 'backend_metadata' | 'billable' | 'billing_type_classification' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'documentation_url' | 'effective_available_limits' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'has_compliance_requirements' | 'helpdesk_url' | 'image' | 'integration_guide' | 'integration_status' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_options' | 'roles' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'tags' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'uuid' | 'vendor_details';
+export type ProviderOfferingDetailsFieldEnum = 'access_url' | 'attributes' | 'backend_id' | 'backend_id_rules' | 'backend_metadata' | 'billable' | 'billing_type_classification' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'documentation_url' | 'effective_available_limits' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'has_compliance_requirements' | 'helpdesk_url' | 'image' | 'integration_guide' | 'integration_status' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'profile_name' | 'profile_uuid' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_options' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'tags' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'uuid' | 'vendor_details';
 
 export type ProviderOfferingDetailsOEnum = '-created' | '-name' | '-state' | '-total_cost' | '-total_cost_estimated' | '-total_customers' | '-type' | 'created' | 'name' | 'state' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type';
 
@@ -30113,7 +30223,7 @@ export type UserFieldEnum = 'active_isds' | 'address' | 'affiliations' | 'agree_
 
 export type ResourceOEnum = '-created' | '-end_date' | '-name' | '-project_name' | '-state' | 'created' | 'end_date' | 'name' | 'project_name' | 'state';
 
-export type PublicOfferingDetailsFieldEnum = 'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'billing_type_classification' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'documentation_url' | 'effective_available_limits' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'has_compliance_requirements' | 'helpdesk_url' | 'image' | 'integration_guide' | 'is_accessible' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'project' | 'project_name' | 'project_uuid' | 'promotion_campaigns' | 'quotas' | 'resource_options' | 'roles' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'tags' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'user_has_consent' | 'uuid' | 'vendor_details';
+export type PublicOfferingDetailsFieldEnum = 'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'billing_type_classification' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'documentation_url' | 'effective_available_limits' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'has_compliance_requirements' | 'helpdesk_url' | 'image' | 'integration_guide' | 'is_accessible' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'profile_name' | 'profile_uuid' | 'project' | 'project_name' | 'project_uuid' | 'promotion_campaigns' | 'quotas' | 'resource_options' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'tags' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'user_has_consent' | 'uuid' | 'vendor_details';
 
 export type RobotAccountDetailsFieldEnum = 'backend_id' | 'created' | 'customer_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'fingerprints' | 'keys' | 'modified' | 'offering_plugin_options' | 'project_name' | 'project_uuid' | 'provider_name' | 'provider_uuid' | 'resource' | 'resource_name' | 'resource_uuid' | 'responsible_user' | 'state' | 'type' | 'url' | 'user_keys' | 'username' | 'users' | 'uuid';
 
@@ -48821,6 +48931,157 @@ export type MarketplaceOfferingPermissionsRetrieveResponses = {
 
 export type MarketplaceOfferingPermissionsRetrieveResponse = MarketplaceOfferingPermissionsRetrieveResponses[keyof MarketplaceOfferingPermissionsRetrieveResponses];
 
+export type MarketplaceOfferingProfilesListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-offering-profiles/';
+};
+
+export type MarketplaceOfferingProfilesListResponses = {
+    200: Array<OfferingProfile>;
+};
+
+export type MarketplaceOfferingProfilesListResponse = MarketplaceOfferingProfilesListResponses[keyof MarketplaceOfferingProfilesListResponses];
+
+export type MarketplaceOfferingProfilesCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-offering-profiles/';
+};
+
+export type MarketplaceOfferingProfilesCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type MarketplaceOfferingProfilesCreateData = {
+    body: OfferingProfileRequest;
+    path?: never;
+    query?: never;
+    url: '/api/marketplace-offering-profiles/';
+};
+
+export type MarketplaceOfferingProfilesCreateResponses = {
+    201: OfferingProfile;
+};
+
+export type MarketplaceOfferingProfilesCreateResponse = MarketplaceOfferingProfilesCreateResponses[keyof MarketplaceOfferingProfilesCreateResponses];
+
+export type MarketplaceOfferingProfilesDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-offering-profiles/{uuid}/';
+};
+
+export type MarketplaceOfferingProfilesDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type MarketplaceOfferingProfilesDestroyResponse = MarketplaceOfferingProfilesDestroyResponses[keyof MarketplaceOfferingProfilesDestroyResponses];
+
+export type MarketplaceOfferingProfilesRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-offering-profiles/{uuid}/';
+};
+
+export type MarketplaceOfferingProfilesRetrieveResponses = {
+    200: OfferingProfile;
+};
+
+export type MarketplaceOfferingProfilesRetrieveResponse = MarketplaceOfferingProfilesRetrieveResponses[keyof MarketplaceOfferingProfilesRetrieveResponses];
+
+export type MarketplaceOfferingProfilesPartialUpdateData = {
+    body?: PatchedOfferingProfileRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-offering-profiles/{uuid}/';
+};
+
+export type MarketplaceOfferingProfilesPartialUpdateResponses = {
+    200: OfferingProfile;
+};
+
+export type MarketplaceOfferingProfilesPartialUpdateResponse = MarketplaceOfferingProfilesPartialUpdateResponses[keyof MarketplaceOfferingProfilesPartialUpdateResponses];
+
+export type MarketplaceOfferingProfilesUpdateData = {
+    body: OfferingProfileRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-offering-profiles/{uuid}/';
+};
+
+export type MarketplaceOfferingProfilesUpdateResponses = {
+    200: OfferingProfile;
+};
+
+export type MarketplaceOfferingProfilesUpdateResponse = MarketplaceOfferingProfilesUpdateResponses[keyof MarketplaceOfferingProfilesUpdateResponses];
+
+export type MarketplaceOfferingProfilesAddRoleData = {
+    body: OfferingProfileRoleAssignRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-offering-profiles/{uuid}/add_role/';
+};
+
+export type MarketplaceOfferingProfilesAddRoleResponses = {
+    200: OfferingProfileRoleAssign;
+};
+
+export type MarketplaceOfferingProfilesAddRoleResponse = MarketplaceOfferingProfilesAddRoleResponses[keyof MarketplaceOfferingProfilesAddRoleResponses];
+
+export type MarketplaceOfferingProfilesRemoveRoleData = {
+    body: OfferingProfileRoleAssignRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-offering-profiles/{uuid}/remove_role/';
+};
+
+export type MarketplaceOfferingProfilesRemoveRoleResponses = {
+    200: OfferingProfileRoleAssign;
+};
+
+export type MarketplaceOfferingProfilesRemoveRoleResponse = MarketplaceOfferingProfilesRemoveRoleResponses[keyof MarketplaceOfferingProfilesRemoveRoleResponses];
+
 export type MarketplaceOfferingReferralsListData = {
     body?: never;
     path?: never;
@@ -48900,6 +49161,133 @@ export type MarketplaceOfferingReferralsRetrieveResponses = {
 };
 
 export type MarketplaceOfferingReferralsRetrieveResponse = MarketplaceOfferingReferralsRetrieveResponses[keyof MarketplaceOfferingReferralsRetrieveResponses];
+
+export type MarketplaceOfferingRolesListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        content_type?: string;
+        name?: string;
+        offering_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-offering-roles/';
+};
+
+export type MarketplaceOfferingRolesListResponses = {
+    200: Array<OfferingRole>;
+};
+
+export type MarketplaceOfferingRolesListResponse = MarketplaceOfferingRolesListResponses[keyof MarketplaceOfferingRolesListResponses];
+
+export type MarketplaceOfferingRolesCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        content_type?: string;
+        name?: string;
+        offering_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-offering-roles/';
+};
+
+export type MarketplaceOfferingRolesCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type MarketplaceOfferingRolesCreateData = {
+    body: OfferingRoleRequest;
+    path?: never;
+    query?: never;
+    url: '/api/marketplace-offering-roles/';
+};
+
+export type MarketplaceOfferingRolesCreateResponses = {
+    201: OfferingRole;
+};
+
+export type MarketplaceOfferingRolesCreateResponse = MarketplaceOfferingRolesCreateResponses[keyof MarketplaceOfferingRolesCreateResponses];
+
+export type MarketplaceOfferingRolesDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-offering-roles/{uuid}/';
+};
+
+export type MarketplaceOfferingRolesDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type MarketplaceOfferingRolesDestroyResponse = MarketplaceOfferingRolesDestroyResponses[keyof MarketplaceOfferingRolesDestroyResponses];
+
+export type MarketplaceOfferingRolesRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-offering-roles/{uuid}/';
+};
+
+export type MarketplaceOfferingRolesRetrieveResponses = {
+    200: OfferingRole;
+};
+
+export type MarketplaceOfferingRolesRetrieveResponse = MarketplaceOfferingRolesRetrieveResponses[keyof MarketplaceOfferingRolesRetrieveResponses];
+
+export type MarketplaceOfferingRolesPartialUpdateData = {
+    body?: PatchedOfferingRoleRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-offering-roles/{uuid}/';
+};
+
+export type MarketplaceOfferingRolesPartialUpdateResponses = {
+    200: OfferingRole;
+};
+
+export type MarketplaceOfferingRolesPartialUpdateResponse = MarketplaceOfferingRolesPartialUpdateResponses[keyof MarketplaceOfferingRolesPartialUpdateResponses];
+
+export type MarketplaceOfferingRolesUpdateData = {
+    body: OfferingRoleRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-offering-roles/{uuid}/';
+};
+
+export type MarketplaceOfferingRolesUpdateResponses = {
+    200: OfferingRole;
+};
+
+export type MarketplaceOfferingRolesUpdateResponse = MarketplaceOfferingRolesUpdateResponses[keyof MarketplaceOfferingRolesUpdateResponses];
 
 export type MarketplaceOfferingTermsOfServiceListData = {
     body?: never;
@@ -49350,147 +49738,6 @@ export type MarketplaceOfferingUserChecklistCompletionsRetrieveResponses = {
 };
 
 export type MarketplaceOfferingUserChecklistCompletionsRetrieveResponse = MarketplaceOfferingUserChecklistCompletionsRetrieveResponses[keyof MarketplaceOfferingUserChecklistCompletionsRetrieveResponses];
-
-export type MarketplaceOfferingUserRolesListData = {
-    body?: never;
-    path?: never;
-    query?: {
-        offering?: string;
-        /**
-         * Multiple values may be separated by commas.
-         */
-        offering_slug?: Array<string>;
-        /**
-         * Multiple values may be separated by commas.
-         */
-        offering_uuid?: Array<string>;
-        /**
-         * A page number within the paginated result set.
-         */
-        page?: number;
-        /**
-         * Number of results to return per page.
-         */
-        page_size?: number;
-        parent_offering_uuid?: string;
-    };
-    url: '/api/marketplace-offering-user-roles/';
-};
-
-export type MarketplaceOfferingUserRolesListResponses = {
-    200: Array<OfferingUserRole>;
-};
-
-export type MarketplaceOfferingUserRolesListResponse = MarketplaceOfferingUserRolesListResponses[keyof MarketplaceOfferingUserRolesListResponses];
-
-export type MarketplaceOfferingUserRolesCountData = {
-    body?: never;
-    path?: never;
-    query?: {
-        offering?: string;
-        /**
-         * Multiple values may be separated by commas.
-         */
-        offering_slug?: Array<string>;
-        /**
-         * Multiple values may be separated by commas.
-         */
-        offering_uuid?: Array<string>;
-        /**
-         * A page number within the paginated result set.
-         */
-        page?: number;
-        /**
-         * Number of results to return per page.
-         */
-        page_size?: number;
-        parent_offering_uuid?: string;
-    };
-    url: '/api/marketplace-offering-user-roles/';
-};
-
-export type MarketplaceOfferingUserRolesCountResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
-};
-
-export type MarketplaceOfferingUserRolesCreateData = {
-    body: OfferingUserRoleRequest;
-    path?: never;
-    query?: never;
-    url: '/api/marketplace-offering-user-roles/';
-};
-
-export type MarketplaceOfferingUserRolesCreateResponses = {
-    201: OfferingUserRole;
-};
-
-export type MarketplaceOfferingUserRolesCreateResponse = MarketplaceOfferingUserRolesCreateResponses[keyof MarketplaceOfferingUserRolesCreateResponses];
-
-export type MarketplaceOfferingUserRolesDestroyData = {
-    body?: never;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/marketplace-offering-user-roles/{uuid}/';
-};
-
-export type MarketplaceOfferingUserRolesDestroyResponses = {
-    /**
-     * No response body
-     */
-    204: void;
-};
-
-export type MarketplaceOfferingUserRolesDestroyResponse = MarketplaceOfferingUserRolesDestroyResponses[keyof MarketplaceOfferingUserRolesDestroyResponses];
-
-export type MarketplaceOfferingUserRolesRetrieveData = {
-    body?: never;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/marketplace-offering-user-roles/{uuid}/';
-};
-
-export type MarketplaceOfferingUserRolesRetrieveResponses = {
-    200: OfferingUserRole;
-};
-
-export type MarketplaceOfferingUserRolesRetrieveResponse = MarketplaceOfferingUserRolesRetrieveResponses[keyof MarketplaceOfferingUserRolesRetrieveResponses];
-
-export type MarketplaceOfferingUserRolesPartialUpdateData = {
-    body?: PatchedOfferingUserRoleRequest;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/marketplace-offering-user-roles/{uuid}/';
-};
-
-export type MarketplaceOfferingUserRolesPartialUpdateResponses = {
-    200: OfferingUserRole;
-};
-
-export type MarketplaceOfferingUserRolesPartialUpdateResponse = MarketplaceOfferingUserRolesPartialUpdateResponses[keyof MarketplaceOfferingUserRolesPartialUpdateResponses];
-
-export type MarketplaceOfferingUserRolesUpdateData = {
-    body: OfferingUserRoleRequest;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/marketplace-offering-user-roles/{uuid}/';
-};
-
-export type MarketplaceOfferingUserRolesUpdateResponses = {
-    200: OfferingUserRole;
-};
-
-export type MarketplaceOfferingUserRolesUpdateResponse = MarketplaceOfferingUserRolesUpdateResponses[keyof MarketplaceOfferingUserRolesUpdateResponses];
 
 export type MarketplaceOfferingUsersListData = {
     body?: never;
@@ -54094,6 +54341,22 @@ export type MarketplaceProviderOfferingsSetBackendMetadataResponses = {
     200: unknown;
 };
 
+export type MarketplaceProviderOfferingsSetProfileData = {
+    body?: OfferingProfileBindRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-provider-offerings/{uuid}/set_profile/';
+};
+
+export type MarketplaceProviderOfferingsSetProfileResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type MarketplaceProviderOfferingsStateCountersRetrieveData = {
     body?: never;
     path: {
@@ -54912,6 +55175,276 @@ export type MarketplaceProviderOfferingsImportOfferingResponses = {
 };
 
 export type MarketplaceProviderOfferingsImportOfferingResponse = MarketplaceProviderOfferingsImportOfferingResponses[keyof MarketplaceProviderOfferingsImportOfferingResponses];
+
+export type MarketplaceProviderResourceProjectsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        name?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Resource URL
+         */
+        resource?: string;
+        /**
+         * Resource UUID
+         */
+        resource_uuid?: string;
+    };
+    url: '/api/marketplace-provider-resource-projects/';
+};
+
+export type MarketplaceProviderResourceProjectsListResponses = {
+    200: Array<ResourceProject>;
+};
+
+export type MarketplaceProviderResourceProjectsListResponse = MarketplaceProviderResourceProjectsListResponses[keyof MarketplaceProviderResourceProjectsListResponses];
+
+export type MarketplaceProviderResourceProjectsCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        name?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Resource URL
+         */
+        resource?: string;
+        /**
+         * Resource UUID
+         */
+        resource_uuid?: string;
+    };
+    url: '/api/marketplace-provider-resource-projects/';
+};
+
+export type MarketplaceProviderResourceProjectsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type MarketplaceProviderResourceProjectsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-provider-resource-projects/{uuid}/';
+};
+
+export type MarketplaceProviderResourceProjectsRetrieveResponses = {
+    200: ResourceProject;
+};
+
+export type MarketplaceProviderResourceProjectsRetrieveResponse = MarketplaceProviderResourceProjectsRetrieveResponses[keyof MarketplaceProviderResourceProjectsRetrieveResponses];
+
+export type MarketplaceProviderResourceProjectsPartialUpdateData = {
+    body?: PatchedResourceProjectRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-provider-resource-projects/{uuid}/';
+};
+
+export type MarketplaceProviderResourceProjectsPartialUpdateResponses = {
+    200: ResourceProject;
+};
+
+export type MarketplaceProviderResourceProjectsPartialUpdateResponse = MarketplaceProviderResourceProjectsPartialUpdateResponses[keyof MarketplaceProviderResourceProjectsPartialUpdateResponses];
+
+export type MarketplaceProviderResourceProjectsUpdateData = {
+    body: ResourceProjectRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-provider-resource-projects/{uuid}/';
+};
+
+export type MarketplaceProviderResourceProjectsUpdateResponses = {
+    200: ResourceProject;
+};
+
+export type MarketplaceProviderResourceProjectsUpdateResponse = MarketplaceProviderResourceProjectsUpdateResponses[keyof MarketplaceProviderResourceProjectsUpdateResponses];
+
+export type MarketplaceProviderResourceProjectsAddUserData = {
+    body: UserRoleCreateRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-provider-resource-projects/{uuid}/add_user/';
+};
+
+export type MarketplaceProviderResourceProjectsAddUserErrors = {
+    /**
+     * Validation error, for example when trying to add a user to a terminated project.
+     */
+    400: unknown;
+};
+
+export type MarketplaceProviderResourceProjectsAddUserResponses = {
+    201: UserRoleExpirationTime;
+};
+
+export type MarketplaceProviderResourceProjectsAddUserResponse = MarketplaceProviderResourceProjectsAddUserResponses[keyof MarketplaceProviderResourceProjectsAddUserResponses];
+
+export type MarketplaceProviderResourceProjectsDeleteUserData = {
+    body: UserRoleDeleteRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-provider-resource-projects/{uuid}/delete_user/';
+};
+
+export type MarketplaceProviderResourceProjectsDeleteUserResponses = {
+    /**
+     * Role revoked successfully.
+     */
+    200: unknown;
+};
+
+export type MarketplaceProviderResourceProjectsListUsersListData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * Fields to include in response
+         */
+        field?: Array<UserRoleDetailsFieldEnum>;
+        /**
+         * User full name
+         */
+        full_name?: string;
+        /**
+         * User native name
+         */
+        native_name?: string;
+        /**
+         * Ordering fields
+         */
+        o?: Array<UserRoleDetailsOEnum>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Role UUID or name
+         */
+        role?: string;
+        /**
+         * Search string for user
+         */
+        search_string?: string;
+        /**
+         * User UUID
+         */
+        user?: string;
+        /**
+         * User slug
+         */
+        user_slug?: string;
+        /**
+         * User URL
+         */
+        user_url?: string;
+        /**
+         * User username
+         */
+        username?: string;
+    };
+    url: '/api/marketplace-provider-resource-projects/{uuid}/list_users/';
+};
+
+export type MarketplaceProviderResourceProjectsListUsersListResponses = {
+    200: Array<UserRoleDetails>;
+};
+
+export type MarketplaceProviderResourceProjectsListUsersListResponse = MarketplaceProviderResourceProjectsListUsersListResponses[keyof MarketplaceProviderResourceProjectsListUsersListResponses];
+
+export type MarketplaceProviderResourceProjectsSetBackendIdData = {
+    body: ResourceProjectBackendIdRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-provider-resource-projects/{uuid}/set_backend_id/';
+};
+
+export type MarketplaceProviderResourceProjectsSetBackendIdResponses = {
+    200: ResourceProjectBackendId;
+};
+
+export type MarketplaceProviderResourceProjectsSetBackendIdResponse = MarketplaceProviderResourceProjectsSetBackendIdResponses[keyof MarketplaceProviderResourceProjectsSetBackendIdResponses];
+
+export type MarketplaceProviderResourceProjectsSetStateErredData = {
+    body: ResourceProjectRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-provider-resource-projects/{uuid}/set_state_erred/';
+};
+
+export type MarketplaceProviderResourceProjectsSetStateErredResponses = {
+    200: ResourceProject;
+};
+
+export type MarketplaceProviderResourceProjectsSetStateErredResponse = MarketplaceProviderResourceProjectsSetStateErredResponses[keyof MarketplaceProviderResourceProjectsSetStateErredResponses];
+
+export type MarketplaceProviderResourceProjectsSetStateOkData = {
+    body: ResourceProjectRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-provider-resource-projects/{uuid}/set_state_ok/';
+};
+
+export type MarketplaceProviderResourceProjectsSetStateOkResponses = {
+    200: ResourceProject;
+};
+
+export type MarketplaceProviderResourceProjectsSetStateOkResponse = MarketplaceProviderResourceProjectsSetStateOkResponses[keyof MarketplaceProviderResourceProjectsSetStateOkResponses];
+
+export type MarketplaceProviderResourceProjectsUpdateUserData = {
+    body: UserRoleUpdateRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-provider-resource-projects/{uuid}/update_user/';
+};
+
+export type MarketplaceProviderResourceProjectsUpdateUserResponses = {
+    200: UserRoleExpirationTime;
+};
+
+export type MarketplaceProviderResourceProjectsUpdateUserResponse = MarketplaceProviderResourceProjectsUpdateUserResponses[keyof MarketplaceProviderResourceProjectsUpdateUserResponses];
 
 export type MarketplaceProviderResourcesListData = {
     body?: never;
@@ -56725,10 +57258,11 @@ export type MarketplaceResourceOfferingsListResponses = {
 
 export type MarketplaceResourceOfferingsListResponse = MarketplaceResourceOfferingsListResponses[keyof MarketplaceResourceOfferingsListResponses];
 
-export type MarketplaceResourceUsersListData = {
+export type MarketplaceResourceProjectsListData = {
     body?: never;
     path?: never;
     query?: {
+        name?: string;
         /**
          * A page number within the paginated result set.
          */
@@ -56745,32 +57279,21 @@ export type MarketplaceResourceUsersListData = {
          * Resource UUID
          */
         resource_uuid?: string;
-        /**
-         * Role name
-         */
-        role_name?: string;
-        /**
-         * Role UUID
-         */
-        role_uuid?: string;
-        /**
-         * User UUID
-         */
-        user_uuid?: string;
     };
-    url: '/api/marketplace-resource-users/';
+    url: '/api/marketplace-resource-projects/';
 };
 
-export type MarketplaceResourceUsersListResponses = {
-    200: Array<ResourceUser>;
+export type MarketplaceResourceProjectsListResponses = {
+    200: Array<ResourceProject>;
 };
 
-export type MarketplaceResourceUsersListResponse = MarketplaceResourceUsersListResponses[keyof MarketplaceResourceUsersListResponses];
+export type MarketplaceResourceProjectsListResponse = MarketplaceResourceProjectsListResponses[keyof MarketplaceResourceProjectsListResponses];
 
-export type MarketplaceResourceUsersCountData = {
+export type MarketplaceResourceProjectsCountData = {
     body?: never;
     path?: never;
     query?: {
+        name?: string;
         /**
          * A page number within the paginated result set.
          */
@@ -56787,74 +57310,209 @@ export type MarketplaceResourceUsersCountData = {
          * Resource UUID
          */
         resource_uuid?: string;
-        /**
-         * Role name
-         */
-        role_name?: string;
-        /**
-         * Role UUID
-         */
-        role_uuid?: string;
-        /**
-         * User UUID
-         */
-        user_uuid?: string;
     };
-    url: '/api/marketplace-resource-users/';
+    url: '/api/marketplace-resource-projects/';
 };
 
-export type MarketplaceResourceUsersCountResponses = {
+export type MarketplaceResourceProjectsCountResponses = {
     /**
      * No response body
      */
     200: unknown;
 };
 
-export type MarketplaceResourceUsersCreateData = {
-    body: ResourceUserRequest;
+export type MarketplaceResourceProjectsCreateData = {
+    body: ResourceProjectRequest;
     path?: never;
     query?: never;
-    url: '/api/marketplace-resource-users/';
+    url: '/api/marketplace-resource-projects/';
 };
 
-export type MarketplaceResourceUsersCreateResponses = {
-    201: ResourceUser;
+export type MarketplaceResourceProjectsCreateResponses = {
+    201: ResourceProject;
 };
 
-export type MarketplaceResourceUsersCreateResponse = MarketplaceResourceUsersCreateResponses[keyof MarketplaceResourceUsersCreateResponses];
+export type MarketplaceResourceProjectsCreateResponse = MarketplaceResourceProjectsCreateResponses[keyof MarketplaceResourceProjectsCreateResponses];
 
-export type MarketplaceResourceUsersDestroyData = {
+export type MarketplaceResourceProjectsDestroyData = {
     body?: never;
     path: {
         uuid: string;
     };
     query?: never;
-    url: '/api/marketplace-resource-users/{uuid}/';
+    url: '/api/marketplace-resource-projects/{uuid}/';
 };
 
-export type MarketplaceResourceUsersDestroyResponses = {
+export type MarketplaceResourceProjectsDestroyResponses = {
     /**
      * No response body
      */
     204: void;
 };
 
-export type MarketplaceResourceUsersDestroyResponse = MarketplaceResourceUsersDestroyResponses[keyof MarketplaceResourceUsersDestroyResponses];
+export type MarketplaceResourceProjectsDestroyResponse = MarketplaceResourceProjectsDestroyResponses[keyof MarketplaceResourceProjectsDestroyResponses];
 
-export type MarketplaceResourceUsersRetrieveData = {
+export type MarketplaceResourceProjectsRetrieveData = {
     body?: never;
     path: {
         uuid: string;
     };
     query?: never;
-    url: '/api/marketplace-resource-users/{uuid}/';
+    url: '/api/marketplace-resource-projects/{uuid}/';
 };
 
-export type MarketplaceResourceUsersRetrieveResponses = {
-    200: ResourceUser;
+export type MarketplaceResourceProjectsRetrieveResponses = {
+    200: ResourceProject;
 };
 
-export type MarketplaceResourceUsersRetrieveResponse = MarketplaceResourceUsersRetrieveResponses[keyof MarketplaceResourceUsersRetrieveResponses];
+export type MarketplaceResourceProjectsRetrieveResponse = MarketplaceResourceProjectsRetrieveResponses[keyof MarketplaceResourceProjectsRetrieveResponses];
+
+export type MarketplaceResourceProjectsPartialUpdateData = {
+    body?: PatchedResourceProjectRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-resource-projects/{uuid}/';
+};
+
+export type MarketplaceResourceProjectsPartialUpdateResponses = {
+    200: ResourceProject;
+};
+
+export type MarketplaceResourceProjectsPartialUpdateResponse = MarketplaceResourceProjectsPartialUpdateResponses[keyof MarketplaceResourceProjectsPartialUpdateResponses];
+
+export type MarketplaceResourceProjectsUpdateData = {
+    body: ResourceProjectRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-resource-projects/{uuid}/';
+};
+
+export type MarketplaceResourceProjectsUpdateResponses = {
+    200: ResourceProject;
+};
+
+export type MarketplaceResourceProjectsUpdateResponse = MarketplaceResourceProjectsUpdateResponses[keyof MarketplaceResourceProjectsUpdateResponses];
+
+export type MarketplaceResourceProjectsAddUserData = {
+    body: UserRoleCreateRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-resource-projects/{uuid}/add_user/';
+};
+
+export type MarketplaceResourceProjectsAddUserErrors = {
+    /**
+     * Validation error, for example when trying to add a user to a terminated project.
+     */
+    400: unknown;
+};
+
+export type MarketplaceResourceProjectsAddUserResponses = {
+    201: UserRoleExpirationTime;
+};
+
+export type MarketplaceResourceProjectsAddUserResponse = MarketplaceResourceProjectsAddUserResponses[keyof MarketplaceResourceProjectsAddUserResponses];
+
+export type MarketplaceResourceProjectsDeleteUserData = {
+    body: UserRoleDeleteRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-resource-projects/{uuid}/delete_user/';
+};
+
+export type MarketplaceResourceProjectsDeleteUserResponses = {
+    /**
+     * Role revoked successfully.
+     */
+    200: unknown;
+};
+
+export type MarketplaceResourceProjectsListUsersListData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * Fields to include in response
+         */
+        field?: Array<UserRoleDetailsFieldEnum>;
+        /**
+         * User full name
+         */
+        full_name?: string;
+        /**
+         * User native name
+         */
+        native_name?: string;
+        /**
+         * Ordering fields
+         */
+        o?: Array<UserRoleDetailsOEnum>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Role UUID or name
+         */
+        role?: string;
+        /**
+         * Search string for user
+         */
+        search_string?: string;
+        /**
+         * User UUID
+         */
+        user?: string;
+        /**
+         * User slug
+         */
+        user_slug?: string;
+        /**
+         * User URL
+         */
+        user_url?: string;
+        /**
+         * User username
+         */
+        username?: string;
+    };
+    url: '/api/marketplace-resource-projects/{uuid}/list_users/';
+};
+
+export type MarketplaceResourceProjectsListUsersListResponses = {
+    200: Array<UserRoleDetails>;
+};
+
+export type MarketplaceResourceProjectsListUsersListResponse = MarketplaceResourceProjectsListUsersListResponses[keyof MarketplaceResourceProjectsListUsersListResponses];
+
+export type MarketplaceResourceProjectsUpdateUserData = {
+    body: UserRoleUpdateRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-resource-projects/{uuid}/update_user/';
+};
+
+export type MarketplaceResourceProjectsUpdateUserResponses = {
+    200: UserRoleExpirationTime;
+};
+
+export type MarketplaceResourceProjectsUpdateUserResponse = MarketplaceResourceProjectsUpdateUserResponses[keyof MarketplaceResourceProjectsUpdateUserResponses];
 
 export type MarketplaceResourcesListData = {
     body?: never;
@@ -57301,6 +57959,44 @@ export type MarketplaceResourcesUpdateResponses = {
 
 export type MarketplaceResourcesUpdateResponse = MarketplaceResourcesUpdateResponses[keyof MarketplaceResourcesUpdateResponses];
 
+export type MarketplaceResourcesAddUserData = {
+    body: UserRoleCreateRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-resources/{uuid}/add_user/';
+};
+
+export type MarketplaceResourcesAddUserErrors = {
+    /**
+     * Validation error, for example when trying to add a user to a terminated project.
+     */
+    400: unknown;
+};
+
+export type MarketplaceResourcesAddUserResponses = {
+    201: UserRoleExpirationTime;
+};
+
+export type MarketplaceResourcesAddUserResponse = MarketplaceResourcesAddUserResponses[keyof MarketplaceResourcesAddUserResponses];
+
+export type MarketplaceResourcesDeleteUserData = {
+    body: UserRoleDeleteRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-resources/{uuid}/delete_user/';
+};
+
+export type MarketplaceResourcesDeleteUserResponses = {
+    /**
+     * Role revoked successfully.
+     */
+    200: unknown;
+};
+
 export type MarketplaceResourcesDetailsRetrieveData = {
     body?: never;
     path: {
@@ -57588,6 +58284,70 @@ export type MarketplaceResourcesHistoryAtRetrieveResponses = {
 
 export type MarketplaceResourcesHistoryAtRetrieveResponse = MarketplaceResourcesHistoryAtRetrieveResponses[keyof MarketplaceResourcesHistoryAtRetrieveResponses];
 
+export type MarketplaceResourcesListUsersListData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * Fields to include in response
+         */
+        field?: Array<UserRoleDetailsFieldEnum>;
+        /**
+         * User full name
+         */
+        full_name?: string;
+        /**
+         * User native name
+         */
+        native_name?: string;
+        /**
+         * Ordering fields
+         */
+        o?: Array<UserRoleDetailsOEnum>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Role UUID or name
+         */
+        role?: string;
+        /**
+         * Search string for user
+         */
+        search_string?: string;
+        /**
+         * User UUID
+         */
+        user?: string;
+        /**
+         * User slug
+         */
+        user_slug?: string;
+        /**
+         * User URL
+         */
+        user_url?: string;
+        /**
+         * User username
+         */
+        username?: string;
+    };
+    url: '/api/marketplace-resources/{uuid}/list_users/';
+};
+
+export type MarketplaceResourcesListUsersListResponses = {
+    200: Array<UserRoleDetails>;
+};
+
+export type MarketplaceResourcesListUsersListResponse = MarketplaceResourcesListUsersListResponses[keyof MarketplaceResourcesListUsersListResponses];
+
 export type MarketplaceResourcesMoveResourceData = {
     body: MoveResourceRequest;
     path: {
@@ -57845,6 +58605,206 @@ export type MarketplaceResourcesTeamListResponses = {
 
 export type MarketplaceResourcesTeamListResponse = MarketplaceResourcesTeamListResponses[keyof MarketplaceResourcesTeamListResponses];
 
+export type MarketplaceResourcesTeamMembersListData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * Backend ID
+         */
+        backend_id?: string;
+        /**
+         * Category UUID
+         */
+        category_uuid?: string;
+        /**
+         * Filter by exact number of components
+         */
+        component_count?: number;
+        /**
+         * Created after
+         */
+        created?: string;
+        /**
+         * Created before
+         */
+        created_before?: string;
+        /**
+         * Customer URL
+         */
+        customer?: string;
+        /**
+         * Customer UUID
+         */
+        customer_uuid?: string;
+        /**
+         * Downscaled
+         */
+        downscaled?: boolean;
+        /**
+         * Has termination date
+         */
+        has_terminate_date?: boolean;
+        /**
+         * Filter by attached state
+         */
+        is_attached?: boolean;
+        /**
+         * LEXIS links supported
+         */
+        lexis_links_supported?: boolean;
+        /**
+         * Filter by limit-based offerings
+         */
+        limit_based?: boolean;
+        /**
+         * Filter by exact number of limit-based components
+         */
+        limit_component_count?: number;
+        /**
+         * Modified after
+         */
+        modified?: string;
+        /**
+         * Modified before
+         */
+        modified_before?: string;
+        /**
+         * Name
+         */
+        name?: string;
+        /**
+         * Name (exact)
+         */
+        name_exact?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<ResourceOEnum>;
+        offering?: string;
+        /**
+         * Offering billable
+         */
+        offering_billable?: boolean;
+        /**
+         * Offering shared
+         */
+        offering_shared?: boolean;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        offering_slug?: Array<string>;
+        /**
+         * Offering type
+         */
+        offering_type?: string;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        offering_uuid?: Array<string>;
+        /**
+         * Filter resources with only limit-based components
+         */
+        only_limit_based?: boolean;
+        /**
+         * Filter resources with only usage-based components
+         */
+        only_usage_based?: boolean;
+        /**
+         * Order state
+         *
+         *
+         */
+        order_state?: Array<OrderState>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        parent_offering_uuid?: string;
+        /**
+         * Paused
+         */
+        paused?: boolean;
+        /**
+         * Plan UUID
+         */
+        plan_uuid?: string;
+        /**
+         * Project name
+         */
+        project_name?: string;
+        /**
+         * Project UUID
+         */
+        project_uuid?: string;
+        /**
+         * Provider UUID
+         */
+        provider_uuid?: string;
+        /**
+         * Search by resource UUID, name, slug, backend ID, effective ID, IPs or hypervisor
+         */
+        query?: string;
+        /**
+         * Resource attributes (JSON)
+         */
+        resource_attributes?: string;
+        /**
+         * Restrict member access
+         */
+        restrict_member_access?: boolean;
+        /**
+         * Runtime state
+         */
+        runtime_state?: string;
+        /**
+         * Filter by scope URL.
+         */
+        scope?: string;
+        /**
+         * Service manager UUID
+         */
+        service_manager_uuid?: string;
+        /**
+         * Slug
+         */
+        slug?: string;
+        /**
+         * Resource state
+         *
+         *
+         */
+        state?: Array<ResourceState>;
+        /**
+         * Filter by usage-based offerings
+         */
+        usage_based?: boolean;
+        /**
+         * Include only resources visible to service providers
+         */
+        visible_to_providers?: boolean;
+        /**
+         * Visible to username
+         */
+        visible_to_username?: string;
+    };
+    url: '/api/marketplace-resources/{uuid}/team_members/';
+};
+
+export type MarketplaceResourcesTeamMembersListResponses = {
+    200: Array<ResourceTeamMember>;
+};
+
+export type MarketplaceResourcesTeamMembersListResponse = MarketplaceResourcesTeamMembersListResponses[keyof MarketplaceResourcesTeamMembersListResponses];
+
 export type MarketplaceResourcesTerminateData = {
     body?: ResourceTerminateRequest;
     path: {
@@ -57922,6 +58882,21 @@ export type MarketplaceResourcesUpdateOptionsResponses = {
 };
 
 export type MarketplaceResourcesUpdateOptionsResponse = MarketplaceResourcesUpdateOptionsResponses[keyof MarketplaceResourcesUpdateOptionsResponses];
+
+export type MarketplaceResourcesUpdateUserData = {
+    body: UserRoleUpdateRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-resources/{uuid}/update_user/';
+};
+
+export type MarketplaceResourcesUpdateUserResponses = {
+    200: UserRoleExpirationTime;
+};
+
+export type MarketplaceResourcesUpdateUserResponse = MarketplaceResourcesUpdateUserResponses[keyof MarketplaceResourcesUpdateUserResponses];
 
 export type MarketplaceResourcesSuggestNameData = {
     body: ResourceSuggestNameRequest;
@@ -85934,6 +86909,116 @@ export type ReviewerSuggestionsRejectResponses = {
 };
 
 export type ReviewerSuggestionsRejectResponse = ReviewerSuggestionsRejectResponses[keyof ReviewerSuggestionsRejectResponses];
+
+export type RoleAvailabilitiesListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Scope object id
+         */
+        object_id?: number;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Role name contains
+         */
+        role_name?: string;
+        /**
+         * Role UUID
+         */
+        role_uuid?: string;
+        /**
+         * Scope content type (e.g. 'offering', 'customer')
+         */
+        scope_type?: string;
+    };
+    url: '/api/role-availabilities/';
+};
+
+export type RoleAvailabilitiesListResponses = {
+    200: Array<RoleAvailabilityDetails>;
+};
+
+export type RoleAvailabilitiesListResponse = RoleAvailabilitiesListResponses[keyof RoleAvailabilitiesListResponses];
+
+export type RoleAvailabilitiesCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Scope object id
+         */
+        object_id?: number;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Role name contains
+         */
+        role_name?: string;
+        /**
+         * Role UUID
+         */
+        role_uuid?: string;
+        /**
+         * Scope content type (e.g. 'offering', 'customer')
+         */
+        scope_type?: string;
+    };
+    url: '/api/role-availabilities/';
+};
+
+export type RoleAvailabilitiesCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type RoleAvailabilitiesDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/role-availabilities/{uuid}/';
+};
+
+export type RoleAvailabilitiesDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type RoleAvailabilitiesDestroyResponse = RoleAvailabilitiesDestroyResponses[keyof RoleAvailabilitiesDestroyResponses];
+
+export type RoleAvailabilitiesRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/role-availabilities/{uuid}/';
+};
+
+export type RoleAvailabilitiesRetrieveResponses = {
+    200: RoleAvailabilityDetails;
+};
+
+export type RoleAvailabilitiesRetrieveResponse = RoleAvailabilitiesRetrieveResponses[keyof RoleAvailabilitiesRetrieveResponses];
 
 export type RolesListData = {
     body?: never;
