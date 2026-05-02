@@ -8224,8 +8224,6 @@ export type HypervisorSummary = {
     total_local_gb: number;
     used_local_gb: number;
     total_running_vms: number;
-    cpu_allocation_ratio: number;
-    effective_vcpus: number;
 };
 
 export type IpMapping = {
@@ -8530,14 +8528,6 @@ export type ImportPublicationsRequest = {
 };
 
 export type ImportPublicationsSourceEnum = 'orcid' | 'doi';
-
-export type ImportRemoteGroupRequest = {
-    offering_uuid: string;
-    role_uuid: string;
-    remote_group_id: string;
-    resource_uuid?: string | null;
-    scope_id?: string;
-};
 
 export type ImportResourceRequest = {
     /**
@@ -9384,21 +9374,6 @@ export type KeycloakGroup = {
     role: string;
     readonly created: string;
     readonly modified: string;
-};
-
-export type KeycloakScopeOptionRequest = {
-    /**
-     * Scope type, e.g. 'project', 'cluster'.
-     */
-    scope_type: string;
-    /**
-     * Identifier of the scope (UUID or external ID).
-     */
-    scope_id: string;
-    /**
-     * Human-readable label shown to end users.
-     */
-    label: string;
 };
 
 export type KeycloakUserGroupMembership = {
@@ -10404,26 +10379,6 @@ export type MergedPluginOptions = {
      */
     auto_approve_marketplace_script?: boolean;
     /**
-     * If set to True, Keycloak group management is enabled for this offering.
-     */
-    keycloak_enabled?: boolean;
-    /**
-     * Root parent group in Keycloak under which offering groups are created. Groups are organized as: {base_group}/{offering_slug}/{role_group}. If empty, offering groups are created at the realm root.
-     */
-    keycloak_base_group?: string;
-    /**
-     * Frequency in minutes for syncing Keycloak group memberships.
-     */
-    keycloak_sync_frequency?: number;
-    /**
-     * Template for generating Keycloak group names. Uses $variable syntax (e.g. $offering_uuid_$role_name). Allowed variables: offering_uuid, offering_name, offering_slug, resource_uuid, resource_name, resource_slug, project_uuid, project_name, project_slug, organization_uuid, organization_name, organization_slug, role_name, scope_id.
-     */
-    keycloak_group_name_template?: string;
-    /**
-     * Custom label for the username field when inviting external users (e.g. 'Civil code', 'CUID'). If empty, defaults to 'Username'.
-     */
-    keycloak_username_label?: string;
-    /**
      * Defines if backend_id should be shown more prominently by the UI
      */
     highlight_backend_id_display?: boolean;
@@ -10718,26 +10673,6 @@ export type MergedPluginOptionsRequest = {
      * If set to False, all orders require manual provider approval, including for service provider owners and staff
      */
     auto_approve_marketplace_script?: boolean;
-    /**
-     * If set to True, Keycloak group management is enabled for this offering.
-     */
-    keycloak_enabled?: boolean;
-    /**
-     * Root parent group in Keycloak under which offering groups are created. Groups are organized as: {base_group}/{offering_slug}/{role_group}. If empty, offering groups are created at the realm root.
-     */
-    keycloak_base_group?: string;
-    /**
-     * Frequency in minutes for syncing Keycloak group memberships.
-     */
-    keycloak_sync_frequency?: number;
-    /**
-     * Template for generating Keycloak group names. Uses $variable syntax (e.g. $offering_uuid_$role_name). Allowed variables: offering_uuid, offering_name, offering_slug, resource_uuid, resource_name, resource_slug, project_uuid, project_name, project_slug, organization_uuid, organization_name, organization_slug, role_name, scope_id.
-     */
-    keycloak_group_name_template?: string;
-    /**
-     * Custom label for the username field when inviting external users (e.g. 'Civil code', 'CUID'). If empty, defaults to 'Username'.
-     */
-    keycloak_username_label?: string;
     /**
      * Defines if backend_id should be shown more prominently by the UI
      */
@@ -12778,79 +12713,6 @@ export type OfferingIntegrationUpdateRequest = {
     backend_id?: string;
 };
 
-export type OfferingKeycloakGroup = {
-    readonly uuid: string;
-    readonly url: string;
-    /**
-     * Group name
-     */
-    readonly name: string;
-    readonly backend_id: string;
-    offering: string;
-    readonly offering_uuid: string;
-    readonly offering_name: string;
-    role: string;
-    readonly role_name: string;
-    resource?: string | null;
-    readonly resource_uuid: string;
-    readonly resource_name: string | null;
-    /**
-     * Sub-entity identifier within a resource, e.g. Rancher project ID within a cluster.
-     */
-    scope_id?: string;
-    readonly created: string;
-    readonly modified: string;
-};
-
-export type OfferingKeycloakMembership = {
-    readonly uuid: string;
-    readonly url: string;
-    /**
-     * Keycloak user username
-     */
-    username: string;
-    /**
-     * User's email for notifications
-     */
-    email: string;
-    readonly first_name: string;
-    readonly last_name: string;
-    readonly group: string;
-    readonly group_name: string;
-    readonly group_role_name: string;
-    readonly group_offering_uuid: string;
-    readonly group_offering_name: string;
-    readonly group_resource_name: string;
-    readonly group_resource_uuid: string;
-    /**
-     * Sub-entity identifier within a resource, e.g. Rancher project ID within a cluster.
-     */
-    readonly group_scope_id: string;
-    user?: string | null;
-    state: KeycloakUserGroupMembershipState;
-    readonly created: string;
-    readonly modified: string;
-    readonly last_checked: string;
-    readonly error_message: string;
-    readonly error_traceback: string;
-};
-
-export type OfferingKeycloakMembershipRequest = {
-    /**
-     * Keycloak user username
-     */
-    username: string;
-    /**
-     * User's email for notifications
-     */
-    email: string;
-    offering: string;
-    role: string;
-    resource?: string | null;
-    scope_id?: string;
-    user?: string | null;
-};
-
 export type OfferingLocationUpdateRequest = {
     latitude: number;
     longitude: number;
@@ -13369,10 +13231,6 @@ export type OfferingThumbnailRequest = {
 };
 
 export type OfferingTypeEnum = 'Support.OfferingTemplate' | 'Marketplace.Booking' | 'Marketplace.Basic' | 'OpenStack.Tenant' | 'OpenStack.Instance' | 'OpenStack.Volume' | 'Marketplace.Rancher' | 'VMware.VirtualMachine' | 'Waldur.RemoteOffering' | 'Marketplace.Script' | 'SlurmInvoices.SlurmPackage' | 'Marketplace.Slurm';
-
-export type OfferingUuidRequest = {
-    offering_uuid: string;
-};
 
 export type OfferingUsagePolicy = {
     readonly uuid: string;
@@ -21034,12 +20892,6 @@ export type PullMarketplaceScriptResourceRequest = {
     resource_uuid: string;
 };
 
-export type PullMembersResponse = {
-    created: number;
-    updated: number;
-    total_remote: number;
-};
-
 export type PullResponse = {
     detail: string;
 };
@@ -22439,21 +22291,6 @@ export type RemoteEduteamsUuid = {
     uuid: string;
 };
 
-export type RemoteGroup = {
-    id: string;
-    name: string;
-    path: string;
-    sub_group_count: number;
-};
-
-export type RemoteGroupMember = {
-    id: string;
-    username: string;
-    email: string;
-    first_name: string;
-    last_name: string;
-};
-
 export type RemoteOffering = {
     readonly uuid: string;
     readonly name: string;
@@ -22730,6 +22567,15 @@ export type RequestTypeAdminRequest = {
     order?: number;
 };
 
+export type RequestTypeReorderItemRequest = {
+    uuid: string;
+    order: number;
+};
+
+export type RequestTypeReorderRequest = {
+    items: Array<RequestTypeReorderItemRequest>;
+};
+
 export type RequestTypes = 'Create' | 'Update' | 'Terminate' | 'Restore';
 
 export type RequestedOffering = {
@@ -22967,13 +22813,6 @@ export type ResourceEndDateRequest = {
      * The date is inclusive. Once reached, a resource will be scheduled for termination.
      */
     end_date?: string | null;
-};
-
-export type ResourceKeycloakScopesRequest = {
-    /**
-     * Pre-configured scope options for this resource.
-     */
-    keycloak_available_scopes: Array<KeycloakScopeOptionRequest>;
 };
 
 export type ResourceLimitPeriod = {
@@ -25032,12 +24871,6 @@ export type ServiceSettings = {
 
 export type ServiceSettingsStateEnum = 'CREATION_SCHEDULED' | 'CREATING' | 'UPDATE_SCHEDULED' | 'UPDATING' | 'DELETION_SCHEDULED' | 'DELETING' | 'OK' | 'ERRED';
 
-export type SetBackendIdRequest = {
-    backend_id?: string | null;
-    resource_uuid?: string | null;
-    scope_id?: string;
-};
-
 export type SetErredRequest = {
     error_message?: string;
     error_traceback?: string;
@@ -26068,18 +25901,6 @@ export type SyncResourcesResponse = {
 
 export type SyncStatusEnum = 'in_sync' | 'out_of_sync' | 'sync_failed';
 
-export type SyncStatusResponse = {
-    local_only: Array<string>;
-    remote_only: Array<string>;
-    synced: Array<SyncedGroup>;
-};
-
-export type SyncedGroup = {
-    local_name: string;
-    remote_name: string;
-    backend_id: string;
-};
-
 export type SystemLog = {
     readonly id: number;
     readonly created: string;
@@ -26340,12 +26161,6 @@ export type TenantSecurityGroupUpdateRequest = {
     name: string;
     description?: string;
     rules?: Array<OpenStackSecurityGroupRuleUpdateByNameRequest>;
-};
-
-export type TestConnectionResponse = {
-    status: string;
-    groups_count: number;
-    groups: Array<string>;
 };
 
 export type ThreadSession = {
@@ -56413,21 +56228,6 @@ export type MarketplaceProviderResourcesSetEndDateByStaffResponses = {
     200: unknown;
 };
 
-export type MarketplaceProviderResourcesSetKeycloakScopesData = {
-    body: ResourceKeycloakScopesRequest;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/marketplace-provider-resources/{uuid}/set_keycloak_scopes/';
-};
-
-export type MarketplaceProviderResourcesSetKeycloakScopesResponses = {
-    200: ResourceResponseStatus;
-};
-
-export type MarketplaceProviderResourcesSetKeycloakScopesResponse = MarketplaceProviderResourcesSetKeycloakScopesResponses[keyof MarketplaceProviderResourcesSetKeycloakScopesResponses];
-
 export type MarketplaceProviderResourcesSetLimitsData = {
     body: ResourceSetLimitsRequest;
     path: {
@@ -66025,479 +65825,6 @@ export type NotificationMessagesEnableResponses = {
      */
     200: unknown;
 };
-
-export type OfferingKeycloakGroupsListData = {
-    body?: never;
-    path?: never;
-    query?: {
-        offering_uuid?: string;
-        /**
-         * A page number within the paginated result set.
-         */
-        page?: number;
-        /**
-         * Number of results to return per page.
-         */
-        page_size?: number;
-        resource_uuid?: string;
-        role_uuid?: string;
-    };
-    url: '/api/offering-keycloak-groups/';
-};
-
-export type OfferingKeycloakGroupsListResponses = {
-    200: Array<OfferingKeycloakGroup>;
-};
-
-export type OfferingKeycloakGroupsListResponse = OfferingKeycloakGroupsListResponses[keyof OfferingKeycloakGroupsListResponses];
-
-export type OfferingKeycloakGroupsCountData = {
-    body?: never;
-    path?: never;
-    query?: {
-        offering_uuid?: string;
-        /**
-         * A page number within the paginated result set.
-         */
-        page?: number;
-        /**
-         * Number of results to return per page.
-         */
-        page_size?: number;
-        resource_uuid?: string;
-        role_uuid?: string;
-    };
-    url: '/api/offering-keycloak-groups/';
-};
-
-export type OfferingKeycloakGroupsCountResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
-};
-
-export type OfferingKeycloakGroupsDestroyData = {
-    body?: never;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/offering-keycloak-groups/{uuid}/';
-};
-
-export type OfferingKeycloakGroupsDestroyResponses = {
-    /**
-     * No response body
-     */
-    204: void;
-};
-
-export type OfferingKeycloakGroupsDestroyResponse = OfferingKeycloakGroupsDestroyResponses[keyof OfferingKeycloakGroupsDestroyResponses];
-
-export type OfferingKeycloakGroupsRetrieveData = {
-    body?: never;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/offering-keycloak-groups/{uuid}/';
-};
-
-export type OfferingKeycloakGroupsRetrieveResponses = {
-    200: OfferingKeycloakGroup;
-};
-
-export type OfferingKeycloakGroupsRetrieveResponse = OfferingKeycloakGroupsRetrieveResponses[keyof OfferingKeycloakGroupsRetrieveResponses];
-
-export type OfferingKeycloakGroupsPullMembersData = {
-    body?: never;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/offering-keycloak-groups/{uuid}/pull_members/';
-};
-
-export type OfferingKeycloakGroupsPullMembersResponses = {
-    200: PullMembersResponse;
-};
-
-export type OfferingKeycloakGroupsPullMembersResponse = OfferingKeycloakGroupsPullMembersResponses[keyof OfferingKeycloakGroupsPullMembersResponses];
-
-export type OfferingKeycloakGroupsSetBackendIdData = {
-    body?: SetBackendIdRequest;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/offering-keycloak-groups/{uuid}/set_backend_id/';
-};
-
-export type OfferingKeycloakGroupsSetBackendIdResponses = {
-    200: OfferingKeycloakGroup;
-};
-
-export type OfferingKeycloakGroupsSetBackendIdResponse = OfferingKeycloakGroupsSetBackendIdResponses[keyof OfferingKeycloakGroupsSetBackendIdResponses];
-
-export type OfferingKeycloakGroupsImportRemoteData = {
-    body: ImportRemoteGroupRequest;
-    path?: never;
-    query?: never;
-    url: '/api/offering-keycloak-groups/import_remote/';
-};
-
-export type OfferingKeycloakGroupsImportRemoteResponses = {
-    201: OfferingKeycloakGroup;
-};
-
-export type OfferingKeycloakGroupsImportRemoteResponse = OfferingKeycloakGroupsImportRemoteResponses[keyof OfferingKeycloakGroupsImportRemoteResponses];
-
-export type OfferingKeycloakGroupsRemoteGroupMembersListData = {
-    body?: never;
-    path?: never;
-    query: {
-        /**
-         * Keycloak group ID
-         */
-        group_id: string;
-        /**
-         * UUID of the offering
-         */
-        offering_uuid: string;
-        /**
-         * A page number within the paginated result set.
-         */
-        page?: number;
-        /**
-         * Number of results to return per page.
-         */
-        page_size?: number;
-        resource_uuid?: string;
-        role_uuid?: string;
-    };
-    url: '/api/offering-keycloak-groups/remote_group_members/';
-};
-
-export type OfferingKeycloakGroupsRemoteGroupMembersListResponses = {
-    200: Array<RemoteGroupMember>;
-};
-
-export type OfferingKeycloakGroupsRemoteGroupMembersListResponse = OfferingKeycloakGroupsRemoteGroupMembersListResponses[keyof OfferingKeycloakGroupsRemoteGroupMembersListResponses];
-
-export type OfferingKeycloakGroupsRemoteGroupMembersCountData = {
-    body?: never;
-    path?: never;
-    query: {
-        /**
-         * Keycloak group ID
-         */
-        group_id: string;
-        /**
-         * UUID of the offering
-         */
-        offering_uuid: string;
-        /**
-         * A page number within the paginated result set.
-         */
-        page?: number;
-        /**
-         * Number of results to return per page.
-         */
-        page_size?: number;
-        resource_uuid?: string;
-        role_uuid?: string;
-    };
-    url: '/api/offering-keycloak-groups/remote_group_members/';
-};
-
-export type OfferingKeycloakGroupsRemoteGroupMembersCountResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
-};
-
-export type OfferingKeycloakGroupsRemoteGroupsListData = {
-    body?: never;
-    path?: never;
-    query: {
-        /**
-         * UUID of the offering
-         */
-        offering_uuid: string;
-        /**
-         * A page number within the paginated result set.
-         */
-        page?: number;
-        /**
-         * Number of results to return per page.
-         */
-        page_size?: number;
-        resource_uuid?: string;
-        role_uuid?: string;
-    };
-    url: '/api/offering-keycloak-groups/remote_groups/';
-};
-
-export type OfferingKeycloakGroupsRemoteGroupsListResponses = {
-    200: Array<RemoteGroup>;
-};
-
-export type OfferingKeycloakGroupsRemoteGroupsListResponse = OfferingKeycloakGroupsRemoteGroupsListResponses[keyof OfferingKeycloakGroupsRemoteGroupsListResponses];
-
-export type OfferingKeycloakGroupsRemoteGroupsCountData = {
-    body?: never;
-    path?: never;
-    query: {
-        /**
-         * UUID of the offering
-         */
-        offering_uuid: string;
-        /**
-         * A page number within the paginated result set.
-         */
-        page?: number;
-        /**
-         * Number of results to return per page.
-         */
-        page_size?: number;
-        resource_uuid?: string;
-        role_uuid?: string;
-    };
-    url: '/api/offering-keycloak-groups/remote_groups/';
-};
-
-export type OfferingKeycloakGroupsRemoteGroupsCountResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
-};
-
-export type OfferingKeycloakGroupsSearchRemoteUsersListData = {
-    body?: never;
-    path?: never;
-    query: {
-        /**
-         * UUID of the offering
-         */
-        offering_uuid: string;
-        /**
-         * A page number within the paginated result set.
-         */
-        page?: number;
-        /**
-         * Number of results to return per page.
-         */
-        page_size?: number;
-        /**
-         * Search query for username, email, or name
-         */
-        q: string;
-        resource_uuid?: string;
-        role_uuid?: string;
-    };
-    url: '/api/offering-keycloak-groups/search_remote_users/';
-};
-
-export type OfferingKeycloakGroupsSearchRemoteUsersListResponses = {
-    200: Array<RemoteGroupMember>;
-};
-
-export type OfferingKeycloakGroupsSearchRemoteUsersListResponse = OfferingKeycloakGroupsSearchRemoteUsersListResponses[keyof OfferingKeycloakGroupsSearchRemoteUsersListResponses];
-
-export type OfferingKeycloakGroupsSearchRemoteUsersCountData = {
-    body?: never;
-    path?: never;
-    query: {
-        /**
-         * UUID of the offering
-         */
-        offering_uuid: string;
-        /**
-         * A page number within the paginated result set.
-         */
-        page?: number;
-        /**
-         * Number of results to return per page.
-         */
-        page_size?: number;
-        /**
-         * Search query for username, email, or name
-         */
-        q: string;
-        resource_uuid?: string;
-        role_uuid?: string;
-    };
-    url: '/api/offering-keycloak-groups/search_remote_users/';
-};
-
-export type OfferingKeycloakGroupsSearchRemoteUsersCountResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
-};
-
-export type OfferingKeycloakGroupsSyncStatusRetrieveData = {
-    body?: never;
-    path?: never;
-    query: {
-        /**
-         * UUID of the offering
-         */
-        offering_uuid: string;
-    };
-    url: '/api/offering-keycloak-groups/sync_status/';
-};
-
-export type OfferingKeycloakGroupsSyncStatusRetrieveResponses = {
-    200: SyncStatusResponse;
-};
-
-export type OfferingKeycloakGroupsSyncStatusRetrieveResponse = OfferingKeycloakGroupsSyncStatusRetrieveResponses[keyof OfferingKeycloakGroupsSyncStatusRetrieveResponses];
-
-export type OfferingKeycloakGroupsSyncStatusCountData = {
-    body?: never;
-    path?: never;
-    query: {
-        /**
-         * UUID of the offering
-         */
-        offering_uuid: string;
-    };
-    url: '/api/offering-keycloak-groups/sync_status/';
-};
-
-export type OfferingKeycloakGroupsSyncStatusCountResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
-};
-
-export type OfferingKeycloakGroupsTestConnectionData = {
-    body: OfferingUuidRequest;
-    path?: never;
-    query?: never;
-    url: '/api/offering-keycloak-groups/test_connection/';
-};
-
-export type OfferingKeycloakGroupsTestConnectionResponses = {
-    200: TestConnectionResponse;
-};
-
-export type OfferingKeycloakGroupsTestConnectionResponse = OfferingKeycloakGroupsTestConnectionResponses[keyof OfferingKeycloakGroupsTestConnectionResponses];
-
-export type OfferingKeycloakMembershipsListData = {
-    body?: never;
-    path?: never;
-    query?: {
-        email?: string;
-        first_name?: string;
-        group_uuid?: string;
-        last_name?: string;
-        offering_uuid?: string;
-        /**
-         * A page number within the paginated result set.
-         */
-        page?: number;
-        /**
-         * Number of results to return per page.
-         */
-        page_size?: number;
-        resource_uuid?: string;
-        role_uuid?: string;
-        state?: Array<KeycloakUserGroupMembershipState>;
-        username?: string;
-    };
-    url: '/api/offering-keycloak-memberships/';
-};
-
-export type OfferingKeycloakMembershipsListResponses = {
-    200: Array<OfferingKeycloakMembership>;
-};
-
-export type OfferingKeycloakMembershipsListResponse = OfferingKeycloakMembershipsListResponses[keyof OfferingKeycloakMembershipsListResponses];
-
-export type OfferingKeycloakMembershipsCountData = {
-    body?: never;
-    path?: never;
-    query?: {
-        email?: string;
-        first_name?: string;
-        group_uuid?: string;
-        last_name?: string;
-        offering_uuid?: string;
-        /**
-         * A page number within the paginated result set.
-         */
-        page?: number;
-        /**
-         * Number of results to return per page.
-         */
-        page_size?: number;
-        resource_uuid?: string;
-        role_uuid?: string;
-        state?: Array<KeycloakUserGroupMembershipState>;
-        username?: string;
-    };
-    url: '/api/offering-keycloak-memberships/';
-};
-
-export type OfferingKeycloakMembershipsCountResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
-};
-
-export type OfferingKeycloakMembershipsCreateData = {
-    body: OfferingKeycloakMembershipRequest;
-    path?: never;
-    query?: never;
-    url: '/api/offering-keycloak-memberships/';
-};
-
-export type OfferingKeycloakMembershipsCreateResponses = {
-    201: OfferingKeycloakMembership;
-};
-
-export type OfferingKeycloakMembershipsCreateResponse = OfferingKeycloakMembershipsCreateResponses[keyof OfferingKeycloakMembershipsCreateResponses];
-
-export type OfferingKeycloakMembershipsDestroyData = {
-    body?: never;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/offering-keycloak-memberships/{uuid}/';
-};
-
-export type OfferingKeycloakMembershipsDestroyResponses = {
-    /**
-     * No response body
-     */
-    204: void;
-};
-
-export type OfferingKeycloakMembershipsDestroyResponse = OfferingKeycloakMembershipsDestroyResponses[keyof OfferingKeycloakMembershipsDestroyResponses];
-
-export type OfferingKeycloakMembershipsRetrieveData = {
-    body?: never;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/offering-keycloak-memberships/{uuid}/';
-};
-
-export type OfferingKeycloakMembershipsRetrieveResponses = {
-    200: OfferingKeycloakMembership;
-};
-
-export type OfferingKeycloakMembershipsRetrieveResponse = OfferingKeycloakMembershipsRetrieveResponses[keyof OfferingKeycloakMembershipsRetrieveResponses];
 
 export type OnboardingJustificationsListData = {
     body?: never;
@@ -89485,7 +88812,7 @@ export type SupportRequestTypesAdminUpdateResponses = {
 export type SupportRequestTypesAdminUpdateResponse = SupportRequestTypesAdminUpdateResponses[keyof SupportRequestTypesAdminUpdateResponses];
 
 export type SupportRequestTypesAdminActivateData = {
-    body: RequestTypeAdminRequest;
+    body?: never;
     path: {
         uuid: string;
     };
@@ -89500,7 +88827,7 @@ export type SupportRequestTypesAdminActivateResponses = {
 export type SupportRequestTypesAdminActivateResponse = SupportRequestTypesAdminActivateResponses[keyof SupportRequestTypesAdminActivateResponses];
 
 export type SupportRequestTypesAdminDeactivateData = {
-    body: RequestTypeAdminRequest;
+    body?: never;
     path: {
         uuid: string;
     };
@@ -89515,7 +88842,7 @@ export type SupportRequestTypesAdminDeactivateResponses = {
 export type SupportRequestTypesAdminDeactivateResponse = SupportRequestTypesAdminDeactivateResponses[keyof SupportRequestTypesAdminDeactivateResponses];
 
 export type SupportRequestTypesAdminReorderData = {
-    body: RequestTypeAdminRequest;
+    body: RequestTypeReorderRequest;
     path?: never;
     query?: never;
     url: '/api/support-request-types-admin/reorder/';
