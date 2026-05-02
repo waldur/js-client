@@ -599,6 +599,21 @@ export type Allocation = {
     readonly is_limit_based?: boolean | null;
 };
 
+export type AllocationCandidatesResponse = {
+    /**
+     * Total number of allocation candidates Placement returned.
+     */
+    candidate_count: number;
+    /**
+     * Placement's per-provider summary: maps resource_provider_uuid → {resources: {CLASS: {used, capacity}, ...}, traits: [...]}.
+     */
+    provider_summaries: {
+        [key: string]: {
+            [key: string]: unknown;
+        };
+    };
+};
+
 export type AllocationRequest = {
     name: string;
     description?: string;
@@ -8214,6 +8229,28 @@ export type Hypervisor = {
      * Hypervisor status, e.g. enabled or disabled
      */
     status?: string;
+};
+
+export type HypervisorInventory = {
+    readonly url: string;
+    readonly uuid: string;
+    readonly hypervisor: string;
+    readonly hypervisor_uuid: string;
+    readonly hypervisor_name: string;
+    readonly settings: string;
+    readonly settings_uuid: string;
+    /**
+     * Placement resource class, e.g. VCPU, MEMORY_MB, DISK_GB, VGPU, PCI_DEVICE, NUMA_CORE, CUSTOM_*.
+     */
+    resource_class: string;
+    total?: number;
+    reserved?: number;
+    allocation_ratio?: number;
+    used?: number;
+    /**
+     * Capacity the Nova scheduler treats as available.
+     */
+    readonly effective_total: number;
 };
 
 export type HypervisorSummary = {
@@ -70348,6 +70385,72 @@ export type OpenstackHealthMonitorsPullResponses = {
     202: unknown;
 };
 
+export type OpenstackHypervisorInventoriesListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        hypervisor_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        resource_class?: string;
+        settings_uuid?: string;
+    };
+    url: '/api/openstack-hypervisor-inventories/';
+};
+
+export type OpenstackHypervisorInventoriesListResponses = {
+    200: Array<HypervisorInventory>;
+};
+
+export type OpenstackHypervisorInventoriesListResponse = OpenstackHypervisorInventoriesListResponses[keyof OpenstackHypervisorInventoriesListResponses];
+
+export type OpenstackHypervisorInventoriesCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        hypervisor_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        resource_class?: string;
+        settings_uuid?: string;
+    };
+    url: '/api/openstack-hypervisor-inventories/';
+};
+
+export type OpenstackHypervisorInventoriesCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type OpenstackHypervisorInventoriesRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openstack-hypervisor-inventories/{uuid}/';
+};
+
+export type OpenstackHypervisorInventoriesRetrieveResponses = {
+    200: HypervisorInventory;
+};
+
+export type OpenstackHypervisorInventoriesRetrieveResponse = OpenstackHypervisorInventoriesRetrieveResponses[keyof OpenstackHypervisorInventoriesRetrieveResponses];
+
 export type OpenstackHypervisorsListData = {
     body?: never;
     path?: never;
@@ -70445,6 +70548,61 @@ export type OpenstackHypervisorsRetrieveResponses = {
 };
 
 export type OpenstackHypervisorsRetrieveResponse = OpenstackHypervisorsRetrieveResponses[keyof OpenstackHypervisorsRetrieveResponses];
+
+export type OpenstackHypervisorsAllocationCandidatesRetrieveData = {
+    body?: never;
+    path?: never;
+    query: {
+        /**
+         * Cap on returned candidates (default 10).
+         */
+        limit?: number;
+        /**
+         * e.g. HW_CPU_X86_AVX2,STORAGE_DISK_SSD
+         */
+        required?: string;
+        /**
+         * e.g. VCPU:4,MEMORY_MB:8192,DISK_GB:10
+         */
+        resources: string;
+        settings_uuid: string;
+    };
+    url: '/api/openstack-hypervisors/allocation_candidates/';
+};
+
+export type OpenstackHypervisorsAllocationCandidatesRetrieveResponses = {
+    200: AllocationCandidatesResponse;
+};
+
+export type OpenstackHypervisorsAllocationCandidatesRetrieveResponse = OpenstackHypervisorsAllocationCandidatesRetrieveResponses[keyof OpenstackHypervisorsAllocationCandidatesRetrieveResponses];
+
+export type OpenstackHypervisorsAllocationCandidatesCountData = {
+    body?: never;
+    path?: never;
+    query: {
+        /**
+         * Cap on returned candidates (default 10).
+         */
+        limit?: number;
+        /**
+         * e.g. HW_CPU_X86_AVX2,STORAGE_DISK_SSD
+         */
+        required?: string;
+        /**
+         * e.g. VCPU:4,MEMORY_MB:8192,DISK_GB:10
+         */
+        resources: string;
+        settings_uuid: string;
+    };
+    url: '/api/openstack-hypervisors/allocation_candidates/';
+};
+
+export type OpenstackHypervisorsAllocationCandidatesCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type OpenstackHypervisorsSummaryRetrieveData = {
     body?: never;
