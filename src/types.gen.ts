@@ -8632,6 +8632,21 @@ export type InstanceFlavorChangeRequest = {
     flavor: string;
 };
 
+export type InstancePlacementAllocation = {
+    resource_provider_uuid: string;
+    resource_provider_name: string;
+    resources: {
+        [key: string]: number;
+    };
+};
+
+export type InstanceRescueRequest = {
+    /**
+     * Optional rescue image. Required for volume-backed instances; must be a Glance image with hw_rescue_device or hw_rescue_bus set (a 'stable device rescue' image).
+     */
+    rescue_image?: string | null;
+};
+
 export type IntegrationStatus = {
     agent_type?: AgentTypeEnum;
     readonly status?: string;
@@ -14206,6 +14221,15 @@ export type OpenStackImage = {
     settings: string;
     backend_id: string;
     backend_created_at?: string | null;
+    /**
+     * Glance hw_rescue_device property (cdrom/disk/floppy).
+     */
+    hw_rescue_device?: string;
+    /**
+     * Glance hw_rescue_bus property (scsi/virtio/ide/usb).
+     */
+    hw_rescue_bus?: string;
+    readonly is_rescue_image: boolean;
 };
 
 export type OpenStackInstance = {
@@ -55743,6 +55767,44 @@ export type MarketplaceProviderResourcesUpdateResponses = {
 
 export type MarketplaceProviderResourcesUpdateResponse = MarketplaceProviderResourcesUpdateResponses[keyof MarketplaceProviderResourcesUpdateResponses];
 
+export type MarketplaceProviderResourcesAddUserData = {
+    body: UserRoleCreateRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-provider-resources/{uuid}/add_user/';
+};
+
+export type MarketplaceProviderResourcesAddUserErrors = {
+    /**
+     * Validation error, for example when trying to add a user to a terminated project.
+     */
+    400: unknown;
+};
+
+export type MarketplaceProviderResourcesAddUserResponses = {
+    201: UserRoleExpirationTime;
+};
+
+export type MarketplaceProviderResourcesAddUserResponse = MarketplaceProviderResourcesAddUserResponses[keyof MarketplaceProviderResourcesAddUserResponses];
+
+export type MarketplaceProviderResourcesDeleteUserData = {
+    body: UserRoleDeleteRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-provider-resources/{uuid}/delete_user/';
+};
+
+export type MarketplaceProviderResourcesDeleteUserResponses = {
+    /**
+     * Role revoked successfully.
+     */
+    200: unknown;
+};
+
 export type MarketplaceProviderResourcesDetailsRetrieveData = {
     body?: never;
     path: {
@@ -56014,6 +56076,70 @@ export type MarketplaceProviderResourcesHistoryAtRetrieveResponses = {
 };
 
 export type MarketplaceProviderResourcesHistoryAtRetrieveResponse = MarketplaceProviderResourcesHistoryAtRetrieveResponses[keyof MarketplaceProviderResourcesHistoryAtRetrieveResponses];
+
+export type MarketplaceProviderResourcesListUsersListData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * Fields to include in response
+         */
+        field?: Array<UserRoleDetailsFieldEnum>;
+        /**
+         * User full name
+         */
+        full_name?: string;
+        /**
+         * User native name
+         */
+        native_name?: string;
+        /**
+         * Ordering fields
+         */
+        o?: Array<UserRoleDetailsOEnum>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Role UUID or name
+         */
+        role?: string;
+        /**
+         * Search string for user
+         */
+        search_string?: string;
+        /**
+         * User UUID
+         */
+        user?: string;
+        /**
+         * User slug
+         */
+        user_slug?: string;
+        /**
+         * User URL
+         */
+        user_url?: string;
+        /**
+         * User username
+         */
+        username?: string;
+    };
+    url: '/api/marketplace-provider-resources/{uuid}/list_users/';
+};
+
+export type MarketplaceProviderResourcesListUsersListResponses = {
+    200: Array<UserRoleDetails>;
+};
+
+export type MarketplaceProviderResourcesListUsersListResponse = MarketplaceProviderResourcesListUsersListResponses[keyof MarketplaceProviderResourcesListUsersListResponses];
 
 export type MarketplaceProviderResourcesMoveResourceData = {
     body: MoveResourceRequest;
@@ -56458,6 +56584,21 @@ export type MarketplaceProviderResourcesUpdateOptionsDirectResponses = {
 };
 
 export type MarketplaceProviderResourcesUpdateOptionsDirectResponse = MarketplaceProviderResourcesUpdateOptionsDirectResponses[keyof MarketplaceProviderResourcesUpdateOptionsDirectResponses];
+
+export type MarketplaceProviderResourcesUpdateUserData = {
+    body: UserRoleUpdateRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-provider-resources/{uuid}/update_user/';
+};
+
+export type MarketplaceProviderResourcesUpdateUserResponses = {
+    200: UserRoleExpirationTime;
+};
+
+export type MarketplaceProviderResourcesUpdateUserResponse = MarketplaceProviderResourcesUpdateUserResponses[keyof MarketplaceProviderResourcesUpdateUserResponses];
 
 export type MarketplacePublicApiCheckSignatureData = {
     body: ServiceProviderSignatureRequest;
@@ -70646,6 +70787,10 @@ export type OpenstackImagesListData = {
     path?: never;
     query?: {
         /**
+         * Filter to images usable as Nova rescue images.
+         */
+        is_rescue_image?: boolean;
+        /**
          * Name
          */
         name?: string;
@@ -70699,6 +70844,10 @@ export type OpenstackImagesCountData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Filter to images usable as Nova rescue images.
+         */
+        is_rescue_image?: boolean;
         /**
          * Name
          */
@@ -71270,6 +71419,30 @@ export type OpenstackInstancesFloatingIpsListResponses = {
 
 export type OpenstackInstancesFloatingIpsListResponse = OpenstackInstancesFloatingIpsListResponses[keyof OpenstackInstancesFloatingIpsListResponses];
 
+export type OpenstackInstancesPlacementAllocationsListData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/openstack-instances/{uuid}/placement_allocations/';
+};
+
+export type OpenstackInstancesPlacementAllocationsListResponses = {
+    200: Array<InstancePlacementAllocation>;
+};
+
+export type OpenstackInstancesPlacementAllocationsListResponse = OpenstackInstancesPlacementAllocationsListResponses[keyof OpenstackInstancesPlacementAllocationsListResponses];
+
 export type OpenstackInstancesPortsListData = {
     body?: never;
     path: {
@@ -71314,6 +71487,22 @@ export type OpenstackInstancesPullResponses = {
 };
 
 export type OpenstackInstancesPullResponse = OpenstackInstancesPullResponses[keyof OpenstackInstancesPullResponses];
+
+export type OpenstackInstancesRescueData = {
+    body?: InstanceRescueRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openstack-instances/{uuid}/rescue/';
+};
+
+export type OpenstackInstancesRescueResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type OpenstackInstancesRestartData = {
     body?: never;
@@ -71410,6 +71599,22 @@ export type OpenstackInstancesUnlinkResponses = {
 };
 
 export type OpenstackInstancesUnlinkResponse = OpenstackInstancesUnlinkResponses[keyof OpenstackInstancesUnlinkResponses];
+
+export type OpenstackInstancesUnrescueData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openstack-instances/{uuid}/unrescue/';
+};
+
+export type OpenstackInstancesUnrescueResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type OpenstackInstancesUpdateAllowedAddressPairsData = {
     body: OpenStackInstanceAllowedAddressPairsUpdateRequest;
