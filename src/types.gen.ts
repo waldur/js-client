@@ -6157,16 +6157,6 @@ export type CustomerCreditConsumption = {
     readonly price: string;
 };
 
-export type CustomerCreditRequest = {
-    value?: string;
-    customer: string;
-    end_date?: string | null;
-    expected_consumption?: string;
-    minimal_consumption_logic?: MinimalConsumptionLogicEnum;
-    grace_coefficient?: string;
-    apply_as_minimal_consumption?: boolean;
-};
-
 export type CustomerDetails = {
     name?: string;
     address?: string;
@@ -10436,6 +10426,10 @@ export type MergedPluginOptions = {
      */
     enable_resource_projects?: boolean;
     /**
+     * If set to True, every limit-billing component declared by the offering must have a value when creating or updating a resource project. Use this for backends that reject projects without resource quotas (e.g. the rancher-keycloak-operator's project-level resourceQuota.limit cap).
+     */
+    resource_projects_limits_required?: boolean;
+    /**
      * If set to True, create orders when resource projects are created, updated or deleted.
      */
     create_orders_on_resource_project_change?: boolean;
@@ -10730,6 +10724,10 @@ export type MergedPluginOptionsRequest = {
      * Enable sub-project management within resources.
      */
     enable_resource_projects?: boolean;
+    /**
+     * If set to True, every limit-billing component declared by the offering must have a value when creating or updating a resource project. Use this for backends that reject projects without resource quotas (e.g. the rancher-keycloak-operator's project-level resourceQuota.limit cap).
+     */
+    resource_projects_limits_required?: boolean;
     /**
      * If set to True, create orders when resource projects are created, updated or deleted.
      */
@@ -11968,11 +11966,6 @@ export type NestedProjectPermission = {
 export type NestedProviderOffering = {
     readonly uuid: string;
     readonly url: string;
-    type: string;
-    name: string;
-};
-
-export type NestedProviderOfferingRequest = {
     type: string;
     name: string;
 };
@@ -21700,14 +21693,6 @@ export type RancherCatalogCreateRequest = {
     scope: string;
     username?: string;
     password?: string;
-};
-
-export type RancherCatalogRequest = {
-    name: string;
-    description?: string;
-    catalog_url: string;
-    branch: string;
-    scope: string;
 };
 
 export type RancherCatalogScopeType = 'global' | 'cluster' | 'project';
@@ -33711,11 +33696,10 @@ export type AwsInstancesRestartData = {
 };
 
 export type AwsInstancesRestartResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    200: AwsInstance;
 };
+
+export type AwsInstancesRestartResponse = AwsInstancesRestartResponses[keyof AwsInstancesRestartResponses];
 
 export type AwsInstancesSetErredData = {
     body?: SetErredRequest;
@@ -33757,11 +33741,10 @@ export type AwsInstancesStartData = {
 };
 
 export type AwsInstancesStartResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    200: AwsInstance;
 };
+
+export type AwsInstancesStartResponse = AwsInstancesStartResponses[keyof AwsInstancesStartResponses];
 
 export type AwsInstancesStopData = {
     body?: never;
@@ -33773,11 +33756,10 @@ export type AwsInstancesStopData = {
 };
 
 export type AwsInstancesStopResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    200: AwsInstance;
 };
+
+export type AwsInstancesStopResponse = AwsInstancesStopResponses[keyof AwsInstancesStopResponses];
 
 export type AwsInstancesUnlinkData = {
     body?: never;
@@ -34100,11 +34082,10 @@ export type AwsVolumesDetachData = {
 };
 
 export type AwsVolumesDetachResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    200: AwsVolume;
 };
+
+export type AwsVolumesDetachResponse = AwsVolumesDetachResponses[keyof AwsVolumesDetachResponses];
 
 export type AwsVolumesPullData = {
     body?: never;
@@ -35855,11 +35836,10 @@ export type AzureVirtualmachinesRestartData = {
 };
 
 export type AzureVirtualmachinesRestartResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    200: AzureVirtualMachine;
 };
+
+export type AzureVirtualmachinesRestartResponse = AzureVirtualmachinesRestartResponses[keyof AzureVirtualmachinesRestartResponses];
 
 export type AzureVirtualmachinesSetErredData = {
     body?: SetErredRequest;
@@ -35901,11 +35881,10 @@ export type AzureVirtualmachinesStartData = {
 };
 
 export type AzureVirtualmachinesStartResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    200: AzureVirtualMachine;
 };
+
+export type AzureVirtualmachinesStartResponse = AzureVirtualmachinesStartResponses[keyof AzureVirtualmachinesStartResponses];
 
 export type AzureVirtualmachinesStopData = {
     body?: never;
@@ -35917,11 +35896,10 @@ export type AzureVirtualmachinesStopData = {
 };
 
 export type AzureVirtualmachinesStopResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    200: AzureVirtualMachine;
 };
+
+export type AzureVirtualmachinesStopResponse = AzureVirtualmachinesStopResponses[keyof AzureVirtualmachinesStopResponses];
 
 export type AzureVirtualmachinesUnlinkData = {
     body?: never;
@@ -36884,11 +36862,10 @@ export type BookingResourcesAcceptData = {
 };
 
 export type BookingResourcesAcceptResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    200: BookingResource;
 };
+
+export type BookingResourcesAcceptResponse = BookingResourcesAcceptResponses[keyof BookingResourcesAcceptResponses];
 
 export type BookingResourcesRejectData = {
     body?: never;
@@ -36900,11 +36877,10 @@ export type BookingResourcesRejectData = {
 };
 
 export type BookingResourcesRejectResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    200: BookingResource;
 };
+
+export type BookingResourcesRejectResponse = BookingResourcesRejectResponses[keyof BookingResourcesRejectResponses];
 
 export type BroadcastMessageTemplatesListData = {
     body?: never;
@@ -38508,7 +38484,7 @@ export type ChatThreadsRetrieveResponses = {
 export type ChatThreadsRetrieveResponse = ChatThreadsRetrieveResponses[keyof ChatThreadsRetrieveResponses];
 
 export type ChatThreadsArchiveData = {
-    body?: ThreadSessionRequest;
+    body?: never;
     path: {
         uuid: string;
     };
@@ -38542,7 +38518,7 @@ export type ChatThreadsCancelResponses = {
 };
 
 export type ChatThreadsUnarchiveData = {
-    body?: ThreadSessionRequest;
+    body?: never;
     path: {
         uuid: string;
     };
@@ -39813,7 +39789,7 @@ export type CustomerCreditsUpdateResponses = {
 export type CustomerCreditsUpdateResponse = CustomerCreditsUpdateResponses[keyof CustomerCreditsUpdateResponses];
 
 export type CustomerCreditsApplyCompensationsData = {
-    body: CustomerCreditRequest;
+    body?: never;
     path: {
         uuid: string;
     };
@@ -39828,7 +39804,7 @@ export type CustomerCreditsApplyCompensationsResponses = {
 export type CustomerCreditsApplyCompensationsResponse = CustomerCreditsApplyCompensationsResponses[keyof CustomerCreditsApplyCompensationsResponses];
 
 export type CustomerCreditsClearCompensationsData = {
-    body: CustomerCreditRequest;
+    body?: never;
     path: {
         uuid: string;
     };
@@ -41687,11 +41663,10 @@ export type DigitaloceanDropletsRestartData = {
 };
 
 export type DigitaloceanDropletsRestartResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    200: DigitalOceanDroplet;
 };
+
+export type DigitaloceanDropletsRestartResponse = DigitaloceanDropletsRestartResponses[keyof DigitaloceanDropletsRestartResponses];
 
 export type DigitaloceanDropletsSetErredData = {
     body?: SetErredRequest;
@@ -41733,11 +41708,10 @@ export type DigitaloceanDropletsStartData = {
 };
 
 export type DigitaloceanDropletsStartResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    200: DigitalOceanDroplet;
 };
+
+export type DigitaloceanDropletsStartResponse = DigitaloceanDropletsStartResponses[keyof DigitaloceanDropletsStartResponses];
 
 export type DigitaloceanDropletsStopData = {
     body?: never;
@@ -41749,11 +41723,10 @@ export type DigitaloceanDropletsStopData = {
 };
 
 export type DigitaloceanDropletsStopResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    200: DigitalOceanDroplet;
 };
+
+export type DigitaloceanDropletsStopResponse = DigitaloceanDropletsStopResponses[keyof DigitaloceanDropletsStopResponses];
 
 export type DigitaloceanDropletsUnlinkData = {
     body?: never;
@@ -44515,11 +44488,10 @@ export type InvoicesSendNotificationData = {
 };
 
 export type InvoicesSendNotificationResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    200: Invoice;
 };
+
+export type InvoicesSendNotificationResponse = InvoicesSendNotificationResponses[keyof InvoicesSendNotificationResponses];
 
 export type InvoicesSetBackendIdData = {
     body?: BackendIdRequest;
@@ -62620,7 +62592,7 @@ export type MarketplaceSoftwareCatalogsUpdateResponses = {
 export type MarketplaceSoftwareCatalogsUpdateResponse = MarketplaceSoftwareCatalogsUpdateResponses[keyof MarketplaceSoftwareCatalogsUpdateResponses];
 
 export type MarketplaceSoftwareCatalogsUpdateCatalogData = {
-    body: SoftwareCatalogRequest;
+    body?: never;
     path: {
         uuid: string;
     };
@@ -76160,11 +76132,10 @@ export type OpenstackSubnetsConnectData = {
 };
 
 export type OpenstackSubnetsConnectResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    200: OpenStackSubNet;
 };
+
+export type OpenstackSubnetsConnectResponse = OpenstackSubnetsConnectResponses[keyof OpenstackSubnetsConnectResponses];
 
 export type OpenstackSubnetsDisconnectData = {
     body?: never;
@@ -76176,11 +76147,10 @@ export type OpenstackSubnetsDisconnectData = {
 };
 
 export type OpenstackSubnetsDisconnectResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    200: OpenStackSubNet;
 };
+
+export type OpenstackSubnetsDisconnectResponse = OpenstackSubnetsDisconnectResponses[keyof OpenstackSubnetsDisconnectResponses];
 
 export type OpenstackSubnetsPullData = {
     body?: never;
@@ -78190,11 +78160,10 @@ export type PaymentProfilesEnableData = {
 };
 
 export type PaymentProfilesEnableResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    200: PaymentProfile;
 };
+
+export type PaymentProfilesEnableResponse = PaymentProfilesEnableResponses[keyof PaymentProfilesEnableResponses];
 
 export type PaymentsListData = {
     body?: never;
@@ -78348,11 +78317,10 @@ export type PaymentsUnlinkFromInvoiceData = {
 };
 
 export type PaymentsUnlinkFromInvoiceResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    200: Payment;
 };
+
+export type PaymentsUnlinkFromInvoiceResponse = PaymentsUnlinkFromInvoiceResponses[keyof PaymentsUnlinkFromInvoiceResponses];
 
 export type PersonalAccessTokensListData = {
     body?: never;
@@ -80975,7 +80943,7 @@ export type ProposalProtectedCallsComplianceOverviewRetrieveResponses = {
 export type ProposalProtectedCallsComplianceOverviewRetrieveResponse = ProposalProtectedCallsComplianceOverviewRetrieveResponses[keyof ProposalProtectedCallsComplianceOverviewRetrieveResponses];
 
 export type ProposalProtectedCallsComputeAffinitiesData = {
-    body: ProtectedCallRequest;
+    body?: never;
     path: {
         uuid: string;
     };
@@ -83289,7 +83257,7 @@ export type RancherCatalogsUpdateResponses = {
 export type RancherCatalogsUpdateResponse = RancherCatalogsUpdateResponses[keyof RancherCatalogsUpdateResponses];
 
 export type RancherCatalogsRefreshData = {
-    body: RancherCatalogRequest;
+    body?: never;
     path: {
         uuid: string;
     };
@@ -89518,7 +89486,7 @@ export type SupportIssuesCommentResponses = {
 export type SupportIssuesCommentResponse = SupportIssuesCommentResponses[keyof SupportIssuesCommentResponses];
 
 export type SupportIssuesSyncData = {
-    body: IssueRequest;
+    body?: never;
     path: {
         uuid: string;
     };
@@ -94856,11 +94824,10 @@ export type VmwareVirtualMachineRebootGuestData = {
 };
 
 export type VmwareVirtualMachineRebootGuestResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    200: VmwareVirtualMachine;
 };
+
+export type VmwareVirtualMachineRebootGuestResponse = VmwareVirtualMachineRebootGuestResponses[keyof VmwareVirtualMachineRebootGuestResponses];
 
 export type VmwareVirtualMachineResetData = {
     body?: never;
@@ -94872,11 +94839,10 @@ export type VmwareVirtualMachineResetData = {
 };
 
 export type VmwareVirtualMachineResetResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    200: VmwareVirtualMachine;
 };
+
+export type VmwareVirtualMachineResetResponse = VmwareVirtualMachineResetResponses[keyof VmwareVirtualMachineResetResponses];
 
 export type VmwareVirtualMachineSetErredData = {
     body?: SetErredRequest;
@@ -94918,11 +94884,10 @@ export type VmwareVirtualMachineShutdownGuestData = {
 };
 
 export type VmwareVirtualMachineShutdownGuestResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    200: VmwareVirtualMachine;
 };
+
+export type VmwareVirtualMachineShutdownGuestResponse = VmwareVirtualMachineShutdownGuestResponses[keyof VmwareVirtualMachineShutdownGuestResponses];
 
 export type VmwareVirtualMachineStartData = {
     body?: never;
@@ -94934,11 +94899,10 @@ export type VmwareVirtualMachineStartData = {
 };
 
 export type VmwareVirtualMachineStartResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    200: VmwareVirtualMachine;
 };
+
+export type VmwareVirtualMachineStartResponse = VmwareVirtualMachineStartResponses[keyof VmwareVirtualMachineStartResponses];
 
 export type VmwareVirtualMachineStopData = {
     body?: never;
@@ -94950,11 +94914,10 @@ export type VmwareVirtualMachineStopData = {
 };
 
 export type VmwareVirtualMachineStopResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    200: VmwareVirtualMachine;
 };
+
+export type VmwareVirtualMachineStopResponse = VmwareVirtualMachineStopResponses[keyof VmwareVirtualMachineStopResponses];
 
 export type VmwareVirtualMachineSuspendData = {
     body?: never;
@@ -94966,11 +94929,10 @@ export type VmwareVirtualMachineSuspendData = {
 };
 
 export type VmwareVirtualMachineSuspendResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    200: VmwareVirtualMachine;
 };
+
+export type VmwareVirtualMachineSuspendResponse = VmwareVirtualMachineSuspendResponses[keyof VmwareVirtualMachineSuspendResponses];
 
 export type VmwareVirtualMachineUnlinkData = {
     body?: never;

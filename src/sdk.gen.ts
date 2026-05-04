@@ -8221,11 +8221,7 @@ export const chatThreadsArchive = <ThrowOnError extends boolean = false>(options
             }
         ],
         url: '/api/chat-threads/{uuid}/archive/',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options.headers
-        }
+        ...options
     });
 };
 
@@ -8279,11 +8275,7 @@ export const chatThreadsUnarchive = <ThrowOnError extends boolean = false>(optio
             }
         ],
         url: '/api/chat-threads/{uuid}/unarchive/',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options.headers
-        }
+        ...options
     });
 };
 
@@ -9760,11 +9752,7 @@ export const customerCreditsApplyCompensations = <ThrowOnError extends boolean =
             }
         ],
         url: '/api/customer-credits/{uuid}/apply_compensations/',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options.headers
-        }
+        ...options
     });
 };
 
@@ -9785,11 +9773,7 @@ export const customerCreditsClearCompensations = <ThrowOnError extends boolean =
             }
         ],
         url: '/api/customer-credits/{uuid}/clear_compensations/',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options.headers
-        }
+        ...options
     });
 };
 
@@ -30776,11 +30760,7 @@ export const marketplaceSoftwareCatalogsUpdateCatalog = <ThrowOnError extends bo
             }
         ],
         url: '/api/marketplace-software-catalogs/{uuid}/update_catalog/',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options.headers
-        }
+        ...options
     });
 };
 
@@ -48705,11 +48685,7 @@ export const proposalProtectedCallsComputeAffinities = <ThrowOnError extends boo
             }
         ],
         url: '/api/proposal-protected-calls/{uuid}/compute-affinities/',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options.headers
-        }
+        ...options
     });
 };
 
@@ -51036,11 +51012,7 @@ export const rancherCatalogsRefresh = <ThrowOnError extends boolean = false>(opt
             }
         ],
         url: '/api/rancher-catalogs/{uuid}/refresh/',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options.headers
-        }
+        ...options
     });
 };
 
@@ -57629,11 +57601,7 @@ export const supportIssuesSync = <ThrowOnError extends boolean = false>(options:
             }
         ],
         url: '/api/support-issues/{uuid}/sync/',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options.headers
-        }
+        ...options
     });
 };
 
