@@ -4541,6 +4541,23 @@ export type ComponentStats = {
     readonly offering_uuid: string;
 };
 
+export type ComponentStatsPerOffering = {
+    readonly type: string;
+    readonly name: string;
+    readonly description: string;
+    readonly measured_unit: string;
+    readonly billing_type: string;
+    readonly usage: number;
+    readonly limit_usage: number;
+    readonly limit: number | null;
+    readonly offering_name: string;
+    readonly offering_uuid: string;
+    readonly limit_period: string | null;
+    readonly current_period_label: string;
+    readonly current_period_start: string | null;
+    readonly current_period_end: string | null;
+};
+
 export type ComponentUsage = {
     readonly uuid?: string;
     readonly created?: string;
@@ -4776,6 +4793,10 @@ export type ComponentUserUsageLimitRequest = {
 
 export type ComponentsUsageStats = {
     readonly components: Array<ComponentStats>;
+};
+
+export type ComponentsUsageStatsPerOffering = {
+    readonly components: Array<ComponentStatsPerOffering>;
 };
 
 export type ComputeAffinitiesResponse = {
@@ -40516,6 +40537,21 @@ export type CustomersAddUserResponses = {
 
 export type CustomersAddUserResponse = CustomersAddUserResponses[keyof CustomersAddUserResponses];
 
+export type CustomersComponentsUsageRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/customers/{uuid}/components-usage/';
+};
+
+export type CustomersComponentsUsageRetrieveResponses = {
+    200: ComponentsUsageStatsPerOffering;
+};
+
+export type CustomersComponentsUsageRetrieveResponse = CustomersComponentsUsageRetrieveResponses[keyof CustomersComponentsUsageRetrieveResponses];
+
 export type CustomersContactData = {
     body?: CustomerContactUpdateRequest;
     path: {
@@ -69389,6 +69425,21 @@ export type OpenportalUnmanagedProjectsCompletionStatusRetrieveResponses = {
 
 export type OpenportalUnmanagedProjectsCompletionStatusRetrieveResponse = OpenportalUnmanagedProjectsCompletionStatusRetrieveResponses[keyof OpenportalUnmanagedProjectsCompletionStatusRetrieveResponses];
 
+export type OpenportalUnmanagedProjectsComponentsUsageRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openportal-unmanaged-projects/{uuid}/components-usage/';
+};
+
+export type OpenportalUnmanagedProjectsComponentsUsageRetrieveResponses = {
+    200: ComponentsUsageStatsPerOffering;
+};
+
+export type OpenportalUnmanagedProjectsComponentsUsageRetrieveResponse = OpenportalUnmanagedProjectsComponentsUsageRetrieveResponses[keyof OpenportalUnmanagedProjectsComponentsUsageRetrieveResponses];
+
 export type OpenportalUnmanagedProjectsDeleteUserData = {
     body: UserRoleDeleteRequest;
     path: {
@@ -79492,6 +79543,21 @@ export type ProjectsCompletionStatusRetrieveResponses = {
 };
 
 export type ProjectsCompletionStatusRetrieveResponse = ProjectsCompletionStatusRetrieveResponses[keyof ProjectsCompletionStatusRetrieveResponses];
+
+export type ProjectsComponentsUsageRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/projects/{uuid}/components-usage/';
+};
+
+export type ProjectsComponentsUsageRetrieveResponses = {
+    200: ComponentsUsageStatsPerOffering;
+};
+
+export type ProjectsComponentsUsageRetrieveResponse = ProjectsComponentsUsageRetrieveResponses[keyof ProjectsComponentsUsageRetrieveResponses];
 
 export type ProjectsDeleteUserData = {
     body: UserRoleDeleteRequest;
