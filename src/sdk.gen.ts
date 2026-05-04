@@ -25090,11 +25090,7 @@ export const marketplaceProviderResourceProjectsSetStateOk = <ThrowOnError exten
             }
         ],
         url: '/api/marketplace-provider-resource-projects/{uuid}/set_state_ok/',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options.headers
-        }
+        ...options
     });
 };
 

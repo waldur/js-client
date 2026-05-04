@@ -23135,6 +23135,7 @@ export type ResourceProject = {
     description?: string;
     readonly backend_id: string;
     readonly state: string;
+    readonly error_message: string;
     /**
      * Dictionary mapping component types to quota values. Same format as Resource.limits.
      */
@@ -23155,6 +23156,20 @@ export type ResourceProjectBackendId = {
 
 export type ResourceProjectBackendIdRequest = {
     backend_id: string;
+};
+
+export type ResourceProjectErrorMessage = {
+    /**
+     * Free-form description of why the project transitioned to Erred.
+     */
+    error_message?: string;
+};
+
+export type ResourceProjectErrorMessageRequest = {
+    /**
+     * Free-form description of why the project transitioned to Erred.
+     */
+    error_message?: string;
 };
 
 export type ResourceProjectRequest = {
@@ -55812,7 +55827,7 @@ export type MarketplaceProviderResourceProjectsSetBackendIdResponses = {
 export type MarketplaceProviderResourceProjectsSetBackendIdResponse = MarketplaceProviderResourceProjectsSetBackendIdResponses[keyof MarketplaceProviderResourceProjectsSetBackendIdResponses];
 
 export type MarketplaceProviderResourceProjectsSetStateErredData = {
-    body: ResourceProjectRequest;
+    body?: ResourceProjectErrorMessageRequest;
     path: {
         uuid: string;
     };
@@ -55821,13 +55836,13 @@ export type MarketplaceProviderResourceProjectsSetStateErredData = {
 };
 
 export type MarketplaceProviderResourceProjectsSetStateErredResponses = {
-    200: ResourceProject;
+    200: ResourceProjectErrorMessage;
 };
 
 export type MarketplaceProviderResourceProjectsSetStateErredResponse = MarketplaceProviderResourceProjectsSetStateErredResponses[keyof MarketplaceProviderResourceProjectsSetStateErredResponses];
 
 export type MarketplaceProviderResourceProjectsSetStateOkData = {
-    body: ResourceProjectRequest;
+    body?: never;
     path: {
         uuid: string;
     };
@@ -55836,7 +55851,9 @@ export type MarketplaceProviderResourceProjectsSetStateOkData = {
 };
 
 export type MarketplaceProviderResourceProjectsSetStateOkResponses = {
-    200: ResourceProject;
+    200: {
+        [key: string]: unknown;
+    };
 };
 
 export type MarketplaceProviderResourceProjectsSetStateOkResponse = MarketplaceProviderResourceProjectsSetStateOkResponses[keyof MarketplaceProviderResourceProjectsSetStateOkResponses];
