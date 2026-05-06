@@ -13478,6 +13478,23 @@ export type OfferingThumbnailRequest = {
 
 export type OfferingTypeEnum = 'Support.OfferingTemplate' | 'Marketplace.Booking' | 'Marketplace.Basic' | 'OpenStack.Tenant' | 'OpenStack.Instance' | 'OpenStack.Volume' | 'Marketplace.Rancher' | 'VMware.VirtualMachine' | 'Waldur.RemoteOffering' | 'Marketplace.Script' | 'SlurmInvoices.SlurmPackage' | 'Marketplace.Slurm';
 
+export type OfferingUsageByProject = {
+    readonly offering_uuid: string;
+    readonly offering_name: string;
+    readonly type: string;
+    readonly name: string;
+    readonly measured_unit: string;
+    readonly billing_type: string;
+    readonly limit_period: string | null;
+    readonly limit: number | null;
+    readonly current_period_label: string;
+    readonly current_period_start: string | null;
+    readonly current_period_end: string | null;
+    readonly today: string;
+    readonly total_usage: number;
+    readonly projects: Array<ProjectUsageEntry>;
+};
+
 export type OfferingUsagePolicy = {
     readonly uuid: string;
     readonly url: string;
@@ -13519,6 +13536,22 @@ export type OfferingUsagePolicyRequest = {
     apply_to_all?: boolean;
     component_limits_set: Array<NestedOfferingComponentLimitRequest>;
     period?: PolicyPeriodEnum;
+};
+
+export type OfferingUsageTimeseries = {
+    readonly offering_uuid: string;
+    readonly offering_name: string;
+    readonly type: string;
+    readonly name: string;
+    readonly measured_unit: string;
+    readonly billing_type: string;
+    readonly limit_period: string | null;
+    readonly limit: number | null;
+    readonly current_period_label: string;
+    readonly current_period_start: string | null;
+    readonly current_period_end: string | null;
+    readonly today: string;
+    readonly buckets: Array<UsageTimeseriesBucket>;
 };
 
 export type OfferingUser = {
@@ -19948,6 +19981,13 @@ export type ProjectType = {
     readonly url: string;
     name: string;
     description?: string;
+};
+
+export type ProjectUsageEntry = {
+    readonly project_uuid: string;
+    readonly project_name: string;
+    readonly usage: number;
+    readonly buckets: Array<UsageTimeseriesBucket>;
 };
 
 export type ProjectUsageReport = {
@@ -26796,6 +26836,11 @@ export type UrgencyEnum = 'low' | 'medium' | 'high';
 
 export type Usage = {
     seconds: number;
+};
+
+export type UsageTimeseriesBucket = {
+    readonly billing_period: string;
+    readonly usage: number;
 };
 
 export type User = {
@@ -40513,21 +40558,6 @@ export type CustomersAddUserResponses = {
 
 export type CustomersAddUserResponse = CustomersAddUserResponses[keyof CustomersAddUserResponses];
 
-export type CustomersComponentsUsageRetrieveData = {
-    body?: never;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/customers/{uuid}/components-usage/';
-};
-
-export type CustomersComponentsUsageRetrieveResponses = {
-    200: ComponentsUsageStatsPerOffering;
-};
-
-export type CustomersComponentsUsageRetrieveResponse = CustomersComponentsUsageRetrieveResponses[keyof CustomersComponentsUsageRetrieveResponses];
-
 export type CustomersContactData = {
     body?: CustomerContactUpdateRequest;
     path: {
@@ -48474,6 +48504,59 @@ export type MarketplaceCustomerServiceAccountsRotateApiKeyResponses = {
 
 export type MarketplaceCustomerServiceAccountsRotateApiKeyResponse = MarketplaceCustomerServiceAccountsRotateApiKeyResponses[keyof MarketplaceCustomerServiceAccountsRotateApiKeyResponses];
 
+export type MarketplaceCustomerUsageComponentsUsageRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-customer-usage/{uuid}/components-usage/';
+};
+
+export type MarketplaceCustomerUsageComponentsUsageRetrieveResponses = {
+    200: ComponentsUsageStatsPerOffering;
+};
+
+export type MarketplaceCustomerUsageComponentsUsageRetrieveResponse = MarketplaceCustomerUsageComponentsUsageRetrieveResponses[keyof MarketplaceCustomerUsageComponentsUsageRetrieveResponses];
+
+export type MarketplaceCustomerUsageComponentsUsageByProjectRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query: {
+        component_type?: string;
+        offering_uuid: string;
+        period_offset?: number;
+    };
+    url: '/api/marketplace-customer-usage/{uuid}/components-usage-by-project/';
+};
+
+export type MarketplaceCustomerUsageComponentsUsageByProjectRetrieveResponses = {
+    200: OfferingUsageByProject;
+};
+
+export type MarketplaceCustomerUsageComponentsUsageByProjectRetrieveResponse = MarketplaceCustomerUsageComponentsUsageByProjectRetrieveResponses[keyof MarketplaceCustomerUsageComponentsUsageByProjectRetrieveResponses];
+
+export type MarketplaceCustomerUsageComponentsUsageTimeseriesRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query: {
+        component_type?: string;
+        offering_uuid: string;
+        period_offset?: number;
+    };
+    url: '/api/marketplace-customer-usage/{uuid}/components-usage-timeseries/';
+};
+
+export type MarketplaceCustomerUsageComponentsUsageTimeseriesRetrieveResponses = {
+    200: OfferingUsageTimeseries;
+};
+
+export type MarketplaceCustomerUsageComponentsUsageTimeseriesRetrieveResponse = MarketplaceCustomerUsageComponentsUsageTimeseriesRetrieveResponses[keyof MarketplaceCustomerUsageComponentsUsageTimeseriesRetrieveResponses];
+
 export type MarketplaceDemoPresetsInfoRetrieveData = {
     body?: never;
     path: {
@@ -52375,6 +52458,40 @@ export type MarketplaceProjectUpdateRequestsRejectResponses = {
      */
     200: unknown;
 };
+
+export type MarketplaceProjectUsageComponentsUsageRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-project-usage/{uuid}/components-usage/';
+};
+
+export type MarketplaceProjectUsageComponentsUsageRetrieveResponses = {
+    200: ComponentsUsageStatsPerOffering;
+};
+
+export type MarketplaceProjectUsageComponentsUsageRetrieveResponse = MarketplaceProjectUsageComponentsUsageRetrieveResponses[keyof MarketplaceProjectUsageComponentsUsageRetrieveResponses];
+
+export type MarketplaceProjectUsageComponentsUsageTimeseriesRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query: {
+        component_type?: string;
+        offering_uuid: string;
+        period_offset?: number;
+    };
+    url: '/api/marketplace-project-usage/{uuid}/components-usage-timeseries/';
+};
+
+export type MarketplaceProjectUsageComponentsUsageTimeseriesRetrieveResponses = {
+    200: OfferingUsageTimeseries;
+};
+
+export type MarketplaceProjectUsageComponentsUsageTimeseriesRetrieveResponse = MarketplaceProjectUsageComponentsUsageTimeseriesRetrieveResponses[keyof MarketplaceProjectUsageComponentsUsageTimeseriesRetrieveResponses];
 
 export type MarketplaceProviderOfferingsListData = {
     body?: never;
@@ -69397,21 +69514,6 @@ export type OpenportalUnmanagedProjectsCompletionStatusRetrieveResponses = {
 
 export type OpenportalUnmanagedProjectsCompletionStatusRetrieveResponse = OpenportalUnmanagedProjectsCompletionStatusRetrieveResponses[keyof OpenportalUnmanagedProjectsCompletionStatusRetrieveResponses];
 
-export type OpenportalUnmanagedProjectsComponentsUsageRetrieveData = {
-    body?: never;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/openportal-unmanaged-projects/{uuid}/components-usage/';
-};
-
-export type OpenportalUnmanagedProjectsComponentsUsageRetrieveResponses = {
-    200: ComponentsUsageStatsPerOffering;
-};
-
-export type OpenportalUnmanagedProjectsComponentsUsageRetrieveResponse = OpenportalUnmanagedProjectsComponentsUsageRetrieveResponses[keyof OpenportalUnmanagedProjectsComponentsUsageRetrieveResponses];
-
 export type OpenportalUnmanagedProjectsDeleteUserData = {
     body: UserRoleDeleteRequest;
     path: {
@@ -79511,21 +79613,6 @@ export type ProjectsCompletionStatusRetrieveResponses = {
 };
 
 export type ProjectsCompletionStatusRetrieveResponse = ProjectsCompletionStatusRetrieveResponses[keyof ProjectsCompletionStatusRetrieveResponses];
-
-export type ProjectsComponentsUsageRetrieveData = {
-    body?: never;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/projects/{uuid}/components-usage/';
-};
-
-export type ProjectsComponentsUsageRetrieveResponses = {
-    200: ComponentsUsageStatsPerOffering;
-};
-
-export type ProjectsComponentsUsageRetrieveResponse = ProjectsComponentsUsageRetrieveResponses[keyof ProjectsComponentsUsageRetrieveResponses];
 
 export type ProjectsDeleteUserData = {
     body: UserRoleDeleteRequest;
