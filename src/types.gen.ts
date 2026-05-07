@@ -27363,7 +27363,7 @@ export type UserAuthToken = {
 
 export type UserChecklistCompletion = {
     readonly uuid: string;
-    offering_user: OfferingUser;
+    offering_user: UserChecklistCompletionOfferingUser | null;
     readonly offering_user_uuid: string | null;
     readonly offering_name: string | null;
     readonly offering_uuid: string | null;
@@ -27393,6 +27393,18 @@ export type UserChecklistCompletion = {
     readonly review_notes: string;
     readonly created: string;
     readonly modified: string;
+};
+
+export type UserChecklistCompletionOfferingUser = {
+    readonly uuid: string;
+    username?: string | null;
+    readonly user_full_name: string;
+    readonly user_email: string;
+    readonly state: string;
+    /**
+     * Signal to service if the user account is restricted or not
+     */
+    is_restricted?: boolean;
 };
 
 export type UserConsentInfo = {
