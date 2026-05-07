@@ -4951,6 +4951,7 @@ export type ConstanceSettings = {
     SHORT_PAGE_TITLE?: string;
     FULL_PAGE_TITLE?: string;
     PROJECT_END_DATE_MANDATORY?: boolean;
+    AFFILIATION_REQUIRED_AT_PROJECT_CREATION?: boolean;
     ENABLE_ORDER_START_DATE?: boolean;
     BRAND_COLOR?: string;
     HERO_LINK_LABEL?: string;
@@ -5220,6 +5221,7 @@ export type ConstanceSettingsRequest = {
     SHORT_PAGE_TITLE?: string;
     FULL_PAGE_TITLE?: string;
     PROJECT_END_DATE_MANDATORY?: boolean;
+    AFFILIATION_REQUIRED_AT_PROJECT_CREATION?: boolean;
     ENABLE_ORDER_START_DATE?: boolean;
     BRAND_COLOR?: string;
     HERO_LINK_LABEL?: string;
@@ -5976,6 +5978,10 @@ export type Customer = {
      * List of allowed identity sources (identity providers).
      */
     user_identity_sources?: unknown;
+    /**
+     * Affiliations offered to project creators of this organization.
+     */
+    readonly default_affiliations?: Array<AffiliatedOrganization>;
     name?: string;
     /**
      * URL-friendly identifier. Only editable by staff users.
@@ -6155,6 +6161,10 @@ export type CustomerCredit = {
 export type CustomerCreditConsumption = {
     readonly date: string;
     readonly price: string;
+};
+
+export type CustomerDefaultAffiliationsUpdateRequest = {
+    default_affiliations?: Array<string>;
 };
 
 export type CustomerDetails = {
@@ -17968,6 +17978,7 @@ export type PatchedProjectRequest = {
      * List of allowed identity sources (identity providers).
      */
     user_identity_sources?: unknown;
+    affiliation_uuid?: string | null;
     science_sub_domain?: string | null;
 };
 
@@ -19389,7 +19400,7 @@ export type Project = {
      * List of allowed identity sources (identity providers).
      */
     user_identity_sources?: unknown;
-    readonly affiliated_organizations?: Array<AffiliatedOrganization>;
+    affiliation?: AffiliatedOrganization;
     science_sub_domain?: string | null;
     readonly science_sub_domain_name?: string;
     /**
@@ -19421,8 +19432,8 @@ export type ProjectAccountingSummary = {
     readonly current_month_spend: string;
 };
 
-export type ProjectAffiliatedOrganizationsUpdateRequest = {
-    affiliated_organizations?: Array<string>;
+export type ProjectAffiliationUpdateRequest = {
+    affiliation?: string | null;
 };
 
 export type ProjectAnswer = {
@@ -19828,6 +19839,7 @@ export type ProjectRequest = {
      * List of allowed identity sources (identity providers).
      */
     user_identity_sources?: unknown;
+    affiliation_uuid?: string | null;
     science_sub_domain?: string | null;
 };
 
@@ -29069,6 +29081,7 @@ export type ProjectRequestForm = {
      * List of allowed identity sources (identity providers).
      */
     user_identity_sources?: unknown;
+    affiliation_uuid?: string | null;
     science_sub_domain?: string | null;
 };
 
@@ -29120,6 +29133,7 @@ export type ProjectRequestMultipart = {
      * List of allowed identity sources (identity providers).
      */
     user_identity_sources?: unknown;
+    affiliation_uuid?: string | null;
     science_sub_domain?: string | null;
 };
 
@@ -29171,6 +29185,7 @@ export type PatchedProjectRequestForm = {
      * List of allowed identity sources (identity providers).
      */
     user_identity_sources?: unknown;
+    affiliation_uuid?: string | null;
     science_sub_domain?: string | null;
 };
 
@@ -29222,6 +29237,7 @@ export type PatchedProjectRequestMultipart = {
      * List of allowed identity sources (identity providers).
      */
     user_identity_sources?: unknown;
+    affiliation_uuid?: string | null;
     science_sub_domain?: string | null;
 };
 
@@ -29268,6 +29284,7 @@ export type ConstanceSettingsRequestForm = {
     SHORT_PAGE_TITLE?: string;
     FULL_PAGE_TITLE?: string;
     PROJECT_END_DATE_MANDATORY?: boolean;
+    AFFILIATION_REQUIRED_AT_PROJECT_CREATION?: boolean;
     ENABLE_ORDER_START_DATE?: boolean;
     BRAND_COLOR?: string;
     HERO_LINK_LABEL?: string;
@@ -29537,6 +29554,7 @@ export type ConstanceSettingsRequestMultipart = {
     SHORT_PAGE_TITLE?: string;
     FULL_PAGE_TITLE?: string;
     PROJECT_END_DATE_MANDATORY?: boolean;
+    AFFILIATION_REQUIRED_AT_PROJECT_CREATION?: boolean;
     ENABLE_ORDER_START_DATE?: boolean;
     BRAND_COLOR?: string;
     HERO_LINK_LABEL?: string;
@@ -30275,7 +30293,7 @@ export type CustomerPermissionReviewOEnum = '-closed' | '-created' | 'closed' | 
 
 export type CustomerQuotasQuotaNameEnum = 'estimated_price' | 'nc_resource_count' | 'os_cpu_count' | 'os_ram_size' | 'os_storage_size' | 'vpc_cpu_count' | 'vpc_floating_ip_count' | 'vpc_instance_count' | 'vpc_ram_size' | 'vpc_storage_size';
 
-export type CustomerFieldEnum = 'abbreviation' | 'access_subnets' | 'accounting_start_date' | 'address' | 'agreement_number' | 'apartment_nr' | 'archived' | 'backend_id' | 'bank_account' | 'bank_name' | 'billing_price_estimate' | 'blocked' | 'call_managing_organization_uuid' | 'city' | 'contact_details' | 'country' | 'country_name' | 'created' | 'customer_credit' | 'customer_unallocated_credit' | 'default_tax_percent' | 'description' | 'display_billing_info_in_projects' | 'display_name' | 'domain' | 'email' | 'grace_period_days' | 'homepage' | 'house_nr' | 'household' | 'image' | 'is_service_provider' | 'latitude' | 'longitude' | 'max_service_accounts' | 'name' | 'native_name' | 'notification_emails' | 'organization_groups' | 'parish' | 'payment_profiles' | 'phone_number' | 'postal' | 'project_metadata_checklist' | 'project_slug_template' | 'projects_count' | 'registration_code' | 'service_provider' | 'service_provider_uuid' | 'slug' | 'sponsor_number' | 'state' | 'street' | 'url' | 'user_affiliations' | 'user_email_patterns' | 'user_identity_sources' | 'users_count' | 'uuid' | 'vat_code';
+export type CustomerFieldEnum = 'abbreviation' | 'access_subnets' | 'accounting_start_date' | 'address' | 'agreement_number' | 'apartment_nr' | 'archived' | 'backend_id' | 'bank_account' | 'bank_name' | 'billing_price_estimate' | 'blocked' | 'call_managing_organization_uuid' | 'city' | 'contact_details' | 'country' | 'country_name' | 'created' | 'customer_credit' | 'customer_unallocated_credit' | 'default_affiliations' | 'default_tax_percent' | 'description' | 'display_billing_info_in_projects' | 'display_name' | 'domain' | 'email' | 'grace_period_days' | 'homepage' | 'house_nr' | 'household' | 'image' | 'is_service_provider' | 'latitude' | 'longitude' | 'max_service_accounts' | 'name' | 'native_name' | 'notification_emails' | 'organization_groups' | 'parish' | 'payment_profiles' | 'phone_number' | 'postal' | 'project_metadata_checklist' | 'project_slug_template' | 'projects_count' | 'registration_code' | 'service_provider' | 'service_provider_uuid' | 'slug' | 'sponsor_number' | 'state' | 'street' | 'url' | 'user_affiliations' | 'user_email_patterns' | 'user_identity_sources' | 'users_count' | 'uuid' | 'vat_code';
 
 export type CustomerUserFieldEnum = 'email' | 'expiration_time' | 'full_name' | 'image' | 'projects' | 'role_name' | 'url' | 'username' | 'uuid';
 
@@ -30361,7 +30379,7 @@ export type ProviderOfferingDetailsOEnum = '-created' | '-name' | '-state' | '-t
 
 export type ProviderOfferingCustomerFieldEnum = 'abbreviation' | 'email' | 'name' | 'phone_number' | 'slug' | 'uuid';
 
-export type ProjectFieldEnum = 'affiliated_organizations' | 'backend_id' | 'billing_price_estimate' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_display_billing_info_in_projects' | 'customer_grace_period_days' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'effective_end_date' | 'end_date' | 'end_date_requested_by' | 'end_date_updated_at' | 'grace_period_days' | 'image' | 'is_in_grace_period' | 'is_industry' | 'is_removed' | 'kind' | 'marketplace_resource_count' | 'max_service_accounts' | 'name' | 'oecd_fos_2007_code' | 'oecd_fos_2007_label' | 'project_credit' | 'resources_count' | 'science_domain_code' | 'science_domain_name' | 'science_domain_uuid' | 'science_sub_domain' | 'science_sub_domain_code' | 'science_sub_domain_name' | 'slug' | 'staff_notes' | 'start_date' | 'termination_metadata' | 'type' | 'type_name' | 'type_uuid' | 'url' | 'user_affiliations' | 'user_email_patterns' | 'user_identity_sources' | 'uuid';
+export type ProjectFieldEnum = 'affiliation' | 'affiliation_uuid' | 'backend_id' | 'billing_price_estimate' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_display_billing_info_in_projects' | 'customer_grace_period_days' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'effective_end_date' | 'end_date' | 'end_date_requested_by' | 'end_date_updated_at' | 'grace_period_days' | 'image' | 'is_in_grace_period' | 'is_industry' | 'is_removed' | 'kind' | 'marketplace_resource_count' | 'max_service_accounts' | 'name' | 'oecd_fos_2007_code' | 'oecd_fos_2007_label' | 'project_credit' | 'resources_count' | 'science_domain_code' | 'science_domain_name' | 'science_domain_uuid' | 'science_sub_domain' | 'science_sub_domain_code' | 'science_sub_domain_name' | 'slug' | 'staff_notes' | 'start_date' | 'termination_metadata' | 'type' | 'type_name' | 'type_uuid' | 'url' | 'user_affiliations' | 'user_email_patterns' | 'user_identity_sources' | 'uuid';
 
 export type UserFieldEnum = 'active_isds' | 'address' | 'affiliations' | 'agree_with_policy' | 'agreement_date' | 'attribute_sources' | 'birth_date' | 'civil_number' | 'country_of_residence' | 'date_joined' | 'deactivation_reason' | 'description' | 'eduperson_assurance' | 'email' | 'first_name' | 'full_name' | 'gender' | 'has_active_session' | 'has_usable_password' | 'identity_provider_fields' | 'identity_provider_label' | 'identity_provider_management_url' | 'identity_provider_name' | 'identity_source' | 'image' | 'ip_address' | 'is_active' | 'is_identity_manager' | 'is_staff' | 'is_support' | 'job_title' | 'last_name' | 'managed_isds' | 'nationalities' | 'nationality' | 'native_name' | 'notifications_enabled' | 'organization' | 'organization_country' | 'organization_registry_code' | 'organization_type' | 'permissions' | 'personal_title' | 'phone_number' | 'place_of_birth' | 'preferred_language' | 'registration_method' | 'requested_email' | 'slug' | 'token' | 'token_expires_at' | 'token_lifetime' | 'url' | 'username' | 'uuid';
 
@@ -32211,6 +32229,10 @@ export type AffiliatedOrganizationsListData = {
          */
         country?: string;
         /**
+         * Limit to a customer's default affiliation list
+         */
+        default_for_customer?: string;
+        /**
          * Name
          */
         name?: string;
@@ -32260,6 +32282,10 @@ export type AffiliatedOrganizationsCountData = {
          * Country
          */
         country?: string;
+        /**
+         * Limit to a customer's default affiliation list
+         */
+        default_for_customer?: string;
         /**
          * Name
          */
@@ -32403,6 +32429,10 @@ export type AffiliatedOrganizationsReportListData = {
          */
         country?: string;
         /**
+         * Limit to a customer's default affiliation list
+         */
+        default_for_customer?: string;
+        /**
          * Name
          */
         name?: string;
@@ -32452,6 +32482,10 @@ export type AffiliatedOrganizationsReportCountData = {
          * Country
          */
         country?: string;
+        /**
+         * Limit to a customer's default affiliation list
+         */
+        default_for_customer?: string;
         /**
          * Name
          */
@@ -40887,6 +40921,22 @@ export type CustomersUpdateProjectDigestConfigUpdateResponses = {
 };
 
 export type CustomersUpdateProjectDigestConfigUpdateResponse = CustomersUpdateProjectDigestConfigUpdateResponses[keyof CustomersUpdateProjectDigestConfigUpdateResponses];
+
+export type CustomersUpdateDefaultAffiliationsData = {
+    body?: CustomerDefaultAffiliationsUpdateRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/customers/{uuid}/update_default_affiliations/';
+};
+
+export type CustomersUpdateDefaultAffiliationsResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type CustomersUpdateOrganizationGroupsData = {
     body?: OrganizationGroupsRequest;
@@ -60571,13 +60621,13 @@ export type MarketplaceServiceProvidersCustomerProjectsListData = {
     };
     query: {
         /**
-         * Affiliated organization name
+         * Affiliation name
          */
-        affiliated_organization_name?: string;
+        affiliation_name?: string;
         /**
-         * Affiliated organization UUID
+         * Affiliation UUID
          */
-        affiliated_organization_uuid?: Array<string>;
+        affiliation_uuid?: Array<string>;
         backend_id?: string;
         /**
          * Return a list of projects where current user is admin.
@@ -60621,9 +60671,9 @@ export type MarketplaceServiceProvidersCustomerProjectsListData = {
         description?: string;
         field?: Array<MarketplaceProviderCustomerProjectFieldEnum>;
         /**
-         * Filter projects that have at least one affiliated organization.
+         * Filter projects that have an affiliation.
          */
-        has_affiliated_organization?: boolean;
+        has_affiliation?: boolean;
         /**
          * Is removed
          */
@@ -61143,13 +61193,13 @@ export type MarketplaceServiceProvidersProjectsListData = {
     };
     query?: {
         /**
-         * Affiliated organization name
+         * Affiliation name
          */
-        affiliated_organization_name?: string;
+        affiliation_name?: string;
         /**
-         * Affiliated organization UUID
+         * Affiliation UUID
          */
-        affiliated_organization_uuid?: Array<string>;
+        affiliation_uuid?: Array<string>;
         backend_id?: string;
         /**
          * Return a list of projects where current user is admin.
@@ -61193,9 +61243,9 @@ export type MarketplaceServiceProvidersProjectsListData = {
         description?: string;
         field?: Array<ProjectFieldEnum>;
         /**
-         * Filter projects that have at least one affiliated organization.
+         * Filter projects that have an affiliation.
          */
-        has_affiliated_organization?: boolean;
+        has_affiliation?: boolean;
         /**
          * Is removed
          */
@@ -69098,13 +69148,13 @@ export type OpenportalUnmanagedProjectsListData = {
          */
         accounting_is_running?: boolean;
         /**
-         * Affiliated organization name
+         * Affiliation name
          */
-        affiliated_organization_name?: string;
+        affiliation_name?: string;
         /**
-         * Affiliated organization UUID
+         * Affiliation UUID
          */
-        affiliated_organization_uuid?: Array<string>;
+        affiliation_uuid?: Array<string>;
         backend_id?: string;
         /**
          * Return a list of projects where current user is admin.
@@ -69148,9 +69198,9 @@ export type OpenportalUnmanagedProjectsListData = {
         description?: string;
         field?: Array<ProjectFieldEnum>;
         /**
-         * Filter projects that have at least one affiliated organization.
+         * Filter projects that have an affiliation.
          */
-        has_affiliated_organization?: boolean;
+        has_affiliation?: boolean;
         /**
          * Include soft-deleted (terminated) projects. Only available to staff and support users, or users with organizational roles who can see their terminated projects.
          */
@@ -69232,13 +69282,13 @@ export type OpenportalUnmanagedProjectsCountData = {
          */
         accounting_is_running?: boolean;
         /**
-         * Affiliated organization name
+         * Affiliation name
          */
-        affiliated_organization_name?: string;
+        affiliation_name?: string;
         /**
-         * Affiliated organization UUID
+         * Affiliation UUID
          */
-        affiliated_organization_uuid?: Array<string>;
+        affiliation_uuid?: Array<string>;
         backend_id?: string;
         /**
          * Return a list of projects where current user is admin.
@@ -69281,9 +69331,9 @@ export type OpenportalUnmanagedProjectsCountData = {
          */
         description?: string;
         /**
-         * Filter projects that have at least one affiliated organization.
+         * Filter projects that have an affiliation.
          */
-        has_affiliated_organization?: boolean;
+        has_affiliation?: boolean;
         /**
          * Include soft-deleted (terminated) projects. Only available to staff and support users, or users with organizational roles who can see their terminated projects.
          */
@@ -69670,16 +69720,16 @@ export type OpenportalUnmanagedProjectsSubmitAnswersResponses = {
 
 export type OpenportalUnmanagedProjectsSubmitAnswersResponse = OpenportalUnmanagedProjectsSubmitAnswersResponses[keyof OpenportalUnmanagedProjectsSubmitAnswersResponses];
 
-export type OpenportalUnmanagedProjectsUpdateAffiliatedOrganizationsData = {
-    body?: ProjectAffiliatedOrganizationsUpdateRequest;
+export type OpenportalUnmanagedProjectsUpdateAffiliationData = {
+    body?: ProjectAffiliationUpdateRequest;
     path: {
         uuid: string;
     };
     query?: never;
-    url: '/api/openportal-unmanaged-projects/{uuid}/update_affiliated_organizations/';
+    url: '/api/openportal-unmanaged-projects/{uuid}/update_affiliation/';
 };
 
-export type OpenportalUnmanagedProjectsUpdateAffiliatedOrganizationsResponses = {
+export type OpenportalUnmanagedProjectsUpdateAffiliationResponses = {
     /**
      * No response body
      */
@@ -79119,13 +79169,13 @@ export type ProjectsListData = {
          */
         accounting_is_running?: boolean;
         /**
-         * Affiliated organization name
+         * Affiliation name
          */
-        affiliated_organization_name?: string;
+        affiliation_name?: string;
         /**
-         * Affiliated organization UUID
+         * Affiliation UUID
          */
-        affiliated_organization_uuid?: Array<string>;
+        affiliation_uuid?: Array<string>;
         backend_id?: string;
         /**
          * Return a list of projects where current user is admin.
@@ -79169,9 +79219,9 @@ export type ProjectsListData = {
         description?: string;
         field?: Array<ProjectFieldEnum>;
         /**
-         * Filter projects that have at least one affiliated organization.
+         * Filter projects that have an affiliation.
          */
-        has_affiliated_organization?: boolean;
+        has_affiliation?: boolean;
         /**
          * Include soft-deleted (terminated) projects. Only available to staff and support users, or users with organizational roles who can see their terminated projects.
          */
@@ -79253,13 +79303,13 @@ export type ProjectsCountData = {
          */
         accounting_is_running?: boolean;
         /**
-         * Affiliated organization name
+         * Affiliation name
          */
-        affiliated_organization_name?: string;
+        affiliation_name?: string;
         /**
-         * Affiliated organization UUID
+         * Affiliation UUID
          */
-        affiliated_organization_uuid?: Array<string>;
+        affiliation_uuid?: Array<string>;
         backend_id?: string;
         /**
          * Return a list of projects where current user is admin.
@@ -79302,9 +79352,9 @@ export type ProjectsCountData = {
          */
         description?: string;
         /**
-         * Filter projects that have at least one affiliated organization.
+         * Filter projects that have an affiliation.
          */
-        has_affiliated_organization?: boolean;
+        has_affiliation?: boolean;
         /**
          * Include soft-deleted (terminated) projects. Only available to staff and support users, or users with organizational roles who can see their terminated projects.
          */
@@ -79786,16 +79836,16 @@ export type ProjectsSyncUserRolesResponses = {
     200: unknown;
 };
 
-export type ProjectsUpdateAffiliatedOrganizationsData = {
-    body?: ProjectAffiliatedOrganizationsUpdateRequest;
+export type ProjectsUpdateAffiliationData = {
+    body?: ProjectAffiliationUpdateRequest;
     path: {
         uuid: string;
     };
     query?: never;
-    url: '/api/projects/{uuid}/update_affiliated_organizations/';
+    url: '/api/projects/{uuid}/update_affiliation/';
 };
 
-export type ProjectsUpdateAffiliatedOrganizationsResponses = {
+export type ProjectsUpdateAffiliationResponses = {
     /**
      * No response body
      */
