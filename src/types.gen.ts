@@ -3548,6 +3548,112 @@ export type CallRound = {
 
 export type CallStates = 'draft' | 'active' | 'archived';
 
+export type CallWorkflowStep = {
+    readonly uuid: string;
+    readonly created: string;
+    readonly modified: string;
+    step: StepEnum;
+    readonly call_uuid: string;
+    readonly call_name: string;
+    /**
+     * Whether this step is enabled. Disabled steps are skipped.
+     */
+    is_enabled?: boolean;
+    /**
+     * Duration in days. Used to calculate deadlines.
+     */
+    duration_in_days?: number | null;
+    checklist?: string | null;
+    readonly checklist_name: string | null;
+    /**
+     * Evaluators cannot see each other's assessments.
+     */
+    blind_review?: boolean;
+    /**
+     * Evaluator must confirm absence of conflict of interest.
+     */
+    requires_coi_confirmation?: boolean;
+    /**
+     * Minimum reviews required before step can complete.
+     */
+    min_reviewers?: number | null;
+    /**
+     * Minimum average score to pass this step.
+     */
+    min_score_threshold?: string | null;
+    /**
+     * Whether the applicant can see step details (not just status).
+     */
+    applicant_visible?: boolean;
+    /**
+     * Role expected to act on this step.
+     */
+    responsible_role?: ResponsibleRoleEnum | BlankEnum | NullEnum | null;
+    /**
+     * How this step advances to the next.
+     */
+    transition_mode?: TransitionModeEnum;
+    /**
+     * Allocation decision: require applicant award response after decision.
+     */
+    include_award_response?: boolean;
+    /**
+     * Optional override of catalog ordering.
+     */
+    display_order?: number | null;
+    criteria?: Array<WorkflowCriterion>;
+};
+
+export type CallWorkflowStepRequest = {
+    step: StepEnum;
+    /**
+     * Whether this step is enabled. Disabled steps are skipped.
+     */
+    is_enabled?: boolean;
+    /**
+     * Duration in days. Used to calculate deadlines.
+     */
+    duration_in_days?: number | null;
+    checklist?: string | null;
+    /**
+     * Evaluators cannot see each other's assessments.
+     */
+    blind_review?: boolean;
+    /**
+     * Evaluator must confirm absence of conflict of interest.
+     */
+    requires_coi_confirmation?: boolean;
+    /**
+     * Minimum reviews required before step can complete.
+     */
+    min_reviewers?: number | null;
+    /**
+     * Minimum average score to pass this step.
+     */
+    min_score_threshold?: string | null;
+    /**
+     * Whether the applicant can see step details (not just status).
+     */
+    applicant_visible?: boolean;
+    /**
+     * Role expected to act on this step.
+     */
+    responsible_role?: ResponsibleRoleEnum | BlankEnum | NullEnum | null;
+    /**
+     * How this step advances to the next.
+     */
+    transition_mode?: TransitionModeEnum;
+    /**
+     * Allocation decision: require applicant award response after decision.
+     */
+    include_award_response?: boolean;
+    /**
+     * Optional override of catalog ordering.
+     */
+    display_order?: number | null;
+    criteria?: Array<WorkflowCriterionRequest>;
+};
+
 export type Campaign = {
     readonly uuid: string;
     name: string;
@@ -4338,7 +4444,7 @@ export type ChecklistTemplate = {
     initial_visible_questions: Array<Question>;
 };
 
-export type ChecklistTypeEnum = 'project_compliance' | 'proposal_compliance' | 'offering_compliance' | 'project_metadata' | 'onboarding_customer' | 'onboarding_intent';
+export type ChecklistTypeEnum = 'project_compliance' | 'proposal_compliance' | 'offering_compliance' | 'project_metadata' | 'onboarding_customer' | 'onboarding_intent' | 'workflow_step';
 
 export type CircuitBreakerConfig = {
     /**
@@ -4504,6 +4610,33 @@ export type Comment = {
 export type CommentRequest = {
     description: string;
     is_public?: boolean;
+};
+
+export type CompleteWorkflowStepRequest = {
+    /**
+     * UUID of the workflow step instance the client believes is active. Used to detect concurrent step transitions.
+     */
+    step_uuid: string;
+    /**
+     * Step outcome. Must be in the active step's allow-list. 'rejected' and 'expired' are reserved for system transitions.
+     */
+    outcome: OutcomeEnum;
+    /**
+     * Explanation for the outcome.
+     */
+    outcome_reason?: string;
+};
+
+export type CompleteWorkflowStepResponse = {
+    detail: string;
+    /**
+     * New proposal state when the workflow terminates.
+     */
+    proposal_state?: string;
+    /**
+     * Identifier of the step that just became active.
+     */
+    next_step?: string;
 };
 
 export type ComplianceOverview = {
@@ -16659,6 +16792,8 @@ export type OrganizationalUser = {
     role: string | null;
 };
 
+export type OutcomeEnum = 'eligible' | 'ineligible' | 'feasible' | 'infeasible' | 'reviewed' | 'approved' | 'declined' | 'accepted' | 'rejected' | 'expired';
+
 export type PaidRequest = {
     date: string;
     proof?: Blob | File;
@@ -16974,6 +17109,55 @@ export type PatchedCallReviewerPoolUpdateRequest = {
      * Maximum number of proposals that can be assigned to this reviewer
      */
     max_assignments?: number;
+};
+
+export type PatchedCallWorkflowStepRequest = {
+    /**
+     * Whether this step is enabled. Disabled steps are skipped.
+     */
+    is_enabled?: boolean;
+    /**
+     * Duration in days. Used to calculate deadlines.
+     */
+    duration_in_days?: number | null;
+    checklist?: string | null;
+    /**
+     * Evaluators cannot see each other's assessments.
+     */
+    blind_review?: boolean;
+    /**
+     * Evaluator must confirm absence of conflict of interest.
+     */
+    requires_coi_confirmation?: boolean;
+    /**
+     * Minimum reviews required before step can complete.
+     */
+    min_reviewers?: number | null;
+    /**
+     * Minimum average score to pass this step.
+     */
+    min_score_threshold?: string | null;
+    /**
+     * Whether the applicant can see step details (not just status).
+     */
+    applicant_visible?: boolean;
+    /**
+     * Role expected to act on this step.
+     */
+    responsible_role?: ResponsibleRoleEnum | BlankEnum | NullEnum | null;
+    /**
+     * How this step advances to the next.
+     */
+    transition_mode?: TransitionModeEnum;
+    /**
+     * Allocation decision: require applicant award response after decision.
+     */
+    include_award_response?: boolean;
+    /**
+     * Optional override of catalog ordering.
+     */
+    display_order?: number | null;
+    criteria?: Array<WorkflowCriterionRequest>;
 };
 
 export type PatchedCategoryColumnRequest = {
@@ -20327,6 +20511,35 @@ export type ProposalUpdateProjectDetailsRequest = {
     oecd_fos_2007_code?: OecdFos2007CodeEnum | BlankEnum | NullEnum | null;
 };
 
+export type ProposalWorkflowStepInstance = {
+    readonly uuid: string;
+    step: StepEnum;
+    readonly step_name: string;
+    readonly step_description: string;
+    readonly responsible_role: string | null;
+    status: ProposalWorkflowStepInstanceStatusEnum;
+    /**
+     * Step-specific outcome (e.g., eligible, feasible, approved).
+     */
+    readonly outcome: string | null;
+    /**
+     * Explanation for the outcome (e.g., rejection reason).
+     */
+    readonly outcome_reason: string;
+    /**
+     * When this step became active.
+     */
+    readonly started_at: string | null;
+    readonly completed_at: string | null;
+    readonly completed_by: string | null;
+    /**
+     * Computed from started_at + step duration_in_days.
+     */
+    readonly deadline: string | null;
+};
+
+export type ProposalWorkflowStepInstanceStatusEnum = 'pending' | 'active' | 'completed' | 'expired' | 'skipped';
+
 export type ProposedAssignment = {
     readonly url: string;
     readonly uuid: string;
@@ -22494,6 +22707,22 @@ export type ReferenceNumberRequest = {
     reference_number?: string;
 };
 
+export type RejectWorkflowStepRequest = {
+    /**
+     * UUID of the workflow step instance the client believes is active. Used to detect concurrent step transitions.
+     */
+    step_uuid: string;
+    /**
+     * Reason for rejecting the proposal at this step.
+     */
+    reason: string;
+};
+
+export type RejectWorkflowStepResponse = {
+    detail: string;
+    proposal_state: string;
+};
+
 export type RelationshipTypeEnum = 'employment' | 'consulting' | 'equity' | 'board' | 'royalties' | 'gifts' | 'other';
 
 export type RemoteAllocation = {
@@ -23579,6 +23808,8 @@ export type ResourcesLimits = {
      */
     readonly organization_group_uuid: string;
 };
+
+export type ResponsibleRoleEnum = 'call_manager' | 'offering_manager' | 'reviewer' | 'panel_member' | 'applicant';
 
 export type ReviewCommentRequest = {
     /**
@@ -25987,6 +26218,8 @@ export type StateTransitionError = {
     detail: string;
 };
 
+export type StepEnum = 'administrative_check' | 'technical_assessment' | 'expert_review' | 'panel_review' | 'allocation_decision' | 'award_response';
+
 export type StorageDataType = {
     key: string;
     label: string;
@@ -26678,6 +26911,8 @@ export type TransactionStats = {
      */
     readonly deadlocks: number;
 };
+
+export type TransitionModeEnum = 'automatic_on_completion';
 
 export type TriggerCoiDetectionJobTypeEnum = 'full_call' | 'incremental';
 
@@ -28030,6 +28265,17 @@ export type WebHookRequest = {
 };
 
 export type WidgetEnum = 'csv' | 'filesize' | 'attached_instance';
+
+export type WorkflowCriterion = {
+    readonly uuid: string;
+    name: string;
+    order?: number;
+};
+
+export type WorkflowCriterionRequest = {
+    name: string;
+    order?: number;
+};
 
 export type ZammadarticletypeEnum = 'email' | 'phone' | 'web' | 'note' | 'sms' | 'chat' | 'fax' | 'twitter status' | 'twitter direct-message' | 'facebook feed post' | 'facebook feed comment' | 'telegram personal-message';
 
@@ -30231,6 +30477,8 @@ export type AdminAnnouncementFieldEnum = 'active_from' | 'active_to' | 'created'
 
 export type AdminAnnouncementOEnum = '-active_from' | '-active_to' | '-created' | '-name' | '-type' | 'active_from' | 'active_to' | 'created' | 'name' | 'type';
 
+export type AffiliatedOrganizationFieldEnum = 'abbreviation' | 'address' | 'code' | 'country' | 'created' | 'description' | 'email' | 'homepage' | 'modified' | 'name' | 'projects_count' | 'url' | 'uuid';
+
 export type AnonymousChatFeedbackOEnum = '-llm_resolution_score' | '-score' | '-submitted_at' | 'llm_resolution_score' | 'score' | 'submitted_at';
 
 export type AnonymousChatInteractionOEnum = '-created' | '-result_count' | 'created' | 'result_count';
@@ -32232,6 +32480,7 @@ export type AffiliatedOrganizationsListData = {
          * Limit to a customer's default affiliation list
          */
         default_for_customer?: string;
+        field?: Array<AffiliatedOrganizationFieldEnum>;
         /**
          * Name
          */
@@ -32357,7 +32606,9 @@ export type AffiliatedOrganizationsRetrieveData = {
     path: {
         uuid: string;
     };
-    query?: never;
+    query?: {
+        field?: Array<AffiliatedOrganizationFieldEnum>;
+    };
     url: '/api/affiliated-organizations/{uuid}/';
 };
 
@@ -80395,6 +80646,21 @@ export type ProposalProposalsChecklistReviewRetrieveResponses = {
 
 export type ProposalProposalsChecklistReviewRetrieveResponse = ProposalProposalsChecklistReviewRetrieveResponses[keyof ProposalProposalsChecklistReviewRetrieveResponses];
 
+export type ProposalProposalsCompleteWorkflowStepData = {
+    body: CompleteWorkflowStepRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-proposals/{uuid}/complete_workflow_step/';
+};
+
+export type ProposalProposalsCompleteWorkflowStepResponses = {
+    200: CompleteWorkflowStepResponse;
+};
+
+export type ProposalProposalsCompleteWorkflowStepResponse = ProposalProposalsCompleteWorkflowStepResponses[keyof ProposalProposalsCompleteWorkflowStepResponses];
+
 export type ProposalProposalsCompletionReviewStatusRetrieveData = {
     body?: never;
     path: {
@@ -80558,6 +80824,21 @@ export type ProposalProposalsRejectResponses = {
      */
     200: unknown;
 };
+
+export type ProposalProposalsRejectWorkflowStepData = {
+    body: RejectWorkflowStepRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-proposals/{uuid}/reject_workflow_step/';
+};
+
+export type ProposalProposalsRejectWorkflowStepResponses = {
+    200: RejectWorkflowStepResponse;
+};
+
+export type ProposalProposalsRejectWorkflowStepResponse = ProposalProposalsRejectWorkflowStepResponses[keyof ProposalProposalsRejectWorkflowStepResponses];
 
 export type ProposalProposalsResourcesListData = {
     body?: never;
@@ -80737,6 +81018,48 @@ export type ProposalProposalsUpdateUserResponses = {
 };
 
 export type ProposalProposalsUpdateUserResponse = ProposalProposalsUpdateUserResponses[keyof ProposalProposalsUpdateUserResponses];
+
+export type ProposalProposalsWorkflowStatesListData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        call_uuid?: string;
+        created_by_uuid?: string;
+        my_proposals?: boolean;
+        name?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<ProposalOEnum>;
+        organization_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        round?: string;
+        round_uuid?: string;
+        /**
+         * Slug
+         */
+        slug?: string;
+        state?: Array<ProposalStates>;
+    };
+    url: '/api/proposal-proposals/{uuid}/workflow_states/';
+};
+
+export type ProposalProposalsWorkflowStatesListResponses = {
+    200: Array<ProposalWorkflowStepInstance>;
+};
+
+export type ProposalProposalsWorkflowStatesListResponse = ProposalProposalsWorkflowStatesListResponses[keyof ProposalProposalsWorkflowStatesListResponses];
 
 export type ProposalProposalsChecklistTemplateRetrieveData = {
     body?: never;
@@ -81947,6 +82270,112 @@ export type ProposalProtectedCallsUpdateUserResponses = {
 };
 
 export type ProposalProtectedCallsUpdateUserResponse = ProposalProtectedCallsUpdateUserResponses[keyof ProposalProtectedCallsUpdateUserResponses];
+
+export type ProposalProtectedCallsWorkflowStepsListData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/proposal-protected-calls/{uuid}/workflow_steps/';
+};
+
+export type ProposalProtectedCallsWorkflowStepsListResponses = {
+    200: Array<CallWorkflowStep>;
+};
+
+export type ProposalProtectedCallsWorkflowStepsListResponse = ProposalProtectedCallsWorkflowStepsListResponses[keyof ProposalProtectedCallsWorkflowStepsListResponses];
+
+export type ProposalProtectedCallsWorkflowStepsSetData = {
+    body: CallWorkflowStepRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-protected-calls/{uuid}/workflow_steps/';
+};
+
+export type ProposalProtectedCallsWorkflowStepsSetResponses = {
+    200: CallWorkflowStep;
+};
+
+export type ProposalProtectedCallsWorkflowStepsSetResponse = ProposalProtectedCallsWorkflowStepsSetResponses[keyof ProposalProtectedCallsWorkflowStepsSetResponses];
+
+export type ProposalProtectedCallsWorkflowStepsDestroyData = {
+    body?: never;
+    path: {
+        obj_uuid: string;
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-protected-calls/{uuid}/workflow_steps/{obj_uuid}/';
+};
+
+export type ProposalProtectedCallsWorkflowStepsDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type ProposalProtectedCallsWorkflowStepsDestroyResponse = ProposalProtectedCallsWorkflowStepsDestroyResponses[keyof ProposalProtectedCallsWorkflowStepsDestroyResponses];
+
+export type ProposalProtectedCallsWorkflowStepsRetrieveData = {
+    body?: never;
+    path: {
+        obj_uuid: string;
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-protected-calls/{uuid}/workflow_steps/{obj_uuid}/';
+};
+
+export type ProposalProtectedCallsWorkflowStepsRetrieveResponses = {
+    200: CallWorkflowStep;
+};
+
+export type ProposalProtectedCallsWorkflowStepsRetrieveResponse = ProposalProtectedCallsWorkflowStepsRetrieveResponses[keyof ProposalProtectedCallsWorkflowStepsRetrieveResponses];
+
+export type ProposalProtectedCallsWorkflowStepsPartialUpdateData = {
+    body?: PatchedCallWorkflowStepRequest;
+    path: {
+        obj_uuid: string;
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-protected-calls/{uuid}/workflow_steps/{obj_uuid}/';
+};
+
+export type ProposalProtectedCallsWorkflowStepsPartialUpdateResponses = {
+    200: CallWorkflowStep;
+};
+
+export type ProposalProtectedCallsWorkflowStepsPartialUpdateResponse = ProposalProtectedCallsWorkflowStepsPartialUpdateResponses[keyof ProposalProtectedCallsWorkflowStepsPartialUpdateResponses];
+
+export type ProposalProtectedCallsWorkflowStepsUpdateData = {
+    body: CallWorkflowStepRequest;
+    path: {
+        obj_uuid: string;
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-protected-calls/{uuid}/workflow_steps/{obj_uuid}/';
+};
+
+export type ProposalProtectedCallsWorkflowStepsUpdateResponses = {
+    200: CallWorkflowStep;
+};
+
+export type ProposalProtectedCallsWorkflowStepsUpdateResponse = ProposalProtectedCallsWorkflowStepsUpdateResponses[keyof ProposalProtectedCallsWorkflowStepsUpdateResponses];
 
 export type ProposalProtectedCallsAvailableComplianceChecklistsListData = {
     body?: never;
