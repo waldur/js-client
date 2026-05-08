@@ -5306,6 +5306,7 @@ export type ConstanceSettings = {
     SSH_KEY_ALLOWED_TYPES?: Array<SshkeyallowedtypesEnum | BlankEnum>;
     SSH_KEY_MIN_RSA_KEY_SIZE?: number;
     ENABLED_REPORTING_SCREENS?: Array<EnabledreportingscreensEnum | BlankEnum>;
+    SITE_AGENT_LOG_MAX_ROWS_PER_IDENTITY?: number;
     PAT_ENABLED?: boolean;
     PAT_MAX_LIFETIME_DAYS?: number;
     PAT_MAX_TOKENS_PER_USER?: number;
@@ -5576,6 +5577,7 @@ export type ConstanceSettingsRequest = {
     SSH_KEY_ALLOWED_TYPES?: Array<SshkeyallowedtypesEnum | BlankEnum>;
     SSH_KEY_MIN_RSA_KEY_SIZE?: number;
     ENABLED_REPORTING_SCREENS?: Array<EnabledreportingscreensEnum | BlankEnum>;
+    SITE_AGENT_LOG_MAX_ROWS_PER_IDENTITY?: number;
     PAT_ENABLED?: boolean;
     PAT_MAX_LIFETIME_DAYS?: number;
     PAT_MAX_TOKENS_PER_USER?: number;
@@ -9816,6 +9818,8 @@ export type KindEnum = 'default' | 'course' | 'public';
 export type LoginpagelayoutEnum = 'split-screen' | 'centered-card' | 'minimal' | 'full-hero' | 'gradient' | 'stacked' | 'right-split' | 'glassmorphism' | 'neumorphism' | 'animated-gradient' | 'video-background' | 'bottom-sheet' | 'tabbed' | 'wizard' | 'stats' | 'news' | 'carousel' | 'logo-watermark' | 'brand-pattern' | 'duotone' | 'diagonal' | 'time-based' | 'seasonal' | 'weather';
 
 export type LbAlgorithmEnum = 'ROUND_ROBIN' | 'LEAST_CONNECTIONS' | 'SOURCE_IP' | 'SOURCE_IP_PORT';
+
+export type LevelEnum = 'DEBUG' | 'INFO' | 'WARNING' | 'ERROR' | 'CRITICAL';
 
 export type LexisLink = {
     readonly url: string;
@@ -19585,6 +19589,12 @@ export type Project = {
      */
     user_identity_sources?: unknown;
     affiliation?: AffiliatedOrganization;
+    affiliation_uuid?: string | null;
+    readonly affiliation_name?: string;
+    /**
+     * Unique short identifier, e.g. CERN, EMBL.
+     */
+    readonly affiliation_code?: string;
     science_sub_domain?: string | null;
     readonly science_sub_domain_name?: string;
     /**
@@ -25524,6 +25534,29 @@ export type SiteAgentConfigGenerationRequest = {
     timezone?: string;
 };
 
+export type SiteAgentLog = {
+    readonly uuid: string;
+    readonly offering: string;
+    readonly offering_uuid: string;
+    readonly agent_identity_uuid: string;
+    /**
+     * Unix timestamp of the log entry
+     */
+    timestamp: number;
+    level: LevelEnum;
+    message: string;
+    module: string;
+    readonly created: string;
+};
+
+export type SiteAgentLogCreateRequest = {
+    agent_identity_uuid: string;
+    timestamp: number;
+    level: LevelEnum;
+    message: string;
+    module: string;
+};
+
 export type SlurmAllocation = {
     readonly url?: string;
     readonly uuid?: string;
@@ -29764,6 +29797,7 @@ export type ConstanceSettingsRequestForm = {
     SSH_KEY_ALLOWED_TYPES?: Array<SshkeyallowedtypesEnum | BlankEnum>;
     SSH_KEY_MIN_RSA_KEY_SIZE?: number;
     ENABLED_REPORTING_SCREENS?: Array<EnabledreportingscreensEnum | BlankEnum>;
+    SITE_AGENT_LOG_MAX_ROWS_PER_IDENTITY?: number;
     PAT_ENABLED?: boolean;
     PAT_MAX_LIFETIME_DAYS?: number;
     PAT_MAX_TOKENS_PER_USER?: number;
@@ -30034,6 +30068,7 @@ export type ConstanceSettingsRequestMultipart = {
     SSH_KEY_ALLOWED_TYPES?: Array<SshkeyallowedtypesEnum | BlankEnum>;
     SSH_KEY_MIN_RSA_KEY_SIZE?: number;
     ENABLED_REPORTING_SCREENS?: Array<EnabledreportingscreensEnum | BlankEnum>;
+    SITE_AGENT_LOG_MAX_ROWS_PER_IDENTITY?: number;
     PAT_ENABLED?: boolean;
     PAT_MAX_LIFETIME_DAYS?: number;
     PAT_MAX_TOKENS_PER_USER?: number;
@@ -30639,7 +30674,7 @@ export type ProviderOfferingDetailsOEnum = '-created' | '-name' | '-state' | '-t
 
 export type ProviderOfferingCustomerFieldEnum = 'abbreviation' | 'email' | 'name' | 'phone_number' | 'slug' | 'uuid';
 
-export type ProjectFieldEnum = 'affiliation' | 'affiliation_uuid' | 'backend_id' | 'billing_price_estimate' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_display_billing_info_in_projects' | 'customer_grace_period_days' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'effective_end_date' | 'end_date' | 'end_date_requested_by' | 'end_date_updated_at' | 'grace_period_days' | 'image' | 'is_in_grace_period' | 'is_industry' | 'is_removed' | 'kind' | 'marketplace_resource_count' | 'max_service_accounts' | 'name' | 'oecd_fos_2007_code' | 'oecd_fos_2007_label' | 'project_credit' | 'resources_count' | 'science_domain_code' | 'science_domain_name' | 'science_domain_uuid' | 'science_sub_domain' | 'science_sub_domain_code' | 'science_sub_domain_name' | 'slug' | 'staff_notes' | 'start_date' | 'termination_metadata' | 'type' | 'type_name' | 'type_uuid' | 'url' | 'user_affiliations' | 'user_email_patterns' | 'user_identity_sources' | 'uuid';
+export type ProjectFieldEnum = 'affiliation' | 'affiliation_code' | 'affiliation_name' | 'affiliation_uuid' | 'backend_id' | 'billing_price_estimate' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_display_billing_info_in_projects' | 'customer_grace_period_days' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'effective_end_date' | 'end_date' | 'end_date_requested_by' | 'end_date_updated_at' | 'grace_period_days' | 'image' | 'is_in_grace_period' | 'is_industry' | 'is_removed' | 'kind' | 'marketplace_resource_count' | 'max_service_accounts' | 'name' | 'oecd_fos_2007_code' | 'oecd_fos_2007_label' | 'project_credit' | 'resources_count' | 'science_domain_code' | 'science_domain_name' | 'science_domain_uuid' | 'science_sub_domain' | 'science_sub_domain_code' | 'science_sub_domain_name' | 'slug' | 'staff_notes' | 'start_date' | 'termination_metadata' | 'type' | 'type_name' | 'type_uuid' | 'url' | 'user_affiliations' | 'user_email_patterns' | 'user_identity_sources' | 'uuid';
 
 export type UserFieldEnum = 'active_isds' | 'address' | 'affiliations' | 'agree_with_policy' | 'agreement_date' | 'attribute_sources' | 'birth_date' | 'civil_number' | 'country_of_residence' | 'date_joined' | 'deactivation_reason' | 'description' | 'eduperson_assurance' | 'email' | 'first_name' | 'full_name' | 'gender' | 'has_active_session' | 'has_usable_password' | 'identity_provider_fields' | 'identity_provider_label' | 'identity_provider_management_url' | 'identity_provider_name' | 'identity_source' | 'image' | 'ip_address' | 'is_active' | 'is_identity_manager' | 'is_staff' | 'is_support' | 'job_title' | 'last_name' | 'managed_isds' | 'nationalities' | 'nationality' | 'native_name' | 'notifications_enabled' | 'organization' | 'organization_country' | 'organization_registry_code' | 'organization_type' | 'permissions' | 'personal_title' | 'phone_number' | 'place_of_birth' | 'preferred_language' | 'registration_method' | 'requested_email' | 'slug' | 'token' | 'token_expires_at' | 'token_lifetime' | 'url' | 'username' | 'uuid';
 
@@ -62291,6 +62326,88 @@ export type MarketplaceSiteAgentIdentitiesCleanupOrphanedResponses = {
 };
 
 export type MarketplaceSiteAgentIdentitiesCleanupOrphanedResponse = MarketplaceSiteAgentIdentitiesCleanupOrphanedResponses[keyof MarketplaceSiteAgentIdentitiesCleanupOrphanedResponses];
+
+export type MarketplaceSiteAgentLogsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        agent_identity_uuid?: string;
+        level?: string;
+        offering_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        timestamp_from?: number;
+        timestamp_to?: number;
+    };
+    url: '/api/marketplace-site-agent-logs/';
+};
+
+export type MarketplaceSiteAgentLogsListResponses = {
+    200: Array<SiteAgentLog>;
+};
+
+export type MarketplaceSiteAgentLogsListResponse = MarketplaceSiteAgentLogsListResponses[keyof MarketplaceSiteAgentLogsListResponses];
+
+export type MarketplaceSiteAgentLogsCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        agent_identity_uuid?: string;
+        level?: string;
+        offering_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        timestamp_from?: number;
+        timestamp_to?: number;
+    };
+    url: '/api/marketplace-site-agent-logs/';
+};
+
+export type MarketplaceSiteAgentLogsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type MarketplaceSiteAgentLogsCreateData = {
+    body: Array<SiteAgentLogCreateRequest>;
+    path?: never;
+    query?: {
+        agent_identity_uuid?: string;
+        level?: string;
+        offering_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        timestamp_from?: number;
+        timestamp_to?: number;
+    };
+    url: '/api/marketplace-site-agent-logs/';
+};
+
+export type MarketplaceSiteAgentLogsCreateResponses = {
+    201: Array<SiteAgentLog>;
+};
+
+export type MarketplaceSiteAgentLogsCreateResponse = MarketplaceSiteAgentLogsCreateResponses[keyof MarketplaceSiteAgentLogsCreateResponses];
 
 export type MarketplaceSiteAgentProcessorsListData = {
     body?: never;
