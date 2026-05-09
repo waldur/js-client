@@ -92,6 +92,21 @@ export type ActiveQuery = {
     readonly query_preview: string;
 };
 
+export type AdjustResourceDatesRequest = {
+    /**
+     * New start date of the originating order.
+     */
+    start_date: string;
+    /**
+     * New end date of the resource.
+     */
+    end_date: string;
+    /**
+     * Optional reason captured in the audit trail.
+     */
+    comment?: string;
+};
+
 export type AdminAnnouncement = {
     readonly uuid?: string;
     description?: string;
@@ -56813,6 +56828,21 @@ export type MarketplaceProviderResourcesAddUserResponses = {
 
 export type MarketplaceProviderResourcesAddUserResponse = MarketplaceProviderResourcesAddUserResponses[keyof MarketplaceProviderResourcesAddUserResponses];
 
+export type MarketplaceProviderResourcesAdjustDatesData = {
+    body: AdjustResourceDatesRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-provider-resources/{uuid}/adjust_dates/';
+};
+
+export type MarketplaceProviderResourcesAdjustDatesResponses = {
+    200: ResourceResponseStatus;
+};
+
+export type MarketplaceProviderResourcesAdjustDatesResponse = MarketplaceProviderResourcesAdjustDatesResponses[keyof MarketplaceProviderResourcesAdjustDatesResponses];
+
 export type MarketplaceProviderResourcesDeleteUserData = {
     body: UserRoleDeleteRequest;
     path: {
@@ -58982,6 +59012,21 @@ export type MarketplaceResourcesAddUserResponses = {
 };
 
 export type MarketplaceResourcesAddUserResponse = MarketplaceResourcesAddUserResponses[keyof MarketplaceResourcesAddUserResponses];
+
+export type MarketplaceResourcesAdjustDatesData = {
+    body: AdjustResourceDatesRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-resources/{uuid}/adjust_dates/';
+};
+
+export type MarketplaceResourcesAdjustDatesResponses = {
+    200: ResourceResponseStatus;
+};
+
+export type MarketplaceResourcesAdjustDatesResponse = MarketplaceResourcesAdjustDatesResponses[keyof MarketplaceResourcesAdjustDatesResponses];
 
 export type MarketplaceResourcesDeleteUserData = {
     body: UserRoleDeleteRequest;
