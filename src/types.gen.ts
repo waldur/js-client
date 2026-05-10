@@ -10588,6 +10588,10 @@ export type MergedPluginOptions = {
      */
     enable_resource_projects?: boolean;
     /**
+     * If set to True, newly-created resource projects are immediately transitioned from CREATING to OK on save, bypassing the provider/site-agent reconciliation callback. Use for offerings that have no external backend to reconcile against.
+     */
+    auto_ok_resource_projects?: boolean;
+    /**
      * If set to True, every limit-billing component declared by the offering must have a value when creating or updating a resource project. Use this for backends that reject projects without resource quotas (e.g. the rancher-keycloak-operator's project-level resourceQuota.limit cap).
      */
     resource_projects_limits_required?: boolean;
@@ -10886,6 +10890,10 @@ export type MergedPluginOptionsRequest = {
      * Enable sub-project management within resources.
      */
     enable_resource_projects?: boolean;
+    /**
+     * If set to True, newly-created resource projects are immediately transitioned from CREATING to OK on save, bypassing the provider/site-agent reconciliation callback. Use for offerings that have no external backend to reconcile against.
+     */
+    auto_ok_resource_projects?: boolean;
     /**
      * If set to True, every limit-billing component declared by the offering must have a value when creating or updating a resource project. Use this for backends that reject projects without resource quotas (e.g. the rancher-keycloak-operator's project-level resourceQuota.limit cap).
      */
@@ -23482,6 +23490,17 @@ export type ResourceProjectErrorMessageRequest = {
      * Free-form description of why the project transitioned to Erred.
      */
     error_message?: string;
+};
+
+export type ResourceProjectRecoveryRequest = {
+    /**
+     * Recreate the UserRole rows captured at soft-delete time. Requires termination_metadata to be present (set on soft-deletes performed after the recovery feature shipped).
+     */
+    restore_team_members?: boolean;
+    /**
+     * Send invitations to users who had access before soft-delete. Mutually exclusive with restore_team_members.
+     */
+    send_invitations_to_previous_members?: boolean;
 };
 
 export type ResourceProjectRequest = {
@@ -58371,7 +58390,12 @@ export type MarketplaceResourceProjectsDestroyData = {
     path: {
         uuid: string;
     };
-    query?: never;
+    query?: {
+        /**
+         * Staff-only: when true, hard-delete the resource project instead of soft-deleting it.
+         */
+        force?: boolean;
+    };
     url: '/api/marketplace-resource-projects/{uuid}/';
 };
 
@@ -58530,6 +58554,21 @@ export type MarketplaceResourceProjectsListUsersListResponses = {
 };
 
 export type MarketplaceResourceProjectsListUsersListResponse = MarketplaceResourceProjectsListUsersListResponses[keyof MarketplaceResourceProjectsListUsersListResponses];
+
+export type MarketplaceResourceProjectsRecoverData = {
+    body?: ResourceProjectRecoveryRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-resource-projects/{uuid}/recover/';
+};
+
+export type MarketplaceResourceProjectsRecoverResponses = {
+    200: ResourceProject;
+};
+
+export type MarketplaceResourceProjectsRecoverResponse = MarketplaceResourceProjectsRecoverResponses[keyof MarketplaceResourceProjectsRecoverResponses];
 
 export type MarketplaceResourceProjectsUpdateUserData = {
     body: UserRoleUpdateRequest;
