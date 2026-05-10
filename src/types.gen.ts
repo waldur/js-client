@@ -23468,6 +23468,13 @@ export type ResourceProject = {
     readonly resource_name: string;
     readonly created: string;
     readonly modified: string;
+    readonly is_removed: boolean;
+    readonly removed_date: string | null;
+    readonly removed_by: number | null;
+    /**
+     * Required. 128 characters or fewer. Lowercase letters, numbers and @/./+/-/_ characters
+     */
+    readonly removed_by_username: string;
 };
 
 export type ResourceProjectBackendId = {
