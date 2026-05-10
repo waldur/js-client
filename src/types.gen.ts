@@ -23475,6 +23475,7 @@ export type ResourceProject = {
      * Required. 128 characters or fewer. Lowercase letters, numbers and @/./+/-/_ characters
      */
     readonly removed_by_username: string;
+    readonly termination_metadata: unknown;
 };
 
 export type ResourceProjectBackendId = {
