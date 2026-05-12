@@ -658,6 +658,17 @@ export type AllocationUserUsage = {
     readonly full_name: string;
 };
 
+export type AllowedScopeInputRequest = {
+    type: string;
+    uuid: string;
+};
+
+export type AllowedScopeOutput = {
+    type: string;
+    uuid: string | null;
+    name: string | null;
+};
+
 export type AmountRangeEnum = 'none' | 'under_5k' | '5k_10k' | '10k_50k' | 'over_50k';
 
 export type AnonymousChatBudgetSnapshot = {
@@ -1997,6 +2008,11 @@ export type AvailableArrowCustomersResponse = {
     arrow_customers: Array<ArrowCustomerDiscovery>;
     waldur_customers: Array<WaldurCustomerBrief>;
     suggestions: Array<CustomerMappingSuggestion>;
+};
+
+export type AvailableBindingTarget = {
+    permission: string;
+    types: Array<string>;
 };
 
 export type AvailableChecklist = {
@@ -19343,6 +19359,7 @@ export type PersonalAccessToken = {
     name: string;
     token_prefix: string;
     scopes: Array<string>;
+    readonly allowed_scopes: Array<AllowedScopeOutput>;
     expires_at: string;
     is_active: boolean;
     last_used_at: string;
@@ -19357,6 +19374,10 @@ export type PersonalAccessToken = {
 export type PersonalAccessTokenCreateRequest = {
     name: string;
     scopes: Array<string>;
+    /**
+     * Optional list of entity bindings restricting where this token can act. Empty list = no entity restriction.
+     */
+    allowed_scopes?: Array<AllowedScopeInputRequest>;
     expires_at: string;
 };
 
@@ -19368,6 +19389,7 @@ export type PersonalAccessTokenCreated = {
      */
     token: string;
     scopes: Array<string>;
+    allowed_scopes: Array<AllowedScopeOutput>;
     expires_at: string;
     created: string;
 };
@@ -79360,6 +79382,51 @@ export type PersonalAccessTokensRotateResponses = {
 };
 
 export type PersonalAccessTokensRotateResponse = PersonalAccessTokensRotateResponses[keyof PersonalAccessTokensRotateResponses];
+
+export type PersonalAccessTokensAvailableBindingTargetsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/personal-access-tokens/available_binding_targets/';
+};
+
+export type PersonalAccessTokensAvailableBindingTargetsListResponses = {
+    200: Array<AvailableBindingTarget>;
+};
+
+export type PersonalAccessTokensAvailableBindingTargetsListResponse = PersonalAccessTokensAvailableBindingTargetsListResponses[keyof PersonalAccessTokensAvailableBindingTargetsListResponses];
+
+export type PersonalAccessTokensAvailableBindingTargetsCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/personal-access-tokens/available_binding_targets/';
+};
+
+export type PersonalAccessTokensAvailableBindingTargetsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type PersonalAccessTokensAvailableScopesListData = {
     body?: never;
