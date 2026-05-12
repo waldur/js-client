@@ -5217,6 +5217,12 @@ export type ConstanceSettings = {
     SCIM_API_URL?: string;
     SCIM_API_KEY?: string;
     SCIM_URN_NAMESPACE?: string;
+    SCIM_INBOUND_ENABLED?: boolean;
+    SCIM_INBOUND_SOURCE_NAME?: string;
+    SCIM_INBOUND_ALLOWED_ATTRIBUTES?: Array<UserAttributeEnum | BlankEnum>;
+    SCIM_PULL_API_URL?: string;
+    SCIM_PULL_API_KEY?: string;
+    SCIM_PULL_SOURCE_NAME?: string;
     KEYCLOAK_ICON?: string | null;
     COUNTRIES?: Array<string>;
     OIDC_AUTH_URL?: string;
@@ -5488,6 +5494,12 @@ export type ConstanceSettingsRequest = {
     SCIM_API_URL?: string;
     SCIM_API_KEY?: string;
     SCIM_URN_NAMESPACE?: string;
+    SCIM_INBOUND_ENABLED?: boolean;
+    SCIM_INBOUND_SOURCE_NAME?: string;
+    SCIM_INBOUND_ALLOWED_ATTRIBUTES?: Array<UserAttributeEnum | BlankEnum>;
+    SCIM_PULL_API_URL?: string;
+    SCIM_PULL_API_KEY?: string;
+    SCIM_PULL_SOURCE_NAME?: string;
     KEYCLOAK_ICON?: (Blob | File) | null;
     COUNTRIES?: Array<string>;
     OIDC_AUTH_URL?: string;
@@ -12621,6 +12633,9 @@ export type Offering = {
     compliance_checklist?: string | null;
     readonly profile_uuid?: string | null;
     readonly profile_name?: string | null;
+    readonly offering_group?: string | null;
+    readonly offering_group_uuid?: string | null;
+    readonly offering_group_title?: string | null;
     readonly user_has_consent?: boolean;
     readonly is_accessible?: boolean;
     googlecalendar?: GoogleCalendar;
@@ -12861,6 +12876,7 @@ export type OfferingCreateRequest = {
     image?: (Blob | File) | null;
     backend_metadata?: unknown;
     compliance_checklist?: string | null;
+    offering_group?: string | null;
     limits?: {
         [key: string]: OfferingComponentLimitRequest;
     };
@@ -13028,6 +13044,32 @@ export type OfferingFileRequest = {
     name: string;
     offering: string;
     file: Blob | File;
+};
+
+export type OfferingGroup = {
+    readonly url?: string;
+    readonly uuid?: string;
+    readonly created?: string;
+    title?: string;
+    description?: string;
+    icon?: string | null;
+    customer?: string;
+    readonly customer_uuid?: string;
+    readonly customer_name?: string;
+};
+
+export type OfferingGroupAssignRequest = {
+    /**
+     * OfferingGroup UUID. Pass null to remove the assignment.
+     */
+    offering_group: string | null;
+};
+
+export type OfferingGroupRequest = {
+    title: string;
+    description?: string;
+    icon?: (Blob | File) | null;
+    customer: string;
 };
 
 export type OfferingGroups = {
@@ -17741,6 +17783,12 @@ export type PatchedOfferingEstimatedCostPolicyRequest = {
     apply_to_all?: boolean;
 };
 
+export type PatchedOfferingGroupRequest = {
+    title?: string;
+    description?: string;
+    icon?: (Blob | File) | null;
+};
+
 export type PatchedOfferingPartitionUpdateRequest = {
     partition_uuid?: string;
     /**
@@ -20831,6 +20879,8 @@ export type ProviderOffering = {
     resource_options?: unknown;
     secret_options?: MergedSecretOptions;
     thumbnail?: string | null;
+    readonly offering_group_uuid?: string | null;
+    readonly offering_group_title?: string | null;
 };
 
 export type ProviderOfferingCosts = {
@@ -20966,6 +21016,9 @@ export type ProviderOfferingDetails = {
     compliance_checklist?: string | null;
     readonly profile_uuid?: string | null;
     readonly profile_name?: string | null;
+    readonly offering_group?: string | null;
+    readonly offering_group_uuid?: string | null;
+    readonly offering_group_title?: string | null;
     readonly integration_status?: Array<IntegrationStatus> | null;
     readonly google_calendar_is_public?: boolean | null;
     /**
@@ -21335,6 +21388,9 @@ export type PublicOfferingDetails = {
     compliance_checklist?: string | null;
     readonly profile_uuid?: string | null;
     readonly profile_name?: string | null;
+    readonly offering_group?: string | null;
+    readonly offering_group_uuid?: string | null;
+    readonly offering_group_title?: string | null;
     readonly user_has_consent?: boolean;
     readonly is_accessible?: boolean;
     readonly google_calendar_is_public?: boolean | null;
@@ -25177,6 +25233,11 @@ export type ScienceSubDomainRequest = {
     code?: string;
     name: string;
     domain: string;
+};
+
+export type ScimPullAttributesResponse = {
+    detail: string;
+    changed_fields?: Array<string>;
 };
 
 export type ScimSyncAllResponse = {
@@ -29074,6 +29135,32 @@ export type OfferingFileRequestMultipart = {
     file: Blob | File;
 };
 
+export type OfferingGroupRequestForm = {
+    title: string;
+    description?: string;
+    icon?: (Blob | File) | null;
+    customer: string;
+};
+
+export type OfferingGroupRequestMultipart = {
+    title: string;
+    description?: string;
+    icon?: (Blob | File) | null;
+    customer: string;
+};
+
+export type PatchedOfferingGroupRequestForm = {
+    title?: string;
+    description?: string;
+    icon?: (Blob | File) | null;
+};
+
+export type PatchedOfferingGroupRequestMultipart = {
+    title?: string;
+    description?: string;
+    icon?: (Blob | File) | null;
+};
+
 export type OrderConsumerInfoRequestForm = {
     consumer_message?: string;
     consumer_message_attachment?: Blob | File;
@@ -29155,6 +29242,7 @@ export type OfferingCreateRequestForm = {
     image?: (Blob | File) | null;
     backend_metadata?: unknown;
     compliance_checklist?: string | null;
+    offering_group?: string | null;
     limits?: {
         [key: string]: OfferingComponentLimitRequest;
     };
@@ -29211,6 +29299,7 @@ export type OfferingCreateRequestMultipart = {
     image?: (Blob | File) | null;
     backend_metadata?: unknown;
     compliance_checklist?: string | null;
+    offering_group?: string | null;
     limits?: {
         [key: string]: OfferingComponentLimitRequest;
     };
@@ -29735,6 +29824,12 @@ export type ConstanceSettingsRequestForm = {
     SCIM_API_URL?: string;
     SCIM_API_KEY?: string;
     SCIM_URN_NAMESPACE?: string;
+    SCIM_INBOUND_ENABLED?: boolean;
+    SCIM_INBOUND_SOURCE_NAME?: string;
+    SCIM_INBOUND_ALLOWED_ATTRIBUTES?: Array<UserAttributeEnum | BlankEnum>;
+    SCIM_PULL_API_URL?: string;
+    SCIM_PULL_API_KEY?: string;
+    SCIM_PULL_SOURCE_NAME?: string;
     KEYCLOAK_ICON?: (Blob | File) | null;
     COUNTRIES?: Array<string>;
     OIDC_AUTH_URL?: string;
@@ -30006,6 +30101,12 @@ export type ConstanceSettingsRequestMultipart = {
     SCIM_API_URL?: string;
     SCIM_API_KEY?: string;
     SCIM_URN_NAMESPACE?: string;
+    SCIM_INBOUND_ENABLED?: boolean;
+    SCIM_INBOUND_SOURCE_NAME?: string;
+    SCIM_INBOUND_ALLOWED_ATTRIBUTES?: Array<UserAttributeEnum | BlankEnum>;
+    SCIM_PULL_API_URL?: string;
+    SCIM_PULL_API_KEY?: string;
+    SCIM_PULL_SOURCE_NAME?: string;
     KEYCLOAK_ICON?: (Blob | File) | null;
     COUNTRIES?: Array<string>;
     OIDC_AUTH_URL?: string;
@@ -30592,7 +30693,7 @@ export type AzureVirtualMachineFieldEnum = 'access_url' | 'backend_id' | 'cores'
 
 export type BackendResourceReqOEnum = '-created' | 'created';
 
-export type OfferingFieldEnum = 'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'billing_type_classification' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'documentation_url' | 'effective_available_limits' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'googlecalendar' | 'has_compliance_requirements' | 'helpdesk_url' | 'image' | 'integration_guide' | 'is_accessible' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'profile_name' | 'profile_uuid' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_options' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'tags' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'user_has_consent' | 'uuid' | 'vendor_details';
+export type OfferingFieldEnum = 'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'billing_type_classification' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'documentation_url' | 'effective_available_limits' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'googlecalendar' | 'has_compliance_requirements' | 'helpdesk_url' | 'image' | 'integration_guide' | 'is_accessible' | 'latitude' | 'longitude' | 'name' | 'offering_group' | 'offering_group_title' | 'offering_group_uuid' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'profile_name' | 'profile_uuid' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_options' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'tags' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'user_has_consent' | 'uuid' | 'vendor_details';
 
 export type BookingResourceFieldEnum = 'attributes' | 'available_actions' | 'backend_id' | 'backend_metadata' | 'can_terminate' | 'category_icon' | 'category_title' | 'category_uuid' | 'consumer_reviewed_by' | 'consumer_reviewed_by_full_name' | 'consumer_reviewed_by_username' | 'created' | 'created_by' | 'created_by_full_name' | 'created_by_username' | 'creation_order' | 'current_usages' | 'customer_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'downscaled' | 'effective_id' | 'end_date' | 'end_date_requested_by' | 'endpoints' | 'error_message' | 'error_traceback' | 'is_limit_based' | 'is_usage_based' | 'last_sync' | 'limit_usage' | 'limits' | 'modified' | 'name' | 'offering' | 'offering_backend_id' | 'offering_billable' | 'offering_components' | 'offering_description' | 'offering_image' | 'offering_name' | 'offering_plugin_options' | 'offering_shared' | 'offering_slug' | 'offering_state' | 'offering_thumbnail' | 'offering_type' | 'offering_uuid' | 'options' | 'order_in_progress' | 'parent_name' | 'parent_offering_name' | 'parent_offering_slug' | 'parent_offering_uuid' | 'parent_uuid' | 'paused' | 'plan' | 'plan_description' | 'plan_name' | 'plan_unit' | 'plan_uuid' | 'project' | 'project_description' | 'project_effective_end_date' | 'project_end_date' | 'project_end_date_requested_by' | 'project_is_in_grace_period' | 'project_name' | 'project_slug' | 'project_uuid' | 'provider_description' | 'provider_name' | 'provider_slug' | 'provider_uuid' | 'renewal_date' | 'report' | 'resource_type' | 'resource_uuid' | 'restrict_member_access' | 'scope' | 'service_settings_uuid' | 'slots' | 'slug' | 'state' | 'url' | 'user_requires_reconsent' | 'username' | 'uuid';
 
@@ -30692,6 +30793,8 @@ export type IntegrationStatusDetailsStatusEnum = 'Active' | 'Disconnected' | 'Un
 
 export type OfferingFileFieldEnum = 'created' | 'file' | 'name' | 'offering' | 'url' | 'uuid';
 
+export type OfferingGroupFieldEnum = 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'description' | 'icon' | 'title' | 'url' | 'uuid';
+
 export type OfferingPermissionOEnum = '-created' | '-email' | '-expiration_time' | '-full_name' | '-native_name' | '-role' | '-username' | 'created' | 'email' | 'expiration_time' | 'full_name' | 'native_name' | 'role' | 'username';
 
 export type OfferingReferralOEnum = '-published' | '-relation_type' | '-resource_type' | 'published' | 'relation_type' | 'resource_type';
@@ -30710,7 +30813,7 @@ export type OrderDetailsOEnum = '-consumer_reviewed_at' | '-cost' | '-created' |
 
 export type RemoteProjectUpdateRequestStateEnum = 'approved' | 'canceled' | 'draft' | 'pending' | 'rejected';
 
-export type ProviderOfferingDetailsFieldEnum = 'access_url' | 'attributes' | 'backend_id' | 'backend_id_rules' | 'backend_metadata' | 'billable' | 'billing_type_classification' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'documentation_url' | 'effective_available_limits' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'has_compliance_requirements' | 'helpdesk_url' | 'image' | 'integration_guide' | 'integration_status' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'profile_name' | 'profile_uuid' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_options' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'tags' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'uuid' | 'vendor_details';
+export type ProviderOfferingDetailsFieldEnum = 'access_url' | 'attributes' | 'backend_id' | 'backend_id_rules' | 'backend_metadata' | 'billable' | 'billing_type_classification' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'documentation_url' | 'effective_available_limits' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'has_compliance_requirements' | 'helpdesk_url' | 'image' | 'integration_guide' | 'integration_status' | 'latitude' | 'longitude' | 'name' | 'offering_group' | 'offering_group_title' | 'offering_group_uuid' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'profile_name' | 'profile_uuid' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_options' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'tags' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'uuid' | 'vendor_details';
 
 export type ProviderOfferingDetailsOEnum = '-created' | '-name' | '-state' | '-total_cost' | '-total_cost_estimated' | '-total_customers' | '-type' | 'created' | 'name' | 'state' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type';
 
@@ -30722,7 +30825,7 @@ export type UserFieldEnum = 'active_isds' | 'address' | 'affiliations' | 'agree_
 
 export type ResourceOEnum = '-created' | '-end_date' | '-name' | '-project_name' | '-state' | 'created' | 'end_date' | 'name' | 'project_name' | 'state';
 
-export type PublicOfferingDetailsFieldEnum = 'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'billing_type_classification' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'documentation_url' | 'effective_available_limits' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'has_compliance_requirements' | 'helpdesk_url' | 'image' | 'integration_guide' | 'is_accessible' | 'latitude' | 'longitude' | 'name' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'profile_name' | 'profile_uuid' | 'project' | 'project_name' | 'project_uuid' | 'promotion_campaigns' | 'quotas' | 'resource_options' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'tags' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'user_has_consent' | 'uuid' | 'vendor_details';
+export type PublicOfferingDetailsFieldEnum = 'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'billing_type_classification' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'documentation_url' | 'effective_available_limits' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'has_compliance_requirements' | 'helpdesk_url' | 'image' | 'integration_guide' | 'is_accessible' | 'latitude' | 'longitude' | 'name' | 'offering_group' | 'offering_group_title' | 'offering_group_uuid' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'profile_name' | 'profile_uuid' | 'project' | 'project_name' | 'project_uuid' | 'promotion_campaigns' | 'quotas' | 'resource_options' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'tags' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'user_has_consent' | 'uuid' | 'vendor_details';
 
 export type RobotAccountDetailsFieldEnum = 'backend_id' | 'created' | 'customer_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'fingerprints' | 'keys' | 'modified' | 'offering_plugin_options' | 'project_name' | 'project_uuid' | 'provider_name' | 'provider_uuid' | 'resource' | 'resource_name' | 'resource_uuid' | 'responsible_user' | 'state' | 'type' | 'url' | 'user_keys' | 'username' | 'users' | 'uuid';
 
@@ -30734,7 +30837,7 @@ export type MarketplaceProviderCustomerProjectOEnum = '-created' | '-customer_ab
 
 export type MarketplaceProviderCustomerFieldEnum = 'abbreviation' | 'billing_price_estimate' | 'email' | 'name' | 'payment_profiles' | 'phone_number' | 'projects' | 'projects_count' | 'slug' | 'users' | 'users_count' | 'uuid';
 
-export type ProviderOfferingFieldEnum = 'billing_price_estimate' | 'category_title' | 'components' | 'customer_uuid' | 'name' | 'options' | 'plans' | 'resource_options' | 'resources_count' | 'secret_options' | 'slug' | 'state' | 'thumbnail' | 'type' | 'uuid';
+export type ProviderOfferingFieldEnum = 'billing_price_estimate' | 'category_title' | 'components' | 'customer_uuid' | 'name' | 'offering_group_title' | 'offering_group_uuid' | 'options' | 'plans' | 'resource_options' | 'resources_count' | 'secret_options' | 'slug' | 'state' | 'thumbnail' | 'type' | 'uuid';
 
 export type ProjectPermissionLogFieldEnum = 'created' | 'created_by' | 'created_by_full_name' | 'created_by_username' | 'customer_name' | 'customer_uuid' | 'expiration_time' | 'project' | 'project_created' | 'project_end_date' | 'project_name' | 'project_uuid' | 'role' | 'role_name' | 'user' | 'user_email' | 'user_full_name' | 'user_native_name' | 'user_username' | 'user_uuid';
 
@@ -49487,6 +49590,140 @@ export type MarketplaceOfferingFilesRetrieveResponses = {
 
 export type MarketplaceOfferingFilesRetrieveResponse = MarketplaceOfferingFilesRetrieveResponses[keyof MarketplaceOfferingFilesRetrieveResponses];
 
+export type MarketplaceOfferingGroupsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Customer UUID
+         */
+        customer_uuid?: string;
+        field?: Array<OfferingGroupFieldEnum>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        title?: string;
+    };
+    url: '/api/marketplace-offering-groups/';
+};
+
+export type MarketplaceOfferingGroupsListResponses = {
+    200: Array<OfferingGroup>;
+};
+
+export type MarketplaceOfferingGroupsListResponse = MarketplaceOfferingGroupsListResponses[keyof MarketplaceOfferingGroupsListResponses];
+
+export type MarketplaceOfferingGroupsCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Customer UUID
+         */
+        customer_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        title?: string;
+    };
+    url: '/api/marketplace-offering-groups/';
+};
+
+export type MarketplaceOfferingGroupsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type MarketplaceOfferingGroupsCreateData = {
+    body: OfferingGroupRequest;
+    path?: never;
+    query?: never;
+    url: '/api/marketplace-offering-groups/';
+};
+
+export type MarketplaceOfferingGroupsCreateResponses = {
+    201: OfferingGroup;
+};
+
+export type MarketplaceOfferingGroupsCreateResponse = MarketplaceOfferingGroupsCreateResponses[keyof MarketplaceOfferingGroupsCreateResponses];
+
+export type MarketplaceOfferingGroupsDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-offering-groups/{uuid}/';
+};
+
+export type MarketplaceOfferingGroupsDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type MarketplaceOfferingGroupsDestroyResponse = MarketplaceOfferingGroupsDestroyResponses[keyof MarketplaceOfferingGroupsDestroyResponses];
+
+export type MarketplaceOfferingGroupsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        field?: Array<OfferingGroupFieldEnum>;
+    };
+    url: '/api/marketplace-offering-groups/{uuid}/';
+};
+
+export type MarketplaceOfferingGroupsRetrieveResponses = {
+    200: OfferingGroup;
+};
+
+export type MarketplaceOfferingGroupsRetrieveResponse = MarketplaceOfferingGroupsRetrieveResponses[keyof MarketplaceOfferingGroupsRetrieveResponses];
+
+export type MarketplaceOfferingGroupsPartialUpdateData = {
+    body?: PatchedOfferingGroupRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-offering-groups/{uuid}/';
+};
+
+export type MarketplaceOfferingGroupsPartialUpdateResponses = {
+    200: OfferingGroup;
+};
+
+export type MarketplaceOfferingGroupsPartialUpdateResponse = MarketplaceOfferingGroupsPartialUpdateResponses[keyof MarketplaceOfferingGroupsPartialUpdateResponses];
+
+export type MarketplaceOfferingGroupsUpdateData = {
+    body: OfferingGroupRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-offering-groups/{uuid}/';
+};
+
+export type MarketplaceOfferingGroupsUpdateResponses = {
+    200: OfferingGroup;
+};
+
+export type MarketplaceOfferingGroupsUpdateResponse = MarketplaceOfferingGroupsUpdateResponses[keyof MarketplaceOfferingGroupsUpdateResponses];
+
 export type MarketplaceOfferingPermissionsListData = {
     body?: never;
     path?: never;
@@ -52972,6 +53209,10 @@ export type MarketplaceProviderOfferingsListData = {
          */
         o?: Array<ProviderOfferingDetailsOEnum>;
         /**
+         * Offering group UUID
+         */
+        offering_group_uuid?: string;
+        /**
          * Organization group UUID
          */
         organization_group_uuid?: string;
@@ -53154,6 +53395,10 @@ export type MarketplaceProviderOfferingsCountData = {
          *
          */
         o?: Array<ProviderOfferingDetailsOEnum>;
+        /**
+         * Offering group UUID
+         */
+        offering_group_uuid?: string;
         /**
          * Organization group UUID
          */
@@ -53505,6 +53750,10 @@ export type MarketplaceProviderOfferingsComponentStatsListData = {
          */
         o?: Array<ProviderOfferingDetailsOEnum>;
         /**
+         * Offering group UUID
+         */
+        offering_group_uuid?: string;
+        /**
          * Organization group UUID
          */
         organization_group_uuid?: string;
@@ -53698,6 +53947,10 @@ export type MarketplaceProviderOfferingsCostsListData = {
          *
          */
         o?: Array<ProviderOfferingDetailsOEnum>;
+        /**
+         * Offering group UUID
+         */
+        offering_group_uuid?: string;
         /**
          * Organization group UUID
          */
@@ -53904,6 +54157,10 @@ export type MarketplaceProviderOfferingsCustomersListData = {
          *
          */
         o?: Array<ProviderOfferingDetailsOEnum>;
+        /**
+         * Offering group UUID
+         */
+        offering_group_uuid?: string;
         /**
          * Organization group UUID
          */
@@ -54263,6 +54520,10 @@ export type MarketplaceProviderOfferingsHistoryListData = {
          */
         o?: Array<ProviderOfferingDetailsOEnum>;
         /**
+         * Offering group UUID
+         */
+        offering_group_uuid?: string;
+        /**
          * Organization group UUID
          */
         organization_group_uuid?: string;
@@ -54518,6 +54779,10 @@ export type MarketplaceProviderOfferingsListCourseAccountsListData = {
          */
         o?: Array<ProviderOfferingDetailsOEnum>;
         /**
+         * Offering group UUID
+         */
+        offering_group_uuid?: string;
+        /**
          * Organization group UUID
          */
         organization_group_uuid?: string;
@@ -54728,6 +54993,10 @@ export type MarketplaceProviderOfferingsListCustomerServiceAccountsListData = {
          */
         o?: Array<ProviderOfferingDetailsOEnum>;
         /**
+         * Offering group UUID
+         */
+        offering_group_uuid?: string;
+        /**
          * Organization group UUID
          */
         organization_group_uuid?: string;
@@ -54937,6 +55206,10 @@ export type MarketplaceProviderOfferingsListProjectServiceAccountsListData = {
          *
          */
         o?: Array<ProviderOfferingDetailsOEnum>;
+        /**
+         * Offering group UUID
+         */
+        offering_group_uuid?: string;
         /**
          * Organization group UUID
          */
@@ -55275,6 +55548,22 @@ export type MarketplaceProviderOfferingsSetBackendMetadataData = {
 };
 
 export type MarketplaceProviderOfferingsSetBackendMetadataResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type MarketplaceProviderOfferingsSetOfferingGroupData = {
+    body: OfferingGroupAssignRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-provider-offerings/{uuid}/set_offering_group/';
+};
+
+export type MarketplaceProviderOfferingsSetOfferingGroupResponses = {
     /**
      * No response body
      */
@@ -55828,6 +56117,10 @@ export type MarketplaceProviderOfferingsGroupsListData = {
          */
         o?: Array<ProviderOfferingDetailsOEnum>;
         /**
+         * Offering group UUID
+         */
+        offering_group_uuid?: string;
+        /**
          * Organization group UUID
          */
         organization_group_uuid?: string;
@@ -56006,6 +56299,10 @@ export type MarketplaceProviderOfferingsGroupsCountData = {
          *
          */
         o?: Array<ProviderOfferingDetailsOEnum>;
+        /**
+         * Offering group UUID
+         */
+        offering_group_uuid?: string;
         /**
          * Organization group UUID
          */
@@ -57794,6 +58091,10 @@ export type MarketplacePublicOfferingsListData = {
          */
         o?: Array<ProviderOfferingDetailsOEnum>;
         /**
+         * Offering group UUID
+         */
+        offering_group_uuid?: string;
+        /**
          * Organization group UUID
          */
         organization_group_uuid?: string;
@@ -57972,6 +58273,10 @@ export type MarketplacePublicOfferingsCountData = {
          *
          */
         o?: Array<ProviderOfferingDetailsOEnum>;
+        /**
+         * Offering group UUID
+         */
+        offering_group_uuid?: string;
         /**
          * Organization group UUID
          */
@@ -61354,6 +61659,10 @@ export type MarketplaceServiceProvidersOfferingsListData = {
          *
          */
         o?: Array<ProviderOfferingDetailsOEnum>;
+        /**
+         * Offering group UUID
+         */
+        offering_group_uuid?: string;
         /**
          * Organization group UUID
          */
@@ -93323,6 +93632,21 @@ export type UsersPullRemoteUserResponses = {
      */
     200: unknown;
 };
+
+export type UsersPullScimAttributesData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/users/{uuid}/pull_scim_attributes/';
+};
+
+export type UsersPullScimAttributesResponses = {
+    200: ScimPullAttributesResponse;
+};
+
+export type UsersPullScimAttributesResponse = UsersPullScimAttributesResponses[keyof UsersPullScimAttributesResponses];
 
 export type UsersRefreshTokenData = {
     body?: never;
