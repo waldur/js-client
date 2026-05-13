@@ -13706,6 +13706,12 @@ export type OfferingThumbnailRequest = {
 
 export type OfferingTypeEnum = 'Support.OfferingTemplate' | 'Marketplace.Booking' | 'Marketplace.Basic' | 'OpenStack.Tenant' | 'OpenStack.Instance' | 'OpenStack.Volume' | 'Marketplace.Rancher' | 'VMware.VirtualMachine' | 'Waldur.RemoteOffering' | 'Marketplace.Script' | 'SlurmInvoices.SlurmPackage' | 'Marketplace.Slurm';
 
+export type OfferingTypeUpdateRequest = {
+    type: OfferingTypeUpdateTypeEnum;
+};
+
+export type OfferingTypeUpdateTypeEnum = 'Marketplace.Basic' | 'Marketplace.Slurm';
+
 export type OfferingUsageByProject = {
     readonly offering_uuid: string;
     readonly offering_name: string;
@@ -55998,6 +56004,22 @@ export type MarketplaceProviderOfferingsUpdateThumbnailData = {
 };
 
 export type MarketplaceProviderOfferingsUpdateThumbnailResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type MarketplaceProviderOfferingsUpdateTypeData = {
+    body: OfferingTypeUpdateRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-provider-offerings/{uuid}/update_type/';
+};
+
+export type MarketplaceProviderOfferingsUpdateTypeResponses = {
     /**
      * No response body
      */
