@@ -6259,6 +6259,13 @@ export type CustomerBillingSummaryResponse = {
     recent_billing_syncs: Array<CustomerBillingSummaryBillingSync>;
 };
 
+export type CustomerCandidate = {
+    readonly uuid: string;
+    name: string;
+    abbreviation?: string;
+    readonly url: string | null;
+};
+
 export type CustomerComponentUsagePolicy = {
     readonly uuid: string;
     readonly url: string;
@@ -8053,6 +8060,15 @@ export type FetchLicenseInfoResponse = {
     data: {
         [key: string]: unknown;
     };
+};
+
+export type FilterCheckResult = {
+    name: string;
+    configured: boolean;
+    matched: boolean;
+    user_value?: unknown;
+    rule_value?: unknown;
+    reason: string;
 };
 
 export type FinancialReport = {
@@ -25132,6 +25148,30 @@ export type RuleRequest = {
     };
 };
 
+export type RuleTestMatchRequestRequest = {
+    /**
+     * UUID of the user to evaluate this rule against.
+     */
+    user_uuid: string;
+};
+
+export type RuleTestMatchResponse = {
+    would_provision: boolean;
+    block_reason: string;
+    user_username: string;
+    user_email: string;
+    user_organization: string;
+    user_registration_method: string;
+    user_identity_source: string;
+    user_affiliations: Array<string>;
+    user_is_protected: boolean;
+    filter_results: Array<FilterCheckResult>;
+    customer_lookup_performed: boolean;
+    customer_candidates: Array<CustomerCandidate>;
+    customer_lookup_ambiguous: boolean;
+    resolved_project_name: string | null;
+};
+
 export type RuntimeStates = {
     /**
      * Value of the runtime state
@@ -27327,6 +27367,7 @@ export type User = {
      * Indicates what identity provider was used.
      */
     readonly identity_source?: string;
+    readonly should_protect_user_details?: boolean;
     readonly has_active_session?: boolean;
     readonly has_usable_password?: boolean;
     readonly ip_address?: string | null;
@@ -30867,7 +30908,7 @@ export type ProviderOfferingCustomerFieldEnum = 'abbreviation' | 'email' | 'name
 
 export type ProjectFieldEnum = 'affiliation' | 'affiliation_code' | 'affiliation_name' | 'affiliation_uuid' | 'backend_id' | 'billing_price_estimate' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_display_billing_info_in_projects' | 'customer_grace_period_days' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'effective_end_date' | 'end_date' | 'end_date_requested_by' | 'end_date_updated_at' | 'grace_period_days' | 'image' | 'is_in_grace_period' | 'is_industry' | 'is_removed' | 'kind' | 'marketplace_resource_count' | 'max_service_accounts' | 'name' | 'oecd_fos_2007_code' | 'oecd_fos_2007_label' | 'project_credit' | 'resources_count' | 'science_domain_code' | 'science_domain_name' | 'science_domain_uuid' | 'science_sub_domain' | 'science_sub_domain_code' | 'science_sub_domain_name' | 'slug' | 'staff_notes' | 'start_date' | 'termination_metadata' | 'type' | 'type_name' | 'type_uuid' | 'url' | 'user_affiliations' | 'user_email_patterns' | 'user_identity_sources' | 'uuid';
 
-export type UserFieldEnum = 'active_isds' | 'address' | 'affiliations' | 'agree_with_policy' | 'agreement_date' | 'attribute_sources' | 'birth_date' | 'civil_number' | 'country_of_residence' | 'date_joined' | 'deactivation_reason' | 'description' | 'eduperson_assurance' | 'email' | 'first_name' | 'full_name' | 'gender' | 'has_active_session' | 'has_usable_password' | 'identity_provider_fields' | 'identity_provider_label' | 'identity_provider_management_url' | 'identity_provider_name' | 'identity_source' | 'image' | 'ip_address' | 'is_active' | 'is_identity_manager' | 'is_staff' | 'is_support' | 'job_title' | 'last_name' | 'managed_isds' | 'nationalities' | 'nationality' | 'native_name' | 'notifications_enabled' | 'organization' | 'organization_country' | 'organization_registry_code' | 'organization_type' | 'permissions' | 'personal_title' | 'phone_number' | 'place_of_birth' | 'preferred_language' | 'registration_method' | 'requested_email' | 'slug' | 'token' | 'token_expires_at' | 'token_lifetime' | 'url' | 'username' | 'uuid';
+export type UserFieldEnum = 'active_isds' | 'address' | 'affiliations' | 'agree_with_policy' | 'agreement_date' | 'attribute_sources' | 'birth_date' | 'civil_number' | 'country_of_residence' | 'date_joined' | 'deactivation_reason' | 'description' | 'eduperson_assurance' | 'email' | 'first_name' | 'full_name' | 'gender' | 'has_active_session' | 'has_usable_password' | 'identity_provider_fields' | 'identity_provider_label' | 'identity_provider_management_url' | 'identity_provider_name' | 'identity_source' | 'image' | 'ip_address' | 'is_active' | 'is_identity_manager' | 'is_staff' | 'is_support' | 'job_title' | 'last_name' | 'managed_isds' | 'nationalities' | 'nationality' | 'native_name' | 'notifications_enabled' | 'organization' | 'organization_country' | 'organization_registry_code' | 'organization_type' | 'permissions' | 'personal_title' | 'phone_number' | 'place_of_birth' | 'preferred_language' | 'registration_method' | 'requested_email' | 'should_protect_user_details' | 'slug' | 'token' | 'token_expires_at' | 'token_lifetime' | 'url' | 'username' | 'uuid';
 
 export type ResourceOEnum = '-created' | '-end_date' | '-name' | '-project_name' | '-state' | 'created' | 'end_date' | 'name' | 'project_name' | 'state';
 
@@ -33881,6 +33922,21 @@ export type AutoprovisioningRulesUpdateResponses = {
 };
 
 export type AutoprovisioningRulesUpdateResponse = AutoprovisioningRulesUpdateResponses[keyof AutoprovisioningRulesUpdateResponses];
+
+export type AutoprovisioningRulesTestMatchData = {
+    body: RuleTestMatchRequestRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/autoprovisioning-rules/{uuid}/test-match/';
+};
+
+export type AutoprovisioningRulesTestMatchResponses = {
+    200: RuleTestMatchResponse;
+};
+
+export type AutoprovisioningRulesTestMatchResponse = AutoprovisioningRulesTestMatchResponses[keyof AutoprovisioningRulesTestMatchResponses];
 
 export type AwsImagesListData = {
     body?: never;
