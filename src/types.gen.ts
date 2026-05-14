@@ -27470,6 +27470,24 @@ export type UserAffiliationCount = {
     count: number;
 };
 
+export type UserAffiliationDetail = {
+    /**
+     * Raw affiliation URN
+     */
+    affiliation: string;
+    organization: string | null;
+    /**
+     * ISO country code
+     */
+    country: string | null;
+    category: string;
+    identifier: string | null;
+    /**
+     * Number of users
+     */
+    count: number;
+};
+
 export type UserAgreement = {
     readonly url: string;
     readonly uuid: string;
@@ -66427,6 +66445,91 @@ export type MarketplaceStatsUserAffiliationCountCountData = {
 };
 
 export type MarketplaceStatsUserAffiliationCountCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type MarketplaceStatsUserAffiliationDetailsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * One of: home-organization, personal-identifier, organization-type, user-status, eduperson, other.
+         */
+        category?: string;
+        /**
+         * ISO country code (case-insensitive).
+         */
+        country?: string;
+        /**
+         * Ordering field; prefix with - for descending. Allowed: count, organization, country, category, affiliation. Defaults to -count.
+         */
+        o?: string;
+        /**
+         * Exact organization domain match.
+         */
+        organization?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Substring match against raw URN or organization.
+         */
+        search?: string;
+    };
+    url: '/api/marketplace-stats/user_affiliation_details/';
+};
+
+export type MarketplaceStatsUserAffiliationDetailsListResponses = {
+    200: Array<UserAffiliationDetail>;
+};
+
+export type MarketplaceStatsUserAffiliationDetailsListResponse = MarketplaceStatsUserAffiliationDetailsListResponses[keyof MarketplaceStatsUserAffiliationDetailsListResponses];
+
+export type MarketplaceStatsUserAffiliationDetailsCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * One of: home-organization, personal-identifier, organization-type, user-status, eduperson, other.
+         */
+        category?: string;
+        /**
+         * ISO country code (case-insensitive).
+         */
+        country?: string;
+        /**
+         * Ordering field; prefix with - for descending. Allowed: count, organization, country, category, affiliation. Defaults to -count.
+         */
+        o?: string;
+        /**
+         * Exact organization domain match.
+         */
+        organization?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Substring match against raw URN or organization.
+         */
+        search?: string;
+    };
+    url: '/api/marketplace-stats/user_affiliation_details/';
+};
+
+export type MarketplaceStatsUserAffiliationDetailsCountResponses = {
     /**
      * No response body
      */
