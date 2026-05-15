@@ -16741,6 +16741,9 @@ export type OrderDetails = {
     consumer_message_attachment?: string | null;
     readonly consumer_rejection_comment?: string;
     readonly provider_rejection_comment?: string;
+    readonly auto_approved?: boolean;
+    readonly auto_approved_by_rule_uuid?: string | null;
+    readonly auto_approved_cost_limit_snapshot?: string | null;
     issue?: IssueReference | null;
 };
 
@@ -18225,6 +18228,12 @@ export type PatchedProjectInfoRequest = {
      * A comma-separated list of allowable destinations of instances that              can be attached to this project. For example, a project may only allow              'brics.aip1.*', meaning that only instances that start with 'brics.aip1.'              can be attached to this project.
      */
     allowed_destinations?: string | null;
+};
+
+export type PatchedProjectOrderAutoApprovalRequest = {
+    project?: string;
+    monthly_cost_limit?: string;
+    enabled?: boolean;
 };
 
 export type PatchedProjectRequest = {
@@ -20032,6 +20041,38 @@ export type ProjectMappingResponse = {
     name: string;
     customer_uuid: string;
     customer_name: string;
+};
+
+export type ProjectOrderAutoApproval = {
+    readonly uuid: string;
+    readonly url: string;
+    project: string;
+    readonly project_name: string;
+    readonly project_uuid: string;
+    readonly customer_name: string;
+    readonly customer_uuid: string;
+    monthly_cost_limit: string;
+    enabled?: boolean;
+    readonly created: string;
+    readonly modified: string;
+    readonly created_by_uuid: string;
+    /**
+     * Required. 128 characters or fewer. Lowercase letters, numbers and @/./+/-/_ characters
+     */
+    readonly created_by_username: string;
+    readonly created_by_full_name: string;
+    readonly modified_by_uuid: string;
+    /**
+     * Required. 128 characters or fewer. Lowercase letters, numbers and @/./+/-/_ characters
+     */
+    readonly modified_by_username: string;
+    readonly modified_by_full_name: string;
+};
+
+export type ProjectOrderAutoApprovalRequest = {
+    project: string;
+    monthly_cost_limit: string;
+    enabled?: boolean;
 };
 
 export type ProjectPermissionLog = {
@@ -30894,7 +30935,7 @@ export type OfferingUserFieldEnum = 'consent_data' | 'created' | 'customer_name'
 
 export type OfferingUserOEnum = '-created' | '-modified' | '-username' | 'created' | 'modified' | 'username';
 
-export type OrderDetailsFieldEnum = 'accepting_terms_of_service' | 'activation_price' | 'attachment' | 'attributes' | 'backend_id' | 'callback_url' | 'can_terminate' | 'category_icon' | 'category_title' | 'category_uuid' | 'completed_at' | 'consumer_message' | 'consumer_message_attachment' | 'consumer_rejection_comment' | 'consumer_reviewed_at' | 'consumer_reviewed_by' | 'consumer_reviewed_by_full_name' | 'consumer_reviewed_by_username' | 'cost' | 'created' | 'created_by_civil_number' | 'created_by_email' | 'created_by_full_name' | 'created_by_organization' | 'created_by_organization_registry_code' | 'created_by_username' | 'customer_name' | 'customer_slug' | 'customer_uuid' | 'error_message' | 'error_traceback' | 'error_updated_at' | 'fixed_price' | 'issue' | 'limits' | 'marketplace_resource_uuid' | 'modified' | 'new_cost_estimate' | 'new_plan_name' | 'new_plan_uuid' | 'offering' | 'offering_billable' | 'offering_description' | 'offering_image' | 'offering_name' | 'offering_plugin_options' | 'offering_shared' | 'offering_thumbnail' | 'offering_type' | 'offering_uuid' | 'old_cost_estimate' | 'old_plan_name' | 'old_plan_uuid' | 'order_subtype' | 'output' | 'output_updated_at' | 'plan' | 'plan_description' | 'plan_name' | 'plan_unit' | 'plan_uuid' | 'project_description' | 'project_name' | 'project_slug' | 'project_uuid' | 'provider_description' | 'provider_message' | 'provider_message_attachment' | 'provider_message_url' | 'provider_name' | 'provider_rejection_comment' | 'provider_reviewed_at' | 'provider_reviewed_by' | 'provider_reviewed_by_full_name' | 'provider_reviewed_by_username' | 'provider_slug' | 'provider_uuid' | 'request_comment' | 'resource_name' | 'resource_type' | 'resource_uuid' | 'slug' | 'start_date' | 'state' | 'termination_comment' | 'type' | 'url' | 'uuid';
+export type OrderDetailsFieldEnum = 'accepting_terms_of_service' | 'activation_price' | 'attachment' | 'attributes' | 'auto_approved' | 'auto_approved_by_rule_uuid' | 'auto_approved_cost_limit_snapshot' | 'backend_id' | 'callback_url' | 'can_terminate' | 'category_icon' | 'category_title' | 'category_uuid' | 'completed_at' | 'consumer_message' | 'consumer_message_attachment' | 'consumer_rejection_comment' | 'consumer_reviewed_at' | 'consumer_reviewed_by' | 'consumer_reviewed_by_full_name' | 'consumer_reviewed_by_username' | 'cost' | 'created' | 'created_by_civil_number' | 'created_by_email' | 'created_by_full_name' | 'created_by_organization' | 'created_by_organization_registry_code' | 'created_by_username' | 'customer_name' | 'customer_slug' | 'customer_uuid' | 'error_message' | 'error_traceback' | 'error_updated_at' | 'fixed_price' | 'issue' | 'limits' | 'marketplace_resource_uuid' | 'modified' | 'new_cost_estimate' | 'new_plan_name' | 'new_plan_uuid' | 'offering' | 'offering_billable' | 'offering_description' | 'offering_image' | 'offering_name' | 'offering_plugin_options' | 'offering_shared' | 'offering_thumbnail' | 'offering_type' | 'offering_uuid' | 'old_cost_estimate' | 'old_plan_name' | 'old_plan_uuid' | 'order_subtype' | 'output' | 'output_updated_at' | 'plan' | 'plan_description' | 'plan_name' | 'plan_unit' | 'plan_uuid' | 'project_description' | 'project_name' | 'project_slug' | 'project_uuid' | 'provider_description' | 'provider_message' | 'provider_message_attachment' | 'provider_message_url' | 'provider_name' | 'provider_rejection_comment' | 'provider_reviewed_at' | 'provider_reviewed_by' | 'provider_reviewed_by_full_name' | 'provider_reviewed_by_username' | 'provider_slug' | 'provider_uuid' | 'request_comment' | 'resource_name' | 'resource_type' | 'resource_uuid' | 'slug' | 'start_date' | 'state' | 'termination_comment' | 'type' | 'url' | 'uuid';
 
 export type OrderDetailsOEnum = '-consumer_reviewed_at' | '-cost' | '-created' | '-state' | 'consumer_reviewed_at' | 'cost' | 'created' | 'state';
 
@@ -51759,6 +51800,10 @@ export type MarketplaceOrdersListData = {
          *
          */
         type?: Array<RequestTypes>;
+        /**
+         * Auto-approved
+         */
+        was_auto_approved?: boolean;
     };
     url: '/api/marketplace-orders/';
 };
@@ -51877,6 +51922,10 @@ export type MarketplaceOrdersCountData = {
          *
          */
         type?: Array<RequestTypes>;
+        /**
+         * Auto-approved
+         */
+        was_auto_approved?: boolean;
     };
     url: '/api/marketplace-orders/';
 };
@@ -52905,6 +52954,145 @@ export type MarketplaceProjectEstimatedCostPoliciesActionsCountResponses = {
      */
     200: unknown;
 };
+
+export type MarketplaceProjectOrderAutoApprovalsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Customer UUID
+         */
+        customer_uuid?: string;
+        enabled?: boolean;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Project UUID
+         */
+        project_uuid?: string;
+    };
+    url: '/api/marketplace-project-order-auto-approvals/';
+};
+
+export type MarketplaceProjectOrderAutoApprovalsListResponses = {
+    200: Array<ProjectOrderAutoApproval>;
+};
+
+export type MarketplaceProjectOrderAutoApprovalsListResponse = MarketplaceProjectOrderAutoApprovalsListResponses[keyof MarketplaceProjectOrderAutoApprovalsListResponses];
+
+export type MarketplaceProjectOrderAutoApprovalsCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Customer UUID
+         */
+        customer_uuid?: string;
+        enabled?: boolean;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Project UUID
+         */
+        project_uuid?: string;
+    };
+    url: '/api/marketplace-project-order-auto-approvals/';
+};
+
+export type MarketplaceProjectOrderAutoApprovalsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type MarketplaceProjectOrderAutoApprovalsCreateData = {
+    body: ProjectOrderAutoApprovalRequest;
+    path?: never;
+    query?: never;
+    url: '/api/marketplace-project-order-auto-approvals/';
+};
+
+export type MarketplaceProjectOrderAutoApprovalsCreateResponses = {
+    201: ProjectOrderAutoApproval;
+};
+
+export type MarketplaceProjectOrderAutoApprovalsCreateResponse = MarketplaceProjectOrderAutoApprovalsCreateResponses[keyof MarketplaceProjectOrderAutoApprovalsCreateResponses];
+
+export type MarketplaceProjectOrderAutoApprovalsDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-project-order-auto-approvals/{uuid}/';
+};
+
+export type MarketplaceProjectOrderAutoApprovalsDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type MarketplaceProjectOrderAutoApprovalsDestroyResponse = MarketplaceProjectOrderAutoApprovalsDestroyResponses[keyof MarketplaceProjectOrderAutoApprovalsDestroyResponses];
+
+export type MarketplaceProjectOrderAutoApprovalsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-project-order-auto-approvals/{uuid}/';
+};
+
+export type MarketplaceProjectOrderAutoApprovalsRetrieveResponses = {
+    200: ProjectOrderAutoApproval;
+};
+
+export type MarketplaceProjectOrderAutoApprovalsRetrieveResponse = MarketplaceProjectOrderAutoApprovalsRetrieveResponses[keyof MarketplaceProjectOrderAutoApprovalsRetrieveResponses];
+
+export type MarketplaceProjectOrderAutoApprovalsPartialUpdateData = {
+    body?: PatchedProjectOrderAutoApprovalRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-project-order-auto-approvals/{uuid}/';
+};
+
+export type MarketplaceProjectOrderAutoApprovalsPartialUpdateResponses = {
+    200: ProjectOrderAutoApproval;
+};
+
+export type MarketplaceProjectOrderAutoApprovalsPartialUpdateResponse = MarketplaceProjectOrderAutoApprovalsPartialUpdateResponses[keyof MarketplaceProjectOrderAutoApprovalsPartialUpdateResponses];
+
+export type MarketplaceProjectOrderAutoApprovalsUpdateData = {
+    body: ProjectOrderAutoApprovalRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-project-order-auto-approvals/{uuid}/';
+};
+
+export type MarketplaceProjectOrderAutoApprovalsUpdateResponses = {
+    200: ProjectOrderAutoApproval;
+};
+
+export type MarketplaceProjectOrderAutoApprovalsUpdateResponse = MarketplaceProjectOrderAutoApprovalsUpdateResponses[keyof MarketplaceProjectOrderAutoApprovalsUpdateResponses];
 
 export type MarketplaceProjectServiceAccountsListData = {
     body?: never;
@@ -61876,6 +62064,191 @@ export type MarketplaceServiceProvidersOfferingsListResponses = {
 };
 
 export type MarketplaceServiceProvidersOfferingsListResponse = MarketplaceServiceProvidersOfferingsListResponses[keyof MarketplaceServiceProvidersOfferingsListResponses];
+
+export type MarketplaceServiceProvidersOfferingsTypesListData = {
+    body?: never;
+    path: {
+        service_provider_uuid: string;
+    };
+    query?: {
+        /**
+         * Accessible via calls
+         */
+        accessible_via_calls?: boolean;
+        /**
+         * Allowed customer UUID
+         */
+        allowed_customer_uuid?: string;
+        /**
+         * Offering attributes (JSON)
+         */
+        attributes?: string;
+        /**
+         * Billable
+         */
+        billable?: boolean;
+        can_create_offering_user?: boolean;
+        /**
+         * Category group UUID
+         */
+        category_group_uuid?: string;
+        /**
+         * Category UUID
+         */
+        category_uuid?: string;
+        /**
+         * Created after
+         */
+        created?: string;
+        /**
+         * Created before
+         */
+        created_before?: string;
+        /**
+         * Customer URL
+         */
+        customer?: string;
+        /**
+         * Customer UUID
+         */
+        customer_uuid?: string;
+        /**
+         * Description contains
+         */
+        description?: string;
+        /**
+         * Has Active Terms of Service
+         */
+        has_active_terms_of_service?: boolean;
+        /**
+         * Has Terms of Service
+         */
+        has_terms_of_service?: boolean;
+        /**
+         * Keyword
+         */
+        keyword?: string;
+        /**
+         * Modified after
+         */
+        modified?: string;
+        /**
+         * Modified before
+         */
+        modified_before?: string;
+        /**
+         * Name
+         */
+        name?: string;
+        /**
+         * Name (exact)
+         */
+        name_exact?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<ProviderOfferingDetailsOEnum>;
+        /**
+         * Offering group UUID
+         */
+        offering_group_uuid?: string;
+        /**
+         * Organization group UUID
+         */
+        organization_group_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Parent offering UUID
+         */
+        parent_uuid?: string;
+        /**
+         * Project UUID
+         */
+        project_uuid?: string;
+        /**
+         * Search by offering name, slug or description
+         */
+        query?: string;
+        /**
+         * Resource customer UUID
+         */
+        resource_customer_uuid?: string;
+        /**
+         * Resource project UUID
+         */
+        resource_project_uuid?: string;
+        /**
+         * Scope UUID
+         */
+        scope_uuid?: string;
+        /**
+         * Service manager UUID
+         */
+        service_manager_uuid?: string;
+        /**
+         * Shared
+         */
+        shared?: boolean;
+        /**
+         * Slug
+         */
+        slug?: string;
+        /**
+         * Offering state
+         *
+         *
+         */
+        state?: Array<OfferingState>;
+        /**
+         * Tag UUID (OR logic)
+         */
+        tag?: Array<string>;
+        /**
+         * Tag name (OR logic)
+         */
+        tag_name?: Array<string>;
+        /**
+         * Tag names with AND logic (comma-separated)
+         */
+        tag_names_and?: string;
+        /**
+         * Tag UUIDs with AND logic (comma-separated)
+         */
+        tags_and?: string;
+        /**
+         * Offering type
+         */
+        type?: Array<string>;
+        /**
+         * User Has Consent
+         */
+        user_has_consent?: boolean;
+        /**
+         * User Has Offering User
+         */
+        user_has_offering_user?: boolean;
+        /**
+         * Comma-separated offering UUIDs
+         */
+        uuid_list?: string;
+    };
+    url: '/api/marketplace-service-providers/{service_provider_uuid}/offerings/types/';
+};
+
+export type MarketplaceServiceProvidersOfferingsTypesListResponses = {
+    200: Array<string>;
+};
+
+export type MarketplaceServiceProvidersOfferingsTypesListResponse = MarketplaceServiceProvidersOfferingsTypesListResponses[keyof MarketplaceServiceProvidersOfferingsTypesListResponses];
 
 export type MarketplaceServiceProvidersProjectPermissionsListData = {
     body?: never;
