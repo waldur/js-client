@@ -9920,6 +9920,8 @@ export type LicenseSuggestion = {
     confidence: number;
 };
 
+export type LikertScaleLengthEnum = 3 | 5 | 7;
+
 export type LimitPeriodEnum = 'month' | 'quarterly' | 'annual' | 'total';
 
 export type LimitTypeEnum = 'GrpTRESMins' | 'MaxTRESMins' | 'GrpTRES';
@@ -18472,6 +18474,30 @@ export type PatchedQuestionAdminRequest = {
      * Maximum number of files allowed for MULTIPLE_FILES type questions. If not set, no count limit is enforced.
      */
     max_files_count?: number | null;
+    /**
+     * Number of points on the Likert scale (3, 5, or 7). Required for LIKERT type questions.
+     */
+    likert_scale_length?: LikertScaleLengthEnum | NullEnum | null;
+    /**
+     * Label for the lowest point on the Likert scale (e.g. 'Strongly disagree'). Optional.
+     */
+    likert_low_label?: string;
+    /**
+     * Label for the highest point on the Likert scale (e.g. 'Strongly agree'). Optional.
+     */
+    likert_high_label?: string;
+    /**
+     * Allow respondents to choose 'N/A' as an answer for LIKERT type questions.
+     */
+    likert_allow_na?: boolean;
+    /**
+     * Maximum number of characters allowed in RICH_TEXT type answers. If not set, no limit is enforced.
+     */
+    rich_text_char_limit?: number | null;
+    /**
+     * Toolbar level for the rich text editor: 'minimal', 'standard', or 'extended'.
+     */
+    rich_text_toolbar_level?: RichTextToolbarLevelEnum | BlankEnum;
     operator?: ChecklistOperators | BlankEnum;
     /**
      * Answer value that trigger review.
@@ -21665,6 +21691,30 @@ export type Question = {
      * Maximum number of files allowed for MULTIPLE_FILES type questions. If not set, no count limit is enforced.
      */
     max_files_count?: number | null;
+    /**
+     * Number of points on the Likert scale (3, 5, or 7). Required for LIKERT type questions.
+     */
+    likert_scale_length?: LikertScaleLengthEnum | NullEnum | null;
+    /**
+     * Label for the lowest point on the Likert scale (e.g. 'Strongly disagree'). Optional.
+     */
+    likert_low_label?: string;
+    /**
+     * Label for the highest point on the Likert scale (e.g. 'Strongly agree'). Optional.
+     */
+    likert_high_label?: string;
+    /**
+     * Allow respondents to choose 'N/A' as an answer for LIKERT type questions.
+     */
+    likert_allow_na?: boolean;
+    /**
+     * Maximum number of characters allowed in RICH_TEXT type answers. If not set, no limit is enforced.
+     */
+    rich_text_char_limit?: number | null;
+    /**
+     * Toolbar level for the rich text editor: 'minimal', 'standard', or 'extended'.
+     */
+    rich_text_toolbar_level?: RichTextToolbarLevelEnum | BlankEnum;
     operator?: ChecklistOperators | BlankEnum;
     /**
      * Answer value that trigger review.
@@ -21730,6 +21780,30 @@ export type QuestionAdmin = {
      * Maximum number of files allowed for MULTIPLE_FILES type questions. If not set, no count limit is enforced.
      */
     max_files_count?: number | null;
+    /**
+     * Number of points on the Likert scale (3, 5, or 7). Required for LIKERT type questions.
+     */
+    likert_scale_length?: LikertScaleLengthEnum | NullEnum | null;
+    /**
+     * Label for the lowest point on the Likert scale (e.g. 'Strongly disagree'). Optional.
+     */
+    likert_low_label?: string;
+    /**
+     * Label for the highest point on the Likert scale (e.g. 'Strongly agree'). Optional.
+     */
+    likert_high_label?: string;
+    /**
+     * Allow respondents to choose 'N/A' as an answer for LIKERT type questions.
+     */
+    likert_allow_na?: boolean;
+    /**
+     * Maximum number of characters allowed in RICH_TEXT type answers. If not set, no limit is enforced.
+     */
+    rich_text_char_limit?: number | null;
+    /**
+     * Toolbar level for the rich text editor: 'minimal', 'standard', or 'extended'.
+     */
+    rich_text_toolbar_level?: RichTextToolbarLevelEnum | BlankEnum;
     operator?: ChecklistOperators | BlankEnum;
     /**
      * Answer value that trigger review.
@@ -21798,6 +21872,30 @@ export type QuestionAdminRequest = {
      * Maximum number of files allowed for MULTIPLE_FILES type questions. If not set, no count limit is enforced.
      */
     max_files_count?: number | null;
+    /**
+     * Number of points on the Likert scale (3, 5, or 7). Required for LIKERT type questions.
+     */
+    likert_scale_length?: LikertScaleLengthEnum | NullEnum | null;
+    /**
+     * Label for the lowest point on the Likert scale (e.g. 'Strongly disagree'). Optional.
+     */
+    likert_low_label?: string;
+    /**
+     * Label for the highest point on the Likert scale (e.g. 'Strongly agree'). Optional.
+     */
+    likert_high_label?: string;
+    /**
+     * Allow respondents to choose 'N/A' as an answer for LIKERT type questions.
+     */
+    likert_allow_na?: boolean;
+    /**
+     * Maximum number of characters allowed in RICH_TEXT type answers. If not set, no limit is enforced.
+     */
+    rich_text_char_limit?: number | null;
+    /**
+     * Toolbar level for the rich text editor: 'minimal', 'standard', or 'extended'.
+     */
+    rich_text_toolbar_level?: RichTextToolbarLevelEnum | BlankEnum;
     operator?: ChecklistOperators | BlankEnum;
     /**
      * Answer value that trigger review.
@@ -21901,7 +21999,7 @@ export type QuestionOptionsAdminRequest = {
     question: string;
 };
 
-export type QuestionTypeEnum = 'boolean' | 'single_select' | 'multi_select' | 'text_input' | 'text_area' | 'number' | 'date' | 'file' | 'multiple_files' | 'phone_number' | 'year' | 'email' | 'url' | 'country' | 'rating' | 'datetime';
+export type QuestionTypeEnum = 'boolean' | 'single_select' | 'multi_select' | 'text_input' | 'text_area' | 'number' | 'date' | 'file' | 'multiple_files' | 'phone_number' | 'year' | 'email' | 'url' | 'country' | 'rating' | 'datetime' | 'likert' | 'rich_text';
 
 export type QuestionWithAnswer = {
     readonly uuid: string;
@@ -21941,6 +22039,30 @@ export type QuestionWithAnswer = {
      * Maximum number of files allowed for MULTIPLE_FILES type questions. If not set, no count limit is enforced.
      */
     readonly max_files_count: number | null;
+    /**
+     * Number of points on the Likert scale (3, 5, or 7). Required for LIKERT type questions.
+     */
+    likert_scale_length: LikertScaleLengthEnum | NullEnum | null;
+    /**
+     * Label for the lowest point on the Likert scale (e.g. 'Strongly disagree'). Optional.
+     */
+    readonly likert_low_label: string;
+    /**
+     * Label for the highest point on the Likert scale (e.g. 'Strongly agree'). Optional.
+     */
+    readonly likert_high_label: string;
+    /**
+     * Allow respondents to choose 'N/A' as an answer for LIKERT type questions.
+     */
+    readonly likert_allow_na: boolean;
+    /**
+     * Maximum number of characters allowed in RICH_TEXT type answers. If not set, no limit is enforced.
+     */
+    readonly rich_text_char_limit: number | null;
+    /**
+     * Toolbar level for the rich text editor: 'minimal', 'standard', or 'extended'.
+     */
+    rich_text_toolbar_level: RichTextToolbarLevelEnum;
     readonly dependencies_info: {
         [key: string]: unknown;
     } | null;
@@ -21984,6 +22106,30 @@ export type QuestionWithAnswerReviewer = {
      * Maximum number of files allowed for MULTIPLE_FILES type questions. If not set, no count limit is enforced.
      */
     readonly max_files_count: number | null;
+    /**
+     * Number of points on the Likert scale (3, 5, or 7). Required for LIKERT type questions.
+     */
+    likert_scale_length: LikertScaleLengthEnum | NullEnum | null;
+    /**
+     * Label for the lowest point on the Likert scale (e.g. 'Strongly disagree'). Optional.
+     */
+    readonly likert_low_label: string;
+    /**
+     * Label for the highest point on the Likert scale (e.g. 'Strongly agree'). Optional.
+     */
+    readonly likert_high_label: string;
+    /**
+     * Allow respondents to choose 'N/A' as an answer for LIKERT type questions.
+     */
+    readonly likert_allow_na: boolean;
+    /**
+     * Maximum number of characters allowed in RICH_TEXT type answers. If not set, no limit is enforced.
+     */
+    readonly rich_text_char_limit: number | null;
+    /**
+     * Toolbar level for the rich text editor: 'minimal', 'standard', or 'extended'.
+     */
+    rich_text_toolbar_level: RichTextToolbarLevelEnum;
     readonly dependencies_info: {
         [key: string]: unknown;
     } | null;
@@ -24386,6 +24532,8 @@ export type ReviewerSuggestionRequest = {
 };
 
 export type ReviewerSuggestionStatusEnum = 'pending' | 'confirmed' | 'rejected' | 'invited';
+
+export type RichTextToolbarLevelEnum = 'minimal' | 'standard' | 'extended';
 
 export type RmqClientProperties = {
     /**
