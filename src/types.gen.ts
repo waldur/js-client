@@ -19307,6 +19307,7 @@ export type Permission = {
     readonly customer_uuid?: string;
     readonly customer_name?: string;
     readonly resource_uuid?: string | null;
+    readonly project_uuid?: string | null;
 };
 
 export type PermissionMetadataResponse = {
