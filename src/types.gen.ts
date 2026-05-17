@@ -3038,6 +3038,20 @@ export type BroadcastMessageRequest = {
 
 export type BroadcastMessageStateEnum = 'DRAFT' | 'SCHEDULED' | 'SENT';
 
+export type BulkRoundCreateRequestRequest = {
+    start_time: string;
+    review_strategy?: ReviewStrategyEnum;
+    deciding_entity?: DecidingEntityEnum;
+    allocation_time?: AllocationTimeEnum;
+    review_duration_in_days?: number | null;
+    minimum_number_of_reviewers?: number | null;
+    minimal_average_scoring?: string | null;
+    cadence: CadenceEnum;
+    custom_interval_months?: number | null;
+    submission_window_days: number;
+    number_of_rounds: number;
+};
+
 export type BulkSilenceResponse = {
     status: string;
     count: number;
@@ -3191,6 +3205,8 @@ export type CachedProjectUsageReport = {
     is_complete?: boolean;
     report: ProjectUsageReport;
 };
+
+export type CadenceEnum = 'monthly' | 'quarterly' | 'biannual' | 'yearly' | 'custom';
 
 export type CallApplicantVisibilityConfig = {
     readonly uuid?: string;
@@ -83429,6 +83445,48 @@ export type ProposalProtectedCallsRoundsSetResponses = {
 };
 
 export type ProposalProtectedCallsRoundsSetResponse = ProposalProtectedCallsRoundsSetResponses[keyof ProposalProtectedCallsRoundsSetResponses];
+
+export type ProposalProtectedCallsRoundsBulkSetData = {
+    body: BulkRoundCreateRequestRequest;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        customer?: string;
+        customer_keyword?: string;
+        customer_uuid?: string;
+        has_active_round?: boolean;
+        name?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<ProtectedCallOEnum>;
+        offering_uuid?: string;
+        offerings_provider_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Slug
+         */
+        slug?: string;
+        state?: Array<CallStates>;
+    };
+    url: '/api/proposal-protected-calls/{uuid}/rounds-bulk-set/';
+};
+
+export type ProposalProtectedCallsRoundsBulkSetResponses = {
+    201: Array<ProtectedRound>;
+};
+
+export type ProposalProtectedCallsRoundsBulkSetResponse = ProposalProtectedCallsRoundsBulkSetResponses[keyof ProposalProtectedCallsRoundsBulkSetResponses];
 
 export type ProposalProtectedCallsRoundsDestroyData = {
     body?: never;
