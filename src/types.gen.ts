@@ -27202,6 +27202,10 @@ export type ToSConsentDashboard = {
     readonly accepted_consents_over_time: Array<TimeSeriesToSData>;
 };
 
+export type TokenExchangeRequest = {
+    code: string;
+};
+
 export type TokenQuotaUsageResponse = {
     /**
      * Daily token limit (non-negative integer). Null uses system default. -1 means unlimited.
@@ -31534,6 +31538,27 @@ export type ApiAuthTaraInitRetrieveResponses = {
      */
     200: unknown;
 };
+
+export type ApiAuthTokenExchangeData = {
+    body: TokenExchangeRequest;
+    path?: never;
+    query?: never;
+    url: '/api-auth/token-exchange/';
+};
+
+export type ApiAuthTokenExchangeErrors = {
+    400: {
+        [key: string]: unknown;
+    };
+};
+
+export type ApiAuthTokenExchangeError = ApiAuthTokenExchangeErrors[keyof ApiAuthTokenExchangeErrors];
+
+export type ApiAuthTokenExchangeResponses = {
+    200: CoreAuthToken;
+};
+
+export type ApiAuthTokenExchangeResponse = ApiAuthTokenExchangeResponses[keyof ApiAuthTokenExchangeResponses];
 
 export type AccessSubnetsListData = {
     body?: never;
