@@ -7466,6 +7466,20 @@ export type DryRunStateEnum = 1 | 2 | 3 | 4;
 
 export type DryRunTypeEnum = 'Create' | 'Update' | 'Terminate' | 'Restore' | 'Pull';
 
+export type DuplicateCallRequestRequest = {
+    name: string;
+    copy_documents?: boolean;
+    copy_offerings?: boolean;
+    copy_rounds?: boolean;
+    copy_workflow_steps?: boolean;
+    copy_resource_templates?: boolean;
+    copy_role_mappings?: boolean;
+    copy_applicant_visibility_config?: boolean;
+    copy_coi_configuration?: boolean;
+    copy_matching_configuration?: boolean;
+    copy_assignment_configuration?: boolean;
+};
+
 export type EnabledreportingscreensEnum = 'resource-usage' | 'user-usage' | 'quotas' | 'usage-monitoring' | 'usage-trends' | 'organization-summary' | 'project-detail' | 'resources-geography' | 'project-classification' | 'usage-by-customer' | 'usage-by-org-type' | 'usage-by-creator' | 'call-performance' | 'review-progress' | 'resource-demand' | 'capacity' | 'provider-overview' | 'provider-revenue' | 'provider-orders' | 'provider-resources' | 'provider-customers' | 'provider-offerings' | 'openstack-instances' | 'offering-usage' | 'user-analytics' | 'user-demographics' | 'user-organizations' | 'user-affiliations' | 'user-roles' | 'growth' | 'revenue' | 'pricelist' | 'orders' | 'offering-costs' | 'maintenance-overview' | 'provisioning-stats';
 
 export type EligibilityCheck = {
@@ -82835,6 +82849,21 @@ export type ProposalProtectedCallsDetectConflictsResponses = {
 };
 
 export type ProposalProtectedCallsDetectConflictsResponse = ProposalProtectedCallsDetectConflictsResponses[keyof ProposalProtectedCallsDetectConflictsResponses];
+
+export type ProposalProtectedCallsDuplicateData = {
+    body: DuplicateCallRequestRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-protected-calls/{uuid}/duplicate/';
+};
+
+export type ProposalProtectedCallsDuplicateResponses = {
+    201: ProtectedCall;
+};
+
+export type ProposalProtectedCallsDuplicateResponse = ProposalProtectedCallsDuplicateResponses[keyof ProposalProtectedCallsDuplicateResponses];
 
 export type ProposalProtectedCallsGenerateAssignmentsData = {
     body?: GenerateAssignmentsRequest;
