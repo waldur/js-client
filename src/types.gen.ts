@@ -14833,6 +14833,10 @@ export type OpenStackInstance = {
      * If True, instance will be connected directly to external network
      */
     connect_directly_to_external_network?: boolean;
+    /**
+     * Force config drive on or off for this instance. If null, the tenant-wide default from service settings is used.
+     */
+    config_drive?: boolean | null;
     readonly runtime_state?: string;
     readonly action?: string;
     /**
@@ -28915,6 +28919,10 @@ export type OpenStackInstanceCreateOrderAttributes = {
      */
     connect_directly_to_external_network?: boolean;
     /**
+     * Force config drive on or off for this instance. If null, the tenant-wide default from service settings is used.
+     */
+    config_drive?: boolean | null;
+    /**
      * Additional data volumes to attach to the instance
      */
     data_volumes?: Array<OpenStackDataVolumeRequest>;
@@ -31253,7 +31261,7 @@ export type OpenStackFloatingIpFieldEnum = 'access_url' | 'address' | 'backend_i
 
 export type OpenStackHealthMonitorFieldEnum = 'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'delay' | 'description' | 'error_message' | 'error_traceback' | 'is_limit_based' | 'is_usage_based' | 'load_balancer_uuid' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'max_retries' | 'modified' | 'name' | 'operating_status' | 'pool' | 'pool_name' | 'pool_uuid' | 'project' | 'project_name' | 'project_uuid' | 'provisioning_status' | 'resource_type' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'timeout' | 'type' | 'url' | 'uuid';
 
-export type OpenStackInstanceFieldEnum = 'access_url' | 'action' | 'action_details' | 'availability_zone' | 'availability_zone_name' | 'backend_id' | 'connect_directly_to_external_network' | 'cores' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'disk' | 'error_message' | 'error_traceback' | 'external_address' | 'external_ips' | 'flavor_disk' | 'flavor_name' | 'floating_ips' | 'hypervisor_hostname' | 'image_name' | 'internal_ips' | 'is_limit_based' | 'is_usage_based' | 'key_fingerprint' | 'key_name' | 'latitude' | 'longitude' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'min_disk' | 'min_ram' | 'modified' | 'name' | 'ports' | 'project' | 'project_name' | 'project_uuid' | 'ram' | 'rancher_cluster' | 'resource_type' | 'runtime_state' | 'security_groups' | 'server_group' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'ssh_public_key' | 'start_time' | 'state' | 'tenant' | 'tenant_uuid' | 'url' | 'user_data' | 'uuid' | 'volumes';
+export type OpenStackInstanceFieldEnum = 'access_url' | 'action' | 'action_details' | 'availability_zone' | 'availability_zone_name' | 'backend_id' | 'config_drive' | 'connect_directly_to_external_network' | 'cores' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'disk' | 'error_message' | 'error_traceback' | 'external_address' | 'external_ips' | 'flavor_disk' | 'flavor_name' | 'floating_ips' | 'hypervisor_hostname' | 'image_name' | 'internal_ips' | 'is_limit_based' | 'is_usage_based' | 'key_fingerprint' | 'key_name' | 'latitude' | 'longitude' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'min_disk' | 'min_ram' | 'modified' | 'name' | 'ports' | 'project' | 'project_name' | 'project_uuid' | 'ram' | 'rancher_cluster' | 'resource_type' | 'runtime_state' | 'security_groups' | 'server_group' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'ssh_public_key' | 'start_time' | 'state' | 'tenant' | 'tenant_uuid' | 'url' | 'user_data' | 'uuid' | 'volumes';
 
 export type OpenStackInstanceOEnum = 'start_time' | '-start_time';
 
