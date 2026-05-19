@@ -13282,6 +13282,7 @@ export type OfferingOverviewUpdateRequest = {
      * URL-friendly identifier. Only editable by staff users.
      */
     slug?: string;
+    backend_id?: string;
 };
 
 export type OfferingPartition = {
