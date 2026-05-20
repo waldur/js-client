@@ -12481,6 +12481,10 @@ export type NestedSoftwareTargetRequest = {
 export type NestedSoftwareVersion = {
     readonly uuid: string;
     version: string;
+    /**
+     * EESSI EasyBuild module version
+     */
+    module_version?: string;
     release_date?: string | null;
     readonly targets: Array<NestedSoftwareTarget>;
     readonly module: {
@@ -12496,6 +12500,10 @@ export type NestedSoftwareVersion = {
 
 export type NestedSoftwareVersionRequest = {
     version: string;
+    /**
+     * EESSI EasyBuild module version
+     */
+    module_version?: string;
     release_date?: string | null;
 };
 
@@ -26651,6 +26659,10 @@ export type SoftwareVersion = {
     readonly created: string;
     readonly modified: string;
     readonly version: string;
+    /**
+     * EESSI EasyBuild module version
+     */
+    readonly module_version: string;
     readonly release_date: string | null;
     /**
      * Package dependencies (format varies by catalog type)
