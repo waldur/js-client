@@ -37426,9 +37426,17 @@ export type BookingResourcesListData = {
         downscaled?: boolean;
         field?: Array<BookingResourceFieldEnum>;
         /**
+         * Flavor name
+         */
+        flavor_name?: string;
+        /**
          * Has termination date
          */
         has_terminate_date?: boolean;
+        /**
+         * Image name
+         */
+        image_name?: string;
         /**
          * Filter by attached state
          */
@@ -37621,9 +37629,17 @@ export type BookingResourcesCountData = {
          */
         downscaled?: boolean;
         /**
+         * Flavor name
+         */
+        flavor_name?: string;
+        /**
          * Has termination date
          */
         has_terminate_date?: boolean;
+        /**
+         * Image name
+         */
+        image_name?: string;
         /**
          * Filter by attached state
          */
@@ -57308,9 +57324,17 @@ export type MarketplaceProviderResourcesListData = {
         downscaled?: boolean;
         field?: Array<ResourceFieldEnum>;
         /**
+         * Flavor name
+         */
+        flavor_name?: string;
+        /**
          * Has termination date
          */
         has_terminate_date?: boolean;
+        /**
+         * Image name
+         */
+        image_name?: string;
         /**
          * Filter by attached state
          */
@@ -57506,9 +57530,17 @@ export type MarketplaceProviderResourcesCountData = {
          */
         downscaled?: boolean;
         /**
+         * Flavor name
+         */
+        flavor_name?: string;
+        /**
          * Has termination date
          */
         has_terminate_date?: boolean;
+        /**
+         * Image name
+         */
+        image_name?: string;
         /**
          * Filter by attached state
          */
@@ -57848,9 +57880,17 @@ export type MarketplaceProviderResourcesHistoryListData = {
          */
         downscaled?: boolean;
         /**
+         * Flavor name
+         */
+        flavor_name?: string;
+        /**
          * Has termination date
          */
         has_terminate_date?: boolean;
+        /**
+         * Image name
+         */
+        image_name?: string;
         /**
          * Filter by attached state
          */
@@ -59674,9 +59714,17 @@ export type MarketplaceResourcesListData = {
         downscaled?: boolean;
         field?: Array<ResourceFieldEnum>;
         /**
+         * Flavor name
+         */
+        flavor_name?: string;
+        /**
          * Has termination date
          */
         has_terminate_date?: boolean;
+        /**
+         * Image name
+         */
+        image_name?: string;
         /**
          * Filter by attached state
          */
@@ -59872,9 +59920,17 @@ export type MarketplaceResourcesCountData = {
          */
         downscaled?: boolean;
         /**
+         * Flavor name
+         */
+        flavor_name?: string;
+        /**
          * Has termination date
          */
         has_terminate_date?: boolean;
+        /**
+         * Image name
+         */
+        image_name?: string;
         /**
          * Filter by attached state
          */
@@ -60229,9 +60285,17 @@ export type MarketplaceResourcesHistoryListData = {
          */
         downscaled?: boolean;
         /**
+         * Flavor name
+         */
+        flavor_name?: string;
+        /**
          * Has termination date
          */
         has_terminate_date?: boolean;
+        /**
+         * Image name
+         */
+        image_name?: string;
         /**
          * Filter by attached state
          */
@@ -60781,9 +60845,17 @@ export type MarketplaceResourcesTeamMembersListData = {
          */
         downscaled?: boolean;
         /**
+         * Flavor name
+         */
+        flavor_name?: string;
+        /**
          * Has termination date
          */
         has_terminate_date?: boolean;
+        /**
+         * Image name
+         */
+        image_name?: string;
         /**
          * Filter by attached state
          */
