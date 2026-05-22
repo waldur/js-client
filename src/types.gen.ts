@@ -5099,6 +5099,8 @@ export type ConstanceSettings = {
     SITE_PHONE?: string;
     CURRENCY_NAME?: string;
     THUMBNAIL_SIZE?: string;
+    ENABLE_MARKDOWN_IMAGE_UPLOAD?: boolean;
+    MARKDOWN_IMAGE_MAX_SIZE_MB?: number;
     ANONYMOUS_USER_CAN_VIEW_OFFERINGS?: boolean;
     SHOW_OFFERING_COVER_IMAGE?: boolean;
     ANONYMOUS_USER_CAN_VIEW_PLANS?: boolean;
@@ -5376,6 +5378,8 @@ export type ConstanceSettingsRequest = {
     SITE_PHONE?: string;
     CURRENCY_NAME?: string;
     THUMBNAIL_SIZE?: string;
+    ENABLE_MARKDOWN_IMAGE_UPLOAD?: boolean;
+    MARKDOWN_IMAGE_MAX_SIZE_MB?: number;
     ANONYMOUS_USER_CAN_VIEW_OFFERINGS?: boolean;
     SHOW_OFFERING_COVER_IMAGE?: boolean;
     ANONYMOUS_USER_CAN_VIEW_PLANS?: boolean;
@@ -10381,6 +10385,17 @@ export type MappingRequest = {
     skip_connection_extnet?: boolean;
     sync_instance_ports?: boolean;
     networks?: Array<string>;
+};
+
+export type MarkdownImageUploadRequest = {
+    image: Blob | File;
+};
+
+export type MarkdownImageUploadResponse = {
+    /**
+     * Absolute URL of the uploaded image for markdown embedding.
+     */
+    url: string;
 };
 
 export type MarketplaceCategory = {
@@ -29707,6 +29722,14 @@ export type OfferingThumbnailRequestMultipart = {
     thumbnail: Blob | File;
 };
 
+export type MarkdownImageUploadRequestForm = {
+    image: Blob | File;
+};
+
+export type MarkdownImageUploadRequestMultipart = {
+    image: Blob | File;
+};
+
 export type ResourceRenewRequestForm = {
     /**
      * Number of months to extend the subscription by.
@@ -30060,6 +30083,8 @@ export type ConstanceSettingsRequestForm = {
     SITE_PHONE?: string;
     CURRENCY_NAME?: string;
     THUMBNAIL_SIZE?: string;
+    ENABLE_MARKDOWN_IMAGE_UPLOAD?: boolean;
+    MARKDOWN_IMAGE_MAX_SIZE_MB?: number;
     ANONYMOUS_USER_CAN_VIEW_OFFERINGS?: boolean;
     SHOW_OFFERING_COVER_IMAGE?: boolean;
     ANONYMOUS_USER_CAN_VIEW_PLANS?: boolean;
@@ -30337,6 +30362,8 @@ export type ConstanceSettingsRequestMultipart = {
     SITE_PHONE?: string;
     CURRENCY_NAME?: string;
     THUMBNAIL_SIZE?: string;
+    ENABLE_MARKDOWN_IMAGE_UPLOAD?: boolean;
+    MARKDOWN_IMAGE_MAX_SIZE_MB?: number;
     ANONYMOUS_USER_CAN_VIEW_OFFERINGS?: boolean;
     SHOW_OFFERING_COVER_IMAGE?: boolean;
     ANONYMOUS_USER_CAN_VIEW_PLANS?: boolean;
@@ -56597,6 +56624,21 @@ export type MarketplaceProviderOfferingsUpdateUserResponses = {
 };
 
 export type MarketplaceProviderOfferingsUpdateUserResponse = MarketplaceProviderOfferingsUpdateUserResponses[keyof MarketplaceProviderOfferingsUpdateUserResponses];
+
+export type MarketplaceProviderOfferingsUploadMarkdownImageData = {
+    body: MarkdownImageUploadRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-provider-offerings/{uuid}/upload_markdown_image/';
+};
+
+export type MarketplaceProviderOfferingsUploadMarkdownImageResponses = {
+    201: MarkdownImageUploadResponse;
+};
+
+export type MarketplaceProviderOfferingsUploadMarkdownImageResponse = MarketplaceProviderOfferingsUploadMarkdownImageResponses[keyof MarketplaceProviderOfferingsUploadMarkdownImageResponses];
 
 export type MarketplaceProviderOfferingsUserAttributeConfigRetrieveData = {
     body?: never;
