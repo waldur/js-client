@@ -23717,6 +23717,24 @@ export type ResourceEndDateRequest = {
     end_date?: string | null;
 };
 
+export type ResourceEndpointRequest = {
+    /**
+     * Name of the access endpoint
+     */
+    name: string;
+    /**
+     * URL of the access endpoint
+     */
+    url: string;
+};
+
+export type ResourceEndpointsRequest = {
+    /**
+     * Access endpoints to set on the resource
+     */
+    endpoints: Array<ResourceEndpointRequest>;
+};
+
 export type ResourceLimitChangeRequest = {
     readonly url: string;
     readonly uuid: string;
@@ -58429,6 +58447,21 @@ export type MarketplaceProviderResourcesSetEndDateByStaffResponses = {
      */
     200: unknown;
 };
+
+export type MarketplaceProviderResourcesSetEndpointsData = {
+    body: ResourceEndpointsRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-provider-resources/{uuid}/set_endpoints/';
+};
+
+export type MarketplaceProviderResourcesSetEndpointsResponses = {
+    200: ResourceResponseStatus;
+};
+
+export type MarketplaceProviderResourcesSetEndpointsResponse = MarketplaceProviderResourcesSetEndpointsResponses[keyof MarketplaceProviderResourcesSetEndpointsResponses];
 
 export type MarketplaceProviderResourcesSetLimitsData = {
     body: ResourceSetLimitsRequest;
