@@ -50,6 +50,13 @@ export type AccountNameGenerationPolicyEnum = 'project_slug';
 
 export type ActionTakenEnum = 'allow' | 'flag' | 'warn' | 'redact' | 'block';
 
+export type ActiveAgentTask = {
+    id: string;
+    name: string;
+    args?: Array<string>;
+    worker: string;
+};
+
 export type ActiveQueriesStats = {
     /**
      * Number of currently active queries
@@ -492,46 +499,68 @@ export type AgentServiceStatus = {
     readonly modified: string;
 };
 
+export type AgentStatsBackendType = {
+    backend_type: string | null;
+    count: number;
+};
+
+export type AgentStatsIdentities = {
+    total: number;
+    by_offering: Array<AgentStatsOfferingCount>;
+};
+
+export type AgentStatsOfferingCount = {
+    offering__name: string;
+    offering__uuid: string;
+    count: number;
+};
+
+export type AgentStatsProcessors = {
+    total: number;
+    by_backend_type: Array<AgentStatsBackendType>;
+    stale_count: number;
+};
+
 export type AgentStatsResponse = {
     /**
      * Statistics about agent identities
      */
-    identities: {
-        [key: string]: unknown;
-    };
+    identities: AgentStatsIdentities;
     /**
      * Statistics about agent services
      */
-    services: {
-        [key: string]: unknown;
-    };
+    services: AgentStatsServices;
     /**
      * Statistics about agent processors
      */
-    processors: {
-        [key: string]: unknown;
-    };
+    processors: AgentStatsProcessors;
+};
+
+export type AgentStatsServices = {
+    total: number;
+    by_state: AgentStatsServicesState;
+    stale_count: number;
+};
+
+export type AgentStatsServicesState = {
+    active: number;
+    idle: number;
+    error: number;
 };
 
 export type AgentTaskStatsResponse = {
     /**
      * Currently running agent-related tasks
      */
-    active_tasks: Array<{
-        [key: string]: unknown;
-    }>;
+    active_tasks: Array<ActiveAgentTask>;
     /**
      * Scheduled agent-related tasks
      */
-    scheduled_tasks: Array<{
-        [key: string]: unknown;
-    }>;
+    scheduled_tasks: Array<ScheduledAgentTask>;
     /**
      * Reserved agent-related tasks
      */
-    reserved_tasks: Array<{
-        [key: string]: unknown;
-    }>;
+    reserved_tasks: Array<ReservedAgentTask>;
     /**
      * Error message if task inspection failed
      */
@@ -623,9 +652,7 @@ export type AllocationCandidatesResponse = {
      * Placement's per-provider summary: maps resource_provider_uuid → {resources: {CLASS: {used, capacity}, ...}, traits: [...]}.
      */
     provider_summaries: {
-        [key: string]: {
-            [key: string]: unknown;
-        };
+        [key: string]: ProviderSummary;
     };
 };
 
@@ -636,10 +663,6 @@ export type AllocationRequest = {
     project: string;
     node_limit?: number;
     groupname?: string | null;
-};
-
-export type AllocationSetLimits = {
-    node_limit: number;
 };
 
 export type AllocationSetLimitsRequest = {
@@ -800,15 +823,11 @@ export type AnonymousChatKpiResponse = {
     /**
      * Per-day query counts across the filter window.
      */
-    daily_volume?: Array<{
-        [key: string]: unknown;
-    }>;
+    daily_volume?: Array<DailyVolume>;
     /**
      * Stacked-bar input. Shape: {labels: [iso-date], series: {NONE: [...], LOW: [...], MEDIUM: [...], HIGH: [...], CRITICAL: [...]}}
      */
-    severity_by_day?: {
-        [key: string]: unknown;
-    };
+    severity_by_day?: SeverityByDay;
 };
 
 export type AnonymousChatStreamRequestRequest = {
@@ -1110,6 +1129,9 @@ export type ArrowCredentialsValidationResponse = {
     valid: boolean;
     message?: string;
     error?: string;
+    /**
+     * Raw partner info data from Arrow API
+     */
     partner_info?: {
         [key: string]: unknown;
     };
@@ -1374,6 +1396,13 @@ export type ArrowSettingsRequest = {
      * Prefix for invoice item names (e.g. 'Arrow consumption')
      */
     invoice_item_prefix?: string;
+};
+
+export type ArrowSyncError = {
+    error?: string;
+    period?: string;
+    subscription_id?: string;
+    customer_id?: string;
 };
 
 export type ArrowVendorOfferingMapping = {
@@ -2039,12 +2068,21 @@ export type AvailableExternalNetwork = {
     name: string;
     description: string;
     source: AvailableExternalNetworkSourceEnum;
-    subnets: Array<{
-        [key: string]: unknown;
-    }>;
+    subnets: Array<AvailableExternalNetworkSubnet>;
 };
 
 export type AvailableExternalNetworkSourceEnum = 'global' | 'rbac';
+
+export type AvailableExternalNetworkSubnet = {
+    backend_id: string;
+    name: string;
+    cidr: string;
+};
+
+export type AvailableProjectDigestSection = {
+    key: string;
+    title: string;
+};
 
 export type AvailableScope = {
     permission: string;
@@ -3374,11 +3412,43 @@ export type CallCoiConfiguration = {
     readonly modified: string;
 };
 
+export type CallComplianceChecklistInfo = {
+    uuid: string;
+    name: string;
+    description: string;
+    total_questions: number;
+    required_questions: number;
+};
+
 export type CallComplianceOverview = {
-    readonly checklist: {
-        [key: string]: unknown;
-    } | null;
-    readonly proposals: Array<unknown>;
+    checklist: CallComplianceChecklistInfo | null;
+    readonly proposals: Array<CallComplianceOverviewProposal>;
+};
+
+export type CallComplianceOverviewProposal = {
+    uuid: string;
+    name: string;
+    state: string;
+    created_by: string | null;
+    created_by_uuid: string | null;
+    compliance: CallComplianceOverviewProposalCompliance | null;
+};
+
+export type CallComplianceOverviewProposalCompliance = {
+    is_completed: boolean;
+    requires_review: boolean;
+    completion_percentage: number;
+    reviewed_by: string | null;
+    reviewed_at: string | null;
+    review_triggers: Array<CallComplianceOverviewProposalReviewTrigger>;
+    unanswered_required_count: number;
+};
+
+export type CallComplianceOverviewProposalReviewTrigger = {
+    question: string;
+    answer: unknown;
+    trigger_value: unknown;
+    operator: string;
 };
 
 export type CallComplianceReviewRequest = {
@@ -4468,25 +4538,26 @@ export type ChecklistRequest = {
 };
 
 export type ChecklistResponse = {
-    readonly checklist: {
-        [key: string]: unknown;
-    };
+    checklist: ChecklistShort;
     completion: ChecklistCompletion;
     questions: Array<QuestionWithAnswer>;
 };
 
 export type ChecklistReviewerResponse = {
-    readonly checklist: {
-        [key: string]: unknown;
-    };
+    checklist: ChecklistShort;
     completion: ChecklistCompletionReviewer;
     questions: Array<QuestionWithAnswerReviewer>;
 };
 
+export type ChecklistShort = {
+    uuid: string;
+    name: string;
+    description: string;
+    checklist_type: string;
+};
+
 export type ChecklistTemplate = {
-    readonly checklist: {
-        [key: string]: unknown;
-    };
+    checklist: ChecklistShort;
     questions: Array<Question>;
     initial_visible_questions: Array<Question>;
 };
@@ -4615,9 +4686,17 @@ export type CleanupResponse = {
     /**
      * List of deleted (or to-be-deleted) items
      */
-    items: Array<{
-        [key: string]: unknown;
-    }>;
+    items: Array<CleanupResponseItem>;
+};
+
+export type CleanupResponseItem = {
+    uuid: string;
+    name: string;
+    offering__name?: string;
+    created?: string;
+    identity__name?: string;
+    state?: string;
+    modified?: string;
 };
 
 export type ClusterSecurityGroup = {
@@ -6023,9 +6102,7 @@ export type CreateManualAssignmentResponse = {
     /**
      * Proposals that were skipped with reasons
      */
-    skipped_proposals: Array<{
-        [key: string]: unknown;
-    }>;
+    skipped_proposals: Array<SkippedProposal>;
 };
 
 export type CreatePool = {
@@ -6803,6 +6880,11 @@ export type DailyStorageReport = {
     };
 };
 
+export type DailyVolume = {
+    date: string;
+    count: number;
+};
+
 export type DataAccessSummary = {
     total_administrative_access: number | null;
     total_organizational_access: number;
@@ -6982,6 +7064,10 @@ export type DeprecatedNetworkRbacPolicyRequest = {
      * Type of access granted - either shared access or external network access
      */
     policy_type?: PolicyTypeEnum;
+};
+
+export type Detail = {
+    detail: string;
 };
 
 export type DetailState = {
@@ -7333,9 +7419,7 @@ export type DiscoverMetadataResponse = {
     /**
      * OIDC endpoints (authorization, token, userinfo, logout)
      */
-    endpoints: {
-        [key: string]: string;
-    };
+    endpoints: OidcEndpoints;
     /**
      * Waldur User fields with suggested OIDC claim mappings
      */
@@ -7984,13 +8068,13 @@ export type FederatedidentitydeactivationpolicyEnum = 'all_isds_removed' | 'any_
 
 export type FontfamilyEnum = 'Inter' | 'Maven Pro';
 
+export type FeatureItem = {
+    key: string;
+    description: string;
+};
+
 export type FeatureMetadataResponse = {
-    /**
-     * List of feature sections with descriptions
-     */
-    features: Array<{
-        [key: string]: unknown;
-    }>;
+    features: Array<FeatureSection>;
     /**
      * Nested feature enum values by section
      */
@@ -7999,6 +8083,12 @@ export type FeatureMetadataResponse = {
             [key: string]: string;
         };
     };
+};
+
+export type FeatureSection = {
+    key: string;
+    description: string;
+    items: Array<FeatureItem>;
 };
 
 export type Feedback = {
@@ -8033,6 +8123,9 @@ export type FetchBillingExportResponse = {
     period_to: string;
     classification: string;
     row_count: number;
+    /**
+     * Raw billing export data from Arrow API
+     */
     data: Array<{
         [key: string]: unknown;
     }>;
@@ -8050,6 +8143,9 @@ export type FetchConsumptionResponse = {
     license_reference: string;
     period: string;
     row_count: number;
+    /**
+     * Raw consumption data from Arrow API
+     */
     data: Array<{
         [key: string]: unknown;
     }>;
@@ -8277,9 +8373,7 @@ export type GenerateAssignmentsResponse = {
     /**
      * Proposals that were skipped with reasons
      */
-    skipped_proposals: Array<{
-        [key: string]: unknown;
-    }>;
+    skipped_proposals: Array<SkippedProposal>;
 };
 
 export type GenerateSuggestionsRequestRequest = {
@@ -9008,6 +9102,11 @@ export type ImportResourceRequest = {
     additional_details?: unknown;
 };
 
+export type ImportUsageError = {
+    customer_name: string;
+    reason: string;
+};
+
 export type ImportUsageItemRequest = {
     customer_name?: string;
     customer_uuid?: string;
@@ -9028,9 +9127,7 @@ export type ImportUsageRequest = {
 export type ImportUsageResponse = {
     created: number;
     skipped: number;
-    errors: Array<{
-        [key: string]: string;
-    }>;
+    errors: Array<ImportUsageError>;
 };
 
 export type ImportableResource = {
@@ -10891,6 +10988,10 @@ export type MergedPluginOptions = {
      */
     backend_id_display_label?: string;
     /**
+     * Show an in-browser inference playground action for resources of this offering (for offerings whose resources expose an OpenAI-compatible endpoint).
+     */
+    expose_inference_playground?: boolean;
+    /**
      * List of disabled marketplace resource actions for this offering.
      */
     disabled_resource_actions?: Array<string>;
@@ -11193,6 +11294,10 @@ export type MergedPluginOptionsRequest = {
      * Label used by UI for showing value of the backend_id
      */
     backend_id_display_label?: string;
+    /**
+     * Show an in-browser inference playground action for resources of this offering (for offerings whose resources expose an OpenAI-compatible endpoint).
+     */
+    expose_inference_playground?: boolean;
     /**
      * List of disabled marketplace resource actions for this offering.
      */
@@ -12502,14 +12607,10 @@ export type NestedSoftwareVersion = {
     module_version?: string;
     release_date?: string | null;
     readonly targets: Array<NestedSoftwareTarget>;
-    readonly module: {
-        [key: string]: unknown;
-    };
+    module: SoftwareModule | null;
     readonly required_modules: Array<unknown>;
     readonly extensions: Array<unknown>;
-    readonly toolchain: {
-        [key: string]: unknown;
-    };
+    toolchain: SoftwareToolchain | null;
     readonly toolchain_families_compatibility: Array<unknown>;
 };
 
@@ -13261,13 +13362,6 @@ export type OfferingIntegrationUpdateRequest = {
 export type OfferingLocationUpdateRequest = {
     latitude: number;
     longitude: number;
-};
-
-export type OfferingMappingResponse = {
-    uuid: string;
-    name: string;
-    description: string;
-    slug: string;
 };
 
 export type OfferingOptions = {
@@ -14067,6 +14161,29 @@ export type OfferingUserUpdateRestrictionRequest = {
      * Whether the offering user should be restricted from accessing resources
      */
     is_restricted: boolean;
+};
+
+export type OidcEndpoints = {
+    /**
+     * OIDC authorization endpoint
+     */
+    authorization_endpoint: string;
+    /**
+     * OIDC token endpoint
+     */
+    token_endpoint: string;
+    /**
+     * OIDC userinfo endpoint
+     */
+    userinfo_endpoint: string;
+    /**
+     * OIDC end session endpoint
+     */
+    end_session_endpoint?: string | null;
+    /**
+     * OIDC JWKS URI
+     */
+    jwks_uri?: string | null;
 };
 
 export type OnboardingCompanyValidationRequestRequest = {
@@ -15201,9 +15318,7 @@ export type OpenStackLoadBalancer = {
     /**
      * Security groups assigned to the VIP port.
      */
-    readonly vip_security_groups?: Array<{
-        [key: string]: unknown;
-    }>;
+    readonly vip_security_groups?: Array<OpenStackLoadBalancerVipSecurityGroup>;
     readonly marketplace_offering_uuid?: string | null;
     readonly marketplace_offering_name?: string | null;
     readonly marketplace_offering_type?: string | null;
@@ -15217,6 +15332,12 @@ export type OpenStackLoadBalancer = {
     readonly marketplace_resource_state?: string | null;
     readonly is_usage_based?: boolean | null;
     readonly is_limit_based?: boolean | null;
+};
+
+export type OpenStackLoadBalancerVipSecurityGroup = {
+    uuid?: string;
+    name?: string;
+    url?: string;
 };
 
 export type OpenStackNestedFloatingIp = {
@@ -15795,10 +15916,6 @@ export type OpenStackRouterInterfaceRequest = {
      * The port to connect to the router. Either subnet or port must be specified, but not both.
      */
     port?: string;
-};
-
-export type OpenStackRouterSetRoutes = {
-    routes: Array<OpenStackStaticRoute>;
 };
 
 export type OpenStackRouterSetRoutesRequest = {
@@ -19387,6 +19504,28 @@ export type Permission = {
     readonly project_uuid?: string | null;
 };
 
+export type PermissionDescription = {
+    /**
+     * Category name
+     */
+    label: string;
+    /**
+     * List of permissions in this category
+     */
+    options: Array<PermissionDescriptionOption>;
+};
+
+export type PermissionDescriptionOption = {
+    /**
+     * Human-readable permission label
+     */
+    label: string;
+    /**
+     * Permission enum value
+     */
+    value: ValueEnum;
+};
+
 export type PermissionMetadataResponse = {
     /**
      * Map of role keys to role enum values from RoleEnum
@@ -19409,9 +19548,7 @@ export type PermissionMetadataResponse = {
     /**
      * Grouped permission descriptions for UI
      */
-    permission_descriptions: Array<{
-        [key: string]: unknown;
-    }>;
+    permission_descriptions: Array<PermissionDescription>;
 };
 
 export type PermissionRequest = {
@@ -19596,6 +19733,12 @@ export type PolicyPeriodEnum = 1 | 2 | 3 | 4;
 export type PolicyTypeEnum = 'access_as_shared' | 'access_as_external';
 
 export type PresetEnum = 'cscs' | 'oecd_fos_2007';
+
+export type PreviewPeriod = {
+    period: string;
+    status?: string;
+    row_count?: number;
+};
 
 export type PreviewServiceAttributesRequestRequest = {
     /**
@@ -19963,9 +20106,7 @@ export type ProjectDigestConfig = {
      */
     day_of_month?: number;
     readonly last_sent_at: string | null;
-    readonly available_sections: Array<{
-        [key: string]: string;
-    }>;
+    readonly available_sections: Array<AvailableProjectDigestSection>;
 };
 
 export type ProjectDigestConfigRequest = {
@@ -20112,13 +20253,6 @@ export type ProjectInfoRequest = {
      * A comma-separated list of allowable destinations of instances that              can be attached to this project. For example, a project may only allow              'brics.aip1.*', meaning that only instances that start with 'brics.aip1.'              can be attached to this project.
      */
     allowed_destinations?: string | null;
-};
-
-export type ProjectMappingResponse = {
-    uuid: string;
-    name: string;
-    customer_uuid: string;
-    customer_name: string;
 };
 
 export type ProjectOrderAutoApproval = {
@@ -20609,12 +20743,8 @@ export type Proposal = {
     readonly science_domain_name: string;
     readonly allocation_comment: string | null;
     readonly created: string;
-    readonly compliance_status: {
-        [key: string]: unknown;
-    } | null;
-    readonly can_submit: {
-        [key: string]: unknown;
-    };
+    compliance_status: ProposalComplianceStatus | null;
+    can_submit: ProposalCanSubmitResponse;
     readonly awaiting_manual_advance: boolean;
 };
 
@@ -20622,9 +20752,26 @@ export type ProposalApproveRequest = {
     allocation_comment?: string;
 };
 
+export type ProposalCanSubmitResponse = {
+    can_submit: boolean;
+    error: string | null;
+};
+
 export type ProposalChecklistAnswerSubmitResponse = {
     detail: string;
     completion: ChecklistCompletionReviewer;
+};
+
+export type ProposalComplianceStatus = {
+    error?: string;
+    has_checklist: boolean;
+    is_completed: boolean;
+    requires_review: boolean;
+    completion_percentage: number;
+    reviewed_by: string | null;
+    reviewed_at: string | null;
+    checklist_name?: string;
+    unanswered_required_count?: number;
 };
 
 export type ProposalDetachDocumentsRequest = {
@@ -20989,6 +21136,11 @@ export type ProtectedRoundRequest = {
     minimum_number_of_reviewers?: number | null;
 };
 
+export type ProviderCustomerMonthly = {
+    month: string;
+    customer_count: number;
+};
+
 export type ProviderCustomerStats = {
     /**
      * Total number of customers
@@ -21001,21 +21153,27 @@ export type ProviderCustomerStats = {
     /**
      * Top customers by revenue
      */
-    top_by_revenue: Array<{
-        [key: string]: unknown;
-    }>;
+    top_by_revenue: Array<ProviderCustomerTopRevenue>;
     /**
      * Top customers by resource count
      */
-    top_by_resources: Array<{
-        [key: string]: unknown;
-    }>;
+    top_by_resources: Array<ProviderCustomerTopResource>;
     /**
      * Monthly customer counts
      */
-    monthly: Array<{
-        [key: string]: unknown;
-    }>;
+    monthly: Array<ProviderCustomerMonthly>;
+};
+
+export type ProviderCustomerTopResource = {
+    customer_uuid: string;
+    customer_name: string;
+    resource_count: number;
+};
+
+export type ProviderCustomerTopRevenue = {
+    customer_uuid: string;
+    customer_name: string;
+    revenue: string | null;
 };
 
 export type ProviderOffering = {
@@ -21191,13 +21349,30 @@ export type ProviderOfferingDetails = {
     readonly google_calendar_link?: string | null;
 };
 
+export type ProviderOfferingPlanStats = {
+    plan_uuid: string;
+    plan_name: string;
+    usage: number;
+    limit: number | null;
+    utilization: number | null;
+};
+
 export type ProviderOfferingStats = {
     /**
      * Offering statistics including resources, revenue, and utilization
      */
-    offerings: Array<{
-        [key: string]: unknown;
-    }>;
+    offerings: Array<ProviderOfferingStatsItem>;
+};
+
+export type ProviderOfferingStatsItem = {
+    offering_uuid: string;
+    offering_name: string;
+    category_name: string;
+    state: string;
+    active_resources: number;
+    total_resources: number;
+    revenue: string | null;
+    plans: Array<ProviderOfferingPlanStats>;
 };
 
 export type ProviderPlanDetails = {
@@ -21305,6 +21480,11 @@ export type ProviderRequestedResource = {
     proposal: string;
 };
 
+export type ProviderResourceMonthly = {
+    month: string;
+    count: number;
+};
+
 export type ProviderResourceStats = {
     /**
      * Total number of resources
@@ -21319,15 +21499,24 @@ export type ProviderResourceStats = {
     /**
      * Resource counts grouped by offering
      */
-    by_offering: Array<{
-        [key: string]: unknown;
-    }>;
+    by_offering: Array<ProviderResourceTopOffering>;
     /**
      * Monthly resource counts
      */
-    monthly: Array<{
-        [key: string]: unknown;
-    }>;
+    monthly: Array<ProviderResourceMonthly>;
+};
+
+export type ProviderResourceTopOffering = {
+    offering_uuid: string;
+    offering_name: string;
+    count: number;
+};
+
+export type ProviderSummary = {
+    resources: {
+        [key: string]: ResourceClassSummary;
+    };
+    traits: Array<string>;
 };
 
 export type ProviderTeamUser = {
@@ -21658,16 +21847,8 @@ export type PubsubOverview = {
     readonly last_updated: string;
 };
 
-export type PullConflictResponse = {
-    detail: string;
-};
-
 export type PullMarketplaceScriptResourceRequest = {
     resource_uuid: string;
-};
-
-export type PullResponse = {
-    detail: string;
 };
 
 export type QosStrategyEnum = 'threshold' | 'progressive';
@@ -22007,6 +22188,12 @@ export type QuestionAnswer = {
     }>;
 };
 
+export type QuestionCondition = {
+    question_description: string;
+    operator: string;
+    required_value: unknown;
+};
+
 export type QuestionDependency = {
     readonly uuid: string;
     readonly url: string;
@@ -22019,6 +22206,11 @@ export type QuestionDependency = {
      */
     required_answer_value: unknown;
     operator?: ChecklistOperators;
+};
+
+export type QuestionDependencyInfo = {
+    logic: string;
+    conditions: Array<QuestionCondition>;
 };
 
 export type QuestionDependencyRequest = {
@@ -22064,9 +22256,7 @@ export type QuestionWithAnswer = {
     question_type: QuestionTypeEnum;
     readonly required: boolean;
     readonly order: number;
-    readonly existing_answer: {
-        [key: string]: unknown;
-    } | null;
+    existing_answer: Answer | null;
     readonly question_options: Array<unknown> | null;
     /**
      * Minimum value allowed for NUMBER, YEAR, and RATING type questions
@@ -22116,9 +22306,7 @@ export type QuestionWithAnswer = {
      * Toolbar level for the rich text editor: 'minimal', 'standard', or 'extended'.
      */
     rich_text_toolbar_level: RichTextToolbarLevelEnum;
-    readonly dependencies_info: {
-        [key: string]: unknown;
-    } | null;
+    dependencies_info: QuestionDependencyInfo | null;
 };
 
 export type QuestionWithAnswerReviewer = {
@@ -22131,9 +22319,7 @@ export type QuestionWithAnswerReviewer = {
     question_type: QuestionTypeEnum;
     readonly required: boolean;
     readonly order: number;
-    readonly existing_answer: {
-        [key: string]: unknown;
-    } | null;
+    existing_answer: Answer | null;
     readonly question_options: Array<unknown> | null;
     /**
      * Minimum value allowed for NUMBER, YEAR, and RATING type questions
@@ -22183,9 +22369,7 @@ export type QuestionWithAnswerReviewer = {
      * Toolbar level for the rich text editor: 'minimal', 'standard', or 'extended'.
      */
     rich_text_toolbar_level: RichTextToolbarLevelEnum;
-    readonly dependencies_info: {
-        [key: string]: unknown;
-    } | null;
+    dependencies_info: QuestionDependencyInfo | null;
     operator?: ChecklistOperators | BlankEnum;
     /**
      * Answer value that trigger review.
@@ -23159,10 +23343,6 @@ export type RemoteAllocationRequest = {
     remote_project_identifier?: string | null;
 };
 
-export type RemoteAllocationSetLimits = {
-    node_limit: number;
-};
-
 export type RemoteAllocationSetLimitsRequest = {
     node_limit: number;
 };
@@ -23536,6 +23716,11 @@ export type RequestedResourceRequest = {
     call_resource_template_uuid?: string;
 };
 
+export type ReservedAgentTask = {
+    id: string;
+    name: string;
+};
+
 export type Resource = {
     offering?: string;
     readonly offering_name?: string;
@@ -23676,6 +23861,11 @@ export type ResourceBackendIdRequest = {
 
 export type ResourceBackendMetadataRequest = {
     backend_metadata: unknown;
+};
+
+export type ResourceClassSummary = {
+    used: number;
+    capacity: number;
 };
 
 export type ResourceDemandStat = {
@@ -24044,13 +24234,6 @@ export type ResourceRequest = {
     end_date?: string | null;
     downscaled?: boolean;
     paused?: boolean;
-};
-
-export type ResourceResponseStatus = {
-    /**
-     * Status of the resource response
-     */
-    readonly status: string;
 };
 
 export type ResourceRestrictMemberAccessRequest = {
@@ -24648,6 +24831,14 @@ export type ReviewerSuggestion = {
     source_type: SourceTypeEnum;
     readonly source_type_display: string;
     readonly created: string;
+};
+
+export type ReviewerSuggestionItem = {
+    pool_entry_uuid: string;
+    reviewer_name: string;
+    affinity_score: number | null;
+    current_assignments: number;
+    max_assignments: number;
 };
 
 export type ReviewerSuggestionRequest = {
@@ -25555,6 +25746,12 @@ export type SaveSettingsResponse = {
     message: string;
 };
 
+export type ScheduledAgentTask = {
+    id: string;
+    name: string;
+    eta: string;
+};
+
 export type ScienceDomain = {
     readonly uuid: string;
     readonly url: string;
@@ -25643,6 +25840,11 @@ export type ScreenshotRequest = {
     description?: string;
     image: Blob | File;
     offering: string;
+};
+
+export type Secret = {
+    name: string;
+    id: string;
 };
 
 export type Section = {
@@ -25916,8 +26118,15 @@ export type SetErredRequest = {
     error_traceback?: string;
 };
 
-export type SetErredResponse = {
-    detail: string;
+export type SetExternalGatewayFixedIpRequest = {
+    /**
+     * IP address specification for the gateway port.
+     */
+    ip_address: string;
+    /**
+     * Backend ID of the subnet.
+     */
+    subnet_id?: string;
 };
 
 export type SetExternalGatewayRequest = {
@@ -25932,9 +26141,7 @@ export type SetExternalGatewayRequest = {
     /**
      * List of fixed IP specifications for the gateway port. Each entry should have 'ip_address' and optionally 'subnet_id'. Requires advanced permissions.
      */
-    external_fixed_ips?: Array<{
-        [key: string]: unknown;
-    }>;
+    external_fixed_ips?: Array<SetExternalGatewayFixedIpRequest>;
 };
 
 export type SetMtu = {
@@ -25956,10 +26163,6 @@ export type SetOfferingsUsernameRequest = {
     username: string;
 };
 
-export type SetOkResponse = {
-    detail: string;
-};
-
 export type SetTokenQuotaRequest = {
     /**
      * UUID of the user to set quota for.
@@ -25979,13 +26182,39 @@ export type SetTokenQuotaRequest = {
     monthly_limit?: number | null;
 };
 
+export type SettingsItem = {
+    key: string;
+    description: string;
+    default?: unknown;
+    type: string;
+    options?: Array<SettingsItemOption>;
+};
+
+export type SettingsItemOption = {
+    value: string;
+    label: string;
+};
+
 export type SettingsMetadataResponse = {
-    /**
-     * List of settings sections with configuration items
-     */
-    settings: Array<{
-        [key: string]: unknown;
-    }>;
+    settings: Array<SettingsSection>;
+};
+
+export type SettingsSection = {
+    description: string;
+    items: Array<SettingsItem>;
+};
+
+export type SeverityByDay = {
+    labels: Array<string>;
+    series: SeverityByDaySeries;
+};
+
+export type SeverityByDaySeries = {
+    NONE: Array<number>;
+    LOW: Array<number>;
+    MEDIUM: Array<number>;
+    HIGH: Array<number>;
+    CRITICAL: Array<number>;
 };
 
 export type SilenceActionRequest = {
@@ -26040,6 +26269,12 @@ export type SiteAgentLogCreateRequest = {
     level: LevelEnum;
     message: string;
     module: string;
+};
+
+export type SkippedProposal = {
+    proposal_uuid: string;
+    proposal_name: string;
+    reason: string;
 };
 
 export type SlurmAllocation = {
@@ -26097,12 +26332,6 @@ export type SlurmAllocationRequest = {
     description?: string;
     service_settings: string;
     project: string;
-};
-
-export type SlurmAllocationSetLimits = {
-    cpu_limit: number;
-    gpu_limit: number;
-    ram_limit: number;
 };
 
 export type SlurmAllocationSetLimitsRequest = {
@@ -26590,6 +26819,11 @@ export type SoftwareCatalogUuid = {
     uuid: string;
 };
 
+export type SoftwareModule = {
+    module_name?: string;
+    module_version?: string;
+};
+
 export type SoftwarePackage = {
     readonly url: string;
     readonly uuid: string;
@@ -26680,6 +26914,11 @@ export type SoftwareTarget = {
     readonly gpu_architectures: unknown;
 };
 
+export type SoftwareToolchain = {
+    name?: string;
+    version?: string;
+};
+
 export type SoftwareVersion = {
     readonly url: string;
     readonly uuid: string;
@@ -26702,14 +26941,10 @@ export type SoftwareVersion = {
     readonly package_name: string;
     readonly catalog_type: string;
     readonly target_count: number;
-    readonly module: {
-        [key: string]: unknown;
-    };
+    module: SoftwareModule | null;
     readonly required_modules: Array<unknown>;
     readonly extensions: Array<unknown>;
-    readonly toolchain: {
-        [key: string]: unknown;
-    };
+    toolchain: SoftwareToolchain | null;
     readonly toolchain_families_compatibility: Array<unknown>;
 };
 
@@ -26738,6 +26973,10 @@ export type StateTransitionError = {
      * Error message to be displayed to the user
      */
     detail: string;
+};
+
+export type Status = {
+    status: string;
 };
 
 export type StepEnum = 'administrative_check' | 'technical_assessment' | 'expert_review' | 'panel_review' | 'allocation_decision' | 'award_response';
@@ -26833,9 +27072,7 @@ export type SuggestAlternativeReviewers = {
     /**
      * List of alternative reviewers with affinity scores
      */
-    suggestions: Array<{
-        [key: string]: unknown;
-    }>;
+    suggestions: Array<ReviewerSuggestionItem>;
 };
 
 export type SuggestionRejectRequest = {
@@ -26920,13 +27157,9 @@ export type SyncResourceHistoricalConsumptionResponse = {
     periods_synced: number;
     periods_skipped: number;
     periods_no_data?: number;
-    errors: Array<{
-        [key: string]: unknown;
-    }>;
+    errors?: Array<ArrowSyncError>;
     dry_run?: boolean;
-    preview_periods?: Array<{
-        [key: string]: unknown;
-    }>;
+    preview_periods?: Array<PreviewPeriod>;
 };
 
 export type SyncResourcesRequestRequest = {
@@ -26957,15 +27190,6 @@ export type SyncResourcesResponse = {
     synced: number;
     created: number;
     updated: number;
-    orders_created?: number;
-    customers_created?: number;
-    projects_created?: number;
-    mappings_created?: number;
-    invoices_created?: number;
-    invoice_items_created?: number;
-    errors?: Array<{
-        [key: string]: unknown;
-    }>;
 };
 
 export type SyncStatusEnum = 'in_sync' | 'out_of_sync' | 'sync_failed';
@@ -27808,11 +28032,17 @@ export type UserActionProvider = {
 
 export type UserActionSummary = {
     total: number;
+    /**
+     * Map of urgency level to count of actions
+     */
     by_urgency: {
-        [key: string]: unknown;
+        [key: string]: number;
     };
+    /**
+     * Map of action type string to count of actions
+     */
     by_type: {
-        [key: string]: unknown;
+        [key: string]: number;
     };
     overdue: number;
 };
@@ -28027,13 +28257,6 @@ export type UserJobTitleCount = {
 export type UserLanguageCount = {
     language: string;
     count: number;
-};
-
-export type UserMappingResponse = {
-    uuid: string;
-    full_name: string;
-    email: string;
-    username: string;
 };
 
 export type UserNationalityStats = {
@@ -28267,6 +28490,8 @@ export type UsernameGenerationPolicyEnum = 'service_provider' | 'anonymized' | '
 export type ValidationDecisionEnum = 'approved' | 'rejected' | 'pending';
 
 export type ValidationMethodEnum = 'ariregister' | 'wirtschaftscompass' | 'bolagsverket' | 'breg';
+
+export type ValueEnum = 'SERVICE_PROVIDER.REGISTER' | 'OFFERING.CREATE' | 'OFFERING.DELETE' | 'OFFERING.UPDATE_THUMBNAIL' | 'OFFERING.UPDATE' | 'OFFERING.UPDATE_ATTRIBUTES' | 'OFFERING.UPDATE_LOCATION' | 'OFFERING.UPDATE_DESCRIPTION' | 'OFFERING.UPDATE_OPTIONS' | 'OFFERING.UPDATE_INTEGRATION' | 'OFFERING.ADD_ENDPOINT' | 'OFFERING.DELETE_ENDPOINT' | 'OFFERING.UPDATE_COMPONENTS' | 'OFFERING.PAUSE' | 'OFFERING.UNPAUSE' | 'OFFERING.ARCHIVE' | 'OFFERING.DRY_RUN_SCRIPT' | 'OFFERING.MANAGE_CAMPAIGN' | 'OFFERING.MANAGE_USER_GROUP' | 'OFFERING.CREATE_PLAN' | 'OFFERING.UPDATE_PLAN' | 'OFFERING.ARCHIVE_PLAN' | 'OFFERING.CREATE_SCREENSHOT' | 'OFFERING.UPDATE_SCREENSHOT' | 'OFFERING.DELETE_SCREENSHOT' | 'OFFERING.CREATE_USER' | 'OFFERING.UPDATE_USER' | 'OFFERING.DELETE_USER' | 'OFFERING.MANAGE_USER_ROLE' | 'RESOURCE.CREATE_ROBOT_ACCOUNT' | 'RESOURCE.UPDATE_ROBOT_ACCOUNT' | 'RESOURCE.DELETE_ROBOT_ACCOUNT' | 'ORDER.LIST' | 'ORDER.CREATE' | 'ORDER.APPROVE_PRIVATE' | 'ORDER.APPROVE' | 'ORDER.REJECT' | 'ORDER.DESTROY' | 'ORDER.CANCEL' | 'ORDER.SET_CONSUMER_INFO' | 'RESOURCE.LIST' | 'RESOURCE.UPDATE' | 'RESOURCE.TERMINATE' | 'RESOURCE.LIST_IMPORTABLE' | 'RESOURCE.SET_END_DATE' | 'RESOURCE.SET_USAGE' | 'RESOURCE.SET_PLAN' | 'RESOURCE.SET_LIMITS' | 'RESOURCE.SET_BACKEND_ID' | 'RESOURCE.SUBMIT_REPORT' | 'RESOURCE.SET_BACKEND_METADATA' | 'RESOURCE.SET_STATE' | 'RESOURCE.UPDATE_OPTIONS' | 'RESOURCE.ACCEPT_BOOKING_REQUEST' | 'RESOURCE.REJECT_BOOKING_REQUEST' | 'RESOURCE.MANAGE_USERS' | 'RESOURCE.CREATE_PERMISSION' | 'RESOURCE.UPDATE_PERMISSION' | 'RESOURCE.DELETE_PERMISSION' | 'RESOURCE_PROJECT.CREATE_PERMISSION' | 'RESOURCE_PROJECT.UPDATE_PERMISSION' | 'RESOURCE_PROJECT.DELETE_PERMISSION' | 'RESOURCE.CONSUMPTION_LIMITATION' | 'OFFERING.MANAGE_BACKEND_RESOURCES' | 'SERVICE_PROVIDER.GET_API_SECRET_CODE' | 'SERVICE_PROVIDER.GENERATE_API_SECRET_CODE' | 'SERVICE_PROVIDER.LIST_CUSTOMERS' | 'SERVICE_PROVIDER.LIST_CUSTOMER_PROJECTS' | 'SERVICE_PROVIDER.LIST_PROJECTS' | 'SERVICE_PROVIDER.LIST_PROJECT_PERMISSIONS' | 'SERVICE_PROVIDER.LIST_KEYS' | 'SERVICE_PROVIDER.LIST_USERS' | 'SERVICE_PROVIDER.LIST_USER_CUSTOMERS' | 'SERVICE_PROVIDER.LIST_SERVICE_ACCOUNTS' | 'SERVICE_PROVIDER.LIST_COURSE_ACCOUNTS' | 'SERVICE_PROVIDER.SET_OFFERINGS_USERNAME' | 'SERVICE_PROVIDER.GET_STATISTICS' | 'SERVICE_PROVIDER.GET_REVENUE' | 'SERVICE_PROVIDER.GET_ROBOT_ACCOUNT_CUSTOMERS' | 'SERVICE_PROVIDER.GET_ROBOT_ACCOUNT_PROJECTS' | 'PROJECT.CREATE_PERMISSION' | 'CUSTOMER.CREATE_PERMISSION' | 'OFFERING.CREATE_PERMISSION' | 'CALL.CREATE_PERMISSION' | 'PROPOSAL.MANAGE' | 'PROPOSAL.MANAGE_REVIEW' | 'PROJECT.UPDATE_PERMISSION' | 'CUSTOMER.UPDATE_PERMISSION' | 'OFFERING.UPDATE_PERMISSION' | 'CALL.UPDATE_PERMISSION' | 'PROPOSAL.UPDATE_PERMISSION' | 'PROJECT.DELETE_PERMISSION' | 'CUSTOMER.DELETE_PERMISSION' | 'OFFERING.DELETE_PERMISSION' | 'CALL.DELETE_PERMISSION' | 'PROPOSAL.DELETE_PERMISSION' | 'LEXIS_LINK.CREATE' | 'LEXIS_LINK.DELETE' | 'PROJECT.LIST' | 'PROJECT.CREATE' | 'PROJECT.DELETE' | 'PROJECT.UPDATE' | 'PROJECT.UPDATE_METADATA' | 'PROJECT.REVIEW_MEMBERSHIP' | 'CUSTOMER.UPDATE' | 'CUSTOMER.CONTACT_UPDATE' | 'CUSTOMER.LIST_USERS' | 'OFFERING.ACCEPT_CALL_REQUEST' | 'CALL.APPROVE_AND_REJECT_PROPOSALS' | 'CALL.CLOSE_ROUNDS' | 'ACCESS_SUBNET.CREATE' | 'ACCESS_SUBNET.UPDATE' | 'ACCESS_SUBNET.DELETE' | 'OFFERINGUSER.UPDATE_RESTRICTION' | 'INVITATION.LIST' | 'CUSTOMER.LIST_PERMISSION_REVIEWS' | 'CALL.LIST' | 'CALL.CREATE' | 'CALL.UPDATE' | 'ROUND.LIST' | 'PROPOSAL.LIST' | 'SERVICE_ACCOUNT.MANAGE' | 'PROJECT.COURSE_ACCOUNT_MANAGE' | 'SERVICE_PROVIDER.OPENSTACK_IMAGE_MANAGEMENT' | 'OPENSTACK_INSTANCE.CONSOLE_ACCESS' | 'OPENSTACK_INSTANCE.MANAGE_POWER' | 'OPENSTACK_INSTANCE.MANAGE' | 'OPENSTACK_ROUTER.MANAGE_GATEWAY' | 'STAFF.ACCESS' | 'SUPPORT.ACCESS';
 
 export type VendorNameChoice = {
     value: string;
@@ -34643,13 +34868,13 @@ export type AwsInstancesPullData = {
 };
 
 export type AwsInstancesPullErrors = {
-    409: PullConflictResponse;
+    409: Detail;
 };
 
 export type AwsInstancesPullError = AwsInstancesPullErrors[keyof AwsInstancesPullErrors];
 
 export type AwsInstancesPullResponses = {
-    202: PullResponse;
+    202: Detail;
 };
 
 export type AwsInstancesPullResponse = AwsInstancesPullResponses[keyof AwsInstancesPullResponses];
@@ -34679,7 +34904,7 @@ export type AwsInstancesRestartData = {
 };
 
 export type AwsInstancesRestartResponses = {
-    200: AwsInstance;
+    202: Status;
 };
 
 export type AwsInstancesRestartResponse = AwsInstancesRestartResponses[keyof AwsInstancesRestartResponses];
@@ -34694,7 +34919,7 @@ export type AwsInstancesSetErredData = {
 };
 
 export type AwsInstancesSetErredResponses = {
-    200: SetErredResponse;
+    200: Detail;
 };
 
 export type AwsInstancesSetErredResponse = AwsInstancesSetErredResponses[keyof AwsInstancesSetErredResponses];
@@ -34709,7 +34934,7 @@ export type AwsInstancesSetOkData = {
 };
 
 export type AwsInstancesSetOkResponses = {
-    200: SetOkResponse;
+    200: Detail;
 };
 
 export type AwsInstancesSetOkResponse = AwsInstancesSetOkResponses[keyof AwsInstancesSetOkResponses];
@@ -34724,7 +34949,7 @@ export type AwsInstancesStartData = {
 };
 
 export type AwsInstancesStartResponses = {
-    200: AwsInstance;
+    202: Status;
 };
 
 export type AwsInstancesStartResponse = AwsInstancesStartResponses[keyof AwsInstancesStartResponses];
@@ -34739,7 +34964,7 @@ export type AwsInstancesStopData = {
 };
 
 export type AwsInstancesStopResponses = {
-    200: AwsInstance;
+    202: Status;
 };
 
 export type AwsInstancesStopResponse = AwsInstancesStopResponses[keyof AwsInstancesStopResponses];
@@ -35065,7 +35290,7 @@ export type AwsVolumesDetachData = {
 };
 
 export type AwsVolumesDetachResponses = {
-    200: AwsVolume;
+    202: Status;
 };
 
 export type AwsVolumesDetachResponse = AwsVolumesDetachResponses[keyof AwsVolumesDetachResponses];
@@ -35080,13 +35305,13 @@ export type AwsVolumesPullData = {
 };
 
 export type AwsVolumesPullErrors = {
-    409: PullConflictResponse;
+    409: Detail;
 };
 
 export type AwsVolumesPullError = AwsVolumesPullErrors[keyof AwsVolumesPullErrors];
 
 export type AwsVolumesPullResponses = {
-    202: PullResponse;
+    202: Detail;
 };
 
 export type AwsVolumesPullResponse = AwsVolumesPullResponses[keyof AwsVolumesPullResponses];
@@ -35101,7 +35326,7 @@ export type AwsVolumesSetErredData = {
 };
 
 export type AwsVolumesSetErredResponses = {
-    200: SetErredResponse;
+    200: Detail;
 };
 
 export type AwsVolumesSetErredResponse = AwsVolumesSetErredResponses[keyof AwsVolumesSetErredResponses];
@@ -35116,7 +35341,7 @@ export type AwsVolumesSetOkData = {
 };
 
 export type AwsVolumesSetOkResponses = {
-    200: SetOkResponse;
+    200: Detail;
 };
 
 export type AwsVolumesSetOkResponse = AwsVolumesSetOkResponses[keyof AwsVolumesSetOkResponses];
@@ -35607,13 +35832,13 @@ export type AzurePublicIpsPullData = {
 };
 
 export type AzurePublicIpsPullErrors = {
-    409: PullConflictResponse;
+    409: Detail;
 };
 
 export type AzurePublicIpsPullError = AzurePublicIpsPullErrors[keyof AzurePublicIpsPullErrors];
 
 export type AzurePublicIpsPullResponses = {
-    202: PullResponse;
+    202: Detail;
 };
 
 export type AzurePublicIpsPullResponse = AzurePublicIpsPullResponses[keyof AzurePublicIpsPullResponses];
@@ -35628,7 +35853,7 @@ export type AzurePublicIpsSetErredData = {
 };
 
 export type AzurePublicIpsSetErredResponses = {
-    200: SetErredResponse;
+    200: Detail;
 };
 
 export type AzurePublicIpsSetErredResponse = AzurePublicIpsSetErredResponses[keyof AzurePublicIpsSetErredResponses];
@@ -35643,7 +35868,7 @@ export type AzurePublicIpsSetOkData = {
 };
 
 export type AzurePublicIpsSetOkResponses = {
-    200: SetOkResponse;
+    200: Detail;
 };
 
 export type AzurePublicIpsSetOkResponse = AzurePublicIpsSetOkResponses[keyof AzurePublicIpsSetOkResponses];
@@ -36109,13 +36334,13 @@ export type AzureSqlDatabasesPullData = {
 };
 
 export type AzureSqlDatabasesPullErrors = {
-    409: PullConflictResponse;
+    409: Detail;
 };
 
 export type AzureSqlDatabasesPullError = AzureSqlDatabasesPullErrors[keyof AzureSqlDatabasesPullErrors];
 
 export type AzureSqlDatabasesPullResponses = {
-    202: PullResponse;
+    202: Detail;
 };
 
 export type AzureSqlDatabasesPullResponse = AzureSqlDatabasesPullResponses[keyof AzureSqlDatabasesPullResponses];
@@ -36130,7 +36355,7 @@ export type AzureSqlDatabasesSetErredData = {
 };
 
 export type AzureSqlDatabasesSetErredResponses = {
-    200: SetErredResponse;
+    200: Detail;
 };
 
 export type AzureSqlDatabasesSetErredResponse = AzureSqlDatabasesSetErredResponses[keyof AzureSqlDatabasesSetErredResponses];
@@ -36145,7 +36370,7 @@ export type AzureSqlDatabasesSetOkData = {
 };
 
 export type AzureSqlDatabasesSetOkResponses = {
-    200: SetOkResponse;
+    200: Detail;
 };
 
 export type AzureSqlDatabasesSetOkResponse = AzureSqlDatabasesSetOkResponses[keyof AzureSqlDatabasesSetOkResponses];
@@ -36461,13 +36686,13 @@ export type AzureSqlServersPullData = {
 };
 
 export type AzureSqlServersPullErrors = {
-    409: PullConflictResponse;
+    409: Detail;
 };
 
 export type AzureSqlServersPullError = AzureSqlServersPullErrors[keyof AzureSqlServersPullErrors];
 
 export type AzureSqlServersPullResponses = {
-    202: PullResponse;
+    202: Detail;
 };
 
 export type AzureSqlServersPullResponse = AzureSqlServersPullResponses[keyof AzureSqlServersPullResponses];
@@ -36482,7 +36707,7 @@ export type AzureSqlServersSetErredData = {
 };
 
 export type AzureSqlServersSetErredResponses = {
-    200: SetErredResponse;
+    200: Detail;
 };
 
 export type AzureSqlServersSetErredResponse = AzureSqlServersSetErredResponses[keyof AzureSqlServersSetErredResponses];
@@ -36497,7 +36722,7 @@ export type AzureSqlServersSetOkData = {
 };
 
 export type AzureSqlServersSetOkResponses = {
-    200: SetOkResponse;
+    200: Detail;
 };
 
 export type AzureSqlServersSetOkResponse = AzureSqlServersSetOkResponses[keyof AzureSqlServersSetOkResponses];
@@ -36798,13 +37023,13 @@ export type AzureVirtualmachinesPullData = {
 };
 
 export type AzureVirtualmachinesPullErrors = {
-    409: PullConflictResponse;
+    409: Detail;
 };
 
 export type AzureVirtualmachinesPullError = AzureVirtualmachinesPullErrors[keyof AzureVirtualmachinesPullErrors];
 
 export type AzureVirtualmachinesPullResponses = {
-    202: PullResponse;
+    202: Detail;
 };
 
 export type AzureVirtualmachinesPullResponse = AzureVirtualmachinesPullResponses[keyof AzureVirtualmachinesPullResponses];
@@ -36819,7 +37044,7 @@ export type AzureVirtualmachinesRestartData = {
 };
 
 export type AzureVirtualmachinesRestartResponses = {
-    200: AzureVirtualMachine;
+    202: Status;
 };
 
 export type AzureVirtualmachinesRestartResponse = AzureVirtualmachinesRestartResponses[keyof AzureVirtualmachinesRestartResponses];
@@ -36834,7 +37059,7 @@ export type AzureVirtualmachinesSetErredData = {
 };
 
 export type AzureVirtualmachinesSetErredResponses = {
-    200: SetErredResponse;
+    200: Detail;
 };
 
 export type AzureVirtualmachinesSetErredResponse = AzureVirtualmachinesSetErredResponses[keyof AzureVirtualmachinesSetErredResponses];
@@ -36849,7 +37074,7 @@ export type AzureVirtualmachinesSetOkData = {
 };
 
 export type AzureVirtualmachinesSetOkResponses = {
-    200: SetOkResponse;
+    200: Detail;
 };
 
 export type AzureVirtualmachinesSetOkResponse = AzureVirtualmachinesSetOkResponses[keyof AzureVirtualmachinesSetOkResponses];
@@ -36864,7 +37089,7 @@ export type AzureVirtualmachinesStartData = {
 };
 
 export type AzureVirtualmachinesStartResponses = {
-    200: AzureVirtualMachine;
+    202: Status;
 };
 
 export type AzureVirtualmachinesStartResponse = AzureVirtualmachinesStartResponses[keyof AzureVirtualmachinesStartResponses];
@@ -36879,7 +37104,7 @@ export type AzureVirtualmachinesStopData = {
 };
 
 export type AzureVirtualmachinesStopResponses = {
-    200: AzureVirtualMachine;
+    202: Status;
 };
 
 export type AzureVirtualmachinesStopResponse = AzureVirtualmachinesStopResponses[keyof AzureVirtualmachinesStopResponses];
@@ -37065,9 +37290,7 @@ export type BackendResourceRequestsSetDoneData = {
 };
 
 export type BackendResourceRequestsSetDoneResponses = {
-    200: {
-        status?: string;
-    };
+    200: Status;
 };
 
 export type BackendResourceRequestsSetDoneResponse = BackendResourceRequestsSetDoneResponses[keyof BackendResourceRequestsSetDoneResponses];
@@ -37082,9 +37305,7 @@ export type BackendResourceRequestsSetErredData = {
 };
 
 export type BackendResourceRequestsSetErredResponses = {
-    200: {
-        status?: string;
-    };
+    200: Status;
 };
 
 export type BackendResourceRequestsSetErredResponse = BackendResourceRequestsSetErredResponses[keyof BackendResourceRequestsSetErredResponses];
@@ -37099,9 +37320,7 @@ export type BackendResourceRequestsStartProcessingData = {
 };
 
 export type BackendResourceRequestsStartProcessingResponses = {
-    200: {
-        status?: string;
-    };
+    200: Status;
 };
 
 export type BackendResourceRequestsStartProcessingResponse = BackendResourceRequestsStartProcessingResponses[keyof BackendResourceRequestsStartProcessingResponses];
@@ -42627,13 +42846,13 @@ export type DigitaloceanDropletsPullData = {
 };
 
 export type DigitaloceanDropletsPullErrors = {
-    409: PullConflictResponse;
+    409: Detail;
 };
 
 export type DigitaloceanDropletsPullError = DigitaloceanDropletsPullErrors[keyof DigitaloceanDropletsPullErrors];
 
 export type DigitaloceanDropletsPullResponses = {
-    202: PullResponse;
+    202: Detail;
 };
 
 export type DigitaloceanDropletsPullResponse = DigitaloceanDropletsPullResponses[keyof DigitaloceanDropletsPullResponses];
@@ -42678,7 +42897,7 @@ export type DigitaloceanDropletsSetErredData = {
 };
 
 export type DigitaloceanDropletsSetErredResponses = {
-    200: SetErredResponse;
+    200: Detail;
 };
 
 export type DigitaloceanDropletsSetErredResponse = DigitaloceanDropletsSetErredResponses[keyof DigitaloceanDropletsSetErredResponses];
@@ -42693,7 +42912,7 @@ export type DigitaloceanDropletsSetOkData = {
 };
 
 export type DigitaloceanDropletsSetOkResponses = {
-    200: SetOkResponse;
+    200: Detail;
 };
 
 export type DigitaloceanDropletsSetOkResponse = DigitaloceanDropletsSetOkResponses[keyof DigitaloceanDropletsSetOkResponses];
@@ -45249,11 +45468,10 @@ export type InvoiceSendFinancialReportByMailData = {
 };
 
 export type InvoiceSendFinancialReportByMailResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    202: Status;
 };
+
+export type InvoiceSendFinancialReportByMailResponse = InvoiceSendFinancialReportByMailResponses[keyof InvoiceSendFinancialReportByMailResponses];
 
 export type InvoicesListData = {
     body?: never;
@@ -52501,9 +52719,7 @@ export type MarketplaceOrdersSetBackendIdData = {
 };
 
 export type MarketplaceOrdersSetBackendIdResponses = {
-    200: {
-        status?: string;
-    };
+    200: Status;
 };
 
 export type MarketplaceOrdersSetBackendIdResponse = MarketplaceOrdersSetBackendIdResponses[keyof MarketplaceOrdersSetBackendIdResponses];
@@ -56105,7 +56321,7 @@ export type MarketplaceProviderOfferingsRefreshOfferingUsernamesData = {
 };
 
 export type MarketplaceProviderOfferingsRefreshOfferingUsernamesResponses = {
-    200: ResourceResponseStatus;
+    200: Status;
 };
 
 export type MarketplaceProviderOfferingsRefreshOfferingUsernamesResponse = MarketplaceProviderOfferingsRefreshOfferingUsernamesResponses[keyof MarketplaceProviderOfferingsRefreshOfferingUsernamesResponses];
@@ -57833,7 +58049,7 @@ export type MarketplaceProviderResourcesAdjustDatesData = {
 };
 
 export type MarketplaceProviderResourcesAdjustDatesResponses = {
-    200: ResourceResponseStatus;
+    200: Status;
 };
 
 export type MarketplaceProviderResourcesAdjustDatesResponse = MarketplaceProviderResourcesAdjustDatesResponses[keyof MarketplaceProviderResourcesAdjustDatesResponses];
@@ -58348,7 +58564,7 @@ export type MarketplaceProviderResourcesSetBackendIdData = {
 };
 
 export type MarketplaceProviderResourcesSetBackendIdResponses = {
-    200: ResourceResponseStatus;
+    200: Status;
 };
 
 export type MarketplaceProviderResourcesSetBackendIdResponse = MarketplaceProviderResourcesSetBackendIdResponses[keyof MarketplaceProviderResourcesSetBackendIdResponses];
@@ -58363,7 +58579,7 @@ export type MarketplaceProviderResourcesSetBackendMetadataData = {
 };
 
 export type MarketplaceProviderResourcesSetBackendMetadataResponses = {
-    200: ResourceResponseStatus;
+    200: Status;
 };
 
 export type MarketplaceProviderResourcesSetBackendMetadataResponse = MarketplaceProviderResourcesSetBackendMetadataResponses[keyof MarketplaceProviderResourcesSetBackendMetadataResponses];
@@ -58378,9 +58594,7 @@ export type MarketplaceProviderResourcesSetDownscaledData = {
 };
 
 export type MarketplaceProviderResourcesSetDownscaledResponses = {
-    200: {
-        status?: string;
-    };
+    200: Status;
 };
 
 export type MarketplaceProviderResourcesSetDownscaledResponse = MarketplaceProviderResourcesSetDownscaledResponses[keyof MarketplaceProviderResourcesSetDownscaledResponses];
@@ -58395,7 +58609,7 @@ export type MarketplaceProviderResourcesSetEffectiveIdData = {
 };
 
 export type MarketplaceProviderResourcesSetEffectiveIdResponses = {
-    200: ResourceResponseStatus;
+    200: Status;
 };
 
 export type MarketplaceProviderResourcesSetEffectiveIdResponse = MarketplaceProviderResourcesSetEffectiveIdResponses[keyof MarketplaceProviderResourcesSetEffectiveIdResponses];
@@ -58458,7 +58672,7 @@ export type MarketplaceProviderResourcesSetEndpointsData = {
 };
 
 export type MarketplaceProviderResourcesSetEndpointsResponses = {
-    200: ResourceResponseStatus;
+    200: Status;
 };
 
 export type MarketplaceProviderResourcesSetEndpointsResponse = MarketplaceProviderResourcesSetEndpointsResponses[keyof MarketplaceProviderResourcesSetEndpointsResponses];
@@ -58473,7 +58687,7 @@ export type MarketplaceProviderResourcesSetLimitsData = {
 };
 
 export type MarketplaceProviderResourcesSetLimitsResponses = {
-    200: ResourceResponseStatus;
+    200: Status;
 };
 
 export type MarketplaceProviderResourcesSetLimitsResponse = MarketplaceProviderResourcesSetLimitsResponses[keyof MarketplaceProviderResourcesSetLimitsResponses];
@@ -58488,9 +58702,7 @@ export type MarketplaceProviderResourcesSetPausedData = {
 };
 
 export type MarketplaceProviderResourcesSetPausedResponses = {
-    200: {
-        status?: string;
-    };
+    200: Status;
 };
 
 export type MarketplaceProviderResourcesSetPausedResponse = MarketplaceProviderResourcesSetPausedResponses[keyof MarketplaceProviderResourcesSetPausedResponses];
@@ -58505,9 +58717,7 @@ export type MarketplaceProviderResourcesSetRestrictMemberAccessData = {
 };
 
 export type MarketplaceProviderResourcesSetRestrictMemberAccessResponses = {
-    200: {
-        status?: string;
-    };
+    200: Status;
 };
 
 export type MarketplaceProviderResourcesSetRestrictMemberAccessResponse = MarketplaceProviderResourcesSetRestrictMemberAccessResponses[keyof MarketplaceProviderResourcesSetRestrictMemberAccessResponses];
@@ -58522,9 +58732,7 @@ export type MarketplaceProviderResourcesSetSlugData = {
 };
 
 export type MarketplaceProviderResourcesSetSlugResponses = {
-    200: {
-        status?: string;
-    };
+    200: Status;
 };
 
 export type MarketplaceProviderResourcesSetSlugResponse = MarketplaceProviderResourcesSetSlugResponses[keyof MarketplaceProviderResourcesSetSlugResponses];
@@ -58539,7 +58747,7 @@ export type MarketplaceProviderResourcesSetStateOkData = {
 };
 
 export type MarketplaceProviderResourcesSetStateOkResponses = {
-    200: ResourceResponseStatus;
+    200: Status;
 };
 
 export type MarketplaceProviderResourcesSetStateOkResponse = MarketplaceProviderResourcesSetStateOkResponses[keyof MarketplaceProviderResourcesSetStateOkResponses];
@@ -58554,7 +58762,7 @@ export type MarketplaceProviderResourcesSubmitReportData = {
 };
 
 export type MarketplaceProviderResourcesSubmitReportResponses = {
-    200: ResourceResponseStatus;
+    200: Status;
 };
 
 export type MarketplaceProviderResourcesSubmitReportResponse = MarketplaceProviderResourcesSubmitReportResponses[keyof MarketplaceProviderResourcesSubmitReportResponses];
@@ -58636,7 +58844,7 @@ export type MarketplaceProviderResourcesUpdateOptionsErrors = {
 };
 
 export type MarketplaceProviderResourcesUpdateOptionsResponses = {
-    200: ResourceResponseStatus;
+    200: Status;
     201: OrderUuid;
 };
 
@@ -58652,7 +58860,7 @@ export type MarketplaceProviderResourcesUpdateOptionsDirectData = {
 };
 
 export type MarketplaceProviderResourcesUpdateOptionsDirectResponses = {
-    200: ResourceResponseStatus;
+    200: Status;
 };
 
 export type MarketplaceProviderResourcesUpdateOptionsDirectResponse = MarketplaceProviderResourcesUpdateOptionsDirectResponses[keyof MarketplaceProviderResourcesUpdateOptionsDirectResponses];
@@ -60238,7 +60446,7 @@ export type MarketplaceResourcesAdjustDatesData = {
 };
 
 export type MarketplaceResourcesAdjustDatesResponses = {
-    200: ResourceResponseStatus;
+    200: Status;
 };
 
 export type MarketplaceResourcesAdjustDatesResponse = MarketplaceResourcesAdjustDatesResponses[keyof MarketplaceResourcesAdjustDatesResponses];
@@ -60750,9 +60958,7 @@ export type MarketplaceResourcesSetDownscaledData = {
 };
 
 export type MarketplaceResourcesSetDownscaledResponses = {
-    200: {
-        status?: string;
-    };
+    200: Status;
 };
 
 export type MarketplaceResourcesSetDownscaledResponse = MarketplaceResourcesSetDownscaledResponses[keyof MarketplaceResourcesSetDownscaledResponses];
@@ -60799,9 +61005,7 @@ export type MarketplaceResourcesSetPausedData = {
 };
 
 export type MarketplaceResourcesSetPausedResponses = {
-    200: {
-        status?: string;
-    };
+    200: Status;
 };
 
 export type MarketplaceResourcesSetPausedResponse = MarketplaceResourcesSetPausedResponses[keyof MarketplaceResourcesSetPausedResponses];
@@ -60816,9 +61020,7 @@ export type MarketplaceResourcesSetRestrictMemberAccessData = {
 };
 
 export type MarketplaceResourcesSetRestrictMemberAccessResponses = {
-    200: {
-        status?: string;
-    };
+    200: Status;
 };
 
 export type MarketplaceResourcesSetRestrictMemberAccessResponse = MarketplaceResourcesSetRestrictMemberAccessResponses[keyof MarketplaceResourcesSetRestrictMemberAccessResponses];
@@ -60833,9 +61035,7 @@ export type MarketplaceResourcesSetSlugData = {
 };
 
 export type MarketplaceResourcesSetSlugResponses = {
-    200: {
-        status?: string;
-    };
+    200: Status;
 };
 
 export type MarketplaceResourcesSetSlugResponse = MarketplaceResourcesSetSlugResponses[keyof MarketplaceResourcesSetSlugResponses];
@@ -61155,7 +61355,7 @@ export type MarketplaceResourcesUpdateOptionsErrors = {
 };
 
 export type MarketplaceResourcesUpdateOptionsResponses = {
-    200: ResourceResponseStatus;
+    200: Status;
     201: OrderUuid;
 };
 
@@ -69838,13 +70038,13 @@ export type OpenportalAllocationsPullData = {
 };
 
 export type OpenportalAllocationsPullErrors = {
-    409: PullConflictResponse;
+    409: Detail;
 };
 
 export type OpenportalAllocationsPullError = OpenportalAllocationsPullErrors[keyof OpenportalAllocationsPullErrors];
 
 export type OpenportalAllocationsPullResponses = {
-    202: PullResponse;
+    202: Detail;
 };
 
 export type OpenportalAllocationsPullResponse = OpenportalAllocationsPullResponses[keyof OpenportalAllocationsPullResponses];
@@ -69859,7 +70059,7 @@ export type OpenportalAllocationsSetErredData = {
 };
 
 export type OpenportalAllocationsSetErredResponses = {
-    200: SetErredResponse;
+    200: Detail;
 };
 
 export type OpenportalAllocationsSetErredResponse = OpenportalAllocationsSetErredResponses[keyof OpenportalAllocationsSetErredResponses];
@@ -69874,7 +70074,7 @@ export type OpenportalAllocationsSetLimitsData = {
 };
 
 export type OpenportalAllocationsSetLimitsResponses = {
-    200: AllocationSetLimits;
+    202: Status;
 };
 
 export type OpenportalAllocationsSetLimitsResponse = OpenportalAllocationsSetLimitsResponses[keyof OpenportalAllocationsSetLimitsResponses];
@@ -69889,7 +70089,7 @@ export type OpenportalAllocationsSetOkData = {
 };
 
 export type OpenportalAllocationsSetOkResponses = {
-    200: SetOkResponse;
+    200: Detail;
 };
 
 export type OpenportalAllocationsSetOkResponse = OpenportalAllocationsSetOkResponses[keyof OpenportalAllocationsSetOkResponses];
@@ -70931,13 +71131,13 @@ export type OpenportalRemoteAllocationsPullData = {
 };
 
 export type OpenportalRemoteAllocationsPullErrors = {
-    409: PullConflictResponse;
+    409: Detail;
 };
 
 export type OpenportalRemoteAllocationsPullError = OpenportalRemoteAllocationsPullErrors[keyof OpenportalRemoteAllocationsPullErrors];
 
 export type OpenportalRemoteAllocationsPullResponses = {
-    202: PullResponse;
+    202: Detail;
 };
 
 export type OpenportalRemoteAllocationsPullResponse = OpenportalRemoteAllocationsPullResponses[keyof OpenportalRemoteAllocationsPullResponses];
@@ -70952,7 +71152,7 @@ export type OpenportalRemoteAllocationsSetErredData = {
 };
 
 export type OpenportalRemoteAllocationsSetErredResponses = {
-    200: SetErredResponse;
+    200: Detail;
 };
 
 export type OpenportalRemoteAllocationsSetErredResponse = OpenportalRemoteAllocationsSetErredResponses[keyof OpenportalRemoteAllocationsSetErredResponses];
@@ -70967,7 +71167,7 @@ export type OpenportalRemoteAllocationsSetLimitsData = {
 };
 
 export type OpenportalRemoteAllocationsSetLimitsResponses = {
-    200: RemoteAllocationSetLimits;
+    202: Status;
 };
 
 export type OpenportalRemoteAllocationsSetLimitsResponse = OpenportalRemoteAllocationsSetLimitsResponses[keyof OpenportalRemoteAllocationsSetLimitsResponses];
@@ -70982,7 +71182,7 @@ export type OpenportalRemoteAllocationsSetOkData = {
 };
 
 export type OpenportalRemoteAllocationsSetOkResponses = {
-    200: SetOkResponse;
+    200: Detail;
 };
 
 export type OpenportalRemoteAllocationsSetOkResponse = OpenportalRemoteAllocationsSetOkResponses[keyof OpenportalRemoteAllocationsSetOkResponses];
@@ -71927,7 +72127,9 @@ export type OpenportalOfferingMappingRetrieveData = {
 };
 
 export type OpenportalOfferingMappingRetrieveResponses = {
-    200: OfferingMappingResponse;
+    200: {
+        [key: string]: unknown;
+    };
 };
 
 export type OpenportalOfferingMappingRetrieveResponse = OpenportalOfferingMappingRetrieveResponses[keyof OpenportalOfferingMappingRetrieveResponses];
@@ -71945,7 +72147,9 @@ export type OpenportalProjectMappingRetrieveData = {
 };
 
 export type OpenportalProjectMappingRetrieveResponses = {
-    200: ProjectMappingResponse;
+    200: {
+        [key: string]: unknown;
+    };
 };
 
 export type OpenportalProjectMappingRetrieveResponse = OpenportalProjectMappingRetrieveResponses[keyof OpenportalProjectMappingRetrieveResponses];
@@ -71963,7 +72167,9 @@ export type OpenportalUserMappingRetrieveData = {
 };
 
 export type OpenportalUserMappingRetrieveResponses = {
-    200: UserMappingResponse;
+    200: {
+        [key: string]: unknown;
+    };
 };
 
 export type OpenportalUserMappingRetrieveResponse = OpenportalUserMappingRetrieveResponses[keyof OpenportalUserMappingRetrieveResponses];
@@ -72261,13 +72467,13 @@ export type OpenstackBackupsPullData = {
 };
 
 export type OpenstackBackupsPullErrors = {
-    409: PullConflictResponse;
+    409: Detail;
 };
 
 export type OpenstackBackupsPullError = OpenstackBackupsPullErrors[keyof OpenstackBackupsPullErrors];
 
 export type OpenstackBackupsPullResponses = {
-    202: PullResponse;
+    202: Detail;
 };
 
 export type OpenstackBackupsPullResponse = OpenstackBackupsPullResponses[keyof OpenstackBackupsPullResponses];
@@ -72297,7 +72503,7 @@ export type OpenstackBackupsSetErredData = {
 };
 
 export type OpenstackBackupsSetErredResponses = {
-    200: SetErredResponse;
+    200: Detail;
 };
 
 export type OpenstackBackupsSetErredResponse = OpenstackBackupsSetErredResponses[keyof OpenstackBackupsSetErredResponses];
@@ -72312,7 +72518,7 @@ export type OpenstackBackupsSetOkData = {
 };
 
 export type OpenstackBackupsSetOkResponses = {
-    200: SetOkResponse;
+    200: Detail;
 };
 
 export type OpenstackBackupsSetOkResponse = OpenstackBackupsSetOkResponses[keyof OpenstackBackupsSetOkResponses];
@@ -72875,11 +73081,10 @@ export type OpenstackFloatingIpsAttachToPortData = {
 };
 
 export type OpenstackFloatingIpsAttachToPortResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    202: Status;
 };
+
+export type OpenstackFloatingIpsAttachToPortResponse = OpenstackFloatingIpsAttachToPortResponses[keyof OpenstackFloatingIpsAttachToPortResponses];
 
 export type OpenstackFloatingIpsDetachFromPortData = {
     body?: never;
@@ -72891,11 +73096,10 @@ export type OpenstackFloatingIpsDetachFromPortData = {
 };
 
 export type OpenstackFloatingIpsDetachFromPortResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    202: Status;
 };
+
+export type OpenstackFloatingIpsDetachFromPortResponse = OpenstackFloatingIpsDetachFromPortResponses[keyof OpenstackFloatingIpsDetachFromPortResponses];
 
 export type OpenstackFloatingIpsPullData = {
     body?: never;
@@ -72907,13 +73111,13 @@ export type OpenstackFloatingIpsPullData = {
 };
 
 export type OpenstackFloatingIpsPullErrors = {
-    409: PullConflictResponse;
+    409: Detail;
 };
 
 export type OpenstackFloatingIpsPullError = OpenstackFloatingIpsPullErrors[keyof OpenstackFloatingIpsPullErrors];
 
 export type OpenstackFloatingIpsPullResponses = {
-    202: PullResponse;
+    202: Detail;
 };
 
 export type OpenstackFloatingIpsPullResponse = OpenstackFloatingIpsPullResponses[keyof OpenstackFloatingIpsPullResponses];
@@ -72928,7 +73132,7 @@ export type OpenstackFloatingIpsSetErredData = {
 };
 
 export type OpenstackFloatingIpsSetErredResponses = {
-    200: SetErredResponse;
+    200: Detail;
 };
 
 export type OpenstackFloatingIpsSetErredResponse = OpenstackFloatingIpsSetErredResponses[keyof OpenstackFloatingIpsSetErredResponses];
@@ -72943,7 +73147,7 @@ export type OpenstackFloatingIpsSetOkData = {
 };
 
 export type OpenstackFloatingIpsSetOkResponses = {
-    200: SetOkResponse;
+    200: Detail;
 };
 
 export type OpenstackFloatingIpsSetOkResponse = OpenstackFloatingIpsSetOkResponses[keyof OpenstackFloatingIpsSetOkResponses];
@@ -72976,11 +73180,10 @@ export type OpenstackFloatingIpsUpdateDescriptionData = {
 };
 
 export type OpenstackFloatingIpsUpdateDescriptionResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    202: Status;
 };
+
+export type OpenstackFloatingIpsUpdateDescriptionResponse = OpenstackFloatingIpsUpdateDescriptionResponses[keyof OpenstackFloatingIpsUpdateDescriptionResponses];
 
 export type OpenstackHealthMonitorsListData = {
     body?: never;
@@ -74013,11 +74216,10 @@ export type OpenstackInstancesChangeFlavorData = {
 };
 
 export type OpenstackInstancesChangeFlavorResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    202: Status;
 };
+
+export type OpenstackInstancesChangeFlavorResponse = OpenstackInstancesChangeFlavorResponses[keyof OpenstackInstancesChangeFlavorResponses];
 
 export type OpenstackInstancesConsoleRetrieveData = {
     body?: never;
@@ -74133,13 +74335,13 @@ export type OpenstackInstancesPullData = {
 };
 
 export type OpenstackInstancesPullErrors = {
-    409: PullConflictResponse;
+    409: Detail;
 };
 
 export type OpenstackInstancesPullError = OpenstackInstancesPullErrors[keyof OpenstackInstancesPullErrors];
 
 export type OpenstackInstancesPullResponses = {
-    202: PullResponse;
+    202: Detail;
 };
 
 export type OpenstackInstancesPullResponse = OpenstackInstancesPullResponses[keyof OpenstackInstancesPullResponses];
@@ -74154,11 +74356,10 @@ export type OpenstackInstancesRescueData = {
 };
 
 export type OpenstackInstancesRescueResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    202: Status;
 };
+
+export type OpenstackInstancesRescueResponse = OpenstackInstancesRescueResponses[keyof OpenstackInstancesRescueResponses];
 
 export type OpenstackInstancesRestartData = {
     body?: never;
@@ -74170,11 +74371,10 @@ export type OpenstackInstancesRestartData = {
 };
 
 export type OpenstackInstancesRestartResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    202: Status;
 };
+
+export type OpenstackInstancesRestartResponse = OpenstackInstancesRestartResponses[keyof OpenstackInstancesRestartResponses];
 
 export type OpenstackInstancesSetErredData = {
     body?: SetErredRequest;
@@ -74186,7 +74386,7 @@ export type OpenstackInstancesSetErredData = {
 };
 
 export type OpenstackInstancesSetErredResponses = {
-    200: SetErredResponse;
+    200: Detail;
 };
 
 export type OpenstackInstancesSetErredResponse = OpenstackInstancesSetErredResponses[keyof OpenstackInstancesSetErredResponses];
@@ -74201,7 +74401,7 @@ export type OpenstackInstancesSetOkData = {
 };
 
 export type OpenstackInstancesSetOkResponses = {
-    200: SetOkResponse;
+    200: Detail;
 };
 
 export type OpenstackInstancesSetOkResponse = OpenstackInstancesSetOkResponses[keyof OpenstackInstancesSetOkResponses];
@@ -74216,11 +74416,10 @@ export type OpenstackInstancesStartData = {
 };
 
 export type OpenstackInstancesStartResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    202: Status;
 };
+
+export type OpenstackInstancesStartResponse = OpenstackInstancesStartResponses[keyof OpenstackInstancesStartResponses];
 
 export type OpenstackInstancesStopData = {
     body?: never;
@@ -74232,11 +74431,10 @@ export type OpenstackInstancesStopData = {
 };
 
 export type OpenstackInstancesStopResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    202: Status;
 };
+
+export type OpenstackInstancesStopResponse = OpenstackInstancesStopResponses[keyof OpenstackInstancesStopResponses];
 
 export type OpenstackInstancesUnlinkData = {
     body?: never;
@@ -74266,11 +74464,10 @@ export type OpenstackInstancesUnrescueData = {
 };
 
 export type OpenstackInstancesUnrescueResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    202: Status;
 };
+
+export type OpenstackInstancesUnrescueResponse = OpenstackInstancesUnrescueResponses[keyof OpenstackInstancesUnrescueResponses];
 
 export type OpenstackInstancesUpdateAllowedAddressPairsData = {
     body: OpenStackInstanceAllowedAddressPairsUpdateRequest;
@@ -74282,11 +74479,10 @@ export type OpenstackInstancesUpdateAllowedAddressPairsData = {
 };
 
 export type OpenstackInstancesUpdateAllowedAddressPairsResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    202: Status;
 };
+
+export type OpenstackInstancesUpdateAllowedAddressPairsResponse = OpenstackInstancesUpdateAllowedAddressPairsResponses[keyof OpenstackInstancesUpdateAllowedAddressPairsResponses];
 
 export type OpenstackInstancesUpdateFloatingIpsData = {
     body?: OpenStackInstanceFloatingIpsUpdateRequest;
@@ -74298,11 +74494,10 @@ export type OpenstackInstancesUpdateFloatingIpsData = {
 };
 
 export type OpenstackInstancesUpdateFloatingIpsResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    202: Status;
 };
+
+export type OpenstackInstancesUpdateFloatingIpsResponse = OpenstackInstancesUpdateFloatingIpsResponses[keyof OpenstackInstancesUpdateFloatingIpsResponses];
 
 export type OpenstackInstancesUpdatePortsData = {
     body: OpenStackInstancePortsUpdateRequest;
@@ -74314,11 +74509,10 @@ export type OpenstackInstancesUpdatePortsData = {
 };
 
 export type OpenstackInstancesUpdatePortsResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    202: Status;
 };
+
+export type OpenstackInstancesUpdatePortsResponse = OpenstackInstancesUpdatePortsResponses[keyof OpenstackInstancesUpdatePortsResponses];
 
 export type OpenstackInstancesUpdateSecurityGroupsData = {
     body: OpenStackInstanceSecurityGroupsUpdateRequest;
@@ -74330,11 +74524,10 @@ export type OpenstackInstancesUpdateSecurityGroupsData = {
 };
 
 export type OpenstackInstancesUpdateSecurityGroupsResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    202: Status;
 };
+
+export type OpenstackInstancesUpdateSecurityGroupsResponse = OpenstackInstancesUpdateSecurityGroupsResponses[keyof OpenstackInstancesUpdateSecurityGroupsResponses];
 
 export type OpenstackListenersListData = {
     body?: never;
@@ -75624,13 +75817,13 @@ export type OpenstackNetworksPullData = {
 };
 
 export type OpenstackNetworksPullErrors = {
-    409: PullConflictResponse;
+    409: Detail;
 };
 
 export type OpenstackNetworksPullError = OpenstackNetworksPullErrors[keyof OpenstackNetworksPullErrors];
 
 export type OpenstackNetworksPullResponses = {
-    202: PullResponse;
+    202: Detail;
 };
 
 export type OpenstackNetworksPullResponse = OpenstackNetworksPullResponses[keyof OpenstackNetworksPullResponses];
@@ -75682,7 +75875,7 @@ export type OpenstackNetworksSetErredData = {
 };
 
 export type OpenstackNetworksSetErredResponses = {
-    200: SetErredResponse;
+    200: Detail;
 };
 
 export type OpenstackNetworksSetErredResponse = OpenstackNetworksSetErredResponses[keyof OpenstackNetworksSetErredResponses];
@@ -75712,7 +75905,7 @@ export type OpenstackNetworksSetOkData = {
 };
 
 export type OpenstackNetworksSetOkResponses = {
-    200: SetOkResponse;
+    200: Detail;
 };
 
 export type OpenstackNetworksSetOkResponse = OpenstackNetworksSetOkResponses[keyof OpenstackNetworksSetOkResponses];
@@ -76429,13 +76622,13 @@ export type OpenstackPortsPullData = {
 };
 
 export type OpenstackPortsPullErrors = {
-    409: PullConflictResponse;
+    409: Detail;
 };
 
 export type OpenstackPortsPullError = OpenstackPortsPullErrors[keyof OpenstackPortsPullErrors];
 
 export type OpenstackPortsPullResponses = {
-    202: PullResponse;
+    202: Detail;
 };
 
 export type OpenstackPortsPullResponse = OpenstackPortsPullResponses[keyof OpenstackPortsPullResponses];
@@ -76450,7 +76643,7 @@ export type OpenstackPortsSetErredData = {
 };
 
 export type OpenstackPortsSetErredResponses = {
-    200: SetErredResponse;
+    200: Detail;
 };
 
 export type OpenstackPortsSetErredResponse = OpenstackPortsSetErredResponses[keyof OpenstackPortsSetErredResponses];
@@ -76465,7 +76658,7 @@ export type OpenstackPortsSetOkData = {
 };
 
 export type OpenstackPortsSetOkResponses = {
-    200: SetOkResponse;
+    200: Detail;
 };
 
 export type OpenstackPortsSetOkResponse = OpenstackPortsSetOkResponses[keyof OpenstackPortsSetOkResponses];
@@ -76514,11 +76707,10 @@ export type OpenstackPortsUpdateSecurityGroupsData = {
 };
 
 export type OpenstackPortsUpdateSecurityGroupsResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    202: Status;
 };
+
+export type OpenstackPortsUpdateSecurityGroupsResponse = OpenstackPortsUpdateSecurityGroupsResponses[keyof OpenstackPortsUpdateSecurityGroupsResponses];
 
 export type OpenstackRoutersListData = {
     body?: never;
@@ -76668,11 +76860,10 @@ export type OpenstackRoutersAddRouterInterfaceData = {
 };
 
 export type OpenstackRoutersAddRouterInterfaceResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    202: Status;
 };
+
+export type OpenstackRoutersAddRouterInterfaceResponse = OpenstackRoutersAddRouterInterfaceResponses[keyof OpenstackRoutersAddRouterInterfaceResponses];
 
 export type OpenstackRoutersAvailableExternalNetworksListData = {
     body?: never;
@@ -76746,11 +76937,10 @@ export type OpenstackRoutersRemoveRouterInterfaceData = {
 };
 
 export type OpenstackRoutersRemoveRouterInterfaceResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    202: Status;
 };
+
+export type OpenstackRoutersRemoveRouterInterfaceResponse = OpenstackRoutersRemoveRouterInterfaceResponses[keyof OpenstackRoutersRemoveRouterInterfaceResponses];
 
 export type OpenstackRoutersSetErredData = {
     body?: SetErredRequest;
@@ -76808,7 +76998,7 @@ export type OpenstackRoutersSetRoutesData = {
 };
 
 export type OpenstackRoutersSetRoutesResponses = {
-    200: OpenStackRouterSetRoutes;
+    202: Status;
 };
 
 export type OpenstackRoutersSetRoutesResponse = OpenstackRoutersSetRoutesResponses[keyof OpenstackRoutersSetRoutesResponses];
@@ -77098,13 +77288,13 @@ export type OpenstackSecurityGroupsPullData = {
 };
 
 export type OpenstackSecurityGroupsPullErrors = {
-    409: PullConflictResponse;
+    409: Detail;
 };
 
 export type OpenstackSecurityGroupsPullError = OpenstackSecurityGroupsPullErrors[keyof OpenstackSecurityGroupsPullErrors];
 
 export type OpenstackSecurityGroupsPullResponses = {
-    202: PullResponse;
+    202: Detail;
 };
 
 export type OpenstackSecurityGroupsPullResponse = OpenstackSecurityGroupsPullResponses[keyof OpenstackSecurityGroupsPullResponses];
@@ -77119,7 +77309,7 @@ export type OpenstackSecurityGroupsSetErredData = {
 };
 
 export type OpenstackSecurityGroupsSetErredResponses = {
-    200: SetErredResponse;
+    200: Detail;
 };
 
 export type OpenstackSecurityGroupsSetErredResponse = OpenstackSecurityGroupsSetErredResponses[keyof OpenstackSecurityGroupsSetErredResponses];
@@ -77134,7 +77324,7 @@ export type OpenstackSecurityGroupsSetOkData = {
 };
 
 export type OpenstackSecurityGroupsSetOkResponses = {
-    200: SetOkResponse;
+    200: Detail;
 };
 
 export type OpenstackSecurityGroupsSetOkResponse = OpenstackSecurityGroupsSetOkResponses[keyof OpenstackSecurityGroupsSetOkResponses];
@@ -77149,11 +77339,10 @@ export type OpenstackSecurityGroupsSetRulesData = {
 };
 
 export type OpenstackSecurityGroupsSetRulesResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    202: Status;
 };
+
+export type OpenstackSecurityGroupsSetRulesResponse = OpenstackSecurityGroupsSetRulesResponses[keyof OpenstackSecurityGroupsSetRulesResponses];
 
 export type OpenstackSecurityGroupsUnlinkData = {
     body?: never;
@@ -77433,13 +77622,13 @@ export type OpenstackServerGroupsPullData = {
 };
 
 export type OpenstackServerGroupsPullErrors = {
-    409: PullConflictResponse;
+    409: Detail;
 };
 
 export type OpenstackServerGroupsPullError = OpenstackServerGroupsPullErrors[keyof OpenstackServerGroupsPullErrors];
 
 export type OpenstackServerGroupsPullResponses = {
-    202: PullResponse;
+    202: Detail;
 };
 
 export type OpenstackServerGroupsPullResponse = OpenstackServerGroupsPullResponses[keyof OpenstackServerGroupsPullResponses];
@@ -77454,7 +77643,7 @@ export type OpenstackServerGroupsSetErredData = {
 };
 
 export type OpenstackServerGroupsSetErredResponses = {
-    200: SetErredResponse;
+    200: Detail;
 };
 
 export type OpenstackServerGroupsSetErredResponse = OpenstackServerGroupsSetErredResponses[keyof OpenstackServerGroupsSetErredResponses];
@@ -77469,7 +77658,7 @@ export type OpenstackServerGroupsSetOkData = {
 };
 
 export type OpenstackServerGroupsSetOkResponses = {
-    200: SetOkResponse;
+    200: Detail;
 };
 
 export type OpenstackServerGroupsSetOkResponse = OpenstackServerGroupsSetOkResponses[keyof OpenstackServerGroupsSetOkResponses];
@@ -77803,13 +77992,13 @@ export type OpenstackSnapshotsPullData = {
 };
 
 export type OpenstackSnapshotsPullErrors = {
-    409: PullConflictResponse;
+    409: Detail;
 };
 
 export type OpenstackSnapshotsPullError = OpenstackSnapshotsPullErrors[keyof OpenstackSnapshotsPullErrors];
 
 export type OpenstackSnapshotsPullResponses = {
-    202: PullResponse;
+    202: Detail;
 };
 
 export type OpenstackSnapshotsPullResponse = OpenstackSnapshotsPullResponses[keyof OpenstackSnapshotsPullResponses];
@@ -77863,7 +78052,7 @@ export type OpenstackSnapshotsSetErredData = {
 };
 
 export type OpenstackSnapshotsSetErredResponses = {
-    200: SetErredResponse;
+    200: Detail;
 };
 
 export type OpenstackSnapshotsSetErredResponse = OpenstackSnapshotsSetErredResponses[keyof OpenstackSnapshotsSetErredResponses];
@@ -77878,7 +78067,7 @@ export type OpenstackSnapshotsSetOkData = {
 };
 
 export type OpenstackSnapshotsSetOkResponses = {
-    200: SetOkResponse;
+    200: Detail;
 };
 
 export type OpenstackSnapshotsSetOkResponse = OpenstackSnapshotsSetOkResponses[keyof OpenstackSnapshotsSetOkResponses];
@@ -78244,13 +78433,13 @@ export type OpenstackSubnetsPullData = {
 };
 
 export type OpenstackSubnetsPullErrors = {
-    409: PullConflictResponse;
+    409: Detail;
 };
 
 export type OpenstackSubnetsPullError = OpenstackSubnetsPullErrors[keyof OpenstackSubnetsPullErrors];
 
 export type OpenstackSubnetsPullResponses = {
-    202: PullResponse;
+    202: Detail;
 };
 
 export type OpenstackSubnetsPullResponse = OpenstackSubnetsPullResponses[keyof OpenstackSubnetsPullResponses];
@@ -78265,7 +78454,7 @@ export type OpenstackSubnetsSetErredData = {
 };
 
 export type OpenstackSubnetsSetErredResponses = {
-    200: SetErredResponse;
+    200: Detail;
 };
 
 export type OpenstackSubnetsSetErredResponse = OpenstackSubnetsSetErredResponses[keyof OpenstackSubnetsSetErredResponses];
@@ -78280,7 +78469,7 @@ export type OpenstackSubnetsSetOkData = {
 };
 
 export type OpenstackSubnetsSetOkResponses = {
-    200: SetOkResponse;
+    200: Detail;
 };
 
 export type OpenstackSubnetsSetOkResponse = OpenstackSubnetsSetOkResponses[keyof OpenstackSubnetsSetOkResponses];
@@ -78734,11 +78923,10 @@ export type OpenstackTenantsChangePasswordData = {
 };
 
 export type OpenstackTenantsChangePasswordResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    202: Status;
 };
+
+export type OpenstackTenantsChangePasswordResponse = OpenstackTenantsChangePasswordResponses[keyof OpenstackTenantsChangePasswordResponses];
 
 export type OpenstackTenantsCreateFloatingIpData = {
     body?: OpenStackFloatingIpRequest;
@@ -78810,13 +78998,13 @@ export type OpenstackTenantsPullData = {
 };
 
 export type OpenstackTenantsPullErrors = {
-    409: PullConflictResponse;
+    409: Detail;
 };
 
 export type OpenstackTenantsPullError = OpenstackTenantsPullErrors[keyof OpenstackTenantsPullErrors];
 
 export type OpenstackTenantsPullResponses = {
-    202: PullResponse;
+    202: Detail;
 };
 
 export type OpenstackTenantsPullResponse = OpenstackTenantsPullResponses[keyof OpenstackTenantsPullResponses];
@@ -78847,11 +79035,10 @@ export type OpenstackTenantsPullQuotasData = {
 };
 
 export type OpenstackTenantsPullQuotasResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    202: Status;
 };
+
+export type OpenstackTenantsPullQuotasResponse = OpenstackTenantsPullQuotasResponses[keyof OpenstackTenantsPullQuotasResponses];
 
 export type OpenstackTenantsPullSecurityGroupsData = {
     body?: never;
@@ -78893,11 +79080,10 @@ export type OpenstackTenantsPushSecurityGroupsData = {
 };
 
 export type OpenstackTenantsPushSecurityGroupsResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    202: Status;
 };
+
+export type OpenstackTenantsPushSecurityGroupsResponse = OpenstackTenantsPushSecurityGroupsResponses[keyof OpenstackTenantsPushSecurityGroupsResponses];
 
 export type OpenstackTenantsSetErredData = {
     body?: SetErredRequest;
@@ -78909,7 +79095,7 @@ export type OpenstackTenantsSetErredData = {
 };
 
 export type OpenstackTenantsSetErredResponses = {
-    200: SetErredResponse;
+    200: Detail;
 };
 
 export type OpenstackTenantsSetErredResponse = OpenstackTenantsSetErredResponses[keyof OpenstackTenantsSetErredResponses];
@@ -78924,7 +79110,7 @@ export type OpenstackTenantsSetOkData = {
 };
 
 export type OpenstackTenantsSetOkResponses = {
-    200: SetOkResponse;
+    200: Detail;
 };
 
 export type OpenstackTenantsSetOkResponse = OpenstackTenantsSetOkResponses[keyof OpenstackTenantsSetOkResponses];
@@ -79554,11 +79740,10 @@ export type OpenstackVolumesAttachData = {
 };
 
 export type OpenstackVolumesAttachResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    202: Status;
 };
+
+export type OpenstackVolumesAttachResponse = OpenstackVolumesAttachResponses[keyof OpenstackVolumesAttachResponses];
 
 export type OpenstackVolumesDetachData = {
     body?: never;
@@ -79570,11 +79755,10 @@ export type OpenstackVolumesDetachData = {
 };
 
 export type OpenstackVolumesDetachResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    202: Status;
 };
+
+export type OpenstackVolumesDetachResponse = OpenstackVolumesDetachResponses[keyof OpenstackVolumesDetachResponses];
 
 export type OpenstackVolumesExtendData = {
     body: OpenStackVolumeExtendRequest;
@@ -79586,11 +79770,10 @@ export type OpenstackVolumesExtendData = {
 };
 
 export type OpenstackVolumesExtendResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    202: Status;
 };
+
+export type OpenstackVolumesExtendResponse = OpenstackVolumesExtendResponses[keyof OpenstackVolumesExtendResponses];
 
 export type OpenstackVolumesPullData = {
     body?: never;
@@ -79602,13 +79785,13 @@ export type OpenstackVolumesPullData = {
 };
 
 export type OpenstackVolumesPullErrors = {
-    409: PullConflictResponse;
+    409: Detail;
 };
 
 export type OpenstackVolumesPullError = OpenstackVolumesPullErrors[keyof OpenstackVolumesPullErrors];
 
 export type OpenstackVolumesPullResponses = {
-    202: PullResponse;
+    202: Detail;
 };
 
 export type OpenstackVolumesPullResponse = OpenstackVolumesPullResponses[keyof OpenstackVolumesPullResponses];
@@ -79623,11 +79806,10 @@ export type OpenstackVolumesRetypeData = {
 };
 
 export type OpenstackVolumesRetypeResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    202: Status;
 };
+
+export type OpenstackVolumesRetypeResponse = OpenstackVolumesRetypeResponses[keyof OpenstackVolumesRetypeResponses];
 
 export type OpenstackVolumesSetErredData = {
     body?: SetErredRequest;
@@ -79639,7 +79821,7 @@ export type OpenstackVolumesSetErredData = {
 };
 
 export type OpenstackVolumesSetErredResponses = {
-    200: SetErredResponse;
+    200: Detail;
 };
 
 export type OpenstackVolumesSetErredResponse = OpenstackVolumesSetErredResponses[keyof OpenstackVolumesSetErredResponses];
@@ -79654,7 +79836,7 @@ export type OpenstackVolumesSetOkData = {
 };
 
 export type OpenstackVolumesSetOkResponses = {
-    200: SetOkResponse;
+    200: Detail;
 };
 
 export type OpenstackVolumesSetOkResponse = OpenstackVolumesSetOkResponses[keyof OpenstackVolumesSetOkResponses];
@@ -85470,13 +85652,13 @@ export type RancherAppsPullData = {
 };
 
 export type RancherAppsPullErrors = {
-    409: PullConflictResponse;
+    409: Detail;
 };
 
 export type RancherAppsPullError = RancherAppsPullErrors[keyof RancherAppsPullErrors];
 
 export type RancherAppsPullResponses = {
-    202: PullResponse;
+    202: Detail;
 };
 
 export type RancherAppsPullResponse = RancherAppsPullResponses[keyof RancherAppsPullResponses];
@@ -85491,7 +85673,7 @@ export type RancherAppsSetErredData = {
 };
 
 export type RancherAppsSetErredResponses = {
-    200: SetErredResponse;
+    200: Detail;
 };
 
 export type RancherAppsSetErredResponse = RancherAppsSetErredResponses[keyof RancherAppsSetErredResponses];
@@ -85506,7 +85688,7 @@ export type RancherAppsSetOkData = {
 };
 
 export type RancherAppsSetOkResponses = {
-    200: SetOkResponse;
+    200: Detail;
 };
 
 export type RancherAppsSetOkResponse = RancherAppsSetOkResponses[keyof RancherAppsSetOkResponses];
@@ -86106,13 +86288,13 @@ export type RancherClustersPullData = {
 };
 
 export type RancherClustersPullErrors = {
-    409: PullConflictResponse;
+    409: Detail;
 };
 
 export type RancherClustersPullError = RancherClustersPullErrors[keyof RancherClustersPullErrors];
 
 export type RancherClustersPullResponses = {
-    202: PullResponse;
+    202: Detail;
 };
 
 export type RancherClustersPullResponse = RancherClustersPullResponses[keyof RancherClustersPullResponses];
@@ -86127,7 +86309,7 @@ export type RancherClustersSetErredData = {
 };
 
 export type RancherClustersSetErredResponses = {
-    200: SetErredResponse;
+    200: Detail;
 };
 
 export type RancherClustersSetErredResponse = RancherClustersSetErredResponses[keyof RancherClustersSetErredResponses];
@@ -86142,7 +86324,7 @@ export type RancherClustersSetOkData = {
 };
 
 export type RancherClustersSetOkResponses = {
-    200: SetOkResponse;
+    200: Detail;
 };
 
 export type RancherClustersSetOkResponse = RancherClustersSetOkResponses[keyof RancherClustersSetOkResponses];
@@ -86336,13 +86518,13 @@ export type RancherHpasPullData = {
 };
 
 export type RancherHpasPullErrors = {
-    409: PullConflictResponse;
+    409: Detail;
 };
 
 export type RancherHpasPullError = RancherHpasPullErrors[keyof RancherHpasPullErrors];
 
 export type RancherHpasPullResponses = {
-    202: PullResponse;
+    202: Detail;
 };
 
 export type RancherHpasPullResponse = RancherHpasPullResponses[keyof RancherHpasPullResponses];
@@ -86357,7 +86539,7 @@ export type RancherHpasSetErredData = {
 };
 
 export type RancherHpasSetErredResponses = {
-    200: SetErredResponse;
+    200: Detail;
 };
 
 export type RancherHpasSetErredResponse = RancherHpasSetErredResponses[keyof RancherHpasSetErredResponses];
@@ -86372,7 +86554,7 @@ export type RancherHpasSetOkData = {
 };
 
 export type RancherHpasSetOkResponses = {
-    200: SetOkResponse;
+    200: Detail;
 };
 
 export type RancherHpasSetOkResponse = RancherHpasSetOkResponses[keyof RancherHpasSetOkResponses];
@@ -86705,13 +86887,13 @@ export type RancherIngressesPullData = {
 };
 
 export type RancherIngressesPullErrors = {
-    409: PullConflictResponse;
+    409: Detail;
 };
 
 export type RancherIngressesPullError = RancherIngressesPullErrors[keyof RancherIngressesPullErrors];
 
 export type RancherIngressesPullResponses = {
-    202: PullResponse;
+    202: Detail;
 };
 
 export type RancherIngressesPullResponse = RancherIngressesPullResponses[keyof RancherIngressesPullResponses];
@@ -86726,7 +86908,7 @@ export type RancherIngressesSetErredData = {
 };
 
 export type RancherIngressesSetErredResponses = {
-    200: SetErredResponse;
+    200: Detail;
 };
 
 export type RancherIngressesSetErredResponse = RancherIngressesSetErredResponses[keyof RancherIngressesSetErredResponses];
@@ -86741,7 +86923,7 @@ export type RancherIngressesSetOkData = {
 };
 
 export type RancherIngressesSetOkResponses = {
-    200: SetOkResponse;
+    200: Detail;
 };
 
 export type RancherIngressesSetOkResponse = RancherIngressesSetOkResponses[keyof RancherIngressesSetOkResponses];
@@ -87062,13 +87244,13 @@ export type RancherNodesPullData = {
 };
 
 export type RancherNodesPullErrors = {
-    409: PullConflictResponse;
+    409: Detail;
 };
 
 export type RancherNodesPullError = RancherNodesPullErrors[keyof RancherNodesPullErrors];
 
 export type RancherNodesPullResponses = {
-    202: PullResponse;
+    202: Detail;
 };
 
 export type RancherNodesPullResponse = RancherNodesPullResponses[keyof RancherNodesPullResponses];
@@ -87083,7 +87265,7 @@ export type RancherNodesSetErredData = {
 };
 
 export type RancherNodesSetErredResponses = {
-    200: SetErredResponse;
+    200: Detail;
 };
 
 export type RancherNodesSetErredResponse = RancherNodesSetErredResponses[keyof RancherNodesSetErredResponses];
@@ -87098,7 +87280,7 @@ export type RancherNodesSetOkData = {
 };
 
 export type RancherNodesSetOkResponses = {
-    200: SetOkResponse;
+    200: Detail;
 };
 
 export type RancherNodesSetOkResponse = RancherNodesSetOkResponses[keyof RancherNodesSetOkResponses];
@@ -87231,20 +87413,29 @@ export type RancherProjectsRetrieveResponses = {
 
 export type RancherProjectsRetrieveResponse = RancherProjectsRetrieveResponses[keyof RancherProjectsRetrieveResponses];
 
-export type RancherProjectsSecretsRetrieveData = {
+export type RancherProjectsSecretsListData = {
     body?: never;
     path: {
         uuid: string;
     };
-    query?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
     url: '/api/rancher-projects/{uuid}/secrets/';
 };
 
-export type RancherProjectsSecretsRetrieveResponses = {
-    200: RancherProject;
+export type RancherProjectsSecretsListResponses = {
+    200: Array<Secret>;
 };
 
-export type RancherProjectsSecretsRetrieveResponse = RancherProjectsSecretsRetrieveResponses[keyof RancherProjectsSecretsRetrieveResponses];
+export type RancherProjectsSecretsListResponse = RancherProjectsSecretsListResponses[keyof RancherProjectsSecretsListResponses];
 
 export type RancherRoleTemplatesListData = {
     body?: never;
@@ -87604,13 +87795,13 @@ export type RancherServicesPullData = {
 };
 
 export type RancherServicesPullErrors = {
-    409: PullConflictResponse;
+    409: Detail;
 };
 
 export type RancherServicesPullError = RancherServicesPullErrors[keyof RancherServicesPullErrors];
 
 export type RancherServicesPullResponses = {
-    202: PullResponse;
+    202: Detail;
 };
 
 export type RancherServicesPullResponse = RancherServicesPullResponses[keyof RancherServicesPullResponses];
@@ -87625,7 +87816,7 @@ export type RancherServicesSetErredData = {
 };
 
 export type RancherServicesSetErredResponses = {
-    200: SetErredResponse;
+    200: Detail;
 };
 
 export type RancherServicesSetErredResponse = RancherServicesSetErredResponses[keyof RancherServicesSetErredResponses];
@@ -87640,7 +87831,7 @@ export type RancherServicesSetOkData = {
 };
 
 export type RancherServicesSetOkResponses = {
-    200: SetOkResponse;
+    200: Detail;
 };
 
 export type RancherServicesSetOkResponse = RancherServicesSetOkResponses[keyof RancherServicesSetOkResponses];
@@ -90758,13 +90949,13 @@ export type SlurmAllocationsPullData = {
 };
 
 export type SlurmAllocationsPullErrors = {
-    409: PullConflictResponse;
+    409: Detail;
 };
 
 export type SlurmAllocationsPullError = SlurmAllocationsPullErrors[keyof SlurmAllocationsPullErrors];
 
 export type SlurmAllocationsPullResponses = {
-    202: PullResponse;
+    202: Detail;
 };
 
 export type SlurmAllocationsPullResponse = SlurmAllocationsPullResponses[keyof SlurmAllocationsPullResponses];
@@ -90779,7 +90970,7 @@ export type SlurmAllocationsSetErredData = {
 };
 
 export type SlurmAllocationsSetErredResponses = {
-    200: SetErredResponse;
+    200: Detail;
 };
 
 export type SlurmAllocationsSetErredResponse = SlurmAllocationsSetErredResponses[keyof SlurmAllocationsSetErredResponses];
@@ -90794,7 +90985,7 @@ export type SlurmAllocationsSetLimitsData = {
 };
 
 export type SlurmAllocationsSetLimitsResponses = {
-    200: SlurmAllocationSetLimits;
+    202: Status;
 };
 
 export type SlurmAllocationsSetLimitsResponse = SlurmAllocationsSetLimitsResponses[keyof SlurmAllocationsSetLimitsResponses];
@@ -90809,7 +91000,7 @@ export type SlurmAllocationsSetOkData = {
 };
 
 export type SlurmAllocationsSetOkResponses = {
-    200: SetOkResponse;
+    200: Detail;
 };
 
 export type SlurmAllocationsSetOkResponse = SlurmAllocationsSetOkResponses[keyof SlurmAllocationsSetOkResponses];
@@ -91030,13 +91221,13 @@ export type SlurmJobsPullData = {
 };
 
 export type SlurmJobsPullErrors = {
-    409: PullConflictResponse;
+    409: Detail;
 };
 
 export type SlurmJobsPullError = SlurmJobsPullErrors[keyof SlurmJobsPullErrors];
 
 export type SlurmJobsPullResponses = {
-    202: PullResponse;
+    202: Detail;
 };
 
 export type SlurmJobsPullResponse = SlurmJobsPullResponses[keyof SlurmJobsPullResponses];
@@ -91051,7 +91242,7 @@ export type SlurmJobsSetErredData = {
 };
 
 export type SlurmJobsSetErredResponses = {
-    200: SetErredResponse;
+    200: Detail;
 };
 
 export type SlurmJobsSetErredResponse = SlurmJobsSetErredResponses[keyof SlurmJobsSetErredResponses];
@@ -91066,7 +91257,7 @@ export type SlurmJobsSetOkData = {
 };
 
 export type SlurmJobsSetOkResponses = {
-    200: SetOkResponse;
+    200: Detail;
 };
 
 export type SlurmJobsSetOkResponse = SlurmJobsSetOkResponses[keyof SlurmJobsSetOkResponses];
@@ -96219,13 +96410,13 @@ export type VmwareDisksPullData = {
 };
 
 export type VmwareDisksPullErrors = {
-    409: PullConflictResponse;
+    409: Detail;
 };
 
 export type VmwareDisksPullError = VmwareDisksPullErrors[keyof VmwareDisksPullErrors];
 
 export type VmwareDisksPullResponses = {
-    202: PullResponse;
+    202: Detail;
 };
 
 export type VmwareDisksPullResponse = VmwareDisksPullResponses[keyof VmwareDisksPullResponses];
@@ -96240,7 +96431,7 @@ export type VmwareDisksSetErredData = {
 };
 
 export type VmwareDisksSetErredResponses = {
-    200: SetErredResponse;
+    200: Detail;
 };
 
 export type VmwareDisksSetErredResponse = VmwareDisksSetErredResponses[keyof VmwareDisksSetErredResponses];
@@ -96255,7 +96446,7 @@ export type VmwareDisksSetOkData = {
 };
 
 export type VmwareDisksSetOkResponses = {
-    200: SetOkResponse;
+    200: Detail;
 };
 
 export type VmwareDisksSetOkResponse = VmwareDisksSetOkResponses[keyof VmwareDisksSetOkResponses];
@@ -96740,13 +96931,13 @@ export type VmwarePortsPullData = {
 };
 
 export type VmwarePortsPullErrors = {
-    409: PullConflictResponse;
+    409: Detail;
 };
 
 export type VmwarePortsPullError = VmwarePortsPullErrors[keyof VmwarePortsPullErrors];
 
 export type VmwarePortsPullResponses = {
-    202: PullResponse;
+    202: Detail;
 };
 
 export type VmwarePortsPullResponse = VmwarePortsPullResponses[keyof VmwarePortsPullResponses];
@@ -96761,7 +96952,7 @@ export type VmwarePortsSetErredData = {
 };
 
 export type VmwarePortsSetErredResponses = {
-    200: SetErredResponse;
+    200: Detail;
 };
 
 export type VmwarePortsSetErredResponse = VmwarePortsSetErredResponses[keyof VmwarePortsSetErredResponses];
@@ -96776,7 +96967,7 @@ export type VmwarePortsSetOkData = {
 };
 
 export type VmwarePortsSetOkResponses = {
-    200: SetOkResponse;
+    200: Detail;
 };
 
 export type VmwarePortsSetOkResponse = VmwarePortsSetOkResponses[keyof VmwarePortsSetOkResponses];
@@ -97212,13 +97403,13 @@ export type VmwareVirtualMachinePullData = {
 };
 
 export type VmwareVirtualMachinePullErrors = {
-    409: PullConflictResponse;
+    409: Detail;
 };
 
 export type VmwareVirtualMachinePullError = VmwareVirtualMachinePullErrors[keyof VmwareVirtualMachinePullErrors];
 
 export type VmwareVirtualMachinePullResponses = {
-    202: PullResponse;
+    202: Detail;
 };
 
 export type VmwareVirtualMachinePullResponse = VmwareVirtualMachinePullResponses[keyof VmwareVirtualMachinePullResponses];
@@ -97263,7 +97454,7 @@ export type VmwareVirtualMachineSetErredData = {
 };
 
 export type VmwareVirtualMachineSetErredResponses = {
-    200: SetErredResponse;
+    200: Detail;
 };
 
 export type VmwareVirtualMachineSetErredResponse = VmwareVirtualMachineSetErredResponses[keyof VmwareVirtualMachineSetErredResponses];
@@ -97278,7 +97469,7 @@ export type VmwareVirtualMachineSetOkData = {
 };
 
 export type VmwareVirtualMachineSetOkResponses = {
-    200: SetOkResponse;
+    200: Detail;
 };
 
 export type VmwareVirtualMachineSetOkResponse = VmwareVirtualMachineSetOkResponses[keyof VmwareVirtualMachineSetOkResponses];
