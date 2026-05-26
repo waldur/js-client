@@ -2184,10 +2184,6 @@ export type AwsInstanceRequest = {
     size: string;
 };
 
-export type AwsInstanceResize = {
-    size: string;
-};
-
 export type AwsInstanceResizeRequest = {
     size: string;
 };
@@ -2265,14 +2261,6 @@ export type AwsVolume = {
     readonly marketplace_resource_state?: string | null;
     readonly is_usage_based?: boolean | null;
     readonly is_limit_based?: boolean | null;
-};
-
-export type AwsVolumeAttach = {
-    instance: string;
-    /**
-     * The device name for attachment. For example, use /dev/sd[f-p] for Linux instances.
-     */
-    device: string;
 };
 
 export type AwsVolumeAttachRequest = {
@@ -2467,14 +2455,14 @@ export type AzureSqlDatabase = {
     readonly is_limit_based?: boolean | null;
 };
 
-export type AzureSqlDatabaseCreate = {
+export type AzureSqlDatabaseCreateRequest = {
     name: string;
     description?: string;
 };
 
-export type AzureSqlDatabaseCreateRequest = {
-    name: string;
-    description?: string;
+export type AzureSqlDatabaseCreateResponse = {
+    status: string;
+    database_uuid: string;
 };
 
 export type AzureSqlDatabaseRequest = {
@@ -2900,6 +2888,10 @@ export type Booking = {
     readonly created_by_full_name: string | null;
     start: string;
     end: string;
+};
+
+export type BookingOrderUuid = {
+    order_uuid: string;
 };
 
 export type BookingResource = {
@@ -6445,6 +6437,11 @@ export type CustomerCreditConsumption = {
     readonly price: string;
 };
 
+export type CustomerCreditConsumptionByMonth = {
+    readonly month: string;
+    readonly price: string;
+};
+
 export type CustomerDefaultAffiliationsUpdateRequest = {
     default_affiliations?: Array<string>;
 };
@@ -7167,10 +7164,6 @@ export type DigitalOceanDropletRequest = {
     size: string;
 };
 
-export type DigitalOceanDropletResize = {
-    disk: boolean;
-};
-
 export type DigitalOceanDropletResizeRequest = {
     size: string;
     disk: boolean;
@@ -7659,6 +7652,10 @@ export type Event = {
     event_type?: string;
     message?: string;
     readonly context?: unknown;
+};
+
+export type EventCount = {
+    count: number;
 };
 
 export type EventGroupsEnum = 'access_subnets' | 'auth' | 'call' | 'chat' | 'credits' | 'customers' | 'invoices' | 'offering_accounting' | 'onboarding' | 'permissions' | 'projects' | 'proposal' | 'providers' | 'resources' | 'review' | 'ssh' | 'support' | 'users' | 'terms_of_service';
@@ -8422,6 +8419,10 @@ export type GlobalUserDataAccessLog = {
     context: {
         [key: string]: unknown;
     };
+};
+
+export type GoogleAuthUrl = {
+    request_url: string;
 };
 
 export type GoogleCalendar = {
@@ -9517,13 +9518,6 @@ export type InvoiceItem = {
     readonly credit?: boolean;
 };
 
-export type InvoiceItemCompensation = {
-    /**
-     * Name of the offering component for compensation
-     */
-    offering_component_name: string;
-};
-
 export type InvoiceItemCompensationRequest = {
     /**
      * Name of the offering component for compensation
@@ -9621,10 +9615,6 @@ export type InvoiceItemDetails = {
     resource_limit_periods?: Array<ResourceLimitPeriod>;
 };
 
-export type InvoiceItemMigrateTo = {
-    invoice: string;
-};
-
 export type InvoiceItemMigrateToRequest = {
     invoice: string;
 };
@@ -9634,6 +9624,10 @@ export type InvoiceItemTotalPrice = {
      * Total price for the invoice item
      */
     total_price: string;
+};
+
+export type InvoiceItemUuid = {
+    invoice_item_uuid: string;
 };
 
 export type InvoiceItemUpdate = {
@@ -10080,19 +10074,8 @@ export type LinkResourceResponse = {
     success: boolean;
 };
 
-export type LinkToInvoice = {
-    invoice: string;
-};
-
 export type LinkToInvoiceRequest = {
     invoice: string;
-};
-
-export type LoadBalancerAsyncOperationResponse = {
-    /**
-     * Message that execution of the operation was scheduled.
-     */
-    status: string;
 };
 
 export type LoadBalancerAttachFloatingIpRequest = {
@@ -11730,13 +11713,6 @@ export type MessageTemplateRequest = {
     body: string;
 };
 
-export type MetricsReset = {
-    /**
-     * Operation status
-     */
-    readonly status: string;
-};
-
 export type MigrationCreate = {
     mappings?: Mapping;
     src_resource: string;
@@ -12678,6 +12654,23 @@ export type Notification = {
     };
 };
 
+export type NotificationRecipient = {
+    full_name?: string | null;
+    email: string;
+    offerings: Array<NotificationRecipientOffering>;
+    customers: Array<NotificationRecipientCustomer>;
+};
+
+export type NotificationRecipientCustomer = {
+    uuid: string;
+    name: string;
+};
+
+export type NotificationRecipientOffering = {
+    uuid: string;
+    name: string;
+};
+
 export type NotificationRequest = {
     key: string;
     description?: string;
@@ -13364,6 +13357,17 @@ export type OfferingLocationUpdateRequest = {
     longitude: number;
 };
 
+export type OfferingMapping = {
+    uuid: string;
+    name: string;
+    description: string;
+    slug: string;
+};
+
+export type OfferingMappingMap = {
+    '*': OfferingMapping | null;
+};
+
 export type OfferingOptions = {
     order?: Array<string>;
     options?: {
@@ -13643,13 +13647,6 @@ export type OfferingProfileBindRequest = {
 export type OfferingProfileRequest = {
     name: string;
     description?: string;
-};
-
-export type OfferingProfileRoleAssign = {
-    /**
-     * Role UUID to add or remove.
-     */
-    role: string;
 };
 
 export type OfferingProfileRoleAssignRequest = {
@@ -16501,21 +16498,6 @@ export type OpenStackTenantChangePasswordRequest = {
     user_password: string;
 };
 
-export type OpenStackTenantQuota = {
-    instances?: number;
-    volumes?: number;
-    snapshots?: number;
-    ram?: number;
-    vcpu?: number;
-    storage?: number;
-    security_group_count?: number;
-    security_group_rule_count?: number;
-    floating_ip_count?: number;
-    network_count?: number;
-    subnet_count?: number;
-    port_count?: number;
-};
-
 export type OpenStackTenantRequest = {
     name: string;
     description?: string;
@@ -16542,6 +16524,12 @@ export type OpenStackTenantSecurityGroupRequest = {
     name: string;
     description?: string;
     rules?: Array<OpenStackSecurityGroupRuleCreateRequest>;
+};
+
+export type OpenStackUsageStatsResponse = {
+    readonly name: string;
+    readonly running_instances_count: number;
+    readonly created_instances_count: number;
 };
 
 export type OpenStackVolume = {
@@ -20255,6 +20243,17 @@ export type ProjectInfoRequest = {
     allowed_destinations?: string | null;
 };
 
+export type ProjectMapping = {
+    uuid: string;
+    name: string;
+    customer_uuid: string;
+    customer_name: string;
+};
+
+export type ProjectMappingMap = {
+    '*': ProjectMapping | null;
+};
+
 export type ProjectOrderAutoApproval = {
     readonly uuid: string;
     readonly url: string;
@@ -22708,6 +22707,10 @@ export type RancherClusterTemplateNode = {
     role: RancherNodeRoleEnum;
 };
 
+export type RancherCreateManagementSecurityGroupResponse = {
+    security_group_uuid: string;
+};
+
 export type RancherCreateNode = {
     cluster: string;
     role: RancherNodeRoleEnum;
@@ -22762,12 +22765,6 @@ export type RancherHpaRequest = {
     min_replicas?: number;
     max_replicas?: number;
     metrics: unknown;
-};
-
-export type RancherImportYaml = {
-    yaml: string;
-    default_namespace?: string | null;
-    namespace?: string | null;
 };
 
 export type RancherImportYamlRequest = {
@@ -24080,19 +24077,8 @@ export type ResourceProject = {
     readonly termination_metadata: unknown;
 };
 
-export type ResourceProjectBackendId = {
-    backend_id: string;
-};
-
 export type ResourceProjectBackendIdRequest = {
     backend_id: string;
-};
-
-export type ResourceProjectErrorMessage = {
-    /**
-     * Free-form description of why the project transitioned to Erred.
-     */
-    error_message?: string;
 };
 
 export type ResourceProjectErrorMessageRequest = {
@@ -25601,14 +25587,6 @@ export type RoundReviewer = {
 
 export type RoundStatus = 'scheduled' | 'open' | 'ended';
 
-export type RouterSetErredResponse = {
-    detail: string;
-};
-
-export type RouterSetOkResponse = {
-    detail: string;
-};
-
 export type Rule = {
     name: string;
     readonly uuid: string;
@@ -25840,6 +25818,14 @@ export type ScreenshotRequest = {
     description?: string;
     image: Blob | File;
     offering: string;
+};
+
+export type ScriptAsyncDryRunResponse = {
+    uuid: string;
+};
+
+export type ScriptDryRunResponse = {
+    output: string;
 };
 
 export type Secret = {
@@ -27690,10 +27676,6 @@ export type TriggerSyncRequestRequest = {
     resource_uuid?: string;
 };
 
-export type UnsilenceActionResponse = {
-    status: string;
-};
-
 export type UpdateActionsRequest = {
     /**
      * Optional provider action type to update. If not provided, updates all providers.
@@ -28216,6 +28198,10 @@ export type UserEmailChangeRequest = {
     email: string;
 };
 
+export type UserHasResourceAccess = {
+    readonly has_access: boolean;
+};
+
 export type UserIdentitySourceCount = {
     /**
      * Identity source
@@ -28257,6 +28243,149 @@ export type UserJobTitleCount = {
 export type UserLanguageCount = {
     language: string;
     count: number;
+};
+
+export type UserMapping = {
+    uuid: string;
+    full_name: string;
+    email: string;
+    username: string;
+};
+
+export type UserMappingMap = {
+    '*': UserMapping | null;
+};
+
+export type UserMe = {
+    readonly url: string;
+    readonly uuid: string;
+    /**
+     * Required. 128 characters or fewer. Lowercase letters, numbers and @/./+/-/_ characters
+     */
+    username: string;
+    /**
+     * URL-friendly identifier. Only editable by staff users.
+     */
+    slug?: string;
+    readonly full_name: string;
+    native_name?: string;
+    job_title?: string;
+    email: string;
+    phone_number?: string;
+    organization?: string;
+    readonly civil_number: string | null;
+    description?: string;
+    /**
+     * Staff status
+     * Designates whether the user can log into this admin site.
+     */
+    is_staff?: boolean;
+    /**
+     * Active
+     * Designates whether this user should be treated as active. Unselect this instead of deleting accounts.
+     */
+    is_active?: boolean;
+    /**
+     * Support status
+     * Designates whether the user is a global support user.
+     */
+    is_support?: boolean;
+    readonly token: string;
+    /**
+     * Token lifetime in seconds.
+     */
+    token_lifetime?: number | null;
+    readonly token_expires_at: string | null;
+    /**
+     * Indicates what registration method was used.
+     */
+    readonly registration_method: string;
+    readonly date_joined: string;
+    /**
+     * Indicates when the user has agreed with the policy.
+     */
+    readonly agreement_date: string | null;
+    /**
+     * Designates whether the user is allowed to receive email notifications.
+     */
+    notifications_enabled?: boolean;
+    preferred_language?: string;
+    readonly permissions: Array<Permission>;
+    readonly requested_email: string | null;
+    /**
+     * Person's affiliation within organization such as student, faculty, staff.
+     */
+    readonly affiliations: unknown;
+    first_name?: string;
+    last_name?: string;
+    birth_date?: string | null;
+    readonly identity_provider_name: string;
+    readonly identity_provider_label: string;
+    readonly identity_provider_management_url: string;
+    readonly identity_provider_fields: Array<string>;
+    image?: string | null;
+    /**
+     * Source of identity
+     * Indicates what identity provider was used.
+     */
+    readonly identity_source: string;
+    readonly should_protect_user_details: boolean;
+    readonly has_active_session: boolean;
+    readonly has_usable_password: boolean;
+    readonly ip_address: string;
+    /**
+     * User's gender (male, female, or unknown)
+     */
+    gender?: GenderEnum | BlankEnum | NullEnum | null;
+    /**
+     * Honorific title (Mr, Ms, Dr, Prof, etc.)
+     */
+    personal_title?: string;
+    place_of_birth?: string;
+    address?: string;
+    country_of_residence?: string;
+    /**
+     * Primary citizenship (ISO 3166-1 alpha-2 code)
+     */
+    nationality?: string;
+    /**
+     * List of all citizenships (ISO 3166-1 alpha-2 codes)
+     */
+    nationalities?: unknown;
+    organization_country?: string;
+    /**
+     * SCHAC URN (e.g., urn:schac:homeOrganizationType:int:university)
+     */
+    organization_type?: string;
+    /**
+     * Company registration code of the user's organization, if known
+     */
+    organization_registry_code?: string;
+    /**
+     * REFEDS assurance profile URIs from identity provider
+     */
+    eduperson_assurance?: unknown;
+    /**
+     * Designates whether the user is allowed to manage remote user identities.
+     */
+    is_identity_manager?: boolean;
+    /**
+     * Per-attribute source and freshness tracking. Format: {'field_name': {'source': 'isd:<name>', 'timestamp': 'ISO8601'}}.
+     */
+    readonly attribute_sources: unknown;
+    /**
+     * List of ISD source identifiers this user can manage via Identity Bridge. E.g., ['isd:puhuri', 'isd:fenix']. Non-empty list implies identity manager role.
+     */
+    managed_isds?: unknown;
+    /**
+     * List of ISDs that have asserted this user exists. User is deactivated when this becomes empty.
+     */
+    readonly active_isds: unknown;
+    /**
+     * Reason why the user was deactivated. Visible to staff and support.
+     */
+    deactivation_reason?: string;
+    profile_completeness: ProfileCompleteness;
 };
 
 export type UserNationalityStats = {
@@ -28675,13 +28804,6 @@ export type VmwareDisk = {
     readonly marketplace_resource_state?: string | null;
     readonly is_usage_based?: boolean | null;
     readonly is_limit_based?: boolean | null;
-};
-
-export type VmwareDiskExtend = {
-    /**
-     * Size in MiB
-     */
-    size: number;
 };
 
 export type VmwareDiskExtendRequest = {
@@ -34889,7 +35011,7 @@ export type AwsInstancesResizeData = {
 };
 
 export type AwsInstancesResizeResponses = {
-    200: AwsInstanceResize;
+    202: Status;
 };
 
 export type AwsInstancesResizeResponse = AwsInstancesResizeResponses[keyof AwsInstancesResizeResponses];
@@ -35275,10 +35397,11 @@ export type AwsVolumesAttachData = {
 };
 
 export type AwsVolumesAttachResponses = {
-    200: AwsVolumeAttach;
+    /**
+     * No response body
+     */
+    202: unknown;
 };
-
-export type AwsVolumesAttachResponse = AwsVolumesAttachResponses[keyof AwsVolumesAttachResponses];
 
 export type AwsVolumesDetachData = {
     body?: never;
@@ -36671,7 +36794,7 @@ export type AzureSqlServersCreateDatabaseData = {
 };
 
 export type AzureSqlServersCreateDatabaseResponses = {
-    200: AzureSqlDatabaseCreate;
+    202: AzureSqlDatabaseCreateResponse;
 };
 
 export type AzureSqlServersCreateDatabaseResponse = AzureSqlServersCreateDatabaseResponses[keyof AzureSqlServersCreateDatabaseResponses];
@@ -38080,7 +38203,7 @@ export type BookingResourcesAcceptData = {
 };
 
 export type BookingResourcesAcceptResponses = {
-    200: BookingResource;
+    200: BookingOrderUuid;
 };
 
 export type BookingResourcesAcceptResponse = BookingResourcesAcceptResponses[keyof BookingResourcesAcceptResponses];
@@ -38095,7 +38218,7 @@ export type BookingResourcesRejectData = {
 };
 
 export type BookingResourcesRejectResponses = {
-    200: BookingResource;
+    200: BookingOrderUuid;
 };
 
 export type BookingResourcesRejectResponse = BookingResourcesRejectResponses[keyof BookingResourcesRejectResponses];
@@ -38398,14 +38521,12 @@ export type BroadcastMessagesSendResponses = {
 export type BroadcastMessagesRecipientsRetrieveData = {
     body?: never;
     path?: never;
-    query?: {
-        field?: Array<BroadcastMessageFieldEnum>;
-    };
+    query?: never;
     url: '/api/broadcast-messages/recipients/';
 };
 
 export type BroadcastMessagesRecipientsRetrieveResponses = {
-    200: BroadcastMessage;
+    200: NotificationRecipient;
 };
 
 export type BroadcastMessagesRecipientsRetrieveResponse = BroadcastMessagesRecipientsRetrieveResponses[keyof BroadcastMessagesRecipientsRetrieveResponses];
@@ -41016,10 +41137,11 @@ export type CustomerCreditsApplyCompensationsData = {
 };
 
 export type CustomerCreditsApplyCompensationsResponses = {
-    200: CustomerCredit;
+    /**
+     * No response body
+     */
+    200: unknown;
 };
-
-export type CustomerCreditsApplyCompensationsResponse = CustomerCreditsApplyCompensationsResponses[keyof CustomerCreditsApplyCompensationsResponses];
 
 export type CustomerCreditsClearCompensationsData = {
     body?: never;
@@ -41031,10 +41153,11 @@ export type CustomerCreditsClearCompensationsData = {
 };
 
 export type CustomerCreditsClearCompensationsResponses = {
-    200: CustomerCredit;
+    /**
+     * No response body
+     */
+    200: unknown;
 };
-
-export type CustomerCreditsClearCompensationsResponse = CustomerCreditsClearCompensationsResponses[keyof CustomerCreditsClearCompensationsResponses];
 
 export type CustomerCreditsConsumptionsListData = {
     body?: never;
@@ -42541,7 +42664,7 @@ export type DebugPubsubMetricsResetData = {
 };
 
 export type DebugPubsubMetricsResetResponses = {
-    200: MetricsReset;
+    200: Status;
 };
 
 export type DebugPubsubMetricsResetResponse = DebugPubsubMetricsResetResponses[keyof DebugPubsubMetricsResetResponses];
@@ -42867,7 +42990,7 @@ export type DigitaloceanDropletsResizeData = {
 };
 
 export type DigitaloceanDropletsResizeResponses = {
-    200: DigitalOceanDropletResize;
+    202: Status;
 };
 
 export type DigitaloceanDropletsResizeResponse = DigitaloceanDropletsResizeResponses[keyof DigitaloceanDropletsResizeResponses];
@@ -42882,7 +43005,7 @@ export type DigitaloceanDropletsRestartData = {
 };
 
 export type DigitaloceanDropletsRestartResponses = {
-    200: DigitalOceanDroplet;
+    202: Status;
 };
 
 export type DigitaloceanDropletsRestartResponse = DigitaloceanDropletsRestartResponses[keyof DigitaloceanDropletsRestartResponses];
@@ -42927,7 +43050,7 @@ export type DigitaloceanDropletsStartData = {
 };
 
 export type DigitaloceanDropletsStartResponses = {
-    200: DigitalOceanDroplet;
+    202: Status;
 };
 
 export type DigitaloceanDropletsStartResponse = DigitaloceanDropletsStartResponses[keyof DigitaloceanDropletsStartResponses];
@@ -42942,7 +43065,7 @@ export type DigitaloceanDropletsStopData = {
 };
 
 export type DigitaloceanDropletsStopResponses = {
-    200: DigitalOceanDroplet;
+    202: Status;
 };
 
 export type DigitaloceanDropletsStopResponse = DigitaloceanDropletsStopResponses[keyof DigitaloceanDropletsStopResponses];
@@ -43718,14 +43841,12 @@ export type EventsRetrieveResponse = EventsRetrieveResponses[keyof EventsRetriev
 export type EventsCountRetrieveData = {
     body?: never;
     path?: never;
-    query?: {
-        field?: Array<EventFieldEnum>;
-    };
+    query?: never;
     url: '/api/events/count/';
 };
 
 export type EventsCountRetrieveResponses = {
-    200: Event;
+    200: EventCount;
 };
 
 export type EventsCountRetrieveResponse = EventsCountRetrieveResponses[keyof EventsCountRetrieveResponses];
@@ -43747,14 +43868,14 @@ export type EventsCountCountResponses = {
 export type EventsEventGroupsRetrieveData = {
     body?: never;
     path?: never;
-    query?: {
-        field?: Array<EventFieldEnum>;
-    };
+    query?: never;
     url: '/api/events/event_groups/';
 };
 
 export type EventsEventGroupsRetrieveResponses = {
-    200: Event;
+    200: {
+        [key: string]: Array<string>;
+    };
 };
 
 export type EventsEventGroupsRetrieveResponse = EventsEventGroupsRetrieveResponses[keyof EventsEventGroupsRetrieveResponses];
@@ -43776,14 +43897,12 @@ export type EventsEventGroupsCountResponses = {
 export type EventsScopeTypesRetrieveData = {
     body?: never;
     path?: never;
-    query?: {
-        field?: Array<EventFieldEnum>;
-    };
+    query?: never;
     url: '/api/events/scope_types/';
 };
 
 export type EventsScopeTypesRetrieveResponses = {
-    200: Event;
+    200: Array<string>;
 };
 
 export type EventsScopeTypesRetrieveResponse = EventsScopeTypesRetrieveResponses[keyof EventsScopeTypesRetrieveResponses];
@@ -44435,14 +44554,12 @@ export type GoogleAuthAuthorizeRetrieveData = {
     path: {
         uuid: string;
     };
-    query?: {
-        field?: Array<GoogleCredentialsFieldEnum>;
-    };
+    query?: never;
     url: '/api/google-auth/{uuid}/authorize/';
 };
 
 export type GoogleAuthAuthorizeRetrieveResponses = {
-    200: GoogleCredentials;
+    200: GoogleAuthUrl;
 };
 
 export type GoogleAuthAuthorizeRetrieveResponse = GoogleAuthAuthorizeRetrieveResponses[keyof GoogleAuthAuthorizeRetrieveResponses];
@@ -44464,11 +44581,10 @@ export type GoogleAuthCallbackRetrieveData = {
 };
 
 export type GoogleAuthCallbackRetrieveResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    200: string;
 };
+
+export type GoogleAuthCallbackRetrieveResponse = GoogleAuthCallbackRetrieveResponses[keyof GoogleAuthCallbackRetrieveResponses];
 
 export type GoogleAuthCallbackCountData = {
     body?: never;
@@ -45213,20 +45329,44 @@ export type InvoiceItemsUpdateResponses = {
 
 export type InvoiceItemsUpdateResponse = InvoiceItemsUpdateResponses[keyof InvoiceItemsUpdateResponses];
 
-export type InvoiceItemsConsumptionsRetrieveData = {
+export type InvoiceItemsConsumptionsListData = {
     body?: never;
     path: {
         uuid: string;
     };
-    query?: never;
+    query?: {
+        credit_uuid?: string;
+        customer_uuid?: string;
+        month?: number;
+        offering_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        project_uuid?: string;
+        resource_uuid?: string;
+        /**
+         * Start month
+         */
+        start_month?: number;
+        /**
+         * Start year
+         */
+        start_year?: number;
+        year?: number;
+    };
     url: '/api/invoice-items/{uuid}/consumptions/';
 };
 
-export type InvoiceItemsConsumptionsRetrieveResponses = {
-    200: InvoiceItemDetail;
+export type InvoiceItemsConsumptionsListResponses = {
+    200: Array<CustomerCreditConsumptionByMonth>;
 };
 
-export type InvoiceItemsConsumptionsRetrieveResponse = InvoiceItemsConsumptionsRetrieveResponses[keyof InvoiceItemsConsumptionsRetrieveResponses];
+export type InvoiceItemsConsumptionsListResponse = InvoiceItemsConsumptionsListResponses[keyof InvoiceItemsConsumptionsListResponses];
 
 export type InvoiceItemsCreateCompensationData = {
     body: InvoiceItemCompensationRequest;
@@ -45238,7 +45378,7 @@ export type InvoiceItemsCreateCompensationData = {
 };
 
 export type InvoiceItemsCreateCompensationResponses = {
-    200: InvoiceItemCompensation;
+    201: InvoiceItemUuid;
 };
 
 export type InvoiceItemsCreateCompensationResponse = InvoiceItemsCreateCompensationResponses[keyof InvoiceItemsCreateCompensationResponses];
@@ -45253,7 +45393,7 @@ export type InvoiceItemsMigrateToData = {
 };
 
 export type InvoiceItemsMigrateToResponses = {
-    200: InvoiceItemMigrateTo;
+    200: InvoiceItemUuid;
 };
 
 export type InvoiceItemsMigrateToResponse = InvoiceItemsMigrateToResponses[keyof InvoiceItemsMigrateToResponses];
@@ -45691,10 +45831,11 @@ export type InvoicesPaidData = {
 };
 
 export type InvoicesPaidResponses = {
-    200: Invoice;
+    /**
+     * No response body
+     */
+    200: unknown;
 };
-
-export type InvoicesPaidResponse = InvoicesPaidResponses[keyof InvoicesPaidResponses];
 
 export type InvoicesSendNotificationData = {
     body?: never;
@@ -45706,7 +45847,7 @@ export type InvoicesSendNotificationData = {
 };
 
 export type InvoicesSendNotificationResponses = {
-    200: Invoice;
+    200: Detail;
 };
 
 export type InvoicesSendNotificationResponse = InvoicesSendNotificationResponses[keyof InvoicesSendNotificationResponses];
@@ -49337,7 +49478,7 @@ export type MarketplaceCustomerComponentUsagePoliciesActionsRetrieveData = {
 };
 
 export type MarketplaceCustomerComponentUsagePoliciesActionsRetrieveResponses = {
-    200: CustomerComponentUsagePolicy;
+    200: Array<string>;
 };
 
 export type MarketplaceCustomerComponentUsagePoliciesActionsRetrieveResponse = MarketplaceCustomerComponentUsagePoliciesActionsRetrieveResponses[keyof MarketplaceCustomerComponentUsagePoliciesActionsRetrieveResponses];
@@ -49493,7 +49634,7 @@ export type MarketplaceCustomerEstimatedCostPoliciesActionsRetrieveData = {
 };
 
 export type MarketplaceCustomerEstimatedCostPoliciesActionsRetrieveResponses = {
-    200: CustomerEstimatedCostPolicy;
+    200: Array<string>;
 };
 
 export type MarketplaceCustomerEstimatedCostPoliciesActionsRetrieveResponse = MarketplaceCustomerEstimatedCostPoliciesActionsRetrieveResponses[keyof MarketplaceCustomerEstimatedCostPoliciesActionsRetrieveResponses];
@@ -50140,7 +50281,7 @@ export type MarketplaceOfferingEstimatedCostPoliciesActionsRetrieveData = {
 };
 
 export type MarketplaceOfferingEstimatedCostPoliciesActionsRetrieveResponses = {
-    200: OfferingEstimatedCostPolicy;
+    200: Array<string>;
 };
 
 export type MarketplaceOfferingEstimatedCostPoliciesActionsRetrieveResponse = MarketplaceOfferingEstimatedCostPoliciesActionsRetrieveResponses[keyof MarketplaceOfferingEstimatedCostPoliciesActionsRetrieveResponses];
@@ -50900,7 +51041,7 @@ export type MarketplaceOfferingProfilesAddRoleData = {
 };
 
 export type MarketplaceOfferingProfilesAddRoleResponses = {
-    200: OfferingProfileRoleAssign;
+    200: OfferingProfile;
 };
 
 export type MarketplaceOfferingProfilesAddRoleResponse = MarketplaceOfferingProfilesAddRoleResponses[keyof MarketplaceOfferingProfilesAddRoleResponses];
@@ -50915,7 +51056,7 @@ export type MarketplaceOfferingProfilesRemoveRoleData = {
 };
 
 export type MarketplaceOfferingProfilesRemoveRoleResponses = {
-    200: OfferingProfileRoleAssign;
+    200: OfferingProfile;
 };
 
 export type MarketplaceOfferingProfilesRemoveRoleResponse = MarketplaceOfferingProfilesRemoveRoleResponses[keyof MarketplaceOfferingProfilesRemoveRoleResponses];
@@ -51433,7 +51574,7 @@ export type MarketplaceOfferingUsagePoliciesActionsRetrieveData = {
 };
 
 export type MarketplaceOfferingUsagePoliciesActionsRetrieveResponses = {
-    200: OfferingUsagePolicy;
+    200: Array<string>;
 };
 
 export type MarketplaceOfferingUsagePoliciesActionsRetrieveResponse = MarketplaceOfferingUsagePoliciesActionsRetrieveResponses[keyof MarketplaceOfferingUsagePoliciesActionsRetrieveResponses];
@@ -53486,7 +53627,7 @@ export type MarketplaceProjectEstimatedCostPoliciesActionsRetrieveData = {
 };
 
 export type MarketplaceProjectEstimatedCostPoliciesActionsRetrieveResponses = {
-    200: ProjectEstimatedCostPolicy;
+    200: Array<string>;
 };
 
 export type MarketplaceProjectEstimatedCostPoliciesActionsRetrieveResponse = MarketplaceProjectEstimatedCostPoliciesActionsRetrieveResponses[keyof MarketplaceProjectEstimatedCostPoliciesActionsRetrieveResponses];
@@ -56889,7 +57030,6 @@ export type MarketplaceProviderOfferingsUserHasResourceAccessRetrieveData = {
         uuid: string;
     };
     query: {
-        field?: Array<ProviderOfferingDetailsFieldEnum>;
         /**
          * Username of the user to check.
          */
@@ -56899,7 +57039,7 @@ export type MarketplaceProviderOfferingsUserHasResourceAccessRetrieveData = {
 };
 
 export type MarketplaceProviderOfferingsUserHasResourceAccessRetrieveResponses = {
-    200: ProviderOfferingDetails;
+    200: UserHasResourceAccess;
 };
 
 export type MarketplaceProviderOfferingsUserHasResourceAccessRetrieveResponse = MarketplaceProviderOfferingsUserHasResourceAccessRetrieveResponses[keyof MarketplaceProviderOfferingsUserHasResourceAccessRetrieveResponses];
@@ -57504,7 +57644,7 @@ export type MarketplaceProviderResourceProjectsSetBackendIdData = {
 };
 
 export type MarketplaceProviderResourceProjectsSetBackendIdResponses = {
-    200: ResourceProjectBackendId;
+    200: Status;
 };
 
 export type MarketplaceProviderResourceProjectsSetBackendIdResponse = MarketplaceProviderResourceProjectsSetBackendIdResponses[keyof MarketplaceProviderResourceProjectsSetBackendIdResponses];
@@ -57519,7 +57659,7 @@ export type MarketplaceProviderResourceProjectsSetStateErredData = {
 };
 
 export type MarketplaceProviderResourceProjectsSetStateErredResponses = {
-    200: ResourceProjectErrorMessage;
+    200: Status;
 };
 
 export type MarketplaceProviderResourceProjectsSetStateErredResponse = MarketplaceProviderResourceProjectsSetStateErredResponses[keyof MarketplaceProviderResourceProjectsSetStateErredResponses];
@@ -57534,9 +57674,7 @@ export type MarketplaceProviderResourceProjectsSetStateOkData = {
 };
 
 export type MarketplaceProviderResourceProjectsSetStateOkResponses = {
-    200: {
-        [key: string]: unknown;
-    };
+    200: Status;
 };
 
 export type MarketplaceProviderResourceProjectsSetStateOkResponse = MarketplaceProviderResourceProjectsSetStateOkResponses[keyof MarketplaceProviderResourceProjectsSetStateOkResponses];
@@ -58517,7 +58655,7 @@ export type MarketplaceProviderResourcesRestoreData = {
 };
 
 export type MarketplaceProviderResourcesRestoreResponses = {
-    200: Resource;
+    200: OrderUuid;
 };
 
 export type MarketplaceProviderResourcesRestoreResponse = MarketplaceProviderResourcesRestoreResponses[keyof MarketplaceProviderResourcesRestoreResponses];
@@ -60943,7 +61081,7 @@ export type MarketplaceResourcesRestoreData = {
 };
 
 export type MarketplaceResourcesRestoreResponses = {
-    200: Resource;
+    200: OrderUuid;
 };
 
 export type MarketplaceResourcesRestoreResponse = MarketplaceResourcesRestoreResponses[keyof MarketplaceResourcesRestoreResponses];
@@ -61975,7 +62113,7 @@ export type MarketplaceScriptDryRunAsyncRunData = {
 };
 
 export type MarketplaceScriptDryRunAsyncRunResponses = {
-    200: PublicOfferingDetails;
+    202: ScriptAsyncDryRunResponse;
 };
 
 export type MarketplaceScriptDryRunAsyncRunResponse = MarketplaceScriptDryRunAsyncRunResponses[keyof MarketplaceScriptDryRunAsyncRunResponses];
@@ -61990,7 +62128,7 @@ export type MarketplaceScriptDryRunRunData = {
 };
 
 export type MarketplaceScriptDryRunRunResponses = {
-    200: PublicOfferingDetails;
+    200: ScriptDryRunResponse;
 };
 
 export type MarketplaceScriptDryRunRunResponse = MarketplaceScriptDryRunRunResponses[keyof MarketplaceScriptDryRunRunResponses];
@@ -64606,7 +64744,7 @@ export type MarketplaceSlurmPeriodicUsagePoliciesActionsRetrieveData = {
 };
 
 export type MarketplaceSlurmPeriodicUsagePoliciesActionsRetrieveResponses = {
-    200: SlurmPeriodicUsagePolicy;
+    200: Array<string>;
 };
 
 export type MarketplaceSlurmPeriodicUsagePoliciesActionsRetrieveResponse = MarketplaceSlurmPeriodicUsagePoliciesActionsRetrieveResponses[keyof MarketplaceSlurmPeriodicUsagePoliciesActionsRetrieveResponses];
@@ -72127,9 +72265,7 @@ export type OpenportalOfferingMappingRetrieveData = {
 };
 
 export type OpenportalOfferingMappingRetrieveResponses = {
-    200: {
-        [key: string]: unknown;
-    };
+    200: OfferingMappingMap;
 };
 
 export type OpenportalOfferingMappingRetrieveResponse = OpenportalOfferingMappingRetrieveResponses[keyof OpenportalOfferingMappingRetrieveResponses];
@@ -72147,9 +72283,7 @@ export type OpenportalProjectMappingRetrieveData = {
 };
 
 export type OpenportalProjectMappingRetrieveResponses = {
-    200: {
-        [key: string]: unknown;
-    };
+    200: ProjectMappingMap;
 };
 
 export type OpenportalProjectMappingRetrieveResponse = OpenportalProjectMappingRetrieveResponses[keyof OpenportalProjectMappingRetrieveResponses];
@@ -72167,9 +72301,7 @@ export type OpenportalUserMappingRetrieveData = {
 };
 
 export type OpenportalUserMappingRetrieveResponses = {
-    200: {
-        [key: string]: unknown;
-    };
+    200: UserMappingMap;
 };
 
 export type OpenportalUserMappingRetrieveResponse = OpenportalUserMappingRetrieveResponses[keyof OpenportalUserMappingRetrieveResponses];
@@ -72796,14 +72928,14 @@ export type OpenstackFlavorsRetrieveResponse = OpenstackFlavorsRetrieveResponses
 export type OpenstackFlavorsUsageStatsRetrieveData = {
     body?: never;
     path?: never;
-    query?: {
-        field?: Array<OpenStackFlavorFieldEnum>;
-    };
+    query?: never;
     url: '/api/openstack-flavors/usage_stats/';
 };
 
 export type OpenstackFlavorsUsageStatsRetrieveResponses = {
-    200: OpenStackFlavor;
+    200: {
+        [key: string]: unknown;
+    };
 };
 
 export type OpenstackFlavorsUsageStatsRetrieveResponse = OpenstackFlavorsUsageStatsRetrieveResponses[keyof OpenstackFlavorsUsageStatsRetrieveResponses];
@@ -73781,7 +73913,7 @@ export type OpenstackImagesUsageStatsRetrieveData = {
 };
 
 export type OpenstackImagesUsageStatsRetrieveResponses = {
-    200: OpenStackImage;
+    200: OpenStackUsageStatsResponse;
 };
 
 export type OpenstackImagesUsageStatsRetrieveResponse = OpenstackImagesUsageStatsRetrieveResponses[keyof OpenstackImagesUsageStatsRetrieveResponses];
@@ -74899,7 +75031,7 @@ export type OpenstackLoadbalancersAttachFloatingIpData = {
 };
 
 export type OpenstackLoadbalancersAttachFloatingIpResponses = {
-    202: LoadBalancerAsyncOperationResponse;
+    202: Status;
 };
 
 export type OpenstackLoadbalancersAttachFloatingIpResponse = OpenstackLoadbalancersAttachFloatingIpResponses[keyof OpenstackLoadbalancersAttachFloatingIpResponses];
@@ -74914,7 +75046,7 @@ export type OpenstackLoadbalancersDetachFloatingIpData = {
 };
 
 export type OpenstackLoadbalancersDetachFloatingIpResponses = {
-    202: LoadBalancerAsyncOperationResponse;
+    202: Status;
 };
 
 export type OpenstackLoadbalancersDetachFloatingIpResponse = OpenstackLoadbalancersDetachFloatingIpResponses[keyof OpenstackLoadbalancersDetachFloatingIpResponses];
@@ -74945,7 +75077,7 @@ export type OpenstackLoadbalancersSetSecurityGroupsData = {
 };
 
 export type OpenstackLoadbalancersSetSecurityGroupsResponses = {
-    202: LoadBalancerAsyncOperationResponse;
+    202: Status;
 };
 
 export type OpenstackLoadbalancersSetSecurityGroupsResponse = OpenstackLoadbalancersSetSecurityGroupsResponses[keyof OpenstackLoadbalancersSetSecurityGroupsResponses];
@@ -75802,7 +75934,7 @@ export type OpenstackNetworksCreateSubnetData = {
 };
 
 export type OpenstackNetworksCreateSubnetResponses = {
-    200: OpenStackSubNet;
+    201: OpenStackSubNet;
 };
 
 export type OpenstackNetworksCreateSubnetResponse = OpenstackNetworksCreateSubnetResponses[keyof OpenstackNetworksCreateSubnetResponses];
@@ -75890,7 +76022,7 @@ export type OpenstackNetworksSetMtuData = {
 };
 
 export type OpenstackNetworksSetMtuResponses = {
-    200: SetMtu;
+    202: SetMtu;
 };
 
 export type OpenstackNetworksSetMtuResponse = OpenstackNetworksSetMtuResponses[keyof OpenstackNetworksSetMtuResponses];
@@ -76921,11 +77053,10 @@ export type OpenstackRoutersRemoveExternalGatewayData = {
 };
 
 export type OpenstackRoutersRemoveExternalGatewayResponses = {
-    /**
-     * No response body
-     */
-    202: unknown;
+    202: Status;
 };
+
+export type OpenstackRoutersRemoveExternalGatewayResponse = OpenstackRoutersRemoveExternalGatewayResponses[keyof OpenstackRoutersRemoveExternalGatewayResponses];
 
 export type OpenstackRoutersRemoveRouterInterfaceData = {
     body?: OpenStackRouterInterfaceRequest;
@@ -76952,7 +77083,7 @@ export type OpenstackRoutersSetErredData = {
 };
 
 export type OpenstackRoutersSetErredResponses = {
-    200: RouterSetErredResponse;
+    200: Detail;
 };
 
 export type OpenstackRoutersSetErredResponse = OpenstackRoutersSetErredResponses[keyof OpenstackRoutersSetErredResponses];
@@ -76967,11 +77098,10 @@ export type OpenstackRoutersSetExternalGatewayData = {
 };
 
 export type OpenstackRoutersSetExternalGatewayResponses = {
-    /**
-     * No response body
-     */
-    202: unknown;
+    202: Status;
 };
+
+export type OpenstackRoutersSetExternalGatewayResponse = OpenstackRoutersSetExternalGatewayResponses[keyof OpenstackRoutersSetExternalGatewayResponses];
 
 export type OpenstackRoutersSetOkData = {
     body?: never;
@@ -76983,7 +77113,7 @@ export type OpenstackRoutersSetOkData = {
 };
 
 export type OpenstackRoutersSetOkResponses = {
-    200: RouterSetOkResponse;
+    200: Detail;
 };
 
 export type OpenstackRoutersSetOkResponse = OpenstackRoutersSetOkResponses[keyof OpenstackRoutersSetOkResponses];
@@ -78403,7 +78533,7 @@ export type OpenstackSubnetsConnectData = {
 };
 
 export type OpenstackSubnetsConnectResponses = {
-    200: OpenStackSubNet;
+    202: Status;
 };
 
 export type OpenstackSubnetsConnectResponse = OpenstackSubnetsConnectResponses[keyof OpenstackSubnetsConnectResponses];
@@ -78418,7 +78548,7 @@ export type OpenstackSubnetsDisconnectData = {
 };
 
 export type OpenstackSubnetsDisconnectResponses = {
-    200: OpenStackSubNet;
+    202: Status;
 };
 
 export type OpenstackSubnetsDisconnectResponse = OpenstackSubnetsDisconnectResponses[keyof OpenstackSubnetsDisconnectResponses];
@@ -78953,7 +79083,7 @@ export type OpenstackTenantsCreateNetworkData = {
 };
 
 export type OpenstackTenantsCreateNetworkResponses = {
-    200: OpenStackNetwork;
+    201: OpenStackNetwork;
 };
 
 export type OpenstackTenantsCreateNetworkResponse = OpenstackTenantsCreateNetworkResponses[keyof OpenstackTenantsCreateNetworkResponses];
@@ -78983,7 +79113,7 @@ export type OpenstackTenantsCreateServerGroupData = {
 };
 
 export type OpenstackTenantsCreateServerGroupResponses = {
-    200: OpenStackServerGroup;
+    201: OpenStackServerGroup;
 };
 
 export type OpenstackTenantsCreateServerGroupResponse = OpenstackTenantsCreateServerGroupResponses[keyof OpenstackTenantsCreateServerGroupResponses];
@@ -79050,7 +79180,7 @@ export type OpenstackTenantsPullSecurityGroupsData = {
 };
 
 export type OpenstackTenantsPullSecurityGroupsResponses = {
-    200: OpenStackTenant;
+    202: Status;
 };
 
 export type OpenstackTenantsPullSecurityGroupsResponse = OpenstackTenantsPullSecurityGroupsResponses[keyof OpenstackTenantsPullSecurityGroupsResponses];
@@ -79065,7 +79195,7 @@ export type OpenstackTenantsPullServerGroupsData = {
 };
 
 export type OpenstackTenantsPullServerGroupsResponses = {
-    200: OpenStackTenant;
+    202: Status;
 };
 
 export type OpenstackTenantsPullServerGroupsResponse = OpenstackTenantsPullServerGroupsResponses[keyof OpenstackTenantsPullServerGroupsResponses];
@@ -79157,7 +79287,7 @@ export type OpenstackTenantsSetQuotasData = {
 };
 
 export type OpenstackTenantsSetQuotasResponses = {
-    200: OpenStackTenantQuota;
+    202: Status;
 };
 
 export type OpenstackTenantsSetQuotasResponse = OpenstackTenantsSetQuotasResponses[keyof OpenstackTenantsSetQuotasResponses];
@@ -80456,7 +80586,7 @@ export type PaymentProfilesEnableData = {
 };
 
 export type PaymentProfilesEnableResponses = {
-    200: PaymentProfile;
+    200: Status;
 };
 
 export type PaymentProfilesEnableResponse = PaymentProfilesEnableResponses[keyof PaymentProfilesEnableResponses];
@@ -80598,7 +80728,7 @@ export type PaymentsLinkToInvoiceData = {
 };
 
 export type PaymentsLinkToInvoiceResponses = {
-    200: LinkToInvoice;
+    200: Detail;
 };
 
 export type PaymentsLinkToInvoiceResponse = PaymentsLinkToInvoiceResponses[keyof PaymentsLinkToInvoiceResponses];
@@ -80613,7 +80743,7 @@ export type PaymentsUnlinkFromInvoiceData = {
 };
 
 export type PaymentsUnlinkFromInvoiceResponses = {
-    200: Payment;
+    200: Detail;
 };
 
 export type PaymentsUnlinkFromInvoiceResponse = PaymentsUnlinkFromInvoiceResponses[keyof PaymentsUnlinkFromInvoiceResponses];
@@ -82843,10 +82973,7 @@ export type ProposalProposalsResourcesDestroyData = {
 };
 
 export type ProposalProposalsResourcesDestroyResponses = {
-    /**
-     * No response body
-     */
-    204: void;
+    200: RequestedResource;
 };
 
 export type ProposalProposalsResourcesDestroyResponse = ProposalProposalsResourcesDestroyResponses[keyof ProposalProposalsResourcesDestroyResponses];
@@ -83697,10 +83824,7 @@ export type ProposalProtectedCallsOfferingsDestroyData = {
 };
 
 export type ProposalProtectedCallsOfferingsDestroyResponses = {
-    /**
-     * No response body
-     */
-    204: void;
+    200: RequestedOffering;
 };
 
 export type ProposalProtectedCallsOfferingsDestroyResponse = ProposalProtectedCallsOfferingsDestroyResponses[keyof ProposalProtectedCallsOfferingsDestroyResponses];
@@ -83891,10 +84015,7 @@ export type ProposalProtectedCallsResourceTemplatesDestroyData = {
 };
 
 export type ProposalProtectedCallsResourceTemplatesDestroyResponses = {
-    /**
-     * No response body
-     */
-    204: void;
+    200: CallResourceTemplate;
 };
 
 export type ProposalProtectedCallsResourceTemplatesDestroyResponse = ProposalProtectedCallsResourceTemplatesDestroyResponses[keyof ProposalProtectedCallsResourceTemplatesDestroyResponses];
@@ -84122,10 +84243,7 @@ export type ProposalProtectedCallsRoundsDestroyData = {
 };
 
 export type ProposalProtectedCallsRoundsDestroyResponses = {
-    /**
-     * No response body
-     */
-    204: void;
+    200: ProtectedRound;
 };
 
 export type ProposalProtectedCallsRoundsDestroyResponse = ProposalProtectedCallsRoundsDestroyResponses[keyof ProposalProtectedCallsRoundsDestroyResponses];
@@ -84189,7 +84307,7 @@ export type ProposalProtectedCallsRoundsCloseData = {
 };
 
 export type ProposalProtectedCallsRoundsCloseResponses = {
-    200: ProtectedCall;
+    200: string;
 };
 
 export type ProposalProtectedCallsRoundsCloseResponse = ProposalProtectedCallsRoundsCloseResponses[keyof ProposalProtectedCallsRoundsCloseResponses];
@@ -84331,10 +84449,7 @@ export type ProposalProtectedCallsWorkflowStepsDestroyData = {
 };
 
 export type ProposalProtectedCallsWorkflowStepsDestroyResponses = {
-    /**
-     * No response body
-     */
-    204: void;
+    200: CallWorkflowStep;
 };
 
 export type ProposalProtectedCallsWorkflowStepsDestroyResponse = ProposalProtectedCallsWorkflowStepsDestroyResponses[keyof ProposalProtectedCallsWorkflowStepsDestroyResponses];
@@ -85842,10 +85957,11 @@ export type RancherCatalogsRefreshData = {
 };
 
 export type RancherCatalogsRefreshResponses = {
-    200: RancherCatalog;
+    /**
+     * No response body
+     */
+    200: unknown;
 };
-
-export type RancherCatalogsRefreshResponse = RancherCatalogsRefreshResponses[keyof RancherCatalogsRefreshResponses];
 
 export type RancherClusterSecurityGroupsListData = {
     body?: never;
@@ -86258,7 +86374,7 @@ export type RancherClustersCreateManagementSecurityGroupData = {
 };
 
 export type RancherClustersCreateManagementSecurityGroupResponses = {
-    200: RancherCluster;
+    201: RancherCreateManagementSecurityGroupResponse;
 };
 
 export type RancherClustersCreateManagementSecurityGroupResponse = RancherClustersCreateManagementSecurityGroupResponses[keyof RancherClustersCreateManagementSecurityGroupResponses];
@@ -86273,10 +86389,11 @@ export type RancherClustersImportYamlData = {
 };
 
 export type RancherClustersImportYamlResponses = {
-    200: RancherImportYaml;
+    /**
+     * No response body
+     */
+    200: unknown;
 };
-
-export type RancherClustersImportYamlResponse = RancherClustersImportYamlResponses[keyof RancherClustersImportYamlResponses];
 
 export type RancherClustersPullData = {
     body?: never;
@@ -86587,7 +86704,7 @@ export type RancherHpasYamlRetrieveData = {
 };
 
 export type RancherHpasYamlRetrieveResponses = {
-    200: RancherHpa;
+    200: Detail;
 };
 
 export type RancherHpasYamlRetrieveResponse = RancherHpasYamlRetrieveResponses[keyof RancherHpasYamlRetrieveResponses];
@@ -86602,7 +86719,7 @@ export type RancherHpasYamlUpdateData = {
 };
 
 export type RancherHpasYamlUpdateResponses = {
-    200: RancherHpa;
+    200: Detail;
 };
 
 export type RancherHpasYamlUpdateResponse = RancherHpasYamlUpdateResponses[keyof RancherHpasYamlUpdateResponses];
@@ -86951,14 +87068,12 @@ export type RancherIngressesYamlRetrieveData = {
     path: {
         uuid: string;
     };
-    query?: {
-        field?: Array<RancherIngressFieldEnum>;
-    };
+    query?: never;
     url: '/api/rancher-ingresses/{uuid}/yaml/';
 };
 
 export type RancherIngressesYamlRetrieveResponses = {
-    200: RancherIngress;
+    200: Detail;
 };
 
 export type RancherIngressesYamlRetrieveResponse = RancherIngressesYamlRetrieveResponses[keyof RancherIngressesYamlRetrieveResponses];
@@ -86973,7 +87088,7 @@ export type RancherIngressesYamlUpdateData = {
 };
 
 export type RancherIngressesYamlUpdateResponses = {
-    200: RancherIngress;
+    200: Detail;
 };
 
 export type RancherIngressesYamlUpdateResponse = RancherIngressesYamlUpdateResponses[keyof RancherIngressesYamlUpdateResponses];
@@ -87859,14 +87974,12 @@ export type RancherServicesYamlRetrieveData = {
     path: {
         uuid: string;
     };
-    query?: {
-        field?: Array<RancherServiceFieldEnum>;
-    };
+    query?: never;
     url: '/api/rancher-services/{uuid}/yaml/';
 };
 
 export type RancherServicesYamlRetrieveResponses = {
-    200: RancherService;
+    200: Detail;
 };
 
 export type RancherServicesYamlRetrieveResponse = RancherServicesYamlRetrieveResponses[keyof RancherServicesYamlRetrieveResponses];
@@ -87881,7 +87994,7 @@ export type RancherServicesYamlUpdateData = {
 };
 
 export type RancherServicesYamlUpdateResponses = {
-    200: RancherService;
+    200: Detail;
 };
 
 export type RancherServicesYamlUpdateResponse = RancherServicesYamlUpdateResponses[keyof RancherServicesYamlUpdateResponses];
@@ -88293,7 +88406,7 @@ export type RancherWorkloadsYamlRetrieveData = {
 };
 
 export type RancherWorkloadsYamlRetrieveResponses = {
-    200: RancherWorkload;
+    200: Detail;
 };
 
 export type RancherWorkloadsYamlRetrieveResponse = RancherWorkloadsYamlRetrieveResponses[keyof RancherWorkloadsYamlRetrieveResponses];
@@ -88308,7 +88421,7 @@ export type RancherWorkloadsYamlUpdateData = {
 };
 
 export type RancherWorkloadsYamlUpdateResponses = {
-    200: RancherWorkload;
+    200: Detail;
 };
 
 export type RancherWorkloadsYamlUpdateResponse = RancherWorkloadsYamlUpdateResponses[keyof RancherWorkloadsYamlUpdateResponses];
@@ -92065,7 +92178,7 @@ export type SupportIssuesCommentData = {
 };
 
 export type SupportIssuesCommentResponses = {
-    200: Comment;
+    201: Comment;
 };
 
 export type SupportIssuesCommentResponse = SupportIssuesCommentResponses[keyof SupportIssuesCommentResponses];
@@ -92080,10 +92193,11 @@ export type SupportIssuesSyncData = {
 };
 
 export type SupportIssuesSyncResponses = {
-    200: Issue;
+    /**
+     * No response body
+     */
+    200: unknown;
 };
-
-export type SupportIssuesSyncResponse = SupportIssuesSyncResponses[keyof SupportIssuesSyncResponses];
 
 export type SupportJiraWebhookData = {
     body: WebHookReceiverRequest;
@@ -92354,7 +92468,7 @@ export type SupportRequestTypesAdminActivateData = {
 };
 
 export type SupportRequestTypesAdminActivateResponses = {
-    200: RequestTypeAdmin;
+    200: Status;
 };
 
 export type SupportRequestTypesAdminActivateResponse = SupportRequestTypesAdminActivateResponses[keyof SupportRequestTypesAdminActivateResponses];
@@ -92369,7 +92483,7 @@ export type SupportRequestTypesAdminDeactivateData = {
 };
 
 export type SupportRequestTypesAdminDeactivateResponses = {
-    200: RequestTypeAdmin;
+    200: Status;
 };
 
 export type SupportRequestTypesAdminDeactivateResponse = SupportRequestTypesAdminDeactivateResponses[keyof SupportRequestTypesAdminDeactivateResponses];
@@ -92382,7 +92496,7 @@ export type SupportRequestTypesAdminReorderData = {
 };
 
 export type SupportRequestTypesAdminReorderResponses = {
-    200: RequestTypeAdmin;
+    200: Status;
 };
 
 export type SupportRequestTypesAdminReorderResponse = SupportRequestTypesAdminReorderResponses[keyof SupportRequestTypesAdminReorderResponses];
@@ -93445,7 +93559,7 @@ export type UserActionsUnsilenceData = {
 };
 
 export type UserActionsUnsilenceResponses = {
-    200: UnsilenceActionResponse;
+    200: Status;
 };
 
 export type UserActionsUnsilenceResponse = UserActionsUnsilenceResponses[keyof UserActionsUnsilenceResponses];
@@ -95230,14 +95344,12 @@ export type UsersConfirmEmailResponses = {
 export type UsersMeRetrieveData = {
     body?: never;
     path?: never;
-    query?: {
-        field?: Array<UserFieldEnum>;
-    };
+    query?: never;
     url: '/api/users/me/';
 };
 
 export type UsersMeRetrieveResponses = {
-    200: User;
+    200: UserMe;
 };
 
 export type UsersMeRetrieveResponse = UsersMeRetrieveResponses[keyof UsersMeRetrieveResponses];
@@ -96395,7 +96507,7 @@ export type VmwareDisksExtendData = {
 };
 
 export type VmwareDisksExtendResponses = {
-    200: VmwareDiskExtend;
+    202: Status;
 };
 
 export type VmwareDisksExtendResponse = VmwareDisksExtendResponses[keyof VmwareDisksExtendResponses];
@@ -97373,7 +97485,7 @@ export type VmwareVirtualMachineCreateDiskData = {
 };
 
 export type VmwareVirtualMachineCreateDiskResponses = {
-    200: VmwareDisk;
+    201: VmwareDisk;
 };
 
 export type VmwareVirtualMachineCreateDiskResponse = VmwareVirtualMachineCreateDiskResponses[keyof VmwareVirtualMachineCreateDiskResponses];
@@ -97388,7 +97500,7 @@ export type VmwareVirtualMachineCreatePortData = {
 };
 
 export type VmwareVirtualMachineCreatePortResponses = {
-    200: VmwarePort;
+    201: VmwarePort;
 };
 
 export type VmwareVirtualMachineCreatePortResponse = VmwareVirtualMachineCreatePortResponses[keyof VmwareVirtualMachineCreatePortResponses];
@@ -97424,7 +97536,7 @@ export type VmwareVirtualMachineRebootGuestData = {
 };
 
 export type VmwareVirtualMachineRebootGuestResponses = {
-    200: VmwareVirtualMachine;
+    202: Status;
 };
 
 export type VmwareVirtualMachineRebootGuestResponse = VmwareVirtualMachineRebootGuestResponses[keyof VmwareVirtualMachineRebootGuestResponses];
@@ -97439,7 +97551,7 @@ export type VmwareVirtualMachineResetData = {
 };
 
 export type VmwareVirtualMachineResetResponses = {
-    200: VmwareVirtualMachine;
+    202: Status;
 };
 
 export type VmwareVirtualMachineResetResponse = VmwareVirtualMachineResetResponses[keyof VmwareVirtualMachineResetResponses];
@@ -97484,7 +97596,7 @@ export type VmwareVirtualMachineShutdownGuestData = {
 };
 
 export type VmwareVirtualMachineShutdownGuestResponses = {
-    200: VmwareVirtualMachine;
+    202: Status;
 };
 
 export type VmwareVirtualMachineShutdownGuestResponse = VmwareVirtualMachineShutdownGuestResponses[keyof VmwareVirtualMachineShutdownGuestResponses];
@@ -97499,7 +97611,7 @@ export type VmwareVirtualMachineStartData = {
 };
 
 export type VmwareVirtualMachineStartResponses = {
-    200: VmwareVirtualMachine;
+    202: Status;
 };
 
 export type VmwareVirtualMachineStartResponse = VmwareVirtualMachineStartResponses[keyof VmwareVirtualMachineStartResponses];
@@ -97514,7 +97626,7 @@ export type VmwareVirtualMachineStopData = {
 };
 
 export type VmwareVirtualMachineStopResponses = {
-    200: VmwareVirtualMachine;
+    202: Status;
 };
 
 export type VmwareVirtualMachineStopResponse = VmwareVirtualMachineStopResponses[keyof VmwareVirtualMachineStopResponses];
@@ -97529,7 +97641,7 @@ export type VmwareVirtualMachineSuspendData = {
 };
 
 export type VmwareVirtualMachineSuspendResponses = {
-    200: VmwareVirtualMachine;
+    202: Status;
 };
 
 export type VmwareVirtualMachineSuspendResponse = VmwareVirtualMachineSuspendResponses[keyof VmwareVirtualMachineSuspendResponses];
