@@ -4748,6 +4748,10 @@ export type CompleteWorkflowStepRequest = {
      * Explanation for the outcome.
      */
     outcome_reason?: string;
+    /**
+     * Internal notes captured by the call-management team. Stored on the step instance and never returned to applicants.
+     */
+    internal_notes?: string;
 };
 
 export type CompleteWorkflowStepResponse = {
@@ -20937,6 +20941,8 @@ export type ProposalWorkflowStepInstance = {
      * Explanation for the outcome (e.g., rejection reason).
      */
     readonly outcome_reason: string;
+    readonly rejection_reason: string | null;
+    readonly internal_notes: string | null;
     /**
      * When this step became active.
      */
@@ -20947,6 +20953,9 @@ export type ProposalWorkflowStepInstance = {
      * Computed from started_at + step duration_in_days.
      */
     readonly deadline: string | null;
+    readonly applicant_visible: boolean;
+    readonly duration_in_days: number | null;
+    readonly is_required: boolean;
 };
 
 export type ProposalWorkflowStepInstanceStatusEnum = 'pending' | 'active' | 'completed' | 'expired' | 'skipped';
@@ -23291,6 +23300,10 @@ export type RejectWorkflowStepRequest = {
      * Reason for rejecting the proposal at this step.
      */
     reason: string;
+    /**
+     * Internal notes captured by the call-management team alongside the rejection. Never returned to applicants.
+     */
+    internal_notes?: string;
 };
 
 export type RejectWorkflowStepResponse = {
@@ -58985,7 +58998,7 @@ export type MarketplaceProviderResourcesTeamListData = {
     };
     query?: {
         /**
-         * When true, return only users who have active consent for this offering.
+         * When ENFORCE_USER_CONSENT_FOR_OFFERINGS is disabled, passing true returns only users who have active consent for this offering.
          */
         has_consent?: boolean;
     };

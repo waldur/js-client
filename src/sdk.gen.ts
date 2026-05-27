@@ -15415,7 +15415,7 @@ export const marketplaceProviderResourcesSubmitReport = <ThrowOnError extends bo
 /**
  * Get resource team
  *
- * Returns a list of users connected to the project of this resource, including their project roles and offering-specific usernames.
+ * Returns project users for this resource from the service provider perspective. When ENFORCE_USER_CONSENT_FOR_OFFERINGS is enabled and the offering has active Terms of Service, only users with active consent are returned (staff and support still see the full team).
  */
 export const marketplaceProviderResourcesTeamList = <ThrowOnError extends boolean = false>(options: Options<MarketplaceProviderResourcesTeamListData, ThrowOnError>) => (options.client ?? client).get<MarketplaceProviderResourcesTeamListResponses, unknown, ThrowOnError>({
     security: [
@@ -16536,7 +16536,7 @@ export const marketplaceResourcesSwitchPlan = <ThrowOnError extends boolean = fa
 /**
  * Get resource team
  *
- * Returns a list of users connected to the project of this resource, including their project roles and offering-specific usernames.
+ * Returns project users for this resource, including project roles and offering-specific usernames. Use has_consent=true to list only users with active Terms of Service consent for the offering.
  */
 export const marketplaceResourcesTeamList = <ThrowOnError extends boolean = false>(options: Options<MarketplaceResourcesTeamListData, ThrowOnError>) => (options.client ?? client).get<MarketplaceResourcesTeamListResponses, unknown, ThrowOnError>({
     security: [
