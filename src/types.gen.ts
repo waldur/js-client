@@ -7588,6 +7588,38 @@ export type DuplicateCallRequestRequest = {
 
 export type EnabledreportingscreensEnum = 'resource-usage' | 'user-usage' | 'quotas' | 'usage-monitoring' | 'usage-trends' | 'organization-summary' | 'project-detail' | 'resources-geography' | 'project-classification' | 'usage-by-customer' | 'usage-by-org-type' | 'usage-by-creator' | 'call-performance' | 'review-progress' | 'resource-demand' | 'capacity' | 'provider-overview' | 'provider-revenue' | 'provider-orders' | 'provider-resources' | 'provider-customers' | 'provider-offerings' | 'openstack-instances' | 'offering-usage' | 'user-analytics' | 'user-demographics' | 'user-organizations' | 'user-affiliations' | 'user-roles' | 'growth' | 'revenue' | 'pricelist' | 'orders' | 'offering-costs' | 'maintenance-overview' | 'provisioning-stats';
 
+export type EffectiveRoute = {
+    destination: string;
+    /**
+     * An IPv4 or IPv6 address.
+     */
+    nexthop: string | string | null;
+    source: EffectiveRouteSourceEnum;
+    subnet_uuid?: string | null;
+    subnet_name?: string;
+    subnet_cidr?: string;
+    port_uuid?: string | null;
+    port_backend_id?: string;
+    /**
+     * An IPv4 or IPv6 address.
+     */
+    ip_on_router?: string | string | null;
+    /**
+     * An IPv4 or IPv6 address.
+     */
+    gateway_ip_on_router?: string | string | null;
+    external_network_uuid?: string | null;
+    external_network_name?: string;
+};
+
+export type EffectiveRouteSourceEnum = 'default' | 'connected' | 'static';
+
+export type EffectiveRoutesResponse = {
+    snat: boolean | null;
+    has_external_gateway: boolean;
+    routes: Array<EffectiveRoute>;
+};
+
 export type EligibilityCheck = {
     is_eligible: boolean;
     restrictions: Array<string>;
@@ -77126,6 +77158,21 @@ export type OpenstackRoutersAvailableExternalNetworksListResponses = {
 };
 
 export type OpenstackRoutersAvailableExternalNetworksListResponse = OpenstackRoutersAvailableExternalNetworksListResponses[keyof OpenstackRoutersAvailableExternalNetworksListResponses];
+
+export type OpenstackRoutersEffectiveRoutesRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openstack-routers/{uuid}/effective_routes/';
+};
+
+export type OpenstackRoutersEffectiveRoutesRetrieveResponses = {
+    200: EffectiveRoutesResponse;
+};
+
+export type OpenstackRoutersEffectiveRoutesRetrieveResponse = OpenstackRoutersEffectiveRoutesRetrieveResponses[keyof OpenstackRoutersEffectiveRoutesRetrieveResponses];
 
 export type OpenstackRoutersRemoveExternalGatewayData = {
     body?: never;
