@@ -12456,9 +12456,9 @@ export type NestedSecurityGroupRule = {
      */
     direction?: DirectionEnum;
     /**
-     * The network protocol (TCP, UDP, ICMP, or empty for any protocol)
+     * Network protocol: 'tcp', 'udp', 'icmp', empty (any) or an IANA protocol number 0-255 (e.g. '112' for VRRP).
      */
-    protocol?: SecurityGroupRuleProtocolEnum | BlankEnum;
+    protocol?: string;
     /**
      * Starting port number in the range (1-65535)
      */
@@ -12487,9 +12487,9 @@ export type NestedSecurityGroupRuleRequest = {
      */
     direction?: DirectionEnum;
     /**
-     * The network protocol (TCP, UDP, ICMP, or empty for any protocol)
+     * Network protocol: 'tcp', 'udp', 'icmp', empty (any) or an IANA protocol number 0-255 (e.g. '112' for VRRP).
      */
-    protocol?: SecurityGroupRuleProtocolEnum | BlankEnum;
+    protocol?: string;
     /**
      * Starting port number in the range (1-65535)
      */
@@ -15997,9 +15997,9 @@ export type OpenStackSecurityGroupRuleCreate = {
      */
     direction?: DirectionEnum;
     /**
-     * The network protocol (TCP, UDP, ICMP, or empty for any protocol)
+     * Network protocol: 'tcp', 'udp', 'icmp', empty (any) or an IANA protocol number 0-255 (e.g. '112' for VRRP).
      */
-    protocol?: SecurityGroupRuleProtocolEnum | BlankEnum;
+    protocol?: string;
     /**
      * Starting port number in the range (1-65535)
      */
@@ -16032,9 +16032,9 @@ export type OpenStackSecurityGroupRuleCreateRequest = {
      */
     direction?: DirectionEnum;
     /**
-     * The network protocol (TCP, UDP, ICMP, or empty for any protocol)
+     * Network protocol: 'tcp', 'udp', 'icmp', empty (any) or an IANA protocol number 0-255 (e.g. '112' for VRRP).
      */
-    protocol?: SecurityGroupRuleProtocolEnum | BlankEnum;
+    protocol?: string;
     /**
      * Starting port number in the range (1-65535)
      */
@@ -16064,9 +16064,9 @@ export type OpenStackSecurityGroupRuleUpdateByNameRequest = {
      */
     direction?: DirectionEnum;
     /**
-     * The network protocol (TCP, UDP, ICMP, or empty for any protocol)
+     * Network protocol: 'tcp', 'udp', 'icmp', empty (any) or an IANA protocol number 0-255 (e.g. '112' for VRRP).
      */
-    protocol?: SecurityGroupRuleProtocolEnum | BlankEnum;
+    protocol?: string;
     /**
      * Starting port number in the range (1-65535)
      */
@@ -16094,9 +16094,9 @@ export type OpenStackSecurityGroupRuleUpdateRequest = {
      */
     direction?: DirectionEnum;
     /**
-     * The network protocol (TCP, UDP, ICMP, or empty for any protocol)
+     * Network protocol: 'tcp', 'udp', 'icmp', empty (any) or an IANA protocol number 0-255 (e.g. '112' for VRRP).
      */
-    protocol?: SecurityGroupRuleProtocolEnum | BlankEnum;
+    protocol?: string;
     /**
      * Starting port number in the range (1-65535)
      */
@@ -22664,9 +22664,9 @@ export type RancherClusterSecurityGroupRule = {
      */
     direction?: DirectionEnum;
     /**
-     * The network protocol (TCP, UDP, ICMP, or empty for any protocol)
+     * Network protocol: 'tcp', 'udp', 'icmp', empty (any) or an IANA protocol number 0-255 (e.g. '112' for VRRP).
      */
-    protocol?: SecurityGroupRuleProtocolEnum | BlankEnum;
+    protocol?: string;
     /**
      * Starting port number in the range (1-65535)
      */
@@ -22692,9 +22692,9 @@ export type RancherClusterSecurityGroupRuleRequest = {
      */
     direction?: DirectionEnum;
     /**
-     * The network protocol (TCP, UDP, ICMP, or empty for any protocol)
+     * Network protocol: 'tcp', 'udp', 'icmp', empty (any) or an IANA protocol number 0-255 (e.g. '112' for VRRP).
      */
-    protocol?: SecurityGroupRuleProtocolEnum | BlankEnum;
+    protocol?: string;
     /**
      * Starting port number in the range (1-65535)
      */
@@ -25889,8 +25889,6 @@ export type SectionRequest = {
      */
     is_standalone?: boolean;
 };
-
-export type SecurityGroupRuleProtocolEnum = 'tcp' | 'udp' | 'icmp';
 
 export type SelfDeclaredConflictRequest = {
     proposal_uuid: string;
