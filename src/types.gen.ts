@@ -10038,8 +10038,6 @@ export type KeycloakUserGroupMembershipState = 'pending' | 'active';
 
 export type KeywordSearchModeEnum = 'expertise_only' | 'full_text';
 
-export type KindEnum = 'default' | 'course' | 'public';
-
 export type LoginpagelayoutEnum = 'split-screen' | 'centered-card' | 'minimal' | 'full-hero' | 'gradient' | 'stacked' | 'right-split' | 'glassmorphism' | 'neumorphism' | 'animated-gradient' | 'video-background' | 'bottom-sheet' | 'tabbed' | 'wizard' | 'stats' | 'news' | 'carousel' | 'logo-watermark' | 'brand-pattern' | 'duotone' | 'diagonal' | 'time-based' | 'seasonal' | 'weather';
 
 export type LbAlgorithmEnum = 'ROUND_ROBIN' | 'LEAST_CONNECTIONS' | 'SOURCE_IP' | 'SOURCE_IP_PORT';
@@ -18472,7 +18470,7 @@ export type PatchedProjectRequest = {
     /**
      * Project type
      */
-    kind?: KindEnum;
+    kind?: ProjectKindEnum;
     /**
      * Internal notes visible only to staff and support users (HTML content will be sanitized)
      */
@@ -19942,7 +19940,7 @@ export type Project = {
     /**
      * Project type
      */
-    kind?: KindEnum;
+    kind?: ProjectKindEnum;
     readonly is_removed?: boolean;
     /**
      * Metadata about project termination (read-only)
@@ -20296,6 +20294,8 @@ export type ProjectInfoRequest = {
     allowed_destinations?: string | null;
 };
 
+export type ProjectKindEnum = 'default' | 'course' | 'public';
+
 export type ProjectMapping = {
     uuid: string;
     name: string;
@@ -20438,7 +20438,7 @@ export type ProjectRequest = {
     /**
      * Project type
      */
-    kind?: KindEnum;
+    kind?: ProjectKindEnum;
     /**
      * Internal notes visible only to staff and support users (HTML content will be sanitized)
      */
@@ -27506,6 +27506,11 @@ export type TenantSecurityGroupUpdateRequest = {
     rules?: Array<OpenStackSecurityGroupRuleUpdateByNameRequest>;
 };
 
+export type TenantTopology = {
+    nodes: Array<TopologyNode>;
+    edges: Array<TopologyEdge>;
+};
+
 export type ThreadSession = {
     readonly uuid?: string;
     name?: string;
@@ -27687,6 +27692,26 @@ export type TopServiceProviderByResources = {
      */
     projects_count: number;
 };
+
+export type TopologyEdge = {
+    source: string;
+    target: string;
+    kind: TopologyEdgeKindEnum;
+};
+
+export type TopologyEdgeKindEnum = 'contains' | 'has_subnet' | 'has_port' | 'has_interface' | 'attached_to' | 'gateway' | 'floating_for' | 'shared_with';
+
+export type TopologyNode = {
+    id: string;
+    type: TopologyNodeTypeEnum;
+    name: string;
+    uuid?: string | null;
+    attrs: {
+        [key: string]: unknown;
+    };
+};
+
+export type TopologyNodeTypeEnum = 'tenant' | 'router' | 'network' | 'subnet' | 'port' | 'instance' | 'floating_ip' | 'external_network' | 'rbac_share';
 
 export type TotalCustomerCost = {
     readonly total: number;
@@ -30344,7 +30369,7 @@ export type ProjectRequestForm = {
     /**
      * Project type
      */
-    kind?: KindEnum;
+    kind?: ProjectKindEnum;
     /**
      * Internal notes visible only to staff and support users (HTML content will be sanitized)
      */
@@ -30396,7 +30421,7 @@ export type ProjectRequestMultipart = {
     /**
      * Project type
      */
-    kind?: KindEnum;
+    kind?: ProjectKindEnum;
     /**
      * Internal notes visible only to staff and support users (HTML content will be sanitized)
      */
@@ -30448,7 +30473,7 @@ export type PatchedProjectRequestForm = {
     /**
      * Project type
      */
-    kind?: KindEnum;
+    kind?: ProjectKindEnum;
     /**
      * Internal notes visible only to staff and support users (HTML content will be sanitized)
      */
@@ -30500,7 +30525,7 @@ export type PatchedProjectRequestMultipart = {
     /**
      * Project type
      */
-    kind?: KindEnum;
+    kind?: ProjectKindEnum;
     /**
      * Internal notes visible only to staff and support users (HTML content will be sanitized)
      */
@@ -79422,6 +79447,21 @@ export type OpenstackTenantsSetQuotasResponses = {
 };
 
 export type OpenstackTenantsSetQuotasResponse = OpenstackTenantsSetQuotasResponses[keyof OpenstackTenantsSetQuotasResponses];
+
+export type OpenstackTenantsTopologyRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openstack-tenants/{uuid}/topology/';
+};
+
+export type OpenstackTenantsTopologyRetrieveResponses = {
+    200: TenantTopology;
+};
+
+export type OpenstackTenantsTopologyRetrieveResponse = OpenstackTenantsTopologyRetrieveResponses[keyof OpenstackTenantsTopologyRetrieveResponses];
 
 export type OpenstackTenantsUnlinkData = {
     body?: never;
