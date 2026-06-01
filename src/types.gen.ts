@@ -20006,7 +20006,7 @@ export type Project = {
      * List of allowed identity sources (identity providers).
      */
     user_identity_sources?: unknown;
-    affiliation?: AffiliatedOrganization;
+    affiliation?: AffiliatedOrganization | null;
     affiliation_uuid?: string | null;
     readonly affiliation_name?: string;
     /**
