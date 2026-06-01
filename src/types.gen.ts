@@ -47952,6 +47952,10 @@ export type MarketplaceCategoriesListData = {
          */
         has_shared?: boolean;
         /**
+         * Which field to use when ordering the results.
+         */
+        o?: string;
+        /**
          * Offering name contains
          */
         offering_name?: string;
@@ -48007,6 +48011,10 @@ export type MarketplaceCategoriesCountData = {
          * Has shared
          */
         has_shared?: boolean;
+        /**
+         * Which field to use when ordering the results.
+         */
+        o?: string;
         /**
          * Offering name contains
          */
