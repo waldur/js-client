@@ -8824,6 +8824,7 @@ export type Hypervisor = {
      * Hypervisor status, e.g. enabled or disabled
      */
     status?: string;
+    readonly traits: Array<string>;
 };
 
 export type HypervisorInventory = {
@@ -8979,34 +8980,34 @@ export type IdentityProvider = {
     /**
      * ID of application used for OAuth authentication.
      */
-    client_id: string;
+    client_id?: string;
     /**
      * Application secret key.
      */
-    client_secret: string;
+    client_secret?: string;
     verify_ssl?: boolean;
     enable_post_logout_redirect?: boolean;
     enable_pkce?: boolean;
     /**
      * The endpoint for endpoint discovery.
      */
-    discovery_url: string;
+    discovery_url?: string;
     /**
      * The endpoint for fetching user info.
      */
-    readonly userinfo_url: string;
+    readonly userinfo_url?: string;
     /**
      * The endpoint for obtaining auth token.
      */
-    readonly token_url: string;
+    readonly token_url?: string;
     /**
      * The endpoint for authorization request flow.
      */
-    readonly auth_url: string;
+    readonly auth_url?: string;
     /**
      * The endpoint used to redirect after sign-out.
      */
-    readonly logout_url: string;
+    readonly logout_url?: string;
     /**
      * Human-readable identity provider is label.
      */
@@ -9754,7 +9755,7 @@ export type Issue = {
     /**
      * Link to issue in support system.
      */
-    readonly link: string;
+    readonly link?: string;
     summary: string;
     description?: string;
     readonly status: string;
@@ -9793,7 +9794,7 @@ export type Issue = {
     /**
      * Internal processing log for debugging order lifecycle events. Visible only to staff.
      */
-    readonly processing_log: unknown;
+    readonly processing_log?: unknown;
     /**
      * Return order UUID if the issue's resource is an Order.
      */
@@ -11701,11 +11702,11 @@ export type Message = {
     readonly created: string;
     readonly input_tokens: number | null;
     readonly output_tokens: number | null;
-    readonly is_flagged: boolean;
-    severity: InjectionSeverityEnum;
-    readonly injection_categories: unknown;
-    readonly pii_categories: unknown;
-    action_taken: ActionTakenEnum;
+    readonly is_flagged?: boolean;
+    severity?: InjectionSeverityEnum;
+    readonly injection_categories?: unknown;
+    readonly pii_categories?: unknown;
+    action_taken?: ActionTakenEnum;
     /**
      * User feedback: True=thumbs up, False=thumbs down, None=no feedback.
      */
@@ -28433,7 +28434,7 @@ export type UserMe = {
      * Designates whether the user is a global support user.
      */
     is_support?: boolean;
-    readonly token: string;
+    readonly token?: string;
     /**
      * Token lifetime in seconds.
      */
@@ -28474,8 +28475,8 @@ export type UserMe = {
      */
     readonly identity_source: string;
     readonly should_protect_user_details: boolean;
-    readonly has_active_session: boolean;
-    readonly has_usable_password: boolean;
+    readonly has_active_session?: boolean;
+    readonly has_usable_password?: boolean;
     readonly ip_address: string;
     /**
      * User's gender (male, female, or unknown)
@@ -28520,7 +28521,7 @@ export type UserMe = {
     /**
      * Per-attribute source and freshness tracking. Format: {'field_name': {'source': 'isd:<name>', 'timestamp': 'ISO8601'}}.
      */
-    readonly attribute_sources: unknown;
+    readonly attribute_sources?: unknown;
     /**
      * List of ISD source identifiers this user can manage via Identity Bridge. E.g., ['isd:puhuri', 'isd:fenix']. Non-empty list implies identity manager role.
      */
@@ -28528,7 +28529,7 @@ export type UserMe = {
     /**
      * List of ISDs that have asserted this user exists. User is deactivated when this becomes empty.
      */
-    readonly active_isds: unknown;
+    readonly active_isds?: unknown;
     /**
      * Reason why the user was deactivated. Visible to staff and support.
      */
@@ -73807,6 +73808,10 @@ export type OpenstackHypervisorsListData = {
         settings_uuid?: string;
         state?: string;
         status?: string;
+        /**
+         * Trait names with AND logic (comma-separated)
+         */
+        trait?: string;
     };
     url: '/api/openstack-hypervisors/';
 };
@@ -73848,6 +73853,10 @@ export type OpenstackHypervisorsCountData = {
         settings_uuid?: string;
         state?: string;
         status?: string;
+        /**
+         * Trait names with AND logic (comma-separated)
+         */
+        trait?: string;
     };
     url: '/api/openstack-hypervisors/';
 };
