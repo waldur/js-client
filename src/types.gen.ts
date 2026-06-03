@@ -12436,11 +12436,11 @@ export type NestedRequestedOfferingRequest = {
 };
 
 export type NestedResourceProjectPermission = {
-    readonly url: string;
-    readonly uuid: string;
-    readonly name: string;
-    readonly role_name: string;
-    readonly role_uuid: string;
+    readonly url?: string;
+    readonly uuid?: string;
+    readonly name?: string;
+    readonly role_name?: string;
+    readonly role_uuid?: string;
     expiration_time?: string | null;
 };
 
@@ -19899,19 +19899,19 @@ export type ProfileCompleteness = {
     /**
      * Whether all mandatory profile fields are filled.
      */
-    is_complete: boolean;
+    is_complete?: boolean;
     /**
      * List of mandatory fields that are missing.
      */
-    missing_fields: Array<string>;
+    missing_fields?: Array<string>;
     /**
      * List of all mandatory fields.
      */
-    mandatory_fields: Array<string>;
+    mandatory_fields?: Array<string>;
     /**
      * Whether enforcement of mandatory attributes is enabled.
      */
-    enforcement_enabled: boolean;
+    enforcement_enabled?: boolean;
 };
 
 export type Project = {
@@ -24358,22 +24358,22 @@ export type ResourceSwitchPlanRequest = {
 };
 
 export type ResourceTeamMember = {
-    readonly url: string;
-    readonly uuid: string;
+    readonly url?: string;
+    readonly uuid?: string;
     /**
      * Required. 128 characters or fewer. Lowercase letters, numbers and @/./+/-/_ characters
      */
-    username: string;
-    readonly full_name: string;
+    username?: string;
+    readonly full_name?: string;
     /**
      * Email address
      */
     email?: string;
     image?: string | null;
-    readonly role_name: string | null;
-    readonly role_uuid: string | null;
-    readonly expiration_time: string | null;
-    readonly resource_projects: Array<NestedResourceProjectPermission>;
+    readonly role_name?: string | null;
+    readonly role_uuid?: string | null;
+    readonly expiration_time?: string | null;
+    readonly resource_projects?: Array<NestedResourceProjectPermission>;
 };
 
 export type ResourceTerminateRequest = {
@@ -27148,6 +27148,14 @@ export type SubmitRequestResponse = {
      * Whether the request was automatically approved
      */
     auto_approved: boolean;
+    /**
+     * UUID of the project the user was added to. Present when the invitation has auto_approve and auto_create_project enabled. Null otherwise.
+     */
+    project_uuid?: string | null;
+    /**
+     * True if a new project was created for the user; false if an existing project with the same name was reused. Null when no project workflow ran.
+     */
+    project_created?: boolean | null;
 };
 
 export type SubresourceOffering = {
@@ -28398,23 +28406,23 @@ export type UserMappingMap = {
 };
 
 export type UserMe = {
-    readonly url: string;
-    readonly uuid: string;
+    readonly url?: string;
+    readonly uuid?: string;
     /**
      * Required. 128 characters or fewer. Lowercase letters, numbers and @/./+/-/_ characters
      */
-    username: string;
+    username?: string;
     /**
      * URL-friendly identifier. Only editable by staff users.
      */
     slug?: string;
-    readonly full_name: string;
+    readonly full_name?: string;
     native_name?: string;
     job_title?: string;
-    email: string;
+    email?: string;
     phone_number?: string;
     organization?: string;
-    readonly civil_number: string | null;
+    readonly civil_number?: string | null;
     description?: string;
     /**
      * Staff status
@@ -28439,45 +28447,45 @@ export type UserMe = {
      * Token lifetime in seconds.
      */
     token_lifetime?: number | null;
-    readonly token_expires_at: string | null;
+    readonly token_expires_at?: string | null;
     /**
      * Indicates what registration method was used.
      */
-    readonly registration_method: string;
-    readonly date_joined: string;
+    readonly registration_method?: string;
+    readonly date_joined?: string;
     /**
      * Indicates when the user has agreed with the policy.
      */
-    readonly agreement_date: string | null;
+    readonly agreement_date?: string | null;
     /**
      * Designates whether the user is allowed to receive email notifications.
      */
     notifications_enabled?: boolean;
     preferred_language?: string;
-    readonly permissions: Array<Permission>;
-    readonly requested_email: string | null;
+    readonly permissions?: Array<Permission>;
+    readonly requested_email?: string | null;
     /**
      * Person's affiliation within organization such as student, faculty, staff.
      */
-    readonly affiliations: unknown;
+    readonly affiliations?: unknown;
     first_name?: string;
     last_name?: string;
     birth_date?: string | null;
-    readonly identity_provider_name: string;
-    readonly identity_provider_label: string;
-    readonly identity_provider_management_url: string;
-    readonly identity_provider_fields: Array<string>;
+    readonly identity_provider_name?: string;
+    readonly identity_provider_label?: string;
+    readonly identity_provider_management_url?: string;
+    readonly identity_provider_fields?: Array<string>;
     image?: string | null;
     /**
      * Source of identity
      *
      * Indicates what identity provider was used.
      */
-    readonly identity_source: string;
-    readonly should_protect_user_details: boolean;
+    readonly identity_source?: string;
+    readonly should_protect_user_details?: boolean;
     readonly has_active_session?: boolean;
     readonly has_usable_password?: boolean;
-    readonly ip_address: string;
+    readonly ip_address?: string;
     /**
      * User's gender (male, female, or unknown)
      */
@@ -28534,7 +28542,7 @@ export type UserMe = {
      * Reason why the user was deactivated. Visible to staff and support.
      */
     deactivation_reason?: string;
-    profile_completeness: ProfileCompleteness;
+    profile_completeness?: ProfileCompleteness;
 };
 
 export type UserNationalityStats = {
@@ -31767,6 +31775,8 @@ export type OrderDetailsFieldEnum = 'accepting_terms_of_service' | 'activation_p
 
 export type OrderDetailsOEnum = '-consumer_reviewed_at' | '-cost' | '-created' | '-state' | 'consumer_reviewed_at' | 'cost' | 'created' | 'state';
 
+export type PublicOfferingDetailsFieldEnum = 'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'billing_type_classification' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'config_drive_default' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'documentation_url' | 'effective_available_limits' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'has_compliance_requirements' | 'helpdesk_url' | 'image' | 'integration_guide' | 'is_accessible' | 'latitude' | 'longitude' | 'name' | 'offering_group' | 'offering_group_title' | 'offering_group_uuid' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'profile_name' | 'profile_uuid' | 'project' | 'project_name' | 'project_uuid' | 'promotion_campaigns' | 'quotas' | 'resource_options' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'tags' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'user_has_consent' | 'uuid' | 'vendor_details';
+
 export type RemoteProjectUpdateRequestStateEnum = 'approved' | 'canceled' | 'draft' | 'pending' | 'rejected';
 
 export type ProviderOfferingDetailsFieldEnum = 'access_url' | 'attributes' | 'backend_id' | 'backend_id_rules' | 'backend_metadata' | 'billable' | 'billing_type_classification' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'documentation_url' | 'effective_available_limits' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'has_compliance_requirements' | 'helpdesk_url' | 'image' | 'integration_guide' | 'integration_status' | 'latitude' | 'longitude' | 'name' | 'offering_group' | 'offering_group_title' | 'offering_group_uuid' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'profile_name' | 'profile_uuid' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_options' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'tags' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'uuid' | 'vendor_details';
@@ -31781,7 +31791,7 @@ export type UserFieldEnum = 'active_isds' | 'address' | 'affiliations' | 'agree_
 
 export type ResourceOEnum = '-created' | '-end_date' | '-name' | '-project_name' | '-state' | 'created' | 'end_date' | 'name' | 'project_name' | 'state';
 
-export type PublicOfferingDetailsFieldEnum = 'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'billing_type_classification' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'config_drive_default' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'documentation_url' | 'effective_available_limits' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'has_compliance_requirements' | 'helpdesk_url' | 'image' | 'integration_guide' | 'is_accessible' | 'latitude' | 'longitude' | 'name' | 'offering_group' | 'offering_group_title' | 'offering_group_uuid' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'profile_name' | 'profile_uuid' | 'project' | 'project_name' | 'project_uuid' | 'promotion_campaigns' | 'quotas' | 'resource_options' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'tags' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'user_has_consent' | 'uuid' | 'vendor_details';
+export type ResourceTeamMemberFieldEnum = 'email' | 'expiration_time' | 'full_name' | 'image' | 'resource_projects' | 'role_name' | 'role_uuid' | 'url' | 'username' | 'uuid';
 
 export type RobotAccountDetailsFieldEnum = 'backend_id' | 'created' | 'customer_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'fingerprints' | 'keys' | 'modified' | 'offering_plugin_options' | 'project_name' | 'project_uuid' | 'provider_name' | 'provider_uuid' | 'resource' | 'resource_name' | 'resource_uuid' | 'responsible_user' | 'state' | 'type' | 'url' | 'user_keys' | 'username' | 'users' | 'uuid';
 
@@ -31950,6 +31960,8 @@ export type SystemLogLevelEnum = 'CRITICAL' | 'ERROR' | 'INFO' | 'WARNING';
 export type SystemLogOEnum = '-created' | '-instance' | '-level_number' | 'created' | 'instance' | 'level_number';
 
 export type InvitationOEnum = '-created' | '-created_by' | '-email' | '-state' | 'created' | 'created_by' | 'email' | 'state';
+
+export type UserMeFieldEnum = 'active_isds' | 'address' | 'affiliations' | 'agree_with_policy' | 'agreement_date' | 'attribute_sources' | 'birth_date' | 'can_use_personal_access_tokens' | 'civil_number' | 'country_of_residence' | 'date_joined' | 'deactivation_reason' | 'description' | 'eduperson_assurance' | 'email' | 'first_name' | 'full_name' | 'gender' | 'has_active_session' | 'has_usable_password' | 'identity_provider_fields' | 'identity_provider_label' | 'identity_provider_management_url' | 'identity_provider_name' | 'identity_source' | 'image' | 'ip_address' | 'is_active' | 'is_identity_manager' | 'is_staff' | 'is_support' | 'job_title' | 'last_name' | 'managed_isds' | 'nationalities' | 'nationality' | 'native_name' | 'notifications_enabled' | 'organization' | 'organization_country' | 'organization_registry_code' | 'organization_type' | 'permissions' | 'personal_title' | 'phone_number' | 'place_of_birth' | 'preferred_language' | 'profile_completeness' | 'registration_method' | 'requested_email' | 'should_protect_user_details' | 'slug' | 'token' | 'token_expires_at' | 'token_lifetime' | 'url' | 'username' | 'uuid';
 
 export type VmwareDiskFieldEnum = 'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'size' | 'state' | 'url' | 'uuid' | 'vm' | 'vm_name' | 'vm_uuid';
 
@@ -39786,7 +39798,9 @@ export type ChatSessionsRetrieveResponse = ChatSessionsRetrieveResponses[keyof C
 export type ChatSessionsCurrentRetrieveData = {
     body?: never;
     path?: never;
-    query?: never;
+    query?: {
+        field?: Array<ChatSessionFieldEnum>;
+    };
     url: '/api/chat-sessions/current/';
 };
 
@@ -52971,7 +52985,9 @@ export type MarketplaceOrdersOfferingRetrieveData = {
     path: {
         uuid: string;
     };
-    query?: never;
+    query?: {
+        field?: Array<PublicOfferingDetailsFieldEnum>;
+    };
     url: '/api/marketplace-orders/{uuid}/offering/';
 };
 
@@ -53018,7 +53034,9 @@ export type MarketplaceOrdersResourceRetrieveData = {
     path: {
         uuid: string;
     };
-    query?: never;
+    query?: {
+        field?: Array<ResourceFieldEnum>;
+    };
     url: '/api/marketplace-orders/{uuid}/resource/';
 };
 
@@ -56621,7 +56639,9 @@ export type MarketplaceProviderOfferingsOrdersRetrieveData = {
         order_uuid: string;
         uuid: string;
     };
-    query?: never;
+    query?: {
+        field?: Array<OrderDetailsFieldEnum>;
+    };
     url: '/api/marketplace-provider-offerings/{uuid}/orders/{order_uuid}/';
 };
 
@@ -58766,7 +58786,9 @@ export type MarketplaceProviderResourcesOfferingRetrieveData = {
     path: {
         uuid: string;
     };
-    query?: never;
+    query?: {
+        field?: Array<PublicOfferingDetailsFieldEnum>;
+    };
     url: '/api/marketplace-provider-resources/{uuid}/offering/';
 };
 
@@ -61178,7 +61200,9 @@ export type MarketplaceResourcesOfferingRetrieveData = {
     path: {
         uuid: string;
     };
-    query?: never;
+    query?: {
+        field?: Array<PublicOfferingDetailsFieldEnum>;
+    };
     url: '/api/marketplace-resources/{uuid}/offering/';
 };
 
@@ -61445,6 +61469,7 @@ export type MarketplaceResourcesTeamMembersListData = {
          * Downscaled
          */
         downscaled?: boolean;
+        field?: Array<ResourceTeamMemberFieldEnum>;
         /**
          * Flavor name
          */
@@ -95618,7 +95643,9 @@ export type UsersConfirmEmailResponses = {
 export type UsersMeRetrieveData = {
     body?: never;
     path?: never;
-    query?: never;
+    query?: {
+        field?: Array<UserMeFieldEnum>;
+    };
     url: '/api/users/me/';
 };
 
