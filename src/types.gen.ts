@@ -5284,6 +5284,7 @@ export type ConstanceSettings = {
     ATLASSIAN_REQUEST_FEEDBACK_FIELD?: string;
     ATLASSIAN_TEMPLATE_FIELD?: string;
     ATLASSIAN_WALDUR_BACKEND_ID_FIELD?: string;
+    JIRA_WEBHOOK_SHARED_SECRET?: string;
     ZAMMAD_API_URL?: string;
     ZAMMAD_TOKEN?: string;
     ZAMMAD_GROUP?: string;
@@ -5291,6 +5292,7 @@ export type ConstanceSettings = {
     ZAMMAD_COMMENT_MARKER?: string;
     ZAMMAD_COMMENT_PREFIX?: string;
     ZAMMAD_COMMENT_COOLDOWN_DURATION?: number;
+    ZAMMAD_WEBHOOK_SHARED_SECRET?: string;
     SMAX_API_URL?: string;
     SMAX_TENANT_ID?: string;
     SMAX_LOGIN?: string;
@@ -5303,6 +5305,7 @@ export type ConstanceSettings = {
     SMAX_CREATION_SOURCE_NAME?: string;
     SMAX_REQUESTS_OFFERING?: string;
     SMAX_VERIFY_SSL?: boolean;
+    SMAX_WEBHOOK_SHARED_SECRET?: string;
     ENABLE_MOCK_SERVICE_ACCOUNT_BACKEND?: boolean;
     ENABLE_MOCK_COURSE_ACCOUNT_BACKEND?: boolean;
     PROPOSAL_REVIEW_DURATION?: number;
@@ -5565,6 +5568,7 @@ export type ConstanceSettingsRequest = {
     ATLASSIAN_REQUEST_FEEDBACK_FIELD?: string;
     ATLASSIAN_TEMPLATE_FIELD?: string;
     ATLASSIAN_WALDUR_BACKEND_ID_FIELD?: string;
+    JIRA_WEBHOOK_SHARED_SECRET?: string;
     ZAMMAD_API_URL?: string;
     ZAMMAD_TOKEN?: string;
     ZAMMAD_GROUP?: string;
@@ -5572,6 +5576,7 @@ export type ConstanceSettingsRequest = {
     ZAMMAD_COMMENT_MARKER?: string;
     ZAMMAD_COMMENT_PREFIX?: string;
     ZAMMAD_COMMENT_COOLDOWN_DURATION?: number;
+    ZAMMAD_WEBHOOK_SHARED_SECRET?: string;
     SMAX_API_URL?: string;
     SMAX_TENANT_ID?: string;
     SMAX_LOGIN?: string;
@@ -5584,6 +5589,7 @@ export type ConstanceSettingsRequest = {
     SMAX_CREATION_SOURCE_NAME?: string;
     SMAX_REQUESTS_OFFERING?: string;
     SMAX_VERIFY_SSL?: boolean;
+    SMAX_WEBHOOK_SHARED_SECRET?: string;
     ENABLE_MOCK_SERVICE_ACCOUNT_BACKEND?: boolean;
     ENABLE_MOCK_COURSE_ACCOUNT_BACKEND?: boolean;
     PROPOSAL_REVIEW_DURATION?: number;
@@ -30710,6 +30716,7 @@ export type ConstanceSettingsRequestForm = {
     ATLASSIAN_REQUEST_FEEDBACK_FIELD?: string;
     ATLASSIAN_TEMPLATE_FIELD?: string;
     ATLASSIAN_WALDUR_BACKEND_ID_FIELD?: string;
+    JIRA_WEBHOOK_SHARED_SECRET?: string;
     ZAMMAD_API_URL?: string;
     ZAMMAD_TOKEN?: string;
     ZAMMAD_GROUP?: string;
@@ -30717,6 +30724,7 @@ export type ConstanceSettingsRequestForm = {
     ZAMMAD_COMMENT_MARKER?: string;
     ZAMMAD_COMMENT_PREFIX?: string;
     ZAMMAD_COMMENT_COOLDOWN_DURATION?: number;
+    ZAMMAD_WEBHOOK_SHARED_SECRET?: string;
     SMAX_API_URL?: string;
     SMAX_TENANT_ID?: string;
     SMAX_LOGIN?: string;
@@ -30729,6 +30737,7 @@ export type ConstanceSettingsRequestForm = {
     SMAX_CREATION_SOURCE_NAME?: string;
     SMAX_REQUESTS_OFFERING?: string;
     SMAX_VERIFY_SSL?: boolean;
+    SMAX_WEBHOOK_SHARED_SECRET?: string;
     ENABLE_MOCK_SERVICE_ACCOUNT_BACKEND?: boolean;
     ENABLE_MOCK_COURSE_ACCOUNT_BACKEND?: boolean;
     PROPOSAL_REVIEW_DURATION?: number;
@@ -30991,6 +31000,7 @@ export type ConstanceSettingsRequestMultipart = {
     ATLASSIAN_REQUEST_FEEDBACK_FIELD?: string;
     ATLASSIAN_TEMPLATE_FIELD?: string;
     ATLASSIAN_WALDUR_BACKEND_ID_FIELD?: string;
+    JIRA_WEBHOOK_SHARED_SECRET?: string;
     ZAMMAD_API_URL?: string;
     ZAMMAD_TOKEN?: string;
     ZAMMAD_GROUP?: string;
@@ -30998,6 +31008,7 @@ export type ConstanceSettingsRequestMultipart = {
     ZAMMAD_COMMENT_MARKER?: string;
     ZAMMAD_COMMENT_PREFIX?: string;
     ZAMMAD_COMMENT_COOLDOWN_DURATION?: number;
+    ZAMMAD_WEBHOOK_SHARED_SECRET?: string;
     SMAX_API_URL?: string;
     SMAX_TENANT_ID?: string;
     SMAX_LOGIN?: string;
@@ -31010,6 +31021,7 @@ export type ConstanceSettingsRequestMultipart = {
     SMAX_CREATION_SOURCE_NAME?: string;
     SMAX_REQUESTS_OFFERING?: string;
     SMAX_VERIFY_SSL?: boolean;
+    SMAX_WEBHOOK_SHARED_SECRET?: string;
     ENABLE_MOCK_SERVICE_ACCOUNT_BACKEND?: boolean;
     ENABLE_MOCK_COURSE_ACCOUNT_BACKEND?: boolean;
     PROPOSAL_REVIEW_DURATION?: number;
