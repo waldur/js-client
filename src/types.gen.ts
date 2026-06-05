@@ -11233,6 +11233,10 @@ export type MergedPluginOptions = {
      */
     backend_id_display_label?: string;
     /**
+     * If set to True, highlighted backend ID display is only shown when the resource has an effective_id.
+     */
+    require_effective_id_for_highlighted_display?: boolean;
+    /**
      * Show an in-browser inference playground action for resources of this offering (for offerings whose resources expose an OpenAI-compatible endpoint).
      */
     expose_inference_playground?: boolean;
@@ -11539,6 +11543,10 @@ export type MergedPluginOptionsRequest = {
      * Label used by UI for showing value of the backend_id
      */
     backend_id_display_label?: string;
+    /**
+     * If set to True, highlighted backend ID display is only shown when the resource has an effective_id.
+     */
+    require_effective_id_for_highlighted_display?: boolean;
     /**
      * Show an in-browser inference playground action for resources of this offering (for offerings whose resources expose an OpenAI-compatible endpoint).
      */
