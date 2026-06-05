@@ -5451,6 +5451,18 @@ export type ConstanceSettings = {
     SSH_KEY_ALLOWED_TYPES?: Array<SshkeyallowedtypesEnum | BlankEnum>;
     SSH_KEY_MIN_RSA_KEY_SIZE?: number;
     ENABLED_REPORTING_SCREENS?: Array<EnabledreportingscreensEnum | BlankEnum>;
+    MATRIX_ENABLED?: boolean;
+    MATRIX_HOMESERVER_URL?: string;
+    MATRIX_HOMESERVER_DOMAIN?: string;
+    MATRIX_APPSERVICE_AS_TOKEN?: string;
+    MATRIX_APPSERVICE_HS_TOKEN?: string;
+    MATRIX_APPSERVICE_SENDER_LOCALPART?: string;
+    MATRIX_HISTORY_EXPORT_ENABLED?: boolean;
+    MATRIX_EXPORT_MEDIA?: boolean;
+    MATRIX_USER_REGISTRATION_SECRET?: string;
+    MATRIX_USER_ID_FORMAT?: string;
+    MATRIX_LOGIN_METHOD?: string;
+    MATRIX_OIDC_PROVIDER_URL?: string;
     SITE_AGENT_LOG_MAX_ROWS_PER_IDENTITY?: number;
     PAT_ENABLED?: boolean;
     PAT_MAX_LIFETIME_DAYS?: number;
@@ -5735,6 +5747,18 @@ export type ConstanceSettingsRequest = {
     SSH_KEY_ALLOWED_TYPES?: Array<SshkeyallowedtypesEnum | BlankEnum>;
     SSH_KEY_MIN_RSA_KEY_SIZE?: number;
     ENABLED_REPORTING_SCREENS?: Array<EnabledreportingscreensEnum | BlankEnum>;
+    MATRIX_ENABLED?: boolean;
+    MATRIX_HOMESERVER_URL?: string;
+    MATRIX_HOMESERVER_DOMAIN?: string;
+    MATRIX_APPSERVICE_AS_TOKEN?: string;
+    MATRIX_APPSERVICE_HS_TOKEN?: string;
+    MATRIX_APPSERVICE_SENDER_LOCALPART?: string;
+    MATRIX_HISTORY_EXPORT_ENABLED?: boolean;
+    MATRIX_EXPORT_MEDIA?: boolean;
+    MATRIX_USER_REGISTRATION_SECRET?: string;
+    MATRIX_USER_ID_FORMAT?: string;
+    MATRIX_LOGIN_METHOD?: string;
+    MATRIX_OIDC_PROVIDER_URL?: string;
     SITE_AGENT_LOG_MAX_ROWS_PER_IDENTITY?: number;
     PAT_ENABLED?: boolean;
     PAT_MAX_LIFETIME_DAYS?: number;
@@ -7665,6 +7689,13 @@ export type EligibilityCheck = {
     restrictions: Array<string>;
 };
 
+export type EligibleProject = {
+    uuid: string;
+    name: string;
+    customer_uuid: string;
+    customer_name: string;
+};
+
 export type EmailHook = {
     readonly url: string;
     readonly uuid: string;
@@ -8057,6 +8088,8 @@ export type ExportTypeCompatibility = {
     compatible: boolean;
     recommended: boolean;
 };
+
+export type ExportTypeEnum = 'periodic' | 'on_deletion' | 'manual';
 
 export type ExtendDeadlineRequestRequest = {
     /**
@@ -10755,6 +10788,152 @@ export type MatchingConfiguration = {
     readonly created: string;
     readonly modified: string;
 };
+
+export type MatrixAppserviceSetupRequest = {
+    /**
+     * Waldur URL reachable by the Matrix homeserver (for webhook callbacks)
+     */
+    url?: string;
+    /**
+     * Localpart for the appservice bot user, e.g. 'waldur-bot'
+     */
+    sender_localpart?: string;
+    /**
+     * Matrix homeserver base URL. Only persisted if MATRIX_HOMESERVER_URL is not already configured.
+     */
+    homeserver_url?: string;
+    /**
+     * Matrix homeserver server_name domain. Only persisted if MATRIX_HOMESERVER_DOMAIN is not already configured.
+     */
+    homeserver_domain?: string;
+    /**
+     * Shared secret configured in the homeserver for user registration. Only persisted if MATRIX_USER_REGISTRATION_SECRET is not already configured.
+     */
+    user_registration_secret?: string;
+};
+
+export type MatrixAppserviceSetupResponse = {
+    registration_yaml: string;
+    as_token: string;
+    hs_token: string;
+    sender_localpart: string;
+    webhook_url: string;
+    bot_provision_status: string;
+};
+
+export type MatrixAppserviceStatus = {
+    enabled: boolean;
+    as_token_configured: boolean;
+    hs_token_configured: boolean;
+    sender_localpart: string;
+    bot_user_id: string;
+    webhook_path: string;
+    homeserver_url: string;
+    homeserver_domain: string;
+    transaction_count: number;
+};
+
+export type MatrixCredentials = {
+    method: string;
+    homeserver_url: string;
+    matrix_user_id: string;
+    password?: string;
+    login_token?: string;
+    oidc_provider_url?: string;
+    room_id?: string;
+    access_token?: string;
+};
+
+export type MatrixDiagnosticCheck = {
+    name: string;
+    label: string;
+    ok: boolean;
+    detail: string;
+};
+
+export type MatrixDiagnosticsResponse = {
+    ok: boolean;
+    checks: Array<MatrixDiagnosticCheck>;
+};
+
+export type MatrixHistoryExport = {
+    readonly uuid: string;
+    readonly url: string;
+    readonly room_uuid: string;
+    readonly room_name: string;
+    export_type: ExportTypeEnum;
+    readonly message_count: number;
+    readonly media_count: number;
+    state: MatrixHistoryExportStateEnum;
+    readonly error_message: string;
+    readonly export_file_url: string | null;
+    readonly media_file_url: string | null;
+    readonly started_at: string | null;
+    readonly completed_at: string | null;
+    readonly created: string;
+};
+
+export type MatrixHistoryExportStateEnum = 'pending' | 'exporting' | 'completed' | 'failed';
+
+export type MatrixReprovisionResponse = {
+    rooms_reprovisioned: number;
+    users_reset: number;
+};
+
+export type MatrixRoom = {
+    readonly uuid: string;
+    readonly url: string;
+    /**
+     * Matrix room ID, e.g. !abc:domain
+     */
+    readonly room_id: string | null;
+    room_name?: string;
+    /**
+     * Matrix room alias, e.g. #project-name:domain
+     */
+    readonly room_alias: string;
+    state: MatrixRoomStateEnum;
+    readonly error_message: string;
+    readonly scope: string;
+    readonly scope_uuid: string | null;
+    readonly scope_name: string | null;
+    readonly customer_uuid: string | null;
+    readonly customer_name: string | null;
+    readonly members_count: number;
+    readonly members: Array<MatrixRoomMemberSummary>;
+    readonly current_user_membership_state: string | null;
+    readonly created: string;
+    readonly modified: string;
+};
+
+export type MatrixRoomCreateRequest = {
+    project: string;
+};
+
+export type MatrixRoomDisableRequest = {
+    delete_history?: boolean;
+};
+
+export type MatrixRoomMember = {
+    readonly uuid: string;
+    readonly user_uuid: string;
+    readonly user_full_name: string;
+    readonly matrix_user_id: string;
+    readonly power_level: number;
+    membership_state: MembershipStateEnum;
+    readonly created: string;
+    readonly modified: string;
+};
+
+export type MatrixRoomMemberSummary = {
+    user_full_name: string;
+    matrix_user_id: string;
+    membership_state: string;
+};
+
+export type MatrixRoomStateEnum = 'creating' | 'active' | 'disabling' | 'archived' | 'error';
+
+export type MembershipStateEnum = 'invited' | 'joined' | 'left' | 'banned';
 
 export type MergedPluginOptions = {
     /**
@@ -30883,6 +31062,18 @@ export type ConstanceSettingsRequestForm = {
     SSH_KEY_ALLOWED_TYPES?: Array<SshkeyallowedtypesEnum | BlankEnum>;
     SSH_KEY_MIN_RSA_KEY_SIZE?: number;
     ENABLED_REPORTING_SCREENS?: Array<EnabledreportingscreensEnum | BlankEnum>;
+    MATRIX_ENABLED?: boolean;
+    MATRIX_HOMESERVER_URL?: string;
+    MATRIX_HOMESERVER_DOMAIN?: string;
+    MATRIX_APPSERVICE_AS_TOKEN?: string;
+    MATRIX_APPSERVICE_HS_TOKEN?: string;
+    MATRIX_APPSERVICE_SENDER_LOCALPART?: string;
+    MATRIX_HISTORY_EXPORT_ENABLED?: boolean;
+    MATRIX_EXPORT_MEDIA?: boolean;
+    MATRIX_USER_REGISTRATION_SECRET?: string;
+    MATRIX_USER_ID_FORMAT?: string;
+    MATRIX_LOGIN_METHOD?: string;
+    MATRIX_OIDC_PROVIDER_URL?: string;
     SITE_AGENT_LOG_MAX_ROWS_PER_IDENTITY?: number;
     PAT_ENABLED?: boolean;
     PAT_MAX_LIFETIME_DAYS?: number;
@@ -31167,6 +31358,18 @@ export type ConstanceSettingsRequestMultipart = {
     SSH_KEY_ALLOWED_TYPES?: Array<SshkeyallowedtypesEnum | BlankEnum>;
     SSH_KEY_MIN_RSA_KEY_SIZE?: number;
     ENABLED_REPORTING_SCREENS?: Array<EnabledreportingscreensEnum | BlankEnum>;
+    MATRIX_ENABLED?: boolean;
+    MATRIX_HOMESERVER_URL?: string;
+    MATRIX_HOMESERVER_DOMAIN?: string;
+    MATRIX_APPSERVICE_AS_TOKEN?: string;
+    MATRIX_APPSERVICE_HS_TOKEN?: string;
+    MATRIX_APPSERVICE_SENDER_LOCALPART?: string;
+    MATRIX_HISTORY_EXPORT_ENABLED?: boolean;
+    MATRIX_EXPORT_MEDIA?: boolean;
+    MATRIX_USER_REGISTRATION_SECRET?: string;
+    MATRIX_USER_ID_FORMAT?: string;
+    MATRIX_LOGIN_METHOD?: string;
+    MATRIX_OIDC_PROVIDER_URL?: string;
     SITE_AGENT_LOG_MAX_ROWS_PER_IDENTITY?: number;
     PAT_ENABLED?: boolean;
     PAT_MAX_LIFETIME_DAYS?: number;
@@ -31998,6 +32201,22 @@ export type Page = number;
  * Number of results to return per page.
  */
 export type PageSize = number;
+
+export type MatrixAppV1TransactionsUpdateData = {
+    body?: never;
+    path: {
+        txn_id: string;
+    };
+    query?: never;
+    url: '/_matrix/app/v1/transactions/{txn_id}';
+};
+
+export type MatrixAppV1TransactionsUpdateResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type ApiAuthEduteamsCompleteRetrieveData = {
     body?: never;
@@ -33662,6 +33881,58 @@ export type AdminArrowVendorOfferingMappingsVendorChoicesCountResponses = {
      */
     200: unknown;
 };
+
+export type AdminMatrixAppserviceSetupData = {
+    body?: MatrixAppserviceSetupRequest;
+    path?: never;
+    query?: never;
+    url: '/api/admin/matrix-appservice/setup/';
+};
+
+export type AdminMatrixAppserviceSetupResponses = {
+    200: MatrixAppserviceSetupResponse;
+};
+
+export type AdminMatrixAppserviceSetupResponse = AdminMatrixAppserviceSetupResponses[keyof AdminMatrixAppserviceSetupResponses];
+
+export type AdminMatrixAppserviceStatusRetrieveData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/admin/matrix-appservice/status/';
+};
+
+export type AdminMatrixAppserviceStatusRetrieveResponses = {
+    200: MatrixAppserviceStatus;
+};
+
+export type AdminMatrixAppserviceStatusRetrieveResponse = AdminMatrixAppserviceStatusRetrieveResponses[keyof AdminMatrixAppserviceStatusRetrieveResponses];
+
+export type AdminMatrixDiagnosticsRetrieveData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/admin/matrix/diagnostics/';
+};
+
+export type AdminMatrixDiagnosticsRetrieveResponses = {
+    200: MatrixDiagnosticsResponse;
+};
+
+export type AdminMatrixDiagnosticsRetrieveResponse = AdminMatrixDiagnosticsRetrieveResponses[keyof AdminMatrixDiagnosticsRetrieveResponses];
+
+export type AdminMatrixReprovisionData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/admin/matrix/reprovision/';
+};
+
+export type AdminMatrixReprovisionResponses = {
+    202: MatrixReprovisionResponse;
+};
+
+export type AdminMatrixReprovisionResponse = AdminMatrixReprovisionResponses[keyof AdminMatrixReprovisionResponses];
 
 export type AffiliatedOrganizationsListData = {
     body?: never;
@@ -68758,6 +69029,429 @@ export type MarketplaceUserOfferingConsentsRevokeResponses = {
 };
 
 export type MarketplaceUserOfferingConsentsRevokeResponse = MarketplaceUserOfferingConsentsRevokeResponses[keyof MarketplaceUserOfferingConsentsRevokeResponses];
+
+export type MatrixCredentialsRetrieveData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/matrix/credentials/';
+};
+
+export type MatrixCredentialsRetrieveResponses = {
+    200: MatrixCredentials;
+};
+
+export type MatrixCredentialsRetrieveResponse = MatrixCredentialsRetrieveResponses[keyof MatrixCredentialsRetrieveResponses];
+
+export type MatrixExportsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        export_type?: ExportTypeEnum;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Room UUID
+         */
+        room_uuid?: string;
+        state?: MatrixHistoryExportStateEnum;
+    };
+    url: '/api/matrix/exports/';
+};
+
+export type MatrixExportsListResponses = {
+    200: Array<MatrixHistoryExport>;
+};
+
+export type MatrixExportsListResponse = MatrixExportsListResponses[keyof MatrixExportsListResponses];
+
+export type MatrixExportsCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        export_type?: ExportTypeEnum;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Room UUID
+         */
+        room_uuid?: string;
+        state?: MatrixHistoryExportStateEnum;
+    };
+    url: '/api/matrix/exports/';
+};
+
+export type MatrixExportsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type MatrixExportsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/matrix/exports/{uuid}/';
+};
+
+export type MatrixExportsRetrieveResponses = {
+    200: MatrixHistoryExport;
+};
+
+export type MatrixExportsRetrieveResponse = MatrixExportsRetrieveResponses[keyof MatrixExportsRetrieveResponses];
+
+export type MatrixExportsDownloadRetrieveData = {
+    body?: never;
+    path: {
+        /**
+         * Which artifact to stream.
+         */
+        kind: 'export' | 'media';
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/matrix/exports/{uuid}/download/{kind}/';
+};
+
+export type MatrixExportsDownloadRetrieveResponses = {
+    200: Blob | File;
+};
+
+export type MatrixExportsDownloadRetrieveResponse = MatrixExportsDownloadRetrieveResponses[keyof MatrixExportsDownloadRetrieveResponses];
+
+export type MatrixRoomsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Only rooms the current user is a member of
+         */
+        member?: boolean;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Project UUID
+         */
+        project_uuid?: string;
+        state?: MatrixRoomStateEnum;
+    };
+    url: '/api/matrix/rooms/';
+};
+
+export type MatrixRoomsListResponses = {
+    200: Array<MatrixRoom>;
+};
+
+export type MatrixRoomsListResponse = MatrixRoomsListResponses[keyof MatrixRoomsListResponses];
+
+export type MatrixRoomsCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Only rooms the current user is a member of
+         */
+        member?: boolean;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Project UUID
+         */
+        project_uuid?: string;
+        state?: MatrixRoomStateEnum;
+    };
+    url: '/api/matrix/rooms/';
+};
+
+export type MatrixRoomsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type MatrixRoomsCreateData = {
+    body: MatrixRoomCreateRequest;
+    path?: never;
+    query?: never;
+    url: '/api/matrix/rooms/';
+};
+
+export type MatrixRoomsCreateResponses = {
+    201: MatrixRoom;
+};
+
+export type MatrixRoomsCreateResponse = MatrixRoomsCreateResponses[keyof MatrixRoomsCreateResponses];
+
+export type MatrixRoomsDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/matrix/rooms/{uuid}/';
+};
+
+export type MatrixRoomsDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type MatrixRoomsDestroyResponse = MatrixRoomsDestroyResponses[keyof MatrixRoomsDestroyResponses];
+
+export type MatrixRoomsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/matrix/rooms/{uuid}/';
+};
+
+export type MatrixRoomsRetrieveResponses = {
+    200: MatrixRoom;
+};
+
+export type MatrixRoomsRetrieveResponse = MatrixRoomsRetrieveResponses[keyof MatrixRoomsRetrieveResponses];
+
+export type MatrixRoomsDisableData = {
+    body?: MatrixRoomDisableRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/matrix/rooms/{uuid}/disable/';
+};
+
+export type MatrixRoomsDisableResponses = {
+    202: MatrixRoom;
+};
+
+export type MatrixRoomsDisableResponse = MatrixRoomsDisableResponses[keyof MatrixRoomsDisableResponses];
+
+export type MatrixRoomsExportHistoryData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/matrix/rooms/{uuid}/export_history/';
+};
+
+export type MatrixRoomsExportHistoryResponses = {
+    202: MatrixHistoryExport;
+};
+
+export type MatrixRoomsExportHistoryResponse = MatrixRoomsExportHistoryResponses[keyof MatrixRoomsExportHistoryResponses];
+
+export type MatrixRoomsJoinData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/matrix/rooms/{uuid}/join/';
+};
+
+export type MatrixRoomsJoinResponses = {
+    202: MatrixRoom;
+};
+
+export type MatrixRoomsJoinResponse = MatrixRoomsJoinResponses[keyof MatrixRoomsJoinResponses];
+
+export type MatrixRoomsLeaveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/matrix/rooms/{uuid}/leave/';
+};
+
+export type MatrixRoomsLeaveResponses = {
+    202: MatrixRoom;
+};
+
+export type MatrixRoomsLeaveResponse = MatrixRoomsLeaveResponses[keyof MatrixRoomsLeaveResponses];
+
+export type MatrixRoomsMembersListData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * Only rooms the current user is a member of
+         */
+        member?: boolean;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Project UUID
+         */
+        project_uuid?: string;
+        state?: MatrixRoomStateEnum;
+    };
+    url: '/api/matrix/rooms/{uuid}/members/';
+};
+
+export type MatrixRoomsMembersListResponses = {
+    200: Array<MatrixRoomMember>;
+};
+
+export type MatrixRoomsMembersListResponse = MatrixRoomsMembersListResponses[keyof MatrixRoomsMembersListResponses];
+
+export type MatrixRoomsReactivateData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/matrix/rooms/{uuid}/reactivate/';
+};
+
+export type MatrixRoomsReactivateResponses = {
+    202: MatrixRoom;
+};
+
+export type MatrixRoomsReactivateResponse = MatrixRoomsReactivateResponses[keyof MatrixRoomsReactivateResponses];
+
+export type MatrixRoomsRetryData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/matrix/rooms/{uuid}/retry/';
+};
+
+export type MatrixRoomsRetryResponses = {
+    202: MatrixRoom;
+};
+
+export type MatrixRoomsRetryResponse = MatrixRoomsRetryResponses[keyof MatrixRoomsRetryResponses];
+
+export type MatrixRoomsSyncMembersData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/matrix/rooms/{uuid}/sync_members/';
+};
+
+export type MatrixRoomsSyncMembersResponses = {
+    /**
+     * No response body
+     */
+    202: unknown;
+};
+
+export type MatrixRoomsEligibleProjectsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Limit results to projects under this customer.
+         */
+        customer_uuid?: string;
+        /**
+         * Only rooms the current user is a member of
+         */
+        member?: boolean;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Project UUID
+         */
+        project_uuid?: string;
+        state?: MatrixRoomStateEnum;
+    };
+    url: '/api/matrix/rooms/eligible_projects/';
+};
+
+export type MatrixRoomsEligibleProjectsListResponses = {
+    200: Array<EligibleProject>;
+};
+
+export type MatrixRoomsEligibleProjectsListResponse = MatrixRoomsEligibleProjectsListResponses[keyof MatrixRoomsEligibleProjectsListResponses];
+
+export type MatrixRoomsEligibleProjectsCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Limit results to projects under this customer.
+         */
+        customer_uuid?: string;
+        /**
+         * Only rooms the current user is a member of
+         */
+        member?: boolean;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Project UUID
+         */
+        project_uuid?: string;
+        state?: MatrixRoomStateEnum;
+    };
+    url: '/api/matrix/rooms/eligible_projects/';
+};
+
+export type MatrixRoomsEligibleProjectsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type MediaRetrieveData = {
     body?: never;
