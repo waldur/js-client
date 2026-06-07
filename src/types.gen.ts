@@ -5453,6 +5453,7 @@ export type ConstanceSettings = {
     ENABLED_REPORTING_SCREENS?: Array<EnabledreportingscreensEnum | BlankEnum>;
     MATRIX_ENABLED?: boolean;
     MATRIX_HOMESERVER_URL?: string;
+    MATRIX_HOMESERVER_PUBLIC_URL?: string;
     MATRIX_HOMESERVER_DOMAIN?: string;
     MATRIX_APPSERVICE_AS_TOKEN?: string;
     MATRIX_APPSERVICE_HS_TOKEN?: string;
@@ -5749,6 +5750,7 @@ export type ConstanceSettingsRequest = {
     ENABLED_REPORTING_SCREENS?: Array<EnabledreportingscreensEnum | BlankEnum>;
     MATRIX_ENABLED?: boolean;
     MATRIX_HOMESERVER_URL?: string;
+    MATRIX_HOMESERVER_PUBLIC_URL?: string;
     MATRIX_HOMESERVER_DOMAIN?: string;
     MATRIX_APPSERVICE_AS_TOKEN?: string;
     MATRIX_APPSERVICE_HS_TOKEN?: string;
@@ -10802,6 +10804,10 @@ export type MatrixAppserviceSetupRequest = {
      * Matrix homeserver base URL. Only persisted if MATRIX_HOMESERVER_URL is not already configured.
      */
     homeserver_url?: string;
+    /**
+     * Optional. Matrix homeserver URL used by browser clients. Leave blank when the homeserver URL above is reachable from both servers and browsers. Set this for deployments where the two differ (e.g. Docker-internal vs. Caddy-proxied). Only persisted if MATRIX_HOMESERVER_PUBLIC_URL is not already configured.
+     */
+    homeserver_public_url?: string;
     /**
      * Matrix homeserver server_name domain. Only persisted if MATRIX_HOMESERVER_DOMAIN is not already configured.
      */
@@ -31072,6 +31078,7 @@ export type ConstanceSettingsRequestForm = {
     ENABLED_REPORTING_SCREENS?: Array<EnabledreportingscreensEnum | BlankEnum>;
     MATRIX_ENABLED?: boolean;
     MATRIX_HOMESERVER_URL?: string;
+    MATRIX_HOMESERVER_PUBLIC_URL?: string;
     MATRIX_HOMESERVER_DOMAIN?: string;
     MATRIX_APPSERVICE_AS_TOKEN?: string;
     MATRIX_APPSERVICE_HS_TOKEN?: string;
@@ -31368,6 +31375,7 @@ export type ConstanceSettingsRequestMultipart = {
     ENABLED_REPORTING_SCREENS?: Array<EnabledreportingscreensEnum | BlankEnum>;
     MATRIX_ENABLED?: boolean;
     MATRIX_HOMESERVER_URL?: string;
+    MATRIX_HOMESERVER_PUBLIC_URL?: string;
     MATRIX_HOMESERVER_DOMAIN?: string;
     MATRIX_APPSERVICE_AS_TOKEN?: string;
     MATRIX_APPSERVICE_HS_TOKEN?: string;
