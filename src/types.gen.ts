@@ -8521,6 +8521,70 @@ export type GenerateSuggestionsResponse = {
     suggestions: Array<string>;
 };
 
+export type GlauthGroupKind = 'project' | 'resource_role' | 'resource_project_role';
+
+export type GlauthTree = {
+    offering: GlauthTreeOffering;
+    groups: Array<GlauthTreeGroup>;
+    users: Array<GlauthTreeUser>;
+    robot_accounts: Array<GlauthTreeRobotAccount>;
+};
+
+export type GlauthTreeGroup = {
+    gid: number;
+    name: string;
+    kind: GlauthGroupKind;
+    scope: GlauthTreeScope;
+    role: string | null;
+    members: Array<string>;
+};
+
+export type GlauthTreeMembership = {
+    gid: number;
+    group_name: string;
+    kind: GlauthGroupKind;
+    role: string | null;
+};
+
+export type GlauthTreeOffering = {
+    uuid: string;
+    name: string;
+    slug: string | null;
+};
+
+export type GlauthTreeRobotAccount = {
+    username: string;
+    uidnumber: number | null;
+    personal_group: number | null;
+    login_shell: string | null;
+    home_dir: string | null;
+    ssh_keys: Array<string>;
+};
+
+export type GlauthTreeScope = {
+    type: GlauthTreeScopeTypeEnum;
+    uuid: string;
+    name: string | null;
+    slug?: string | null;
+    resource_uuid?: string | null;
+};
+
+export type GlauthTreeScopeTypeEnum = 'resource' | 'resource_project' | 'project';
+
+export type GlauthTreeUser = {
+    username: string;
+    uidnumber: number | null;
+    disabled: boolean;
+    personal_group: number | null;
+    mail: string | null;
+    givenname: string | null;
+    sn: string | null;
+    login_shell: string | null;
+    home_dir: string | null;
+    ssh_keys: Array<string>;
+    memberships: Array<GlauthTreeMembership>;
+};
+
 export type GlobalUserDataAccessLog = {
     uuid: string;
     timestamp: string;
@@ -11005,7 +11069,7 @@ export type MergedPluginOptions = {
     /**
      * Required user role in a project for provisioning of resources
      */
-    required_team_role_for_provisioning?: string;
+    required_team_role_for_provisioning?: string | null;
     /**
      * If set to True, users will be able to upload purchase orders.
      */
@@ -11057,7 +11121,7 @@ export type MergedPluginOptions = {
     /**
      * Python format string for generating resource names. Available variables: {customer_name}, {customer_slug}, {project_name}, {project_slug}, {offering_name}, {offering_slug}, {plan_name}, {counter}, {attributes[KEY]}.
      */
-    resource_name_pattern?: string;
+    resource_name_pattern?: string | null;
     /**
      * If set, it will be used as a default MTU for the first network in a tenant
      */
@@ -11130,6 +11194,30 @@ export type MergedPluginOptions = {
      * GLAuth initial usergroup number
      */
     initial_usergroup_number?: number;
+    /**
+     * GLAuth initial gid for role-aware groups (one per (resource|resource-project, role) tuple). Must leave at least 50000 gids of headroom above initial_usergroup_number to avoid collisions.
+     */
+    initial_rolegroup_number?: number;
+    /**
+     * Mapping of Waldur role names (on Resource scope) to emitted role tokens used in group name rendering. Roles outside the map are skipped. Example: {"PI": "admin", "Member": "member"}.
+     */
+    resource_role_map?: {
+        [key: string]: string;
+    };
+    /**
+     * Mapping of Waldur role names (on ResourceProject scope) to emitted role tokens. Same semantics as resource_role_map.
+     */
+    resource_project_role_map?: {
+        [key: string]: string;
+    };
+    /**
+     * string.Template for resource-scope role group names. Variables: ${role_name}, ${resource_slug}, ${customer_slug}, ${project_slug}.
+     */
+    resource_role_group_template?: string;
+    /**
+     * string.Template for resource-project-scope role group names. Adds ${rp_uuid}, ${rp_uuid_short}, ${project_name} to the variables available for resource-scope templates.
+     */
+    resource_project_role_group_template?: string;
     /**
      * GLAuth prefix for anonymized usernames
      */
@@ -11316,7 +11404,7 @@ export type MergedPluginOptionsRequest = {
     /**
      * Required user role in a project for provisioning of resources
      */
-    required_team_role_for_provisioning?: string;
+    required_team_role_for_provisioning?: string | null;
     /**
      * If set to True, users will be able to upload purchase orders.
      */
@@ -11368,7 +11456,7 @@ export type MergedPluginOptionsRequest = {
     /**
      * Python format string for generating resource names. Available variables: {customer_name}, {customer_slug}, {project_name}, {project_slug}, {offering_name}, {offering_slug}, {plan_name}, {counter}, {attributes[KEY]}.
      */
-    resource_name_pattern?: string;
+    resource_name_pattern?: string | null;
     /**
      * If set, it will be used as a default MTU for the first network in a tenant
      */
@@ -11441,6 +11529,30 @@ export type MergedPluginOptionsRequest = {
      * GLAuth initial usergroup number
      */
     initial_usergroup_number?: number;
+    /**
+     * GLAuth initial gid for role-aware groups (one per (resource|resource-project, role) tuple). Must leave at least 50000 gids of headroom above initial_usergroup_number to avoid collisions.
+     */
+    initial_rolegroup_number?: number;
+    /**
+     * Mapping of Waldur role names (on Resource scope) to emitted role tokens used in group name rendering. Roles outside the map are skipped. Example: {"PI": "admin", "Member": "member"}.
+     */
+    resource_role_map?: {
+        [key: string]: string;
+    };
+    /**
+     * Mapping of Waldur role names (on ResourceProject scope) to emitted role tokens. Same semantics as resource_role_map.
+     */
+    resource_project_role_map?: {
+        [key: string]: string;
+    };
+    /**
+     * string.Template for resource-scope role group names. Variables: ${role_name}, ${resource_slug}, ${customer_slug}, ${project_slug}.
+     */
+    resource_role_group_template?: string;
+    /**
+     * string.Template for resource-project-scope role group names. Adds ${rp_uuid}, ${rp_uuid_short}, ${project_name} to the variables available for resource-scope templates.
+     */
+    resource_project_role_group_template?: string;
     /**
      * GLAuth prefix for anonymized usernames
      */
@@ -15738,6 +15850,7 @@ export type OpenStackNestedSubNet = {
      * If True, DHCP service will be enabled on this subnet
      */
     enable_dhcp?: boolean;
+    readonly port_security_enabled?: boolean;
 };
 
 export type OpenStackNestedSubNetRequest = {
@@ -15864,6 +15977,10 @@ export type OpenStackNetwork = {
      */
     readonly mtu?: number | null;
     readonly rbac_policies?: Array<NetworkRbacPolicy>;
+    /**
+     * Default port_security_enabled for ports on this network. When False, ports created on this network inherit disabled port security unless explicitly overridden.
+     */
+    readonly port_security_enabled?: boolean;
     readonly marketplace_offering_uuid?: string | null;
     readonly marketplace_offering_name?: string | null;
     readonly marketplace_offering_type?: string | null;
@@ -16651,6 +16768,7 @@ export type OpenStackSubNet = {
      * Is subnet connected to the default tenant router.
      */
     readonly is_connected?: boolean;
+    readonly port_security_enabled?: boolean;
     readonly marketplace_offering_uuid?: string | null;
     readonly marketplace_offering_name?: string | null;
     readonly marketplace_offering_type?: string | null;
@@ -32114,7 +32232,7 @@ export type OpenStackLoadBalancerFieldEnum = 'access_url' | 'attached_floating_i
 
 export type NetworkRbacPolicyDirectionEnum = 'all' | 'inbound' | 'outbound';
 
-export type OpenStackNetworkFieldEnum = 'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'is_external' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'mtu' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'rbac_policies' | 'resource_type' | 'segmentation_id' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'subnets' | 'tenant' | 'tenant_name' | 'tenant_uuid' | 'type' | 'url' | 'uuid';
+export type OpenStackNetworkFieldEnum = 'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'is_external' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'mtu' | 'name' | 'port_security_enabled' | 'project' | 'project_name' | 'project_uuid' | 'rbac_policies' | 'resource_type' | 'segmentation_id' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'subnets' | 'tenant' | 'tenant_name' | 'tenant_uuid' | 'type' | 'url' | 'uuid';
 
 export type OpenStackPoolMemberFieldEnum = 'access_url' | 'address' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'is_limit_based' | 'is_usage_based' | 'load_balancer_uuid' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'operating_status' | 'pool' | 'pool_name' | 'pool_uuid' | 'project' | 'project_name' | 'project_uuid' | 'protocol_port' | 'provisioning_status' | 'resource_type' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'subnet' | 'url' | 'uuid' | 'weight';
 
@@ -32132,7 +32250,7 @@ export type OpenStackServerGroupFieldEnum = 'access_url' | 'backend_id' | 'creat
 
 export type OpenStackSnapshotFieldEnum = 'access_url' | 'action' | 'action_details' | 'backend_id' | 'backups' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'is_limit_based' | 'is_usage_based' | 'kept_until' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'metadata' | 'modified' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'restorations' | 'runtime_state' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'size' | 'source_volume' | 'source_volume_marketplace_uuid' | 'source_volume_name' | 'state' | 'url' | 'uuid';
 
-export type OpenStackSubNetFieldEnum = 'access_url' | 'allocation_pools' | 'backend_id' | 'cidr' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'disable_gateway' | 'dns_nameservers' | 'enable_dhcp' | 'error_message' | 'error_traceback' | 'gateway_ip' | 'host_routes' | 'ip_version' | 'is_connected' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'network' | 'network_name' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'tenant' | 'tenant_name' | 'url' | 'uuid';
+export type OpenStackSubNetFieldEnum = 'access_url' | 'allocation_pools' | 'backend_id' | 'cidr' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'disable_gateway' | 'dns_nameservers' | 'enable_dhcp' | 'error_message' | 'error_traceback' | 'gateway_ip' | 'host_routes' | 'ip_version' | 'is_connected' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'network' | 'network_name' | 'port_security_enabled' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'tenant' | 'tenant_name' | 'url' | 'uuid';
 
 export type OpenStackTenantFieldEnum = 'availability_zone' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'default_volume_type_name' | 'description' | 'error_message' | 'error_traceback' | 'external_network_id' | 'external_network_ref_name' | 'external_network_ref_uuid' | 'internal_network_id' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_type' | 'security_groups' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'skip_creation_of_default_router' | 'skip_creation_of_default_subnet' | 'state' | 'subnet_cidr' | 'url' | 'uuid';
 
@@ -55949,6 +56067,21 @@ export type MarketplaceProviderOfferingsExportOfferingResponses = {
 
 export type MarketplaceProviderOfferingsExportOfferingResponse = MarketplaceProviderOfferingsExportOfferingResponses[keyof MarketplaceProviderOfferingsExportOfferingResponses];
 
+export type MarketplaceProviderOfferingsGlauthTreeRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-provider-offerings/{uuid}/glauth_tree/';
+};
+
+export type MarketplaceProviderOfferingsGlauthTreeRetrieveResponses = {
+    200: GlauthTree;
+};
+
+export type MarketplaceProviderOfferingsGlauthTreeRetrieveResponse = MarketplaceProviderOfferingsGlauthTreeRetrieveResponses[keyof MarketplaceProviderOfferingsGlauthTreeRetrieveResponses];
+
 export type MarketplaceProviderOfferingsGlauthUsersConfigRetrieveData = {
     body?: never;
     path: {
@@ -58789,6 +58922,21 @@ export type MarketplaceProviderResourcesDetailsRetrieveResponses = {
 
 export type MarketplaceProviderResourcesDetailsRetrieveResponse = MarketplaceProviderResourcesDetailsRetrieveResponses[keyof MarketplaceProviderResourcesDetailsRetrieveResponses];
 
+export type MarketplaceProviderResourcesGlauthTreeRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-provider-resources/{uuid}/glauth_tree/';
+};
+
+export type MarketplaceProviderResourcesGlauthTreeRetrieveResponses = {
+    200: GlauthTree;
+};
+
+export type MarketplaceProviderResourcesGlauthTreeRetrieveResponse = MarketplaceProviderResourcesGlauthTreeRetrieveResponses[keyof MarketplaceProviderResourcesGlauthTreeRetrieveResponses];
+
 export type MarketplaceProviderResourcesGlauthUsersConfigRetrieveData = {
     body?: never;
     path: {
@@ -61202,6 +61350,21 @@ export type MarketplaceResourcesEstimateRenewalResponses = {
 };
 
 export type MarketplaceResourcesEstimateRenewalResponse = MarketplaceResourcesEstimateRenewalResponses[keyof MarketplaceResourcesEstimateRenewalResponses];
+
+export type MarketplaceResourcesGlauthTreeRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-resources/{uuid}/glauth_tree/';
+};
+
+export type MarketplaceResourcesGlauthTreeRetrieveResponses = {
+    200: GlauthTree;
+};
+
+export type MarketplaceResourcesGlauthTreeRetrieveResponse = MarketplaceResourcesGlauthTreeRetrieveResponses[keyof MarketplaceResourcesGlauthTreeRetrieveResponses];
 
 export type MarketplaceResourcesGlauthUsersConfigRetrieveData = {
     body?: never;
