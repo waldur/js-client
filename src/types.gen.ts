@@ -5213,6 +5213,7 @@ export type ConstanceSettings = {
     K8S_JOB_TIMEOUT?: number;
     ENABLE_STRICT_CHECK_ACCEPTING_INVITATION?: boolean;
     INVITATION_DISABLE_MULTIPLE_ROLES?: boolean;
+    ONLY_ONE_PROJECT_MANAGER?: boolean;
     DEFAULT_IDP?: DefaultidpEnum | BlankEnum;
     DOCS_URL?: string;
     SHORT_PAGE_TITLE?: string;
@@ -5510,6 +5511,7 @@ export type ConstanceSettingsRequest = {
     K8S_JOB_TIMEOUT?: number;
     ENABLE_STRICT_CHECK_ACCEPTING_INVITATION?: boolean;
     INVITATION_DISABLE_MULTIPLE_ROLES?: boolean;
+    ONLY_ONE_PROJECT_MANAGER?: boolean;
     DEFAULT_IDP?: DefaultidpEnum | BlankEnum;
     DOCS_URL?: string;
     SHORT_PAGE_TITLE?: string;
@@ -30974,6 +30976,7 @@ export type ConstanceSettingsRequestForm = {
     K8S_JOB_TIMEOUT?: number;
     ENABLE_STRICT_CHECK_ACCEPTING_INVITATION?: boolean;
     INVITATION_DISABLE_MULTIPLE_ROLES?: boolean;
+    ONLY_ONE_PROJECT_MANAGER?: boolean;
     DEFAULT_IDP?: DefaultidpEnum | BlankEnum;
     DOCS_URL?: string;
     SHORT_PAGE_TITLE?: string;
@@ -31271,6 +31274,7 @@ export type ConstanceSettingsRequestMultipart = {
     K8S_JOB_TIMEOUT?: number;
     ENABLE_STRICT_CHECK_ACCEPTING_INVITATION?: boolean;
     INVITATION_DISABLE_MULTIPLE_ROLES?: boolean;
+    ONLY_ONE_PROJECT_MANAGER?: boolean;
     DEFAULT_IDP?: DefaultidpEnum | BlankEnum;
     DOCS_URL?: string;
     SHORT_PAGE_TITLE?: string;
