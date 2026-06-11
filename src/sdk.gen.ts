@@ -27907,6 +27907,11 @@ export const personalAccessTokensAvailableBindingTargetsCount = <ThrowOnError ex
  * List available scopes for PAT creation
  *
  * Return permissions the current user can delegate to a PAT.
+ *
+ * Staff users can delegate any permission (they bypass UserRole checks).
+ * For other users only the permissions granted by their active roles are
+ * offered, plus SUPPORT.ACCESS for support users — mirroring what the
+ * create serializer would accept.
  */
 export const personalAccessTokensAvailableScopesList = <ThrowOnError extends boolean = false>(options?: Options<PersonalAccessTokensAvailableScopesListData, ThrowOnError>) => (options?.client ?? client).get<PersonalAccessTokensAvailableScopesListResponses, unknown, ThrowOnError>({
     security: [
