@@ -334,7 +334,9 @@ export type AgentEventSubscriptionWithConnection = {
     /**
      * List of observable object configurations
      */
-    readonly observable_objects: unknown;
+    readonly observable_objects: {
+        [key: string]: unknown;
+    };
     /**
      * RabbitMQ connection status for this subscription
      */
@@ -351,7 +353,9 @@ export type AgentIdentity = {
     readonly created_by: string | null;
     name: string;
     version?: string | null;
-    dependencies?: unknown;
+    dependencies?: {
+        [key: string]: unknown;
+    };
     /**
      * Example: '/etc/waldur/agent.yaml'
      */
@@ -373,7 +377,9 @@ export type AgentIdentityRequest = {
     offering: string;
     name: string;
     version?: string | null;
-    dependencies?: unknown;
+    dependencies?: {
+        [key: string]: unknown;
+    };
     /**
      * Example: '/etc/waldur/agent.yaml'
      */
@@ -464,7 +470,9 @@ export type AgentService = {
     name: string;
     mode?: string | null;
     state: AgentServiceState;
-    statistics?: unknown;
+    statistics?: {
+        [key: string]: unknown;
+    };
     readonly created: string;
     readonly modified: string;
     readonly processors: Array<NestedAgentProcessor>;
@@ -481,7 +489,9 @@ export type AgentServiceStatisticsRequest = {
     /**
      * Statistics data to be stored for the service
      */
-    statistics: unknown;
+    statistics: {
+        [key: string]: unknown;
+    };
 };
 
 export type AgentServiceStatus = {
@@ -773,13 +783,21 @@ export type AnonymousChatInteraction = {
     readonly uuid: string;
     readonly user_slug: string;
     readonly user_input: string;
-    readonly assistant_blocks: unknown;
-    readonly offering_uuids: unknown;
+    readonly assistant_blocks: {
+        [key: string]: unknown;
+    };
+    readonly offering_uuids: {
+        [key: string]: unknown;
+    };
     readonly result_count: number;
     readonly is_flagged: boolean;
     readonly severity: string;
-    readonly injection_categories: unknown;
-    readonly pii_categories: unknown;
+    readonly injection_categories: {
+        [key: string]: unknown;
+    };
+    readonly pii_categories: {
+        [key: string]: unknown;
+    };
     readonly action_taken: string;
     readonly warning: string;
     /**
@@ -869,7 +887,9 @@ export type Answer = {
     /**
      * Flexible answer storage for different question types
      */
-    answer_data?: unknown;
+    answer_data?: {
+        [key: string]: unknown;
+    };
     /**
      * Internal flag - this answer requires additional review
      */
@@ -882,7 +902,9 @@ export type Answer = {
 
 export type AnswerSubmitRequest = {
     question_uuid: string;
-    answer_data: unknown;
+    answer_data: {
+        [key: string]: unknown;
+    } | null;
 };
 
 export type AnswerSubmitResponse = {
@@ -1118,7 +1140,9 @@ export type ArrowConsumptionRecord = {
     /**
      * Raw consumption data for debugging
      */
-    readonly raw_data: unknown;
+    readonly raw_data: {
+        [key: string]: unknown;
+    };
     readonly created: string;
     readonly modified: string;
 };
@@ -1938,7 +1962,9 @@ export type Attribute = {
      * A value must be provided for the attribute.
      */
     required?: boolean;
-    default?: unknown;
+    default?: {
+        [key: string]: unknown;
+    } | null;
 };
 
 export type AttributeOption = {
@@ -1970,7 +1996,9 @@ export type AttributeRequest = {
      * A value must be provided for the attribute.
      */
     required?: boolean;
-    default?: unknown;
+    default?: {
+        [key: string]: unknown;
+    } | null;
 };
 
 export type AttributeSourceDetail = {
@@ -2675,7 +2703,9 @@ export type BackendResource = {
     readonly offering_name: string;
     readonly offering_url: string;
     backend_id?: string;
-    backend_metadata?: unknown;
+    backend_metadata?: {
+        [key: string]: unknown;
+    };
 };
 
 export type BackendResourceImportRequest = {
@@ -2714,7 +2744,9 @@ export type BackendResourceRequest = {
     project: string;
     offering: string;
     backend_id?: string;
-    backend_metadata?: unknown;
+    backend_metadata?: {
+        [key: string]: unknown;
+    };
 };
 
 export type BackendResourceRequestSetErredRequest = {
@@ -2923,7 +2955,9 @@ export type BookingResource = {
     /**
      * Public data used by specific plugin, such as storage mode for OpenStack.
      */
-    readonly offering_plugin_options: unknown;
+    readonly offering_plugin_options: {
+        [key: string]: unknown;
+    };
     readonly provider_name: string;
     readonly provider_uuid: string;
     readonly provider_slug: string;
@@ -3023,7 +3057,9 @@ export type BookingResource = {
     readonly endpoints: Array<NestedEndpoint>;
     readonly error_message: string;
     readonly error_traceback: string;
-    readonly options: unknown;
+    readonly options: {
+        [key: string]: unknown;
+    } | null;
     readonly available_actions: Array<string>;
     readonly last_sync: string;
     order_in_progress: OrderDetails | null;
@@ -3066,9 +3102,13 @@ export type BroadcastMessage = {
     readonly created: string;
     subject: string;
     body: string;
-    query: unknown;
+    query: {
+        [key: string]: unknown;
+    };
     readonly author_full_name: string;
-    readonly emails: unknown;
+    readonly emails: {
+        [key: string]: unknown;
+    };
     state: BroadcastMessageStateEnum;
     send_at?: string | null;
 };
@@ -3076,7 +3116,9 @@ export type BroadcastMessage = {
 export type BroadcastMessageRequest = {
     subject: string;
     body: string;
-    query: unknown;
+    query: {
+        [key: string]: unknown;
+    };
     send_at?: string | null;
 };
 
@@ -3167,7 +3209,9 @@ export type CoiDisclosureForm = {
     has_financial_interests?: boolean;
     readonly financial_interests: Array<CoiDisclosureFinancialInterest>;
     has_personal_relationships?: boolean;
-    personal_relationships?: unknown;
+    personal_relationships?: {
+        [key: string]: unknown;
+    };
     has_other_conflicts?: boolean;
     other_conflicts_description?: string;
     /**
@@ -3190,7 +3234,9 @@ export type CoiDisclosureFormRequest = {
     certification_statement?: string;
     has_financial_interests?: boolean;
     has_personal_relationships?: boolean;
-    personal_relationships?: unknown;
+    personal_relationships?: {
+        [key: string]: unknown;
+    };
     has_other_conflicts?: boolean;
     other_conflicts_description?: string;
     /**
@@ -3452,8 +3498,12 @@ export type CallComplianceOverviewProposalCompliance = {
 
 export type CallComplianceOverviewProposalReviewTrigger = {
     question: string;
-    answer: unknown;
-    trigger_value: unknown;
+    answer: {
+        [key: string]: unknown;
+    };
+    trigger_value: {
+        [key: string]: unknown;
+    };
     operator: string;
 };
 
@@ -3543,8 +3593,12 @@ export type CallResourceTemplate = {
     readonly url: string;
     name: string;
     description?: string;
-    attributes?: unknown;
-    limits?: unknown;
+    attributes?: {
+        [key: string]: unknown;
+    };
+    limits?: {
+        [key: string]: unknown;
+    };
     /**
      * If True, every proposal must include this resource type
      */
@@ -3561,8 +3615,12 @@ export type CallResourceTemplate = {
 export type CallResourceTemplateRequest = {
     name: string;
     description?: string;
-    attributes?: unknown;
-    limits?: unknown;
+    attributes?: {
+        [key: string]: unknown;
+    };
+    limits?: {
+        [key: string]: unknown;
+    };
     /**
      * If True, every proposal must include this resource type
      */
@@ -3869,8 +3927,12 @@ export type CascadeStep = {
     label: string;
     type: CascadeStepTypeEnum;
     depends_on?: string;
-    choices?: unknown;
-    choices_map?: unknown;
+    choices?: {
+        [key: string]: unknown;
+    };
+    choices_map?: {
+        [key: string]: unknown;
+    };
 };
 
 export type CascadeStepRequest = {
@@ -3878,8 +3940,12 @@ export type CascadeStepRequest = {
     label: string;
     type: CascadeStepTypeEnum;
     depends_on?: string;
-    choices?: unknown;
-    choices_map?: unknown;
+    choices?: {
+        [key: string]: unknown;
+    };
+    choices_map?: {
+        [key: string]: unknown;
+    };
 };
 
 export type CascadeStepTypeEnum = 'select_string' | 'select_string_multi';
@@ -4198,7 +4264,9 @@ export type CeleryTask = {
     /**
      * Positional arguments passed to the task
      */
-    readonly args: Array<unknown>;
+    readonly args: Array<{
+        [key: string]: unknown;
+    }>;
     /**
      * Keyword arguments passed to the task
      */
@@ -5101,7 +5169,9 @@ export type ConflictOfInterest = {
     /**
      * Structured evidence: {"papers": [...], "affiliation_overlap": {...}}
      */
-    readonly evidence_data: unknown;
+    readonly evidence_data: {
+        [key: string]: unknown;
+    };
     status?: ConflictOfInterestStatusEnum;
     readonly status_display: string;
     readonly reviewed_by: string | null;
@@ -5310,6 +5380,7 @@ export type ConstanceSettings = {
     SMAX_CREATION_SOURCE_NAME?: string;
     SMAX_REQUESTS_OFFERING?: string;
     SMAX_VERIFY_SSL?: boolean;
+    SMAX_CERTIFICATE?: string;
     SMAX_WEBHOOK_SHARED_SECRET?: string;
     ENABLE_MOCK_SERVICE_ACCOUNT_BACKEND?: boolean;
     ENABLE_MOCK_COURSE_ACCOUNT_BACKEND?: boolean;
@@ -5608,6 +5679,7 @@ export type ConstanceSettingsRequest = {
     SMAX_CREATION_SOURCE_NAME?: string;
     SMAX_REQUESTS_OFFERING?: string;
     SMAX_VERIFY_SSL?: boolean;
+    SMAX_CERTIFICATE?: string;
     SMAX_WEBHOOK_SHARED_SECRET?: string;
     ENABLE_MOCK_SERVICE_ACCOUNT_BACKEND?: boolean;
     ENABLE_MOCK_COURSE_ACCOUNT_BACKEND?: boolean;
@@ -6295,12 +6367,18 @@ export type Customer = {
      * Number of extra days after project end date before resources are terminated
      */
     grace_period_days?: number | null;
-    user_email_patterns?: unknown;
-    user_affiliations?: unknown;
+    user_email_patterns?: {
+        [key: string]: unknown;
+    };
+    user_affiliations?: {
+        [key: string]: unknown;
+    };
     /**
      * List of allowed identity sources (identity providers).
      */
-    user_identity_sources?: unknown;
+    user_identity_sources?: {
+        [key: string]: unknown;
+    };
     /**
      * Affiliations offered to project creators of this organization.
      */
@@ -6426,7 +6504,9 @@ export type CustomerComponentUsagePolicy = {
     /**
      * Fields for saving actions extra data. Keys are name of actions.
      */
-    options?: unknown;
+    options?: {
+        [key: string]: unknown;
+    };
     readonly affected_resources_count: number;
     component_limits_set: Array<NestedCustomerUsagePolicyComponent>;
 };
@@ -6437,7 +6517,9 @@ export type CustomerComponentUsagePolicyRequest = {
     /**
      * Fields for saving actions extra data. Keys are name of actions.
      */
-    options?: unknown;
+    options?: {
+        [key: string]: unknown;
+    };
     component_limits_set: Array<NestedCustomerUsagePolicyComponentRequest>;
 };
 
@@ -6536,7 +6618,9 @@ export type CustomerEstimatedCostPolicy = {
     /**
      * Fields for saving actions extra data. Keys are name of actions.
      */
-    options?: unknown;
+    options?: {
+        [key: string]: unknown;
+    };
     readonly affected_resources_count: number;
     limit_cost: number;
     period?: PolicyPeriodEnum;
@@ -6551,7 +6635,9 @@ export type CustomerEstimatedCostPolicyRequest = {
     /**
      * Fields for saving actions extra data. Keys are name of actions.
      */
-    options?: unknown;
+    options?: {
+        [key: string]: unknown;
+    };
     limit_cost: number;
     period?: PolicyPeriodEnum;
 };
@@ -6701,12 +6787,18 @@ export type CustomerRequest = {
      * Number of extra days after project end date before resources are terminated
      */
     grace_period_days?: number | null;
-    user_email_patterns?: unknown;
-    user_affiliations?: unknown;
+    user_email_patterns?: {
+        [key: string]: unknown;
+    };
+    user_affiliations?: {
+        [key: string]: unknown;
+    };
     /**
      * List of allowed identity sources (identity providers).
      */
-    user_identity_sources?: unknown;
+    user_identity_sources?: {
+        [key: string]: unknown;
+    };
     name: string;
     /**
      * URL-friendly identifier. Only editable by staff users.
@@ -7624,7 +7716,9 @@ export type DiskFormatEnum = 'qcow2' | 'raw' | 'vhd' | 'vmdk' | 'vdi' | 'iso' | 
 export type DryRun = {
     readonly url: string;
     readonly uuid: string;
-    readonly order_attributes: unknown;
+    readonly order_attributes: {
+        [key: string]: unknown;
+    };
     readonly order_type: string;
     order_offering?: string | null;
     state: DryRunStateEnum;
@@ -7636,7 +7730,9 @@ export type DryRun = {
 export type DryRunRequest = {
     plan?: string | null;
     type?: DryRunTypeEnum;
-    attributes?: unknown;
+    attributes?: {
+        [key: string]: unknown;
+    };
     order_offering?: string | null;
 };
 
@@ -7771,7 +7867,9 @@ export type Event = {
     readonly created: string;
     event_type: string;
     message: string;
-    readonly context: unknown;
+    readonly context: {
+        [key: string]: unknown;
+    };
 };
 
 export type EventCount = {
@@ -7809,7 +7907,9 @@ export type EventSubscription = {
     /**
      * List of objects to observe. Each item must have 'object_type' (one of: order, user_role, resource, offering_user, importable_resources, service_account, course_account, resource_periodic_limits) and optionally 'object_id' (integer). Example: [{"object_type": "resource"}, {"object_type": "order", "object_id": 123}]
      */
-    observable_objects?: unknown;
+    observable_objects?: {
+        [key: string]: unknown;
+    };
     readonly created: string;
     readonly modified: string;
     /**
@@ -7868,7 +7968,9 @@ export type EventSubscriptionRequest = {
     /**
      * List of objects to observe. Each item must have 'object_type' (one of: order, user_role, resource, offering_user, importable_resources, service_account, course_account, resource_periodic_limits) and optionally 'object_id' (integer). Example: [{"object_type": "resource"}, {"object_type": "order", "object_id": 123}]
      */
-    observable_objects?: unknown;
+    observable_objects?: {
+        [key: string]: unknown;
+    };
 };
 
 export type EventTypesEnum = 'access_subnet_creation_succeeded' | 'access_subnet_deletion_succeeded' | 'access_subnet_update_succeeded' | 'allowed_offerings_have_been_updated' | 'attachment_created' | 'attachment_deleted' | 'attachment_updated' | 'auth_logged_in_with_saml2' | 'auth_logged_in_with_username' | 'auth_logged_in_with_oauth' | 'auth_logged_out' | 'auth_logged_out_with_saml2' | 'auth_login_failed_with_username' | 'block_creation_of_new_resources' | 'block_modification_of_existing_resources' | 'call_document_added' | 'call_document_removed' | 'create_of_credit_by_staff' | 'create_of_project_credit_by_staff' | 'custom_notification' | 'customer_creation_succeeded' | 'customer_deletion_succeeded' | 'customer_update_succeeded' | 'customer_permission_review_created' | 'customer_permission_review_closed' | 'droplet_resize_scheduled' | 'droplet_resize_succeeded' | 'freeipa_profile_created' | 'freeipa_profile_deleted' | 'freeipa_profile_disabled' | 'freeipa_profile_enabled' | 'invoice_canceled' | 'invoice_created' | 'invoice_item_created' | 'invoice_item_deleted' | 'invoice_item_updated' | 'invoice_paid' | 'issue_creation_succeeded' | 'issue_deletion_succeeded' | 'issue_update_succeeded' | 'marketplace_offering_component_created' | 'marketplace_offering_component_deleted' | 'marketplace_offering_component_updated' | 'marketplace_offering_created' | 'marketplace_offering_updated' | 'marketplace_offering_options_updated' | 'marketplace_offering_resource_options_updated' | 'marketplace_offering_user_created' | 'marketplace_offering_user_updated' | 'marketplace_offering_user_deleted' | 'marketplace_offering_user_restriction_updated' | 'marketplace_order_approved' | 'marketplace_order_completed' | 'marketplace_order_created' | 'marketplace_order_failed' | 'marketplace_order_rejected' | 'marketplace_order_terminated' | 'marketplace_order_unlinked' | 'marketplace_plan_archived' | 'marketplace_plan_component_current_price_updated' | 'marketplace_plan_component_future_price_updated' | 'marketplace_plan_component_quota_updated' | 'marketplace_plan_created' | 'marketplace_plan_updated' | 'marketplace_plan_deleted' | 'marketplace_resource_create_canceled' | 'marketplace_resource_create_failed' | 'marketplace_resource_create_requested' | 'marketplace_resource_create_succeeded' | 'marketplace_resource_downscaled' | 'marketplace_resource_erred_on_backend' | 'marketplace_resource_paused' | 'marketplace_resource_terminate_canceled' | 'marketplace_resource_terminate_failed' | 'marketplace_resource_terminate_requested' | 'marketplace_resource_terminate_succeeded' | 'marketplace_resource_unlinked' | 'marketplace_resource_update_canceled' | 'marketplace_resource_update_end_date_succeeded' | 'marketplace_resource_update_failed' | 'marketplace_resource_update_limits_failed' | 'marketplace_resource_update_limits_succeeded' | 'marketplace_resource_update_requested' | 'marketplace_resource_update_succeeded' | 'marketplace_resource_limit_change_request_created' | 'marketplace_resource_limit_change_request_approved' | 'marketplace_resource_limit_change_request_rejected' | 'notify_external_user' | 'notify_organization_owners' | 'notify_project_team' | 'openstack_floating_ip_attached' | 'openstack_floating_ip_connected' | 'openstack_floating_ip_description_updated' | 'openstack_floating_ip_detached' | 'openstack_floating_ip_disconnected' | 'openstack_instance_security_groups_changed' | 'openstack_network_cleaned' | 'openstack_network_created' | 'openstack_network_deleted' | 'openstack_network_imported' | 'openstack_network_pulled' | 'openstack_network_updated' | 'openstack_load_balancer_created' | 'openstack_load_balancer_updated' | 'openstack_load_balancer_deleted' | 'openstack_load_balancer_security_groups_changed' | 'openstack_listener_created' | 'openstack_listener_updated' | 'openstack_listener_deleted' | 'openstack_pool_created' | 'openstack_pool_updated' | 'openstack_pool_deleted' | 'openstack_pool_member_created' | 'openstack_pool_member_updated' | 'openstack_pool_member_deleted' | 'openstack_port_cleaned' | 'openstack_port_created' | 'openstack_port_deleted' | 'openstack_port_imported' | 'openstack_port_pulled' | 'openstack_port_updated' | 'openstack_port_security_enabled' | 'openstack_port_security_disabled' | 'openstack_port_allowed_address_pairs_changed' | 'openstack_port_security_groups_changed' | 'openstack_rbac_policy_created' | 'openstack_rbac_policy_deleted' | 'openstack_router_interface_added' | 'openstack_router_interface_removed' | 'openstack_router_updated' | 'openstack_subnet_host_routes_changed' | 'openstack_security_group_cleaned' | 'openstack_security_group_created' | 'openstack_security_group_deleted' | 'openstack_security_group_imported' | 'openstack_security_group_pulled' | 'openstack_security_group_rule_cleaned' | 'openstack_security_group_rule_created' | 'openstack_security_group_rule_deleted' | 'openstack_security_group_rule_imported' | 'openstack_security_group_rule_updated' | 'openstack_security_group_rules_changed' | 'openstack_security_group_updated' | 'openstack_security_group_added_remotely' | 'openstack_security_group_removed_remotely' | 'openstack_security_group_added_locally' | 'openstack_security_group_removed_locally' | 'openstack_server_group_cleaned' | 'openstack_server_group_created' | 'openstack_server_group_deleted' | 'openstack_server_group_imported' | 'openstack_server_group_pulled' | 'openstack_subnet_cleaned' | 'openstack_subnet_created' | 'openstack_subnet_deleted' | 'openstack_subnet_imported' | 'openstack_subnet_pulled' | 'openstack_subnet_updated' | 'openstack_tenant_quota_limit_updated' | 'payment_added' | 'payment_created' | 'payment_removed' | 'policy_notification' | 'project_creation_succeeded' | 'project_deletion_succeeded' | 'project_deletion_triggered' | 'project_update_request_approved' | 'project_update_request_created' | 'project_update_request_rejected' | 'project_end_date_change_request_approved' | 'project_end_date_change_request_created' | 'project_end_date_change_request_rejected' | 'project_update_succeeded' | 'project_permission_review_created' | 'project_permission_review_closed' | 'proposal_canceled' | 'proposal_document_added' | 'proposal_document_removed' | 'proposal_workflow_advanced' | 'query_executed' | 'reduction_of_customer_credit' | 'reduction_of_customer_credit_due_to_minimal_consumption' | 'reduction_of_customer_expected_consumption' | 'reduction_of_project_credit' | 'reduction_of_project_credit_due_to_minimal_consumption' | 'reduction_of_project_expected_consumption' | 'request_downscaling' | 'request_pausing' | 'request_slurm_resource_downscaling' | 'request_slurm_resource_pausing' | 'reset_downscaling' | 'reset_member_restriction' | 'reset_pausing' | 'resource_assign_floating_ip_failed' | 'resource_assign_floating_ip_scheduled' | 'resource_assign_floating_ip_succeeded' | 'resource_attach_failed' | 'resource_attach_scheduled' | 'resource_attach_succeeded' | 'resource_backup_creation_failed' | 'resource_backup_creation_scheduled' | 'resource_backup_creation_succeeded' | 'resource_backup_deletion_failed' | 'resource_backup_deletion_scheduled' | 'resource_backup_deletion_succeeded' | 'resource_backup_restoration_failed' | 'resource_backup_restoration_scheduled' | 'resource_backup_restoration_succeeded' | 'resource_change_flavor_failed' | 'resource_change_flavor_scheduled' | 'resource_change_flavor_succeeded' | 'resource_creation_failed' | 'resource_creation_scheduled' | 'resource_creation_succeeded' | 'resource_deletion_failed' | 'resource_deletion_scheduled' | 'resource_deletion_succeeded' | 'resource_detach_failed' | 'resource_detach_scheduled' | 'resource_detach_succeeded' | 'resource_extend_failed' | 'resource_extend_scheduled' | 'resource_extend_succeeded' | 'resource_extend_volume_failed' | 'resource_extend_volume_scheduled' | 'resource_extend_volume_succeeded' | 'resource_import_succeeded' | 'resource_pull_failed' | 'resource_pull_scheduled' | 'resource_pull_succeeded' | 'resource_rescue_failed' | 'resource_rescue_scheduled' | 'resource_rescue_succeeded' | 'resource_restart_failed' | 'resource_restart_scheduled' | 'resource_restart_succeeded' | 'resource_retype_failed' | 'resource_retype_scheduled' | 'resource_retype_succeeded' | 'resource_robot_account_created' | 'resource_robot_account_deleted' | 'resource_robot_account_state_changed' | 'resource_robot_account_updated' | 'resource_start_failed' | 'resource_start_scheduled' | 'resource_start_succeeded' | 'resource_stop_failed' | 'resource_stop_scheduled' | 'resource_stop_succeeded' | 'resource_unassign_floating_ip_failed' | 'resource_unassign_floating_ip_scheduled' | 'resource_unassign_floating_ip_succeeded' | 'resource_unrescue_failed' | 'resource_unrescue_scheduled' | 'resource_unrescue_succeeded' | 'resource_update_allowed_address_pairs_failed' | 'resource_update_allowed_address_pairs_scheduled' | 'resource_update_allowed_address_pairs_succeeded' | 'resource_update_floating_ips_failed' | 'resource_update_floating_ips_scheduled' | 'resource_update_floating_ips_succeeded' | 'resource_update_ports_failed' | 'resource_update_ports_scheduled' | 'resource_update_ports_succeeded' | 'resource_update_security_groups_failed' | 'resource_update_security_groups_scheduled' | 'resource_update_security_groups_succeeded' | 'resource_update_succeeded' | 'restrict_members' | 'review_canceled' | 'role_granted' | 'role_revoked' | 'role_updated' | 'roll_back_customer_credit' | 'roll_back_project_credit' | 'service_account_created' | 'service_account_deleted' | 'service_account_updated' | 'set_to_zero_overdue_credit' | 'slurm_policy_evaluation' | 'ssh_key_creation_succeeded' | 'ssh_key_deletion_succeeded' | 'terminate_resources' | 'token_created' | 'token_lifetime_updated' | 'update_of_credit_by_staff' | 'update_of_project_credit_by_staff' | 'automatic_credit_adjustment' | 'user_activated' | 'user_creation_succeeded' | 'user_data_accessed' | 'user_deactivated' | 'user_deactivated_no_roles' | 'user_deletion_succeeded' | 'user_details_update_succeeded' | 'user_has_been_created_by_staff' | 'user_password_updated' | 'user_password_updated_by_staff' | 'user_password_removed_by_staff' | 'user_update_succeeded' | 'user_group_invitation_updated' | 'user_invitation_updated' | 'user_invitation_deleted' | 'terms_of_service_consent_granted' | 'terms_of_service_consent_revoked' | 'chat_session_accessed' | 'chat_thread_accessed' | 'chat_injection_detected' | 'chat_pii_detected' | 'chat_feedback_submitted' | 'onboarding_verification_deleted' | 'onboarding_verification_deleted_by_task' | 'pat_created' | 'pat_revoked' | 'pat_rotated' | 'pat_expired' | 'pat_used_from_new_ip';
@@ -7977,8 +8079,12 @@ export type ExportOfferingData = {
     longitude: number | null;
     access_url: string;
     paused_reason: string;
-    attributes?: unknown;
-    options?: unknown;
+    attributes?: {
+        [key: string]: unknown;
+    };
+    options?: {
+        [key: string]: unknown;
+    };
 };
 
 export type ExportOfferingDataRequest = {
@@ -7998,8 +8104,12 @@ export type ExportOfferingDataRequest = {
     longitude: number | null;
     access_url: string;
     paused_reason: string;
-    attributes?: unknown;
-    options?: unknown;
+    attributes?: {
+        [key: string]: unknown;
+    };
+    options?: {
+        [key: string]: unknown;
+    };
 };
 
 export type ExportOrganizationGroupData = {
@@ -8174,8 +8284,12 @@ export type ExternalSubnet = {
     gateway_ip?: string | string | null;
     ip_version?: number;
     enable_dhcp?: boolean;
-    allocation_pools?: unknown;
-    dns_nameservers?: unknown;
+    allocation_pools?: {
+        [key: string]: unknown;
+    };
+    dns_nameservers?: {
+        [key: string]: unknown;
+    };
     /**
      * Public CIDR mapped to this subnet (for carrier-grade NAT overlay)
      */
@@ -8315,8 +8429,12 @@ export type FilterCheckResult = {
     name: string;
     configured: boolean;
     matched: boolean;
-    user_value?: unknown;
-    rule_value?: unknown;
+    user_value?: {
+        [key: string]: unknown;
+    } | null;
+    rule_value?: {
+        [key: string]: unknown;
+    } | null;
     reason: string;
 };
 
@@ -8399,7 +8517,9 @@ export type FirecrestJob = {
     /**
      * Job output
      */
-    readonly report: unknown;
+    readonly report: {
+        [key: string]: unknown;
+    } | null;
 };
 
 export type FirecrestJobRequest = {
@@ -8637,7 +8757,9 @@ export type GoogleCredentials = {
     /**
      * List of allowed domains for offering endpoints. Only staff can modify this field.
      */
-    allowed_domains?: unknown;
+    allowed_domains?: {
+        [key: string]: unknown;
+    };
     readonly calendar_token: string;
     readonly calendar_refresh_token: string;
     readonly google_auth_url: string;
@@ -8716,12 +8838,18 @@ export type GroupInvitation = {
      * UUID of the project role to grant if auto_create_project is enabled
      */
     project_role?: string | null;
-    user_affiliations?: unknown;
-    user_email_patterns?: unknown;
+    user_affiliations?: {
+        [key: string]: unknown;
+    };
+    user_email_patterns?: {
+        [key: string]: unknown;
+    };
     /**
      * List of allowed identity sources (identity providers).
      */
-    user_identity_sources?: unknown;
+    user_identity_sources?: {
+        [key: string]: unknown;
+    };
     /**
      * Image URL of the invitation scope (Customer or Project)
      */
@@ -8769,12 +8897,18 @@ export type GroupInvitationRequest = {
      * UUID of the project role to grant if auto_create_project is enabled
      */
     project_role?: string | null;
-    user_affiliations?: unknown;
-    user_email_patterns?: unknown;
+    user_affiliations?: {
+        [key: string]: unknown;
+    };
+    user_email_patterns?: {
+        [key: string]: unknown;
+    };
     /**
      * List of allowed identity sources (identity providers).
      */
-    user_identity_sources?: unknown;
+    user_identity_sources?: {
+        [key: string]: unknown;
+    };
     /**
      * Custom description text displayed to users viewing this invitation.
      */
@@ -8818,12 +8952,18 @@ export type GroupInvitationUpdate = {
      * UUID of the project role to grant if auto_create_project is enabled
      */
     project_role?: string | null;
-    user_affiliations?: unknown;
-    user_email_patterns?: unknown;
+    user_affiliations?: {
+        [key: string]: unknown;
+    };
+    user_email_patterns?: {
+        [key: string]: unknown;
+    };
     /**
      * List of allowed identity sources (identity providers).
      */
-    user_identity_sources?: unknown;
+    user_identity_sources?: {
+        [key: string]: unknown;
+    };
     /**
      * Custom description text displayed to users viewing this invitation.
      */
@@ -8867,12 +9007,18 @@ export type GroupInvitationUpdateRequest = {
      * UUID of the project role to grant if auto_create_project is enabled
      */
     project_role?: string | null;
-    user_affiliations?: unknown;
-    user_email_patterns?: unknown;
+    user_affiliations?: {
+        [key: string]: unknown;
+    };
+    user_email_patterns?: {
+        [key: string]: unknown;
+    };
     /**
      * List of allowed identity sources (identity providers).
      */
-    user_identity_sources?: unknown;
+    user_identity_sources?: {
+        [key: string]: unknown;
+    };
     /**
      * Custom description text displayed to users viewing this invitation.
      */
@@ -9131,7 +9277,9 @@ export type IdentityProvider = {
      * The endpoint for user details management.
      */
     management_url?: string;
-    protected_fields?: unknown;
+    protected_fields?: {
+        [key: string]: unknown;
+    };
     /**
      * Space-separated list of scopes to request during authentication.
      */
@@ -9147,7 +9295,9 @@ export type IdentityProvider = {
     /**
      * A JSON object mapping Waldur User model fields to OIDC claims. Example: {"first_name": "given_name", "last_name": "family_name", "email": "email"}
      */
-    attribute_mapping?: unknown;
+    attribute_mapping?: {
+        [key: string]: unknown;
+    };
     /**
      * Space-separated list of extra fields to persist.
      */
@@ -9155,7 +9305,9 @@ export type IdentityProvider = {
     /**
      * List of allowed redirect URLs for OAuth authentication. URLs must be exact matches (origin only: scheme + domain + port). HTTPS required except for localhost. No wildcards, paths, query params, or fragments. Example: ["https://portal1.example.com", "https://portal2.example.com:8443"]. If empty, falls back to HOMEPORT_URL setting.
      */
-    allowed_redirects?: unknown;
+    allowed_redirects?: {
+        [key: string]: unknown;
+    };
 };
 
 export type IdentityProviderRequest = {
@@ -9184,7 +9336,9 @@ export type IdentityProviderRequest = {
      * The endpoint for user details management.
      */
     management_url?: string;
-    protected_fields?: unknown;
+    protected_fields?: {
+        [key: string]: unknown;
+    };
     /**
      * Space-separated list of scopes to request during authentication.
      */
@@ -9200,7 +9354,9 @@ export type IdentityProviderRequest = {
     /**
      * A JSON object mapping Waldur User model fields to OIDC claims. Example: {"first_name": "given_name", "last_name": "family_name", "email": "email"}
      */
-    attribute_mapping?: unknown;
+    attribute_mapping?: {
+        [key: string]: unknown;
+    };
     /**
      * Space-separated list of extra fields to persist.
      */
@@ -9208,7 +9364,9 @@ export type IdentityProviderRequest = {
     /**
      * List of allowed redirect URLs for OAuth authentication. URLs must be exact matches (origin only: scheme + domain + port). HTTPS required except for localhost. No wildcards, paths, query params, or fragments. Example: ["https://portal1.example.com", "https://portal2.example.com:8443"]. If empty, falls back to HOMEPORT_URL setting.
      */
-    allowed_redirects?: unknown;
+    allowed_redirects?: {
+        [key: string]: unknown;
+    };
 };
 
 export type ImageCreateRequest = {
@@ -9287,7 +9445,9 @@ export type ImportResourceRequest = {
      */
     project: string;
     plan?: string;
-    additional_details?: unknown;
+    additional_details?: {
+        [key: string]: unknown;
+    } | null;
 };
 
 export type ImportUsageError = {
@@ -9737,7 +9897,9 @@ export type InvoiceItemDetail = {
     /**
      * Stores data about scope
      */
-    details?: unknown;
+    details?: {
+        [key: string]: unknown;
+    };
     readonly offering_uuid: string;
     readonly offering_name: string | null;
     readonly offering_component_type: string | null;
@@ -9909,7 +10071,9 @@ export type Issue = {
     /**
      * Internal processing log for debugging order lifecycle events. Visible only to staff.
      */
-    readonly processing_log?: unknown;
+    readonly processing_log?: {
+        [key: string]: unknown;
+    };
     /**
      * Return order UUID if the issue's resource is an Order.
      */
@@ -10611,7 +10775,9 @@ export type ManagedProject = {
     /**
      * Details of the project as provided by the remote OpenPortal.
      */
-    readonly details: unknown;
+    readonly details: {
+        [key: string]: unknown;
+    };
     project: string;
     project_data: BasicProject;
     project_template: string;
@@ -10783,7 +10949,9 @@ export type MarketplaceServiceProviderUser = {
     /**
      * Person's affiliation within organization such as student, faculty, staff.
      */
-    affiliations?: unknown;
+    affiliations?: {
+        [key: string]: unknown;
+    };
     /**
      * Active
      *
@@ -10809,7 +10977,9 @@ export type MarketplaceServiceProviderUser = {
     /**
      * List of all citizenships (ISO 3166-1 alpha-2 codes)
      */
-    nationalities?: unknown;
+    nationalities?: {
+        [key: string]: unknown;
+    };
     organization_country?: string;
     /**
      * SCHAC URN (e.g., urn:schac:homeOrganizationType:int:university)
@@ -10822,7 +10992,9 @@ export type MarketplaceServiceProviderUser = {
     /**
      * REFEDS assurance profile URIs from identity provider
      */
-    eduperson_assurance?: unknown;
+    eduperson_assurance?: {
+        [key: string]: unknown;
+    };
     civil_number?: string | null;
     birth_date?: string | null;
     /**
@@ -10834,7 +11006,9 @@ export type MarketplaceServiceProviderUser = {
     /**
      * List of ISDs that have asserted this user exists. User is deactivated when this becomes empty.
      */
-    active_isds?: unknown;
+    active_isds?: {
+        [key: string]: unknown;
+    };
 };
 
 export type MatchingAlgorithm = 'minmax' | 'fairflow' | 'hungarian';
@@ -11717,7 +11891,9 @@ export type MergedSecretOptions = {
     /**
      * Script environment variables
      */
-    environ?: unknown;
+    environ?: {
+        [key: string]: unknown;
+    };
     /**
      * Script for resource creation
      */
@@ -11880,7 +12056,9 @@ export type MergedSecretOptionsRequest = {
     /**
      * Script environment variables
      */
-    environ?: unknown;
+    environ?: {
+        [key: string]: unknown;
+    };
     /**
      * Script for resource creation
      */
@@ -12025,8 +12203,12 @@ export type Message = {
     readonly output_tokens: number | null;
     readonly is_flagged?: boolean;
     severity?: InjectionSeverityEnum;
-    readonly injection_categories?: unknown;
-    readonly pii_categories?: unknown;
+    readonly injection_categories?: {
+        [key: string]: unknown;
+    };
+    readonly pii_categories?: {
+        [key: string]: unknown;
+    };
     action_taken?: ActionTakenEnum;
     /**
      * User feedback: True=thumbs up, False=thumbs down, None=no feedback.
@@ -12247,7 +12429,9 @@ export type NestedAgentService = {
     name: string;
     mode?: string | null;
     state: AgentServiceState;
-    statistics?: unknown;
+    statistics?: {
+        [key: string]: unknown;
+    };
     readonly created: string;
     readonly modified: string;
 };
@@ -12255,7 +12439,9 @@ export type NestedAgentService = {
 export type NestedAgentServiceRequest = {
     name: string;
     mode?: string | null;
-    statistics?: unknown;
+    statistics?: {
+        [key: string]: unknown;
+    };
 };
 
 export type NestedAttribute = {
@@ -12268,7 +12454,9 @@ export type NestedAttribute = {
      * A value must be provided for the attribute.
      */
     required?: boolean;
-    default?: unknown;
+    default?: {
+        [key: string]: unknown;
+    } | null;
 };
 
 export type NestedAttributeOption = {
@@ -12295,7 +12483,9 @@ export type NestedAttributeRequest = {
      * A value must be provided for the attribute.
      */
     required?: boolean;
-    default?: unknown;
+    default?: {
+        [key: string]: unknown;
+    } | null;
 };
 
 export type NestedCampaign = {
@@ -12742,7 +12932,9 @@ export type NestedRequestedOffering = {
     readonly category_uuid: string;
     readonly category_name: string;
     readonly call_managing_organisation: string;
-    attributes?: unknown;
+    attributes?: {
+        [key: string]: unknown;
+    };
     plan?: string | null;
     plan_details: BasePublicPlan;
     options: OfferingOptions;
@@ -12752,7 +12944,9 @@ export type NestedRequestedOffering = {
 
 export type NestedRequestedOfferingRequest = {
     offering: string;
-    attributes?: unknown;
+    attributes?: {
+        [key: string]: unknown;
+    };
     plan?: string | null;
 };
 
@@ -12893,11 +13087,15 @@ export type NestedSoftwareCatalog = {
     /**
      * List of enabled CPU families: ['x86_64', 'aarch64']
      */
-    enabled_cpu_family?: unknown;
+    enabled_cpu_family?: {
+        [key: string]: unknown;
+    };
     /**
      * List of enabled CPU microarchitectures: ['generic', 'zen3']
      */
-    enabled_cpu_microarchitectures?: unknown;
+    enabled_cpu_microarchitectures?: {
+        [key: string]: unknown;
+    };
     readonly package_count: number;
     partition: PartitionSummary | null;
 };
@@ -12906,11 +13104,15 @@ export type NestedSoftwareCatalogRequest = {
     /**
      * List of enabled CPU families: ['x86_64', 'aarch64']
      */
-    enabled_cpu_family?: unknown;
+    enabled_cpu_family?: {
+        [key: string]: unknown;
+    };
     /**
      * List of enabled CPU microarchitectures: ['generic', 'zen3']
      */
-    enabled_cpu_microarchitectures?: unknown;
+    enabled_cpu_microarchitectures?: {
+        [key: string]: unknown;
+    };
 };
 
 export type NestedSoftwareTarget = {
@@ -12934,11 +13136,15 @@ export type NestedSoftwareTarget = {
     /**
      * Target-specific metadata (build options, system requirements, etc.)
      */
-    metadata?: unknown;
+    metadata?: {
+        [key: string]: unknown;
+    };
     /**
      * List of GPU architectures this target supports (e.g., ['nvidia/cc70', 'nvidia/cc90'])
      */
-    gpu_architectures?: unknown;
+    gpu_architectures?: {
+        [key: string]: unknown;
+    };
 };
 
 export type NestedSoftwareTargetRequest = {
@@ -12961,11 +13167,15 @@ export type NestedSoftwareTargetRequest = {
     /**
      * Target-specific metadata (build options, system requirements, etc.)
      */
-    metadata?: unknown;
+    metadata?: {
+        [key: string]: unknown;
+    };
     /**
      * List of GPU architectures this target supports (e.g., ['nvidia/cc70', 'nvidia/cc90'])
      */
-    gpu_architectures?: unknown;
+    gpu_architectures?: {
+        [key: string]: unknown;
+    };
 };
 
 export type NestedSoftwareVersion = {
@@ -13201,7 +13411,9 @@ export type Offering = {
     readonly parent_description: string | null;
     readonly parent_uuid: string | null;
     readonly parent_name: string | null;
-    backend_metadata?: unknown;
+    backend_metadata?: {
+        [key: string]: unknown;
+    };
     readonly has_compliance_requirements: boolean;
     /**
      * Classify offering components by billing type.
@@ -13224,11 +13436,15 @@ export type OfferingBackendIdRulesUpdateRequest = {
     /**
      * Validation rules for resource backend_id: format regex and uniqueness scope.
      */
-    backend_id_rules?: unknown;
+    backend_id_rules?: {
+        [key: string]: unknown;
+    };
 };
 
 export type OfferingBackendMetadataRequest = {
-    backend_metadata?: unknown;
+    backend_metadata?: {
+        [key: string]: unknown;
+    };
 };
 
 export type OfferingComplianceChecklistUpdateRequest = {
@@ -13421,7 +13637,9 @@ export type OfferingCreateRequest = {
     access_url?: string;
     customer?: string | null;
     category: string;
-    attributes?: unknown;
+    attributes?: {
+        [key: string]: unknown;
+    };
     options?: OfferingOptionsRequest;
     resource_options?: OfferingOptionsRequest;
     components?: Array<OfferingComponentRequest>;
@@ -13451,9 +13669,13 @@ export type OfferingCreateRequest = {
     /**
      * Validation rules for resource backend_id: format regex and uniqueness scope.
      */
-    backend_id_rules?: unknown;
+    backend_id_rules?: {
+        [key: string]: unknown;
+    };
     image?: Blob | File | null;
-    backend_metadata?: unknown;
+    backend_metadata?: {
+        [key: string]: unknown;
+    };
     compliance_checklist?: string | null;
     offering_group?: string | null;
     limits?: {
@@ -13480,7 +13702,9 @@ export type OfferingEstimatedCostPolicy = {
     /**
      * Fields for saving actions extra data. Keys are name of actions.
      */
-    options?: unknown;
+    options?: {
+        [key: string]: unknown;
+    };
     readonly affected_resources_count: number;
     limit_cost: number;
     period?: PolicyPeriodEnum;
@@ -13498,7 +13722,9 @@ export type OfferingEstimatedCostPolicyRequest = {
     /**
      * Fields for saving actions extra data. Keys are name of actions.
      */
-    options?: unknown;
+    options?: {
+        [key: string]: unknown;
+    };
     limit_cost: number;
     period?: PolicyPeriodEnum;
     organization_groups?: Array<string>;
@@ -13517,9 +13743,15 @@ export type OfferingExportData = {
     endpoints?: Array<ExportEndpointData>;
     organization_groups?: Array<ExportOrganizationGroupData>;
     terms_of_service?: Array<ExportTermsOfServiceData>;
-    plugin_options?: unknown;
-    secret_options?: unknown;
-    resource_options?: unknown;
+    plugin_options?: {
+        [key: string]: unknown;
+    };
+    secret_options?: {
+        [key: string]: unknown;
+    };
+    resource_options?: {
+        [key: string]: unknown;
+    };
 };
 
 export type OfferingExportDataRequest = {
@@ -13531,9 +13763,15 @@ export type OfferingExportDataRequest = {
     endpoints?: Array<ExportEndpointDataRequest>;
     organization_groups?: Array<ExportOrganizationGroupDataRequest>;
     terms_of_service?: Array<ExportTermsOfServiceDataRequest>;
-    plugin_options?: unknown;
-    secret_options?: unknown;
-    resource_options?: unknown;
+    plugin_options?: {
+        [key: string]: unknown;
+    };
+    secret_options?: {
+        [key: string]: unknown;
+    };
+    resource_options?: {
+        [key: string]: unknown;
+    };
 };
 
 export type OfferingExportParametersRequest = {
@@ -13746,7 +13984,9 @@ export type OfferingImportResponse = {
 export type OfferingIntegrationUpdateRequest = {
     secret_options?: MergedSecretOptionsRequest;
     plugin_options?: MergedPluginOptionsRequest;
-    service_attributes?: unknown;
+    service_attributes?: {
+        [key: string]: unknown;
+    };
     backend_id?: string;
 };
 
@@ -14120,11 +14360,15 @@ export type OfferingSoftwareCatalog = {
     /**
      * List of enabled CPU families: ['x86_64', 'aarch64']
      */
-    enabled_cpu_family?: unknown;
+    enabled_cpu_family?: {
+        [key: string]: unknown;
+    };
     /**
      * List of enabled CPU microarchitectures: ['generic', 'zen3']
      */
-    enabled_cpu_microarchitectures?: unknown;
+    enabled_cpu_microarchitectures?: {
+        [key: string]: unknown;
+    };
     partition?: string | null;
     readonly partition_name: string;
 };
@@ -14135,11 +14379,15 @@ export type OfferingSoftwareCatalogRequest = {
     /**
      * List of enabled CPU families: ['x86_64', 'aarch64']
      */
-    enabled_cpu_family?: unknown;
+    enabled_cpu_family?: {
+        [key: string]: unknown;
+    };
     /**
      * List of enabled CPU microarchitectures: ['generic', 'zen3']
      */
-    enabled_cpu_microarchitectures?: unknown;
+    enabled_cpu_microarchitectures?: {
+        [key: string]: unknown;
+    };
     partition?: string | null;
 };
 
@@ -14305,7 +14553,9 @@ export type OfferingUsagePolicy = {
     /**
      * Fields for saving actions extra data. Keys are name of actions.
      */
-    options?: unknown;
+    options?: {
+        [key: string]: unknown;
+    };
     readonly affected_resources_count: number;
     organization_groups?: Array<string>;
     /**
@@ -14323,7 +14573,9 @@ export type OfferingUsagePolicyRequest = {
     /**
      * Fields for saving actions extra data. Keys are name of actions.
      */
-    options?: unknown;
+    options?: {
+        [key: string]: unknown;
+    };
     organization_groups?: Array<string>;
     /**
      * If True, policy applies to all customers. Mutually exclusive with organization_groups.
@@ -14375,7 +14627,9 @@ export type OfferingUser = {
     /**
      * Person's affiliation within organization such as student, faculty, staff.
      */
-    readonly user_affiliations: unknown;
+    readonly user_affiliations: {
+        [key: string]: unknown;
+    };
     /**
      * User's gender (male, female, or unknown)
      */
@@ -14394,7 +14648,9 @@ export type OfferingUser = {
     /**
      * List of all citizenships (ISO 3166-1 alpha-2 codes)
      */
-    readonly user_nationalities: unknown;
+    readonly user_nationalities: {
+        [key: string]: unknown;
+    };
     readonly user_organization_country: string;
     /**
      * SCHAC URN (e.g., urn:schac:homeOrganizationType:int:university)
@@ -14407,7 +14663,9 @@ export type OfferingUser = {
     /**
      * REFEDS assurance profile URIs from identity provider
      */
-    readonly user_eduperson_assurance: unknown;
+    readonly user_eduperson_assurance: {
+        [key: string]: unknown;
+    };
     readonly user_civil_number: string | null;
     readonly user_birth_date: string | null;
     /**
@@ -14419,7 +14677,9 @@ export type OfferingUser = {
     /**
      * List of ISDs that have asserted this user exists. User is deactivated when this becomes empty.
      */
-    readonly user_active_isds: unknown;
+    readonly user_active_isds: {
+        [key: string]: unknown;
+    };
     readonly created: string;
     readonly modified: string;
     readonly customer_uuid: string;
@@ -14780,15 +15040,21 @@ export type OnboardingVerification = {
     /**
      * Roles the user has in the company
      */
-    readonly verified_user_roles: unknown;
+    readonly verified_user_roles: {
+        [key: string]: unknown;
+    };
     /**
      * Company information retrieved during validation
      */
-    readonly verified_company_data: unknown;
+    readonly verified_company_data: {
+        [key: string]: unknown;
+    };
     /**
      * Raw API response for debugging and auditing
      */
-    readonly raw_response: unknown;
+    readonly raw_response: {
+        [key: string]: unknown;
+    };
     readonly error_traceback: string;
     readonly error_message: string;
     /**
@@ -14941,7 +15207,9 @@ export type OpenStackBackup = {
      * Guaranteed time of backup retention. If null - keep forever.
      */
     kept_until?: string | null;
-    readonly metadata: unknown;
+    readonly metadata: {
+        [key: string]: unknown;
+    };
     /**
      * Instance that this backup is created from
      */
@@ -15395,7 +15663,9 @@ export type OpenStackInstance = {
     /**
      * Details about ongoing or completed actions
      */
-    readonly action_details: unknown;
+    readonly action_details: {
+        [key: string]: unknown;
+    };
     /**
      * UUID of the OpenStack tenant
      */
@@ -16307,7 +16577,9 @@ export type OpenStackRouter = {
      * Whether SNAT is enabled on the external gateway. None means OpenStack default (True).
      */
     enable_snat?: boolean | null;
-    readonly external_fixed_ips: unknown;
+    readonly external_fixed_ips: {
+        [key: string]: unknown;
+    };
     readonly marketplace_offering_uuid: string | null;
     readonly marketplace_offering_name: string | null;
     readonly marketplace_offering_type: string | null;
@@ -16629,12 +16901,16 @@ export type OpenStackSnapshot = {
      * Size in MiB
      */
     readonly size: number;
-    metadata?: unknown;
+    metadata?: {
+        [key: string]: unknown;
+    };
     readonly runtime_state: string;
     readonly source_volume_name: string;
     readonly source_volume_marketplace_uuid: string;
     readonly action: string;
-    readonly action_details: unknown;
+    readonly action_details: {
+        [key: string]: unknown;
+    };
     readonly restorations: Array<OpenStackSnapshotRestoration>;
     readonly backups: Array<OpenStackSnapshotBackup>;
     /**
@@ -16664,7 +16940,9 @@ export type OpenStackSnapshotBackup = {
 export type OpenStackSnapshotRequest = {
     name: string;
     description?: string;
-    metadata?: unknown;
+    metadata?: {
+        [key: string]: unknown;
+    };
     /**
      * Guaranteed time of snapshot retention. If null - keep forever.
      */
@@ -16994,7 +17272,9 @@ export type OpenStackVolume = {
      * Indicates if this volume can be used to boot an instance
      */
     bootable?: boolean;
-    readonly metadata: unknown;
+    readonly metadata: {
+        [key: string]: unknown;
+    };
     /**
      * Image that this volume was created from, if any
      */
@@ -17023,7 +17303,9 @@ export type OpenStackVolume = {
      */
     readonly device: string;
     readonly action: string;
-    readonly action_details: unknown;
+    readonly action_details: {
+        [key: string]: unknown;
+    };
     /**
      * Instance that this volume is attached to, if any
      */
@@ -17150,7 +17432,9 @@ export type OrcidSyncResponse = {
 };
 
 export type OrderApproveByProviderRequest = {
-    attributes?: unknown;
+    attributes?: {
+        [key: string]: unknown;
+    };
 };
 
 export type OrderAttachment = {
@@ -17214,7 +17498,9 @@ export type OrderDetails = {
     /**
      * Public data used by specific plugin, such as storage mode for OpenStack.
      */
-    readonly offering_plugin_options: unknown;
+    readonly offering_plugin_options: {
+        [key: string]: unknown;
+    };
     readonly provider_name: string;
     readonly provider_uuid: string;
     readonly provider_slug: string;
@@ -17227,7 +17513,9 @@ export type OrderDetails = {
     readonly plan_name: string | null;
     readonly plan_uuid: string | null;
     readonly plan_description: string | null;
-    attributes?: unknown;
+    attributes?: {
+        [key: string]: unknown;
+    };
     limits?: {
         [key: string]: number;
     };
@@ -17421,7 +17709,9 @@ export type OrderUpdate = {
     limits?: {
         [key: string]: number;
     };
-    attributes?: unknown;
+    attributes?: {
+        [key: string]: unknown;
+    };
     /**
      * Enables delayed processing of resource provisioning order.
      */
@@ -17432,7 +17722,9 @@ export type OrderUpdateRequest = {
     limits?: {
         [key: string]: number;
     };
-    attributes?: unknown;
+    attributes?: {
+        [key: string]: unknown;
+    };
     /**
      * Enables delayed processing of resource provisioning order.
      */
@@ -17667,7 +17959,9 @@ export type PatchedAttributeRequest = {
      * A value must be provided for the attribute.
      */
     required?: boolean;
-    default?: unknown;
+    default?: {
+        [key: string]: unknown;
+    } | null;
 };
 
 export type PatchedAwsInstanceRequest = {
@@ -17702,7 +17996,9 @@ export type PatchedAzureVirtualMachineRequest = {
 export type PatchedBroadcastMessageRequest = {
     subject?: string;
     body?: string;
-    query?: unknown;
+    query?: {
+        [key: string]: unknown;
+    };
     send_at?: string | null;
 };
 
@@ -17784,8 +18080,12 @@ export type PatchedCallManagingOrganisationRequest = {
 export type PatchedCallResourceTemplateRequest = {
     name?: string;
     description?: string;
-    attributes?: unknown;
-    limits?: unknown;
+    attributes?: {
+        [key: string]: unknown;
+    };
+    limits?: {
+        [key: string]: unknown;
+    };
     /**
      * If True, every proposal must include this resource type
      */
@@ -17949,7 +18249,9 @@ export type PatchedCustomerComponentUsagePolicyRequest = {
     /**
      * Fields for saving actions extra data. Keys are name of actions.
      */
-    options?: unknown;
+    options?: {
+        [key: string]: unknown;
+    };
     component_limits_set?: Array<NestedCustomerUsagePolicyComponentRequest>;
 };
 
@@ -17959,7 +18261,9 @@ export type PatchedCustomerEstimatedCostPolicyRequest = {
     /**
      * Fields for saving actions extra data. Keys are name of actions.
      */
-    options?: unknown;
+    options?: {
+        [key: string]: unknown;
+    };
     limit_cost?: number;
     period?: PolicyPeriodEnum;
 };
@@ -17994,12 +18298,18 @@ export type PatchedCustomerRequest = {
      * Number of extra days after project end date before resources are terminated
      */
     grace_period_days?: number | null;
-    user_email_patterns?: unknown;
-    user_affiliations?: unknown;
+    user_email_patterns?: {
+        [key: string]: unknown;
+    };
+    user_affiliations?: {
+        [key: string]: unknown;
+    };
     /**
      * List of allowed identity sources (identity providers).
      */
-    user_identity_sources?: unknown;
+    user_identity_sources?: {
+        [key: string]: unknown;
+    };
     name?: string;
     /**
      * URL-friendly identifier. Only editable by staff users.
@@ -18116,12 +18426,18 @@ export type PatchedGroupInvitationUpdateRequest = {
      * UUID of the project role to grant if auto_create_project is enabled
      */
     project_role?: string | null;
-    user_affiliations?: unknown;
-    user_email_patterns?: unknown;
+    user_affiliations?: {
+        [key: string]: unknown;
+    };
+    user_email_patterns?: {
+        [key: string]: unknown;
+    };
     /**
      * List of allowed identity sources (identity providers).
      */
-    user_identity_sources?: unknown;
+    user_identity_sources?: {
+        [key: string]: unknown;
+    };
     /**
      * Custom description text displayed to users viewing this invitation.
      */
@@ -18162,7 +18478,9 @@ export type PatchedIdentityProviderRequest = {
      * The endpoint for user details management.
      */
     management_url?: string;
-    protected_fields?: unknown;
+    protected_fields?: {
+        [key: string]: unknown;
+    };
     /**
      * Space-separated list of scopes to request during authentication.
      */
@@ -18178,7 +18496,9 @@ export type PatchedIdentityProviderRequest = {
     /**
      * A JSON object mapping Waldur User model fields to OIDC claims. Example: {"first_name": "given_name", "last_name": "family_name", "email": "email"}
      */
-    attribute_mapping?: unknown;
+    attribute_mapping?: {
+        [key: string]: unknown;
+    };
     /**
      * Space-separated list of extra fields to persist.
      */
@@ -18186,7 +18506,9 @@ export type PatchedIdentityProviderRequest = {
     /**
      * List of allowed redirect URLs for OAuth authentication. URLs must be exact matches (origin only: scheme + domain + port). HTTPS required except for localhost. No wildcards, paths, query params, or fragments. Example: ["https://portal1.example.com", "https://portal2.example.com:8443"]. If empty, falls back to HOMEPORT_URL setting.
      */
-    allowed_redirects?: unknown;
+    allowed_redirects?: {
+        [key: string]: unknown;
+    };
 };
 
 export type PatchedInvitationUpdateRequest = {
@@ -18393,7 +18715,9 @@ export type PatchedOfferingEstimatedCostPolicyRequest = {
     /**
      * Fields for saving actions extra data. Keys are name of actions.
      */
-    options?: unknown;
+    options?: {
+        [key: string]: unknown;
+    };
     limit_cost?: number;
     period?: PolicyPeriodEnum;
     organization_groups?: Array<string>;
@@ -18525,11 +18849,15 @@ export type PatchedOfferingSoftwareCatalogUpdateRequest = {
     /**
      * List of enabled CPU families: ['x86_64', 'aarch64']
      */
-    enabled_cpu_family?: unknown;
+    enabled_cpu_family?: {
+        [key: string]: unknown;
+    };
     /**
      * List of enabled CPU microarchitectures: ['generic', 'zen3']
      */
-    enabled_cpu_microarchitectures?: unknown;
+    enabled_cpu_microarchitectures?: {
+        [key: string]: unknown;
+    };
     partition?: string | null;
 };
 
@@ -18549,7 +18877,9 @@ export type PatchedOfferingUsagePolicyRequest = {
     /**
      * Fields for saving actions extra data. Keys are name of actions.
      */
-    options?: unknown;
+    options?: {
+        [key: string]: unknown;
+    };
     organization_groups?: Array<string>;
     /**
      * If True, policy applies to all customers. Mutually exclusive with organization_groups.
@@ -18678,7 +19008,9 @@ export type PatchedOpenStackSecurityGroupUpdateRequest = {
 export type PatchedOpenStackSnapshotRequest = {
     name?: string;
     description?: string;
-    metadata?: unknown;
+    metadata?: {
+        [key: string]: unknown;
+    };
     /**
      * Guaranteed time of snapshot retention. If null - keep forever.
      */
@@ -18734,7 +19066,9 @@ export type PatchedOrderUpdateRequest = {
     limits?: {
         [key: string]: number;
     };
-    attributes?: unknown;
+    attributes?: {
+        [key: string]: unknown;
+    };
     /**
      * Enables delayed processing of resource provisioning order.
      */
@@ -18792,7 +19126,9 @@ export type PatchedProjectEstimatedCostPolicyRequest = {
     /**
      * Fields for saving actions extra data. Keys are name of actions.
      */
-    options?: unknown;
+    options?: {
+        [key: string]: unknown;
+    };
     limit_cost?: number;
     period?: PolicyPeriodEnum;
 };
@@ -18857,12 +19193,18 @@ export type PatchedProjectRequest = {
      * Number of extra days after project end date before resources are terminated. Overrides customer-level setting.
      */
     grace_period_days?: number | null;
-    user_email_patterns?: unknown;
-    user_affiliations?: unknown;
+    user_email_patterns?: {
+        [key: string]: unknown;
+    };
+    user_affiliations?: {
+        [key: string]: unknown;
+    };
     /**
      * List of allowed identity sources (identity providers).
      */
-    user_identity_sources?: unknown;
+    user_identity_sources?: {
+        [key: string]: unknown;
+    };
     affiliation_uuid?: string | null;
     science_sub_domain?: string | null;
 };
@@ -18904,11 +19246,15 @@ export type PatchedProjectTemplateRequest = {
     /**
      * The mapping of credits to allocation units, i.e. how many allocation units to award per credit allocated.
      */
-    allocation_units_mapping?: unknown;
+    allocation_units_mapping?: {
+        [key: string]: unknown;
+    };
     /**
      * The mapping of role names from the remote portal to role information in this portal for users in projects created in this class.
      */
-    role_mapping?: unknown;
+    role_mapping?: {
+        [key: string]: unknown;
+    };
 };
 
 export type PatchedProposalProjectRoleMappingRequest = {
@@ -18963,27 +19309,39 @@ export type PatchedProtectedCallRequest = {
     /**
      * List of email regex patterns. User must match one.
      */
-    user_email_patterns?: unknown;
+    user_email_patterns?: {
+        [key: string]: unknown;
+    };
     /**
      * List of allowed affiliations. User must have one.
      */
-    user_affiliations?: unknown;
+    user_affiliations?: {
+        [key: string]: unknown;
+    };
     /**
      * List of allowed identity sources (identity providers).
      */
-    user_identity_sources?: unknown;
+    user_identity_sources?: {
+        [key: string]: unknown;
+    };
     /**
      * List of allowed nationality codes (ISO 3166-1 alpha-2). User must have one.
      */
-    user_nationalities?: unknown;
+    user_nationalities?: {
+        [key: string]: unknown;
+    };
     /**
      * List of allowed organization type URNs (SCHAC). User must match one.
      */
-    user_organization_types?: unknown;
+    user_organization_types?: {
+        [key: string]: unknown;
+    };
     /**
      * List of required assurance URIs (REFEDS). User must have ALL of these.
      */
-    user_assurance_levels?: unknown;
+    user_assurance_levels?: {
+        [key: string]: unknown;
+    };
     applicant_visibility_config?: CallApplicantVisibilityConfigRequest | null;
 };
 
@@ -19039,11 +19397,15 @@ export type PatchedQuestionAdminRequest = {
     /**
      * List of allowed file extensions (e.g., ['.pdf', '.doc', '.docx']). If empty, all file types are allowed.
      */
-    allowed_file_types?: unknown;
+    allowed_file_types?: {
+        [key: string]: unknown;
+    };
     /**
      * List of allowed MIME types (e.g., ['application/pdf', 'application/msword']). If empty, MIME type validation is not enforced. When both extensions and MIME types are specified, files must match both criteria for security.
      */
-    allowed_mime_types?: unknown;
+    allowed_mime_types?: {
+        [key: string]: unknown;
+    };
     /**
      * Maximum file size in megabytes. If not set, no size limit is enforced.
      */
@@ -19080,7 +19442,9 @@ export type PatchedQuestionAdminRequest = {
     /**
      * Answer value that trigger review.
      */
-    review_answer_value?: unknown;
+    review_answer_value?: {
+        [key: string]: unknown;
+    } | null;
     /**
      * This question always requires review regardless of answer
      */
@@ -19088,7 +19452,9 @@ export type PatchedQuestionAdminRequest = {
     /**
      * Answer value that triggers display of user guidance.
      */
-    guidance_answer_value?: unknown;
+    guidance_answer_value?: {
+        [key: string]: unknown;
+    } | null;
     /**
      * Operator to use when comparing answer with guidance_answer_value
      */
@@ -19110,7 +19476,9 @@ export type PatchedQuestionDependencyRequest = {
     /**
      * The answer value(s) that make this question visible
      */
-    required_answer_value?: unknown;
+    required_answer_value?: {
+        [key: string]: unknown;
+    };
     operator?: ChecklistOperators;
 };
 
@@ -19163,7 +19531,9 @@ export type PatchedRancherHpaRequest = {
     workload?: string | null;
     min_replicas?: number;
     max_replicas?: number;
-    metrics?: unknown;
+    metrics?: {
+        [key: string]: unknown;
+    };
 };
 
 export type PatchedRancherIngressRequest = {
@@ -19177,7 +19547,9 @@ export type PatchedRancherIngressRequest = {
     runtime_state?: string;
     rancher_project?: string;
     namespace?: string;
-    rules?: unknown;
+    rules?: {
+        [key: string]: unknown;
+    };
 };
 
 export type PatchedRancherServiceRequest = {
@@ -19194,7 +19566,9 @@ export type PatchedRancherServiceRequest = {
      * An IPv4 or IPv6 address.
      */
     cluster_ip?: string | string | null;
-    selector?: unknown;
+    selector?: {
+        [key: string]: unknown;
+    } | null;
     target_workloads?: Array<RancherNestedWorkloadRequest>;
 };
 
@@ -19240,14 +19614,20 @@ export type PatchedRequestTypeAdminRequest = {
 };
 
 export type PatchedRequestedOfferingRequest = {
-    attributes?: unknown;
+    attributes?: {
+        [key: string]: unknown;
+    };
     plan?: string | null;
     description?: string;
 };
 
 export type PatchedRequestedResourceRequest = {
-    attributes?: unknown;
-    limits?: unknown;
+    attributes?: {
+        [key: string]: unknown;
+    };
+    limits?: {
+        [key: string]: unknown;
+    };
     description?: string;
     requested_offering_uuid?: string;
     call_resource_template_uuid?: string;
@@ -19260,7 +19640,9 @@ export type PatchedResourceProjectRequest = {
     /**
      * Dictionary mapping component types to quota values. Same format as Resource.limits.
      */
-    limits?: unknown;
+    limits?: {
+        [key: string]: unknown;
+    };
 };
 
 export type PatchedResourceUpdateRequest = {
@@ -19331,7 +19713,9 @@ export type PatchedReviewerProfileCreateRequest = {
     /**
      * List of name variants used in publications
      */
-    alternative_names?: unknown;
+    alternative_names?: {
+        [key: string]: unknown;
+    };
     /**
      * Whether reviewer is currently accepting review requests
      */
@@ -19350,7 +19734,9 @@ export type PatchedReviewerProfileRequest = {
     /**
      * List of name variants used in publications
      */
-    alternative_names?: unknown;
+    alternative_names?: {
+        [key: string]: unknown;
+    };
     /**
      * Whether reviewer is currently accepting review requests
      */
@@ -19373,11 +19759,15 @@ export type PatchedReviewerPublicationRequest = {
     /**
      * List of co-author names and identifiers
      */
-    coauthors?: unknown;
+    coauthors?: {
+        [key: string]: unknown;
+    };
     /**
      * External identifiers: {"semantic_scholar": "...", "pubmed": "..."}
      */
-    external_ids?: unknown;
+    external_ids?: {
+        [key: string]: unknown;
+    };
     /**
      * User can exclude old papers from expertise matching
      */
@@ -19396,7 +19786,9 @@ export type PatchedRobotAccountRequest = {
      * Users who have access to this robot account.
      */
     users?: Array<string>;
-    keys?: unknown;
+    keys?: {
+        [key: string]: unknown;
+    };
     responsible_user?: string | null;
 };
 
@@ -19518,7 +19910,9 @@ export type PatchedServiceProviderRequest = {
     /**
      * List of allowed domains for offering endpoints. Only staff can modify this field.
      */
-    allowed_domains?: unknown;
+    allowed_domains?: {
+        [key: string]: unknown;
+    };
 };
 
 export type PatchedSlurmAllocationRequest = {
@@ -19532,7 +19926,9 @@ export type PatchedSlurmPeriodicUsagePolicyRequest = {
     /**
      * Fields for saving actions extra data. Keys are name of actions.
      */
-    options?: unknown;
+    options?: {
+        [key: string]: unknown;
+    };
     organization_groups?: Array<string>;
     /**
      * If True, policy applies to all customers. Mutually exclusive with organization_groups.
@@ -19551,7 +19947,9 @@ export type PatchedSlurmPeriodicUsagePolicyRequest = {
     /**
      * TRES billing weights (e.g., {"CPU": 0.015625, "Mem": 0.001953125, "GRES/gpu": 0.25})
      */
-    tres_billing_weights?: unknown;
+    tres_billing_weights?: {
+        [key: string]: unknown;
+    };
     /**
      * Maximum percentage of base allocation that can carry over from unused previous period (0-100)
      */
@@ -19595,7 +19993,9 @@ export type PatchedSoftwareCatalogRequest = {
     /**
      * Catalog-specific metadata (architecture maps, API endpoints, etc.)
      */
-    metadata?: unknown;
+    metadata?: {
+        [key: string]: unknown;
+    };
     /**
      * Whether to automatically update this catalog via scheduled tasks
      */
@@ -19611,15 +20011,21 @@ export type PatchedSoftwarePackageRequest = {
     /**
      * Package categories (e.g., ['bio', 'hpc', 'build-tools'])
      */
-    categories?: unknown;
+    categories?: {
+        [key: string]: unknown;
+    };
     /**
      * Software licenses (e.g., ['GPL-3.0', 'MIT'])
      */
-    licenses?: unknown;
+    licenses?: {
+        [key: string]: unknown;
+    };
     /**
      * Package maintainers
      */
-    maintainers?: unknown;
+    maintainers?: {
+        [key: string]: unknown;
+    };
     /**
      * Whether this package is an extension of another package
      */
@@ -19766,7 +20172,9 @@ export type PatchedUserRequest = {
     /**
      * List of all citizenships (ISO 3166-1 alpha-2 codes)
      */
-    nationalities?: unknown;
+    nationalities?: {
+        [key: string]: unknown;
+    };
     organization_country?: string;
     /**
      * SCHAC URN (e.g., urn:schac:homeOrganizationType:int:university)
@@ -19779,7 +20187,9 @@ export type PatchedUserRequest = {
     /**
      * REFEDS assurance profile URIs from identity provider
      */
-    eduperson_assurance?: unknown;
+    eduperson_assurance?: {
+        [key: string]: unknown;
+    };
     /**
      * Designates whether the user is allowed to manage remote user identities.
      */
@@ -19791,7 +20201,9 @@ export type PatchedUserRequest = {
     /**
      * List of ISD source identifiers this user can manage via Identity Bridge. E.g., ['isd:puhuri', 'isd:fenix']. Non-empty list implies identity manager role.
      */
-    managed_isds?: unknown;
+    managed_isds?: {
+        [key: string]: unknown;
+    };
     /**
      * Reason why the user was deactivated. Visible to staff and support.
      */
@@ -20323,7 +20735,9 @@ export type Project = {
     /**
      * Metadata about project termination (read-only)
      */
-    readonly termination_metadata: unknown;
+    readonly termination_metadata: {
+        [key: string]: unknown;
+    } | null;
     /**
      * Internal notes visible only to staff and support users (HTML content will be sanitized)
      */
@@ -20344,12 +20758,18 @@ export type Project = {
      * True if the project is past its end date but still within the grace period.
      */
     readonly is_in_grace_period: boolean;
-    user_email_patterns?: unknown;
-    user_affiliations?: unknown;
+    user_email_patterns?: {
+        [key: string]: unknown;
+    };
+    user_affiliations?: {
+        [key: string]: unknown;
+    };
     /**
      * List of allowed identity sources (identity providers).
      */
-    user_identity_sources?: unknown;
+    user_identity_sources?: {
+        [key: string]: unknown;
+    };
     affiliation: AffiliatedOrganization | null;
     affiliation_uuid?: string | null;
     readonly affiliation_name: string;
@@ -20623,7 +21043,9 @@ export type ProjectEstimatedCostPolicy = {
     /**
      * Fields for saving actions extra data. Keys are name of actions.
      */
-    options?: unknown;
+    options?: {
+        [key: string]: unknown;
+    };
     readonly affected_resources_count: number;
     limit_cost: number;
     period?: PolicyPeriodEnum;
@@ -20639,7 +21061,9 @@ export type ProjectEstimatedCostPolicyRequest = {
     /**
      * Fields for saving actions extra data. Keys are name of actions.
      */
-    options?: unknown;
+    options?: {
+        [key: string]: unknown;
+    };
     limit_cost: number;
     period?: PolicyPeriodEnum;
 };
@@ -20825,12 +21249,18 @@ export type ProjectRequest = {
      * Number of extra days after project end date before resources are terminated. Overrides customer-level setting.
      */
     grace_period_days?: number | null;
-    user_email_patterns?: unknown;
-    user_affiliations?: unknown;
+    user_email_patterns?: {
+        [key: string]: unknown;
+    };
+    user_affiliations?: {
+        [key: string]: unknown;
+    };
     /**
      * List of allowed identity sources (identity providers).
      */
-    user_identity_sources?: unknown;
+    user_identity_sources?: {
+        [key: string]: unknown;
+    };
     affiliation_uuid?: string | null;
     science_sub_domain?: string | null;
 };
@@ -20932,11 +21362,15 @@ export type ProjectTemplate = {
     /**
      * The mapping of credits to allocation units, i.e. how many allocation units to award per credit allocated.
      */
-    allocation_units_mapping?: unknown;
+    allocation_units_mapping?: {
+        [key: string]: unknown;
+    };
     /**
      * The mapping of role names from the remote portal to role information in this portal for users in projects created in this class.
      */
-    role_mapping?: unknown;
+    role_mapping?: {
+        [key: string]: unknown;
+    };
     /**
      * Serialize the role mapping dictionary returned by get_role_mapping()
      */
@@ -20975,11 +21409,15 @@ export type ProjectTemplateRequest = {
     /**
      * The mapping of credits to allocation units, i.e. how many allocation units to award per credit allocated.
      */
-    allocation_units_mapping?: unknown;
+    allocation_units_mapping?: {
+        [key: string]: unknown;
+    };
     /**
      * The mapping of role names from the remote portal to role information in this portal for users in projects created in this class.
      */
-    role_mapping?: unknown;
+    role_mapping?: {
+        [key: string]: unknown;
+    };
 };
 
 export type ProjectType = {
@@ -21123,7 +21561,9 @@ export type Proposal = {
     /**
      * Person's affiliation within organization such as student, faculty, staff.
      */
-    readonly applicant_affiliations: unknown;
+    readonly applicant_affiliations: {
+        [key: string]: unknown;
+    };
     /**
      * User's gender (male, female, or unknown)
      */
@@ -21142,11 +21582,15 @@ export type Proposal = {
     /**
      * List of all citizenships (ISO 3166-1 alpha-2 codes)
      */
-    readonly applicant_nationalities: unknown;
+    readonly applicant_nationalities: {
+        [key: string]: unknown;
+    };
     /**
      * REFEDS assurance profile URIs from identity provider
      */
-    readonly applicant_eduperson_assurance: unknown;
+    readonly applicant_eduperson_assurance: {
+        [key: string]: unknown;
+    };
     /**
      * Source of identity
      *
@@ -21158,7 +21602,9 @@ export type Proposal = {
     /**
      * List of ISDs that have asserted this user exists. User is deactivated when this becomes empty.
      */
-    readonly applicant_active_isds: unknown;
+    readonly applicant_active_isds: {
+        [key: string]: unknown;
+    };
     /**
      * Duration in days after provisioning of resources.
      */
@@ -21443,27 +21889,39 @@ export type ProtectedCall = {
     /**
      * List of email regex patterns. User must match one.
      */
-    user_email_patterns?: unknown;
+    user_email_patterns?: {
+        [key: string]: unknown;
+    };
     /**
      * List of allowed affiliations. User must have one.
      */
-    user_affiliations?: unknown;
+    user_affiliations?: {
+        [key: string]: unknown;
+    };
     /**
      * List of allowed identity sources (identity providers).
      */
-    user_identity_sources?: unknown;
+    user_identity_sources?: {
+        [key: string]: unknown;
+    };
     /**
      * List of allowed nationality codes (ISO 3166-1 alpha-2). User must have one.
      */
-    user_nationalities?: unknown;
+    user_nationalities?: {
+        [key: string]: unknown;
+    };
     /**
      * List of allowed organization type URNs (SCHAC). User must match one.
      */
-    user_organization_types?: unknown;
+    user_organization_types?: {
+        [key: string]: unknown;
+    };
     /**
      * List of required assurance URIs (REFEDS). User must have ALL of these.
      */
-    user_assurance_levels?: unknown;
+    user_assurance_levels?: {
+        [key: string]: unknown;
+    };
     applicant_visibility_config?: CallApplicantVisibilityConfig | null;
 };
 
@@ -21499,27 +21957,39 @@ export type ProtectedCallRequest = {
     /**
      * List of email regex patterns. User must match one.
      */
-    user_email_patterns?: unknown;
+    user_email_patterns?: {
+        [key: string]: unknown;
+    };
     /**
      * List of allowed affiliations. User must have one.
      */
-    user_affiliations?: unknown;
+    user_affiliations?: {
+        [key: string]: unknown;
+    };
     /**
      * List of allowed identity sources (identity providers).
      */
-    user_identity_sources?: unknown;
+    user_identity_sources?: {
+        [key: string]: unknown;
+    };
     /**
      * List of allowed nationality codes (ISO 3166-1 alpha-2). User must have one.
      */
-    user_nationalities?: unknown;
+    user_nationalities?: {
+        [key: string]: unknown;
+    };
     /**
      * List of allowed organization type URNs (SCHAC). User must match one.
      */
-    user_organization_types?: unknown;
+    user_organization_types?: {
+        [key: string]: unknown;
+    };
     /**
      * List of required assurance URIs (REFEDS). User must have ALL of these.
      */
-    user_assurance_levels?: unknown;
+    user_assurance_levels?: {
+        [key: string]: unknown;
+    };
     applicant_visibility_config?: CallApplicantVisibilityConfigRequest | null;
 };
 
@@ -21632,11 +22102,15 @@ export type ProviderOffering = {
     /**
      * Fields describing resource provision form.
      */
-    options?: unknown;
+    options?: {
+        [key: string]: unknown;
+    };
     /**
      * Fields describing resource report form.
      */
-    resource_options?: unknown;
+    resource_options?: {
+        [key: string]: unknown;
+    };
     secret_options: MergedSecretOptions;
     thumbnail?: string | null;
     readonly offering_group_uuid: string | null;
@@ -21755,7 +22229,9 @@ export type ProviderOfferingDetails = {
     /**
      * Validation rules for resource backend_id: format regex and uniqueness scope.
      */
-    backend_id_rules?: unknown;
+    backend_id_rules?: {
+        [key: string]: unknown;
+    };
     readonly organization_groups: Array<OrganizationGroup>;
     readonly tags: Array<NestedTag>;
     image?: string | null;
@@ -21765,7 +22241,9 @@ export type ProviderOfferingDetails = {
     readonly parent_description: string | null;
     readonly parent_uuid: string | null;
     readonly parent_name: string | null;
-    backend_metadata?: unknown;
+    backend_metadata?: {
+        [key: string]: unknown;
+    };
     readonly has_compliance_requirements: boolean;
     /**
      * Classify offering components by billing type.
@@ -21884,7 +22362,9 @@ export type ProviderRequestedOffering = {
     readonly category_uuid: string;
     readonly category_name: string;
     readonly call_managing_organisation: string;
-    attributes?: unknown;
+    attributes?: {
+        [key: string]: unknown;
+    };
     readonly plan: string | null;
     plan_details: BasePublicPlan;
     options: OfferingOptions;
@@ -21909,8 +22389,12 @@ export type ProviderRequestedResource = {
     readonly resource_name: string;
     readonly call_resource_template: string;
     readonly call_resource_template_name: string;
-    attributes?: unknown;
-    limits?: unknown;
+    attributes?: {
+        [key: string]: unknown;
+    };
+    limits?: {
+        [key: string]: unknown;
+    };
     description?: string;
     created_by?: string | null;
     readonly created_by_name: string;
@@ -22168,7 +22652,9 @@ export type PublicOfferingDetails = {
     readonly parent_description: string | null;
     readonly parent_uuid: string | null;
     readonly parent_name: string | null;
-    backend_metadata?: unknown;
+    backend_metadata?: {
+        [key: string]: unknown;
+    };
     readonly has_compliance_requirements: boolean;
     /**
      * Classify offering components by billing type.
@@ -22350,11 +22836,15 @@ export type Question = {
     /**
      * List of allowed file extensions (e.g., ['.pdf', '.doc', '.docx']). If empty, all file types are allowed.
      */
-    allowed_file_types?: unknown;
+    allowed_file_types?: {
+        [key: string]: unknown;
+    };
     /**
      * List of allowed MIME types (e.g., ['application/pdf', 'application/msword']). If empty, MIME type validation is not enforced. When both extensions and MIME types are specified, files must match both criteria for security.
      */
-    allowed_mime_types?: unknown;
+    allowed_mime_types?: {
+        [key: string]: unknown;
+    };
     /**
      * Maximum file size in megabytes. If not set, no size limit is enforced.
      */
@@ -22391,7 +22881,9 @@ export type Question = {
     /**
      * Answer value that trigger review.
      */
-    review_answer_value?: unknown;
+    review_answer_value?: {
+        [key: string]: unknown;
+    } | null;
     /**
      * This question always requires review regardless of answer
      */
@@ -22399,7 +22891,9 @@ export type Question = {
     /**
      * Answer value that triggers display of user guidance.
      */
-    guidance_answer_value?: unknown;
+    guidance_answer_value?: {
+        [key: string]: unknown;
+    } | null;
     /**
      * Operator to use when comparing answer with guidance_answer_value
      */
@@ -22439,11 +22933,15 @@ export type QuestionAdmin = {
     /**
      * List of allowed file extensions (e.g., ['.pdf', '.doc', '.docx']). If empty, all file types are allowed.
      */
-    allowed_file_types?: unknown;
+    allowed_file_types?: {
+        [key: string]: unknown;
+    };
     /**
      * List of allowed MIME types (e.g., ['application/pdf', 'application/msword']). If empty, MIME type validation is not enforced. When both extensions and MIME types are specified, files must match both criteria for security.
      */
-    allowed_mime_types?: unknown;
+    allowed_mime_types?: {
+        [key: string]: unknown;
+    };
     /**
      * Maximum file size in megabytes. If not set, no size limit is enforced.
      */
@@ -22480,7 +22978,9 @@ export type QuestionAdmin = {
     /**
      * Answer value that trigger review.
      */
-    review_answer_value?: unknown;
+    review_answer_value?: {
+        [key: string]: unknown;
+    } | null;
     /**
      * This question always requires review regardless of answer
      */
@@ -22488,7 +22988,9 @@ export type QuestionAdmin = {
     /**
      * Answer value that triggers display of user guidance.
      */
-    guidance_answer_value?: unknown;
+    guidance_answer_value?: {
+        [key: string]: unknown;
+    } | null;
     /**
      * Operator to use when comparing answer with guidance_answer_value
      */
@@ -22531,11 +23033,15 @@ export type QuestionAdminRequest = {
     /**
      * List of allowed file extensions (e.g., ['.pdf', '.doc', '.docx']). If empty, all file types are allowed.
      */
-    allowed_file_types?: unknown;
+    allowed_file_types?: {
+        [key: string]: unknown;
+    };
     /**
      * List of allowed MIME types (e.g., ['application/pdf', 'application/msword']). If empty, MIME type validation is not enforced. When both extensions and MIME types are specified, files must match both criteria for security.
      */
-    allowed_mime_types?: unknown;
+    allowed_mime_types?: {
+        [key: string]: unknown;
+    };
     /**
      * Maximum file size in megabytes. If not set, no size limit is enforced.
      */
@@ -22572,7 +23078,9 @@ export type QuestionAdminRequest = {
     /**
      * Answer value that trigger review.
      */
-    review_answer_value?: unknown;
+    review_answer_value?: {
+        [key: string]: unknown;
+    } | null;
     /**
      * This question always requires review regardless of answer
      */
@@ -22580,7 +23088,9 @@ export type QuestionAdminRequest = {
     /**
      * Answer value that triggers display of user guidance.
      */
-    guidance_answer_value?: unknown;
+    guidance_answer_value?: {
+        [key: string]: unknown;
+    } | null;
     /**
      * Operator to use when comparing answer with guidance_answer_value
      */
@@ -22629,7 +23139,9 @@ export type QuestionAnswer = {
 export type QuestionCondition = {
     question_description: string;
     operator: string;
-    required_value: unknown;
+    required_value: {
+        [key: string]: unknown;
+    };
 };
 
 export type QuestionDependency = {
@@ -22642,7 +23154,9 @@ export type QuestionDependency = {
     /**
      * The answer value(s) that make this question visible
      */
-    required_answer_value: unknown;
+    required_answer_value: {
+        [key: string]: unknown;
+    };
     operator?: ChecklistOperators;
 };
 
@@ -22657,7 +23171,9 @@ export type QuestionDependencyRequest = {
     /**
      * The answer value(s) that make this question visible
      */
-    required_answer_value: unknown;
+    required_answer_value: {
+        [key: string]: unknown;
+    };
     operator?: ChecklistOperators;
 };
 
@@ -22707,11 +23223,15 @@ export type QuestionWithAnswer = {
     /**
      * List of allowed file extensions (e.g., ['.pdf', '.doc', '.docx']). If empty, all file types are allowed.
      */
-    readonly allowed_file_types: unknown;
+    readonly allowed_file_types: {
+        [key: string]: unknown;
+    };
     /**
      * List of allowed MIME types (e.g., ['application/pdf', 'application/msword']). If empty, MIME type validation is not enforced. When both extensions and MIME types are specified, files must match both criteria for security.
      */
-    readonly allowed_mime_types: unknown;
+    readonly allowed_mime_types: {
+        [key: string]: unknown;
+    };
     /**
      * Maximum file size in megabytes. If not set, no size limit is enforced.
      */
@@ -22770,11 +23290,15 @@ export type QuestionWithAnswerReviewer = {
     /**
      * List of allowed file extensions (e.g., ['.pdf', '.doc', '.docx']). If empty, all file types are allowed.
      */
-    readonly allowed_file_types: unknown;
+    readonly allowed_file_types: {
+        [key: string]: unknown;
+    };
     /**
      * List of allowed MIME types (e.g., ['application/pdf', 'application/msword']). If empty, MIME type validation is not enforced. When both extensions and MIME types are specified, files must match both criteria for security.
      */
-    readonly allowed_mime_types: unknown;
+    readonly allowed_mime_types: {
+        [key: string]: unknown;
+    };
     /**
      * Maximum file size in megabytes. If not set, no size limit is enforced.
      */
@@ -22812,7 +23336,9 @@ export type QuestionWithAnswerReviewer = {
     /**
      * Answer value that trigger review.
      */
-    review_answer_value?: unknown;
+    review_answer_value?: {
+        [key: string]: unknown;
+    } | null;
     /**
      * This question always requires review regardless of answer
      */
@@ -23021,11 +23547,15 @@ export type RancherCluster = {
     /**
      * Cluster capacity in the format {'cpu': '10', 'ram': '49125240Ki', 'pods': '330'}
      */
-    readonly capacity: unknown;
+    readonly capacity: {
+        [key: string]: unknown;
+    };
     /**
      * Cluster requested resources in the format {'cpu': '1450m', 'memory': '884Mi', 'pods': '13'}
      */
-    readonly requested: unknown;
+    readonly requested: {
+        [key: string]: unknown;
+    };
     /**
      * Kubernetes version used in the cluster.
      */
@@ -23194,7 +23724,9 @@ export type RancherHpa = {
     max_replicas?: number;
     readonly current_replicas: number;
     readonly desired_replicas: number;
-    metrics: unknown;
+    metrics: {
+        [key: string]: unknown;
+    };
 };
 
 export type RancherHpaRequest = {
@@ -23203,7 +23735,9 @@ export type RancherHpaRequest = {
     workload?: string | null;
     min_replicas?: number;
     max_replicas?: number;
-    metrics: unknown;
+    metrics: {
+        [key: string]: unknown;
+    };
 };
 
 export type RancherImportYamlRequest = {
@@ -23243,7 +23777,9 @@ export type RancherIngress = {
     readonly rancher_project_name: string;
     namespace?: string;
     readonly namespace_name: string;
-    rules?: unknown;
+    rules?: {
+        [key: string]: unknown;
+    };
     readonly marketplace_offering_uuid: string | null;
     readonly marketplace_offering_name: string | null;
     readonly marketplace_offering_type: string | null;
@@ -23270,7 +23806,9 @@ export type RancherIngressRequest = {
     runtime_state?: string;
     rancher_project: string;
     namespace?: string;
-    rules?: unknown;
+    rules?: {
+        [key: string]: unknown;
+    };
 };
 
 export type RancherNamespace = {
@@ -23302,7 +23840,9 @@ export type RancherNestedNode = {
     /**
      * Initial data for instance creating.
      */
-    readonly initial_data: unknown;
+    readonly initial_data: {
+        [key: string]: unknown;
+    };
     readonly runtime_state: string;
     readonly k8s_version: string;
     readonly docker_version: string;
@@ -23318,8 +23858,12 @@ export type RancherNestedNode = {
     readonly ram_total: number | null;
     readonly pods_allocated: number | null;
     readonly pods_total: number | null;
-    readonly labels: unknown;
-    readonly annotations: unknown;
+    readonly labels: {
+        [key: string]: unknown;
+    };
+    readonly annotations: {
+        [key: string]: unknown;
+    };
 };
 
 export type RancherNestedNodeRequest = {
@@ -23393,8 +23937,12 @@ export type RancherNode = {
     readonly ram_total: number | null;
     readonly pods_allocated: number | null;
     readonly pods_total: number | null;
-    readonly labels: unknown;
-    readonly annotations: unknown;
+    readonly labels: {
+        [key: string]: unknown;
+    };
+    readonly annotations: {
+        [key: string]: unknown;
+    };
     readonly runtime_state: string;
 };
 
@@ -23447,7 +23995,9 @@ export type RancherService = {
      * An IPv4 or IPv6 address.
      */
     cluster_ip?: string | string | null;
-    selector?: unknown;
+    selector?: {
+        [key: string]: unknown;
+    } | null;
     target_workloads: Array<RancherNestedWorkload>;
     readonly marketplace_offering_uuid: string | null;
     readonly marketplace_offering_name: string | null;
@@ -23497,7 +24047,9 @@ export type RancherServiceCreate = {
      * An IPv4 or IPv6 address.
      */
     cluster_ip?: string | string | null;
-    selector?: unknown;
+    selector?: {
+        [key: string]: unknown;
+    } | null;
     target_workloads?: Array<RancherWorkloadCreate>;
     readonly marketplace_offering_uuid: string | null;
     readonly marketplace_offering_name: string | null;
@@ -23528,7 +24080,9 @@ export type RancherServiceCreateRequest = {
      * An IPv4 or IPv6 address.
      */
     cluster_ip?: string | string | null;
-    selector?: unknown;
+    selector?: {
+        [key: string]: unknown;
+    } | null;
     target_workloads?: Array<RancherWorkloadCreateRequest>;
 };
 
@@ -23546,7 +24100,9 @@ export type RancherServiceRequest = {
      * An IPv4 or IPv6 address.
      */
     cluster_ip?: string | string | null;
-    selector?: unknown;
+    selector?: {
+        [key: string]: unknown;
+    } | null;
     target_workloads: Array<RancherNestedWorkloadRequest>;
 };
 
@@ -23576,7 +24132,9 @@ export type RancherTemplateBaseQuestion = {
     /**
      * Validate
      */
-    validate_?: unknown;
+    validate_?: {
+        [key: string]: unknown;
+    };
     type: RancherTemplateQuestionType;
     default?: string | null;
     group?: string;
@@ -23591,7 +24149,9 @@ export type RancherTemplateQuestion = {
     /**
      * Validate
      */
-    validate_?: unknown;
+    validate_?: {
+        [key: string]: unknown;
+    };
     type: RancherTemplateQuestionType;
     default?: string | null;
     group?: string;
@@ -24112,7 +24672,9 @@ export type RequestedOffering = {
     readonly category_uuid: string;
     readonly category_name: string;
     readonly call_managing_organisation: string;
-    attributes?: unknown;
+    attributes?: {
+        [key: string]: unknown;
+    };
     plan?: string | null;
     plan_details: BasePublicPlan;
     options: OfferingOptions;
@@ -24128,7 +24690,9 @@ export type RequestedOffering = {
 
 export type RequestedOfferingRequest = {
     offering: string;
-    attributes?: unknown;
+    attributes?: {
+        [key: string]: unknown;
+    };
     plan?: string | null;
     description?: string;
 };
@@ -24143,16 +24707,24 @@ export type RequestedResource = {
     readonly resource_name: string;
     readonly call_resource_template: string;
     readonly call_resource_template_name: string;
-    attributes?: unknown;
-    limits?: unknown;
+    attributes?: {
+        [key: string]: unknown;
+    };
+    limits?: {
+        [key: string]: unknown;
+    };
     description?: string;
     readonly created_by: string | null;
     readonly created_by_name: string;
 };
 
 export type RequestedResourceRequest = {
-    attributes?: unknown;
-    limits?: unknown;
+    attributes?: {
+        [key: string]: unknown;
+    };
+    limits?: {
+        [key: string]: unknown;
+    };
     description?: string;
     requested_offering_uuid?: string;
     call_resource_template_uuid?: string;
@@ -24182,7 +24754,9 @@ export type Resource = {
     /**
      * Public data used by specific plugin, such as storage mode for OpenStack.
      */
-    readonly offering_plugin_options: unknown;
+    readonly offering_plugin_options: {
+        [key: string]: unknown;
+    };
     readonly provider_name: string;
     readonly provider_uuid: string;
     readonly provider_slug: string;
@@ -24282,7 +24856,9 @@ export type Resource = {
     readonly endpoints: Array<NestedEndpoint>;
     readonly error_message: string;
     readonly error_traceback: string;
-    readonly options: unknown;
+    readonly options: {
+        [key: string]: unknown;
+    } | null;
     readonly available_actions: Array<string>;
     readonly last_sync: string;
     order_in_progress: OrderDetails | null;
@@ -24306,7 +24882,9 @@ export type ResourceBackendIdRequest = {
 };
 
 export type ResourceBackendMetadataRequest = {
-    backend_metadata: unknown;
+    backend_metadata: {
+        [key: string]: unknown;
+    };
 };
 
 export type ResourceClassSummary = {
@@ -24384,7 +24962,9 @@ export type ResourceLimitChangeRequest = {
     readonly customer_name: string;
     readonly offering_uuid: string;
     readonly offering_name: string;
-    requested_limits: unknown;
+    requested_limits: {
+        [key: string]: unknown;
+    };
     readonly current_limits: {
         [key: string]: unknown;
     };
@@ -24405,19 +24985,25 @@ export type ResourceLimitChangeRequest = {
 
 export type ResourceLimitChangeRequestCreate = {
     resource: string;
-    requested_limits: unknown;
+    requested_limits: {
+        [key: string]: unknown;
+    };
     readonly uuid: string;
     readonly state: string;
 };
 
 export type ResourceLimitChangeRequestCreateRequest = {
     resource: string;
-    requested_limits: unknown;
+    requested_limits: {
+        [key: string]: unknown;
+    };
 };
 
 export type ResourceLimitChangeRequestRequest = {
     resource: string;
-    requested_limits: unknown;
+    requested_limits: {
+        [key: string]: unknown;
+    };
     /**
      * Optional comment provided during review
      */
@@ -24480,7 +25066,9 @@ export type ResourceOfferingRequest = {
 };
 
 export type ResourceOptionsRequest = {
-    options?: unknown;
+    options?: {
+        [key: string]: unknown;
+    } | null;
 };
 
 export type ResourcePausedRequest = {
@@ -24507,11 +25095,15 @@ export type ResourceProject = {
     /**
      * Dictionary mapping component types to quota values. Same format as Resource.limits.
      */
-    limits?: unknown;
+    limits?: {
+        [key: string]: unknown;
+    };
     /**
      * Dictionary mapping component types to current usage amounts. Populated by backend synchronization.
      */
-    readonly current_usages: unknown;
+    readonly current_usages: {
+        [key: string]: unknown;
+    };
     readonly resource_uuid: string;
     readonly resource_name: string;
     readonly created: string;
@@ -24523,7 +25115,9 @@ export type ResourceProject = {
      * Required. 128 characters or fewer. Lowercase letters, numbers and @/./+/-/_ characters
      */
     readonly removed_by_username: string;
-    readonly termination_metadata: unknown;
+    readonly termination_metadata: {
+        [key: string]: unknown;
+    };
 };
 
 export type ResourceProjectBackendIdRequest = {
@@ -24555,7 +25149,9 @@ export type ResourceProjectRequest = {
     /**
      * Dictionary mapping component types to quota values. Same format as Resource.limits.
      */
-    limits?: unknown;
+    limits?: {
+        [key: string]: unknown;
+    };
 };
 
 export type ResourceProvisioningStats = {
@@ -24679,7 +25275,9 @@ export type ResourceSetLimitsRequest = {
     /**
      * Dictionary mapping component types to their new limit values
      */
-    limits: unknown;
+    limits: {
+        [key: string]: unknown;
+    };
 };
 
 export type ResourceSetStateErredRequest = {
@@ -24697,7 +25295,9 @@ export type ResourceSuggestNameRequest = {
     project: string;
     offering: string;
     plan?: string | null;
-    attributes?: unknown;
+    attributes?: {
+        [key: string]: unknown;
+    };
 };
 
 export type ResourceSwitchPlanRequest = {
@@ -24729,7 +25329,9 @@ export type ResourceTerminateRequest = {
      *
      * Optional attributes/parameters to pass to the termination operation
      */
-    attributes?: unknown;
+    attributes?: {
+        [key: string]: unknown;
+    };
 };
 
 export type ResourceUpdate = {
@@ -25085,7 +25687,9 @@ export type ReviewerProfile = {
     /**
      * List of name variants used in publications
      */
-    alternative_names?: unknown;
+    alternative_names?: {
+        [key: string]: unknown;
+    };
     readonly affiliations: Array<ReviewerAffiliation>;
     readonly expertise_set: Array<ReviewerExpertise>;
     readonly publications: Array<ReviewerPublication>;
@@ -25124,7 +25728,9 @@ export type ReviewerProfileCreateRequest = {
     /**
      * List of name variants used in publications
      */
-    alternative_names?: unknown;
+    alternative_names?: {
+        [key: string]: unknown;
+    };
     /**
      * Whether reviewer is currently accepting review requests
      */
@@ -25143,7 +25749,9 @@ export type ReviewerProfileRequest = {
     /**
      * List of name variants used in publications
      */
-    alternative_names?: unknown;
+    alternative_names?: {
+        [key: string]: unknown;
+    };
     /**
      * Whether reviewer is currently accepting review requests
      */
@@ -25167,11 +25775,15 @@ export type ReviewerPublication = {
     /**
      * List of co-author names and identifiers
      */
-    coauthors?: unknown;
+    coauthors?: {
+        [key: string]: unknown;
+    };
     /**
      * External identifiers: {"semantic_scholar": "...", "pubmed": "..."}
      */
-    external_ids?: unknown;
+    external_ids?: {
+        [key: string]: unknown;
+    };
     /**
      * User can exclude old papers from expertise matching
      */
@@ -25195,11 +25807,15 @@ export type ReviewerPublicationRequest = {
     /**
      * List of co-author names and identifiers
      */
-    coauthors?: unknown;
+    coauthors?: {
+        [key: string]: unknown;
+    };
     /**
      * External identifiers: {"semantic_scholar": "...", "pubmed": "..."}
      */
-    external_ids?: unknown;
+    external_ids?: {
+        [key: string]: unknown;
+    };
     /**
      * User can exclude old papers from expertise matching
      */
@@ -25256,11 +25872,15 @@ export type ReviewerSuggestion = {
     /**
      * Keywords from reviewer's expertise that matched the source text
      */
-    readonly matched_keywords: unknown;
+    readonly matched_keywords: {
+        [key: string]: unknown;
+    };
     /**
      * Top proposals with highest affinity: [{uuid, name, slug, affinity}, ...]
      */
-    readonly top_matching_proposals: unknown;
+    readonly top_matching_proposals: {
+        [key: string]: unknown;
+    };
     /**
      * What content was used to generate this suggestion
      */
@@ -25683,7 +26303,9 @@ export type RobotAccount = {
      * Users who have access to this robot account.
      */
     users?: Array<string>;
-    keys?: unknown;
+    keys?: {
+        [key: string]: unknown;
+    };
     readonly backend_id: string;
     readonly fingerprints: Array<Fingerprint>;
     responsible_user?: string | null;
@@ -25705,7 +26327,9 @@ export type RobotAccountDetails = {
      */
     type: string;
     readonly users: Array<BasicUser>;
-    keys?: unknown;
+    keys?: {
+        [key: string]: unknown;
+    };
     readonly backend_id: string;
     readonly fingerprints: Array<Fingerprint>;
     responsible_user: BasicUser | null;
@@ -25740,7 +26364,9 @@ export type RobotAccountRequest = {
      * Users who have access to this robot account.
      */
     users?: Array<string>;
-    keys?: unknown;
+    keys?: {
+        [key: string]: unknown;
+    };
     responsible_user?: string | null;
 };
 
@@ -26005,7 +26631,9 @@ export type RoleModifyRequest = {
      * Description [cs]
      */
     description_cs?: string | null;
-    permissions: unknown;
+    permissions: {
+        [key: string]: unknown;
+    };
     is_active?: boolean;
     content_type: string;
 };
@@ -26389,7 +27017,9 @@ export type ServiceProvider = {
     /**
      * List of allowed domains for offering endpoints. Only staff can modify this field.
      */
-    allowed_domains?: unknown;
+    allowed_domains?: {
+        [key: string]: unknown;
+    };
 };
 
 export type ServiceProviderAccess = {
@@ -26452,7 +27082,9 @@ export type ServiceProviderRequest = {
     /**
      * List of allowed domains for offering endpoints. Only staff can modify this field.
      */
-    allowed_domains?: unknown;
+    allowed_domains?: {
+        [key: string]: unknown;
+    };
 };
 
 export type ServiceProviderRevenues = {
@@ -26627,7 +27259,9 @@ export type SetTokenQuotaRequest = {
 export type SettingsItem = {
     key: string;
     description: string;
-    default?: unknown;
+    default?: {
+        [key: string]: unknown;
+    };
     type: string;
     options?: Array<SettingsItemOption>;
 };
@@ -26838,7 +27472,9 @@ export type SlurmCommandHistory = {
     /**
      * Command parameters as key-value pairs
      */
-    parameters?: unknown;
+    parameters?: {
+        [key: string]: unknown;
+    };
     readonly executed_at: string;
     /**
      * Whether command was executed in production or emulator mode
@@ -26894,7 +27530,9 @@ export type SlurmPeriodicUsagePolicy = {
     /**
      * Fields for saving actions extra data. Keys are name of actions.
      */
-    options?: unknown;
+    options?: {
+        [key: string]: unknown;
+    };
     readonly affected_resources_count: number;
     organization_groups?: Array<string>;
     /**
@@ -26915,7 +27553,9 @@ export type SlurmPeriodicUsagePolicy = {
     /**
      * TRES billing weights (e.g., {"CPU": 0.015625, "Mem": 0.001953125, "GRES/gpu": 0.25})
      */
-    tres_billing_weights?: unknown;
+    tres_billing_weights?: {
+        [key: string]: unknown;
+    };
     /**
      * Maximum percentage of base allocation that can carry over from unused previous period (0-100)
      */
@@ -26948,7 +27588,9 @@ export type SlurmPeriodicUsagePolicyRequest = {
     /**
      * Fields for saving actions extra data. Keys are name of actions.
      */
-    options?: unknown;
+    options?: {
+        [key: string]: unknown;
+    };
     organization_groups?: Array<string>;
     /**
      * If True, policy applies to all customers. Mutually exclusive with organization_groups.
@@ -26967,7 +27609,9 @@ export type SlurmPeriodicUsagePolicyRequest = {
     /**
      * TRES billing weights (e.g., {"CPU": 0.015625, "Mem": 0.001953125, "GRES/gpu": 0.25})
      */
-    tres_billing_weights?: unknown;
+    tres_billing_weights?: {
+        [key: string]: unknown;
+    };
     /**
      * Maximum percentage of base allocation that can carry over from unused previous period (0-100)
      */
@@ -27075,15 +27719,21 @@ export type SlurmPolicyEvaluationLog = {
     /**
      * List of actions taken during this evaluation (e.g. ['pause', 'notify'])
      */
-    actions_taken?: unknown;
+    actions_taken?: {
+        [key: string]: unknown;
+    };
     /**
      * Resource state before evaluation: {paused: bool, downscaled: bool}
      */
-    previous_state?: unknown;
+    previous_state?: {
+        [key: string]: unknown;
+    };
     /**
      * Resource state after evaluation: {paused: bool, downscaled: bool}
      */
-    new_state?: unknown;
+    new_state?: {
+        [key: string]: unknown;
+    };
     /**
      * Whether a STOMP message was sent to the site agent
      */
@@ -27095,7 +27745,9 @@ export type SlurmPolicyEvaluationLog = {
     /**
      * Response payload from the site agent
      */
-    site_agent_response?: unknown;
+    site_agent_response?: {
+        [key: string]: unknown;
+    } | null;
     /**
      * When this evaluation was performed
      */
@@ -27199,7 +27851,9 @@ export type SoftwareCatalog = {
     /**
      * Catalog-specific metadata (architecture maps, API endpoints, etc.)
      */
-    metadata?: unknown;
+    metadata?: {
+        [key: string]: unknown;
+    };
     /**
      * Whether to automatically update this catalog via scheduled tasks
      */
@@ -27246,7 +27900,9 @@ export type SoftwareCatalogRequest = {
     /**
      * Catalog-specific metadata (architecture maps, API endpoints, etc.)
      */
-    metadata?: unknown;
+    metadata?: {
+        [key: string]: unknown;
+    };
     /**
      * Whether to automatically update this catalog via scheduled tasks
      */
@@ -27278,15 +27934,21 @@ export type SoftwarePackage = {
     /**
      * Package categories (e.g., ['bio', 'hpc', 'build-tools'])
      */
-    categories?: unknown;
+    categories?: {
+        [key: string]: unknown;
+    };
     /**
      * Software licenses (e.g., ['GPL-3.0', 'MIT'])
      */
-    licenses?: unknown;
+    licenses?: {
+        [key: string]: unknown;
+    };
     /**
      * Package maintainers
      */
-    maintainers?: unknown;
+    maintainers?: {
+        [key: string]: unknown;
+    };
     /**
      * Whether this package is an extension of another package
      */
@@ -27310,15 +27972,21 @@ export type SoftwarePackageRequest = {
     /**
      * Package categories (e.g., ['bio', 'hpc', 'build-tools'])
      */
-    categories?: unknown;
+    categories?: {
+        [key: string]: unknown;
+    };
     /**
      * Software licenses (e.g., ['GPL-3.0', 'MIT'])
      */
-    licenses?: unknown;
+    licenses?: {
+        [key: string]: unknown;
+    };
     /**
      * Package maintainers
      */
-    maintainers?: unknown;
+    maintainers?: {
+        [key: string]: unknown;
+    };
     /**
      * Whether this package is an extension of another package
      */
@@ -27349,11 +28017,15 @@ export type SoftwareTarget = {
     /**
      * Target-specific metadata (build options, system requirements, etc.)
      */
-    readonly metadata: unknown;
+    readonly metadata: {
+        [key: string]: unknown;
+    };
     /**
      * List of GPU architectures this target supports (e.g., ['nvidia/cc70', 'nvidia/cc90'])
      */
-    readonly gpu_architectures: unknown;
+    readonly gpu_architectures: {
+        [key: string]: unknown;
+    };
 };
 
 export type SoftwareToolchain = {
@@ -27375,11 +28047,15 @@ export type SoftwareVersion = {
     /**
      * Package dependencies (format varies by catalog type)
      */
-    readonly dependencies: unknown;
+    readonly dependencies: {
+        [key: string]: unknown;
+    };
     /**
      * Version-specific metadata (toolchains, build info, modules, etc.)
      */
-    readonly metadata: unknown;
+    readonly metadata: {
+        [key: string]: unknown;
+    };
     readonly package_name: string;
     readonly catalog_type: string;
     readonly target_count: number;
@@ -27656,7 +28332,9 @@ export type SystemLog = {
     readonly level_number: number;
     readonly logger_name: string;
     readonly message: string;
-    readonly context: unknown;
+    readonly context: {
+        [key: string]: unknown;
+    };
 };
 
 export type SystemLogInstance = {
@@ -27915,7 +28593,9 @@ export type ThreadSession = {
     readonly uuid: string;
     name?: string;
     readonly chat_session: string;
-    readonly flags: unknown;
+    readonly flags: {
+        [key: string]: unknown;
+    };
     is_archived?: boolean;
     readonly message_count: number;
     readonly input_tokens: number | null;
@@ -28052,7 +28732,9 @@ export type ToolExecuteRequest = {
     /**
      * Tool arguments.
      */
-    arguments?: unknown;
+    arguments?: {
+        [key: string]: unknown;
+    };
 };
 
 export type TopQueue = {
@@ -28107,7 +28789,9 @@ export type TopologyNode = {
     name: string;
     uuid?: string | null;
     attrs: {
-        [key: string]: unknown;
+        [key: string]: {
+            [key: string]: unknown;
+        };
     };
 };
 
@@ -28373,7 +29057,9 @@ export type User = {
     /**
      * Person's affiliation within organization such as student, faculty, staff.
      */
-    readonly affiliations: unknown;
+    readonly affiliations: {
+        [key: string]: unknown;
+    };
     first_name?: string;
     last_name?: string;
     birth_date?: string | null;
@@ -28410,7 +29096,9 @@ export type User = {
     /**
      * List of all citizenships (ISO 3166-1 alpha-2 codes)
      */
-    nationalities?: unknown;
+    nationalities?: {
+        [key: string]: unknown;
+    };
     organization_country?: string;
     /**
      * SCHAC URN (e.g., urn:schac:homeOrganizationType:int:university)
@@ -28423,7 +29111,9 @@ export type User = {
     /**
      * REFEDS assurance profile URIs from identity provider
      */
-    eduperson_assurance?: unknown;
+    eduperson_assurance?: {
+        [key: string]: unknown;
+    };
     /**
      * Designates whether the user is allowed to manage remote user identities.
      */
@@ -28435,15 +29125,21 @@ export type User = {
     /**
      * Per-attribute source and freshness tracking. Format: {'field_name': {'source': 'isd:<name>', 'timestamp': 'ISO8601'}}.
      */
-    readonly attribute_sources?: unknown;
+    readonly attribute_sources?: {
+        [key: string]: unknown;
+    };
     /**
      * List of ISD source identifiers this user can manage via Identity Bridge. E.g., ['isd:puhuri', 'isd:fenix']. Non-empty list implies identity manager role.
      */
-    managed_isds?: unknown;
+    managed_isds?: {
+        [key: string]: unknown;
+    };
     /**
      * List of ISDs that have asserted this user exists. User is deactivated when this becomes empty.
      */
-    readonly active_isds?: unknown;
+    readonly active_isds?: {
+        [key: string]: unknown;
+    };
     /**
      * Reason why the user was deactivated. Visible to staff and support.
      */
@@ -28820,7 +29516,9 @@ export type UserMe = {
     /**
      * Person's affiliation within organization such as student, faculty, staff.
      */
-    readonly affiliations: unknown;
+    readonly affiliations: {
+        [key: string]: unknown;
+    };
     first_name?: string;
     last_name?: string;
     birth_date?: string | null;
@@ -28857,7 +29555,9 @@ export type UserMe = {
     /**
      * List of all citizenships (ISO 3166-1 alpha-2 codes)
      */
-    nationalities?: unknown;
+    nationalities?: {
+        [key: string]: unknown;
+    };
     organization_country?: string;
     /**
      * SCHAC URN (e.g., urn:schac:homeOrganizationType:int:university)
@@ -28870,7 +29570,9 @@ export type UserMe = {
     /**
      * REFEDS assurance profile URIs from identity provider
      */
-    eduperson_assurance?: unknown;
+    eduperson_assurance?: {
+        [key: string]: unknown;
+    };
     /**
      * Designates whether the user is allowed to manage remote user identities.
      */
@@ -28882,15 +29584,21 @@ export type UserMe = {
     /**
      * Per-attribute source and freshness tracking. Format: {'field_name': {'source': 'isd:<name>', 'timestamp': 'ISO8601'}}.
      */
-    readonly attribute_sources?: unknown;
+    readonly attribute_sources?: {
+        [key: string]: unknown;
+    };
     /**
      * List of ISD source identifiers this user can manage via Identity Bridge. E.g., ['isd:puhuri', 'isd:fenix']. Non-empty list implies identity manager role.
      */
-    managed_isds?: unknown;
+    managed_isds?: {
+        [key: string]: unknown;
+    };
     /**
      * List of ISDs that have asserted this user exists. User is deactivated when this becomes empty.
      */
-    readonly active_isds?: unknown;
+    readonly active_isds?: {
+        [key: string]: unknown;
+    };
     /**
      * Reason why the user was deactivated. Visible to staff and support.
      */
@@ -29049,7 +29757,9 @@ export type UserRequest = {
     /**
      * List of all citizenships (ISO 3166-1 alpha-2 codes)
      */
-    nationalities?: unknown;
+    nationalities?: {
+        [key: string]: unknown;
+    };
     organization_country?: string;
     /**
      * SCHAC URN (e.g., urn:schac:homeOrganizationType:int:university)
@@ -29062,7 +29772,9 @@ export type UserRequest = {
     /**
      * REFEDS assurance profile URIs from identity provider
      */
-    eduperson_assurance?: unknown;
+    eduperson_assurance?: {
+        [key: string]: unknown;
+    };
     /**
      * Designates whether the user is allowed to manage remote user identities.
      */
@@ -29074,7 +29786,9 @@ export type UserRequest = {
     /**
      * List of ISD source identifiers this user can manage via Identity Bridge. E.g., ['isd:puhuri', 'isd:fenix']. Non-empty list implies identity manager role.
      */
-    managed_isds?: unknown;
+    managed_isds?: {
+        [key: string]: unknown;
+    };
     /**
      * Reason why the user was deactivated. Visible to staff and support.
      */
@@ -29940,12 +30654,18 @@ export type CustomerRequestForm = {
      * Number of extra days after project end date before resources are terminated
      */
     grace_period_days?: number | null;
-    user_email_patterns?: unknown;
-    user_affiliations?: unknown;
+    user_email_patterns?: {
+        [key: string]: unknown;
+    };
+    user_affiliations?: {
+        [key: string]: unknown;
+    };
     /**
      * List of allowed identity sources (identity providers).
      */
-    user_identity_sources?: unknown;
+    user_identity_sources?: {
+        [key: string]: unknown;
+    };
     name: string;
     /**
      * URL-friendly identifier. Only editable by staff users.
@@ -30029,12 +30749,18 @@ export type CustomerRequestMultipart = {
      * Number of extra days after project end date before resources are terminated
      */
     grace_period_days?: number | null;
-    user_email_patterns?: unknown;
-    user_affiliations?: unknown;
+    user_email_patterns?: {
+        [key: string]: unknown;
+    };
+    user_affiliations?: {
+        [key: string]: unknown;
+    };
     /**
      * List of allowed identity sources (identity providers).
      */
-    user_identity_sources?: unknown;
+    user_identity_sources?: {
+        [key: string]: unknown;
+    };
     name: string;
     /**
      * URL-friendly identifier. Only editable by staff users.
@@ -30118,12 +30844,18 @@ export type PatchedCustomerRequestForm = {
      * Number of extra days after project end date before resources are terminated
      */
     grace_period_days?: number | null;
-    user_email_patterns?: unknown;
-    user_affiliations?: unknown;
+    user_email_patterns?: {
+        [key: string]: unknown;
+    };
+    user_affiliations?: {
+        [key: string]: unknown;
+    };
     /**
      * List of allowed identity sources (identity providers).
      */
-    user_identity_sources?: unknown;
+    user_identity_sources?: {
+        [key: string]: unknown;
+    };
     name?: string;
     /**
      * URL-friendly identifier. Only editable by staff users.
@@ -30207,12 +30939,18 @@ export type PatchedCustomerRequestMultipart = {
      * Number of extra days after project end date before resources are terminated
      */
     grace_period_days?: number | null;
-    user_email_patterns?: unknown;
-    user_affiliations?: unknown;
+    user_email_patterns?: {
+        [key: string]: unknown;
+    };
+    user_affiliations?: {
+        [key: string]: unknown;
+    };
     /**
      * List of allowed identity sources (identity providers).
      */
-    user_identity_sources?: unknown;
+    user_identity_sources?: {
+        [key: string]: unknown;
+    };
     name?: string;
     /**
      * URL-friendly identifier. Only editable by staff users.
@@ -30489,7 +31227,9 @@ export type OfferingCreateRequestForm = {
     access_url?: string;
     customer?: string | null;
     category: string;
-    attributes?: unknown;
+    attributes?: {
+        [key: string]: unknown;
+    };
     options?: OfferingOptionsRequest;
     resource_options?: OfferingOptionsRequest;
     components?: Array<OfferingComponentRequest>;
@@ -30519,9 +31259,13 @@ export type OfferingCreateRequestForm = {
     /**
      * Validation rules for resource backend_id: format regex and uniqueness scope.
      */
-    backend_id_rules?: unknown;
+    backend_id_rules?: {
+        [key: string]: unknown;
+    };
     image?: Blob | File | null;
-    backend_metadata?: unknown;
+    backend_metadata?: {
+        [key: string]: unknown;
+    };
     compliance_checklist?: string | null;
     offering_group?: string | null;
     limits?: {
@@ -30546,7 +31290,9 @@ export type OfferingCreateRequestMultipart = {
     access_url?: string;
     customer?: string | null;
     category: string;
-    attributes?: unknown;
+    attributes?: {
+        [key: string]: unknown;
+    };
     options?: OfferingOptionsRequest;
     resource_options?: OfferingOptionsRequest;
     components?: Array<OfferingComponentRequest>;
@@ -30576,9 +31322,13 @@ export type OfferingCreateRequestMultipart = {
     /**
      * Validation rules for resource backend_id: format regex and uniqueness scope.
      */
-    backend_id_rules?: unknown;
+    backend_id_rules?: {
+        [key: string]: unknown;
+    };
     image?: Blob | File | null;
-    backend_metadata?: unknown;
+    backend_metadata?: {
+        [key: string]: unknown;
+    };
     compliance_checklist?: string | null;
     offering_group?: string | null;
     limits?: {
@@ -30696,7 +31446,9 @@ export type ServiceProviderRequestForm = {
     /**
      * List of allowed domains for offering endpoints. Only staff can modify this field.
      */
-    allowed_domains?: unknown;
+    allowed_domains?: {
+        [key: string]: unknown;
+    };
 };
 
 export type ServiceProviderRequestMultipart = {
@@ -30707,7 +31459,9 @@ export type ServiceProviderRequestMultipart = {
     /**
      * List of allowed domains for offering endpoints. Only staff can modify this field.
      */
-    allowed_domains?: unknown;
+    allowed_domains?: {
+        [key: string]: unknown;
+    };
 };
 
 export type PatchedServiceProviderRequestForm = {
@@ -30717,7 +31471,9 @@ export type PatchedServiceProviderRequestForm = {
     /**
      * List of allowed domains for offering endpoints. Only staff can modify this field.
      */
-    allowed_domains?: unknown;
+    allowed_domains?: {
+        [key: string]: unknown;
+    };
 };
 
 export type PatchedServiceProviderRequestMultipart = {
@@ -30727,7 +31483,9 @@ export type PatchedServiceProviderRequestMultipart = {
     /**
      * List of allowed domains for offering endpoints. Only staff can modify this field.
      */
-    allowed_domains?: unknown;
+    allowed_domains?: {
+        [key: string]: unknown;
+    };
 };
 
 export type OnboardingJustificationDocumentationRequestForm = {
@@ -30786,12 +31544,18 @@ export type ProjectRequestForm = {
      * Number of extra days after project end date before resources are terminated. Overrides customer-level setting.
      */
     grace_period_days?: number | null;
-    user_email_patterns?: unknown;
-    user_affiliations?: unknown;
+    user_email_patterns?: {
+        [key: string]: unknown;
+    };
+    user_affiliations?: {
+        [key: string]: unknown;
+    };
     /**
      * List of allowed identity sources (identity providers).
      */
-    user_identity_sources?: unknown;
+    user_identity_sources?: {
+        [key: string]: unknown;
+    };
     affiliation_uuid?: string | null;
     science_sub_domain?: string | null;
 };
@@ -30838,12 +31602,18 @@ export type ProjectRequestMultipart = {
      * Number of extra days after project end date before resources are terminated. Overrides customer-level setting.
      */
     grace_period_days?: number | null;
-    user_email_patterns?: unknown;
-    user_affiliations?: unknown;
+    user_email_patterns?: {
+        [key: string]: unknown;
+    };
+    user_affiliations?: {
+        [key: string]: unknown;
+    };
     /**
      * List of allowed identity sources (identity providers).
      */
-    user_identity_sources?: unknown;
+    user_identity_sources?: {
+        [key: string]: unknown;
+    };
     affiliation_uuid?: string | null;
     science_sub_domain?: string | null;
 };
@@ -30890,12 +31660,18 @@ export type PatchedProjectRequestForm = {
      * Number of extra days after project end date before resources are terminated. Overrides customer-level setting.
      */
     grace_period_days?: number | null;
-    user_email_patterns?: unknown;
-    user_affiliations?: unknown;
+    user_email_patterns?: {
+        [key: string]: unknown;
+    };
+    user_affiliations?: {
+        [key: string]: unknown;
+    };
     /**
      * List of allowed identity sources (identity providers).
      */
-    user_identity_sources?: unknown;
+    user_identity_sources?: {
+        [key: string]: unknown;
+    };
     affiliation_uuid?: string | null;
     science_sub_domain?: string | null;
 };
@@ -30942,12 +31718,18 @@ export type PatchedProjectRequestMultipart = {
      * Number of extra days after project end date before resources are terminated. Overrides customer-level setting.
      */
     grace_period_days?: number | null;
-    user_email_patterns?: unknown;
-    user_affiliations?: unknown;
+    user_email_patterns?: {
+        [key: string]: unknown;
+    };
+    user_affiliations?: {
+        [key: string]: unknown;
+    };
     /**
      * List of allowed identity sources (identity providers).
      */
-    user_identity_sources?: unknown;
+    user_identity_sources?: {
+        [key: string]: unknown;
+    };
     affiliation_uuid?: string | null;
     science_sub_domain?: string | null;
 };
@@ -31085,6 +31867,7 @@ export type ConstanceSettingsRequestForm = {
     SMAX_CREATION_SOURCE_NAME?: string;
     SMAX_REQUESTS_OFFERING?: string;
     SMAX_VERIFY_SSL?: boolean;
+    SMAX_CERTIFICATE?: string;
     SMAX_WEBHOOK_SHARED_SECRET?: string;
     ENABLE_MOCK_SERVICE_ACCOUNT_BACKEND?: boolean;
     ENABLE_MOCK_COURSE_ACCOUNT_BACKEND?: boolean;
@@ -31383,6 +32166,7 @@ export type ConstanceSettingsRequestMultipart = {
     SMAX_CREATION_SOURCE_NAME?: string;
     SMAX_REQUESTS_OFFERING?: string;
     SMAX_VERIFY_SSL?: boolean;
+    SMAX_CERTIFICATE?: string;
     SMAX_WEBHOOK_SHARED_SECRET?: string;
     ENABLE_MOCK_SERVICE_ACCOUNT_BACKEND?: boolean;
     ENABLE_MOCK_COURSE_ACCOUNT_BACKEND?: boolean;
@@ -31692,7 +32476,9 @@ export type UserRequestForm = {
     /**
      * List of all citizenships (ISO 3166-1 alpha-2 codes)
      */
-    nationalities?: unknown;
+    nationalities?: {
+        [key: string]: unknown;
+    };
     organization_country?: string;
     /**
      * SCHAC URN (e.g., urn:schac:homeOrganizationType:int:university)
@@ -31705,7 +32491,9 @@ export type UserRequestForm = {
     /**
      * REFEDS assurance profile URIs from identity provider
      */
-    eduperson_assurance?: unknown;
+    eduperson_assurance?: {
+        [key: string]: unknown;
+    };
     /**
      * Designates whether the user is allowed to manage remote user identities.
      */
@@ -31717,7 +32505,9 @@ export type UserRequestForm = {
     /**
      * List of ISD source identifiers this user can manage via Identity Bridge. E.g., ['isd:puhuri', 'isd:fenix']. Non-empty list implies identity manager role.
      */
-    managed_isds?: unknown;
+    managed_isds?: {
+        [key: string]: unknown;
+    };
     /**
      * Reason why the user was deactivated. Visible to staff and support.
      */
@@ -31792,7 +32582,9 @@ export type UserRequestMultipart = {
     /**
      * List of all citizenships (ISO 3166-1 alpha-2 codes)
      */
-    nationalities?: unknown;
+    nationalities?: {
+        [key: string]: unknown;
+    };
     organization_country?: string;
     /**
      * SCHAC URN (e.g., urn:schac:homeOrganizationType:int:university)
@@ -31805,7 +32597,9 @@ export type UserRequestMultipart = {
     /**
      * REFEDS assurance profile URIs from identity provider
      */
-    eduperson_assurance?: unknown;
+    eduperson_assurance?: {
+        [key: string]: unknown;
+    };
     /**
      * Designates whether the user is allowed to manage remote user identities.
      */
@@ -31817,7 +32611,9 @@ export type UserRequestMultipart = {
     /**
      * List of ISD source identifiers this user can manage via Identity Bridge. E.g., ['isd:puhuri', 'isd:fenix']. Non-empty list implies identity manager role.
      */
-    managed_isds?: unknown;
+    managed_isds?: {
+        [key: string]: unknown;
+    };
     /**
      * Reason why the user was deactivated. Visible to staff and support.
      */
@@ -31891,7 +32687,9 @@ export type PatchedUserRequestForm = {
     /**
      * List of all citizenships (ISO 3166-1 alpha-2 codes)
      */
-    nationalities?: unknown;
+    nationalities?: {
+        [key: string]: unknown;
+    };
     organization_country?: string;
     /**
      * SCHAC URN (e.g., urn:schac:homeOrganizationType:int:university)
@@ -31904,7 +32702,9 @@ export type PatchedUserRequestForm = {
     /**
      * REFEDS assurance profile URIs from identity provider
      */
-    eduperson_assurance?: unknown;
+    eduperson_assurance?: {
+        [key: string]: unknown;
+    };
     /**
      * Designates whether the user is allowed to manage remote user identities.
      */
@@ -31916,7 +32716,9 @@ export type PatchedUserRequestForm = {
     /**
      * List of ISD source identifiers this user can manage via Identity Bridge. E.g., ['isd:puhuri', 'isd:fenix']. Non-empty list implies identity manager role.
      */
-    managed_isds?: unknown;
+    managed_isds?: {
+        [key: string]: unknown;
+    };
     /**
      * Reason why the user was deactivated. Visible to staff and support.
      */
@@ -31990,7 +32792,9 @@ export type PatchedUserRequestMultipart = {
     /**
      * List of all citizenships (ISO 3166-1 alpha-2 codes)
      */
-    nationalities?: unknown;
+    nationalities?: {
+        [key: string]: unknown;
+    };
     organization_country?: string;
     /**
      * SCHAC URN (e.g., urn:schac:homeOrganizationType:int:university)
@@ -32003,7 +32807,9 @@ export type PatchedUserRequestMultipart = {
     /**
      * REFEDS assurance profile URIs from identity provider
      */
-    eduperson_assurance?: unknown;
+    eduperson_assurance?: {
+        [key: string]: unknown;
+    };
     /**
      * Designates whether the user is allowed to manage remote user identities.
      */
@@ -32015,7 +32821,9 @@ export type PatchedUserRequestMultipart = {
     /**
      * List of ISD source identifiers this user can manage via Identity Bridge. E.g., ['isd:puhuri', 'isd:fenix']. Non-empty list implies identity manager role.
      */
-    managed_isds?: unknown;
+    managed_isds?: {
+        [key: string]: unknown;
+    };
     /**
      * Reason why the user was deactivated. Visible to staff and support.
      */
