@@ -3102,9 +3102,7 @@ export type BroadcastMessage = {
     readonly created: string;
     subject: string;
     body: string;
-    query: {
-        [key: string]: unknown;
-    };
+    query: QueryOutput;
     readonly author_full_name: string;
     readonly emails: {
         [key: string]: unknown;
@@ -3113,13 +3111,17 @@ export type BroadcastMessage = {
     send_at?: string | null;
 };
 
-export type BroadcastMessageRequest = {
+export type BroadcastMessageCreateRequest = {
     subject: string;
     body: string;
-    query: {
-        [key: string]: unknown;
-    };
+    query: BroadcastMessageQueryRequest;
     send_at?: string | null;
+};
+
+export type BroadcastMessageQueryRequest = {
+    customers?: Array<string>;
+    offerings?: Array<string>;
+    all_users?: boolean;
 };
 
 export type BroadcastMessageStateEnum = 'DRAFT' | 'SCHEDULED' | 'SENT';
@@ -8838,18 +8840,9 @@ export type GroupInvitation = {
      * UUID of the project role to grant if auto_create_project is enabled
      */
     project_role?: string | null;
-    user_affiliations?: {
-        [key: string]: unknown;
-    };
-    user_email_patterns?: {
-        [key: string]: unknown;
-    };
-    /**
-     * List of allowed identity sources (identity providers).
-     */
-    user_identity_sources?: {
-        [key: string]: unknown;
-    };
+    user_affiliations?: Array<string>;
+    user_email_patterns?: Array<string>;
+    user_identity_sources?: Array<string>;
     /**
      * Image URL of the invitation scope (Customer or Project)
      */
@@ -8897,18 +8890,9 @@ export type GroupInvitationRequest = {
      * UUID of the project role to grant if auto_create_project is enabled
      */
     project_role?: string | null;
-    user_affiliations?: {
-        [key: string]: unknown;
-    };
-    user_email_patterns?: {
-        [key: string]: unknown;
-    };
-    /**
-     * List of allowed identity sources (identity providers).
-     */
-    user_identity_sources?: {
-        [key: string]: unknown;
-    };
+    user_affiliations?: Array<string>;
+    user_email_patterns?: Array<string>;
+    user_identity_sources?: Array<string>;
     /**
      * Custom description text displayed to users viewing this invitation.
      */
@@ -8952,18 +8936,9 @@ export type GroupInvitationUpdate = {
      * UUID of the project role to grant if auto_create_project is enabled
      */
     project_role?: string | null;
-    user_affiliations?: {
-        [key: string]: unknown;
-    };
-    user_email_patterns?: {
-        [key: string]: unknown;
-    };
-    /**
-     * List of allowed identity sources (identity providers).
-     */
-    user_identity_sources?: {
-        [key: string]: unknown;
-    };
+    user_affiliations?: Array<string>;
+    user_email_patterns?: Array<string>;
+    user_identity_sources?: Array<string>;
     /**
      * Custom description text displayed to users viewing this invitation.
      */
@@ -9007,18 +8982,9 @@ export type GroupInvitationUpdateRequest = {
      * UUID of the project role to grant if auto_create_project is enabled
      */
     project_role?: string | null;
-    user_affiliations?: {
-        [key: string]: unknown;
-    };
-    user_email_patterns?: {
-        [key: string]: unknown;
-    };
-    /**
-     * List of allowed identity sources (identity providers).
-     */
-    user_identity_sources?: {
-        [key: string]: unknown;
-    };
+    user_affiliations?: Array<string>;
+    user_email_patterns?: Array<string>;
+    user_identity_sources?: Array<string>;
     /**
      * Custom description text displayed to users viewing this invitation.
      */
@@ -9149,6 +9115,16 @@ export type IsdUserCount = {
     oldest_sync: string | null;
 };
 
+export type IdNamePair = {
+    name: string;
+    uuid: string;
+};
+
+export type IdNamePairRequest = {
+    name: string;
+    uuid: string;
+};
+
 export type IdentityBridgeAllowedFields = {
     allowed_fields: Array<string>;
 };
@@ -9236,6 +9212,8 @@ export type IdentityManager = {
 };
 
 export type IdentityProvider = {
+    protected_fields?: Array<string>;
+    allowed_redirects?: Array<string>;
     provider: string;
     is_active?: boolean;
     /**
@@ -9277,9 +9255,6 @@ export type IdentityProvider = {
      * The endpoint for user details management.
      */
     management_url?: string;
-    protected_fields?: {
-        [key: string]: unknown;
-    };
     /**
      * Space-separated list of scopes to request during authentication.
      */
@@ -9302,15 +9277,11 @@ export type IdentityProvider = {
      * Space-separated list of extra fields to persist.
      */
     extra_fields?: string | null;
-    /**
-     * List of allowed redirect URLs for OAuth authentication. URLs must be exact matches (origin only: scheme + domain + port). HTTPS required except for localhost. No wildcards, paths, query params, or fragments. Example: ["https://portal1.example.com", "https://portal2.example.com:8443"]. If empty, falls back to HOMEPORT_URL setting.
-     */
-    allowed_redirects?: {
-        [key: string]: unknown;
-    };
 };
 
 export type IdentityProviderRequest = {
+    protected_fields?: Array<string>;
+    allowed_redirects?: Array<string>;
     provider: string;
     is_active?: boolean;
     /**
@@ -9336,9 +9307,6 @@ export type IdentityProviderRequest = {
      * The endpoint for user details management.
      */
     management_url?: string;
-    protected_fields?: {
-        [key: string]: unknown;
-    };
     /**
      * Space-separated list of scopes to request during authentication.
      */
@@ -9361,12 +9329,6 @@ export type IdentityProviderRequest = {
      * Space-separated list of extra fields to persist.
      */
     extra_fields?: string | null;
-    /**
-     * List of allowed redirect URLs for OAuth authentication. URLs must be exact matches (origin only: scheme + domain + port). HTTPS required except for localhost. No wildcards, paths, query params, or fragments. Example: ["https://portal1.example.com", "https://portal2.example.com:8443"]. If empty, falls back to HOMEPORT_URL setting.
-     */
-    allowed_redirects?: {
-        [key: string]: unknown;
-    };
 };
 
 export type ImageCreateRequest = {
@@ -17996,9 +17958,6 @@ export type PatchedAzureVirtualMachineRequest = {
 export type PatchedBroadcastMessageRequest = {
     subject?: string;
     body?: string;
-    query?: {
-        [key: string]: unknown;
-    };
     send_at?: string | null;
 };
 
@@ -18426,18 +18385,9 @@ export type PatchedGroupInvitationUpdateRequest = {
      * UUID of the project role to grant if auto_create_project is enabled
      */
     project_role?: string | null;
-    user_affiliations?: {
-        [key: string]: unknown;
-    };
-    user_email_patterns?: {
-        [key: string]: unknown;
-    };
-    /**
-     * List of allowed identity sources (identity providers).
-     */
-    user_identity_sources?: {
-        [key: string]: unknown;
-    };
+    user_affiliations?: Array<string>;
+    user_email_patterns?: Array<string>;
+    user_identity_sources?: Array<string>;
     /**
      * Custom description text displayed to users viewing this invitation.
      */
@@ -18453,6 +18403,8 @@ export type PatchedGroupInvitationUpdateRequest = {
 };
 
 export type PatchedIdentityProviderRequest = {
+    protected_fields?: Array<string>;
+    allowed_redirects?: Array<string>;
     provider?: string;
     is_active?: boolean;
     /**
@@ -18478,9 +18430,6 @@ export type PatchedIdentityProviderRequest = {
      * The endpoint for user details management.
      */
     management_url?: string;
-    protected_fields?: {
-        [key: string]: unknown;
-    };
     /**
      * Space-separated list of scopes to request during authentication.
      */
@@ -18503,12 +18452,6 @@ export type PatchedIdentityProviderRequest = {
      * Space-separated list of extra fields to persist.
      */
     extra_fields?: string | null;
-    /**
-     * List of allowed redirect URLs for OAuth authentication. URLs must be exact matches (origin only: scheme + domain + port). HTTPS required except for localhost. No wildcards, paths, query params, or fragments. Example: ["https://portal1.example.com", "https://portal2.example.com:8443"]. If empty, falls back to HOMEPORT_URL setting.
-     */
-    allowed_redirects?: {
-        [key: string]: unknown;
-    };
 };
 
 export type PatchedInvitationUpdateRequest = {
@@ -19394,18 +19337,8 @@ export type PatchedQuestionAdminRequest = {
      * Maximum value allowed for NUMBER, YEAR, and RATING type questions
      */
     max_value?: string | null;
-    /**
-     * List of allowed file extensions (e.g., ['.pdf', '.doc', '.docx']). If empty, all file types are allowed.
-     */
-    allowed_file_types?: {
-        [key: string]: unknown;
-    };
-    /**
-     * List of allowed MIME types (e.g., ['application/pdf', 'application/msword']). If empty, MIME type validation is not enforced. When both extensions and MIME types are specified, files must match both criteria for security.
-     */
-    allowed_mime_types?: {
-        [key: string]: unknown;
-    };
+    allowed_file_types?: Array<string>;
+    allowed_mime_types?: Array<string>;
     /**
      * Maximum file size in megabytes. If not set, no size limit is enforced.
      */
@@ -19786,9 +19719,7 @@ export type PatchedRobotAccountRequest = {
      * Users who have access to this robot account.
      */
     users?: Array<string>;
-    keys?: {
-        [key: string]: unknown;
-    };
+    keys?: Array<string>;
     responsible_user?: string | null;
 };
 
@@ -20150,6 +20081,7 @@ export type PatchedUserRequest = {
      */
     notifications_enabled?: boolean;
     preferred_language?: string;
+    affiliations?: Array<string>;
     first_name?: string;
     last_name?: string;
     birth_date?: string | null;
@@ -20169,12 +20101,7 @@ export type PatchedUserRequest = {
      * Primary citizenship (ISO 3166-1 alpha-2 code)
      */
     nationality?: string;
-    /**
-     * List of all citizenships (ISO 3166-1 alpha-2 codes)
-     */
-    nationalities?: {
-        [key: string]: unknown;
-    };
+    nationalities?: Array<string>;
     organization_country?: string;
     /**
      * SCHAC URN (e.g., urn:schac:homeOrganizationType:int:university)
@@ -20184,12 +20111,7 @@ export type PatchedUserRequest = {
      * Company registration code of the user's organization, if known
      */
     organization_registry_code?: string;
-    /**
-     * REFEDS assurance profile URIs from identity provider
-     */
-    eduperson_assurance?: {
-        [key: string]: unknown;
-    };
+    eduperson_assurance?: Array<string>;
     /**
      * Designates whether the user is allowed to manage remote user identities.
      */
@@ -20198,12 +20120,8 @@ export type PatchedUserRequest = {
      * Designates whether the user is allowed to create and use personal access tokens.
      */
     can_use_personal_access_tokens?: boolean;
-    /**
-     * List of ISD source identifiers this user can manage via Identity Bridge. E.g., ['isd:puhuri', 'isd:fenix']. Non-empty list implies identity manager role.
-     */
-    managed_isds?: {
-        [key: string]: unknown;
-    };
+    managed_isds?: Array<string>;
+    active_isds?: Array<string>;
     /**
      * Reason why the user was deactivated. Visible to staff and support.
      */
@@ -22777,6 +22695,18 @@ export type PullMarketplaceScriptResourceRequest = {
 
 export type QosStrategyEnum = 'threshold' | 'progressive';
 
+export type QueryOutput = {
+    customers?: Array<IdNamePair>;
+    offerings?: Array<IdNamePair>;
+    all_users?: boolean;
+};
+
+export type QueryOutputRequest = {
+    customers?: Array<IdNamePairRequest>;
+    offerings?: Array<IdNamePairRequest>;
+    all_users?: boolean;
+};
+
 export type QueryPerformance = {
     /**
      * Total sequential scans (potentially expensive)
@@ -22833,18 +22763,8 @@ export type Question = {
      * Maximum value allowed for NUMBER, YEAR, and RATING type questions
      */
     max_value?: string | null;
-    /**
-     * List of allowed file extensions (e.g., ['.pdf', '.doc', '.docx']). If empty, all file types are allowed.
-     */
-    allowed_file_types?: {
-        [key: string]: unknown;
-    };
-    /**
-     * List of allowed MIME types (e.g., ['application/pdf', 'application/msword']). If empty, MIME type validation is not enforced. When both extensions and MIME types are specified, files must match both criteria for security.
-     */
-    allowed_mime_types?: {
-        [key: string]: unknown;
-    };
+    allowed_file_types?: Array<string>;
+    allowed_mime_types?: Array<string>;
     /**
      * Maximum file size in megabytes. If not set, no size limit is enforced.
      */
@@ -22930,18 +22850,8 @@ export type QuestionAdmin = {
      * Maximum value allowed for NUMBER, YEAR, and RATING type questions
      */
     max_value?: string | null;
-    /**
-     * List of allowed file extensions (e.g., ['.pdf', '.doc', '.docx']). If empty, all file types are allowed.
-     */
-    allowed_file_types?: {
-        [key: string]: unknown;
-    };
-    /**
-     * List of allowed MIME types (e.g., ['application/pdf', 'application/msword']). If empty, MIME type validation is not enforced. When both extensions and MIME types are specified, files must match both criteria for security.
-     */
-    allowed_mime_types?: {
-        [key: string]: unknown;
-    };
+    allowed_file_types?: Array<string>;
+    allowed_mime_types?: Array<string>;
     /**
      * Maximum file size in megabytes. If not set, no size limit is enforced.
      */
@@ -23030,18 +22940,8 @@ export type QuestionAdminRequest = {
      * Maximum value allowed for NUMBER, YEAR, and RATING type questions
      */
     max_value?: string | null;
-    /**
-     * List of allowed file extensions (e.g., ['.pdf', '.doc', '.docx']). If empty, all file types are allowed.
-     */
-    allowed_file_types?: {
-        [key: string]: unknown;
-    };
-    /**
-     * List of allowed MIME types (e.g., ['application/pdf', 'application/msword']). If empty, MIME type validation is not enforced. When both extensions and MIME types are specified, files must match both criteria for security.
-     */
-    allowed_mime_types?: {
-        [key: string]: unknown;
-    };
+    allowed_file_types?: Array<string>;
+    allowed_mime_types?: Array<string>;
     /**
      * Maximum file size in megabytes. If not set, no size limit is enforced.
      */
@@ -26303,9 +26203,7 @@ export type RobotAccount = {
      * Users who have access to this robot account.
      */
     users?: Array<string>;
-    keys?: {
-        [key: string]: unknown;
-    };
+    keys?: Array<string>;
     readonly backend_id: string;
     readonly fingerprints: Array<Fingerprint>;
     responsible_user?: string | null;
@@ -26327,9 +26225,7 @@ export type RobotAccountDetails = {
      */
     type: string;
     readonly users: Array<BasicUser>;
-    keys?: {
-        [key: string]: unknown;
-    };
+    keys?: Array<string>;
     readonly backend_id: string;
     readonly fingerprints: Array<Fingerprint>;
     responsible_user: BasicUser | null;
@@ -26364,9 +26260,7 @@ export type RobotAccountRequest = {
      * Users who have access to this robot account.
      */
     users?: Array<string>;
-    keys?: {
-        [key: string]: unknown;
-    };
+    keys?: Array<string>;
     responsible_user?: string | null;
 };
 
@@ -29054,12 +28948,7 @@ export type User = {
     preferred_language?: string;
     readonly permissions: Array<Permission>;
     readonly requested_email: string | null;
-    /**
-     * Person's affiliation within organization such as student, faculty, staff.
-     */
-    readonly affiliations: {
-        [key: string]: unknown;
-    };
+    affiliations?: Array<string>;
     first_name?: string;
     last_name?: string;
     birth_date?: string | null;
@@ -29093,12 +28982,7 @@ export type User = {
      * Primary citizenship (ISO 3166-1 alpha-2 code)
      */
     nationality?: string;
-    /**
-     * List of all citizenships (ISO 3166-1 alpha-2 codes)
-     */
-    nationalities?: {
-        [key: string]: unknown;
-    };
+    nationalities?: Array<string>;
     organization_country?: string;
     /**
      * SCHAC URN (e.g., urn:schac:homeOrganizationType:int:university)
@@ -29108,12 +28992,7 @@ export type User = {
      * Company registration code of the user's organization, if known
      */
     organization_registry_code?: string;
-    /**
-     * REFEDS assurance profile URIs from identity provider
-     */
-    eduperson_assurance?: {
-        [key: string]: unknown;
-    };
+    eduperson_assurance?: Array<string>;
     /**
      * Designates whether the user is allowed to manage remote user identities.
      */
@@ -29128,18 +29007,8 @@ export type User = {
     readonly attribute_sources?: {
         [key: string]: unknown;
     };
-    /**
-     * List of ISD source identifiers this user can manage via Identity Bridge. E.g., ['isd:puhuri', 'isd:fenix']. Non-empty list implies identity manager role.
-     */
-    managed_isds?: {
-        [key: string]: unknown;
-    };
-    /**
-     * List of ISDs that have asserted this user exists. User is deactivated when this becomes empty.
-     */
-    readonly active_isds?: {
-        [key: string]: unknown;
-    };
+    managed_isds?: Array<string>;
+    active_isds?: Array<string>;
     /**
      * Reason why the user was deactivated. Visible to staff and support.
      */
@@ -29513,12 +29382,7 @@ export type UserMe = {
     preferred_language?: string;
     readonly permissions: Array<Permission>;
     readonly requested_email: string | null;
-    /**
-     * Person's affiliation within organization such as student, faculty, staff.
-     */
-    readonly affiliations: {
-        [key: string]: unknown;
-    };
+    affiliations?: Array<string>;
     first_name?: string;
     last_name?: string;
     birth_date?: string | null;
@@ -29552,12 +29416,7 @@ export type UserMe = {
      * Primary citizenship (ISO 3166-1 alpha-2 code)
      */
     nationality?: string;
-    /**
-     * List of all citizenships (ISO 3166-1 alpha-2 codes)
-     */
-    nationalities?: {
-        [key: string]: unknown;
-    };
+    nationalities?: Array<string>;
     organization_country?: string;
     /**
      * SCHAC URN (e.g., urn:schac:homeOrganizationType:int:university)
@@ -29567,12 +29426,7 @@ export type UserMe = {
      * Company registration code of the user's organization, if known
      */
     organization_registry_code?: string;
-    /**
-     * REFEDS assurance profile URIs from identity provider
-     */
-    eduperson_assurance?: {
-        [key: string]: unknown;
-    };
+    eduperson_assurance?: Array<string>;
     /**
      * Designates whether the user is allowed to manage remote user identities.
      */
@@ -29587,18 +29441,8 @@ export type UserMe = {
     readonly attribute_sources?: {
         [key: string]: unknown;
     };
-    /**
-     * List of ISD source identifiers this user can manage via Identity Bridge. E.g., ['isd:puhuri', 'isd:fenix']. Non-empty list implies identity manager role.
-     */
-    managed_isds?: {
-        [key: string]: unknown;
-    };
-    /**
-     * List of ISDs that have asserted this user exists. User is deactivated when this becomes empty.
-     */
-    readonly active_isds?: {
-        [key: string]: unknown;
-    };
+    managed_isds?: Array<string>;
+    active_isds?: Array<string>;
     /**
      * Reason why the user was deactivated. Visible to staff and support.
      */
@@ -29735,6 +29579,7 @@ export type UserRequest = {
      */
     notifications_enabled?: boolean;
     preferred_language?: string;
+    affiliations?: Array<string>;
     first_name?: string;
     last_name?: string;
     birth_date?: string | null;
@@ -29754,12 +29599,7 @@ export type UserRequest = {
      * Primary citizenship (ISO 3166-1 alpha-2 code)
      */
     nationality?: string;
-    /**
-     * List of all citizenships (ISO 3166-1 alpha-2 codes)
-     */
-    nationalities?: {
-        [key: string]: unknown;
-    };
+    nationalities?: Array<string>;
     organization_country?: string;
     /**
      * SCHAC URN (e.g., urn:schac:homeOrganizationType:int:university)
@@ -29769,12 +29609,7 @@ export type UserRequest = {
      * Company registration code of the user's organization, if known
      */
     organization_registry_code?: string;
-    /**
-     * REFEDS assurance profile URIs from identity provider
-     */
-    eduperson_assurance?: {
-        [key: string]: unknown;
-    };
+    eduperson_assurance?: Array<string>;
     /**
      * Designates whether the user is allowed to manage remote user identities.
      */
@@ -29783,12 +29618,8 @@ export type UserRequest = {
      * Designates whether the user is allowed to create and use personal access tokens.
      */
     can_use_personal_access_tokens?: boolean;
-    /**
-     * List of ISD source identifiers this user can manage via Identity Bridge. E.g., ['isd:puhuri', 'isd:fenix']. Non-empty list implies identity manager role.
-     */
-    managed_isds?: {
-        [key: string]: unknown;
-    };
+    managed_isds?: Array<string>;
+    active_isds?: Array<string>;
     /**
      * Reason why the user was deactivated. Visible to staff and support.
      */
@@ -32454,6 +32285,7 @@ export type UserRequestForm = {
      */
     notifications_enabled?: boolean;
     preferred_language?: string;
+    affiliations?: Array<string>;
     first_name?: string;
     last_name?: string;
     birth_date?: string | null;
@@ -32473,12 +32305,7 @@ export type UserRequestForm = {
      * Primary citizenship (ISO 3166-1 alpha-2 code)
      */
     nationality?: string;
-    /**
-     * List of all citizenships (ISO 3166-1 alpha-2 codes)
-     */
-    nationalities?: {
-        [key: string]: unknown;
-    };
+    nationalities?: Array<string>;
     organization_country?: string;
     /**
      * SCHAC URN (e.g., urn:schac:homeOrganizationType:int:university)
@@ -32488,12 +32315,7 @@ export type UserRequestForm = {
      * Company registration code of the user's organization, if known
      */
     organization_registry_code?: string;
-    /**
-     * REFEDS assurance profile URIs from identity provider
-     */
-    eduperson_assurance?: {
-        [key: string]: unknown;
-    };
+    eduperson_assurance?: Array<string>;
     /**
      * Designates whether the user is allowed to manage remote user identities.
      */
@@ -32502,12 +32324,8 @@ export type UserRequestForm = {
      * Designates whether the user is allowed to create and use personal access tokens.
      */
     can_use_personal_access_tokens?: boolean;
-    /**
-     * List of ISD source identifiers this user can manage via Identity Bridge. E.g., ['isd:puhuri', 'isd:fenix']. Non-empty list implies identity manager role.
-     */
-    managed_isds?: {
-        [key: string]: unknown;
-    };
+    managed_isds?: Array<string>;
+    active_isds?: Array<string>;
     /**
      * Reason why the user was deactivated. Visible to staff and support.
      */
@@ -32560,6 +32378,7 @@ export type UserRequestMultipart = {
      */
     notifications_enabled?: boolean;
     preferred_language?: string;
+    affiliations?: Array<string>;
     first_name?: string;
     last_name?: string;
     birth_date?: string | null;
@@ -32579,12 +32398,7 @@ export type UserRequestMultipart = {
      * Primary citizenship (ISO 3166-1 alpha-2 code)
      */
     nationality?: string;
-    /**
-     * List of all citizenships (ISO 3166-1 alpha-2 codes)
-     */
-    nationalities?: {
-        [key: string]: unknown;
-    };
+    nationalities?: Array<string>;
     organization_country?: string;
     /**
      * SCHAC URN (e.g., urn:schac:homeOrganizationType:int:university)
@@ -32594,12 +32408,7 @@ export type UserRequestMultipart = {
      * Company registration code of the user's organization, if known
      */
     organization_registry_code?: string;
-    /**
-     * REFEDS assurance profile URIs from identity provider
-     */
-    eduperson_assurance?: {
-        [key: string]: unknown;
-    };
+    eduperson_assurance?: Array<string>;
     /**
      * Designates whether the user is allowed to manage remote user identities.
      */
@@ -32608,12 +32417,8 @@ export type UserRequestMultipart = {
      * Designates whether the user is allowed to create and use personal access tokens.
      */
     can_use_personal_access_tokens?: boolean;
-    /**
-     * List of ISD source identifiers this user can manage via Identity Bridge. E.g., ['isd:puhuri', 'isd:fenix']. Non-empty list implies identity manager role.
-     */
-    managed_isds?: {
-        [key: string]: unknown;
-    };
+    managed_isds?: Array<string>;
+    active_isds?: Array<string>;
     /**
      * Reason why the user was deactivated. Visible to staff and support.
      */
@@ -32665,6 +32470,7 @@ export type PatchedUserRequestForm = {
      */
     notifications_enabled?: boolean;
     preferred_language?: string;
+    affiliations?: Array<string>;
     first_name?: string;
     last_name?: string;
     birth_date?: string | null;
@@ -32684,12 +32490,7 @@ export type PatchedUserRequestForm = {
      * Primary citizenship (ISO 3166-1 alpha-2 code)
      */
     nationality?: string;
-    /**
-     * List of all citizenships (ISO 3166-1 alpha-2 codes)
-     */
-    nationalities?: {
-        [key: string]: unknown;
-    };
+    nationalities?: Array<string>;
     organization_country?: string;
     /**
      * SCHAC URN (e.g., urn:schac:homeOrganizationType:int:university)
@@ -32699,12 +32500,7 @@ export type PatchedUserRequestForm = {
      * Company registration code of the user's organization, if known
      */
     organization_registry_code?: string;
-    /**
-     * REFEDS assurance profile URIs from identity provider
-     */
-    eduperson_assurance?: {
-        [key: string]: unknown;
-    };
+    eduperson_assurance?: Array<string>;
     /**
      * Designates whether the user is allowed to manage remote user identities.
      */
@@ -32713,12 +32509,8 @@ export type PatchedUserRequestForm = {
      * Designates whether the user is allowed to create and use personal access tokens.
      */
     can_use_personal_access_tokens?: boolean;
-    /**
-     * List of ISD source identifiers this user can manage via Identity Bridge. E.g., ['isd:puhuri', 'isd:fenix']. Non-empty list implies identity manager role.
-     */
-    managed_isds?: {
-        [key: string]: unknown;
-    };
+    managed_isds?: Array<string>;
+    active_isds?: Array<string>;
     /**
      * Reason why the user was deactivated. Visible to staff and support.
      */
@@ -32770,6 +32562,7 @@ export type PatchedUserRequestMultipart = {
      */
     notifications_enabled?: boolean;
     preferred_language?: string;
+    affiliations?: Array<string>;
     first_name?: string;
     last_name?: string;
     birth_date?: string | null;
@@ -32789,12 +32582,7 @@ export type PatchedUserRequestMultipart = {
      * Primary citizenship (ISO 3166-1 alpha-2 code)
      */
     nationality?: string;
-    /**
-     * List of all citizenships (ISO 3166-1 alpha-2 codes)
-     */
-    nationalities?: {
-        [key: string]: unknown;
-    };
+    nationalities?: Array<string>;
     organization_country?: string;
     /**
      * SCHAC URN (e.g., urn:schac:homeOrganizationType:int:university)
@@ -32804,12 +32592,7 @@ export type PatchedUserRequestMultipart = {
      * Company registration code of the user's organization, if known
      */
     organization_registry_code?: string;
-    /**
-     * REFEDS assurance profile URIs from identity provider
-     */
-    eduperson_assurance?: {
-        [key: string]: unknown;
-    };
+    eduperson_assurance?: Array<string>;
     /**
      * Designates whether the user is allowed to manage remote user identities.
      */
@@ -32818,12 +32601,8 @@ export type PatchedUserRequestMultipart = {
      * Designates whether the user is allowed to create and use personal access tokens.
      */
     can_use_personal_access_tokens?: boolean;
-    /**
-     * List of ISD source identifiers this user can manage via Identity Bridge. E.g., ['isd:puhuri', 'isd:fenix']. Non-empty list implies identity manager role.
-     */
-    managed_isds?: {
-        [key: string]: unknown;
-    };
+    managed_isds?: Array<string>;
+    active_isds?: Array<string>;
     /**
      * Reason why the user was deactivated. Visible to staff and support.
      */
@@ -39878,7 +39657,7 @@ export type BroadcastMessagesCountResponses = {
 };
 
 export type BroadcastMessagesCreateData = {
-    body: BroadcastMessageRequest;
+    body: BroadcastMessageCreateRequest;
     path?: never;
     query?: never;
     url: '/api/broadcast-messages/';
@@ -39941,7 +39720,7 @@ export type BroadcastMessagesPartialUpdateResponses = {
 export type BroadcastMessagesPartialUpdateResponse = BroadcastMessagesPartialUpdateResponses[keyof BroadcastMessagesPartialUpdateResponses];
 
 export type BroadcastMessagesUpdateData = {
-    body: BroadcastMessageRequest;
+    body: BroadcastMessageCreateRequest;
     path: {
         uuid: string;
     };
