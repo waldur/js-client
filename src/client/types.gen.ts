@@ -122,10 +122,6 @@ export type RequestResult<
                 data: TData extends Record<string, unknown> ? TData[keyof TData] : TData;
                 error: undefined;
               }
-            | {
-                data: undefined;
-                error: TError extends Record<string, unknown> ? TError[keyof TError] : TError;
-              }
           ) & {
             /** request may be undefined, because error may be from building the request object itself */
             request?: Request;
