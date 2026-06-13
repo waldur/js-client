@@ -13285,7 +13285,7 @@ export type NotifySystemEnum = 'AdminAnnouncement' | 'BroadcastMessage';
 
 export type NullEnum = never;
 
-export type ObservableObjectTypeEnum = 'order' | 'user_role' | 'resource' | 'offering_user' | 'importable_resources' | 'service_account' | 'course_account' | 'resource_periodic_limits';
+export type ObservableObjectTypeEnum = 'order' | 'user_role' | 'resource' | 'offering_user' | 'importable_resources' | 'service_account' | 'course_account' | 'resource_periodic_limits' | 'offering_resources_sync';
 
 export type ObtainAuthTokenRequest = {
     /**
@@ -57888,6 +57888,21 @@ export type MarketplaceProviderOfferingsSyncResponses = {
      */
     202: unknown;
 };
+
+export type MarketplaceProviderOfferingsSyncResourcesData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-provider-offerings/{uuid}/sync_resources/';
+};
+
+export type MarketplaceProviderOfferingsSyncResourcesResponses = {
+    202: Status;
+};
+
+export type MarketplaceProviderOfferingsSyncResourcesResponse = MarketplaceProviderOfferingsSyncResourcesResponses[keyof MarketplaceProviderOfferingsSyncResourcesResponses];
 
 export type MarketplaceProviderOfferingsTosStatsRetrieveData = {
     body?: never;
