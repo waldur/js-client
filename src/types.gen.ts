@@ -22463,25 +22463,9 @@ export type PublicMaintenanceAnnouncement = {
     readonly actual_end: string | null;
     readonly affected_offerings: Array<MaintenanceAnnouncementOffering>;
     readonly service_provider_name: string;
-    readonly description: string;
-    type: PublicMaintenanceAnnouncementTypeEnum;
-    readonly maintenance_uuid: string;
-    readonly maintenance_name: string;
-    readonly maintenance_service_provider: string;
-    readonly maintenance_scheduled_start: string;
-    readonly maintenance_scheduled_end: string;
-    readonly maintenance_affected_offerings: Array<{
-        uuid?: string;
-        name?: string;
-        impact_level?: string;
-        impact_level_display?: string;
-        impact_description?: string;
-    }>;
 };
 
 export type PublicMaintenanceAnnouncementStateEnum = 'Scheduled' | 'In progress' | 'Completed';
-
-export type PublicMaintenanceAnnouncementTypeEnum = 'danger' | 'warning';
 
 export type PublicOfferingDetails = {
     readonly url: string;
