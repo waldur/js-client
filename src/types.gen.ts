@@ -11279,6 +11279,14 @@ export type MergedPluginOptions = {
      */
     resource_name_pattern?: string | null;
     /**
+     * Template for resource slugs, overriding the default 10-character slugified name. Available variables: {customer_slug}, {project_slug}, {project_name}, {offering_slug}, {year}, {month}, {counter}, {counter_padded}. Default: slugified resource name (max 10 characters).
+     */
+    resource_slug_template?: string | null;
+    /**
+     * Maximum length of auto-generated resource slugs derived from the resource name, overriding the default of 10 characters (up to 40). Ignored when a resource slug template is set.
+     */
+    resource_slug_max_length?: number | null;
+    /**
      * If set, it will be used as a default MTU for the first network in a tenant
      */
     default_internal_network_mtu?: number;
@@ -11613,6 +11621,14 @@ export type MergedPluginOptionsRequest = {
      * Python format string for generating resource names. Available variables: {customer_name}, {customer_slug}, {project_name}, {project_slug}, {offering_name}, {offering_slug}, {plan_name}, {counter}, {attributes[KEY]}.
      */
     resource_name_pattern?: string | null;
+    /**
+     * Template for resource slugs, overriding the default 10-character slugified name. Available variables: {customer_slug}, {project_slug}, {project_name}, {offering_slug}, {year}, {month}, {counter}, {counter_padded}. Default: slugified resource name (max 10 characters).
+     */
+    resource_slug_template?: string | null;
+    /**
+     * Maximum length of auto-generated resource slugs derived from the resource name, overriding the default of 10 characters (up to 40). Ignored when a resource slug template is set.
+     */
+    resource_slug_max_length?: number | null;
     /**
      * If set, it will be used as a default MTU for the first network in a tenant
      */
