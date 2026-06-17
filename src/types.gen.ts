@@ -363,7 +363,7 @@ export type AgentIdentity = {
     readonly created_by: string | null;
     name: string;
     version?: string | null;
-    readonly dependencies: Array<AgentDependency>;
+    dependencies?: Array<AgentDependency>;
     /**
      * Example: '/etc/waldur/agent.yaml'
      */
@@ -385,6 +385,7 @@ export type AgentIdentityRequest = {
     offering: string;
     name: string;
     version?: string | null;
+    dependencies?: Array<AgentDependencyRequest>;
     /**
      * Example: '/etc/waldur/agent.yaml'
      */
