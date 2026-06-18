@@ -14616,9 +14616,7 @@ export type OfferingUser = {
     /**
      * Person's affiliation within organization such as student, faculty, staff.
      */
-    readonly user_affiliations: {
-        [key: string]: unknown;
-    };
+    readonly user_affiliations: Array<string>;
     /**
      * User's gender (male, female, or unknown)
      */
@@ -14637,9 +14635,7 @@ export type OfferingUser = {
     /**
      * List of all citizenships (ISO 3166-1 alpha-2 codes)
      */
-    readonly user_nationalities: {
-        [key: string]: unknown;
-    };
+    readonly user_nationalities: Array<string>;
     readonly user_organization_country: string;
     /**
      * SCHAC URN (e.g., urn:schac:homeOrganizationType:int:university)
@@ -14652,9 +14648,7 @@ export type OfferingUser = {
     /**
      * REFEDS assurance profile URIs from identity provider
      */
-    readonly user_eduperson_assurance: {
-        [key: string]: unknown;
-    };
+    readonly user_eduperson_assurance: Array<string>;
     readonly user_civil_number: string | null;
     readonly user_birth_date: string | null;
     /**
@@ -14666,9 +14660,7 @@ export type OfferingUser = {
     /**
      * List of ISDs that have asserted this user exists. User is deactivated when this becomes empty.
      */
-    readonly user_active_isds: {
-        [key: string]: unknown;
-    };
+    readonly user_active_isds: Array<string>;
     readonly created: string;
     readonly modified: string;
     readonly customer_uuid: string;
