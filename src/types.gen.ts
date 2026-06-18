@@ -5546,6 +5546,9 @@ export type ConstanceSettings = {
     MATRIX_USER_ID_FORMAT?: string;
     MATRIX_LOGIN_METHOD?: string;
     MATRIX_OIDC_PROVIDER_URL?: string;
+    MATRIX_LIVEKIT_KEY?: string;
+    MATRIX_LIVEKIT_SECRET?: string;
+    MATRIX_LIVEKIT_URL?: string;
     SITE_AGENT_LOG_MAX_ROWS_PER_IDENTITY?: number;
     PAT_ENABLED?: boolean;
     PAT_MAX_LIFETIME_DAYS?: number;
@@ -5845,6 +5848,9 @@ export type ConstanceSettingsRequest = {
     MATRIX_USER_ID_FORMAT?: string;
     MATRIX_LOGIN_METHOD?: string;
     MATRIX_OIDC_PROVIDER_URL?: string;
+    MATRIX_LIVEKIT_KEY?: string;
+    MATRIX_LIVEKIT_SECRET?: string;
+    MATRIX_LIVEKIT_URL?: string;
     SITE_AGENT_LOG_MAX_ROWS_PER_IDENTITY?: number;
     PAT_ENABLED?: boolean;
     PAT_MAX_LIFETIME_DAYS?: number;
@@ -10399,6 +10405,46 @@ export type LinkResourceResponse = {
 
 export type LinkToInvoiceRequest = {
     invoice: string;
+};
+
+export type LiveKitOverviewResponse = {
+    rooms: Array<LiveKitRoomSummary>;
+    totals: LiveKitTotals;
+    livekit_url: string;
+};
+
+export type LiveKitParticipant = {
+    sid: string;
+    identity: string;
+    state: string;
+    is_publisher: boolean;
+    joined_at: number;
+    tracks: Array<LiveKitTrack>;
+};
+
+export type LiveKitRoomSummary = {
+    sid: string;
+    name: string;
+    num_participants: number;
+    num_publishers: number;
+    creation_time: number;
+    max_participants: number;
+    metadata: string;
+};
+
+export type LiveKitTotals = {
+    room_count: number;
+    participant_count: number;
+    publisher_count: number;
+};
+
+export type LiveKitTrack = {
+    sid: string;
+    name: string;
+    type: string;
+    muted: boolean;
+    width: number;
+    height: number;
 };
 
 export type LoadBalancerAttachFloatingIpRequest = {
@@ -31817,6 +31863,9 @@ export type ConstanceSettingsRequestForm = {
     MATRIX_USER_ID_FORMAT?: string;
     MATRIX_LOGIN_METHOD?: string;
     MATRIX_OIDC_PROVIDER_URL?: string;
+    MATRIX_LIVEKIT_KEY?: string;
+    MATRIX_LIVEKIT_SECRET?: string;
+    MATRIX_LIVEKIT_URL?: string;
     SITE_AGENT_LOG_MAX_ROWS_PER_IDENTITY?: number;
     PAT_ENABLED?: boolean;
     PAT_MAX_LIFETIME_DAYS?: number;
@@ -32116,6 +32165,9 @@ export type ConstanceSettingsRequestMultipart = {
     MATRIX_USER_ID_FORMAT?: string;
     MATRIX_LOGIN_METHOD?: string;
     MATRIX_OIDC_PROVIDER_URL?: string;
+    MATRIX_LIVEKIT_KEY?: string;
+    MATRIX_LIVEKIT_SECRET?: string;
+    MATRIX_LIVEKIT_URL?: string;
     SITE_AGENT_LOG_MAX_ROWS_PER_IDENTITY?: number;
     PAT_ENABLED?: boolean;
     PAT_MAX_LIFETIME_DAYS?: number;
@@ -34638,6 +34690,37 @@ export type AdminMatrixDiagnosticsRetrieveResponses = {
 };
 
 export type AdminMatrixDiagnosticsRetrieveResponse = AdminMatrixDiagnosticsRetrieveResponses[keyof AdminMatrixDiagnosticsRetrieveResponses];
+
+export type AdminMatrixLivekitOverviewRetrieveData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/admin/matrix/livekit/overview/';
+};
+
+export type AdminMatrixLivekitOverviewRetrieveResponses = {
+    200: LiveKitOverviewResponse;
+};
+
+export type AdminMatrixLivekitOverviewRetrieveResponse = AdminMatrixLivekitOverviewRetrieveResponses[keyof AdminMatrixLivekitOverviewRetrieveResponses];
+
+export type AdminMatrixLivekitParticipantsListData = {
+    body?: never;
+    path?: never;
+    query: {
+        /**
+         * LiveKit room name. A query parameter rather than a path segment because Element Call room names are base64 and routinely contain '/'.
+         */
+        room: string;
+    };
+    url: '/api/admin/matrix/livekit/participants/';
+};
+
+export type AdminMatrixLivekitParticipantsListResponses = {
+    200: Array<LiveKitParticipant>;
+};
+
+export type AdminMatrixLivekitParticipantsListResponse = AdminMatrixLivekitParticipantsListResponses[keyof AdminMatrixLivekitParticipantsListResponses];
 
 export type AdminMatrixReprovisionData = {
     body?: never;
