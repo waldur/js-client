@@ -4806,6 +4806,7 @@ export type Comment = {
      * Email address
      */
     readonly author_email: string;
+    readonly author_image: string;
     readonly backend_id: string | null;
     remote_id?: string | null;
     readonly created: string;
@@ -5450,6 +5451,7 @@ export type ConstanceSettings = {
     MANDATORY_USER_ATTRIBUTES?: Array<UserAttributeEnum | BlankEnum>;
     ENFORCE_MANDATORY_USER_ATTRIBUTES?: boolean;
     MAINTENANCE_ANNOUNCEMENT_NOTIFY_BEFORE_MINUTES?: number;
+    MAINTENANCE_ANNOUNCEMENT_TRAILING_BUFFER_MINUTES?: number;
     MAINTENANCE_ANNOUNCEMENT_NOTIFY_SYSTEM?: Array<NotifySystemEnum | BlankEnum>;
     ENFORCE_USER_CONSENT_FOR_OFFERINGS?: boolean;
     ENFORCE_OFFERING_USER_PROFILE_COMPLETENESS?: boolean;
@@ -5752,6 +5754,7 @@ export type ConstanceSettingsRequest = {
     MANDATORY_USER_ATTRIBUTES?: Array<UserAttributeEnum | BlankEnum>;
     ENFORCE_MANDATORY_USER_ATTRIBUTES?: boolean;
     MAINTENANCE_ANNOUNCEMENT_NOTIFY_BEFORE_MINUTES?: number;
+    MAINTENANCE_ANNOUNCEMENT_TRAILING_BUFFER_MINUTES?: number;
     MAINTENANCE_ANNOUNCEMENT_NOTIFY_SYSTEM?: Array<NotifySystemEnum | BlankEnum>;
     ENFORCE_USER_CONSENT_FOR_OFFERINGS?: boolean;
     ENFORCE_OFFERING_USER_PROFILE_COMPLETENESS?: boolean;
@@ -11191,6 +11194,7 @@ export type MatrixRoomMember = {
     readonly uuid: string;
     readonly user_uuid: string;
     readonly user_full_name: string;
+    readonly user_image: string;
     readonly matrix_user_id: string;
     readonly power_level: number;
     membership_state: MembershipStateEnum;
@@ -20677,6 +20681,10 @@ export type Project = {
      */
     readonly resources_count: number;
     /**
+     * Answers to the customer's project-metadata checklist (read-only).
+     */
+    readonly project_metadata: Array<ProjectMetadataAnswer>;
+    /**
      * Maximum number of service accounts allowed
      */
     readonly max_service_accounts: number | null;
@@ -21060,6 +21068,21 @@ export type ProjectMapping = {
 
 export type ProjectMappingMap = {
     '*': ProjectMapping | null;
+};
+
+export type ProjectMetadataAnswer = {
+    question_uuid: string;
+    /**
+     * Question description.
+     */
+    question: string;
+    question_type: string;
+    /**
+     * Human-readable answer value; select-type option UUIDs are resolved to their labels.
+     */
+    answer: {
+        [key: string]: unknown;
+    };
 };
 
 export type ProjectOrderAutoApproval = {
@@ -21669,6 +21692,7 @@ export type ProposalReview = {
     reviewer?: string;
     readonly reviewer_full_name: string;
     readonly reviewer_uuid: string;
+    readonly reviewer_image: string;
     /**
      * Generate an anonymous reviewer identifier like 'Reviewer 1', 'Reviewer 2'.
      * Returns None if the review is not associated with a proposal.
@@ -31767,6 +31791,7 @@ export type ConstanceSettingsRequestForm = {
     MANDATORY_USER_ATTRIBUTES?: Array<UserAttributeEnum | BlankEnum>;
     ENFORCE_MANDATORY_USER_ATTRIBUTES?: boolean;
     MAINTENANCE_ANNOUNCEMENT_NOTIFY_BEFORE_MINUTES?: number;
+    MAINTENANCE_ANNOUNCEMENT_TRAILING_BUFFER_MINUTES?: number;
     MAINTENANCE_ANNOUNCEMENT_NOTIFY_SYSTEM?: Array<NotifySystemEnum | BlankEnum>;
     ENFORCE_USER_CONSENT_FOR_OFFERINGS?: boolean;
     ENFORCE_OFFERING_USER_PROFILE_COMPLETENESS?: boolean;
@@ -32069,6 +32094,7 @@ export type ConstanceSettingsRequestMultipart = {
     MANDATORY_USER_ATTRIBUTES?: Array<UserAttributeEnum | BlankEnum>;
     ENFORCE_MANDATORY_USER_ATTRIBUTES?: boolean;
     MAINTENANCE_ANNOUNCEMENT_NOTIFY_BEFORE_MINUTES?: number;
+    MAINTENANCE_ANNOUNCEMENT_TRAILING_BUFFER_MINUTES?: number;
     MAINTENANCE_ANNOUNCEMENT_NOTIFY_SYSTEM?: Array<NotifySystemEnum | BlankEnum>;
     ENFORCE_USER_CONSENT_FOR_OFFERINGS?: boolean;
     ENFORCE_OFFERING_USER_PROFILE_COMPLETENESS?: boolean;
@@ -32778,7 +32804,7 @@ export type ProviderOfferingDetailsOEnum = '-created' | '-name' | '-state' | '-t
 
 export type ProviderOfferingCustomerFieldEnum = 'abbreviation' | 'email' | 'name' | 'phone_number' | 'slug' | 'uuid';
 
-export type ProjectFieldEnum = 'affiliation' | 'affiliation_code' | 'affiliation_name' | 'affiliation_uuid' | 'backend_id' | 'billing_price_estimate' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_display_billing_info_in_projects' | 'customer_grace_period_days' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'effective_end_date' | 'end_date' | 'end_date_requested_by' | 'end_date_updated_at' | 'grace_period_days' | 'image' | 'is_in_grace_period' | 'is_industry' | 'is_removed' | 'kind' | 'marketplace_resource_count' | 'max_service_accounts' | 'name' | 'oecd_fos_2007_code' | 'oecd_fos_2007_label' | 'project_credit' | 'resources_count' | 'science_domain_code' | 'science_domain_name' | 'science_domain_uuid' | 'science_sub_domain' | 'science_sub_domain_code' | 'science_sub_domain_name' | 'slug' | 'staff_notes' | 'start_date' | 'termination_metadata' | 'type' | 'type_name' | 'type_uuid' | 'url' | 'user_affiliations' | 'user_email_patterns' | 'user_identity_sources' | 'uuid';
+export type ProjectFieldEnum = 'affiliation' | 'affiliation_code' | 'affiliation_name' | 'affiliation_uuid' | 'backend_id' | 'billing_price_estimate' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_display_billing_info_in_projects' | 'customer_grace_period_days' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'effective_end_date' | 'end_date' | 'end_date_requested_by' | 'end_date_updated_at' | 'grace_period_days' | 'image' | 'is_in_grace_period' | 'is_industry' | 'is_removed' | 'kind' | 'marketplace_resource_count' | 'max_service_accounts' | 'name' | 'oecd_fos_2007_code' | 'oecd_fos_2007_label' | 'project_credit' | 'project_metadata' | 'resources_count' | 'science_domain_code' | 'science_domain_name' | 'science_domain_uuid' | 'science_sub_domain' | 'science_sub_domain_code' | 'science_sub_domain_name' | 'slug' | 'staff_notes' | 'start_date' | 'termination_metadata' | 'type' | 'type_name' | 'type_uuid' | 'url' | 'user_affiliations' | 'user_email_patterns' | 'user_identity_sources' | 'uuid';
 
 export type UserFieldEnum = 'active_isds' | 'address' | 'affiliations' | 'agree_with_policy' | 'agreement_date' | 'attribute_sources' | 'birth_date' | 'can_use_personal_access_tokens' | 'civil_number' | 'country_of_residence' | 'date_joined' | 'deactivation_reason' | 'description' | 'eduperson_assurance' | 'email' | 'first_name' | 'full_name' | 'gender' | 'has_active_session' | 'has_usable_password' | 'identity_provider_fields' | 'identity_provider_label' | 'identity_provider_management_url' | 'identity_provider_name' | 'identity_source' | 'image' | 'ip_address' | 'is_active' | 'is_admin_deactivated' | 'is_identity_manager' | 'is_staff' | 'is_support' | 'job_title' | 'last_name' | 'managed_isds' | 'nationalities' | 'nationality' | 'native_name' | 'notifications_enabled' | 'organization' | 'organization_country' | 'organization_registry_code' | 'organization_type' | 'permissions' | 'personal_title' | 'phone_number' | 'place_of_birth' | 'preferred_language' | 'registration_method' | 'requested_email' | 'should_protect_user_details' | 'slug' | 'token' | 'token_expires_at' | 'token_lifetime' | 'url' | 'username' | 'uuid';
 
