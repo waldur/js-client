@@ -3316,6 +3316,7 @@ export type CallApplicantVisibilityConfig = {
     expose_organization_country?: boolean;
     expose_organization_type?: boolean;
     expose_organization_registry_code?: boolean;
+    expose_organization_vat_code?: boolean;
     expose_affiliations?: boolean;
     expose_phone_number?: boolean;
     expose_job_title?: boolean;
@@ -3347,6 +3348,7 @@ export type CallApplicantVisibilityConfigRequest = {
     expose_organization_country?: boolean;
     expose_organization_type?: boolean;
     expose_organization_registry_code?: boolean;
+    expose_organization_vat_code?: boolean;
     expose_affiliations?: boolean;
     expose_phone_number?: boolean;
     expose_job_title?: boolean;
@@ -14696,6 +14698,10 @@ export type OfferingUser = {
      */
     readonly user_organization_registry_code: string;
     /**
+     * VAT code of the user's organization
+     */
+    readonly user_organization_vat_code: string;
+    /**
      * REFEDS assurance profile URIs from identity provider
      */
     readonly user_eduperson_assurance: Array<string>;
@@ -14764,6 +14770,7 @@ export type OfferingUserAttributeConfig = {
     expose_organization_country?: boolean;
     expose_organization_type?: boolean;
     expose_organization_registry_code?: boolean;
+    expose_organization_vat_code?: boolean;
     expose_affiliations?: boolean;
     expose_phone_number?: boolean;
     expose_job_title?: boolean;
@@ -14797,6 +14804,7 @@ export type OfferingUserAttributeConfigRequest = {
     expose_organization_country?: boolean;
     expose_organization_type?: boolean;
     expose_organization_registry_code?: boolean;
+    expose_organization_vat_code?: boolean;
     expose_affiliations?: boolean;
     expose_phone_number?: boolean;
     expose_job_title?: boolean;
@@ -17609,10 +17617,15 @@ export type OrderDetails = {
      */
     readonly created_by_email: string | null;
     readonly created_by_organization: string | null;
+    readonly created_by_organization_country: string | null;
     /**
      * Company registration code of the user's organization, if known
      */
     readonly created_by_organization_registry_code: string | null;
+    /**
+     * VAT code of the user's organization
+     */
+    readonly created_by_organization_vat_code: string | null;
     readonly customer_name: string;
     readonly customer_uuid: string;
     readonly customer_slug: string;
@@ -18910,6 +18923,7 @@ export type PatchedOfferingUserAttributeConfigRequest = {
     expose_organization_country?: boolean;
     expose_organization_type?: boolean;
     expose_organization_registry_code?: boolean;
+    expose_organization_vat_code?: boolean;
     expose_affiliations?: boolean;
     expose_phone_number?: boolean;
     expose_job_title?: boolean;
@@ -20150,6 +20164,10 @@ export type PatchedUserRequest = {
      * Company registration code of the user's organization, if known
      */
     organization_registry_code?: string;
+    /**
+     * VAT code of the user's organization
+     */
+    organization_vat_code?: string;
     eduperson_assurance?: Array<string>;
     /**
      * Designates whether the user is allowed to manage remote user identities.
@@ -21533,6 +21551,10 @@ export type Proposal = {
      * Company registration code of the user's organization, if known
      */
     readonly applicant_organization_registry_code: string;
+    /**
+     * VAT code of the user's organization
+     */
+    readonly applicant_organization_vat_code: string;
     readonly applicant_job_title: string;
     /**
      * Person's affiliation within organization such as student, faculty, staff.
@@ -29021,6 +29043,10 @@ export type User = {
      * Company registration code of the user's organization, if known
      */
     organization_registry_code?: string;
+    /**
+     * VAT code of the user's organization
+     */
+    organization_vat_code?: string;
     eduperson_assurance?: Array<string>;
     /**
      * Designates whether the user is allowed to manage remote user identities.
@@ -29180,7 +29206,7 @@ export type UserAgreementRequest = {
     language: string;
 };
 
-export type UserAttributeEnum = 'username' | 'registration_method' | 'first_name' | 'last_name' | 'full_name' | 'email' | 'phone_number' | 'organization' | 'job_title' | 'affiliations' | 'gender' | 'personal_title' | 'birth_date' | 'place_of_birth' | 'country_of_residence' | 'nationality' | 'nationalities' | 'organization_country' | 'organization_type' | 'organization_registry_code' | 'eduperson_assurance' | 'civil_number' | 'identity_source';
+export type UserAttributeEnum = 'username' | 'registration_method' | 'first_name' | 'last_name' | 'full_name' | 'email' | 'phone_number' | 'organization' | 'job_title' | 'affiliations' | 'gender' | 'personal_title' | 'birth_date' | 'place_of_birth' | 'country_of_residence' | 'nationality' | 'nationalities' | 'organization_country' | 'organization_type' | 'organization_registry_code' | 'organization_vat_code' | 'eduperson_assurance' | 'civil_number' | 'identity_source';
 
 export type UserAuthMethodCount = {
     /**
@@ -29455,6 +29481,10 @@ export type UserMe = {
      * Company registration code of the user's organization, if known
      */
     organization_registry_code?: string;
+    /**
+     * VAT code of the user's organization
+     */
+    organization_vat_code?: string;
     eduperson_assurance?: Array<string>;
     /**
      * Designates whether the user is allowed to manage remote user identities.
@@ -29638,6 +29668,10 @@ export type UserRequest = {
      * Company registration code of the user's organization, if known
      */
     organization_registry_code?: string;
+    /**
+     * VAT code of the user's organization
+     */
+    organization_vat_code?: string;
     eduperson_assurance?: Array<string>;
     /**
      * Designates whether the user is allowed to manage remote user identities.
@@ -32352,6 +32386,10 @@ export type UserRequestForm = {
      * Company registration code of the user's organization, if known
      */
     organization_registry_code?: string;
+    /**
+     * VAT code of the user's organization
+     */
+    organization_vat_code?: string;
     eduperson_assurance?: Array<string>;
     /**
      * Designates whether the user is allowed to manage remote user identities.
@@ -32445,6 +32483,10 @@ export type UserRequestMultipart = {
      * Company registration code of the user's organization, if known
      */
     organization_registry_code?: string;
+    /**
+     * VAT code of the user's organization
+     */
+    organization_vat_code?: string;
     eduperson_assurance?: Array<string>;
     /**
      * Designates whether the user is allowed to manage remote user identities.
@@ -32537,6 +32579,10 @@ export type PatchedUserRequestForm = {
      * Company registration code of the user's organization, if known
      */
     organization_registry_code?: string;
+    /**
+     * VAT code of the user's organization
+     */
+    organization_vat_code?: string;
     eduperson_assurance?: Array<string>;
     /**
      * Designates whether the user is allowed to manage remote user identities.
@@ -32629,6 +32675,10 @@ export type PatchedUserRequestMultipart = {
      * Company registration code of the user's organization, if known
      */
     organization_registry_code?: string;
+    /**
+     * VAT code of the user's organization
+     */
+    organization_vat_code?: string;
     eduperson_assurance?: Array<string>;
     /**
      * Designates whether the user is allowed to manage remote user identities.
@@ -32786,11 +32836,11 @@ export type OfferingTermsOfServiceOEnum = '-created' | '-modified' | '-version' 
 
 export type UserChecklistCompletionOEnum = '-is_completed' | '-modified' | 'is_completed' | 'modified';
 
-export type OfferingUserFieldEnum = 'consent_data' | 'created' | 'customer_name' | 'customer_uuid' | 'has_compliance_checklist' | 'has_consent' | 'is_profile_complete' | 'is_restricted' | 'missing_profile_attributes' | 'modified' | 'offering' | 'offering_has_active_tos' | 'offering_name' | 'offering_uuid' | 'requires_reconsent' | 'runtime_state' | 'service_provider_comment' | 'service_provider_comment_url' | 'state' | 'url' | 'user' | 'user_active_isds' | 'user_address' | 'user_affiliations' | 'user_birth_date' | 'user_civil_number' | 'user_country_of_residence' | 'user_eduperson_assurance' | 'user_email' | 'user_first_name' | 'user_full_name' | 'user_gender' | 'user_identity_source' | 'user_job_title' | 'user_last_name' | 'user_nationalities' | 'user_nationality' | 'user_organization' | 'user_organization_country' | 'user_organization_registry_code' | 'user_organization_type' | 'user_personal_title' | 'user_phone_number' | 'user_place_of_birth' | 'user_username' | 'user_uuid' | 'username' | 'uuid';
+export type OfferingUserFieldEnum = 'consent_data' | 'created' | 'customer_name' | 'customer_uuid' | 'has_compliance_checklist' | 'has_consent' | 'is_profile_complete' | 'is_restricted' | 'missing_profile_attributes' | 'modified' | 'offering' | 'offering_has_active_tos' | 'offering_name' | 'offering_uuid' | 'requires_reconsent' | 'runtime_state' | 'service_provider_comment' | 'service_provider_comment_url' | 'state' | 'url' | 'user' | 'user_active_isds' | 'user_address' | 'user_affiliations' | 'user_birth_date' | 'user_civil_number' | 'user_country_of_residence' | 'user_eduperson_assurance' | 'user_email' | 'user_first_name' | 'user_full_name' | 'user_gender' | 'user_identity_source' | 'user_job_title' | 'user_last_name' | 'user_nationalities' | 'user_nationality' | 'user_organization' | 'user_organization_country' | 'user_organization_registry_code' | 'user_organization_type' | 'user_organization_vat_code' | 'user_personal_title' | 'user_phone_number' | 'user_place_of_birth' | 'user_username' | 'user_uuid' | 'username' | 'uuid';
 
 export type OfferingUserOEnum = '-created' | '-modified' | '-username' | 'created' | 'modified' | 'username';
 
-export type OrderDetailsFieldEnum = 'accepting_terms_of_service' | 'activation_price' | 'attachment' | 'attributes' | 'auto_approved' | 'auto_approved_by_rule_uuid' | 'auto_approved_cost_limit_snapshot' | 'backend_id' | 'callback_url' | 'can_terminate' | 'category_icon' | 'category_title' | 'category_uuid' | 'completed_at' | 'consumer_message' | 'consumer_message_attachment' | 'consumer_rejection_comment' | 'consumer_reviewed_at' | 'consumer_reviewed_by' | 'consumer_reviewed_by_full_name' | 'consumer_reviewed_by_username' | 'cost' | 'created' | 'created_by_civil_number' | 'created_by_email' | 'created_by_full_name' | 'created_by_organization' | 'created_by_organization_registry_code' | 'created_by_username' | 'customer_name' | 'customer_slug' | 'customer_uuid' | 'error_message' | 'error_traceback' | 'error_updated_at' | 'fixed_price' | 'issue' | 'limits' | 'marketplace_resource_uuid' | 'modified' | 'new_cost_estimate' | 'new_plan_name' | 'new_plan_uuid' | 'offering' | 'offering_billable' | 'offering_description' | 'offering_image' | 'offering_name' | 'offering_plugin_options' | 'offering_shared' | 'offering_thumbnail' | 'offering_type' | 'offering_uuid' | 'old_cost_estimate' | 'old_plan_name' | 'old_plan_uuid' | 'order_subtype' | 'output' | 'output_updated_at' | 'plan' | 'plan_description' | 'plan_name' | 'plan_unit' | 'plan_uuid' | 'project_description' | 'project_name' | 'project_slug' | 'project_uuid' | 'provider_description' | 'provider_message' | 'provider_message_attachment' | 'provider_message_url' | 'provider_name' | 'provider_rejection_comment' | 'provider_reviewed_at' | 'provider_reviewed_by' | 'provider_reviewed_by_full_name' | 'provider_reviewed_by_username' | 'provider_slug' | 'provider_uuid' | 'request_comment' | 'resource_name' | 'resource_type' | 'resource_uuid' | 'slug' | 'start_date' | 'state' | 'termination_comment' | 'type' | 'url' | 'uuid';
+export type OrderDetailsFieldEnum = 'accepting_terms_of_service' | 'activation_price' | 'attachment' | 'attributes' | 'auto_approved' | 'auto_approved_by_rule_uuid' | 'auto_approved_cost_limit_snapshot' | 'backend_id' | 'callback_url' | 'can_terminate' | 'category_icon' | 'category_title' | 'category_uuid' | 'completed_at' | 'consumer_message' | 'consumer_message_attachment' | 'consumer_rejection_comment' | 'consumer_reviewed_at' | 'consumer_reviewed_by' | 'consumer_reviewed_by_full_name' | 'consumer_reviewed_by_username' | 'cost' | 'created' | 'created_by_civil_number' | 'created_by_email' | 'created_by_full_name' | 'created_by_organization' | 'created_by_organization_country' | 'created_by_organization_registry_code' | 'created_by_organization_vat_code' | 'created_by_username' | 'customer_name' | 'customer_slug' | 'customer_uuid' | 'error_message' | 'error_traceback' | 'error_updated_at' | 'fixed_price' | 'issue' | 'limits' | 'marketplace_resource_uuid' | 'modified' | 'new_cost_estimate' | 'new_plan_name' | 'new_plan_uuid' | 'offering' | 'offering_billable' | 'offering_description' | 'offering_image' | 'offering_name' | 'offering_plugin_options' | 'offering_shared' | 'offering_thumbnail' | 'offering_type' | 'offering_uuid' | 'old_cost_estimate' | 'old_plan_name' | 'old_plan_uuid' | 'order_subtype' | 'output' | 'output_updated_at' | 'plan' | 'plan_description' | 'plan_name' | 'plan_unit' | 'plan_uuid' | 'project_description' | 'project_name' | 'project_slug' | 'project_uuid' | 'provider_description' | 'provider_message' | 'provider_message_attachment' | 'provider_message_url' | 'provider_name' | 'provider_rejection_comment' | 'provider_reviewed_at' | 'provider_reviewed_by' | 'provider_reviewed_by_full_name' | 'provider_reviewed_by_username' | 'provider_slug' | 'provider_uuid' | 'request_comment' | 'resource_name' | 'resource_type' | 'resource_uuid' | 'slug' | 'start_date' | 'state' | 'termination_comment' | 'type' | 'url' | 'uuid';
 
 export type OrderDetailsOEnum = '-consumer_reviewed_at' | '-cost' | '-created' | '-state' | 'consumer_reviewed_at' | 'cost' | 'created' | 'state';
 
@@ -32806,7 +32856,7 @@ export type ProviderOfferingCustomerFieldEnum = 'abbreviation' | 'email' | 'name
 
 export type ProjectFieldEnum = 'affiliation' | 'affiliation_code' | 'affiliation_name' | 'affiliation_uuid' | 'backend_id' | 'billing_price_estimate' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_display_billing_info_in_projects' | 'customer_grace_period_days' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'effective_end_date' | 'end_date' | 'end_date_requested_by' | 'end_date_updated_at' | 'grace_period_days' | 'image' | 'is_in_grace_period' | 'is_industry' | 'is_removed' | 'kind' | 'marketplace_resource_count' | 'max_service_accounts' | 'name' | 'oecd_fos_2007_code' | 'oecd_fos_2007_label' | 'project_credit' | 'project_metadata' | 'resources_count' | 'science_domain_code' | 'science_domain_name' | 'science_domain_uuid' | 'science_sub_domain' | 'science_sub_domain_code' | 'science_sub_domain_name' | 'slug' | 'staff_notes' | 'start_date' | 'termination_metadata' | 'type' | 'type_name' | 'type_uuid' | 'url' | 'user_affiliations' | 'user_email_patterns' | 'user_identity_sources' | 'uuid';
 
-export type UserFieldEnum = 'active_isds' | 'address' | 'affiliations' | 'agree_with_policy' | 'agreement_date' | 'attribute_sources' | 'birth_date' | 'can_use_personal_access_tokens' | 'civil_number' | 'country_of_residence' | 'date_joined' | 'deactivation_reason' | 'description' | 'eduperson_assurance' | 'email' | 'first_name' | 'full_name' | 'gender' | 'has_active_session' | 'has_usable_password' | 'identity_provider_fields' | 'identity_provider_label' | 'identity_provider_management_url' | 'identity_provider_name' | 'identity_source' | 'image' | 'ip_address' | 'is_active' | 'is_admin_deactivated' | 'is_identity_manager' | 'is_staff' | 'is_support' | 'job_title' | 'last_name' | 'managed_isds' | 'nationalities' | 'nationality' | 'native_name' | 'notifications_enabled' | 'organization' | 'organization_country' | 'organization_registry_code' | 'organization_type' | 'permissions' | 'personal_title' | 'phone_number' | 'place_of_birth' | 'preferred_language' | 'registration_method' | 'requested_email' | 'should_protect_user_details' | 'slug' | 'token' | 'token_expires_at' | 'token_lifetime' | 'url' | 'username' | 'uuid';
+export type UserFieldEnum = 'active_isds' | 'address' | 'affiliations' | 'agree_with_policy' | 'agreement_date' | 'attribute_sources' | 'birth_date' | 'can_use_personal_access_tokens' | 'civil_number' | 'country_of_residence' | 'date_joined' | 'deactivation_reason' | 'description' | 'eduperson_assurance' | 'email' | 'first_name' | 'full_name' | 'gender' | 'has_active_session' | 'has_usable_password' | 'identity_provider_fields' | 'identity_provider_label' | 'identity_provider_management_url' | 'identity_provider_name' | 'identity_source' | 'image' | 'ip_address' | 'is_active' | 'is_admin_deactivated' | 'is_identity_manager' | 'is_staff' | 'is_support' | 'job_title' | 'last_name' | 'managed_isds' | 'nationalities' | 'nationality' | 'native_name' | 'notifications_enabled' | 'organization' | 'organization_country' | 'organization_registry_code' | 'organization_type' | 'organization_vat_code' | 'permissions' | 'personal_title' | 'phone_number' | 'place_of_birth' | 'preferred_language' | 'registration_method' | 'requested_email' | 'should_protect_user_details' | 'slug' | 'token' | 'token_expires_at' | 'token_lifetime' | 'url' | 'username' | 'uuid';
 
 export type ResourceOEnum = '-created' | '-end_date' | '-name' | '-project_name' | '-state' | 'created' | 'end_date' | 'name' | 'project_name' | 'state';
 
@@ -32980,7 +33030,7 @@ export type SystemLogOEnum = '-created' | '-instance' | '-level_number' | 'creat
 
 export type InvitationOEnum = '-created' | '-created_by' | '-email' | '-state' | 'created' | 'created_by' | 'email' | 'state';
 
-export type UserMeFieldEnum = 'active_isds' | 'address' | 'affiliations' | 'agree_with_policy' | 'agreement_date' | 'attribute_sources' | 'birth_date' | 'can_use_personal_access_tokens' | 'civil_number' | 'country_of_residence' | 'date_joined' | 'deactivation_reason' | 'description' | 'eduperson_assurance' | 'email' | 'first_name' | 'full_name' | 'gender' | 'has_active_session' | 'has_usable_password' | 'identity_provider_fields' | 'identity_provider_label' | 'identity_provider_management_url' | 'identity_provider_name' | 'identity_source' | 'image' | 'ip_address' | 'is_active' | 'is_admin_deactivated' | 'is_identity_manager' | 'is_staff' | 'is_support' | 'job_title' | 'last_name' | 'managed_isds' | 'nationalities' | 'nationality' | 'native_name' | 'notifications_enabled' | 'organization' | 'organization_country' | 'organization_registry_code' | 'organization_type' | 'permissions' | 'personal_title' | 'phone_number' | 'place_of_birth' | 'preferred_language' | 'profile_completeness' | 'registration_method' | 'requested_email' | 'should_protect_user_details' | 'slug' | 'token' | 'token_expires_at' | 'token_lifetime' | 'url' | 'username' | 'uuid';
+export type UserMeFieldEnum = 'active_isds' | 'address' | 'affiliations' | 'agree_with_policy' | 'agreement_date' | 'attribute_sources' | 'birth_date' | 'can_use_personal_access_tokens' | 'civil_number' | 'country_of_residence' | 'date_joined' | 'deactivation_reason' | 'description' | 'eduperson_assurance' | 'email' | 'first_name' | 'full_name' | 'gender' | 'has_active_session' | 'has_usable_password' | 'identity_provider_fields' | 'identity_provider_label' | 'identity_provider_management_url' | 'identity_provider_name' | 'identity_source' | 'image' | 'ip_address' | 'is_active' | 'is_admin_deactivated' | 'is_identity_manager' | 'is_staff' | 'is_support' | 'job_title' | 'last_name' | 'managed_isds' | 'nationalities' | 'nationality' | 'native_name' | 'notifications_enabled' | 'organization' | 'organization_country' | 'organization_registry_code' | 'organization_type' | 'organization_vat_code' | 'permissions' | 'personal_title' | 'phone_number' | 'place_of_birth' | 'preferred_language' | 'profile_completeness' | 'registration_method' | 'requested_email' | 'should_protect_user_details' | 'slug' | 'token' | 'token_expires_at' | 'token_lifetime' | 'url' | 'username' | 'uuid';
 
 export type VmwareDiskFieldEnum = 'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'size' | 'state' | 'url' | 'uuid' | 'vm' | 'vm_name' | 'vm_uuid';
 
