@@ -11018,6 +11018,10 @@ export type MarketplaceServiceProviderUser = {
      */
     organization_registry_code?: string;
     /**
+     * VAT code of the user's organization
+     */
+    organization_vat_code?: string;
+    /**
      * REFEDS assurance profile URIs from identity provider
      */
     eduperson_assurance?: {
@@ -32876,7 +32880,7 @@ export type ProviderOfferingFieldEnum = 'billing_price_estimate' | 'category_tit
 
 export type ProjectPermissionLogFieldEnum = 'created' | 'created_by' | 'created_by_full_name' | 'created_by_username' | 'customer_name' | 'customer_uuid' | 'expiration_time' | 'project' | 'project_created' | 'project_end_date' | 'project_name' | 'project_uuid' | 'role' | 'role_name' | 'user' | 'user_email' | 'user_full_name' | 'user_native_name' | 'user_username' | 'user_uuid';
 
-export type MarketplaceServiceProviderUserFieldEnum = 'active_isds' | 'address' | 'affiliations' | 'birth_date' | 'civil_number' | 'country_of_residence' | 'eduperson_assurance' | 'email' | 'first_name' | 'full_name' | 'gender' | 'identity_source' | 'is_active' | 'job_title' | 'last_name' | 'nationalities' | 'nationality' | 'organization' | 'organization_country' | 'organization_registry_code' | 'organization_type' | 'personal_title' | 'phone_number' | 'place_of_birth' | 'projects_count' | 'registration_method' | 'username' | 'uuid';
+export type MarketplaceServiceProviderUserFieldEnum = 'active_isds' | 'address' | 'affiliations' | 'birth_date' | 'civil_number' | 'country_of_residence' | 'eduperson_assurance' | 'email' | 'first_name' | 'full_name' | 'gender' | 'identity_source' | 'is_active' | 'job_title' | 'last_name' | 'nationalities' | 'nationality' | 'organization' | 'organization_country' | 'organization_registry_code' | 'organization_type' | 'organization_vat_code' | 'personal_title' | 'phone_number' | 'place_of_birth' | 'projects_count' | 'registration_method' | 'username' | 'uuid';
 
 export type MarketplaceServiceProviderUserOEnum = '-description' | '-email' | '-full_name' | '-is_active' | '-is_staff' | '-is_support' | '-job_title' | '-native_name' | '-organization' | '-phone_number' | '-registration_method' | '-username' | 'description' | 'email' | 'full_name' | 'is_active' | 'is_staff' | 'is_support' | 'job_title' | 'native_name' | 'organization' | 'phone_number' | 'registration_method' | 'username';
 
