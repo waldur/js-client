@@ -11290,6 +11290,10 @@ export type MergedPluginOptions = {
      */
     required_team_role_for_provisioning?: string | null;
     /**
+     * List of project or organization role names (e.g. 'PROJECT.MANAGER') allowed to view and order this offering. When set, the offering is hidden from the catalog for other users and they cannot create orders for it. Whether their orders skip consumer review still depends on the role having the order-approval permission.
+     */
+    restricted_to_roles?: Array<string>;
+    /**
      * If set to True, users will be able to upload purchase orders.
      */
     enable_purchase_order_upload?: boolean;
@@ -11632,6 +11636,10 @@ export type MergedPluginOptionsRequest = {
      * Required user role in a project for provisioning of resources
      */
     required_team_role_for_provisioning?: string | null;
+    /**
+     * List of project or organization role names (e.g. 'PROJECT.MANAGER') allowed to view and order this offering. When set, the offering is hidden from the catalog for other users and they cannot create orders for it. Whether their orders skip consumer review still depends on the role having the order-approval permission.
+     */
+    restricted_to_roles?: Array<string>;
     /**
      * If set to True, users will be able to upload purchase orders.
      */
@@ -42808,6 +42816,10 @@ export type CustomersListData = {
          * Return a list of customers where current user has project create permission.
          */
         current_user_has_project_create_permission?: boolean;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        current_user_has_role?: Array<string>;
         field?: Array<CustomerFieldEnum>;
         /**
          * Filter by customers with resources.
@@ -42907,6 +42919,10 @@ export type CustomersCountData = {
          * Return a list of customers where current user has project create permission.
          */
         current_user_has_project_create_permission?: boolean;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        current_user_has_role?: Array<string>;
         /**
          * Filter by customers with resources.
          */
@@ -43344,6 +43360,10 @@ export type CustomersHistoryListData = {
          */
         current_user_has_project_create_permission?: boolean;
         /**
+         * Multiple values may be separated by commas.
+         */
+        current_user_has_role?: Array<string>;
+        /**
          * Filter by customers with resources.
          */
         has_resources?: string;
@@ -43680,6 +43700,10 @@ export type CustomersCountriesListData = {
          */
         current_user_has_project_create_permission?: boolean;
         /**
+         * Multiple values may be separated by commas.
+         */
+        current_user_has_role?: Array<string>;
+        /**
          * Filter by customers with resources.
          */
         has_resources?: string;
@@ -43777,6 +43801,10 @@ export type CustomersCountriesCountData = {
          * Return a list of customers where current user has project create permission.
          */
         current_user_has_project_create_permission?: boolean;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        current_user_has_role?: Array<string>;
         /**
          * Filter by customers with resources.
          */
@@ -45602,6 +45630,10 @@ export type FinancialReportsListData = {
          */
         current_user_has_project_create_permission?: boolean;
         /**
+         * Multiple values may be separated by commas.
+         */
+        current_user_has_role?: Array<string>;
+        /**
          * Filter by customer UUID.
          */
         customer_uuid?: string;
@@ -45691,6 +45723,10 @@ export type FinancialReportsCountData = {
          * Return a list of customers where current user has project create permission.
          */
         current_user_has_project_create_permission?: boolean;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        current_user_has_role?: Array<string>;
         /**
          * Filter by customer UUID.
          */
@@ -64096,6 +64132,10 @@ export type MarketplaceServiceProvidersCustomerProjectsListData = {
         /**
          * Multiple values may be separated by commas.
          */
+        current_user_has_role?: Array<string>;
+        /**
+         * Multiple values may be separated by commas.
+         */
         customer?: Array<string>;
         /**
          * Customer abbreviation
@@ -64207,6 +64247,10 @@ export type MarketplaceServiceProvidersCustomersListData = {
          * Return a list of customers where current user has project create permission.
          */
         current_user_has_project_create_permission?: boolean;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        current_user_has_role?: Array<string>;
         field?: Array<MarketplaceProviderCustomerFieldEnum>;
         /**
          * Name
@@ -64857,6 +64901,10 @@ export type MarketplaceServiceProvidersProjectsListData = {
         /**
          * Multiple values may be separated by commas.
          */
+        current_user_has_role?: Array<string>;
+        /**
+         * Multiple values may be separated by commas.
+         */
         customer?: Array<string>;
         /**
          * Customer abbreviation
@@ -64964,6 +65012,10 @@ export type MarketplaceServiceProvidersUserCustomersListData = {
          * Return a list of customers where current user has project create permission.
          */
         current_user_has_project_create_permission?: boolean;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        current_user_has_role?: Array<string>;
         field?: Array<MarketplaceProviderCustomerFieldEnum>;
         /**
          * Name
@@ -73402,6 +73454,10 @@ export type OpenportalUnmanagedProjectsListData = {
         /**
          * Multiple values may be separated by commas.
          */
+        current_user_has_role?: Array<string>;
+        /**
+         * Multiple values may be separated by commas.
+         */
         customer?: Array<string>;
         /**
          * Customer abbreviation
@@ -73533,6 +73589,10 @@ export type OpenportalUnmanagedProjectsCountData = {
          * Created before
          */
         created_before?: string;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        current_user_has_role?: Array<string>;
         /**
          * Multiple values may be separated by commas.
          */
@@ -83554,6 +83614,10 @@ export type ProjectsListData = {
         /**
          * Multiple values may be separated by commas.
          */
+        current_user_has_role?: Array<string>;
+        /**
+         * Multiple values may be separated by commas.
+         */
         customer?: Array<string>;
         /**
          * Customer abbreviation
@@ -83685,6 +83749,10 @@ export type ProjectsCountData = {
          * Created before
          */
         created_before?: string;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        current_user_has_role?: Array<string>;
         /**
          * Multiple values may be separated by commas.
          */
