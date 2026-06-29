@@ -15189,6 +15189,7 @@ export type OpenPortalQuota = {
 };
 
 export type OpenStackAllowedAddressPair = {
+    ip_address?: string;
     mac_address?: string;
 };
 
