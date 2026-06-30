@@ -20323,19 +20323,25 @@ export type PeriodBreakdown = {
 };
 
 export type Permission = {
+    readonly uuid: string;
     readonly user_uuid: string;
     readonly user_name: string;
     readonly user_slug: string;
     readonly created: string;
     expiration_time?: string | null;
+    is_active?: boolean | null;
     readonly created_by_full_name: string;
     readonly created_by_username: string;
+    readonly revoked_by_full_name: string | null;
+    readonly revoked_by_username: string | null;
+    revoke_reason?: string;
     readonly role_name: string;
     readonly role_description: string;
     readonly role_uuid: string;
     readonly scope_type: string | null;
     readonly scope_uuid: string;
     readonly scope_name: string;
+    readonly scope_is_removed: boolean;
     readonly customer_uuid: string;
     readonly customer_name: string;
     readonly resource_uuid: string | null;
@@ -29785,6 +29791,10 @@ export type UserRoleDetails = {
 
 export type UserRoleExpirationTime = {
     expiration_time: string | null;
+};
+
+export type UserRolePermissionActionRequest = {
+    reason?: string;
 };
 
 export type UserRoleUpdateRequest = {
@@ -52047,6 +52057,7 @@ export type MarketplaceOfferingPermissionsListData = {
          * User full name contains
          */
         full_name?: string;
+        is_active?: boolean;
         /**
          * Modified after
          */
@@ -52125,6 +52136,7 @@ export type MarketplaceOfferingPermissionsCountData = {
          * User full name contains
          */
         full_name?: string;
+        is_active?: boolean;
         /**
          * Modified after
          */
@@ -52204,6 +52216,7 @@ export type MarketplaceOfferingPermissionsLogListData = {
          * User full name contains
          */
         full_name?: string;
+        is_active?: boolean;
         /**
          * Modified after
          */
@@ -52282,6 +52295,7 @@ export type MarketplaceOfferingPermissionsLogCountData = {
          * User full name contains
          */
         full_name?: string;
+        is_active?: boolean;
         /**
          * Modified after
          */
@@ -64758,6 +64772,7 @@ export type MarketplaceServiceProvidersProjectPermissionsListData = {
          * User full name contains
          */
         full_name?: string;
+        is_active?: boolean;
         /**
          * Modified after
          */
@@ -96526,6 +96541,7 @@ export type UserPermissionsListData = {
          * User full name contains
          */
         full_name?: string;
+        is_active?: boolean;
         /**
          * Modified after
          */
@@ -96569,6 +96585,10 @@ export type UserPermissionsListData = {
          * Scope UUID
          */
         scope_uuid?: string;
+        /**
+         * Staff/support only. Include revoked (inactive) role grants in addition to active ones. Ignored for other users, who only ever see their own active roles.
+         */
+        show_inactive?: boolean;
         user?: string;
         /**
          * User slug contains
@@ -96603,6 +96623,7 @@ export type UserPermissionsCountData = {
          * User full name contains
          */
         full_name?: string;
+        is_active?: boolean;
         /**
          * Modified after
          */
@@ -96646,6 +96667,10 @@ export type UserPermissionsCountData = {
          * Scope UUID
          */
         scope_uuid?: string;
+        /**
+         * Staff/support only. Include revoked (inactive) role grants in addition to active ones. Ignored for other users, who only ever see their own active roles.
+         */
+        show_inactive?: boolean;
         user?: string;
         /**
          * User slug contains
@@ -96678,6 +96703,38 @@ export type UserPermissionsRetrieveResponses = {
 };
 
 export type UserPermissionsRetrieveResponse = UserPermissionsRetrieveResponses[keyof UserPermissionsRetrieveResponses];
+
+export type UserPermissionsRestoreData = {
+    body?: UserRolePermissionActionRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/user-permissions/{uuid}/restore/';
+};
+
+export type UserPermissionsRestoreResponses = {
+    /**
+     * Role restored successfully.
+     */
+    200: unknown;
+};
+
+export type UserPermissionsRevokeData = {
+    body?: UserRolePermissionActionRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/user-permissions/{uuid}/revoke/';
+};
+
+export type UserPermissionsRevokeResponses = {
+    /**
+     * Role revoked successfully.
+     */
+    200: unknown;
+};
 
 export type UsersListData = {
     body?: never;
