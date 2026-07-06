@@ -2946,6 +2946,8 @@ export type BidEnum = 'eager' | 'willing' | 'not_willing' | 'conflict';
 
 export type BillingModeEnum = 'monthly' | 'prepaid' | 'usage';
 
+export type BillingSourceEnum = 'quota' | 'placement';
+
 export type BillingTypeEnum = 'fixed' | 'usage' | 'limit' | 'one' | 'few';
 
 export type BillingUnit = 'month' | 'quarter' | 'half_month' | 'day' | 'hour' | 'quantity';
@@ -11485,6 +11487,10 @@ export type MergedPluginOptions = {
      */
     usage_poll_interval_minutes?: number;
     /**
+     * Source for OpenStack instance compute ComponentUsage: 'quota' (flavor-derived Nova quota, default) or 'placement' (Placement allocations; also bills VGPU/PCI/custom resource classes).
+     */
+    billing_source?: BillingSourceEnum;
+    /**
      * HEAppE cluster id
      */
     heappe_cluster_id?: string;
@@ -11835,6 +11841,10 @@ export type MergedPluginOptionsRequest = {
      * Interval in minutes between usage polling for this offering (default: 60)
      */
     usage_poll_interval_minutes?: number;
+    /**
+     * Source for OpenStack instance compute ComponentUsage: 'quota' (flavor-derived Nova quota, default) or 'placement' (Placement allocations; also bills VGPU/PCI/custom resource classes).
+     */
+    billing_source?: BillingSourceEnum;
     /**
      * HEAppE cluster id
      */
