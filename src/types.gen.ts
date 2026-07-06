@@ -3357,6 +3357,8 @@ export type CallApplicantVisibilityConfig = {
     expose_civil_number?: boolean;
     expose_birth_date?: boolean;
     expose_active_isds?: boolean;
+    expose_uid_number?: boolean;
+    expose_primary_gid?: boolean;
     readonly exposed_fields: Array<string>;
     /**
      * Return True if this is a default (unsaved) config.
@@ -3390,6 +3392,8 @@ export type CallApplicantVisibilityConfigRequest = {
     expose_civil_number?: boolean;
     expose_birth_date?: boolean;
     expose_active_isds?: boolean;
+    expose_uid_number?: boolean;
+    expose_primary_gid?: boolean;
 };
 
 export type CallAssignmentConfiguration = {
@@ -5563,6 +5567,7 @@ export type ConstanceSettings = {
     SSH_KEY_ALLOWED_TYPES?: Array<SshkeyallowedtypesEnum | BlankEnum>;
     SSH_KEY_MIN_RSA_KEY_SIZE?: number;
     ENABLED_REPORTING_SCREENS?: Array<EnabledreportingscreensEnum | BlankEnum>;
+    POSIX_ID_POOL_UTILIZATION_THRESHOLD?: number;
     AFFILIATES_ENABLED?: boolean;
     MATRIX_ENABLED?: boolean;
     MATRIX_HOMESERVER_URL?: string;
@@ -5867,6 +5872,7 @@ export type ConstanceSettingsRequest = {
     SSH_KEY_ALLOWED_TYPES?: Array<SshkeyallowedtypesEnum | BlankEnum>;
     SSH_KEY_MIN_RSA_KEY_SIZE?: number;
     ENABLED_REPORTING_SCREENS?: Array<EnabledreportingscreensEnum | BlankEnum>;
+    POSIX_ID_POOL_UTILIZATION_THRESHOLD?: number;
     AFFILIATES_ENABLED?: boolean;
     MATRIX_ENABLED?: boolean;
     MATRIX_HOMESERVER_URL?: string;
@@ -10636,6 +10642,9 @@ export type MaintenanceAnnouncement = {
      * When the maintenance actually completed
      */
     readonly actual_end: string | null;
+    readonly overrun_minutes: number | null;
+    readonly start_delta_minutes: number | null;
+    timing_bucket: TimingBucketEnum;
     /**
      * Service provider announcing the maintenance
      */
@@ -10871,6 +10880,18 @@ export type MaintenanceStatsSummary = {
      * Percentage of maintenances completed on time
      */
     on_time_completion_rate: number | null;
+    /**
+     * Fraction (0-1) of completed maintenances that finished within 15 minutes of their scheduled end
+     */
+    on_time_rate_15min: number | null;
+    /**
+     * Mean overrun in hours across completed maintenances that ran past their scheduled end
+     */
+    avg_overrun_hours: number | null;
+    /**
+     * Number of emergency-type maintenances in the window
+     */
+    emergency_count: number;
 };
 
 export type MaintenanceTypeEnum = 1 | 2 | 3 | 4 | 5;
@@ -11519,21 +11540,9 @@ export type MergedPluginOptions = {
      */
     project_permanent_directory?: string;
     /**
-     * GLAuth initial primary group number
+     * Manage a POSIX/LDAP account (UID, GID, home directory, login shell and GLAuth exposure) for this offering's users. Disable for offerings that only need a username.
      */
-    initial_primarygroup_number?: number;
-    /**
-     * GLAuth initial uidnumber
-     */
-    initial_uidnumber?: number;
-    /**
-     * GLAuth initial usergroup number
-     */
-    initial_usergroup_number?: number;
-    /**
-     * GLAuth initial gid for role-aware groups (one per (resource|resource-project, role) tuple). Must leave at least 50000 gids of headroom above initial_usergroup_number to avoid collisions.
-     */
-    initial_rolegroup_number?: number;
+    enable_posix_account?: boolean;
     /**
      * Mapping of Waldur role names (on Resource scope) to emitted role tokens used in group name rendering. Roles outside the map are skipped. Example: {"PI": "admin", "Member": "member"}.
      */
@@ -11562,6 +11571,26 @@ export type MergedPluginOptions = {
      * GLAuth username generation policy
      */
     username_generation_policy?: UsernameGenerationPolicyEnum;
+    /**
+     * Default login shell assigned to GLAuth/LDAP accounts.
+     */
+    login_shell?: string;
+    /**
+     * Where each offering user's UID comes from: allocated from the POSIX ID pool (default), or taken from the user's uid_number attribute (e.g. an OIDC claim). Pair 'user_attribute' with a GID-only pool to avoid UID collisions.
+     */
+    uid_source?: PosixIdSourceEnum;
+    /**
+     * Where each offering user's primary GID comes from: the POSIX ID pool (default), or the user's primary_gid attribute.
+     */
+    gid_source?: PosixIdSourceEnum;
+    /**
+     * Emit the user's full name as a GLAuth displayName custom attribute (rendered to LDAP displayName).
+     */
+    emit_display_name?: boolean;
+    /**
+     * Emit the Waldur username as a GLAuth waldurUsername custom attribute, alongside the generated POSIX login name.
+     */
+    emit_waldur_username?: boolean;
     /**
      * Enable issues for membership changes
      */
@@ -11874,21 +11903,9 @@ export type MergedPluginOptionsRequest = {
      */
     project_permanent_directory?: string;
     /**
-     * GLAuth initial primary group number
+     * Manage a POSIX/LDAP account (UID, GID, home directory, login shell and GLAuth exposure) for this offering's users. Disable for offerings that only need a username.
      */
-    initial_primarygroup_number?: number;
-    /**
-     * GLAuth initial uidnumber
-     */
-    initial_uidnumber?: number;
-    /**
-     * GLAuth initial usergroup number
-     */
-    initial_usergroup_number?: number;
-    /**
-     * GLAuth initial gid for role-aware groups (one per (resource|resource-project, role) tuple). Must leave at least 50000 gids of headroom above initial_usergroup_number to avoid collisions.
-     */
-    initial_rolegroup_number?: number;
+    enable_posix_account?: boolean;
     /**
      * Mapping of Waldur role names (on Resource scope) to emitted role tokens used in group name rendering. Roles outside the map are skipped. Example: {"PI": "admin", "Member": "member"}.
      */
@@ -11917,6 +11934,26 @@ export type MergedPluginOptionsRequest = {
      * GLAuth username generation policy
      */
     username_generation_policy?: UsernameGenerationPolicyEnum;
+    /**
+     * Default login shell assigned to GLAuth/LDAP accounts.
+     */
+    login_shell?: string;
+    /**
+     * Where each offering user's UID comes from: allocated from the POSIX ID pool (default), or taken from the user's uid_number attribute (e.g. an OIDC claim). Pair 'user_attribute' with a GID-only pool to avoid UID collisions.
+     */
+    uid_source?: PosixIdSourceEnum;
+    /**
+     * Where each offering user's primary GID comes from: the POSIX ID pool (default), or the user's primary_gid attribute.
+     */
+    gid_source?: PosixIdSourceEnum;
+    /**
+     * Emit the user's full name as a GLAuth displayName custom attribute (rendered to LDAP displayName).
+     */
+    emit_display_name?: boolean;
+    /**
+     * Emit the Waldur username as a GLAuth waldurUsername custom attribute, alongside the generated POSIX login name.
+     */
+    emit_waldur_username?: boolean;
     /**
      * Enable issues for membership changes
      */
@@ -14848,6 +14885,14 @@ export type OfferingUser = {
      */
     readonly user_identity_source: string;
     /**
+     * POSIX UID from the identity provider; used when an offering's uid_source is 'user_attribute'.
+     */
+    readonly user_uid_number: number | null;
+    /**
+     * POSIX primary GID from the identity provider; used when an offering's gid_source is 'user_attribute'.
+     */
+    readonly user_primary_gid: number | null;
+    /**
      * List of ISDs that have asserted this user exists. User is deactivated when this becomes empty.
      */
     readonly user_active_isds: Array<string>;
@@ -14890,6 +14935,10 @@ export type OfferingUser = {
     } | null;
     readonly is_profile_complete: boolean;
     readonly missing_profile_attributes: Array<string>;
+    readonly uidnumber: number | null;
+    readonly primarygroup: number | null;
+    readonly login_shell: string | null;
+    readonly home_directory: string | null;
 };
 
 export type OfferingUserAttributeConfig = {
@@ -14921,6 +14970,8 @@ export type OfferingUserAttributeConfig = {
     expose_civil_number?: boolean;
     expose_birth_date?: boolean;
     expose_active_isds?: boolean;
+    expose_uid_number?: boolean;
+    expose_primary_gid?: boolean;
     readonly exposed_fields: Array<string>;
     /**
      * Return True if this is a default (unsaved) config.
@@ -14956,7 +15007,53 @@ export type OfferingUserAttributeConfigRequest = {
     expose_civil_number?: boolean;
     expose_birth_date?: boolean;
     expose_active_isds?: boolean;
+    expose_uid_number?: boolean;
+    expose_primary_gid?: boolean;
     offering?: string;
+};
+
+export type OfferingUserPosixAllocation = {
+    namespace: string;
+    value: number;
+    pool_uuid: string | null;
+    scope: string | null;
+    scope_name: string | null;
+};
+
+export type OfferingUserPosixAttributesRequest = {
+    /**
+     * Login shell for this account (LDAP loginShell).
+     */
+    login_shell?: string;
+    /**
+     * Home directory for this account (LDAP homeDirectory).
+     */
+    home_directory?: string;
+    /**
+     * Override the account's UID. The value must fall within the offering's POSIX ID pool and is rejected if already allocated.
+     */
+    uidnumber?: number | null;
+    /**
+     * Override the account's primary GID (see uidnumber).
+     */
+    primarygroup?: number | null;
+};
+
+export type OfferingUserPosixGroup = {
+    gid: number;
+    offering_name: string;
+    project_name: string | null;
+    project_uuid: string | null;
+    customer_name: string | null;
+    customer_uuid: string | null;
+    project_accessible: boolean;
+    pool_uuid: string | null;
+};
+
+export type OfferingUserPosixUpdateResponse = {
+    uidnumber?: number | null;
+    primarygroup?: number | null;
+    warnings?: Array<string>;
 };
 
 export type OfferingUserRequest = {
@@ -19090,6 +19187,8 @@ export type PatchedOfferingUserAttributeConfigRequest = {
     expose_civil_number?: boolean;
     expose_birth_date?: boolean;
     expose_active_isds?: boolean;
+    expose_uid_number?: boolean;
+    expose_primary_gid?: boolean;
     offering?: string;
 };
 
@@ -19270,6 +19369,14 @@ export type PatchedPaymentRequest = {
     date_of_payment?: string;
     sum?: string;
     proof?: Blob | File | null;
+};
+
+export type PatchedPosixIdPoolRequest = {
+    description?: string;
+    min_uid?: number | null;
+    max_uid?: number | null;
+    min_gid?: number | null;
+    max_gid?: number | null;
 };
 
 export type PatchedProjectCreditRequest = {
@@ -20502,13 +20609,13 @@ export type PermissionMetadataResponse = {
      * Map of permission keys to permission enum values from PermissionEnum
      */
     permissions: {
-        [key: string]: 'SERVICE_PROVIDER.REGISTER' | 'OFFERING.CREATE' | 'OFFERING.DELETE' | 'OFFERING.UPDATE_THUMBNAIL' | 'OFFERING.UPDATE' | 'OFFERING.UPDATE_ATTRIBUTES' | 'OFFERING.UPDATE_LOCATION' | 'OFFERING.UPDATE_DESCRIPTION' | 'OFFERING.UPDATE_OPTIONS' | 'OFFERING.UPDATE_INTEGRATION' | 'OFFERING.ADD_ENDPOINT' | 'OFFERING.DELETE_ENDPOINT' | 'OFFERING.UPDATE_COMPONENTS' | 'OFFERING.PAUSE' | 'OFFERING.UNPAUSE' | 'OFFERING.ARCHIVE' | 'OFFERING.DRY_RUN_SCRIPT' | 'OFFERING.MANAGE_CAMPAIGN' | 'OFFERING.MANAGE_USER_GROUP' | 'OFFERING.CREATE_PLAN' | 'OFFERING.UPDATE_PLAN' | 'OFFERING.ARCHIVE_PLAN' | 'OFFERING.CREATE_SCREENSHOT' | 'OFFERING.UPDATE_SCREENSHOT' | 'OFFERING.DELETE_SCREENSHOT' | 'OFFERING.CREATE_USER' | 'OFFERING.UPDATE_USER' | 'OFFERING.DELETE_USER' | 'OFFERING.MANAGE_USER_ROLE' | 'RESOURCE.CREATE_ROBOT_ACCOUNT' | 'RESOURCE.UPDATE_ROBOT_ACCOUNT' | 'RESOURCE.DELETE_ROBOT_ACCOUNT' | 'ORDER.LIST' | 'ORDER.CREATE' | 'ORDER.APPROVE_PRIVATE' | 'ORDER.APPROVE' | 'ORDER.REJECT' | 'ORDER.DESTROY' | 'ORDER.CANCEL' | 'ORDER.SET_CONSUMER_INFO' | 'RESOURCE.LIST' | 'RESOURCE.UPDATE' | 'RESOURCE.TERMINATE' | 'RESOURCE.LIST_IMPORTABLE' | 'RESOURCE.SET_END_DATE' | 'RESOURCE.SET_USAGE' | 'RESOURCE.SET_PLAN' | 'RESOURCE.SET_LIMITS' | 'RESOURCE.SET_BACKEND_ID' | 'RESOURCE.SUBMIT_REPORT' | 'RESOURCE.SET_BACKEND_METADATA' | 'RESOURCE.SET_STATE' | 'RESOURCE.UPDATE_OPTIONS' | 'RESOURCE.ACCEPT_BOOKING_REQUEST' | 'RESOURCE.REJECT_BOOKING_REQUEST' | 'RESOURCE.MANAGE_USERS' | 'RESOURCE.CREATE_PERMISSION' | 'RESOURCE.UPDATE_PERMISSION' | 'RESOURCE.DELETE_PERMISSION' | 'RESOURCE_PROJECT.CREATE_PERMISSION' | 'RESOURCE_PROJECT.UPDATE_PERMISSION' | 'RESOURCE_PROJECT.DELETE_PERMISSION' | 'RESOURCE.CONSUMPTION_LIMITATION' | 'OFFERING.MANAGE_BACKEND_RESOURCES' | 'SERVICE_PROVIDER.GET_API_SECRET_CODE' | 'SERVICE_PROVIDER.GENERATE_API_SECRET_CODE' | 'SERVICE_PROVIDER.LIST_CUSTOMERS' | 'SERVICE_PROVIDER.LIST_CUSTOMER_PROJECTS' | 'SERVICE_PROVIDER.LIST_PROJECTS' | 'SERVICE_PROVIDER.LIST_PROJECT_PERMISSIONS' | 'SERVICE_PROVIDER.LIST_KEYS' | 'SERVICE_PROVIDER.LIST_USERS' | 'SERVICE_PROVIDER.LIST_USER_CUSTOMERS' | 'SERVICE_PROVIDER.LIST_SERVICE_ACCOUNTS' | 'SERVICE_PROVIDER.LIST_COURSE_ACCOUNTS' | 'SERVICE_PROVIDER.SET_OFFERINGS_USERNAME' | 'SERVICE_PROVIDER.GET_STATISTICS' | 'SERVICE_PROVIDER.GET_REVENUE' | 'SERVICE_PROVIDER.GET_ROBOT_ACCOUNT_CUSTOMERS' | 'SERVICE_PROVIDER.GET_ROBOT_ACCOUNT_PROJECTS' | 'PROJECT.CREATE_PERMISSION' | 'CUSTOMER.CREATE_PERMISSION' | 'OFFERING.CREATE_PERMISSION' | 'CALL.CREATE_PERMISSION' | 'PROPOSAL.MANAGE' | 'PROPOSAL.MANAGE_REVIEW' | 'PROJECT.UPDATE_PERMISSION' | 'CUSTOMER.UPDATE_PERMISSION' | 'OFFERING.UPDATE_PERMISSION' | 'CALL.UPDATE_PERMISSION' | 'PROPOSAL.UPDATE_PERMISSION' | 'PROJECT.DELETE_PERMISSION' | 'CUSTOMER.DELETE_PERMISSION' | 'OFFERING.DELETE_PERMISSION' | 'CALL.DELETE_PERMISSION' | 'PROPOSAL.DELETE_PERMISSION' | 'LEXIS_LINK.CREATE' | 'LEXIS_LINK.DELETE' | 'PROJECT.LIST' | 'PROJECT.CREATE' | 'PROJECT.DELETE' | 'PROJECT.UPDATE' | 'PROJECT.UPDATE_METADATA' | 'PROJECT.REVIEW_MEMBERSHIP' | 'CUSTOMER.UPDATE' | 'CUSTOMER.CONTACT_UPDATE' | 'CUSTOMER.LIST_USERS' | 'OFFERING.ACCEPT_CALL_REQUEST' | 'CALL.APPROVE_AND_REJECT_PROPOSALS' | 'CALL.CLOSE_ROUNDS' | 'ACCESS_SUBNET.CREATE' | 'ACCESS_SUBNET.UPDATE' | 'ACCESS_SUBNET.DELETE' | 'OFFERINGUSER.UPDATE_RESTRICTION' | 'INVITATION.LIST' | 'CUSTOMER.LIST_PERMISSION_REVIEWS' | 'CALL.LIST' | 'CALL.CREATE' | 'CALL.UPDATE' | 'ROUND.LIST' | 'PROPOSAL.LIST' | 'SERVICE_ACCOUNT.MANAGE' | 'PROJECT.COURSE_ACCOUNT_MANAGE' | 'SERVICE_PROVIDER.OPENSTACK_IMAGE_MANAGEMENT' | 'OPENSTACK_INSTANCE.CONSOLE_ACCESS' | 'OPENSTACK_INSTANCE.MANAGE_POWER' | 'OPENSTACK_INSTANCE.MANAGE' | 'OPENSTACK_ROUTER.MANAGE_GATEWAY' | 'STAFF.ACCESS' | 'SUPPORT.ACCESS';
+        [key: string]: 'SERVICE_PROVIDER.REGISTER' | 'OFFERING.CREATE' | 'OFFERING.DELETE' | 'OFFERING.UPDATE_THUMBNAIL' | 'OFFERING.UPDATE' | 'OFFERING.UPDATE_ATTRIBUTES' | 'OFFERING.UPDATE_LOCATION' | 'OFFERING.UPDATE_DESCRIPTION' | 'OFFERING.UPDATE_OPTIONS' | 'OFFERING.UPDATE_INTEGRATION' | 'OFFERING.ADD_ENDPOINT' | 'OFFERING.DELETE_ENDPOINT' | 'OFFERING.UPDATE_COMPONENTS' | 'OFFERING.PAUSE' | 'OFFERING.UNPAUSE' | 'OFFERING.ARCHIVE' | 'OFFERING.DRY_RUN_SCRIPT' | 'OFFERING.MANAGE_CAMPAIGN' | 'OFFERING.MANAGE_USER_GROUP' | 'OFFERING.CREATE_PLAN' | 'OFFERING.UPDATE_PLAN' | 'OFFERING.ARCHIVE_PLAN' | 'OFFERING.CREATE_SCREENSHOT' | 'OFFERING.UPDATE_SCREENSHOT' | 'OFFERING.DELETE_SCREENSHOT' | 'OFFERING.CREATE_USER' | 'OFFERING.UPDATE_USER' | 'OFFERING.DELETE_USER' | 'OFFERING.MANAGE_USER_ROLE' | 'POSIX_ID_POOL.MANAGE' | 'RESOURCE.CREATE_ROBOT_ACCOUNT' | 'RESOURCE.UPDATE_ROBOT_ACCOUNT' | 'RESOURCE.DELETE_ROBOT_ACCOUNT' | 'ORDER.LIST' | 'ORDER.CREATE' | 'ORDER.APPROVE_PRIVATE' | 'ORDER.APPROVE' | 'ORDER.REJECT' | 'ORDER.DESTROY' | 'ORDER.CANCEL' | 'ORDER.SET_CONSUMER_INFO' | 'RESOURCE.LIST' | 'RESOURCE.UPDATE' | 'RESOURCE.TERMINATE' | 'RESOURCE.LIST_IMPORTABLE' | 'RESOURCE.SET_END_DATE' | 'RESOURCE.SET_USAGE' | 'RESOURCE.SET_PLAN' | 'RESOURCE.SET_LIMITS' | 'RESOURCE.SET_BACKEND_ID' | 'RESOURCE.SUBMIT_REPORT' | 'RESOURCE.SET_BACKEND_METADATA' | 'RESOURCE.SET_STATE' | 'RESOURCE.UPDATE_OPTIONS' | 'RESOURCE.ACCEPT_BOOKING_REQUEST' | 'RESOURCE.REJECT_BOOKING_REQUEST' | 'RESOURCE.MANAGE_USERS' | 'RESOURCE.CREATE_PERMISSION' | 'RESOURCE.UPDATE_PERMISSION' | 'RESOURCE.DELETE_PERMISSION' | 'RESOURCE_PROJECT.CREATE_PERMISSION' | 'RESOURCE_PROJECT.UPDATE_PERMISSION' | 'RESOURCE_PROJECT.DELETE_PERMISSION' | 'RESOURCE.CONSUMPTION_LIMITATION' | 'OFFERING.MANAGE_BACKEND_RESOURCES' | 'SERVICE_PROVIDER.GET_API_SECRET_CODE' | 'SERVICE_PROVIDER.GENERATE_API_SECRET_CODE' | 'SERVICE_PROVIDER.LIST_CUSTOMERS' | 'SERVICE_PROVIDER.LIST_CUSTOMER_PROJECTS' | 'SERVICE_PROVIDER.LIST_PROJECTS' | 'SERVICE_PROVIDER.LIST_PROJECT_PERMISSIONS' | 'SERVICE_PROVIDER.LIST_KEYS' | 'SERVICE_PROVIDER.LIST_USERS' | 'SERVICE_PROVIDER.LIST_USER_CUSTOMERS' | 'SERVICE_PROVIDER.LIST_SERVICE_ACCOUNTS' | 'SERVICE_PROVIDER.LIST_COURSE_ACCOUNTS' | 'SERVICE_PROVIDER.SET_OFFERINGS_USERNAME' | 'SERVICE_PROVIDER.GET_STATISTICS' | 'SERVICE_PROVIDER.GET_REVENUE' | 'SERVICE_PROVIDER.GET_ROBOT_ACCOUNT_CUSTOMERS' | 'SERVICE_PROVIDER.GET_ROBOT_ACCOUNT_PROJECTS' | 'PROJECT.CREATE_PERMISSION' | 'CUSTOMER.CREATE_PERMISSION' | 'OFFERING.CREATE_PERMISSION' | 'CALL.CREATE_PERMISSION' | 'PROPOSAL.MANAGE' | 'PROPOSAL.MANAGE_REVIEW' | 'PROJECT.UPDATE_PERMISSION' | 'CUSTOMER.UPDATE_PERMISSION' | 'OFFERING.UPDATE_PERMISSION' | 'CALL.UPDATE_PERMISSION' | 'PROPOSAL.UPDATE_PERMISSION' | 'PROJECT.DELETE_PERMISSION' | 'CUSTOMER.DELETE_PERMISSION' | 'OFFERING.DELETE_PERMISSION' | 'CALL.DELETE_PERMISSION' | 'PROPOSAL.DELETE_PERMISSION' | 'LEXIS_LINK.CREATE' | 'LEXIS_LINK.DELETE' | 'PROJECT.LIST' | 'PROJECT.CREATE' | 'PROJECT.DELETE' | 'PROJECT.UPDATE' | 'PROJECT.UPDATE_METADATA' | 'PROJECT.REVIEW_MEMBERSHIP' | 'CUSTOMER.UPDATE' | 'CUSTOMER.CONTACT_UPDATE' | 'CUSTOMER.LIST_USERS' | 'OFFERING.ACCEPT_CALL_REQUEST' | 'CALL.APPROVE_AND_REJECT_PROPOSALS' | 'CALL.CLOSE_ROUNDS' | 'ACCESS_SUBNET.CREATE' | 'ACCESS_SUBNET.UPDATE' | 'ACCESS_SUBNET.DELETE' | 'OFFERINGUSER.UPDATE_RESTRICTION' | 'INVITATION.LIST' | 'CUSTOMER.LIST_PERMISSION_REVIEWS' | 'CALL.LIST' | 'CALL.CREATE' | 'CALL.UPDATE' | 'ROUND.LIST' | 'PROPOSAL.LIST' | 'SERVICE_ACCOUNT.MANAGE' | 'PROJECT.COURSE_ACCOUNT_MANAGE' | 'SERVICE_PROVIDER.OPENSTACK_IMAGE_MANAGEMENT' | 'OPENSTACK_INSTANCE.CONSOLE_ACCESS' | 'OPENSTACK_INSTANCE.MANAGE_POWER' | 'OPENSTACK_INSTANCE.MANAGE' | 'OPENSTACK_ROUTER.MANAGE_GATEWAY' | 'STAFF.ACCESS' | 'SUPPORT.ACCESS';
     };
     /**
      * Map of resource types to create permission enums
      */
     permission_map: {
-        [key: string]: 'SERVICE_PROVIDER.REGISTER' | 'OFFERING.CREATE' | 'OFFERING.DELETE' | 'OFFERING.UPDATE_THUMBNAIL' | 'OFFERING.UPDATE' | 'OFFERING.UPDATE_ATTRIBUTES' | 'OFFERING.UPDATE_LOCATION' | 'OFFERING.UPDATE_DESCRIPTION' | 'OFFERING.UPDATE_OPTIONS' | 'OFFERING.UPDATE_INTEGRATION' | 'OFFERING.ADD_ENDPOINT' | 'OFFERING.DELETE_ENDPOINT' | 'OFFERING.UPDATE_COMPONENTS' | 'OFFERING.PAUSE' | 'OFFERING.UNPAUSE' | 'OFFERING.ARCHIVE' | 'OFFERING.DRY_RUN_SCRIPT' | 'OFFERING.MANAGE_CAMPAIGN' | 'OFFERING.MANAGE_USER_GROUP' | 'OFFERING.CREATE_PLAN' | 'OFFERING.UPDATE_PLAN' | 'OFFERING.ARCHIVE_PLAN' | 'OFFERING.CREATE_SCREENSHOT' | 'OFFERING.UPDATE_SCREENSHOT' | 'OFFERING.DELETE_SCREENSHOT' | 'OFFERING.CREATE_USER' | 'OFFERING.UPDATE_USER' | 'OFFERING.DELETE_USER' | 'OFFERING.MANAGE_USER_ROLE' | 'RESOURCE.CREATE_ROBOT_ACCOUNT' | 'RESOURCE.UPDATE_ROBOT_ACCOUNT' | 'RESOURCE.DELETE_ROBOT_ACCOUNT' | 'ORDER.LIST' | 'ORDER.CREATE' | 'ORDER.APPROVE_PRIVATE' | 'ORDER.APPROVE' | 'ORDER.REJECT' | 'ORDER.DESTROY' | 'ORDER.CANCEL' | 'ORDER.SET_CONSUMER_INFO' | 'RESOURCE.LIST' | 'RESOURCE.UPDATE' | 'RESOURCE.TERMINATE' | 'RESOURCE.LIST_IMPORTABLE' | 'RESOURCE.SET_END_DATE' | 'RESOURCE.SET_USAGE' | 'RESOURCE.SET_PLAN' | 'RESOURCE.SET_LIMITS' | 'RESOURCE.SET_BACKEND_ID' | 'RESOURCE.SUBMIT_REPORT' | 'RESOURCE.SET_BACKEND_METADATA' | 'RESOURCE.SET_STATE' | 'RESOURCE.UPDATE_OPTIONS' | 'RESOURCE.ACCEPT_BOOKING_REQUEST' | 'RESOURCE.REJECT_BOOKING_REQUEST' | 'RESOURCE.MANAGE_USERS' | 'RESOURCE.CREATE_PERMISSION' | 'RESOURCE.UPDATE_PERMISSION' | 'RESOURCE.DELETE_PERMISSION' | 'RESOURCE_PROJECT.CREATE_PERMISSION' | 'RESOURCE_PROJECT.UPDATE_PERMISSION' | 'RESOURCE_PROJECT.DELETE_PERMISSION' | 'RESOURCE.CONSUMPTION_LIMITATION' | 'OFFERING.MANAGE_BACKEND_RESOURCES' | 'SERVICE_PROVIDER.GET_API_SECRET_CODE' | 'SERVICE_PROVIDER.GENERATE_API_SECRET_CODE' | 'SERVICE_PROVIDER.LIST_CUSTOMERS' | 'SERVICE_PROVIDER.LIST_CUSTOMER_PROJECTS' | 'SERVICE_PROVIDER.LIST_PROJECTS' | 'SERVICE_PROVIDER.LIST_PROJECT_PERMISSIONS' | 'SERVICE_PROVIDER.LIST_KEYS' | 'SERVICE_PROVIDER.LIST_USERS' | 'SERVICE_PROVIDER.LIST_USER_CUSTOMERS' | 'SERVICE_PROVIDER.LIST_SERVICE_ACCOUNTS' | 'SERVICE_PROVIDER.LIST_COURSE_ACCOUNTS' | 'SERVICE_PROVIDER.SET_OFFERINGS_USERNAME' | 'SERVICE_PROVIDER.GET_STATISTICS' | 'SERVICE_PROVIDER.GET_REVENUE' | 'SERVICE_PROVIDER.GET_ROBOT_ACCOUNT_CUSTOMERS' | 'SERVICE_PROVIDER.GET_ROBOT_ACCOUNT_PROJECTS' | 'PROJECT.CREATE_PERMISSION' | 'CUSTOMER.CREATE_PERMISSION' | 'OFFERING.CREATE_PERMISSION' | 'CALL.CREATE_PERMISSION' | 'PROPOSAL.MANAGE' | 'PROPOSAL.MANAGE_REVIEW' | 'PROJECT.UPDATE_PERMISSION' | 'CUSTOMER.UPDATE_PERMISSION' | 'OFFERING.UPDATE_PERMISSION' | 'CALL.UPDATE_PERMISSION' | 'PROPOSAL.UPDATE_PERMISSION' | 'PROJECT.DELETE_PERMISSION' | 'CUSTOMER.DELETE_PERMISSION' | 'OFFERING.DELETE_PERMISSION' | 'CALL.DELETE_PERMISSION' | 'PROPOSAL.DELETE_PERMISSION' | 'LEXIS_LINK.CREATE' | 'LEXIS_LINK.DELETE' | 'PROJECT.LIST' | 'PROJECT.CREATE' | 'PROJECT.DELETE' | 'PROJECT.UPDATE' | 'PROJECT.UPDATE_METADATA' | 'PROJECT.REVIEW_MEMBERSHIP' | 'CUSTOMER.UPDATE' | 'CUSTOMER.CONTACT_UPDATE' | 'CUSTOMER.LIST_USERS' | 'OFFERING.ACCEPT_CALL_REQUEST' | 'CALL.APPROVE_AND_REJECT_PROPOSALS' | 'CALL.CLOSE_ROUNDS' | 'ACCESS_SUBNET.CREATE' | 'ACCESS_SUBNET.UPDATE' | 'ACCESS_SUBNET.DELETE' | 'OFFERINGUSER.UPDATE_RESTRICTION' | 'INVITATION.LIST' | 'CUSTOMER.LIST_PERMISSION_REVIEWS' | 'CALL.LIST' | 'CALL.CREATE' | 'CALL.UPDATE' | 'ROUND.LIST' | 'PROPOSAL.LIST' | 'SERVICE_ACCOUNT.MANAGE' | 'PROJECT.COURSE_ACCOUNT_MANAGE' | 'SERVICE_PROVIDER.OPENSTACK_IMAGE_MANAGEMENT' | 'OPENSTACK_INSTANCE.CONSOLE_ACCESS' | 'OPENSTACK_INSTANCE.MANAGE_POWER' | 'OPENSTACK_INSTANCE.MANAGE' | 'OPENSTACK_ROUTER.MANAGE_GATEWAY' | 'STAFF.ACCESS' | 'SUPPORT.ACCESS';
+        [key: string]: 'SERVICE_PROVIDER.REGISTER' | 'OFFERING.CREATE' | 'OFFERING.DELETE' | 'OFFERING.UPDATE_THUMBNAIL' | 'OFFERING.UPDATE' | 'OFFERING.UPDATE_ATTRIBUTES' | 'OFFERING.UPDATE_LOCATION' | 'OFFERING.UPDATE_DESCRIPTION' | 'OFFERING.UPDATE_OPTIONS' | 'OFFERING.UPDATE_INTEGRATION' | 'OFFERING.ADD_ENDPOINT' | 'OFFERING.DELETE_ENDPOINT' | 'OFFERING.UPDATE_COMPONENTS' | 'OFFERING.PAUSE' | 'OFFERING.UNPAUSE' | 'OFFERING.ARCHIVE' | 'OFFERING.DRY_RUN_SCRIPT' | 'OFFERING.MANAGE_CAMPAIGN' | 'OFFERING.MANAGE_USER_GROUP' | 'OFFERING.CREATE_PLAN' | 'OFFERING.UPDATE_PLAN' | 'OFFERING.ARCHIVE_PLAN' | 'OFFERING.CREATE_SCREENSHOT' | 'OFFERING.UPDATE_SCREENSHOT' | 'OFFERING.DELETE_SCREENSHOT' | 'OFFERING.CREATE_USER' | 'OFFERING.UPDATE_USER' | 'OFFERING.DELETE_USER' | 'OFFERING.MANAGE_USER_ROLE' | 'POSIX_ID_POOL.MANAGE' | 'RESOURCE.CREATE_ROBOT_ACCOUNT' | 'RESOURCE.UPDATE_ROBOT_ACCOUNT' | 'RESOURCE.DELETE_ROBOT_ACCOUNT' | 'ORDER.LIST' | 'ORDER.CREATE' | 'ORDER.APPROVE_PRIVATE' | 'ORDER.APPROVE' | 'ORDER.REJECT' | 'ORDER.DESTROY' | 'ORDER.CANCEL' | 'ORDER.SET_CONSUMER_INFO' | 'RESOURCE.LIST' | 'RESOURCE.UPDATE' | 'RESOURCE.TERMINATE' | 'RESOURCE.LIST_IMPORTABLE' | 'RESOURCE.SET_END_DATE' | 'RESOURCE.SET_USAGE' | 'RESOURCE.SET_PLAN' | 'RESOURCE.SET_LIMITS' | 'RESOURCE.SET_BACKEND_ID' | 'RESOURCE.SUBMIT_REPORT' | 'RESOURCE.SET_BACKEND_METADATA' | 'RESOURCE.SET_STATE' | 'RESOURCE.UPDATE_OPTIONS' | 'RESOURCE.ACCEPT_BOOKING_REQUEST' | 'RESOURCE.REJECT_BOOKING_REQUEST' | 'RESOURCE.MANAGE_USERS' | 'RESOURCE.CREATE_PERMISSION' | 'RESOURCE.UPDATE_PERMISSION' | 'RESOURCE.DELETE_PERMISSION' | 'RESOURCE_PROJECT.CREATE_PERMISSION' | 'RESOURCE_PROJECT.UPDATE_PERMISSION' | 'RESOURCE_PROJECT.DELETE_PERMISSION' | 'RESOURCE.CONSUMPTION_LIMITATION' | 'OFFERING.MANAGE_BACKEND_RESOURCES' | 'SERVICE_PROVIDER.GET_API_SECRET_CODE' | 'SERVICE_PROVIDER.GENERATE_API_SECRET_CODE' | 'SERVICE_PROVIDER.LIST_CUSTOMERS' | 'SERVICE_PROVIDER.LIST_CUSTOMER_PROJECTS' | 'SERVICE_PROVIDER.LIST_PROJECTS' | 'SERVICE_PROVIDER.LIST_PROJECT_PERMISSIONS' | 'SERVICE_PROVIDER.LIST_KEYS' | 'SERVICE_PROVIDER.LIST_USERS' | 'SERVICE_PROVIDER.LIST_USER_CUSTOMERS' | 'SERVICE_PROVIDER.LIST_SERVICE_ACCOUNTS' | 'SERVICE_PROVIDER.LIST_COURSE_ACCOUNTS' | 'SERVICE_PROVIDER.SET_OFFERINGS_USERNAME' | 'SERVICE_PROVIDER.GET_STATISTICS' | 'SERVICE_PROVIDER.GET_REVENUE' | 'SERVICE_PROVIDER.GET_ROBOT_ACCOUNT_CUSTOMERS' | 'SERVICE_PROVIDER.GET_ROBOT_ACCOUNT_PROJECTS' | 'PROJECT.CREATE_PERMISSION' | 'CUSTOMER.CREATE_PERMISSION' | 'OFFERING.CREATE_PERMISSION' | 'CALL.CREATE_PERMISSION' | 'PROPOSAL.MANAGE' | 'PROPOSAL.MANAGE_REVIEW' | 'PROJECT.UPDATE_PERMISSION' | 'CUSTOMER.UPDATE_PERMISSION' | 'OFFERING.UPDATE_PERMISSION' | 'CALL.UPDATE_PERMISSION' | 'PROPOSAL.UPDATE_PERMISSION' | 'PROJECT.DELETE_PERMISSION' | 'CUSTOMER.DELETE_PERMISSION' | 'OFFERING.DELETE_PERMISSION' | 'CALL.DELETE_PERMISSION' | 'PROPOSAL.DELETE_PERMISSION' | 'LEXIS_LINK.CREATE' | 'LEXIS_LINK.DELETE' | 'PROJECT.LIST' | 'PROJECT.CREATE' | 'PROJECT.DELETE' | 'PROJECT.UPDATE' | 'PROJECT.UPDATE_METADATA' | 'PROJECT.REVIEW_MEMBERSHIP' | 'CUSTOMER.UPDATE' | 'CUSTOMER.CONTACT_UPDATE' | 'CUSTOMER.LIST_USERS' | 'OFFERING.ACCEPT_CALL_REQUEST' | 'CALL.APPROVE_AND_REJECT_PROPOSALS' | 'CALL.CLOSE_ROUNDS' | 'ACCESS_SUBNET.CREATE' | 'ACCESS_SUBNET.UPDATE' | 'ACCESS_SUBNET.DELETE' | 'OFFERINGUSER.UPDATE_RESTRICTION' | 'INVITATION.LIST' | 'CUSTOMER.LIST_PERMISSION_REVIEWS' | 'CALL.LIST' | 'CALL.CREATE' | 'CALL.UPDATE' | 'ROUND.LIST' | 'PROPOSAL.LIST' | 'SERVICE_ACCOUNT.MANAGE' | 'PROJECT.COURSE_ACCOUNT_MANAGE' | 'SERVICE_PROVIDER.OPENSTACK_IMAGE_MANAGEMENT' | 'OPENSTACK_INSTANCE.CONSOLE_ACCESS' | 'OPENSTACK_INSTANCE.MANAGE_POWER' | 'OPENSTACK_INSTANCE.MANAGE' | 'OPENSTACK_ROUTER.MANAGE_GATEWAY' | 'STAFF.ACCESS' | 'SUPPORT.ACCESS';
     };
     /**
      * Grouped permission descriptions for UI
@@ -20696,6 +20803,69 @@ export type PolicyEnum = 'affinity' | 'anti-affinity' | 'soft-affinity' | 'soft-
 export type PolicyPeriodEnum = 1 | 2 | 3 | 4;
 
 export type PolicyTypeEnum = 'access_as_shared' | 'access_as_external';
+
+export type PosixIdPool = {
+    readonly url: string;
+    readonly uuid: string;
+    readonly created: string;
+    description?: string;
+    service_provider?: string | null;
+    offering?: string | null;
+    min_uid?: number | null;
+    max_uid?: number | null;
+    readonly next_uid: number | null;
+    min_gid?: number | null;
+    max_gid?: number | null;
+    readonly next_gid: number | null;
+    readonly customer_uuid: string;
+    readonly customer_name: string;
+    readonly scope: string;
+    readonly uid_used: number;
+    readonly gid_used: number;
+    readonly uid_utilization: number | null;
+    readonly gid_utilization: number | null;
+};
+
+export type PosixIdPoolNamespaceStats = {
+    min: number;
+    max: number;
+    next: number;
+    capacity: number;
+    used: number;
+    utilization: number;
+};
+
+export type PosixIdPoolRequest = {
+    description?: string;
+    service_provider?: string | null;
+    offering?: string | null;
+    min_uid?: number | null;
+    max_uid?: number | null;
+    min_gid?: number | null;
+    max_gid?: number | null;
+};
+
+export type PosixIdPoolStats = {
+    uid: PosixIdPoolNamespaceStats | null;
+    gid: PosixIdPoolNamespaceStats | null;
+    utilization_threshold: number;
+};
+
+export type PosixIdSourceEnum = 'pool' | 'user_attribute';
+
+export type PosixIdentity = {
+    readonly url: string;
+    readonly uuid: string;
+    readonly created: string;
+    uid?: number | null;
+    gid?: number | null;
+    released_at?: string | null;
+    readonly pool_uuid: string;
+    readonly offering_uuid: string;
+    readonly offering_name: string;
+    readonly consumer_type: string | null;
+    readonly consumer_name: string | null;
+};
 
 export type PresetEnum = 'cscs' | 'oecd_fos_2007';
 
@@ -21339,6 +21509,20 @@ export type ProjectPermissionReview = {
     readonly project_uuid: string;
     readonly project_name: string;
 };
+
+export type ProjectPosixGroup = {
+    kind: ProjectPosixGroupKindEnum;
+    gid: number;
+    offering_uuid: string;
+    offering_name: string;
+    provider_name: string;
+    role: string | null;
+    scope_type: string | null;
+    scope_name: string | null;
+    scope_uuid: string | null;
+};
+
+export type ProjectPosixGroupKindEnum = 'project_group' | 'role_group';
 
 export type ProjectQuotas = {
     readonly project_name: string;
@@ -22279,6 +22463,7 @@ export type ProviderOffering = {
     thumbnail?: string | null;
     readonly offering_group_uuid: string | null;
     readonly offering_group_title: string | null;
+    readonly service_provider_can_create_offering_user: boolean;
 };
 
 export type ProviderOfferingCosts = {
@@ -28738,6 +28923,8 @@ export type TimeSeriesToSData = {
     readonly count: number;
 };
 
+export type TimingBucketEnum = 'pending' | 'overrun' | 'late_start' | 'early' | 'on_time';
+
 export type ToSConsentDashboard = {
     /**
      * Number of active users
@@ -29220,6 +29407,14 @@ export type User = {
     organization_address?: string;
     eduperson_assurance?: Array<string>;
     /**
+     * POSIX UID from the identity provider; used when an offering's uid_source is 'user_attribute'.
+     */
+    readonly uid_number: number | null;
+    /**
+     * POSIX primary GID from the identity provider; used when an offering's gid_source is 'user_attribute'.
+     */
+    readonly primary_gid: number | null;
+    /**
      * Designates whether the user is allowed to manage remote user identities.
      */
     is_identity_manager?: boolean;
@@ -29662,6 +29857,14 @@ export type UserMe = {
     organization_address?: string;
     eduperson_assurance?: Array<string>;
     /**
+     * POSIX UID from the identity provider; used when an offering's uid_source is 'user_attribute'.
+     */
+    readonly uid_number: number | null;
+    /**
+     * POSIX primary GID from the identity provider; used when an offering's gid_source is 'user_attribute'.
+     */
+    readonly primary_gid: number | null;
+    /**
      * Designates whether the user is allowed to manage remote user identities.
      */
     is_identity_manager?: boolean;
@@ -29760,6 +29963,15 @@ export type UserOrganizationTypeCount = {
      * Number of users
      */
     count: number;
+};
+
+export type UserPosixIdentity = {
+    offering_name: string;
+    offering_uuid: string;
+    namespace: string;
+    value: number;
+    context: string | null;
+    pool_uuid: string | null;
 };
 
 export type UserRegistrationTrend = {
@@ -29932,7 +30144,7 @@ export type ValidationDecisionEnum = 'approved' | 'rejected' | 'pending';
 
 export type ValidationMethodEnum = 'ariregister' | 'wirtschaftscompass' | 'bolagsverket' | 'breg';
 
-export type ValueEnum = 'SERVICE_PROVIDER.REGISTER' | 'OFFERING.CREATE' | 'OFFERING.DELETE' | 'OFFERING.UPDATE_THUMBNAIL' | 'OFFERING.UPDATE' | 'OFFERING.UPDATE_ATTRIBUTES' | 'OFFERING.UPDATE_LOCATION' | 'OFFERING.UPDATE_DESCRIPTION' | 'OFFERING.UPDATE_OPTIONS' | 'OFFERING.UPDATE_INTEGRATION' | 'OFFERING.ADD_ENDPOINT' | 'OFFERING.DELETE_ENDPOINT' | 'OFFERING.UPDATE_COMPONENTS' | 'OFFERING.PAUSE' | 'OFFERING.UNPAUSE' | 'OFFERING.ARCHIVE' | 'OFFERING.DRY_RUN_SCRIPT' | 'OFFERING.MANAGE_CAMPAIGN' | 'OFFERING.MANAGE_USER_GROUP' | 'OFFERING.CREATE_PLAN' | 'OFFERING.UPDATE_PLAN' | 'OFFERING.ARCHIVE_PLAN' | 'OFFERING.CREATE_SCREENSHOT' | 'OFFERING.UPDATE_SCREENSHOT' | 'OFFERING.DELETE_SCREENSHOT' | 'OFFERING.CREATE_USER' | 'OFFERING.UPDATE_USER' | 'OFFERING.DELETE_USER' | 'OFFERING.MANAGE_USER_ROLE' | 'RESOURCE.CREATE_ROBOT_ACCOUNT' | 'RESOURCE.UPDATE_ROBOT_ACCOUNT' | 'RESOURCE.DELETE_ROBOT_ACCOUNT' | 'ORDER.LIST' | 'ORDER.CREATE' | 'ORDER.APPROVE_PRIVATE' | 'ORDER.APPROVE' | 'ORDER.REJECT' | 'ORDER.DESTROY' | 'ORDER.CANCEL' | 'ORDER.SET_CONSUMER_INFO' | 'RESOURCE.LIST' | 'RESOURCE.UPDATE' | 'RESOURCE.TERMINATE' | 'RESOURCE.LIST_IMPORTABLE' | 'RESOURCE.SET_END_DATE' | 'RESOURCE.SET_USAGE' | 'RESOURCE.SET_PLAN' | 'RESOURCE.SET_LIMITS' | 'RESOURCE.SET_BACKEND_ID' | 'RESOURCE.SUBMIT_REPORT' | 'RESOURCE.SET_BACKEND_METADATA' | 'RESOURCE.SET_STATE' | 'RESOURCE.UPDATE_OPTIONS' | 'RESOURCE.ACCEPT_BOOKING_REQUEST' | 'RESOURCE.REJECT_BOOKING_REQUEST' | 'RESOURCE.MANAGE_USERS' | 'RESOURCE.CREATE_PERMISSION' | 'RESOURCE.UPDATE_PERMISSION' | 'RESOURCE.DELETE_PERMISSION' | 'RESOURCE_PROJECT.CREATE_PERMISSION' | 'RESOURCE_PROJECT.UPDATE_PERMISSION' | 'RESOURCE_PROJECT.DELETE_PERMISSION' | 'RESOURCE.CONSUMPTION_LIMITATION' | 'OFFERING.MANAGE_BACKEND_RESOURCES' | 'SERVICE_PROVIDER.GET_API_SECRET_CODE' | 'SERVICE_PROVIDER.GENERATE_API_SECRET_CODE' | 'SERVICE_PROVIDER.LIST_CUSTOMERS' | 'SERVICE_PROVIDER.LIST_CUSTOMER_PROJECTS' | 'SERVICE_PROVIDER.LIST_PROJECTS' | 'SERVICE_PROVIDER.LIST_PROJECT_PERMISSIONS' | 'SERVICE_PROVIDER.LIST_KEYS' | 'SERVICE_PROVIDER.LIST_USERS' | 'SERVICE_PROVIDER.LIST_USER_CUSTOMERS' | 'SERVICE_PROVIDER.LIST_SERVICE_ACCOUNTS' | 'SERVICE_PROVIDER.LIST_COURSE_ACCOUNTS' | 'SERVICE_PROVIDER.SET_OFFERINGS_USERNAME' | 'SERVICE_PROVIDER.GET_STATISTICS' | 'SERVICE_PROVIDER.GET_REVENUE' | 'SERVICE_PROVIDER.GET_ROBOT_ACCOUNT_CUSTOMERS' | 'SERVICE_PROVIDER.GET_ROBOT_ACCOUNT_PROJECTS' | 'PROJECT.CREATE_PERMISSION' | 'CUSTOMER.CREATE_PERMISSION' | 'OFFERING.CREATE_PERMISSION' | 'CALL.CREATE_PERMISSION' | 'PROPOSAL.MANAGE' | 'PROPOSAL.MANAGE_REVIEW' | 'PROJECT.UPDATE_PERMISSION' | 'CUSTOMER.UPDATE_PERMISSION' | 'OFFERING.UPDATE_PERMISSION' | 'CALL.UPDATE_PERMISSION' | 'PROPOSAL.UPDATE_PERMISSION' | 'PROJECT.DELETE_PERMISSION' | 'CUSTOMER.DELETE_PERMISSION' | 'OFFERING.DELETE_PERMISSION' | 'CALL.DELETE_PERMISSION' | 'PROPOSAL.DELETE_PERMISSION' | 'LEXIS_LINK.CREATE' | 'LEXIS_LINK.DELETE' | 'PROJECT.LIST' | 'PROJECT.CREATE' | 'PROJECT.DELETE' | 'PROJECT.UPDATE' | 'PROJECT.UPDATE_METADATA' | 'PROJECT.REVIEW_MEMBERSHIP' | 'CUSTOMER.UPDATE' | 'CUSTOMER.CONTACT_UPDATE' | 'CUSTOMER.LIST_USERS' | 'OFFERING.ACCEPT_CALL_REQUEST' | 'CALL.APPROVE_AND_REJECT_PROPOSALS' | 'CALL.CLOSE_ROUNDS' | 'ACCESS_SUBNET.CREATE' | 'ACCESS_SUBNET.UPDATE' | 'ACCESS_SUBNET.DELETE' | 'OFFERINGUSER.UPDATE_RESTRICTION' | 'INVITATION.LIST' | 'CUSTOMER.LIST_PERMISSION_REVIEWS' | 'CALL.LIST' | 'CALL.CREATE' | 'CALL.UPDATE' | 'ROUND.LIST' | 'PROPOSAL.LIST' | 'SERVICE_ACCOUNT.MANAGE' | 'PROJECT.COURSE_ACCOUNT_MANAGE' | 'SERVICE_PROVIDER.OPENSTACK_IMAGE_MANAGEMENT' | 'OPENSTACK_INSTANCE.CONSOLE_ACCESS' | 'OPENSTACK_INSTANCE.MANAGE_POWER' | 'OPENSTACK_INSTANCE.MANAGE' | 'OPENSTACK_ROUTER.MANAGE_GATEWAY' | 'STAFF.ACCESS' | 'SUPPORT.ACCESS';
+export type ValueEnum = 'SERVICE_PROVIDER.REGISTER' | 'OFFERING.CREATE' | 'OFFERING.DELETE' | 'OFFERING.UPDATE_THUMBNAIL' | 'OFFERING.UPDATE' | 'OFFERING.UPDATE_ATTRIBUTES' | 'OFFERING.UPDATE_LOCATION' | 'OFFERING.UPDATE_DESCRIPTION' | 'OFFERING.UPDATE_OPTIONS' | 'OFFERING.UPDATE_INTEGRATION' | 'OFFERING.ADD_ENDPOINT' | 'OFFERING.DELETE_ENDPOINT' | 'OFFERING.UPDATE_COMPONENTS' | 'OFFERING.PAUSE' | 'OFFERING.UNPAUSE' | 'OFFERING.ARCHIVE' | 'OFFERING.DRY_RUN_SCRIPT' | 'OFFERING.MANAGE_CAMPAIGN' | 'OFFERING.MANAGE_USER_GROUP' | 'OFFERING.CREATE_PLAN' | 'OFFERING.UPDATE_PLAN' | 'OFFERING.ARCHIVE_PLAN' | 'OFFERING.CREATE_SCREENSHOT' | 'OFFERING.UPDATE_SCREENSHOT' | 'OFFERING.DELETE_SCREENSHOT' | 'OFFERING.CREATE_USER' | 'OFFERING.UPDATE_USER' | 'OFFERING.DELETE_USER' | 'OFFERING.MANAGE_USER_ROLE' | 'POSIX_ID_POOL.MANAGE' | 'RESOURCE.CREATE_ROBOT_ACCOUNT' | 'RESOURCE.UPDATE_ROBOT_ACCOUNT' | 'RESOURCE.DELETE_ROBOT_ACCOUNT' | 'ORDER.LIST' | 'ORDER.CREATE' | 'ORDER.APPROVE_PRIVATE' | 'ORDER.APPROVE' | 'ORDER.REJECT' | 'ORDER.DESTROY' | 'ORDER.CANCEL' | 'ORDER.SET_CONSUMER_INFO' | 'RESOURCE.LIST' | 'RESOURCE.UPDATE' | 'RESOURCE.TERMINATE' | 'RESOURCE.LIST_IMPORTABLE' | 'RESOURCE.SET_END_DATE' | 'RESOURCE.SET_USAGE' | 'RESOURCE.SET_PLAN' | 'RESOURCE.SET_LIMITS' | 'RESOURCE.SET_BACKEND_ID' | 'RESOURCE.SUBMIT_REPORT' | 'RESOURCE.SET_BACKEND_METADATA' | 'RESOURCE.SET_STATE' | 'RESOURCE.UPDATE_OPTIONS' | 'RESOURCE.ACCEPT_BOOKING_REQUEST' | 'RESOURCE.REJECT_BOOKING_REQUEST' | 'RESOURCE.MANAGE_USERS' | 'RESOURCE.CREATE_PERMISSION' | 'RESOURCE.UPDATE_PERMISSION' | 'RESOURCE.DELETE_PERMISSION' | 'RESOURCE_PROJECT.CREATE_PERMISSION' | 'RESOURCE_PROJECT.UPDATE_PERMISSION' | 'RESOURCE_PROJECT.DELETE_PERMISSION' | 'RESOURCE.CONSUMPTION_LIMITATION' | 'OFFERING.MANAGE_BACKEND_RESOURCES' | 'SERVICE_PROVIDER.GET_API_SECRET_CODE' | 'SERVICE_PROVIDER.GENERATE_API_SECRET_CODE' | 'SERVICE_PROVIDER.LIST_CUSTOMERS' | 'SERVICE_PROVIDER.LIST_CUSTOMER_PROJECTS' | 'SERVICE_PROVIDER.LIST_PROJECTS' | 'SERVICE_PROVIDER.LIST_PROJECT_PERMISSIONS' | 'SERVICE_PROVIDER.LIST_KEYS' | 'SERVICE_PROVIDER.LIST_USERS' | 'SERVICE_PROVIDER.LIST_USER_CUSTOMERS' | 'SERVICE_PROVIDER.LIST_SERVICE_ACCOUNTS' | 'SERVICE_PROVIDER.LIST_COURSE_ACCOUNTS' | 'SERVICE_PROVIDER.SET_OFFERINGS_USERNAME' | 'SERVICE_PROVIDER.GET_STATISTICS' | 'SERVICE_PROVIDER.GET_REVENUE' | 'SERVICE_PROVIDER.GET_ROBOT_ACCOUNT_CUSTOMERS' | 'SERVICE_PROVIDER.GET_ROBOT_ACCOUNT_PROJECTS' | 'PROJECT.CREATE_PERMISSION' | 'CUSTOMER.CREATE_PERMISSION' | 'OFFERING.CREATE_PERMISSION' | 'CALL.CREATE_PERMISSION' | 'PROPOSAL.MANAGE' | 'PROPOSAL.MANAGE_REVIEW' | 'PROJECT.UPDATE_PERMISSION' | 'CUSTOMER.UPDATE_PERMISSION' | 'OFFERING.UPDATE_PERMISSION' | 'CALL.UPDATE_PERMISSION' | 'PROPOSAL.UPDATE_PERMISSION' | 'PROJECT.DELETE_PERMISSION' | 'CUSTOMER.DELETE_PERMISSION' | 'OFFERING.DELETE_PERMISSION' | 'CALL.DELETE_PERMISSION' | 'PROPOSAL.DELETE_PERMISSION' | 'LEXIS_LINK.CREATE' | 'LEXIS_LINK.DELETE' | 'PROJECT.LIST' | 'PROJECT.CREATE' | 'PROJECT.DELETE' | 'PROJECT.UPDATE' | 'PROJECT.UPDATE_METADATA' | 'PROJECT.REVIEW_MEMBERSHIP' | 'CUSTOMER.UPDATE' | 'CUSTOMER.CONTACT_UPDATE' | 'CUSTOMER.LIST_USERS' | 'OFFERING.ACCEPT_CALL_REQUEST' | 'CALL.APPROVE_AND_REJECT_PROPOSALS' | 'CALL.CLOSE_ROUNDS' | 'ACCESS_SUBNET.CREATE' | 'ACCESS_SUBNET.UPDATE' | 'ACCESS_SUBNET.DELETE' | 'OFFERINGUSER.UPDATE_RESTRICTION' | 'INVITATION.LIST' | 'CUSTOMER.LIST_PERMISSION_REVIEWS' | 'CALL.LIST' | 'CALL.CREATE' | 'CALL.UPDATE' | 'ROUND.LIST' | 'PROPOSAL.LIST' | 'SERVICE_ACCOUNT.MANAGE' | 'PROJECT.COURSE_ACCOUNT_MANAGE' | 'SERVICE_PROVIDER.OPENSTACK_IMAGE_MANAGEMENT' | 'OPENSTACK_INSTANCE.CONSOLE_ACCESS' | 'OPENSTACK_INSTANCE.MANAGE_POWER' | 'OPENSTACK_INSTANCE.MANAGE' | 'OPENSTACK_ROUTER.MANAGE_GATEWAY' | 'STAFF.ACCESS' | 'SUPPORT.ACCESS';
 
 export type VendorNameChoice = {
     value: string;
@@ -32097,6 +32309,7 @@ export type ConstanceSettingsRequestForm = {
     SSH_KEY_ALLOWED_TYPES?: Array<SshkeyallowedtypesEnum | BlankEnum>;
     SSH_KEY_MIN_RSA_KEY_SIZE?: number;
     ENABLED_REPORTING_SCREENS?: Array<EnabledreportingscreensEnum | BlankEnum>;
+    POSIX_ID_POOL_UTILIZATION_THRESHOLD?: number;
     AFFILIATES_ENABLED?: boolean;
     MATRIX_ENABLED?: boolean;
     MATRIX_HOMESERVER_URL?: string;
@@ -32401,6 +32614,7 @@ export type ConstanceSettingsRequestMultipart = {
     SSH_KEY_ALLOWED_TYPES?: Array<SshkeyallowedtypesEnum | BlankEnum>;
     SSH_KEY_MIN_RSA_KEY_SIZE?: number;
     ENABLED_REPORTING_SCREENS?: Array<EnabledreportingscreensEnum | BlankEnum>;
+    POSIX_ID_POOL_UTILIZATION_THRESHOLD?: number;
     AFFILIATES_ENABLED?: boolean;
     MATRIX_ENABLED?: boolean;
     MATRIX_HOMESERVER_URL?: string;
@@ -33004,7 +33218,7 @@ export type SshKeyFieldEnum = 'fingerprint_md5' | 'fingerprint_sha256' | 'finger
 
 export type SshKeyOEnum = '-name' | 'name';
 
-export type MaintenanceAnnouncementOEnum = '-created' | '-name' | '-scheduled_end' | '-scheduled_start' | 'created' | 'name' | 'scheduled_end' | 'scheduled_start';
+export type MaintenanceAnnouncementOEnum = '-created' | '-name' | '-overrun_minutes' | '-scheduled_end' | '-scheduled_start' | '-start_delta_minutes' | 'created' | 'name' | 'overrun_minutes' | 'scheduled_end' | 'scheduled_start' | 'start_delta_minutes';
 
 export type MaintenanceAnnouncementTemplateOEnum = '-created' | '-name' | 'created' | 'name';
 
@@ -33044,7 +33258,7 @@ export type OfferingTermsOfServiceOEnum = '-created' | '-modified' | '-version' 
 
 export type UserChecklistCompletionOEnum = '-is_completed' | '-modified' | 'is_completed' | 'modified';
 
-export type OfferingUserFieldEnum = 'consent_data' | 'created' | 'customer_name' | 'customer_uuid' | 'has_compliance_checklist' | 'has_consent' | 'is_profile_complete' | 'is_restricted' | 'missing_profile_attributes' | 'modified' | 'offering' | 'offering_has_active_tos' | 'offering_name' | 'offering_uuid' | 'requires_reconsent' | 'runtime_state' | 'service_provider_comment' | 'service_provider_comment_url' | 'state' | 'url' | 'user' | 'user_active_isds' | 'user_address' | 'user_affiliations' | 'user_birth_date' | 'user_civil_number' | 'user_country_of_residence' | 'user_eduperson_assurance' | 'user_email' | 'user_first_name' | 'user_full_name' | 'user_gender' | 'user_identity_source' | 'user_job_title' | 'user_last_name' | 'user_nationalities' | 'user_nationality' | 'user_organization' | 'user_organization_address' | 'user_organization_country' | 'user_organization_registry_code' | 'user_organization_type' | 'user_organization_vat_code' | 'user_personal_title' | 'user_phone_number' | 'user_place_of_birth' | 'user_username' | 'user_uuid' | 'username' | 'uuid';
+export type OfferingUserFieldEnum = 'consent_data' | 'created' | 'customer_name' | 'customer_uuid' | 'has_compliance_checklist' | 'has_consent' | 'home_directory' | 'is_profile_complete' | 'is_restricted' | 'login_shell' | 'missing_profile_attributes' | 'modified' | 'offering' | 'offering_has_active_tos' | 'offering_name' | 'offering_uuid' | 'primarygroup' | 'requires_reconsent' | 'runtime_state' | 'service_provider_comment' | 'service_provider_comment_url' | 'state' | 'uidnumber' | 'url' | 'user' | 'user_active_isds' | 'user_address' | 'user_affiliations' | 'user_birth_date' | 'user_civil_number' | 'user_country_of_residence' | 'user_eduperson_assurance' | 'user_email' | 'user_first_name' | 'user_full_name' | 'user_gender' | 'user_identity_source' | 'user_job_title' | 'user_last_name' | 'user_nationalities' | 'user_nationality' | 'user_organization' | 'user_organization_address' | 'user_organization_country' | 'user_organization_registry_code' | 'user_organization_type' | 'user_organization_vat_code' | 'user_personal_title' | 'user_phone_number' | 'user_place_of_birth' | 'user_primary_gid' | 'user_uid_number' | 'user_username' | 'user_uuid' | 'username' | 'uuid';
 
 export type OfferingUserOEnum = '-created' | '-modified' | '-username' | 'created' | 'modified' | 'username';
 
@@ -33053,6 +33267,8 @@ export type OrderDetailsFieldEnum = 'accepting_terms_of_service' | 'activation_p
 export type OrderDetailsOEnum = '-consumer_reviewed_at' | '-cost' | '-created' | '-state' | 'consumer_reviewed_at' | 'cost' | 'created' | 'state';
 
 export type PublicOfferingDetailsFieldEnum = 'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'billing_type_classification' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'config_drive_default' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'description' | 'documentation_url' | 'effective_available_limits' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'has_compliance_requirements' | 'helpdesk_url' | 'image' | 'integration_guide' | 'is_accessible' | 'latitude' | 'longitude' | 'name' | 'offering_group' | 'offering_group_title' | 'offering_group_uuid' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'profile_name' | 'profile_uuid' | 'project' | 'project_name' | 'project_uuid' | 'promotion_campaigns' | 'quotas' | 'resource_options' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'tags' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'user_has_consent' | 'uuid' | 'vendor_details';
+
+export type PosixIdPoolFieldEnum = 'created' | 'customer_name' | 'customer_uuid' | 'description' | 'gid_used' | 'gid_utilization' | 'max_gid' | 'max_uid' | 'min_gid' | 'min_uid' | 'next_gid' | 'next_uid' | 'offering' | 'scope' | 'service_provider' | 'uid_used' | 'uid_utilization' | 'url' | 'uuid';
 
 export type RemoteProjectUpdateRequestStateEnum = 'approved' | 'canceled' | 'draft' | 'pending' | 'rejected';
 
@@ -33064,7 +33280,7 @@ export type ProviderOfferingCustomerFieldEnum = 'abbreviation' | 'email' | 'name
 
 export type ProjectFieldEnum = 'affiliation' | 'affiliation_code' | 'affiliation_name' | 'affiliation_uuid' | 'backend_id' | 'billing_price_estimate' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_display_billing_info_in_projects' | 'customer_grace_period_days' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'effective_end_date' | 'end_date' | 'end_date_requested_by' | 'end_date_updated_at' | 'grace_period_days' | 'image' | 'is_in_grace_period' | 'is_industry' | 'is_removed' | 'kind' | 'marketplace_resource_count' | 'max_service_accounts' | 'name' | 'oecd_fos_2007_code' | 'oecd_fos_2007_label' | 'project_credit' | 'project_metadata' | 'resources_count' | 'science_domain_code' | 'science_domain_name' | 'science_domain_uuid' | 'science_sub_domain' | 'science_sub_domain_code' | 'science_sub_domain_name' | 'slug' | 'staff_notes' | 'start_date' | 'termination_metadata' | 'type' | 'type_name' | 'type_uuid' | 'url' | 'user_affiliations' | 'user_email_patterns' | 'user_identity_sources' | 'uuid';
 
-export type UserFieldEnum = 'active_isds' | 'address' | 'affiliations' | 'agree_with_policy' | 'agreement_date' | 'attribute_sources' | 'birth_date' | 'can_use_personal_access_tokens' | 'civil_number' | 'country_of_residence' | 'date_joined' | 'deactivation_reason' | 'description' | 'eduperson_assurance' | 'email' | 'first_name' | 'full_name' | 'gender' | 'has_active_session' | 'has_usable_password' | 'identity_provider_fields' | 'identity_provider_label' | 'identity_provider_management_url' | 'identity_provider_name' | 'identity_source' | 'image' | 'ip_address' | 'is_active' | 'is_admin_deactivated' | 'is_identity_manager' | 'is_staff' | 'is_support' | 'job_title' | 'last_name' | 'managed_isds' | 'nationalities' | 'nationality' | 'native_name' | 'notifications_enabled' | 'organization' | 'organization_address' | 'organization_country' | 'organization_registry_code' | 'organization_type' | 'organization_vat_code' | 'permissions' | 'personal_title' | 'phone_number' | 'place_of_birth' | 'preferred_language' | 'registration_method' | 'requested_email' | 'should_protect_user_details' | 'slug' | 'token' | 'token_expires_at' | 'token_lifetime' | 'url' | 'username' | 'uuid';
+export type UserFieldEnum = 'active_isds' | 'address' | 'affiliations' | 'agree_with_policy' | 'agreement_date' | 'attribute_sources' | 'birth_date' | 'can_use_personal_access_tokens' | 'civil_number' | 'country_of_residence' | 'date_joined' | 'deactivation_reason' | 'description' | 'eduperson_assurance' | 'email' | 'first_name' | 'full_name' | 'gender' | 'has_active_session' | 'has_usable_password' | 'identity_provider_fields' | 'identity_provider_label' | 'identity_provider_management_url' | 'identity_provider_name' | 'identity_source' | 'image' | 'ip_address' | 'is_active' | 'is_admin_deactivated' | 'is_identity_manager' | 'is_staff' | 'is_support' | 'job_title' | 'last_name' | 'managed_isds' | 'nationalities' | 'nationality' | 'native_name' | 'notifications_enabled' | 'organization' | 'organization_address' | 'organization_country' | 'organization_registry_code' | 'organization_type' | 'organization_vat_code' | 'permissions' | 'personal_title' | 'phone_number' | 'place_of_birth' | 'preferred_language' | 'primary_gid' | 'registration_method' | 'requested_email' | 'should_protect_user_details' | 'slug' | 'token' | 'token_expires_at' | 'token_lifetime' | 'uid_number' | 'url' | 'username' | 'uuid';
 
 export type ResourceOEnum = '-created' | '-end_date' | '-name' | '-project_name' | '-state' | 'created' | 'end_date' | 'name' | 'project_name' | 'state';
 
@@ -33080,7 +33296,7 @@ export type MarketplaceProviderCustomerProjectOEnum = '-created' | '-customer_ab
 
 export type MarketplaceProviderCustomerFieldEnum = 'abbreviation' | 'billing_price_estimate' | 'email' | 'name' | 'payment_profiles' | 'phone_number' | 'projects' | 'projects_count' | 'slug' | 'users' | 'users_count' | 'uuid';
 
-export type ProviderOfferingFieldEnum = 'billing_price_estimate' | 'category_title' | 'components' | 'customer_uuid' | 'name' | 'offering_group_title' | 'offering_group_uuid' | 'options' | 'plans' | 'resource_options' | 'resources_count' | 'secret_options' | 'slug' | 'state' | 'thumbnail' | 'type' | 'uuid';
+export type ProviderOfferingFieldEnum = 'billing_price_estimate' | 'category_title' | 'components' | 'customer_uuid' | 'name' | 'offering_group_title' | 'offering_group_uuid' | 'options' | 'plans' | 'resource_options' | 'resources_count' | 'secret_options' | 'service_provider_can_create_offering_user' | 'slug' | 'state' | 'thumbnail' | 'type' | 'uuid';
 
 export type ProjectPermissionLogFieldEnum = 'created' | 'created_by' | 'created_by_full_name' | 'created_by_username' | 'customer_name' | 'customer_uuid' | 'expiration_time' | 'project' | 'project_created' | 'project_end_date' | 'project_name' | 'project_uuid' | 'role' | 'role_name' | 'user' | 'user_email' | 'user_full_name' | 'user_native_name' | 'user_username' | 'user_uuid';
 
@@ -33238,7 +33454,7 @@ export type SystemLogOEnum = '-created' | '-instance' | '-level_number' | 'creat
 
 export type InvitationOEnum = '-created' | '-created_by' | '-email' | '-state' | 'created' | 'created_by' | 'email' | 'state';
 
-export type UserMeFieldEnum = 'active_isds' | 'address' | 'affiliations' | 'agree_with_policy' | 'agreement_date' | 'attribute_sources' | 'birth_date' | 'can_use_personal_access_tokens' | 'civil_number' | 'country_of_residence' | 'date_joined' | 'deactivation_reason' | 'description' | 'eduperson_assurance' | 'email' | 'first_name' | 'full_name' | 'gender' | 'has_active_session' | 'has_usable_password' | 'identity_provider_fields' | 'identity_provider_label' | 'identity_provider_management_url' | 'identity_provider_name' | 'identity_source' | 'image' | 'ip_address' | 'is_active' | 'is_admin_deactivated' | 'is_identity_manager' | 'is_staff' | 'is_support' | 'job_title' | 'last_name' | 'managed_isds' | 'nationalities' | 'nationality' | 'native_name' | 'notifications_enabled' | 'organization' | 'organization_address' | 'organization_country' | 'organization_registry_code' | 'organization_type' | 'organization_vat_code' | 'permissions' | 'personal_title' | 'phone_number' | 'place_of_birth' | 'preferred_language' | 'profile_completeness' | 'registration_method' | 'requested_email' | 'should_protect_user_details' | 'slug' | 'token' | 'token_expires_at' | 'token_lifetime' | 'url' | 'username' | 'uuid';
+export type UserMeFieldEnum = 'active_isds' | 'address' | 'affiliations' | 'agree_with_policy' | 'agreement_date' | 'attribute_sources' | 'birth_date' | 'can_use_personal_access_tokens' | 'civil_number' | 'country_of_residence' | 'date_joined' | 'deactivation_reason' | 'description' | 'eduperson_assurance' | 'email' | 'first_name' | 'full_name' | 'gender' | 'has_active_session' | 'has_usable_password' | 'identity_provider_fields' | 'identity_provider_label' | 'identity_provider_management_url' | 'identity_provider_name' | 'identity_source' | 'image' | 'ip_address' | 'is_active' | 'is_admin_deactivated' | 'is_identity_manager' | 'is_staff' | 'is_support' | 'job_title' | 'last_name' | 'managed_isds' | 'nationalities' | 'nationality' | 'native_name' | 'notifications_enabled' | 'organization' | 'organization_address' | 'organization_country' | 'organization_registry_code' | 'organization_type' | 'organization_vat_code' | 'permissions' | 'personal_title' | 'phone_number' | 'place_of_birth' | 'preferred_language' | 'primary_gid' | 'profile_completeness' | 'registration_method' | 'requested_email' | 'should_protect_user_details' | 'slug' | 'token' | 'token_expires_at' | 'token_lifetime' | 'uid_number' | 'url' | 'username' | 'uuid';
 
 export type VmwareDiskFieldEnum = 'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'size' | 'state' | 'url' | 'uuid' | 'vm' | 'vm_name' | 'vm_uuid';
 
@@ -48825,6 +49041,10 @@ export type MaintenanceAnnouncementsListData = {
          *
          */
         state?: Array<MaintenanceAnnouncementStateEnum>;
+        /**
+         * Timing bucket (comma-separated: on_time, late_start, overrun, early, pending)
+         */
+        timing_bucket?: string;
     };
     url: '/api/maintenance-announcements/';
 };
@@ -48883,6 +49103,10 @@ export type MaintenanceAnnouncementsCountData = {
          *
          */
         state?: Array<MaintenanceAnnouncementStateEnum>;
+        /**
+         * Timing bucket (comma-separated: on_time, late_start, overrun, early, pending)
+         */
+        timing_bucket?: string;
     };
     url: '/api/maintenance-announcements/';
 };
@@ -53686,7 +53910,7 @@ export type MarketplaceOfferingUsersListData = {
          */
         provider_uuid?: string;
         /**
-         * Search by offering name, username or user name
+         * Search by offering name, username, user name, UID or primary GID
          */
         query?: string;
         /**
@@ -53784,7 +54008,7 @@ export type MarketplaceOfferingUsersCountData = {
          */
         provider_uuid?: string;
         /**
-         * Search by offering name, username or user name
+         * Search by offering name, username, user name, UID or primary GID
          */
         query?: string;
         /**
@@ -54021,6 +54245,206 @@ export type MarketplaceOfferingUsersCompletionStatusRetrieveResponses = {
 
 export type MarketplaceOfferingUsersCompletionStatusRetrieveResponse = MarketplaceOfferingUsersCompletionStatusRetrieveResponses[keyof MarketplaceOfferingUsersCompletionStatusRetrieveResponses];
 
+export type MarketplaceOfferingUsersPosixAllocationsListData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * Created after
+         */
+        created?: string;
+        /**
+         * Created before
+         */
+        created_before?: string;
+        /**
+         * User has complete profile for the offering
+         */
+        has_complete_profile?: boolean;
+        /**
+         * User Has Consent
+         */
+        has_consent?: boolean;
+        /**
+         * Is restricted
+         */
+        is_restricted?: boolean;
+        /**
+         * Modified after
+         */
+        modified?: string;
+        /**
+         * Modified before
+         */
+        modified_before?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<OfferingUserOEnum>;
+        offering?: string;
+        /**
+         * Offering has active Terms of Service
+         */
+        offering_has_active_tos?: boolean;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        offering_slug?: Array<string>;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        offering_uuid?: Array<string>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        parent_offering_uuid?: string;
+        /**
+         * Provider UUID
+         */
+        provider_uuid?: string;
+        /**
+         * Search by offering name, username, user name, UID or primary GID
+         */
+        query?: string;
+        /**
+         * Offering user runtime state
+         *
+         *
+         */
+        runtime_state?: Array<RuntimeStateEnum>;
+        /**
+         * Offering user state
+         *
+         *
+         */
+        state?: Array<OfferingUserState>;
+        /**
+         * User username
+         */
+        user_username?: string;
+        /**
+         * User UUID
+         */
+        user_uuid?: string;
+    };
+    url: '/api/marketplace-offering-users/{uuid}/posix_allocations/';
+};
+
+export type MarketplaceOfferingUsersPosixAllocationsListResponses = {
+    200: Array<OfferingUserPosixAllocation>;
+};
+
+export type MarketplaceOfferingUsersPosixAllocationsListResponse = MarketplaceOfferingUsersPosixAllocationsListResponses[keyof MarketplaceOfferingUsersPosixAllocationsListResponses];
+
+export type MarketplaceOfferingUsersPosixGroupsListData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * Created after
+         */
+        created?: string;
+        /**
+         * Created before
+         */
+        created_before?: string;
+        /**
+         * User has complete profile for the offering
+         */
+        has_complete_profile?: boolean;
+        /**
+         * User Has Consent
+         */
+        has_consent?: boolean;
+        /**
+         * Is restricted
+         */
+        is_restricted?: boolean;
+        /**
+         * Modified after
+         */
+        modified?: string;
+        /**
+         * Modified before
+         */
+        modified_before?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<OfferingUserOEnum>;
+        offering?: string;
+        /**
+         * Offering has active Terms of Service
+         */
+        offering_has_active_tos?: boolean;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        offering_slug?: Array<string>;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        offering_uuid?: Array<string>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        parent_offering_uuid?: string;
+        /**
+         * Provider UUID
+         */
+        provider_uuid?: string;
+        /**
+         * Search by offering name, username, user name, UID or primary GID
+         */
+        query?: string;
+        /**
+         * Offering user runtime state
+         *
+         *
+         */
+        runtime_state?: Array<RuntimeStateEnum>;
+        /**
+         * Offering user state
+         *
+         *
+         */
+        state?: Array<OfferingUserState>;
+        /**
+         * User username
+         */
+        user_username?: string;
+        /**
+         * User UUID
+         */
+        user_uuid?: string;
+    };
+    url: '/api/marketplace-offering-users/{uuid}/posix_groups/';
+};
+
+export type MarketplaceOfferingUsersPosixGroupsListResponses = {
+    200: Array<OfferingUserPosixGroup>;
+};
+
+export type MarketplaceOfferingUsersPosixGroupsListResponse = MarketplaceOfferingUsersPosixGroupsListResponses[keyof MarketplaceOfferingUsersPosixGroupsListResponses];
+
 export type MarketplaceOfferingUsersRequestDeletionData = {
     body?: never;
     path: {
@@ -54148,6 +54572,21 @@ export type MarketplaceOfferingUsersSetPendingAdditionalValidationResponses = {
      */
     200: unknown;
 };
+
+export type MarketplaceOfferingUsersSetPosixAttributesData = {
+    body?: OfferingUserPosixAttributesRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-offering-users/{uuid}/set_posix_attributes/';
+};
+
+export type MarketplaceOfferingUsersSetPosixAttributesResponses = {
+    200: OfferingUserPosixUpdateResponse;
+};
+
+export type MarketplaceOfferingUsersSetPosixAttributesResponse = MarketplaceOfferingUsersSetPosixAttributesResponses[keyof MarketplaceOfferingUsersSetPosixAttributesResponses];
 
 export type MarketplaceOfferingUsersSetValidationCompleteData = {
     body?: never;
@@ -54280,6 +54719,197 @@ export type MarketplaceOfferingUsersChecklistTemplateCountData = {
 };
 
 export type MarketplaceOfferingUsersChecklistTemplateCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type MarketplaceOfferingUsersPosixIdentitiesListData = {
+    body?: never;
+    path?: never;
+    query: {
+        /**
+         * Created after
+         */
+        created?: string;
+        /**
+         * Created before
+         */
+        created_before?: string;
+        /**
+         * User has complete profile for the offering
+         */
+        has_complete_profile?: boolean;
+        /**
+         * User Has Consent
+         */
+        has_consent?: boolean;
+        /**
+         * Is restricted
+         */
+        is_restricted?: boolean;
+        /**
+         * Modified after
+         */
+        modified?: string;
+        /**
+         * Modified before
+         */
+        modified_before?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<OfferingUserOEnum>;
+        offering?: string;
+        /**
+         * Offering has active Terms of Service
+         */
+        offering_has_active_tos?: boolean;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        offering_slug?: Array<string>;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        offering_uuid?: Array<string>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        parent_offering_uuid?: string;
+        /**
+         * Provider UUID
+         */
+        provider_uuid?: string;
+        /**
+         * Search by offering name, username, user name, UID or primary GID
+         */
+        query?: string;
+        /**
+         * Offering user runtime state
+         *
+         *
+         */
+        runtime_state?: Array<RuntimeStateEnum>;
+        /**
+         * Offering user state
+         *
+         *
+         */
+        state?: Array<OfferingUserState>;
+        /**
+         * User username
+         */
+        user_username?: string;
+        user_uuid: string;
+    };
+    url: '/api/marketplace-offering-users/posix_identities/';
+};
+
+export type MarketplaceOfferingUsersPosixIdentitiesListResponses = {
+    200: Array<UserPosixIdentity>;
+};
+
+export type MarketplaceOfferingUsersPosixIdentitiesListResponse = MarketplaceOfferingUsersPosixIdentitiesListResponses[keyof MarketplaceOfferingUsersPosixIdentitiesListResponses];
+
+export type MarketplaceOfferingUsersPosixIdentitiesCountData = {
+    body?: never;
+    path?: never;
+    query: {
+        /**
+         * Created after
+         */
+        created?: string;
+        /**
+         * Created before
+         */
+        created_before?: string;
+        /**
+         * User has complete profile for the offering
+         */
+        has_complete_profile?: boolean;
+        /**
+         * User Has Consent
+         */
+        has_consent?: boolean;
+        /**
+         * Is restricted
+         */
+        is_restricted?: boolean;
+        /**
+         * Modified after
+         */
+        modified?: string;
+        /**
+         * Modified before
+         */
+        modified_before?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<OfferingUserOEnum>;
+        offering?: string;
+        /**
+         * Offering has active Terms of Service
+         */
+        offering_has_active_tos?: boolean;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        offering_slug?: Array<string>;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        offering_uuid?: Array<string>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        parent_offering_uuid?: string;
+        /**
+         * Provider UUID
+         */
+        provider_uuid?: string;
+        /**
+         * Search by offering name, username, user name, UID or primary GID
+         */
+        query?: string;
+        /**
+         * Offering user runtime state
+         *
+         *
+         */
+        runtime_state?: Array<RuntimeStateEnum>;
+        /**
+         * Offering user state
+         *
+         *
+         */
+        state?: Array<OfferingUserState>;
+        /**
+         * User username
+         */
+        user_username?: string;
+        user_uuid: string;
+    };
+    url: '/api/marketplace-offering-users/posix_identities/';
+};
+
+export type MarketplaceOfferingUsersPosixIdentitiesCountResponses = {
     /**
      * No response body
      */
@@ -55418,6 +56048,247 @@ export type MarketplacePluginsListResponses = {
 
 export type MarketplacePluginsListResponse = MarketplacePluginsListResponses[keyof MarketplacePluginsListResponses];
 
+export type MarketplacePosixIdPoolsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Customer UUID
+         */
+        customer_uuid?: string;
+        field?: Array<PosixIdPoolFieldEnum>;
+        /**
+         * Offering UUID
+         */
+        offering_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Service provider UUID
+         */
+        service_provider_uuid?: string;
+    };
+    url: '/api/marketplace-posix-id-pools/';
+};
+
+export type MarketplacePosixIdPoolsListResponses = {
+    200: Array<PosixIdPool>;
+};
+
+export type MarketplacePosixIdPoolsListResponse = MarketplacePosixIdPoolsListResponses[keyof MarketplacePosixIdPoolsListResponses];
+
+export type MarketplacePosixIdPoolsCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Customer UUID
+         */
+        customer_uuid?: string;
+        /**
+         * Offering UUID
+         */
+        offering_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Service provider UUID
+         */
+        service_provider_uuid?: string;
+    };
+    url: '/api/marketplace-posix-id-pools/';
+};
+
+export type MarketplacePosixIdPoolsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type MarketplacePosixIdPoolsCreateData = {
+    body?: PosixIdPoolRequest;
+    path?: never;
+    query?: never;
+    url: '/api/marketplace-posix-id-pools/';
+};
+
+export type MarketplacePosixIdPoolsCreateResponses = {
+    201: PosixIdPool;
+};
+
+export type MarketplacePosixIdPoolsCreateResponse = MarketplacePosixIdPoolsCreateResponses[keyof MarketplacePosixIdPoolsCreateResponses];
+
+export type MarketplacePosixIdPoolsDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-posix-id-pools/{uuid}/';
+};
+
+export type MarketplacePosixIdPoolsDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type MarketplacePosixIdPoolsDestroyResponse = MarketplacePosixIdPoolsDestroyResponses[keyof MarketplacePosixIdPoolsDestroyResponses];
+
+export type MarketplacePosixIdPoolsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        field?: Array<PosixIdPoolFieldEnum>;
+    };
+    url: '/api/marketplace-posix-id-pools/{uuid}/';
+};
+
+export type MarketplacePosixIdPoolsRetrieveResponses = {
+    200: PosixIdPool;
+};
+
+export type MarketplacePosixIdPoolsRetrieveResponse = MarketplacePosixIdPoolsRetrieveResponses[keyof MarketplacePosixIdPoolsRetrieveResponses];
+
+export type MarketplacePosixIdPoolsPartialUpdateData = {
+    body?: PatchedPosixIdPoolRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-posix-id-pools/{uuid}/';
+};
+
+export type MarketplacePosixIdPoolsPartialUpdateResponses = {
+    200: PosixIdPool;
+};
+
+export type MarketplacePosixIdPoolsPartialUpdateResponse = MarketplacePosixIdPoolsPartialUpdateResponses[keyof MarketplacePosixIdPoolsPartialUpdateResponses];
+
+export type MarketplacePosixIdPoolsUpdateData = {
+    body?: PosixIdPoolRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-posix-id-pools/{uuid}/';
+};
+
+export type MarketplacePosixIdPoolsUpdateResponses = {
+    200: PosixIdPool;
+};
+
+export type MarketplacePosixIdPoolsUpdateResponse = MarketplacePosixIdPoolsUpdateResponses[keyof MarketplacePosixIdPoolsUpdateResponses];
+
+export type MarketplacePosixIdPoolsStatsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-posix-id-pools/{uuid}/stats/';
+};
+
+export type MarketplacePosixIdPoolsStatsRetrieveResponses = {
+    200: PosixIdPoolStats;
+};
+
+export type MarketplacePosixIdPoolsStatsRetrieveResponse = MarketplacePosixIdPoolsStatsRetrieveResponses[keyof MarketplacePosixIdPoolsStatsRetrieveResponses];
+
+export type MarketplacePosixIdentitiesListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        is_released?: boolean;
+        /**
+         * Offering UUID
+         */
+        offering_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * POSIX ID pool UUID
+         */
+        pool_uuid?: string;
+    };
+    url: '/api/marketplace-posix-identities/';
+};
+
+export type MarketplacePosixIdentitiesListResponses = {
+    200: Array<PosixIdentity>;
+};
+
+export type MarketplacePosixIdentitiesListResponse = MarketplacePosixIdentitiesListResponses[keyof MarketplacePosixIdentitiesListResponses];
+
+export type MarketplacePosixIdentitiesCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        is_released?: boolean;
+        /**
+         * Offering UUID
+         */
+        offering_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * POSIX ID pool UUID
+         */
+        pool_uuid?: string;
+    };
+    url: '/api/marketplace-posix-identities/';
+};
+
+export type MarketplacePosixIdentitiesCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type MarketplacePosixIdentitiesRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-posix-identities/{uuid}/';
+};
+
+export type MarketplacePosixIdentitiesRetrieveResponses = {
+    200: PosixIdentity;
+};
+
+export type MarketplacePosixIdentitiesRetrieveResponse = MarketplacePosixIdentitiesRetrieveResponses[keyof MarketplacePosixIdentitiesRetrieveResponses];
+
 export type MarketplaceProjectEstimatedCostPoliciesListData = {
     body?: never;
     path?: never;
@@ -55718,6 +56589,37 @@ export type MarketplaceProjectOrderAutoApprovalsUpdateResponses = {
 };
 
 export type MarketplaceProjectOrderAutoApprovalsUpdateResponse = MarketplaceProjectOrderAutoApprovalsUpdateResponses[keyof MarketplaceProjectOrderAutoApprovalsUpdateResponses];
+
+export type MarketplaceProjectPosixGroupsListData = {
+    body?: never;
+    path?: never;
+    query: {
+        project_uuid: string;
+    };
+    url: '/api/marketplace-project-posix-groups/';
+};
+
+export type MarketplaceProjectPosixGroupsListResponses = {
+    200: Array<ProjectPosixGroup>;
+};
+
+export type MarketplaceProjectPosixGroupsListResponse = MarketplaceProjectPosixGroupsListResponses[keyof MarketplaceProjectPosixGroupsListResponses];
+
+export type MarketplaceProjectPosixGroupsCountData = {
+    body?: never;
+    path?: never;
+    query: {
+        project_uuid: string;
+    };
+    url: '/api/marketplace-project-posix-groups/';
+};
+
+export type MarketplaceProjectPosixGroupsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type MarketplaceProjectServiceAccountsListData = {
     body?: never;
@@ -57310,6 +58212,23 @@ export type MarketplaceProviderOfferingsDraftResponses = {
 };
 
 export type MarketplaceProviderOfferingsDraftResponse = MarketplaceProviderOfferingsDraftResponses[keyof MarketplaceProviderOfferingsDraftResponses];
+
+export type MarketplaceProviderOfferingsEffectivePosixIdPoolRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        field?: Array<PosixIdPoolFieldEnum>;
+    };
+    url: '/api/marketplace-provider-offerings/{uuid}/effective_posix_id_pool/';
+};
+
+export type MarketplaceProviderOfferingsEffectivePosixIdPoolRetrieveResponses = {
+    200: PosixIdPool;
+};
+
+export type MarketplaceProviderOfferingsEffectivePosixIdPoolRetrieveResponse = MarketplaceProviderOfferingsEffectivePosixIdPoolRetrieveResponses[keyof MarketplaceProviderOfferingsEffectivePosixIdPoolRetrieveResponses];
 
 export type MarketplaceProviderOfferingsExportOfferingData = {
     body?: OfferingExportParametersRequest;
@@ -87832,6 +88751,10 @@ export type PublicMaintenanceAnnouncementsListData = {
          *
          */
         state?: Array<MaintenanceAnnouncementStateEnum>;
+        /**
+         * Timing bucket (comma-separated: on_time, late_start, overrun, early, pending)
+         */
+        timing_bucket?: string;
     };
     url: '/api/public-maintenance-announcements/';
 };
@@ -87890,6 +88813,10 @@ export type PublicMaintenanceAnnouncementsCountData = {
          *
          */
         state?: Array<MaintenanceAnnouncementStateEnum>;
+        /**
+         * Timing bucket (comma-separated: on_time, late_start, overrun, early, pending)
+         */
+        timing_bucket?: string;
     };
     url: '/api/public-maintenance-announcements/';
 };
