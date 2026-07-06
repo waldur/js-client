@@ -7876,6 +7876,28 @@ export type DuplicateCallRequestRequest = {
     copy_assignment_configuration?: boolean;
 };
 
+export type DuplicateOfferingCandidate = {
+    id: number;
+    uuid: string;
+    name: string;
+    state: string;
+    active_resources: number;
+    total_resources: number;
+    is_recommended_keeper: boolean;
+};
+
+export type DuplicateOfferingGroup = {
+    tenant_id: number;
+    tenant_uuid: string | null;
+    tenant_name: string | null;
+    customer_name: string | null;
+    customer_uuid: string | null;
+    offering_type: string;
+    recommended_keeper_id: number;
+    orphan_count: number;
+    candidates: Array<DuplicateOfferingCandidate>;
+};
+
 export type EnabledreportingscreensEnum = 'resource-usage' | 'user-usage' | 'quotas' | 'usage-monitoring' | 'usage-trends' | 'organization-summary' | 'project-detail' | 'resources-geography' | 'project-classification' | 'usage-by-customer' | 'usage-by-org-type' | 'usage-by-creator' | 'call-performance' | 'review-progress' | 'resource-demand' | 'capacity' | 'provider-overview' | 'provider-revenue' | 'provider-orders' | 'provider-resources' | 'provider-customers' | 'provider-offerings' | 'openstack-instances' | 'offering-usage' | 'user-analytics' | 'user-demographics' | 'user-organizations' | 'user-affiliations' | 'user-roles' | 'growth' | 'revenue' | 'pricelist' | 'orders' | 'offering-costs' | 'maintenance-overview' | 'provisioning-stats';
 
 export type EffectiveRoute = {
@@ -54938,6 +54960,51 @@ export type MarketplaceOfferingUsersProfileFieldWarningsCountData = {
 };
 
 export type MarketplaceOfferingUsersProfileFieldWarningsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type MarketplaceOpenstackDuplicateOfferingsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-openstack-duplicate-offerings/';
+};
+
+export type MarketplaceOpenstackDuplicateOfferingsListResponses = {
+    200: Array<DuplicateOfferingGroup>;
+};
+
+export type MarketplaceOpenstackDuplicateOfferingsListResponse = MarketplaceOpenstackDuplicateOfferingsListResponses[keyof MarketplaceOpenstackDuplicateOfferingsListResponses];
+
+export type MarketplaceOpenstackDuplicateOfferingsCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-openstack-duplicate-offerings/';
+};
+
+export type MarketplaceOpenstackDuplicateOfferingsCountResponses = {
     /**
      * No response body
      */
