@@ -3074,7 +3074,7 @@ export type BookingResource = {
     readonly end_date_updated_at: string | null;
     readonly username: string | null;
     /**
-     * Dictionary mapping limit-based component types to their consumed usage. For monthly periods, maps from current_usages; for longer periods, aggregates historical usage.
+     * Dictionary mapping limit-based component types to their consumed usage. Sums the ComponentUsage rows of the component's current period (the monthly billing period unless the component defines a longer limit_period), i.e. the period's high-watermark rather than the instantaneous current_usages value.
      */
     readonly limit_usage: {
         [key: string]: number;
@@ -5457,6 +5457,7 @@ export type ConstanceSettings = {
     SCIM_INBOUND_ENABLED?: boolean;
     SCIM_INBOUND_SOURCE_NAME?: string;
     SCIM_INBOUND_ALLOWED_ATTRIBUTES?: Array<UserAttributeEnum | BlankEnum>;
+    SCIM_INBOUND_SSH_KEYS_ENABLED?: boolean;
     SCIM_PULL_API_URL?: string;
     SCIM_PULL_API_KEY?: string;
     SCIM_PULL_SOURCE_NAME?: string;
@@ -5762,6 +5763,7 @@ export type ConstanceSettingsRequest = {
     SCIM_INBOUND_ENABLED?: boolean;
     SCIM_INBOUND_SOURCE_NAME?: string;
     SCIM_INBOUND_ALLOWED_ATTRIBUTES?: Array<UserAttributeEnum | BlankEnum>;
+    SCIM_INBOUND_SSH_KEYS_ENABLED?: boolean;
     SCIM_PULL_API_URL?: string;
     SCIM_PULL_API_KEY?: string;
     SCIM_PULL_SOURCE_NAME?: string;
@@ -25182,7 +25184,7 @@ export type Resource = {
     readonly end_date_updated_at: string | null;
     readonly username: string | null;
     /**
-     * Dictionary mapping limit-based component types to their consumed usage. For monthly periods, maps from current_usages; for longer periods, aggregates historical usage.
+     * Dictionary mapping limit-based component types to their consumed usage. Sums the ComponentUsage rows of the component's current period (the monthly billing period unless the component defines a longer limit_period), i.e. the period's high-watermark rather than the instantaneous current_usages value.
      */
     readonly limit_usage: {
         [key: string]: number;
@@ -32221,6 +32223,7 @@ export type ConstanceSettingsRequestForm = {
     SCIM_INBOUND_ENABLED?: boolean;
     SCIM_INBOUND_SOURCE_NAME?: string;
     SCIM_INBOUND_ALLOWED_ATTRIBUTES?: Array<UserAttributeEnum | BlankEnum>;
+    SCIM_INBOUND_SSH_KEYS_ENABLED?: boolean;
     SCIM_PULL_API_URL?: string;
     SCIM_PULL_API_KEY?: string;
     SCIM_PULL_SOURCE_NAME?: string;
@@ -32526,6 +32529,7 @@ export type ConstanceSettingsRequestMultipart = {
     SCIM_INBOUND_ENABLED?: boolean;
     SCIM_INBOUND_SOURCE_NAME?: string;
     SCIM_INBOUND_ALLOWED_ATTRIBUTES?: Array<UserAttributeEnum | BlankEnum>;
+    SCIM_INBOUND_SSH_KEYS_ENABLED?: boolean;
     SCIM_PULL_API_URL?: string;
     SCIM_PULL_API_KEY?: string;
     SCIM_PULL_SOURCE_NAME?: string;
