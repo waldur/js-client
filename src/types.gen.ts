@@ -8799,7 +8799,7 @@ export type GenerateSuggestionsResponse = {
     suggestions: Array<string>;
 };
 
-export type GlauthGroupKind = 'project' | 'resource_role' | 'resource_project_role';
+export type GlauthGroupKind = 'project' | 'resource_role' | 'resource_project_role' | 'personal';
 
 export type GlauthTree = {
     offering: GlauthTreeOffering;
@@ -8847,7 +8847,7 @@ export type GlauthTreeScope = {
     resource_uuid?: string | null;
 };
 
-export type GlauthTreeScopeTypeEnum = 'resource' | 'resource_project' | 'project';
+export type GlauthTreeScopeTypeEnum = 'resource' | 'resource_project' | 'project' | 'user';
 
 export type GlauthTreeUser = {
     username: string;
