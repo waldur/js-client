@@ -20629,7 +20629,7 @@ export type PermissionMetadataResponse = {
      * Map of role keys to role enum values from RoleEnum
      */
     roles: {
-        [key: string]: 'CUSTOMER.OWNER' | 'CUSTOMER.SUPPORT' | 'CUSTOMER.MANAGER' | 'CUSTOMER.READER' | 'PROJECT.ADMIN' | 'PROJECT.MANAGER' | 'PROJECT.MEMBER' | 'OFFERING.MANAGER' | 'CALL.REVIEWER' | 'CALL.MANAGER' | 'PROPOSAL.MEMBER' | 'PROPOSAL.MANAGER';
+        [key: string]: 'CUSTOMER.OWNER' | 'CUSTOMER.SUPPORT' | 'CUSTOMER.MANAGER' | 'CUSTOMER.READER' | 'PROJECT.ADMIN' | 'PROJECT.MANAGER' | 'PROJECT.MEMBER' | 'OFFERING.MANAGER' | 'CALL.REVIEWER' | 'CALL.MANAGER' | 'CALL.PANEL_MEMBER' | 'PROPOSAL.MEMBER' | 'PROPOSAL.MANAGER';
     };
     /**
      * Map of permission keys to permission enum values from PermissionEnum
