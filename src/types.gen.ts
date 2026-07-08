@@ -29598,7 +29598,7 @@ export type UserAgreementRequest = {
     language: string;
 };
 
-export type UserAttributeEnum = 'username' | 'registration_method' | 'first_name' | 'last_name' | 'full_name' | 'email' | 'phone_number' | 'organization' | 'job_title' | 'affiliations' | 'gender' | 'personal_title' | 'birth_date' | 'place_of_birth' | 'country_of_residence' | 'nationality' | 'nationalities' | 'organization_country' | 'organization_type' | 'organization_registry_code' | 'organization_vat_code' | 'organization_address' | 'eduperson_assurance' | 'civil_number' | 'identity_source';
+export type UserAttributeEnum = 'username' | 'registration_method' | 'first_name' | 'last_name' | 'full_name' | 'email' | 'phone_number' | 'organization' | 'job_title' | 'affiliations' | 'gender' | 'personal_title' | 'birth_date' | 'place_of_birth' | 'address' | 'country_of_residence' | 'nationality' | 'nationalities' | 'organization_country' | 'organization_type' | 'organization_registry_code' | 'organization_vat_code' | 'organization_address' | 'eduperson_assurance' | 'civil_number' | 'identity_source' | 'active_isds' | 'uid_number' | 'primary_gid';
 
 export type UserAuthMethodCount = {
     /**
