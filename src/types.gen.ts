@@ -5314,6 +5314,7 @@ export type ConstanceSettings = {
     ENABLE_ISSUES_FOR_USER_SSH_KEY_CHANGES?: boolean;
     TELEMETRY_URL?: string;
     TELEMETRY_VERSION?: number;
+    CHECK_FOR_UPDATES?: boolean;
     SCRIPT_RUN_MODE?: ScriptrunmodeEnum;
     DOCKER_CLIENT?: string;
     DOCKER_RUN_OPTIONS?: string;
@@ -5620,6 +5621,7 @@ export type ConstanceSettingsRequest = {
     ENABLE_ISSUES_FOR_USER_SSH_KEY_CHANGES?: boolean;
     TELEMETRY_URL?: string;
     TELEMETRY_VERSION?: number;
+    CHECK_FOR_UPDATES?: boolean;
     SCRIPT_RUN_MODE?: ScriptrunmodeEnum;
     DOCKER_CLIENT?: string;
     DOCKER_RUN_OPTIONS?: string;
@@ -32080,6 +32082,7 @@ export type ConstanceSettingsRequestForm = {
     ENABLE_ISSUES_FOR_USER_SSH_KEY_CHANGES?: boolean;
     TELEMETRY_URL?: string;
     TELEMETRY_VERSION?: number;
+    CHECK_FOR_UPDATES?: boolean;
     SCRIPT_RUN_MODE?: ScriptrunmodeEnum;
     DOCKER_CLIENT?: string;
     DOCKER_RUN_OPTIONS?: string;
@@ -32386,6 +32389,7 @@ export type ConstanceSettingsRequestMultipart = {
     ENABLE_ISSUES_FOR_USER_SSH_KEY_CHANGES?: boolean;
     TELEMETRY_URL?: string;
     TELEMETRY_VERSION?: number;
+    CHECK_FOR_UPDATES?: boolean;
     SCRIPT_RUN_MODE?: ScriptrunmodeEnum;
     DOCKER_CLIENT?: string;
     DOCKER_RUN_OPTIONS?: string;
