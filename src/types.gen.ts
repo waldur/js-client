@@ -40727,6 +40727,71 @@ export type CallManagingOrganisationsListUsersListResponses = {
 
 export type CallManagingOrganisationsListUsersListResponse = CallManagingOrganisationsListUsersListResponses[keyof CallManagingOrganisationsListUsersListResponses];
 
+export type CallManagingOrganisationsListUsersCountData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * Fields to include in response
+         */
+        field?: Array<UserRoleDetailsFieldEnum>;
+        /**
+         * User full name
+         */
+        full_name?: string;
+        /**
+         * User native name
+         */
+        native_name?: string;
+        /**
+         * Ordering fields
+         */
+        o?: Array<UserRoleDetailsOEnum>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Role UUID or name
+         */
+        role?: string;
+        /**
+         * Search string for user
+         */
+        search_string?: string;
+        /**
+         * User UUID
+         */
+        user?: string;
+        /**
+         * User slug
+         */
+        user_slug?: string;
+        /**
+         * User URL
+         */
+        user_url?: string;
+        /**
+         * User username
+         */
+        username?: string;
+    };
+    url: '/api/call-managing-organisations/{uuid}/list_users/';
+};
+
+export type CallManagingOrganisationsListUsersCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type CallManagingOrganisationsStatsRetrieveData = {
     body?: never;
     path: {
@@ -43714,6 +43779,34 @@ export type CustomersProjectMetadataComplianceDetailsListResponses = {
 
 export type CustomersProjectMetadataComplianceDetailsListResponse = CustomersProjectMetadataComplianceDetailsListResponses[keyof CustomersProjectMetadataComplianceDetailsListResponses];
 
+export type CustomersProjectMetadataComplianceDetailsCountData = {
+    body?: never;
+    path: {
+        /**
+         * UUID of the customer
+         */
+        customer_uuid: string;
+    };
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/customers/{customer_uuid}/project-metadata-compliance-details/';
+};
+
+export type CustomersProjectMetadataComplianceDetailsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type CustomersProjectMetadataComplianceOverviewListData = {
     body?: never;
     path: {
@@ -43740,6 +43833,34 @@ export type CustomersProjectMetadataComplianceOverviewListResponses = {
 };
 
 export type CustomersProjectMetadataComplianceOverviewListResponse = CustomersProjectMetadataComplianceOverviewListResponses[keyof CustomersProjectMetadataComplianceOverviewListResponses];
+
+export type CustomersProjectMetadataComplianceOverviewCountData = {
+    body?: never;
+    path: {
+        /**
+         * UUID of the customer
+         */
+        customer_uuid: string;
+    };
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/customers/{customer_uuid}/project-metadata-compliance-overview/';
+};
+
+export type CustomersProjectMetadataComplianceOverviewCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type CustomersProjectMetadataComplianceProjectsListData = {
     body?: never;
@@ -43768,6 +43889,34 @@ export type CustomersProjectMetadataComplianceProjectsListResponses = {
 
 export type CustomersProjectMetadataComplianceProjectsListResponse = CustomersProjectMetadataComplianceProjectsListResponses[keyof CustomersProjectMetadataComplianceProjectsListResponses];
 
+export type CustomersProjectMetadataComplianceProjectsCountData = {
+    body?: never;
+    path: {
+        /**
+         * UUID of the customer
+         */
+        customer_uuid: string;
+    };
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/customers/{customer_uuid}/project-metadata-compliance-projects/';
+};
+
+export type CustomersProjectMetadataComplianceProjectsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type CustomersProjectMetadataQuestionAnswersListData = {
     body?: never;
     path: {
@@ -43794,6 +43943,34 @@ export type CustomersProjectMetadataQuestionAnswersListResponses = {
 };
 
 export type CustomersProjectMetadataQuestionAnswersListResponse = CustomersProjectMetadataQuestionAnswersListResponses[keyof CustomersProjectMetadataQuestionAnswersListResponses];
+
+export type CustomersProjectMetadataQuestionAnswersCountData = {
+    body?: never;
+    path: {
+        /**
+         * UUID of the customer
+         */
+        customer_uuid: string;
+    };
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/customers/{customer_uuid}/project-metadata-question-answers/';
+};
+
+export type CustomersProjectMetadataQuestionAnswersCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type CustomersUsersListData = {
     body?: never;
@@ -43882,6 +44059,94 @@ export type CustomersUsersListResponses = {
 };
 
 export type CustomersUsersListResponse = CustomersUsersListResponses[keyof CustomersUsersListResponses];
+
+export type CustomersUsersCountData = {
+    body?: never;
+    path: {
+        /**
+         * UUID of the customer
+         */
+        customer_uuid: string;
+    };
+    query?: {
+        /**
+         * Agreement date after
+         */
+        agreement_date?: string;
+        civil_number?: string;
+        /**
+         * Date joined after
+         */
+        date_joined?: string;
+        description?: string;
+        /**
+         * Email
+         */
+        email?: string;
+        /**
+         * Full name
+         */
+        full_name?: string;
+        /**
+         * Is active
+         */
+        is_active?: boolean;
+        /**
+         * Job title
+         */
+        job_title?: string;
+        /**
+         * Date modified after
+         */
+        modified?: string;
+        /**
+         * Native name
+         */
+        native_name?: string;
+        /**
+         * Ordering. Sort by a combination of first name, last name, and username.
+         */
+        o?: CustomerUserOEnum;
+        /**
+         * Organization
+         */
+        organization?: string;
+        /**
+         * Filter by one or more organization roles. Select a standard role or provide a custom role string. Can be specified multiple times.
+         */
+        organization_role?: Array<'CUSTOMER.MANAGER' | 'CUSTOMER.OWNER' | 'CUSTOMER.SUPPORT' | string>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        phone_number?: string;
+        /**
+         * Filter by one or more project roles. Select a standard role or provide a custom role string. Can be specified multiple times.
+         */
+        project_role?: Array<'PROJECT.ADMIN' | 'PROJECT.MANAGER' | 'PROJECT.MEMBER' | string>;
+        registration_method?: string;
+        /**
+         * User keyword
+         */
+        user_keyword?: string;
+        /**
+         * Username
+         */
+        username?: string;
+    };
+    url: '/api/customers/{customer_uuid}/users/';
+};
+
+export type CustomersUsersCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type CustomersDestroyData = {
     body?: never;
@@ -44207,6 +44472,71 @@ export type CustomersListUsersListResponses = {
 };
 
 export type CustomersListUsersListResponse = CustomersListUsersListResponses[keyof CustomersListUsersListResponses];
+
+export type CustomersListUsersCountData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * Fields to include in response
+         */
+        field?: Array<UserRoleDetailsFieldEnum>;
+        /**
+         * User full name
+         */
+        full_name?: string;
+        /**
+         * User native name
+         */
+        native_name?: string;
+        /**
+         * Ordering fields
+         */
+        o?: Array<UserRoleDetailsOEnum>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Role UUID or name
+         */
+        role?: string;
+        /**
+         * Search string for user
+         */
+        search_string?: string;
+        /**
+         * User UUID
+         */
+        user?: string;
+        /**
+         * User slug
+         */
+        user_slug?: string;
+        /**
+         * User URL
+         */
+        user_url?: string;
+        /**
+         * User username
+         */
+        username?: string;
+    };
+    url: '/api/customers/{uuid}/list_users/';
+};
+
+export type CustomersListUsersCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type CustomersProjectDigestConfigRetrieveData = {
     body?: never;
@@ -59294,6 +59624,71 @@ export type MarketplaceProviderOfferingsListUsersListResponses = {
 
 export type MarketplaceProviderOfferingsListUsersListResponse = MarketplaceProviderOfferingsListUsersListResponses[keyof MarketplaceProviderOfferingsListUsersListResponses];
 
+export type MarketplaceProviderOfferingsListUsersCountData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * Fields to include in response
+         */
+        field?: Array<UserRoleDetailsFieldEnum>;
+        /**
+         * User full name
+         */
+        full_name?: string;
+        /**
+         * User native name
+         */
+        native_name?: string;
+        /**
+         * Ordering fields
+         */
+        o?: Array<UserRoleDetailsOEnum>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Role UUID or name
+         */
+        role?: string;
+        /**
+         * Search string for user
+         */
+        search_string?: string;
+        /**
+         * User UUID
+         */
+        user?: string;
+        /**
+         * User slug
+         */
+        user_slug?: string;
+        /**
+         * User URL
+         */
+        user_url?: string;
+        /**
+         * User username
+         */
+        username?: string;
+    };
+    url: '/api/marketplace-provider-offerings/{uuid}/list_users/';
+};
+
+export type MarketplaceProviderOfferingsListUsersCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type MarketplaceProviderOfferingsMakeAvailableData = {
     body?: never;
     path: {
@@ -60594,6 +60989,71 @@ export type MarketplaceProviderResourceProjectsListUsersListResponses = {
 
 export type MarketplaceProviderResourceProjectsListUsersListResponse = MarketplaceProviderResourceProjectsListUsersListResponses[keyof MarketplaceProviderResourceProjectsListUsersListResponses];
 
+export type MarketplaceProviderResourceProjectsListUsersCountData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * Fields to include in response
+         */
+        field?: Array<UserRoleDetailsFieldEnum>;
+        /**
+         * User full name
+         */
+        full_name?: string;
+        /**
+         * User native name
+         */
+        native_name?: string;
+        /**
+         * Ordering fields
+         */
+        o?: Array<UserRoleDetailsOEnum>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Role UUID or name
+         */
+        role?: string;
+        /**
+         * Search string for user
+         */
+        search_string?: string;
+        /**
+         * User UUID
+         */
+        user?: string;
+        /**
+         * User slug
+         */
+        user_slug?: string;
+        /**
+         * User URL
+         */
+        user_url?: string;
+        /**
+         * User username
+         */
+        username?: string;
+    };
+    url: '/api/marketplace-provider-resource-projects/{uuid}/list_users/';
+};
+
+export type MarketplaceProviderResourceProjectsListUsersCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type MarketplaceProviderResourceProjectsSetBackendIdData = {
     body: ResourceProjectBackendIdRequest;
     path: {
@@ -61526,6 +61986,71 @@ export type MarketplaceProviderResourcesListUsersListResponses = {
 };
 
 export type MarketplaceProviderResourcesListUsersListResponse = MarketplaceProviderResourcesListUsersListResponses[keyof MarketplaceProviderResourcesListUsersListResponses];
+
+export type MarketplaceProviderResourcesListUsersCountData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * Fields to include in response
+         */
+        field?: Array<UserRoleDetailsFieldEnum>;
+        /**
+         * User full name
+         */
+        full_name?: string;
+        /**
+         * User native name
+         */
+        native_name?: string;
+        /**
+         * Ordering fields
+         */
+        o?: Array<UserRoleDetailsOEnum>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Role UUID or name
+         */
+        role?: string;
+        /**
+         * Search string for user
+         */
+        search_string?: string;
+        /**
+         * User UUID
+         */
+        user?: string;
+        /**
+         * User slug
+         */
+        user_slug?: string;
+        /**
+         * User URL
+         */
+        user_url?: string;
+        /**
+         * User username
+         */
+        username?: string;
+    };
+    url: '/api/marketplace-provider-resources/{uuid}/list_users/';
+};
+
+export type MarketplaceProviderResourcesListUsersCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type MarketplaceProviderResourcesMoveResourceData = {
     body: MoveResourceRequest;
@@ -63038,6 +63563,71 @@ export type MarketplaceResourceProjectsListUsersListResponses = {
 
 export type MarketplaceResourceProjectsListUsersListResponse = MarketplaceResourceProjectsListUsersListResponses[keyof MarketplaceResourceProjectsListUsersListResponses];
 
+export type MarketplaceResourceProjectsListUsersCountData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * Fields to include in response
+         */
+        field?: Array<UserRoleDetailsFieldEnum>;
+        /**
+         * User full name
+         */
+        full_name?: string;
+        /**
+         * User native name
+         */
+        native_name?: string;
+        /**
+         * Ordering fields
+         */
+        o?: Array<UserRoleDetailsOEnum>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Role UUID or name
+         */
+        role?: string;
+        /**
+         * Search string for user
+         */
+        search_string?: string;
+        /**
+         * User UUID
+         */
+        user?: string;
+        /**
+         * User slug
+         */
+        user_slug?: string;
+        /**
+         * User URL
+         */
+        user_url?: string;
+        /**
+         * User username
+         */
+        username?: string;
+    };
+    url: '/api/marketplace-resource-projects/{uuid}/list_users/';
+};
+
+export type MarketplaceResourceProjectsListUsersCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type MarketplaceResourceProjectsRecoverData = {
     body?: ResourceProjectRecoveryRequest;
     path: {
@@ -63955,6 +64545,71 @@ export type MarketplaceResourcesListUsersListResponses = {
 };
 
 export type MarketplaceResourcesListUsersListResponse = MarketplaceResourcesListUsersListResponses[keyof MarketplaceResourcesListUsersListResponses];
+
+export type MarketplaceResourcesListUsersCountData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * Fields to include in response
+         */
+        field?: Array<UserRoleDetailsFieldEnum>;
+        /**
+         * User full name
+         */
+        full_name?: string;
+        /**
+         * User native name
+         */
+        native_name?: string;
+        /**
+         * Ordering fields
+         */
+        o?: Array<UserRoleDetailsOEnum>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Role UUID or name
+         */
+        role?: string;
+        /**
+         * Search string for user
+         */
+        search_string?: string;
+        /**
+         * User UUID
+         */
+        user?: string;
+        /**
+         * User slug
+         */
+        user_slug?: string;
+        /**
+         * User URL
+         */
+        user_url?: string;
+        /**
+         * User username
+         */
+        username?: string;
+    };
+    url: '/api/marketplace-resources/{uuid}/list_users/';
+};
+
+export type MarketplaceResourcesListUsersCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type MarketplaceResourcesMoveResourceData = {
     body: MoveResourceRequest;
@@ -65401,6 +66056,22 @@ export type ServiceProviderChecklistsSummaryResponses = {
 
 export type ServiceProviderChecklistsSummaryResponse = ServiceProviderChecklistsSummaryResponses[keyof ServiceProviderChecklistsSummaryResponses];
 
+export type MarketplaceServiceProvidersComplianceChecklistsSummaryCountData = {
+    body?: never;
+    path: {
+        service_provider_uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-service-providers/{service_provider_uuid}/compliance/checklists_summary/';
+};
+
+export type MarketplaceServiceProvidersComplianceChecklistsSummaryCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type ServiceProviderComplianceOverviewData = {
     body?: never;
     path: {
@@ -65424,6 +66095,22 @@ export type ServiceProviderComplianceOverviewResponses = {
 };
 
 export type ServiceProviderComplianceOverviewResponse = ServiceProviderComplianceOverviewResponses[keyof ServiceProviderComplianceOverviewResponses];
+
+export type MarketplaceServiceProvidersComplianceComplianceOverviewCountData = {
+    body?: never;
+    path: {
+        service_provider_uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-service-providers/{service_provider_uuid}/compliance/compliance_overview/';
+};
+
+export type MarketplaceServiceProvidersComplianceComplianceOverviewCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type ServiceProviderOfferingUsersComplianceData = {
     body?: never;
@@ -65456,6 +66143,22 @@ export type ServiceProviderOfferingUsersComplianceResponses = {
 };
 
 export type ServiceProviderOfferingUsersComplianceResponse = ServiceProviderOfferingUsersComplianceResponses[keyof ServiceProviderOfferingUsersComplianceResponses];
+
+export type MarketplaceServiceProvidersComplianceOfferingUsersCountData = {
+    body?: never;
+    path: {
+        service_provider_uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-service-providers/{service_provider_uuid}/compliance/offering_users/';
+};
+
+export type MarketplaceServiceProvidersComplianceOfferingUsersCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type MarketplaceServiceProvidersCourseAccountsListData = {
     body?: never;
@@ -65520,6 +66223,71 @@ export type MarketplaceServiceProvidersCourseAccountsListResponses = {
 };
 
 export type MarketplaceServiceProvidersCourseAccountsListResponse = MarketplaceServiceProvidersCourseAccountsListResponses[keyof MarketplaceServiceProvidersCourseAccountsListResponses];
+
+export type MarketplaceServiceProvidersCourseAccountsCountData = {
+    body?: never;
+    path: {
+        service_provider_uuid: string;
+    };
+    query?: {
+        /**
+         * Email contains
+         */
+        email?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<CourseAccountOEnum>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Project end date range
+         */
+        project_end_date_after?: string;
+        /**
+         * Project end date range
+         */
+        project_end_date_before?: string;
+        /**
+         * Project start date range
+         */
+        project_start_date_after?: string;
+        /**
+         * Project start date range
+         */
+        project_start_date_before?: string;
+        /**
+         * Project UUID
+         */
+        project_uuid?: string;
+        /**
+         * Course account state
+         *
+         *
+         */
+        state?: Array<CourseAccountStateEnum>;
+        /**
+         * Username
+         */
+        username?: string;
+    };
+    url: '/api/marketplace-service-providers/{service_provider_uuid}/course_accounts/';
+};
+
+export type MarketplaceServiceProvidersCourseAccountsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type MarketplaceServiceProvidersCustomerProjectsListData = {
     body?: never;
@@ -65653,6 +66421,138 @@ export type MarketplaceServiceProvidersCustomerProjectsListResponses = {
 
 export type MarketplaceServiceProvidersCustomerProjectsListResponse = MarketplaceServiceProvidersCustomerProjectsListResponses[keyof MarketplaceServiceProvidersCustomerProjectsListResponses];
 
+export type MarketplaceServiceProvidersCustomerProjectsCountData = {
+    body?: never;
+    path: {
+        service_provider_uuid: string;
+    };
+    query: {
+        /**
+         * Affiliation name
+         */
+        affiliation_name?: string;
+        /**
+         * Affiliation UUID
+         */
+        affiliation_uuid?: Array<string>;
+        backend_id?: string;
+        /**
+         * Return a list of projects where current user is admin.
+         */
+        can_admin?: boolean;
+        /**
+         * Return a list of projects where current user is manager or a customer owner.
+         */
+        can_manage?: boolean;
+        /**
+         * Conceal finished projects
+         */
+        conceal_finished_projects?: boolean;
+        /**
+         * Created after
+         */
+        created?: string;
+        /**
+         * Created before
+         */
+        created_before?: string;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        current_user_has_role?: Array<string>;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        customer?: Array<string>;
+        /**
+         * Customer abbreviation
+         */
+        customer_abbreviation?: string;
+        /**
+         * Customer name
+         */
+        customer_name?: string;
+        /**
+         * Customer native name
+         */
+        customer_native_name?: string;
+        /**
+         * Description
+         */
+        description?: string;
+        /**
+         * Filter projects that have an affiliation.
+         */
+        has_affiliation?: boolean;
+        /**
+         * Is removed
+         */
+        is_removed?: boolean;
+        /**
+         * Modified after
+         */
+        modified?: string;
+        /**
+         * Modified before
+         */
+        modified_before?: string;
+        /**
+         * Name
+         */
+        name?: string;
+        /**
+         * Name (exact)
+         */
+        name_exact?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<MarketplaceProviderCustomerProjectOEnum>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * UUID of the customer to filter projects by.
+         */
+        project_customer_uuid: string;
+        /**
+         * Filter by name, slug, UUID, backend ID or resource effective ID
+         */
+        query?: string;
+        /**
+         * Science domain UUID
+         */
+        science_domain_uuid?: string;
+        /**
+         * Science sub-domain UUID
+         */
+        science_sub_domain_uuid?: string;
+        /**
+         * Slug
+         */
+        slug?: string;
+        /**
+         * Filter projects where the given user has a role.
+         */
+        user_uuid_with_active_role?: string;
+    };
+    url: '/api/marketplace-service-providers/{service_provider_uuid}/customer_projects/';
+};
+
+export type MarketplaceServiceProvidersCustomerProjectsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type MarketplaceServiceProvidersCustomersListData = {
     body?: never;
     path: {
@@ -65730,6 +66630,83 @@ export type MarketplaceServiceProvidersCustomersListResponses = {
 
 export type MarketplaceServiceProvidersCustomersListResponse = MarketplaceServiceProvidersCustomersListResponses[keyof MarketplaceServiceProvidersCustomersListResponses];
 
+export type MarketplaceServiceProvidersCustomersCountData = {
+    body?: never;
+    path: {
+        service_provider_uuid: string;
+    };
+    query?: {
+        /**
+         * Abbreviation
+         */
+        abbreviation?: string;
+        agreement_number?: string;
+        archived?: boolean;
+        backend_id?: string;
+        /**
+         * Contact details
+         */
+        contact_details?: string;
+        /**
+         * Return a list of customers where current user has project create permission.
+         */
+        current_user_has_project_create_permission?: boolean;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        current_user_has_role?: Array<string>;
+        /**
+         * Name
+         */
+        name?: string;
+        /**
+         * Name (exact)
+         */
+        name_exact?: string;
+        /**
+         * Native name
+         */
+        native_name?: string;
+        /**
+         * Organization group name
+         */
+        organization_group_name?: string;
+        /**
+         * Organization group UUID
+         */
+        organization_group_uuid?: Array<string>;
+        /**
+         * Return a list of customers where current user is owner.
+         */
+        owned_by_current_user?: boolean;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Filter by name, native name, abbreviation, domain, UUID, registration code or agreement number
+         */
+        query?: string;
+        registration_code?: string;
+        /**
+         * Slug
+         */
+        slug?: string;
+    };
+    url: '/api/marketplace-service-providers/{service_provider_uuid}/customers/';
+};
+
+export type MarketplaceServiceProvidersCustomersCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type MarketplaceServiceProvidersKeysListData = {
     body?: never;
     path: {
@@ -65792,6 +66769,69 @@ export type MarketplaceServiceProvidersKeysListResponses = {
 };
 
 export type MarketplaceServiceProvidersKeysListResponse = MarketplaceServiceProvidersKeysListResponses[keyof MarketplaceServiceProvidersKeysListResponses];
+
+export type MarketplaceServiceProvidersKeysCountData = {
+    body?: never;
+    path: {
+        service_provider_uuid: string;
+    };
+    query?: {
+        /**
+         * Created after
+         */
+        created?: string;
+        /**
+         * Created before
+         */
+        created_before?: string;
+        fingerprint_md5?: string;
+        fingerprint_sha256?: string;
+        fingerprint_sha512?: string;
+        is_shared?: boolean;
+        /**
+         * Modified after
+         */
+        modified?: string;
+        /**
+         * Modified before
+         */
+        modified_before?: string;
+        /**
+         * Name
+         */
+        name?: string;
+        /**
+         * Name (exact)
+         */
+        name_exact?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<SshKeyOEnum>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * User UUID
+         */
+        user_uuid?: string;
+    };
+    url: '/api/marketplace-service-providers/{service_provider_uuid}/keys/';
+};
+
+export type MarketplaceServiceProvidersKeysCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type MarketplaceServiceProvidersOfferingsListData = {
     body?: never;
@@ -65979,6 +67019,192 @@ export type MarketplaceServiceProvidersOfferingsListResponses = {
 
 export type MarketplaceServiceProvidersOfferingsListResponse = MarketplaceServiceProvidersOfferingsListResponses[keyof MarketplaceServiceProvidersOfferingsListResponses];
 
+export type MarketplaceServiceProvidersOfferingsCountData = {
+    body?: never;
+    path: {
+        service_provider_uuid: string;
+    };
+    query?: {
+        /**
+         * Accessible via calls
+         */
+        accessible_via_calls?: boolean;
+        /**
+         * Allowed customer UUID
+         */
+        allowed_customer_uuid?: string;
+        /**
+         * Offering attributes (JSON)
+         */
+        attributes?: string;
+        /**
+         * Billable
+         */
+        billable?: boolean;
+        can_create_offering_user?: boolean;
+        /**
+         * Category group UUID
+         */
+        category_group_uuid?: string;
+        /**
+         * Category UUID
+         */
+        category_uuid?: string;
+        /**
+         * Created after
+         */
+        created?: string;
+        /**
+         * Created before
+         */
+        created_before?: string;
+        /**
+         * Customer URL
+         */
+        customer?: string;
+        /**
+         * Customer UUID
+         */
+        customer_uuid?: string;
+        /**
+         * Description contains
+         */
+        description?: string;
+        /**
+         * Has Active Terms of Service
+         */
+        has_active_terms_of_service?: boolean;
+        /**
+         * Has Terms of Service
+         */
+        has_terms_of_service?: boolean;
+        /**
+         * Keyword
+         */
+        keyword?: string;
+        /**
+         * Modified after
+         */
+        modified?: string;
+        /**
+         * Modified before
+         */
+        modified_before?: string;
+        /**
+         * Name
+         */
+        name?: string;
+        /**
+         * Name (exact)
+         */
+        name_exact?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<ProviderOfferingDetailsOEnum>;
+        /**
+         * Offering group UUID
+         */
+        offering_group_uuid?: string;
+        /**
+         * Organization group UUID
+         */
+        organization_group_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Parent offering UUID
+         */
+        parent_uuid?: string;
+        /**
+         * Project UUID
+         */
+        project_uuid?: string;
+        /**
+         * Search by offering name, slug or description
+         */
+        query?: string;
+        /**
+         * Resource customer UUID
+         */
+        resource_customer_uuid?: string;
+        /**
+         * Resource project UUID
+         */
+        resource_project_uuid?: string;
+        /**
+         * Scope UUID
+         */
+        scope_uuid?: string;
+        /**
+         * Service manager UUID
+         */
+        service_manager_uuid?: string;
+        /**
+         * Shared
+         */
+        shared?: boolean;
+        /**
+         * Slug
+         */
+        slug?: string;
+        /**
+         * Offering state
+         *
+         *
+         */
+        state?: Array<OfferingState>;
+        /**
+         * Tag UUID (OR logic)
+         */
+        tag?: Array<string>;
+        /**
+         * Tag name (OR logic)
+         */
+        tag_name?: Array<string>;
+        /**
+         * Tag names with AND logic (comma-separated)
+         */
+        tag_names_and?: string;
+        /**
+         * Tag UUIDs with AND logic (comma-separated)
+         */
+        tags_and?: string;
+        /**
+         * Offering type
+         */
+        type?: Array<string>;
+        /**
+         * User Has Consent
+         */
+        user_has_consent?: boolean;
+        /**
+         * User Has Offering User
+         */
+        user_has_offering_user?: boolean;
+        /**
+         * Comma-separated offering UUIDs
+         */
+        uuid_list?: string;
+    };
+    url: '/api/marketplace-service-providers/{service_provider_uuid}/offerings/';
+};
+
+export type MarketplaceServiceProvidersOfferingsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type MarketplaceServiceProvidersOfferingsTypesListData = {
     body?: never;
     path: {
@@ -66164,6 +67390,192 @@ export type MarketplaceServiceProvidersOfferingsTypesListResponses = {
 
 export type MarketplaceServiceProvidersOfferingsTypesListResponse = MarketplaceServiceProvidersOfferingsTypesListResponses[keyof MarketplaceServiceProvidersOfferingsTypesListResponses];
 
+export type MarketplaceServiceProvidersOfferingsTypesCountData = {
+    body?: never;
+    path: {
+        service_provider_uuid: string;
+    };
+    query?: {
+        /**
+         * Accessible via calls
+         */
+        accessible_via_calls?: boolean;
+        /**
+         * Allowed customer UUID
+         */
+        allowed_customer_uuid?: string;
+        /**
+         * Offering attributes (JSON)
+         */
+        attributes?: string;
+        /**
+         * Billable
+         */
+        billable?: boolean;
+        can_create_offering_user?: boolean;
+        /**
+         * Category group UUID
+         */
+        category_group_uuid?: string;
+        /**
+         * Category UUID
+         */
+        category_uuid?: string;
+        /**
+         * Created after
+         */
+        created?: string;
+        /**
+         * Created before
+         */
+        created_before?: string;
+        /**
+         * Customer URL
+         */
+        customer?: string;
+        /**
+         * Customer UUID
+         */
+        customer_uuid?: string;
+        /**
+         * Description contains
+         */
+        description?: string;
+        /**
+         * Has Active Terms of Service
+         */
+        has_active_terms_of_service?: boolean;
+        /**
+         * Has Terms of Service
+         */
+        has_terms_of_service?: boolean;
+        /**
+         * Keyword
+         */
+        keyword?: string;
+        /**
+         * Modified after
+         */
+        modified?: string;
+        /**
+         * Modified before
+         */
+        modified_before?: string;
+        /**
+         * Name
+         */
+        name?: string;
+        /**
+         * Name (exact)
+         */
+        name_exact?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<ProviderOfferingDetailsOEnum>;
+        /**
+         * Offering group UUID
+         */
+        offering_group_uuid?: string;
+        /**
+         * Organization group UUID
+         */
+        organization_group_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Parent offering UUID
+         */
+        parent_uuid?: string;
+        /**
+         * Project UUID
+         */
+        project_uuid?: string;
+        /**
+         * Search by offering name, slug or description
+         */
+        query?: string;
+        /**
+         * Resource customer UUID
+         */
+        resource_customer_uuid?: string;
+        /**
+         * Resource project UUID
+         */
+        resource_project_uuid?: string;
+        /**
+         * Scope UUID
+         */
+        scope_uuid?: string;
+        /**
+         * Service manager UUID
+         */
+        service_manager_uuid?: string;
+        /**
+         * Shared
+         */
+        shared?: boolean;
+        /**
+         * Slug
+         */
+        slug?: string;
+        /**
+         * Offering state
+         *
+         *
+         */
+        state?: Array<OfferingState>;
+        /**
+         * Tag UUID (OR logic)
+         */
+        tag?: Array<string>;
+        /**
+         * Tag name (OR logic)
+         */
+        tag_name?: Array<string>;
+        /**
+         * Tag names with AND logic (comma-separated)
+         */
+        tag_names_and?: string;
+        /**
+         * Tag UUIDs with AND logic (comma-separated)
+         */
+        tags_and?: string;
+        /**
+         * Offering type
+         */
+        type?: Array<string>;
+        /**
+         * User Has Consent
+         */
+        user_has_consent?: boolean;
+        /**
+         * User Has Offering User
+         */
+        user_has_offering_user?: boolean;
+        /**
+         * Comma-separated offering UUIDs
+         */
+        uuid_list?: string;
+    };
+    url: '/api/marketplace-service-providers/{service_provider_uuid}/offerings/types/';
+};
+
+export type MarketplaceServiceProvidersOfferingsTypesCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type MarketplaceServiceProvidersProjectPermissionsListData = {
     body?: never;
     path: {
@@ -66245,6 +67657,87 @@ export type MarketplaceServiceProvidersProjectPermissionsListResponses = {
 
 export type MarketplaceServiceProvidersProjectPermissionsListResponse = MarketplaceServiceProvidersProjectPermissionsListResponses[keyof MarketplaceServiceProvidersProjectPermissionsListResponses];
 
+export type MarketplaceServiceProvidersProjectPermissionsCountData = {
+    body?: never;
+    path: {
+        service_provider_uuid: string;
+    };
+    query?: {
+        /**
+         * Created after
+         */
+        created?: string;
+        /**
+         * Created before
+         */
+        created_before?: string;
+        expiration_time?: string;
+        /**
+         * User full name contains
+         */
+        full_name?: string;
+        is_active?: boolean;
+        /**
+         * Modified after
+         */
+        modified?: string;
+        /**
+         * Modified before
+         */
+        modified_before?: string;
+        native_name?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<OfferingPermissionOEnum>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Role name contains
+         */
+        role_name?: string;
+        /**
+         * Role UUID
+         */
+        role_uuid?: string;
+        /**
+         * Scope name
+         */
+        scope_name?: string;
+        /**
+         * Scope type
+         */
+        scope_type?: string;
+        /**
+         * Scope UUID
+         */
+        scope_uuid?: string;
+        user?: string;
+        /**
+         * User slug contains
+         */
+        user_slug?: string;
+        user_url?: string;
+        username?: string;
+    };
+    url: '/api/marketplace-service-providers/{service_provider_uuid}/project_permissions/';
+};
+
+export type MarketplaceServiceProvidersProjectPermissionsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type MarketplaceServiceProvidersProjectServiceAccountsListData = {
     body?: never;
     path: {
@@ -66290,6 +67783,53 @@ export type MarketplaceServiceProvidersProjectServiceAccountsListResponses = {
 };
 
 export type MarketplaceServiceProvidersProjectServiceAccountsListResponse = MarketplaceServiceProvidersProjectServiceAccountsListResponses[keyof MarketplaceServiceProvidersProjectServiceAccountsListResponses];
+
+export type MarketplaceServiceProvidersProjectServiceAccountsCountData = {
+    body?: never;
+    path: {
+        service_provider_uuid: string;
+    };
+    query?: {
+        /**
+         * Email contains
+         */
+        email?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Project URL
+         */
+        project?: string;
+        /**
+         * Project UUID
+         */
+        project_uuid?: string;
+        /**
+         * Service account state
+         *
+         *
+         */
+        state?: Array<ServiceAccountState>;
+        /**
+         * Username
+         */
+        username?: string;
+    };
+    url: '/api/marketplace-service-providers/{service_provider_uuid}/project_service_accounts/';
+};
+
+export type MarketplaceServiceProvidersProjectServiceAccountsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type MarketplaceServiceProvidersProjectsListData = {
     body?: never;
@@ -66419,6 +67959,134 @@ export type MarketplaceServiceProvidersProjectsListResponses = {
 
 export type MarketplaceServiceProvidersProjectsListResponse = MarketplaceServiceProvidersProjectsListResponses[keyof MarketplaceServiceProvidersProjectsListResponses];
 
+export type MarketplaceServiceProvidersProjectsCountData = {
+    body?: never;
+    path: {
+        service_provider_uuid: string;
+    };
+    query?: {
+        /**
+         * Affiliation name
+         */
+        affiliation_name?: string;
+        /**
+         * Affiliation UUID
+         */
+        affiliation_uuid?: Array<string>;
+        backend_id?: string;
+        /**
+         * Return a list of projects where current user is admin.
+         */
+        can_admin?: boolean;
+        /**
+         * Return a list of projects where current user is manager or a customer owner.
+         */
+        can_manage?: boolean;
+        /**
+         * Conceal finished projects
+         */
+        conceal_finished_projects?: boolean;
+        /**
+         * Created after
+         */
+        created?: string;
+        /**
+         * Created before
+         */
+        created_before?: string;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        current_user_has_role?: Array<string>;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        customer?: Array<string>;
+        /**
+         * Customer abbreviation
+         */
+        customer_abbreviation?: string;
+        /**
+         * Customer name
+         */
+        customer_name?: string;
+        /**
+         * Customer native name
+         */
+        customer_native_name?: string;
+        /**
+         * Description
+         */
+        description?: string;
+        /**
+         * Filter projects that have an affiliation.
+         */
+        has_affiliation?: boolean;
+        /**
+         * Is removed
+         */
+        is_removed?: boolean;
+        /**
+         * Modified after
+         */
+        modified?: string;
+        /**
+         * Modified before
+         */
+        modified_before?: string;
+        /**
+         * Name
+         */
+        name?: string;
+        /**
+         * Name (exact)
+         */
+        name_exact?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<MarketplaceProviderCustomerProjectOEnum>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Filter by name, slug, UUID, backend ID or resource effective ID
+         */
+        query?: string;
+        /**
+         * Science domain UUID
+         */
+        science_domain_uuid?: string;
+        /**
+         * Science sub-domain UUID
+         */
+        science_sub_domain_uuid?: string;
+        /**
+         * Slug
+         */
+        slug?: string;
+        /**
+         * Filter projects where the given user has a role.
+         */
+        user_uuid_with_active_role?: string;
+    };
+    url: '/api/marketplace-service-providers/{service_provider_uuid}/projects/';
+};
+
+export type MarketplaceServiceProvidersProjectsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type MarketplaceServiceProvidersUserCustomersListData = {
     body?: never;
     path: {
@@ -66499,6 +68167,87 @@ export type MarketplaceServiceProvidersUserCustomersListResponses = {
 };
 
 export type MarketplaceServiceProvidersUserCustomersListResponse = MarketplaceServiceProvidersUserCustomersListResponses[keyof MarketplaceServiceProvidersUserCustomersListResponses];
+
+export type MarketplaceServiceProvidersUserCustomersCountData = {
+    body?: never;
+    path: {
+        service_provider_uuid: string;
+    };
+    query: {
+        /**
+         * Abbreviation
+         */
+        abbreviation?: string;
+        agreement_number?: string;
+        archived?: boolean;
+        backend_id?: string;
+        /**
+         * Contact details
+         */
+        contact_details?: string;
+        /**
+         * Return a list of customers where current user has project create permission.
+         */
+        current_user_has_project_create_permission?: boolean;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        current_user_has_role?: Array<string>;
+        /**
+         * Name
+         */
+        name?: string;
+        /**
+         * Name (exact)
+         */
+        name_exact?: string;
+        /**
+         * Native name
+         */
+        native_name?: string;
+        /**
+         * Organization group name
+         */
+        organization_group_name?: string;
+        /**
+         * Organization group UUID
+         */
+        organization_group_uuid?: Array<string>;
+        /**
+         * Return a list of customers where current user is owner.
+         */
+        owned_by_current_user?: boolean;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Filter by name, native name, abbreviation, domain, UUID, registration code or agreement number
+         */
+        query?: string;
+        registration_code?: string;
+        /**
+         * Slug
+         */
+        slug?: string;
+        /**
+         * UUID of the user to get related customers for.
+         */
+        user_uuid: string;
+    };
+    url: '/api/marketplace-service-providers/{service_provider_uuid}/user_customers/';
+};
+
+export type MarketplaceServiceProvidersUserCustomersCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type MarketplaceServiceProvidersUsersListData = {
     body?: never;
@@ -66610,6 +68359,117 @@ export type MarketplaceServiceProvidersUsersListResponses = {
 };
 
 export type MarketplaceServiceProvidersUsersListResponse = MarketplaceServiceProvidersUsersListResponses[keyof MarketplaceServiceProvidersUsersListResponses];
+
+export type MarketplaceServiceProvidersUsersCountData = {
+    body?: never;
+    path: {
+        service_provider_uuid: string;
+    };
+    query?: {
+        /**
+         * Agreement date after
+         */
+        agreement_date?: string;
+        civil_number?: string;
+        /**
+         * Customer UUID
+         */
+        customer_uuid?: string;
+        /**
+         * Date joined after
+         */
+        date_joined?: string;
+        description?: string;
+        /**
+         * Email
+         */
+        email?: string;
+        /**
+         * Full name
+         */
+        full_name?: string;
+        /**
+         * Is active
+         */
+        is_active?: boolean;
+        /**
+         * Is staff
+         */
+        is_staff?: boolean;
+        /**
+         * Is support
+         */
+        is_support?: boolean;
+        /**
+         * Job title
+         */
+        job_title?: string;
+        /**
+         * Date modified after
+         */
+        modified?: string;
+        /**
+         * Native name
+         */
+        native_name?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<MarketplaceServiceProviderUserOEnum>;
+        /**
+         * Organization
+         */
+        organization?: string;
+        /**
+         * Organization roles
+         */
+        organization_roles?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        phone_number?: string;
+        /**
+         * Project roles
+         */
+        project_roles?: string;
+        /**
+         * Project UUID
+         */
+        project_uuid?: string;
+        /**
+         * Filter by first name, last name, civil number, username or email
+         */
+        query?: string;
+        registration_method?: string;
+        /**
+         * User keyword
+         */
+        user_keyword?: string;
+        /**
+         * Username (exact)
+         */
+        username?: string;
+        /**
+         * Comma-separated usernames
+         */
+        username_list?: string;
+    };
+    url: '/api/marketplace-service-providers/{service_provider_uuid}/users/';
+};
+
+export type MarketplaceServiceProvidersUsersCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type MarketplaceServiceProvidersDestroyData = {
     body?: never;
@@ -66822,6 +68682,71 @@ export type MarketplaceServiceProvidersListUsersListResponses = {
 };
 
 export type MarketplaceServiceProvidersListUsersListResponse = MarketplaceServiceProvidersListUsersListResponses[keyof MarketplaceServiceProvidersListUsersListResponses];
+
+export type MarketplaceServiceProvidersListUsersCountData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * Fields to include in response
+         */
+        field?: Array<UserRoleDetailsFieldEnum>;
+        /**
+         * User full name
+         */
+        full_name?: string;
+        /**
+         * User native name
+         */
+        native_name?: string;
+        /**
+         * Ordering fields
+         */
+        o?: Array<UserRoleDetailsOEnum>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Role UUID or name
+         */
+        role?: string;
+        /**
+         * Search string for user
+         */
+        search_string?: string;
+        /**
+         * User UUID
+         */
+        user?: string;
+        /**
+         * User slug
+         */
+        user_slug?: string;
+        /**
+         * User URL
+         */
+        user_url?: string;
+        /**
+         * User username
+         */
+        username?: string;
+    };
+    url: '/api/marketplace-service-providers/{uuid}/list_users/';
+};
+
+export type MarketplaceServiceProvidersListUsersCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type MarketplaceServiceProvidersRevenueListData = {
     body?: never;
@@ -75354,6 +77279,71 @@ export type OpenportalUnmanagedProjectsListUsersListResponses = {
 };
 
 export type OpenportalUnmanagedProjectsListUsersListResponse = OpenportalUnmanagedProjectsListUsersListResponses[keyof OpenportalUnmanagedProjectsListUsersListResponses];
+
+export type OpenportalUnmanagedProjectsListUsersCountData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * Fields to include in response
+         */
+        field?: Array<UserRoleDetailsFieldEnum>;
+        /**
+         * User full name
+         */
+        full_name?: string;
+        /**
+         * User native name
+         */
+        native_name?: string;
+        /**
+         * Ordering fields
+         */
+        o?: Array<UserRoleDetailsOEnum>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Role UUID or name
+         */
+        role?: string;
+        /**
+         * Search string for user
+         */
+        search_string?: string;
+        /**
+         * User UUID
+         */
+        user?: string;
+        /**
+         * User slug
+         */
+        user_slug?: string;
+        /**
+         * User URL
+         */
+        user_url?: string;
+        /**
+         * User username
+         */
+        username?: string;
+    };
+    url: '/api/openportal-unmanaged-projects/{uuid}/list_users/';
+};
+
+export type OpenportalUnmanagedProjectsListUsersCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type OpenportalUnmanagedProjectsMoveProjectData = {
     body: MoveProjectRequest;
@@ -85370,6 +87360,86 @@ export type ProjectsOtherUsersListResponses = {
 
 export type ProjectsOtherUsersListResponse = ProjectsOtherUsersListResponses[keyof ProjectsOtherUsersListResponses];
 
+export type ProjectsOtherUsersCountData = {
+    body?: never;
+    path: {
+        /**
+         * UUID of the project
+         */
+        project_uuid: string;
+    };
+    query?: {
+        /**
+         * Agreement date after
+         */
+        agreement_date?: string;
+        civil_number?: string;
+        /**
+         * Date joined after
+         */
+        date_joined?: string;
+        description?: string;
+        /**
+         * Email
+         */
+        email?: string;
+        /**
+         * Full name
+         */
+        full_name?: string;
+        /**
+         * Is active
+         */
+        is_active?: boolean;
+        /**
+         * Job title
+         */
+        job_title?: string;
+        /**
+         * Date modified after
+         */
+        modified?: string;
+        /**
+         * Native name
+         */
+        native_name?: string;
+        /**
+         * Ordering. Sort by a combination of first name, last name, and username.
+         */
+        o?: CustomerUserOEnum;
+        /**
+         * Organization
+         */
+        organization?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        phone_number?: string;
+        registration_method?: string;
+        /**
+         * User keyword
+         */
+        user_keyword?: string;
+        /**
+         * Username
+         */
+        username?: string;
+    };
+    url: '/api/projects/{project_uuid}/other_users/';
+};
+
+export type ProjectsOtherUsersCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type ProjectsDestroyData = {
     body?: never;
     path: {
@@ -85593,6 +87663,71 @@ export type ProjectsListUsersListResponses = {
 };
 
 export type ProjectsListUsersListResponse = ProjectsListUsersListResponses[keyof ProjectsListUsersListResponses];
+
+export type ProjectsListUsersCountData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * Fields to include in response
+         */
+        field?: Array<UserRoleDetailsFieldEnum>;
+        /**
+         * User full name
+         */
+        full_name?: string;
+        /**
+         * User native name
+         */
+        native_name?: string;
+        /**
+         * Ordering fields
+         */
+        o?: Array<UserRoleDetailsOEnum>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Role UUID or name
+         */
+        role?: string;
+        /**
+         * Search string for user
+         */
+        search_string?: string;
+        /**
+         * User UUID
+         */
+        user?: string;
+        /**
+         * User slug
+         */
+        user_slug?: string;
+        /**
+         * User URL
+         */
+        user_url?: string;
+        /**
+         * User username
+         */
+        username?: string;
+    };
+    url: '/api/projects/{uuid}/list_users/';
+};
+
+export type ProjectsListUsersCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type ProjectsMoveProjectData = {
     body: MoveProjectRequest;
@@ -86422,6 +88557,71 @@ export type ProposalProposalsListUsersListResponses = {
 };
 
 export type ProposalProposalsListUsersListResponse = ProposalProposalsListUsersListResponses[keyof ProposalProposalsListUsersListResponses];
+
+export type ProposalProposalsListUsersCountData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * Fields to include in response
+         */
+        field?: Array<UserRoleDetailsFieldEnum>;
+        /**
+         * User full name
+         */
+        full_name?: string;
+        /**
+         * User native name
+         */
+        native_name?: string;
+        /**
+         * Ordering fields
+         */
+        o?: Array<UserRoleDetailsOEnum>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Role UUID or name
+         */
+        role?: string;
+        /**
+         * Search string for user
+         */
+        search_string?: string;
+        /**
+         * User UUID
+         */
+        user?: string;
+        /**
+         * User slug
+         */
+        user_slug?: string;
+        /**
+         * User URL
+         */
+        user_url?: string;
+        /**
+         * User username
+         */
+        username?: string;
+    };
+    url: '/api/proposal-proposals/{uuid}/list_users/';
+};
+
+export type ProposalProposalsListUsersCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type ProposalProposalsRejectData = {
     body?: ProposalApproveRequest;
@@ -87270,6 +89470,71 @@ export type ProposalProtectedCallsListUsersListResponses = {
 };
 
 export type ProposalProtectedCallsListUsersListResponse = ProposalProtectedCallsListUsersListResponses[keyof ProposalProtectedCallsListUsersListResponses];
+
+export type ProposalProtectedCallsListUsersCountData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * Fields to include in response
+         */
+        field?: Array<UserRoleDetailsFieldEnum>;
+        /**
+         * User full name
+         */
+        full_name?: string;
+        /**
+         * User native name
+         */
+        native_name?: string;
+        /**
+         * Ordering fields
+         */
+        o?: Array<UserRoleDetailsOEnum>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Role UUID or name
+         */
+        role?: string;
+        /**
+         * Search string for user
+         */
+        search_string?: string;
+        /**
+         * User UUID
+         */
+        user?: string;
+        /**
+         * User slug
+         */
+        user_slug?: string;
+        /**
+         * User URL
+         */
+        user_url?: string;
+        /**
+         * User username
+         */
+        username?: string;
+    };
+    url: '/api/proposal-protected-calls/{uuid}/list_users/';
+};
+
+export type ProposalProtectedCallsListUsersCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type ProposalProtectedCallsMatchingConfigurationRetrieveData = {
     body?: never;
@@ -92721,6 +94986,34 @@ export type NestedReviewerProfileAffiliationsListResponses = {
 
 export type NestedReviewerProfileAffiliationsListResponse = NestedReviewerProfileAffiliationsListResponses[keyof NestedReviewerProfileAffiliationsListResponses];
 
+export type NestedReviewerProfileAffiliationsCountData = {
+    body?: never;
+    path: {
+        /**
+         * UUID of the parent reviewer profile
+         */
+        reviewer_profile_uuid: string;
+    };
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/reviewer-profiles/{reviewer_profile_uuid}/affiliations/';
+};
+
+export type NestedReviewerProfileAffiliationsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type NestedReviewerProfileAffiliationsCreateData = {
     body: ReviewerAffiliationRequest;
     path: {
@@ -92845,6 +95138,34 @@ export type NestedReviewerProfileExpertiseListResponses = {
 
 export type NestedReviewerProfileExpertiseListResponse = NestedReviewerProfileExpertiseListResponses[keyof NestedReviewerProfileExpertiseListResponses];
 
+export type NestedReviewerProfileExpertiseCountData = {
+    body?: never;
+    path: {
+        /**
+         * UUID of the parent reviewer profile
+         */
+        reviewer_profile_uuid: string;
+    };
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/reviewer-profiles/{reviewer_profile_uuid}/expertise/';
+};
+
+export type NestedReviewerProfileExpertiseCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type NestedReviewerProfileExpertiseCreateData = {
     body: ReviewerExpertiseRequest;
     path: {
@@ -92968,6 +95289,34 @@ export type NestedReviewerProfilePublicationsListResponses = {
 };
 
 export type NestedReviewerProfilePublicationsListResponse = NestedReviewerProfilePublicationsListResponses[keyof NestedReviewerProfilePublicationsListResponses];
+
+export type NestedReviewerProfilePublicationsCountData = {
+    body?: never;
+    path: {
+        /**
+         * UUID of the parent reviewer profile
+         */
+        reviewer_profile_uuid: string;
+    };
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/reviewer-profiles/{reviewer_profile_uuid}/publications/';
+};
+
+export type NestedReviewerProfilePublicationsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type NestedReviewerProfilePublicationsCreateData = {
     body: ReviewerPublicationRequest;
