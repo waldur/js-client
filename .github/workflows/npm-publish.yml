@@ -8,6 +8,9 @@ on:
       - '*'
     paths:
       - 'src/**'
+  # Allow re-publishing manually (e.g. after a publish failure) without needing
+  # a fresh SDK push, since the push trigger is gated on src/** changes.
+  workflow_dispatch:
 
 permissions:
   id-token: write
@@ -25,8 +28,10 @@ jobs:
           node-version: '24'
           registry-url: https://registry.npmjs.org/
 
-      - name: Ensure npm 11.5.1 or later is installed
-        run: npm install -g npm@latest
+      # No `npm install -g npm@latest` self-upgrade: node 24 already bundles
+      # npm >= 11.5.1 (node 24.18.0 ships npm 11.16.0), and the global
+      # self-upgrade drops npm's bundled `sigstore` module, which broke
+      # `npm publish` provenance with "Cannot find module 'sigstore'".
 
       - name: Install dependencies
         run: npm ci
