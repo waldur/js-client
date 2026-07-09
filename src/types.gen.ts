@@ -3156,12 +3156,7 @@ export type BroadcastMessageStateEnum = 'DRAFT' | 'SCHEDULED' | 'SENT';
 
 export type BulkRoundCreateRequestRequest = {
     start_time: string;
-    review_strategy?: ReviewStrategyEnum;
-    deciding_entity?: DecidingEntityEnum;
-    allocation_time?: AllocationTimeEnum;
     review_duration_in_days?: number | null;
-    minimum_number_of_reviewers?: number | null;
-    minimal_average_scoring?: string | null;
     cadence: CadenceEnum;
     custom_interval_months?: number | null;
     submission_window_days: number;
@@ -3817,6 +3812,10 @@ export type CallWorkflowStep = {
      */
     include_award_response?: boolean;
     /**
+     * Allocation decision: when a granted proposal takes effect — immediately (on_decision) or on the round's allocation date (fixed_date).
+     */
+    allocation_time?: AllocationTimeEnum;
+    /**
      * Optional override of catalog ordering.
      */
     display_order?: number | null;
@@ -3866,6 +3865,10 @@ export type CallWorkflowStepRequest = {
      * Allocation decision: require applicant award response after decision.
      */
     include_award_response?: boolean;
+    /**
+     * Allocation decision: when a granted proposal takes effect — immediately (on_decision) or on the round's allocation date (fixed_date).
+     */
+    allocation_time?: AllocationTimeEnum;
     /**
      * Optional override of catalog ordering.
      */
@@ -7254,8 +7257,6 @@ export type DeadLetterQueue = {
      */
     readonly note: string;
 };
-
-export type DecidingEntityEnum = 'by_call_manager' | 'automatic';
 
 export type DefaultPermissionEnum = '2770' | '2775' | '2777' | '770' | '775' | '777';
 
@@ -13200,26 +13201,16 @@ export type NestedRound = {
     start_time: string;
     cutoff_time: string;
     status: RoundStatus;
-    review_strategy?: ReviewStrategyEnum;
-    deciding_entity?: DecidingEntityEnum;
-    allocation_time?: AllocationTimeEnum;
     allocation_date?: string | null;
-    minimal_average_scoring?: string | null;
     review_duration_in_days?: number | null;
-    minimum_number_of_reviewers?: number | null;
 };
 
 export type NestedRoundRequest = {
     slug?: string;
     start_time: string;
     cutoff_time: string;
-    review_strategy?: ReviewStrategyEnum;
-    deciding_entity?: DecidingEntityEnum;
-    allocation_time?: AllocationTimeEnum;
     allocation_date?: string | null;
-    minimal_average_scoring?: string | null;
     review_duration_in_days?: number | null;
-    minimum_number_of_reviewers?: number | null;
 };
 
 export type NestedScreenshot = {
@@ -18448,6 +18439,10 @@ export type PatchedCallWorkflowStepRequest = {
      */
     include_award_response?: boolean;
     /**
+     * Allocation decision: when a granted proposal takes effect — immediately (on_decision) or on the round's allocation date (fixed_date).
+     */
+    allocation_time?: AllocationTimeEnum;
+    /**
      * Optional override of catalog ordering.
      */
     display_order?: number | null;
@@ -19658,13 +19653,8 @@ export type PatchedProtectedCallRequest = {
 export type PatchedProtectedRoundRequest = {
     start_time?: string;
     cutoff_time?: string;
-    review_strategy?: ReviewStrategyEnum;
-    deciding_entity?: DecidingEntityEnum;
-    allocation_time?: AllocationTimeEnum;
     allocation_date?: string | null;
-    minimal_average_scoring?: string | null;
     review_duration_in_days?: number;
-    minimum_number_of_reviewers?: number | null;
 };
 
 export type PatchedProviderPlanDetailsRequest = {
@@ -22395,13 +22385,8 @@ export type ProtectedRound = {
     start_time: string;
     cutoff_time: string;
     status: RoundStatus;
-    review_strategy?: ReviewStrategyEnum;
-    deciding_entity?: DecidingEntityEnum;
-    allocation_time?: AllocationTimeEnum;
     allocation_date?: string | null;
-    minimal_average_scoring?: string | null;
     review_duration_in_days?: number;
-    minimum_number_of_reviewers?: number | null;
     readonly url: string;
     readonly proposals: Array<ProtectedProposalList>;
 };
@@ -22409,13 +22394,8 @@ export type ProtectedRound = {
 export type ProtectedRoundRequest = {
     start_time: string;
     cutoff_time: string;
-    review_strategy?: ReviewStrategyEnum;
-    deciding_entity?: DecidingEntityEnum;
-    allocation_time?: AllocationTimeEnum;
     allocation_date?: string | null;
-    minimal_average_scoring?: string | null;
     review_duration_in_days?: number;
-    minimum_number_of_reviewers?: number | null;
 };
 
 export type ProviderCustomerMonthly = {
@@ -25857,8 +25837,6 @@ export type ReviewProgressStat = {
     readonly average_review_time_days: number | null;
     readonly completion_rate: number;
 };
-
-export type ReviewStrategyEnum = 'after_round' | 'after_proposal';
 
 export type ReviewSubmitRequest = {
     summary_score?: number;
