@@ -19436,6 +19436,8 @@ export type PatchedProjectEstimatedCostPolicyRequest = {
     };
     limit_cost?: number;
     period?: PolicyPeriodEnum;
+    resource?: string | null;
+    use_credit?: boolean;
 };
 
 export type PatchedProjectInfoRequest = {
@@ -21378,6 +21380,9 @@ export type ProjectEstimatedCostPolicy = {
     readonly period_name: string;
     readonly project_credit: string | null;
     readonly customer_credit: string | null;
+    resource?: string | null;
+    readonly resource_name: string;
+    use_credit?: boolean;
     billing_price_estimate: NestedPriceEstimate;
 };
 
@@ -21392,6 +21397,8 @@ export type ProjectEstimatedCostPolicyRequest = {
     };
     limit_cost: number;
     period?: PolicyPeriodEnum;
+    resource?: string | null;
+    use_credit?: boolean;
 };
 
 export type ProjectHyperlinkRequest = {
@@ -47952,6 +47959,10 @@ export type InvoiceItemsProjectCostsForPeriodRetrieveData = {
          * UUID of the project for which statistics should be calculated.
          */
         project_uuid?: string;
+        /**
+         * Optional marketplace resource UUID. When provided, costs are limited to this resource only.
+         */
+        resource_uuid?: string;
     };
     url: '/api/invoice-items/project_costs_for_period/';
 };
@@ -47974,6 +47985,10 @@ export type InvoiceItemsProjectCostsForPeriodCountData = {
          * UUID of the project for which statistics should be calculated.
          */
         project_uuid?: string;
+        /**
+         * Optional marketplace resource UUID. When provided, costs are limited to this resource only.
+         */
+        resource_uuid?: string;
     };
     url: '/api/invoice-items/project_costs_for_period/';
 };
