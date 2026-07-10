@@ -3783,6 +3783,7 @@ export type CallWorkflowStep = {
      * Whether this step is enabled. Disabled steps are skipped.
      */
     is_enabled?: boolean;
+    readonly is_mandatory: boolean;
     /**
      * Duration in days. Used to calculate deadlines.
      */
@@ -3802,7 +3803,7 @@ export type CallWorkflowStep = {
      */
     min_reviewers?: number | null;
     /**
-     * Minimum average score to pass this step.
+     * Minimum average score required before this step can complete (a completion gate; it does not auto-reject lower scores).
      */
     min_score_threshold?: string | null;
     /**
@@ -3814,7 +3815,7 @@ export type CallWorkflowStep = {
      */
     responsible_role?: ResponsibleRoleEnum | BlankEnum | NullEnum | null;
     /**
-     * How this step advances to the next.
+     * How this step advances once a human completes it. 'Automatic' advances to the next step immediately; 'Manual' waits for a separate advance action. Neither auto-decides from review scores.
      */
     transition_mode?: TransitionModeEnum;
     /**
@@ -3856,7 +3857,7 @@ export type CallWorkflowStepRequest = {
      */
     min_reviewers?: number | null;
     /**
-     * Minimum average score to pass this step.
+     * Minimum average score required before this step can complete (a completion gate; it does not auto-reject lower scores).
      */
     min_score_threshold?: string | null;
     /**
@@ -3868,7 +3869,7 @@ export type CallWorkflowStepRequest = {
      */
     responsible_role?: ResponsibleRoleEnum | BlankEnum | NullEnum | null;
     /**
-     * How this step advances to the next.
+     * How this step advances once a human completes it. 'Automatic' advances to the next step immediately; 'Manual' waits for a separate advance action. Neither auto-decides from review scores.
      */
     transition_mode?: TransitionModeEnum;
     /**
@@ -18445,7 +18446,7 @@ export type PatchedCallWorkflowStepRequest = {
      */
     min_reviewers?: number | null;
     /**
-     * Minimum average score to pass this step.
+     * Minimum average score required before this step can complete (a completion gate; it does not auto-reject lower scores).
      */
     min_score_threshold?: string | null;
     /**
@@ -18457,7 +18458,7 @@ export type PatchedCallWorkflowStepRequest = {
      */
     responsible_role?: ResponsibleRoleEnum | BlankEnum | NullEnum | null;
     /**
-     * How this step advances to the next.
+     * How this step advances once a human completes it. 'Automatic' advances to the next step immediately; 'Manual' waits for a separate advance action. Neither auto-decides from review scores.
      */
     transition_mode?: TransitionModeEnum;
     /**
@@ -22021,10 +22022,6 @@ export type Proposal = {
     compliance_status: ProposalComplianceStatus | null;
     can_submit: ProposalCanSubmitResponse;
     readonly awaiting_manual_advance: boolean;
-};
-
-export type ProposalApproveRequest = {
-    allocation_comment?: string;
 };
 
 export type ProposalCanSubmitResponse = {
@@ -88335,22 +88332,6 @@ export type ProposalProposalsAdvanceWorkflowStepResponses = {
 
 export type ProposalProposalsAdvanceWorkflowStepResponse = ProposalProposalsAdvanceWorkflowStepResponses[keyof ProposalProposalsAdvanceWorkflowStepResponses];
 
-export type ProposalProposalsApproveData = {
-    body?: ProposalApproveRequest;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/proposal-proposals/{uuid}/approve/';
-};
-
-export type ProposalProposalsApproveResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
-};
-
 export type ProposalProposalsAttachDocumentData = {
     body?: ProposalDocumentationRequest;
     path: {
@@ -88646,22 +88627,6 @@ export type ProposalProposalsListUsersCountData = {
 };
 
 export type ProposalProposalsListUsersCountResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
-};
-
-export type ProposalProposalsRejectData = {
-    body?: ProposalApproveRequest;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/proposal-proposals/{uuid}/reject/';
-};
-
-export type ProposalProposalsRejectResponses = {
     /**
      * No response body
      */
