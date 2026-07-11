@@ -3791,6 +3791,10 @@ export type CallWorkflowStep = {
     checklist?: string | null;
     readonly checklist_name: string | null;
     /**
+     * When the step has a checklist, block completion until its required questions are answered. Set False to make the checklist advisory.
+     */
+    checklist_required?: boolean;
+    /**
      * Evaluators cannot see each other's assessments.
      */
     blind_review?: boolean;
@@ -3844,6 +3848,10 @@ export type CallWorkflowStepRequest = {
      */
     duration_in_days?: number | null;
     checklist?: string | null;
+    /**
+     * When the step has a checklist, block completion until its required questions are answered. Set False to make the checklist advisory.
+     */
+    checklist_required?: boolean;
     /**
      * Evaluators cannot see each other's assessments.
      */
@@ -18434,6 +18442,10 @@ export type PatchedCallWorkflowStepRequest = {
     duration_in_days?: number | null;
     checklist?: string | null;
     /**
+     * When the step has a checklist, block completion until its required questions are answered. Set False to make the checklist advisory.
+     */
+    checklist_required?: boolean;
+    /**
      * Evaluators cannot see each other's assessments.
      */
     blind_review?: boolean;
@@ -22138,6 +22150,12 @@ export type ProposalReview = {
     comment_project_supporting_documentation?: string | null;
     comment_resource_requests?: string | null;
     comment_team?: string | null;
+    /**
+     * Reviewer confirmed absence of conflict of interest with this proposal.
+     */
+    readonly coi_confirmed: boolean;
+    readonly coi_confirmed_at: string | null;
+    readonly coi_confirmation_required: boolean;
     readonly created: string;
     readonly modified: string;
 };
@@ -22206,6 +22224,7 @@ export type ProposalWorkflowStepInstance = {
     readonly applicant_visible: boolean;
     readonly duration_in_days: number | null;
     readonly is_required: boolean;
+    checklist_status: StepChecklistStatus | null;
 };
 
 export type ProposalWorkflowStepInstanceStatusEnum = 'pending' | 'active' | 'completed' | 'expired' | 'skipped';
@@ -25880,6 +25899,10 @@ export type ReviewSubmitRequest = {
     summary_score?: number;
     summary_public_comment?: string;
     summary_private_comment?: string;
+    /**
+     * Reviewer confirmed absence of conflict of interest with this proposal.
+     */
+    coi_confirmed?: boolean;
 };
 
 export type ReviewerAffiliation = {
@@ -28434,6 +28457,22 @@ export type Status = {
     status: string;
 };
 
+export type StepChecklistResponseGroup = {
+    readonly user_uuid: string | null;
+    readonly user_full_name: string | null;
+    readonly user_image: string | null;
+    submitted_at: string | null;
+    answers: Array<TechnicalAssessmentAnswer>;
+};
+
+export type StepChecklistStatus = {
+    has_checklist: boolean;
+    checklist_required: boolean;
+    checklist_name: string | null;
+    checklist_completed: boolean;
+    unanswered_required_count: number;
+};
+
 export type StepEnum = 'administrative_check' | 'technical_assessment' | 'expert_review' | 'panel_review' | 'allocation_decision' | 'award_response';
 
 export type StorageDataType = {
@@ -28871,6 +28910,16 @@ export type TargetUser = {
     uuid: string;
     username: string;
     full_name: string;
+};
+
+export type TechnicalAssessmentAnswer = {
+    question_uuid: string;
+    question_description: string;
+    question_type: string;
+    answer_data: {
+        [key: string]: unknown;
+    };
+    readonly answer_display: string | null;
 };
 
 export type Template = {
@@ -88751,6 +88800,90 @@ export type ProposalProposalsResourcesUpdateResponses = {
 
 export type ProposalProposalsResourcesUpdateResponse = ProposalProposalsResourcesUpdateResponses[keyof ProposalProposalsResourcesUpdateResponses];
 
+export type ProposalProposalsStepChecklistRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query: {
+        /**
+         * Return all questions ignoring dynamic visibility.
+         */
+        include_all?: string;
+        /**
+         * Workflow step key (e.g. technical_assessment).
+         */
+        step: string;
+    };
+    url: '/api/proposal-proposals/{uuid}/step-checklist/';
+};
+
+export type ProposalProposalsStepChecklistRetrieveErrors = {
+    /**
+     * No step/checklist
+     */
+    400: unknown;
+};
+
+export type ProposalProposalsStepChecklistRetrieveResponses = {
+    200: ChecklistResponse;
+};
+
+export type ProposalProposalsStepChecklistRetrieveResponse = ProposalProposalsStepChecklistRetrieveResponses[keyof ProposalProposalsStepChecklistRetrieveResponses];
+
+export type ProposalProposalsStepChecklistResponsesListData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query: {
+        call_uuid?: string;
+        created_by_uuid?: string;
+        my_proposals?: boolean;
+        name?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<ProposalOEnum>;
+        organization_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        round?: string;
+        round_uuid?: string;
+        /**
+         * Slug
+         */
+        slug?: string;
+        state?: Array<ProposalStates>;
+        /**
+         * Workflow step key (e.g. technical_assessment).
+         */
+        step: string;
+    };
+    url: '/api/proposal-proposals/{uuid}/step-checklist-responses/';
+};
+
+export type ProposalProposalsStepChecklistResponsesListErrors = {
+    /**
+     * No step/checklist
+     */
+    400: unknown;
+};
+
+export type ProposalProposalsStepChecklistResponsesListResponses = {
+    200: Array<StepChecklistResponseGroup>;
+};
+
+export type ProposalProposalsStepChecklistResponsesListResponse = ProposalProposalsStepChecklistResponsesListResponses[keyof ProposalProposalsStepChecklistResponsesListResponses];
+
 export type ProposalProposalsSubmitData = {
     body?: never;
     path: {
@@ -88766,6 +88899,33 @@ export type ProposalProposalsSubmitResponses = {
      */
     200: unknown;
 };
+
+export type ProposalProposalsSubmitStepChecklistAnswersData = {
+    body: Array<AnswerSubmitRequest>;
+    path: {
+        uuid: string;
+    };
+    query: {
+        /**
+         * Workflow step key (e.g. technical_assessment).
+         */
+        step: string;
+    };
+    url: '/api/proposal-proposals/{uuid}/submit-step-checklist-answers/';
+};
+
+export type ProposalProposalsSubmitStepChecklistAnswersErrors = {
+    /**
+     * Validation error or no checklist configured
+     */
+    400: unknown;
+};
+
+export type ProposalProposalsSubmitStepChecklistAnswersResponses = {
+    200: ProposalChecklistAnswerSubmitResponse;
+};
+
+export type ProposalProposalsSubmitStepChecklistAnswersResponse = ProposalProposalsSubmitStepChecklistAnswersResponses[keyof ProposalProposalsSubmitStepChecklistAnswersResponses];
 
 export type ProposalProposalsSubmitAnswersData = {
     body: Array<AnswerSubmitRequest>;
@@ -90381,6 +90541,87 @@ export type ProposalProtectedCallsAvailableComplianceChecklistsCountData = {
 };
 
 export type ProposalProtectedCallsAvailableComplianceChecklistsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type ProposalProtectedCallsStepChecklistsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        customer?: string;
+        customer_keyword?: string;
+        customer_uuid?: string;
+        has_active_round?: boolean;
+        name?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<ProtectedCallOEnum>;
+        offering_uuid?: string;
+        offerings_provider_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Slug
+         */
+        slug?: string;
+        state?: Array<CallStates>;
+    };
+    url: '/api/proposal-protected-calls/step_checklists/';
+};
+
+export type ProposalProtectedCallsStepChecklistsListResponses = {
+    200: Array<ChecklistShort>;
+};
+
+export type ProposalProtectedCallsStepChecklistsListResponse = ProposalProtectedCallsStepChecklistsListResponses[keyof ProposalProtectedCallsStepChecklistsListResponses];
+
+export type ProposalProtectedCallsStepChecklistsCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        customer?: string;
+        customer_keyword?: string;
+        customer_uuid?: string;
+        has_active_round?: boolean;
+        name?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<ProtectedCallOEnum>;
+        offering_uuid?: string;
+        offerings_provider_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Slug
+         */
+        slug?: string;
+        state?: Array<CallStates>;
+    };
+    url: '/api/proposal-protected-calls/step_checklists/';
+};
+
+export type ProposalProtectedCallsStepChecklistsCountResponses = {
     /**
      * No response body
      */
