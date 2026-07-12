@@ -22336,6 +22336,10 @@ export type ProtectedCall = {
         [key: string]: unknown;
     };
     applicant_visibility_config?: CallApplicantVisibilityConfig | null;
+    /**
+     * Whether any proposal has been submitted to this call. Used by the frontend to gate slug-template and checklist fields.
+     */
+    readonly has_proposals: boolean;
 };
 
 export type ProtectedCallRequest = {
@@ -33489,7 +33493,7 @@ export type CampaignStateEnum = 'Active' | 'Draft' | 'Terminated';
 
 export type ProposalOEnum = '-created' | '-round__call__name' | '-round__cutoff_time' | '-round__start_time' | '-slug' | '-state' | 'created' | 'round__call__name' | 'round__cutoff_time' | 'round__start_time' | 'slug' | 'state';
 
-export type ProtectedCallFieldEnum = 'applicant_visibility_config' | 'backend_id' | 'compliance_checklist' | 'compliance_checklist_name' | 'created' | 'created_by' | 'customer_name' | 'customer_uuid' | 'description' | 'documents' | 'end_date' | 'external_url' | 'fixed_duration_in_days' | 'has_eligibility_restrictions' | 'manager' | 'manager_uuid' | 'name' | 'offerings' | 'proposal_slug_template' | 'reference_code' | 'resource_templates' | 'reviewer_identity_visible_to_submitters' | 'reviews_visible_to_submitters' | 'rounds' | 'slug' | 'start_date' | 'state' | 'url' | 'user_affiliations' | 'user_assurance_levels' | 'user_email_patterns' | 'user_identity_sources' | 'user_nationalities' | 'user_organization_types' | 'uuid';
+export type ProtectedCallFieldEnum = 'applicant_visibility_config' | 'backend_id' | 'compliance_checklist' | 'compliance_checklist_name' | 'created' | 'created_by' | 'customer_name' | 'customer_uuid' | 'description' | 'documents' | 'end_date' | 'external_url' | 'fixed_duration_in_days' | 'has_eligibility_restrictions' | 'has_proposals' | 'manager' | 'manager_uuid' | 'name' | 'offerings' | 'proposal_slug_template' | 'reference_code' | 'resource_templates' | 'reviewer_identity_visible_to_submitters' | 'reviews_visible_to_submitters' | 'rounds' | 'slug' | 'start_date' | 'state' | 'url' | 'user_affiliations' | 'user_assurance_levels' | 'user_email_patterns' | 'user_identity_sources' | 'user_nationalities' | 'user_organization_types' | 'uuid';
 
 export type ProtectedCallOEnum = '-created' | '-manager__customer__name' | '-name' | 'created' | 'manager__customer__name' | 'name';
 
