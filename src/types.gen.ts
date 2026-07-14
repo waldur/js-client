@@ -6488,18 +6488,9 @@ export type Customer = {
      * Number of extra days after project end date before resources are terminated
      */
     grace_period_days?: number | null;
-    user_email_patterns?: {
-        [key: string]: unknown;
-    };
-    user_affiliations?: {
-        [key: string]: unknown;
-    };
-    /**
-     * List of allowed identity sources (identity providers).
-     */
-    user_identity_sources?: {
-        [key: string]: unknown;
-    };
+    user_email_patterns?: Array<string>;
+    user_affiliations?: Array<string>;
+    user_identity_sources?: Array<string>;
     /**
      * Affiliations offered to project creators of this organization.
      */
@@ -6933,18 +6924,9 @@ export type CustomerRequest = {
      * Number of extra days after project end date before resources are terminated
      */
     grace_period_days?: number | null;
-    user_email_patterns?: {
-        [key: string]: unknown;
-    };
-    user_affiliations?: {
-        [key: string]: unknown;
-    };
-    /**
-     * List of allowed identity sources (identity providers).
-     */
-    user_identity_sources?: {
-        [key: string]: unknown;
-    };
+    user_email_patterns?: Array<string>;
+    user_affiliations?: Array<string>;
+    user_identity_sources?: Array<string>;
     name: string;
     /**
      * URL-friendly identifier. Only editable by staff users.
@@ -11143,9 +11125,7 @@ export type MarketplaceServiceProviderUser = {
     /**
      * Person's affiliation within organization such as student, faculty, staff.
      */
-    affiliations?: {
-        [key: string]: unknown;
-    };
+    affiliations?: Array<string>;
     /**
      * Active
      *
@@ -11171,9 +11151,7 @@ export type MarketplaceServiceProviderUser = {
     /**
      * List of all citizenships (ISO 3166-1 alpha-2 codes)
      */
-    nationalities?: {
-        [key: string]: unknown;
-    };
+    nationalities?: Array<string>;
     organization_country?: string;
     /**
      * SCHAC URN (e.g., urn:schac:homeOrganizationType:int:university)
@@ -11194,9 +11172,7 @@ export type MarketplaceServiceProviderUser = {
     /**
      * REFEDS assurance profile URIs from identity provider
      */
-    eduperson_assurance?: {
-        [key: string]: unknown;
-    };
+    eduperson_assurance?: Array<string>;
     civil_number?: string | null;
     birth_date?: string | null;
     /**
@@ -11208,9 +11184,7 @@ export type MarketplaceServiceProviderUser = {
     /**
      * List of ISDs that have asserted this user exists. User is deactivated when this becomes empty.
      */
-    active_isds?: {
-        [key: string]: unknown;
-    };
+    active_isds?: Array<string>;
 };
 
 export type MatchingAlgorithm = 'minmax' | 'fairflow' | 'hungarian';
@@ -15941,7 +15915,7 @@ export type OpenStackInstance = {
      */
     readonly min_disk: number;
     /**
-     * Additional data that will be added to instance on provisioning
+     * Cloud-init user data passed to the instance on provisioning. SECURITY: this value is stored and transmitted in plain text — it is kept unencrypted in Waldur's database, forwarded to OpenStack where any process on the instance can read it via the metadata service, and it may appear in logs. Do NOT put unencrypted secrets (passwords, private keys, API tokens) here; reference a secrets manager or inject them through an encrypted channel instead.
      */
     user_data?: string;
     readonly external_ips: Array<string>;
@@ -18646,18 +18620,9 @@ export type PatchedCustomerRequest = {
      * Number of extra days after project end date before resources are terminated
      */
     grace_period_days?: number | null;
-    user_email_patterns?: {
-        [key: string]: unknown;
-    };
-    user_affiliations?: {
-        [key: string]: unknown;
-    };
-    /**
-     * List of allowed identity sources (identity providers).
-     */
-    user_identity_sources?: {
-        [key: string]: unknown;
-    };
+    user_email_patterns?: Array<string>;
+    user_affiliations?: Array<string>;
+    user_identity_sources?: Array<string>;
     name?: string;
     /**
      * URL-friendly identifier. Only editable by staff users.
@@ -19539,18 +19504,9 @@ export type PatchedProjectRequest = {
      * Number of extra days after project end date before resources are terminated. Overrides customer-level setting.
      */
     grace_period_days?: number | null;
-    user_email_patterns?: {
-        [key: string]: unknown;
-    };
-    user_affiliations?: {
-        [key: string]: unknown;
-    };
-    /**
-     * List of allowed identity sources (identity providers).
-     */
-    user_identity_sources?: {
-        [key: string]: unknown;
-    };
+    user_email_patterns?: Array<string>;
+    user_affiliations?: Array<string>;
+    user_identity_sources?: Array<string>;
     affiliation_uuid?: string | null;
     science_sub_domain?: string | null;
 };
@@ -19655,39 +19611,27 @@ export type PatchedProtectedCallRequest = {
     /**
      * List of email regex patterns. User must match one.
      */
-    user_email_patterns?: {
-        [key: string]: unknown;
-    };
+    user_email_patterns?: Array<string>;
     /**
      * List of allowed affiliations. User must have one.
      */
-    user_affiliations?: {
-        [key: string]: unknown;
-    };
+    user_affiliations?: Array<string>;
     /**
      * List of allowed identity sources (identity providers).
      */
-    user_identity_sources?: {
-        [key: string]: unknown;
-    };
+    user_identity_sources?: Array<string>;
     /**
      * List of allowed nationality codes (ISO 3166-1 alpha-2). User must have one.
      */
-    user_nationalities?: {
-        [key: string]: unknown;
-    };
+    user_nationalities?: Array<string>;
     /**
      * List of allowed organization type URNs (SCHAC). User must match one.
      */
-    user_organization_types?: {
-        [key: string]: unknown;
-    };
+    user_organization_types?: Array<string>;
     /**
      * List of required assurance URIs (REFEDS). User must have ALL of these.
      */
-    user_assurance_levels?: {
-        [key: string]: unknown;
-    };
+    user_assurance_levels?: Array<string>;
     applicant_visibility_config?: CallApplicantVisibilityConfigRequest | null;
 };
 
@@ -21125,18 +21069,9 @@ export type Project = {
      * True if the project is past its end date but still within the grace period.
      */
     readonly is_in_grace_period: boolean;
-    user_email_patterns?: {
-        [key: string]: unknown;
-    };
-    user_affiliations?: {
-        [key: string]: unknown;
-    };
-    /**
-     * List of allowed identity sources (identity providers).
-     */
-    user_identity_sources?: {
-        [key: string]: unknown;
-    };
+    user_email_patterns?: Array<string>;
+    user_affiliations?: Array<string>;
+    user_identity_sources?: Array<string>;
     affiliation: AffiliatedOrganization | null;
     affiliation_uuid?: string | null;
     readonly affiliation_name: string;
@@ -21650,18 +21585,9 @@ export type ProjectRequest = {
      * Number of extra days after project end date before resources are terminated. Overrides customer-level setting.
      */
     grace_period_days?: number | null;
-    user_email_patterns?: {
-        [key: string]: unknown;
-    };
-    user_affiliations?: {
-        [key: string]: unknown;
-    };
-    /**
-     * List of allowed identity sources (identity providers).
-     */
-    user_identity_sources?: {
-        [key: string]: unknown;
-    };
+    user_email_patterns?: Array<string>;
+    user_affiliations?: Array<string>;
+    user_identity_sources?: Array<string>;
     affiliation_uuid?: string | null;
     science_sub_domain?: string | null;
 };
@@ -21967,12 +21893,7 @@ export type Proposal = {
      */
     readonly applicant_organization_address: string | null;
     readonly applicant_job_title: string;
-    /**
-     * Person's affiliation within organization such as student, faculty, staff.
-     */
-    readonly applicant_affiliations: {
-        [key: string]: unknown;
-    };
+    readonly applicant_affiliations: Array<string>;
     /**
      * User's gender (male, female, or unknown)
      */
@@ -21988,18 +21909,8 @@ export type Proposal = {
      * Primary citizenship (ISO 3166-1 alpha-2 code)
      */
     readonly applicant_nationality: string;
-    /**
-     * List of all citizenships (ISO 3166-1 alpha-2 codes)
-     */
-    readonly applicant_nationalities: {
-        [key: string]: unknown;
-    };
-    /**
-     * REFEDS assurance profile URIs from identity provider
-     */
-    readonly applicant_eduperson_assurance: {
-        [key: string]: unknown;
-    };
+    readonly applicant_nationalities: Array<string>;
+    readonly applicant_eduperson_assurance: Array<string>;
     /**
      * Source of identity
      *
@@ -22008,12 +21919,7 @@ export type Proposal = {
     readonly applicant_identity_source: string;
     readonly applicant_civil_number: string | null;
     readonly applicant_birth_date: string | null;
-    /**
-     * List of ISDs that have asserted this user exists. User is deactivated when this becomes empty.
-     */
-    readonly applicant_active_isds: {
-        [key: string]: unknown;
-    };
+    readonly applicant_active_isds: Array<string>;
     /**
      * Duration in days after provisioning of resources.
      */
@@ -22302,39 +22208,27 @@ export type ProtectedCall = {
     /**
      * List of email regex patterns. User must match one.
      */
-    user_email_patterns?: {
-        [key: string]: unknown;
-    };
+    user_email_patterns?: Array<string>;
     /**
      * List of allowed affiliations. User must have one.
      */
-    user_affiliations?: {
-        [key: string]: unknown;
-    };
+    user_affiliations?: Array<string>;
     /**
      * List of allowed identity sources (identity providers).
      */
-    user_identity_sources?: {
-        [key: string]: unknown;
-    };
+    user_identity_sources?: Array<string>;
     /**
      * List of allowed nationality codes (ISO 3166-1 alpha-2). User must have one.
      */
-    user_nationalities?: {
-        [key: string]: unknown;
-    };
+    user_nationalities?: Array<string>;
     /**
      * List of allowed organization type URNs (SCHAC). User must match one.
      */
-    user_organization_types?: {
-        [key: string]: unknown;
-    };
+    user_organization_types?: Array<string>;
     /**
      * List of required assurance URIs (REFEDS). User must have ALL of these.
      */
-    user_assurance_levels?: {
-        [key: string]: unknown;
-    };
+    user_assurance_levels?: Array<string>;
     applicant_visibility_config?: CallApplicantVisibilityConfig | null;
     /**
      * Whether any proposal has been submitted to this call. Used by the frontend to gate slug-template and checklist fields.
@@ -22374,39 +22268,27 @@ export type ProtectedCallRequest = {
     /**
      * List of email regex patterns. User must match one.
      */
-    user_email_patterns?: {
-        [key: string]: unknown;
-    };
+    user_email_patterns?: Array<string>;
     /**
      * List of allowed affiliations. User must have one.
      */
-    user_affiliations?: {
-        [key: string]: unknown;
-    };
+    user_affiliations?: Array<string>;
     /**
      * List of allowed identity sources (identity providers).
      */
-    user_identity_sources?: {
-        [key: string]: unknown;
-    };
+    user_identity_sources?: Array<string>;
     /**
      * List of allowed nationality codes (ISO 3166-1 alpha-2). User must have one.
      */
-    user_nationalities?: {
-        [key: string]: unknown;
-    };
+    user_nationalities?: Array<string>;
     /**
      * List of allowed organization type URNs (SCHAC). User must match one.
      */
-    user_organization_types?: {
-        [key: string]: unknown;
-    };
+    user_organization_types?: Array<string>;
     /**
      * List of required assurance URIs (REFEDS). User must have ALL of these.
      */
-    user_assurance_levels?: {
-        [key: string]: unknown;
-    };
+    user_assurance_levels?: Array<string>;
     applicant_visibility_config?: CallApplicantVisibilityConfigRequest | null;
 };
 
@@ -30921,7 +30803,7 @@ export type OpenStackInstanceCreateOrderAttributes = {
     data_volume_type?: string | null;
     ssh_public_key?: string;
     /**
-     * Additional data that will be added to instance on provisioning
+     * Cloud-init user data passed to the instance on provisioning. SECURITY: this value is stored and transmitted in plain text — it is kept unencrypted in Waldur's database, forwarded to OpenStack where any process on the instance can read it via the metadata service, and it may appear in logs. Do NOT put unencrypted secrets (passwords, private keys, API tokens) here; reference a secrets manager or inject them through an encrypted channel instead.
      */
     user_data?: string;
     /**
@@ -31045,18 +30927,9 @@ export type CustomerRequestForm = {
      * Number of extra days after project end date before resources are terminated
      */
     grace_period_days?: number | null;
-    user_email_patterns?: {
-        [key: string]: unknown;
-    };
-    user_affiliations?: {
-        [key: string]: unknown;
-    };
-    /**
-     * List of allowed identity sources (identity providers).
-     */
-    user_identity_sources?: {
-        [key: string]: unknown;
-    };
+    user_email_patterns?: Array<string>;
+    user_affiliations?: Array<string>;
+    user_identity_sources?: Array<string>;
     name: string;
     /**
      * URL-friendly identifier. Only editable by staff users.
@@ -31140,18 +31013,9 @@ export type CustomerRequestMultipart = {
      * Number of extra days after project end date before resources are terminated
      */
     grace_period_days?: number | null;
-    user_email_patterns?: {
-        [key: string]: unknown;
-    };
-    user_affiliations?: {
-        [key: string]: unknown;
-    };
-    /**
-     * List of allowed identity sources (identity providers).
-     */
-    user_identity_sources?: {
-        [key: string]: unknown;
-    };
+    user_email_patterns?: Array<string>;
+    user_affiliations?: Array<string>;
+    user_identity_sources?: Array<string>;
     name: string;
     /**
      * URL-friendly identifier. Only editable by staff users.
@@ -31235,18 +31099,9 @@ export type PatchedCustomerRequestForm = {
      * Number of extra days after project end date before resources are terminated
      */
     grace_period_days?: number | null;
-    user_email_patterns?: {
-        [key: string]: unknown;
-    };
-    user_affiliations?: {
-        [key: string]: unknown;
-    };
-    /**
-     * List of allowed identity sources (identity providers).
-     */
-    user_identity_sources?: {
-        [key: string]: unknown;
-    };
+    user_email_patterns?: Array<string>;
+    user_affiliations?: Array<string>;
+    user_identity_sources?: Array<string>;
     name?: string;
     /**
      * URL-friendly identifier. Only editable by staff users.
@@ -31330,18 +31185,9 @@ export type PatchedCustomerRequestMultipart = {
      * Number of extra days after project end date before resources are terminated
      */
     grace_period_days?: number | null;
-    user_email_patterns?: {
-        [key: string]: unknown;
-    };
-    user_affiliations?: {
-        [key: string]: unknown;
-    };
-    /**
-     * List of allowed identity sources (identity providers).
-     */
-    user_identity_sources?: {
-        [key: string]: unknown;
-    };
+    user_email_patterns?: Array<string>;
+    user_affiliations?: Array<string>;
+    user_identity_sources?: Array<string>;
     name?: string;
     /**
      * URL-friendly identifier. Only editable by staff users.
@@ -31935,18 +31781,9 @@ export type ProjectRequestForm = {
      * Number of extra days after project end date before resources are terminated. Overrides customer-level setting.
      */
     grace_period_days?: number | null;
-    user_email_patterns?: {
-        [key: string]: unknown;
-    };
-    user_affiliations?: {
-        [key: string]: unknown;
-    };
-    /**
-     * List of allowed identity sources (identity providers).
-     */
-    user_identity_sources?: {
-        [key: string]: unknown;
-    };
+    user_email_patterns?: Array<string>;
+    user_affiliations?: Array<string>;
+    user_identity_sources?: Array<string>;
     affiliation_uuid?: string | null;
     science_sub_domain?: string | null;
 };
@@ -31993,18 +31830,9 @@ export type ProjectRequestMultipart = {
      * Number of extra days after project end date before resources are terminated. Overrides customer-level setting.
      */
     grace_period_days?: number | null;
-    user_email_patterns?: {
-        [key: string]: unknown;
-    };
-    user_affiliations?: {
-        [key: string]: unknown;
-    };
-    /**
-     * List of allowed identity sources (identity providers).
-     */
-    user_identity_sources?: {
-        [key: string]: unknown;
-    };
+    user_email_patterns?: Array<string>;
+    user_affiliations?: Array<string>;
+    user_identity_sources?: Array<string>;
     affiliation_uuid?: string | null;
     science_sub_domain?: string | null;
 };
@@ -32051,18 +31879,9 @@ export type PatchedProjectRequestForm = {
      * Number of extra days after project end date before resources are terminated. Overrides customer-level setting.
      */
     grace_period_days?: number | null;
-    user_email_patterns?: {
-        [key: string]: unknown;
-    };
-    user_affiliations?: {
-        [key: string]: unknown;
-    };
-    /**
-     * List of allowed identity sources (identity providers).
-     */
-    user_identity_sources?: {
-        [key: string]: unknown;
-    };
+    user_email_patterns?: Array<string>;
+    user_affiliations?: Array<string>;
+    user_identity_sources?: Array<string>;
     affiliation_uuid?: string | null;
     science_sub_domain?: string | null;
 };
@@ -32109,18 +31928,9 @@ export type PatchedProjectRequestMultipart = {
      * Number of extra days after project end date before resources are terminated. Overrides customer-level setting.
      */
     grace_period_days?: number | null;
-    user_email_patterns?: {
-        [key: string]: unknown;
-    };
-    user_affiliations?: {
-        [key: string]: unknown;
-    };
-    /**
-     * List of allowed identity sources (identity providers).
-     */
-    user_identity_sources?: {
-        [key: string]: unknown;
-    };
+    user_email_patterns?: Array<string>;
+    user_affiliations?: Array<string>;
+    user_identity_sources?: Array<string>;
     affiliation_uuid?: string | null;
     science_sub_domain?: string | null;
 };
