@@ -16,6 +16,15 @@ permissions:
   id-token: write
   contents: write
 
+# Serialize publish runs so each version-bump commit is pushed onto an
+# up-to-date main. Without this, two runs (or a concurrent push to the same
+# ref) can advance main between checkout and push, producing a non-fast-forward
+# "Updates were rejected ... (fetch first)" error. cancel-in-progress: false so
+# queued runs still publish rather than being dropped.
+concurrency:
+  group: publish-npm
+  cancel-in-progress: false
+
 jobs:
   publish-npm:
     runs-on: ubuntu-latest
@@ -50,7 +59,21 @@ jobs:
             npm publish
           else
             npm version prerelease --preid=dev
-            git push
+            # Push the version-bump commit, rebasing and retrying if main
+            # advanced meanwhile (e.g. a concurrent SDK-regen push to src/**).
+            # A bare `git push` fails with a non-fast-forward rejection in that
+            # case and aborts the whole publish.
+            attempts=0
+            until git push origin HEAD:main; do
+              attempts=$((attempts + 1))
+              if [ "$attempts" -ge 5 ]; then
+                echo "::error::Failed to push version bump after $attempts attempts"
+                exit 1
+              fi
+              echo "Push rejected (attempt $attempts); rebasing onto origin/main and retrying..."
+              git pull --rebase origin main
+              sleep $((RANDOM % 5 + 2))
+            done
             npm publish --tag dev
           fi
 
