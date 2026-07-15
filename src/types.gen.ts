@@ -57236,6 +57236,10 @@ export type MarketplaceProviderOfferingsListData = {
     path?: never;
     query?: {
         /**
+         * Only offerings the current user can order
+         */
+        accessible?: boolean;
+        /**
          * Accessible via calls
          */
         accessible_via_calls?: boolean;
@@ -57423,6 +57427,10 @@ export type MarketplaceProviderOfferingsCountData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Only offerings the current user can order
+         */
+        accessible?: boolean;
         /**
          * Accessible via calls
          */
@@ -57774,6 +57782,10 @@ export type MarketplaceProviderOfferingsComponentStatsListData = {
     };
     query?: {
         /**
+         * Only offerings the current user can order
+         */
+        accessible?: boolean;
+        /**
          * Accessible via calls
          */
         accessible_via_calls?: boolean;
@@ -57970,6 +57982,10 @@ export type MarketplaceProviderOfferingsCostsListData = {
         uuid: string;
     };
     query?: {
+        /**
+         * Only offerings the current user can order
+         */
+        accessible?: boolean;
         /**
          * Accessible via calls
          */
@@ -58184,6 +58200,10 @@ export type MarketplaceProviderOfferingsCustomersListData = {
         uuid: string;
     };
     query?: {
+        /**
+         * Only offerings the current user can order
+         */
+        accessible?: boolean;
         /**
          * Accessible via calls
          */
@@ -58576,6 +58596,10 @@ export type MarketplaceProviderOfferingsHistoryListData = {
     };
     query?: {
         /**
+         * Only offerings the current user can order
+         */
+        accessible?: boolean;
+        /**
          * Accessible via calls
          */
         accessible_via_calls?: boolean;
@@ -58839,6 +58863,10 @@ export type MarketplaceProviderOfferingsListCourseAccountsListData = {
     };
     query?: {
         /**
+         * Only offerings the current user can order
+         */
+        accessible?: boolean;
+        /**
          * Accessible via calls
          */
         accessible_via_calls?: boolean;
@@ -59053,6 +59081,10 @@ export type MarketplaceProviderOfferingsListCustomerServiceAccountsListData = {
     };
     query?: {
         /**
+         * Only offerings the current user can order
+         */
+        accessible?: boolean;
+        /**
          * Accessible via calls
          */
         accessible_via_calls?: boolean;
@@ -59266,6 +59298,10 @@ export type MarketplaceProviderOfferingsListProjectServiceAccountsListData = {
         uuid: string;
     };
     query?: {
+        /**
+         * Only offerings the current user can order
+         */
+        accessible?: boolean;
         /**
          * Accessible via calls
          */
@@ -60293,6 +60329,10 @@ export type MarketplaceProviderOfferingsGroupsListData = {
     path?: never;
     query?: {
         /**
+         * Only offerings the current user can order
+         */
+        accessible?: boolean;
+        /**
          * Accessible via calls
          */
         accessible_via_calls?: boolean;
@@ -60475,6 +60515,10 @@ export type MarketplaceProviderOfferingsGroupsCountData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Only offerings the current user can order
+         */
+        accessible?: boolean;
         /**
          * Accessible via calls
          */
@@ -62442,6 +62486,10 @@ export type MarketplacePublicOfferingsListData = {
     path?: never;
     query?: {
         /**
+         * Only offerings the current user can order
+         */
+        accessible?: boolean;
+        /**
          * Accessible via calls
          */
         accessible_via_calls?: boolean;
@@ -62625,6 +62673,10 @@ export type MarketplacePublicOfferingsCountData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Only offerings the current user can order
+         */
+        accessible?: boolean;
         /**
          * Accessible via calls
          */
@@ -66729,6 +66781,10 @@ export type MarketplaceServiceProvidersOfferingsListData = {
     };
     query?: {
         /**
+         * Only offerings the current user can order
+         */
+        accessible?: boolean;
+        /**
          * Accessible via calls
          */
         accessible_via_calls?: boolean;
@@ -66914,6 +66970,10 @@ export type MarketplaceServiceProvidersOfferingsCountData = {
         service_provider_uuid: string;
     };
     query?: {
+        /**
+         * Only offerings the current user can order
+         */
+        accessible?: boolean;
         /**
          * Accessible via calls
          */
@@ -67101,6 +67161,10 @@ export type MarketplaceServiceProvidersOfferingsTypesListData = {
     };
     query?: {
         /**
+         * Only offerings the current user can order
+         */
+        accessible?: boolean;
+        /**
          * Accessible via calls
          */
         accessible_via_calls?: boolean;
@@ -67285,6 +67349,10 @@ export type MarketplaceServiceProvidersOfferingsTypesCountData = {
         service_provider_uuid: string;
     };
     query?: {
+        /**
+         * Only offerings the current user can order
+         */
+        accessible?: boolean;
         /**
          * Accessible via calls
          */
