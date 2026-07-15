@@ -1,0 +1,131 @@
+variables:
+  npm_config_cache: "$CI_PROJECT_DIR/.npm"
+
+cache:
+  key:
+    files:
+      - package-lock.json
+  paths:
+    - .npm/
+
+stages:
+  - test
+  - release
+  - publish
+
+Build TypeScript SDK:
+  stage: test
+  image: registry.hpc.ut.ee/mirror/library/node:lts-alpine
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "pipeline"'
+    - if: '$CI_PIPELINE_SOURCE == "trigger"'
+  needs:
+    - pipeline: $CI_PARENT_PIPELINE_ID
+      job: Generate OpenAPI schema
+  before_script:
+    - apk add --no-cache bash git
+  script:
+    - set -e
+    # Install dependencies including TypeScript
+    - npm install
+    # generate-ts-sdk.sh uses openapi-ts to generate waldur-typescript-sdk
+    - bash scripts/generate-ts-sdk.sh
+    - rm -rf src
+    - mv waldur-typescript-sdk src
+    - echo "Compiling TS source code..."
+    - npm run build
+  artifacts:
+    paths:
+      - src/
+    expire_in: 1 day
+
+Release TypeScript/JavaScript SDK:
+  stage: release
+  image: registry.hpc.ut.ee/mirror/library/node:lts-alpine
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "pipeline"'
+    - if: '$CI_PIPELINE_SOURCE == "trigger"'
+  needs:
+    - job: Build TypeScript SDK
+      artifacts: true
+  before_script:
+    - apk add --no-cache bash git
+    - git config --global user.name "$GITLAB_USER_NAME"
+    - git config --global user.email "$GITLAB_USER_EMAIL"
+    # Authenticate origin with token for pushing back commits & tags
+    - git remote set-url origin "https://gitlab-ci-token:${GITLAB_TOKEN}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git"
+  script:
+    # src/ is passed from the Test TypeScript SDK job automatically
+    - |
+      if [ -n "$RELEASE_VERSION" ]; then
+        sed -i 's/"version": "[^"]*"/"version": "'$RELEASE_VERSION'"/' package.json
+        sed -i '0,/"version": "[^"]*"/{s/"version": "[^"]*"/"version": "'$RELEASE_VERSION'"/}' package-lock.json
+        sed -i '/"packages": {/,/"devDependencies":/{s/"version": "[^"]*"/"version": "'$RELEASE_VERSION'"/}' package-lock.json
+        git add src package.json package-lock.json
+        git diff --cached --quiet && echo "js-client version already set" || git commit -m "Release: bump version and update code to $RELEASE_VERSION"
+        git tag -a $RELEASE_VERSION -m "Release version $RELEASE_VERSION" || echo "Tag $RELEASE_VERSION already exists"
+        git push origin $RELEASE_VERSION || echo "Tag $RELEASE_VERSION already pushed"
+      else
+        git add src
+        git diff --cached --quiet && echo "No changes" || git commit -m "chore: nightly update of Waldur TypeScript SDK"
+      fi
+    - git push origin HEAD:main || echo "main already up to date in js-client"
+
+Publish Dev to NPM:
+  stage: publish
+  image: registry.hpc.ut.ee/mirror/library/node:lts-alpine
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "pipeline" && $RELEASE_VERSION == ""'
+    - if: '$CI_PIPELINE_SOURCE == "trigger" && $RELEASE_VERSION == ""'
+  needs:
+    - job: Build TypeScript SDK
+      artifacts: true
+  before_script:
+    - apk add --no-cache bash git
+    - git config --global user.name "$GITLAB_USER_NAME"
+    - git config --global user.email "$GITLAB_USER_EMAIL"
+    # Authenticate origin with token for pushing back commits
+    - git remote set-url origin "https://gitlab-ci-token:${GITLAB_TOKEN}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git"
+  script:
+    - set -e
+    - npm install
+    - npm run build
+    - echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+    - npm version prerelease --preid=dev -m "chore: bump dev version [skip ci]"
+    - git push -o ci.skip origin HEAD:main
+    - npm publish --tag dev
+    # Deprecate old dev versions
+    - |
+      if [ -n "${NPM_DEPRECATE_TOKEN:-$NPM_TOKEN}" ]; then
+        echo "//registry.npmjs.org/:_authToken=${NPM_DEPRECATE_TOKEN:-$NPM_TOKEN}" > ~/.npmrc
+        node -e "
+          const { execSync } = require('child_process');
+          const versions = JSON.parse(execSync('npm view waldur-js-client versions --json').toString());
+          const devVersions = versions.filter(v => v.includes('-dev.'));
+          const toDeprecate = devVersions.slice(0, -6);
+          for (const v of toDeprecate) {
+            console.log('Deprecating ' + v);
+            execSync('npm deprecate waldur-js-client@' + v + ' \"Outdated dev version. Use the dev tag for the latest dev release.\"');
+          }
+          console.log('Deprecated ' + toDeprecate.length + ' old dev versions, keeping ' + Math.min(devVersions.length, 6) + ' recent ones.');
+        "
+      fi
+
+Publish Release to NPM:
+  stage: publish
+  image: registry.hpc.ut.ee/mirror/library/node:lts-alpine
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "pipeline" && $RELEASE_VERSION =~ /^\d+\.\d+\.\d+$/'
+    - if: '$CI_PIPELINE_SOURCE == "trigger" && $RELEASE_VERSION =~ /^\d+\.\d+\.\d+$/'
+  needs:
+    - job: Build TypeScript SDK
+      artifacts: true
+  before_script:
+    - apk add --no-cache bash git
+  script:
+    - set -e
+    - npm version "$RELEASE_VERSION" --no-git-tag-version
+    - npm install
+    - npm run build
+    - echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+    - npm publish
