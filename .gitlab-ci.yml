@@ -97,7 +97,9 @@ Publish Dev to NPM:
       npm install
       npm run build
       echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
-      npm version prerelease --preid=dev -m "chore: bump dev version [skip ci]"
+      npm version prerelease --preid=dev --no-git-tag-version
+      git add package.json package-lock.json src/
+      git commit -m "chore: bump dev version and update client source [skip ci]"
       git push -o ci.skip origin HEAD:main
       npm publish --tag dev
     # Deprecate old dev versions
