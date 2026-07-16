@@ -42,6 +42,7 @@ Build TypeScript SDK:
   artifacts:
     paths:
       - src/
+      - waldur-openapi-schema.yaml
     expire_in: 1 day
 
 Release TypeScript/JavaScript SDK:
@@ -97,9 +98,23 @@ Publish Dev to NPM:
       npm install
       npm run build
       echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
-      npm version prerelease --preid=dev --no-git-tag-version
+      DEV_VERSION=$(node -e "
+      const fs = require('fs');
+      let version = '0.0.0';
+      try {
+        const content = fs.readFileSync('waldur-openapi-schema.yaml', 'utf8');
+        const m = content.match(/^\s*version:\s*['\"]?([^'\"]+)['\"]?/m);
+        if (m) version = m[1];
+      } catch (e) {}
+      if (!version.includes('dev')) {
+        version = version + '-dev.' + process.argv[1];
+      }
+      console.log(version);
+      " "$CI_PIPELINE_IID")
+      echo "Publishing dev version: $DEV_VERSION"
+      npm version "$DEV_VERSION" --no-git-tag-version
       git add package.json package-lock.json src/
-      git commit -m "chore: bump dev version and update client source [skip ci]"
+      git commit -m "chore: bump dev version to $DEV_VERSION and update client source [skip ci]"
       git push -o ci.skip origin HEAD:main
       npm publish --tag dev
     # Deprecate old dev versions
