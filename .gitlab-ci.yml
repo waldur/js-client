@@ -88,12 +88,13 @@ Publish Dev to NPM:
     - git remote set-url origin "https://gitlab-ci-token:${GITLAB_TOKEN}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git"
   script:
     - set -e
-    - npm install
-    - npm run build
-    - echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
-    - npm version prerelease --preid=dev -m "chore: bump dev version [skip ci]"
-    - git push -o ci.skip origin HEAD:main
-    - npm publish --tag dev
+    - |
+      npm install
+      npm run build
+      echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+      npm version prerelease --preid=dev -m "chore: bump dev version [skip ci]"
+      git push -o ci.skip origin HEAD:main
+      npm publish --tag dev
     # Deprecate old dev versions
     - |
       if [ -n "${NPM_DEPRECATE_TOKEN:-$NPM_TOKEN}" ]; then
