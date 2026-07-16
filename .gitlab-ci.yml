@@ -19,11 +19,43 @@ Build TypeScript SDK:
   rules:
     - if: '$CI_PIPELINE_SOURCE == "pipeline"'
     - if: '$CI_PIPELINE_SOURCE == "trigger"'
-  needs:
-    - pipeline: $CI_PARENT_PIPELINE_ID
-      job: Generate OpenAPI schema
+  needs: []
   before_script:
-    - apk add --no-cache bash git
+    - apk add --no-cache bash git curl jq
+    - |
+      PARENT_PROJECT="waldur%2Fwaldur-docs"
+      JOBS_URL="https://code.opennodecloud.com/api/v4/projects/${PARENT_PROJECT}/pipelines/${CI_PARENT_PIPELINE_ID}/jobs"
+      JOB_ID=""
+      echo "Resolving job 'Generate OpenAPI schema' in parent pipeline $CI_PARENT_PIPELINE_ID..."
+      JOBS_JSON=$(curl --fail --silent --header "JOB-TOKEN: $CI_JOB_TOKEN" "$JOBS_URL" 2>/dev/null)
+      if [ -n "$JOBS_JSON" ]; then
+        JOB_ID=$(echo "$JOBS_JSON" | jq -r '.[] | select(.name == "Generate OpenAPI schema") | .id' 2>/dev/null)
+      fi
+      if [ -z "$JOB_ID" ] || [ "$JOB_ID" = "null" ]; then
+        echo "JOB-TOKEN failed, trying GITLAB_TOKEN..."
+        JOBS_JSON=$(curl --fail --silent --header "PRIVATE-TOKEN: $GITLAB_TOKEN" "$JOBS_URL" 2>/dev/null)
+        if [ -n "$JOBS_JSON" ]; then
+          JOB_ID=$(echo "$JOBS_JSON" | jq -r '.[] | select(.name == "Generate OpenAPI schema") | .id' 2>/dev/null)
+        fi
+      fi
+      if [ -n "$JOB_ID" ] && [ "$JOB_ID" != "null" ]; then
+        echo "Found job ID: $JOB_ID. Downloading artifacts..."
+        # Download waldur-openapi-schema.yaml
+        if curl --fail --show-error --silent --header "JOB-TOKEN: $CI_JOB_TOKEN" "https://code.opennodecloud.com/api/v4/projects/${PARENT_PROJECT}/jobs/${JOB_ID}/artifacts/raw/waldur-openapi-schema.yaml" -o waldur-openapi-schema.yaml 2>/dev/null; then
+          echo "Successfully downloaded waldur-openapi-schema.yaml using JOB-TOKEN."
+        else
+          curl --fail --show-error --silent --header "PRIVATE-TOKEN: $GITLAB_TOKEN" "https://code.opennodecloud.com/api/v4/projects/${PARENT_PROJECT}/jobs/${JOB_ID}/artifacts/raw/waldur-openapi-schema.yaml" -o waldur-openapi-schema.yaml
+        fi
+        # Download waldur-typescript-schema.yaml
+        if curl --fail --show-error --silent --header "JOB-TOKEN: $CI_JOB_TOKEN" "https://code.opennodecloud.com/api/v4/projects/${PARENT_PROJECT}/jobs/${JOB_ID}/artifacts/raw/waldur-typescript-schema.yaml" -o waldur-typescript-schema.yaml 2>/dev/null; then
+          echo "Successfully downloaded waldur-typescript-schema.yaml using JOB-TOKEN."
+        else
+          curl --fail --show-error --silent --header "PRIVATE-TOKEN: $GITLAB_TOKEN" "https://code.opennodecloud.com/api/v4/projects/${PARENT_PROJECT}/jobs/${JOB_ID}/artifacts/raw/waldur-typescript-schema.yaml" -o waldur-typescript-schema.yaml
+        fi
+      else
+        echo "ERROR: Could not resolve parent job 'Generate OpenAPI schema'."
+        exit 1
+      fi
   script:
     - set -e
     # Install dependencies including TypeScript
