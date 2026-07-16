@@ -104,7 +104,7 @@ Publish Dev to NPM:
       try {
         const content = fs.readFileSync('waldur-openapi-schema.yaml', 'utf8');
         const m = content.match(/^\s*version:\s*['\"]?([^'\"]+)['\"]?/m);
-        if (m) version = m[1];
+        if (m) version = m[1].trim();
       } catch (e) {}
       if (!version.includes('dev')) {
         version = version + '-dev.' + process.argv[1];
