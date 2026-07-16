@@ -98,17 +98,17 @@ Publish Dev to NPM:
     - |
       if [ -n "${NPM_DEPRECATE_TOKEN:-$NPM_TOKEN}" ]; then
         echo "//registry.npmjs.org/:_authToken=${NPM_DEPRECATE_TOKEN:-$NPM_TOKEN}" > ~/.npmrc
-        node -e "
-          const { execSync } = require('child_process');
-          const versions = JSON.parse(execSync('npm view waldur-js-client versions --json').toString());
-          const devVersions = versions.filter(v => v.includes('-dev.'));
+        node -e '
+          const { execSync } = require("child_process");
+          const versions = JSON.parse(execSync("npm view waldur-js-client versions --json").toString());
+          const devVersions = versions.filter(v => v.includes("-dev."));
           const toDeprecate = devVersions.slice(0, -6);
           for (const v of toDeprecate) {
-            console.log('Deprecating ' + v);
-            execSync('npm deprecate waldur-js-client@' + v + ' \"Outdated dev version. Use the dev tag for the latest dev release.\"');
+            console.log("Deprecating " + v);
+            execSync("npm deprecate waldur-js-client@" + v + " \"Outdated dev version. Use the dev tag for the latest dev release.\"");
           }
-          console.log('Deprecated ' + toDeprecate.length + ' old dev versions, keeping ' + Math.min(devVersions.length, 6) + ' recent ones.');
-        "
+          console.log("Deprecated " + toDeprecate.length + " old dev versions, keeping " + Math.min(devVersions.length, 6) + " recent ones.");
+        '
       fi
 
 Publish Release to NPM:
