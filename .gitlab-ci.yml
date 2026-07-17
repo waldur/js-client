@@ -30,9 +30,6 @@ Build TypeScript SDK:
   before_script:
     - apk add --no-cache bash curl jq yq unzip
 
-    - |
-      curl --header "JOB-TOKEN: ${CI_JOB_TOKEN}" "${CI_API_V4_URL}/projects/${DOCS_PROJECT}/pipelines/${PARENT_PIPELINE_ID}/jobs?scope=success"
-
     # 1. Query the parent pipeline's jobs list to find the successful "Generate OpenAPI schema" job ID
     - |
       echo "Fetching job list for parent pipeline: ${PARENT_PIPELINE_ID}..."
@@ -119,14 +116,31 @@ Publish Dev to NPM:
         echo "//registry.npmjs.org/:_authToken=${NPM_DEPRECATE_TOKEN:-$NPM_TOKEN}" > ~/.npmrc
         node -e '
           const { execSync } = require("child_process");
-          const versions = JSON.parse(execSync("npm view waldur-js-client versions --json").toString());
+          
+          // 1. Get the full package info (contains deprecation messages)
+          const pkgInfo = JSON.parse(execSync("npm view waldur-js-client --json").toString());
+          const versions = pkgInfo.versions || [];
+          
+          // 2. Identify dev versions and figure out which ones *should* be deprecated
           const devVersions = versions.filter(v => v.includes("-dev."));
           const toDeprecate = devVersions.slice(0, -6);
+          
+          // 3. Map out which versions are already deprecated
+          // NPM stores "deprecated" as an object/string mapping versions to messages
+          const deprecatedInfo = pkgInfo.deprecated || {};
+          
+          let deprecationCount = 0;
           for (const v of toDeprecate) {
+            // Skip if this specific version already has a deprecation message
+            if (deprecatedInfo[v]) {
+              continue; 
+            }
+            
             console.log("Deprecating " + v);
             execSync("npm deprecate waldur-js-client@" + v + " \"Outdated dev version. Use the dev tag for the latest dev release.\"");
+            deprecationCount++;
           }
-          console.log("Deprecated " + toDeprecate.length + " old dev versions, keeping " + Math.min(devVersions.length, 6) + " recent ones.");
+          console.log("Successfully deprecated " + deprecationCount + " new old-dev versions. Kept " + Math.min(devVersions.length, 6) + " recent ones.");
         '
       fi
 
