@@ -33,7 +33,7 @@ Build TypeScript SDK:
     # 1. Query the parent pipeline's jobs list to find the successful "Generate OpenAPI schema" job ID
     - |
       echo "Fetching job list for parent pipeline: ${PARENT_PIPELINE_ID}..."
-      JOBS_JSON=$(curl --silent --fail --header "JOB-TOKEN: ${CI_JOB_TOKEN}" "${CI_API_V4_URL}/projects/${DOCS_PROJECT}/pipelines/${PARENT_PIPELINE_ID}/jobs?scope=success")
+      JOBS_JSON=$(curl --header "JOB-TOKEN: ${CI_JOB_TOKEN}" "${CI_API_V4_URL}/projects/${DOCS_PROJECT}/pipelines/${PARENT_PIPELINE_ID}/jobs?scope=success")
       
     # 2. Extract the job ID using jq
     - |
