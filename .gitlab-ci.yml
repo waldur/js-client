@@ -35,7 +35,6 @@ Build TypeScript SDK:
       - src/
       - package.json
       - package-lock.json
-      - waldur-typescript-schema.yaml
     expire_in: 1 day
 
 Release TypeScript/JavaScript SDK:
