@@ -29,35 +29,7 @@ Build TypeScript SDK:
     - !reference [.resolve-parent-job-id]
     - !reference [.download-typescript-schema]
   script:
-    - set -e
-    # Extract version from TypeScript schema and format it
-    - DEV_VERSION=$(yq '.info.version' waldur-typescript-schema.yaml | tr -d '"' | tr -d "'")
-    - |
-      if [ -z "$DEV_VERSION" ] || [ "$DEV_VERSION" = "null" ]; then
-        DEV_VERSION="0.0.0"
-      fi
-    - |
-      if [ -z "$RELEASE_VERSION" ]; then
-        if echo "$DEV_VERSION" | grep -q "dev"; then
-          DEV_VERSION="${DEV_VERSION}.${CI_PIPELINE_IID}"
-        elif echo "$DEV_VERSION" | grep -q "-"; then
-          DEV_VERSION="${DEV_VERSION}.dev.${CI_PIPELINE_IID}"
-        else
-          DEV_VERSION="${DEV_VERSION}-dev.${CI_PIPELINE_IID}"
-        fi
-      else
-        DEV_VERSION="$RELEASE_VERSION"
-      fi
-    - echo "Updating package version to $DEV_VERSION"
-    - npm version "$DEV_VERSION" --no-git-tag-version
-    # Install dependencies including TypeScript
-    - npm install
-    # generate-ts-sdk.sh uses openapi-ts to generate waldur-typescript-sdk
     - bash scripts/generate-ts-sdk.sh
-    - rm -rf src
-    - mv waldur-typescript-sdk src
-    - echo "Compiling TS source code..."
-    - npm run build
   artifacts:
     paths:
       - src/
