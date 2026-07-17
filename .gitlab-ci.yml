@@ -27,12 +27,11 @@ Build TypeScript SDK:
   before_script:
     - apk add --no-cache bash git curl jq yq
     - !reference [.resolve-parent-job-id]
-    - !reference [.download-openapi-schema]
     - !reference [.download-typescript-schema]
   script:
     - set -e
-    # Extract version from OpenAPI schema and format it
-    - DEV_VERSION=$(yq '.info.version' waldur-openapi-schema.yaml | tr -d '"' | tr -d "'")
+    # Extract version from TypeScript schema and format it
+    - DEV_VERSION=$(yq '.info.version' waldur-typescript-schema.yaml | tr -d '"' | tr -d "'")
     - |
       if [ -z "$DEV_VERSION" ] || [ "$DEV_VERSION" = "null" ]; then
         DEV_VERSION="0.0.0"
@@ -64,7 +63,7 @@ Build TypeScript SDK:
       - src/
       - package.json
       - package-lock.json
-      - waldur-openapi-schema.yaml
+      - waldur-typescript-schema.yaml
     expire_in: 1 day
 
 Release TypeScript/JavaScript SDK:
