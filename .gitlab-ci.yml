@@ -87,7 +87,7 @@ Publish Dev to NPM:
     - job: Build TypeScript SDK
       artifacts: true
   before_script:
-    - apk add --no-cache bash git
+    - apk add --no-cache bash git yq
     - git config --global user.name "$GITLAB_USER_NAME"
     - git config --global user.email "$GITLAB_USER_EMAIL"
     # Authenticate origin with token for pushing back commits
@@ -98,19 +98,13 @@ Publish Dev to NPM:
       npm install
       npm run build
       echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
-      DEV_VERSION=$(node -e "
-      const fs = require('fs');
-      let version = '0.0.0';
-      try {
-        const content = fs.readFileSync('waldur-openapi-schema.yaml', 'utf8');
-        const m = content.match(/info:\s*[\s\S]*?\s+version:\s*['\"]?([^'\r\n\"]+)['\"]?/i);
-        if (m) version = m[1].trim();
-      } catch (e) {}
-      if (!version.includes('dev')) {
-        version = version + '-dev.' + process.argv[1];
-      }
-      console.log(version);
-      " "$CI_PIPELINE_IID")
+      DEV_VERSION=$(yq '.info.version' waldur-openapi-schema.yaml)
+      if [ -z "$DEV_VERSION" ] || [ "$DEV_VERSION" = "null" ]; then
+        DEV_VERSION="0.0.0"
+      fi
+      if ! echo "$DEV_VERSION" | grep -q "dev"; then
+        DEV_VERSION="${DEV_VERSION}-dev.${CI_PIPELINE_IID}"
+      fi
       echo "Publishing dev version: $DEV_VERSION"
       npm version "$DEV_VERSION" --no-git-tag-version
       git add package.json package-lock.json src/
