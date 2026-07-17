@@ -28,6 +28,8 @@ Build TypeScript SDK:
     DOCS_PROJECT: "waldur%2Fwaldur-docs"
     DOCS_JOB_NAME: "Generate OpenAPI schema"
   before_script:
+    - apk add --no-cache bash curl jq unzip
+
     # 1. Query the parent pipeline's jobs list to find the successful "Generate OpenAPI schema" job ID
     - |
       echo "Fetching job list for parent pipeline: ${PARENT_PIPELINE_ID}..."
