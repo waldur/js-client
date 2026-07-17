@@ -109,7 +109,7 @@ Publish Dev to NPM:
       npm version "$DEV_VERSION" --no-git-tag-version
       git add package.json package-lock.json src/
       git commit -m "chore: bump dev version to $DEV_VERSION and update client source [skip ci]"
-      git push -o ci.skip origin HEAD:main
+      git pull --rebase origin main && git push -o ci.skip origin HEAD:main
       npm publish --tag dev
     # Deprecate old dev versions
     - |
