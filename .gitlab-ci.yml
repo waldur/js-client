@@ -76,9 +76,8 @@ Release TypeScript/JavaScript SDK:
         if [ -z "$DEV_VERSION" ] || [ "$DEV_VERSION" = "null" ]; then
           DEV_VERSION="0.0.0"
         fi
-        if ! echo "$DEV_VERSION" | grep -q "dev"; then
-          DEV_VERSION="${DEV_VERSION}-dev.${CI_PIPELINE_IID}"
-        fi
+        DEV_VERSION=$(echo "$DEV_VERSION" | sed -E 's/[-.]dev\.[0-9]+//g')
+        DEV_VERSION="${DEV_VERSION}-dev.${CI_PIPELINE_IID}"
         sed -i 's/"version": "[^"]*"/"version": "'$DEV_VERSION'"/' package.json
         sed -i '0,/"version": "[^"]*"/{s/"version": "[^"]*"/"version": "'$DEV_VERSION'"/}' package-lock.json
         sed -i '/"packages": {/,/"devDependencies":/{s/"version": "[^"]*"/"version": "'$DEV_VERSION'"/}' package-lock.json
