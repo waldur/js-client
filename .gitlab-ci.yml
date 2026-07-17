@@ -33,6 +33,7 @@ Build TypeScript SDK:
         download_with_token() {
           local token_header="$1"
           local token_val="$2"
+          MASTERMIND_REF="${CI_COMMIT_TAG:-develop}"
           
           # 1. Try direct API download by ref (simplest, uses latest successful pipeline)
           echo "Attempting direct API download by ref $MASTERMIND_REF..."
