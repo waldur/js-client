@@ -72,7 +72,7 @@ Release TypeScript/JavaScript SDK:
         git tag -a $RELEASE_VERSION -m "Release version $RELEASE_VERSION" || echo "Tag $RELEASE_VERSION already exists"
         git push origin $RELEASE_VERSION || echo "Tag $RELEASE_VERSION already pushed"
       else
-        DEV_VERSION=$(yq '.info.version' waldur-openapi-schema.yaml)
+        DEV_VERSION=$(yq '.info.version' waldur-openapi-schema.yaml | tr -d '"' | tr -d "'")
         if [ -z "$DEV_VERSION" ] || [ "$DEV_VERSION" = "null" ]; then
           DEV_VERSION="0.0.0"
         fi
