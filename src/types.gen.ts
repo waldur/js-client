@@ -50341,6 +50341,10 @@ export type MarketplaceCategoriesListData = {
     path?: never;
     query?: {
         /**
+         * Only categories with offerings the current user can order
+         */
+        accessible?: boolean;
+        /**
          * Customer UUID
          */
         customer_uuid?: string;
@@ -50401,6 +50405,10 @@ export type MarketplaceCategoriesCountData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Only categories with offerings the current user can order
+         */
+        accessible?: boolean;
         /**
          * Customer UUID
          */
