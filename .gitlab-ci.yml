@@ -29,6 +29,7 @@ Build TypeScript SDK:
   rules:
     - if: '$CI_PIPELINE_SOURCE == "pipeline"'
     - if: '$CI_PIPELINE_SOURCE == "trigger"'
+    - if: '$CI_PIPELINE_SOURCE == "web"'
   needs:
     - job: Fetch OpenAPI schema
       artifacts: true
@@ -49,6 +50,7 @@ Release TypeScript/JavaScript SDK:
   rules:
     - if: '$CI_PIPELINE_SOURCE == "pipeline"'
     - if: '$CI_PIPELINE_SOURCE == "trigger"'
+    - if: '$CI_PIPELINE_SOURCE == "web"'
   needs:
     - job: Build TypeScript SDK
       artifacts: true
@@ -78,6 +80,7 @@ Publish Dev to NPM:
   rules:
     - if: '$CI_PIPELINE_SOURCE == "pipeline" && $RELEASE_VERSION == ""'
     - if: '$CI_PIPELINE_SOURCE == "trigger" && $RELEASE_VERSION == ""'
+    - if: '$CI_PIPELINE_SOURCE == "web" && $RELEASE_VERSION == ""'
   needs:
     - job: Build TypeScript SDK
       artifacts: false
@@ -100,6 +103,7 @@ Publish Release to NPM:
   rules:
     - if: '$CI_PIPELINE_SOURCE == "pipeline" && $RELEASE_VERSION =~ /^\d+\.\d+\.\d+$/'
     - if: '$CI_PIPELINE_SOURCE == "trigger" && $RELEASE_VERSION =~ /^\d+\.\d+\.\d+$/'
+    - if: '$CI_PIPELINE_SOURCE == "web" && $RELEASE_VERSION =~ /^\d+\.\d+\.\d+$/'
   needs:
     - job: Build TypeScript SDK
       artifacts: true
