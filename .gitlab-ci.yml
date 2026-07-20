@@ -17,42 +17,23 @@ stages:
   - release
   - publish
 
+Fetch OpenAPI schema:
+  extends: .fetch-openapi-schema
+  stage: codegen
+  variables:
+    DOWNLOAD_TYPESCRIPT_SCHEMA: "true"
+
 Build TypeScript SDK:
   stage: codegen
   image: registry.hpc.ut.ee/mirror/library/node:lts-alpine
   rules:
     - if: '$CI_PIPELINE_SOURCE == "pipeline"'
     - if: '$CI_PIPELINE_SOURCE == "trigger"'
-  variables:
-    # URL-encoded path of the waldur-docs project
-    DOCS_PROJECT: "waldur%2Fwaldur-docs"
-    DOCS_JOB_NAME: "Generate OpenAPI schema"
+  needs:
+    - job: Fetch OpenAPI schema
+      artifacts: true
   before_script:
-    - apk add --no-cache bash curl jq yq unzip
-
-    # 1. Query the parent pipeline's jobs list to find the successful "Generate OpenAPI schema" job ID
-    - |
-      echo "Fetching job list for parent pipeline: ${PARENT_PIPELINE_ID}..."
-      JOBS_JSON=$(curl --header "JOB-TOKEN: ${CI_JOB_TOKEN}" "${CI_API_V4_URL}/projects/${DOCS_PROJECT}/pipelines/${PARENT_PIPELINE_ID}/jobs?scope=success")
-      
-    # 2. Extract the job ID using jq
-    - |
-      JOB_ID=$(echo "$JOBS_JSON" | jq -r ".[] | select(.name == \"${DOCS_JOB_NAME}\") | .id" | head -n 1)
-      if [ -z "$JOB_ID" ] || [ "$JOB_ID" = "null" ]; then
-        echo "Error: Could not find job ID for '${DOCS_JOB_NAME}' in parent pipeline!"
-        exit 1
-      fi
-      echo "Found target Job ID: ${JOB_ID}"
-
-    # 3. Download the zipped artifacts of that specific job ID
-    - |
-      curl --location --fail --header "JOB-TOKEN: ${CI_JOB_TOKEN}" \
-        --output docs_artifacts.zip \
-        "${CI_API_V4_URL}/projects/${DOCS_PROJECT}/jobs/${JOB_ID}/artifacts"
-
-    # 4. Extract and use the schema
-    - |
-      unzip -o docs_artifacts.zip
+    - apk add --no-cache bash yq
   script:
     - bash scripts/generate-ts-sdk.sh
   artifacts:
