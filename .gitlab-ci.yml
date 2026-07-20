@@ -80,6 +80,8 @@ Publish Dev to NPM:
     - if: '$CI_PIPELINE_SOURCE == "trigger" && $RELEASE_VERSION == ""'
   needs:
     - job: Build TypeScript SDK
+      artifacts: false
+    - job: Release TypeScript/JavaScript SDK
   before_script:
     - apk add --no-cache bash git
   script:
