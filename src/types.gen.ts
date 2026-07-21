@@ -465,6 +465,32 @@ export type AgentQueueInfo = {
     readonly object_type: string | null;
 };
 
+export type AgentQueueRegistrationRequest = {
+    /**
+     * List of observable object types to receive. An explicit empty list means all types; omitting the field leaves the current filter unchanged.
+     */
+    object_types?: Array<ObservableObjectTypeEnum>;
+};
+
+export type AgentQueueRegistrationResponse = {
+    /**
+     * RabbitMQ username (UUID hex) for STOMP authentication
+     */
+    rmq_username: string;
+    /**
+     * RabbitMQ queue name (consumer_{consumer_uuid})
+     */
+    queue_name: string;
+    /**
+     * RabbitMQ virtual host (user UUID)
+     */
+    vhost: string;
+    /**
+     * List of observable object types routed to this queue
+     */
+    observable_object_types: Array<string>;
+};
+
 export type AgentRmqConnection = {
     /**
      * Whether the agent has an active connection
@@ -1958,6 +1984,13 @@ export type AtlassianSettingsSaveRequest = {
     confirm_save: boolean;
 };
 
+export type AttachResourceRequest = {
+    /**
+     * URL of the marketplace resource to attach to this issue.
+     */
+    resource: string;
+};
+
 export type Attachment = {
     readonly url: string;
     readonly uuid: string;
@@ -2782,6 +2815,8 @@ export type BackendResourceRequestSetErredRequest = {
     error_traceback?: string;
 };
 
+export type BackendTypeEnum = 'basic' | 'email' | 'atlassian' | 'zammad' | 'smax';
+
 export type BaseComponentUsage = {
     readonly uuid: string;
     readonly created: string;
@@ -3177,6 +3212,16 @@ export type BulkSilenceResponse = {
     status: string;
     count: number;
     duration_days?: number | null;
+};
+
+export type BulkUpdateIssueRequest = {
+    /**
+     * List of issue UUIDs to update.
+     */
+    issue_uuids: Array<string>;
+    status?: string;
+    priority?: string;
+    assignee?: string | null;
 };
 
 export type CoiDetectionJob = {
@@ -3895,6 +3940,12 @@ export type CallWorkflowStepRequest = {
     criteria?: Array<WorkflowCriterionRequest>;
 };
 
+export type CallerContext = {
+    full_name: string;
+    email: string;
+    organization: string;
+};
+
 export type Campaign = {
     readonly uuid: string;
     name: string;
@@ -3972,6 +4023,36 @@ export type CancelRequestResponse = {
      * UUID of the invitation scope
      */
     scope_uuid: string;
+};
+
+export type CannedResponse = {
+    readonly url: string;
+    readonly uuid: string;
+    name: string;
+    /**
+     * Template text. Supports Django template syntax.
+     */
+    text: string;
+    category?: string;
+    is_active?: boolean;
+    readonly created: string;
+    readonly modified: string;
+};
+
+export type CannedResponseRenderRequest = {
+    context?: {
+        [key: string]: unknown;
+    };
+};
+
+export type CannedResponseRequest = {
+    name: string;
+    /**
+     * Template text. Supports Django template syntax.
+     */
+    text: string;
+    category?: string;
+    is_active?: boolean;
 };
 
 export type CascadeConfig = {
@@ -5356,6 +5437,8 @@ export type ConstanceSettings = {
     FULL_PAGE_TITLE?: string;
     PROJECT_END_DATE_MANDATORY?: boolean;
     AFFILIATION_REQUIRED_AT_PROJECT_CREATION?: boolean;
+    PROJECT_NAME_REGEX?: string;
+    PROJECT_NAME_REGEX_ERROR_MESSAGE?: string;
     ENABLE_ORDER_START_DATE?: boolean;
     BRAND_COLOR?: string;
     HERO_LINK_LABEL?: string;
@@ -5389,6 +5472,12 @@ export type ConstanceSettings = {
     WALDUR_SUPPORT_ENABLED?: boolean;
     WALDUR_SUPPORT_ACTIVE_BACKEND_TYPE?: WaldursupportactivebackendtypeEnum;
     WALDUR_SUPPORT_DISPLAY_REQUEST_TYPE?: boolean;
+    WALDUR_SUPPORT_PROVIDER_ROUTING_ENABLED?: boolean;
+    WALDUR_SUPPORT_AUTO_ASSIGN?: boolean;
+    WALDUR_SUPPORT_AUTO_ASSIGN_STRATEGY?: string;
+    WALDUR_SUPPORT_SLA_ENABLED?: boolean;
+    WALDUR_SUPPORT_SLA_RESPONSE_HOURS?: number;
+    WALDUR_SUPPORT_SLA_RESOLUTION_HOURS?: number;
     ATLASSIAN_MAP_WALDUR_USERS_TO_SERVICEDESK_AGENTS?: boolean;
     ATLASSIAN_API_URL?: string;
     ATLASSIAN_USERNAME?: string;
@@ -5665,6 +5754,8 @@ export type ConstanceSettingsRequest = {
     FULL_PAGE_TITLE?: string;
     PROJECT_END_DATE_MANDATORY?: boolean;
     AFFILIATION_REQUIRED_AT_PROJECT_CREATION?: boolean;
+    PROJECT_NAME_REGEX?: string;
+    PROJECT_NAME_REGEX_ERROR_MESSAGE?: string;
     ENABLE_ORDER_START_DATE?: boolean;
     BRAND_COLOR?: string;
     HERO_LINK_LABEL?: string;
@@ -5698,6 +5789,12 @@ export type ConstanceSettingsRequest = {
     WALDUR_SUPPORT_ENABLED?: boolean;
     WALDUR_SUPPORT_ACTIVE_BACKEND_TYPE?: WaldursupportactivebackendtypeEnum;
     WALDUR_SUPPORT_DISPLAY_REQUEST_TYPE?: boolean;
+    WALDUR_SUPPORT_PROVIDER_ROUTING_ENABLED?: boolean;
+    WALDUR_SUPPORT_AUTO_ASSIGN?: boolean;
+    WALDUR_SUPPORT_AUTO_ASSIGN_STRATEGY?: string;
+    WALDUR_SUPPORT_SLA_ENABLED?: boolean;
+    WALDUR_SUPPORT_SLA_RESPONSE_HOURS?: number;
+    WALDUR_SUPPORT_SLA_RESOLUTION_HOURS?: number;
     ATLASSIAN_MAP_WALDUR_USERS_TO_SERVICEDESK_AGENTS?: boolean;
     ATLASSIAN_API_URL?: string;
     ATLASSIAN_USERNAME?: string;
@@ -6551,8 +6648,8 @@ export type Customer = {
      */
     project_slug_template?: string | null;
     readonly payment_profiles: Array<PaymentProfile>;
-    readonly customer_credit: number | null;
-    readonly customer_unallocated_credit: number | null;
+    readonly customer_credit: string | null;
+    readonly customer_unallocated_credit: string | null;
     readonly has_affiliate_links: boolean;
     readonly is_service_provider: boolean;
     readonly service_provider: string | null;
@@ -6683,6 +6780,12 @@ export type CustomerContactUpdateRequest = {
      * Comma-separated list of notification email addresses
      */
     notification_emails?: string;
+};
+
+export type CustomerContext = {
+    caller: CallerContext;
+    resource: ResourceContext | null;
+    recent_tickets: Array<RecentTicket>;
 };
 
 export type CustomerCredit = {
@@ -8027,6 +8130,13 @@ export type EndpointUuidRequest = {
 
 export type EntityTypeEnum = 'company' | 'startup' | 'nonprofit' | 'government' | 'other';
 
+export type EscalateIssueRequest = {
+    /**
+     * Reason for escalation.
+     */
+    reason: string;
+};
+
 export type EthertypeEnum = 'IPv4' | 'IPv6';
 
 export type Event = {
@@ -8037,6 +8147,60 @@ export type Event = {
     readonly context: {
         [key: string]: unknown;
     };
+};
+
+export type EventConsumer = {
+    readonly uuid: string;
+    /**
+     * List of observable object types this consumer receives. Empty list means all types.
+     */
+    readonly object_types: {
+        [key: string]: unknown;
+    };
+    readonly scopes: Array<EventConsumerScopeOutput>;
+    readonly is_global: boolean;
+    /**
+     * RabbitMQ username (UUID hex) for the consumer queue.
+     */
+    readonly rmq_username: string;
+    readonly queue_created: boolean;
+    readonly created: string;
+    readonly modified: string;
+};
+
+export type EventConsumerRegistrationRequest = {
+    /**
+     * Observable object types to receive. An explicit empty list means all types; omitting the field leaves an existing consumer's filter unchanged.
+     */
+    object_types?: Array<ObservableObjectTypeEnum>;
+    /**
+     * Entity bindings this consumer receives events for — e.g. several projects, a customer, an offering. You may only bind to an entity you hold a role on. AN EMPTY LIST MEANS GLOBAL (every event, including all-user PII) and is staff/support only.
+     */
+    scopes?: Array<AllowedScopeInputRequest>;
+};
+
+export type EventConsumerRegistrationResponse = {
+    /**
+     * RabbitMQ username (UUID hex) for STOMP authentication
+     */
+    rmq_username: string;
+    /**
+     * RabbitMQ queue name (consumer_{consumer_uuid})
+     */
+    queue_name: string;
+    /**
+     * RabbitMQ virtual host (user UUID)
+     */
+    vhost: string;
+    /**
+     * Object types routed to this queue
+     */
+    observable_object_types: Array<string>;
+};
+
+export type EventConsumerScopeOutput = {
+    readonly type: string | null;
+    readonly uuid: string | null;
 };
 
 export type EventCount = {
@@ -8984,7 +9148,7 @@ export type GroupInvitation = {
     /**
      * Profile image of the user who created this invitation
      */
-    readonly created_by_image: string;
+    readonly created_by_image: string | null;
     readonly url: string;
     readonly uuid: string;
     /**
@@ -9177,6 +9341,31 @@ export type GrowthPeriodEnum = 'weekly' | 'monthly';
 export type GuestOsEnum = 'DOS' | 'WIN_31' | 'WIN_95' | 'WIN_98' | 'WIN_ME' | 'WIN_NT' | 'WIN_2000_PRO' | 'WIN_2000_SERV' | 'WIN_2000_ADV_SERV' | 'WIN_XP_HOME' | 'WIN_XP_PRO' | 'WIN_XP_PRO_64' | 'WIN_NET_WEB' | 'WIN_NET_STANDARD' | 'WIN_NET_ENTERPRISE' | 'WIN_NET_DATACENTER' | 'WIN_NET_BUSINESS' | 'WIN_NET_STANDARD_64' | 'WIN_NET_ENTERPRISE_64' | 'WIN_LONGHORN' | 'WIN_LONGHORN_64' | 'WIN_NET_DATACENTER_64' | 'WIN_VISTA' | 'WIN_VISTA_64' | 'WINDOWS_7' | 'WINDOWS_7_64' | 'WINDOWS_7_SERVER_64' | 'WINDOWS_8' | 'WINDOWS_8_64' | 'WINDOWS_8_SERVER_64' | 'WINDOWS_9' | 'WINDOWS_9_64' | 'WINDOWS_9_SERVER_64' | 'WINDOWS_HYPERV' | 'FREEBSD' | 'FREEBSD_64' | 'REDHAT' | 'RHEL_2' | 'RHEL_3' | 'RHEL_3_64' | 'RHEL_4' | 'RHEL_4_64' | 'RHEL_5' | 'RHEL_5_64' | 'RHEL_6' | 'RHEL_6_64' | 'RHEL_7' | 'RHEL_7_64' | 'CENTOS' | 'CENTOS_64' | 'CENTOS_6' | 'CENTOS_6_64' | 'CENTOS_7' | 'CENTOS_7_64' | 'ORACLE_LINUX' | 'ORACLE_LINUX_64' | 'ORACLE_LINUX_6' | 'ORACLE_LINUX_6_64' | 'ORACLE_LINUX_7' | 'ORACLE_LINUX_7_64' | 'SUSE' | 'SUSE_64' | 'SLES' | 'SLES_64' | 'SLES_10' | 'SLES_10_64' | 'SLES_11' | 'SLES_11_64' | 'SLES_12' | 'SLES_12_64' | 'NLD_9' | 'OES' | 'SJDS' | 'MANDRAKE' | 'MANDRIVA' | 'MANDRIVA_64' | 'TURBO_LINUX' | 'TURBO_LINUX_64' | 'UBUNTU' | 'UBUNTU_64' | 'DEBIAN_4' | 'DEBIAN_4_64' | 'DEBIAN_5' | 'DEBIAN_5_64' | 'DEBIAN_6' | 'DEBIAN_6_64' | 'DEBIAN_7' | 'DEBIAN_7_64' | 'DEBIAN_8' | 'DEBIAN_8_64' | 'DEBIAN_9' | 'DEBIAN_9_64' | 'DEBIAN_10' | 'DEBIAN_10_64' | 'ASIANUX_3' | 'ASIANUX_3_64' | 'ASIANUX_4' | 'ASIANUX_4_64' | 'ASIANUX_5_64' | 'ASIANUX_7_64' | 'OPENSUSE' | 'OPENSUSE_64' | 'FEDORA' | 'FEDORA_64' | 'COREOS_64' | 'VMWARE_PHOTON_64' | 'OTHER_24X_LINUX' | 'OTHER_24X_LINUX_64' | 'OTHER_26X_LINUX' | 'OTHER_26X_LINUX_64' | 'OTHER_3X_LINUX' | 'OTHER_3X_LINUX_64' | 'OTHER_LINUX' | 'GENERIC_LINUX' | 'OTHER_LINUX_64' | 'SOLARIS_6' | 'SOLARIS_7' | 'SOLARIS_8' | 'SOLARIS_9' | 'SOLARIS_10' | 'SOLARIS_10_64' | 'SOLARIS_11_64' | 'OS2' | 'ECOMSTATION' | 'ECOMSTATION_2' | 'NETWARE_4' | 'NETWARE_5' | 'NETWARE_6' | 'OPENSERVER_5' | 'OPENSERVER_6' | 'UNIXWARE_7' | 'DARWIN' | 'DARWIN_64' | 'DARWIN_10' | 'DARWIN_10_64' | 'DARWIN_11' | 'DARWIN_11_64' | 'DARWIN_12_64' | 'DARWIN_13_64' | 'DARWIN_14_64' | 'DARWIN_15_64' | 'DARWIN_16_64' | 'VMKERNEL' | 'VMKERNEL_5' | 'VMKERNEL_6' | 'VMKERNEL_65' | 'OTHER' | 'OTHER_64';
 
 export type GuestPowerStateEnum = 'RUNNING' | 'SHUTTING_DOWN' | 'RESETTING' | 'STANDBY' | 'NOT_RUNNING' | 'UNAVAILABLE';
+
+export type HelpdeskHealth = {
+    provider_name: string;
+    backend_type: string;
+    is_active: boolean;
+    health_status: string;
+    last_health_check: string | null;
+    failed_routing_count: number;
+};
+
+export type HelpdeskStats = {
+    total_open: number;
+    total_closed_this_month: number;
+    total_routed: number;
+    total_escalated: number;
+    sla_breach_count: number;
+    avg_first_response_hours: number | null;
+    avg_resolution_hours: number | null;
+    by_status: {
+        [key: string]: unknown;
+    };
+    by_priority: {
+        [key: string]: unknown;
+    };
+};
 
 export type Hypervisor = {
     readonly url: string;
@@ -9721,7 +9910,7 @@ export type Invitation = {
     /**
      * Profile image of the user who created this invitation
      */
-    readonly created_by_image: string;
+    readonly created_by_image: string | null;
     readonly url: string;
     readonly uuid: string;
     /**
@@ -10225,6 +10414,57 @@ export type Issue = {
      * Return order's resource name if the issue's resource is an Order.
      */
     readonly order_resource_name: string | null;
+    /**
+     * Deadline for first response from support staff.
+     */
+    readonly first_response_deadline: string | null;
+    /**
+     * Deadline for issue resolution.
+     */
+    readonly resolution_deadline: string | null;
+    /**
+     * Timestamp of first response from support staff.
+     */
+    readonly first_response_at: string | null;
+    /**
+     * Whether SLA has been breached for this issue.
+     */
+    readonly sla_breached: boolean;
+    readonly sla_status: string;
+    readonly parent_issue: string;
+    readonly provider_helpdesk: string;
+    /**
+     * Whether this issue has been escalated.
+     */
+    readonly is_escalated: boolean;
+    /**
+     * When the issue was escalated.
+     */
+    readonly escalated_at: string | null;
+    /**
+     * Reason for escalation.
+     */
+    readonly escalation_reason: string;
+    readonly is_routed: boolean;
+    readonly provider_ticket_info: {
+        [key: string]: unknown;
+    } | null;
+};
+
+export type IssueLink = {
+    readonly url: string;
+    readonly uuid: string;
+    source: string;
+    readonly source_key: string;
+    target: string;
+    readonly target_key: string;
+    link_type?: LinkTypeEnum;
+};
+
+export type IssueLinkRequest = {
+    source: string;
+    target: string;
+    link_type?: LinkTypeEnum;
 };
 
 export type IssueReference = {
@@ -10281,6 +10521,24 @@ export type IssueStatusCreateRequest = {
 };
 
 export type IssueStatusType = 0 | 1;
+
+export type IssueTag = {
+    readonly url: string;
+    readonly uuid: string;
+    name: string;
+    /**
+     * Hex color code, e.g. #FF0000.
+     */
+    color?: string;
+};
+
+export type IssueTagRequest = {
+    name: string;
+    /**
+     * Hex color code, e.g. #FF0000.
+     */
+    color?: string;
+};
 
 export type IssueTypeEnum = 'INFORMATIONAL' | 'SERVICE_REQUEST' | 'CHANGE_REQUEST' | 'INCIDENT';
 
@@ -10561,6 +10819,8 @@ export type LinkResourceResponse = {
 export type LinkToInvoiceRequest = {
     invoice: string;
 };
+
+export type LinkTypeEnum = 'related' | 'blocked_by' | 'duplicates';
 
 export type LiveKitOverviewResponse = {
     rooms: Array<LiveKitRoomSummary>;
@@ -13588,7 +13848,7 @@ export type NotifySystemEnum = 'AdminAnnouncement' | 'BroadcastMessage';
 
 export type NullEnum = never;
 
-export type ObservableObjectTypeEnum = 'order' | 'user_role' | 'resource' | 'offering_user' | 'importable_resources' | 'service_account' | 'course_account' | 'resource_periodic_limits' | 'offering_resources_sync';
+export type ObservableObjectTypeEnum = 'order' | 'user_role' | 'resource' | 'offering_user' | 'importable_resources' | 'service_account' | 'course_account' | 'resource_periodic_limits' | 'offering_resources_sync' | 'user_profile' | 'user_ssh_key' | 'user_lifecycle';
 
 export type ObtainAuthTokenRequest = {
     /**
@@ -18536,6 +18796,16 @@ export type PatchedCallWorkflowStepRequest = {
     criteria?: Array<WorkflowCriterionRequest>;
 };
 
+export type PatchedCannedResponseRequest = {
+    name?: string;
+    /**
+     * Template text. Supports Django template syntax.
+     */
+    text?: string;
+    category?: string;
+    is_active?: boolean;
+};
+
 export type PatchedCategoryColumnRequest = {
     /**
      * Index allows to reorder columns.
@@ -18907,6 +19177,12 @@ export type PatchedInvoiceItemUpdateRequest = {
     end?: string;
 };
 
+export type PatchedIssueLinkRequest = {
+    source?: string;
+    target?: string;
+    link_type?: LinkTypeEnum;
+};
+
 export type PatchedIssueRequest = {
     summary?: string;
     description?: string;
@@ -18923,6 +19199,14 @@ export type PatchedIssueStatusRequest = {
      */
     name?: string;
     type?: IssueStatusType;
+};
+
+export type PatchedIssueTagRequest = {
+    name?: string;
+    /**
+     * Hex color code, e.g. #FF0000.
+     */
+    color?: string;
 };
 
 export type PatchedKeycloakUserGroupMembershipRequest = {
@@ -19721,6 +20005,37 @@ export type PatchedProtectedRoundRequest = {
     review_duration_in_days?: number;
 };
 
+export type PatchedProviderCannedResponseRequest = {
+    name?: string;
+    provider_helpdesk?: string;
+    /**
+     * Template text. Supports Django template syntax.
+     */
+    text?: string;
+    category?: string;
+};
+
+export type PatchedProviderHelpdeskRequest = {
+    service_provider?: string;
+    backend_type?: BackendTypeEnum;
+    /**
+     * Backend-specific configuration.
+     */
+    settings?: {
+        [key: string]: unknown;
+    };
+    is_active?: boolean;
+    webhook_secret?: string;
+    /**
+     * Primary email for notifications.
+     */
+    notification_email?: string;
+    notify_on_new_ticket?: boolean;
+    notify_on_comment?: boolean;
+    notify_on_escalation?: boolean;
+    notify_on_sla_warning?: boolean;
+};
+
 export type PatchedProviderPlanDetailsRequest = {
     name?: string;
     description?: string;
@@ -19736,6 +20051,35 @@ export type PatchedProviderPlanDetailsRequest = {
     unit_price?: string;
     unit?: BillingUnit;
     backend_id?: string;
+};
+
+export type PatchedProviderSupportUserRequest = {
+    user?: string;
+    provider_helpdesk?: string;
+    role?: ProviderSupportUserRoleEnum;
+    is_active?: boolean;
+    /**
+     * List of skill tags for routing.
+     */
+    skills?: {
+        [key: string]: unknown;
+    };
+    /**
+     * Maximum number of open tickets this user can handle.
+     */
+    max_open_tickets?: number;
+};
+
+export type PatchedProviderTicketRequest = {
+    /**
+     * When the issue was escalated.
+     */
+    escalated_at?: string | null;
+    /**
+     * Organization
+     */
+    customer?: string | null;
+    project?: string | null;
 };
 
 export type PatchedQuestionAdminRequest = {
@@ -20216,6 +20560,20 @@ export type PatchedRuleRequest = {
     };
 };
 
+export type PatchedSavedFilterRequest = {
+    name?: string;
+    /**
+     * Saved filter parameters as JSON.
+     */
+    filter_params?: {
+        [key: string]: unknown;
+    };
+    /**
+     * If True, visible to all staff/support users.
+     */
+    is_shared?: boolean;
+};
+
 export type PatchedScienceDomainRequest = {
     /**
      * Domain code (e.g. '1'). Auto-derived if left blank.
@@ -20584,13 +20942,13 @@ export type PaymentProfile = {
 export type PaymentProfileAttributes = {
     end_date?: string;
     agreement_number?: string;
-    contract_sum?: number;
+    contract_sum?: string;
 };
 
 export type PaymentProfileAttributesRequest = {
     end_date?: string;
     agreement_number?: string;
-    contract_sum?: number;
+    contract_sum?: string;
 };
 
 export type PaymentProfileRequest = {
@@ -20719,8 +21077,8 @@ export type PermissionRequest = {
     readonly created_by_full_name: string;
     readonly created_by_username: string;
     readonly created_by_email: string;
-    readonly reviewed_by_full_name: string;
-    readonly reviewed_by_username: string;
+    readonly reviewed_by_full_name: string | null;
+    readonly reviewed_by_username: string | null;
     /**
      * Timestamp when the review was completed
      */
@@ -21274,7 +21632,7 @@ export type ProjectCredit = {
     readonly customer_slug: string;
     readonly customer_uuid: string;
     readonly customer_credit: string;
-    readonly allocated_customer_credit: number;
+    readonly allocated_customer_credit: string | null;
     readonly consumption_last_month: number;
     readonly offerings: Array<NestedPublicOffering>;
     end_date?: string | null;
@@ -22419,6 +22777,40 @@ export type ProtectedRoundRequest = {
     review_duration_in_days?: number;
 };
 
+export type ProviderAssignRequest = {
+    provider_support_user: string;
+};
+
+export type ProviderCannedResponse = {
+    readonly url: string;
+    readonly uuid: string;
+    name: string;
+    provider_helpdesk: string;
+    /**
+     * Template text. Supports Django template syntax.
+     */
+    text: string;
+    category?: string;
+    readonly usage_count: number;
+    readonly created: string;
+    readonly modified: string;
+};
+
+export type ProviderCannedResponseRequest = {
+    name: string;
+    provider_helpdesk: string;
+    /**
+     * Template text. Supports Django template syntax.
+     */
+    text: string;
+    category?: string;
+};
+
+export type ProviderCommentRequest = {
+    description: string;
+    is_public?: boolean;
+};
+
 export type ProviderCustomerMonthly = {
     month: string;
     customer_count: number;
@@ -22457,6 +22849,56 @@ export type ProviderCustomerTopRevenue = {
     customer_uuid: string;
     customer_name: string;
     revenue: string | null;
+};
+
+export type ProviderHelpdesk = {
+    readonly url: string;
+    readonly uuid: string;
+    service_provider: string;
+    readonly service_provider_name: string;
+    backend_type?: BackendTypeEnum;
+    /**
+     * Backend-specific configuration.
+     */
+    settings?: {
+        [key: string]: unknown;
+    };
+    is_active?: boolean;
+    webhook_secret?: string;
+    /**
+     * Primary email for notifications.
+     */
+    notification_email?: string;
+    notify_on_new_ticket?: boolean;
+    notify_on_comment?: boolean;
+    notify_on_escalation?: boolean;
+    notify_on_sla_warning?: boolean;
+    readonly health_status: string;
+    readonly last_health_check: string | null;
+    readonly failed_routing_count: number;
+    readonly created: string;
+    readonly modified: string;
+};
+
+export type ProviderHelpdeskRequest = {
+    service_provider: string;
+    backend_type?: BackendTypeEnum;
+    /**
+     * Backend-specific configuration.
+     */
+    settings?: {
+        [key: string]: unknown;
+    };
+    is_active?: boolean;
+    webhook_secret?: string;
+    /**
+     * Primary email for notifications.
+     */
+    notification_email?: string;
+    notify_on_new_ticket?: boolean;
+    notify_on_comment?: boolean;
+    notify_on_escalation?: boolean;
+    notify_on_sla_warning?: boolean;
 };
 
 export type ProviderOffering = {
@@ -22811,6 +23253,17 @@ export type ProviderResourceTopOffering = {
     count: number;
 };
 
+export type ProviderStats = {
+    total_open: number;
+    total_resolved: number;
+    total_escalated: number;
+    sla_breach_count: number;
+    avg_resolution_hours: number | null;
+    by_status: {
+        [key: string]: unknown;
+    };
+};
+
 export type ProviderSummary = {
     resources: {
         [key: string]: ResourceClassSummary;
@@ -22818,11 +23271,120 @@ export type ProviderSummary = {
     traits: Array<string>;
 };
 
+export type ProviderSupportUser = {
+    readonly url: string;
+    readonly uuid: string;
+    user: string;
+    readonly user_full_name: string;
+    /**
+     * Email address
+     */
+    readonly user_email: string;
+    provider_helpdesk: string;
+    role?: ProviderSupportUserRoleEnum;
+    is_active?: boolean;
+    /**
+     * List of skill tags for routing.
+     */
+    skills?: {
+        [key: string]: unknown;
+    };
+    /**
+     * Maximum number of open tickets this user can handle.
+     */
+    max_open_tickets?: number;
+    readonly open_ticket_count: number;
+    readonly has_capacity: boolean;
+    readonly created: string;
+    readonly modified: string;
+};
+
+export type ProviderSupportUserRequest = {
+    user: string;
+    provider_helpdesk: string;
+    role?: ProviderSupportUserRoleEnum;
+    is_active?: boolean;
+    /**
+     * List of skill tags for routing.
+     */
+    skills?: {
+        [key: string]: unknown;
+    };
+    /**
+     * Maximum number of open tickets this user can handle.
+     */
+    max_open_tickets?: number;
+};
+
+export type ProviderSupportUserRoleEnum = 'agent' | 'manager';
+
 export type ProviderTeamUser = {
     user_uuid: string;
     username: string;
     full_name: string;
     role: string | null;
+};
+
+export type ProviderTicket = {
+    readonly url: string;
+    readonly uuid: string;
+    readonly key: string;
+    readonly summary: string;
+    readonly description: string;
+    readonly type: string;
+    readonly status: string;
+    readonly priority: string;
+    readonly created: string;
+    readonly modified: string;
+    readonly parent_issue_key: string;
+    readonly parent_issue_uuid: string;
+    /**
+     * Whether this issue has been escalated.
+     */
+    readonly is_escalated: boolean;
+    /**
+     * When the issue was escalated.
+     */
+    escalated_at?: string | null;
+    readonly provider_assignee: string | null;
+    readonly provider_assignee_name: string;
+    /**
+     * Deadline for first response from support staff.
+     */
+    readonly first_response_deadline: string | null;
+    /**
+     * Deadline for issue resolution.
+     */
+    readonly resolution_deadline: string | null;
+    /**
+     * Timestamp of first response from support staff.
+     */
+    readonly first_response_at: string | null;
+    /**
+     * Whether SLA has been breached for this issue.
+     */
+    readonly sla_breached: boolean;
+    /**
+     * Organization
+     */
+    customer?: string | null;
+    readonly customer_uuid: string | null;
+    readonly customer_name: string | null;
+    project?: string | null;
+    readonly project_uuid: string | null;
+    readonly project_name: string | null;
+};
+
+export type ProviderTicketRequest = {
+    /**
+     * When the issue was escalated.
+     */
+    escalated_at?: string | null;
+    /**
+     * Organization
+     */
+    customer?: string | null;
+    project?: string | null;
 };
 
 export type ProviderUser = {
@@ -24590,6 +25152,14 @@ export type ReassignItemResponse = {
     new_batch_uuid: string;
 };
 
+export type RecentTicket = {
+    uuid: string;
+    key: string;
+    summary: string;
+    status: string;
+    created: string;
+};
+
 export type ReconcileRequestRequest = {
     year: number;
     month: number;
@@ -25257,6 +25827,11 @@ export type ResourceBackendMetadataRequest = {
 export type ResourceClassSummary = {
     used: number;
     capacity: number;
+};
+
+export type ResourceContext = {
+    name: string;
+    type: string;
 };
 
 export type ResourceDemandStat = {
@@ -27191,6 +27766,38 @@ export type SaveSettingsResponse = {
     message: string;
 };
 
+export type SavedFilter = {
+    readonly url: string;
+    readonly uuid: string;
+    name: string;
+    /**
+     * Saved filter parameters as JSON.
+     */
+    filter_params?: {
+        [key: string]: unknown;
+    };
+    /**
+     * If True, visible to all staff/support users.
+     */
+    is_shared?: boolean;
+    readonly created: string;
+    readonly modified: string;
+};
+
+export type SavedFilterRequest = {
+    name: string;
+    /**
+     * Saved filter parameters as JSON.
+     */
+    filter_params?: {
+        [key: string]: unknown;
+    };
+    /**
+     * If True, visible to all staff/support users.
+     */
+    is_shared?: boolean;
+};
+
 export type ScheduledAgentTask = {
     id: string;
     name: string;
@@ -28911,6 +29518,14 @@ export type TargetUser = {
     full_name: string;
 };
 
+export type TeamWorkload = {
+    uuid: string;
+    user_full_name: string;
+    open_ticket_count: number;
+    max_open_tickets: number;
+    has_capacity: boolean;
+};
+
 export type TechnicalAssessmentAnswer = {
     question_uuid: string;
     question_description: string;
@@ -30340,7 +30955,7 @@ export type VisibleInvitationDetails = {
     /**
      * Profile image of the user who created this invitation
      */
-    readonly created_by_image: string;
+    readonly created_by_image: string | null;
     /**
      * Invitation link will be sent to this email. Note that user can accept invitation with different email.
      */
@@ -30782,6 +31397,20 @@ export type WebHookRequest = {
     event_groups?: Array<EventGroupsEnum>;
     destination_url: string;
     content_type?: WebHookContentTypeEnum;
+};
+
+export type WebhookPayload = {
+    event_type: string;
+    issue_backend_id?: string;
+    comment?: string;
+    new_status?: string;
+};
+
+export type WebhookPayloadRequest = {
+    event_type: string;
+    issue_backend_id?: string;
+    comment?: string;
+    new_status?: string;
 };
 
 export type WidgetEnum = 'csv' | 'filesize' | 'attached_instance';
@@ -32096,6 +32725,8 @@ export type ConstanceSettingsRequestForm = {
     FULL_PAGE_TITLE?: string;
     PROJECT_END_DATE_MANDATORY?: boolean;
     AFFILIATION_REQUIRED_AT_PROJECT_CREATION?: boolean;
+    PROJECT_NAME_REGEX?: string;
+    PROJECT_NAME_REGEX_ERROR_MESSAGE?: string;
     ENABLE_ORDER_START_DATE?: boolean;
     BRAND_COLOR?: string;
     HERO_LINK_LABEL?: string;
@@ -32129,6 +32760,12 @@ export type ConstanceSettingsRequestForm = {
     WALDUR_SUPPORT_ENABLED?: boolean;
     WALDUR_SUPPORT_ACTIVE_BACKEND_TYPE?: WaldursupportactivebackendtypeEnum;
     WALDUR_SUPPORT_DISPLAY_REQUEST_TYPE?: boolean;
+    WALDUR_SUPPORT_PROVIDER_ROUTING_ENABLED?: boolean;
+    WALDUR_SUPPORT_AUTO_ASSIGN?: boolean;
+    WALDUR_SUPPORT_AUTO_ASSIGN_STRATEGY?: string;
+    WALDUR_SUPPORT_SLA_ENABLED?: boolean;
+    WALDUR_SUPPORT_SLA_RESPONSE_HOURS?: number;
+    WALDUR_SUPPORT_SLA_RESOLUTION_HOURS?: number;
     ATLASSIAN_MAP_WALDUR_USERS_TO_SERVICEDESK_AGENTS?: boolean;
     ATLASSIAN_API_URL?: string;
     ATLASSIAN_USERNAME?: string;
@@ -32405,6 +33042,8 @@ export type ConstanceSettingsRequestMultipart = {
     FULL_PAGE_TITLE?: string;
     PROJECT_END_DATE_MANDATORY?: boolean;
     AFFILIATION_REQUIRED_AT_PROJECT_CREATION?: boolean;
+    PROJECT_NAME_REGEX?: string;
+    PROJECT_NAME_REGEX_ERROR_MESSAGE?: string;
     ENABLE_ORDER_START_DATE?: boolean;
     BRAND_COLOR?: string;
     HERO_LINK_LABEL?: string;
@@ -32438,6 +33077,12 @@ export type ConstanceSettingsRequestMultipart = {
     WALDUR_SUPPORT_ENABLED?: boolean;
     WALDUR_SUPPORT_ACTIVE_BACKEND_TYPE?: WaldursupportactivebackendtypeEnum;
     WALDUR_SUPPORT_DISPLAY_REQUEST_TYPE?: boolean;
+    WALDUR_SUPPORT_PROVIDER_ROUTING_ENABLED?: boolean;
+    WALDUR_SUPPORT_AUTO_ASSIGN?: boolean;
+    WALDUR_SUPPORT_AUTO_ASSIGN_STRATEGY?: string;
+    WALDUR_SUPPORT_SLA_ENABLED?: boolean;
+    WALDUR_SUPPORT_SLA_RESPONSE_HOURS?: number;
+    WALDUR_SUPPORT_SLA_RESOLUTION_HOURS?: number;
     ATLASSIAN_MAP_WALDUR_USERS_TO_SERVICEDESK_AGENTS?: boolean;
     ATLASSIAN_API_URL?: string;
     ATLASSIAN_USERNAME?: string;
@@ -33435,6 +34080,8 @@ export type ProviderRequestedResourceOEnum = '-created' | '-offering__name' | '-
 export type ProposalReviewOEnum = '-created' | '-state' | 'created' | 'state';
 
 export type InvoiceItemOEnum1 = '-invoice_customer_name' | '-project_name' | '-resource_offering_name' | '-unit_price' | 'invoice_customer_name' | 'project_name' | 'resource_offering_name' | 'unit_price';
+
+export type ProviderTicketOEnum = '-created' | '-modified' | '-priority' | '-status' | 'created' | 'modified' | 'priority' | 'status';
 
 export type RancherApplicationFieldEnum = 'access_url' | 'answers' | 'backend_id' | 'catalog_name' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'external_url' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'namespace' | 'namespace_name' | 'project' | 'project_name' | 'project_uuid' | 'rancher_project' | 'rancher_project_name' | 'resource_type' | 'runtime_state' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'template' | 'template_name' | 'url' | 'uuid' | 'version';
 
@@ -40698,9 +41345,9 @@ export type CallManagingOrganisationsListUsersListData = {
          */
         page_size?: number;
         /**
-         * Role UUID or name
+         * Role UUID or name. Repeat to filter by several roles.
          */
-        role?: string;
+        role?: Array<string>;
         /**
          * Search string for user
          */
@@ -40762,9 +41409,9 @@ export type CallManagingOrganisationsListUsersCountData = {
          */
         page_size?: number;
         /**
-         * Role UUID or name
+         * Role UUID or name. Repeat to filter by several roles.
          */
-        role?: string;
+        role?: Array<string>;
         /**
          * Search string for user
          */
@@ -44551,9 +45198,9 @@ export type CustomersListUsersListData = {
          */
         page_size?: number;
         /**
-         * Role UUID or name
+         * Role UUID or name. Repeat to filter by several roles.
          */
-        role?: string;
+        role?: Array<string>;
         /**
          * Search string for user
          */
@@ -44615,9 +45262,9 @@ export type CustomersListUsersCountData = {
          */
         page_size?: number;
         /**
-         * Role UUID or name
+         * Role UUID or name. Repeat to filter by several roles.
          */
-        role?: string;
+        role?: Array<string>;
         /**
          * Search string for user
          */
@@ -45987,6 +46634,83 @@ export type EmailLogsRetrieveResponses = {
 
 export type EmailLogsRetrieveResponse = EmailLogsRetrieveResponses[keyof EmailLogsRetrieveResponses];
 
+export type EventConsumersListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/event-consumers/';
+};
+
+export type EventConsumersListResponses = {
+    200: Array<EventConsumer>;
+};
+
+export type EventConsumersListResponse = EventConsumersListResponses[keyof EventConsumersListResponses];
+
+export type EventConsumersCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/event-consumers/';
+};
+
+export type EventConsumersCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type EventConsumersDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/event-consumers/{uuid}/';
+};
+
+export type EventConsumersDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type EventConsumersDestroyResponse = EventConsumersDestroyResponses[keyof EventConsumersDestroyResponses];
+
+export type EventConsumersRegisterData = {
+    body?: EventConsumerRegistrationRequest;
+    path?: never;
+    query?: never;
+    url: '/api/event-consumers/register/';
+};
+
+export type EventConsumersRegisterResponses = {
+    200: EventConsumerRegistrationResponse;
+    201: EventConsumerRegistrationResponse;
+};
+
+export type EventConsumersRegisterResponse = EventConsumersRegisterResponses[keyof EventConsumersRegisterResponses];
+
 export type EventSubscriptionQueuesListData = {
     body?: never;
     path?: never;
@@ -46245,6 +46969,10 @@ export type EventsListData = {
          */
         project_uuid?: string;
         /**
+         * Filter events related to a user: Feed scope, actor (context.user_uuid), or affected user (context.affected_user_uuid). Combined with OR. Staff/support may target any user; others only themselves.
+         */
+        related_user_uuid?: string;
+        /**
          * Filter by scope URL.
          */
         scope?: string;
@@ -46300,6 +47028,10 @@ export type EventsCountData = {
          */
         project_uuid?: string;
         /**
+         * Filter events related to a user: Feed scope, actor (context.user_uuid), or affected user (context.affected_user_uuid). Combined with OR. Staff/support may target any user; others only themselves.
+         */
+        related_user_uuid?: string;
+        /**
          * Filter by scope URL.
          */
         scope?: string;
@@ -46339,6 +47071,10 @@ export type EventsStatsListData = {
          */
         page_size?: number;
         /**
+         * Filter events related to a user: Feed scope, actor (context.user_uuid), or affected user (context.affected_user_uuid). Combined with OR. Staff/support may target any user; others only themselves.
+         */
+        related_user_uuid?: string;
+        /**
          * Filter by scope URL.
          */
         scope?: string;
@@ -46372,6 +47108,10 @@ export type EventsStatsCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Filter events related to a user: Feed scope, actor (context.user_uuid), or affected user (context.affected_user_uuid). Combined with OR. Staff/support may target any user; others only themselves.
+         */
+        related_user_uuid?: string;
         /**
          * Filter by scope URL.
          */
@@ -47185,6 +47925,32 @@ export type GoogleAuthCallbackCountResponses = {
      */
     200: unknown;
 };
+
+export type HelpdeskHealthListData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/helpdesk-health/';
+};
+
+export type HelpdeskHealthListResponses = {
+    200: Array<HelpdeskHealth>;
+};
+
+export type HelpdeskHealthListResponse = HelpdeskHealthListResponses[keyof HelpdeskHealthListResponses];
+
+export type HelpdeskStatsRetrieveData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/helpdesk-stats/';
+};
+
+export type HelpdeskStatsRetrieveResponses = {
+    200: HelpdeskStats;
+};
+
+export type HelpdeskStatsRetrieveResponse = HelpdeskStatsRetrieveResponses[keyof HelpdeskStatsRetrieveResponses];
 
 export type HooksListData = {
     body?: never;
@@ -59938,9 +60704,9 @@ export type MarketplaceProviderOfferingsListUsersListData = {
          */
         page_size?: number;
         /**
-         * Role UUID or name
+         * Role UUID or name. Repeat to filter by several roles.
          */
-        role?: string;
+        role?: Array<string>;
         /**
          * Search string for user
          */
@@ -60002,9 +60768,9 @@ export type MarketplaceProviderOfferingsListUsersCountData = {
          */
         page_size?: number;
         /**
-         * Role UUID or name
+         * Role UUID or name. Repeat to filter by several roles.
          */
-        role?: string;
+        role?: Array<string>;
         /**
          * Search string for user
          */
@@ -61311,9 +62077,9 @@ export type MarketplaceProviderResourceProjectsListUsersListData = {
          */
         page_size?: number;
         /**
-         * Role UUID or name
+         * Role UUID or name. Repeat to filter by several roles.
          */
-        role?: string;
+        role?: Array<string>;
         /**
          * Search string for user
          */
@@ -61375,9 +62141,9 @@ export type MarketplaceProviderResourceProjectsListUsersCountData = {
          */
         page_size?: number;
         /**
-         * Role UUID or name
+         * Role UUID or name. Repeat to filter by several roles.
          */
-        role?: string;
+        role?: Array<string>;
         /**
          * Search string for user
          */
@@ -62309,9 +63075,9 @@ export type MarketplaceProviderResourcesListUsersListData = {
          */
         page_size?: number;
         /**
-         * Role UUID or name
+         * Role UUID or name. Repeat to filter by several roles.
          */
-        role?: string;
+        role?: Array<string>;
         /**
          * Search string for user
          */
@@ -62373,9 +63139,9 @@ export type MarketplaceProviderResourcesListUsersCountData = {
          */
         page_size?: number;
         /**
-         * Role UUID or name
+         * Role UUID or name. Repeat to filter by several roles.
          */
-        role?: string;
+        role?: Array<string>;
         /**
          * Search string for user
          */
@@ -64054,9 +64820,9 @@ export type MarketplaceResourceProjectsListUsersListData = {
          */
         page_size?: number;
         /**
-         * Role UUID or name
+         * Role UUID or name. Repeat to filter by several roles.
          */
-        role?: string;
+        role?: Array<string>;
         /**
          * Search string for user
          */
@@ -64118,9 +64884,9 @@ export type MarketplaceResourceProjectsListUsersCountData = {
          */
         page_size?: number;
         /**
-         * Role UUID or name
+         * Role UUID or name. Repeat to filter by several roles.
          */
-        role?: string;
+        role?: Array<string>;
         /**
          * Search string for user
          */
@@ -65037,9 +65803,9 @@ export type MarketplaceResourcesListUsersListData = {
          */
         page_size?: number;
         /**
-         * Role UUID or name
+         * Role UUID or name. Repeat to filter by several roles.
          */
-        role?: string;
+        role?: Array<string>;
         /**
          * Search string for user
          */
@@ -65101,9 +65867,9 @@ export type MarketplaceResourcesListUsersCountData = {
          */
         page_size?: number;
         /**
-         * Role UUID or name
+         * Role UUID or name. Repeat to filter by several roles.
          */
-        role?: string;
+        role?: Array<string>;
         /**
          * Search string for user
          */
@@ -69198,9 +69964,9 @@ export type MarketplaceServiceProvidersListUsersListData = {
          */
         page_size?: number;
         /**
-         * Role UUID or name
+         * Role UUID or name. Repeat to filter by several roles.
          */
-        role?: string;
+        role?: Array<string>;
         /**
          * Search string for user
          */
@@ -69262,9 +70028,9 @@ export type MarketplaceServiceProvidersListUsersCountData = {
          */
         page_size?: number;
         /**
-         * Role UUID or name
+         * Role UUID or name. Repeat to filter by several roles.
          */
-        role?: string;
+        role?: Array<string>;
         /**
          * Search string for user
          */
@@ -69585,6 +70351,22 @@ export type MarketplaceSiteAgentIdentitiesRegisterEventSubscriptionResponses = {
 };
 
 export type MarketplaceSiteAgentIdentitiesRegisterEventSubscriptionResponse = MarketplaceSiteAgentIdentitiesRegisterEventSubscriptionResponses[keyof MarketplaceSiteAgentIdentitiesRegisterEventSubscriptionResponses];
+
+export type MarketplaceSiteAgentIdentitiesRegisterQueueData = {
+    body?: AgentQueueRegistrationRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-site-agent-identities/{uuid}/register_queue/';
+};
+
+export type MarketplaceSiteAgentIdentitiesRegisterQueueResponses = {
+    200: AgentQueueRegistrationResponse;
+    201: AgentQueueRegistrationResponse;
+};
+
+export type MarketplaceSiteAgentIdentitiesRegisterQueueResponse = MarketplaceSiteAgentIdentitiesRegisterQueueResponses[keyof MarketplaceSiteAgentIdentitiesRegisterQueueResponses];
 
 export type MarketplaceSiteAgentIdentitiesRegisterServiceData = {
     body: AgentServiceCreateRequest;
@@ -77795,9 +78577,9 @@ export type OpenportalUnmanagedProjectsListUsersListData = {
          */
         page_size?: number;
         /**
-         * Role UUID or name
+         * Role UUID or name. Repeat to filter by several roles.
          */
-        role?: string;
+        role?: Array<string>;
         /**
          * Search string for user
          */
@@ -77859,9 +78641,9 @@ export type OpenportalUnmanagedProjectsListUsersCountData = {
          */
         page_size?: number;
         /**
-         * Role UUID or name
+         * Role UUID or name. Repeat to filter by several roles.
          */
-        role?: string;
+        role?: Array<string>;
         /**
          * Search string for user
          */
@@ -88179,9 +88961,9 @@ export type ProjectsListUsersListData = {
          */
         page_size?: number;
         /**
-         * Role UUID or name
+         * Role UUID or name. Repeat to filter by several roles.
          */
-        role?: string;
+        role?: Array<string>;
         /**
          * Search string for user
          */
@@ -88243,9 +89025,9 @@ export type ProjectsListUsersCountData = {
          */
         page_size?: number;
         /**
-         * Role UUID or name
+         * Role UUID or name. Repeat to filter by several roles.
          */
-        role?: string;
+        role?: Array<string>;
         /**
          * Search string for user
          */
@@ -89057,9 +89839,9 @@ export type ProposalProposalsListUsersListData = {
          */
         page_size?: number;
         /**
-         * Role UUID or name
+         * Role UUID or name. Repeat to filter by several roles.
          */
-        role?: string;
+        role?: Array<string>;
         /**
          * Search string for user
          */
@@ -89121,9 +89903,9 @@ export type ProposalProposalsListUsersCountData = {
          */
         page_size?: number;
         /**
-         * Role UUID or name
+         * Role UUID or name. Repeat to filter by several roles.
          */
-        role?: string;
+        role?: Array<string>;
         /**
          * Search string for user
          */
@@ -90065,9 +90847,9 @@ export type ProposalProtectedCallsListUsersListData = {
          */
         page_size?: number;
         /**
-         * Role UUID or name
+         * Role UUID or name. Repeat to filter by several roles.
          */
-        role?: string;
+        role?: Array<string>;
         /**
          * Search string for user
          */
@@ -90129,9 +90911,9 @@ export type ProposalProtectedCallsListUsersCountData = {
          */
         page_size?: number;
         /**
-         * Role UUID or name
+         * Role UUID or name. Repeat to filter by several roles.
          */
-        role?: string;
+        role?: Array<string>;
         /**
          * Search string for user
          */
@@ -91636,6 +92418,292 @@ export type ProposalReviewsSubmitResponses = {
     200: unknown;
 };
 
+export type ProviderCannedResponsesListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        category?: string;
+        name?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        provider_helpdesk_uuid?: string;
+    };
+    url: '/api/provider-canned-responses/';
+};
+
+export type ProviderCannedResponsesListResponses = {
+    200: Array<ProviderCannedResponse>;
+};
+
+export type ProviderCannedResponsesListResponse = ProviderCannedResponsesListResponses[keyof ProviderCannedResponsesListResponses];
+
+export type ProviderCannedResponsesCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        category?: string;
+        name?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        provider_helpdesk_uuid?: string;
+    };
+    url: '/api/provider-canned-responses/';
+};
+
+export type ProviderCannedResponsesCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type ProviderCannedResponsesCreateData = {
+    body: ProviderCannedResponseRequest;
+    path?: never;
+    query?: never;
+    url: '/api/provider-canned-responses/';
+};
+
+export type ProviderCannedResponsesCreateResponses = {
+    201: ProviderCannedResponse;
+};
+
+export type ProviderCannedResponsesCreateResponse = ProviderCannedResponsesCreateResponses[keyof ProviderCannedResponsesCreateResponses];
+
+export type ProviderCannedResponsesDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/provider-canned-responses/{uuid}/';
+};
+
+export type ProviderCannedResponsesDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type ProviderCannedResponsesDestroyResponse = ProviderCannedResponsesDestroyResponses[keyof ProviderCannedResponsesDestroyResponses];
+
+export type ProviderCannedResponsesRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/provider-canned-responses/{uuid}/';
+};
+
+export type ProviderCannedResponsesRetrieveResponses = {
+    200: ProviderCannedResponse;
+};
+
+export type ProviderCannedResponsesRetrieveResponse = ProviderCannedResponsesRetrieveResponses[keyof ProviderCannedResponsesRetrieveResponses];
+
+export type ProviderCannedResponsesPartialUpdateData = {
+    body?: PatchedProviderCannedResponseRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/provider-canned-responses/{uuid}/';
+};
+
+export type ProviderCannedResponsesPartialUpdateResponses = {
+    200: ProviderCannedResponse;
+};
+
+export type ProviderCannedResponsesPartialUpdateResponse = ProviderCannedResponsesPartialUpdateResponses[keyof ProviderCannedResponsesPartialUpdateResponses];
+
+export type ProviderCannedResponsesUpdateData = {
+    body: ProviderCannedResponseRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/provider-canned-responses/{uuid}/';
+};
+
+export type ProviderCannedResponsesUpdateResponses = {
+    200: ProviderCannedResponse;
+};
+
+export type ProviderCannedResponsesUpdateResponse = ProviderCannedResponsesUpdateResponses[keyof ProviderCannedResponsesUpdateResponses];
+
+export type ProviderCannedResponsesRenderData = {
+    body: ProviderCannedResponseRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/provider-canned-responses/{uuid}/render/';
+};
+
+export type ProviderCannedResponsesRenderResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type ProviderHelpdesksListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        backend_type?: string;
+        is_active?: boolean;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        service_provider_uuid?: string;
+    };
+    url: '/api/provider-helpdesks/';
+};
+
+export type ProviderHelpdesksListResponses = {
+    200: Array<ProviderHelpdesk>;
+};
+
+export type ProviderHelpdesksListResponse = ProviderHelpdesksListResponses[keyof ProviderHelpdesksListResponses];
+
+export type ProviderHelpdesksCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        backend_type?: string;
+        is_active?: boolean;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        service_provider_uuid?: string;
+    };
+    url: '/api/provider-helpdesks/';
+};
+
+export type ProviderHelpdesksCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type ProviderHelpdesksCreateData = {
+    body: ProviderHelpdeskRequest;
+    path?: never;
+    query?: never;
+    url: '/api/provider-helpdesks/';
+};
+
+export type ProviderHelpdesksCreateResponses = {
+    201: ProviderHelpdesk;
+};
+
+export type ProviderHelpdesksCreateResponse = ProviderHelpdesksCreateResponses[keyof ProviderHelpdesksCreateResponses];
+
+export type ProviderHelpdesksDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/provider-helpdesks/{uuid}/';
+};
+
+export type ProviderHelpdesksDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type ProviderHelpdesksDestroyResponse = ProviderHelpdesksDestroyResponses[keyof ProviderHelpdesksDestroyResponses];
+
+export type ProviderHelpdesksRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/provider-helpdesks/{uuid}/';
+};
+
+export type ProviderHelpdesksRetrieveResponses = {
+    200: ProviderHelpdesk;
+};
+
+export type ProviderHelpdesksRetrieveResponse = ProviderHelpdesksRetrieveResponses[keyof ProviderHelpdesksRetrieveResponses];
+
+export type ProviderHelpdesksPartialUpdateData = {
+    body?: PatchedProviderHelpdeskRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/provider-helpdesks/{uuid}/';
+};
+
+export type ProviderHelpdesksPartialUpdateResponses = {
+    200: ProviderHelpdesk;
+};
+
+export type ProviderHelpdesksPartialUpdateResponse = ProviderHelpdesksPartialUpdateResponses[keyof ProviderHelpdesksPartialUpdateResponses];
+
+export type ProviderHelpdesksUpdateData = {
+    body: ProviderHelpdeskRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/provider-helpdesks/{uuid}/';
+};
+
+export type ProviderHelpdesksUpdateResponses = {
+    200: ProviderHelpdesk;
+};
+
+export type ProviderHelpdesksUpdateResponse = ProviderHelpdesksUpdateResponses[keyof ProviderHelpdesksUpdateResponses];
+
+export type ProviderHelpdesksValidateData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/provider-helpdesks/{uuid}/validate/';
+};
+
+export type ProviderHelpdesksValidateResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type ProviderInvoiceItemsListData = {
     body?: never;
     path?: never;
@@ -91750,6 +92818,417 @@ export type ProviderInvoiceItemsRetrieveResponses = {
 };
 
 export type ProviderInvoiceItemsRetrieveResponse = ProviderInvoiceItemsRetrieveResponses[keyof ProviderInvoiceItemsRetrieveResponses];
+
+export type ProviderSupportUsersListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        is_active?: boolean;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        provider_helpdesk_uuid?: string;
+        role?: string;
+        /**
+         * User full name contains
+         */
+        user_full_name?: string;
+    };
+    url: '/api/provider-support-users/';
+};
+
+export type ProviderSupportUsersListResponses = {
+    200: Array<ProviderSupportUser>;
+};
+
+export type ProviderSupportUsersListResponse = ProviderSupportUsersListResponses[keyof ProviderSupportUsersListResponses];
+
+export type ProviderSupportUsersCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        is_active?: boolean;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        provider_helpdesk_uuid?: string;
+        role?: string;
+        /**
+         * User full name contains
+         */
+        user_full_name?: string;
+    };
+    url: '/api/provider-support-users/';
+};
+
+export type ProviderSupportUsersCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type ProviderSupportUsersCreateData = {
+    body: ProviderSupportUserRequest;
+    path?: never;
+    query?: never;
+    url: '/api/provider-support-users/';
+};
+
+export type ProviderSupportUsersCreateResponses = {
+    201: ProviderSupportUser;
+};
+
+export type ProviderSupportUsersCreateResponse = ProviderSupportUsersCreateResponses[keyof ProviderSupportUsersCreateResponses];
+
+export type ProviderSupportUsersDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/provider-support-users/{uuid}/';
+};
+
+export type ProviderSupportUsersDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type ProviderSupportUsersDestroyResponse = ProviderSupportUsersDestroyResponses[keyof ProviderSupportUsersDestroyResponses];
+
+export type ProviderSupportUsersRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/provider-support-users/{uuid}/';
+};
+
+export type ProviderSupportUsersRetrieveResponses = {
+    200: ProviderSupportUser;
+};
+
+export type ProviderSupportUsersRetrieveResponse = ProviderSupportUsersRetrieveResponses[keyof ProviderSupportUsersRetrieveResponses];
+
+export type ProviderSupportUsersPartialUpdateData = {
+    body?: PatchedProviderSupportUserRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/provider-support-users/{uuid}/';
+};
+
+export type ProviderSupportUsersPartialUpdateResponses = {
+    200: ProviderSupportUser;
+};
+
+export type ProviderSupportUsersPartialUpdateResponse = ProviderSupportUsersPartialUpdateResponses[keyof ProviderSupportUsersPartialUpdateResponses];
+
+export type ProviderSupportUsersUpdateData = {
+    body: ProviderSupportUserRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/provider-support-users/{uuid}/';
+};
+
+export type ProviderSupportUsersUpdateResponses = {
+    200: ProviderSupportUser;
+};
+
+export type ProviderSupportUsersUpdateResponse = ProviderSupportUsersUpdateResponses[keyof ProviderSupportUsersUpdateResponses];
+
+export type ProviderSupportUsersTeamWorkloadListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        is_active?: boolean;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        provider_helpdesk_uuid?: string;
+        role?: string;
+        /**
+         * User full name contains
+         */
+        user_full_name?: string;
+    };
+    url: '/api/provider-support-users/team_workload/';
+};
+
+export type ProviderSupportUsersTeamWorkloadListResponses = {
+    200: Array<TeamWorkload>;
+};
+
+export type ProviderSupportUsersTeamWorkloadListResponse = ProviderSupportUsersTeamWorkloadListResponses[keyof ProviderSupportUsersTeamWorkloadListResponses];
+
+export type ProviderSupportUsersTeamWorkloadCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        is_active?: boolean;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        provider_helpdesk_uuid?: string;
+        role?: string;
+        /**
+         * User full name contains
+         */
+        user_full_name?: string;
+    };
+    url: '/api/provider-support-users/team_workload/';
+};
+
+export type ProviderSupportUsersTeamWorkloadCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type ProviderTicketsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        is_escalated?: boolean;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<ProviderTicketOEnum>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        priority?: string;
+        provider_assignee?: string;
+        sla_breached?: boolean;
+        status?: string;
+        summary?: string;
+    };
+    url: '/api/provider-tickets/';
+};
+
+export type ProviderTicketsListResponses = {
+    200: Array<ProviderTicket>;
+};
+
+export type ProviderTicketsListResponse = ProviderTicketsListResponses[keyof ProviderTicketsListResponses];
+
+export type ProviderTicketsCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        is_escalated?: boolean;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<ProviderTicketOEnum>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        priority?: string;
+        provider_assignee?: string;
+        sla_breached?: boolean;
+        status?: string;
+        summary?: string;
+    };
+    url: '/api/provider-tickets/';
+};
+
+export type ProviderTicketsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type ProviderTicketsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/provider-tickets/{uuid}/';
+};
+
+export type ProviderTicketsRetrieveResponses = {
+    200: ProviderTicket;
+};
+
+export type ProviderTicketsRetrieveResponse = ProviderTicketsRetrieveResponses[keyof ProviderTicketsRetrieveResponses];
+
+export type ProviderTicketsPartialUpdateData = {
+    body?: PatchedProviderTicketRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/provider-tickets/{uuid}/';
+};
+
+export type ProviderTicketsPartialUpdateResponses = {
+    200: ProviderTicket;
+};
+
+export type ProviderTicketsPartialUpdateResponse = ProviderTicketsPartialUpdateResponses[keyof ProviderTicketsPartialUpdateResponses];
+
+export type ProviderTicketsUpdateData = {
+    body?: ProviderTicketRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/provider-tickets/{uuid}/';
+};
+
+export type ProviderTicketsUpdateResponses = {
+    200: ProviderTicket;
+};
+
+export type ProviderTicketsUpdateResponse = ProviderTicketsUpdateResponses[keyof ProviderTicketsUpdateResponses];
+
+export type ProviderTicketsAssignData = {
+    body: ProviderAssignRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/provider-tickets/{uuid}/assign/';
+};
+
+export type ProviderTicketsAssignResponses = {
+    200: Status;
+};
+
+export type ProviderTicketsAssignResponse = ProviderTicketsAssignResponses[keyof ProviderTicketsAssignResponses];
+
+export type ProviderTicketsClaimData = {
+    body?: ProviderTicketRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/provider-tickets/{uuid}/claim/';
+};
+
+export type ProviderTicketsClaimResponses = {
+    200: Status;
+};
+
+export type ProviderTicketsClaimResponse = ProviderTicketsClaimResponses[keyof ProviderTicketsClaimResponses];
+
+export type ProviderTicketsCommentData = {
+    body: ProviderCommentRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/provider-tickets/{uuid}/comment/';
+};
+
+export type ProviderTicketsCommentResponses = {
+    /**
+     * No response body
+     */
+    201: unknown;
+};
+
+export type ProviderTicketsCustomerContextRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/provider-tickets/{uuid}/customer_context/';
+};
+
+export type ProviderTicketsCustomerContextRetrieveResponses = {
+    200: CustomerContext;
+};
+
+export type ProviderTicketsCustomerContextRetrieveResponse = ProviderTicketsCustomerContextRetrieveResponses[keyof ProviderTicketsCustomerContextRetrieveResponses];
+
+export type ProviderTicketsResolveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/provider-tickets/{uuid}/resolve/';
+};
+
+export type ProviderTicketsResolveResponses = {
+    200: Status;
+};
+
+export type ProviderTicketsResolveResponse = ProviderTicketsResolveResponses[keyof ProviderTicketsResolveResponses];
+
+export type ProviderTicketsStatsRetrieveData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/provider-tickets/stats/';
+};
+
+export type ProviderTicketsStatsRetrieveResponses = {
+    200: ProviderStats;
+};
+
+export type ProviderTicketsStatsRetrieveResponse = ProviderTicketsStatsRetrieveResponses[keyof ProviderTicketsStatsRetrieveResponses];
+
+export type ProviderTicketsStatsCountData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/provider-tickets/stats/';
+};
+
+export type ProviderTicketsStatsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type PublicMaintenanceAnnouncementsListData = {
     body?: never;
@@ -98220,6 +99699,149 @@ export type SupportAttachmentsRetrieveResponses = {
 
 export type SupportAttachmentsRetrieveResponse = SupportAttachmentsRetrieveResponses[keyof SupportAttachmentsRetrieveResponses];
 
+export type SupportCannedResponsesListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        category?: string;
+        is_active?: boolean;
+        name?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/support-canned-responses/';
+};
+
+export type SupportCannedResponsesListResponses = {
+    200: Array<CannedResponse>;
+};
+
+export type SupportCannedResponsesListResponse = SupportCannedResponsesListResponses[keyof SupportCannedResponsesListResponses];
+
+export type SupportCannedResponsesCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        category?: string;
+        is_active?: boolean;
+        name?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/support-canned-responses/';
+};
+
+export type SupportCannedResponsesCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type SupportCannedResponsesCreateData = {
+    body: CannedResponseRequest;
+    path?: never;
+    query?: never;
+    url: '/api/support-canned-responses/';
+};
+
+export type SupportCannedResponsesCreateResponses = {
+    201: CannedResponse;
+};
+
+export type SupportCannedResponsesCreateResponse = SupportCannedResponsesCreateResponses[keyof SupportCannedResponsesCreateResponses];
+
+export type SupportCannedResponsesDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/support-canned-responses/{uuid}/';
+};
+
+export type SupportCannedResponsesDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type SupportCannedResponsesDestroyResponse = SupportCannedResponsesDestroyResponses[keyof SupportCannedResponsesDestroyResponses];
+
+export type SupportCannedResponsesRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/support-canned-responses/{uuid}/';
+};
+
+export type SupportCannedResponsesRetrieveResponses = {
+    200: CannedResponse;
+};
+
+export type SupportCannedResponsesRetrieveResponse = SupportCannedResponsesRetrieveResponses[keyof SupportCannedResponsesRetrieveResponses];
+
+export type SupportCannedResponsesPartialUpdateData = {
+    body?: PatchedCannedResponseRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/support-canned-responses/{uuid}/';
+};
+
+export type SupportCannedResponsesPartialUpdateResponses = {
+    200: CannedResponse;
+};
+
+export type SupportCannedResponsesPartialUpdateResponse = SupportCannedResponsesPartialUpdateResponses[keyof SupportCannedResponsesPartialUpdateResponses];
+
+export type SupportCannedResponsesUpdateData = {
+    body: CannedResponseRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/support-canned-responses/{uuid}/';
+};
+
+export type SupportCannedResponsesUpdateResponses = {
+    200: CannedResponse;
+};
+
+export type SupportCannedResponsesUpdateResponse = SupportCannedResponsesUpdateResponses[keyof SupportCannedResponsesUpdateResponses];
+
+export type SupportCannedResponsesRenderData = {
+    body?: CannedResponseRenderRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/support-canned-responses/{uuid}/render/';
+};
+
+export type SupportCannedResponsesRenderResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type SupportCommentsListData = {
     body?: never;
     path?: never;
@@ -98493,6 +100115,133 @@ export type SupportFeedbacksRetrieveResponses = {
 
 export type SupportFeedbacksRetrieveResponse = SupportFeedbacksRetrieveResponses[keyof SupportFeedbacksRetrieveResponses];
 
+export type SupportIssueLinksListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        link_type?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        source_uuid?: string;
+        target_uuid?: string;
+    };
+    url: '/api/support-issue-links/';
+};
+
+export type SupportIssueLinksListResponses = {
+    200: Array<IssueLink>;
+};
+
+export type SupportIssueLinksListResponse = SupportIssueLinksListResponses[keyof SupportIssueLinksListResponses];
+
+export type SupportIssueLinksCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        link_type?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        source_uuid?: string;
+        target_uuid?: string;
+    };
+    url: '/api/support-issue-links/';
+};
+
+export type SupportIssueLinksCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type SupportIssueLinksCreateData = {
+    body: IssueLinkRequest;
+    path?: never;
+    query?: never;
+    url: '/api/support-issue-links/';
+};
+
+export type SupportIssueLinksCreateResponses = {
+    201: IssueLink;
+};
+
+export type SupportIssueLinksCreateResponse = SupportIssueLinksCreateResponses[keyof SupportIssueLinksCreateResponses];
+
+export type SupportIssueLinksDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/support-issue-links/{uuid}/';
+};
+
+export type SupportIssueLinksDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type SupportIssueLinksDestroyResponse = SupportIssueLinksDestroyResponses[keyof SupportIssueLinksDestroyResponses];
+
+export type SupportIssueLinksRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/support-issue-links/{uuid}/';
+};
+
+export type SupportIssueLinksRetrieveResponses = {
+    200: IssueLink;
+};
+
+export type SupportIssueLinksRetrieveResponse = SupportIssueLinksRetrieveResponses[keyof SupportIssueLinksRetrieveResponses];
+
+export type SupportIssueLinksPartialUpdateData = {
+    body?: PatchedIssueLinkRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/support-issue-links/{uuid}/';
+};
+
+export type SupportIssueLinksPartialUpdateResponses = {
+    200: IssueLink;
+};
+
+export type SupportIssueLinksPartialUpdateResponse = SupportIssueLinksPartialUpdateResponses[keyof SupportIssueLinksPartialUpdateResponses];
+
+export type SupportIssueLinksUpdateData = {
+    body: IssueLinkRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/support-issue-links/{uuid}/';
+};
+
+export type SupportIssueLinksUpdateResponses = {
+    200: IssueLink;
+};
+
+export type SupportIssueLinksUpdateResponse = SupportIssueLinksUpdateResponses[keyof SupportIssueLinksUpdateResponses];
+
 export type SupportIssueStatusesListData = {
     body?: never;
     path?: never;
@@ -98614,6 +100363,129 @@ export type SupportIssueStatusesUpdateResponses = {
 
 export type SupportIssueStatusesUpdateResponse = SupportIssueStatusesUpdateResponses[keyof SupportIssueStatusesUpdateResponses];
 
+export type SupportIssueTagsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        name?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/support-issue-tags/';
+};
+
+export type SupportIssueTagsListResponses = {
+    200: Array<IssueTag>;
+};
+
+export type SupportIssueTagsListResponse = SupportIssueTagsListResponses[keyof SupportIssueTagsListResponses];
+
+export type SupportIssueTagsCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        name?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/support-issue-tags/';
+};
+
+export type SupportIssueTagsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type SupportIssueTagsCreateData = {
+    body: IssueTagRequest;
+    path?: never;
+    query?: never;
+    url: '/api/support-issue-tags/';
+};
+
+export type SupportIssueTagsCreateResponses = {
+    201: IssueTag;
+};
+
+export type SupportIssueTagsCreateResponse = SupportIssueTagsCreateResponses[keyof SupportIssueTagsCreateResponses];
+
+export type SupportIssueTagsDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/support-issue-tags/{uuid}/';
+};
+
+export type SupportIssueTagsDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type SupportIssueTagsDestroyResponse = SupportIssueTagsDestroyResponses[keyof SupportIssueTagsDestroyResponses];
+
+export type SupportIssueTagsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/support-issue-tags/{uuid}/';
+};
+
+export type SupportIssueTagsRetrieveResponses = {
+    200: IssueTag;
+};
+
+export type SupportIssueTagsRetrieveResponse = SupportIssueTagsRetrieveResponses[keyof SupportIssueTagsRetrieveResponses];
+
+export type SupportIssueTagsPartialUpdateData = {
+    body?: PatchedIssueTagRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/support-issue-tags/{uuid}/';
+};
+
+export type SupportIssueTagsPartialUpdateResponses = {
+    200: IssueTag;
+};
+
+export type SupportIssueTagsPartialUpdateResponse = SupportIssueTagsPartialUpdateResponses[keyof SupportIssueTagsPartialUpdateResponses];
+
+export type SupportIssueTagsUpdateData = {
+    body: IssueTagRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/support-issue-tags/{uuid}/';
+};
+
+export type SupportIssueTagsUpdateResponses = {
+    200: IssueTag;
+};
+
+export type SupportIssueTagsUpdateResponse = SupportIssueTagsUpdateResponses[keyof SupportIssueTagsUpdateResponses];
+
 export type SupportIssuesListData = {
     body?: never;
     path?: never;
@@ -98627,6 +100499,15 @@ export type SupportIssuesListData = {
         caller_full_name?: string;
         customer?: string;
         customer_uuid?: string;
+        is_escalated?: boolean;
+        /**
+         * Is a parent issue
+         */
+        is_parent?: boolean;
+        /**
+         * Has been routed to provider
+         */
+        is_routed?: boolean;
         key?: string;
         /**
          * Ordering
@@ -98644,6 +100525,7 @@ export type SupportIssuesListData = {
         page_size?: number;
         project?: string;
         project_uuid?: string;
+        provider_uuid?: string;
         /**
          * Summary or key contains
          */
@@ -98668,6 +100550,7 @@ export type SupportIssuesListData = {
          * Resource UUID
          */
         resource_uuid?: string;
+        sla_breached?: boolean;
         status?: string;
         summary?: string;
         type?: string;
@@ -98694,6 +100577,15 @@ export type SupportIssuesCountData = {
         caller_full_name?: string;
         customer?: string;
         customer_uuid?: string;
+        is_escalated?: boolean;
+        /**
+         * Is a parent issue
+         */
+        is_parent?: boolean;
+        /**
+         * Has been routed to provider
+         */
+        is_routed?: boolean;
         key?: string;
         /**
          * Ordering
@@ -98711,6 +100603,7 @@ export type SupportIssuesCountData = {
         page_size?: number;
         project?: string;
         project_uuid?: string;
+        provider_uuid?: string;
         /**
          * Summary or key contains
          */
@@ -98735,6 +100628,7 @@ export type SupportIssuesCountData = {
          * Resource UUID
          */
         resource_uuid?: string;
+        sla_breached?: boolean;
         status?: string;
         summary?: string;
         type?: string;
@@ -98825,6 +100719,21 @@ export type SupportIssuesUpdateResponses = {
 
 export type SupportIssuesUpdateResponse = SupportIssuesUpdateResponses[keyof SupportIssuesUpdateResponses];
 
+export type SupportIssuesAttachResourceData = {
+    body: AttachResourceRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/support-issues/{uuid}/attach_resource/';
+};
+
+export type SupportIssuesAttachResourceResponses = {
+    200: Issue;
+};
+
+export type SupportIssuesAttachResourceResponse = SupportIssuesAttachResourceResponses[keyof SupportIssuesAttachResourceResponses];
+
 export type SupportIssuesCommentData = {
     body: CommentRequest;
     path: {
@@ -98840,6 +100749,22 @@ export type SupportIssuesCommentResponses = {
 
 export type SupportIssuesCommentResponse = SupportIssuesCommentResponses[keyof SupportIssuesCommentResponses];
 
+export type SupportIssuesEscalateData = {
+    body: EscalateIssueRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/support-issues/{uuid}/escalate/';
+};
+
+export type SupportIssuesEscalateResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type SupportIssuesSyncData = {
     body?: never;
     path: {
@@ -98850,6 +100775,20 @@ export type SupportIssuesSyncData = {
 };
 
 export type SupportIssuesSyncResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type SupportIssuesBulkUpdateData = {
+    body: BulkUpdateIssueRequest;
+    path?: never;
+    query?: never;
+    url: '/api/support-issues/bulk_update/';
+};
+
+export type SupportIssuesBulkUpdateResponses = {
     /**
      * No response body
      */
@@ -98944,6 +100883,22 @@ export type SupportPrioritiesRetrieveResponses = {
 };
 
 export type SupportPrioritiesRetrieveResponse = SupportPrioritiesRetrieveResponses[keyof SupportPrioritiesRetrieveResponses];
+
+export type SupportProviderWebhookData = {
+    body: WebhookPayloadRequest;
+    path: {
+        backend_type: string;
+        provider_uuid: string;
+    };
+    query?: never;
+    url: '/api/support-provider-webhook/{provider_uuid}/{backend_type}/';
+};
+
+export type SupportProviderWebhookResponses = {
+    200: WebhookPayload;
+};
+
+export type SupportProviderWebhookResponse = SupportProviderWebhookResponses[keyof SupportProviderWebhookResponses];
 
 export type SupportRequestTypesListData = {
     body?: never;
@@ -99172,6 +101127,131 @@ export type SupportRequestTypesRetrieveResponses = {
 };
 
 export type SupportRequestTypesRetrieveResponse = SupportRequestTypesRetrieveResponses[keyof SupportRequestTypesRetrieveResponses];
+
+export type SupportSavedFiltersListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        is_shared?: boolean;
+        name?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/support-saved-filters/';
+};
+
+export type SupportSavedFiltersListResponses = {
+    200: Array<SavedFilter>;
+};
+
+export type SupportSavedFiltersListResponse = SupportSavedFiltersListResponses[keyof SupportSavedFiltersListResponses];
+
+export type SupportSavedFiltersCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        is_shared?: boolean;
+        name?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/support-saved-filters/';
+};
+
+export type SupportSavedFiltersCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type SupportSavedFiltersCreateData = {
+    body: SavedFilterRequest;
+    path?: never;
+    query?: never;
+    url: '/api/support-saved-filters/';
+};
+
+export type SupportSavedFiltersCreateResponses = {
+    201: SavedFilter;
+};
+
+export type SupportSavedFiltersCreateResponse = SupportSavedFiltersCreateResponses[keyof SupportSavedFiltersCreateResponses];
+
+export type SupportSavedFiltersDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/support-saved-filters/{uuid}/';
+};
+
+export type SupportSavedFiltersDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type SupportSavedFiltersDestroyResponse = SupportSavedFiltersDestroyResponses[keyof SupportSavedFiltersDestroyResponses];
+
+export type SupportSavedFiltersRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/support-saved-filters/{uuid}/';
+};
+
+export type SupportSavedFiltersRetrieveResponses = {
+    200: SavedFilter;
+};
+
+export type SupportSavedFiltersRetrieveResponse = SupportSavedFiltersRetrieveResponses[keyof SupportSavedFiltersRetrieveResponses];
+
+export type SupportSavedFiltersPartialUpdateData = {
+    body?: PatchedSavedFilterRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/support-saved-filters/{uuid}/';
+};
+
+export type SupportSavedFiltersPartialUpdateResponses = {
+    200: SavedFilter;
+};
+
+export type SupportSavedFiltersPartialUpdateResponse = SupportSavedFiltersPartialUpdateResponses[keyof SupportSavedFiltersPartialUpdateResponses];
+
+export type SupportSavedFiltersUpdateData = {
+    body: SavedFilterRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/support-saved-filters/{uuid}/';
+};
+
+export type SupportSavedFiltersUpdateResponses = {
+    200: SavedFilter;
+};
+
+export type SupportSavedFiltersUpdateResponse = SupportSavedFiltersUpdateResponses[keyof SupportSavedFiltersUpdateResponses];
 
 export type SupportSmaxWebhookData = {
     body: SmaxWebHookReceiverRequest;
