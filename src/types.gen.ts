@@ -21870,9 +21870,7 @@ export type ProjectMetadataAnswer = {
     /**
      * Human-readable answer value; select-type option UUIDs are resolved to their labels.
      */
-    answer: {
-        [key: string]: unknown;
-    };
+    answer: unknown;
 };
 
 export type ProjectOrderAutoApproval = {
