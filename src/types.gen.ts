@@ -6656,6 +6656,7 @@ export type Customer = {
     readonly service_provider_uuid: string | null;
     readonly call_managing_organization_uuid: string | null;
     billing_price_estimate: NestedPriceEstimate;
+    readonly has_active_helpdesk: boolean;
 };
 
 export type CustomerAffiliate = {
@@ -20717,6 +20718,19 @@ export type PatchedSoftwarePackageRequest = {
     is_extension?: boolean;
 };
 
+export type PatchedSupportUserRequest = {
+    name?: string;
+    backend_id?: string | null;
+    backend_name?: string | null;
+    /**
+     * Active
+     *
+     * Designates whether this user should be treated as active. Unselect this instead of deleting accounts.
+     */
+    is_active?: boolean;
+    user?: string | null;
+};
+
 export type PatchedSystemPromptRequest = {
     name?: string;
     description?: string;
@@ -27625,6 +27639,13 @@ export type RoundReviewer = {
 
 export type RoundStatus = 'scheduled' | 'open' | 'ended';
 
+export type RouteToProviderRequest = {
+    /**
+     * UUID of the provider helpdesk to route this issue to.
+     */
+    provider_helpdesk: string;
+};
+
 export type Rule = {
     name: string;
     readonly uuid: string;
@@ -29199,8 +29220,77 @@ export type SupportUser = {
     readonly uuid: string;
     name: string;
     backend_id?: string | null;
-    user?: string | null;
     backend_name?: string | null;
+    /**
+     * Active
+     *
+     * Designates whether this user should be treated as active. Unselect this instead of deleting accounts.
+     */
+    is_active?: boolean;
+    user?: string | null;
+    readonly user_full_name: string;
+    /**
+     * Email address
+     */
+    readonly user_email: string;
+    readonly reported_issues_count: number;
+    readonly assigned_issues_count: number;
+    readonly comments_count: number;
+    readonly attachments_count: number;
+};
+
+export type SupportUserAttachmentBrief = {
+    readonly uuid: string;
+    readonly file_name: string;
+    readonly created: string;
+    readonly issue_key: string;
+    readonly issue_uuid: string;
+};
+
+export type SupportUserCommentBrief = {
+    readonly uuid: string;
+    description: string;
+    is_public?: boolean;
+    readonly created: string;
+    readonly issue_key: string;
+    readonly issue_uuid: string;
+};
+
+export type SupportUserConnections = {
+    readonly reported_issues: Array<SupportUserIssueBrief>;
+    readonly assigned_issues: Array<SupportUserIssueBrief>;
+    readonly comments: Array<SupportUserCommentBrief>;
+    readonly attachments: Array<SupportUserAttachmentBrief>;
+};
+
+export type SupportUserIssueBrief = {
+    readonly uuid: string;
+    key?: string;
+    type: string;
+    summary: string;
+    status: string;
+    readonly created: string;
+    readonly modified: string;
+};
+
+export type SupportUserMergeRequest = {
+    /**
+     * Support users to merge into this one. They will be deleted and their issues, comments and attachments re-pointed to this user.
+     */
+    source_users: Array<string>;
+};
+
+export type SupportUserRequest = {
+    name: string;
+    backend_id?: string | null;
+    backend_name?: string | null;
+    /**
+     * Active
+     *
+     * Designates whether this user should be treated as active. Unselect this instead of deleting accounts.
+     */
+    is_active?: boolean;
+    user?: string | null;
 };
 
 export type SupportedCountriesResponse = {
@@ -33857,7 +33947,7 @@ export type CustomerPermissionReviewOEnum = '-closed' | '-created' | 'closed' | 
 
 export type CustomerQuotasQuotaNameEnum = 'estimated_price' | 'nc_resource_count' | 'os_cpu_count' | 'os_ram_size' | 'os_storage_size' | 'vpc_cpu_count' | 'vpc_floating_ip_count' | 'vpc_instance_count' | 'vpc_ram_size' | 'vpc_storage_size';
 
-export type CustomerFieldEnum = 'abbreviation' | 'access_subnets' | 'accounting_start_date' | 'address' | 'agreement_number' | 'apartment_nr' | 'archived' | 'backend_id' | 'bank_account' | 'bank_name' | 'billing_price_estimate' | 'blocked' | 'call_managing_organization_uuid' | 'city' | 'contact_details' | 'country' | 'country_name' | 'created' | 'customer_credit' | 'customer_unallocated_credit' | 'default_affiliations' | 'default_tax_percent' | 'description' | 'display_billing_info_in_projects' | 'display_name' | 'domain' | 'email' | 'grace_period_days' | 'has_affiliate_links' | 'homepage' | 'house_nr' | 'household' | 'image' | 'is_service_provider' | 'latitude' | 'longitude' | 'max_service_accounts' | 'name' | 'native_name' | 'notification_emails' | 'organization_groups' | 'parish' | 'payment_profiles' | 'phone_number' | 'postal' | 'project_metadata_checklist' | 'project_slug_template' | 'projects_count' | 'registration_code' | 'service_provider' | 'service_provider_uuid' | 'slug' | 'sponsor_number' | 'state' | 'street' | 'url' | 'user_affiliations' | 'user_email_patterns' | 'user_identity_sources' | 'users_count' | 'uuid' | 'vat_code';
+export type CustomerFieldEnum = 'abbreviation' | 'access_subnets' | 'accounting_start_date' | 'address' | 'agreement_number' | 'apartment_nr' | 'archived' | 'backend_id' | 'bank_account' | 'bank_name' | 'billing_price_estimate' | 'blocked' | 'call_managing_organization_uuid' | 'city' | 'contact_details' | 'country' | 'country_name' | 'created' | 'customer_credit' | 'customer_unallocated_credit' | 'default_affiliations' | 'default_tax_percent' | 'description' | 'display_billing_info_in_projects' | 'display_name' | 'domain' | 'email' | 'grace_period_days' | 'has_active_helpdesk' | 'has_affiliate_links' | 'homepage' | 'house_nr' | 'household' | 'image' | 'is_service_provider' | 'latitude' | 'longitude' | 'max_service_accounts' | 'name' | 'native_name' | 'notification_emails' | 'organization_groups' | 'parish' | 'payment_profiles' | 'phone_number' | 'postal' | 'project_metadata_checklist' | 'project_slug_template' | 'projects_count' | 'registration_code' | 'service_provider' | 'service_provider_uuid' | 'slug' | 'sponsor_number' | 'state' | 'street' | 'url' | 'user_affiliations' | 'user_email_patterns' | 'user_identity_sources' | 'users_count' | 'uuid' | 'vat_code';
 
 export type CustomerUserFieldEnum = 'email' | 'expiration_time' | 'full_name' | 'image' | 'projects' | 'role_name' | 'url' | 'username' | 'uuid';
 
@@ -34122,6 +34212,8 @@ export type AttachmentFieldEnum = 'backend_id' | 'created' | 'destroy_is_availab
 export type CommentOEnum = '-created' | '-modified' | 'created' | 'modified';
 
 export type IssueOEnum = '-assignee_name' | '-caller_first_name' | '-caller_last_name' | '-created' | '-customer_name' | '-key' | '-modified' | '-priority' | '-project_name' | '-remote_id' | '-reporter_name' | '-status' | '-summary' | '-type' | 'assignee_name' | 'caller_first_name' | 'caller_last_name' | 'created' | 'customer_name' | 'key' | 'modified' | 'priority' | 'project_name' | 'remote_id' | 'reporter_name' | 'status' | 'summary' | 'type';
+
+export type SupportUserOEnum = '-backend_id' | '-backend_name' | '-is_active' | '-name' | 'backend_id' | 'backend_name' | 'is_active' | 'name';
 
 export type SystemLogLevelEnum = 'CRITICAL' | 'ERROR' | 'INFO' | 'WARNING';
 
@@ -100763,6 +100855,36 @@ export type SupportIssuesEscalateResponses = {
     200: unknown;
 };
 
+export type SupportIssuesRerouteData = {
+    body: RouteToProviderRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/support-issues/{uuid}/reroute/';
+};
+
+export type SupportIssuesRerouteResponses = {
+    200: Issue;
+};
+
+export type SupportIssuesRerouteResponse = SupportIssuesRerouteResponses[keyof SupportIssuesRerouteResponses];
+
+export type SupportIssuesRouteToProviderData = {
+    body: RouteToProviderRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/support-issues/{uuid}/route_to_provider/';
+};
+
+export type SupportIssuesRouteToProviderResponses = {
+    200: Issue;
+};
+
+export type SupportIssuesRouteToProviderResponse = SupportIssuesRouteToProviderResponses[keyof SupportIssuesRouteToProviderResponses];
+
 export type SupportIssuesSyncData = {
     body?: never;
     path: {
@@ -101442,7 +101564,15 @@ export type SupportUsersListData = {
     path?: never;
     query?: {
         backend_id?: string;
+        backend_name?: string;
+        is_active?: boolean;
         name?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<SupportUserOEnum>;
         /**
          * A page number within the paginated result set.
          */
@@ -101467,7 +101597,15 @@ export type SupportUsersCountData = {
     path?: never;
     query?: {
         backend_id?: string;
+        backend_name?: string;
+        is_active?: boolean;
         name?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<SupportUserOEnum>;
         /**
          * A page number within the paginated result set.
          */
@@ -101488,6 +101626,37 @@ export type SupportUsersCountResponses = {
     200: unknown;
 };
 
+export type SupportUsersCreateData = {
+    body: SupportUserRequest;
+    path?: never;
+    query?: never;
+    url: '/api/support-users/';
+};
+
+export type SupportUsersCreateResponses = {
+    201: SupportUser;
+};
+
+export type SupportUsersCreateResponse = SupportUsersCreateResponses[keyof SupportUsersCreateResponses];
+
+export type SupportUsersDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/support-users/{uuid}/';
+};
+
+export type SupportUsersDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type SupportUsersDestroyResponse = SupportUsersDestroyResponses[keyof SupportUsersDestroyResponses];
+
 export type SupportUsersRetrieveData = {
     body?: never;
     path: {
@@ -101502,6 +101671,66 @@ export type SupportUsersRetrieveResponses = {
 };
 
 export type SupportUsersRetrieveResponse = SupportUsersRetrieveResponses[keyof SupportUsersRetrieveResponses];
+
+export type SupportUsersPartialUpdateData = {
+    body?: PatchedSupportUserRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/support-users/{uuid}/';
+};
+
+export type SupportUsersPartialUpdateResponses = {
+    200: SupportUser;
+};
+
+export type SupportUsersPartialUpdateResponse = SupportUsersPartialUpdateResponses[keyof SupportUsersPartialUpdateResponses];
+
+export type SupportUsersUpdateData = {
+    body: SupportUserRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/support-users/{uuid}/';
+};
+
+export type SupportUsersUpdateResponses = {
+    200: SupportUser;
+};
+
+export type SupportUsersUpdateResponse = SupportUsersUpdateResponses[keyof SupportUsersUpdateResponses];
+
+export type SupportUsersConnectionsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/support-users/{uuid}/connections/';
+};
+
+export type SupportUsersConnectionsRetrieveResponses = {
+    200: SupportUserConnections;
+};
+
+export type SupportUsersConnectionsRetrieveResponse = SupportUsersConnectionsRetrieveResponses[keyof SupportUsersConnectionsRetrieveResponses];
+
+export type SupportUsersMergeData = {
+    body: SupportUserMergeRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/support-users/{uuid}/merge/';
+};
+
+export type SupportUsersMergeResponses = {
+    200: SupportUser;
+};
+
+export type SupportUsersMergeResponse = SupportUsersMergeResponses[keyof SupportUsersMergeResponses];
 
 export type SupportZammadWebhookData = {
     body?: never;
