@@ -11765,6 +11765,18 @@ export type MergedPluginOptions = {
      */
     enable_resource_projects?: boolean;
     /**
+     * If set to True, an Access subnets tab is shown on resource detail pages, letting consumers curate the IPs allowed to reach the backend entity. The list is advisory data for external firewalls.
+     */
+    enable_resource_access_subnets?: boolean;
+    /**
+     * If set to True, a resource of this offering that has access subnets is hidden from the consumer API unless the caller's IP is in the resource's allow-list. Staff and support are exempt; resources without any subnet stay visible.
+     */
+    conceal_subnet_restricted_resources?: boolean;
+    /**
+     * How parent resource limits are enforced on child resource projects: 'none' (accepted as-is, default), 'per_project' (each resource project limit must be within the parent resource limit), or 'aggregate' (the sum of all resource project limits must be within the parent limit).
+     */
+    resource_projects_limit_policy?: ResourceProjectsLimitPolicyEnum | BlankEnum | NullEnum | null;
+    /**
      * If set to True, newly-created resource projects are immediately transitioned from CREATING to OK on save, bypassing the provider/site-agent reconciliation callback. Use for offerings that have no external backend to reconcile against.
      */
     auto_ok_resource_projects?: boolean;
@@ -12135,6 +12147,18 @@ export type MergedPluginOptionsRequest = {
      * Enable sub-project management within resources.
      */
     enable_resource_projects?: boolean;
+    /**
+     * If set to True, an Access subnets tab is shown on resource detail pages, letting consumers curate the IPs allowed to reach the backend entity. The list is advisory data for external firewalls.
+     */
+    enable_resource_access_subnets?: boolean;
+    /**
+     * If set to True, a resource of this offering that has access subnets is hidden from the consumer API unless the caller's IP is in the resource's allow-list. Staff and support are exempt; resources without any subnet stay visible.
+     */
+    conceal_subnet_restricted_resources?: boolean;
+    /**
+     * How parent resource limits are enforced on child resource projects: 'none' (accepted as-is, default), 'per_project' (each resource project limit must be within the parent resource limit), or 'aggregate' (the sum of all resource project limits must be within the parent limit).
+     */
+    resource_projects_limit_policy?: ResourceProjectsLimitPolicyEnum | BlankEnum | NullEnum | null;
     /**
      * If set to True, newly-created resource projects are immediately transitioned from CREATING to OK on save, bypassing the provider/site-agent reconciliation callback. Use for offerings that have no external backend to reconcile against.
      */
@@ -26117,6 +26141,8 @@ export type ResourceProjectRequest = {
         [key: string]: unknown;
     };
 };
+
+export type ResourceProjectsLimitPolicyEnum = 'none' | 'per_project' | 'aggregate';
 
 export type ResourceProvisioningStats = {
     /**
