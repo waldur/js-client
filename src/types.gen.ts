@@ -3126,7 +3126,7 @@ export type BookingResource = {
     /**
      * Which restriction (paused or downscaled) was automatically applied because reported usage reached a component limit. Empty when no such restriction is active. Used so the automatic lift never clears a restriction that was set for another reason.
      */
-    usage_limit_restriction: UsageLimitRestrictionEnum;
+    usage_limit_restriction: UsageLimitRestrictionEnum | BlankEnum;
     readonly endpoints: Array<NestedEndpoint>;
     readonly error_message: string;
     readonly error_traceback: string;
@@ -25786,7 +25786,7 @@ export type Resource = {
     /**
      * Which restriction (paused or downscaled) was automatically applied because reported usage reached a component limit. Empty when no such restriction is active. Used so the automatic lift never clears a restriction that was set for another reason.
      */
-    usage_limit_restriction: UsageLimitRestrictionEnum;
+    usage_limit_restriction: UsageLimitRestrictionEnum | BlankEnum;
     readonly endpoints: Array<NestedEndpoint>;
     readonly error_message: string;
     readonly error_traceback: string;
