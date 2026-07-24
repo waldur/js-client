@@ -8035,6 +8035,43 @@ export type DuplicateOfferingGroup = {
     candidates: Array<DuplicateOfferingCandidate>;
 };
 
+export type DuplicateOfferingMergePlan = {
+    duplicate_id: number;
+    duplicate_name: string;
+    keeper_id: number;
+    keeper_name: string;
+    /**
+     * delete (nothing attached), merge, or skip.
+     */
+    action: string;
+    is_empty: boolean;
+    resource_count: number;
+    order_count: number;
+    plan_period_count: number;
+    component_usage_count: number;
+    component_quota_count: number;
+    blockers: Array<string>;
+};
+
+export type DuplicateOfferingRemediateRequest = {
+    tenant_id: number;
+    offering_type: string;
+    /**
+     * Preview the changes without applying them. Mirrors the dry-run-by-default behaviour of the dedupe_tenant_offerings command.
+     */
+    dry_run?: boolean;
+};
+
+export type DuplicateOfferingRemediation = {
+    tenant_id: number;
+    offering_type: string;
+    keeper_id: number;
+    keeper_name: string;
+    dry_run: boolean;
+    duplicates: Array<DuplicateOfferingMergePlan>;
+    blockers: Array<string>;
+};
+
 export type EnabledreportingscreensEnum = 'resource-usage' | 'user-usage' | 'quotas' | 'usage-monitoring' | 'usage-trends' | 'organization-summary' | 'project-detail' | 'resources-geography' | 'project-classification' | 'usage-by-customer' | 'usage-by-org-type' | 'usage-by-creator' | 'call-performance' | 'review-progress' | 'resource-demand' | 'capacity' | 'provider-overview' | 'provider-revenue' | 'provider-orders' | 'provider-resources' | 'provider-customers' | 'provider-offerings' | 'openstack-instances' | 'offering-usage' | 'user-analytics' | 'user-demographics' | 'user-organizations' | 'user-affiliations' | 'user-roles' | 'growth' | 'revenue' | 'pricelist' | 'orders' | 'offering-costs' | 'maintenance-overview' | 'provisioning-stats';
 
 export type EffectiveRoute = {
@@ -26099,13 +26136,10 @@ export type ResourceProject = {
     readonly is_removed: boolean;
     readonly removed_date: string | null;
     readonly removed_by: number | null;
-    /**
-     * Required. 128 characters or fewer. Lowercase letters, numbers and @/./+/-/_ characters
-     */
-    readonly removed_by_username: string;
+    readonly removed_by_username: string | null;
     readonly termination_metadata: {
         [key: string]: unknown;
-    };
+    } | null;
 };
 
 export type ResourceProjectBackendIdRequest = {
@@ -56545,6 +56579,19 @@ export type MarketplaceOpenstackDuplicateOfferingsCountResponses = {
      */
     200: unknown;
 };
+
+export type MarketplaceOpenstackDuplicateOfferingsRemediateData = {
+    body: DuplicateOfferingRemediateRequest;
+    path?: never;
+    query?: never;
+    url: '/api/marketplace-openstack-duplicate-offerings/remediate/';
+};
+
+export type MarketplaceOpenstackDuplicateOfferingsRemediateResponses = {
+    200: DuplicateOfferingRemediation;
+};
+
+export type MarketplaceOpenstackDuplicateOfferingsRemediateResponse = MarketplaceOpenstackDuplicateOfferingsRemediateResponses[keyof MarketplaceOpenstackDuplicateOfferingsRemediateResponses];
 
 export type MarketplaceOrdersListData = {
     body?: never;
