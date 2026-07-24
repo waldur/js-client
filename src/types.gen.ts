@@ -29264,11 +29264,8 @@ export type SupportUser = {
      */
     is_active?: boolean;
     user?: string | null;
-    readonly user_full_name: string;
-    /**
-     * Email address
-     */
-    readonly user_email: string;
+    readonly user_full_name: string | null;
+    readonly user_email: string | null;
     readonly reported_issues_count: number;
     readonly assigned_issues_count: number;
     readonly comments_count: number;
@@ -34258,6 +34255,8 @@ export type AttachmentFieldEnum = 'backend_id' | 'created' | 'destroy_is_availab
 export type CommentOEnum = '-created' | '-modified' | 'created' | 'modified';
 
 export type IssueOEnum = '-assignee_name' | '-caller_first_name' | '-caller_last_name' | '-created' | '-customer_name' | '-key' | '-modified' | '-priority' | '-project_name' | '-remote_id' | '-reporter_name' | '-status' | '-summary' | '-type' | 'assignee_name' | 'caller_first_name' | 'caller_last_name' | 'created' | 'customer_name' | 'key' | 'modified' | 'priority' | 'project_name' | 'remote_id' | 'reporter_name' | 'status' | 'summary' | 'type';
+
+export type SupportUserBackendNameEnum = 'atlassian' | 'basic' | 'smax' | 'zammad';
 
 export type SupportUserOEnum = '-backend_id' | '-backend_name' | '-is_active' | '-name' | 'backend_id' | 'backend_name' | 'is_active' | 'name';
 
@@ -101610,7 +101609,12 @@ export type SupportUsersListData = {
     path?: never;
     query?: {
         backend_id?: string;
-        backend_name?: string;
+        /**
+         * Helpdesk
+         *
+         *
+         */
+        backend_name?: SupportUserBackendNameEnum;
         is_active?: boolean;
         name?: string;
         /**
@@ -101627,6 +101631,10 @@ export type SupportUsersListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Search by name, backend ID or linked user name/email
+         */
+        query?: string;
         user?: number;
     };
     url: '/api/support-users/';
@@ -101643,7 +101651,12 @@ export type SupportUsersCountData = {
     path?: never;
     query?: {
         backend_id?: string;
-        backend_name?: string;
+        /**
+         * Helpdesk
+         *
+         *
+         */
+        backend_name?: SupportUserBackendNameEnum;
         is_active?: boolean;
         name?: string;
         /**
@@ -101660,6 +101673,10 @@ export type SupportUsersCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Search by name, backend ID or linked user name/email
+         */
+        query?: string;
         user?: number;
     };
     url: '/api/support-users/';
