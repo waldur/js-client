@@ -4091,6 +4091,10 @@ export type CannedResponseRenderRequest = {
     };
 };
 
+export type CannedResponseRenderResponse = {
+    rendered_text: string;
+};
+
 export type CannedResponseRequest = {
     name: string;
     /**
@@ -12162,6 +12166,10 @@ export type MergedPluginOptions = {
      */
     slurm_periodic_policy_enabled?: boolean;
     /**
+     * When enabled, the site agent enforces the offering's QoS selection by granting the chosen QoS on the SLURM association (QosLevel/DefaultQOS). When disabled (default), QoS is informational only — profiles are shown and the selection is recorded on the resource, but the agent does not touch SLURM QoS. The agent config may override this per deployment.
+     */
+    enforce_qos?: boolean;
+    /**
      * If set to False, all orders require manual provider approval, including for service provider owners and staff
      */
     auto_approve_marketplace_script?: boolean;
@@ -12548,6 +12556,10 @@ export type MergedPluginOptionsRequest = {
      * Enable SLURM periodic usage policy configuration. When enabled, allows configuring QoS-based threshold enforcement, carryover logic, and fairshare decay for site-agent managed SLURM offerings.
      */
     slurm_periodic_policy_enabled?: boolean;
+    /**
+     * When enabled, the site agent enforces the offering's QoS selection by granting the chosen QoS on the SLURM association (QosLevel/DefaultQOS). When disabled (default), QoS is informational only — profiles are shown and the selection is recorded on the resource, but the agent does not touch SLURM QoS. The agent config may override this per deployment.
+     */
+    enforce_qos?: boolean;
     /**
      * If set to False, all orders require manual provider approval, including for service provider owners and staff
      */
@@ -13444,10 +13456,28 @@ export type NestedPartition = {
      * Quality of Service (QOS) name
      */
     qos?: string;
+    readonly qos_options: Array<NestedPartitionQoS>;
     /**
      * Require reservation for job allocation
      */
     req_resv?: boolean;
+};
+
+export type NestedPartitionQoS = {
+    readonly uuid: string;
+    readonly qos: string;
+    readonly qos_name: string;
+    /**
+     * Default QOS for this partition (seeds SLURM DefaultQOS).
+     */
+    is_default?: boolean;
+};
+
+export type NestedPartitionQoSRequest = {
+    /**
+     * Default QOS for this partition (seeds SLURM DefaultQOS).
+     */
+    is_default?: boolean;
 };
 
 export type NestedPartitionRequest = {
@@ -13631,6 +13661,119 @@ export type NestedPublicOffering = {
 export type NestedPublicOfferingRequest = {
     type: string;
     name: string;
+};
+
+export type NestedQoS = {
+    readonly uuid: string;
+    /**
+     * Name of the SLURM QOS.
+     */
+    name: string;
+    description?: string;
+    /**
+     * Maximum nodes per job
+     */
+    max_nodes?: number | null;
+    /**
+     * Minimum nodes per job
+     */
+    min_nodes?: number | null;
+    /**
+     * Default time limit in minutes
+     */
+    default_time?: number | null;
+    /**
+     * Maximum wall time in minutes
+     */
+    max_time?: number | null;
+    /**
+     * Preemption grace time in seconds
+     */
+    grace_time?: number | null;
+    /**
+     * Scheduling priority
+     */
+    priority?: number | null;
+    /**
+     * Aggregate TRES the QOS may allocate at once (GrpTRES)
+     */
+    grp_tres?: string;
+    /**
+     * Max TRES per job (MaxTRESPerJob)
+     */
+    max_tres_per_job?: string;
+    /**
+     * Max TRES per node (MaxTRESPerNode)
+     */
+    max_tres_per_node?: string;
+    /**
+     * Max TRES per user (MaxTRESPerUser)
+     */
+    max_tres_per_user?: string;
+    /**
+     * Min TRES per job (MinTRESPerJob)
+     */
+    min_tres_per_job?: string;
+    /**
+     * Comma-separated QOS flags (e.g. DenyOnLimit, OverPartQOS)
+     */
+    flags?: string;
+};
+
+export type NestedQoSRequest = {
+    /**
+     * Name of the SLURM QOS.
+     */
+    name: string;
+    description?: string;
+    /**
+     * Maximum nodes per job
+     */
+    max_nodes?: number | null;
+    /**
+     * Minimum nodes per job
+     */
+    min_nodes?: number | null;
+    /**
+     * Default time limit in minutes
+     */
+    default_time?: number | null;
+    /**
+     * Maximum wall time in minutes
+     */
+    max_time?: number | null;
+    /**
+     * Preemption grace time in seconds
+     */
+    grace_time?: number | null;
+    /**
+     * Scheduling priority
+     */
+    priority?: number | null;
+    /**
+     * Aggregate TRES the QOS may allocate at once (GrpTRES)
+     */
+    grp_tres?: string;
+    /**
+     * Max TRES per job (MaxTRESPerJob)
+     */
+    max_tres_per_job?: string;
+    /**
+     * Max TRES per node (MaxTRESPerNode)
+     */
+    max_tres_per_node?: string;
+    /**
+     * Max TRES per user (MaxTRESPerUser)
+     */
+    max_tres_per_user?: string;
+    /**
+     * Min TRES per job (MinTRESPerJob)
+     */
+    min_tres_per_job?: string;
+    /**
+     * Comma-separated QOS flags (e.g. DenyOnLimit, OverPartQOS)
+     */
+    flags?: string;
 };
 
 export type NestedRemoteLocalCategory = {
@@ -14077,6 +14220,7 @@ export type Offering = {
     readonly default_access_subnets: Array<NestedOfferingAccessSubnet>;
     readonly software_catalogs: Array<NestedSoftwareCatalog>;
     readonly partitions: Array<NestedPartition>;
+    readonly qos_profiles: Array<NestedQoS>;
     customer?: string | null;
     readonly customer_uuid: string | null;
     readonly customer_name: string | null;
@@ -14894,6 +15038,7 @@ export type OfferingPartition = {
      * Quality of Service (QOS) name
      */
     qos?: string;
+    readonly qos_options: Array<NestedPartitionQoS>;
     /**
      * Require reservation for job allocation
      */
@@ -15052,6 +15197,124 @@ export type OfferingProfileRoleAssignRequest = {
      * Role UUID to add or remove.
      */
     role: string;
+};
+
+export type OfferingQoS = {
+    readonly uuid: string;
+    readonly created: string;
+    readonly modified: string;
+    offering: string;
+    readonly offering_name: string;
+    /**
+     * Name of the SLURM QOS.
+     */
+    name: string;
+    description?: string;
+    /**
+     * Maximum nodes per job
+     */
+    max_nodes?: number | null;
+    /**
+     * Minimum nodes per job
+     */
+    min_nodes?: number | null;
+    /**
+     * Default time limit in minutes
+     */
+    default_time?: number | null;
+    /**
+     * Maximum wall time in minutes
+     */
+    max_time?: number | null;
+    /**
+     * Preemption grace time in seconds
+     */
+    grace_time?: number | null;
+    /**
+     * Scheduling priority
+     */
+    priority?: number | null;
+    /**
+     * Aggregate TRES the QOS may allocate at once (GrpTRES)
+     */
+    grp_tres?: string;
+    /**
+     * Max TRES per job (MaxTRESPerJob)
+     */
+    max_tres_per_job?: string;
+    /**
+     * Max TRES per node (MaxTRESPerNode)
+     */
+    max_tres_per_node?: string;
+    /**
+     * Max TRES per user (MaxTRESPerUser)
+     */
+    max_tres_per_user?: string;
+    /**
+     * Min TRES per job (MinTRESPerJob)
+     */
+    min_tres_per_job?: string;
+    /**
+     * Comma-separated QOS flags (e.g. DenyOnLimit, OverPartQOS)
+     */
+    flags?: string;
+};
+
+export type OfferingQoSRequest = {
+    offering: string;
+    /**
+     * Name of the SLURM QOS.
+     */
+    name: string;
+    description?: string;
+    /**
+     * Maximum nodes per job
+     */
+    max_nodes?: number | null;
+    /**
+     * Minimum nodes per job
+     */
+    min_nodes?: number | null;
+    /**
+     * Default time limit in minutes
+     */
+    default_time?: number | null;
+    /**
+     * Maximum wall time in minutes
+     */
+    max_time?: number | null;
+    /**
+     * Preemption grace time in seconds
+     */
+    grace_time?: number | null;
+    /**
+     * Scheduling priority
+     */
+    priority?: number | null;
+    /**
+     * Aggregate TRES the QOS may allocate at once (GrpTRES)
+     */
+    grp_tres?: string;
+    /**
+     * Max TRES per job (MaxTRESPerJob)
+     */
+    max_tres_per_job?: string;
+    /**
+     * Max TRES per node (MaxTRESPerNode)
+     */
+    max_tres_per_node?: string;
+    /**
+     * Max TRES per user (MaxTRESPerUser)
+     */
+    max_tres_per_user?: string;
+    /**
+     * Min TRES per job (MinTRESPerJob)
+     */
+    min_tres_per_job?: string;
+    /**
+     * Comma-separated QOS flags (e.g. DenyOnLimit, OverPartQOS)
+     */
+    flags?: string;
 };
 
 export type OfferingReference = {
@@ -18614,6 +18877,11 @@ export type PaidRequest = {
     proof?: Blob | File;
 };
 
+export type PartitionQoSItemRequest = {
+    qos_uuid: string;
+    is_default?: boolean;
+};
+
 export type PartitionSummary = {
     readonly uuid: string;
     /**
@@ -19680,6 +19948,63 @@ export type PatchedOfferingPartitionUpdateRequest = {
 export type PatchedOfferingProfileRequest = {
     name?: string;
     description?: string;
+};
+
+export type PatchedOfferingQoSUpdateRequest = {
+    qos_uuid?: string;
+    /**
+     * Name of the SLURM QOS.
+     */
+    name?: string;
+    description?: string;
+    /**
+     * Maximum nodes per job
+     */
+    max_nodes?: number | null;
+    /**
+     * Minimum nodes per job
+     */
+    min_nodes?: number | null;
+    /**
+     * Default time limit in minutes
+     */
+    default_time?: number | null;
+    /**
+     * Maximum wall time in minutes
+     */
+    max_time?: number | null;
+    /**
+     * Preemption grace time in seconds
+     */
+    grace_time?: number | null;
+    /**
+     * Scheduling priority
+     */
+    priority?: number | null;
+    /**
+     * Aggregate TRES the QOS may allocate at once (GrpTRES)
+     */
+    grp_tres?: string;
+    /**
+     * Max TRES per job (MaxTRESPerJob)
+     */
+    max_tres_per_job?: string;
+    /**
+     * Max TRES per node (MaxTRESPerNode)
+     */
+    max_tres_per_node?: string;
+    /**
+     * Max TRES per user (MaxTRESPerUser)
+     */
+    max_tres_per_user?: string;
+    /**
+     * Min TRES per job (MinTRESPerJob)
+     */
+    min_tres_per_job?: string;
+    /**
+     * Comma-separated QOS flags (e.g. DenyOnLimit, OverPartQOS)
+     */
+    flags?: string;
 };
 
 export type PatchedOfferingRoleRequest = {
@@ -23201,6 +23526,7 @@ export type ProviderOfferingDetails = {
     readonly default_access_subnets: Array<NestedOfferingAccessSubnet>;
     readonly software_catalogs: Array<NestedSoftwareCatalog>;
     readonly partitions: Array<NestedPartition>;
+    readonly qos_profiles: Array<NestedQoS>;
     customer?: string | null;
     readonly customer_uuid: string | null;
     readonly customer_name: string | null;
@@ -23743,6 +24069,7 @@ export type PublicOfferingDetails = {
     readonly default_access_subnets: Array<NestedOfferingAccessSubnet>;
     readonly software_catalogs: Array<NestedSoftwareCatalog>;
     readonly partitions: Array<NestedPartition>;
+    readonly qos_profiles: Array<NestedQoS>;
     customer?: string | null;
     readonly customer_uuid: string | null;
     readonly customer_name: string | null;
@@ -25655,6 +25982,10 @@ export type RemoveOfferingComponentRequest = {
 
 export type RemovePartitionRequest = {
     partition_uuid: string;
+};
+
+export type RemoveQoSRequest = {
+    qos_uuid: string;
 };
 
 export type RemoveSoftwareCatalogRequest = {
@@ -28502,6 +28833,11 @@ export type SetOfferingsUsernameRequest = {
      * Username for offering access
      */
     username: string;
+};
+
+export type SetPartitionQoSRequest = {
+    partition_uuid: string;
+    qos_options: Array<PartitionQoSItemRequest>;
 };
 
 export type SetTokenQuotaRequest = {
@@ -34162,7 +34498,7 @@ export type AzureVirtualMachineFieldEnum = 'access_url' | 'backend_id' | 'cores'
 
 export type BackendResourceReqOEnum = '-created' | 'created';
 
-export type OfferingFieldEnum = 'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'billing_type_classification' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'default_access_subnets' | 'description' | 'documentation_url' | 'effective_available_limits' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'googlecalendar' | 'has_compliance_requirements' | 'helpdesk_url' | 'image' | 'integration_guide' | 'is_accessible' | 'latitude' | 'longitude' | 'name' | 'offering_group' | 'offering_group_title' | 'offering_group_uuid' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'profile_name' | 'profile_uuid' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_options' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'tags' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'user_has_consent' | 'uuid' | 'vendor_details';
+export type OfferingFieldEnum = 'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'billing_type_classification' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'default_access_subnets' | 'description' | 'documentation_url' | 'effective_available_limits' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'googlecalendar' | 'has_compliance_requirements' | 'helpdesk_url' | 'image' | 'integration_guide' | 'is_accessible' | 'latitude' | 'longitude' | 'name' | 'offering_group' | 'offering_group_title' | 'offering_group_uuid' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'profile_name' | 'profile_uuid' | 'project' | 'project_name' | 'project_uuid' | 'qos_profiles' | 'quotas' | 'resource_options' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'tags' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'user_has_consent' | 'uuid' | 'vendor_details';
 
 export type BookingResourceFieldEnum = 'attributes' | 'available_actions' | 'backend_id' | 'backend_metadata' | 'can_terminate' | 'category_icon' | 'category_title' | 'category_uuid' | 'consumer_reviewed_by' | 'consumer_reviewed_by_full_name' | 'consumer_reviewed_by_username' | 'created' | 'created_by' | 'created_by_full_name' | 'created_by_username' | 'creation_order' | 'current_usages' | 'customer_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'downscaled' | 'effective_id' | 'end_date' | 'end_date_requested_by' | 'end_date_updated_at' | 'endpoints' | 'error_message' | 'error_traceback' | 'has_api_keys' | 'is_limit_based' | 'is_usage_based' | 'last_sync' | 'limit_usage' | 'limits' | 'modified' | 'name' | 'offering' | 'offering_backend_id' | 'offering_billable' | 'offering_components' | 'offering_description' | 'offering_image' | 'offering_name' | 'offering_plugin_options' | 'offering_shared' | 'offering_slug' | 'offering_state' | 'offering_thumbnail' | 'offering_type' | 'offering_uuid' | 'options' | 'order_in_progress' | 'parent_name' | 'parent_offering_name' | 'parent_offering_slug' | 'parent_offering_uuid' | 'parent_uuid' | 'paused' | 'plan' | 'plan_description' | 'plan_name' | 'plan_unit' | 'plan_uuid' | 'project' | 'project_description' | 'project_effective_end_date' | 'project_end_date' | 'project_end_date_requested_by' | 'project_is_in_grace_period' | 'project_name' | 'project_slug' | 'project_uuid' | 'provider_description' | 'provider_name' | 'provider_slug' | 'provider_uuid' | 'renewal_date' | 'report' | 'resource_effective_end_date' | 'resource_type' | 'resource_uuid' | 'restrict_member_access' | 'scope' | 'service_settings_uuid' | 'slots' | 'slug' | 'state' | 'url' | 'usage_limit_restriction' | 'user_requires_reconsent' | 'username' | 'uuid';
 
@@ -34282,13 +34618,13 @@ export type OrderDetailsFieldEnum = 'accepting_terms_of_service' | 'activation_p
 
 export type OrderDetailsOEnum = '-consumer_reviewed_at' | '-cost' | '-created' | '-state' | 'consumer_reviewed_at' | 'cost' | 'created' | 'state';
 
-export type PublicOfferingDetailsFieldEnum = 'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'billing_type_classification' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'config_drive_default' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'default_access_subnets' | 'description' | 'documentation_url' | 'effective_available_limits' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'has_compliance_requirements' | 'helpdesk_url' | 'image' | 'integration_guide' | 'is_accessible' | 'latitude' | 'longitude' | 'name' | 'offering_group' | 'offering_group_title' | 'offering_group_uuid' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'profile_name' | 'profile_uuid' | 'project' | 'project_name' | 'project_uuid' | 'promotion_campaigns' | 'quotas' | 'resource_options' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'tags' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'user_has_consent' | 'uuid' | 'vendor_details';
+export type PublicOfferingDetailsFieldEnum = 'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'billing_type_classification' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'config_drive_default' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'default_access_subnets' | 'description' | 'documentation_url' | 'effective_available_limits' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'has_compliance_requirements' | 'helpdesk_url' | 'image' | 'integration_guide' | 'is_accessible' | 'latitude' | 'longitude' | 'name' | 'offering_group' | 'offering_group_title' | 'offering_group_uuid' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'profile_name' | 'profile_uuid' | 'project' | 'project_name' | 'project_uuid' | 'promotion_campaigns' | 'qos_profiles' | 'quotas' | 'resource_options' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'tags' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'user_has_consent' | 'uuid' | 'vendor_details';
 
 export type PosixIdPoolFieldEnum = 'created' | 'customer_name' | 'customer_uuid' | 'description' | 'gid_used' | 'gid_utilization' | 'max_gid' | 'max_uid' | 'min_gid' | 'min_uid' | 'next_gid' | 'next_uid' | 'offering' | 'scope' | 'service_provider' | 'uid_used' | 'uid_utilization' | 'url' | 'uuid';
 
 export type RemoteProjectUpdateRequestStateEnum = 'approved' | 'canceled' | 'draft' | 'pending' | 'rejected';
 
-export type ProviderOfferingDetailsFieldEnum = 'access_url' | 'attributes' | 'backend_id' | 'backend_id_rules' | 'backend_metadata' | 'billable' | 'billing_type_classification' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'default_access_subnets' | 'description' | 'documentation_url' | 'effective_available_limits' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'has_compliance_requirements' | 'helpdesk_url' | 'image' | 'integration_guide' | 'integration_status' | 'latitude' | 'longitude' | 'name' | 'offering_group' | 'offering_group_title' | 'offering_group_uuid' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'profile_name' | 'profile_uuid' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_options' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'tags' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'uuid' | 'vendor_details';
+export type ProviderOfferingDetailsFieldEnum = 'access_url' | 'attributes' | 'backend_id' | 'backend_id_rules' | 'backend_metadata' | 'billable' | 'billing_type_classification' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'default_access_subnets' | 'description' | 'documentation_url' | 'effective_available_limits' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'has_compliance_requirements' | 'helpdesk_url' | 'image' | 'integration_guide' | 'integration_status' | 'latitude' | 'longitude' | 'name' | 'offering_group' | 'offering_group_title' | 'offering_group_uuid' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'profile_name' | 'profile_uuid' | 'project' | 'project_name' | 'project_uuid' | 'qos_profiles' | 'quotas' | 'resource_options' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'tags' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'uuid' | 'vendor_details';
 
 export type ProviderOfferingDetailsOEnum = '-created' | '-name' | '-state' | '-total_cost' | '-total_cost_estimated' | '-total_customers' | '-type' | 'created' | 'name' | 'state' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type';
 
@@ -59321,6 +59657,21 @@ export type MarketplaceProviderOfferingsAddPartitionResponses = {
 
 export type MarketplaceProviderOfferingsAddPartitionResponse = MarketplaceProviderOfferingsAddPartitionResponses[keyof MarketplaceProviderOfferingsAddPartitionResponses];
 
+export type MarketplaceProviderOfferingsAddQosData = {
+    body: OfferingQoSRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-provider-offerings/{uuid}/add_qos/';
+};
+
+export type MarketplaceProviderOfferingsAddQosResponses = {
+    201: OfferingQoS;
+};
+
+export type MarketplaceProviderOfferingsAddQosResponse = MarketplaceProviderOfferingsAddQosResponses[keyof MarketplaceProviderOfferingsAddQosResponses];
+
 export type MarketplaceProviderOfferingsAddSoftwareCatalogData = {
     body: OfferingSoftwareCatalogRequest;
     path: {
@@ -61379,6 +61730,24 @@ export type MarketplaceProviderOfferingsRemovePartitionResponses = {
 
 export type MarketplaceProviderOfferingsRemovePartitionResponse = MarketplaceProviderOfferingsRemovePartitionResponses[keyof MarketplaceProviderOfferingsRemovePartitionResponses];
 
+export type MarketplaceProviderOfferingsRemoveQosData = {
+    body: RemoveQoSRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-provider-offerings/{uuid}/remove_qos/';
+};
+
+export type MarketplaceProviderOfferingsRemoveQosResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type MarketplaceProviderOfferingsRemoveQosResponse = MarketplaceProviderOfferingsRemoveQosResponses[keyof MarketplaceProviderOfferingsRemoveQosResponses];
+
 export type MarketplaceProviderOfferingsRemoveSoftwareCatalogData = {
     body: RemoveSoftwareCatalogRequest;
     path: {
@@ -61428,6 +61797,21 @@ export type MarketplaceProviderOfferingsSetOfferingGroupResponses = {
      */
     200: unknown;
 };
+
+export type MarketplaceProviderOfferingsSetPartitionQosData = {
+    body: SetPartitionQoSRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-provider-offerings/{uuid}/set_partition_qos/';
+};
+
+export type MarketplaceProviderOfferingsSetPartitionQosResponses = {
+    200: OfferingPartition;
+};
+
+export type MarketplaceProviderOfferingsSetPartitionQosResponse = MarketplaceProviderOfferingsSetPartitionQosResponses[keyof MarketplaceProviderOfferingsSetPartitionQosResponses];
 
 export type MarketplaceProviderOfferingsSetProfileData = {
     body?: OfferingProfileBindRequest;
@@ -61792,6 +62176,21 @@ export type MarketplaceProviderOfferingsUpdatePartitionPartialUpdateResponses = 
 };
 
 export type MarketplaceProviderOfferingsUpdatePartitionPartialUpdateResponse = MarketplaceProviderOfferingsUpdatePartitionPartialUpdateResponses[keyof MarketplaceProviderOfferingsUpdatePartitionPartialUpdateResponses];
+
+export type MarketplaceProviderOfferingsUpdateQosPartialUpdateData = {
+    body?: PatchedOfferingQoSUpdateRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-provider-offerings/{uuid}/update_qos/';
+};
+
+export type MarketplaceProviderOfferingsUpdateQosPartialUpdateResponses = {
+    200: OfferingQoS;
+};
+
+export type MarketplaceProviderOfferingsUpdateQosPartialUpdateResponse = MarketplaceProviderOfferingsUpdateQosPartialUpdateResponses[keyof MarketplaceProviderOfferingsUpdateQosPartialUpdateResponses];
 
 export type MarketplaceProviderOfferingsUpdateResourceOptionsData = {
     body: OfferingResourceOptionsUpdateRequest;
@@ -93204,7 +93603,7 @@ export type ProviderCannedResponsesUpdateResponses = {
 export type ProviderCannedResponsesUpdateResponse = ProviderCannedResponsesUpdateResponses[keyof ProviderCannedResponsesUpdateResponses];
 
 export type ProviderCannedResponsesRenderData = {
-    body: ProviderCannedResponseRequest;
+    body?: CannedResponseRenderRequest;
     path: {
         uuid: string;
     };
@@ -93213,11 +93612,10 @@ export type ProviderCannedResponsesRenderData = {
 };
 
 export type ProviderCannedResponsesRenderResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    200: CannedResponseRenderResponse;
 };
+
+export type ProviderCannedResponsesRenderResponse = ProviderCannedResponsesRenderResponses[keyof ProviderCannedResponsesRenderResponses];
 
 export type ProviderHelpdesksListData = {
     body?: never;
@@ -100494,11 +100892,10 @@ export type SupportCannedResponsesRenderData = {
 };
 
 export type SupportCannedResponsesRenderResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+    200: CannedResponseRenderResponse;
 };
+
+export type SupportCannedResponsesRenderResponse = SupportCannedResponsesRenderResponses[keyof SupportCannedResponsesRenderResponses];
 
 export type SupportCommentsListData = {
     body?: never;
