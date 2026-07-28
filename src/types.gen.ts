@@ -3569,15 +3569,15 @@ export type CallCoiConfiguration = {
     /**
      * COI types requiring automatic recusal
      */
-    recusal_required_types?: Array<string>;
+    recusal_required_types?: Array<CoiTypeEnum>;
     /**
      * COI types allowing management plan
      */
-    management_allowed_types?: Array<string>;
+    management_allowed_types?: Array<CoiTypeEnum>;
     /**
      * COI types requiring disclosure only
      */
-    disclosure_only_types?: Array<string>;
+    disclosure_only_types?: Array<CoiTypeEnum>;
     /**
      * Enable automated co-authorship detection
      */
@@ -10095,15 +10095,15 @@ export type InvitationCoiConfiguration = {
     /**
      * COI types requiring automatic recusal
      */
-    recusal_required_types: Array<string>;
+    recusal_required_types: Array<CoiTypeEnum>;
     /**
      * COI types where a management plan can be submitted
      */
-    management_allowed_types: Array<string>;
+    management_allowed_types: Array<CoiTypeEnum>;
     /**
      * COI types that only need disclosure
      */
-    disclosure_only_types: Array<string>;
+    disclosure_only_types: Array<CoiTypeEnum>;
     /**
      * How much proposal info is disclosed to reviewers
      */
@@ -18876,15 +18876,15 @@ export type PatchedCallCoiConfigurationRequest = {
     /**
      * COI types requiring automatic recusal
      */
-    recusal_required_types?: Array<string>;
+    recusal_required_types?: Array<CoiTypeEnum>;
     /**
      * COI types allowing management plan
      */
-    management_allowed_types?: Array<string>;
+    management_allowed_types?: Array<CoiTypeEnum>;
     /**
      * COI types requiring disclosure only
      */
-    disclosure_only_types?: Array<string>;
+    disclosure_only_types?: Array<CoiTypeEnum>;
     /**
      * Enable automated co-authorship detection
      */
