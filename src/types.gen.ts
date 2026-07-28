@@ -639,6 +639,13 @@ export type AgentTaskStatsResponse = {
 
 export type AgentTypeEnum = 'Order processing' | 'Usage reporting' | 'Glauth sync' | 'Resource sync' | 'Event processing' | 'unknown';
 
+export type AggregatedAccessSubnets = {
+    expanded: Array<OfferingAccessSubnetExpanded>;
+    packed: Array<string>;
+    defaults: Array<OfferingDefaultAccessSubnetRow>;
+    organization_subnets: Array<OrganizationAccessSubnetRow>;
+};
+
 export type AggregatedUsageTrend = {
     /**
      * Period in YYYY-MM format
@@ -14322,6 +14329,8 @@ export type OfferingAccessSubnetExpanded = {
     project_name: string;
     customer_uuid: string;
     customer_name: string;
+    offering_uuid: string;
+    offering_name: string;
 };
 
 export type OfferingAccessSubnetRequest = {
@@ -14585,6 +14594,13 @@ export type OfferingCreateRequest = {
     limits?: {
         [key: string]: OfferingComponentLimitRequest;
     };
+};
+
+export type OfferingDefaultAccessSubnetRow = {
+    inet: string;
+    description: string;
+    offering_uuid: string;
+    offering_name: string;
 };
 
 export type OfferingDescriptionUpdateRequest = {
@@ -18826,6 +18842,13 @@ export type OrderUpdateRequest = {
      * Enables delayed processing of resource provisioning order.
      */
     start_date?: string | null;
+};
+
+export type OrganizationAccessSubnetRow = {
+    inet: string;
+    description: string;
+    customer_uuid: string;
+    customer_name: string;
 };
 
 export type OrganizationGroup = {
@@ -31531,7 +31554,7 @@ export type Version = {
      */
     version: string;
     /**
-     * Latest available version from GitHub, if available.
+     * Latest available version from GitHub. Only included for staff or support users when update checks are enabled.
      */
     latest_version?: string;
 };
@@ -62335,6 +62358,51 @@ export type MarketplaceProviderOfferingsUserHasResourceAccessRetrieveResponses =
 };
 
 export type MarketplaceProviderOfferingsUserHasResourceAccessRetrieveResponse = MarketplaceProviderOfferingsUserHasResourceAccessRetrieveResponses[keyof MarketplaceProviderOfferingsUserHasResourceAccessRetrieveResponses];
+
+export type MarketplaceProviderOfferingsAggregatedAccessSubnetsRetrieveData = {
+    body?: never;
+    path?: never;
+    query: {
+        /**
+         * Also merge in the organization-level access subnets of customers owning non-terminated resources of the offerings.
+         */
+        include_organization_subnets?: boolean;
+        /**
+         * UUID of an offering to include. May be repeated.
+         */
+        offering_uuid: Array<string>;
+    };
+    url: '/api/marketplace-provider-offerings/aggregated_access_subnets/';
+};
+
+export type MarketplaceProviderOfferingsAggregatedAccessSubnetsRetrieveResponses = {
+    200: AggregatedAccessSubnets;
+};
+
+export type MarketplaceProviderOfferingsAggregatedAccessSubnetsRetrieveResponse = MarketplaceProviderOfferingsAggregatedAccessSubnetsRetrieveResponses[keyof MarketplaceProviderOfferingsAggregatedAccessSubnetsRetrieveResponses];
+
+export type MarketplaceProviderOfferingsAggregatedAccessSubnetsCountData = {
+    body?: never;
+    path?: never;
+    query: {
+        /**
+         * Also merge in the organization-level access subnets of customers owning non-terminated resources of the offerings.
+         */
+        include_organization_subnets?: boolean;
+        /**
+         * UUID of an offering to include. May be repeated.
+         */
+        offering_uuid: Array<string>;
+    };
+    url: '/api/marketplace-provider-offerings/aggregated_access_subnets/';
+};
+
+export type MarketplaceProviderOfferingsAggregatedAccessSubnetsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type MarketplaceProviderOfferingsGroupsListData = {
     body?: never;
