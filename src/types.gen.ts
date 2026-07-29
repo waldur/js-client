@@ -8310,9 +8310,9 @@ export type EventConsumerRegistrationRequest = {
      */
     object_types?: Array<ObservableObjectTypeEnum>;
     /**
-     * Entity bindings this consumer receives events for — e.g. several projects, a customer, an offering. You may only bind to an entity you hold a role on. AN EMPTY LIST MEANS GLOBAL (every event, including all-user PII) and is staff/support only.
+     * Entity bindings this consumer receives events for — e.g. several projects, a customer, an offering, or your own user (type 'user', your own UUID) for identity events. You may only bind to an entity you hold a role on, or to yourself. AN EMPTY LIST MEANS GLOBAL (every event, including all-user PII) and is staff/support only.
      */
-    scopes?: Array<AllowedScopeInputRequest>;
+    scopes?: Array<EventConsumerScopeInputRequest>;
 };
 
 export type EventConsumerRegistrationResponse = {
@@ -8332,6 +8332,11 @@ export type EventConsumerRegistrationResponse = {
      * Object types routed to this queue
      */
     observable_object_types: Array<string>;
+};
+
+export type EventConsumerScopeInputRequest = {
+    type: string;
+    uuid: string;
 };
 
 export type EventConsumerScopeOutput = {
