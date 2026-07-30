@@ -26394,6 +26394,7 @@ export type ResourceAccessSubnetRequest = {
 export type ResourceApiKey = {
     readonly uuid: string;
     readonly resource_uuid: string;
+    readonly resource_backend_id: string;
     client_id?: string;
     fingerprint?: string;
     state?: ResourceApiKeyState;
@@ -26417,11 +26418,12 @@ export type ResourceApiKeySetKeyRequest = {
     client_id?: string;
 };
 
-export type ResourceApiKeyState = 'Creating' | 'OK' | 'Updating' | 'Terminating' | 'Erred';
+export type ResourceApiKeyState = 'Creating' | 'OK' | 'Updating' | 'Erred';
 
 export type ResourceApiKeyStatus = {
     readonly uuid: string;
     readonly resource_uuid: string;
+    readonly resource_backend_id: string;
     client_id?: string;
     fingerprint?: string;
     state?: ResourceApiKeyState;
@@ -65373,6 +65375,14 @@ export type MarketplaceResourceApiKeysListData = {
     path?: never;
     query?: {
         /**
+         * Modified before
+         */
+        modified_before?: string;
+        /**
+         * Offering UUID
+         */
+        offering_uuid?: string;
+        /**
          * A page number within the paginated result set.
          */
         page?: number;
@@ -65384,6 +65394,12 @@ export type MarketplaceResourceApiKeysListData = {
          * Resource UUID
          */
         resource_uuid?: string;
+        /**
+         * API key state
+         *
+         *
+         */
+        state?: Array<ResourceApiKeyState>;
     };
     url: '/api/marketplace-resource-api-keys/';
 };
@@ -65399,6 +65415,14 @@ export type MarketplaceResourceApiKeysCountData = {
     path?: never;
     query?: {
         /**
+         * Modified before
+         */
+        modified_before?: string;
+        /**
+         * Offering UUID
+         */
+        offering_uuid?: string;
+        /**
          * A page number within the paginated result set.
          */
         page?: number;
@@ -65410,6 +65434,12 @@ export type MarketplaceResourceApiKeysCountData = {
          * Resource UUID
          */
         resource_uuid?: string;
+        /**
+         * API key state
+         *
+         *
+         */
+        state?: Array<ResourceApiKeyState>;
     };
     url: '/api/marketplace-resource-api-keys/';
 };
@@ -65420,24 +65450,6 @@ export type MarketplaceResourceApiKeysCountResponses = {
      */
     200: unknown;
 };
-
-export type MarketplaceResourceApiKeysDestroyData = {
-    body?: never;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/marketplace-resource-api-keys/{uuid}/';
-};
-
-export type MarketplaceResourceApiKeysDestroyResponses = {
-    /**
-     * No response body
-     */
-    204: void;
-};
-
-export type MarketplaceResourceApiKeysDestroyResponse = MarketplaceResourceApiKeysDestroyResponses[keyof MarketplaceResourceApiKeysDestroyResponses];
 
 export type MarketplaceResourceApiKeysRetrieveData = {
     body?: never;
@@ -65468,21 +65480,6 @@ export type MarketplaceResourceApiKeysRevealRetrieveResponses = {
 };
 
 export type MarketplaceResourceApiKeysRevealRetrieveResponse = MarketplaceResourceApiKeysRevealRetrieveResponses[keyof MarketplaceResourceApiKeysRevealRetrieveResponses];
-
-export type MarketplaceResourceApiKeysRevokeData = {
-    body?: never;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/marketplace-resource-api-keys/{uuid}/revoke/';
-};
-
-export type MarketplaceResourceApiKeysRevokeResponses = {
-    202: Status;
-};
-
-export type MarketplaceResourceApiKeysRevokeResponse = MarketplaceResourceApiKeysRevokeResponses[keyof MarketplaceResourceApiKeysRevokeResponses];
 
 export type MarketplaceResourceApiKeysRotateData = {
     body?: never;
