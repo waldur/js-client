@@ -10525,6 +10525,7 @@ export type Issue = {
     resource?: string;
     readonly resource_type: string;
     readonly resource_name: string;
+    offering?: string | null;
     readonly created: string;
     readonly modified: string;
     template?: string | null;
@@ -10628,6 +10629,7 @@ export type IssueRequest = {
     customer?: string | null;
     project?: string | null;
     resource?: string;
+    offering?: string | null;
     /**
      * Set true if issue is created by regular user via portal.
      */
@@ -19676,6 +19678,7 @@ export type PatchedIssueRequest = {
     summary?: string;
     description?: string;
     assignee?: string | null;
+    offering?: string | null;
     /**
      * Set true if issue is created by regular user via portal.
      */
@@ -34669,7 +34672,7 @@ export type ProjectFieldEnum = 'affiliation' | 'affiliation_code' | 'affiliation
 
 export type UserFieldEnum = 'active_isds' | 'address' | 'affiliations' | 'agree_with_policy' | 'agreement_date' | 'attribute_sources' | 'birth_date' | 'can_use_personal_access_tokens' | 'civil_number' | 'country_of_residence' | 'date_joined' | 'deactivation_reason' | 'description' | 'eduperson_assurance' | 'email' | 'first_name' | 'full_name' | 'gender' | 'has_active_session' | 'has_usable_password' | 'identity_provider_fields' | 'identity_provider_label' | 'identity_provider_management_url' | 'identity_provider_name' | 'identity_source' | 'image' | 'ip_address' | 'is_active' | 'is_admin_deactivated' | 'is_identity_manager' | 'is_staff' | 'is_support' | 'job_title' | 'last_name' | 'managed_isds' | 'nationalities' | 'nationality' | 'native_name' | 'notifications_enabled' | 'organization' | 'organization_address' | 'organization_country' | 'organization_registry_code' | 'organization_type' | 'organization_vat_code' | 'permissions' | 'personal_title' | 'phone_number' | 'place_of_birth' | 'preferred_language' | 'primary_gid' | 'registration_method' | 'requested_email' | 'should_protect_user_details' | 'slug' | 'token' | 'token_expires_at' | 'token_lifetime' | 'uid_number' | 'url' | 'username' | 'uuid';
 
-export type ResourceOEnum = '-created' | '-end_date' | '-name' | '-project_name' | '-state' | 'created' | 'end_date' | 'name' | 'project_name' | 'state';
+export type ResourceOEnum = '-backend_id' | '-created' | '-customer_name' | '-end_date' | '-name' | '-offering_name' | '-plan_name' | '-project_name' | '-state' | 'backend_id' | 'created' | 'customer_name' | 'end_date' | 'name' | 'offering_name' | 'plan_name' | 'project_name' | 'state';
 
 export type ResourceTeamMemberFieldEnum = 'email' | 'expiration_time' | 'full_name' | 'image' | 'resource_projects' | 'role_name' | 'role_uuid' | 'roles' | 'url' | 'username' | 'uuid';
 
@@ -67933,6 +67936,10 @@ export type MarketplaceRuntimeStatesListData = {
          * Filter runtime states by resources belonging to a specific category.
          */
         category_uuid?: string;
+        /**
+         * Filter runtime states by resources of a specific offering.
+         */
+        offering_uuid?: string;
         /**
          * Filter runtime states by resources within a specific project.
          */
