@@ -10272,6 +10272,7 @@ export type Invoice = {
 
 export type InvoiceCost = {
     readonly price: number;
+    readonly compensation: number;
     readonly year: number;
     readonly month: number;
     items?: Array<InvoiceCostItem>;
