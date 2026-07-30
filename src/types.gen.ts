@@ -29779,6 +29779,10 @@ export type SubmitRequestResponse = {
      */
     scope_uuid: string;
     /**
+     * Type of the invitation scope (e.g., 'customer', 'project')
+     */
+    scope_type?: RoleType | NullEnum | null;
+    /**
      * Whether the request was automatically approved
      */
     auto_approved: boolean;
