@@ -26400,7 +26400,6 @@ export type ResourceApiKey = {
     readonly resource_uuid: string;
     readonly resource_backend_id: string;
     client_id?: string;
-    fingerprint?: string;
     state?: ResourceApiKeyState;
     readonly modified: string;
     error_message?: string;
@@ -26429,7 +26428,6 @@ export type ResourceApiKeyStatus = {
     readonly resource_uuid: string;
     readonly resource_backend_id: string;
     client_id?: string;
-    fingerprint?: string;
     state?: ResourceApiKeyState;
     readonly modified: string;
     error_message?: string;
