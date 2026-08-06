@@ -66,7 +66,6 @@ export type AccessSubnetImpactResource = {
     project_name: string;
     offering_uuid: string;
     offering_name: string;
-    supports_access_subnets: boolean;
     concealment_enabled: boolean;
     unrestricted: boolean;
     addresses: Array<AccessSubnetImpactAddress>;

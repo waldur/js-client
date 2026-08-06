@@ -255,7 +255,7 @@ export const accessSubnetsUpdate = <ThrowOnError extends boolean = true>(options
 /**
  * Show which resources the access subnets reach
  *
- * For each of the organization's live resources, the addresses that may reach it, where each came from, and whether the list is enforced or merely advisory. Pass access_subnet_uuid to narrow it to the resources one address reaches.
+ * For each of the organization's live resources of an offering that supports access subnets, the addresses that may reach it, where each came from, and whether the list is enforced or merely advisory. Resources of offerings without access subnet support are omitted: no allow-list can apply to them. Pass access_subnet_uuid to narrow it to the resources one address reaches.
  */
 export const accessSubnetsResourceImpactRetrieve = <ThrowOnError extends boolean = true>(options: Options<AccessSubnetsResourceImpactRetrieveData, ThrowOnError>) => (options.client ?? client).get<AccessSubnetsResourceImpactRetrieveResponses, unknown, ThrowOnError>({
     security: [
