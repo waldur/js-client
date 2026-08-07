@@ -5873,6 +5873,8 @@ export type ConstanceSettings = {
     TABLE_GROWTH_MONTHLY_THRESHOLD_PERCENT?: number;
     TABLE_GROWTH_RETENTION_DAYS?: number;
     TABLE_GROWTH_MIN_SIZE_BYTES?: number;
+    USER_REVISION_RETENTION_DAYS?: number;
+    USER_REVISION_KEEP_MINIMUM?: number;
     USER_ACTIONS_ENABLED?: boolean;
     USER_ACTIONS_PENDING_ORDER_HOURS?: number;
     USER_ACTIONS_HIGH_URGENCY_NOTIFICATION?: boolean;
@@ -6199,6 +6201,8 @@ export type ConstanceSettingsRequest = {
     TABLE_GROWTH_MONTHLY_THRESHOLD_PERCENT?: number;
     TABLE_GROWTH_RETENTION_DAYS?: number;
     TABLE_GROWTH_MIN_SIZE_BYTES?: number;
+    USER_REVISION_RETENTION_DAYS?: number;
+    USER_REVISION_KEEP_MINIMUM?: number;
     USER_ACTIONS_ENABLED?: boolean;
     USER_ACTIONS_PENDING_ORDER_HOURS?: number;
     USER_ACTIONS_HIGH_URGENCY_NOTIFICATION?: boolean;
@@ -18915,8 +18919,10 @@ export type OrderDetails = {
     provider_message?: string;
     provider_message_url?: string;
     provider_message_attachment?: string | null;
+    readonly provider_message_updated_at: string | null;
     consumer_message?: string;
     consumer_message_attachment?: string | null;
+    readonly consumer_message_updated_at: string | null;
     readonly consumer_rejection_comment: string;
     readonly provider_rejection_comment: string;
     readonly auto_approved: boolean;
@@ -34053,6 +34059,8 @@ export type ConstanceSettingsRequestForm = {
     TABLE_GROWTH_MONTHLY_THRESHOLD_PERCENT?: number;
     TABLE_GROWTH_RETENTION_DAYS?: number;
     TABLE_GROWTH_MIN_SIZE_BYTES?: number;
+    USER_REVISION_RETENTION_DAYS?: number;
+    USER_REVISION_KEEP_MINIMUM?: number;
     USER_ACTIONS_ENABLED?: boolean;
     USER_ACTIONS_PENDING_ORDER_HOURS?: number;
     USER_ACTIONS_HIGH_URGENCY_NOTIFICATION?: boolean;
@@ -34379,6 +34387,8 @@ export type ConstanceSettingsRequestMultipart = {
     TABLE_GROWTH_MONTHLY_THRESHOLD_PERCENT?: number;
     TABLE_GROWTH_RETENTION_DAYS?: number;
     TABLE_GROWTH_MIN_SIZE_BYTES?: number;
+    USER_REVISION_RETENTION_DAYS?: number;
+    USER_REVISION_KEEP_MINIMUM?: number;
     USER_ACTIONS_ENABLED?: boolean;
     USER_ACTIONS_PENDING_ORDER_HOURS?: number;
     USER_ACTIONS_HIGH_URGENCY_NOTIFICATION?: boolean;
@@ -35066,7 +35076,7 @@ export type OfferingUserFieldEnum = 'consent_data' | 'created' | 'customer_name'
 
 export type OfferingUserOEnum = '-created' | '-modified' | '-user_first_name' | '-user_last_name' | '-username' | 'created' | 'modified' | 'user_first_name' | 'user_last_name' | 'username';
 
-export type OrderDetailsFieldEnum = 'accepting_terms_of_service' | 'activation_price' | 'attachment' | 'attributes' | 'auto_approved' | 'auto_approved_by_rule_uuid' | 'auto_approved_cost_limit_snapshot' | 'backend_id' | 'callback_url' | 'can_terminate' | 'category_icon' | 'category_title' | 'category_uuid' | 'completed_at' | 'consumer_message' | 'consumer_message_attachment' | 'consumer_rejection_comment' | 'consumer_reviewed_at' | 'consumer_reviewed_by' | 'consumer_reviewed_by_full_name' | 'consumer_reviewed_by_username' | 'cost' | 'created' | 'created_by_civil_number' | 'created_by_email' | 'created_by_full_name' | 'created_by_organization' | 'created_by_organization_address' | 'created_by_organization_country' | 'created_by_organization_registry_code' | 'created_by_organization_vat_code' | 'created_by_username' | 'customer_name' | 'customer_slug' | 'customer_uuid' | 'error_message' | 'error_traceback' | 'error_updated_at' | 'fixed_price' | 'issue' | 'limits' | 'marketplace_resource_uuid' | 'modified' | 'new_cost_estimate' | 'new_plan_name' | 'new_plan_uuid' | 'offering' | 'offering_billable' | 'offering_description' | 'offering_image' | 'offering_name' | 'offering_plugin_options' | 'offering_shared' | 'offering_thumbnail' | 'offering_type' | 'offering_uuid' | 'old_cost_estimate' | 'old_plan_name' | 'old_plan_uuid' | 'order_subtype' | 'output' | 'output_updated_at' | 'plan' | 'plan_description' | 'plan_name' | 'plan_unit' | 'plan_uuid' | 'project_description' | 'project_name' | 'project_slug' | 'project_uuid' | 'provider_description' | 'provider_message' | 'provider_message_attachment' | 'provider_message_url' | 'provider_name' | 'provider_rejection_comment' | 'provider_reviewed_at' | 'provider_reviewed_by' | 'provider_reviewed_by_full_name' | 'provider_reviewed_by_username' | 'provider_slug' | 'provider_uuid' | 'request_comment' | 'resource_name' | 'resource_type' | 'resource_uuid' | 'slug' | 'start_date' | 'state' | 'termination_comment' | 'type' | 'url' | 'uuid';
+export type OrderDetailsFieldEnum = 'accepting_terms_of_service' | 'activation_price' | 'attachment' | 'attributes' | 'auto_approved' | 'auto_approved_by_rule_uuid' | 'auto_approved_cost_limit_snapshot' | 'backend_id' | 'callback_url' | 'can_terminate' | 'category_icon' | 'category_title' | 'category_uuid' | 'completed_at' | 'consumer_message' | 'consumer_message_attachment' | 'consumer_message_updated_at' | 'consumer_rejection_comment' | 'consumer_reviewed_at' | 'consumer_reviewed_by' | 'consumer_reviewed_by_full_name' | 'consumer_reviewed_by_username' | 'cost' | 'created' | 'created_by_civil_number' | 'created_by_email' | 'created_by_full_name' | 'created_by_organization' | 'created_by_organization_address' | 'created_by_organization_country' | 'created_by_organization_registry_code' | 'created_by_organization_vat_code' | 'created_by_username' | 'customer_name' | 'customer_slug' | 'customer_uuid' | 'error_message' | 'error_traceback' | 'error_updated_at' | 'fixed_price' | 'issue' | 'limits' | 'marketplace_resource_uuid' | 'modified' | 'new_cost_estimate' | 'new_plan_name' | 'new_plan_uuid' | 'offering' | 'offering_billable' | 'offering_description' | 'offering_image' | 'offering_name' | 'offering_plugin_options' | 'offering_shared' | 'offering_thumbnail' | 'offering_type' | 'offering_uuid' | 'old_cost_estimate' | 'old_plan_name' | 'old_plan_uuid' | 'order_subtype' | 'output' | 'output_updated_at' | 'plan' | 'plan_description' | 'plan_name' | 'plan_unit' | 'plan_uuid' | 'project_description' | 'project_name' | 'project_slug' | 'project_uuid' | 'provider_description' | 'provider_message' | 'provider_message_attachment' | 'provider_message_updated_at' | 'provider_message_url' | 'provider_name' | 'provider_rejection_comment' | 'provider_reviewed_at' | 'provider_reviewed_by' | 'provider_reviewed_by_full_name' | 'provider_reviewed_by_username' | 'provider_slug' | 'provider_uuid' | 'request_comment' | 'resource_name' | 'resource_type' | 'resource_uuid' | 'slug' | 'start_date' | 'state' | 'termination_comment' | 'type' | 'url' | 'uuid';
 
 export type OrderDetailsOEnum = '-consumer_reviewed_at' | '-cost' | '-created' | '-state' | 'consumer_reviewed_at' | 'cost' | 'created' | 'state';
 
