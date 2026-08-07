@@ -22410,16 +22410,7 @@ export type ProjectCredit = {
     readonly customer_credit: string;
     readonly allocated_customer_credit: string | null;
     readonly consumption_last_month: number;
-    /**
-     * Credit this project can actually draw this month.
-     *
-     * `value` is only an allocation: compensation stops as soon as the
-     * organization credit is exhausted (see MonthlyCompensation), so a
-     * project can show a healthy balance that cannot be spent. Exposing the
-     * minimum lets the dashboard say so without revealing organization
-     * totals to project members.
-     */
-    readonly spendable_value: number;
+    readonly spendable_value: string;
     /**
      * True when the organization balance, not this allocation, is binding.
      */
