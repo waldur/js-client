@@ -66102,6 +66102,10 @@ export type MarketplaceResourceEndDateChangeRequestsListData = {
          */
         customer_uuid?: string;
         /**
+         * Offering UUID
+         */
+        offering_uuid?: string;
+        /**
          * A page number within the paginated result set.
          */
         page?: number;
@@ -66140,6 +66144,10 @@ export type MarketplaceResourceEndDateChangeRequestsCountData = {
          * Customer UUID
          */
         customer_uuid?: string;
+        /**
+         * Offering UUID
+         */
+        offering_uuid?: string;
         /**
          * A page number within the paginated result set.
          */
