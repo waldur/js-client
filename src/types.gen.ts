@@ -863,6 +863,26 @@ export type AnonymousChatConversation = {
      * Click-throughs on recommended offerings; repeat clicks count separately.
      */
     offerings_clicked: number;
+    /**
+     * Comma-separated distinct LLM models across the conversation. More than one when AI_ASSISTANT_MODEL was switched partway through; blank for conversations predating model tracking.
+     */
+    models_used: string;
+    /**
+     * True once the nightly LLM judge has scored this conversation. One verdict per conversation, recorded on its last turn; a conversation is never re-judged.
+     */
+    is_reviewed: boolean;
+    /**
+     * Prompt tokens summed over the conversation; 0 for turns predating token tracking.
+     */
+    input_tokens: number;
+    /**
+     * Completion tokens summed over the conversation.
+     */
+    output_tokens: number;
+    /**
+     * input_tokens + output_tokens. Excludes LLM judge spend, which runs on its own budget.
+     */
+    total_tokens: number;
     started: string | null;
     last_active: string | null;
 };
@@ -30792,6 +30812,10 @@ export type ThreadSession = {
     readonly total_tokens: number | null;
     readonly title_gen_input_tokens: number | null;
     readonly title_gen_output_tokens: number | null;
+    /**
+     * Comma-separated distinct LLM models across the thread's messages. More than one when an admin switched AI_ASSISTANT_MODEL mid-thread; blank for threads written before model tracking existed.
+     */
+    readonly models_used: string;
     readonly is_flagged: boolean;
     max_severity: InjectionSeverityEnum;
     readonly has_feedback: boolean;
@@ -35083,9 +35107,9 @@ export type CallReviewerPoolOEnum = '-created' | '-current_assignments' | '-expe
 
 export type ChatSessionFieldEnum = 'created' | 'modified' | 'user' | 'user_full_name' | 'user_username' | 'uuid';
 
-export type ThreadSessionFieldEnum = 'chat_session' | 'created' | 'flags' | 'has_feedback' | 'input_tokens' | 'is_archived' | 'is_flagged' | 'max_severity' | 'message_count' | 'modified' | 'name' | 'output_tokens' | 'title_gen_input_tokens' | 'title_gen_output_tokens' | 'total_tokens' | 'user_full_name' | 'user_username' | 'uuid';
+export type ThreadSessionFieldEnum = 'chat_session' | 'created' | 'flags' | 'has_feedback' | 'input_tokens' | 'is_archived' | 'is_flagged' | 'max_severity' | 'message_count' | 'models_used' | 'modified' | 'name' | 'output_tokens' | 'title_gen_input_tokens' | 'title_gen_output_tokens' | 'total_tokens' | 'user_full_name' | 'user_username' | 'uuid';
 
-export type ThreadSessionOEnum = '-created' | '-input_tokens' | '-modified' | '-output_tokens' | '-total_tokens' | 'created' | 'input_tokens' | 'modified' | 'output_tokens' | 'total_tokens';
+export type ThreadSessionOEnum = '-created' | '-input_tokens' | '-models_used' | '-modified' | '-output_tokens' | '-total_tokens' | 'created' | 'input_tokens' | 'models_used' | 'modified' | 'output_tokens' | 'total_tokens';
 
 export type ThreadSessionScopeEnum = 'own';
 
@@ -37601,9 +37625,9 @@ export type AnonymousChatInteractionsListData = {
     body?: never;
     path?: never;
     query?: {
-        created_from?: string;
-        created_to?: string;
-        has_negative_feedback?: boolean;
+        created_after?: string;
+        created_before?: string;
+        has_feedback?: boolean;
         is_flagged?: boolean;
         /**
          * Ordering
@@ -37667,9 +37691,9 @@ export type AnonymousChatInteractionsBySessionListData = {
         session_id: string;
     };
     query?: {
-        created_from?: string;
-        created_to?: string;
-        has_negative_feedback?: boolean;
+        created_after?: string;
+        created_before?: string;
+        has_feedback?: boolean;
         is_flagged?: boolean;
         /**
          * Ordering
@@ -37703,9 +37727,9 @@ export type AnonymousChatInteractionsByUserAggregateData = {
     body?: never;
     path?: never;
     query?: {
-        created_from?: string;
-        created_to?: string;
-        has_negative_feedback?: boolean;
+        created_after?: string;
+        created_before?: string;
+        has_feedback?: boolean;
         is_flagged?: boolean;
         /**
          * Ordering
@@ -37741,9 +37765,9 @@ export type AnonymousChatInteractionsByUserListData = {
         user_slug: string;
     };
     query?: {
-        created_from?: string;
-        created_to?: string;
-        has_negative_feedback?: boolean;
+        created_after?: string;
+        created_before?: string;
+        has_feedback?: boolean;
         is_flagged?: boolean;
         /**
          * Ordering
@@ -37777,16 +37801,44 @@ export type AnonymousChatInteractionsConversationsListData = {
     body?: never;
     path?: never;
     query?: {
-        created_from?: string;
-        created_to?: string;
-        has_negative_feedback?: boolean;
+        created_after?: string;
+        created_before?: string;
+        has_feedback?: boolean;
+        /**
+         * Conversation-level bound: selects whole conversations by their summed spend, never individual turns.
+         */
+        input_tokens_max?: number;
+        /**
+         * Conversation-level bound: selects whole conversations by their summed spend, never individual turns.
+         */
+        input_tokens_min?: number;
         is_flagged?: boolean;
+        /**
+         * Whether the nightly LLM judge has scored the conversation.
+         */
+        is_reviewed?: boolean;
+        /**
+         * Bound on the conversation's most recent turn. Inclusive of the boundary day.
+         */
+        last_active_after?: string;
+        /**
+         * Bound on the conversation's most recent turn. Inclusive of the boundary day.
+         */
+        last_active_before?: string;
         /**
          * Ordering
          *
          *
          */
         o?: Array<AnonymousChatInteractionOEnum>;
+        /**
+         * Conversation-level bound: selects whole conversations by their summed spend, never individual turns.
+         */
+        output_tokens_max?: number;
+        /**
+         * Conversation-level bound: selects whole conversations by their summed spend, never individual turns.
+         */
+        output_tokens_min?: number;
         /**
          * A page number within the paginated result set.
          */
@@ -37798,6 +37850,14 @@ export type AnonymousChatInteractionsConversationsListData = {
         query?: string;
         session_id?: string;
         severity?: InjectionSeverityEnum;
+        /**
+         * Conversation-level bound: selects whole conversations by their summed spend, never individual turns.
+         */
+        total_tokens_max?: number;
+        /**
+         * Conversation-level bound: selects whole conversations by their summed spend, never individual turns.
+         */
+        total_tokens_min?: number;
         user_slug?: string;
     };
     url: '/api/anonymous-chat-interactions/conversations/';
@@ -37812,7 +37872,58 @@ export type AnonymousChatInteractionsConversationsListResponse = AnonymousChatIn
 export type AnonymousChatInteractionsKpiRetrieveData = {
     body?: never;
     path?: never;
-    query?: never;
+    query?: {
+        created_after?: string;
+        created_before?: string;
+        has_feedback?: boolean;
+        /**
+         * Conversation-level bound: selects whole conversations by their summed spend, never individual turns.
+         */
+        input_tokens_max?: number;
+        /**
+         * Conversation-level bound: selects whole conversations by their summed spend, never individual turns.
+         */
+        input_tokens_min?: number;
+        is_flagged?: boolean;
+        /**
+         * Whether the nightly LLM judge has scored the conversation.
+         */
+        is_reviewed?: boolean;
+        /**
+         * Bound on the conversation's most recent turn. Inclusive of the boundary day.
+         */
+        last_active_after?: string;
+        /**
+         * Bound on the conversation's most recent turn. Inclusive of the boundary day.
+         */
+        last_active_before?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<AnonymousChatInteractionOEnum>;
+        /**
+         * Conversation-level bound: selects whole conversations by their summed spend, never individual turns.
+         */
+        output_tokens_max?: number;
+        /**
+         * Conversation-level bound: selects whole conversations by their summed spend, never individual turns.
+         */
+        output_tokens_min?: number;
+        query?: string;
+        session_id?: string;
+        severity?: InjectionSeverityEnum;
+        /**
+         * Conversation-level bound: selects whole conversations by their summed spend, never individual turns.
+         */
+        total_tokens_max?: number;
+        /**
+         * Conversation-level bound: selects whole conversations by their summed spend, never individual turns.
+         */
+        total_tokens_min?: number;
+        user_slug?: string;
+    };
     url: '/api/anonymous-chat-interactions/kpi/';
 };
 
@@ -43664,7 +43775,8 @@ export type ChatThreadsListData = {
     body?: never;
     path?: never;
     query?: {
-        created?: string;
+        created_after?: string;
+        created_before?: string;
         field?: Array<ThreadSessionFieldEnum>;
         has_feedback?: boolean;
         input_tokens_max?: number;
@@ -43672,7 +43784,8 @@ export type ChatThreadsListData = {
         is_archived?: boolean;
         is_flagged?: boolean;
         max_severity?: InjectionSeverityEnum;
-        modified?: string;
+        modified_after?: string;
+        modified_before?: string;
         /**
          * Ordering
          *
@@ -43776,7 +43889,31 @@ export type ChatThreadsUnarchiveResponse = ChatThreadsUnarchiveResponses[keyof C
 export type ChatThreadsStatsRetrieveData = {
     body?: never;
     path?: never;
-    query?: never;
+    query?: {
+        created_after?: string;
+        created_before?: string;
+        has_feedback?: boolean;
+        input_tokens_max?: number;
+        input_tokens_min?: number;
+        is_archived?: boolean;
+        is_flagged?: boolean;
+        max_severity?: InjectionSeverityEnum;
+        modified_after?: string;
+        modified_before?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<ThreadSessionOEnum>;
+        output_tokens_max?: number;
+        output_tokens_min?: number;
+        query?: string;
+        scope?: ThreadSessionScopeEnum;
+        total_tokens_max?: number;
+        total_tokens_min?: number;
+        user?: string;
+    };
     url: '/api/chat-threads/stats/';
 };
 

@@ -4435,10 +4435,12 @@ export const chatThreadsUnarchive = <ThrowOnError extends boolean = true>(option
  *
  * Summary statistics for the visible chat threads.
  *
- * Aggregates over a clean base queryset rather than ``get_queryset`` —
- * the per-row token/count annotations there would collide with these
- * aggregates. Visibility mirrors the list: staff/support see all, other
- * users only their own.
+ * Filters run against the annotated list queryset, then the matched
+ * threads are re-read as a plain queryset. Both halves are load-bearing:
+ * ``has_feedback`` and the token ranges resolve against annotations that
+ * exist only on ``get_queryset``, while the per-row annotations there
+ * would collide with the aggregates below. Visibility comes from
+ * ``get_queryset`` — staff/support see all, other users only their own.
  */
 export const chatThreadsStatsRetrieve = <ThrowOnError extends boolean = true>(options?: Options<ChatThreadsStatsRetrieveData, ThrowOnError>) => (options?.client ?? client).get<ChatThreadsStatsRetrieveResponses, unknown, ThrowOnError>({
     security: [
