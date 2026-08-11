@@ -9396,9 +9396,7 @@ export type GoogleCredentials = {
     /**
      * List of allowed domains for offering endpoints. Only staff can modify this field.
      */
-    allowed_domains?: {
-        [key: string]: unknown;
-    };
+    allowed_domains?: Array<string>;
     readonly calendar_token: string;
     readonly calendar_refresh_token: string;
     readonly google_auth_url: string;
@@ -14180,15 +14178,11 @@ export type NestedSoftwareCatalog = {
     /**
      * List of enabled CPU families: ['x86_64', 'aarch64']
      */
-    enabled_cpu_family?: {
-        [key: string]: unknown;
-    };
+    enabled_cpu_family?: Array<string>;
     /**
      * List of enabled CPU microarchitectures: ['generic', 'zen3']
      */
-    enabled_cpu_microarchitectures?: {
-        [key: string]: unknown;
-    };
+    enabled_cpu_microarchitectures?: Array<string>;
     readonly package_count: number;
     partition: PartitionSummary | null;
 };
@@ -14197,15 +14191,11 @@ export type NestedSoftwareCatalogRequest = {
     /**
      * List of enabled CPU families: ['x86_64', 'aarch64']
      */
-    enabled_cpu_family?: {
-        [key: string]: unknown;
-    };
+    enabled_cpu_family?: Array<string>;
     /**
      * List of enabled CPU microarchitectures: ['generic', 'zen3']
      */
-    enabled_cpu_microarchitectures?: {
-        [key: string]: unknown;
-    };
+    enabled_cpu_microarchitectures?: Array<string>;
 };
 
 export type NestedSoftwareTarget = {
@@ -14235,9 +14225,7 @@ export type NestedSoftwareTarget = {
     /**
      * List of GPU architectures this target supports (e.g., ['nvidia/cc70', 'nvidia/cc90'])
      */
-    gpu_architectures?: {
-        [key: string]: unknown;
-    };
+    gpu_architectures?: Array<string>;
 };
 
 export type NestedSoftwareTargetRequest = {
@@ -14266,9 +14254,7 @@ export type NestedSoftwareTargetRequest = {
     /**
      * List of GPU architectures this target supports (e.g., ['nvidia/cc70', 'nvidia/cc90'])
      */
-    gpu_architectures?: {
-        [key: string]: unknown;
-    };
+    gpu_architectures?: Array<string>;
 };
 
 export type NestedSoftwareVersion = {
@@ -15629,15 +15615,11 @@ export type OfferingSoftwareCatalog = {
     /**
      * List of enabled CPU families: ['x86_64', 'aarch64']
      */
-    enabled_cpu_family?: {
-        [key: string]: unknown;
-    };
+    enabled_cpu_family?: Array<string>;
     /**
      * List of enabled CPU microarchitectures: ['generic', 'zen3']
      */
-    enabled_cpu_microarchitectures?: {
-        [key: string]: unknown;
-    };
+    enabled_cpu_microarchitectures?: Array<string>;
     partition?: string | null;
     readonly partition_name: string;
 };
@@ -15648,15 +15630,11 @@ export type OfferingSoftwareCatalogRequest = {
     /**
      * List of enabled CPU families: ['x86_64', 'aarch64']
      */
-    enabled_cpu_family?: {
-        [key: string]: unknown;
-    };
+    enabled_cpu_family?: Array<string>;
     /**
      * List of enabled CPU microarchitectures: ['generic', 'zen3']
      */
-    enabled_cpu_microarchitectures?: {
-        [key: string]: unknown;
-    };
+    enabled_cpu_microarchitectures?: Array<string>;
     partition?: string | null;
 };
 
@@ -20290,15 +20268,11 @@ export type PatchedOfferingSoftwareCatalogUpdateRequest = {
     /**
      * List of enabled CPU families: ['x86_64', 'aarch64']
      */
-    enabled_cpu_family?: {
-        [key: string]: unknown;
-    };
+    enabled_cpu_family?: Array<string>;
     /**
      * List of enabled CPU microarchitectures: ['generic', 'zen3']
      */
-    enabled_cpu_microarchitectures?: {
-        [key: string]: unknown;
-    };
+    enabled_cpu_microarchitectures?: Array<string>;
     partition?: string | null;
 };
 
@@ -20842,9 +20816,7 @@ export type PatchedProviderSupportUserRequest = {
     /**
      * List of skill tags for routing.
      */
-    skills?: {
-        [key: string]: unknown;
-    };
+    skills?: Array<string>;
     /**
      * Maximum number of open tickets this user can handle.
      */
@@ -21185,9 +21157,7 @@ export type PatchedReviewerProfileCreateRequest = {
     /**
      * List of name variants used in publications
      */
-    alternative_names?: {
-        [key: string]: unknown;
-    };
+    alternative_names?: Array<string>;
     /**
      * Whether reviewer is currently accepting review requests
      */
@@ -21206,9 +21176,7 @@ export type PatchedReviewerProfileRequest = {
     /**
      * List of name variants used in publications
      */
-    alternative_names?: {
-        [key: string]: unknown;
-    };
+    alternative_names?: Array<string>;
     /**
      * Whether reviewer is currently accepting review requests
      */
@@ -21231,9 +21199,7 @@ export type PatchedReviewerPublicationRequest = {
     /**
      * List of co-author names and identifiers
      */
-    coauthors?: {
-        [key: string]: unknown;
-    };
+    coauthors?: Array<unknown>;
     /**
      * External identifiers: {"semantic_scholar": "...", "pubmed": "..."}
      */
@@ -21394,9 +21360,7 @@ export type PatchedServiceProviderRequest = {
     /**
      * List of allowed domains for offering endpoints. Only staff can modify this field.
      */
-    allowed_domains?: {
-        [key: string]: unknown;
-    };
+    allowed_domains?: Array<string>;
 };
 
 export type PatchedSlurmAllocationRequest = {
@@ -24118,9 +24082,7 @@ export type ProviderSupportUser = {
     /**
      * List of skill tags for routing.
      */
-    skills?: {
-        [key: string]: unknown;
-    };
+    skills?: Array<string>;
     /**
      * Maximum number of open tickets this user can handle.
      */
@@ -24139,9 +24101,7 @@ export type ProviderSupportUserRequest = {
     /**
      * List of skill tags for routing.
      */
-    skills?: {
-        [key: string]: unknown;
-    };
+    skills?: Array<string>;
     /**
      * Maximum number of open tickets this user can handle.
      */
@@ -27725,9 +27685,7 @@ export type ReviewerProfile = {
     /**
      * List of name variants used in publications
      */
-    alternative_names?: {
-        [key: string]: unknown;
-    };
+    alternative_names?: Array<string>;
     readonly affiliations: Array<ReviewerAffiliation>;
     readonly expertise_set: Array<ReviewerExpertise>;
     readonly publications: Array<ReviewerPublication>;
@@ -27766,9 +27724,7 @@ export type ReviewerProfileCreateRequest = {
     /**
      * List of name variants used in publications
      */
-    alternative_names?: {
-        [key: string]: unknown;
-    };
+    alternative_names?: Array<string>;
     /**
      * Whether reviewer is currently accepting review requests
      */
@@ -27787,9 +27743,7 @@ export type ReviewerProfileRequest = {
     /**
      * List of name variants used in publications
      */
-    alternative_names?: {
-        [key: string]: unknown;
-    };
+    alternative_names?: Array<string>;
     /**
      * Whether reviewer is currently accepting review requests
      */
@@ -27813,9 +27767,7 @@ export type ReviewerPublication = {
     /**
      * List of co-author names and identifiers
      */
-    coauthors?: {
-        [key: string]: unknown;
-    };
+    coauthors?: Array<unknown>;
     /**
      * External identifiers: {"semantic_scholar": "...", "pubmed": "..."}
      */
@@ -27845,9 +27797,7 @@ export type ReviewerPublicationRequest = {
     /**
      * List of co-author names and identifiers
      */
-    coauthors?: {
-        [key: string]: unknown;
-    };
+    coauthors?: Array<unknown>;
     /**
      * External identifiers: {"semantic_scholar": "...", "pubmed": "..."}
      */
@@ -29136,9 +29086,7 @@ export type ServiceProvider = {
     /**
      * List of allowed domains for offering endpoints. Only staff can modify this field.
      */
-    allowed_domains?: {
-        [key: string]: unknown;
-    };
+    allowed_domains?: Array<string>;
 };
 
 export type ServiceProviderAccess = {
@@ -29201,9 +29149,7 @@ export type ServiceProviderRequest = {
     /**
      * List of allowed domains for offering endpoints. Only staff can modify this field.
      */
-    allowed_domains?: {
-        [key: string]: unknown;
-    };
+    allowed_domains?: Array<string>;
 };
 
 export type ServiceProviderRevenues = {
@@ -30128,9 +30074,7 @@ export type SoftwareTarget = {
     /**
      * List of GPU architectures this target supports (e.g., ['nvidia/cc70', 'nvidia/cc90'])
      */
-    readonly gpu_architectures: {
-        [key: string]: unknown;
-    };
+    readonly gpu_architectures: Array<string>;
 };
 
 export type SoftwareToolchain = {
@@ -33661,9 +33605,7 @@ export type ServiceProviderRequestForm = {
     /**
      * List of allowed domains for offering endpoints. Only staff can modify this field.
      */
-    allowed_domains?: {
-        [key: string]: unknown;
-    };
+    allowed_domains?: Array<string>;
 };
 
 export type ServiceProviderRequestMultipart = {
@@ -33674,9 +33616,7 @@ export type ServiceProviderRequestMultipart = {
     /**
      * List of allowed domains for offering endpoints. Only staff can modify this field.
      */
-    allowed_domains?: {
-        [key: string]: unknown;
-    };
+    allowed_domains?: Array<string>;
 };
 
 export type PatchedServiceProviderRequestForm = {
@@ -33686,9 +33626,7 @@ export type PatchedServiceProviderRequestForm = {
     /**
      * List of allowed domains for offering endpoints. Only staff can modify this field.
      */
-    allowed_domains?: {
-        [key: string]: unknown;
-    };
+    allowed_domains?: Array<string>;
 };
 
 export type PatchedServiceProviderRequestMultipart = {
@@ -33698,9 +33636,7 @@ export type PatchedServiceProviderRequestMultipart = {
     /**
      * List of allowed domains for offering endpoints. Only staff can modify this field.
      */
-    allowed_domains?: {
-        [key: string]: unknown;
-    };
+    allowed_domains?: Array<string>;
 };
 
 export type OnboardingJustificationDocumentationRequestForm = {
@@ -59302,6 +59238,7 @@ export type MarketplaceProjectEstimatedCostPoliciesListData = {
     query?: {
         customer?: string;
         customer_uuid?: string;
+        has_resource?: boolean;
         /**
          * A page number within the paginated result set.
          */
@@ -59313,6 +59250,8 @@ export type MarketplaceProjectEstimatedCostPoliciesListData = {
         project?: string;
         project_uuid?: string;
         query?: string;
+        resource?: string;
+        resource_uuid?: string;
         scope?: string;
         scope_uuid?: string;
     };
@@ -59331,6 +59270,7 @@ export type MarketplaceProjectEstimatedCostPoliciesCountData = {
     query?: {
         customer?: string;
         customer_uuid?: string;
+        has_resource?: boolean;
         /**
          * A page number within the paginated result set.
          */
@@ -59342,6 +59282,8 @@ export type MarketplaceProjectEstimatedCostPoliciesCountData = {
         project?: string;
         project_uuid?: string;
         query?: string;
+        resource?: string;
+        resource_uuid?: string;
         scope?: string;
         scope_uuid?: string;
     };
