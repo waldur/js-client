@@ -12401,6 +12401,10 @@ export type MergedPluginOptions = {
      * List of disabled marketplace resource actions for this offering.
      */
     disabled_resource_actions?: Array<string>;
+    /**
+     * Show a warning about unrecoverable loss of the SSH private key on the OpenStack instance order form.
+     */
+    show_ssh_key_loss_warning?: boolean;
 };
 
 export type MergedPluginOptionsRequest = {
@@ -12796,6 +12800,10 @@ export type MergedPluginOptionsRequest = {
      * List of disabled marketplace resource actions for this offering.
      */
     disabled_resource_actions?: Array<string>;
+    /**
+     * Show a warning about unrecoverable loss of the SSH private key on the OpenStack instance order form.
+     */
+    show_ssh_key_loss_warning?: boolean;
 };
 
 export type MergedSecretOptions = {
@@ -21287,6 +21295,10 @@ export type PatchedRoleDetailsRequest = {
      * Description [cs]
      */
     description_cs?: string | null;
+    /**
+     * Description [km]
+     */
+    description_km?: string | null;
     is_active?: boolean;
 };
 
@@ -28445,6 +28457,10 @@ export type RoleDescription = {
      * Description [cs]
      */
     description_cs?: string | null;
+    /**
+     * Description [km]
+     */
+    description_km?: string | null;
 };
 
 export type RoleDescriptionRequest = {
@@ -28505,6 +28521,10 @@ export type RoleDescriptionRequest = {
      * Description [cs]
      */
     description_cs?: string | null;
+    /**
+     * Description [km]
+     */
+    description_km?: string | null;
 };
 
 export type RoleDetails = {
@@ -28567,6 +28587,10 @@ export type RoleDetails = {
      * Description [cs]
      */
     description_cs?: string | null;
+    /**
+     * Description [km]
+     */
+    description_km?: string | null;
     readonly permissions: Array<string>;
     readonly is_system_role: boolean;
     is_active?: boolean;
@@ -28637,6 +28661,10 @@ export type RoleModifyRequest = {
      * Description [cs]
      */
     description_cs?: string | null;
+    /**
+     * Description [km]
+     */
+    description_km?: string | null;
     permissions: {
         [key: string]: unknown;
     };
@@ -35309,7 +35337,7 @@ export type ReviewerProfileOEnum = '-created' | '-user_email' | '-user_name' | '
 
 export type ReviewerSuggestionOEnum = '-affinity_score' | '-created' | '-reviewed_at' | '-status' | 'affinity_score' | 'created' | 'reviewed_at' | 'status';
 
-export type RoleDetailsFieldEnum = 'content_type' | 'customer_name' | 'customer_uuid' | 'description' | 'description_ar' | 'description_cs' | 'description_da' | 'description_de' | 'description_en' | 'description_es' | 'description_et' | 'description_fr' | 'description_it' | 'description_lt' | 'description_lv' | 'description_nb' | 'description_ru' | 'description_sv' | 'is_active' | 'is_system_role' | 'name' | 'permissions' | 'template_name' | 'template_uuid' | 'users_count' | 'uuid';
+export type RoleDetailsFieldEnum = 'content_type' | 'customer_name' | 'customer_uuid' | 'description' | 'description_ar' | 'description_cs' | 'description_da' | 'description_de' | 'description_en' | 'description_es' | 'description_et' | 'description_fr' | 'description_it' | 'description_km' | 'description_lt' | 'description_lv' | 'description_nb' | 'description_ru' | 'description_sv' | 'is_active' | 'is_system_role' | 'name' | 'permissions' | 'template_name' | 'template_uuid' | 'users_count' | 'uuid';
 
 export type RoleDetailsOEnum = '-is_active' | '-name' | '-origin' | '-scope' | '-users_count' | 'is_active' | 'name' | 'origin' | 'scope' | 'users_count';
 
