@@ -11628,10 +11628,6 @@ export type MarketplaceCategory = {
      * Set to true if this category is for OpenStack Volume. Only one category can have "true" value.
      */
     default_volume_category?: boolean;
-    /**
-     * Set to true if this category is for OpenStack Tenant. Only one category can have "true" value.
-     */
-    default_tenant_category?: boolean;
     readonly offering_count: number;
     readonly available_offerings_count: number;
     readonly sections: Array<NestedSection>;
@@ -11653,10 +11649,6 @@ export type MarketplaceCategoryRequest = {
      * Set to true if this category is for OpenStack Volume. Only one category can have "true" value.
      */
     default_volume_category?: boolean;
-    /**
-     * Set to true if this category is for OpenStack Tenant. Only one category can have "true" value.
-     */
-    default_tenant_category?: boolean;
     group?: string | null;
 };
 
@@ -18796,7 +18788,6 @@ export type OrderCreateRequest = {
     accepting_terms_of_service?: boolean;
     callback_url?: string | null;
     request_comment?: string | null;
-    type?: RequestTypes;
     /**
      * Enables delayed processing of resource provisioning order.
      */
@@ -20025,10 +20016,6 @@ export type PatchedMarketplaceCategoryRequest = {
      * Set to true if this category is for OpenStack Volume. Only one category can have "true" value.
      */
     default_volume_category?: boolean;
-    /**
-     * Set to true if this category is for OpenStack Tenant. Only one category can have "true" value.
-     */
-    default_tenant_category?: boolean;
     group?: string | null;
 };
 
@@ -21074,10 +21061,6 @@ export type PatchedRequestedOfferingRequest = {
         [key: string]: unknown;
     };
     plan?: string | null;
-    /**
-     * Whether a purchase order must accompany a resource request for this offering before the proposal can be submitted. Defaults to the offering's require_purchase_order_upload, and stays under the call manager's control afterwards.
-     */
-    require_purchase_order?: boolean;
     description?: string;
 };
 
@@ -22422,7 +22405,14 @@ export type ProjectCredit = {
     readonly customer_uuid: string;
     readonly customer_credit: string;
     readonly allocated_customer_credit: string | null;
-    readonly consumption_last_month: number;
+    /**
+     * Credit drawn by this project in the previous month.
+     *
+     * None when that month has no invoice at all — no billing period is not
+     * the same statement as "drew nothing", and callers should be able to
+     * tell them apart.
+     */
+    readonly consumption_last_month: number | null;
     readonly spendable_value: string;
     /**
      * True when the organization balance, not this allocation, is binding.
@@ -26523,7 +26513,7 @@ export type RequestedOffering = {
     /**
      * Whether a purchase order must accompany a resource request for this offering before the proposal can be submitted. Defaults to the offering's require_purchase_order_upload, and stays under the call manager's control afterwards.
      */
-    require_purchase_order?: boolean;
+    readonly require_purchase_order: boolean;
     readonly created: string;
     readonly url: string;
     readonly approved_by: string | null;
@@ -26539,10 +26529,6 @@ export type RequestedOfferingRequest = {
         [key: string]: unknown;
     };
     plan?: string | null;
-    /**
-     * Whether a purchase order must accompany a resource request for this offering before the proposal can be submitted. Defaults to the offering's require_purchase_order_upload, and stays under the call manager's control afterwards.
-     */
-    require_purchase_order?: boolean;
     description?: string;
 };
 
@@ -33250,10 +33236,6 @@ export type MarketplaceCategoryRequestForm = {
      * Set to true if this category is for OpenStack Volume. Only one category can have "true" value.
      */
     default_volume_category?: boolean;
-    /**
-     * Set to true if this category is for OpenStack Tenant. Only one category can have "true" value.
-     */
-    default_tenant_category?: boolean;
     group?: string | null;
 };
 
@@ -33269,10 +33251,6 @@ export type MarketplaceCategoryRequestMultipart = {
      * Set to true if this category is for OpenStack Volume. Only one category can have "true" value.
      */
     default_volume_category?: boolean;
-    /**
-     * Set to true if this category is for OpenStack Tenant. Only one category can have "true" value.
-     */
-    default_tenant_category?: boolean;
     group?: string | null;
 };
 
@@ -33288,10 +33266,6 @@ export type PatchedMarketplaceCategoryRequestForm = {
      * Set to true if this category is for OpenStack Volume. Only one category can have "true" value.
      */
     default_volume_category?: boolean;
-    /**
-     * Set to true if this category is for OpenStack Tenant. Only one category can have "true" value.
-     */
-    default_tenant_category?: boolean;
     group?: string | null;
 };
 
@@ -33307,10 +33281,6 @@ export type PatchedMarketplaceCategoryRequestMultipart = {
      * Set to true if this category is for OpenStack Volume. Only one category can have "true" value.
      */
     default_volume_category?: boolean;
-    /**
-     * Set to true if this category is for OpenStack Tenant. Only one category can have "true" value.
-     */
-    default_tenant_category?: boolean;
     group?: string | null;
 };
 
@@ -35138,7 +35108,7 @@ export type MaintenanceAnnouncementTemplateOEnum = '-created' | '-name' | 'creat
 
 export type ResourceFieldEnum = 'attributes' | 'available_actions' | 'backend_id' | 'backend_metadata' | 'can_terminate' | 'category_icon' | 'category_title' | 'category_uuid' | 'created' | 'creation_order' | 'current_usages' | 'customer_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'downscaled' | 'effective_id' | 'end_date' | 'end_date_requested_by' | 'end_date_updated_at' | 'endpoints' | 'error_message' | 'error_traceback' | 'has_api_keys' | 'is_limit_based' | 'is_usage_based' | 'last_sync' | 'limit_usage' | 'limits' | 'modified' | 'name' | 'offering' | 'offering_backend_id' | 'offering_billable' | 'offering_components' | 'offering_description' | 'offering_image' | 'offering_name' | 'offering_plugin_options' | 'offering_shared' | 'offering_slug' | 'offering_state' | 'offering_thumbnail' | 'offering_type' | 'offering_uuid' | 'options' | 'order_in_progress' | 'parent_name' | 'parent_offering_name' | 'parent_offering_slug' | 'parent_offering_uuid' | 'parent_uuid' | 'paused' | 'plan' | 'plan_description' | 'plan_name' | 'plan_unit' | 'plan_uuid' | 'project' | 'project_description' | 'project_effective_end_date' | 'project_end_date' | 'project_end_date_requested_by' | 'project_is_in_grace_period' | 'project_name' | 'project_slug' | 'project_uuid' | 'provider_description' | 'provider_name' | 'provider_slug' | 'provider_uuid' | 'renewal_date' | 'report' | 'resource_effective_end_date' | 'resource_type' | 'resource_uuid' | 'restrict_member_access' | 'scope' | 'service_settings_uuid' | 'slug' | 'state' | 'url' | 'usage_limit_restriction' | 'user_requires_reconsent' | 'username' | 'uuid';
 
-export type MarketplaceCategoryFieldEnum = 'articles' | 'available_offerings_count' | 'columns' | 'components' | 'default_tenant_category' | 'default_vm_category' | 'default_volume_category' | 'description' | 'group' | 'icon' | 'offering_count' | 'sections' | 'title' | 'url' | 'uuid';
+export type MarketplaceCategoryFieldEnum = 'articles' | 'available_offerings_count' | 'columns' | 'components' | 'default_vm_category' | 'default_volume_category' | 'description' | 'group' | 'icon' | 'offering_count' | 'sections' | 'title' | 'url' | 'uuid';
 
 export type CategoryComponentUsageFieldEnum = 'category_title' | 'category_uuid' | 'date' | 'fixed_usage' | 'measured_unit' | 'name' | 'reported_usage' | 'scope' | 'type';
 
