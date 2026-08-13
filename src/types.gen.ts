@@ -16077,11 +16077,11 @@ export type OfferingUserPosixAttributesRequest = {
      */
     home_directory?: string;
     /**
-     * Override the account's UID. The value must fall within the offering's POSIX ID pool and is rejected if already allocated.
+     * Override the account's UID. The value must fall within the offering's resolved POSIX ID pool and is rejected with 400 if it is out of range or already held by another active identity.
      */
     uidnumber?: number | null;
     /**
-     * Override the account's primary GID (see uidnumber).
+     * Override the account's primary GID, under the same pool-range and uniqueness rules as uidnumber.
      */
     primarygroup?: number | null;
 };
@@ -16098,8 +16098,17 @@ export type OfferingUserPosixGroup = {
 };
 
 export type OfferingUserPosixUpdateResponse = {
+    /**
+     * The UID now stored for the account.
+     */
     uidnumber?: number | null;
+    /**
+     * The primary GID now stored for the account.
+     */
     primarygroup?: number | null;
+    /**
+     * Non-fatal advisories about the accepted values: a reserved POSIX id (65534 or 65535) or a value of 2^31 or above. Out-of-range and already-allocated values are rejected with 400 instead.
+     */
     warnings?: Array<string>;
 };
 

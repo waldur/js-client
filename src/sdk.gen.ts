@@ -11738,7 +11738,11 @@ export const marketplaceOfferingUsersSetPendingAdditionalValidation = <ThrowOnEr
 /**
  * Set POSIX attributes for an offering user
  *
- * Override the login shell, home directory, UID and/or primary GID for a single offering user, taking precedence over the offering-level defaults / the range allocator. UID and primary GID re-point the allocation ledger; values outside every active range are accepted but reported in the response 'warnings'.
+ * Override the login shell, home directory, UID and/or primary GID for a single offering user, taking precedence over the offering-level defaults / the range allocator. This is the programmatic equivalent of the 'Edit POSIX attributes' dialog. The accepted fields are 'login_shell', 'home_directory', 'uidnumber' and 'primarygroup'; all are optional, but at least one must be provided.
+ *
+ * A UID or primary GID re-points the allocation ledger and must fall within the POSIX ID pool resolved for the offering: a value outside that pool's range is rejected with 400, as is a value already held by another active identity (another account, a robot account or a group) and any override on an offering for which no pool resolves. The action is all-or-nothing - a conflict on the second identifier rolls back the change made for the first.
+ *
+ * The response 'warnings' list carries only non-fatal advisories about values that were accepted: the reserved POSIX ids 65534 and 65535, and values of 2^31 or above, which may break software using signed 32-bit ids.
  */
 export const marketplaceOfferingUsersSetPosixAttributes = <ThrowOnError extends boolean = true>(options: Options<MarketplaceOfferingUsersSetPosixAttributesData, ThrowOnError>) => (options.client ?? client).post<MarketplaceOfferingUsersSetPosixAttributesResponses, unknown, ThrowOnError>({
     security: [
