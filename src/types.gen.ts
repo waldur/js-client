@@ -5817,6 +5817,8 @@ export type ConstanceSettings = {
     OIDC_ACCESS_TOKEN_ENABLED?: boolean;
     OIDC_BLOCK_CREATION_OF_UNINVITED_USERS?: boolean;
     OIDC_BLOCK_CREATION_OF_UNINVITED_USERS_RESPONSE_MESSAGE?: string;
+    OIDC_BLOCKED_LOGIN_RESPONSE_MESSAGE?: string;
+    OIDC_ALLOWED_USER_EMAIL_PATTERNS?: Array<string>;
     OIDC_MATCHMAKING_BY_EMAIL?: boolean;
     OIDC_DEFAULT_LOGOUT_URL?: string;
     DEACTIVATE_USER_IF_NO_ROLES?: boolean;
@@ -6145,6 +6147,8 @@ export type ConstanceSettingsRequest = {
     OIDC_ACCESS_TOKEN_ENABLED?: boolean;
     OIDC_BLOCK_CREATION_OF_UNINVITED_USERS?: boolean;
     OIDC_BLOCK_CREATION_OF_UNINVITED_USERS_RESPONSE_MESSAGE?: string;
+    OIDC_BLOCKED_LOGIN_RESPONSE_MESSAGE?: string;
+    OIDC_ALLOWED_USER_EMAIL_PATTERNS?: Array<string>;
     OIDC_MATCHMAKING_BY_EMAIL?: boolean;
     OIDC_DEFAULT_LOGOUT_URL?: string;
     DEACTIVATE_USER_IF_NO_ROLES?: boolean;
@@ -32520,7 +32524,7 @@ export type VolumeTypeResponse = {
     description?: string;
 };
 
-export type WaldursupportactivebackendtypeEnum = 'atlassian' | 'zammad' | 'smax';
+export type WaldursupportactivebackendtypeEnum = 'basic' | 'atlassian' | 'zammad' | 'smax';
 
 export type WaldurCustomerBrief = {
     uuid: string;
@@ -34053,6 +34057,8 @@ export type ConstanceSettingsRequestForm = {
     OIDC_ACCESS_TOKEN_ENABLED?: boolean;
     OIDC_BLOCK_CREATION_OF_UNINVITED_USERS?: boolean;
     OIDC_BLOCK_CREATION_OF_UNINVITED_USERS_RESPONSE_MESSAGE?: string;
+    OIDC_BLOCKED_LOGIN_RESPONSE_MESSAGE?: string;
+    OIDC_ALLOWED_USER_EMAIL_PATTERNS?: Array<string>;
     OIDC_MATCHMAKING_BY_EMAIL?: boolean;
     OIDC_DEFAULT_LOGOUT_URL?: string;
     DEACTIVATE_USER_IF_NO_ROLES?: boolean;
@@ -34381,6 +34387,8 @@ export type ConstanceSettingsRequestMultipart = {
     OIDC_ACCESS_TOKEN_ENABLED?: boolean;
     OIDC_BLOCK_CREATION_OF_UNINVITED_USERS?: boolean;
     OIDC_BLOCK_CREATION_OF_UNINVITED_USERS_RESPONSE_MESSAGE?: string;
+    OIDC_BLOCKED_LOGIN_RESPONSE_MESSAGE?: string;
+    OIDC_ALLOWED_USER_EMAIL_PATTERNS?: Array<string>;
     OIDC_MATCHMAKING_BY_EMAIL?: boolean;
     OIDC_DEFAULT_LOGOUT_URL?: string;
     DEACTIVATE_USER_IF_NO_ROLES?: boolean;
@@ -35335,8 +35343,6 @@ export type AttachmentFieldEnum = 'backend_id' | 'created' | 'destroy_is_availab
 export type CommentOEnum = '-created' | '-modified' | 'created' | 'modified';
 
 export type IssueOEnum = '-assignee_name' | '-caller_first_name' | '-caller_last_name' | '-created' | '-customer_name' | '-key' | '-modified' | '-priority' | '-project_name' | '-remote_id' | '-reporter_name' | '-status' | '-summary' | '-type' | 'assignee_name' | 'caller_first_name' | 'caller_last_name' | 'created' | 'customer_name' | 'key' | 'modified' | 'priority' | 'project_name' | 'remote_id' | 'reporter_name' | 'status' | 'summary' | 'type';
-
-export type SupportUserBackendNameEnum = 'atlassian' | 'basic' | 'smax' | 'zammad';
 
 export type SupportUserOEnum = '-backend_id' | '-backend_name' | '-is_active' | '-name' | 'backend_id' | 'backend_name' | 'is_active' | 'name';
 
@@ -104232,7 +104238,7 @@ export type SupportUsersListData = {
          *
          *
          */
-        backend_name?: SupportUserBackendNameEnum;
+        backend_name?: WaldursupportactivebackendtypeEnum;
         is_active?: boolean;
         name?: string;
         /**
@@ -104274,7 +104280,7 @@ export type SupportUsersCountData = {
          *
          *
          */
-        backend_name?: SupportUserBackendNameEnum;
+        backend_name?: WaldursupportactivebackendtypeEnum;
         is_active?: boolean;
         name?: string;
         /**
