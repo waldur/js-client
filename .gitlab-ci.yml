@@ -131,6 +131,12 @@ Publish Release to NPM:
   needs:
     - job: Build TypeScript SDK
       artifacts: true
+    # Gate the registry publish too, not just the tag. These jobs use `needs`,
+    # so a satisfied dependency lets them run even while another job in an
+    # earlier stage is failing — which is exactly how the SDK jobs published
+    # during 8.1.0 while the schema job was red.
+    - job: Verify generated client
+      artifacts: false
   before_script:
     - apk add --no-cache bash git
   script:
