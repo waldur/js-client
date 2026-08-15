@@ -1,6 +1,8 @@
 include:
   - project: "waldur/waldur-pipelines"
     file: "/templates/utils/release-utils.yml"
+  - project: "waldur/waldur-pipelines"
+    file: "/templates/utils/verify-generated-artifact.yml"
 
 variables:
   npm_config_cache: "$CI_PROJECT_DIR/.npm"
@@ -44,6 +46,25 @@ Build TypeScript SDK:
       - package-lock.json
     expire_in: 1 day
 
+# The 8.1.0 client was generated from the 8.0.9 schema — the fetch had silently
+# fallen back — so it contained none of that release's 234 new operations and
+# every job still went green. This compares what was generated against what was
+# asked for, before it can be released.
+Verify generated client:
+  extends: .verify-generated-artifact
+  stage: codegen
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "pipeline"'
+    - if: '$CI_PIPELINE_SOURCE == "trigger"'
+    - if: '$CI_PIPELINE_SOURCE == "web"'
+  needs:
+    - job: Fetch OpenAPI schema
+      artifacts: true
+    - job: Build TypeScript SDK
+      artifacts: true
+  variables:
+    GENERATED_DIR: "src"
+
 Release TypeScript/JavaScript SDK:
   stage: release
   image: registry.hpc.ut.ee/mirror/library/node:lts-alpine
@@ -54,6 +75,9 @@ Release TypeScript/JavaScript SDK:
   needs:
     - job: Build TypeScript SDK
       artifacts: true
+    # Gate the release on the check, so a stale client cannot be published.
+    - job: Verify generated client
+      artifacts: false
   before_script:
     - apk add --no-cache bash git
     - git config --global user.name "$GITLAB_USER_NAME"
