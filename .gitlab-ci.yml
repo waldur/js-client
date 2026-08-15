@@ -111,7 +111,19 @@ Publish Release to NPM:
     - apk add --no-cache bash git
   script:
     - set -e
-    - npm version "$RELEASE_VERSION" --no-git-tag-version
+    # `Release TypeScript/JavaScript SDK` already commits the bump to main, so
+    # by the time this job checks out the ref, package.json is usually at
+    # $RELEASE_VERSION — and `npm version` exits 1 with "Version not changed"
+    # on a no-op bump, failing the publish. That is what blocked the 8.1.0
+    # release from reaching npm. Bump only when it is actually needed.
+    - |
+      current=$(node -p "require('./package.json').version")
+      if [ "$current" = "$RELEASE_VERSION" ]; then
+        echo "package.json is already at $RELEASE_VERSION — skipping bump"
+      else
+        echo "Bumping package.json from $current to $RELEASE_VERSION"
+        npm version "$RELEASE_VERSION" --no-git-tag-version
+      fi
     - npm install
     - npm run build
     - echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
