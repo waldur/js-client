@@ -7127,6 +7127,7 @@ export type CustomerEstimatedCostPolicy = {
     limit_cost: number;
     period?: PolicyPeriodEnum;
     readonly period_name: string;
+    readonly current_cost: string;
     readonly customer_credit: string | null;
     billing_price_estimate: NestedPriceEstimate;
 };
@@ -14849,6 +14850,7 @@ export type OfferingEstimatedCostPolicy = {
     limit_cost: number;
     period?: PolicyPeriodEnum;
     readonly period_name: string;
+    readonly current_cost: string;
     organization_groups?: Array<string>;
     /**
      * If True, policy applies to all customers. Mutually exclusive with organization_groups.
@@ -22588,6 +22590,7 @@ export type ProjectEstimatedCostPolicy = {
     limit_cost: number;
     period?: PolicyPeriodEnum;
     readonly period_name: string;
+    readonly current_cost: string;
     readonly project_credit: string | null;
     readonly customer_credit: string | null;
     resource?: string | null;
@@ -35134,9 +35137,13 @@ export type ComponentUserUsageOEnum = '-component_usage__billing_period' | '-usa
 
 export type CourseAccountOEnum = '-created' | '-email' | '-modified' | '-project_end_date' | '-project_name' | '-project_start_date' | '-state' | '-username' | 'created' | 'email' | 'modified' | 'project_end_date' | 'project_name' | 'project_start_date' | 'state' | 'username';
 
+export type CustomerEstimatedCostPolicyFieldEnum = 'actions' | 'affected_resources_count' | 'billing_price_estimate' | 'created' | 'created_by_full_name' | 'created_by_username' | 'current_cost' | 'customer_credit' | 'fired_datetime' | 'has_fired' | 'limit_cost' | 'options' | 'period' | 'period_name' | 'scope' | 'scope_name' | 'scope_uuid' | 'url' | 'uuid';
+
 export type IntegrationStatusDetailsOEnum = '-last_request_timestamp' | 'last_request_timestamp';
 
 export type IntegrationStatusDetailsStatusEnum = 'Active' | 'Disconnected' | 'Unknown';
+
+export type OfferingEstimatedCostPolicyFieldEnum = 'actions' | 'affected_resources_count' | 'apply_to_all' | 'created' | 'created_by_full_name' | 'created_by_username' | 'current_cost' | 'fired_datetime' | 'has_fired' | 'limit_cost' | 'options' | 'organization_groups' | 'period' | 'period_name' | 'scope' | 'scope_name' | 'scope_uuid' | 'url' | 'uuid';
 
 export type OfferingFileFieldEnum = 'created' | 'file' | 'name' | 'offering' | 'url' | 'uuid';
 
@@ -35161,6 +35168,8 @@ export type OrderDetailsOEnum = '-consumer_reviewed_at' | '-cost' | '-created' |
 export type PublicOfferingDetailsFieldEnum = 'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'billing_type_classification' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'config_drive_default' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'default_access_subnets' | 'description' | 'documentation_url' | 'effective_available_limits' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'has_compliance_requirements' | 'helpdesk_url' | 'image' | 'integration_guide' | 'is_accessible' | 'latitude' | 'longitude' | 'name' | 'offering_group' | 'offering_group_title' | 'offering_group_uuid' | 'open_for_proposals' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'profile_name' | 'profile_uuid' | 'project' | 'project_name' | 'project_uuid' | 'promotion_campaigns' | 'qos_profiles' | 'quotas' | 'resource_options' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'tags' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'user_has_consent' | 'uuid' | 'vendor_details';
 
 export type PosixIdPoolFieldEnum = 'created' | 'customer_name' | 'customer_uuid' | 'description' | 'gid_used' | 'gid_utilization' | 'max_gid' | 'max_uid' | 'min_gid' | 'min_uid' | 'next_gid' | 'next_uid' | 'offering' | 'scope' | 'service_provider' | 'uid_used' | 'uid_utilization' | 'url' | 'uuid';
+
+export type ProjectEstimatedCostPolicyFieldEnum = 'actions' | 'affected_resources_count' | 'billing_price_estimate' | 'created' | 'created_by_full_name' | 'created_by_username' | 'current_cost' | 'customer_credit' | 'fired_datetime' | 'has_fired' | 'limit_cost' | 'options' | 'period' | 'period_name' | 'project_credit' | 'resource' | 'resource_name' | 'scope' | 'scope_name' | 'scope_uuid' | 'url' | 'use_credit' | 'uuid';
 
 export type RemoteProjectUpdateRequestStateEnum = 'approved' | 'canceled' | 'draft' | 'pending' | 'rejected';
 
@@ -54354,6 +54363,7 @@ export type MarketplaceCustomerEstimatedCostPoliciesListData = {
     query?: {
         customer?: string;
         customer_uuid?: string;
+        field?: Array<CustomerEstimatedCostPolicyFieldEnum>;
         /**
          * A page number within the paginated result set.
          */
@@ -54437,7 +54447,9 @@ export type MarketplaceCustomerEstimatedCostPoliciesRetrieveData = {
     path: {
         uuid: string;
     };
-    query?: never;
+    query?: {
+        field?: Array<CustomerEstimatedCostPolicyFieldEnum>;
+    };
     url: '/api/marketplace-customer-estimated-cost-policies/{uuid}/';
 };
 
@@ -55156,6 +55168,7 @@ export type MarketplaceOfferingEstimatedCostPoliciesListData = {
     body?: never;
     path?: never;
     query?: {
+        field?: Array<OfferingEstimatedCostPolicyFieldEnum>;
         /**
          * A page number within the paginated result set.
          */
@@ -55237,7 +55250,9 @@ export type MarketplaceOfferingEstimatedCostPoliciesRetrieveData = {
     path: {
         uuid: string;
     };
-    query?: never;
+    query?: {
+        field?: Array<OfferingEstimatedCostPolicyFieldEnum>;
+    };
     url: '/api/marketplace-offering-estimated-cost-policies/{uuid}/';
 };
 
@@ -59251,6 +59266,7 @@ export type MarketplaceProjectEstimatedCostPoliciesListData = {
     query?: {
         customer?: string;
         customer_uuid?: string;
+        field?: Array<ProjectEstimatedCostPolicyFieldEnum>;
         has_resource?: boolean;
         /**
          * A page number within the paginated result set.
@@ -59346,7 +59362,9 @@ export type MarketplaceProjectEstimatedCostPoliciesRetrieveData = {
     path: {
         uuid: string;
     };
-    query?: never;
+    query?: {
+        field?: Array<ProjectEstimatedCostPolicyFieldEnum>;
+    };
     url: '/api/marketplace-project-estimated-cost-policies/{uuid}/';
 };
 
