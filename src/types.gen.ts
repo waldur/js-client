@@ -6799,8 +6799,11 @@ export type CreditTransaction = {
     transaction_type: TransactionTypeEnum;
     readonly transaction_type_display: string;
     comment?: string;
-    readonly customer_uuid: string;
-    readonly customer_name: string;
+    readonly customer_uuid: string | null;
+    readonly customer_name: string | null;
+    project_uuid?: string;
+    project_name?: string;
+    billing_period?: string | null;
 };
 
 export type CurrentQosStatusEnum = 'normal' | 'notification' | 'slowdown' | 'blocked';
@@ -30980,7 +30983,7 @@ export type TransactionStats = {
     readonly deadlocks: number;
 };
 
-export type TransactionTypeEnum = 'staff_grant' | 'compensation' | 'affiliate_fee' | 'transfer_in' | 'transfer_out' | 'payout' | 'expiry' | 'rollback' | 'adjustment' | 'withdrawable_adjustment';
+export type TransactionTypeEnum = 'staff_grant' | 'compensation' | 'minimal_draw' | 'affiliate_fee' | 'transfer_in' | 'transfer_out' | 'payout' | 'expiry' | 'rollback' | 'adjustment' | 'withdrawable_adjustment';
 
 export type TransitionModeEnum = 'automatic_on_completion' | 'manual';
 
@@ -35054,6 +35057,8 @@ export type CoiDisclosureFormOEnum = '-certification_date' | '-created' | '-vali
 
 export type ConflictOfInterestOEnum = '-created' | '-detected_at' | '-severity' | '-status' | 'created' | 'detected_at' | 'severity' | 'status';
 
+export type CreditTransactionOEnum = '-billing_period' | '-created' | 'billing_period' | 'created';
+
 export type CustomerAffiliateOEnum = '-affiliate_name' | '-created' | '-customer_name' | 'affiliate_name' | 'created' | 'customer_name';
 
 export type CustomerCreditOEnum = '-customer_name' | '-end_date' | '-expected_consumption' | '-value' | 'customer_name' | 'end_date' | 'expected_consumption' | 'value';
@@ -35110,7 +35115,7 @@ export type ComponentUsageMonthlyFieldEnum = 'billing_period' | 'billing_type' |
 
 export type ComponentUsageFieldEnum = 'billing_period' | 'created' | 'customer_name' | 'customer_uuid' | 'date' | 'description' | 'measured_unit' | 'missing_usage_policy' | 'modified_by' | 'name' | 'offering_name' | 'offering_uuid' | 'project_name' | 'project_uuid' | 'recurring' | 'resource_name' | 'resource_uuid' | 'type' | 'usage' | 'uuid';
 
-export type ComponentUsageOEnum = '-billing_period' | '-usage' | 'billing_period' | 'usage';
+export type ComponentUsageOEnum = '-billing_period' | '-missing_usage_policy' | '-usage' | 'billing_period' | 'missing_usage_policy' | 'usage';
 
 export type ComponentUserUsageFieldEnum = 'backend_id' | 'billing_period' | 'component_type' | 'component_usage' | 'created' | 'customer_name' | 'customer_uuid' | 'date' | 'description' | 'measured_unit' | 'modified' | 'offering_name' | 'offering_uuid' | 'project_name' | 'project_uuid' | 'resource_name' | 'resource_uuid' | 'usage' | 'user' | 'username' | 'uuid';
 
@@ -44976,6 +44981,9 @@ export type CreditTransactionsListData = {
     body?: never;
     path?: never;
     query?: {
+        billing_period?: string;
+        billing_period_after?: string;
+        billing_period_before?: string;
         credit_uuid?: string;
         customer_uuid?: string;
         /**
@@ -44983,7 +44991,7 @@ export type CreditTransactionsListData = {
          *
          *
          */
-        o?: Array<BackendResourceReqOEnum>;
+        o?: Array<CreditTransactionOEnum>;
         /**
          * A page number within the paginated result set.
          */
@@ -44992,6 +45000,8 @@ export type CreditTransactionsListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        project_credit_uuid?: string;
+        project_uuid?: string;
         transaction_type?: string;
     };
     url: '/api/credit-transactions/';
@@ -45007,6 +45017,9 @@ export type CreditTransactionsCountData = {
     body?: never;
     path?: never;
     query?: {
+        billing_period?: string;
+        billing_period_after?: string;
+        billing_period_before?: string;
         credit_uuid?: string;
         customer_uuid?: string;
         /**
@@ -45014,7 +45027,7 @@ export type CreditTransactionsCountData = {
          *
          *
          */
-        o?: Array<BackendResourceReqOEnum>;
+        o?: Array<CreditTransactionOEnum>;
         /**
          * A page number within the paginated result set.
          */
@@ -45023,6 +45036,8 @@ export type CreditTransactionsCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        project_credit_uuid?: string;
+        project_uuid?: string;
         transaction_type?: string;
     };
     url: '/api/credit-transactions/';
@@ -53591,6 +53606,12 @@ export type MarketplaceComponentUsagesListData = {
         date_before?: string;
         field?: Array<ComponentUsageFieldEnum>;
         /**
+         * Missing usage policy
+         *
+         *
+         */
+        missing_usage_policy?: Array<MissingUsagePolicyEnum>;
+        /**
          * Ordering
          *
          *
@@ -53659,6 +53680,12 @@ export type MarketplaceComponentUsagesCountData = {
          * Date before or equal to
          */
         date_before?: string;
+        /**
+         * Missing usage policy
+         *
+         *
+         */
+        missing_usage_policy?: Array<MissingUsagePolicyEnum>;
         /**
          * Ordering
          *
