@@ -12822,6 +12822,14 @@ export type MergedPluginOptionsRequest = {
 
 export type MergedSecretOptions = {
     /**
+     * Email addresses notified about every new order for this offering, regardless of whether the order needs approval. Intended for provider-side mailboxes which do not belong to a Waldur user, so these addresses are notified even if a user with the same address disabled notifications. At most 10 addresses.
+     */
+    order_notification_emails?: Array<string>;
+    /**
+     * List of organization or offering role names (e.g. 'CUSTOMER.OWNER', 'OFFERING.MANAGER') whose holders are notified about every new order for this offering, regardless of whether the order needs approval. Names are resolved on the provider organization and on the offering itself. Users who disabled notifications in their profile are skipped. At most 10 names.
+     */
+    order_notification_roles?: Array<string>;
+    /**
      * HEAppE cluster password
      */
     heappe_cluster_password?: string;
@@ -12984,6 +12992,14 @@ export type MergedSecretOptions = {
 };
 
 export type MergedSecretOptionsRequest = {
+    /**
+     * Email addresses notified about every new order for this offering, regardless of whether the order needs approval. Intended for provider-side mailboxes which do not belong to a Waldur user, so these addresses are notified even if a user with the same address disabled notifications. At most 10 addresses.
+     */
+    order_notification_emails?: Array<string>;
+    /**
+     * List of organization or offering role names (e.g. 'CUSTOMER.OWNER', 'OFFERING.MANAGER') whose holders are notified about every new order for this offering, regardless of whether the order needs approval. Names are resolved on the provider organization and on the offering itself. Users who disabled notifications in their profile are skipped. At most 10 names.
+     */
+    order_notification_roles?: Array<string>;
     /**
      * HEAppE cluster password
      */
