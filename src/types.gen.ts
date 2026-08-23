@@ -16104,6 +16104,7 @@ export type OfferingUserPosixAllocation = {
     pool_uuid: string | null;
     scope: string | null;
     scope_name: string | null;
+    shared_with_offerings: Array<PosixSharingOffering>;
 };
 
 export type OfferingUserPosixAttributesRequest = {
@@ -16134,6 +16135,7 @@ export type OfferingUserPosixGroup = {
     customer_uuid: string | null;
     project_accessible: boolean;
     pool_uuid: string | null;
+    pool_scope: string | null;
 };
 
 export type OfferingUserPosixUpdateResponse = {
@@ -22089,6 +22091,13 @@ export type PosixIdPool = {
     readonly gid_utilization: number | null;
 };
 
+export type PosixIdPoolLeftBehindConsumer = {
+    kind: string;
+    uid: number | null;
+    gid: number | null;
+    identity_uuid: string;
+};
+
 export type PosixIdPoolNamespaceStats = {
     min: number;
     max: number;
@@ -22096,6 +22105,40 @@ export type PosixIdPoolNamespaceStats = {
     capacity: number;
     used: number;
     utilization: number;
+};
+
+export type PosixIdPoolRepoint = {
+    changes: Array<PosixIdPoolRepointChange>;
+    /**
+     * Identities freed in the previously resolved pool. Their values are withheld from recycling until an operator returns them.
+     */
+    released: number;
+    /**
+     * Users whose previous identity stays active because this pool does not manage every namespace they hold a value in.
+     */
+    retained: number;
+    /**
+     * Robot accounts and groups of the offering that keep their values from the previously resolved pool; re-pointing moves offering accounts only.
+     */
+    other_consumers: Array<PosixIdPoolLeftBehindConsumer>;
+};
+
+export type PosixIdPoolRepointChange = {
+    offering_user_uuid: string;
+    offering_uuid: string;
+    offering_name: string;
+    user_uuid: string;
+    username: string;
+    namespace: string;
+    old_value: number | null;
+    new_value: number;
+};
+
+export type PosixIdPoolRepointRequestRequest = {
+    /**
+     * Must be true. Re-pointing rewrites identifiers that the provider's directory and filesystem already carry, so it is never applied implicitly - preview it first with repoint_preview.
+     */
+    confirm: boolean;
 };
 
 export type PosixIdPoolRequest = {
@@ -22123,11 +22166,22 @@ export type PosixIdentity = {
     uid?: number | null;
     gid?: number | null;
     released_at?: string | null;
+    recyclable?: boolean;
     readonly pool_uuid: string;
-    readonly offering_uuid: string;
-    readonly offering_name: string;
+    readonly offering_uuid: string | null;
+    readonly offering_name: string | null;
+    readonly user_uuid: string | null;
+    /**
+     * Required. 128 characters or fewer. Lowercase letters, numbers and @/./+/-/_ characters
+     */
+    readonly user_username: string | null;
     readonly consumer_type: string | null;
     readonly consumer_name: string | null;
+};
+
+export type PosixSharingOffering = {
+    uuid: string;
+    name: string;
 };
 
 export type PresetEnum = 'cscs' | 'oecd_fos_2007';
@@ -31833,12 +31887,20 @@ export type UserOrganizationTypeCount = {
 };
 
 export type UserPosixIdentity = {
-    offering_name: string;
-    offering_uuid: string;
     namespace: string;
     value: number;
     context: string | null;
     pool_uuid: string | null;
+    pool_scope: string | null;
+    offerings: Array<PosixSharingOffering>;
+    /**
+     * Deprecated: the first entry of 'offerings'. The endpoint used to return one row per offering; read 'offerings' instead.
+     */
+    offering_name: string | null;
+    /**
+     * Deprecated: the first entry of 'offerings'. Read 'offerings' instead.
+     */
+    offering_uuid: string | null;
 };
 
 export type UserRegistrationTrend = {
@@ -35154,6 +35216,10 @@ export type OrderDetailsOEnum = '-consumer_reviewed_at' | '-cost' | '-created' |
 export type PublicOfferingDetailsFieldEnum = 'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'billing_type_classification' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'config_drive_default' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'default_access_subnets' | 'description' | 'documentation_url' | 'effective_available_limits' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'has_compliance_requirements' | 'helpdesk_url' | 'image' | 'integration_guide' | 'is_accessible' | 'latitude' | 'longitude' | 'name' | 'offering_group' | 'offering_group_title' | 'offering_group_uuid' | 'open_for_proposals' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'profile_name' | 'profile_uuid' | 'project' | 'project_name' | 'project_uuid' | 'promotion_campaigns' | 'qos_profiles' | 'quotas' | 'resource_options' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_resource' | 'scope_resource_name' | 'scope_resource_uuid' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'tags' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'user_has_consent' | 'uuid' | 'vendor_details';
 
 export type PosixIdPoolFieldEnum = 'created' | 'customer_name' | 'customer_uuid' | 'description' | 'gid_used' | 'gid_utilization' | 'max_gid' | 'max_uid' | 'min_gid' | 'min_uid' | 'next_gid' | 'next_uid' | 'offering' | 'scope' | 'service_provider' | 'uid_used' | 'uid_utilization' | 'url' | 'uuid';
+
+export type PosixIdentityConsumerTypeEnum = 'offeringrolegroup' | 'offeringusergroup' | 'robotaccount' | 'user';
+
+export type PosixIdentityOEnum = '-created' | '-gid' | '-released_at' | '-uid' | 'created' | 'gid' | 'released_at' | 'uid';
 
 export type ProjectEstimatedCostPolicyFieldEnum = 'actions' | 'affected_resources_count' | 'billing_price_estimate' | 'created' | 'created_by_full_name' | 'created_by_username' | 'current_cost' | 'customer_credit' | 'fired_datetime' | 'has_fired' | 'limit_cost' | 'options' | 'period' | 'period_name' | 'project_credit' | 'resource' | 'resource_name' | 'scope' | 'scope_name' | 'scope_uuid' | 'url' | 'use_credit' | 'uuid';
 
@@ -59173,6 +59239,36 @@ export type MarketplacePosixIdPoolsUpdateResponses = {
 
 export type MarketplacePosixIdPoolsUpdateResponse = MarketplacePosixIdPoolsUpdateResponses[keyof MarketplacePosixIdPoolsUpdateResponses];
 
+export type MarketplacePosixIdPoolsRepointData = {
+    body: PosixIdPoolRepointRequestRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-posix-id-pools/{uuid}/repoint/';
+};
+
+export type MarketplacePosixIdPoolsRepointResponses = {
+    200: PosixIdPoolRepoint;
+};
+
+export type MarketplacePosixIdPoolsRepointResponse = MarketplacePosixIdPoolsRepointResponses[keyof MarketplacePosixIdPoolsRepointResponses];
+
+export type MarketplacePosixIdPoolsRepointPreviewRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-posix-id-pools/{uuid}/repoint_preview/';
+};
+
+export type MarketplacePosixIdPoolsRepointPreviewRetrieveResponses = {
+    200: PosixIdPoolRepoint;
+};
+
+export type MarketplacePosixIdPoolsRepointPreviewRetrieveResponse = MarketplacePosixIdPoolsRepointPreviewRetrieveResponses[keyof MarketplacePosixIdPoolsRepointPreviewRetrieveResponses];
+
 export type MarketplacePosixIdPoolsStatsRetrieveData = {
     body?: never;
     path: {
@@ -59192,7 +59288,35 @@ export type MarketplacePosixIdentitiesListData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Principal kind
+         *
+         *
+         */
+        consumer_type?: PosixIdentityConsumerTypeEnum;
+        /**
+         * GID
+         */
+        gid?: number;
+        /**
+         * Maximum GID
+         */
+        gid_max?: number;
+        /**
+         * Minimum GID
+         */
+        gid_min?: number;
         is_released?: boolean;
+        /**
+         * Keyword (account username, first or last name, robot account name)
+         */
+        keyword?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<PosixIdentityOEnum>;
         /**
          * Offering UUID
          */
@@ -59209,6 +59333,26 @@ export type MarketplacePosixIdentitiesListData = {
          * POSIX ID pool UUID
          */
         pool_uuid?: string;
+        /**
+         * Recyclable (false lists released values withheld from the pool)
+         */
+        recyclable?: boolean;
+        /**
+         * UID
+         */
+        uid?: number;
+        /**
+         * Maximum UID
+         */
+        uid_max?: number;
+        /**
+         * Minimum UID
+         */
+        uid_min?: number;
+        /**
+         * User UUID
+         */
+        user_uuid?: string;
     };
     url: '/api/marketplace-posix-identities/';
 };
@@ -59223,7 +59367,35 @@ export type MarketplacePosixIdentitiesCountData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Principal kind
+         *
+         *
+         */
+        consumer_type?: PosixIdentityConsumerTypeEnum;
+        /**
+         * GID
+         */
+        gid?: number;
+        /**
+         * Maximum GID
+         */
+        gid_max?: number;
+        /**
+         * Minimum GID
+         */
+        gid_min?: number;
         is_released?: boolean;
+        /**
+         * Keyword (account username, first or last name, robot account name)
+         */
+        keyword?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<PosixIdentityOEnum>;
         /**
          * Offering UUID
          */
@@ -59240,6 +59412,26 @@ export type MarketplacePosixIdentitiesCountData = {
          * POSIX ID pool UUID
          */
         pool_uuid?: string;
+        /**
+         * Recyclable (false lists released values withheld from the pool)
+         */
+        recyclable?: boolean;
+        /**
+         * UID
+         */
+        uid?: number;
+        /**
+         * Maximum UID
+         */
+        uid_max?: number;
+        /**
+         * Minimum UID
+         */
+        uid_min?: number;
+        /**
+         * User UUID
+         */
+        user_uuid?: string;
     };
     url: '/api/marketplace-posix-identities/';
 };
