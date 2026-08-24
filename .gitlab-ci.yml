@@ -96,7 +96,14 @@ Release TypeScript/JavaScript SDK:
         DEV_VERSION=$(node -p "require('./package.json').version")
         git diff --cached --quiet && echo "No changes" || git commit -m "chore: nightly update of Waldur TypeScript SDK to $DEV_VERSION"
       fi
-    - git pull --rebase origin main && git push origin HEAD:main || echo "main already up to date in js-client"
+    # Both halves of this must be able to fail the job. It used to end in
+    # `|| echo`, which turned a conflicted rebase into exit 0: a nightly
+    # rebase hit conflicts in the generated sources, pushed nothing, reported
+    # success, and the publish stage then tried to republish the version
+    # already on npm. When there is nothing to push, `git push` is a no-op
+    # that exits 0 on its own, so the fallback only ever hid real failures.
+    - git pull --rebase origin main
+    - git push origin HEAD:main
 
 Publish Dev to NPM:
   stage: publish
