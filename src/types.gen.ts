@@ -20743,8 +20743,6 @@ export type PatchedProposalReviewRequest = {
     summary_private_comment?: string;
     comment_project_title?: string | null;
     comment_project_summary?: string | null;
-    comment_project_is_confidential?: string | null;
-    comment_project_has_civilian_purpose?: string | null;
     comment_project_description?: string | null;
     comment_project_duration?: string | null;
     comment_project_supporting_documentation?: string | null;
@@ -23178,8 +23176,6 @@ export type Proposal = {
     description?: string;
     readonly project_name: string;
     project_summary?: string;
-    project_is_confidential?: boolean;
-    project_has_civilian_purpose?: boolean;
     readonly supporting_documentation: Array<ProposalDocumentation>;
     state: ProposalStates;
     readonly approved_by: string | null;
@@ -23338,8 +23334,6 @@ export type ProposalRequest = {
     name: string;
     description?: string;
     project_summary?: string;
-    project_is_confidential?: boolean;
-    project_has_civilian_purpose?: boolean;
     /**
      * Duration in days after provisioning of resources.
      */
@@ -23381,8 +23375,6 @@ export type ProposalReview = {
     readonly call_managing_organisation_uuid: string;
     comment_project_title?: string | null;
     comment_project_summary?: string | null;
-    comment_project_is_confidential?: string | null;
-    comment_project_has_civilian_purpose?: string | null;
     comment_project_description?: string | null;
     comment_project_duration?: string | null;
     comment_project_supporting_documentation?: string | null;
@@ -23406,8 +23398,6 @@ export type ProposalReviewRequest = {
     summary_private_comment?: string;
     comment_project_title?: string | null;
     comment_project_summary?: string | null;
-    comment_project_is_confidential?: string | null;
-    comment_project_has_civilian_purpose?: string | null;
     comment_project_description?: string | null;
     comment_project_duration?: string | null;
     comment_project_supporting_documentation?: string | null;
@@ -23423,13 +23413,11 @@ export type ProposalUpdateProjectDetailsRequest = {
     name: string;
     description?: string;
     project_summary?: string;
-    project_is_confidential?: boolean;
-    project_has_civilian_purpose?: boolean;
     /**
      * Duration in days after provisioning of resources.
      */
     duration_in_days?: number | null;
-    oecd_fos_2007_code?: OecdFos2007CodeEnum | BlankEnum | NullEnum | null;
+    science_sub_domain?: string | null;
 };
 
 export type ProposalWorkflowStepInstance = {
