@@ -20649,10 +20649,6 @@ export type PatchedProjectRequest = {
      */
     description?: string;
     /**
-     * Show credit and usage analytics widgets on this project's dashboard.
-     */
-    display_credit_reports?: boolean;
-    /**
      * Project type
      */
     type?: string | null;
@@ -22315,10 +22311,6 @@ export type Project = {
      */
     description?: string;
     readonly customer_display_billing_info_in_projects: boolean;
-    /**
-     * Show credit and usage analytics widgets on this project's dashboard.
-     */
-    display_credit_reports?: boolean;
     readonly created: string;
     /**
      * Project type
@@ -22893,10 +22885,6 @@ export type ProjectRequest = {
      * Project description (HTML content will be sanitized)
      */
     description?: string;
-    /**
-     * Show credit and usage analytics widgets on this project's dashboard.
-     */
-    display_credit_reports?: boolean;
     /**
      * Project type
      */
@@ -33714,10 +33702,6 @@ export type ProjectRequestForm = {
      */
     description?: string;
     /**
-     * Show credit and usage analytics widgets on this project's dashboard.
-     */
-    display_credit_reports?: boolean;
-    /**
      * Project type
      */
     type?: string | null;
@@ -33766,10 +33750,6 @@ export type ProjectRequestMultipart = {
      * Project description (HTML content will be sanitized)
      */
     description?: string;
-    /**
-     * Show credit and usage analytics widgets on this project's dashboard.
-     */
-    display_credit_reports?: boolean;
     /**
      * Project type
      */
@@ -33820,10 +33800,6 @@ export type PatchedProjectRequestForm = {
      */
     description?: string;
     /**
-     * Show credit and usage analytics widgets on this project's dashboard.
-     */
-    display_credit_reports?: boolean;
-    /**
      * Project type
      */
     type?: string | null;
@@ -33872,10 +33848,6 @@ export type PatchedProjectRequestMultipart = {
      * Project description (HTML content will be sanitized)
      */
     description?: string;
-    /**
-     * Show credit and usage analytics widgets on this project's dashboard.
-     */
-    display_credit_reports?: boolean;
     /**
      * Project type
      */
@@ -35233,7 +35205,7 @@ export type ProviderOfferingDetailsOEnum = '-created' | '-name' | '-state' | '-t
 
 export type ProviderOfferingCustomerFieldEnum = 'abbreviation' | 'email' | 'name' | 'phone_number' | 'slug' | 'uuid';
 
-export type ProjectFieldEnum = 'affiliation' | 'affiliation_code' | 'affiliation_name' | 'affiliation_uuid' | 'backend_id' | 'billing_price_estimate' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_display_billing_info_in_projects' | 'customer_grace_period_days' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'display_credit_reports' | 'effective_end_date' | 'end_date' | 'end_date_requested_by' | 'end_date_updated_at' | 'grace_period_days' | 'image' | 'is_in_grace_period' | 'is_industry' | 'is_removed' | 'kind' | 'marketplace_resource_count' | 'max_service_accounts' | 'name' | 'oecd_fos_2007_code' | 'oecd_fos_2007_label' | 'project_credit' | 'project_metadata' | 'resources_count' | 'science_domain_code' | 'science_domain_name' | 'science_domain_uuid' | 'science_sub_domain' | 'science_sub_domain_code' | 'science_sub_domain_name' | 'slug' | 'staff_notes' | 'start_date' | 'termination_metadata' | 'type' | 'type_name' | 'type_uuid' | 'url' | 'user_affiliations' | 'user_email_patterns' | 'user_identity_sources' | 'uuid';
+export type ProjectFieldEnum = 'affiliation' | 'affiliation_code' | 'affiliation_name' | 'affiliation_uuid' | 'backend_id' | 'billing_price_estimate' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_display_billing_info_in_projects' | 'customer_grace_period_days' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'effective_end_date' | 'end_date' | 'end_date_requested_by' | 'end_date_updated_at' | 'grace_period_days' | 'image' | 'is_in_grace_period' | 'is_industry' | 'is_removed' | 'kind' | 'marketplace_resource_count' | 'max_service_accounts' | 'name' | 'oecd_fos_2007_code' | 'oecd_fos_2007_label' | 'project_credit' | 'project_metadata' | 'resources_count' | 'science_domain_code' | 'science_domain_name' | 'science_domain_uuid' | 'science_sub_domain' | 'science_sub_domain_code' | 'science_sub_domain_name' | 'slug' | 'staff_notes' | 'start_date' | 'termination_metadata' | 'type' | 'type_name' | 'type_uuid' | 'url' | 'user_affiliations' | 'user_email_patterns' | 'user_identity_sources' | 'uuid';
 
 export type UserFieldEnum = 'active_isds' | 'address' | 'affiliations' | 'agree_with_policy' | 'agreement_date' | 'attribute_sources' | 'birth_date' | 'can_use_personal_access_tokens' | 'civil_number' | 'country_of_residence' | 'date_joined' | 'deactivation_reason' | 'description' | 'eduperson_assurance' | 'email' | 'first_name' | 'full_name' | 'gender' | 'has_active_session' | 'has_usable_password' | 'identity_provider_fields' | 'identity_provider_label' | 'identity_provider_management_url' | 'identity_provider_name' | 'identity_source' | 'image' | 'ip_address' | 'is_active' | 'is_admin_deactivated' | 'is_identity_manager' | 'is_staff' | 'is_support' | 'job_title' | 'last_name' | 'managed_isds' | 'nationalities' | 'nationality' | 'native_name' | 'notifications_enabled' | 'organization' | 'organization_address' | 'organization_country' | 'organization_registry_code' | 'organization_type' | 'organization_vat_code' | 'permissions' | 'personal_title' | 'phone_number' | 'place_of_birth' | 'preferred_language' | 'primary_gid' | 'registration_method' | 'requested_email' | 'should_protect_user_details' | 'slug' | 'token' | 'token_expires_at' | 'token_lifetime' | 'uid_number' | 'url' | 'username' | 'uuid';
 
