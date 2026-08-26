@@ -7570,6 +7570,81 @@ export type DailyVolume = {
     count: number;
 };
 
+export type DashboardCallManagerStats = {
+    readonly pending_assessments: number;
+    readonly active_calls: number;
+    readonly overdue_reviews: number;
+};
+
+export type DashboardGeneralStats = {
+    readonly pending_permission_requests: number;
+    readonly active_invitations: number;
+    readonly pending_onboarding_applications: number;
+};
+
+export type DashboardMyOrder = {
+    readonly uuid: string;
+    readonly offering_uuid: string;
+    readonly offering_name: string;
+    readonly resource_uuid: string;
+    readonly resource_name: string;
+    readonly project_uuid: string;
+    readonly project_name: string;
+    readonly customer_uuid: string;
+    readonly customer_name: string;
+    state: OrderState;
+    type: DashboardMyOrderTypeEnum;
+    readonly created: string;
+};
+
+export type DashboardMyOrderTypeEnum = 'create' | 'update' | 'terminate' | 'restore';
+
+export type DashboardPendingAction = {
+    readonly type: string;
+    readonly title: string;
+    readonly description: string;
+    variant: VariantEnum;
+    readonly deadline: string | null;
+    readonly count: number | null;
+    readonly target_uuid: string | null;
+    readonly customer_uuid: string | null;
+};
+
+export type DashboardReviewDeadline = {
+    readonly uuid: string;
+    readonly proposal_uuid: string;
+    readonly proposal_name: string;
+    readonly call_uuid: string;
+    readonly call_name: string;
+    readonly due_date: string | null;
+};
+
+export type DashboardReviewerStats = {
+    readonly assigned: number;
+    readonly pending: number;
+    readonly completed: number;
+    readonly deadlines: Array<DashboardReviewDeadline>;
+    readonly deadlines_total: number;
+};
+
+export type DashboardSubmitterStats = {
+    readonly total: number;
+    readonly draft: number;
+    readonly submitted: number;
+    readonly in_review: number;
+    readonly accepted: number;
+    readonly rejected: number;
+    readonly canceled: number;
+};
+
+export type DashboardUpcomingDeadline = {
+    readonly uuid: string;
+    readonly call_uuid: string;
+    readonly call_name: string;
+    readonly round_name: string;
+    readonly due_date: string | null;
+};
+
 export type DataAccessSummary = {
     total_administrative_access: number | null;
     total_organizational_access: number;
@@ -32116,6 +32191,8 @@ export type ValidationMethodEnum = 'ariregister' | 'wirtschaftscompass' | 'bolag
 
 export type ValueEnum = 'SERVICE_PROVIDER.REGISTER' | 'OFFERING.CREATE' | 'OFFERING.DELETE' | 'OFFERING.UPDATE_THUMBNAIL' | 'OFFERING.UPDATE' | 'OFFERING.UPDATE_ATTRIBUTES' | 'OFFERING.UPDATE_LOCATION' | 'OFFERING.UPDATE_DESCRIPTION' | 'OFFERING.UPDATE_OPTIONS' | 'OFFERING.UPDATE_INTEGRATION' | 'OFFERING.ADD_ENDPOINT' | 'OFFERING.DELETE_ENDPOINT' | 'OFFERING.UPDATE_COMPONENTS' | 'OFFERING.PAUSE' | 'OFFERING.UNPAUSE' | 'OFFERING.ARCHIVE' | 'OFFERING.DRY_RUN_SCRIPT' | 'OFFERING.MANAGE_CAMPAIGN' | 'OFFERING.MANAGE_USER_GROUP' | 'OFFERING.CREATE_PLAN' | 'OFFERING.UPDATE_PLAN' | 'OFFERING.ARCHIVE_PLAN' | 'OFFERING.CREATE_SCREENSHOT' | 'OFFERING.UPDATE_SCREENSHOT' | 'OFFERING.DELETE_SCREENSHOT' | 'OFFERING.CREATE_USER' | 'OFFERING.UPDATE_USER' | 'OFFERING.DELETE_USER' | 'OFFERING.MANAGE_USER_ROLE' | 'POSIX_ID_POOL.MANAGE' | 'RESOURCE.CREATE_ROBOT_ACCOUNT' | 'RESOURCE.UPDATE_ROBOT_ACCOUNT' | 'RESOURCE.DELETE_ROBOT_ACCOUNT' | 'ORDER.LIST' | 'ORDER.CREATE' | 'ORDER.APPROVE_PRIVATE' | 'ORDER.APPROVE' | 'ORDER.REJECT' | 'ORDER.DESTROY' | 'ORDER.CANCEL' | 'ORDER.SET_CONSUMER_INFO' | 'RESOURCE.LIST' | 'RESOURCE.UPDATE' | 'RESOURCE.TERMINATE' | 'RESOURCE.LIST_IMPORTABLE' | 'RESOURCE.SET_END_DATE' | 'RESOURCE.SET_USAGE' | 'RESOURCE.SET_PLAN' | 'RESOURCE.SET_LIMITS' | 'RESOURCE.SET_BACKEND_ID' | 'RESOURCE.SUBMIT_REPORT' | 'RESOURCE.SET_BACKEND_METADATA' | 'RESOURCE.MANAGE_API_KEY' | 'RESOURCE.SET_STATE' | 'RESOURCE.UPDATE_OPTIONS' | 'RESOURCE.ACCEPT_BOOKING_REQUEST' | 'RESOURCE.REJECT_BOOKING_REQUEST' | 'RESOURCE.MANAGE_USERS' | 'RESOURCE.CREATE_PERMISSION' | 'RESOURCE.UPDATE_PERMISSION' | 'RESOURCE.DELETE_PERMISSION' | 'RESOURCE_PROJECT.CREATE_PERMISSION' | 'RESOURCE_PROJECT.UPDATE_PERMISSION' | 'RESOURCE_PROJECT.DELETE_PERMISSION' | 'RESOURCE.CONSUMPTION_LIMITATION' | 'OFFERING.MANAGE_BACKEND_RESOURCES' | 'SERVICE_PROVIDER.GET_API_SECRET_CODE' | 'SERVICE_PROVIDER.GENERATE_API_SECRET_CODE' | 'SERVICE_PROVIDER.LIST_CUSTOMERS' | 'SERVICE_PROVIDER.LIST_CUSTOMER_PROJECTS' | 'SERVICE_PROVIDER.LIST_PROJECTS' | 'SERVICE_PROVIDER.LIST_PROJECT_PERMISSIONS' | 'SERVICE_PROVIDER.LIST_KEYS' | 'SERVICE_PROVIDER.LIST_USERS' | 'SERVICE_PROVIDER.LIST_USER_CUSTOMERS' | 'SERVICE_PROVIDER.LIST_SERVICE_ACCOUNTS' | 'SERVICE_PROVIDER.LIST_COURSE_ACCOUNTS' | 'SERVICE_PROVIDER.SET_OFFERINGS_USERNAME' | 'SERVICE_PROVIDER.GET_STATISTICS' | 'SERVICE_PROVIDER.GET_REVENUE' | 'SERVICE_PROVIDER.GET_ROBOT_ACCOUNT_CUSTOMERS' | 'SERVICE_PROVIDER.GET_ROBOT_ACCOUNT_PROJECTS' | 'SERVICE_PROVIDER.MANAGE_MAINTENANCE_ANNOUNCEMENT' | 'PROJECT.CREATE_PERMISSION' | 'CUSTOMER.CREATE_PERMISSION' | 'OFFERING.CREATE_PERMISSION' | 'CALL.CREATE_PERMISSION' | 'PROPOSAL.MANAGE' | 'PROPOSAL.MANAGE_REVIEW' | 'PROJECT.UPDATE_PERMISSION' | 'CUSTOMER.UPDATE_PERMISSION' | 'OFFERING.UPDATE_PERMISSION' | 'CALL.UPDATE_PERMISSION' | 'PROPOSAL.UPDATE_PERMISSION' | 'PROJECT.DELETE_PERMISSION' | 'CUSTOMER.DELETE_PERMISSION' | 'OFFERING.DELETE_PERMISSION' | 'CALL.DELETE_PERMISSION' | 'PROPOSAL.DELETE_PERMISSION' | 'LEXIS_LINK.CREATE' | 'LEXIS_LINK.DELETE' | 'PROJECT.LIST' | 'PROJECT.CREATE' | 'PROJECT.DELETE' | 'PROJECT.UPDATE' | 'PROJECT.UPDATE_METADATA' | 'PROJECT.REVIEW_MEMBERSHIP' | 'CUSTOMER.UPDATE' | 'CUSTOMER.CONTACT_UPDATE' | 'CUSTOMER.LIST_USERS' | 'OFFERING.ACCEPT_CALL_REQUEST' | 'CALL.APPROVE_AND_REJECT_PROPOSALS' | 'CALL.CLOSE_ROUNDS' | 'ACCESS_SUBNET.CREATE' | 'ACCESS_SUBNET.UPDATE' | 'ACCESS_SUBNET.DELETE' | 'OFFERING_ACCESS_SUBNET.CREATE' | 'OFFERING_ACCESS_SUBNET.UPDATE' | 'OFFERING_ACCESS_SUBNET.DELETE' | 'OFFERINGUSER.UPDATE_RESTRICTION' | 'INVITATION.LIST' | 'CUSTOMER.LIST_PERMISSION_REVIEWS' | 'CALL.LIST' | 'CALL.CREATE' | 'CALL.UPDATE' | 'ROUND.LIST' | 'PROPOSAL.LIST' | 'SERVICE_ACCOUNT.MANAGE' | 'PROJECT.COURSE_ACCOUNT_MANAGE' | 'SERVICE_PROVIDER.OPENSTACK_IMAGE_MANAGEMENT' | 'OPENSTACK_INSTANCE.CONSOLE_ACCESS' | 'OPENSTACK_INSTANCE.MANAGE_POWER' | 'OPENSTACK_INSTANCE.MANAGE' | 'OPENSTACK_ROUTER.MANAGE_GATEWAY' | 'STAFF.ACCESS' | 'SUPPORT.ACCESS';
 
+export type VariantEnum = 'info' | 'warning' | 'error';
+
 export type VendorNameChoice = {
     value: string;
     label: string;
@@ -43500,6 +43577,51 @@ export type CallRoundsReviewersListResponses = {
 };
 
 export type CallRoundsReviewersListResponse = CallRoundsReviewersListResponses[keyof CallRoundsReviewersListResponses];
+
+export type CallRoundsDashboardDeadlinesListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/call-rounds/dashboard-deadlines/';
+};
+
+export type CallRoundsDashboardDeadlinesListResponses = {
+    200: Array<DashboardUpcomingDeadline>;
+};
+
+export type CallRoundsDashboardDeadlinesListResponse = CallRoundsDashboardDeadlinesListResponses[keyof CallRoundsDashboardDeadlinesListResponses];
+
+export type CallRoundsDashboardDeadlinesCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/call-rounds/dashboard-deadlines/';
+};
+
+export type CallRoundsDashboardDeadlinesCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type CeleryStatsRetrieveData = {
     body?: never;
@@ -58595,6 +58717,251 @@ export type MarketplaceOrdersUpdateAttachmentResponses = {
 };
 
 export type MarketplaceOrdersUpdateAttachmentResponse = MarketplaceOrdersUpdateAttachmentResponses[keyof MarketplaceOrdersUpdateAttachmentResponses];
+
+export type MarketplaceOrdersDashboardMyOrdersListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Can approve as consumer
+         */
+        can_approve_as_consumer?: boolean;
+        /**
+         * Can approve as provider
+         */
+        can_approve_as_provider?: boolean;
+        /**
+         * Category UUID
+         */
+        category_uuid?: string;
+        /**
+         * Created after
+         */
+        created?: string;
+        /**
+         * Created before
+         */
+        created_before?: string;
+        /**
+         * Customer UUID
+         */
+        customer_uuid?: string;
+        /**
+         * Modified after
+         */
+        modified?: string;
+        /**
+         * Modified before
+         */
+        modified_before?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<OrderDetailsOEnum>;
+        offering?: string;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        offering_slug?: Array<string>;
+        /**
+         * Offering type
+         */
+        offering_type?: Array<string>;
+        /**
+         * Offering UUID
+         */
+        offering_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        parent_offering_uuid?: string;
+        /**
+         * Project UUID
+         */
+        project_uuid?: string;
+        /**
+         * Provider UUID
+         */
+        provider_uuid?: string;
+        /**
+         * Search by order UUID, slug, project name or resource name
+         */
+        query?: string;
+        /**
+         * Resource URL
+         */
+        resource?: string;
+        /**
+         * Resource name
+         */
+        resource_name?: string;
+        /**
+         * Resource UUID
+         */
+        resource_uuid?: string;
+        /**
+         * Service manager UUID
+         */
+        service_manager_uuid?: string;
+        /**
+         * Slug
+         */
+        slug?: string;
+        /**
+         * Order state
+         *
+         *
+         */
+        state?: Array<OrderState>;
+        /**
+         * Order type
+         *
+         *
+         */
+        type?: Array<RequestTypes>;
+        /**
+         * Auto-approved
+         */
+        was_auto_approved?: boolean;
+    };
+    url: '/api/marketplace-orders/dashboard-my-orders/';
+};
+
+export type MarketplaceOrdersDashboardMyOrdersListResponses = {
+    200: Array<DashboardMyOrder>;
+};
+
+export type MarketplaceOrdersDashboardMyOrdersListResponse = MarketplaceOrdersDashboardMyOrdersListResponses[keyof MarketplaceOrdersDashboardMyOrdersListResponses];
+
+export type MarketplaceOrdersDashboardMyOrdersCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Can approve as consumer
+         */
+        can_approve_as_consumer?: boolean;
+        /**
+         * Can approve as provider
+         */
+        can_approve_as_provider?: boolean;
+        /**
+         * Category UUID
+         */
+        category_uuid?: string;
+        /**
+         * Created after
+         */
+        created?: string;
+        /**
+         * Created before
+         */
+        created_before?: string;
+        /**
+         * Customer UUID
+         */
+        customer_uuid?: string;
+        /**
+         * Modified after
+         */
+        modified?: string;
+        /**
+         * Modified before
+         */
+        modified_before?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<OrderDetailsOEnum>;
+        offering?: string;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        offering_slug?: Array<string>;
+        /**
+         * Offering type
+         */
+        offering_type?: Array<string>;
+        /**
+         * Offering UUID
+         */
+        offering_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        parent_offering_uuid?: string;
+        /**
+         * Project UUID
+         */
+        project_uuid?: string;
+        /**
+         * Provider UUID
+         */
+        provider_uuid?: string;
+        /**
+         * Search by order UUID, slug, project name or resource name
+         */
+        query?: string;
+        /**
+         * Resource URL
+         */
+        resource?: string;
+        /**
+         * Resource name
+         */
+        resource_name?: string;
+        /**
+         * Resource UUID
+         */
+        resource_uuid?: string;
+        /**
+         * Service manager UUID
+         */
+        service_manager_uuid?: string;
+        /**
+         * Slug
+         */
+        slug?: string;
+        /**
+         * Order state
+         *
+         *
+         */
+        state?: Array<OrderState>;
+        /**
+         * Order type
+         *
+         *
+         */
+        type?: Array<RequestTypes>;
+        /**
+         * Auto-approved
+         */
+        was_auto_approved?: boolean;
+    };
+    url: '/api/marketplace-orders/dashboard-my-orders/';
+};
+
+export type MarketplaceOrdersDashboardMyOrdersCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type MarketplacePlanComponentsListData = {
     body?: never;
@@ -93236,6 +93603,19 @@ export type ProposalProposalsChecklistTemplateCountResponses = {
     200: unknown;
 };
 
+export type ProposalProposalsDashboardStatsRetrieveData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/proposal-proposals/dashboard-stats/';
+};
+
+export type ProposalProposalsDashboardStatsRetrieveResponses = {
+    200: DashboardSubmitterStats;
+};
+
+export type ProposalProposalsDashboardStatsRetrieveResponse = ProposalProposalsDashboardStatsRetrieveResponses[keyof ProposalProposalsDashboardStatsRetrieveResponses];
+
 export type ProposalProtectedCallsListData = {
     body?: never;
     path?: never;
@@ -94749,6 +95129,19 @@ export type ProposalProtectedCallsAvailableComplianceChecklistsCountResponses = 
     200: unknown;
 };
 
+export type ProposalProtectedCallsDashboardStatsRetrieveData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/proposal-protected-calls/dashboard-stats/';
+};
+
+export type ProposalProtectedCallsDashboardStatsRetrieveResponses = {
+    200: DashboardCallManagerStats;
+};
+
+export type ProposalProtectedCallsDashboardStatsRetrieveResponse = ProposalProtectedCallsDashboardStatsRetrieveResponses[keyof ProposalProtectedCallsDashboardStatsRetrieveResponses];
+
 export type ProposalProtectedCallsStepChecklistsListData = {
     body?: never;
     path?: never;
@@ -95400,6 +95793,19 @@ export type ProposalReviewsSubmitResponses = {
      */
     200: unknown;
 };
+
+export type ProposalReviewsDashboardStatsRetrieveData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/proposal-reviews/dashboard-stats/';
+};
+
+export type ProposalReviewsDashboardStatsRetrieveResponses = {
+    200: DashboardReviewerStats;
+};
+
+export type ProposalReviewsDashboardStatsRetrieveResponse = ProposalReviewsDashboardStatsRetrieveResponses[keyof ProposalReviewsDashboardStatsRetrieveResponses];
 
 export type ProviderCannedResponsesListData = {
     body?: never;
@@ -106774,6 +107180,127 @@ export type UsersConfirmEmailResponses = {
      */
     200: unknown;
 };
+
+export type UsersDashboardGeneralStatsRetrieveData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/users/dashboard-general-stats/';
+};
+
+export type UsersDashboardGeneralStatsRetrieveResponses = {
+    200: DashboardGeneralStats;
+};
+
+export type UsersDashboardGeneralStatsRetrieveResponse = UsersDashboardGeneralStatsRetrieveResponses[keyof UsersDashboardGeneralStatsRetrieveResponses];
+
+export type UsersDashboardPendingActionsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Agreement date after
+         */
+        agreement_date?: string;
+        civil_number?: string;
+        /**
+         * Customer UUID
+         */
+        customer_uuid?: string;
+        /**
+         * Date joined after
+         */
+        date_joined?: string;
+        description?: string;
+        /**
+         * Email
+         */
+        email?: string;
+        /**
+         * Full name
+         */
+        full_name?: string;
+        /**
+         * Is active
+         */
+        is_active?: boolean;
+        /**
+         * Is staff
+         */
+        is_staff?: boolean;
+        /**
+         * Is support
+         */
+        is_support?: boolean;
+        /**
+         * Job title
+         */
+        job_title?: string;
+        /**
+         * Date modified after
+         */
+        modified?: string;
+        /**
+         * Native name
+         */
+        native_name?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<MarketplaceServiceProviderUserOEnum>;
+        /**
+         * Organization
+         */
+        organization?: string;
+        /**
+         * Organization roles
+         */
+        organization_roles?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        phone_number?: string;
+        /**
+         * Project roles
+         */
+        project_roles?: string;
+        /**
+         * Project UUID
+         */
+        project_uuid?: string;
+        /**
+         * Filter by first name, last name, civil number, username or email
+         */
+        query?: string;
+        registration_method?: string;
+        /**
+         * User keyword
+         */
+        user_keyword?: string;
+        /**
+         * Username (exact)
+         */
+        username?: string;
+        /**
+         * Comma-separated usernames
+         */
+        username_list?: string;
+    };
+    url: '/api/users/dashboard-pending-actions/';
+};
+
+export type UsersDashboardPendingActionsListResponses = {
+    200: Array<DashboardPendingAction>;
+};
+
+export type UsersDashboardPendingActionsListResponse = UsersDashboardPendingActionsListResponses[keyof UsersDashboardPendingActionsListResponses];
 
 export type UsersMeRetrieveData = {
     body?: never;
