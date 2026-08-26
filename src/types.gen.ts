@@ -3882,6 +3882,20 @@ export type CallPerformanceStat = {
     readonly last_submission_date: string | null;
 };
 
+export type CallProposalFieldConfig = {
+    field_project_summary?: ProposalFieldStateEnum;
+    field_description?: ProposalFieldStateEnum;
+    field_science_sub_domain?: ProposalFieldStateEnum;
+    field_supporting_documentation?: ProposalFieldStateEnum;
+};
+
+export type CallProposalFieldConfigRequest = {
+    field_project_summary?: ProposalFieldStateEnum;
+    field_description?: ProposalFieldStateEnum;
+    field_science_sub_domain?: ProposalFieldStateEnum;
+    field_supporting_documentation?: ProposalFieldStateEnum;
+};
+
 export type CallResourceTemplate = {
     readonly uuid: string;
     readonly url: string;
@@ -5838,6 +5852,8 @@ export type ConstanceSettings = {
     REMOTE_EDUTEAMS_REFRESH_TOKEN?: string;
     DEFAULT_OFFERING_USER_ATTRIBUTES?: Array<UserAttributeEnum | BlankEnum>;
     DEFAULT_CALL_USER_ATTRIBUTES?: Array<UserAttributeEnum | BlankEnum>;
+    DEFAULT_PROPOSAL_REQUIRED_FIELDS?: Array<ProposalConfigurableFieldEnum | BlankEnum>;
+    DEFAULT_PROPOSAL_HIDDEN_FIELDS?: Array<ProposalConfigurableFieldEnum | BlankEnum>;
     INVITATION_ALLOWED_FIELDS?: Array<UserAttributeEnum | BlankEnum>;
     ENABLED_USER_PROFILE_ATTRIBUTES?: Array<UserAttributeEnum | BlankEnum>;
     MANDATORY_USER_ATTRIBUTES?: Array<UserAttributeEnum | BlankEnum>;
@@ -6168,6 +6184,8 @@ export type ConstanceSettingsRequest = {
     REMOTE_EDUTEAMS_REFRESH_TOKEN?: string;
     DEFAULT_OFFERING_USER_ATTRIBUTES?: Array<UserAttributeEnum | BlankEnum>;
     DEFAULT_CALL_USER_ATTRIBUTES?: Array<UserAttributeEnum | BlankEnum>;
+    DEFAULT_PROPOSAL_REQUIRED_FIELDS?: Array<ProposalConfigurableFieldEnum | BlankEnum>;
+    DEFAULT_PROPOSAL_HIDDEN_FIELDS?: Array<ProposalConfigurableFieldEnum | BlankEnum>;
     INVITATION_ALLOWED_FIELDS?: Array<UserAttributeEnum | BlankEnum>;
     ENABLED_USER_PROFILE_ATTRIBUTES?: Array<UserAttributeEnum | BlankEnum>;
     MANDATORY_USER_ATTRIBUTES?: Array<UserAttributeEnum | BlankEnum>;
@@ -8275,6 +8293,7 @@ export type DuplicateCallRequestRequest = {
     copy_resource_templates?: boolean;
     copy_role_mappings?: boolean;
     copy_applicant_visibility_config?: boolean;
+    copy_proposal_field_config?: boolean;
     copy_coi_configuration?: boolean;
     copy_matching_configuration?: boolean;
     copy_assignment_configuration?: boolean;
@@ -20768,6 +20787,7 @@ export type PatchedProtectedCallRequest = {
      * Whether proposal applicants can see review comments and scores
      */
     reviews_visible_to_submitters?: boolean;
+    proposal_field_config?: CallProposalFieldConfigRequest;
     created_by?: string | null;
     reference_code?: string;
     /**
@@ -23292,6 +23312,8 @@ export type ProposalComplianceStatus = {
     unanswered_required_count?: number;
 };
 
+export type ProposalConfigurableFieldEnum = 'project_summary' | 'description' | 'science_sub_domain' | 'supporting_documentation';
+
 export type ProposalDetachDocumentsRequest = {
     documents: Array<string>;
 };
@@ -23313,6 +23335,16 @@ export type ProposalDocumentationRequest = {
      */
     file?: Blob | File | null;
 };
+
+export type ProposalFieldMetadata = {
+    field: string;
+    state: ProposalFieldStateEnum;
+    allowed_states: Array<string>;
+    locked_reason: string | null;
+    usage: Array<string>;
+};
+
+export type ProposalFieldStateEnum = 'hidden' | 'optional' | 'required';
 
 export type ProposalProjectRoleMapping = {
     readonly url: string;
@@ -23514,6 +23546,7 @@ export type ProtectedCall = {
      * Check if call has any eligibility restrictions configured.
      */
     readonly has_eligibility_restrictions: boolean;
+    proposal_field_config?: CallProposalFieldConfig;
     created_by?: string | null;
     reference_code?: string;
     /**
@@ -23551,6 +23584,10 @@ export type ProtectedCall = {
     user_assurance_levels?: Array<string>;
     applicant_visibility_config?: CallApplicantVisibilityConfig | null;
     /**
+     * Per-field state, permitted transitions and downstream consumers for the Project details step.
+     */
+    readonly proposal_field_metadata: Array<ProposalFieldMetadata>;
+    /**
      * Whether any proposal has been submitted to this call. Used by the frontend to gate slug-template and checklist fields.
      */
     readonly has_proposals: boolean;
@@ -23575,6 +23612,7 @@ export type ProtectedCallRequest = {
      * Whether proposal applicants can see review comments and scores
      */
     reviews_visible_to_submitters?: boolean;
+    proposal_field_config?: CallProposalFieldConfigRequest;
     created_by?: string | null;
     reference_code?: string;
     /**
@@ -24328,6 +24366,7 @@ export type PublicCall = {
      * Check if call has any eligibility restrictions configured.
      */
     readonly has_eligibility_restrictions: boolean;
+    proposal_field_config: CallProposalFieldConfig;
 };
 
 export type PublicInvitation = {
@@ -34077,6 +34116,8 @@ export type ConstanceSettingsRequestForm = {
     REMOTE_EDUTEAMS_REFRESH_TOKEN?: string;
     DEFAULT_OFFERING_USER_ATTRIBUTES?: Array<UserAttributeEnum | BlankEnum>;
     DEFAULT_CALL_USER_ATTRIBUTES?: Array<UserAttributeEnum | BlankEnum>;
+    DEFAULT_PROPOSAL_REQUIRED_FIELDS?: Array<ProposalConfigurableFieldEnum | BlankEnum>;
+    DEFAULT_PROPOSAL_HIDDEN_FIELDS?: Array<ProposalConfigurableFieldEnum | BlankEnum>;
     INVITATION_ALLOWED_FIELDS?: Array<UserAttributeEnum | BlankEnum>;
     ENABLED_USER_PROFILE_ATTRIBUTES?: Array<UserAttributeEnum | BlankEnum>;
     MANDATORY_USER_ATTRIBUTES?: Array<UserAttributeEnum | BlankEnum>;
@@ -34407,6 +34448,8 @@ export type ConstanceSettingsRequestMultipart = {
     REMOTE_EDUTEAMS_REFRESH_TOKEN?: string;
     DEFAULT_OFFERING_USER_ATTRIBUTES?: Array<UserAttributeEnum | BlankEnum>;
     DEFAULT_CALL_USER_ATTRIBUTES?: Array<UserAttributeEnum | BlankEnum>;
+    DEFAULT_PROPOSAL_REQUIRED_FIELDS?: Array<ProposalConfigurableFieldEnum | BlankEnum>;
+    DEFAULT_PROPOSAL_HIDDEN_FIELDS?: Array<ProposalConfigurableFieldEnum | BlankEnum>;
     INVITATION_ALLOWED_FIELDS?: Array<UserAttributeEnum | BlankEnum>;
     ENABLED_USER_PROFILE_ATTRIBUTES?: Array<UserAttributeEnum | BlankEnum>;
     MANDATORY_USER_ATTRIBUTES?: Array<UserAttributeEnum | BlankEnum>;
@@ -35309,13 +35352,13 @@ export type UserRequestedResourceOEnum = '-call__name' | '-created' | '-offering
 
 export type ProposalOEnum = '-created' | '-round__call__name' | '-round__cutoff_time' | '-round__start_time' | '-slug' | '-state' | 'created' | 'round__call__name' | 'round__cutoff_time' | 'round__start_time' | 'slug' | 'state';
 
-export type ProtectedCallFieldEnum = 'applicant_visibility_config' | 'backend_id' | 'compliance_checklist' | 'compliance_checklist_name' | 'created' | 'created_by' | 'customer_name' | 'customer_uuid' | 'description' | 'documents' | 'end_date' | 'external_url' | 'fixed_duration_in_days' | 'has_eligibility_restrictions' | 'has_proposals' | 'manager' | 'manager_uuid' | 'name' | 'offerings' | 'proposal_slug_template' | 'reference_code' | 'resource_templates' | 'reviewer_identity_visible_to_submitters' | 'reviews_visible_to_submitters' | 'rounds' | 'slug' | 'start_date' | 'state' | 'url' | 'user_affiliations' | 'user_assurance_levels' | 'user_email_patterns' | 'user_identity_sources' | 'user_nationalities' | 'user_organization_types' | 'uuid';
+export type ProtectedCallFieldEnum = 'applicant_visibility_config' | 'backend_id' | 'compliance_checklist' | 'compliance_checklist_name' | 'created' | 'created_by' | 'customer_name' | 'customer_uuid' | 'description' | 'documents' | 'end_date' | 'external_url' | 'fixed_duration_in_days' | 'has_eligibility_restrictions' | 'has_proposals' | 'manager' | 'manager_uuid' | 'name' | 'offerings' | 'proposal_field_config' | 'proposal_field_metadata' | 'proposal_slug_template' | 'reference_code' | 'resource_templates' | 'reviewer_identity_visible_to_submitters' | 'reviews_visible_to_submitters' | 'rounds' | 'slug' | 'start_date' | 'state' | 'url' | 'user_affiliations' | 'user_assurance_levels' | 'user_email_patterns' | 'user_identity_sources' | 'user_nationalities' | 'user_organization_types' | 'uuid';
 
 export type ProtectedCallOEnum = '-created' | '-manager__customer__name' | '-name' | 'created' | 'manager__customer__name' | 'name';
 
 export type AffinityMatrixResponseScopeEnum = 'all' | 'pool' | 'suggestions';
 
-export type PublicCallFieldEnum = 'backend_id' | 'created' | 'customer_name' | 'customer_uuid' | 'description' | 'documents' | 'end_date' | 'external_url' | 'fixed_duration_in_days' | 'has_eligibility_restrictions' | 'manager' | 'manager_uuid' | 'name' | 'offerings' | 'resource_templates' | 'reviewer_identity_visible_to_submitters' | 'reviews_visible_to_submitters' | 'rounds' | 'slug' | 'start_date' | 'state' | 'url' | 'uuid';
+export type PublicCallFieldEnum = 'backend_id' | 'created' | 'customer_name' | 'customer_uuid' | 'description' | 'documents' | 'end_date' | 'external_url' | 'fixed_duration_in_days' | 'has_eligibility_restrictions' | 'manager' | 'manager_uuid' | 'name' | 'offerings' | 'proposal_field_config' | 'resource_templates' | 'reviewer_identity_visible_to_submitters' | 'reviews_visible_to_submitters' | 'rounds' | 'slug' | 'start_date' | 'state' | 'url' | 'uuid';
 
 export type ProviderRequestedOfferingOEnum = '-call__name' | '-created' | '-offering__name' | '-state' | 'call__name' | 'created' | 'offering__name' | 'state';
 
