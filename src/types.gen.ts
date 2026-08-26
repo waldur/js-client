@@ -22528,6 +22528,7 @@ export type ProjectCredit = {
      * tell them apart.
      */
     readonly consumption_last_month: number | null;
+    readonly creditable_cost_this_month: string | null;
     readonly spendable_value: string;
     /**
      * True when the organization balance, not this allocation, is binding.
