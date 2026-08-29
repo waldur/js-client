@@ -23451,10 +23451,6 @@ export type Proposal = {
     readonly applicant_civil_number: string | null;
     readonly applicant_birth_date: string | null;
     readonly applicant_active_isds: Array<string>;
-    /**
-     * Duration in days after provisioning of resources.
-     */
-    duration_in_days?: number | null;
     readonly project: string | null;
     round: NestedRound;
     readonly call_uuid: string;
@@ -23553,10 +23549,6 @@ export type ProposalRequest = {
     name: string;
     description?: string;
     project_summary?: string;
-    /**
-     * Duration in days after provisioning of resources.
-     */
-    duration_in_days?: number | null;
     round_uuid: string;
     oecd_fos_2007_code?: OecdFos2007CodeEnum | BlankEnum | NullEnum | null;
     science_sub_domain?: string | null;
@@ -23632,10 +23624,6 @@ export type ProposalUpdateProjectDetailsRequest = {
     name: string;
     description?: string;
     project_summary?: string;
-    /**
-     * Duration in days after provisioning of resources.
-     */
-    duration_in_days?: number | null;
     science_sub_domain?: string | null;
 };
 
@@ -35352,6 +35340,8 @@ export type CustomerUserFieldEnum = 'email' | 'expiration_time' | 'full_name' | 
 
 export type CustomerUserOEnum = 'concatenated_name' | '-concatenated_name';
 
+export type ServiceProviderFieldEnum = 'allowed_domains' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_country' | 'customer_image' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'enable_notifications' | 'image' | 'offering_count' | 'organization_groups' | 'url' | 'uuid';
+
 export type GlobalUserDataAccessLogOEnum = '-accessor_type' | '-accessor_username' | '-timestamp' | '-user_username' | 'accessor_type' | 'accessor_username' | 'timestamp' | 'user_username';
 
 export type DigitalOceanDropletFieldEnum = 'access_url' | 'backend_id' | 'cores' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'disk' | 'error_message' | 'error_traceback' | 'external_ips' | 'image' | 'image_name' | 'internal_ips' | 'is_limit_based' | 'is_usage_based' | 'key_fingerprint' | 'key_name' | 'latitude' | 'longitude' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'min_disk' | 'min_ram' | 'modified' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'ram' | 'region' | 'region_name' | 'resource_type' | 'runtime_state' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'size' | 'ssh_public_key' | 'start_time' | 'state' | 'url' | 'user_data' | 'uuid';
@@ -35457,8 +35447,6 @@ export type ResourceOEnum = '-backend_id' | '-created' | '-customer_name' | '-en
 export type ResourceTeamMemberFieldEnum = 'email' | 'expiration_time' | 'full_name' | 'image' | 'resource_projects' | 'role_name' | 'role_uuid' | 'roles' | 'url' | 'username' | 'uuid';
 
 export type RobotAccountDetailsFieldEnum = 'backend_id' | 'created' | 'customer_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'fingerprints' | 'keys' | 'modified' | 'offering_plugin_options' | 'project_name' | 'project_uuid' | 'provider_name' | 'provider_uuid' | 'resource' | 'resource_name' | 'resource_uuid' | 'responsible_user' | 'state' | 'type' | 'url' | 'user_keys' | 'username' | 'users' | 'uuid';
-
-export type ServiceProviderFieldEnum = 'allowed_domains' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_country' | 'customer_image' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'enable_notifications' | 'image' | 'offering_count' | 'organization_groups' | 'url' | 'uuid';
 
 export type MarketplaceProviderCustomerProjectFieldEnum = 'billing_price_estimate' | 'description' | 'end_date' | 'name' | 'resources_count' | 'users_count' | 'uuid';
 
@@ -47131,6 +47119,111 @@ export type CustomersProjectDigestConfigSendTestResponses = {
      */
     200: unknown;
 };
+
+export type CustomersProvidersListData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * Abbreviation
+         */
+        abbreviation?: string;
+        /**
+         * Filter by whether accounting is running.
+         */
+        accounting_is_running?: boolean;
+        agreement_number?: string;
+        archived?: boolean;
+        backend_id?: string;
+        /**
+         * Contact details
+         */
+        contact_details?: string;
+        /**
+         * Return a list of customers where current user has project create permission.
+         */
+        current_user_has_project_create_permission?: boolean;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        current_user_has_role?: Array<string>;
+        field?: Array<ServiceProviderFieldEnum>;
+        /**
+         * Filter by customers with resources.
+         */
+        has_resources?: string;
+        /**
+         * Filter by customers that are call managing organizations.
+         */
+        is_call_managing_organization?: boolean;
+        /**
+         * Filter by customers that are service providers.
+         */
+        is_service_provider?: boolean;
+        /**
+         * Name
+         */
+        name?: string;
+        /**
+         * Name (exact)
+         */
+        name_exact?: string;
+        /**
+         * Native name
+         */
+        native_name?: string;
+        /**
+         * Which field to use when ordering the results.
+         */
+        o?: string;
+        /**
+         * Organization group name
+         */
+        organization_group_name?: string;
+        /**
+         * Organization group UUID
+         */
+        organization_group_uuid?: Array<string>;
+        /**
+         * Return a list of customers where current user is owner.
+         */
+        owned_by_current_user?: boolean;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Filter by name, native name, abbreviation, domain, UUID, registration code or agreement number
+         */
+        query?: string;
+        registration_code?: string;
+        /**
+         * Filter by service provider UUID.
+         */
+        service_provider_uuid?: string;
+        /**
+         * Slug
+         */
+        slug?: string;
+        /**
+         * Filter by user UUID.
+         */
+        user_uuid?: string;
+    };
+    url: '/api/customers/{uuid}/providers/';
+};
+
+export type CustomersProvidersListResponses = {
+    200: Array<ServiceProvider>;
+};
+
+export type CustomersProvidersListResponse = CustomersProvidersListResponses[keyof CustomersProvidersListResponses];
 
 export type CustomersStatsRetrieveData = {
     body?: never;
