@@ -17136,7 +17136,7 @@ export type OpenStackInstance = {
     readonly volumes: Array<OpenStackNestedVolume>;
     security_groups?: Array<OpenStackNestedSecurityGroup>;
     server_group: OpenStackNestedServerGroup;
-    floating_ips: Array<OpenStackNestedFloatingIp>;
+    readonly floating_ips: Array<OpenStackNestedFloatingIp>;
     ports: Array<OpenStackNestedPort>;
     /**
      * Availability zone where this instance is located
@@ -18137,6 +18137,10 @@ export type OpenStackSecurityGroup = {
     readonly tenant_name: string;
     readonly tenant_uuid: string;
     rules: Array<OpenStackSecurityGroupRuleCreate>;
+    /**
+     * Number of instances the security group is attached to. It is annotated by the security group endpoints only, so it is null when the group is rendered as a nested object.
+     */
+    readonly instance_count: number | null;
     readonly marketplace_offering_uuid: string | null;
     readonly marketplace_offering_name: string | null;
     readonly marketplace_offering_type: string | null;
@@ -35528,7 +35532,7 @@ export type OpenStackPortOEnum = '-admin_state_up' | '-created' | '-device_owner
 
 export type OpenStackRouterFieldEnum = 'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'enable_snat' | 'error_message' | 'error_traceback' | 'external_fixed_ips' | 'external_network_id' | 'external_network_name' | 'external_network_uuid' | 'fixed_ips' | 'has_external_gateway' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'offering_external_ips' | 'ports' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'routes' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'tenant' | 'tenant_name' | 'tenant_uuid' | 'url' | 'uuid';
 
-export type OpenStackSecurityGroupFieldEnum = 'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'rules' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'tenant' | 'tenant_name' | 'tenant_uuid' | 'url' | 'uuid';
+export type OpenStackSecurityGroupFieldEnum = 'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'instance_count' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'rules' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'tenant' | 'tenant_name' | 'tenant_uuid' | 'url' | 'uuid';
 
 export type OpenStackServerGroupFieldEnum = 'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'display_name' | 'error_message' | 'error_traceback' | 'instances' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'policy' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'tenant' | 'tenant_name' | 'tenant_uuid' | 'url' | 'uuid';
 
@@ -84248,6 +84252,14 @@ export type OpenstackInstancesListData = {
         query?: string;
         runtime_state?: string;
         /**
+         * Security group URL
+         */
+        security_group?: string;
+        /**
+         * Security group UUID
+         */
+        security_group_uuid?: string;
+        /**
          * Service settings name
          */
         service_settings_name?: string;
@@ -84364,6 +84376,14 @@ export type OpenstackInstancesCountData = {
          */
         query?: string;
         runtime_state?: string;
+        /**
+         * Security group URL
+         */
+        security_group?: string;
+        /**
+         * Security group UUID
+         */
+        security_group_uuid?: string;
         /**
          * Service settings name
          */
