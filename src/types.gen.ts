@@ -23764,6 +23764,10 @@ export type ProtectedCall = {
     readonly documents: Array<CallDocument>;
     readonly resource_templates: Array<CallResourceTemplate>;
     fixed_duration_in_days?: number | null;
+    /**
+     * The longest prepaid subscription, in whole months, that fits inside fixed_duration_in_days measured from today; null when the call fixes no duration.
+     */
+    readonly max_prepaid_duration_months: number | null;
     backend_id?: string;
     external_url?: string | null;
     /**
@@ -24590,6 +24594,10 @@ export type PublicCall = {
      * Fixed duration in days that applies to all proposals in this call
      */
     readonly fixed_duration_in_days: number | null;
+    /**
+     * The longest prepaid subscription, in whole months, that fits inside fixed_duration_in_days measured from today; null when the call fixes no duration.
+     */
+    readonly max_prepaid_duration_months: number | null;
     backend_id?: string;
     external_url?: string | null;
     /**
@@ -35617,13 +35625,13 @@ export type UserRequestedResourceOEnum = '-call__name' | '-created' | '-offering
 
 export type ProposalOEnum = '-created' | '-round__call__name' | '-round__cutoff_time' | '-round__start_time' | '-slug' | '-state' | 'created' | 'round__call__name' | 'round__cutoff_time' | 'round__start_time' | 'slug' | 'state';
 
-export type ProtectedCallFieldEnum = 'applicant_visibility_config' | 'backend_id' | 'compliance_checklist' | 'compliance_checklist_name' | 'created' | 'created_by' | 'customer_name' | 'customer_uuid' | 'description' | 'documents' | 'end_date' | 'external_url' | 'fixed_duration_in_days' | 'has_eligibility_restrictions' | 'has_proposals' | 'manager' | 'manager_uuid' | 'name' | 'offerings' | 'panel_chair' | 'panel_chair_name' | 'panel_chair_uuid' | 'proposal_field_config' | 'proposal_field_metadata' | 'proposal_slug_template' | 'reference_code' | 'resource_templates' | 'reviewer_identity_visible_to_submitters' | 'reviews_visible_to_submitters' | 'rounds' | 'slug' | 'start_date' | 'state' | 'url' | 'user_affiliations' | 'user_assurance_levels' | 'user_email_patterns' | 'user_identity_sources' | 'user_nationalities' | 'user_organization_types' | 'uuid';
+export type ProtectedCallFieldEnum = 'applicant_visibility_config' | 'backend_id' | 'compliance_checklist' | 'compliance_checklist_name' | 'created' | 'created_by' | 'customer_name' | 'customer_uuid' | 'description' | 'documents' | 'end_date' | 'external_url' | 'fixed_duration_in_days' | 'has_eligibility_restrictions' | 'has_proposals' | 'manager' | 'manager_uuid' | 'max_prepaid_duration_months' | 'name' | 'offerings' | 'panel_chair' | 'panel_chair_name' | 'panel_chair_uuid' | 'proposal_field_config' | 'proposal_field_metadata' | 'proposal_slug_template' | 'reference_code' | 'resource_templates' | 'reviewer_identity_visible_to_submitters' | 'reviews_visible_to_submitters' | 'rounds' | 'slug' | 'start_date' | 'state' | 'url' | 'user_affiliations' | 'user_assurance_levels' | 'user_email_patterns' | 'user_identity_sources' | 'user_nationalities' | 'user_organization_types' | 'uuid';
 
 export type ProtectedCallOEnum = '-created' | '-manager__customer__name' | '-name' | 'created' | 'manager__customer__name' | 'name';
 
 export type AffinityMatrixResponseScopeEnum = 'all' | 'pool' | 'suggestions';
 
-export type PublicCallFieldEnum = 'backend_id' | 'created' | 'customer_name' | 'customer_uuid' | 'description' | 'documents' | 'end_date' | 'external_url' | 'fixed_duration_in_days' | 'has_eligibility_restrictions' | 'manager' | 'manager_uuid' | 'name' | 'offerings' | 'proposal_field_config' | 'resource_templates' | 'reviewer_identity_visible_to_submitters' | 'reviews_visible_to_submitters' | 'rounds' | 'slug' | 'start_date' | 'state' | 'url' | 'uuid';
+export type PublicCallFieldEnum = 'backend_id' | 'created' | 'customer_name' | 'customer_uuid' | 'description' | 'documents' | 'end_date' | 'external_url' | 'fixed_duration_in_days' | 'has_eligibility_restrictions' | 'manager' | 'manager_uuid' | 'max_prepaid_duration_months' | 'name' | 'offerings' | 'proposal_field_config' | 'resource_templates' | 'reviewer_identity_visible_to_submitters' | 'reviews_visible_to_submitters' | 'rounds' | 'slug' | 'start_date' | 'state' | 'url' | 'uuid';
 
 export type ProviderRequestedOfferingOEnum = '-call__name' | '-created' | '-offering__name' | '-state' | 'call__name' | 'created' | 'offering__name' | 'state';
 
