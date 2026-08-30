@@ -4132,6 +4132,7 @@ export type CallWorkflowStep = {
     display_order?: number | null;
     criteria?: Array<WorkflowCriterion>;
     readonly notification_rules: Array<CallWorkflowStepNotificationRuleNested>;
+    readonly responsible_users: Array<WorkflowStepResponsibleUser>;
 };
 
 export type CallWorkflowStepNotificationRule = {
@@ -32964,6 +32965,14 @@ export type WorkflowCriterion = {
 export type WorkflowCriterionRequest = {
     name: string;
     order?: number;
+};
+
+export type WorkflowStepResponsibleUser = {
+    uuid: string;
+    username: string;
+    full_name: string;
+    email: string;
+    is_panel_chair: boolean;
 };
 
 export type ZammadarticletypeEnum = 'email' | 'phone' | 'web' | 'note' | 'sms' | 'chat' | 'fax' | 'twitter status' | 'twitter direct-message' | 'facebook feed post' | 'facebook feed comment' | 'telegram personal-message';
