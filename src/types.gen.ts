@@ -4131,6 +4131,47 @@ export type CallWorkflowStep = {
      */
     display_order?: number | null;
     criteria?: Array<WorkflowCriterion>;
+    readonly notification_rules: Array<CallWorkflowStepNotificationRuleNested>;
+};
+
+export type CallWorkflowStepNotificationRule = {
+    readonly url: string;
+    readonly uuid: string;
+    readonly created: string;
+    readonly modified: string;
+    workflow_step: string;
+    readonly workflow_step_uuid: string;
+    step: StepEnum;
+    readonly call_uuid: string;
+    trigger: TriggerEnum;
+    recipient: RecipientEnum;
+    /**
+     * Only for deadline_approaching: how many days before the step's deadline the reminder is sent.
+     */
+    days_before?: number | null;
+    is_enabled?: boolean;
+};
+
+export type CallWorkflowStepNotificationRuleNested = {
+    readonly uuid: string;
+    trigger: TriggerEnum;
+    recipient: RecipientEnum;
+    /**
+     * Only for deadline_approaching: how many days before the step's deadline the reminder is sent.
+     */
+    readonly days_before: number | null;
+    readonly is_enabled: boolean;
+};
+
+export type CallWorkflowStepNotificationRuleRequest = {
+    workflow_step: string;
+    trigger: TriggerEnum;
+    recipient: RecipientEnum;
+    /**
+     * Only for deadline_approaching: how many days before the step's deadline the reminder is sent.
+     */
+    days_before?: number | null;
+    is_enabled?: boolean;
 };
 
 export type CallWorkflowStepRequest = {
@@ -19699,6 +19740,17 @@ export type PatchedCallReviewerPoolUpdateRequest = {
     max_assignments?: number;
 };
 
+export type PatchedCallWorkflowStepNotificationRuleRequest = {
+    workflow_step?: string;
+    trigger?: TriggerEnum;
+    recipient?: RecipientEnum;
+    /**
+     * Only for deadline_approaching: how many days before the step's deadline the reminder is sent.
+     */
+    days_before?: number | null;
+    is_enabled?: boolean;
+};
+
 export type PatchedCallWorkflowStepRequest = {
     /**
      * Whether this step is enabled. Disabled steps are skipped.
@@ -20980,6 +21032,7 @@ export type PatchedProtectedCallRequest = {
      * Compliance checklist that proposals must complete before submission
      */
     compliance_checklist?: string | null;
+    panel_chair?: string | null;
     /**
      * Template for proposal slugs. Supports: {call_slug}, {round_slug}, {org_slug}, {year}, {month}, {counter}, {counter_padded}. Default: {round_slug}-{counter_padded}
      */
@@ -23733,6 +23786,9 @@ export type ProtectedCall = {
      */
     compliance_checklist?: string | null;
     readonly compliance_checklist_name: string;
+    panel_chair?: string | null;
+    readonly panel_chair_uuid: string;
+    readonly panel_chair_name: string;
     /**
      * Template for proposal slugs. Supports: {call_slug}, {round_slug}, {org_slug}, {year}, {month}, {counter}, {counter_padded}. Default: {round_slug}-{counter_padded}
      */
@@ -23798,6 +23854,7 @@ export type ProtectedCallRequest = {
      * Compliance checklist that proposals must complete before submission
      */
     compliance_checklist?: string | null;
+    panel_chair?: string | null;
     /**
      * Template for proposal slugs. Supports: {call_slug}, {round_slug}, {org_slug}, {year}, {month}, {counter}, {counter_padded}. Default: {round_slug}-{counter_padded}
      */
@@ -26279,6 +26336,8 @@ export type RecentTicket = {
     status: string;
     created: string;
 };
+
+export type RecipientEnum = 'applicant' | 'responsible_role' | 'assigned_reviewers' | 'call_managers' | 'all_pool_reviewers' | 'panel_chair';
 
 export type ReconcileRequestRequest = {
     year: number;
@@ -31273,6 +31332,8 @@ export type TriggerConsumptionSyncRequestRequest = {
     resource_uuid?: string;
 };
 
+export type TriggerEnum = 'step_started' | 'step_completed' | 'step_rejected' | 'step_expired' | 'deadline_approaching';
+
 export type TriggerSyncRequestRequest = {
     year: number;
     month: number;
@@ -35556,7 +35617,7 @@ export type UserRequestedResourceOEnum = '-call__name' | '-created' | '-offering
 
 export type ProposalOEnum = '-created' | '-round__call__name' | '-round__cutoff_time' | '-round__start_time' | '-slug' | '-state' | 'created' | 'round__call__name' | 'round__cutoff_time' | 'round__start_time' | 'slug' | 'state';
 
-export type ProtectedCallFieldEnum = 'applicant_visibility_config' | 'backend_id' | 'compliance_checklist' | 'compliance_checklist_name' | 'created' | 'created_by' | 'customer_name' | 'customer_uuid' | 'description' | 'documents' | 'end_date' | 'external_url' | 'fixed_duration_in_days' | 'has_eligibility_restrictions' | 'has_proposals' | 'manager' | 'manager_uuid' | 'name' | 'offerings' | 'proposal_field_config' | 'proposal_field_metadata' | 'proposal_slug_template' | 'reference_code' | 'resource_templates' | 'reviewer_identity_visible_to_submitters' | 'reviews_visible_to_submitters' | 'rounds' | 'slug' | 'start_date' | 'state' | 'url' | 'user_affiliations' | 'user_assurance_levels' | 'user_email_patterns' | 'user_identity_sources' | 'user_nationalities' | 'user_organization_types' | 'uuid';
+export type ProtectedCallFieldEnum = 'applicant_visibility_config' | 'backend_id' | 'compliance_checklist' | 'compliance_checklist_name' | 'created' | 'created_by' | 'customer_name' | 'customer_uuid' | 'description' | 'documents' | 'end_date' | 'external_url' | 'fixed_duration_in_days' | 'has_eligibility_restrictions' | 'has_proposals' | 'manager' | 'manager_uuid' | 'name' | 'offerings' | 'panel_chair' | 'panel_chair_name' | 'panel_chair_uuid' | 'proposal_field_config' | 'proposal_field_metadata' | 'proposal_slug_template' | 'reference_code' | 'resource_templates' | 'reviewer_identity_visible_to_submitters' | 'reviews_visible_to_submitters' | 'rounds' | 'slug' | 'start_date' | 'state' | 'url' | 'user_affiliations' | 'user_assurance_levels' | 'user_email_patterns' | 'user_identity_sources' | 'user_nationalities' | 'user_organization_types' | 'uuid';
 
 export type ProtectedCallOEnum = '-created' | '-manager__customer__name' | '-name' | 'created' | 'manager__customer__name' | 'name';
 
@@ -43747,6 +43808,137 @@ export type CallRoundsDashboardDeadlinesCountResponses = {
      */
     200: unknown;
 };
+
+export type CallWorkflowStepNotificationRulesListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        call_uuid?: string;
+        is_enabled?: boolean;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        step?: string;
+        trigger?: string;
+        workflow_step_uuid?: string;
+    };
+    url: '/api/call-workflow-step-notification-rules/';
+};
+
+export type CallWorkflowStepNotificationRulesListResponses = {
+    200: Array<CallWorkflowStepNotificationRule>;
+};
+
+export type CallWorkflowStepNotificationRulesListResponse = CallWorkflowStepNotificationRulesListResponses[keyof CallWorkflowStepNotificationRulesListResponses];
+
+export type CallWorkflowStepNotificationRulesCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        call_uuid?: string;
+        is_enabled?: boolean;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        step?: string;
+        trigger?: string;
+        workflow_step_uuid?: string;
+    };
+    url: '/api/call-workflow-step-notification-rules/';
+};
+
+export type CallWorkflowStepNotificationRulesCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type CallWorkflowStepNotificationRulesCreateData = {
+    body: CallWorkflowStepNotificationRuleRequest;
+    path?: never;
+    query?: never;
+    url: '/api/call-workflow-step-notification-rules/';
+};
+
+export type CallWorkflowStepNotificationRulesCreateResponses = {
+    201: CallWorkflowStepNotificationRule;
+};
+
+export type CallWorkflowStepNotificationRulesCreateResponse = CallWorkflowStepNotificationRulesCreateResponses[keyof CallWorkflowStepNotificationRulesCreateResponses];
+
+export type CallWorkflowStepNotificationRulesDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/call-workflow-step-notification-rules/{uuid}/';
+};
+
+export type CallWorkflowStepNotificationRulesDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type CallWorkflowStepNotificationRulesDestroyResponse = CallWorkflowStepNotificationRulesDestroyResponses[keyof CallWorkflowStepNotificationRulesDestroyResponses];
+
+export type CallWorkflowStepNotificationRulesRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/call-workflow-step-notification-rules/{uuid}/';
+};
+
+export type CallWorkflowStepNotificationRulesRetrieveResponses = {
+    200: CallWorkflowStepNotificationRule;
+};
+
+export type CallWorkflowStepNotificationRulesRetrieveResponse = CallWorkflowStepNotificationRulesRetrieveResponses[keyof CallWorkflowStepNotificationRulesRetrieveResponses];
+
+export type CallWorkflowStepNotificationRulesPartialUpdateData = {
+    body?: PatchedCallWorkflowStepNotificationRuleRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/call-workflow-step-notification-rules/{uuid}/';
+};
+
+export type CallWorkflowStepNotificationRulesPartialUpdateResponses = {
+    200: CallWorkflowStepNotificationRule;
+};
+
+export type CallWorkflowStepNotificationRulesPartialUpdateResponse = CallWorkflowStepNotificationRulesPartialUpdateResponses[keyof CallWorkflowStepNotificationRulesPartialUpdateResponses];
+
+export type CallWorkflowStepNotificationRulesUpdateData = {
+    body: CallWorkflowStepNotificationRuleRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/call-workflow-step-notification-rules/{uuid}/';
+};
+
+export type CallWorkflowStepNotificationRulesUpdateResponses = {
+    200: CallWorkflowStepNotificationRule;
+};
+
+export type CallWorkflowStepNotificationRulesUpdateResponse = CallWorkflowStepNotificationRulesUpdateResponses[keyof CallWorkflowStepNotificationRulesUpdateResponses];
 
 export type CeleryStatsRetrieveData = {
     body?: never;
