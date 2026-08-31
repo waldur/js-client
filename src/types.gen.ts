@@ -8550,6 +8550,89 @@ export type EligibleProject = {
     customer_name: string;
 };
 
+export type EmailConfig = {
+    /**
+     * EMAIL_BACKEND class path
+     */
+    readonly backend: string;
+    /**
+     * EMAIL_HOST
+     */
+    readonly host: string;
+    /**
+     * EMAIL_PORT
+     */
+    readonly port: number | null;
+    /**
+     * EMAIL_HOST_USER
+     */
+    readonly host_user: string;
+    /**
+     * Whether EMAIL_HOST_PASSWORD is set
+     */
+    readonly has_password: boolean;
+    /**
+     * EMAIL_USE_TLS
+     */
+    readonly use_tls: boolean;
+    /**
+     * EMAIL_USE_SSL
+     */
+    readonly use_ssl: boolean;
+    /**
+     * EMAIL_TIMEOUT in seconds
+     */
+    readonly timeout: number | null;
+    /**
+     * DEFAULT_FROM_EMAIL
+     */
+    readonly default_from_email: string;
+    /**
+     * DEFAULT_REPLY_TO_EMAIL
+     */
+    readonly default_reply_to_email: string;
+    /**
+     * EMAIL_SUBJECT_PREFIX
+     */
+    readonly subject_prefix: string;
+};
+
+export type EmailDiagnostics = {
+    /**
+     * Worst finding level: OK, WARNING or ERROR
+     */
+    readonly status: string;
+    config: EmailConfig;
+    readonly findings: Array<EmailFinding>;
+    readonly enabled_notification_count: number;
+    readonly total_notification_count: number;
+    readonly emails_sent_last_week: number;
+    readonly last_email_sent_at: string | null;
+};
+
+export type EmailFinding = {
+    /**
+     * OK, WARNING or ERROR
+     */
+    readonly level: string;
+    /**
+     * Stable machine-readable id
+     */
+    readonly code: string;
+    /**
+     * Short summary
+     */
+    readonly title: string;
+    /**
+     * What was observed
+     */
+    readonly detail: string;
+    /**
+     * How to fix it
+     */
+    readonly remediation: string;
+};
+
 export type EmailHook = {
     readonly url: string;
     readonly uuid: string;
@@ -8592,6 +8675,37 @@ export type EmailLog = {
     subject: string;
     body: string;
     emails: Array<string>;
+};
+
+export type EmailProbe = {
+    readonly success: boolean;
+    /**
+     * Time to open the connection, in milliseconds
+     */
+    readonly latency_ms: number | null;
+    /**
+     * Failure reason, empty on success
+     */
+    readonly error: string;
+};
+
+export type EmailTestSendRequestRequest = {
+    /**
+     * Recipient of the test message. Defaults to the current user's own address.
+     */
+    email?: string;
+};
+
+export type EmailTestSendResult = {
+    readonly success: boolean;
+    /**
+     * Address the test was sent to
+     */
+    readonly email: string;
+    /**
+     * Failure reason, empty on success
+     */
+    readonly error: string;
 };
 
 export type EndpointUuid = {
@@ -47896,6 +48010,52 @@ export type DatabaseStatsRetrieveResponses = {
 };
 
 export type DatabaseStatsRetrieveResponse = DatabaseStatsRetrieveResponses[keyof DatabaseStatsRetrieveResponses];
+
+export type DebugEmailConfigRetrieveData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/debug/email/config/';
+};
+
+export type DebugEmailConfigRetrieveResponses = {
+    200: EmailDiagnostics;
+};
+
+export type DebugEmailConfigRetrieveResponse = DebugEmailConfigRetrieveResponses[keyof DebugEmailConfigRetrieveResponses];
+
+export type DebugEmailProbeData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/debug/email/probe/';
+};
+
+export type DebugEmailProbeResponses = {
+    200: EmailProbe;
+};
+
+export type DebugEmailProbeResponse = DebugEmailProbeResponses[keyof DebugEmailProbeResponses];
+
+export type DebugEmailSendTestData = {
+    body?: EmailTestSendRequestRequest;
+    path?: never;
+    query?: never;
+    url: '/api/debug/email/send_test/';
+};
+
+export type DebugEmailSendTestErrors = {
+    /**
+     * No response body
+     */
+    400: unknown;
+};
+
+export type DebugEmailSendTestResponses = {
+    200: EmailTestSendResult;
+};
+
+export type DebugEmailSendTestResponse = DebugEmailSendTestResponses[keyof DebugEmailSendTestResponses];
 
 export type DebugPubsubCircuitBreakerRetrieveData = {
     body?: never;
