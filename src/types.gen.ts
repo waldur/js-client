@@ -10995,6 +10995,7 @@ export type Issue = {
     readonly resolved: boolean | null;
     readonly update_is_available: boolean;
     readonly destroy_is_available: boolean;
+    readonly available_statuses: Array<string>;
     readonly add_comment_is_available: boolean;
     readonly add_attachment_is_available: boolean;
     /**
@@ -29825,6 +29826,13 @@ export type SetExternalGatewayRequest = {
      * List of fixed IP specifications for the gateway port. Each entry should have 'ip_address' and optionally 'subnet_id'. Requires advanced permissions.
      */
     external_fixed_ips?: Array<SetExternalGatewayFixedIpRequest>;
+};
+
+export type SetIssueStatusRequest = {
+    /**
+     * Name of the status to move to.
+     */
+    status: string;
 };
 
 export type SetLinksRequest = {
@@ -104295,6 +104303,10 @@ export type SupportIssuesListData = {
         customer_uuid?: string;
         is_escalated?: boolean;
         /**
+         * Has not reached a terminal status
+         */
+        is_open?: boolean;
+        /**
          * Is a parent issue
          */
         is_parent?: boolean;
@@ -104372,6 +104384,10 @@ export type SupportIssuesCountData = {
         customer?: string;
         customer_uuid?: string;
         is_escalated?: boolean;
+        /**
+         * Has not reached a terminal status
+         */
+        is_open?: boolean;
         /**
          * Is a parent issue
          */
@@ -104588,6 +104604,21 @@ export type SupportIssuesRouteToProviderResponses = {
 };
 
 export type SupportIssuesRouteToProviderResponse = SupportIssuesRouteToProviderResponses[keyof SupportIssuesRouteToProviderResponses];
+
+export type SupportIssuesSetStatusData = {
+    body: SetIssueStatusRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/support-issues/{uuid}/set_status/';
+};
+
+export type SupportIssuesSetStatusResponses = {
+    200: Issue;
+};
+
+export type SupportIssuesSetStatusResponse = SupportIssuesSetStatusResponses[keyof SupportIssuesSetStatusResponses];
 
 export type SupportIssuesSyncData = {
     body?: never;
