@@ -6639,6 +6639,9 @@ export type CreateCustomerCredit = {
     readonly customer_name: string;
     readonly customer_uuid: string;
     readonly customer_slug: string;
+    /**
+     * Offerings the credit may be drawn against. Leave empty to allow all offerings: an empty list means unrestricted, not none. Cost on any other offering is invoiced normally and is never compensated from this credit.
+     */
     offerings?: Array<string | null>;
     end_date?: string | null;
     expected_consumption?: string;
@@ -6660,6 +6663,9 @@ export type CreateCustomerCredit = {
 export type CreateCustomerCreditRequest = {
     value?: string;
     customer: string;
+    /**
+     * Offerings the credit may be drawn against. Leave empty to allow all offerings: an empty list means unrestricted, not none. Cost on any other offering is invoiced normally and is never compensated from this credit.
+     */
     offerings?: Array<string | null>;
     end_date?: string | null;
     expected_consumption?: string;
@@ -7233,6 +7239,8 @@ export type CustomerEstimatedCostPolicy = {
     period?: PolicyPeriodEnum;
     readonly period_name: string;
     readonly current_cost: string;
+    readonly eta_days: number | null;
+    readonly eta_date: string | null;
     readonly customer_credit: string | null;
     billing_price_estimate: NestedPriceEstimate;
 };
@@ -15176,6 +15184,8 @@ export type OfferingEstimatedCostPolicy = {
     period?: PolicyPeriodEnum;
     readonly period_name: string;
     readonly current_cost: string;
+    readonly eta_days: number | null;
+    readonly eta_date: string | null;
     organization_groups?: Array<string>;
     /**
      * If True, policy applies to all customers. Mutually exclusive with organization_groups.
@@ -20030,6 +20040,9 @@ export type PatchedCreateCustomerAffiliateRequest = {
 export type PatchedCreateCustomerCreditRequest = {
     value?: string;
     customer?: string;
+    /**
+     * Offerings the credit may be drawn against. Leave empty to allow all offerings: an empty list means unrestricted, not none. Cost on any other offering is invoiced normally and is never compensated from this credit.
+     */
     offerings?: Array<string | null>;
     end_date?: string | null;
     expected_consumption?: string;
@@ -23061,6 +23074,8 @@ export type ProjectEstimatedCostPolicy = {
     period?: PolicyPeriodEnum;
     readonly period_name: string;
     readonly current_cost: string;
+    readonly eta_days: number | null;
+    readonly eta_date: string | null;
     readonly project_credit: string | null;
     readonly customer_credit: string | null;
     resource?: string | null;
@@ -35598,13 +35613,13 @@ export type ComponentUserUsageOEnum = '-component_usage__billing_period' | '-usa
 
 export type CourseAccountOEnum = '-created' | '-email' | '-modified' | '-project_end_date' | '-project_name' | '-project_start_date' | '-state' | '-username' | 'created' | 'email' | 'modified' | 'project_end_date' | 'project_name' | 'project_start_date' | 'state' | 'username';
 
-export type CustomerEstimatedCostPolicyFieldEnum = 'actions' | 'affected_resources_count' | 'billing_price_estimate' | 'created' | 'created_by_full_name' | 'created_by_username' | 'current_cost' | 'customer_credit' | 'fired_datetime' | 'has_fired' | 'limit_cost' | 'options' | 'period' | 'period_name' | 'scope' | 'scope_name' | 'scope_uuid' | 'url' | 'uuid';
+export type CustomerEstimatedCostPolicyFieldEnum = 'actions' | 'affected_resources_count' | 'billing_price_estimate' | 'created' | 'created_by_full_name' | 'created_by_username' | 'current_cost' | 'customer_credit' | 'eta_date' | 'eta_days' | 'fired_datetime' | 'has_fired' | 'limit_cost' | 'options' | 'period' | 'period_name' | 'scope' | 'scope_name' | 'scope_uuid' | 'url' | 'uuid';
 
 export type IntegrationStatusDetailsOEnum = '-last_request_timestamp' | 'last_request_timestamp';
 
 export type IntegrationStatusDetailsStatusEnum = 'Active' | 'Disconnected' | 'Unknown';
 
-export type OfferingEstimatedCostPolicyFieldEnum = 'actions' | 'affected_resources_count' | 'apply_to_all' | 'created' | 'created_by_full_name' | 'created_by_username' | 'current_cost' | 'fired_datetime' | 'has_fired' | 'limit_cost' | 'options' | 'organization_groups' | 'period' | 'period_name' | 'scope' | 'scope_name' | 'scope_uuid' | 'url' | 'uuid';
+export type OfferingEstimatedCostPolicyFieldEnum = 'actions' | 'affected_resources_count' | 'apply_to_all' | 'created' | 'created_by_full_name' | 'created_by_username' | 'current_cost' | 'eta_date' | 'eta_days' | 'fired_datetime' | 'has_fired' | 'limit_cost' | 'options' | 'organization_groups' | 'period' | 'period_name' | 'scope' | 'scope_name' | 'scope_uuid' | 'url' | 'uuid';
 
 export type OfferingFileFieldEnum = 'created' | 'file' | 'name' | 'offering' | 'url' | 'uuid';
 
@@ -35634,7 +35649,7 @@ export type PosixIdentityConsumerTypeEnum = 'offeringrolegroup' | 'offeringuserg
 
 export type PosixIdentityOEnum = '-created' | '-gid' | '-released_at' | '-uid' | 'created' | 'gid' | 'released_at' | 'uid';
 
-export type ProjectEstimatedCostPolicyFieldEnum = 'actions' | 'affected_resources_count' | 'billing_price_estimate' | 'created' | 'created_by_full_name' | 'created_by_username' | 'current_cost' | 'customer_credit' | 'fired_datetime' | 'has_fired' | 'limit_cost' | 'options' | 'period' | 'period_name' | 'project_credit' | 'resource' | 'resource_name' | 'scope' | 'scope_name' | 'scope_uuid' | 'url' | 'use_credit' | 'uuid';
+export type ProjectEstimatedCostPolicyFieldEnum = 'actions' | 'affected_resources_count' | 'billing_price_estimate' | 'created' | 'created_by_full_name' | 'created_by_username' | 'current_cost' | 'customer_credit' | 'eta_date' | 'eta_days' | 'fired_datetime' | 'has_fired' | 'limit_cost' | 'options' | 'period' | 'period_name' | 'project_credit' | 'resource' | 'resource_name' | 'scope' | 'scope_name' | 'scope_uuid' | 'url' | 'use_credit' | 'uuid';
 
 export type RemoteProjectUpdateRequestStateEnum = 'approved' | 'canceled' | 'draft' | 'pending' | 'rejected';
 
