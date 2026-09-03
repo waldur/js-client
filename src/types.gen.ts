@@ -8824,7 +8824,7 @@ export type EventCount = {
     count: number;
 };
 
-export type EventGroupsEnum = 'access_subnets' | 'auth' | 'call' | 'chat' | 'credits' | 'customers' | 'invoices' | 'offering_accounting' | 'onboarding' | 'openstack_floating_ip' | 'openstack_network' | 'openstack_port' | 'openstack_rbac' | 'openstack_router' | 'openstack_security_group' | 'openstack_subnet' | 'permissions' | 'projects' | 'proposal' | 'providers' | 'resources' | 'review' | 'ssh' | 'support' | 'users' | 'terms_of_service';
+export type EventGroupsEnum = 'access_subnets' | 'auth' | 'call' | 'chat' | 'credits' | 'customers' | 'invoices' | 'offering_accounting' | 'onboarding' | 'openstack_floating_ip' | 'openstack_network' | 'openstack_port' | 'openstack_rbac' | 'openstack_resources' | 'openstack_router' | 'openstack_security_group' | 'openstack_subnet' | 'permissions' | 'projects' | 'proposal' | 'providers' | 'resources' | 'review' | 'ssh' | 'support' | 'users' | 'terms_of_service';
 
 export type EventMetadataResponse = {
     /**
