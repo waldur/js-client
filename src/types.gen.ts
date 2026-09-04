@@ -346,6 +346,10 @@ export type AgentConnectionInfo = {
      */
     readonly last_restarted: string;
     /**
+     * UUID of the unified event consumer the agent drains, null while it still runs on legacy subscriptions
+     */
+    readonly event_consumer_uuid: string | null;
+    /**
      * Services running within this agent
      */
     readonly services: Array<AgentServiceStatus>;
@@ -517,6 +521,10 @@ export type AgentQueueInfo = {
      * Parsed object type from queue name
      */
     readonly object_type: string | null;
+    /**
+     * Whether this is the agent's unified consumer queue or a legacy subscription queue
+     */
+    kind: QueueKindEnum;
 };
 
 export type AgentQueueRegistrationRequest = {
@@ -7697,6 +7705,14 @@ export type DashboardPendingAction = {
     readonly count: number | null;
     readonly target_uuid: string | null;
     readonly customer_uuid: string | null;
+    readonly uuid: string | null;
+    readonly urgency: string | null;
+    readonly route_name: string | null;
+    readonly route_params: {
+        [key: string]: unknown;
+    };
+    readonly can_silence: boolean;
+    readonly actions: Array<CorrectiveAction>;
 };
 
 export type DashboardReviewDeadline = {
@@ -8763,12 +8779,7 @@ export type Event = {
 
 export type EventConsumer = {
     readonly uuid: string;
-    /**
-     * List of observable object types this consumer receives. Empty list means all types.
-     */
-    readonly object_types: {
-        [key: string]: unknown;
-    };
+    readonly object_types: Array<string>;
     readonly scopes: Array<EventConsumerScopeOutput>;
     readonly is_global: boolean;
     /**
@@ -8776,6 +8787,12 @@ export type EventConsumer = {
      */
     readonly rmq_username: string;
     readonly queue_created: boolean;
+    readonly user_uuid: string;
+    /**
+     * Required. 128 characters or fewer. Lowercase letters, numbers and @/./+/-/_ characters
+     */
+    readonly user_username: string;
+    readonly user_full_name: string;
     readonly created: string;
     readonly modified: string;
 };
@@ -25596,6 +25613,8 @@ export type QuestionWithAnswerReviewer = {
     always_requires_review?: boolean;
 };
 
+export type QueueKindEnum = 'consumer' | 'legacy' | 'unknown';
+
 export type Quota = {
     name: string;
     usage: number;
@@ -28716,6 +28735,14 @@ export type RmqQueueStats = {
      * Parsed object type from queue name (e.g., 'resource', 'order')
      */
     readonly object_type: string | null;
+    /**
+     * Parsed EventConsumer UUID from a unified consumer queue name
+     */
+    readonly consumer_uuid: string | null;
+    /**
+     * How Waldur uses the queue: a unified consumer queue, a legacy subscription queue, or one whose name matches neither
+     */
+    queue_kind: QueueKindEnum;
     /**
      * Message TTL in milliseconds
      */
@@ -35917,6 +35944,22 @@ export type MatrixAppV1TransactionsUpdateResponses = {
      * No response body
      */
     200: unknown;
+};
+
+export type ApiAuthDefaultInitRetrieveData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Origin to send the browser back to after login.
+         */
+        return_url?: string;
+        /**
+         * Language hint forwarded to the identity provider.
+         */
+        ui_locales?: string;
+    };
+    url: '/api-auth/default/init/';
 };
 
 export type ApiAuthEduteamsCompleteRetrieveData = {
@@ -48968,6 +49011,16 @@ export type EventConsumersListData = {
     path?: never;
     query?: {
         /**
+         * Consumer is bound to no scope and therefore receives every event
+         */
+        is_global?: boolean;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<BackendResourceReqOEnum>;
+        /**
          * A page number within the paginated result set.
          */
         page?: number;
@@ -48975,6 +49028,11 @@ export type EventConsumersListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        user_username?: string;
+        /**
+         * Owner UUID
+         */
+        user_uuid?: string;
     };
     url: '/api/event-consumers/';
 };
@@ -48990,6 +49048,16 @@ export type EventConsumersCountData = {
     path?: never;
     query?: {
         /**
+         * Consumer is bound to no scope and therefore receives every event
+         */
+        is_global?: boolean;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<BackendResourceReqOEnum>;
+        /**
          * A page number within the paginated result set.
          */
         page?: number;
@@ -48997,6 +49065,11 @@ export type EventConsumersCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        user_username?: string;
+        /**
+         * Owner UUID
+         */
+        user_uuid?: string;
     };
     url: '/api/event-consumers/';
 };
