@@ -17027,6 +17027,14 @@ export type OpenStackBackupRestorationRequest = {
     ports: Array<OpenStackNestedPortRequest>;
 };
 
+export type OpenStackConsoleLog = {
+    length?: number;
+};
+
+export type OpenStackConsoleLogRequest = {
+    length?: number;
+};
+
 export type OpenStackCreateFloatingIpRequest = {
     url?: string;
     /**
@@ -85091,6 +85099,21 @@ export type OpenstackInstancesConsoleLogRetrieveResponses = {
 };
 
 export type OpenstackInstancesConsoleLogRetrieveResponse = OpenstackInstancesConsoleLogRetrieveResponses[keyof OpenstackInstancesConsoleLogRetrieveResponses];
+
+export type OpenstackInstancesConsoleLogData = {
+    body?: OpenStackConsoleLogRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/openstack-instances/{uuid}/console_log/';
+};
+
+export type OpenstackInstancesConsoleLogResponses = {
+    200: string;
+};
+
+export type OpenstackInstancesConsoleLogResponse = OpenstackInstancesConsoleLogResponses[keyof OpenstackInstancesConsoleLogResponses];
 
 export type OpenstackInstancesDiagnoseConnectivityData = {
     body?: DiagnoseConnectivityRequestRequest;
