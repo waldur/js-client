@@ -15001,6 +15001,15 @@ export type OfferingComponent = {
     is_boolean?: boolean;
     default_limit?: number | null;
     readonly factor: number | null;
+    /**
+     * The API's older name for ``billed_per_plan``.
+     *
+     * It used to ask the plugin registry whether this component's type is one
+     * the plugin declares, which left out the OpenStack per-volume-type
+     * quotas: they are created by the volume type sync rather than declared,
+     * so the API called them provider components while the billing resolver
+     * treated them as builtin. Reading the stored flag makes the two agree.
+     */
     readonly is_builtin: boolean;
     is_prepaid?: boolean;
     overage_component?: string | null;
