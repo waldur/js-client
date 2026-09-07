@@ -5936,6 +5936,7 @@ export type ConstanceSettings = {
     OIDC_CLIENT_SECRET?: string;
     OIDC_USER_FIELD?: string;
     OIDC_CACHE_TIMEOUT?: number;
+    OIDC_REGISTRATION_METHOD?: string;
     OIDC_ACCESS_TOKEN_ENABLED?: boolean;
     OIDC_BLOCK_CREATION_OF_UNINVITED_USERS?: boolean;
     OIDC_BLOCK_CREATION_OF_UNINVITED_USERS_RESPONSE_MESSAGE?: string;
@@ -6268,6 +6269,7 @@ export type ConstanceSettingsRequest = {
     OIDC_CLIENT_SECRET?: string;
     OIDC_USER_FIELD?: string;
     OIDC_CACHE_TIMEOUT?: number;
+    OIDC_REGISTRATION_METHOD?: string;
     OIDC_ACCESS_TOKEN_ENABLED?: boolean;
     OIDC_BLOCK_CREATION_OF_UNINVITED_USERS?: boolean;
     OIDC_BLOCK_CREATION_OF_UNINVITED_USERS_RESPONSE_MESSAGE?: string;
@@ -6593,8 +6595,8 @@ export type CourseAccount = {
     readonly project_slug: string;
     readonly project_start_date: string | null;
     readonly project_end_date: string | null;
-    readonly user_uuid: string;
-    readonly username: string;
+    readonly user_uuid: string | null;
+    readonly username: string | null;
     readonly customer_uuid: string;
     readonly customer_name: string;
     state: CourseAccountStateEnum;
@@ -8554,7 +8556,7 @@ export type DuplicateOfferingRemediation = {
     blockers: Array<string>;
 };
 
-export type EnabledreportingscreensEnum = 'resource-usage' | 'user-usage' | 'quotas' | 'usage-monitoring' | 'usage-trends' | 'organization-summary' | 'project-detail' | 'resources-geography' | 'project-classification' | 'usage-by-customer' | 'usage-by-org-type' | 'usage-by-creator' | 'call-performance' | 'review-progress' | 'resource-demand' | 'capacity' | 'provider-overview' | 'provider-revenue' | 'provider-orders' | 'provider-resources' | 'provider-customers' | 'provider-offerings' | 'openstack-instances' | 'offering-usage' | 'user-analytics' | 'user-demographics' | 'user-organizations' | 'user-affiliations' | 'user-roles' | 'growth' | 'revenue' | 'pricelist' | 'orders' | 'offering-costs' | 'maintenance-overview' | 'provisioning-stats';
+export type EnabledreportingscreensEnum = 'resource-usage' | 'user-usage' | 'quotas' | 'usage-monitoring' | 'usage-trends' | 'organization-summary' | 'project-detail' | 'resources-geography' | 'project-classification' | 'usage-by-customer' | 'usage-by-org-type' | 'usage-by-creator' | 'projects-by-affiliated-organization' | 'call-performance' | 'review-progress' | 'resource-demand' | 'capacity' | 'provider-overview' | 'provider-revenue' | 'provider-orders' | 'provider-resources' | 'provider-customers' | 'provider-offerings' | 'openstack-instances' | 'offering-usage' | 'user-analytics' | 'user-demographics' | 'user-organizations' | 'user-affiliations' | 'user-roles' | 'growth' | 'revenue' | 'pricelist' | 'orders' | 'offering-costs' | 'maintenance-overview' | 'provisioning-stats';
 
 export type EffectiveRoute = {
     destination: string;
@@ -34666,6 +34668,7 @@ export type ConstanceSettingsRequestForm = {
     OIDC_CLIENT_SECRET?: string;
     OIDC_USER_FIELD?: string;
     OIDC_CACHE_TIMEOUT?: number;
+    OIDC_REGISTRATION_METHOD?: string;
     OIDC_ACCESS_TOKEN_ENABLED?: boolean;
     OIDC_BLOCK_CREATION_OF_UNINVITED_USERS?: boolean;
     OIDC_BLOCK_CREATION_OF_UNINVITED_USERS_RESPONSE_MESSAGE?: string;
@@ -34998,6 +35001,7 @@ export type ConstanceSettingsRequestMultipart = {
     OIDC_CLIENT_SECRET?: string;
     OIDC_USER_FIELD?: string;
     OIDC_CACHE_TIMEOUT?: number;
+    OIDC_REGISTRATION_METHOD?: string;
     OIDC_ACCESS_TOKEN_ENABLED?: boolean;
     OIDC_BLOCK_CREATION_OF_UNINVITED_USERS?: boolean;
     OIDC_BLOCK_CREATION_OF_UNINVITED_USERS_RESPONSE_MESSAGE?: string;
