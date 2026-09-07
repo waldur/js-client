@@ -5827,6 +5827,7 @@ export type ConstanceSettings = {
     WALDUR_SUPPORT_ENABLED?: boolean;
     WALDUR_SUPPORT_ACTIVE_BACKEND_TYPE?: WaldursupportactivebackendtypeEnum;
     WALDUR_SUPPORT_DISPLAY_REQUEST_TYPE?: boolean;
+    WALDUR_SUPPORT_ISSUE_KEY_PREFIX?: string;
     WALDUR_SUPPORT_PROVIDER_ROUTING_ENABLED?: boolean;
     WALDUR_SUPPORT_AUTO_ASSIGN?: boolean;
     WALDUR_SUPPORT_AUTO_ASSIGN_STRATEGY?: string;
@@ -6160,6 +6161,7 @@ export type ConstanceSettingsRequest = {
     WALDUR_SUPPORT_ENABLED?: boolean;
     WALDUR_SUPPORT_ACTIVE_BACKEND_TYPE?: WaldursupportactivebackendtypeEnum;
     WALDUR_SUPPORT_DISPLAY_REQUEST_TYPE?: boolean;
+    WALDUR_SUPPORT_ISSUE_KEY_PREFIX?: string;
     WALDUR_SUPPORT_PROVIDER_ROUTING_ENABLED?: boolean;
     WALDUR_SUPPORT_AUTO_ASSIGN?: boolean;
     WALDUR_SUPPORT_AUTO_ASSIGN_STRATEGY?: string;
@@ -34559,6 +34561,7 @@ export type ConstanceSettingsRequestForm = {
     WALDUR_SUPPORT_ENABLED?: boolean;
     WALDUR_SUPPORT_ACTIVE_BACKEND_TYPE?: WaldursupportactivebackendtypeEnum;
     WALDUR_SUPPORT_DISPLAY_REQUEST_TYPE?: boolean;
+    WALDUR_SUPPORT_ISSUE_KEY_PREFIX?: string;
     WALDUR_SUPPORT_PROVIDER_ROUTING_ENABLED?: boolean;
     WALDUR_SUPPORT_AUTO_ASSIGN?: boolean;
     WALDUR_SUPPORT_AUTO_ASSIGN_STRATEGY?: string;
@@ -34892,6 +34895,7 @@ export type ConstanceSettingsRequestMultipart = {
     WALDUR_SUPPORT_ENABLED?: boolean;
     WALDUR_SUPPORT_ACTIVE_BACKEND_TYPE?: WaldursupportactivebackendtypeEnum;
     WALDUR_SUPPORT_DISPLAY_REQUEST_TYPE?: boolean;
+    WALDUR_SUPPORT_ISSUE_KEY_PREFIX?: string;
     WALDUR_SUPPORT_PROVIDER_ROUTING_ENABLED?: boolean;
     WALDUR_SUPPORT_AUTO_ASSIGN?: boolean;
     WALDUR_SUPPORT_AUTO_ASSIGN_STRATEGY?: string;
