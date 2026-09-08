@@ -26721,7 +26721,7 @@ export const openstackSubnetsUpdate = <ThrowOnError extends boolean = true>(opti
 /**
  * Connect subnet to router
  *
- * Connect the subnet to the default tenant router.
+ * Connect the subnet to its router: the one chosen when the subnet was created or last attached to, and otherwise the tenant router Waldur picks.
  */
 export const openstackSubnetsConnect = <ThrowOnError extends boolean = true>(options: Options<OpenstackSubnetsConnectData, ThrowOnError>) => (options.client ?? client).post<OpenstackSubnetsConnectResponses, unknown, ThrowOnError>({
     security: [
@@ -26735,7 +26735,7 @@ export const openstackSubnetsConnect = <ThrowOnError extends boolean = true>(opt
 /**
  * Disconnect subnet from router
  *
- * Disconnect the subnet from the default tenant router.
+ * Disconnect the subnet from its router. The router is remembered, so connecting again returns the subnet to it.
  */
 export const openstackSubnetsDisconnect = <ThrowOnError extends boolean = true>(options: Options<OpenstackSubnetsDisconnectData, ThrowOnError>) => (options.client ?? client).post<OpenstackSubnetsDisconnectResponses, unknown, ThrowOnError>({
     security: [

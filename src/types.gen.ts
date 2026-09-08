@@ -15004,6 +15004,10 @@ export type OfferingComponent = {
     unit_factor?: number;
     limit_period?: LimitPeriodEnum | NullEnum | null;
     limit_amount?: number | null;
+    /**
+     * Number of decimal places accepted for this component's limit. 0 keeps the limit integer-only.
+     */
+    limit_decimal_places?: number;
     article_code?: string;
     max_value?: number | null;
     min_value?: number | null;
@@ -15079,6 +15083,10 @@ export type OfferingComponentRequest = {
     unit_factor?: number;
     limit_period?: LimitPeriodEnum | NullEnum | null;
     limit_amount?: number | null;
+    /**
+     * Number of decimal places accepted for this component's limit. 0 keeps the limit integer-only.
+     */
+    limit_decimal_places?: number;
     article_code?: string;
     max_value?: number | null;
     min_value?: number | null;
@@ -18824,6 +18832,12 @@ export type OpenStackSubNet = {
      */
     readonly is_connected: boolean;
     readonly port_security_enabled: boolean;
+    /**
+     * Router to attach the subnet to. Optional: when omitted Waldur picks a router of the tenant itself. Cannot be changed here afterwards -- use the router's add/remove interface actions.
+     */
+    router?: string | null;
+    readonly router_name: string | null;
+    readonly router_uuid: string | null;
     readonly marketplace_offering_uuid: string | null;
     readonly marketplace_offering_name: string | null;
     readonly marketplace_offering_type: string | null;
@@ -18879,6 +18893,10 @@ export type OpenStackSubNetRequest = {
      */
     dns_nameservers?: Array<string | string>;
     host_routes?: Array<OpenStackStaticRouteRequest>;
+    /**
+     * Router to attach the subnet to. Optional: when omitted Waldur picks a router of the tenant itself. Cannot be changed here afterwards -- use the router's add/remove interface actions.
+     */
+    router?: string | null;
 };
 
 export type OpenStackTenant = {
@@ -20988,6 +21006,10 @@ export type PatchedOpenStackSubNetRequest = {
      */
     dns_nameservers?: Array<string | string>;
     host_routes?: Array<OpenStackStaticRouteRequest>;
+    /**
+     * Router to attach the subnet to. Optional: when omitted Waldur picks a router of the tenant itself. Cannot be changed here afterwards -- use the router's add/remove interface actions.
+     */
+    router?: string | null;
 };
 
 export type PatchedOpenStackTenantRequest = {
@@ -21607,7 +21629,7 @@ export type PatchedRequestedResourceRequest = {
         [key: string]: unknown;
     };
     limits?: {
-        [key: string]: unknown;
+        [key: string]: number;
     };
     purchase_order_reference?: string;
     description?: string;
@@ -24632,7 +24654,7 @@ export type ProviderRequestedResource = {
         [key: string]: unknown;
     };
     limits?: {
-        [key: string]: unknown;
+        [key: string]: number;
     };
     purchase_order_reference?: string;
     readonly attachment: string;
@@ -27191,7 +27213,7 @@ export type RequestedResource = {
         [key: string]: unknown;
     };
     limits?: {
-        [key: string]: unknown;
+        [key: string]: number;
     };
     purchase_order_reference?: string;
     readonly attachment: string;
@@ -27224,7 +27246,7 @@ export type RequestedResourceRequest = {
         [key: string]: unknown;
     };
     limits?: {
-        [key: string]: unknown;
+        [key: string]: number;
     };
     purchase_order_reference?: string;
     description?: string;
@@ -31716,6 +31738,10 @@ export type UpdateOfferingComponentRequest = {
     unit_factor?: number;
     limit_period?: LimitPeriodEnum | NullEnum | null;
     limit_amount?: number | null;
+    /**
+     * Number of decimal places accepted for this component's limit. 0 keeps the limit integer-only.
+     */
+    limit_decimal_places?: number;
     article_code?: string;
     max_value?: number | null;
     min_value?: number | null;
@@ -35904,7 +35930,7 @@ export type OpenStackServerGroupFieldEnum = 'access_url' | 'backend_id' | 'creat
 
 export type OpenStackSnapshotFieldEnum = 'access_url' | 'action' | 'action_details' | 'backend_id' | 'backups' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'is_limit_based' | 'is_usage_based' | 'kept_until' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'metadata' | 'modified' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'restorations' | 'runtime_state' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'size' | 'source_volume' | 'source_volume_marketplace_uuid' | 'source_volume_name' | 'state' | 'url' | 'uuid';
 
-export type OpenStackSubNetFieldEnum = 'access_url' | 'allocation_pools' | 'backend_id' | 'cidr' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'disable_gateway' | 'dns_nameservers' | 'enable_dhcp' | 'error_message' | 'error_traceback' | 'gateway_ip' | 'host_routes' | 'ip_version' | 'is_connected' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'network' | 'network_name' | 'port_security_enabled' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'tenant' | 'tenant_name' | 'url' | 'uuid';
+export type OpenStackSubNetFieldEnum = 'access_url' | 'allocation_pools' | 'backend_id' | 'cidr' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'disable_gateway' | 'dns_nameservers' | 'enable_dhcp' | 'error_message' | 'error_traceback' | 'gateway_ip' | 'host_routes' | 'ip_version' | 'is_connected' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'network' | 'network_name' | 'port_security_enabled' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'router' | 'router_name' | 'router_uuid' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'tenant' | 'tenant_name' | 'url' | 'uuid';
 
 export type OpenStackTenantFieldEnum = 'availability_zone' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'default_volume_type_name' | 'description' | 'error_message' | 'error_traceback' | 'external_network_id' | 'external_network_ref_name' | 'external_network_ref_uuid' | 'internal_network_id' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_type' | 'security_groups' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'skip_creation_of_default_router' | 'skip_creation_of_default_subnet' | 'state' | 'subnet_cidr' | 'url' | 'uuid';
 
