@@ -27634,7 +27634,7 @@ export type ResourceLimitChangeRequest = {
 export type ResourceLimitChangeRequestCreate = {
     resource: string;
     requested_limits: {
-        [key: string]: unknown;
+        [key: string]: number;
     };
     readonly uuid: string;
     readonly state: string;
@@ -27643,7 +27643,7 @@ export type ResourceLimitChangeRequestCreate = {
 export type ResourceLimitChangeRequestCreateRequest = {
     resource: string;
     requested_limits: {
-        [key: string]: unknown;
+        [key: string]: number;
     };
 };
 
