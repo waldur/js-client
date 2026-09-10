@@ -98,6 +98,8 @@ export type AccessorUser = {
 
 export type AccountNameGenerationPolicyEnum = 'project_slug';
 
+export type AccountScope = 'offering' | 'provider';
+
 export type ActionOnUsageLimitEnum = 'pause' | 'downscale';
 
 export type ActionTakenEnum = 'allow' | 'flag' | 'warn' | 'redact' | 'block';
@@ -220,6 +222,26 @@ export type AdministrativeAccess = {
     staff_count?: number;
     support_count?: number;
     users?: Array<AdminUser>;
+};
+
+export type AdoptProviderAccountsRequest = {
+    /**
+     * User UUID (hex) to the username that survives adoption. Only needed for users reported by the 'username_conflicts' action.
+     */
+    resolutions?: {
+        [key: string]: string;
+    };
+};
+
+export type AdoptProviderAccountsResponse = {
+    /**
+     * Provider accounts created.
+     */
+    adopted: number;
+    /**
+     * Offering accounts now reading through a provider account.
+     */
+    backed: number;
 };
 
 export type AffiliateEarnings = {
@@ -9810,6 +9832,22 @@ export type GoogleCredentials = {
      * List of allowed domains for offering endpoints. Only staff can modify this field.
      */
     allowed_domains?: Array<string>;
+    /**
+     * Default for this provider's offerings: hold user accounts per offering (the historical behaviour) or once per provider. Choose 'provider' when one directory fronts several offerings. Any single offering can override this with an 'account_scope' plugin option, so a provider can run both -- for example a cluster with its own separate directory alongside offerings that share the main one.
+     */
+    account_scope?: AccountScope;
+    /**
+     * Provider-level default for the offering plugin option of the same name. Blank means each offering decides for itself.
+     */
+    account_username_generation_policy?: string;
+    /**
+     * Provider-level default home directory prefix. Blank means each offering decides for itself.
+     */
+    account_homedir_prefix?: string;
+    /**
+     * Provider-level default login shell. Blank means each offering decides for itself.
+     */
+    account_login_shell?: string;
     readonly calendar_token: string;
     readonly calendar_refresh_token: string;
     readonly google_auth_url: string;
@@ -12430,6 +12468,10 @@ export type MembershipStateEnum = 'invited' | 'joined' | 'left' | 'banned';
 
 export type MergedPluginOptions = {
     /**
+     * Where this offering's accounts are held, overriding the service provider's own account_scope. 'offering' keeps one account per offering (the historical behaviour); 'provider' shares one account per user across the provider's offerings. Omit to inherit.
+     */
+    account_scope?: AccountScope;
+    /**
      * If set to True, an order can be processed without approval
      */
     auto_approve_remote_orders?: boolean;
@@ -12828,6 +12870,10 @@ export type MergedPluginOptions = {
 };
 
 export type MergedPluginOptionsRequest = {
+    /**
+     * Where this offering's accounts are held, overriding the service provider's own account_scope. 'offering' keeps one account per offering (the historical behaviour); 'provider' shares one account per user across the provider's offerings. Omit to inherit.
+     */
+    account_scope?: AccountScope;
     /**
      * If set to True, an order can be processed without approval
      */
@@ -14855,7 +14901,7 @@ export type NullEnum = never;
 
 export type OpenportalmembershipsyncmodeEnum = 'invitation' | 'direct';
 
-export type ObservableObjectTypeEnum = 'order' | 'user_role' | 'resource' | 'offering_user' | 'importable_resources' | 'service_account' | 'course_account' | 'resource_periodic_limits' | 'offering_resources_sync' | 'resource_api_key_rotation' | 'resource_end_date_change_request' | 'user_profile' | 'user_ssh_key' | 'user_lifecycle';
+export type ObservableObjectTypeEnum = 'order' | 'user_role' | 'resource' | 'offering_user' | 'importable_resources' | 'service_account' | 'course_account' | 'resource_periodic_limits' | 'offering_resources_sync' | 'resource_api_key_rotation' | 'resource_end_date_change_request' | 'user_profile' | 'user_ssh_key' | 'user_lifecycle' | 'service_provider_account';
 
 export type ObtainAuthTokenRequest = {
     /**
@@ -21986,6 +22032,22 @@ export type PatchedSectionRequest = {
     is_standalone?: boolean;
 };
 
+export type PatchedServiceProviderAccountRequest = {
+    username?: string | null;
+    /**
+     * Operational/access state of the user account. Separate from lifecycle state; can be set by the service provider at any time.
+     */
+    runtime_state?: RuntimeStateEnum;
+    /**
+     * Additional comment for pending states like validation or account linking
+     */
+    service_provider_comment?: string;
+    /**
+     * URL link for additional information or actions related to service provider comment
+     */
+    service_provider_comment_url?: string;
+};
+
 export type PatchedServiceProviderRequest = {
     description?: string;
     enable_notifications?: boolean;
@@ -21994,6 +22056,22 @@ export type PatchedServiceProviderRequest = {
      * List of allowed domains for offering endpoints. Only staff can modify this field.
      */
     allowed_domains?: Array<string>;
+    /**
+     * Default for this provider's offerings: hold user accounts per offering (the historical behaviour) or once per provider. Choose 'provider' when one directory fronts several offerings. Any single offering can override this with an 'account_scope' plugin option, so a provider can run both -- for example a cluster with its own separate directory alongside offerings that share the main one.
+     */
+    account_scope?: AccountScope;
+    /**
+     * Provider-level default for the offering plugin option of the same name. Blank means each offering decides for itself.
+     */
+    account_username_generation_policy?: string;
+    /**
+     * Provider-level default home directory prefix. Blank means each offering decides for itself.
+     */
+    account_homedir_prefix?: string;
+    /**
+     * Provider-level default login shell. Blank means each offering decides for itself.
+     */
+    account_login_shell?: string;
 };
 
 export type PatchedSlurmPeriodicUsagePolicyRequest = {
@@ -24909,6 +24987,21 @@ export type ProviderUser = {
      */
     email?: string;
     image?: string | null;
+};
+
+export type ProviderUsernameCandidate = {
+    username: string;
+    offering_count: number;
+    offering_uuids: Array<string>;
+    has_active_resources: boolean;
+    home_directories: Array<string>;
+};
+
+export type ProviderUsernameConflict = {
+    user_uuid: string;
+    user_username: string;
+    user_full_name: string;
+    candidates: Array<ProviderUsernameCandidate>;
 };
 
 export type PublicCall = {
@@ -29867,6 +29960,22 @@ export type ServiceProvider = {
      * List of allowed domains for offering endpoints. Only staff can modify this field.
      */
     allowed_domains?: Array<string>;
+    /**
+     * Default for this provider's offerings: hold user accounts per offering (the historical behaviour) or once per provider. Choose 'provider' when one directory fronts several offerings. Any single offering can override this with an 'account_scope' plugin option, so a provider can run both -- for example a cluster with its own separate directory alongside offerings that share the main one.
+     */
+    account_scope?: AccountScope;
+    /**
+     * Provider-level default for the offering plugin option of the same name. Blank means each offering decides for itself.
+     */
+    account_username_generation_policy?: string;
+    /**
+     * Provider-level default home directory prefix. Blank means each offering decides for itself.
+     */
+    account_homedir_prefix?: string;
+    /**
+     * Provider-level default login shell. Blank means each offering decides for itself.
+     */
+    account_login_shell?: string;
 };
 
 export type ServiceProviderAccess = {
@@ -29878,6 +29987,63 @@ export type ServiceProviderAccess = {
     consent_date: string | null;
     consent_version: string | null;
     provider_team?: Array<ProviderTeamUser>;
+};
+
+export type ServiceProviderAccount = {
+    readonly url: string;
+    readonly uuid: string;
+    readonly created: string;
+    readonly modified: string;
+    readonly service_provider: string;
+    readonly service_provider_uuid: string;
+    readonly service_provider_name: string;
+    readonly user: string;
+    readonly user_uuid: string;
+    /**
+     * Required. 128 characters or fewer. Lowercase letters, numbers and @/./+/-/_ characters
+     */
+    readonly user_username: string;
+    readonly user_full_name: string;
+    /**
+     * Email address
+     */
+    readonly user_email: string;
+    username?: string | null;
+    state: OfferingUserState;
+    /**
+     * Operational/access state of the user account. Separate from lifecycle state; can be set by the service provider at any time.
+     */
+    runtime_state?: RuntimeStateEnum;
+    readonly is_restricted: boolean;
+    /**
+     * Additional comment for pending states like validation or account linking
+     */
+    service_provider_comment?: string;
+    /**
+     * URL link for additional information or actions related to service provider comment
+     */
+    service_provider_comment_url?: string;
+    readonly uidnumber: number | null;
+    readonly primarygroup: number | null;
+    readonly login_shell: string | null;
+    readonly home_directory: string | null;
+    readonly offering_count: number;
+};
+
+export type ServiceProviderAccountRequest = {
+    username?: string | null;
+    /**
+     * Operational/access state of the user account. Separate from lifecycle state; can be set by the service provider at any time.
+     */
+    runtime_state?: RuntimeStateEnum;
+    /**
+     * Additional comment for pending states like validation or account linking
+     */
+    service_provider_comment?: string;
+    /**
+     * URL link for additional information or actions related to service provider comment
+     */
+    service_provider_comment_url?: string;
 };
 
 export type ServiceProviderApiSecretCode = {
@@ -29930,6 +30096,22 @@ export type ServiceProviderRequest = {
      * List of allowed domains for offering endpoints. Only staff can modify this field.
      */
     allowed_domains?: Array<string>;
+    /**
+     * Default for this provider's offerings: hold user accounts per offering (the historical behaviour) or once per provider. Choose 'provider' when one directory fronts several offerings. Any single offering can override this with an 'account_scope' plugin option, so a provider can run both -- for example a cluster with its own separate directory alongside offerings that share the main one.
+     */
+    account_scope?: AccountScope;
+    /**
+     * Provider-level default for the offering plugin option of the same name. Blank means each offering decides for itself.
+     */
+    account_username_generation_policy?: string;
+    /**
+     * Provider-level default home directory prefix. Blank means each offering decides for itself.
+     */
+    account_homedir_prefix?: string;
+    /**
+     * Provider-level default login shell. Blank means each offering decides for itself.
+     */
+    account_login_shell?: string;
 };
 
 export type ServiceProviderRevenues = {
@@ -34324,6 +34506,22 @@ export type ServiceProviderRequestForm = {
      * List of allowed domains for offering endpoints. Only staff can modify this field.
      */
     allowed_domains?: Array<string>;
+    /**
+     * Default for this provider's offerings: hold user accounts per offering (the historical behaviour) or once per provider. Choose 'provider' when one directory fronts several offerings. Any single offering can override this with an 'account_scope' plugin option, so a provider can run both -- for example a cluster with its own separate directory alongside offerings that share the main one.
+     */
+    account_scope?: AccountScope;
+    /**
+     * Provider-level default for the offering plugin option of the same name. Blank means each offering decides for itself.
+     */
+    account_username_generation_policy?: string;
+    /**
+     * Provider-level default home directory prefix. Blank means each offering decides for itself.
+     */
+    account_homedir_prefix?: string;
+    /**
+     * Provider-level default login shell. Blank means each offering decides for itself.
+     */
+    account_login_shell?: string;
 };
 
 export type ServiceProviderRequestMultipart = {
@@ -34335,6 +34533,22 @@ export type ServiceProviderRequestMultipart = {
      * List of allowed domains for offering endpoints. Only staff can modify this field.
      */
     allowed_domains?: Array<string>;
+    /**
+     * Default for this provider's offerings: hold user accounts per offering (the historical behaviour) or once per provider. Choose 'provider' when one directory fronts several offerings. Any single offering can override this with an 'account_scope' plugin option, so a provider can run both -- for example a cluster with its own separate directory alongside offerings that share the main one.
+     */
+    account_scope?: AccountScope;
+    /**
+     * Provider-level default for the offering plugin option of the same name. Blank means each offering decides for itself.
+     */
+    account_username_generation_policy?: string;
+    /**
+     * Provider-level default home directory prefix. Blank means each offering decides for itself.
+     */
+    account_homedir_prefix?: string;
+    /**
+     * Provider-level default login shell. Blank means each offering decides for itself.
+     */
+    account_login_shell?: string;
 };
 
 export type PatchedServiceProviderRequestForm = {
@@ -34345,6 +34559,22 @@ export type PatchedServiceProviderRequestForm = {
      * List of allowed domains for offering endpoints. Only staff can modify this field.
      */
     allowed_domains?: Array<string>;
+    /**
+     * Default for this provider's offerings: hold user accounts per offering (the historical behaviour) or once per provider. Choose 'provider' when one directory fronts several offerings. Any single offering can override this with an 'account_scope' plugin option, so a provider can run both -- for example a cluster with its own separate directory alongside offerings that share the main one.
+     */
+    account_scope?: AccountScope;
+    /**
+     * Provider-level default for the offering plugin option of the same name. Blank means each offering decides for itself.
+     */
+    account_username_generation_policy?: string;
+    /**
+     * Provider-level default home directory prefix. Blank means each offering decides for itself.
+     */
+    account_homedir_prefix?: string;
+    /**
+     * Provider-level default login shell. Blank means each offering decides for itself.
+     */
+    account_login_shell?: string;
 };
 
 export type PatchedServiceProviderRequestMultipart = {
@@ -34355,6 +34585,22 @@ export type PatchedServiceProviderRequestMultipart = {
      * List of allowed domains for offering endpoints. Only staff can modify this field.
      */
     allowed_domains?: Array<string>;
+    /**
+     * Default for this provider's offerings: hold user accounts per offering (the historical behaviour) or once per provider. Choose 'provider' when one directory fronts several offerings. Any single offering can override this with an 'account_scope' plugin option, so a provider can run both -- for example a cluster with its own separate directory alongside offerings that share the main one.
+     */
+    account_scope?: AccountScope;
+    /**
+     * Provider-level default for the offering plugin option of the same name. Blank means each offering decides for itself.
+     */
+    account_username_generation_policy?: string;
+    /**
+     * Provider-level default home directory prefix. Blank means each offering decides for itself.
+     */
+    account_homedir_prefix?: string;
+    /**
+     * Provider-level default login shell. Blank means each offering decides for itself.
+     */
+    account_login_shell?: string;
 };
 
 export type OnboardingJustificationDocumentationRequestForm = {
@@ -35801,7 +36047,7 @@ export type CustomerUserFieldEnum = 'email' | 'expiration_time' | 'full_name' | 
 
 export type CustomerUserOEnum = 'concatenated_name' | '-concatenated_name';
 
-export type ServiceProviderFieldEnum = 'allowed_domains' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_country' | 'customer_image' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'enable_notifications' | 'image' | 'offering_count' | 'organization_groups' | 'url' | 'uuid';
+export type ServiceProviderFieldEnum = 'account_homedir_prefix' | 'account_login_shell' | 'account_scope' | 'account_username_generation_policy' | 'allowed_domains' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_country' | 'customer_image' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'enable_notifications' | 'image' | 'offering_count' | 'organization_groups' | 'url' | 'uuid';
 
 export type GlobalUserDataAccessLogOEnum = '-accessor_type' | '-accessor_username' | '-timestamp' | '-user_username' | 'accessor_type' | 'accessor_username' | 'timestamp' | 'user_username';
 
@@ -35815,7 +36061,7 @@ export type EventFieldEnum = 'context' | 'created' | 'event_type' | 'message' | 
 
 export type ExpertiseCategoryOEnum = '-code' | '-level' | '-name' | 'code' | 'level' | 'name';
 
-export type GoogleCredentialsFieldEnum = 'allowed_domains' | 'calendar_refresh_token' | 'calendar_token' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_country' | 'customer_image' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'enable_notifications' | 'google_auth_url' | 'image' | 'offering_count' | 'organization_groups' | 'url' | 'uuid';
+export type GoogleCredentialsFieldEnum = 'account_homedir_prefix' | 'account_login_shell' | 'account_scope' | 'account_username_generation_policy' | 'allowed_domains' | 'calendar_refresh_token' | 'calendar_token' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_country' | 'customer_image' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'enable_notifications' | 'google_auth_url' | 'image' | 'offering_count' | 'organization_groups' | 'url' | 'uuid';
 
 export type WebHookContentTypeEnum1 = 1 | 2;
 
@@ -35908,6 +36154,8 @@ export type ResourceOEnum = '-backend_id' | '-created' | '-customer_name' | '-en
 export type ResourceTeamMemberFieldEnum = 'email' | 'expiration_time' | 'full_name' | 'image' | 'resource_projects' | 'role_name' | 'role_uuid' | 'roles' | 'url' | 'username' | 'uuid';
 
 export type RobotAccountDetailsFieldEnum = 'backend_id' | 'created' | 'customer_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'fingerprints' | 'keys' | 'modified' | 'offering_plugin_options' | 'project_name' | 'project_uuid' | 'provider_name' | 'provider_uuid' | 'resource' | 'resource_name' | 'resource_uuid' | 'responsible_user' | 'state' | 'type' | 'url' | 'user_keys' | 'username' | 'users' | 'uuid';
+
+export type ServiceProviderAccountFieldEnum = 'created' | 'home_directory' | 'is_restricted' | 'login_shell' | 'modified' | 'offering_count' | 'primarygroup' | 'runtime_state' | 'service_provider' | 'service_provider_comment' | 'service_provider_comment_url' | 'service_provider_name' | 'service_provider_uuid' | 'state' | 'uidnumber' | 'url' | 'user' | 'user_email' | 'user_full_name' | 'user_username' | 'user_uuid' | 'username' | 'uuid';
 
 export type MarketplaceProviderCustomerProjectFieldEnum = 'billing_price_estimate' | 'description' | 'end_date' | 'name' | 'resources_count' | 'users_count' | 'uuid';
 
@@ -70686,6 +70934,233 @@ export type MarketplaceSectionsUpdateResponses = {
 
 export type MarketplaceSectionsUpdateResponse = MarketplaceSectionsUpdateResponses[keyof MarketplaceSectionsUpdateResponses];
 
+export type MarketplaceServiceProviderAccountsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Created after
+         */
+        created?: string;
+        /**
+         * Created before
+         */
+        created_before?: string;
+        /**
+         * Provider organization UUID
+         */
+        customer_uuid?: string;
+        field?: Array<ServiceProviderAccountFieldEnum>;
+        /**
+         * Is restricted
+         */
+        is_restricted?: boolean;
+        /**
+         * Modified after
+         */
+        modified?: string;
+        /**
+         * Modified before
+         */
+        modified_before?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<OfferingUserOEnum>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Service provider UUID
+         */
+        provider_uuid?: string;
+        /**
+         * Search by username, user name, UID or primary GID
+         */
+        query?: string;
+        /**
+         * Account runtime state
+         *
+         *
+         */
+        runtime_state?: Array<RuntimeStateEnum>;
+        /**
+         * Account state
+         *
+         *
+         */
+        state?: Array<OfferingUserState>;
+        /**
+         * User username
+         */
+        user_username?: string;
+        /**
+         * User UUID
+         */
+        user_uuid?: string;
+    };
+    url: '/api/marketplace-service-provider-accounts/';
+};
+
+export type MarketplaceServiceProviderAccountsListResponses = {
+    200: Array<ServiceProviderAccount>;
+};
+
+export type MarketplaceServiceProviderAccountsListResponse = MarketplaceServiceProviderAccountsListResponses[keyof MarketplaceServiceProviderAccountsListResponses];
+
+export type MarketplaceServiceProviderAccountsCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Created after
+         */
+        created?: string;
+        /**
+         * Created before
+         */
+        created_before?: string;
+        /**
+         * Provider organization UUID
+         */
+        customer_uuid?: string;
+        /**
+         * Is restricted
+         */
+        is_restricted?: boolean;
+        /**
+         * Modified after
+         */
+        modified?: string;
+        /**
+         * Modified before
+         */
+        modified_before?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<OfferingUserOEnum>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Service provider UUID
+         */
+        provider_uuid?: string;
+        /**
+         * Search by username, user name, UID or primary GID
+         */
+        query?: string;
+        /**
+         * Account runtime state
+         *
+         *
+         */
+        runtime_state?: Array<RuntimeStateEnum>;
+        /**
+         * Account state
+         *
+         *
+         */
+        state?: Array<OfferingUserState>;
+        /**
+         * User username
+         */
+        user_username?: string;
+        /**
+         * User UUID
+         */
+        user_uuid?: string;
+    };
+    url: '/api/marketplace-service-provider-accounts/';
+};
+
+export type MarketplaceServiceProviderAccountsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type MarketplaceServiceProviderAccountsDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-service-provider-accounts/{uuid}/';
+};
+
+export type MarketplaceServiceProviderAccountsDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type MarketplaceServiceProviderAccountsDestroyResponse = MarketplaceServiceProviderAccountsDestroyResponses[keyof MarketplaceServiceProviderAccountsDestroyResponses];
+
+export type MarketplaceServiceProviderAccountsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        field?: Array<ServiceProviderAccountFieldEnum>;
+    };
+    url: '/api/marketplace-service-provider-accounts/{uuid}/';
+};
+
+export type MarketplaceServiceProviderAccountsRetrieveResponses = {
+    200: ServiceProviderAccount;
+};
+
+export type MarketplaceServiceProviderAccountsRetrieveResponse = MarketplaceServiceProviderAccountsRetrieveResponses[keyof MarketplaceServiceProviderAccountsRetrieveResponses];
+
+export type MarketplaceServiceProviderAccountsPartialUpdateData = {
+    body?: PatchedServiceProviderAccountRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-service-provider-accounts/{uuid}/';
+};
+
+export type MarketplaceServiceProviderAccountsPartialUpdateResponses = {
+    200: ServiceProviderAccount;
+};
+
+export type MarketplaceServiceProviderAccountsPartialUpdateResponse = MarketplaceServiceProviderAccountsPartialUpdateResponses[keyof MarketplaceServiceProviderAccountsPartialUpdateResponses];
+
+export type MarketplaceServiceProviderAccountsUpdateData = {
+    body?: ServiceProviderAccountRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-service-provider-accounts/{uuid}/';
+};
+
+export type MarketplaceServiceProviderAccountsUpdateResponses = {
+    200: ServiceProviderAccount;
+};
+
+export type MarketplaceServiceProviderAccountsUpdateResponse = MarketplaceServiceProviderAccountsUpdateResponses[keyof MarketplaceServiceProviderAccountsUpdateResponses];
+
 export type MarketplaceServiceProvidersListData = {
     body?: never;
     path?: never;
@@ -73395,6 +73870,21 @@ export type MarketplaceServiceProvidersAddUserResponses = {
 
 export type MarketplaceServiceProvidersAddUserResponse = MarketplaceServiceProvidersAddUserResponses[keyof MarketplaceServiceProvidersAddUserResponses];
 
+export type MarketplaceServiceProvidersAdoptProviderAccountsData = {
+    body?: AdoptProviderAccountsRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-service-providers/{uuid}/adopt_provider_accounts/';
+};
+
+export type MarketplaceServiceProvidersAdoptProviderAccountsResponses = {
+    200: AdoptProviderAccountsResponse;
+};
+
+export type MarketplaceServiceProvidersAdoptProviderAccountsResponse = MarketplaceServiceProvidersAdoptProviderAccountsResponses[keyof MarketplaceServiceProvidersAdoptProviderAccountsResponses];
+
 export type ServiceProviderApiSecretCodeRetrieveData = {
     body?: never;
     path: {
@@ -73710,6 +74200,64 @@ export type MarketplaceServiceProvidersUpdateUserResponses = {
 };
 
 export type MarketplaceServiceProvidersUpdateUserResponse = MarketplaceServiceProvidersUpdateUserResponses[keyof MarketplaceServiceProvidersUpdateUserResponses];
+
+export type MarketplaceServiceProvidersUsernameConflictsListData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * Created after
+         */
+        created?: string;
+        /**
+         * Created before
+         */
+        created_before?: string;
+        /**
+         * Customer URL
+         */
+        customer?: string;
+        /**
+         * Customer keyword (name, abbreviation or native name)
+         */
+        customer_keyword?: string;
+        /**
+         * Customer UUID
+         */
+        customer_uuid?: string;
+        /**
+         * Modified after
+         */
+        modified?: string;
+        /**
+         * Modified before
+         */
+        modified_before?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<CallManagingOrganisationOEnum>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-service-providers/{uuid}/username_conflicts/';
+};
+
+export type MarketplaceServiceProvidersUsernameConflictsListResponses = {
+    200: Array<ProviderUsernameConflict>;
+};
+
+export type MarketplaceServiceProvidersUsernameConflictsListResponse = MarketplaceServiceProvidersUsernameConflictsListResponses[keyof MarketplaceServiceProvidersUsernameConflictsListResponses];
 
 export type MarketplaceSiteAgentConnectionStatsRetrieveData = {
     body?: never;
