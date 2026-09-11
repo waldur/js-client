@@ -24951,6 +24951,7 @@ export type ProviderTicket = {
     readonly modified: string;
     readonly parent_issue_key: string;
     readonly parent_issue_uuid: string;
+    readonly provider_helpdesk_uuid: string | null;
     /**
      * Whether this issue has been escalated.
      */
@@ -29462,6 +29463,31 @@ export type RoleDetails = {
     readonly template_name: string | null;
     readonly customer_uuid: string | null;
     readonly customer_name: string | null;
+};
+
+export type RoleHygieneFinding = {
+    check: string;
+    severity: RoleHygieneFindingSeverityEnum;
+    role_uuid: string;
+    role_name: string;
+    role_description: string;
+    scope_type: RoleType | NullEnum | null;
+    is_system_role: boolean;
+    message: string;
+    details: {
+        [key: string]: unknown;
+    };
+};
+
+export type RoleHygieneFindingSeverityEnum = 'error' | 'warning' | 'info';
+
+export type RoleHygieneReport = {
+    roles_checked: number;
+    roles_with_findings: number;
+    error_count: number;
+    warning_count: number;
+    info_count: number;
+    findings: Array<RoleHygieneFinding>;
 };
 
 export type RoleModifyRequest = {
@@ -98249,6 +98275,7 @@ export type ProviderTicketsListData = {
         page_size?: number;
         priority?: string;
         provider_assignee?: string;
+        provider_helpdesk_uuid?: string;
         sla_breached?: boolean;
         status?: string;
         summary?: string;
@@ -98283,6 +98310,7 @@ export type ProviderTicketsCountData = {
         page_size?: number;
         priority?: string;
         provider_assignee?: string;
+        provider_helpdesk_uuid?: string;
         sla_breached?: boolean;
         status?: string;
         summary?: string;
@@ -98421,7 +98449,12 @@ export type ProviderTicketsResolveResponse = ProviderTicketsResolveResponses[key
 export type ProviderTicketsStatsRetrieveData = {
     body?: never;
     path?: never;
-    query?: never;
+    query?: {
+        /**
+         * Count only the tickets routed to this helpdesk.
+         */
+        provider_helpdesk_uuid?: string;
+    };
     url: '/api/provider-tickets/stats/';
 };
 
@@ -98434,7 +98467,12 @@ export type ProviderTicketsStatsRetrieveResponse = ProviderTicketsStatsRetrieveR
 export type ProviderTicketsStatsCountData = {
     body?: never;
     path?: never;
-    query?: never;
+    query?: {
+        /**
+         * Count only the tickets routed to this helpdesk.
+         */
+        provider_helpdesk_uuid?: string;
+    };
     url: '/api/provider-tickets/stats/';
 };
 
@@ -103520,6 +103558,33 @@ export type RolesUpdateDescriptionsUpdateResponses = {
 };
 
 export type RolesUpdateDescriptionsUpdateResponse = RolesUpdateDescriptionsUpdateResponses[keyof RolesUpdateDescriptionsUpdateResponses];
+
+export type RolesHygieneReportRetrieveData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/roles/hygiene_report/';
+};
+
+export type RolesHygieneReportRetrieveResponses = {
+    200: RoleHygieneReport;
+};
+
+export type RolesHygieneReportRetrieveResponse = RolesHygieneReportRetrieveResponses[keyof RolesHygieneReportRetrieveResponses];
+
+export type RolesHygieneReportCountData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/roles/hygiene_report/';
+};
+
+export type RolesHygieneReportCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type ScienceDomainsListData = {
     body?: never;
