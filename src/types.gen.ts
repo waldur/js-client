@@ -6717,6 +6717,10 @@ export type Customer = {
      * Affiliations offered to project creators of this organization.
      */
     readonly default_affiliations: Array<AffiliatedOrganization>;
+    /**
+     * True when the requesting user's only link to this organization is a role on its service provider. Such a row carries only identity fields.
+     */
+    readonly is_service_provider_manager_only: boolean;
     name: string;
     /**
      * URL-friendly identifier. Only editable by staff users.
@@ -12239,6 +12243,10 @@ export type MergedPluginOptions = {
      */
     enable_resource_end_date_change_requests?: boolean;
     /**
+     * If set to True, users who cannot change resource limits directly (RESOURCE.SET_LIMITS together with ORDER.CREATE) can request a limit change, and holders of RESOURCE.SET_LIMITS approve or reject. Approval submits an update order for the requested limits.
+     */
+    enable_resource_limit_change_requests?: boolean;
+    /**
      * Enable sub-project management within resources.
      */
     enable_resource_projects?: boolean;
@@ -12641,6 +12649,10 @@ export type MergedPluginOptionsRequest = {
      * If set to True, users without RESOURCE.SET_END_DATE can request an end date change, and holders of that permission approve or reject. Approval writes the date directly; no order is created. Requests are published as events so an external approval system can decide instead. Not applicable to prepaid offerings, which extend through renewal instead.
      */
     enable_resource_end_date_change_requests?: boolean;
+    /**
+     * If set to True, users who cannot change resource limits directly (RESOURCE.SET_LIMITS together with ORDER.CREATE) can request a limit change, and holders of RESOURCE.SET_LIMITS approve or reject. Approval submits an update order for the requested limits.
+     */
+    enable_resource_limit_change_requests?: boolean;
     /**
      * Enable sub-project management within resources.
      */
@@ -35843,7 +35855,7 @@ export type CustomerPermissionReviewOEnum = '-closed' | '-created' | 'closed' | 
 
 export type CustomerQuotasQuotaNameEnum = 'estimated_price' | 'nc_resource_count' | 'os_cpu_count' | 'os_ram_size' | 'os_storage_size' | 'vpc_cpu_count' | 'vpc_floating_ip_count' | 'vpc_instance_count' | 'vpc_ram_size' | 'vpc_storage_size';
 
-export type CustomerFieldEnum = 'abbreviation' | 'access_subnets' | 'accounting_start_date' | 'address' | 'agreement_number' | 'apartment_nr' | 'archived' | 'backend_id' | 'bank_account' | 'bank_name' | 'billing_price_estimate' | 'blocked' | 'call_managing_organization_uuid' | 'city' | 'contact_details' | 'country' | 'country_name' | 'created' | 'customer_credit' | 'customer_unallocated_credit' | 'default_affiliations' | 'default_tax_percent' | 'description' | 'display_billing_info_in_projects' | 'display_name' | 'domain' | 'email' | 'grace_period_days' | 'has_active_helpdesk' | 'has_affiliate_links' | 'homepage' | 'house_nr' | 'household' | 'image' | 'is_service_provider' | 'latitude' | 'longitude' | 'max_service_accounts' | 'name' | 'native_name' | 'notification_emails' | 'organization_groups' | 'parish' | 'payment_profiles' | 'phone_number' | 'postal' | 'project_metadata_checklist' | 'project_slug_template' | 'projects_count' | 'registration_code' | 'service_provider' | 'service_provider_uuid' | 'slug' | 'sponsor_number' | 'state' | 'street' | 'url' | 'user_affiliations' | 'user_email_patterns' | 'user_identity_sources' | 'users_count' | 'uuid' | 'vat_code';
+export type CustomerFieldEnum = 'abbreviation' | 'access_subnets' | 'accounting_start_date' | 'address' | 'agreement_number' | 'apartment_nr' | 'archived' | 'backend_id' | 'bank_account' | 'bank_name' | 'billing_price_estimate' | 'blocked' | 'call_managing_organization_uuid' | 'city' | 'contact_details' | 'country' | 'country_name' | 'created' | 'customer_credit' | 'customer_unallocated_credit' | 'default_affiliations' | 'default_tax_percent' | 'description' | 'display_billing_info_in_projects' | 'display_name' | 'domain' | 'email' | 'grace_period_days' | 'has_active_helpdesk' | 'has_affiliate_links' | 'homepage' | 'house_nr' | 'household' | 'image' | 'is_service_provider' | 'is_service_provider_manager_only' | 'latitude' | 'longitude' | 'max_service_accounts' | 'name' | 'native_name' | 'notification_emails' | 'organization_groups' | 'parish' | 'payment_profiles' | 'phone_number' | 'postal' | 'project_metadata_checklist' | 'project_slug_template' | 'projects_count' | 'registration_code' | 'service_provider' | 'service_provider_uuid' | 'slug' | 'sponsor_number' | 'state' | 'street' | 'url' | 'user_affiliations' | 'user_email_patterns' | 'user_identity_sources' | 'users_count' | 'uuid' | 'vat_code';
 
 export type CustomerUserFieldEnum = 'email' | 'expiration_time' | 'full_name' | 'image' | 'projects' | 'role_name' | 'url' | 'username' | 'uuid';
 

@@ -4873,7 +4873,7 @@ export const customerRoleConcealmentsRetrieve = <ThrowOnError extends boolean = 
 /**
  * List customers
  *
- * Retrieve a list of customers. The list is filtered based on the user's permissions.
+ * Retrieve a list of customers. The list is filtered based on the user's permissions. A user whose only link to an organization is a role on its service provider sees it with a restricted field set: url, uuid, name, native_name, display_name, abbreviation, slug, image, country, country_name, is_service_provider, service_provider and service_provider_uuid. All other fields are omitted for that row.
  */
 export const customersList = <ThrowOnError extends boolean = true>(options?: Options<CustomersListData, ThrowOnError>) => (options?.client ?? client).get<CustomersListResponses, unknown, ThrowOnError>({
     security: [
@@ -5073,7 +5073,7 @@ export const customersDestroy = <ThrowOnError extends boolean = true>(options: O
 /**
  * Retrieve customer details
  *
- * Fetch the details of a specific customer by its UUID.
+ * Fetch the details of a specific customer by its UUID. A user whose only link to the organization is a role on its service provider receives the restricted field set described on the list operation.
  */
 export const customersRetrieve = <ThrowOnError extends boolean = true>(options: Options<CustomersRetrieveData, ThrowOnError>) => (options.client ?? client).get<CustomersRetrieveResponses, unknown, ThrowOnError>({
     security: [
