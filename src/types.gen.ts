@@ -22690,7 +22690,7 @@ export type Project = {
      */
     readonly resources_count: number;
     /**
-     * Answers to the customer's project-metadata checklist (read-only).
+     * Answers to the customer's project-metadata checklist (read-only): the latest answer per question.
      */
     readonly project_metadata: Array<ProjectMetadataAnswer>;
     /**
@@ -22802,6 +22802,21 @@ export type ProjectAnswer = {
      * Get count of unanswered required questions.
      */
     readonly unanswered_required_count: number;
+};
+
+export type ProjectAnswerDetail = {
+    readonly project_uuid: string;
+    readonly project_name: string;
+    readonly answer_uuid: string | null;
+    readonly answer_data: {
+        [key: string]: unknown;
+    } | null;
+    readonly answered_by: string | null;
+    /**
+     * When the shown answer was last saved.
+     */
+    readonly answered_at: string | null;
+    readonly requires_review: boolean;
 };
 
 export type ProjectAttachRequest = {
@@ -23117,6 +23132,10 @@ export type ProjectMetadataAnswer = {
      * Human-readable answer value; select-type option UUIDs are resolved to their labels.
      */
     answer: unknown;
+    /**
+     * When this answer was last saved.
+     */
+    modified: string;
 };
 
 export type ProjectOrderAutoApproval = {
@@ -25361,12 +25380,7 @@ export type QuestionAnswer = {
      * Get count of projects that answered this question.
      */
     readonly answered_projects_count: number;
-    /**
-     * Get all project answers for this question.
-     */
-    readonly project_answers: Array<{
-        [key: string]: unknown;
-    }>;
+    readonly project_answers: Array<ProjectAnswerDetail>;
     /**
      * Get question options for select-type questions.
      */
