@@ -9511,6 +9511,10 @@ export type GoogleCredentials = {
      * Provider-level default login shell. Blank means each offering decides for itself.
      */
     account_login_shell?: string;
+    /**
+     * Provider-level default prefix for anonymized usernames, which are the prefix followed by the account's POSIX UID. Blank means each offering decides for itself.
+     */
+    account_username_anonymized_prefix?: string;
     readonly calendar_token: string;
     readonly calendar_refresh_token: string;
     readonly google_auth_url: string;
@@ -12383,7 +12387,7 @@ export type MergedPluginOptions = {
      */
     resource_project_role_group_template?: string;
     /**
-     * GLAuth prefix for anonymized usernames
+     * Prefix for anonymized usernames; the name is the prefix followed by the account's POSIX UID
      */
     username_anonymized_prefix?: string;
     /**
@@ -12786,7 +12790,7 @@ export type MergedPluginOptionsRequest = {
      */
     resource_project_role_group_template?: string;
     /**
-     * GLAuth prefix for anonymized usernames
+     * Prefix for anonymized usernames; the name is the prefix followed by the account's POSIX UID
      */
     username_anonymized_prefix?: string;
     /**
@@ -21635,6 +21639,10 @@ export type PatchedRuleRequest = {
      */
     create_project?: boolean;
     /**
+     * Template for project name. Supports {username}, {email}, {full_name} variables
+     */
+    project_name_template?: string | null;
+    /**
      * Revoke the roles this rule granted once the user stops matching it. Off by default so enabling a rule cannot silently strip access that is already in use.
      */
     revoke_when_unmatched?: boolean;
@@ -21737,6 +21745,10 @@ export type PatchedServiceProviderRequest = {
      * Provider-level default login shell. Blank means each offering decides for itself.
      */
     account_login_shell?: string;
+    /**
+     * Provider-level default prefix for anonymized usernames, which are the prefix followed by the account's POSIX UID. Blank means each offering decides for itself.
+     */
+    account_username_anonymized_prefix?: string;
 };
 
 export type PatchedSlurmPeriodicUsagePolicyRequest = {
@@ -22744,6 +22756,8 @@ export type ProjectAccountingSummary = {
     readonly total_spend: string;
     readonly current_month_spend: string;
 };
+
+export type ProjectActionEnum = 'create' | 'existing' | 'not_recreated';
 
 export type ProjectAffiliationUpdateRequest = {
     affiliation?: string | null;
@@ -29281,6 +29295,10 @@ export type Rule = {
      */
     create_project?: boolean;
     /**
+     * Template for project name. Supports {username}, {email}, {full_name} variables
+     */
+    project_name_template?: string | null;
+    /**
      * Revoke the roles this rule granted once the user stops matching it. Off by default so enabling a rule cannot silently strip access that is already in use.
      */
     revoke_when_unmatched?: boolean;
@@ -29324,6 +29342,10 @@ export type RuleRequest = {
      * Create (or join) a project for the matched user. Disable to grant only the organization-level role.
      */
     create_project?: boolean;
+    /**
+     * Template for project name. Supports {username}, {email}, {full_name} variables
+     */
+    project_name_template?: string | null;
     /**
      * Revoke the roles this rule granted once the user stops matching it. Off by default so enabling a rule cannot silently strip access that is already in use.
      */
@@ -29373,6 +29395,10 @@ export type RuleTestMatchResponse = {
     customer_candidates: Array<CustomerCandidate>;
     customer_lookup_ambiguous: boolean;
     resolved_project_name: string | null;
+    /**
+     * What provisioning does with the rule's project for this user: 'create' a new one, reuse an 'existing' one, or leave it deleted ('not_recreated') because this rule provisioned it before. Null when the rule creates no project or would not provision.
+     */
+    project_action: ProjectActionEnum | NullEnum | null;
 };
 
 export type RuntimeStateEnum = 'Active' | 'Pending account linking' | 'Pending additional validation';
@@ -29732,6 +29758,10 @@ export type ServiceProvider = {
      * Provider-level default login shell. Blank means each offering decides for itself.
      */
     account_login_shell?: string;
+    /**
+     * Provider-level default prefix for anonymized usernames, which are the prefix followed by the account's POSIX UID. Blank means each offering decides for itself.
+     */
+    account_username_anonymized_prefix?: string;
 };
 
 export type ServiceProviderAccess = {
@@ -29868,6 +29898,10 @@ export type ServiceProviderRequest = {
      * Provider-level default login shell. Blank means each offering decides for itself.
      */
     account_login_shell?: string;
+    /**
+     * Provider-level default prefix for anonymized usernames, which are the prefix followed by the account's POSIX UID. Blank means each offering decides for itself.
+     */
+    account_username_anonymized_prefix?: string;
 };
 
 export type ServiceProviderRevenues = {
@@ -34284,6 +34318,10 @@ export type ServiceProviderRequestForm = {
      * Provider-level default login shell. Blank means each offering decides for itself.
      */
     account_login_shell?: string;
+    /**
+     * Provider-level default prefix for anonymized usernames, which are the prefix followed by the account's POSIX UID. Blank means each offering decides for itself.
+     */
+    account_username_anonymized_prefix?: string;
 };
 
 export type ServiceProviderRequestMultipart = {
@@ -34311,6 +34349,10 @@ export type ServiceProviderRequestMultipart = {
      * Provider-level default login shell. Blank means each offering decides for itself.
      */
     account_login_shell?: string;
+    /**
+     * Provider-level default prefix for anonymized usernames, which are the prefix followed by the account's POSIX UID. Blank means each offering decides for itself.
+     */
+    account_username_anonymized_prefix?: string;
 };
 
 export type PatchedServiceProviderRequestForm = {
@@ -34337,6 +34379,10 @@ export type PatchedServiceProviderRequestForm = {
      * Provider-level default login shell. Blank means each offering decides for itself.
      */
     account_login_shell?: string;
+    /**
+     * Provider-level default prefix for anonymized usernames, which are the prefix followed by the account's POSIX UID. Blank means each offering decides for itself.
+     */
+    account_username_anonymized_prefix?: string;
 };
 
 export type PatchedServiceProviderRequestMultipart = {
@@ -34363,6 +34409,10 @@ export type PatchedServiceProviderRequestMultipart = {
      * Provider-level default login shell. Blank means each offering decides for itself.
      */
     account_login_shell?: string;
+    /**
+     * Provider-level default prefix for anonymized usernames, which are the prefix followed by the account's POSIX UID. Blank means each offering decides for itself.
+     */
+    account_username_anonymized_prefix?: string;
 };
 
 export type OnboardingJustificationDocumentationRequestForm = {
@@ -35799,7 +35849,7 @@ export type CustomerUserFieldEnum = 'email' | 'expiration_time' | 'full_name' | 
 
 export type CustomerUserOEnum = 'concatenated_name' | '-concatenated_name';
 
-export type ServiceProviderFieldEnum = 'account_homedir_prefix' | 'account_login_shell' | 'account_scope' | 'account_username_generation_policy' | 'allowed_domains' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_country' | 'customer_image' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'enable_notifications' | 'image' | 'offering_count' | 'organization_groups' | 'url' | 'uuid';
+export type ServiceProviderFieldEnum = 'account_homedir_prefix' | 'account_login_shell' | 'account_scope' | 'account_username_anonymized_prefix' | 'account_username_generation_policy' | 'allowed_domains' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_country' | 'customer_image' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'enable_notifications' | 'image' | 'offering_count' | 'organization_groups' | 'url' | 'uuid';
 
 export type GlobalUserDataAccessLogOEnum = '-accessor_type' | '-accessor_username' | '-timestamp' | '-user_username' | 'accessor_type' | 'accessor_username' | 'timestamp' | 'user_username';
 
@@ -35813,7 +35863,7 @@ export type EventFieldEnum = 'context' | 'created' | 'event_type' | 'message' | 
 
 export type ExpertiseCategoryOEnum = '-code' | '-level' | '-name' | 'code' | 'level' | 'name';
 
-export type GoogleCredentialsFieldEnum = 'account_homedir_prefix' | 'account_login_shell' | 'account_scope' | 'account_username_generation_policy' | 'allowed_domains' | 'calendar_refresh_token' | 'calendar_token' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_country' | 'customer_image' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'enable_notifications' | 'google_auth_url' | 'image' | 'offering_count' | 'organization_groups' | 'url' | 'uuid';
+export type GoogleCredentialsFieldEnum = 'account_homedir_prefix' | 'account_login_shell' | 'account_scope' | 'account_username_anonymized_prefix' | 'account_username_generation_policy' | 'allowed_domains' | 'calendar_refresh_token' | 'calendar_token' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_country' | 'customer_image' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'enable_notifications' | 'google_auth_url' | 'image' | 'offering_count' | 'organization_groups' | 'url' | 'uuid';
 
 export type WebHookContentTypeEnum1 = 1 | 2;
 
