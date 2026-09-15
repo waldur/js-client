@@ -12351,6 +12351,10 @@ export type MergedPluginOptions = {
      */
     heappe_local_base_path?: string;
     /**
+     * Identifier of the HEAppE instance this offering targets, e.g. 'it4i-heappe-prod'. Lets providers with multiple HEAppE deployments disambiguate which one a given offering uses.
+     */
+    heappe_identifier?: string;
+    /**
      * HEAppE url
      */
     heappe_url?: string;
@@ -12757,6 +12761,10 @@ export type MergedPluginOptionsRequest = {
      * HEAppE local base path
      */
     heappe_local_base_path?: string;
+    /**
+     * Identifier of the HEAppE instance this offering targets, e.g. 'it4i-heappe-prod'. Lets providers with multiple HEAppE deployments disambiguate which one a given offering uses.
+     */
+    heappe_identifier?: string;
     /**
      * HEAppE url
      */
