@@ -96,9 +96,128 @@ export type AccessorUser = {
     full_name: string;
 };
 
+export type AccountExample = {
+    /**
+     * The username a person new to the offering would get; placeholders in angle brackets stand for the person's own values.
+     */
+    username: string;
+    home_directory: string;
+    login_shell: string;
+};
+
 export type AccountNameGenerationPolicyEnum = 'project_slug';
 
+export type AccountOptions = {
+    /**
+     * Where accounts are held: 'offering' keeps one account per offering (the historical behaviour); 'provider' shares one account per user across the provider's offerings.
+     */
+    account_scope?: AccountScope | BlankEnum;
+    /**
+     * How the usernames of offering users are generated.
+     */
+    username_generation_policy?: UsernameGenerationPolicyEnum | BlankEnum;
+    /**
+     * Prefix for anonymized usernames; the name is the prefix followed by the account's POSIX UID.
+     */
+    username_anonymized_prefix?: string;
+    /**
+     * Prefix of each account's home directory; the username follows.
+     */
+    homedir_prefix?: string;
+    /**
+     * Login shell assigned to GLAuth/LDAP accounts.
+     */
+    login_shell?: string;
+};
+
+export type AccountOptionsChangeRequest = {
+    /**
+     * Changes to the provider's account options, merged into the current ones key by key; a blank value removes a setting.
+     */
+    account_options: AccountOptionsRequest;
+};
+
+export type AccountOptionsPreview = {
+    account_options: AccountOptionsVersions;
+    offerings: Array<OfferingAccountPreview>;
+    renamed: number;
+    provider_accounts_kept: number;
+    accounts_keeping_home_or_shell: number;
+    /**
+     * People whose usernames disagree across offerings. Non-zero blocks switching to per service provider accounts.
+     */
+    username_conflicts: number;
+};
+
+export type AccountOptionsRequest = {
+    /**
+     * Where accounts are held: 'offering' keeps one account per offering (the historical behaviour); 'provider' shares one account per user across the provider's offerings.
+     */
+    account_scope?: AccountScope | BlankEnum;
+    /**
+     * How the usernames of offering users are generated.
+     */
+    username_generation_policy?: UsernameGenerationPolicyEnum | BlankEnum;
+    /**
+     * Prefix for anonymized usernames; the name is the prefix followed by the account's POSIX UID.
+     */
+    username_anonymized_prefix?: string;
+    /**
+     * Prefix of each account's home directory; the username follows.
+     */
+    homedir_prefix?: string;
+    /**
+     * Login shell assigned to GLAuth/LDAP accounts.
+     */
+    login_shell?: string;
+};
+
+export type AccountOptionsVersions = {
+    current: AccountOptions;
+    proposed: AccountOptions;
+};
+
+export type AccountRename = {
+    username: string;
+    /**
+     * Null when the rename would first allocate a POSIX UID.
+     */
+    new_username: string | null;
+    home_directory: string;
+    new_home_directory: string;
+};
+
 export type AccountScope = 'offering' | 'provider';
+
+export type AccountSetting = {
+    /**
+     * The value the setting resolves to.
+     */
+    value: string;
+    /**
+     * Where the value comes from: the offering's own plugin option, the service provider's account options, or the built-in default.
+     */
+    source: AccountSettingSource;
+    /**
+     * What the setting resolves to without the offering's own value: the service provider's, else the built-in default. Removing the offering's override leads to it.
+     */
+    inherited: InheritedAccountSetting;
+};
+
+export type AccountSettingChange = {
+    before: InheritedAccountSetting;
+    after: InheritedAccountSetting;
+};
+
+export type AccountSettingChanges = {
+    account_scope: AccountSettingChange;
+    username_generation_policy: AccountSettingChange;
+    username_anonymized_prefix: AccountSettingChange;
+    homedir_prefix: AccountSettingChange;
+    login_shell: AccountSettingChange;
+};
+
+export type AccountSettingSource = 'offering' | 'provider' | 'default';
 
 export type ActionOnUsageLimitEnum = 'pause' | 'downscale';
 
@@ -3152,6 +3271,7 @@ export type BookingResource = {
      * Whether the resource owns any API keys, so the portal can offer key management without knowing which backend serves the resource.
      */
     readonly has_api_keys: boolean;
+    offering_account_settings: OfferingAccountSettings;
     readonly created_by: string;
     /**
      * Required. 128 characters or fewer. Lowercase letters, numbers and @/./+/-/_ characters
@@ -5410,7 +5530,7 @@ export type ConflictOfInterest = {
     readonly evidence_data: {
         [key: string]: unknown;
     };
-    status?: ConflictOfInterestStatusEnum;
+    status: ConflictOfInterestStatusEnum;
     readonly status_display: string;
     readonly reviewed_by: string | null;
     readonly reviewed_by_name: string;
@@ -5431,7 +5551,6 @@ export type ConflictOfInterest = {
 };
 
 export type ConflictOfInterestRequest = {
-    status?: ConflictOfInterestStatusEnum;
     review_notes?: string;
     /**
      * If waived, how is it managed
@@ -6539,6 +6658,10 @@ export type CreateLoadBalancer = {
      */
     tenant: string;
     vip_subnet: string;
+    /**
+     * Virtual IP address to request, IPv4 or IPv6. It must be of the same family as vip_subnet and lie inside it. Octavia allocates one from vip_subnet when omitted.
+     */
+    vip_address?: string | string | null;
 };
 
 export type CreateLoadBalancerRequest = {
@@ -6548,6 +6671,10 @@ export type CreateLoadBalancerRequest = {
      */
     tenant: string;
     vip_subnet: string;
+    /**
+     * Virtual IP address to request, IPv4 or IPv6. It must be of the same family as vip_subnet and lie inside it. Octavia allocates one from vip_subnet when omitted.
+     */
+    vip_address?: string | string | null;
 };
 
 export type CreateManualAssignmentRequest = {
@@ -9528,25 +9655,9 @@ export type GoogleCredentials = {
      */
     allowed_domains?: Array<string>;
     /**
-     * Default for this provider's offerings: hold user accounts per offering (the historical behaviour) or once per provider. Choose 'provider' when one directory fronts several offerings. Any single offering can override this with an 'account_scope' plugin option, so a provider can run both -- for example a cluster with its own separate directory alongside offerings that share the main one.
+     * Account settings for this provider's offerings, under the same keys as an offering's plugin options. Each applies to every offering that does not set its own. Updated key by key: an omitted key is kept, and a blank value removes it.
      */
-    account_scope?: AccountScope;
-    /**
-     * Provider-level default for the offering plugin option of the same name. Blank means each offering decides for itself.
-     */
-    account_username_generation_policy?: string;
-    /**
-     * Provider-level default home directory prefix. Blank means each offering decides for itself.
-     */
-    account_homedir_prefix?: string;
-    /**
-     * Provider-level default login shell. Blank means each offering decides for itself.
-     */
-    account_login_shell?: string;
-    /**
-     * Provider-level default prefix for anonymized usernames, which are the prefix followed by the account's POSIX UID. Blank means each offering decides for itself.
-     */
-    account_username_anonymized_prefix?: string;
+    account_options?: AccountOptions;
     readonly calendar_token: string;
     readonly calendar_refresh_token: string;
     readonly google_auth_url: string;
@@ -10274,6 +10385,17 @@ export type ImportableResource = {
     description: string;
 };
 
+export type InheritedAccountSetting = {
+    /**
+     * The value the setting resolves to.
+     */
+    value: string;
+    /**
+     * Where the value comes from: the offering's own plugin option, the service provider's account options, or the built-in default.
+     */
+    source: AccountSettingSource;
+};
+
 export type InjectionSeverityEnum = 'none' | 'low' | 'medium' | 'high' | 'critical';
 
 export type InstanceFlavorChangeRequest = {
@@ -10808,6 +10930,8 @@ export type InvoiceStatsOffering = {
     readonly service_provider_name: string;
     readonly service_provider_uuid: string;
 };
+
+export type Ipv6Mode = 'slaac' | 'dhcpv6-stateful' | 'dhcpv6-stateless';
 
 export type Issue = {
     readonly url: string;
@@ -12167,9 +12291,25 @@ export type MembershipStateEnum = 'invited' | 'joined' | 'left' | 'banned';
 
 export type MergedPluginOptions = {
     /**
-     * Where this offering's accounts are held, overriding the service provider's own account_scope. 'offering' keeps one account per offering (the historical behaviour); 'provider' shares one account per user across the provider's offerings. Omit to inherit.
+     * Where accounts are held: 'offering' keeps one account per offering (the historical behaviour); 'provider' shares one account per user across the provider's offerings.
      */
-    account_scope?: AccountScope;
+    account_scope?: AccountScope | BlankEnum;
+    /**
+     * How the usernames of offering users are generated.
+     */
+    username_generation_policy?: UsernameGenerationPolicyEnum | BlankEnum;
+    /**
+     * Prefix for anonymized usernames; the name is the prefix followed by the account's POSIX UID.
+     */
+    username_anonymized_prefix?: string;
+    /**
+     * Prefix of each account's home directory; the username follows.
+     */
+    homedir_prefix?: string;
+    /**
+     * Login shell assigned to GLAuth/LDAP accounts.
+     */
+    login_shell?: string;
     /**
      * If set to True, an order can be processed without approval
      */
@@ -12391,10 +12531,6 @@ export type MergedPluginOptions = {
      */
     heappe_identifier?: string | null;
     /**
-     * GLAuth homedir prefix
-     */
-    homedir_prefix?: string;
-    /**
      * HEAppE scratch project directory
      */
     scratch_project_directory?: string | null;
@@ -12426,18 +12562,6 @@ export type MergedPluginOptions = {
      * string.Template for resource-project-scope role group names. Adds ${rp_uuid}, ${rp_uuid_short}, ${project_name} to the variables available for resource-scope templates.
      */
     resource_project_role_group_template?: string;
-    /**
-     * Prefix for anonymized usernames; the name is the prefix followed by the account's POSIX UID
-     */
-    username_anonymized_prefix?: string;
-    /**
-     * GLAuth username generation policy
-     */
-    username_generation_policy?: UsernameGenerationPolicyEnum;
-    /**
-     * Default login shell assigned to GLAuth/LDAP accounts.
-     */
-    login_shell?: string;
     /**
      * Where each offering user's UID comes from: allocated from the POSIX ID pool (default), or taken from the user's uid_number attribute (e.g. an OIDC claim). Pair 'user_attribute' with a GID-only pool to avoid UID collisions.
      */
@@ -12578,9 +12702,25 @@ export type MergedPluginOptions = {
 
 export type MergedPluginOptionsRequest = {
     /**
-     * Where this offering's accounts are held, overriding the service provider's own account_scope. 'offering' keeps one account per offering (the historical behaviour); 'provider' shares one account per user across the provider's offerings. Omit to inherit.
+     * Where accounts are held: 'offering' keeps one account per offering (the historical behaviour); 'provider' shares one account per user across the provider's offerings.
      */
-    account_scope?: AccountScope;
+    account_scope?: AccountScope | BlankEnum;
+    /**
+     * How the usernames of offering users are generated.
+     */
+    username_generation_policy?: UsernameGenerationPolicyEnum | BlankEnum;
+    /**
+     * Prefix for anonymized usernames; the name is the prefix followed by the account's POSIX UID.
+     */
+    username_anonymized_prefix?: string;
+    /**
+     * Prefix of each account's home directory; the username follows.
+     */
+    homedir_prefix?: string;
+    /**
+     * Login shell assigned to GLAuth/LDAP accounts.
+     */
+    login_shell?: string;
     /**
      * If set to True, an order can be processed without approval
      */
@@ -12802,10 +12942,6 @@ export type MergedPluginOptionsRequest = {
      */
     heappe_identifier?: string | null;
     /**
-     * GLAuth homedir prefix
-     */
-    homedir_prefix?: string;
-    /**
      * HEAppE scratch project directory
      */
     scratch_project_directory?: string | null;
@@ -12837,18 +12973,6 @@ export type MergedPluginOptionsRequest = {
      * string.Template for resource-project-scope role group names. Adds ${rp_uuid}, ${rp_uuid_short}, ${project_name} to the variables available for resource-scope templates.
      */
     resource_project_role_group_template?: string;
-    /**
-     * Prefix for anonymized usernames; the name is the prefix followed by the account's POSIX UID
-     */
-    username_anonymized_prefix?: string;
-    /**
-     * GLAuth username generation policy
-     */
-    username_generation_policy?: UsernameGenerationPolicyEnum;
-    /**
-     * Default login shell assigned to GLAuth/LDAP accounts.
-     */
-    login_shell?: string;
     /**
      * Where each offering user's UID comes from: allocated from the POSIX ID pool (default), or taken from the user's uid_number attribute (e.g. an OIDC claim). Pair 'user_attribute' with a GID-only pool to avoid UID collisions.
      */
@@ -14682,6 +14806,7 @@ export type Offering = {
     resource_options: OfferingOptions;
     readonly components: Array<OfferingComponent>;
     plugin_options: MergedPluginOptions;
+    account_settings: OfferingAccountSettings;
     readonly can_update_integration: boolean;
     readonly can_update_options: boolean;
     state: OfferingState;
@@ -14784,6 +14909,31 @@ export type OfferingAccessSubnets = {
     expanded: Array<OfferingAccessSubnetExpanded>;
     packed: Array<string>;
     defaults: Array<string>;
+};
+
+export type OfferingAccountPreview = {
+    uuid: string;
+    name: string;
+    settings: AccountSettingChanges;
+    changed: Array<string>;
+    example: AccountExample;
+    renames: Array<AccountRename>;
+    /**
+     * Provider accounts that keep their username and POSIX values.
+     */
+    provider_accounts_kept: number;
+    /**
+     * Existing accounts that keep their home directory and login shell; the change applies to accounts created afterwards.
+     */
+    accounts_keeping_home_or_shell: number;
+};
+
+export type OfferingAccountSettings = {
+    account_scope: AccountSetting;
+    username_generation_policy: AccountSetting;
+    username_anonymized_prefix: AccountSetting;
+    homedir_prefix: AccountSetting;
+    login_shell: AccountSetting;
 };
 
 export type OfferingBackendIdRulesUpdateRequest = {
@@ -17630,7 +17780,7 @@ export type OpenStackNestedFloatingIp = {
     readonly subnet_name: string;
     readonly subnet_description: string;
     /**
-     * IPv4 network address in CIDR format (e.g. 192.168.0.0/24)
+     * Network address in CIDR format (e.g. 192.168.0.0/24 or 2001:db8::/64)
      */
     readonly subnet_cidr: string;
 };
@@ -17663,7 +17813,7 @@ export type OpenStackNestedPort = {
     readonly subnet_name: string | null;
     readonly subnet_description: string | null;
     /**
-     * IPv4 network address in CIDR format (e.g. 192.168.0.0/24)
+     * Network address in CIDR format (e.g. 192.168.0.0/24 or 2001:db8::/64)
      */
     readonly subnet_cidr: string | null;
     readonly allowed_address_pairs: Array<OpenStackAllowedAddressPair>;
@@ -17709,7 +17859,7 @@ export type OpenStackNestedSubNet = {
     name: string;
     description?: string;
     /**
-     * IPv4 network address in CIDR format (e.g. 192.168.0.0/24)
+     * Network address in CIDR format (e.g. 192.168.0.0/24 or 2001:db8::/64)
      */
     cidr?: string;
     /**
@@ -17721,6 +17871,8 @@ export type OpenStackNestedSubNet = {
      * IP protocol version (4 or 6)
      */
     ip_version?: number;
+    ipv6_ra_mode: Ipv6Mode | NullEnum | null;
+    ipv6_address_mode: Ipv6Mode | NullEnum | null;
     /**
      * If True, DHCP service will be enabled on this subnet
      */
@@ -17732,7 +17884,7 @@ export type OpenStackNestedSubNetRequest = {
     name: string;
     description?: string;
     /**
-     * IPv4 network address in CIDR format (e.g. 192.168.0.0/24)
+     * Network address in CIDR format (e.g. 192.168.0.0/24 or 2001:db8::/64)
      */
     cidr?: string;
     /**
@@ -18632,7 +18784,7 @@ export type OpenStackSubNet = {
     /**
      * IP address of the gateway for this subnet
      */
-    gateway_ip?: string | null;
+    gateway_ip?: string | string | null;
     /**
      * If True, no gateway IP address will be allocated
      */
@@ -18642,6 +18794,14 @@ export type OpenStackSubNet = {
      * IP protocol version (4 or 6)
      */
     readonly ip_version: number;
+    /**
+     * How the router advertises an IPv6 subnet. Set at creation only; null for an IPv4 subnet.
+     */
+    ipv6_ra_mode?: Ipv6Mode | NullEnum | null;
+    /**
+     * How instances on an IPv6 subnet get their address. Set at creation only; null for an IPv4 subnet.
+     */
+    ipv6_address_mode?: Ipv6Mode | NullEnum | null;
     /**
      * If True, DHCP service will be enabled on this subnet
      */
@@ -18706,12 +18866,20 @@ export type OpenStackSubNetRequest = {
     /**
      * IP address of the gateway for this subnet
      */
-    gateway_ip?: string | null;
+    gateway_ip?: string | string | null;
     /**
      * If True, no gateway IP address will be allocated
      */
     disable_gateway?: boolean;
     allocation_pools?: Array<OpenStackSubNetAllocationPoolRequest>;
+    /**
+     * How the router advertises an IPv6 subnet. Set at creation only; null for an IPv4 subnet.
+     */
+    ipv6_ra_mode?: Ipv6Mode | NullEnum | null;
+    /**
+     * How instances on an IPv6 subnet get their address. Set at creation only; null for an IPv4 subnet.
+     */
+    ipv6_address_mode?: Ipv6Mode | NullEnum | null;
     /**
      * An IPv4 or IPv6 address.
      */
@@ -19133,6 +19301,7 @@ export type OrderDetails = {
     readonly resource_uuid: string | null;
     readonly resource_type: string | null;
     readonly resource_name: string;
+    readonly resource_end_date: string | null;
     readonly cost: string | null;
     state: OrderState;
     readonly output: string;
@@ -19212,6 +19381,15 @@ export type OrderDetails = {
     readonly new_plan_uuid: string | null;
     readonly old_plan_billing_mode: string | null;
     readonly new_plan_billing_mode: string | null;
+    /**
+     * The old-limits estimate, snapshotted by init_cost() at creation.
+     *
+     * Must not recompute live: _compute_old_cost_estimate() prices from
+     * "today", which keeps advancing on every read while `cost` stays fixed
+     * from creation -- the shown cost change would grow the longer an order
+     * sits unread. Orders that predate this field have no snapshot, so they
+     * fall back to the live computation rather than a wrong zero.
+     */
     readonly old_cost_estimate: number;
     readonly new_cost_estimate: string | null;
     readonly can_terminate: boolean;
@@ -19939,7 +20117,6 @@ export type PatchedComponentUserUsageLimitRequest = {
 };
 
 export type PatchedConflictOfInterestRequest = {
-    status?: ConflictOfInterestStatusEnum;
     review_notes?: string;
     /**
      * If waived, how is it managed
@@ -20799,12 +20976,20 @@ export type PatchedOpenStackSubNetRequest = {
     /**
      * IP address of the gateway for this subnet
      */
-    gateway_ip?: string | null;
+    gateway_ip?: string | string | null;
     /**
      * If True, no gateway IP address will be allocated
      */
     disable_gateway?: boolean;
     allocation_pools?: Array<OpenStackSubNetAllocationPoolRequest>;
+    /**
+     * How the router advertises an IPv6 subnet. Set at creation only; null for an IPv4 subnet.
+     */
+    ipv6_ra_mode?: Ipv6Mode | NullEnum | null;
+    /**
+     * How instances on an IPv6 subnet get their address. Set at creation only; null for an IPv4 subnet.
+     */
+    ipv6_address_mode?: Ipv6Mode | NullEnum | null;
     /**
      * An IPv4 or IPv6 address.
      */
@@ -21778,25 +21963,9 @@ export type PatchedServiceProviderRequest = {
      */
     allowed_domains?: Array<string>;
     /**
-     * Default for this provider's offerings: hold user accounts per offering (the historical behaviour) or once per provider. Choose 'provider' when one directory fronts several offerings. Any single offering can override this with an 'account_scope' plugin option, so a provider can run both -- for example a cluster with its own separate directory alongside offerings that share the main one.
+     * Account settings for this provider's offerings, under the same keys as an offering's plugin options. Each applies to every offering that does not set its own. Updated key by key: an omitted key is kept, and a blank value removes it.
      */
-    account_scope?: AccountScope;
-    /**
-     * Provider-level default for the offering plugin option of the same name. Blank means each offering decides for itself.
-     */
-    account_username_generation_policy?: string;
-    /**
-     * Provider-level default home directory prefix. Blank means each offering decides for itself.
-     */
-    account_homedir_prefix?: string;
-    /**
-     * Provider-level default login shell. Blank means each offering decides for itself.
-     */
-    account_login_shell?: string;
-    /**
-     * Provider-level default prefix for anonymized usernames, which are the prefix followed by the account's POSIX UID. Blank means each offering decides for itself.
-     */
-    account_username_anonymized_prefix?: string;
+    account_options?: AccountOptionsRequest;
 };
 
 export type PatchedSlurmPeriodicUsagePolicyRequest = {
@@ -24158,6 +24327,17 @@ export type ProviderCustomerTopRevenue = {
     revenue: string | null;
 };
 
+export type ProviderGlauthTree = {
+    offerings: Array<GlauthTreeOffering>;
+    groups: Array<GlauthTreeGroup>;
+    users: Array<GlauthTreeUser>;
+    robot_accounts: Array<GlauthTreeRobotAccount>;
+    /**
+     * Disagreements between the offerings that could not be merged.
+     */
+    warnings: Array<string>;
+};
+
 export type ProviderHelpdesk = {
     readonly url: string;
     readonly uuid: string;
@@ -24325,6 +24505,7 @@ export type ProviderOfferingDetails = {
     readonly components: Array<OfferingComponent>;
     readonly limit_precision_advisory: string | null;
     plugin_options: MergedPluginOptions;
+    account_settings: OfferingAccountSettings;
     secret_options?: MergedSecretOptions;
     readonly service_attributes?: {
         [key: string]: unknown;
@@ -24926,6 +25107,7 @@ export type PublicOfferingDetails = {
     resource_options: OfferingOptions;
     readonly components: Array<OfferingComponent>;
     plugin_options: MergedPluginOptions;
+    account_settings: OfferingAccountSettings;
     readonly can_update_integration: boolean;
     readonly can_update_options: boolean;
     state: OfferingState;
@@ -27326,6 +27508,7 @@ export type Resource = {
      * Whether the resource owns any API keys, so the portal can offer key management without knowing which backend serves the resource.
      */
     readonly has_api_keys: boolean;
+    offering_account_settings: OfferingAccountSettings;
 };
 
 export type ResourceApiKey = {
@@ -29805,25 +29988,9 @@ export type ServiceProvider = {
      */
     allowed_domains?: Array<string>;
     /**
-     * Default for this provider's offerings: hold user accounts per offering (the historical behaviour) or once per provider. Choose 'provider' when one directory fronts several offerings. Any single offering can override this with an 'account_scope' plugin option, so a provider can run both -- for example a cluster with its own separate directory alongside offerings that share the main one.
+     * Account settings for this provider's offerings, under the same keys as an offering's plugin options. Each applies to every offering that does not set its own. Updated key by key: an omitted key is kept, and a blank value removes it.
      */
-    account_scope?: AccountScope;
-    /**
-     * Provider-level default for the offering plugin option of the same name. Blank means each offering decides for itself.
-     */
-    account_username_generation_policy?: string;
-    /**
-     * Provider-level default home directory prefix. Blank means each offering decides for itself.
-     */
-    account_homedir_prefix?: string;
-    /**
-     * Provider-level default login shell. Blank means each offering decides for itself.
-     */
-    account_login_shell?: string;
-    /**
-     * Provider-level default prefix for anonymized usernames, which are the prefix followed by the account's POSIX UID. Blank means each offering decides for itself.
-     */
-    account_username_anonymized_prefix?: string;
+    account_options?: AccountOptions;
 };
 
 export type ServiceProviderAccess = {
@@ -29847,15 +30014,9 @@ export type ServiceProviderAccount = {
     readonly service_provider_name: string;
     readonly user: string;
     readonly user_uuid: string;
-    /**
-     * Required. 128 characters or fewer. Lowercase letters, numbers and @/./+/-/_ characters
-     */
-    readonly user_username: string;
-    readonly user_full_name: string;
-    /**
-     * Email address
-     */
-    readonly user_email: string;
+    readonly user_username: string | null;
+    readonly user_full_name: string | null;
+    readonly user_email: string | null;
     username?: string | null;
     state: OfferingUserState;
     /**
@@ -29945,25 +30106,9 @@ export type ServiceProviderRequest = {
      */
     allowed_domains?: Array<string>;
     /**
-     * Default for this provider's offerings: hold user accounts per offering (the historical behaviour) or once per provider. Choose 'provider' when one directory fronts several offerings. Any single offering can override this with an 'account_scope' plugin option, so a provider can run both -- for example a cluster with its own separate directory alongside offerings that share the main one.
+     * Account settings for this provider's offerings, under the same keys as an offering's plugin options. Each applies to every offering that does not set its own. Updated key by key: an omitted key is kept, and a blank value removes it.
      */
-    account_scope?: AccountScope;
-    /**
-     * Provider-level default for the offering plugin option of the same name. Blank means each offering decides for itself.
-     */
-    account_username_generation_policy?: string;
-    /**
-     * Provider-level default home directory prefix. Blank means each offering decides for itself.
-     */
-    account_homedir_prefix?: string;
-    /**
-     * Provider-level default login shell. Blank means each offering decides for itself.
-     */
-    account_login_shell?: string;
-    /**
-     * Provider-level default prefix for anonymized usernames, which are the prefix followed by the account's POSIX UID. Blank means each offering decides for itself.
-     */
-    account_username_anonymized_prefix?: string;
+    account_options?: AccountOptionsRequest;
 };
 
 export type ServiceProviderRevenues = {
@@ -34365,25 +34510,9 @@ export type ServiceProviderRequestForm = {
      */
     allowed_domains?: Array<string>;
     /**
-     * Default for this provider's offerings: hold user accounts per offering (the historical behaviour) or once per provider. Choose 'provider' when one directory fronts several offerings. Any single offering can override this with an 'account_scope' plugin option, so a provider can run both -- for example a cluster with its own separate directory alongside offerings that share the main one.
+     * Account settings for this provider's offerings, under the same keys as an offering's plugin options. Each applies to every offering that does not set its own. Updated key by key: an omitted key is kept, and a blank value removes it.
      */
-    account_scope?: AccountScope;
-    /**
-     * Provider-level default for the offering plugin option of the same name. Blank means each offering decides for itself.
-     */
-    account_username_generation_policy?: string;
-    /**
-     * Provider-level default home directory prefix. Blank means each offering decides for itself.
-     */
-    account_homedir_prefix?: string;
-    /**
-     * Provider-level default login shell. Blank means each offering decides for itself.
-     */
-    account_login_shell?: string;
-    /**
-     * Provider-level default prefix for anonymized usernames, which are the prefix followed by the account's POSIX UID. Blank means each offering decides for itself.
-     */
-    account_username_anonymized_prefix?: string;
+    account_options?: AccountOptionsRequest;
 };
 
 export type ServiceProviderRequestMultipart = {
@@ -34396,25 +34525,9 @@ export type ServiceProviderRequestMultipart = {
      */
     allowed_domains?: Array<string>;
     /**
-     * Default for this provider's offerings: hold user accounts per offering (the historical behaviour) or once per provider. Choose 'provider' when one directory fronts several offerings. Any single offering can override this with an 'account_scope' plugin option, so a provider can run both -- for example a cluster with its own separate directory alongside offerings that share the main one.
+     * Account settings for this provider's offerings, under the same keys as an offering's plugin options. Each applies to every offering that does not set its own. Updated key by key: an omitted key is kept, and a blank value removes it.
      */
-    account_scope?: AccountScope;
-    /**
-     * Provider-level default for the offering plugin option of the same name. Blank means each offering decides for itself.
-     */
-    account_username_generation_policy?: string;
-    /**
-     * Provider-level default home directory prefix. Blank means each offering decides for itself.
-     */
-    account_homedir_prefix?: string;
-    /**
-     * Provider-level default login shell. Blank means each offering decides for itself.
-     */
-    account_login_shell?: string;
-    /**
-     * Provider-level default prefix for anonymized usernames, which are the prefix followed by the account's POSIX UID. Blank means each offering decides for itself.
-     */
-    account_username_anonymized_prefix?: string;
+    account_options?: AccountOptionsRequest;
 };
 
 export type PatchedServiceProviderRequestForm = {
@@ -34426,25 +34539,9 @@ export type PatchedServiceProviderRequestForm = {
      */
     allowed_domains?: Array<string>;
     /**
-     * Default for this provider's offerings: hold user accounts per offering (the historical behaviour) or once per provider. Choose 'provider' when one directory fronts several offerings. Any single offering can override this with an 'account_scope' plugin option, so a provider can run both -- for example a cluster with its own separate directory alongside offerings that share the main one.
+     * Account settings for this provider's offerings, under the same keys as an offering's plugin options. Each applies to every offering that does not set its own. Updated key by key: an omitted key is kept, and a blank value removes it.
      */
-    account_scope?: AccountScope;
-    /**
-     * Provider-level default for the offering plugin option of the same name. Blank means each offering decides for itself.
-     */
-    account_username_generation_policy?: string;
-    /**
-     * Provider-level default home directory prefix. Blank means each offering decides for itself.
-     */
-    account_homedir_prefix?: string;
-    /**
-     * Provider-level default login shell. Blank means each offering decides for itself.
-     */
-    account_login_shell?: string;
-    /**
-     * Provider-level default prefix for anonymized usernames, which are the prefix followed by the account's POSIX UID. Blank means each offering decides for itself.
-     */
-    account_username_anonymized_prefix?: string;
+    account_options?: AccountOptionsRequest;
 };
 
 export type PatchedServiceProviderRequestMultipart = {
@@ -34456,25 +34553,9 @@ export type PatchedServiceProviderRequestMultipart = {
      */
     allowed_domains?: Array<string>;
     /**
-     * Default for this provider's offerings: hold user accounts per offering (the historical behaviour) or once per provider. Choose 'provider' when one directory fronts several offerings. Any single offering can override this with an 'account_scope' plugin option, so a provider can run both -- for example a cluster with its own separate directory alongside offerings that share the main one.
+     * Account settings for this provider's offerings, under the same keys as an offering's plugin options. Each applies to every offering that does not set its own. Updated key by key: an omitted key is kept, and a blank value removes it.
      */
-    account_scope?: AccountScope;
-    /**
-     * Provider-level default for the offering plugin option of the same name. Blank means each offering decides for itself.
-     */
-    account_username_generation_policy?: string;
-    /**
-     * Provider-level default home directory prefix. Blank means each offering decides for itself.
-     */
-    account_homedir_prefix?: string;
-    /**
-     * Provider-level default login shell. Blank means each offering decides for itself.
-     */
-    account_login_shell?: string;
-    /**
-     * Provider-level default prefix for anonymized usernames, which are the prefix followed by the account's POSIX UID. Blank means each offering decides for itself.
-     */
-    account_username_anonymized_prefix?: string;
+    account_options?: AccountOptionsRequest;
 };
 
 export type OnboardingJustificationDocumentationRequestForm = {
@@ -35865,9 +35946,9 @@ export type AwsVolumeFieldEnum = 'access_url' | 'backend_id' | 'created' | 'cust
 
 export type BackendResourceReqOEnum = '-created' | 'created';
 
-export type OfferingFieldEnum = 'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'billing_mode_components' | 'billing_period_applies' | 'billing_type_classification' | 'can_update_integration' | 'can_update_options' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'default_access_subnets' | 'description' | 'documentation_url' | 'effective_available_limits' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'googlecalendar' | 'has_compliance_requirements' | 'helpdesk_url' | 'image' | 'integration_guide' | 'is_accessible' | 'latitude' | 'longitude' | 'name' | 'offering_group' | 'offering_group_title' | 'offering_group_uuid' | 'open_for_proposals' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'profile_name' | 'profile_uuid' | 'project' | 'project_name' | 'project_uuid' | 'qos_profiles' | 'quotas' | 'resource_options' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_resource' | 'scope_resource_name' | 'scope_resource_uuid' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'tags' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'user_has_consent' | 'user_has_offering_user' | 'uuid' | 'vendor_details';
+export type OfferingFieldEnum = 'access_url' | 'account_settings' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'billing_mode_components' | 'billing_period_applies' | 'billing_type_classification' | 'can_update_integration' | 'can_update_options' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'default_access_subnets' | 'description' | 'documentation_url' | 'effective_available_limits' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'googlecalendar' | 'has_compliance_requirements' | 'helpdesk_url' | 'image' | 'integration_guide' | 'is_accessible' | 'latitude' | 'longitude' | 'name' | 'offering_group' | 'offering_group_title' | 'offering_group_uuid' | 'open_for_proposals' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'profile_name' | 'profile_uuid' | 'project' | 'project_name' | 'project_uuid' | 'qos_profiles' | 'quotas' | 'resource_options' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_resource' | 'scope_resource_name' | 'scope_resource_uuid' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'tags' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'user_has_consent' | 'user_has_offering_user' | 'uuid' | 'vendor_details';
 
-export type BookingResourceFieldEnum = 'attributes' | 'available_actions' | 'backend_id' | 'backend_metadata' | 'can_terminate' | 'category_icon' | 'category_title' | 'category_uuid' | 'consumer_reviewed_by' | 'consumer_reviewed_by_full_name' | 'consumer_reviewed_by_username' | 'created' | 'created_by' | 'created_by_full_name' | 'created_by_username' | 'creation_order' | 'current_usages' | 'customer_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'downscaled' | 'effective_id' | 'end_date' | 'end_date_requested_by' | 'end_date_updated_at' | 'endpoints' | 'error_message' | 'error_traceback' | 'has_api_keys' | 'is_limit_based' | 'is_usage_based' | 'last_sync' | 'limit_usage' | 'limits' | 'modified' | 'name' | 'offering' | 'offering_backend_id' | 'offering_billable' | 'offering_components' | 'offering_description' | 'offering_image' | 'offering_name' | 'offering_plugin_options' | 'offering_shared' | 'offering_slug' | 'offering_state' | 'offering_thumbnail' | 'offering_type' | 'offering_uuid' | 'options' | 'order_in_progress' | 'parent_name' | 'parent_offering_name' | 'parent_offering_slug' | 'parent_offering_uuid' | 'parent_uuid' | 'paused' | 'plan' | 'plan_description' | 'plan_name' | 'plan_unit' | 'plan_uuid' | 'project' | 'project_description' | 'project_effective_end_date' | 'project_end_date' | 'project_end_date_requested_by' | 'project_is_in_grace_period' | 'project_name' | 'project_slug' | 'project_start_date' | 'project_uuid' | 'provider_description' | 'provider_name' | 'provider_slug' | 'provider_uuid' | 'renewal_date' | 'report' | 'resource_effective_end_date' | 'resource_type' | 'resource_uuid' | 'restrict_member_access' | 'scope' | 'service_settings_uuid' | 'slots' | 'slug' | 'state' | 'url' | 'usage_limit_restriction' | 'user_requires_reconsent' | 'username' | 'uuid';
+export type BookingResourceFieldEnum = 'attributes' | 'available_actions' | 'backend_id' | 'backend_metadata' | 'can_terminate' | 'category_icon' | 'category_title' | 'category_uuid' | 'consumer_reviewed_by' | 'consumer_reviewed_by_full_name' | 'consumer_reviewed_by_username' | 'created' | 'created_by' | 'created_by_full_name' | 'created_by_username' | 'creation_order' | 'current_usages' | 'customer_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'downscaled' | 'effective_id' | 'end_date' | 'end_date_requested_by' | 'end_date_updated_at' | 'endpoints' | 'error_message' | 'error_traceback' | 'has_api_keys' | 'is_limit_based' | 'is_usage_based' | 'last_sync' | 'limit_usage' | 'limits' | 'modified' | 'name' | 'offering' | 'offering_account_settings' | 'offering_backend_id' | 'offering_billable' | 'offering_components' | 'offering_description' | 'offering_image' | 'offering_name' | 'offering_plugin_options' | 'offering_shared' | 'offering_slug' | 'offering_state' | 'offering_thumbnail' | 'offering_type' | 'offering_uuid' | 'options' | 'order_in_progress' | 'parent_name' | 'parent_offering_name' | 'parent_offering_slug' | 'parent_offering_uuid' | 'parent_uuid' | 'paused' | 'plan' | 'plan_description' | 'plan_name' | 'plan_unit' | 'plan_uuid' | 'project' | 'project_description' | 'project_effective_end_date' | 'project_end_date' | 'project_end_date_requested_by' | 'project_is_in_grace_period' | 'project_name' | 'project_slug' | 'project_start_date' | 'project_uuid' | 'provider_description' | 'provider_name' | 'provider_slug' | 'provider_uuid' | 'renewal_date' | 'report' | 'resource_effective_end_date' | 'resource_type' | 'resource_uuid' | 'restrict_member_access' | 'scope' | 'service_settings_uuid' | 'slots' | 'slug' | 'state' | 'url' | 'usage_limit_restriction' | 'user_requires_reconsent' | 'username' | 'uuid';
 
 export type BookingResourceOEnum = '-created' | '-name' | '-schedules' | '-type' | 'created' | 'name' | 'schedules' | 'type';
 
@@ -35913,7 +35994,7 @@ export type CustomerUserFieldEnum = 'email' | 'expiration_time' | 'full_name' | 
 
 export type CustomerUserOEnum = 'concatenated_name' | '-concatenated_name';
 
-export type ServiceProviderFieldEnum = 'account_homedir_prefix' | 'account_login_shell' | 'account_scope' | 'account_username_anonymized_prefix' | 'account_username_generation_policy' | 'allowed_domains' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_country' | 'customer_image' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'enable_notifications' | 'image' | 'offering_count' | 'organization_groups' | 'url' | 'uuid';
+export type ServiceProviderFieldEnum = 'account_options' | 'allowed_domains' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_country' | 'customer_image' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'enable_notifications' | 'image' | 'offering_count' | 'organization_groups' | 'url' | 'uuid';
 
 export type GlobalUserDataAccessLogOEnum = '-accessor_type' | '-accessor_username' | '-timestamp' | '-user_username' | 'accessor_type' | 'accessor_username' | 'timestamp' | 'user_username';
 
@@ -35927,7 +36008,7 @@ export type EventFieldEnum = 'context' | 'created' | 'event_type' | 'message' | 
 
 export type ExpertiseCategoryOEnum = '-code' | '-level' | '-name' | 'code' | 'level' | 'name';
 
-export type GoogleCredentialsFieldEnum = 'account_homedir_prefix' | 'account_login_shell' | 'account_scope' | 'account_username_anonymized_prefix' | 'account_username_generation_policy' | 'allowed_domains' | 'calendar_refresh_token' | 'calendar_token' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_country' | 'customer_image' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'enable_notifications' | 'google_auth_url' | 'image' | 'offering_count' | 'organization_groups' | 'url' | 'uuid';
+export type GoogleCredentialsFieldEnum = 'account_options' | 'allowed_domains' | 'calendar_refresh_token' | 'calendar_token' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_country' | 'customer_image' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'enable_notifications' | 'google_auth_url' | 'image' | 'offering_count' | 'organization_groups' | 'url' | 'uuid';
 
 export type WebHookContentTypeEnum1 = 1 | 2;
 
@@ -35945,7 +36026,7 @@ export type MaintenanceAnnouncementOEnum = '-created' | '-name' | '-overrun_minu
 
 export type MaintenanceAnnouncementTemplateOEnum = '-created' | '-name' | 'created' | 'name';
 
-export type ResourceFieldEnum = 'attributes' | 'available_actions' | 'backend_id' | 'backend_metadata' | 'can_terminate' | 'category_icon' | 'category_title' | 'category_uuid' | 'created' | 'creation_order' | 'current_usages' | 'customer_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'downscaled' | 'effective_id' | 'end_date' | 'end_date_requested_by' | 'end_date_updated_at' | 'endpoints' | 'error_message' | 'error_traceback' | 'has_api_keys' | 'is_limit_based' | 'is_usage_based' | 'last_sync' | 'limit_usage' | 'limits' | 'modified' | 'name' | 'offering' | 'offering_backend_id' | 'offering_billable' | 'offering_components' | 'offering_description' | 'offering_image' | 'offering_name' | 'offering_plugin_options' | 'offering_shared' | 'offering_slug' | 'offering_state' | 'offering_thumbnail' | 'offering_type' | 'offering_uuid' | 'options' | 'order_in_progress' | 'parent_name' | 'parent_offering_name' | 'parent_offering_slug' | 'parent_offering_uuid' | 'parent_uuid' | 'paused' | 'plan' | 'plan_description' | 'plan_name' | 'plan_unit' | 'plan_uuid' | 'project' | 'project_description' | 'project_effective_end_date' | 'project_end_date' | 'project_end_date_requested_by' | 'project_is_in_grace_period' | 'project_name' | 'project_slug' | 'project_start_date' | 'project_uuid' | 'provider_description' | 'provider_name' | 'provider_slug' | 'provider_uuid' | 'renewal_date' | 'report' | 'resource_effective_end_date' | 'resource_type' | 'resource_uuid' | 'restrict_member_access' | 'scope' | 'service_settings_uuid' | 'slug' | 'state' | 'url' | 'usage_limit_restriction' | 'user_requires_reconsent' | 'username' | 'uuid';
+export type ResourceFieldEnum = 'attributes' | 'available_actions' | 'backend_id' | 'backend_metadata' | 'can_terminate' | 'category_icon' | 'category_title' | 'category_uuid' | 'created' | 'creation_order' | 'current_usages' | 'customer_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'downscaled' | 'effective_id' | 'end_date' | 'end_date_requested_by' | 'end_date_updated_at' | 'endpoints' | 'error_message' | 'error_traceback' | 'has_api_keys' | 'is_limit_based' | 'is_usage_based' | 'last_sync' | 'limit_usage' | 'limits' | 'modified' | 'name' | 'offering' | 'offering_account_settings' | 'offering_backend_id' | 'offering_billable' | 'offering_components' | 'offering_description' | 'offering_image' | 'offering_name' | 'offering_plugin_options' | 'offering_shared' | 'offering_slug' | 'offering_state' | 'offering_thumbnail' | 'offering_type' | 'offering_uuid' | 'options' | 'order_in_progress' | 'parent_name' | 'parent_offering_name' | 'parent_offering_slug' | 'parent_offering_uuid' | 'parent_uuid' | 'paused' | 'plan' | 'plan_description' | 'plan_name' | 'plan_unit' | 'plan_uuid' | 'project' | 'project_description' | 'project_effective_end_date' | 'project_end_date' | 'project_end_date_requested_by' | 'project_is_in_grace_period' | 'project_name' | 'project_slug' | 'project_start_date' | 'project_uuid' | 'provider_description' | 'provider_name' | 'provider_slug' | 'provider_uuid' | 'renewal_date' | 'report' | 'resource_effective_end_date' | 'resource_type' | 'resource_uuid' | 'restrict_member_access' | 'scope' | 'service_settings_uuid' | 'slug' | 'state' | 'url' | 'usage_limit_restriction' | 'user_requires_reconsent' | 'username' | 'uuid';
 
 export type MarketplaceCategoryFieldEnum = 'articles' | 'available_offerings_count' | 'columns' | 'components' | 'default_vm_category' | 'default_volume_category' | 'description' | 'group' | 'icon' | 'offering_count' | 'sections' | 'title' | 'url' | 'uuid';
 
@@ -35989,11 +36070,11 @@ export type OfferingUserFieldEnum = 'consent_data' | 'created' | 'customer_name'
 
 export type OfferingUserOEnum = '-created' | '-modified' | '-user_first_name' | '-user_last_name' | '-username' | 'created' | 'modified' | 'user_first_name' | 'user_last_name' | 'username';
 
-export type OrderDetailsFieldEnum = 'accepting_terms_of_service' | 'activation_price' | 'attachment' | 'attributes' | 'auto_approved' | 'auto_approved_by_rule_uuid' | 'auto_approved_cost_limit_snapshot' | 'backend_id' | 'callback_url' | 'can_terminate' | 'category_icon' | 'category_title' | 'category_uuid' | 'completed_at' | 'consumer_message' | 'consumer_message_attachment' | 'consumer_message_updated_at' | 'consumer_rejection_comment' | 'consumer_reviewed_at' | 'consumer_reviewed_by' | 'consumer_reviewed_by_full_name' | 'consumer_reviewed_by_username' | 'cost' | 'created' | 'created_by_civil_number' | 'created_by_email' | 'created_by_full_name' | 'created_by_organization' | 'created_by_organization_address' | 'created_by_organization_country' | 'created_by_organization_registry_code' | 'created_by_organization_vat_code' | 'created_by_username' | 'customer_name' | 'customer_slug' | 'customer_uuid' | 'error_message' | 'error_traceback' | 'error_updated_at' | 'fixed_price' | 'issue' | 'limits' | 'marketplace_resource_uuid' | 'modified' | 'new_cost_estimate' | 'new_plan_billing_mode' | 'new_plan_name' | 'new_plan_uuid' | 'offering' | 'offering_billable' | 'offering_description' | 'offering_image' | 'offering_name' | 'offering_plugin_options' | 'offering_shared' | 'offering_thumbnail' | 'offering_type' | 'offering_uuid' | 'old_cost_estimate' | 'old_plan_billing_mode' | 'old_plan_name' | 'old_plan_uuid' | 'order_subtype' | 'output' | 'output_updated_at' | 'plan' | 'plan_description' | 'plan_name' | 'plan_unit' | 'plan_uuid' | 'project_description' | 'project_name' | 'project_slug' | 'project_uuid' | 'provider_description' | 'provider_message' | 'provider_message_attachment' | 'provider_message_updated_at' | 'provider_message_url' | 'provider_name' | 'provider_rejection_comment' | 'provider_reviewed_at' | 'provider_reviewed_by' | 'provider_reviewed_by_full_name' | 'provider_reviewed_by_username' | 'provider_slug' | 'provider_uuid' | 'request_comment' | 'resource_name' | 'resource_type' | 'resource_uuid' | 'slug' | 'start_date' | 'state' | 'termination_comment' | 'type' | 'url' | 'uuid';
+export type OrderDetailsFieldEnum = 'accepting_terms_of_service' | 'activation_price' | 'attachment' | 'attributes' | 'auto_approved' | 'auto_approved_by_rule_uuid' | 'auto_approved_cost_limit_snapshot' | 'backend_id' | 'callback_url' | 'can_terminate' | 'category_icon' | 'category_title' | 'category_uuid' | 'completed_at' | 'consumer_message' | 'consumer_message_attachment' | 'consumer_message_updated_at' | 'consumer_rejection_comment' | 'consumer_reviewed_at' | 'consumer_reviewed_by' | 'consumer_reviewed_by_full_name' | 'consumer_reviewed_by_username' | 'cost' | 'created' | 'created_by_civil_number' | 'created_by_email' | 'created_by_full_name' | 'created_by_organization' | 'created_by_organization_address' | 'created_by_organization_country' | 'created_by_organization_registry_code' | 'created_by_organization_vat_code' | 'created_by_username' | 'customer_name' | 'customer_slug' | 'customer_uuid' | 'error_message' | 'error_traceback' | 'error_updated_at' | 'fixed_price' | 'issue' | 'limits' | 'marketplace_resource_uuid' | 'modified' | 'new_cost_estimate' | 'new_plan_billing_mode' | 'new_plan_name' | 'new_plan_uuid' | 'offering' | 'offering_billable' | 'offering_description' | 'offering_image' | 'offering_name' | 'offering_plugin_options' | 'offering_shared' | 'offering_thumbnail' | 'offering_type' | 'offering_uuid' | 'old_cost_estimate' | 'old_plan_billing_mode' | 'old_plan_name' | 'old_plan_uuid' | 'order_subtype' | 'output' | 'output_updated_at' | 'plan' | 'plan_description' | 'plan_name' | 'plan_unit' | 'plan_uuid' | 'project_description' | 'project_name' | 'project_slug' | 'project_uuid' | 'provider_description' | 'provider_message' | 'provider_message_attachment' | 'provider_message_updated_at' | 'provider_message_url' | 'provider_name' | 'provider_rejection_comment' | 'provider_reviewed_at' | 'provider_reviewed_by' | 'provider_reviewed_by_full_name' | 'provider_reviewed_by_username' | 'provider_slug' | 'provider_uuid' | 'request_comment' | 'resource_end_date' | 'resource_name' | 'resource_type' | 'resource_uuid' | 'slug' | 'start_date' | 'state' | 'termination_comment' | 'type' | 'url' | 'uuid';
 
 export type OrderDetailsOEnum = '-consumer_reviewed_at' | '-cost' | '-created' | '-state' | 'consumer_reviewed_at' | 'cost' | 'created' | 'state';
 
-export type PublicOfferingDetailsFieldEnum = 'access_url' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'billing_mode_components' | 'billing_period_applies' | 'billing_type_classification' | 'can_update_integration' | 'can_update_options' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'config_drive_default' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'default_access_subnets' | 'description' | 'documentation_url' | 'effective_available_limits' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'has_compliance_requirements' | 'helpdesk_url' | 'image' | 'integration_guide' | 'is_accessible' | 'latitude' | 'longitude' | 'name' | 'offering_group' | 'offering_group_title' | 'offering_group_uuid' | 'open_for_proposals' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'profile_name' | 'profile_uuid' | 'project' | 'project_name' | 'project_uuid' | 'promotion_campaigns' | 'qos_profiles' | 'quotas' | 'resource_options' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_resource' | 'scope_resource_name' | 'scope_resource_uuid' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'tags' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'user_has_consent' | 'user_has_offering_user' | 'uuid' | 'vendor_details';
+export type PublicOfferingDetailsFieldEnum = 'access_url' | 'account_settings' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'billing_mode_components' | 'billing_period_applies' | 'billing_type_classification' | 'can_update_integration' | 'can_update_options' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'config_drive_default' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'default_access_subnets' | 'description' | 'documentation_url' | 'effective_available_limits' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'has_compliance_requirements' | 'helpdesk_url' | 'image' | 'integration_guide' | 'is_accessible' | 'latitude' | 'longitude' | 'name' | 'offering_group' | 'offering_group_title' | 'offering_group_uuid' | 'open_for_proposals' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'profile_name' | 'profile_uuid' | 'project' | 'project_name' | 'project_uuid' | 'promotion_campaigns' | 'qos_profiles' | 'quotas' | 'resource_options' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_resource' | 'scope_resource_name' | 'scope_resource_uuid' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'tags' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'user_has_consent' | 'user_has_offering_user' | 'uuid' | 'vendor_details';
 
 export type PosixIdPoolFieldEnum = 'created' | 'customer_name' | 'customer_uuid' | 'description' | 'gid_used' | 'gid_utilization' | 'max_gid' | 'max_uid' | 'min_gid' | 'min_uid' | 'next_gid' | 'next_uid' | 'offering' | 'scope' | 'service_provider' | 'uid_used' | 'uid_utilization' | 'url' | 'uuid';
 
@@ -36005,7 +36086,7 @@ export type ProjectEstimatedCostPolicyFieldEnum = 'actions' | 'affected_resource
 
 export type RemoteProjectUpdateRequestStateEnum = 'approved' | 'canceled' | 'draft' | 'pending' | 'rejected';
 
-export type ProviderOfferingDetailsFieldEnum = 'access_url' | 'attributes' | 'backend_id' | 'backend_id_rules' | 'backend_metadata' | 'billable' | 'billing_mode_components' | 'billing_period_applies' | 'billing_type_classification' | 'can_update_integration' | 'can_update_options' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'default_access_subnets' | 'description' | 'documentation_url' | 'effective_available_limits' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'has_compliance_requirements' | 'helpdesk_url' | 'image' | 'integration_guide' | 'integration_status' | 'latitude' | 'limit_precision_advisory' | 'longitude' | 'name' | 'offering_group' | 'offering_group_title' | 'offering_group_uuid' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'profile_name' | 'profile_uuid' | 'project' | 'project_name' | 'project_uuid' | 'qos_profiles' | 'quotas' | 'resource_options' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_resource' | 'scope_resource_name' | 'scope_resource_uuid' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'tags' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'uuid' | 'vendor_details';
+export type ProviderOfferingDetailsFieldEnum = 'access_url' | 'account_settings' | 'attributes' | 'backend_id' | 'backend_id_rules' | 'backend_metadata' | 'billable' | 'billing_mode_components' | 'billing_period_applies' | 'billing_type_classification' | 'can_update_integration' | 'can_update_options' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'default_access_subnets' | 'description' | 'documentation_url' | 'effective_available_limits' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'has_compliance_requirements' | 'helpdesk_url' | 'image' | 'integration_guide' | 'integration_status' | 'latitude' | 'limit_precision_advisory' | 'longitude' | 'name' | 'offering_group' | 'offering_group_title' | 'offering_group_uuid' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'profile_name' | 'profile_uuid' | 'project' | 'project_name' | 'project_uuid' | 'qos_profiles' | 'quotas' | 'resource_options' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_resource' | 'scope_resource_name' | 'scope_resource_uuid' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'tags' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'uuid' | 'vendor_details';
 
 export type ProviderOfferingDetailsOEnum = '-created' | '-name' | '-state' | '-total_cost' | '-total_cost_estimated' | '-total_customers' | '-type' | 'created' | 'name' | 'state' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type';
 
@@ -36109,7 +36190,7 @@ export type OpenStackServerGroupFieldEnum = 'access_url' | 'backend_id' | 'creat
 
 export type OpenStackSnapshotFieldEnum = 'access_url' | 'action' | 'action_details' | 'backend_id' | 'backups' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'is_limit_based' | 'is_usage_based' | 'kept_until' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'metadata' | 'modified' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'restorations' | 'runtime_state' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'size' | 'source_volume' | 'source_volume_marketplace_uuid' | 'source_volume_name' | 'state' | 'url' | 'uuid';
 
-export type OpenStackSubNetFieldEnum = 'access_url' | 'allocation_pools' | 'backend_id' | 'cidr' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'disable_gateway' | 'dns_nameservers' | 'enable_dhcp' | 'error_message' | 'error_traceback' | 'gateway_ip' | 'host_routes' | 'ip_version' | 'is_connected' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'network' | 'network_name' | 'port_security_enabled' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'router' | 'router_name' | 'router_uuid' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'skip_router_connection' | 'state' | 'tenant' | 'tenant_name' | 'url' | 'uuid';
+export type OpenStackSubNetFieldEnum = 'access_url' | 'allocation_pools' | 'backend_id' | 'cidr' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'disable_gateway' | 'dns_nameservers' | 'enable_dhcp' | 'error_message' | 'error_traceback' | 'gateway_ip' | 'host_routes' | 'ip_version' | 'ipv6_address_mode' | 'ipv6_ra_mode' | 'is_connected' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'network' | 'network_name' | 'port_security_enabled' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'router' | 'router_name' | 'router_uuid' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'skip_router_connection' | 'state' | 'tenant' | 'tenant_name' | 'url' | 'uuid';
 
 export type OpenStackTenantFieldEnum = 'availability_zone' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'default_volume_type_name' | 'description' | 'error_message' | 'error_traceback' | 'external_network_id' | 'external_network_ref_name' | 'external_network_ref_uuid' | 'internal_network_id' | 'is_limit_based' | 'is_usage_based' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'quotas' | 'resource_type' | 'security_groups' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'skip_creation_of_default_router' | 'skip_creation_of_default_subnet' | 'state' | 'subnet_cidr' | 'url' | 'uuid';
 
@@ -38827,19 +38908,6 @@ export type AssignmentBatchesCountResponses = {
     200: unknown;
 };
 
-export type AssignmentBatchesCreateData = {
-    body?: AssignmentBatchRequest;
-    path?: never;
-    query?: never;
-    url: '/api/assignment-batches/';
-};
-
-export type AssignmentBatchesCreateResponses = {
-    201: AssignmentBatch;
-};
-
-export type AssignmentBatchesCreateResponse = AssignmentBatchesCreateResponses[keyof AssignmentBatchesCreateResponses];
-
 export type AssignmentBatchesDestroyData = {
     body?: never;
     path: {
@@ -39018,19 +39086,6 @@ export type AssignmentItemsCountResponses = {
      */
     200: unknown;
 };
-
-export type AssignmentItemsCreateData = {
-    body?: AssignmentItemRequest;
-    path?: never;
-    query?: never;
-    url: '/api/assignment-items/';
-};
-
-export type AssignmentItemsCreateResponses = {
-    201: AssignmentItem;
-};
-
-export type AssignmentItemsCreateResponse = AssignmentItemsCreateResponses[keyof AssignmentItemsCreateResponses];
 
 export type AssignmentItemsDestroyData = {
     body?: never;
@@ -71951,6 +72006,21 @@ export type MarketplaceServiceProvidersUpdateResponses = {
 
 export type MarketplaceServiceProvidersUpdateResponse = MarketplaceServiceProvidersUpdateResponses[keyof MarketplaceServiceProvidersUpdateResponses];
 
+export type MarketplaceServiceProvidersAccountOptionsPreviewData = {
+    body: AccountOptionsChangeRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-service-providers/{uuid}/account_options_preview/';
+};
+
+export type MarketplaceServiceProvidersAccountOptionsPreviewResponses = {
+    200: AccountOptionsPreview;
+};
+
+export type MarketplaceServiceProvidersAccountOptionsPreviewResponse = MarketplaceServiceProvidersAccountOptionsPreviewResponses[keyof MarketplaceServiceProvidersAccountOptionsPreviewResponses];
+
 export type MarketplaceServiceProvidersAddUserData = {
     body: UserRoleCreateRequest;
     path: {
@@ -72048,6 +72118,36 @@ export type MarketplaceServiceProvidersGenerateSiteAgentConfigResponses = {
 };
 
 export type MarketplaceServiceProvidersGenerateSiteAgentConfigResponse = MarketplaceServiceProvidersGenerateSiteAgentConfigResponses[keyof MarketplaceServiceProvidersGenerateSiteAgentConfigResponses];
+
+export type MarketplaceServiceProvidersGlauthTreeRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-service-providers/{uuid}/glauth_tree/';
+};
+
+export type MarketplaceServiceProvidersGlauthTreeRetrieveResponses = {
+    200: ProviderGlauthTree;
+};
+
+export type MarketplaceServiceProvidersGlauthTreeRetrieveResponse = MarketplaceServiceProvidersGlauthTreeRetrieveResponses[keyof MarketplaceServiceProvidersGlauthTreeRetrieveResponses];
+
+export type MarketplaceServiceProvidersGlauthUsersConfigRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-service-providers/{uuid}/glauth_users_config/';
+};
+
+export type MarketplaceServiceProvidersGlauthUsersConfigRetrieveResponses = {
+    200: string;
+};
+
+export type MarketplaceServiceProvidersGlauthUsersConfigRetrieveResponse = MarketplaceServiceProvidersGlauthUsersConfigRetrieveResponses[keyof MarketplaceServiceProvidersGlauthUsersConfigRetrieveResponses];
 
 export type MarketplaceServiceProvidersListUsersListData = {
     body?: never;
