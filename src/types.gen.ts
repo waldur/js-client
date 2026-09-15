@@ -2063,7 +2063,7 @@ export type Association = {
 
 export type AtlassianCredentialsRequest = {
     /**
-     * Atlassian API URL (e.g., https://your-domain.atlassian.net)
+     * Atlassian site or API URL (e.g., https://your-domain.atlassian.net). With OAuth 2.0 client credentials a Cloud site URL is resolved to the API gateway URL.
      */
     api_url: string;
     /**
@@ -2075,6 +2075,8 @@ export type AtlassianCredentialsRequest = {
     personal_access_token?: string;
     username?: string;
     password?: string;
+    client_id?: string;
+    client_secret?: string;
     verify_ssl?: boolean;
 };
 
@@ -2108,13 +2110,21 @@ export type AtlassianRequestTypeResponse = {
 };
 
 export type AtlassianSettingsPreviewRequest = {
+    /**
+     * Atlassian site or API URL (e.g., https://your-domain.atlassian.net). With OAuth 2.0 client credentials a Cloud site URL is resolved to the API gateway URL.
+     */
     api_url: string;
+    /**
+     * Authentication method to use
+     */
     auth_method: AuthMethodEnum;
     email?: string;
     token?: string;
     personal_access_token?: string;
     username?: string;
     password?: string;
+    client_id?: string;
+    client_secret?: string;
     verify_ssl?: boolean;
     project_id: string;
     issue_types?: Array<string>;
@@ -2145,13 +2155,21 @@ export type AtlassianSettingsPreviewRequest = {
 };
 
 export type AtlassianSettingsSaveRequest = {
+    /**
+     * Atlassian site or API URL (e.g., https://your-domain.atlassian.net). With OAuth 2.0 client credentials a Cloud site URL is resolved to the API gateway URL.
+     */
     api_url: string;
+    /**
+     * Authentication method to use
+     */
     auth_method: AuthMethodEnum;
     email?: string;
     token?: string;
     personal_access_token?: string;
     username?: string;
     password?: string;
+    client_id?: string;
+    client_secret?: string;
     verify_ssl?: boolean;
     project_id: string;
     issue_types?: Array<string>;
@@ -2276,7 +2294,7 @@ export type AttributeTypeEnum = 'boolean' | 'string' | 'text' | 'integer' | 'cho
 
 export type AuthKindEnum = 'session' | 'pat' | 'token' | 'oidc' | 'unknown';
 
-export type AuthMethodEnum = 'api_token' | 'personal_access_token' | 'basic';
+export type AuthMethodEnum = 'api_token' | 'personal_access_token' | 'basic' | 'oauth2_client_credentials';
 
 export type AuthResult = {
     readonly uuid: string;
@@ -5568,6 +5586,7 @@ export type ConstanceSettings = {
     ATLASSIAN_TOKEN?: string;
     ATLASSIAN_PERSONAL_ACCESS_TOKEN?: string;
     ATLASSIAN_OAUTH2_CLIENT_ID?: string;
+    ATLASSIAN_OAUTH2_CLIENT_SECRET?: string;
     ATLASSIAN_OAUTH2_ACCESS_TOKEN?: string;
     ATLASSIAN_OAUTH2_TOKEN_TYPE?: string;
     ATLASSIAN_VERIFY_SSL?: boolean;
@@ -5902,6 +5921,7 @@ export type ConstanceSettingsRequest = {
     ATLASSIAN_TOKEN?: string;
     ATLASSIAN_PERSONAL_ACCESS_TOKEN?: string;
     ATLASSIAN_OAUTH2_CLIENT_ID?: string;
+    ATLASSIAN_OAUTH2_CLIENT_SECRET?: string;
     ATLASSIAN_OAUTH2_ACCESS_TOKEN?: string;
     ATLASSIAN_OAUTH2_TOKEN_TYPE?: string;
     ATLASSIAN_VERIFY_SSL?: boolean;
@@ -7888,7 +7908,7 @@ export type DiscountsUpdateRequest = {
 
 export type DiscoverCustomFieldsRequestRequest = {
     /**
-     * Atlassian API URL (e.g., https://your-domain.atlassian.net)
+     * Atlassian site or API URL (e.g., https://your-domain.atlassian.net). With OAuth 2.0 client credentials a Cloud site URL is resolved to the API gateway URL.
      */
     api_url: string;
     /**
@@ -7900,6 +7920,8 @@ export type DiscoverCustomFieldsRequestRequest = {
     personal_access_token?: string;
     username?: string;
     password?: string;
+    client_id?: string;
+    client_secret?: string;
     verify_ssl?: boolean;
     project_id?: string;
     /**
@@ -8071,7 +8093,7 @@ export type DiscoverMetadataResponse = {
 
 export type DiscoverPrioritiesRequestRequest = {
     /**
-     * Atlassian API URL (e.g., https://your-domain.atlassian.net)
+     * Atlassian site or API URL (e.g., https://your-domain.atlassian.net). With OAuth 2.0 client credentials a Cloud site URL is resolved to the API gateway URL.
      */
     api_url: string;
     /**
@@ -8083,12 +8105,14 @@ export type DiscoverPrioritiesRequestRequest = {
     personal_access_token?: string;
     username?: string;
     password?: string;
+    client_id?: string;
+    client_secret?: string;
     verify_ssl?: boolean;
 };
 
 export type DiscoverProjectsRequestRequest = {
     /**
-     * Atlassian API URL (e.g., https://your-domain.atlassian.net)
+     * Atlassian site or API URL (e.g., https://your-domain.atlassian.net). With OAuth 2.0 client credentials a Cloud site URL is resolved to the API gateway URL.
      */
     api_url: string;
     /**
@@ -8100,12 +8124,14 @@ export type DiscoverProjectsRequestRequest = {
     personal_access_token?: string;
     username?: string;
     password?: string;
+    client_id?: string;
+    client_secret?: string;
     verify_ssl?: boolean;
 };
 
 export type DiscoverRequestTypesRequestRequest = {
     /**
-     * Atlassian API URL (e.g., https://your-domain.atlassian.net)
+     * Atlassian site or API URL (e.g., https://your-domain.atlassian.net). With OAuth 2.0 client credentials a Cloud site URL is resolved to the API gateway URL.
      */
     api_url: string;
     /**
@@ -8117,6 +8143,8 @@ export type DiscoverRequestTypesRequestRequest = {
     personal_access_token?: string;
     username?: string;
     password?: string;
+    client_id?: string;
+    client_secret?: string;
     verify_ssl?: boolean;
     /**
      * Service Desk project ID or key
@@ -12345,23 +12373,23 @@ export type MergedPluginOptions = {
     /**
      * HEAppE cluster id
      */
-    heappe_cluster_id?: string;
+    heappe_cluster_id?: string | null;
     /**
      * HEAppE local base path
      */
-    heappe_local_base_path?: string;
-    /**
-     * Identifier of the HEAppE instance this offering targets, e.g. 'it4i-heappe-prod'. Lets providers with multiple HEAppE deployments disambiguate which one a given offering uses.
-     */
-    heappe_identifier?: string;
+    heappe_local_base_path?: string | null;
     /**
      * HEAppE url
      */
-    heappe_url?: string;
+    heappe_url?: string | null;
     /**
      * HEAppE username
      */
-    heappe_username?: string;
+    heappe_username?: string | null;
+    /**
+     * Identifier of the HEAppE instance this offering targets, e.g. 'it4i-heappe-prod'. Lets providers with multiple HEAppE deployments disambiguate which one a given offering uses.
+     */
+    heappe_identifier?: string | null;
     /**
      * GLAuth homedir prefix
      */
@@ -12369,11 +12397,11 @@ export type MergedPluginOptions = {
     /**
      * HEAppE scratch project directory
      */
-    scratch_project_directory?: string;
+    scratch_project_directory?: string | null;
     /**
      * HEAppE project permanent directory
      */
-    project_permanent_directory?: string;
+    project_permanent_directory?: string | null;
     /**
      * Manage a POSIX/LDAP account (UID, GID, home directory, login shell and GLAuth exposure) for this offering's users. Disable for offerings that only need a username.
      */
@@ -12756,23 +12784,23 @@ export type MergedPluginOptionsRequest = {
     /**
      * HEAppE cluster id
      */
-    heappe_cluster_id?: string;
+    heappe_cluster_id?: string | null;
     /**
      * HEAppE local base path
      */
-    heappe_local_base_path?: string;
-    /**
-     * Identifier of the HEAppE instance this offering targets, e.g. 'it4i-heappe-prod'. Lets providers with multiple HEAppE deployments disambiguate which one a given offering uses.
-     */
-    heappe_identifier?: string;
+    heappe_local_base_path?: string | null;
     /**
      * HEAppE url
      */
-    heappe_url?: string;
+    heappe_url?: string | null;
     /**
      * HEAppE username
      */
-    heappe_username?: string;
+    heappe_username?: string | null;
+    /**
+     * Identifier of the HEAppE instance this offering targets, e.g. 'it4i-heappe-prod'. Lets providers with multiple HEAppE deployments disambiguate which one a given offering uses.
+     */
+    heappe_identifier?: string | null;
     /**
      * GLAuth homedir prefix
      */
@@ -12780,11 +12808,11 @@ export type MergedPluginOptionsRequest = {
     /**
      * HEAppE scratch project directory
      */
-    scratch_project_directory?: string;
+    scratch_project_directory?: string | null;
     /**
      * HEAppE project permanent directory
      */
-    project_permanent_directory?: string;
+    project_permanent_directory?: string | null;
     /**
      * Manage a POSIX/LDAP account (UID, GID, home directory, login shell and GLAuth exposure) for this offering's users. Disable for offerings that only need a username.
      */
@@ -12971,11 +12999,11 @@ export type MergedSecretOptions = {
     /**
      * HEAppE cluster password
      */
-    heappe_cluster_password?: string;
+    heappe_cluster_password?: string | null;
     /**
      * HEAppE password
      */
-    heappe_password?: string;
+    heappe_password?: string | null;
     /**
      * OpenStack IPv4 external IP mapping
      */
@@ -13142,11 +13170,11 @@ export type MergedSecretOptionsRequest = {
     /**
      * HEAppE cluster password
      */
-    heappe_cluster_password?: string;
+    heappe_cluster_password?: string | null;
     /**
      * HEAppE password
      */
-    heappe_password?: string;
+    heappe_password?: string | null;
     /**
      * OpenStack IPv4 external IP mapping
      */
@@ -34760,6 +34788,7 @@ export type ConstanceSettingsRequestForm = {
     ATLASSIAN_TOKEN?: string;
     ATLASSIAN_PERSONAL_ACCESS_TOKEN?: string;
     ATLASSIAN_OAUTH2_CLIENT_ID?: string;
+    ATLASSIAN_OAUTH2_CLIENT_SECRET?: string;
     ATLASSIAN_OAUTH2_ACCESS_TOKEN?: string;
     ATLASSIAN_OAUTH2_TOKEN_TYPE?: string;
     ATLASSIAN_VERIFY_SSL?: boolean;
@@ -35094,6 +35123,7 @@ export type ConstanceSettingsRequestMultipart = {
     ATLASSIAN_TOKEN?: string;
     ATLASSIAN_PERSONAL_ACCESS_TOKEN?: string;
     ATLASSIAN_OAUTH2_CLIENT_ID?: string;
+    ATLASSIAN_OAUTH2_CLIENT_SECRET?: string;
     ATLASSIAN_OAUTH2_ACCESS_TOKEN?: string;
     ATLASSIAN_OAUTH2_TOKEN_TYPE?: string;
     ATLASSIAN_VERIFY_SSL?: boolean;
