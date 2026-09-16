@@ -11230,6 +11230,10 @@ export type K8sDefaultConfiguration = {
     default_lb_ram_gb?: number;
     default_lb_system_disk_gb?: number;
     default_lb_logs_disk_gb?: number;
+    /**
+     * Whether clusters get a load balancer: always (required), at the customer's choice (optional) or never (disabled). Treated as required when omitted.
+     */
+    load_balancer_mode?: LoadBalancerModeEnum;
     minimal_worker_vcpus?: number;
     minimal_worker_ram_gb?: number;
     default_worker_data_disk_gb?: number;
@@ -11250,6 +11254,10 @@ export type K8sDefaultConfigurationRequest = {
     default_lb_ram_gb?: number;
     default_lb_system_disk_gb?: number;
     default_lb_logs_disk_gb?: number;
+    /**
+     * Whether clusters get a load balancer: always (required), at the customer's choice (optional) or never (disabled). Treated as required when omitted.
+     */
+    load_balancer_mode?: LoadBalancerModeEnum;
     minimal_worker_vcpus?: number;
     minimal_worker_ram_gb?: number;
     default_worker_data_disk_gb?: number;
@@ -11466,6 +11474,8 @@ export type LiveKitTrack = {
 export type LoadBalancerAttachFloatingIpRequest = {
     floating_ip: string;
 };
+
+export type LoadBalancerModeEnum = 'required' | 'optional' | 'disabled';
 
 export type LoadBalancerProtocolEnum = 'TCP' | 'UDP';
 
@@ -21304,6 +21314,14 @@ export type PatchedProtectedCallRequest = {
      */
     user_assurance_levels?: Array<string>;
     applicant_visibility_config?: CallApplicantVisibilityConfigRequest | null;
+    /**
+     * Who helpdesk tickets for granted resources are raised for.
+     */
+    support_ticket_caller?: SupportTicketCallerEnum;
+    /**
+     * The person tickets go to when the caller is a named contact. Must hold a role on this call or on the organisation managing it.
+     */
+    support_ticket_caller_user?: string | null;
 };
 
 export type PatchedProtectedRoundRequest = {
@@ -24152,6 +24170,16 @@ export type ProtectedCall = {
      * Whether any proposal has been submitted to this call. Used by the frontend to gate slug-template and checklist fields.
      */
     readonly has_proposals: boolean;
+    /**
+     * Who helpdesk tickets for granted resources are raised for.
+     */
+    support_ticket_caller?: SupportTicketCallerEnum;
+    /**
+     * The person tickets go to when the caller is a named contact. Must hold a role on this call or on the organisation managing it.
+     */
+    support_ticket_caller_user?: string | null;
+    readonly support_ticket_caller_user_uuid: string | null;
+    readonly support_ticket_caller_user_name: string | null;
 };
 
 export type ProtectedCallRequest = {
@@ -24210,6 +24238,14 @@ export type ProtectedCallRequest = {
      */
     user_assurance_levels?: Array<string>;
     applicant_visibility_config?: CallApplicantVisibilityConfigRequest | null;
+    /**
+     * Who helpdesk tickets for granted resources are raised for.
+     */
+    support_ticket_caller?: SupportTicketCallerEnum;
+    /**
+     * The person tickets go to when the caller is a named contact. Must hold a role on this call or on the organisation managing it.
+     */
+    support_ticket_caller_user?: string | null;
 };
 
 export type ProtectedProposalList = {
@@ -31168,6 +31204,8 @@ export type SupportStats = {
     readonly recent_broadcasts_count: number;
 };
 
+export type SupportTicketCallerEnum = 'applicant' | 'project_manager' | 'call_manager' | 'specific_user';
+
 export type SupportUser = {
     readonly url: string;
     readonly uuid: string;
@@ -36208,7 +36246,7 @@ export type UserRequestedResourceOEnum = '-call__name' | '-created' | '-offering
 
 export type ProposalOEnum = '-created' | '-round__call__name' | '-round__cutoff_time' | '-round__start_time' | '-slug' | '-state' | 'created' | 'round__call__name' | 'round__cutoff_time' | 'round__start_time' | 'slug' | 'state';
 
-export type ProtectedCallFieldEnum = 'applicant_visibility_config' | 'backend_id' | 'compliance_checklist' | 'compliance_checklist_name' | 'created' | 'created_by' | 'customer_name' | 'customer_uuid' | 'description' | 'documents' | 'end_date' | 'external_url' | 'fixed_duration_in_days' | 'has_eligibility_restrictions' | 'has_proposals' | 'manager' | 'manager_uuid' | 'max_prepaid_duration_months' | 'name' | 'offerings' | 'panel_chair' | 'panel_chair_name' | 'panel_chair_uuid' | 'proposal_field_config' | 'proposal_field_metadata' | 'proposal_slug_template' | 'reference_code' | 'resource_templates' | 'reviewer_identity_visible_to_submitters' | 'reviews_visible_to_submitters' | 'rounds' | 'slug' | 'start_date' | 'state' | 'url' | 'user_affiliations' | 'user_assurance_levels' | 'user_email_patterns' | 'user_identity_sources' | 'user_nationalities' | 'user_organization_types' | 'uuid';
+export type ProtectedCallFieldEnum = 'applicant_visibility_config' | 'backend_id' | 'compliance_checklist' | 'compliance_checklist_name' | 'created' | 'created_by' | 'customer_name' | 'customer_uuid' | 'description' | 'documents' | 'end_date' | 'external_url' | 'fixed_duration_in_days' | 'has_eligibility_restrictions' | 'has_proposals' | 'manager' | 'manager_uuid' | 'max_prepaid_duration_months' | 'name' | 'offerings' | 'panel_chair' | 'panel_chair_name' | 'panel_chair_uuid' | 'proposal_field_config' | 'proposal_field_metadata' | 'proposal_slug_template' | 'reference_code' | 'resource_templates' | 'reviewer_identity_visible_to_submitters' | 'reviews_visible_to_submitters' | 'rounds' | 'slug' | 'start_date' | 'state' | 'support_ticket_caller' | 'support_ticket_caller_user' | 'support_ticket_caller_user_name' | 'support_ticket_caller_user_uuid' | 'url' | 'user_affiliations' | 'user_assurance_levels' | 'user_email_patterns' | 'user_identity_sources' | 'user_nationalities' | 'user_organization_types' | 'uuid';
 
 export type ProtectedCallOEnum = '-created' | '-manager__customer__name' | '-name' | 'created' | 'manager__customer__name' | 'name';
 
@@ -57799,6 +57837,13 @@ export type MarketplaceOrdersApproveByProviderData = {
     url: '/api/marketplace-orders/{uuid}/approve_by_provider/';
 };
 
+export type MarketplaceOrdersApproveByProviderErrors = {
+    /**
+     * Order is no longer pending provider review.
+     */
+    409: unknown;
+};
+
 export type MarketplaceOrdersApproveByProviderResponses = {
     200: OrderInfoResponse;
 };
@@ -57879,6 +57924,13 @@ export type MarketplaceOrdersRejectByProviderData = {
     };
     query?: never;
     url: '/api/marketplace-orders/{uuid}/reject_by_provider/';
+};
+
+export type MarketplaceOrdersRejectByProviderErrors = {
+    /**
+     * Order is no longer pending provider review.
+     */
+    409: unknown;
 };
 
 export type MarketplaceOrdersRejectByProviderResponses = {
