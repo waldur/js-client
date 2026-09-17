@@ -11267,6 +11267,10 @@ export type K8sDefaultConfiguration = {
      * Whether clusters get a load balancer: always (required), at the customer's choice (optional) or never (disabled). Treated as required when omitted.
      */
     load_balancer_mode?: LoadBalancerModeEnum;
+    /**
+     * Cluster topology: one site with three controllers (1-datacenter), three sites with one controller each (3-datacenter) or the customer's pick (customer_choice). When omitted, the option type decides: 1-datacenter for single_datacenter_k8s_config, 3-datacenter for multi_datacenter_k8s_config.
+     */
+    topology_mode?: TopologyModeEnum;
     minimal_worker_vcpus?: number;
     minimal_worker_ram_gb?: number;
     default_worker_data_disk_gb?: number;
@@ -11291,6 +11295,10 @@ export type K8sDefaultConfigurationRequest = {
      * Whether clusters get a load balancer: always (required), at the customer's choice (optional) or never (disabled). Treated as required when omitted.
      */
     load_balancer_mode?: LoadBalancerModeEnum;
+    /**
+     * Cluster topology: one site with three controllers (1-datacenter), three sites with one controller each (3-datacenter) or the customer's pick (customer_choice). When omitted, the option type decides: 1-datacenter for single_datacenter_k8s_config, 3-datacenter for multi_datacenter_k8s_config.
+     */
+    topology_mode?: TopologyModeEnum;
     minimal_worker_vcpus?: number;
     minimal_worker_ram_gb?: number;
     default_worker_data_disk_gb?: number;
@@ -19197,6 +19205,10 @@ export type OptionField = {
     storage_folder_config?: StorageFolderConfig;
     default_configs?: K8sDefaultConfiguration;
     validators?: Array<OptionValidator>;
+    /**
+     * Show this option only when another option has a given value.
+     */
+    visible_if?: OptionVisibleIf;
 };
 
 export type OptionFieldRequest = {
@@ -19213,6 +19225,10 @@ export type OptionFieldRequest = {
     storage_folder_config?: StorageFolderConfigRequest;
     default_configs?: K8sDefaultConfigurationRequest;
     validators?: Array<OptionValidatorRequest>;
+    /**
+     * Show this option only when another option has a given value.
+     */
+    visible_if?: OptionVisibleIfRequest;
 };
 
 export type OptionFieldTypeEnum = 'boolean' | 'integer' | 'money' | 'string' | 'text' | 'html_text' | 'select_string' | 'select_string_multi' | 'select_openstack_tenant' | 'select_multiple_openstack_tenants' | 'select_openstack_instance' | 'select_multiple_openstack_instances' | 'date' | 'time' | 'conditional_cascade' | 'component_multiplier' | 'single_datacenter_k8s_config' | 'multi_datacenter_k8s_config' | 'storage_folder_manager';
@@ -19228,6 +19244,28 @@ export type OptionValidatorRequest = {
 };
 
 export type OptionValidatorTypeEnum = 'gt' | 'gte' | 'lt' | 'lte';
+
+export type OptionVisibleIf = {
+    /**
+     * Key of an earlier option whose value controls visibility.
+     */
+    field: string;
+    /**
+     * The option is shown when the referenced option has one of these values. For a multi-select option, when any of its selected values is listed.
+     */
+    values: Array<boolean | string>;
+};
+
+export type OptionVisibleIfRequest = {
+    /**
+     * Key of an earlier option whose value controls visibility.
+     */
+    field: string;
+    /**
+     * The option is shown when the referenced option has one of these values. For a multi-select option, when any of its selected values is listed.
+     */
+    values: Array<boolean | string>;
+};
 
 export type OrcidCallbackRequest = {
     /**
@@ -31997,6 +32035,8 @@ export type TopologyEdge = {
 };
 
 export type TopologyEdgeKindEnum = 'contains' | 'has_subnet' | 'has_port' | 'has_interface' | 'attached_to' | 'gateway' | 'floating_for' | 'shared_with';
+
+export type TopologyModeEnum = '1-datacenter' | '3-datacenter' | 'customer_choice';
 
 export type TopologyNode = {
     id: string;
