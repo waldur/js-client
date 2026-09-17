@@ -16652,10 +16652,12 @@ export const marketplaceRobotAccountsSetStateRequestDeletion = <ThrowOnError ext
  * List available runtime states for resources
  *
  *
- * Returns a unique, sorted list of runtime states for all resources accessible to the current user.
+ * Returns a unique, sorted list of runtime states for resources accessible to the current user.
  * The runtime state is a backend-specific state of a resource (e.g., 'ACTIVE', 'SHUTOFF' for a VM).
  * This endpoint is useful for building dynamic filters in a user interface.
- * The list can be optionally filtered by project or category.
+ *
+ * At least one scope query parameter is required: `project_uuid`, `category_uuid`,
+ * `offering_uuid`, or `customer_uuid`.
  *
  */
 export const marketplaceRuntimeStatesList = <ThrowOnError extends boolean = true>(options?: Options<MarketplaceRuntimeStatesListData, ThrowOnError>) => (options?.client ?? client).get<MarketplaceRuntimeStatesListResponses, unknown, ThrowOnError>({
@@ -36207,7 +36209,7 @@ export const userInvitationsApprove = <ThrowOnError extends boolean = true>(opti
 /**
  * Check for duplicate invitations
  *
- * Returns pending invitations that already exist for the same email and role within the given scope.
+ * Returns pending invitations that already exist for the same email and role within the given scope, along with the active roles those emails already hold in it.
  */
 export const userInvitationsCheckDuplicates = <ThrowOnError extends boolean = true>(options: Options<UserInvitationsCheckDuplicatesData, ThrowOnError>) => (options.client ?? client).post<UserInvitationsCheckDuplicatesResponses, unknown, ThrowOnError>({
     security: [

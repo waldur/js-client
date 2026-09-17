@@ -10623,6 +10623,31 @@ export type InvitationDuplicateCheckRequest = {
 
 export type InvitationDuplicateCheckResponse = {
     duplicates: Array<InvitationDuplicate>;
+    existing_roles: Array<InvitationExistingRole>;
+};
+
+export type InvitationExistingRole = {
+    email: string;
+    /**
+     * UUID of the role requested for this email
+     */
+    role: string;
+    /**
+     * UUID of the role the user already holds in the scope
+     */
+    existing_role: string;
+    /**
+     * Name of the role the user already holds in the scope
+     */
+    existing_role_name: string;
+    /**
+     * Human-readable description of the role the user already holds, for display. Falls back to the role name when the description is blank.
+     */
+    existing_role_description: string;
+    /**
+     * Whether the role already held is the one being requested. This reports what the scope currently holds, not the outcome of a grant: acceptance is decided per accepting user and also depends on the INVITATION_DISABLE_MULTIPLE_ROLES and ONLY_ONE_PROJECT_MANAGER settings.
+     */
+    is_same_role: boolean;
 };
 
 export type InvitationProposalDisclosureEnum = 'titles_only' | 'titles_and_summaries' | 'full_details';
@@ -68845,6 +68870,10 @@ export type MarketplaceRuntimeStatesListData = {
          * Filter runtime states by resources belonging to a specific category.
          */
         category_uuid?: string;
+        /**
+         * Filter runtime states by resources within a specific customer.
+         */
+        customer_uuid?: string;
         /**
          * Filter runtime states by resources of a specific offering.
          */
