@@ -12474,6 +12474,10 @@ export type MergedPluginOptions = {
      */
     enable_membership_sync_status?: boolean;
     /**
+     * Include this offering in outbound SCIM user entitlement sync. When unset or false, SSH access endpoints on this offering are not pushed to the remote SCIM service even if SCIM_MEMBERSHIP_SYNC_ENABLED is on.
+     */
+    enable_scim_entitlements?: boolean;
+    /**
      * If set to True, an Access subnets tab is shown on resource detail pages, letting consumers curate the IPs allowed to reach the backend entity. The list is advisory data for external firewalls.
      */
     enable_resource_access_subnets?: boolean;
@@ -12884,6 +12888,10 @@ export type MergedPluginOptionsRequest = {
      * Enable per-member sync status reporting by the site agent: team views show whether each role grant has propagated to the provider backend, and providers can trigger a resync.
      */
     enable_membership_sync_status?: boolean;
+    /**
+     * Include this offering in outbound SCIM user entitlement sync. When unset or false, SSH access endpoints on this offering are not pushed to the remote SCIM service even if SCIM_MEMBERSHIP_SYNC_ENABLED is on.
+     */
+    enable_scim_entitlements?: boolean;
     /**
      * If set to True, an Access subnets tab is shown on resource detail pages, letting consumers curate the IPs allowed to reach the backend entity. The list is advisory data for external firewalls.
      */
