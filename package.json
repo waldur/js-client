@@ -1,6 +1,6 @@
 {
   "name": "waldur-js-client",
-  "version": "8.1.3-rc.15.dev.20260922171627.371",
+  "version": "8.1.3-rc.16.dev.20260923200128.373",
   "description": "JavaScript client for Waldur MasterMind generated from OpenAPI schema",
   "author": "Waldur Platform",
   "license": "MIT",

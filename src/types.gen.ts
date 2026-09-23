@@ -1031,6 +1031,8 @@ export type AllowedScopeOutput = {
 
 export type AmountRangeEnum = 'none' | 'under_5k' | '5k_10k' | '10k_50k' | 'over_50k';
 
+export type AnnouncementTypeEnum = 'information' | 'warning';
+
 export type AnonymousChatBudgetSnapshot = {
     tokens_today: number;
     tokens_limit: number;
@@ -4790,6 +4792,22 @@ export type ChangelogRelease = {
     };
 };
 
+export type ChangelogUpgradeReport = {
+    current_version: string;
+    latest_version: string;
+    entry_count: number;
+    commands: UpgradeCommands;
+    /**
+     * Markdown upgrade report
+     */
+    report: string;
+    /**
+     * Markdown text for a maintenance announcement
+     */
+    announcement: string;
+    announcement_type: AnnouncementTypeEnum;
+};
+
 export type ChatRequestModeEnum = 'reload' | 'edit';
 
 export type ChatRequestRequest = {
@@ -5715,6 +5733,8 @@ export type ConstanceSettings = {
     HOMEPORT_URL?: string;
     RANCHER_USERNAME_INPUT_LABEL?: string;
     DISCLAIMER_AREA_TEXT?: string;
+    ABOUT_US_PAGE_ENABLED?: boolean;
+    ABOUT_US_PAGE_CONTENT?: string;
     SITE_ADDRESS?: string;
     SITE_EMAIL?: string;
     SITE_PHONE?: string;
@@ -6054,6 +6074,8 @@ export type ConstanceSettingsRequest = {
     HOMEPORT_URL?: string;
     RANCHER_USERNAME_INPUT_LABEL?: string;
     DISCLAIMER_AREA_TEXT?: string;
+    ABOUT_US_PAGE_ENABLED?: boolean;
+    ABOUT_US_PAGE_CONTENT?: string;
     SITE_ADDRESS?: string;
     SITE_EMAIL?: string;
     SITE_PHONE?: string;
@@ -32764,6 +32786,11 @@ export type UpdatePoolRequest = {
     name: string;
 };
 
+export type UpgradeCommands = {
+    helm: string;
+    docker_compose: string;
+};
+
 export type UrgencyEnum = 'low' | 'medium' | 'high';
 
 export type Usage = {
@@ -35508,6 +35535,8 @@ export type ConstanceSettingsRequestForm = {
     HOMEPORT_URL?: string;
     RANCHER_USERNAME_INPUT_LABEL?: string;
     DISCLAIMER_AREA_TEXT?: string;
+    ABOUT_US_PAGE_ENABLED?: boolean;
+    ABOUT_US_PAGE_CONTENT?: string;
     SITE_ADDRESS?: string;
     SITE_EMAIL?: string;
     SITE_PHONE?: string;
@@ -35847,6 +35876,8 @@ export type ConstanceSettingsRequestMultipart = {
     HOMEPORT_URL?: string;
     RANCHER_USERNAME_INPUT_LABEL?: string;
     DISCLAIMER_AREA_TEXT?: string;
+    ABOUT_US_PAGE_ENABLED?: boolean;
+    ABOUT_US_PAGE_CONTENT?: string;
     SITE_ADDRESS?: string;
     SITE_EMAIL?: string;
     SITE_PHONE?: string;
@@ -43582,6 +43613,19 @@ export type ChangelogEntriesRetrieveResponses = {
 };
 
 export type ChangelogEntriesRetrieveResponse = ChangelogEntriesRetrieveResponses[keyof ChangelogEntriesRetrieveResponses];
+
+export type ChangelogUpgradeReportRetrieveData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/changelog-upgrade-report/';
+};
+
+export type ChangelogUpgradeReportRetrieveResponses = {
+    200: ChangelogUpgradeReport;
+};
+
+export type ChangelogUpgradeReportRetrieveResponse = ChangelogUpgradeReportRetrieveResponses[keyof ChangelogUpgradeReportRetrieveResponses];
 
 export type ChangelogRetrieveData = {
     body?: never;
