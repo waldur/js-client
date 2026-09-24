@@ -4792,6 +4792,26 @@ export type ChangelogRelease = {
     };
 };
 
+export type ChangelogReleaseList = {
+    current_version: string;
+    releases: Array<ChangelogReleaseSummary>;
+};
+
+export type ChangelogReleaseSummary = {
+    version: string;
+    date?: string;
+    type: string;
+    /**
+     * Relative to the version this deployment runs
+     */
+    status: ChangelogReleaseSummaryStatusEnum;
+    has_breaking?: boolean;
+    has_security?: boolean;
+    max_security_urgency?: string | null;
+};
+
+export type ChangelogReleaseSummaryStatusEnum = 'running' | 'pending' | 'older';
+
 export type ChangelogUpgradeReport = {
     current_version: string;
     latest_version: string;
@@ -5880,6 +5900,7 @@ export type ConstanceSettings = {
     ENABLE_MOCK_SERVICE_ACCOUNT_BACKEND?: boolean;
     ENABLE_MOCK_COURSE_ACCOUNT_BACKEND?: boolean;
     PROPOSAL_REVIEW_DURATION?: number;
+    PROPOSAL_DASHBOARD_REVIEWS_DUE_WITHIN_DAYS?: number;
     ORCID_CLIENT_ID?: string;
     ORCID_CLIENT_SECRET?: string;
     ORCID_REDIRECT_URI?: string;
@@ -6221,6 +6242,7 @@ export type ConstanceSettingsRequest = {
     ENABLE_MOCK_SERVICE_ACCOUNT_BACKEND?: boolean;
     ENABLE_MOCK_COURSE_ACCOUNT_BACKEND?: boolean;
     PROPOSAL_REVIEW_DURATION?: number;
+    PROPOSAL_DASHBOARD_REVIEWS_DUE_WITHIN_DAYS?: number;
     ORCID_CLIENT_ID?: string;
     ORCID_CLIENT_SECRET?: string;
     ORCID_REDIRECT_URI?: string;
@@ -7701,7 +7723,8 @@ export type DailyVolume = {
 export type DashboardCallManagerStats = {
     readonly pending_assessments: number;
     readonly active_calls: number;
-    readonly overdue_reviews: number;
+    readonly reviews_due_soon: number;
+    readonly reviews_due_within_days: number;
 };
 
 export type DashboardGeneralStats = {
@@ -19701,6 +19724,14 @@ export type OptionField = {
      * Show this option only when another option has a given value.
      */
     visible_if?: OptionVisibleIf;
+    /**
+     * Regular expression the whole value must match. Only for string and text options. Use syntax common to Python and JavaScript, so the order form can check it too; \w, \d, \s and \b match ASCII characters only. Blank means no pattern.
+     */
+    pattern?: string;
+    /**
+     * Error shown when the value does not match the pattern.
+     */
+    pattern_error?: string;
 };
 
 export type OptionFieldRequest = {
@@ -19721,6 +19752,14 @@ export type OptionFieldRequest = {
      * Show this option only when another option has a given value.
      */
     visible_if?: OptionVisibleIfRequest;
+    /**
+     * Regular expression the whole value must match. Only for string and text options. Use syntax common to Python and JavaScript, so the order form can check it too; \w, \d, \s and \b match ASCII characters only. Blank means no pattern.
+     */
+    pattern?: string;
+    /**
+     * Error shown when the value does not match the pattern.
+     */
+    pattern_error?: string;
 };
 
 export type OptionFieldTypeEnum = 'boolean' | 'integer' | 'money' | 'string' | 'text' | 'html_text' | 'select_string' | 'select_string_multi' | 'select_openstack_tenant' | 'select_multiple_openstack_tenants' | 'select_openstack_instance' | 'select_multiple_openstack_instances' | 'date' | 'time' | 'conditional_cascade' | 'component_multiplier' | 'single_datacenter_k8s_config' | 'multi_datacenter_k8s_config' | 'storage_folder_manager';
@@ -25635,6 +25674,7 @@ export type PublicInvitation = {
     readonly call_name: string;
     readonly call_uuid: string;
     readonly invitation_status: string;
+    readonly invited_at: string;
     readonly expires_at: string | null;
     readonly is_expired: boolean;
     readonly max_assignments: number | null;
@@ -35682,6 +35722,7 @@ export type ConstanceSettingsRequestForm = {
     ENABLE_MOCK_SERVICE_ACCOUNT_BACKEND?: boolean;
     ENABLE_MOCK_COURSE_ACCOUNT_BACKEND?: boolean;
     PROPOSAL_REVIEW_DURATION?: number;
+    PROPOSAL_DASHBOARD_REVIEWS_DUE_WITHIN_DAYS?: number;
     ORCID_CLIENT_ID?: string;
     ORCID_CLIENT_SECRET?: string;
     ORCID_REDIRECT_URI?: string;
@@ -36023,6 +36064,7 @@ export type ConstanceSettingsRequestMultipart = {
     ENABLE_MOCK_SERVICE_ACCOUNT_BACKEND?: boolean;
     ENABLE_MOCK_COURSE_ACCOUNT_BACKEND?: boolean;
     PROPOSAL_REVIEW_DURATION?: number;
+    PROPOSAL_DASHBOARD_REVIEWS_DUE_WITHIN_DAYS?: number;
     ORCID_CLIENT_ID?: string;
     ORCID_CLIENT_SECRET?: string;
     ORCID_REDIRECT_URI?: string;
@@ -43581,6 +43623,10 @@ export type ChangelogEntriesRetrieveData = {
          */
         page_size?: number;
         /**
+         * List what this release introduced instead of the pending entries
+         */
+        release?: string;
+        /**
          * Show only relevant entries
          */
         relevant_only?: boolean;
@@ -43685,6 +43731,19 @@ export type ChangelogPendingRetrieveResponses = {
 };
 
 export type ChangelogPendingRetrieveResponse = ChangelogPendingRetrieveResponses[keyof ChangelogPendingRetrieveResponses];
+
+export type ChangelogReleasesRetrieveData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/changelog/releases/';
+};
+
+export type ChangelogReleasesRetrieveResponses = {
+    200: ChangelogReleaseList;
+};
+
+export type ChangelogReleasesRetrieveResponse = ChangelogReleasesRetrieveResponses[keyof ChangelogReleasesRetrieveResponses];
 
 export type ChatMessagesListData = {
     body?: never;
@@ -54532,10 +54591,7 @@ export type MarketplaceCourseAccountsDestroyData = {
 };
 
 export type MarketplaceCourseAccountsDestroyResponses = {
-    /**
-     * No response body
-     */
-    204: void;
+    202: CourseAccount;
 };
 
 export type MarketplaceCourseAccountsDestroyResponse = MarketplaceCourseAccountsDestroyResponses[keyof MarketplaceCourseAccountsDestroyResponses];
@@ -57571,6 +57627,10 @@ export type MarketplaceOfferingUsersListData = {
          * User UUID
          */
         user_uuid?: string;
+        /**
+         * Username
+         */
+        username?: string;
     };
     url: '/api/marketplace-offering-users/';
 };
@@ -57669,6 +57729,10 @@ export type MarketplaceOfferingUsersCountData = {
          * User UUID
          */
         user_uuid?: string;
+        /**
+         * Username
+         */
+        username?: string;
     };
     url: '/api/marketplace-offering-users/';
 };
@@ -57973,6 +58037,10 @@ export type MarketplaceOfferingUsersPosixAllocationsListData = {
          * User UUID
          */
         user_uuid?: string;
+        /**
+         * Username
+         */
+        username?: string;
     };
     url: '/api/marketplace-offering-users/{uuid}/posix_allocations/';
 };
@@ -58073,6 +58141,10 @@ export type MarketplaceOfferingUsersPosixGroupsListData = {
          * User UUID
          */
         user_uuid?: string;
+        /**
+         * Username
+         */
+        username?: string;
     };
     url: '/api/marketplace-offering-users/{uuid}/posix_groups/';
 };
@@ -58448,6 +58520,10 @@ export type MarketplaceOfferingUsersPosixIdentitiesListData = {
          */
         user_username?: string;
         user_uuid: string;
+        /**
+         * Username
+         */
+        username?: string;
     };
     url: '/api/marketplace-offering-users/posix_identities/';
 };
@@ -58543,6 +58619,10 @@ export type MarketplaceOfferingUsersPosixIdentitiesCountData = {
          */
         user_username?: string;
         user_uuid: string;
+        /**
+         * Username
+         */
+        username?: string;
     };
     url: '/api/marketplace-offering-users/posix_identities/';
 };
@@ -70357,6 +70437,10 @@ export type MarketplaceServiceProviderAccountsListData = {
          * User UUID
          */
         user_uuid?: string;
+        /**
+         * Username
+         */
+        username?: string;
     };
     url: '/api/marketplace-service-provider-accounts/';
 };
@@ -70437,6 +70521,10 @@ export type MarketplaceServiceProviderAccountsCountData = {
          * User UUID
          */
         user_uuid?: string;
+        /**
+         * Username
+         */
+        username?: string;
     };
     url: '/api/marketplace-service-provider-accounts/';
 };
@@ -96758,6 +96846,14 @@ export type ProposalReviewsListData = {
     query?: {
         call_uuid?: string;
         /**
+         * Only reviews in progress whose deadline is at most this many days away, including ones already past it. Implies state=in_review.
+         */
+        due_within_days?: number;
+        /**
+         * Only reviews on calls where the current user is call manager, the same scope as the call manager dashboard.
+         */
+        managed_calls_only?: boolean;
+        /**
          * Ordering
          *
          *
@@ -96793,6 +96889,14 @@ export type ProposalReviewsCountData = {
     path?: never;
     query?: {
         call_uuid?: string;
+        /**
+         * Only reviews in progress whose deadline is at most this many days away, including ones already past it. Implies state=in_review.
+         */
+        due_within_days?: number;
+        /**
+         * Only reviews on calls where the current user is call manager, the same scope as the call manager dashboard.
+         */
+        managed_calls_only?: boolean;
         /**
          * Ordering
          *
