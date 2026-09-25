@@ -12520,6 +12520,10 @@ export type MergedPluginOptions = {
      */
     service_provider_can_create_offering_user?: boolean;
     /**
+     * This offering's identity model is per-resource robot accounts rather than automatic offering users. Unset means false. Cannot be combined with service_provider_can_create_offering_user. Does not block creating robot accounts on offerings that use offering users.
+     */
+    uses_robot_accounts?: boolean;
+    /**
      * If set to True, offering users will be automatically marked for deletion by the cleanup task when users lose project access. If False (default), deletion must be triggered manually by the service provider.
      */
     offering_user_auto_deletion?: boolean;
@@ -12934,6 +12938,10 @@ export type MergedPluginOptionsRequest = {
      * Service provider can create offering user
      */
     service_provider_can_create_offering_user?: boolean;
+    /**
+     * This offering's identity model is per-resource robot accounts rather than automatic offering users. Unset means false. Cannot be combined with service_provider_can_create_offering_user. Does not block creating robot accounts on offerings that use offering users.
+     */
+    uses_robot_accounts?: boolean;
     /**
      * If set to True, offering users will be automatically marked for deletion by the cleanup task when users lose project access. If False (default), deletion must be triggered manually by the service provider.
      */
