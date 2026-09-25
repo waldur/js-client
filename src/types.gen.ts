@@ -42481,19 +42481,6 @@ export type CallAssignmentConfigurationsCountResponses = {
     200: unknown;
 };
 
-export type CallAssignmentConfigurationsCreateData = {
-    body?: CallAssignmentConfigurationRequest;
-    path?: never;
-    query?: never;
-    url: '/api/call-assignment-configurations/';
-};
-
-export type CallAssignmentConfigurationsCreateResponses = {
-    201: CallAssignmentConfiguration;
-};
-
-export type CallAssignmentConfigurationsCreateResponse = CallAssignmentConfigurationsCreateResponses[keyof CallAssignmentConfigurationsCreateResponses];
-
 export type CallAssignmentConfigurationsDestroyData = {
     body?: never;
     path: {
