@@ -36779,6 +36779,16 @@ export type UserRoleDetailsOEnum = 'created' | 'email' | 'expiration_time' | 'fu
 
 export type CallReviewerPoolOEnum = '-created' | '-current_assignments' | '-expertise_match_score' | '-invited_at' | 'created' | 'current_assignments' | 'expertise_match_score' | 'invited_at';
 
+export type ChangelogEntryListCategoryEnum = 'ai_assistant' | 'auth' | 'identity' | 'infrastructure' | 'invoices' | 'marketplace' | 'notifications' | 'openstack' | 'policy' | 'proposal' | 'reporting' | 'slurm' | 'support' | 'ui';
+
+export type ChangelogEntryListOEnum = '-category' | '-risk' | '-title' | '-type' | '-version' | 'category' | 'risk' | 'title' | 'type' | 'version';
+
+export type ChangelogEntryListRiskEnum = 'high' | 'low' | 'medium' | 'none';
+
+export type ChangelogEntryListScopeEnum = 'core' | 'dev' | 'infra' | 'plugin';
+
+export type ChangelogEntryListTypeEnum = 'breaking' | 'deprecation' | 'feature' | 'fix' | 'improvement' | 'security';
+
 export type ChatSessionFieldEnum = 'created' | 'modified' | 'user' | 'user_full_name' | 'user_username' | 'uuid';
 
 export type ThreadSessionFieldEnum = 'chat_session' | 'created' | 'flags' | 'has_feedback' | 'input_tokens' | 'is_archived' | 'is_flagged' | 'max_severity' | 'message_count' | 'models_used' | 'modified' | 'name' | 'output_tokens' | 'title_gen_input_tokens' | 'title_gen_output_tokens' | 'total_tokens' | 'user_full_name' | 'user_username' | 'uuid';
@@ -43611,9 +43621,17 @@ export type ChangelogEntriesRetrieveData = {
     path?: never;
     query?: {
         /**
+         * Filter by category
+         */
+        category?: ChangelogEntryListCategoryEnum;
+        /**
          * Filter highlighted entries only
          */
         highlight?: boolean;
+        /**
+         * Sort by a field; prefix with - to reverse. Type and risk sort most consequential first (breaking, high). Without it, relevant entries come first, then by risk.
+         */
+        o?: ChangelogEntryListOEnum;
         /**
          * A page number within the paginated result set.
          */
@@ -43633,11 +43651,11 @@ export type ChangelogEntriesRetrieveData = {
         /**
          * Filter by risk level
          */
-        risk?: string;
+        risk?: ChangelogEntryListRiskEnum;
         /**
          * Filter by scope
          */
-        scope?: string;
+        scope?: ChangelogEntryListScopeEnum;
         /**
          * Full-text search in title and description
          */
@@ -43645,7 +43663,7 @@ export type ChangelogEntriesRetrieveData = {
         /**
          * Filter by entry type
          */
-        type?: string;
+        type?: ChangelogEntryListTypeEnum;
         /**
          * Filter by release version
          */
