@@ -64,10 +64,6 @@ export const apiAuthLogout = <ThrowOnError extends boolean = true>(options?: Opt
  * Authenticates a user with username and password and returns an authentication token.
  */
 export const apiAuthPassword = <ThrowOnError extends boolean = true>(options: Options<ApiAuthPasswordData, ThrowOnError>) => (options.client ?? client).post<ApiAuthPasswordResponses, ApiAuthPasswordErrors, ThrowOnError>({
-    security: [
-        { name: 'Authorization', type: 'apiKey' },
-        { scheme: 'bearer', type: 'http' }
-    ],
     url: '/api-auth/password/',
     ...options,
     headers: {

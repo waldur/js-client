@@ -5779,6 +5779,7 @@ export type ConstanceSettings = {
     ENABLE_ISSUES_FOR_USER_SSH_KEY_CHANGES?: boolean;
     TELEMETRY_URL?: string;
     TELEMETRY_VERSION?: number;
+    TELEMETRY_DEPLOYMENT_ID?: string;
     CHECK_FOR_UPDATES?: boolean;
     SCRIPT_RUN_MODE?: ScriptrunmodeEnum;
     DOCKER_CLIENT?: string;
@@ -6121,6 +6122,7 @@ export type ConstanceSettingsRequest = {
     ENABLE_ISSUES_FOR_USER_SSH_KEY_CHANGES?: boolean;
     TELEMETRY_URL?: string;
     TELEMETRY_VERSION?: number;
+    TELEMETRY_DEPLOYMENT_ID?: string;
     CHECK_FOR_UPDATES?: boolean;
     SCRIPT_RUN_MODE?: ScriptrunmodeEnum;
     DOCKER_CLIENT?: string;
@@ -14953,7 +14955,7 @@ export type NullEnum = never;
 
 export type OpenportalmembershipsyncmodeEnum = 'invitation' | 'direct';
 
-export type ObservableObjectTypeEnum = 'order' | 'user_role' | 'resource' | 'offering_user' | 'importable_resources' | 'service_account' | 'course_account' | 'resource_periodic_limits' | 'offering_resources_sync' | 'resource_api_key_rotation' | 'resource_end_date_change_request' | 'user_profile' | 'user_ssh_key' | 'user_lifecycle' | 'service_provider_account';
+export type ObservableObjectTypeEnum = 'order' | 'user_role' | 'resource' | 'offering_user' | 'importable_resources' | 'service_account' | 'course_account' | 'resource_periodic_limits' | 'offering_resources_sync' | 'resource_api_key_rotation' | 'resource_end_date_change_request' | 'user_profile' | 'user_ssh_key' | 'user_lifecycle' | 'service_provider_account' | 'call' | 'proposal';
 
 export type ObtainAuthTokenRequest = {
     /**
@@ -15082,6 +15084,7 @@ export type Offering = {
     readonly billing_type_classification: string;
     readonly effective_available_limits: Array<string>;
     compliance_checklist?: string | null;
+    compliance_checklist_details: OfferingComplianceChecklist | null;
     readonly profile_uuid: string | null;
     readonly profile_name: string | null;
     readonly offering_group: string | null;
@@ -15162,6 +15165,13 @@ export type OfferingBackendMetadataRequest = {
     backend_metadata?: {
         [key: string]: unknown;
     };
+};
+
+export type OfferingComplianceChecklist = {
+    readonly uuid: string;
+    readonly name: string;
+    readonly description: string;
+    readonly questions_count: number;
 };
 
 export type OfferingComplianceChecklistUpdateRequest = {
@@ -17310,7 +17320,7 @@ export type OnboardingRunValidationRequestRequest = {
     birth_date?: string | null;
 };
 
-export type OnboardingValidationEnum = 'ariregister' | 'wirtschaftscompass' | 'bolagsverket' | 'dnb_se' | 'dnb_no' | 'dnb_dk' | 'dnb_fi';
+export type OnboardingValidationEnum = 'ariregister' | 'wirtschaftscompass' | 'bolagsverket' | 'breg' | 'dnb_se' | 'dnb_no' | 'dnb_dk' | 'dnb_fi';
 
 export type OnboardingVerification = {
     readonly uuid: string;
@@ -25270,6 +25280,7 @@ export type ProviderOfferingDetails = {
     readonly billing_type_classification: string;
     readonly effective_available_limits: Array<string>;
     compliance_checklist?: string | null;
+    compliance_checklist_details: OfferingComplianceChecklist | null;
     readonly profile_uuid: string | null;
     readonly profile_name: string | null;
     readonly offering_group: string | null;
@@ -25863,6 +25874,7 @@ export type PublicOfferingDetails = {
     readonly billing_type_classification: string;
     readonly effective_available_limits: Array<string>;
     compliance_checklist?: string | null;
+    compliance_checklist_details: OfferingComplianceChecklist | null;
     readonly profile_uuid: string | null;
     readonly profile_name: string | null;
     readonly offering_group: string | null;
@@ -35609,6 +35621,7 @@ export type ConstanceSettingsRequestForm = {
     ENABLE_ISSUES_FOR_USER_SSH_KEY_CHANGES?: boolean;
     TELEMETRY_URL?: string;
     TELEMETRY_VERSION?: number;
+    TELEMETRY_DEPLOYMENT_ID?: string;
     CHECK_FOR_UPDATES?: boolean;
     SCRIPT_RUN_MODE?: ScriptrunmodeEnum;
     DOCKER_CLIENT?: string;
@@ -35951,6 +35964,7 @@ export type ConstanceSettingsRequestMultipart = {
     ENABLE_ISSUES_FOR_USER_SSH_KEY_CHANGES?: boolean;
     TELEMETRY_URL?: string;
     TELEMETRY_VERSION?: number;
+    TELEMETRY_DEPLOYMENT_ID?: string;
     CHECK_FOR_UPDATES?: boolean;
     SCRIPT_RUN_MODE?: ScriptrunmodeEnum;
     DOCKER_CLIENT?: string;
@@ -36769,7 +36783,7 @@ export type AwsVolumeFieldEnum = 'access_url' | 'backend_id' | 'created' | 'cust
 
 export type BackendResourceReqOEnum = '-created' | 'created';
 
-export type OfferingFieldEnum = 'access_url' | 'account_settings' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'billing_mode_components' | 'billing_period_applies' | 'billing_type_classification' | 'can_update_integration' | 'can_update_options' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'default_access_subnets' | 'description' | 'documentation_url' | 'effective_available_limits' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'googlecalendar' | 'has_compliance_requirements' | 'helpdesk_url' | 'image' | 'integration_guide' | 'is_accessible' | 'latitude' | 'longitude' | 'name' | 'offering_group' | 'offering_group_title' | 'offering_group_uuid' | 'open_for_proposals' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'profile_name' | 'profile_uuid' | 'project' | 'project_name' | 'project_uuid' | 'qos_profiles' | 'quotas' | 'resource_options' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_resource' | 'scope_resource_name' | 'scope_resource_uuid' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'tags' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'user_has_consent' | 'user_has_offering_user' | 'uuid' | 'vendor_details';
+export type OfferingFieldEnum = 'access_url' | 'account_settings' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'billing_mode_components' | 'billing_period_applies' | 'billing_type_classification' | 'can_update_integration' | 'can_update_options' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'compliance_checklist_details' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'default_access_subnets' | 'description' | 'documentation_url' | 'effective_available_limits' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'googlecalendar' | 'has_compliance_requirements' | 'helpdesk_url' | 'image' | 'integration_guide' | 'is_accessible' | 'latitude' | 'longitude' | 'name' | 'offering_group' | 'offering_group_title' | 'offering_group_uuid' | 'open_for_proposals' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'profile_name' | 'profile_uuid' | 'project' | 'project_name' | 'project_uuid' | 'qos_profiles' | 'quotas' | 'resource_options' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_resource' | 'scope_resource_name' | 'scope_resource_uuid' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'tags' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'user_has_consent' | 'user_has_offering_user' | 'uuid' | 'vendor_details';
 
 export type BookingResourceFieldEnum = 'attributes' | 'available_actions' | 'backend_id' | 'backend_metadata' | 'can_terminate' | 'category_icon' | 'category_title' | 'category_uuid' | 'consumer_reviewed_by' | 'consumer_reviewed_by_full_name' | 'consumer_reviewed_by_username' | 'created' | 'created_by' | 'created_by_full_name' | 'created_by_username' | 'creation_order' | 'current_usages' | 'customer_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'downscaled' | 'effective_id' | 'end_date' | 'end_date_requested_by' | 'end_date_updated_at' | 'endpoints' | 'error_message' | 'error_traceback' | 'has_api_keys' | 'is_limit_based' | 'is_usage_based' | 'last_sync' | 'limit_usage' | 'limits' | 'modified' | 'name' | 'offering' | 'offering_account_settings' | 'offering_backend_id' | 'offering_billable' | 'offering_components' | 'offering_description' | 'offering_image' | 'offering_name' | 'offering_plugin_options' | 'offering_shared' | 'offering_slug' | 'offering_state' | 'offering_thumbnail' | 'offering_type' | 'offering_uuid' | 'options' | 'order_in_progress' | 'parent_name' | 'parent_offering_name' | 'parent_offering_slug' | 'parent_offering_uuid' | 'parent_uuid' | 'paused' | 'plan' | 'plan_description' | 'plan_name' | 'plan_unit' | 'plan_uuid' | 'project' | 'project_description' | 'project_effective_end_date' | 'project_end_date' | 'project_end_date_requested_by' | 'project_is_in_grace_period' | 'project_name' | 'project_slug' | 'project_start_date' | 'project_uuid' | 'provider_description' | 'provider_name' | 'provider_slug' | 'provider_uuid' | 'renewal_date' | 'report' | 'resource_effective_end_date' | 'resource_type' | 'resource_uuid' | 'restrict_member_access' | 'scope' | 'service_settings_uuid' | 'slots' | 'slug' | 'state' | 'url' | 'usage_limit_restriction' | 'user_requires_reconsent' | 'username' | 'uuid';
 
@@ -36907,7 +36921,7 @@ export type OrderDetailsFieldEnum = 'accepting_terms_of_service' | 'activation_p
 
 export type OrderDetailsOEnum = '-consumer_reviewed_at' | '-cost' | '-created' | '-state' | 'consumer_reviewed_at' | 'cost' | 'created' | 'state';
 
-export type PublicOfferingDetailsFieldEnum = 'access_url' | 'account_settings' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'billing_mode_components' | 'billing_period_applies' | 'billing_type_classification' | 'can_update_integration' | 'can_update_options' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'config_drive_default' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'default_access_subnets' | 'description' | 'documentation_url' | 'effective_available_limits' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'has_compliance_requirements' | 'helpdesk_url' | 'image' | 'integration_guide' | 'is_accessible' | 'latitude' | 'longitude' | 'name' | 'offering_group' | 'offering_group_title' | 'offering_group_uuid' | 'open_for_proposals' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'profile_name' | 'profile_uuid' | 'project' | 'project_name' | 'project_uuid' | 'promotion_campaigns' | 'qos_profiles' | 'quotas' | 'resource_options' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_resource' | 'scope_resource_name' | 'scope_resource_uuid' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'tags' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'user_has_consent' | 'user_has_offering_user' | 'uuid' | 'vendor_details';
+export type PublicOfferingDetailsFieldEnum = 'access_url' | 'account_settings' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'billing_mode_components' | 'billing_period_applies' | 'billing_type_classification' | 'can_update_integration' | 'can_update_options' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'compliance_checklist_details' | 'components' | 'config_drive_default' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'default_access_subnets' | 'description' | 'documentation_url' | 'effective_available_limits' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'has_compliance_requirements' | 'helpdesk_url' | 'image' | 'integration_guide' | 'is_accessible' | 'latitude' | 'longitude' | 'name' | 'offering_group' | 'offering_group_title' | 'offering_group_uuid' | 'open_for_proposals' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'profile_name' | 'profile_uuid' | 'project' | 'project_name' | 'project_uuid' | 'promotion_campaigns' | 'qos_profiles' | 'quotas' | 'resource_options' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_resource' | 'scope_resource_name' | 'scope_resource_uuid' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'tags' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'user_has_consent' | 'user_has_offering_user' | 'uuid' | 'vendor_details';
 
 export type PosixIdPoolFieldEnum = 'created' | 'customer_name' | 'customer_uuid' | 'description' | 'gid_used' | 'gid_utilization' | 'max_gid' | 'max_uid' | 'min_gid' | 'min_uid' | 'next_gid' | 'next_uid' | 'offering' | 'scope' | 'service_provider' | 'uid_used' | 'uid_utilization' | 'url' | 'uuid';
 
@@ -36919,7 +36933,7 @@ export type ProjectEstimatedCostPolicyFieldEnum = 'actions' | 'affected_resource
 
 export type RemoteProjectUpdateRequestStateEnum = 'approved' | 'canceled' | 'draft' | 'pending' | 'rejected';
 
-export type ProviderOfferingDetailsFieldEnum = 'access_url' | 'account_settings' | 'attributes' | 'backend_id' | 'backend_id_rules' | 'backend_metadata' | 'billable' | 'billing_mode_components' | 'billing_period_applies' | 'billing_type_classification' | 'can_update_integration' | 'can_update_options' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'default_access_subnets' | 'description' | 'documentation_url' | 'effective_available_limits' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'has_compliance_requirements' | 'helpdesk_url' | 'image' | 'integration_guide' | 'integration_status' | 'latitude' | 'limit_precision_advisory' | 'longitude' | 'name' | 'offering_group' | 'offering_group_title' | 'offering_group_uuid' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'profile_name' | 'profile_uuid' | 'project' | 'project_name' | 'project_uuid' | 'qos_profiles' | 'quotas' | 'resource_options' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_resource' | 'scope_resource_name' | 'scope_resource_uuid' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'tags' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'uuid' | 'vendor_details';
+export type ProviderOfferingDetailsFieldEnum = 'access_url' | 'account_settings' | 'attributes' | 'backend_id' | 'backend_id_rules' | 'backend_metadata' | 'billable' | 'billing_mode_components' | 'billing_period_applies' | 'billing_type_classification' | 'can_update_integration' | 'can_update_options' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'compliance_checklist_details' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'default_access_subnets' | 'description' | 'documentation_url' | 'effective_available_limits' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'has_compliance_requirements' | 'helpdesk_url' | 'image' | 'integration_guide' | 'integration_status' | 'latitude' | 'limit_precision_advisory' | 'longitude' | 'name' | 'offering_group' | 'offering_group_title' | 'offering_group_uuid' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'profile_name' | 'profile_uuid' | 'project' | 'project_name' | 'project_uuid' | 'qos_profiles' | 'quotas' | 'resource_options' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_resource' | 'scope_resource_name' | 'scope_resource_uuid' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'tags' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'uuid' | 'vendor_details';
 
 export type ProviderOfferingDetailsOEnum = '-created' | '-name' | '-state' | '-total_cost' | '-total_cost_estimated' | '-total_customers' | '-type' | 'created' | 'name' | 'state' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type';
 
@@ -79994,7 +80008,7 @@ export type OnboardingPersonIdentifierFieldsRetrieveData = {
         /**
          * Validation method identifier
          */
-        validation_method: ValidationMethodEnum;
+        validation_method: OnboardingValidationEnum;
     };
     url: '/api/onboarding/person-identifier-fields/';
 };
