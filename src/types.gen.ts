@@ -34523,6 +34523,8 @@ export type VMwareVirtualMachineCreateOrderAttributes = {
     template?: string | null;
     cluster?: string | null;
     datastore?: string | null;
+    folder?: string | null;
+    networks?: Array<VmwareNestedNetworkRequest>;
 };
 
 export type GenericOrderAttributes = {
@@ -45929,6 +45931,10 @@ export type CustomerQuotasListData = {
     path?: never;
     query?: {
         /**
+         * Limit results to the given organization
+         */
+        customer_uuid?: string;
+        /**
          * A page number within the paginated result set.
          */
         page?: number;
@@ -45954,6 +45960,10 @@ export type CustomerQuotasCountData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Limit results to the given organization
+         */
+        customer_uuid?: string;
         /**
          * A page number within the paginated result set.
          */
@@ -92559,6 +92569,10 @@ export type ProjectQuotasListData = {
     path?: never;
     query?: {
         /**
+         * Limit results to the given organization
+         */
+        customer_uuid?: string;
+        /**
          * A page number within the paginated result set.
          */
         page?: number;
@@ -92584,6 +92598,10 @@ export type ProjectQuotasCountData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Limit results to the given organization
+         */
+        customer_uuid?: string;
         /**
          * A page number within the paginated result set.
          */
