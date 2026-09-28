@@ -3,6 +3,8 @@ include:
     file: "/templates/utils/release-utils.yml"
   - project: "waldur/waldur-pipelines"
     file: "/templates/utils/verify-generated-artifact.yml"
+  - project: "waldur/waldur-pipelines"
+    file: "/templates/sbom/publish-sboms-to-github-release.yml"
 
 variables:
   npm_config_cache: "$CI_PROJECT_DIR/.npm"
@@ -165,3 +167,35 @@ Publish Release to NPM:
     - npm run build
     - echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
     - npm publish
+
+# `Release TypeScript/JavaScript SDK` pushes the release tag, which starts a
+# pipeline of its own at the release commit; the SBOM jobs run there.
+Generate Codebase SBOM:
+  stage: release
+  # Pinned: the tool that produces supply-chain evidence should not float.
+  image: registry.hpc.ut.ee/mirror/library/node:24-alpine
+  rules: !reference [.Publish SBOMs to GitHub release template, rules]
+  interruptible: true
+  allow_failure: true
+  cache: []
+  variables:
+    PROJECT_NAME: waldur-js-client
+  script:
+    - apk add --no-cache jq
+    # The SDK bundles its HTTP client and has no runtime dependencies, so an SBOM
+    # without components is the correct result, not a failed scan.
+    - npm sbom --sbom-format cyclonedx --omit dev --package-lock-only > npm.cyclonedx.json
+    # npm names the root after the checkout directory, not the package.
+    - jq --arg name "$PROJECT_NAME" --arg version "${CI_COMMIT_TAG:-$CI_COMMIT_SHORT_SHA}" '.metadata.component.name = $name | .metadata.component.version = $version' npm.cyclonedx.json > ${PROJECT_NAME}-${CI_COMMIT_TAG}-source.cyclonedx.json
+    - tar -czf ${PROJECT_NAME}-${CI_COMMIT_TAG}-source.cyclonedx.tar.gz ${PROJECT_NAME}-${CI_COMMIT_TAG}-source.cyclonedx.json
+  artifacts:
+    paths:
+      - ${PROJECT_NAME}-${CI_COMMIT_TAG}-source.cyclonedx.tar.gz
+    expire_in: 90 days
+
+Publish SBOMs to GitHub release:
+  extends: .Publish SBOMs to GitHub release template
+  stage: publish
+  variables:
+    PROJECT_NAME: waldur-js-client
+    SBOM_TYPES: "source"
