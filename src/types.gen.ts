@@ -3765,6 +3765,75 @@ export type CallDocumentRequest = {
     description?: string;
 };
 
+export type CallExportParametersRequest = {
+    include_documents?: boolean;
+    include_rounds?: boolean;
+    /**
+     * Requested offerings together with their resource templates.
+     */
+    include_offerings?: boolean;
+    /**
+     * Workflow steps with their notification rules and criteria.
+     */
+    include_workflow_steps?: boolean;
+    /**
+     * Proposal field and applicant visibility configuration.
+     */
+    include_field_configs?: boolean;
+    /**
+     * COI, reviewer matching and assignment configuration.
+     */
+    include_review_configs?: boolean;
+    include_role_mappings?: boolean;
+    include_compliance_checklist?: boolean;
+};
+
+export type CallExportResponse = {
+    call_uuid: string;
+    call_name: string;
+    export_data: {
+        [key: string]: unknown;
+    };
+    exported_sections: Array<string>;
+    export_timestamp: string;
+    /**
+     * Parts that could not be exported, such as unreadable documents.
+     */
+    warnings: Array<string>;
+};
+
+export type CallImportParametersRequest = {
+    /**
+     * Call managing organisation that will own the imported call.
+     */
+    manager: string;
+    /**
+     * Name for the imported call. Defaults to the exported name.
+     */
+    name?: string;
+    /**
+     * Exported call document, as a mapping or a YAML string.
+     */
+    call_data: {
+        [key: string]: unknown;
+    };
+    import_documents?: boolean;
+    import_rounds?: boolean;
+    import_offerings?: boolean;
+    import_workflow_steps?: boolean;
+    import_field_configs?: boolean;
+    import_review_configs?: boolean;
+    import_role_mappings?: boolean;
+    import_compliance_checklist?: boolean;
+};
+
+export type CallImportResponse = {
+    call_uuid: string;
+    call_name: string;
+    imported_sections: Array<string>;
+    warnings: Array<string>;
+};
+
 export type CallManagingOrganisation = {
     readonly url: string;
     readonly uuid: string;
@@ -95342,6 +95411,21 @@ export type ProposalProtectedCallsDuplicateResponses = {
 
 export type ProposalProtectedCallsDuplicateResponse = ProposalProtectedCallsDuplicateResponses[keyof ProposalProtectedCallsDuplicateResponses];
 
+export type ProposalProtectedCallsExportCallData = {
+    body?: CallExportParametersRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-protected-calls/{uuid}/export_call/';
+};
+
+export type ProposalProtectedCallsExportCallResponses = {
+    200: CallExportResponse;
+};
+
+export type ProposalProtectedCallsExportCallResponse = ProposalProtectedCallsExportCallResponses[keyof ProposalProtectedCallsExportCallResponses];
+
 export type ProposalProtectedCallsGenerateAssignmentsData = {
     body?: GenerateAssignmentsRequest;
     path: {
@@ -96413,6 +96497,19 @@ export type ProposalProtectedCallsDashboardStatsRetrieveResponses = {
 };
 
 export type ProposalProtectedCallsDashboardStatsRetrieveResponse = ProposalProtectedCallsDashboardStatsRetrieveResponses[keyof ProposalProtectedCallsDashboardStatsRetrieveResponses];
+
+export type ProposalProtectedCallsImportCallData = {
+    body: CallImportParametersRequest;
+    path?: never;
+    query?: never;
+    url: '/api/proposal-protected-calls/import_call/';
+};
+
+export type ProposalProtectedCallsImportCallResponses = {
+    201: CallImportResponse;
+};
+
+export type ProposalProtectedCallsImportCallResponse = ProposalProtectedCallsImportCallResponses[keyof ProposalProtectedCallsImportCallResponses];
 
 export type ProposalProtectedCallsStepChecklistsListData = {
     body?: never;
