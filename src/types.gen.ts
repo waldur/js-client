@@ -5413,6 +5413,36 @@ export type ComponentActivity = {
     compare_url_previous?: string;
 };
 
+export type ComponentFormulaConfig = {
+    /**
+     * Limit components set from the value the customer enters.
+     */
+    targets: Array<ComponentFormulaTarget>;
+};
+
+export type ComponentFormulaConfigRequest = {
+    /**
+     * Limit components set from the value the customer enters.
+     */
+    targets: Array<ComponentFormulaTargetRequest>;
+};
+
+export type ComponentFormulaTarget = {
+    component_type: string;
+    /**
+     * Expression over input, numbers, + - * / and parentheses, for example input * 2 * 0.25.
+     */
+    formula: string;
+};
+
+export type ComponentFormulaTargetRequest = {
+    component_type: string;
+    /**
+     * Expression over input, numbers, + - * / and parentheses, for example input * 2 * 0.25.
+     */
+    formula: string;
+};
+
 export type ComponentMultiplierConfig = {
     component_type: string;
     factor: number;
@@ -5455,6 +5485,28 @@ export type ComponentStatsPerOffering = {
     readonly current_period_label: string;
     readonly current_period_start: string | null;
     readonly current_period_end: string | null;
+};
+
+export type ComponentSumConfig = {
+    /**
+     * Limit component whose quantity is the sum.
+     */
+    target_component: string;
+    /**
+     * Limit components added together.
+     */
+    components: Array<string>;
+};
+
+export type ComponentSumConfigRequest = {
+    /**
+     * Limit component whose quantity is the sum.
+     */
+    target_component: string;
+    /**
+     * Limit components added together.
+     */
+    components: Array<string>;
 };
 
 export type ComponentUsage = {
@@ -8882,6 +8934,8 @@ export type EscalateIssueRequest = {
 };
 
 export type EthertypeEnum = 'IPv4' | 'IPv6';
+
+export type EvaluationStartEnum = 'on_submission' | 'at_cutoff';
 
 export type Event = {
     readonly uuid: string;
@@ -19804,6 +19858,8 @@ export type OptionField = {
     max?: number;
     cascade_config?: CascadeConfig;
     component_multiplier_config?: ComponentMultiplierConfig;
+    component_formula_config?: ComponentFormulaConfig;
+    component_sum_config?: ComponentSumConfig;
     storage_folder_config?: StorageFolderConfig;
     default_configs?: K8sDefaultConfiguration;
     validators?: Array<OptionValidator>;
@@ -19832,6 +19888,8 @@ export type OptionFieldRequest = {
     max?: number;
     cascade_config?: CascadeConfigRequest;
     component_multiplier_config?: ComponentMultiplierConfigRequest;
+    component_formula_config?: ComponentFormulaConfigRequest;
+    component_sum_config?: ComponentSumConfigRequest;
     storage_folder_config?: StorageFolderConfigRequest;
     default_configs?: K8sDefaultConfigurationRequest;
     validators?: Array<OptionValidatorRequest>;
@@ -19849,7 +19907,7 @@ export type OptionFieldRequest = {
     pattern_error?: string;
 };
 
-export type OptionFieldTypeEnum = 'boolean' | 'integer' | 'money' | 'string' | 'text' | 'html_text' | 'select_string' | 'select_string_multi' | 'select_openstack_tenant' | 'select_multiple_openstack_tenants' | 'select_openstack_instance' | 'select_multiple_openstack_instances' | 'date' | 'time' | 'conditional_cascade' | 'component_multiplier' | 'single_datacenter_k8s_config' | 'multi_datacenter_k8s_config' | 'storage_folder_manager';
+export type OptionFieldTypeEnum = 'boolean' | 'integer' | 'money' | 'string' | 'text' | 'html_text' | 'select_string' | 'select_string_multi' | 'select_openstack_tenant' | 'select_multiple_openstack_tenants' | 'select_openstack_instance' | 'select_multiple_openstack_instances' | 'date' | 'time' | 'conditional_cascade' | 'component_multiplier' | 'component_formula' | 'component_sum' | 'single_datacenter_k8s_config' | 'multi_datacenter_k8s_config' | 'storage_folder_manager';
 
 export type OptionValidator = {
     type: OptionValidatorTypeEnum;
@@ -21973,7 +22031,6 @@ export type PatchedProposalReviewRequest = {
     comment_project_title?: string | null;
     comment_project_summary?: string | null;
     comment_project_description?: string | null;
-    comment_project_duration?: string | null;
     comment_project_supporting_documentation?: string | null;
     comment_resource_requests?: string | null;
     comment_team?: string | null;
@@ -21998,6 +22055,10 @@ export type PatchedProtectedCallRequest = {
      */
     reviews_visible_to_submitters?: boolean;
     proposal_field_config?: CallProposalFieldConfigRequest;
+    /**
+     * When a submitted proposal's evaluation starts: on submission, or for all proposals of a round together at its cut-off. Cannot be changed while the call has proposals submitted or in review.
+     */
+    evaluation_start?: EvaluationStartEnum;
     created_by?: string | null;
     reference_code?: string;
     /**
@@ -24703,7 +24764,14 @@ export type ProposalReview = {
      */
     readonly anonymous_reviewer_name: string | null;
     state: ProposalReviewStateEnum;
-    readonly review_end_date: string;
+    /**
+     * When the review is due, or None if the round sets no review duration.
+     *
+     * A review created by accepting an assignment is also due no earlier than
+     * its assignment batch's deadline, so extending the batch deadline moves
+     * the deadline of the reviews accepted from it.
+     */
+    readonly review_end_date: string | null;
     summary_score?: number;
     summary_public_comment?: string;
     summary_private_comment?: string;
@@ -24719,7 +24787,6 @@ export type ProposalReview = {
     comment_project_title?: string | null;
     comment_project_summary?: string | null;
     comment_project_description?: string | null;
-    comment_project_duration?: string | null;
     comment_project_supporting_documentation?: string | null;
     comment_resource_requests?: string | null;
     comment_team?: string | null;
@@ -24742,7 +24809,6 @@ export type ProposalReviewRequest = {
     comment_project_title?: string | null;
     comment_project_summary?: string | null;
     comment_project_description?: string | null;
-    comment_project_duration?: string | null;
     comment_project_supporting_documentation?: string | null;
     comment_resource_requests?: string | null;
     comment_team?: string | null;
@@ -24858,6 +24924,10 @@ export type ProtectedCall = {
      */
     readonly has_eligibility_restrictions: boolean;
     proposal_field_config?: CallProposalFieldConfig;
+    /**
+     * When a submitted proposal's evaluation starts: on submission, or for all proposals of a round together at its cut-off. Cannot be changed while the call has proposals submitted or in review.
+     */
+    evaluation_start?: EvaluationStartEnum;
     created_by?: string | null;
     reference_code?: string;
     /**
@@ -24937,6 +25007,10 @@ export type ProtectedCallRequest = {
      */
     reviews_visible_to_submitters?: boolean;
     proposal_field_config?: CallProposalFieldConfigRequest;
+    /**
+     * When a submitted proposal's evaluation starts: on submission, or for all proposals of a round together at its cut-off. Cannot be changed while the call has proposals submitted or in review.
+     */
+    evaluation_start?: EvaluationStartEnum;
     created_by?: string | null;
     reference_code?: string;
     /**
@@ -25756,6 +25830,10 @@ export type PublicCall = {
      */
     readonly has_eligibility_restrictions: boolean;
     proposal_field_config: CallProposalFieldConfig;
+    /**
+     * When a submitted proposal's evaluation starts: at once on submission, or for every proposal of a round together at the round's cut-off. Cannot be changed while proposals are submitted or in review.
+     */
+    evaluation_start?: EvaluationStartEnum;
 };
 
 export type PublicInvitation = {
@@ -37126,13 +37204,13 @@ export type UserRequestedResourceOEnum = '-call__name' | '-created' | '-offering
 
 export type ProposalOEnum = '-created' | '-round__call__name' | '-round__cutoff_time' | '-round__start_time' | '-slug' | '-state' | 'created' | 'round__call__name' | 'round__cutoff_time' | 'round__start_time' | 'slug' | 'state';
 
-export type ProtectedCallFieldEnum = 'applicant_visibility_config' | 'backend_id' | 'compliance_checklist' | 'compliance_checklist_name' | 'created' | 'created_by' | 'customer_name' | 'customer_uuid' | 'description' | 'documents' | 'end_date' | 'external_url' | 'fixed_duration_in_days' | 'has_eligibility_restrictions' | 'has_proposals' | 'manager' | 'manager_uuid' | 'max_prepaid_duration_months' | 'name' | 'offerings' | 'order_author' | 'order_author_user' | 'order_author_user_name' | 'order_author_user_uuid' | 'panel_chair' | 'panel_chair_name' | 'panel_chair_uuid' | 'proposal_field_config' | 'proposal_field_metadata' | 'proposal_slug_template' | 'reference_code' | 'resource_templates' | 'reviewer_identity_visible_to_submitters' | 'reviews_visible_to_submitters' | 'rounds' | 'slug' | 'start_date' | 'state' | 'url' | 'user_affiliations' | 'user_assurance_levels' | 'user_email_patterns' | 'user_identity_sources' | 'user_nationalities' | 'user_organization_types' | 'uuid';
+export type ProtectedCallFieldEnum = 'applicant_visibility_config' | 'backend_id' | 'compliance_checklist' | 'compliance_checklist_name' | 'created' | 'created_by' | 'customer_name' | 'customer_uuid' | 'description' | 'documents' | 'end_date' | 'evaluation_start' | 'external_url' | 'fixed_duration_in_days' | 'has_eligibility_restrictions' | 'has_proposals' | 'manager' | 'manager_uuid' | 'max_prepaid_duration_months' | 'name' | 'offerings' | 'order_author' | 'order_author_user' | 'order_author_user_name' | 'order_author_user_uuid' | 'panel_chair' | 'panel_chair_name' | 'panel_chair_uuid' | 'proposal_field_config' | 'proposal_field_metadata' | 'proposal_slug_template' | 'reference_code' | 'resource_templates' | 'reviewer_identity_visible_to_submitters' | 'reviews_visible_to_submitters' | 'rounds' | 'slug' | 'start_date' | 'state' | 'url' | 'user_affiliations' | 'user_assurance_levels' | 'user_email_patterns' | 'user_identity_sources' | 'user_nationalities' | 'user_organization_types' | 'uuid';
 
 export type ProtectedCallOEnum = '-created' | '-manager__customer__name' | '-name' | 'created' | 'manager__customer__name' | 'name';
 
 export type AffinityMatrixResponseScopeEnum = 'all' | 'pool' | 'suggestions';
 
-export type PublicCallFieldEnum = 'backend_id' | 'created' | 'customer_name' | 'customer_uuid' | 'description' | 'documents' | 'end_date' | 'external_url' | 'fixed_duration_in_days' | 'has_eligibility_restrictions' | 'manager' | 'manager_uuid' | 'max_prepaid_duration_months' | 'name' | 'offerings' | 'proposal_field_config' | 'resource_templates' | 'reviewer_identity_visible_to_submitters' | 'reviews_visible_to_submitters' | 'rounds' | 'slug' | 'start_date' | 'state' | 'url' | 'uuid';
+export type PublicCallFieldEnum = 'backend_id' | 'created' | 'customer_name' | 'customer_uuid' | 'description' | 'documents' | 'end_date' | 'evaluation_start' | 'external_url' | 'fixed_duration_in_days' | 'has_eligibility_restrictions' | 'manager' | 'manager_uuid' | 'max_prepaid_duration_months' | 'name' | 'offerings' | 'proposal_field_config' | 'resource_templates' | 'reviewer_identity_visible_to_submitters' | 'reviews_visible_to_submitters' | 'rounds' | 'slug' | 'start_date' | 'state' | 'url' | 'uuid';
 
 export type ProviderRequestedOfferingOEnum = '-call__name' | '-created' | '-offering__name' | '-state' | 'call__name' | 'created' | 'offering__name' | 'state';
 
@@ -43422,6 +43500,21 @@ export type CallReviewerPoolsForceAcceptResponses = {
 };
 
 export type CallReviewerPoolsForceAcceptResponse = CallReviewerPoolsForceAcceptResponses[keyof CallReviewerPoolsForceAcceptResponses];
+
+export type CallReviewerPoolsResendInvitationData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/call-reviewer-pools/{uuid}/resend-invitation/';
+};
+
+export type CallReviewerPoolsResendInvitationResponses = {
+    200: CallReviewerPool;
+};
+
+export type CallReviewerPoolsResendInvitationResponse = CallReviewerPoolsResendInvitationResponses[keyof CallReviewerPoolsResendInvitationResponses];
 
 export type CallRoundsListData = {
     body?: never;
