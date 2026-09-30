@@ -19875,6 +19875,10 @@ export type OptionField = {
      */
     visible_if?: OptionVisibleIf;
     /**
+     * The value must not be used by another non-terminated resource of this offering. Only for string, text, integer and select_string options.
+     */
+    unique?: boolean;
+    /**
      * Regular expression the whole value must match. Only for string and text options. Use syntax common to Python and JavaScript, so the order form can check it too; \w, \d, \s and \b match ASCII characters only. Blank means no pattern.
      */
     pattern?: string;
@@ -19904,6 +19908,10 @@ export type OptionFieldRequest = {
      * Show this option only when another option has a given value.
      */
     visible_if?: OptionVisibleIfRequest;
+    /**
+     * The value must not be used by another non-terminated resource of this offering. Only for string, text, integer and select_string options.
+     */
+    unique?: boolean;
     /**
      * Regular expression the whole value must match. Only for string and text options. Use syntax common to Python and JavaScript, so the order form can check it too; \w, \d, \s and \b match ASCII characters only. Blank means no pattern.
      */
