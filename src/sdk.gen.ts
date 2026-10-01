@@ -20677,7 +20677,7 @@ export const matrixRoomsSyncMembers = <ThrowOnError extends boolean = true>(opti
 /**
  * List projects the caller can create a Matrix room for
  *
- * Returns projects where the caller is customer owner (staff sees all) and no MatrixRoom row exists yet. Existing archived rooms still block creation, so projects with any room are excluded.
+ * Returns projects where the caller holds MATRIX_ROOM.CREATE on the project or its organization (staff and support see all) and no MatrixRoom row exists yet. Existing archived rooms still block creation, so projects with any room are excluded.
  */
 export const matrixRoomsEligibleProjectsList = <ThrowOnError extends boolean = true>(options?: Options<MatrixRoomsEligibleProjectsListData, ThrowOnError>) => (options?.client ?? client).get<MatrixRoomsEligibleProjectsListResponses, unknown, ThrowOnError>({
     security: [
