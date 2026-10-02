@@ -12549,7 +12549,20 @@ export type MatrixRoomMemberSummary = {
     membership_state: string;
 };
 
+export type MatrixRoomOpen = {
+    room_id: string;
+};
+
 export type MatrixRoomStateEnum = 'creating' | 'active' | 'disabling' | 'archived' | 'error';
+
+export type MatrixSession = {
+    homeserver_url: string;
+    matrix_user_id: string;
+    device_id: string;
+    access_token: string;
+    refresh_token: string | null;
+    expires_in_ms: number | null;
+};
 
 export type MePermission = {
     readonly role_name: string;
@@ -18947,12 +18960,12 @@ export type OpenStackPortIpUpdateRequest = {
 
 export type OpenStackPortNestedSecurityGroup = {
     readonly uuid: string;
-    name: string;
-    readonly url: string;
+    readonly name: string;
+    url: string;
 };
 
 export type OpenStackPortNestedSecurityGroupRequest = {
-    name: string;
+    url: string;
 };
 
 export type OpenStackPortRequest = {
@@ -21746,7 +21759,6 @@ export type PatchedOpenStackPortRequest = {
      * Target tenant for shared network port creation. If not specified, defaults to network's tenant.
      */
     target_tenant?: string;
-    security_groups?: Array<OpenStackPortNestedSecurityGroupRequest>;
 };
 
 export type PatchedOpenStackSecurityGroupUpdateRequest = {
@@ -79707,6 +79719,32 @@ export type MatrixRoomsMembersListResponses = {
 
 export type MatrixRoomsMembersListResponse = MatrixRoomsMembersListResponses[keyof MatrixRoomsMembersListResponses];
 
+export type MatrixRoomsOpenData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/matrix/rooms/{uuid}/open/';
+};
+
+export type MatrixRoomsOpenErrors = {
+    /**
+     * The caller is not a member of the room.
+     */
+    403: unknown;
+    /**
+     * The room is not active.
+     */
+    409: unknown;
+};
+
+export type MatrixRoomsOpenResponses = {
+    200: MatrixRoomOpen;
+};
+
+export type MatrixRoomsOpenResponse = MatrixRoomsOpenResponses[keyof MatrixRoomsOpenResponses];
+
 export type MatrixRoomsReactivateData = {
     body?: never;
     path: {
@@ -79823,6 +79861,30 @@ export type MatrixRoomsEligibleProjectsCountResponses = {
      */
     200: unknown;
 };
+
+export type MatrixSessionData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/matrix/session/';
+};
+
+export type MatrixSessionErrors = {
+    /**
+     * Matrix chat is not enabled.
+     */
+    404: unknown;
+    /**
+     * The homeserver could not start a session; try again later.
+     */
+    503: unknown;
+};
+
+export type MatrixSessionResponses = {
+    200: MatrixSession;
+};
+
+export type MatrixSessionResponse = MatrixSessionResponses[keyof MatrixSessionResponses];
 
 export type MediaRetrieveData = {
     body?: never;
