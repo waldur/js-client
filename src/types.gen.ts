@@ -4377,6 +4377,7 @@ export type CatalogSummary = {
      */
     version: string;
     description?: string;
+    readonly supports_cpu_target_restrictions: boolean;
 };
 
 export type CatalogSummaryRequest = {
@@ -31707,6 +31708,7 @@ export type SoftwareCatalog = {
      */
     catalog_type?: CatalogTypeEnum;
     readonly catalog_type_display: string;
+    readonly supports_cpu_target_restrictions: boolean;
     /**
      * Catalog source URL
      */
@@ -31728,6 +31730,12 @@ export type SoftwareCatalog = {
     readonly package_count: number;
     readonly version_count: number;
     readonly target_count: number;
+};
+
+export type SoftwareCatalogCpuTarget = {
+    cpu_family: string;
+    cpu_microarchitecture: string;
+    full_arch: string;
 };
 
 export type SoftwareCatalogDiscover = {
@@ -75022,6 +75030,21 @@ export type MarketplaceSoftwareCatalogsUpdateResponses = {
 
 export type MarketplaceSoftwareCatalogsUpdateResponse = MarketplaceSoftwareCatalogsUpdateResponses[keyof MarketplaceSoftwareCatalogsUpdateResponses];
 
+export type MarketplaceSoftwareCatalogsCpuTargetsListData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-software-catalogs/{uuid}/cpu_targets/';
+};
+
+export type MarketplaceSoftwareCatalogsCpuTargetsListResponses = {
+    200: Array<SoftwareCatalogCpuTarget>;
+};
+
+export type MarketplaceSoftwareCatalogsCpuTargetsListResponse = MarketplaceSoftwareCatalogsCpuTargetsListResponses[keyof MarketplaceSoftwareCatalogsCpuTargetsListResponses];
+
 export type MarketplaceSoftwareCatalogsUpdateCatalogData = {
     body?: never;
     path: {
@@ -75168,13 +75191,13 @@ export type MarketplaceSoftwarePackagesListData = {
          */
         category?: string;
         /**
-         * Filter packages available for specific CPU family (e.g., x86_64, aarch64)
+         * Filter packages available for any of the given CPU families (e.g., x86_64, aarch64)
          */
-        cpu_family?: string;
+        cpu_family?: Array<string>;
         /**
-         * Filter packages available for specific CPU microarchitecture (e.g., generic, zen2, haswell)
+         * Filter packages available for any of the given CPU microarchitectures (e.g., generic, amd/zen3, intel/sapphirerapids)
          */
-        cpu_microarchitecture?: string;
+        cpu_microarchitecture?: Array<string>;
         /**
          * Filter packages by description (case-insensitive partial match)
          */
@@ -75286,13 +75309,13 @@ export type MarketplaceSoftwarePackagesCountData = {
          */
         category?: string;
         /**
-         * Filter packages available for specific CPU family (e.g., x86_64, aarch64)
+         * Filter packages available for any of the given CPU families (e.g., x86_64, aarch64)
          */
-        cpu_family?: string;
+        cpu_family?: Array<string>;
         /**
-         * Filter packages available for specific CPU microarchitecture (e.g., generic, zen2, haswell)
+         * Filter packages available for any of the given CPU microarchitectures (e.g., generic, amd/zen3, intel/sapphirerapids)
          */
-        cpu_microarchitecture?: string;
+        cpu_microarchitecture?: Array<string>;
         /**
          * Filter packages by description (case-insensitive partial match)
          */
@@ -75459,8 +75482,8 @@ export type MarketplaceSoftwareTargetsListData = {
     path?: never;
     query?: {
         catalog_uuid?: string;
-        cpu_family?: string;
-        cpu_microarchitecture?: string;
+        cpu_family?: Array<string>;
+        cpu_microarchitecture?: Array<string>;
         /**
          * Filter targets by GPU architecture (e.g., nvidia/cc90)
          */
@@ -75517,8 +75540,8 @@ export type MarketplaceSoftwareTargetsCountData = {
     path?: never;
     query?: {
         catalog_uuid?: string;
-        cpu_family?: string;
-        cpu_microarchitecture?: string;
+        cpu_family?: Array<string>;
+        cpu_microarchitecture?: Array<string>;
         /**
          * Filter targets by GPU architecture (e.g., nvidia/cc90)
          */
@@ -75658,8 +75681,8 @@ export type MarketplaceSoftwareVersionsListData = {
          */
         catalog_type?: CatalogTypeEnum;
         catalog_uuid?: string;
-        cpu_family?: string;
-        cpu_microarchitecture?: string;
+        cpu_family?: Array<string>;
+        cpu_microarchitecture?: Array<string>;
         /**
          * Filter versions by GPU architecture (e.g., nvidia/cc90)
          */
@@ -75731,8 +75754,8 @@ export type MarketplaceSoftwareVersionsCountData = {
          */
         catalog_type?: CatalogTypeEnum;
         catalog_uuid?: string;
-        cpu_family?: string;
-        cpu_microarchitecture?: string;
+        cpu_family?: Array<string>;
+        cpu_microarchitecture?: Array<string>;
         /**
          * Filter versions by GPU architecture (e.g., nvidia/cc90)
          */
