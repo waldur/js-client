@@ -66395,6 +66395,38 @@ export type MarketplaceProviderResourcesRestoreResponses = {
 
 export type MarketplaceProviderResourcesRestoreResponse = MarketplaceProviderResourcesRestoreResponses[keyof MarketplaceProviderResourcesRestoreResponses];
 
+export type MarketplaceProviderResourcesRobotAccountUsersListData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * Filter by full name.
+         */
+        full_name?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Filter by full name, username or email.
+         */
+        user_keyword?: string;
+    };
+    url: '/api/marketplace-provider-resources/{uuid}/robot_account_users/';
+};
+
+export type MarketplaceProviderResourcesRobotAccountUsersListResponses = {
+    200: Array<BasicUser>;
+};
+
+export type MarketplaceProviderResourcesRobotAccountUsersListResponse = MarketplaceProviderResourcesRobotAccountUsersListResponses[keyof MarketplaceProviderResourcesRobotAccountUsersListResponses];
+
 export type MarketplaceProviderResourcesSetAsErredData = {
     body?: ResourceSetStateErredRequest;
     path: {
