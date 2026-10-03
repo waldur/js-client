@@ -15087,7 +15087,7 @@ export type NullEnum = never;
 
 export type OpenportalmembershipsyncmodeEnum = 'invitation' | 'direct';
 
-export type ObservableObjectTypeEnum = 'order' | 'user_role' | 'resource' | 'offering_user' | 'importable_resources' | 'service_account' | 'course_account' | 'resource_periodic_limits' | 'offering_resources_sync' | 'resource_api_key_rotation' | 'resource_end_date_change_request' | 'user_profile' | 'user_ssh_key' | 'user_lifecycle' | 'service_provider_account' | 'call' | 'proposal';
+export type ObservableObjectTypeEnum = 'order' | 'user_role' | 'resource' | 'offering_user' | 'importable_resources' | 'service_account' | 'course_account' | 'resource_periodic_limits' | 'offering_resources_sync' | 'resource_api_key_rotation' | 'resource_end_date_change_request' | 'user_profile' | 'user_ssh_key' | 'user_lifecycle' | 'service_provider_account' | 'service_provider_project_group' | 'call' | 'proposal';
 
 export type ObtainAuthTokenRequest = {
     /**
