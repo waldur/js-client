@@ -13921,10 +13921,15 @@ export type MessageTemplateRequest = {
 };
 
 export type MetricBreakdownItem = {
+    /**
+     * The attribute's value, or the resource's name when broken down by resource.
+     */
     value: {
         [key: string]: unknown;
     } | null;
     figure: number | null;
+    resource_uuid: string | null;
+    resource_name: string | null;
 };
 
 export type MetricDefinition = {
@@ -29170,6 +29175,14 @@ export type ResourceLimitPeriod = {
      * Total amount for this period
      */
     total: string;
+};
+
+export type ResourceMetric = {
+    offering_metric: OfferingMetric;
+    period: string;
+    period_start: string;
+    current: number | null;
+    previous: number | null;
 };
 
 export type ResourceMissingUsage = {
@@ -56323,9 +56336,19 @@ export type MarketplaceMetricBreakdownListData = {
     path?: never;
     query: {
         end?: string;
+        /**
+         * An attribute the metric declares, or 'resource' to break a project's figure down by its resources.
+         */
         group_by: string;
         offering_metric_uuid: string;
-        project_uuid: string;
+        /**
+         * The project whose figure to break down. Either this or resource_uuid.
+         */
+        project_uuid?: string;
+        /**
+         * The resource whose figure to break down. Either this or project_uuid.
+         */
+        resource_uuid?: string;
         start: string;
     };
     url: '/api/marketplace-metric-breakdown/';
@@ -69460,6 +69483,21 @@ export type MarketplaceResourceLimitChangeRequestsRejectResponses = {
      */
     200: unknown;
 };
+
+export type MarketplaceResourceMetricsListData = {
+    body?: never;
+    path?: never;
+    query: {
+        resource_uuid: string;
+    };
+    url: '/api/marketplace-resource-metrics/';
+};
+
+export type MarketplaceResourceMetricsListResponses = {
+    200: Array<ResourceMetric>;
+};
+
+export type MarketplaceResourceMetricsListResponse = MarketplaceResourceMetricsListResponses[keyof MarketplaceResourceMetricsListResponses];
 
 export type MarketplaceResourceOfferingsListData = {
     body?: never;
