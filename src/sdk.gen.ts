@@ -21207,7 +21207,7 @@ export const marketplaceUserOfferingConsentsRevoke = <ThrowOnError extends boole
 /**
  * Get Matrix login credentials
  *
- * Returns Matrix login credentials for the authenticated user based on the configured login method.
+ * Returns what an external Matrix client needs to sign the authenticated user in, per MATRIX_EXTERNAL_LOGIN_METHOD: a password only in password mode, and never an access token.
  */
 export const matrixCredentialsRetrieve = <ThrowOnError extends boolean = true>(options?: Options<MatrixCredentialsRetrieveData, ThrowOnError>) => (options?.client ?? client).get<MatrixCredentialsRetrieveResponses, unknown, ThrowOnError>({
     security: [

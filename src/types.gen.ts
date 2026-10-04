@@ -6181,8 +6181,7 @@ export type ConstanceSettings = {
     MATRIX_EXPORT_MEDIA?: boolean;
     MATRIX_USER_REGISTRATION_SECRET?: string;
     MATRIX_USER_ID_FORMAT?: string;
-    MATRIX_LOGIN_METHOD?: string;
-    MATRIX_OIDC_PROVIDER_URL?: string;
+    MATRIX_EXTERNAL_LOGIN_METHOD?: MatrixExternalLoginMethodEnum;
     MATRIX_LIVEKIT_KEY?: string;
     MATRIX_LIVEKIT_SECRET?: string;
     MATRIX_LIVEKIT_URL?: string;
@@ -6531,8 +6530,7 @@ export type ConstanceSettingsRequest = {
     MATRIX_EXPORT_MEDIA?: boolean;
     MATRIX_USER_REGISTRATION_SECRET?: string;
     MATRIX_USER_ID_FORMAT?: string;
-    MATRIX_LOGIN_METHOD?: string;
-    MATRIX_OIDC_PROVIDER_URL?: string;
+    MATRIX_EXTERNAL_LOGIN_METHOD?: MatrixExternalLoginMethodEnum;
     MATRIX_LIVEKIT_KEY?: string;
     MATRIX_LIVEKIT_SECRET?: string;
     MATRIX_LIVEKIT_URL?: string;
@@ -12467,14 +12465,10 @@ export type MatrixAppserviceStatus = {
 };
 
 export type MatrixCredentials = {
-    method: string;
+    method: MatrixExternalLoginMethodEnum;
     homeserver_url: string;
     matrix_user_id: string;
     password?: string;
-    login_token?: string;
-    oidc_provider_url?: string;
-    room_id?: string;
-    access_token?: string;
 };
 
 export type MatrixDiagnosticCheck = {
@@ -12488,6 +12482,8 @@ export type MatrixDiagnosticsResponse = {
     ok: boolean;
     checks: Array<MatrixDiagnosticCheck>;
 };
+
+export type MatrixExternalLoginMethodEnum = 'none' | 'password' | 'oidc';
 
 export type MatrixHistoryExport = {
     readonly uuid: string;
@@ -36689,8 +36685,7 @@ export type ConstanceSettingsRequestForm = {
     MATRIX_EXPORT_MEDIA?: boolean;
     MATRIX_USER_REGISTRATION_SECRET?: string;
     MATRIX_USER_ID_FORMAT?: string;
-    MATRIX_LOGIN_METHOD?: string;
-    MATRIX_OIDC_PROVIDER_URL?: string;
+    MATRIX_EXTERNAL_LOGIN_METHOD?: MatrixExternalLoginMethodEnum;
     MATRIX_LIVEKIT_KEY?: string;
     MATRIX_LIVEKIT_SECRET?: string;
     MATRIX_LIVEKIT_URL?: string;
@@ -37039,8 +37034,7 @@ export type ConstanceSettingsRequestMultipart = {
     MATRIX_EXPORT_MEDIA?: boolean;
     MATRIX_USER_REGISTRATION_SECRET?: string;
     MATRIX_USER_ID_FORMAT?: string;
-    MATRIX_LOGIN_METHOD?: string;
-    MATRIX_OIDC_PROVIDER_URL?: string;
+    MATRIX_EXTERNAL_LOGIN_METHOD?: MatrixExternalLoginMethodEnum;
     MATRIX_LIVEKIT_KEY?: string;
     MATRIX_LIVEKIT_SECRET?: string;
     MATRIX_LIVEKIT_URL?: string;
