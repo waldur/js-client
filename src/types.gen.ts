@@ -17073,6 +17073,8 @@ export type OfferingUser = {
      * URL link for additional information or actions related to service provider comment
      */
     readonly service_provider_comment_url: string;
+    readonly service_provider_account_uuid: string | null;
+    readonly service_provider_account_username: string | null;
     /**
      * Check if the user has active consent for this offering.
      */
@@ -37362,7 +37364,7 @@ export type OfferingTermsOfServiceOEnum = '-created' | '-modified' | '-version' 
 
 export type UserChecklistCompletionOEnum = '-is_completed' | '-modified' | 'is_completed' | 'modified';
 
-export type OfferingUserFieldEnum = 'consent_data' | 'created' | 'customer_name' | 'customer_uuid' | 'has_compliance_checklist' | 'has_consent' | 'home_directory' | 'is_profile_complete' | 'is_restricted' | 'login_shell' | 'missing_profile_attributes' | 'modified' | 'offering' | 'offering_has_active_tos' | 'offering_name' | 'offering_uuid' | 'primarygroup' | 'requires_reconsent' | 'runtime_state' | 'service_provider_comment' | 'service_provider_comment_url' | 'state' | 'uidnumber' | 'url' | 'user' | 'user_active_isds' | 'user_address' | 'user_affiliations' | 'user_birth_date' | 'user_civil_number' | 'user_country_of_residence' | 'user_eduperson_assurance' | 'user_email' | 'user_first_name' | 'user_full_name' | 'user_gender' | 'user_identity_source' | 'user_job_title' | 'user_last_name' | 'user_nationalities' | 'user_nationality' | 'user_organization' | 'user_organization_address' | 'user_organization_country' | 'user_organization_registry_code' | 'user_organization_type' | 'user_organization_vat_code' | 'user_personal_title' | 'user_phone_number' | 'user_place_of_birth' | 'user_primary_gid' | 'user_uid_number' | 'user_username' | 'user_uuid' | 'username' | 'uuid';
+export type OfferingUserFieldEnum = 'consent_data' | 'created' | 'customer_name' | 'customer_uuid' | 'has_compliance_checklist' | 'has_consent' | 'home_directory' | 'is_profile_complete' | 'is_restricted' | 'login_shell' | 'missing_profile_attributes' | 'modified' | 'offering' | 'offering_has_active_tos' | 'offering_name' | 'offering_uuid' | 'primarygroup' | 'requires_reconsent' | 'runtime_state' | 'service_provider_account_username' | 'service_provider_account_uuid' | 'service_provider_comment' | 'service_provider_comment_url' | 'state' | 'uidnumber' | 'url' | 'user' | 'user_active_isds' | 'user_address' | 'user_affiliations' | 'user_birth_date' | 'user_civil_number' | 'user_country_of_residence' | 'user_eduperson_assurance' | 'user_email' | 'user_first_name' | 'user_full_name' | 'user_gender' | 'user_identity_source' | 'user_job_title' | 'user_last_name' | 'user_nationalities' | 'user_nationality' | 'user_organization' | 'user_organization_address' | 'user_organization_country' | 'user_organization_registry_code' | 'user_organization_type' | 'user_organization_vat_code' | 'user_personal_title' | 'user_phone_number' | 'user_place_of_birth' | 'user_primary_gid' | 'user_uid_number' | 'user_username' | 'user_uuid' | 'username' | 'uuid';
 
 export type OfferingUserOEnum = '-created' | '-modified' | '-user_first_name' | '-user_last_name' | '-username' | 'created' | 'modified' | 'user_first_name' | 'user_last_name' | 'username';
 
@@ -58061,6 +58063,10 @@ export type MarketplaceOfferingUsersListData = {
          */
         has_consent?: boolean;
         /**
+         * Backed by a service provider account
+         */
+        is_provider_backed?: boolean;
+        /**
          * Is restricted
          */
         is_restricted?: boolean;
@@ -58114,6 +58120,10 @@ export type MarketplaceOfferingUsersListData = {
          *
          */
         runtime_state?: Array<RuntimeStateEnum>;
+        /**
+         * Service provider account UUID
+         */
+        service_provider_account_uuid?: string;
         /**
          * Offering user state
          *
@@ -58163,6 +58173,10 @@ export type MarketplaceOfferingUsersCountData = {
          */
         has_consent?: boolean;
         /**
+         * Backed by a service provider account
+         */
+        is_provider_backed?: boolean;
+        /**
          * Is restricted
          */
         is_restricted?: boolean;
@@ -58216,6 +58230,10 @@ export type MarketplaceOfferingUsersCountData = {
          *
          */
         runtime_state?: Array<RuntimeStateEnum>;
+        /**
+         * Service provider account UUID
+         */
+        service_provider_account_uuid?: string;
         /**
          * Offering user state
          *
@@ -58471,6 +58489,10 @@ export type MarketplaceOfferingUsersPosixAllocationsListData = {
          */
         has_consent?: boolean;
         /**
+         * Backed by a service provider account
+         */
+        is_provider_backed?: boolean;
+        /**
          * Is restricted
          */
         is_restricted?: boolean;
@@ -58524,6 +58546,10 @@ export type MarketplaceOfferingUsersPosixAllocationsListData = {
          *
          */
         runtime_state?: Array<RuntimeStateEnum>;
+        /**
+         * Service provider account UUID
+         */
+        service_provider_account_uuid?: string;
         /**
          * Offering user state
          *
@@ -58575,6 +58601,10 @@ export type MarketplaceOfferingUsersPosixGroupsListData = {
          */
         has_consent?: boolean;
         /**
+         * Backed by a service provider account
+         */
+        is_provider_backed?: boolean;
+        /**
          * Is restricted
          */
         is_restricted?: boolean;
@@ -58628,6 +58658,10 @@ export type MarketplaceOfferingUsersPosixGroupsListData = {
          *
          */
         runtime_state?: Array<RuntimeStateEnum>;
+        /**
+         * Service provider account UUID
+         */
+        service_provider_account_uuid?: string;
         /**
          * Offering user state
          *
@@ -58957,6 +58991,10 @@ export type MarketplaceOfferingUsersPosixIdentitiesListData = {
          */
         has_consent?: boolean;
         /**
+         * Backed by a service provider account
+         */
+        is_provider_backed?: boolean;
+        /**
          * Is restricted
          */
         is_restricted?: boolean;
@@ -59010,6 +59048,10 @@ export type MarketplaceOfferingUsersPosixIdentitiesListData = {
          *
          */
         runtime_state?: Array<RuntimeStateEnum>;
+        /**
+         * Service provider account UUID
+         */
+        service_provider_account_uuid?: string;
         /**
          * Offering user state
          *
@@ -59056,6 +59098,10 @@ export type MarketplaceOfferingUsersPosixIdentitiesCountData = {
          */
         has_consent?: boolean;
         /**
+         * Backed by a service provider account
+         */
+        is_provider_backed?: boolean;
+        /**
          * Is restricted
          */
         is_restricted?: boolean;
@@ -59109,6 +59155,10 @@ export type MarketplaceOfferingUsersPosixIdentitiesCountData = {
          *
          */
         runtime_state?: Array<RuntimeStateEnum>;
+        /**
+         * Service provider account UUID
+         */
+        service_provider_account_uuid?: string;
         /**
          * Offering user state
          *
