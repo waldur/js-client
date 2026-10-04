@@ -5341,6 +5341,8 @@ export type CommentRequest = {
     is_public?: boolean;
 };
 
+export type ComparatorEnum = 'ge' | 'le';
+
 export type CompleteWorkflowStepRequest = {
     /**
      * UUID of the workflow step instance the client believes is active. Used to detect concurrent step transitions.
@@ -6148,6 +6150,12 @@ export type ConstanceSettings = {
     ARROW_CONSUMPTION_SYNC_ENABLED?: boolean;
     ARROW_CONSUMPTION_SYNC_INTERVAL_HOURS?: number;
     ARROW_BILLING_CHECK_INTERVAL_HOURS?: number;
+    METRICS_LATE_DATA_DAYS?: number;
+    METRICS_MAX_SERIES_PER_RESOURCE_METRIC?: number;
+    METRICS_MAX_POINTS_PER_REQUEST?: number;
+    METRICS_MAX_OTLP_BODY_BYTES?: number;
+    METRICS_DEFAULT_RETENTION_POLICY?: string;
+    METRICS_ARCHIVE_GRACE_DAYS?: number;
     USAGE_POLL_RECORD_RETENTION_MONTHS?: number;
     SLURM_POLICY_EVALUATION_LOG_RETENTION_DAYS?: number;
     FEDERATED_IDENTITY_SYNC_ENABLED?: boolean;
@@ -6492,6 +6500,12 @@ export type ConstanceSettingsRequest = {
     ARROW_CONSUMPTION_SYNC_ENABLED?: boolean;
     ARROW_CONSUMPTION_SYNC_INTERVAL_HOURS?: number;
     ARROW_BILLING_CHECK_INTERVAL_HOURS?: number;
+    METRICS_LATE_DATA_DAYS?: number;
+    METRICS_MAX_SERIES_PER_RESOURCE_METRIC?: number;
+    METRICS_MAX_POINTS_PER_REQUEST?: number;
+    METRICS_MAX_OTLP_BODY_BYTES?: number;
+    METRICS_DEFAULT_RETENTION_POLICY?: string;
+    METRICS_ARCHIVE_GRACE_DAYS?: number;
     USAGE_POLL_RECORD_RETENTION_MONTHS?: number;
     SLURM_POLICY_EVALUATION_LOG_RETENTION_DAYS?: number;
     FEDERATED_IDENTITY_SYNC_ENABLED?: boolean;
@@ -9868,6 +9882,8 @@ export type GlobalUserDataAccessLog = {
         [key: string]: unknown;
     };
 };
+
+export type GoodDirectionEnum = 'up' | 'down' | 'neutral';
 
 export type GoogleAuthUrl = {
     request_url: string;
@@ -13904,6 +13920,147 @@ export type MessageTemplateRequest = {
     body: string;
 };
 
+export type MetricBreakdownItem = {
+    value: {
+        [key: string]: unknown;
+    } | null;
+    figure: number | null;
+};
+
+export type MetricDefinition = {
+    readonly uuid: string;
+    /**
+     * Name services report against. Cannot be changed.
+     */
+    key: string;
+    name: string;
+    description?: string;
+    /**
+     * UCUM unit, for example h, % or {learners}.
+     */
+    unit?: string;
+    kind?: MetricKindEnum;
+    good_direction?: GoodDirectionEnum;
+    attribute_keys?: Array<string>;
+    /**
+     * Distinct values one attribute may take per resource.
+     */
+    max_attribute_values?: number;
+    retention_policy?: string | null;
+    /**
+     * Service provider the definition is private to; empty is global.
+     */
+    owner_customer?: string | null;
+    readonly owner_customer_name: string;
+    state?: MetricDefinitionStateEnum;
+    readonly created: string;
+};
+
+export type MetricDefinitionRequest = {
+    /**
+     * Name services report against. Cannot be changed.
+     */
+    key: string;
+    name: string;
+    description?: string;
+    /**
+     * UCUM unit, for example h, % or {learners}.
+     */
+    unit?: string;
+    kind?: MetricKindEnum;
+    good_direction?: GoodDirectionEnum;
+    attribute_keys?: Array<string>;
+    /**
+     * Distinct values one attribute may take per resource.
+     */
+    max_attribute_values?: number;
+    retention_policy?: string | null;
+    /**
+     * Service provider the definition is private to; empty is global.
+     */
+    owner_customer?: string | null;
+    state?: MetricDefinitionStateEnum;
+};
+
+export type MetricDefinitionStateEnum = 'active' | 'deprecated';
+
+export type MetricGoal = {
+    readonly uuid: string;
+    offering_metric: string;
+    readonly metric_name: string;
+    /**
+     * Empty sets the offering's default goal.
+     */
+    project?: string | null;
+    readonly project_name: string;
+    comparator?: ComparatorEnum;
+    value: string;
+    period?: MetricGoalPeriodEnum;
+    readonly created: string;
+};
+
+export type MetricGoalPeriodEnum = 'month' | 'quarter' | 'rolling_30d';
+
+export type MetricGoalRequest = {
+    offering_metric: string;
+    /**
+     * Empty sets the offering's default goal.
+     */
+    project?: string | null;
+    comparator?: ComparatorEnum;
+    value: string;
+    period?: MetricGoalPeriodEnum;
+};
+
+export type MetricKindEnum = 'gauge' | 'counter';
+
+export type MetricPointReportRequest = MetricPointRequest | Array<MetricPointRequest>;
+
+export type MetricPointRequest = {
+    /**
+     * UUID of the resource
+     */
+    resource: string;
+    /**
+     * Key of a metric the resource's offering adopts
+     */
+    metric: string;
+    timestamp: string;
+    value: number;
+    /**
+     * Only for a counter reported as a running total: when the total started counting. Omit it to report the increment since the previous point.
+     */
+    start_time?: string | null;
+    /**
+     * Values of the attributes the metric declares
+     */
+    attributes?: {
+        [key: string]: unknown;
+    };
+};
+
+export type MetricPointValue = {
+    timestamp: string;
+    value: number | null;
+};
+
+export type MetricReportResult = {
+    accepted: number;
+    rejected: Array<RejectedPoint>;
+};
+
+export type MetricSeriesGroup = {
+    attributes: {
+        [key: string]: unknown;
+    };
+    points: Array<MetricPointValue>;
+};
+
+export type MetricSeriesResponse = {
+    granularity: string;
+    series: Array<MetricSeriesGroup>;
+};
+
 export type MigrationCreate = {
     mappings?: Mapping;
     src_resource: string;
@@ -16261,6 +16418,50 @@ export type OfferingMergeVerification = {
     execute?: OfferingMergeExecuteReport;
     undo?: OfferingMergeUndoReport;
 };
+
+export type OfferingMetric = {
+    readonly uuid: string;
+    offering: string;
+    readonly offering_name: string;
+    definition: string;
+    /**
+     * Name services report against. Cannot be changed.
+     */
+    readonly key: string;
+    readonly name: string;
+    /**
+     * Empty shows the definition's name.
+     */
+    display_name?: string;
+    /**
+     * UCUM unit, for example h, % or {learners}.
+     */
+    readonly unit: string;
+    kind: MetricKindEnum;
+    good_direction: GoodDirectionEnum;
+    readonly attribute_keys: Array<string>;
+    /**
+     * How the figures of a project's resources combine. An average is unweighted: every resource counts once.
+     */
+    project_aggregation?: ProjectAggregationEnum;
+    state: OfferingMetricStateEnum;
+    readonly created: string;
+};
+
+export type OfferingMetricRequest = {
+    offering: string;
+    definition: string;
+    /**
+     * Empty shows the definition's name.
+     */
+    display_name?: string;
+    /**
+     * How the figures of a project's resources combine. An average is unweighted: every resource counts once.
+     */
+    project_aggregation?: ProjectAggregationEnum;
+};
+
+export type OfferingMetricStateEnum = 'active' | 'paused' | 'archived';
 
 export type OfferingOptions = {
     order: Array<string>;
@@ -21354,6 +21555,43 @@ export type PatchedMessageTemplateRequest = {
     body?: string;
 };
 
+export type PatchedMetricDefinitionRequest = {
+    /**
+     * Name services report against. Cannot be changed.
+     */
+    key?: string;
+    name?: string;
+    description?: string;
+    /**
+     * UCUM unit, for example h, % or {learners}.
+     */
+    unit?: string;
+    kind?: MetricKindEnum;
+    good_direction?: GoodDirectionEnum;
+    attribute_keys?: Array<string>;
+    /**
+     * Distinct values one attribute may take per resource.
+     */
+    max_attribute_values?: number;
+    retention_policy?: string | null;
+    /**
+     * Service provider the definition is private to; empty is global.
+     */
+    owner_customer?: string | null;
+    state?: MetricDefinitionStateEnum;
+};
+
+export type PatchedMetricGoalRequest = {
+    offering_metric?: string;
+    /**
+     * Empty sets the offering's default goal.
+     */
+    project?: string | null;
+    comparator?: ComparatorEnum;
+    value?: string;
+    period?: MetricGoalPeriodEnum;
+};
+
 export type PatchedMigrationDetailsRequest = {
     mappings?: MappingRequest;
     error_message?: string;
@@ -21438,6 +21676,19 @@ export type PatchedOfferingMergeRequest = {
         [key: string]: string;
     };
     invoice_policy?: InvoicePolicyEnum;
+};
+
+export type PatchedOfferingMetricRequest = {
+    offering?: string;
+    definition?: string;
+    /**
+     * Empty shows the definition's name.
+     */
+    display_name?: string;
+    /**
+     * How the figures of a project's resources combine. An average is unweighted: every resource counts once.
+     */
+    project_aggregation?: ProjectAggregationEnum;
 };
 
 export type PatchedOfferingPartitionUpdateRequest = {
@@ -22500,6 +22751,16 @@ export type PatchedResourceUpdateRequest = {
      * The date is inclusive. Once reached, a resource will be scheduled for termination.
      */
     end_date?: string | null;
+};
+
+export type PatchedRetentionPolicyRequest = {
+    name?: string;
+    raw_days?: number;
+    hourly_days?: number;
+    /**
+     * Empty keeps daily roll-ups forever.
+     */
+    daily_days?: number | null;
 };
 
 export type PatchedReviewerAffiliationRequest = {
@@ -23849,6 +24110,7 @@ export type Project = {
         [key: string]: number;
     };
     billing_price_estimate: NestedPriceEstimate;
+    readonly has_metrics: boolean;
 };
 
 export type ProjectAccountingSummary = {
@@ -23868,6 +24130,8 @@ export type ProjectActionEnum = 'create' | 'existing' | 'not_recreated';
 export type ProjectAffiliationUpdateRequest = {
     affiliation?: string | null;
 };
+
+export type ProjectAggregationEnum = 'sum' | 'mean';
 
 export type ProjectAnswer = {
     readonly project_uuid: string;
@@ -24250,6 +24514,17 @@ export type ProjectMetadataAnswer = {
      * When this answer was last saved.
      */
     modified: string;
+};
+
+export type ProjectMetric = {
+    offering_metric: OfferingMetric;
+    period: string;
+    period_start: string;
+    current: number | null;
+    previous: number | null;
+    goal: MetricGoal | null;
+    goal_is_project: boolean;
+    goal_met: boolean | null;
 };
 
 export type ProjectOrderAutoApproval = {
@@ -27777,6 +28052,11 @@ export type RejectWorkflowStepResponse = {
     proposal_state: string;
 };
 
+export type RejectedPoint = {
+    index: number;
+    reason: string;
+};
+
 export type RelationshipTypeEnum = 'employment' | 'consulting' | 'equity' | 'board' | 'royalties' | 'gifts' | 'other';
 
 export type RelevantWhen = {
@@ -29355,6 +29635,27 @@ export type ResourcesLimits = {
 };
 
 export type ResponsibleRoleEnum = 'call_manager' | 'offering_manager' | 'reviewer' | 'panel_member' | 'applicant';
+
+export type RetentionPolicy = {
+    readonly uuid: string;
+    name: string;
+    raw_days?: number;
+    hourly_days?: number;
+    /**
+     * Empty keeps daily roll-ups forever.
+     */
+    daily_days?: number | null;
+};
+
+export type RetentionPolicyRequest = {
+    name: string;
+    raw_days?: number;
+    hourly_days?: number;
+    /**
+     * Empty keeps daily roll-ups forever.
+     */
+    daily_days?: number | null;
+};
 
 export type ReviewCommentRequest = {
     /**
@@ -36344,6 +36645,12 @@ export type ConstanceSettingsRequestForm = {
     ARROW_CONSUMPTION_SYNC_ENABLED?: boolean;
     ARROW_CONSUMPTION_SYNC_INTERVAL_HOURS?: number;
     ARROW_BILLING_CHECK_INTERVAL_HOURS?: number;
+    METRICS_LATE_DATA_DAYS?: number;
+    METRICS_MAX_SERIES_PER_RESOURCE_METRIC?: number;
+    METRICS_MAX_POINTS_PER_REQUEST?: number;
+    METRICS_MAX_OTLP_BODY_BYTES?: number;
+    METRICS_DEFAULT_RETENTION_POLICY?: string;
+    METRICS_ARCHIVE_GRACE_DAYS?: number;
     USAGE_POLL_RECORD_RETENTION_MONTHS?: number;
     SLURM_POLICY_EVALUATION_LOG_RETENTION_DAYS?: number;
     FEDERATED_IDENTITY_SYNC_ENABLED?: boolean;
@@ -36688,6 +36995,12 @@ export type ConstanceSettingsRequestMultipart = {
     ARROW_CONSUMPTION_SYNC_ENABLED?: boolean;
     ARROW_CONSUMPTION_SYNC_INTERVAL_HOURS?: number;
     ARROW_BILLING_CHECK_INTERVAL_HOURS?: number;
+    METRICS_LATE_DATA_DAYS?: number;
+    METRICS_MAX_SERIES_PER_RESOURCE_METRIC?: number;
+    METRICS_MAX_POINTS_PER_REQUEST?: number;
+    METRICS_MAX_OTLP_BODY_BYTES?: number;
+    METRICS_DEFAULT_RETENTION_POLICY?: string;
+    METRICS_ARCHIVE_GRACE_DAYS?: number;
     USAGE_POLL_RECORD_RETENTION_MONTHS?: number;
     SLURM_POLICY_EVALUATION_LOG_RETENTION_DAYS?: number;
     FEDERATED_IDENTITY_SYNC_ENABLED?: boolean;
@@ -37350,6 +37663,10 @@ export type IntegrationStatusDetailsOEnum = '-last_request_timestamp' | 'last_re
 
 export type IntegrationStatusDetailsStatusEnum = 'Active' | 'Disconnected' | 'Unknown';
 
+export type MetricSeriesResponseAggregateEnum = 'last' | 'max' | 'mean' | 'min';
+
+export type MetricSeriesResponseGranularityEnum = 'auto' | 'day' | 'hour' | 'raw';
+
 export type OfferingEstimatedCostPolicyFieldEnum = 'actions' | 'affected_resources_count' | 'apply_to_all' | 'created' | 'created_by_full_name' | 'created_by_username' | 'current_cost' | 'eta_date' | 'eta_days' | 'fired_datetime' | 'has_fired' | 'limit_cost' | 'options' | 'organization_groups' | 'period' | 'period_name' | 'scope' | 'scope_name' | 'scope_uuid' | 'url' | 'uuid';
 
 export type OfferingFileFieldEnum = 'created' | 'file' | 'name' | 'offering' | 'url' | 'uuid';
@@ -37390,7 +37707,7 @@ export type ProviderOfferingDetailsOEnum = '-created' | '-name' | '-state' | '-t
 
 export type ProviderOfferingCustomerFieldEnum = 'abbreviation' | 'email' | 'name' | 'phone_number' | 'slug' | 'uuid';
 
-export type ProjectFieldEnum = 'affiliation' | 'affiliation_code' | 'affiliation_name' | 'affiliation_uuid' | 'backend_id' | 'billing_price_estimate' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_display_billing_info_in_projects' | 'customer_grace_period_days' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'effective_end_date' | 'end_date' | 'end_date_requested_by' | 'end_date_updated_at' | 'grace_period_days' | 'image' | 'is_in_grace_period' | 'is_industry' | 'is_removed' | 'kind' | 'marketplace_resource_count' | 'max_service_accounts' | 'name' | 'oecd_fos_2007_code' | 'oecd_fos_2007_label' | 'project_credit' | 'project_metadata' | 'resources_count' | 'science_domain_code' | 'science_domain_name' | 'science_domain_uuid' | 'science_sub_domain' | 'science_sub_domain_code' | 'science_sub_domain_name' | 'slug' | 'staff_notes' | 'start_date' | 'termination_metadata' | 'type' | 'type_name' | 'type_uuid' | 'url' | 'user_affiliations' | 'user_email_patterns' | 'user_identity_sources' | 'uuid';
+export type ProjectFieldEnum = 'affiliation' | 'affiliation_code' | 'affiliation_name' | 'affiliation_uuid' | 'backend_id' | 'billing_price_estimate' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_display_billing_info_in_projects' | 'customer_grace_period_days' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'effective_end_date' | 'end_date' | 'end_date_requested_by' | 'end_date_updated_at' | 'grace_period_days' | 'has_metrics' | 'image' | 'is_in_grace_period' | 'is_industry' | 'is_removed' | 'kind' | 'marketplace_resource_count' | 'max_service_accounts' | 'name' | 'oecd_fos_2007_code' | 'oecd_fos_2007_label' | 'project_credit' | 'project_metadata' | 'resources_count' | 'science_domain_code' | 'science_domain_name' | 'science_domain_uuid' | 'science_sub_domain' | 'science_sub_domain_code' | 'science_sub_domain_name' | 'slug' | 'staff_notes' | 'start_date' | 'termination_metadata' | 'type' | 'type_name' | 'type_uuid' | 'url' | 'user_affiliations' | 'user_email_patterns' | 'user_identity_sources' | 'uuid';
 
 export type UserFieldEnum = 'active_isds' | 'address' | 'affiliations' | 'agree_with_policy' | 'agreement_date' | 'attribute_sources' | 'birth_date' | 'can_use_personal_access_tokens' | 'civil_number' | 'country_of_residence' | 'date_joined' | 'deactivation_reason' | 'description' | 'details' | 'eduperson_assurance' | 'email' | 'first_name' | 'full_name' | 'gender' | 'has_active_session' | 'has_passkey' | 'has_usable_password' | 'identity_provider_fields' | 'identity_provider_label' | 'identity_provider_management_url' | 'identity_provider_name' | 'identity_source' | 'image' | 'ip_address' | 'is_active' | 'is_admin_deactivated' | 'is_identity_manager' | 'is_staff' | 'is_support' | 'job_title' | 'last_name' | 'managed_isds' | 'nationalities' | 'nationality' | 'native_name' | 'notifications_enabled' | 'organization' | 'organization_address' | 'organization_country' | 'organization_registry_code' | 'organization_type' | 'organization_vat_code' | 'passkey_count' | 'permissions' | 'personal_title' | 'phone_number' | 'place_of_birth' | 'preferred_language' | 'primary_gid' | 'registration_method' | 'requested_email' | 'should_protect_user_details' | 'slug' | 'token' | 'token_expires_at' | 'token_lifetime' | 'uid_number' | 'url' | 'username' | 'uuid';
 
@@ -56001,6 +56318,449 @@ export type MarketplaceIntegrationStatusesRetrieveResponses = {
 
 export type MarketplaceIntegrationStatusesRetrieveResponse = MarketplaceIntegrationStatusesRetrieveResponses[keyof MarketplaceIntegrationStatusesRetrieveResponses];
 
+export type MarketplaceMetricBreakdownListData = {
+    body?: never;
+    path?: never;
+    query: {
+        end?: string;
+        group_by: string;
+        offering_metric_uuid: string;
+        project_uuid: string;
+        start: string;
+    };
+    url: '/api/marketplace-metric-breakdown/';
+};
+
+export type MarketplaceMetricBreakdownListResponses = {
+    200: Array<MetricBreakdownItem>;
+};
+
+export type MarketplaceMetricBreakdownListResponse = MarketplaceMetricBreakdownListResponses[keyof MarketplaceMetricBreakdownListResponses];
+
+export type MarketplaceMetricDefinitionsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        is_global?: boolean;
+        key?: string;
+        kind?: MetricKindEnum;
+        name?: string;
+        owner_customer_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        state?: MetricDefinitionStateEnum;
+    };
+    url: '/api/marketplace-metric-definitions/';
+};
+
+export type MarketplaceMetricDefinitionsListResponses = {
+    200: Array<MetricDefinition>;
+};
+
+export type MarketplaceMetricDefinitionsListResponse = MarketplaceMetricDefinitionsListResponses[keyof MarketplaceMetricDefinitionsListResponses];
+
+export type MarketplaceMetricDefinitionsCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        is_global?: boolean;
+        key?: string;
+        kind?: MetricKindEnum;
+        name?: string;
+        owner_customer_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        state?: MetricDefinitionStateEnum;
+    };
+    url: '/api/marketplace-metric-definitions/';
+};
+
+export type MarketplaceMetricDefinitionsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type MarketplaceMetricDefinitionsCreateData = {
+    body: MetricDefinitionRequest;
+    path?: never;
+    query?: never;
+    url: '/api/marketplace-metric-definitions/';
+};
+
+export type MarketplaceMetricDefinitionsCreateResponses = {
+    201: MetricDefinition;
+};
+
+export type MarketplaceMetricDefinitionsCreateResponse = MarketplaceMetricDefinitionsCreateResponses[keyof MarketplaceMetricDefinitionsCreateResponses];
+
+export type MarketplaceMetricDefinitionsDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-metric-definitions/{uuid}/';
+};
+
+export type MarketplaceMetricDefinitionsDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type MarketplaceMetricDefinitionsDestroyResponse = MarketplaceMetricDefinitionsDestroyResponses[keyof MarketplaceMetricDefinitionsDestroyResponses];
+
+export type MarketplaceMetricDefinitionsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-metric-definitions/{uuid}/';
+};
+
+export type MarketplaceMetricDefinitionsRetrieveResponses = {
+    200: MetricDefinition;
+};
+
+export type MarketplaceMetricDefinitionsRetrieveResponse = MarketplaceMetricDefinitionsRetrieveResponses[keyof MarketplaceMetricDefinitionsRetrieveResponses];
+
+export type MarketplaceMetricDefinitionsPartialUpdateData = {
+    body?: PatchedMetricDefinitionRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-metric-definitions/{uuid}/';
+};
+
+export type MarketplaceMetricDefinitionsPartialUpdateResponses = {
+    200: MetricDefinition;
+};
+
+export type MarketplaceMetricDefinitionsPartialUpdateResponse = MarketplaceMetricDefinitionsPartialUpdateResponses[keyof MarketplaceMetricDefinitionsPartialUpdateResponses];
+
+export type MarketplaceMetricDefinitionsUpdateData = {
+    body: MetricDefinitionRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-metric-definitions/{uuid}/';
+};
+
+export type MarketplaceMetricDefinitionsUpdateResponses = {
+    200: MetricDefinition;
+};
+
+export type MarketplaceMetricDefinitionsUpdateResponse = MarketplaceMetricDefinitionsUpdateResponses[keyof MarketplaceMetricDefinitionsUpdateResponses];
+
+export type MarketplaceMetricGoalsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        is_default?: boolean;
+        offering_metric_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        period?: MetricGoalPeriodEnum;
+        project_uuid?: string;
+    };
+    url: '/api/marketplace-metric-goals/';
+};
+
+export type MarketplaceMetricGoalsListResponses = {
+    200: Array<MetricGoal>;
+};
+
+export type MarketplaceMetricGoalsListResponse = MarketplaceMetricGoalsListResponses[keyof MarketplaceMetricGoalsListResponses];
+
+export type MarketplaceMetricGoalsCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        is_default?: boolean;
+        offering_metric_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        period?: MetricGoalPeriodEnum;
+        project_uuid?: string;
+    };
+    url: '/api/marketplace-metric-goals/';
+};
+
+export type MarketplaceMetricGoalsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type MarketplaceMetricGoalsCreateData = {
+    body: MetricGoalRequest;
+    path?: never;
+    query?: never;
+    url: '/api/marketplace-metric-goals/';
+};
+
+export type MarketplaceMetricGoalsCreateResponses = {
+    201: MetricGoal;
+};
+
+export type MarketplaceMetricGoalsCreateResponse = MarketplaceMetricGoalsCreateResponses[keyof MarketplaceMetricGoalsCreateResponses];
+
+export type MarketplaceMetricGoalsDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-metric-goals/{uuid}/';
+};
+
+export type MarketplaceMetricGoalsDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type MarketplaceMetricGoalsDestroyResponse = MarketplaceMetricGoalsDestroyResponses[keyof MarketplaceMetricGoalsDestroyResponses];
+
+export type MarketplaceMetricGoalsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-metric-goals/{uuid}/';
+};
+
+export type MarketplaceMetricGoalsRetrieveResponses = {
+    200: MetricGoal;
+};
+
+export type MarketplaceMetricGoalsRetrieveResponse = MarketplaceMetricGoalsRetrieveResponses[keyof MarketplaceMetricGoalsRetrieveResponses];
+
+export type MarketplaceMetricGoalsPartialUpdateData = {
+    body?: PatchedMetricGoalRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-metric-goals/{uuid}/';
+};
+
+export type MarketplaceMetricGoalsPartialUpdateResponses = {
+    200: MetricGoal;
+};
+
+export type MarketplaceMetricGoalsPartialUpdateResponse = MarketplaceMetricGoalsPartialUpdateResponses[keyof MarketplaceMetricGoalsPartialUpdateResponses];
+
+export type MarketplaceMetricGoalsUpdateData = {
+    body: MetricGoalRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-metric-goals/{uuid}/';
+};
+
+export type MarketplaceMetricGoalsUpdateResponses = {
+    200: MetricGoal;
+};
+
+export type MarketplaceMetricGoalsUpdateResponse = MarketplaceMetricGoalsUpdateResponses[keyof MarketplaceMetricGoalsUpdateResponses];
+
+export type MarketplaceMetricPointsCreateData = {
+    body?: MetricPointReportRequest;
+    path?: never;
+    query?: never;
+    url: '/api/marketplace-metric-points/';
+};
+
+export type MarketplaceMetricPointsCreateResponses = {
+    200: MetricReportResult;
+};
+
+export type MarketplaceMetricPointsCreateResponse = MarketplaceMetricPointsCreateResponses[keyof MarketplaceMetricPointsCreateResponses];
+
+export type MarketplaceMetricRetentionPoliciesListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-metric-retention-policies/';
+};
+
+export type MarketplaceMetricRetentionPoliciesListResponses = {
+    200: Array<RetentionPolicy>;
+};
+
+export type MarketplaceMetricRetentionPoliciesListResponse = MarketplaceMetricRetentionPoliciesListResponses[keyof MarketplaceMetricRetentionPoliciesListResponses];
+
+export type MarketplaceMetricRetentionPoliciesCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-metric-retention-policies/';
+};
+
+export type MarketplaceMetricRetentionPoliciesCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type MarketplaceMetricRetentionPoliciesCreateData = {
+    body: RetentionPolicyRequest;
+    path?: never;
+    query?: never;
+    url: '/api/marketplace-metric-retention-policies/';
+};
+
+export type MarketplaceMetricRetentionPoliciesCreateResponses = {
+    201: RetentionPolicy;
+};
+
+export type MarketplaceMetricRetentionPoliciesCreateResponse = MarketplaceMetricRetentionPoliciesCreateResponses[keyof MarketplaceMetricRetentionPoliciesCreateResponses];
+
+export type MarketplaceMetricRetentionPoliciesDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-metric-retention-policies/{uuid}/';
+};
+
+export type MarketplaceMetricRetentionPoliciesDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type MarketplaceMetricRetentionPoliciesDestroyResponse = MarketplaceMetricRetentionPoliciesDestroyResponses[keyof MarketplaceMetricRetentionPoliciesDestroyResponses];
+
+export type MarketplaceMetricRetentionPoliciesRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-metric-retention-policies/{uuid}/';
+};
+
+export type MarketplaceMetricRetentionPoliciesRetrieveResponses = {
+    200: RetentionPolicy;
+};
+
+export type MarketplaceMetricRetentionPoliciesRetrieveResponse = MarketplaceMetricRetentionPoliciesRetrieveResponses[keyof MarketplaceMetricRetentionPoliciesRetrieveResponses];
+
+export type MarketplaceMetricRetentionPoliciesPartialUpdateData = {
+    body?: PatchedRetentionPolicyRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-metric-retention-policies/{uuid}/';
+};
+
+export type MarketplaceMetricRetentionPoliciesPartialUpdateResponses = {
+    200: RetentionPolicy;
+};
+
+export type MarketplaceMetricRetentionPoliciesPartialUpdateResponse = MarketplaceMetricRetentionPoliciesPartialUpdateResponses[keyof MarketplaceMetricRetentionPoliciesPartialUpdateResponses];
+
+export type MarketplaceMetricRetentionPoliciesUpdateData = {
+    body: RetentionPolicyRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-metric-retention-policies/{uuid}/';
+};
+
+export type MarketplaceMetricRetentionPoliciesUpdateResponses = {
+    200: RetentionPolicy;
+};
+
+export type MarketplaceMetricRetentionPoliciesUpdateResponse = MarketplaceMetricRetentionPoliciesUpdateResponses[keyof MarketplaceMetricRetentionPoliciesUpdateResponses];
+
+export type MarketplaceMetricSeriesRetrieveData = {
+    body?: never;
+    path?: never;
+    query: {
+        /**
+         * How a gauge's points in a bucket combine; counters sum.
+         */
+        aggregate?: MetricSeriesResponseAggregateEnum;
+        end?: string;
+        granularity?: MetricSeriesResponseGranularityEnum;
+        /**
+         * Attribute key to break the figure down by
+         */
+        group_by?: string;
+        offering_metric_uuid: string;
+        project_uuid?: string;
+        resource_uuid?: string;
+        start: string;
+    };
+    url: '/api/marketplace-metric-series/';
+};
+
+export type MarketplaceMetricSeriesRetrieveResponses = {
+    200: MetricSeriesResponse;
+};
+
+export type MarketplaceMetricSeriesRetrieveResponse = MarketplaceMetricSeriesRetrieveResponses[keyof MarketplaceMetricSeriesRetrieveResponses];
+
 export type MarketplaceOfferingAccessSubnetsListData = {
     body?: never;
     path?: never;
@@ -56862,6 +57622,196 @@ export type MarketplaceOfferingMergesSuggestMappingRetrieveResponses = {
 };
 
 export type MarketplaceOfferingMergesSuggestMappingRetrieveResponse = MarketplaceOfferingMergesSuggestMappingRetrieveResponses[keyof MarketplaceOfferingMergesSuggestMappingRetrieveResponses];
+
+export type MarketplaceOfferingMetricsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        definition_uuid?: string;
+        key?: string;
+        offering_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        state?: OfferingMetricStateEnum;
+    };
+    url: '/api/marketplace-offering-metrics/';
+};
+
+export type MarketplaceOfferingMetricsListResponses = {
+    200: Array<OfferingMetric>;
+};
+
+export type MarketplaceOfferingMetricsListResponse = MarketplaceOfferingMetricsListResponses[keyof MarketplaceOfferingMetricsListResponses];
+
+export type MarketplaceOfferingMetricsCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        definition_uuid?: string;
+        key?: string;
+        offering_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        state?: OfferingMetricStateEnum;
+    };
+    url: '/api/marketplace-offering-metrics/';
+};
+
+export type MarketplaceOfferingMetricsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type MarketplaceOfferingMetricsCreateData = {
+    body: OfferingMetricRequest;
+    path?: never;
+    query?: never;
+    url: '/api/marketplace-offering-metrics/';
+};
+
+export type MarketplaceOfferingMetricsCreateResponses = {
+    201: OfferingMetric;
+};
+
+export type MarketplaceOfferingMetricsCreateResponse = MarketplaceOfferingMetricsCreateResponses[keyof MarketplaceOfferingMetricsCreateResponses];
+
+export type MarketplaceOfferingMetricsDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-offering-metrics/{uuid}/';
+};
+
+export type MarketplaceOfferingMetricsDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type MarketplaceOfferingMetricsDestroyResponse = MarketplaceOfferingMetricsDestroyResponses[keyof MarketplaceOfferingMetricsDestroyResponses];
+
+export type MarketplaceOfferingMetricsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-offering-metrics/{uuid}/';
+};
+
+export type MarketplaceOfferingMetricsRetrieveResponses = {
+    200: OfferingMetric;
+};
+
+export type MarketplaceOfferingMetricsRetrieveResponse = MarketplaceOfferingMetricsRetrieveResponses[keyof MarketplaceOfferingMetricsRetrieveResponses];
+
+export type MarketplaceOfferingMetricsPartialUpdateData = {
+    body?: PatchedOfferingMetricRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-offering-metrics/{uuid}/';
+};
+
+export type MarketplaceOfferingMetricsPartialUpdateResponses = {
+    200: OfferingMetric;
+};
+
+export type MarketplaceOfferingMetricsPartialUpdateResponse = MarketplaceOfferingMetricsPartialUpdateResponses[keyof MarketplaceOfferingMetricsPartialUpdateResponses];
+
+export type MarketplaceOfferingMetricsUpdateData = {
+    body: OfferingMetricRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-offering-metrics/{uuid}/';
+};
+
+export type MarketplaceOfferingMetricsUpdateResponses = {
+    200: OfferingMetric;
+};
+
+export type MarketplaceOfferingMetricsUpdateResponse = MarketplaceOfferingMetricsUpdateResponses[keyof MarketplaceOfferingMetricsUpdateResponses];
+
+export type MarketplaceOfferingMetricsArchiveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-offering-metrics/{uuid}/archive/';
+};
+
+export type MarketplaceOfferingMetricsArchiveResponses = {
+    200: OfferingMetric;
+};
+
+export type MarketplaceOfferingMetricsArchiveResponse = MarketplaceOfferingMetricsArchiveResponses[keyof MarketplaceOfferingMetricsArchiveResponses];
+
+export type MarketplaceOfferingMetricsPauseData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-offering-metrics/{uuid}/pause/';
+};
+
+export type MarketplaceOfferingMetricsPauseResponses = {
+    200: OfferingMetric;
+};
+
+export type MarketplaceOfferingMetricsPauseResponse = MarketplaceOfferingMetricsPauseResponses[keyof MarketplaceOfferingMetricsPauseResponses];
+
+export type MarketplaceOfferingMetricsPurgeData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-offering-metrics/{uuid}/purge/';
+};
+
+export type MarketplaceOfferingMetricsPurgeResponses = {
+    /**
+     * No response body
+     */
+    202: unknown;
+};
+
+export type MarketplaceOfferingMetricsResumeData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-offering-metrics/{uuid}/resume/';
+};
+
+export type MarketplaceOfferingMetricsResumeResponses = {
+    200: OfferingMetric;
+};
+
+export type MarketplaceOfferingMetricsResumeResponse = MarketplaceOfferingMetricsResumeResponses[keyof MarketplaceOfferingMetricsResumeResponses];
 
 export type MarketplaceOfferingPermissionsListData = {
     body?: never;
@@ -61158,6 +62108,21 @@ export type MarketplaceProjectEstimatedCostPoliciesActionsCountResponses = {
      */
     200: unknown;
 };
+
+export type MarketplaceProjectMetricsListData = {
+    body?: never;
+    path?: never;
+    query: {
+        project_uuid: string;
+    };
+    url: '/api/marketplace-project-metrics/';
+};
+
+export type MarketplaceProjectMetricsListResponses = {
+    200: Array<ProjectMetric>;
+};
+
+export type MarketplaceProjectMetricsListResponse = MarketplaceProjectMetricsListResponses[keyof MarketplaceProjectMetricsListResponses];
 
 export type MarketplaceProjectOrderAutoApprovalsListData = {
     body?: never;
@@ -92553,6 +93518,23 @@ export type OrganizationGroupsUpdateResponses = {
 };
 
 export type OrganizationGroupsUpdateResponse = OrganizationGroupsUpdateResponses[keyof OrganizationGroupsUpdateResponses];
+
+export type OtlpV1MetricsData = {
+    body?: {
+        [key: string]: unknown;
+    };
+    path?: never;
+    query?: never;
+    url: '/api/otlp/v1/metrics/';
+};
+
+export type OtlpV1MetricsResponses = {
+    200: {
+        [key: string]: unknown;
+    };
+};
+
+export type OtlpV1MetricsResponse = OtlpV1MetricsResponses[keyof OtlpV1MetricsResponses];
 
 export type OverrideSettingsRetrieveData = {
     body?: never;
