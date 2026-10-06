@@ -13551,7 +13551,7 @@ export const marketplaceProviderOfferingsCheckUniqueBackendId = <ThrowOnError ex
 /**
  * Get statistics for offering components
  *
- * Returns monthly usage statistics for the components of an offering within a specified date range.
+ * Returns monthly usage statistics for the components of an offering within a specified date range. Requires SERVICE_PROVIDER.GET_STATISTICS on the offering's customer or its service provider, or ORDER.LIST on the offering, its customer, or that customer's service provider.
  */
 export const marketplaceProviderOfferingsComponentStatsList = <ThrowOnError extends boolean = true>(options: Options<MarketplaceProviderOfferingsComponentStatsListData, ThrowOnError>) => (options.client ?? client).get<MarketplaceProviderOfferingsComponentStatsListResponses, unknown, ThrowOnError>({
     security: [
@@ -14215,7 +14215,7 @@ export const marketplaceProviderOfferingsSetProfile = <ThrowOnError extends bool
 /**
  * Get offering resource and user state counters
  *
- * Returns resource and offering-user counts grouped by state for the given offering.
+ * Returns resource and offering-user counts grouped by state for the given offering. Requires SERVICE_PROVIDER.GET_STATISTICS on the offering's customer or its service provider, or ORDER.LIST on the offering, its customer, or that customer's service provider.
  */
 export const marketplaceProviderOfferingsStateCountersRetrieve = <ThrowOnError extends boolean = true>(options: Options<MarketplaceProviderOfferingsStateCountersRetrieveData, ThrowOnError>) => (options.client ?? client).get<MarketplaceProviderOfferingsStateCountersRetrieveResponses, unknown, ThrowOnError>({
     security: [

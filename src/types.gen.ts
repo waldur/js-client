@@ -6295,6 +6295,7 @@ export type ConstanceSettings = {
     MATRIX_APPSERVICE_SENDER_LOCALPART?: string;
     MATRIX_HISTORY_EXPORT_ENABLED?: boolean;
     MATRIX_EXPORT_MEDIA?: boolean;
+    MATRIX_HISTORY_EXPORT_RETENTION_DAYS?: number;
     MATRIX_USER_REGISTRATION_SECRET?: string;
     MATRIX_USER_ID_FORMAT?: string;
     MATRIX_EXTERNAL_LOGIN_METHOD?: MatrixExternalLoginMethodEnum;
@@ -6644,6 +6645,7 @@ export type ConstanceSettingsRequest = {
     MATRIX_APPSERVICE_SENDER_LOCALPART?: string;
     MATRIX_HISTORY_EXPORT_ENABLED?: boolean;
     MATRIX_EXPORT_MEDIA?: boolean;
+    MATRIX_HISTORY_EXPORT_RETENTION_DAYS?: number;
     MATRIX_USER_REGISTRATION_SECRET?: string;
     MATRIX_USER_ID_FORMAT?: string;
     MATRIX_EXTERNAL_LOGIN_METHOD?: MatrixExternalLoginMethodEnum;
@@ -37023,6 +37025,7 @@ export type ConstanceSettingsRequestForm = {
     MATRIX_APPSERVICE_SENDER_LOCALPART?: string;
     MATRIX_HISTORY_EXPORT_ENABLED?: boolean;
     MATRIX_EXPORT_MEDIA?: boolean;
+    MATRIX_HISTORY_EXPORT_RETENTION_DAYS?: number;
     MATRIX_USER_REGISTRATION_SECRET?: string;
     MATRIX_USER_ID_FORMAT?: string;
     MATRIX_EXTERNAL_LOGIN_METHOD?: MatrixExternalLoginMethodEnum;
@@ -37372,6 +37375,7 @@ export type ConstanceSettingsRequestMultipart = {
     MATRIX_APPSERVICE_SENDER_LOCALPART?: string;
     MATRIX_HISTORY_EXPORT_ENABLED?: boolean;
     MATRIX_EXPORT_MEDIA?: boolean;
+    MATRIX_HISTORY_EXPORT_RETENTION_DAYS?: number;
     MATRIX_USER_REGISTRATION_SECRET?: string;
     MATRIX_USER_ID_FORMAT?: string;
     MATRIX_EXTERNAL_LOGIN_METHOD?: MatrixExternalLoginMethodEnum;
