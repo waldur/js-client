@@ -31554,6 +31554,7 @@ export type ServiceProviderProjectGroup = {
     readonly project_slug: string | null;
     readonly customer_uuid: string | null;
     readonly customer_name: string | null;
+    readonly customer_slug: string | null;
     /**
      * The provider's offerings where the project has a non-terminated resource.
      */
