@@ -6302,6 +6302,7 @@ export type ConstanceSettings = {
     MATRIX_LIVEKIT_KEY?: string;
     MATRIX_LIVEKIT_SECRET?: string;
     MATRIX_LIVEKIT_URL?: string;
+    MATRIX_LIVEKIT_PUBLIC_URL?: string;
     SITE_AGENT_LOG_MAX_ROWS_PER_IDENTITY?: number;
     PAT_ENABLED?: boolean;
     PAT_MAX_LIFETIME_DAYS?: number;
@@ -6652,6 +6653,7 @@ export type ConstanceSettingsRequest = {
     MATRIX_LIVEKIT_KEY?: string;
     MATRIX_LIVEKIT_SECRET?: string;
     MATRIX_LIVEKIT_URL?: string;
+    MATRIX_LIVEKIT_PUBLIC_URL?: string;
     SITE_AGENT_LOG_MAX_ROWS_PER_IDENTITY?: number;
     PAT_ENABLED?: boolean;
     PAT_MAX_LIFETIME_DAYS?: number;
@@ -37072,6 +37074,7 @@ export type ConstanceSettingsRequestForm = {
     MATRIX_LIVEKIT_KEY?: string;
     MATRIX_LIVEKIT_SECRET?: string;
     MATRIX_LIVEKIT_URL?: string;
+    MATRIX_LIVEKIT_PUBLIC_URL?: string;
     SITE_AGENT_LOG_MAX_ROWS_PER_IDENTITY?: number;
     PAT_ENABLED?: boolean;
     PAT_MAX_LIFETIME_DAYS?: number;
@@ -37422,6 +37425,7 @@ export type ConstanceSettingsRequestMultipart = {
     MATRIX_LIVEKIT_KEY?: string;
     MATRIX_LIVEKIT_SECRET?: string;
     MATRIX_LIVEKIT_URL?: string;
+    MATRIX_LIVEKIT_PUBLIC_URL?: string;
     SITE_AGENT_LOG_MAX_ROWS_PER_IDENTITY?: number;
     PAT_ENABLED?: boolean;
     PAT_MAX_LIFETIME_DAYS?: number;
