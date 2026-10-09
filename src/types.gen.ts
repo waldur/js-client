@@ -6293,12 +6293,14 @@ export type ConstanceSettings = {
     MATRIX_APPSERVICE_AS_TOKEN?: string;
     MATRIX_APPSERVICE_HS_TOKEN?: string;
     MATRIX_APPSERVICE_SENDER_LOCALPART?: string;
+    MATRIX_TOKENS_MANAGED_BY?: string;
     MATRIX_HISTORY_EXPORT_ENABLED?: boolean;
     MATRIX_EXPORT_MEDIA?: boolean;
     MATRIX_HISTORY_EXPORT_RETENTION_DAYS?: number;
     MATRIX_USER_REGISTRATION_SECRET?: string;
     MATRIX_USER_ID_FORMAT?: string;
     MATRIX_EXTERNAL_LOGIN_METHOD?: MatrixExternalLoginMethodEnum;
+    MATRIX_SSO_REGISTRATION_METHOD?: string;
     MATRIX_LIVEKIT_KEY?: string;
     MATRIX_LIVEKIT_SECRET?: string;
     MATRIX_LIVEKIT_URL?: string;
@@ -6644,12 +6646,14 @@ export type ConstanceSettingsRequest = {
     MATRIX_APPSERVICE_AS_TOKEN?: string;
     MATRIX_APPSERVICE_HS_TOKEN?: string;
     MATRIX_APPSERVICE_SENDER_LOCALPART?: string;
+    MATRIX_TOKENS_MANAGED_BY?: string;
     MATRIX_HISTORY_EXPORT_ENABLED?: boolean;
     MATRIX_EXPORT_MEDIA?: boolean;
     MATRIX_HISTORY_EXPORT_RETENTION_DAYS?: number;
     MATRIX_USER_REGISTRATION_SECRET?: string;
     MATRIX_USER_ID_FORMAT?: string;
     MATRIX_EXTERNAL_LOGIN_METHOD?: MatrixExternalLoginMethodEnum;
+    MATRIX_SSO_REGISTRATION_METHOD?: string;
     MATRIX_LIVEKIT_KEY?: string;
     MATRIX_LIVEKIT_SECRET?: string;
     MATRIX_LIVEKIT_URL?: string;
@@ -12552,19 +12556,19 @@ export type MatrixAppserviceSetupRequest = {
      */
     sender_localpart?: string;
     /**
-     * Matrix homeserver base URL. Only persisted if MATRIX_HOMESERVER_URL is not already configured.
+     * Matrix homeserver base URL. Only persisted if MATRIX_HOMESERVER_URL is not already configured; a different value is refused.
      */
     homeserver_url?: string;
     /**
-     * Optional. Matrix homeserver URL used by browser clients. Leave blank when the homeserver URL above is reachable from both servers and browsers. Set this for deployments where the two differ (e.g. Docker-internal vs. Caddy-proxied). Only persisted if MATRIX_HOMESERVER_PUBLIC_URL is not already configured.
+     * Optional. Matrix homeserver URL used by browser clients. Leave blank when the homeserver URL above is reachable from both servers and browsers. Set this for deployments where the two differ (e.g. Docker-internal vs. Caddy-proxied). Only persisted if MATRIX_HOMESERVER_PUBLIC_URL is not already configured; a different value is refused.
      */
     homeserver_public_url?: string;
     /**
-     * Matrix homeserver server_name domain. Only persisted if MATRIX_HOMESERVER_DOMAIN is not already configured.
+     * Matrix homeserver server_name domain. Only persisted if MATRIX_HOMESERVER_DOMAIN is not already configured; a different value is refused.
      */
     homeserver_domain?: string;
     /**
-     * Shared secret configured in the homeserver for user registration. Only persisted if MATRIX_USER_REGISTRATION_SECRET is not already configured.
+     * Registration token the homeserver requires for sign-up (its registration_token). Only persisted if MATRIX_USER_REGISTRATION_SECRET is not already configured; a different value is refused.
      */
     user_registration_secret?: string;
 };
@@ -12583,6 +12587,7 @@ export type MatrixAppserviceStatus = {
     as_token_configured: boolean;
     hs_token_configured: boolean;
     sender_localpart: string;
+    tokens_managed_by: string;
     bot_user_id: string;
     webhook_path: string;
     homeserver_url: string;
@@ -37065,12 +37070,14 @@ export type ConstanceSettingsRequestForm = {
     MATRIX_APPSERVICE_AS_TOKEN?: string;
     MATRIX_APPSERVICE_HS_TOKEN?: string;
     MATRIX_APPSERVICE_SENDER_LOCALPART?: string;
+    MATRIX_TOKENS_MANAGED_BY?: string;
     MATRIX_HISTORY_EXPORT_ENABLED?: boolean;
     MATRIX_EXPORT_MEDIA?: boolean;
     MATRIX_HISTORY_EXPORT_RETENTION_DAYS?: number;
     MATRIX_USER_REGISTRATION_SECRET?: string;
     MATRIX_USER_ID_FORMAT?: string;
     MATRIX_EXTERNAL_LOGIN_METHOD?: MatrixExternalLoginMethodEnum;
+    MATRIX_SSO_REGISTRATION_METHOD?: string;
     MATRIX_LIVEKIT_KEY?: string;
     MATRIX_LIVEKIT_SECRET?: string;
     MATRIX_LIVEKIT_URL?: string;
@@ -37416,12 +37423,14 @@ export type ConstanceSettingsRequestMultipart = {
     MATRIX_APPSERVICE_AS_TOKEN?: string;
     MATRIX_APPSERVICE_HS_TOKEN?: string;
     MATRIX_APPSERVICE_SENDER_LOCALPART?: string;
+    MATRIX_TOKENS_MANAGED_BY?: string;
     MATRIX_HISTORY_EXPORT_ENABLED?: boolean;
     MATRIX_EXPORT_MEDIA?: boolean;
     MATRIX_HISTORY_EXPORT_RETENTION_DAYS?: number;
     MATRIX_USER_REGISTRATION_SECRET?: string;
     MATRIX_USER_ID_FORMAT?: string;
     MATRIX_EXTERNAL_LOGIN_METHOD?: MatrixExternalLoginMethodEnum;
+    MATRIX_SSO_REGISTRATION_METHOD?: string;
     MATRIX_LIVEKIT_KEY?: string;
     MATRIX_LIVEKIT_SECRET?: string;
     MATRIX_LIVEKIT_URL?: string;
@@ -38301,6 +38310,20 @@ export type Page = number;
  * Number of results to return per page.
  */
 export type PageSize = number;
+
+export type MatrixAppV1PingData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/_matrix/app/v1/ping';
+};
+
+export type MatrixAppV1PingResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type MatrixAppV1TransactionsUpdateData = {
     body?: never;
@@ -40099,6 +40122,13 @@ export type AdminMatrixAppserviceSetupData = {
     path?: never;
     query?: never;
     url: '/api/admin/matrix-appservice/setup/';
+};
+
+export type AdminMatrixAppserviceSetupErrors = {
+    /**
+     * The deployment owns the appservice tokens and re-seeds them on every sync. Rotate its Matrix secret and redeploy instead, or clear MATRIX_TOKENS_MANAGED_BY if the deployment no longer manages Matrix.
+     */
+    409: unknown;
 };
 
 export type AdminMatrixAppserviceSetupResponses = {
