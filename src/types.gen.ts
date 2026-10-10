@@ -11905,6 +11905,14 @@ export type LiveKitTrack = {
     muted: boolean;
     width: number;
     height: number;
+    /**
+     * What the track carries, as LiveKit names it: CAMERA, MICROPHONE, SCREEN_SHARE, SCREEN_SHARE_AUDIO or UNKNOWN.
+     */
+    source: string;
+    /**
+     * How the publisher encrypts the track's media end to end, as LiveKit names it: GCM (LiveKit's end-to-end encryption, which Matrix calls in encrypted rooms use), CUSTOM (another scheme) or NONE (only encrypted between the browser and LiveKit).
+     */
+    encryption: string;
 };
 
 export type LoadBalancerAttachFloatingIpRequest = {
@@ -81354,6 +81362,7 @@ export type MatrixRoomsExportHistoryData = {
 };
 
 export type MatrixRoomsExportHistoryResponses = {
+    200: MatrixHistoryExport;
     202: MatrixHistoryExport;
 };
 
