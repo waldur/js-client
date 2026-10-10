@@ -26495,6 +26495,95 @@ export type ProviderUser = {
     image?: string | null;
 };
 
+export type ProviderUserRoleDetails = {
+    readonly uuid: string;
+    readonly created: string;
+    expiration_time?: string | null;
+    readonly role_name: string;
+    readonly role_uuid: string;
+    /**
+     * Email address
+     */
+    readonly user_email: string;
+    readonly user_full_name: string;
+    /**
+     * Required. 128 characters or fewer. Lowercase letters, numbers and @/./+/-/_ characters
+     */
+    readonly user_username: string;
+    readonly user_uuid: string;
+    readonly user_image: string;
+    readonly created_by_full_name: string;
+    readonly created_by_uuid: string;
+    readonly source: string;
+    readonly user_phone_number: string;
+    readonly user_organization: string;
+    readonly user_job_title: string;
+    /**
+     * Person's affiliation within organization such as student, faculty, staff.
+     */
+    readonly user_affiliations: Array<string>;
+    /**
+     * User's gender (male, female, or unknown)
+     */
+    user_gender: GenderEnum | BlankEnum | NullEnum | null;
+    /**
+     * Honorific title (Mr, Ms, Dr, Prof, etc.)
+     */
+    readonly user_personal_title: string;
+    readonly user_place_of_birth: string;
+    readonly user_address: string;
+    readonly user_country_of_residence: string;
+    /**
+     * Primary citizenship (ISO 3166-1 alpha-2 code)
+     */
+    readonly user_nationality: string;
+    /**
+     * List of all citizenships (ISO 3166-1 alpha-2 codes)
+     */
+    readonly user_nationalities: Array<string>;
+    readonly user_organization_country: string;
+    /**
+     * SCHAC URN (e.g., urn:schac:homeOrganizationType:int:university)
+     */
+    readonly user_organization_type: string;
+    /**
+     * Company registration code of the user's organization, if known
+     */
+    readonly user_organization_registry_code: string;
+    /**
+     * VAT code of the user's organization
+     */
+    readonly user_organization_vat_code: string;
+    /**
+     * Postal address of the user's organization
+     */
+    readonly user_organization_address: string;
+    /**
+     * REFEDS assurance profile URIs from identity provider
+     */
+    readonly user_eduperson_assurance: Array<string>;
+    readonly user_civil_number: string | null;
+    readonly user_birth_date: string | null;
+    /**
+     * Source of identity
+     *
+     * Indicates what identity provider was used.
+     */
+    readonly user_identity_source: string;
+    /**
+     * POSIX UID from the identity provider; used when an offering's uid_source is 'user_attribute'.
+     */
+    readonly user_uid_number: number | null;
+    /**
+     * POSIX primary GID from the identity provider; used when an offering's gid_source is 'user_attribute'.
+     */
+    readonly user_primary_gid: number | null;
+    /**
+     * List of ISDs that have asserted this user exists. User is deactivated when this becomes empty.
+     */
+    readonly user_active_isds: Array<string>;
+};
+
 export type ProviderUsernameCandidate = {
     username: string;
     offering_count: number;
@@ -66942,7 +67031,7 @@ export type MarketplaceProviderResourceProjectsListUsersListData = {
 };
 
 export type MarketplaceProviderResourceProjectsListUsersListResponses = {
-    200: Array<UserRoleDetails>;
+    200: Array<ProviderUserRoleDetails>;
 };
 
 export type MarketplaceProviderResourceProjectsListUsersListResponse = MarketplaceProviderResourceProjectsListUsersListResponses[keyof MarketplaceProviderResourceProjectsListUsersListResponses];
@@ -67940,7 +68029,7 @@ export type MarketplaceProviderResourcesListUsersListData = {
 };
 
 export type MarketplaceProviderResourcesListUsersListResponses = {
-    200: Array<UserRoleDetails>;
+    200: Array<ProviderUserRoleDetails>;
 };
 
 export type MarketplaceProviderResourcesListUsersListResponse = MarketplaceProviderResourcesListUsersListResponses[keyof MarketplaceProviderResourcesListUsersListResponses];
