@@ -9917,7 +9917,7 @@ export const marketplaceCustomerServiceAccountsRotateApiKey = <ThrowOnError exte
 /**
  * Get resource usage statistics broken down per offering
  *
- * Returns one row per (offering, component type, billing type) for all non-terminated resources within the scope. Each row's `usage` and `limit_usage` are aggregated using the offering's own `limit_period`.
+ * Returns one row per (offering, component type, billing type) for all non-terminated resources within the scope (or all resources when `include_terminated` is true). Each row's `usage` and `limit_usage` are aggregated using the offering's own `limit_period`.
  */
 export const marketplaceCustomerUsageComponentsUsageRetrieve = <ThrowOnError extends boolean = true>(options: Options<MarketplaceCustomerUsageComponentsUsageRetrieveData, ThrowOnError>) => (options.client ?? client).get<MarketplaceCustomerUsageComponentsUsageRetrieveResponses, unknown, ThrowOnError>({
     security: [
@@ -13306,7 +13306,7 @@ export const marketplaceProjectUpdateRequestsReject = <ThrowOnError extends bool
 /**
  * Get resource usage statistics broken down per offering
  *
- * Returns one row per (offering, component type, billing type) for all non-terminated resources within the scope. Each row's `usage` and `limit_usage` are aggregated using the offering's own `limit_period`.
+ * Returns one row per (offering, component type, billing type) for all non-terminated resources within the scope (or all resources when `include_terminated` is true). Each row's `usage` and `limit_usage` are aggregated using the offering's own `limit_period`.
  */
 export const marketplaceProjectUsageComponentsUsageRetrieve = <ThrowOnError extends boolean = true>(options: Options<MarketplaceProjectUsageComponentsUsageRetrieveData, ThrowOnError>) => (options.client ?? client).get<MarketplaceProjectUsageComponentsUsageRetrieveResponses, unknown, ThrowOnError>({
     security: [

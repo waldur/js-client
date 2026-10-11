@@ -5557,6 +5557,14 @@ export type ComponentStats = {
     readonly billing_type: string;
     readonly usage: number;
     readonly limit_usage: number;
+    /**
+     * Part of usage that came from terminated resources.
+     */
+    readonly usage_terminated: number;
+    /**
+     * Part of limit_usage that came from terminated resources.
+     */
+    readonly limit_usage_terminated: number;
     readonly limit: number;
     readonly offering_name: string;
     readonly offering_uuid: string;
@@ -5570,6 +5578,14 @@ export type ComponentStatsPerOffering = {
     readonly billing_type: string;
     readonly usage: number;
     readonly limit_usage: number;
+    /**
+     * Part of usage that came from terminated resources.
+     */
+    readonly usage_terminated: number;
+    /**
+     * Part of limit_usage that came from terminated resources.
+     */
+    readonly limit_usage_terminated: number;
     readonly limit: number | null;
     readonly offering_name: string;
     readonly offering_uuid: string;
@@ -25115,7 +25131,12 @@ export type ProjectType = {
 export type ProjectUsageEntry = {
     readonly project_uuid: string;
     readonly project_name: string;
+    readonly is_removed: boolean;
     readonly usage: number;
+    /**
+     * Part of usage that came from terminated resources.
+     */
+    readonly usage_terminated: number;
     readonly buckets: Array<UsageTimeseriesBucket>;
 };
 
@@ -34118,6 +34139,10 @@ export type UsageLimitRestrictionEnum = 'paused' | 'downscaled';
 export type UsageTimeseriesBucket = {
     readonly billing_period: string;
     readonly usage: number;
+    /**
+     * Part of usage that came from terminated resources.
+     */
+    readonly usage_terminated: number;
 };
 
 export type User = {
@@ -48578,6 +48603,10 @@ export type CustomersStatsRetrieveData = {
          * If true, returns usage data for the current month only. Otherwise, returns total usage.
          */
         for_current_month?: boolean;
+        /**
+         * If true, also counts terminated resources that reported usage in the current month. Their share is returned as usage_terminated and limit_usage_terminated; limit never includes them. Ignored unless the dashboard.usage_include_terminated feature is enabled.
+         */
+        include_terminated?: boolean;
     };
     url: '/api/customers/{uuid}/stats/';
 };
@@ -56543,7 +56572,12 @@ export type MarketplaceCustomerUsageComponentsUsageRetrieveData = {
     path: {
         uuid: string;
     };
-    query?: never;
+    query?: {
+        /**
+         * If true, also counts terminated resources. Their share of usage is returned as usage_terminated (and limit_usage_terminated); limit never includes them. Ignored unless the dashboard.usage_include_terminated feature is enabled.
+         */
+        include_terminated?: boolean;
+    };
     url: '/api/marketplace-customer-usage/{uuid}/components-usage/';
 };
 
@@ -56560,6 +56594,10 @@ export type MarketplaceCustomerUsageComponentsUsageByProjectRetrieveData = {
     };
     query: {
         component_type?: string;
+        /**
+         * If true, also counts terminated resources. Their share of usage is returned as usage_terminated (and limit_usage_terminated); limit never includes them. Ignored unless the dashboard.usage_include_terminated feature is enabled.
+         */
+        include_terminated?: boolean;
         offering_uuid: string;
         period_offset?: number;
     };
@@ -56579,6 +56617,10 @@ export type MarketplaceCustomerUsageComponentsUsageTimeseriesRetrieveData = {
     };
     query: {
         component_type?: string;
+        /**
+         * If true, also counts terminated resources. Their share of usage is returned as usage_terminated (and limit_usage_terminated); limit never includes them. Ignored unless the dashboard.usage_include_terminated feature is enabled.
+         */
+        include_terminated?: boolean;
         offering_uuid: string;
         period_offset?: number;
     };
@@ -63126,7 +63168,12 @@ export type MarketplaceProjectUsageComponentsUsageRetrieveData = {
     path: {
         uuid: string;
     };
-    query?: never;
+    query?: {
+        /**
+         * If true, also counts terminated resources. Their share of usage is returned as usage_terminated (and limit_usage_terminated); limit never includes them. Ignored unless the dashboard.usage_include_terminated feature is enabled.
+         */
+        include_terminated?: boolean;
+    };
     url: '/api/marketplace-project-usage/{uuid}/components-usage/';
 };
 
@@ -63143,6 +63190,10 @@ export type MarketplaceProjectUsageComponentsUsageTimeseriesRetrieveData = {
     };
     query: {
         component_type?: string;
+        /**
+         * If true, also counts terminated resources. Their share of usage is returned as usage_terminated (and limit_usage_terminated); limit never includes them. Ignored unless the dashboard.usage_include_terminated feature is enabled.
+         */
+        include_terminated?: boolean;
         offering_uuid: string;
         period_offset?: number;
     };
@@ -85619,6 +85670,10 @@ export type OpenportalUnmanagedProjectsStatsRetrieveData = {
          * If true, returns usage data for the current month only. Otherwise, returns total usage.
          */
         for_current_month?: boolean;
+        /**
+         * If true, also counts terminated resources that reported usage in the current month. Their share is returned as usage_terminated and limit_usage_terminated; limit never includes them. Ignored unless the dashboard.usage_include_terminated feature is enabled.
+         */
+        include_terminated?: boolean;
     };
     url: '/api/openportal-unmanaged-projects/{uuid}/stats/';
 };
@@ -96290,6 +96345,10 @@ export type ProjectsStatsRetrieveData = {
          * If true, returns usage data for the current month only. Otherwise, returns total usage.
          */
         for_current_month?: boolean;
+        /**
+         * If true, also counts terminated resources that reported usage in the current month. Their share is returned as usage_terminated and limit_usage_terminated; limit never includes them. Ignored unless the dashboard.usage_include_terminated feature is enabled.
+         */
+        include_terminated?: boolean;
     };
     url: '/api/projects/{uuid}/stats/';
 };
