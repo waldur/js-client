@@ -28342,7 +28342,7 @@ export const otlpV1Metrics = <ThrowOnError extends boolean = true>(options?: Opt
 /**
  * Get all overridable settings
  *
- * Returns all settings that can be overridden in the database via the Constance backend. Requires admin permissions.
+ * Returns all settings that can be overridden in the database via the Constance backend. Staff receive every value. Support users receive the same keys, with secret_field values blanked.
  */
 export const overrideSettingsRetrieve = <ThrowOnError extends boolean = true>(options?: Options<OverrideSettingsRetrieveData, ThrowOnError>) => (options?.client ?? client).get<OverrideSettingsRetrieveResponses, unknown, ThrowOnError>({
     security: [
@@ -28356,7 +28356,7 @@ export const overrideSettingsRetrieve = <ThrowOnError extends boolean = true>(op
 /**
  * Update overridable settings
  *
- * Updates one or more settings in the database via the Constance backend. Requires admin permissions.
+ * Updates one or more settings in the database via the Constance backend. Requires staff permissions. Support users cannot update settings.
  */
 export const overrideSettings = <ThrowOnError extends boolean = true>(options?: Options<OverrideSettingsData, ThrowOnError>) => (options?.client ?? client).post<OverrideSettingsResponses, unknown, ThrowOnError>({
     security: [

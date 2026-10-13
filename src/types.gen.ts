@@ -31036,6 +31036,7 @@ export type RobotAccountDetails = {
     readonly user_keys: Array<SshKey>;
     readonly resource_name: string;
     readonly resource_uuid: string;
+    readonly resource_backend_id: string;
     readonly project_name: string;
     readonly project_uuid: string;
     readonly customer_uuid: string;
@@ -38266,7 +38267,7 @@ export type ResourceOEnum = '-backend_id' | '-created' | '-customer_name' | '-en
 
 export type ResourceTeamMemberFieldEnum = 'email' | 'expiration_time' | 'full_name' | 'image' | 'resource_projects' | 'role_name' | 'role_uuid' | 'roles' | 'url' | 'username' | 'uuid';
 
-export type RobotAccountDetailsFieldEnum = 'backend_id' | 'created' | 'customer_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'fingerprints' | 'keys' | 'modified' | 'offering_plugin_options' | 'project_name' | 'project_uuid' | 'provider_name' | 'provider_uuid' | 'resource' | 'resource_name' | 'resource_uuid' | 'responsible_user' | 'state' | 'type' | 'url' | 'user_keys' | 'username' | 'users' | 'uuid';
+export type RobotAccountDetailsFieldEnum = 'backend_id' | 'created' | 'customer_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'fingerprints' | 'keys' | 'modified' | 'offering_plugin_options' | 'project_name' | 'project_uuid' | 'provider_name' | 'provider_uuid' | 'resource' | 'resource_backend_id' | 'resource_name' | 'resource_uuid' | 'responsible_user' | 'state' | 'type' | 'url' | 'user_keys' | 'username' | 'users' | 'uuid';
 
 export type ServiceProviderAccountFieldEnum = 'created' | 'home_directory' | 'is_restricted' | 'login_shell' | 'modified' | 'offering_count' | 'primarygroup' | 'runtime_state' | 'service_provider' | 'service_provider_comment' | 'service_provider_comment_url' | 'service_provider_name' | 'service_provider_uuid' | 'state' | 'uidnumber' | 'url' | 'user' | 'user_email' | 'user_full_name' | 'user_username' | 'user_uuid' | 'username' | 'uuid';
 
