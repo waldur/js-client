@@ -10598,6 +10598,14 @@ export type IdentityProvider = {
      */
     readonly logout_url?: string;
     /**
+     * The issuer identifier the ID token must carry.
+     */
+    readonly issuer: string;
+    /**
+     * The endpoint publishing the keys that sign ID tokens.
+     */
+    readonly jwks_url: string;
+    /**
      * Human-readable identity provider is label.
      */
     label: string;
