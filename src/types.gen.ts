@@ -6301,6 +6301,8 @@ export type ConstanceSettings = {
     ENABLED_REPORTING_SCREENS?: Array<EnabledreportingscreensEnum | BlankEnum>;
     POSIX_ID_POOL_UTILIZATION_THRESHOLD?: number;
     AFFILIATES_ENABLED?: boolean;
+    VAT_TAXATION_ENABLED?: boolean;
+    VAT_OSS_ENABLED?: boolean;
     MATRIX_ENABLED?: boolean;
     MATRIX_AUTO_CREATE_PROJECT_ROOMS?: boolean;
     MATRIX_HOMESERVER_URL?: string;
@@ -6654,6 +6656,8 @@ export type ConstanceSettingsRequest = {
     ENABLED_REPORTING_SCREENS?: Array<EnabledreportingscreensEnum | BlankEnum>;
     POSIX_ID_POOL_UTILIZATION_THRESHOLD?: number;
     AFFILIATES_ENABLED?: boolean;
+    VAT_TAXATION_ENABLED?: boolean;
+    VAT_OSS_ENABLED?: boolean;
     MATRIX_ENABLED?: boolean;
     MATRIX_AUTO_CREATE_PROJECT_ROOMS?: boolean;
     MATRIX_HOMESERVER_URL?: string;
@@ -7238,6 +7242,22 @@ export type Customer = {
     display_billing_info_in_projects?: boolean;
     default_tax_percent?: string;
     /**
+     * Organization represents a private person rather than a legal entity. Used for EU VAT calculation.
+     */
+    is_private_person?: boolean;
+    /**
+     * Whether the EU VIES service confirmed the current VAT number.
+     */
+    readonly vat_code_verified: boolean;
+    /**
+     * VAT percent calculated from EU VAT rules, when VAT taxation is on.
+     */
+    readonly vat_percent: string | null;
+    /**
+     * Which EU VAT rule picked vat_percent, or why it cannot be calculated.
+     */
+    readonly vat_rule: string | null;
+    /**
      * Start date of accounting
      */
     accounting_start_date?: string;
@@ -7708,6 +7728,10 @@ export type CustomerRequest = {
     archived?: boolean;
     display_billing_info_in_projects?: boolean;
     default_tax_percent?: string;
+    /**
+     * Organization represents a private person rather than a legal entity. Used for EU VAT calculation.
+     */
+    is_private_person?: boolean;
     /**
      * Start date of accounting
      */
@@ -21425,6 +21449,10 @@ export type PatchedCustomerRequest = {
     archived?: boolean;
     display_billing_info_in_projects?: boolean;
     default_tax_percent?: string;
+    /**
+     * Organization represents a private person rather than a legal entity. Used for EU VAT calculation.
+     */
+    is_private_person?: boolean;
     /**
      * Start date of accounting
      */
@@ -35866,6 +35894,10 @@ export type CustomerRequestForm = {
     display_billing_info_in_projects?: boolean;
     default_tax_percent?: string;
     /**
+     * Organization represents a private person rather than a legal entity. Used for EU VAT calculation.
+     */
+    is_private_person?: boolean;
+    /**
      * Start date of accounting
      */
     accounting_start_date?: string;
@@ -35951,6 +35983,10 @@ export type CustomerRequestMultipart = {
     archived?: boolean;
     display_billing_info_in_projects?: boolean;
     default_tax_percent?: string;
+    /**
+     * Organization represents a private person rather than a legal entity. Used for EU VAT calculation.
+     */
+    is_private_person?: boolean;
     /**
      * Start date of accounting
      */
@@ -36038,6 +36074,10 @@ export type PatchedCustomerRequestForm = {
     display_billing_info_in_projects?: boolean;
     default_tax_percent?: string;
     /**
+     * Organization represents a private person rather than a legal entity. Used for EU VAT calculation.
+     */
+    is_private_person?: boolean;
+    /**
      * Start date of accounting
      */
     accounting_start_date?: string;
@@ -36123,6 +36163,10 @@ export type PatchedCustomerRequestMultipart = {
     archived?: boolean;
     display_billing_info_in_projects?: boolean;
     default_tax_percent?: string;
+    /**
+     * Organization represents a private person rather than a legal entity. Used for EU VAT calculation.
+     */
+    is_private_person?: boolean;
     /**
      * Start date of accounting
      */
@@ -37210,6 +37254,8 @@ export type ConstanceSettingsRequestForm = {
     ENABLED_REPORTING_SCREENS?: Array<EnabledreportingscreensEnum | BlankEnum>;
     POSIX_ID_POOL_UTILIZATION_THRESHOLD?: number;
     AFFILIATES_ENABLED?: boolean;
+    VAT_TAXATION_ENABLED?: boolean;
+    VAT_OSS_ENABLED?: boolean;
     MATRIX_ENABLED?: boolean;
     MATRIX_AUTO_CREATE_PROJECT_ROOMS?: boolean;
     MATRIX_HOMESERVER_URL?: string;
@@ -37563,6 +37609,8 @@ export type ConstanceSettingsRequestMultipart = {
     ENABLED_REPORTING_SCREENS?: Array<EnabledreportingscreensEnum | BlankEnum>;
     POSIX_ID_POOL_UTILIZATION_THRESHOLD?: number;
     AFFILIATES_ENABLED?: boolean;
+    VAT_TAXATION_ENABLED?: boolean;
+    VAT_OSS_ENABLED?: boolean;
     MATRIX_ENABLED?: boolean;
     MATRIX_AUTO_CREATE_PROJECT_ROOMS?: boolean;
     MATRIX_HOMESERVER_URL?: string;
@@ -38151,7 +38199,7 @@ export type CustomerPermissionReviewOEnum = '-closed' | '-created' | 'closed' | 
 
 export type CustomerQuotasQuotaNameEnum = 'estimated_price' | 'nc_resource_count' | 'os_cpu_count' | 'os_ram_size' | 'os_storage_size' | 'vpc_cpu_count' | 'vpc_floating_ip_count' | 'vpc_instance_count' | 'vpc_ram_size' | 'vpc_storage_size';
 
-export type CustomerFieldEnum = 'abbreviation' | 'access_subnets' | 'accounting_start_date' | 'address' | 'agreement_number' | 'apartment_nr' | 'archived' | 'backend_id' | 'bank_account' | 'bank_name' | 'billing_price_estimate' | 'blocked' | 'call_managing_organization_uuid' | 'city' | 'contact_details' | 'country' | 'country_name' | 'created' | 'customer_credit' | 'customer_unallocated_credit' | 'default_affiliations' | 'default_tax_percent' | 'description' | 'display_billing_info_in_projects' | 'display_name' | 'domain' | 'email' | 'grace_period_days' | 'has_active_helpdesk' | 'has_affiliate_links' | 'homepage' | 'house_nr' | 'household' | 'image' | 'is_service_provider' | 'is_service_provider_manager_only' | 'latitude' | 'longitude' | 'max_service_accounts' | 'name' | 'native_name' | 'notification_emails' | 'organization_groups' | 'parish' | 'payment_profiles' | 'phone_number' | 'postal' | 'project_metadata_checklist' | 'project_slug_template' | 'projects_count' | 'registration_code' | 'service_provider' | 'service_provider_uuid' | 'slug' | 'sponsor_number' | 'state' | 'street' | 'url' | 'user_affiliations' | 'user_email_patterns' | 'user_identity_sources' | 'users_count' | 'uuid' | 'vat_code';
+export type CustomerFieldEnum = 'abbreviation' | 'access_subnets' | 'accounting_start_date' | 'address' | 'agreement_number' | 'apartment_nr' | 'archived' | 'backend_id' | 'bank_account' | 'bank_name' | 'billing_price_estimate' | 'blocked' | 'call_managing_organization_uuid' | 'city' | 'contact_details' | 'country' | 'country_name' | 'created' | 'customer_credit' | 'customer_unallocated_credit' | 'default_affiliations' | 'default_tax_percent' | 'description' | 'display_billing_info_in_projects' | 'display_name' | 'domain' | 'email' | 'grace_period_days' | 'has_active_helpdesk' | 'has_affiliate_links' | 'homepage' | 'house_nr' | 'household' | 'image' | 'is_private_person' | 'is_service_provider' | 'is_service_provider_manager_only' | 'latitude' | 'longitude' | 'max_service_accounts' | 'name' | 'native_name' | 'notification_emails' | 'organization_groups' | 'parish' | 'payment_profiles' | 'phone_number' | 'postal' | 'project_metadata_checklist' | 'project_slug_template' | 'projects_count' | 'registration_code' | 'service_provider' | 'service_provider_uuid' | 'slug' | 'sponsor_number' | 'state' | 'street' | 'url' | 'user_affiliations' | 'user_email_patterns' | 'user_identity_sources' | 'users_count' | 'uuid' | 'vat_code' | 'vat_code_verified' | 'vat_percent' | 'vat_rule';
 
 export type CustomerUserFieldEnum = 'email' | 'expiration_time' | 'full_name' | 'image' | 'projects' | 'role_name' | 'url' | 'username' | 'uuid';
 
