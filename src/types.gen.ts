@@ -4059,6 +4059,91 @@ export type CallRound = {
 
 export type CallStates = 'draft' | 'active' | 'archived';
 
+export type CallStats = {
+    call: CallStatsBlock;
+    rounds: Array<CallStatsRound>;
+};
+
+export type CallStatsBlock = {
+    /**
+     * Proposals by state (accepted = awarded), plus total.
+     */
+    proposals: {
+        [key: string]: number;
+    };
+    /**
+     * Reviews by state, plus total.
+     */
+    reviews: {
+        [key: string]: number;
+    };
+    /**
+     * Proposals whose administrative check completed as eligible.
+     */
+    admin_approved: number;
+    /**
+     * Proposals whose administrative check is active or expired.
+     */
+    missing_admin_checks: number;
+    /**
+     * Proposals in expert review below the step's minimum reviews.
+     */
+    missing_reviews: number;
+    /**
+     * Reviews still in review past their deadline.
+     */
+    overdue_reviews: number;
+    /**
+     * Proposals per current workflow step, over the enabled steps.
+     */
+    steps: Array<CallStatsStep>;
+};
+
+export type CallStatsRound = {
+    /**
+     * Proposals by state (accepted = awarded), plus total.
+     */
+    proposals: {
+        [key: string]: number;
+    };
+    /**
+     * Reviews by state, plus total.
+     */
+    reviews: {
+        [key: string]: number;
+    };
+    /**
+     * Proposals whose administrative check completed as eligible.
+     */
+    admin_approved: number;
+    /**
+     * Proposals whose administrative check is active or expired.
+     */
+    missing_admin_checks: number;
+    /**
+     * Proposals in expert review below the step's minimum reviews.
+     */
+    missing_reviews: number;
+    /**
+     * Reviews still in review past their deadline.
+     */
+    overdue_reviews: number;
+    /**
+     * Proposals per current workflow step, over the enabled steps.
+     */
+    steps: Array<CallStatsStep>;
+    uuid: string;
+    slug: string;
+    start_time: string;
+    cutoff_time: string;
+};
+
+export type CallStatsStep = {
+    step: string;
+    label: string;
+    count: number;
+};
+
 export type CallWorkflowStep = {
     readonly uuid: string;
     readonly created: string;
@@ -96989,6 +97074,12 @@ export type ProposalProposalsListData = {
          */
         slug?: string;
         state?: Array<ProposalStates>;
+        /**
+         * Current workflow step
+         *
+         *
+         */
+        workflow_step?: Array<StepEnum>;
     };
     url: '/api/proposal-proposals/';
 };
@@ -97035,6 +97126,12 @@ export type ProposalProposalsCountData = {
          */
         slug?: string;
         state?: Array<ProposalStates>;
+        /**
+         * Current workflow step
+         *
+         *
+         */
+        workflow_step?: Array<StepEnum>;
     };
     url: '/api/proposal-proposals/';
 };
@@ -97774,6 +97871,12 @@ export type ProposalProposalsStepChecklistResponsesListData = {
          * Workflow step key (e.g. technical_assessment).
          */
         step: string;
+        /**
+         * Current workflow step
+         *
+         *
+         */
+        workflow_step?: Array<StepEnum>;
     };
     url: '/api/proposal-proposals/{uuid}/step-checklist-responses/';
 };
@@ -97929,6 +98032,12 @@ export type ProposalProposalsWorkflowStatesListData = {
          */
         slug?: string;
         state?: Array<ProposalStates>;
+        /**
+         * Current workflow step
+         *
+         *
+         */
+        workflow_step?: Array<StepEnum>;
     };
     url: '/api/proposal-proposals/{uuid}/workflow_states/';
 };
@@ -99404,6 +99513,21 @@ export type ProposalProtectedCallsSendInvitationsResponses = {
 };
 
 export type ProposalProtectedCallsSendInvitationsResponse = ProposalProtectedCallsSendInvitationsResponses[keyof ProposalProtectedCallsSendInvitationsResponses];
+
+export type ProposalProtectedCallsStatsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-protected-calls/{uuid}/stats/';
+};
+
+export type ProposalProtectedCallsStatsRetrieveResponses = {
+    200: CallStats;
+};
+
+export type ProposalProtectedCallsStatsRetrieveResponse = ProposalProtectedCallsStatsRetrieveResponses[keyof ProposalProtectedCallsStatsRetrieveResponses];
 
 export type ProposalProtectedCallsSuggestionsListData = {
     body?: never;
