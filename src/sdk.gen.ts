@@ -37470,7 +37470,7 @@ export const userInvitationsUpdate = <ThrowOnError extends boolean = true>(optio
 /**
  * Accept an invitation
  *
- * Accepts an invitation for the currently authenticated user. This grants the user the specified role in the invitation's scope.
+ * Accepts an invitation for the currently authenticated user. This grants the user the specified role in the invitation's scope. Staff may pass `user` to accept it for that user instead, for example from a service account that registers users elsewhere; the user's email must match the invitation.
  */
 export const userInvitationsAccept = <ThrowOnError extends boolean = true>(options: Options<UserInvitationsAcceptData, ThrowOnError>) => (options.client ?? client).post<UserInvitationsAcceptResponses, unknown, ThrowOnError>({
     security: [
@@ -37478,7 +37478,11 @@ export const userInvitationsAccept = <ThrowOnError extends boolean = true>(optio
         { scheme: 'bearer', type: 'http' }
     ],
     url: '/api/user-invitations/{uuid}/accept/',
-    ...options
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
 });
 
 /**
