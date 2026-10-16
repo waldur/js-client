@@ -7431,6 +7431,10 @@ export type Customer = {
      * Comma-separated list of notification email addresses
      */
     notification_emails?: string;
+    /**
+     * Comma-separated list of email addresses that receive invoice notifications instead of the organization owners
+     */
+    invoice_emails?: string;
     city?: string;
     state?: string;
     parish?: string;
@@ -7562,6 +7566,10 @@ export type CustomerContactUpdate = {
      * Comma-separated list of notification email addresses
      */
     notification_emails?: string;
+    /**
+     * Comma-separated list of email addresses that receive invoice notifications instead of the organization owners
+     */
+    invoice_emails?: string;
 };
 
 export type CustomerContactUpdateRequest = {
@@ -7576,6 +7584,10 @@ export type CustomerContactUpdateRequest = {
      * Comma-separated list of notification email addresses
      */
     notification_emails?: string;
+    /**
+     * Comma-separated list of email addresses that receive invoice notifications instead of the organization owners
+     */
+    invoice_emails?: string;
 };
 
 export type CustomerContext = {
@@ -7886,6 +7898,10 @@ export type CustomerRequest = {
      * Comma-separated list of notification email addresses
      */
     notification_emails?: string;
+    /**
+     * Comma-separated list of email addresses that receive invoice notifications instead of the organization owners
+     */
+    invoice_emails?: string;
     city?: string;
     state?: string;
     parish?: string;
@@ -21677,6 +21693,10 @@ export type PatchedCustomerRequest = {
      * Comma-separated list of notification email addresses
      */
     notification_emails?: string;
+    /**
+     * Comma-separated list of email addresses that receive invoice notifications instead of the organization owners
+     */
+    invoice_emails?: string;
     city?: string;
     state?: string;
     parish?: string;
@@ -36134,6 +36154,10 @@ export type CustomerRequestForm = {
      * Comma-separated list of notification email addresses
      */
     notification_emails?: string;
+    /**
+     * Comma-separated list of email addresses that receive invoice notifications instead of the organization owners
+     */
+    invoice_emails?: string;
     city?: string;
     state?: string;
     parish?: string;
@@ -36224,6 +36248,10 @@ export type CustomerRequestMultipart = {
      * Comma-separated list of notification email addresses
      */
     notification_emails?: string;
+    /**
+     * Comma-separated list of email addresses that receive invoice notifications instead of the organization owners
+     */
+    invoice_emails?: string;
     city?: string;
     state?: string;
     parish?: string;
@@ -36314,6 +36342,10 @@ export type PatchedCustomerRequestForm = {
      * Comma-separated list of notification email addresses
      */
     notification_emails?: string;
+    /**
+     * Comma-separated list of email addresses that receive invoice notifications instead of the organization owners
+     */
+    invoice_emails?: string;
     city?: string;
     state?: string;
     parish?: string;
@@ -36404,6 +36436,10 @@ export type PatchedCustomerRequestMultipart = {
      * Comma-separated list of notification email addresses
      */
     notification_emails?: string;
+    /**
+     * Comma-separated list of email addresses that receive invoice notifications instead of the organization owners
+     */
+    invoice_emails?: string;
     city?: string;
     state?: string;
     parish?: string;
@@ -37865,6 +37901,16 @@ export type RequestedResourcePurchaseOrderRequestMultipart = {
     purchase_order_reference?: string;
 };
 
+export type CallAttachDocumentsRequestForm = {
+    documents: Array<Blob | File>;
+    description?: string;
+};
+
+export type CallAttachDocumentsRequestMultipart = {
+    documents: Array<Blob | File>;
+    description?: string;
+};
+
 export type FirecrestJobRequestForm = {
     name: string;
     description?: string;
@@ -37897,6 +37943,20 @@ export type AttachmentRequestForm = {
 export type AttachmentRequestMultipart = {
     issue: string;
     file: Blob | File;
+};
+
+export type CreateAttachmentsRequestForm = {
+    /**
+     * List of files to attach
+     */
+    attachments: Array<Blob | File>;
+};
+
+export type CreateAttachmentsRequestMultipart = {
+    /**
+     * List of files to attach
+     */
+    attachments: Array<Blob | File>;
 };
 
 export type UserRequestForm = {
@@ -38373,7 +38433,7 @@ export type CustomerPermissionReviewOEnum = '-closed' | '-created' | 'closed' | 
 
 export type CustomerQuotasQuotaNameEnum = 'estimated_price' | 'nc_resource_count' | 'os_cpu_count' | 'os_ram_size' | 'os_storage_size' | 'vpc_cpu_count' | 'vpc_floating_ip_count' | 'vpc_instance_count' | 'vpc_ram_size' | 'vpc_storage_size';
 
-export type CustomerFieldEnum = 'abbreviation' | 'access_subnets' | 'accounting_start_date' | 'address' | 'agreement_number' | 'apartment_nr' | 'archived' | 'backend_id' | 'bank_account' | 'bank_name' | 'billing_price_estimate' | 'blocked' | 'call_managing_organization_uuid' | 'city' | 'contact_details' | 'country' | 'country_name' | 'created' | 'customer_credit' | 'customer_unallocated_credit' | 'default_affiliations' | 'default_tax_percent' | 'description' | 'display_billing_info_in_projects' | 'display_name' | 'domain' | 'email' | 'grace_period_days' | 'has_active_helpdesk' | 'has_affiliate_links' | 'homepage' | 'house_nr' | 'household' | 'image' | 'is_private_person' | 'is_service_provider' | 'is_service_provider_manager_only' | 'latitude' | 'longitude' | 'max_service_accounts' | 'name' | 'native_name' | 'notification_emails' | 'organization_groups' | 'parish' | 'payment_profiles' | 'phone_number' | 'postal' | 'project_metadata_checklist' | 'project_slug_template' | 'projects_count' | 'registration_code' | 'service_provider' | 'service_provider_uuid' | 'slug' | 'sponsor_number' | 'state' | 'street' | 'url' | 'user_affiliations' | 'user_email_patterns' | 'user_identity_sources' | 'users_count' | 'uuid' | 'vat_code' | 'vat_code_verified' | 'vat_percent' | 'vat_rule';
+export type CustomerFieldEnum = 'abbreviation' | 'access_subnets' | 'accounting_start_date' | 'address' | 'agreement_number' | 'apartment_nr' | 'archived' | 'backend_id' | 'bank_account' | 'bank_name' | 'billing_price_estimate' | 'blocked' | 'call_managing_organization_uuid' | 'city' | 'contact_details' | 'country' | 'country_name' | 'created' | 'customer_credit' | 'customer_unallocated_credit' | 'default_affiliations' | 'default_tax_percent' | 'description' | 'display_billing_info_in_projects' | 'display_name' | 'domain' | 'email' | 'grace_period_days' | 'has_active_helpdesk' | 'has_affiliate_links' | 'homepage' | 'house_nr' | 'household' | 'image' | 'invoice_emails' | 'is_private_person' | 'is_service_provider' | 'is_service_provider_manager_only' | 'latitude' | 'longitude' | 'max_service_accounts' | 'name' | 'native_name' | 'notification_emails' | 'organization_groups' | 'parish' | 'payment_profiles' | 'phone_number' | 'postal' | 'project_metadata_checklist' | 'project_slug_template' | 'projects_count' | 'registration_code' | 'service_provider' | 'service_provider_uuid' | 'slug' | 'sponsor_number' | 'state' | 'street' | 'url' | 'user_affiliations' | 'user_email_patterns' | 'user_identity_sources' | 'users_count' | 'uuid' | 'vat_code' | 'vat_code_verified' | 'vat_percent' | 'vat_rule';
 
 export type CustomerUserFieldEnum = 'email' | 'expiration_time' | 'full_name' | 'image' | 'projects' | 'role_name' | 'url' | 'username' | 'uuid';
 
