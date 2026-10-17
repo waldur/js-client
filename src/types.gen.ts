@@ -6405,6 +6405,8 @@ export type ConstanceSettings = {
     MATRIX_TOKENS_MANAGED_BY?: string;
     MATRIX_HISTORY_EXPORT_ENABLED?: boolean;
     MATRIX_EXPORT_MEDIA?: boolean;
+    MATRIX_TICKET_CONTEXT_MESSAGES?: number;
+    MATRIX_TICKET_DRAFT_TTL_MINUTES?: number;
     MATRIX_HISTORY_EXPORT_RETENTION_DAYS?: number;
     MATRIX_USER_REGISTRATION_SECRET?: string;
     MATRIX_USER_ID_FORMAT?: string;
@@ -6760,6 +6762,8 @@ export type ConstanceSettingsRequest = {
     MATRIX_TOKENS_MANAGED_BY?: string;
     MATRIX_HISTORY_EXPORT_ENABLED?: boolean;
     MATRIX_EXPORT_MEDIA?: boolean;
+    MATRIX_TICKET_CONTEXT_MESSAGES?: number;
+    MATRIX_TICKET_DRAFT_TTL_MINUTES?: number;
     MATRIX_HISTORY_EXPORT_RETENTION_DAYS?: number;
     MATRIX_USER_REGISTRATION_SECRET?: string;
     MATRIX_USER_ID_FORMAT?: string;
@@ -12830,6 +12834,23 @@ export type MatrixAppserviceStatus = {
     transaction_count: number;
 };
 
+export type MatrixBotCommand = {
+    /**
+     * As typed after `!`, e.g. `ticket send`.
+     */
+    name: string;
+    description: string;
+    /**
+     * Arguments: `[optional]`, `<required>`.
+     */
+    hint: string;
+    available: boolean;
+    /**
+     * Why the command is not available; blank if it is.
+     */
+    reason: string;
+};
+
 export type MatrixCredentials = {
     method: MatrixExternalLoginMethodEnum;
     homeserver_url: string;
@@ -12946,6 +12967,10 @@ export type MatrixRoom = {
     readonly members_count: number;
     readonly members: Array<MatrixRoomMemberSummary>;
     readonly current_user_membership_state: string | null;
+    /**
+     * The Matrix user ID of Waldur's bot in the room: only its events carry Waldur's blocks.
+     */
+    readonly bot_user_id: string;
     readonly created: string;
     readonly modified: string;
 };
@@ -12994,6 +13019,54 @@ export type MatrixSession = {
      */
     recovery_key: string | null;
 };
+
+export type MatrixTicketDraft = {
+    readonly uuid: string;
+    state: MatrixTicketDraftStateEnum;
+    readonly title: string;
+    readonly description: string;
+    readonly request_type: string;
+    readonly priority: string;
+    readonly project_uuid: string;
+    readonly project_name: string;
+    readonly customer_uuid: string;
+    readonly customer_name: string;
+    readonly resource_uuid: string | null;
+    readonly resource_name: string;
+    readonly resource_offering_name: string;
+    readonly helpdesk: string;
+    readonly expires_at: string;
+    readonly issue_uuid: string | null;
+    readonly issue_key: string | null;
+    readonly issue_url: string | null;
+};
+
+export type MatrixTicketDraftCreateIssueRequest = {
+    /**
+     * Replaces the draft's title.
+     */
+    summary?: string;
+    /**
+     * Replaces the draft's description.
+     */
+    description?: string;
+    /**
+     * Replaces the draft's request type.
+     */
+    type?: string;
+    /**
+     * Replaces the draft's resource: one of the room's project, or blank or null for none.
+     */
+    resource_uuid?: string | null;
+};
+
+export type MatrixTicketDraftIssue = {
+    issue_uuid: string;
+    issue_key: string;
+    issue_url: string;
+};
+
+export type MatrixTicketDraftStateEnum = 'pending' | 'sent' | 'cancelled' | 'expired';
 
 export type MePermission = {
     readonly role_name: string;
@@ -37547,6 +37620,8 @@ export type ConstanceSettingsRequestForm = {
     MATRIX_TOKENS_MANAGED_BY?: string;
     MATRIX_HISTORY_EXPORT_ENABLED?: boolean;
     MATRIX_EXPORT_MEDIA?: boolean;
+    MATRIX_TICKET_CONTEXT_MESSAGES?: number;
+    MATRIX_TICKET_DRAFT_TTL_MINUTES?: number;
     MATRIX_HISTORY_EXPORT_RETENTION_DAYS?: number;
     MATRIX_USER_REGISTRATION_SECRET?: string;
     MATRIX_USER_ID_FORMAT?: string;
@@ -37902,6 +37977,8 @@ export type ConstanceSettingsRequestMultipart = {
     MATRIX_TOKENS_MANAGED_BY?: string;
     MATRIX_HISTORY_EXPORT_ENABLED?: boolean;
     MATRIX_EXPORT_MEDIA?: boolean;
+    MATRIX_TICKET_CONTEXT_MESSAGES?: number;
+    MATRIX_TICKET_DRAFT_TTL_MINUTES?: number;
     MATRIX_HISTORY_EXPORT_RETENTION_DAYS?: number;
     MATRIX_USER_REGISTRATION_SECRET?: string;
     MATRIX_USER_ID_FORMAT?: string;
@@ -81813,6 +81890,31 @@ export type MatrixRoomsRetrieveResponses = {
 
 export type MatrixRoomsRetrieveResponse = MatrixRoomsRetrieveResponses[keyof MatrixRoomsRetrieveResponses];
 
+export type MatrixRoomsCommandsListData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * Only rooms the current user is a member of
+         */
+        member?: boolean;
+        /**
+         * Project UUID
+         */
+        project_uuid?: string;
+        state?: MatrixRoomStateEnum;
+    };
+    url: '/api/matrix/rooms/{uuid}/commands/';
+};
+
+export type MatrixRoomsCommandsListResponses = {
+    200: Array<MatrixBotCommand>;
+};
+
+export type MatrixRoomsCommandsListResponse = MatrixRoomsCommandsListResponses[keyof MatrixRoomsCommandsListResponses];
+
 export type MatrixRoomsDisableData = {
     body?: MatrixRoomDisableRequest;
     path: {
@@ -82073,6 +82175,54 @@ export type MatrixSessionResponses = {
 };
 
 export type MatrixSessionResponse = MatrixSessionResponses[keyof MatrixSessionResponses];
+
+export type MatrixTicketDraftsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/matrix/ticket-drafts/{uuid}/';
+};
+
+export type MatrixTicketDraftsRetrieveResponses = {
+    200: MatrixTicketDraft;
+};
+
+export type MatrixTicketDraftsRetrieveResponse = MatrixTicketDraftsRetrieveResponses[keyof MatrixTicketDraftsRetrieveResponses];
+
+export type MatrixTicketDraftsCancelData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/matrix/ticket-drafts/{uuid}/cancel/';
+};
+
+export type MatrixTicketDraftsCancelResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type MatrixTicketDraftsCancelResponse = MatrixTicketDraftsCancelResponses[keyof MatrixTicketDraftsCancelResponses];
+
+export type MatrixTicketDraftsCreateIssueData = {
+    body?: MatrixTicketDraftCreateIssueRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/matrix/ticket-drafts/{uuid}/create_issue/';
+};
+
+export type MatrixTicketDraftsCreateIssueResponses = {
+    201: MatrixTicketDraftIssue;
+};
+
+export type MatrixTicketDraftsCreateIssueResponse = MatrixTicketDraftsCreateIssueResponses[keyof MatrixTicketDraftsCreateIssueResponses];
 
 export type MediaRetrieveData = {
     body?: never;
