@@ -504,7 +504,7 @@ export type AgentConnectionInfo = {
      */
     readonly auth_token_name: string | null;
     /**
-     * Permission branch that authorised the registration
+     * Permission branch that authorized the registration
      */
     authorized_via: AuthorizedViaEnum | BlankEnum | NullEnum | null;
     /**
@@ -3823,7 +3823,7 @@ export type CallExportResponse = {
 
 export type CallImportParametersRequest = {
     /**
-     * Call managing organisation that will own the imported call.
+     * Call managing organization that will own the imported call.
      */
     manager: string;
     /**
@@ -4522,7 +4522,7 @@ export type CategoryColumn = {
      */
     attribute?: string;
     /**
-     * Widget field allows to customise table cell rendering.
+     * Widget field allows to customize table cell rendering.
      */
     widget?: WidgetEnum | BlankEnum | NullEnum | null;
     category: string;
@@ -4542,7 +4542,7 @@ export type CategoryColumnRequest = {
      */
     attribute?: string;
     /**
-     * Widget field allows to customise table cell rendering.
+     * Widget field allows to customize table cell rendering.
      */
     widget?: WidgetEnum | BlankEnum | NullEnum | null;
     category: string;
@@ -4763,7 +4763,7 @@ export type CeleryStatsResponse = {
         [key: string]: Array<CeleryTask>;
     } | null;
     /**
-     * IDs of revoked (cancelled) tasks per worker. Keys are worker names, values are lists of task IDs.
+     * IDs of revoked (canceled) tasks per worker. Keys are worker names, values are lists of task IDs.
      */
     readonly revoked: {
         [key: string]: Array<string>;
@@ -13110,7 +13110,7 @@ export type MembershipStateEnum = 'invited' | 'joined' | 'left' | 'banned';
 
 export type MergedPluginOptions = {
     /**
-     * Where accounts are held: 'offering' keeps one account per offering (the historical behaviour); 'provider' shares one account per user across the provider's offerings.
+     * Where accounts are held: 'offering' keeps one account per offering (the historical behavior); 'provider' shares one account per user across the provider's offerings.
      */
     account_scope?: AccountScope | BlankEnum;
     /**
@@ -13541,7 +13541,7 @@ export type MergedPluginOptions = {
 
 export type MergedPluginOptionsRequest = {
     /**
-     * Where accounts are held: 'offering' keeps one account per offering (the historical behaviour); 'provider' shares one account per user across the provider's offerings.
+     * Where accounts are held: 'offering' keeps one account per offering (the historical behavior); 'provider' shares one account per user across the provider's offerings.
      */
     account_scope?: AccountScope | BlankEnum;
     /**
@@ -14800,7 +14800,7 @@ export type NestedColumn = {
      */
     attribute?: string;
     /**
-     * Widget field allows to customise table cell rendering.
+     * Widget field allows to customize table cell rendering.
      */
     widget?: WidgetEnum | BlankEnum | NullEnum | null;
 };
@@ -14819,7 +14819,7 @@ export type NestedColumnRequest = {
      */
     attribute?: string;
     /**
-     * Widget field allows to customise table cell rendering.
+     * Widget field allows to customize table cell rendering.
      */
     widget?: WidgetEnum | BlankEnum | NullEnum | null;
 };
@@ -21631,7 +21631,7 @@ export type PatchedCategoryColumnRequest = {
      */
     attribute?: string;
     /**
-     * Widget field allows to customise table cell rendering.
+     * Widget field allows to customize table cell rendering.
      */
     widget?: WidgetEnum | BlankEnum | NullEnum | null;
     category?: string;
@@ -22993,11 +22993,11 @@ export type PatchedProtectedCallRequest = {
      */
     order_author?: OrderAuthorEnum;
     /**
-     * The person orders are attributed to when the author is a named contact. Must hold a role on this call or on the organisation managing it.
+     * The person orders are attributed to when the author is a named contact. Must hold a role on this call or on the organization managing it.
      */
     order_author_user?: string | null;
     /**
-     * Whether a draft still open when its round's cut-off passes moves on to the call's next round instead of being cancelled. Without a later round the draft is cancelled either way.
+     * Whether a draft still open when its round's cut-off passes moves on to the call's next round instead of being canceled. Without a later round the draft is canceled either way.
      */
     carry_over_drafts?: boolean;
     /**
@@ -23520,6 +23520,10 @@ export type PatchedRoleDetailsRequest = {
      */
     description_en?: string | null;
     /**
+     * Description [en-gb]
+     */
+    description_en_gb?: string | null;
+    /**
      * Description [et]
      */
     description_et?: string | null;
@@ -23576,9 +23580,29 @@ export type PatchedRoleDetailsRequest = {
      */
     description_hr?: string | null;
     /**
+     * Description [sl]
+     */
+    description_sl?: string | null;
+    /**
+     * Description [el]
+     */
+    description_el?: string | null;
+    /**
+     * Description [bg]
+     */
+    description_bg?: string | null;
+    /**
      * Description [km]
      */
     description_km?: string | null;
+    /**
+     * Description [mk]
+     */
+    description_mk?: string | null;
+    /**
+     * Description [sq]
+     */
+    description_sq?: string | null;
     is_active?: boolean;
 };
 
@@ -23825,7 +23849,7 @@ export type PatchedSystemPromptRequest = {
     name?: string;
     description?: string;
     /**
-     * Additional instructions injected into the system prompt. Use this for organisation-specific context, terminology, FAQ content, or behavioural guidelines. Supports {assistant_name} and {organization} placeholders.
+     * Additional instructions injected into the system prompt. Use this for organization-specific context, terminology, FAQ content, or behavioral guidelines. Supports {assistant_name} and {organization} placeholders.
      */
     custom_instructions?: string;
 };
@@ -25994,13 +26018,13 @@ export type ProtectedCall = {
      */
     order_author?: OrderAuthorEnum;
     /**
-     * The person orders are attributed to when the author is a named contact. Must hold a role on this call or on the organisation managing it.
+     * The person orders are attributed to when the author is a named contact. Must hold a role on this call or on the organization managing it.
      */
     order_author_user?: string | null;
     readonly order_author_user_uuid: string | null;
     readonly order_author_user_name: string | null;
     /**
-     * Whether a draft still open when its round's cut-off passes moves on to the call's next round instead of being cancelled. Without a later round the draft is cancelled either way.
+     * Whether a draft still open when its round's cut-off passes moves on to the call's next round instead of being canceled. Without a later round the draft is canceled either way.
      */
     carry_over_drafts?: boolean;
     /**
@@ -26078,11 +26102,11 @@ export type ProtectedCallRequest = {
      */
     order_author?: OrderAuthorEnum;
     /**
-     * The person orders are attributed to when the author is a named contact. Must hold a role on this call or on the organisation managing it.
+     * The person orders are attributed to when the author is a named contact. Must hold a role on this call or on the organization managing it.
      */
     order_author_user?: string | null;
     /**
-     * Whether a draft still open when its round's cut-off passes moves on to the call's next round instead of being cancelled. Without a later round the draft is cancelled either way.
+     * Whether a draft still open when its round's cut-off passes moves on to the call's next round instead of being canceled. Without a later round the draft is canceled either way.
      */
     carry_over_drafts?: boolean;
     /**
@@ -26164,7 +26188,7 @@ export type ProtectedRoundRequest = {
 
 export type ProviderAccountOptions = {
     /**
-     * Where accounts are held: 'offering' keeps one account per offering (the historical behaviour); 'provider' shares one account per user across the provider's offerings.
+     * Where accounts are held: 'offering' keeps one account per offering (the historical behavior); 'provider' shares one account per user across the provider's offerings.
      */
     account_scope?: AccountScope | BlankEnum;
     /**
@@ -26191,7 +26215,7 @@ export type ProviderAccountOptions = {
 
 export type ProviderAccountOptionsRequest = {
     /**
-     * Where accounts are held: 'offering' keeps one account per offering (the historical behaviour); 'provider' shares one account per user across the provider's offerings.
+     * Where accounts are held: 'offering' keeps one account per offering (the historical behavior); 'provider' shares one account per user across the provider's offerings.
      */
     account_scope?: AccountScope | BlankEnum;
     /**
@@ -31443,6 +31467,10 @@ export type RoleDescription = {
      */
     description_en?: string | null;
     /**
+     * Description [en-gb]
+     */
+    description_en_gb?: string | null;
+    /**
      * Description [et]
      */
     description_et?: string | null;
@@ -31499,9 +31527,29 @@ export type RoleDescription = {
      */
     description_hr?: string | null;
     /**
+     * Description [sl]
+     */
+    description_sl?: string | null;
+    /**
+     * Description [el]
+     */
+    description_el?: string | null;
+    /**
+     * Description [bg]
+     */
+    description_bg?: string | null;
+    /**
      * Description [km]
      */
     description_km?: string | null;
+    /**
+     * Description [mk]
+     */
+    description_mk?: string | null;
+    /**
+     * Description [sq]
+     */
+    description_sq?: string | null;
 };
 
 export type RoleDescriptionRequest = {
@@ -31511,6 +31559,10 @@ export type RoleDescriptionRequest = {
      */
     description_en?: string | null;
     /**
+     * Description [en-gb]
+     */
+    description_en_gb?: string | null;
+    /**
      * Description [et]
      */
     description_et?: string | null;
@@ -31567,9 +31619,29 @@ export type RoleDescriptionRequest = {
      */
     description_hr?: string | null;
     /**
+     * Description [sl]
+     */
+    description_sl?: string | null;
+    /**
+     * Description [el]
+     */
+    description_el?: string | null;
+    /**
+     * Description [bg]
+     */
+    description_bg?: string | null;
+    /**
      * Description [km]
      */
     description_km?: string | null;
+    /**
+     * Description [mk]
+     */
+    description_mk?: string | null;
+    /**
+     * Description [sq]
+     */
+    description_sq?: string | null;
 };
 
 export type RoleDetails = {
@@ -31581,6 +31653,10 @@ export type RoleDetails = {
      */
     description_en?: string | null;
     /**
+     * Description [en-gb]
+     */
+    description_en_gb?: string | null;
+    /**
      * Description [et]
      */
     description_et?: string | null;
@@ -31637,9 +31713,29 @@ export type RoleDetails = {
      */
     description_hr?: string | null;
     /**
+     * Description [sl]
+     */
+    description_sl?: string | null;
+    /**
+     * Description [el]
+     */
+    description_el?: string | null;
+    /**
+     * Description [bg]
+     */
+    description_bg?: string | null;
+    /**
      * Description [km]
      */
     description_km?: string | null;
+    /**
+     * Description [mk]
+     */
+    description_mk?: string | null;
+    /**
+     * Description [sq]
+     */
+    description_sq?: string | null;
     readonly permissions: Array<string>;
     readonly is_system_role: boolean;
     is_active?: boolean;
@@ -31684,6 +31780,10 @@ export type RoleModifyRequest = {
      */
     description_en?: string | null;
     /**
+     * Description [en-gb]
+     */
+    description_en_gb?: string | null;
+    /**
      * Description [et]
      */
     description_et?: string | null;
@@ -31740,9 +31840,29 @@ export type RoleModifyRequest = {
      */
     description_hr?: string | null;
     /**
+     * Description [sl]
+     */
+    description_sl?: string | null;
+    /**
+     * Description [el]
+     */
+    description_el?: string | null;
+    /**
+     * Description [bg]
+     */
+    description_bg?: string | null;
+    /**
      * Description [km]
      */
     description_km?: string | null;
+    /**
+     * Description [mk]
+     */
+    description_mk?: string | null;
+    /**
+     * Description [sq]
+     */
+    description_sq?: string | null;
     permissions: {
         [key: string]: unknown;
     };
@@ -33364,7 +33484,7 @@ export type SramGroup = {
     readonly external_id: string;
     readonly display_name: string;
     /**
-     * SRAM global URN: '<organisation>:<co>' or '<organisation>:<co>:<group>'.
+     * SRAM global URN: '<organization>:<co>' or '<organization>:<co>:<group>'.
      */
     readonly urn: string;
     kind: SramGroupKindEnum;
@@ -33825,7 +33945,7 @@ export type SystemPrompt = {
     name: string;
     description?: string;
     /**
-     * Additional instructions injected into the system prompt. Use this for organisation-specific context, terminology, FAQ content, or behavioural guidelines. Supports {assistant_name} and {organization} placeholders.
+     * Additional instructions injected into the system prompt. Use this for organization-specific context, terminology, FAQ content, or behavioral guidelines. Supports {assistant_name} and {organization} placeholders.
      */
     custom_instructions?: string;
     /**
@@ -33840,7 +33960,7 @@ export type SystemPromptRequest = {
     name: string;
     description?: string;
     /**
-     * Additional instructions injected into the system prompt. Use this for organisation-specific context, terminology, FAQ content, or behavioural guidelines. Supports {assistant_name} and {organization} placeholders.
+     * Additional instructions injected into the system prompt. Use this for organization-specific context, terminology, FAQ content, or behavioral guidelines. Supports {assistant_name} and {organization} placeholders.
      */
     custom_instructions?: string;
 };
@@ -38844,7 +38964,7 @@ export type ReviewerProfileOEnum = '-created' | '-user_email' | '-user_name' | '
 
 export type ReviewerSuggestionOEnum = '-affinity_score' | '-created' | '-reviewed_at' | '-status' | 'affinity_score' | 'created' | 'reviewed_at' | 'status';
 
-export type RoleDetailsFieldEnum = 'content_type' | 'customer_name' | 'customer_uuid' | 'description' | 'description_ar' | 'description_cs' | 'description_da' | 'description_de' | 'description_en' | 'description_es' | 'description_et' | 'description_fr' | 'description_hr' | 'description_it' | 'description_km' | 'description_lt' | 'description_lv' | 'description_nb' | 'description_ru' | 'description_sv' | 'is_active' | 'is_system_role' | 'name' | 'permissions' | 'template_name' | 'template_uuid' | 'users_count' | 'uuid';
+export type RoleDetailsFieldEnum = 'content_type' | 'customer_name' | 'customer_uuid' | 'description' | 'description_ar' | 'description_bg' | 'description_cs' | 'description_da' | 'description_de' | 'description_el' | 'description_en' | 'description_en_gb' | 'description_es' | 'description_et' | 'description_fr' | 'description_hr' | 'description_it' | 'description_km' | 'description_lt' | 'description_lv' | 'description_mk' | 'description_nb' | 'description_ru' | 'description_sl' | 'description_sq' | 'description_sv' | 'is_active' | 'is_system_role' | 'name' | 'permissions' | 'template_name' | 'template_uuid' | 'users_count' | 'uuid';
 
 export type RoleDetailsOEnum = '-is_active' | '-name' | '-origin' | '-scope' | '-users_count' | 'is_active' | 'name' | 'origin' | 'scope' | 'users_count';
 

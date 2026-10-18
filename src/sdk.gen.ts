@@ -1453,7 +1453,7 @@ export const anonymousChatInteractionsByUserList = <ThrowOnError extends boolean
 /**
  * Conversations grouped by session
  *
- * One row per anonymous conversation (``session_id``) with aggregate counters, mirroring the authenticated threads table. Honours the same filters as the list endpoint. Read a conversation's transcript via ``by-session/{session_id}``.
+ * One row per anonymous conversation (``session_id``) with aggregate counters, mirroring the authenticated threads table. Honors the same filters as the list endpoint. Read a conversation's transcript via ``by-session/{session_id}``.
  */
 export const anonymousChatInteractionsConversationsList = <ThrowOnError extends boolean = true>(options?: Options<AnonymousChatInteractionsConversationsListData, ThrowOnError>) => (options?.client ?? client).get<AnonymousChatInteractionsConversationsListResponses, unknown, ThrowOnError>({
     security: [
@@ -1467,7 +1467,7 @@ export const anonymousChatInteractionsConversationsList = <ThrowOnError extends 
 /**
  * Aggregate KPI roll-up
  *
- * Returns aggregate counters and rates for the anonymous chat flow. Filters are honoured (date range etc.) so the same parameters work as on the list endpoint.
+ * Returns aggregate counters and rates for the anonymous chat flow. Filters are honored (date range etc.) so the same parameters work as on the list endpoint.
  */
 export const anonymousChatInteractionsKpiRetrieve = <ThrowOnError extends boolean = true>(options?: Options<AnonymousChatInteractionsKpiRetrieveData, ThrowOnError>) => (options?.client ?? client).get<AnonymousChatInteractionsKpiRetrieveResponses, unknown, ThrowOnError>({
     security: [
@@ -3063,7 +3063,7 @@ export const callManagingOrganisationsListUsersCount = <ThrowOnError extends boo
 });
 
 /**
- * Return statistics for call managing organisation.
+ * Return statistics for call managing organization.
  */
 export const callManagingOrganisationsStatsRetrieve = <ThrowOnError extends boolean = true>(options: Options<CallManagingOrganisationsStatsRetrieveData, ThrowOnError>) => (options.client ?? client).get<CallManagingOrganisationsStatsRetrieveResponses, unknown, ThrowOnError>({
     security: [
@@ -3502,7 +3502,7 @@ export const callWorkflowStepNotificationRulesUpdate = <ThrowOnError extends boo
  * - **active**: Tasks currently being executed by workers
  * - **scheduled**: Tasks scheduled for future execution (with ETA)
  * - **reserved**: Tasks received by workers but not yet started
- * - **revoked**: Task IDs that have been cancelled/revoked
+ * - **revoked**: Task IDs that have been canceled/revoked
  * - **query_task**: Results of task queries (if any)
  * - **stats**: Detailed worker statistics including uptime, pool info, and broker connection
  *
@@ -18597,7 +18597,7 @@ export const marketplaceServiceProvidersAddUser = <ThrowOnError extends boolean 
  *
  * Backs every offering account at this provider with one provider-level account per user, so a person resolves to a single username and POSIX identity across the provider's offerings.
  *
- * Users whose accounts already agree are adopted without input. A user whose accounts disagree must be given a surviving username in 'resolutions', keyed by user UUID — see the 'username_conflicts' action. The call is refused while any conflict is unresolved, rather than adopting part of the provider and leaving the rest on the old per-offering behaviour.
+ * Users whose accounts already agree are adopted without input. A user whose accounts disagree must be given a surviving username in 'resolutions', keyed by user UUID — see the 'username_conflicts' action. The call is refused while any conflict is unresolved, rather than adopting part of the provider and leaving the rest on the old per-offering behavior.
  */
 export const marketplaceServiceProvidersAdoptProviderAccounts = <ThrowOnError extends boolean = true>(options: Options<MarketplaceServiceProvidersAdoptProviderAccountsData, ThrowOnError>) => (options.client ?? client).post<MarketplaceServiceProvidersAdoptProviderAccountsResponses, unknown, ThrowOnError>({
     security: [
@@ -21664,7 +21664,7 @@ export const matrixTicketDraftsCancel = <ThrowOnError extends boolean = true>(op
 /**
  * Create the draft's support ticket
  *
- * Create the pending draft's ticket as its requester, through the support API, and post its key in the room's thread. The draft is then sent: a second call, or one for a cancelled or expired draft, gets 404.
+ * Create the pending draft's ticket as its requester, through the support API, and post its key in the room's thread. The draft is then sent: a second call, or one for a canceled or expired draft, gets 404.
  */
 export const matrixTicketDraftsCreateIssue = <ThrowOnError extends boolean = true>(options: Options<MatrixTicketDraftsCreateIssueData, ThrowOnError>) => (options.client ?? client).post<MatrixTicketDraftsCreateIssueResponses, unknown, ThrowOnError>({
     security: [
@@ -29875,7 +29875,7 @@ export const proposalProposalsAttachDocument = <ThrowOnError extends boolean = t
 });
 
 /**
- * List what the allocation decision awards the proposal. Staff, support, the call's managers and organisers, and the managers of the offerings involved see it at any time; the applicant team once the decision is released.
+ * List what the allocation decision awards the proposal. Staff, support, the call's managers and organizers, and the managers of the offerings involved see it at any time; the applicant team once the decision is released.
  */
 export const proposalProposalsAwardedResourcesList = <ThrowOnError extends boolean = true>(options: Options<ProposalProposalsAwardedResourcesListData, ThrowOnError>) => (options.client ?? client).get<ProposalProposalsAwardedResourcesListResponses, unknown, ThrowOnError>({
     security: [
@@ -31373,7 +31373,7 @@ export const proposalProtectedCallsDashboardStatsRetrieve = <ThrowOnError extend
 /**
  * Import call configuration
  *
- * Create a draft call under the given call managing organisation from a document produced by export_call. References that cannot be resolved by name on this portal are skipped and reported in warnings. The import is atomic.
+ * Create a draft call under the given call managing organization from a document produced by export_call. References that cannot be resolved by name on this portal are skipped and reported in warnings. The import is atomic.
  */
 export const proposalProtectedCallsImportCall = <ThrowOnError extends boolean = true>(options: Options<ProposalProtectedCallsImportCallData, ThrowOnError>) => (options.client ?? client).post<ProposalProtectedCallsImportCallResponses, unknown, ThrowOnError>({
     security: [
@@ -35427,7 +35427,7 @@ export const staffPasskeysRevoke = <ThrowOnError extends boolean = true>(options
  * - **active**: Tasks currently being executed by workers
  * - **scheduled**: Tasks scheduled for future execution (with ETA)
  * - **reserved**: Tasks received by workers but not yet started
- * - **revoked**: Task IDs that have been cancelled/revoked
+ * - **revoked**: Task IDs that have been canceled/revoked
  * - **query_task**: Results of task queries (if any)
  * - **stats**: Detailed worker statistics including uptime, pool info, and broker connection
  *
