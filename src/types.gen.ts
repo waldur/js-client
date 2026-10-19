@@ -86196,6 +86196,176 @@ export type OpenportalUnmanagedProjectsDeleteUserResponses = {
     200: unknown;
 };
 
+export type OpenportalUnmanagedProjectsHistoryListData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * Filter by whether accounting is running.
+         */
+        accounting_is_running?: boolean;
+        /**
+         * Affiliation name
+         */
+        affiliation_name?: string;
+        /**
+         * Affiliation UUID
+         */
+        affiliation_uuid?: Array<string>;
+        backend_id?: string;
+        /**
+         * Return a list of projects where current user is admin.
+         */
+        can_admin?: boolean;
+        /**
+         * Return a list of projects where current user is manager or a customer owner.
+         */
+        can_manage?: boolean;
+        /**
+         * Conceal finished projects
+         */
+        conceal_finished_projects?: boolean;
+        /**
+         * Created after
+         */
+        created?: string;
+        /**
+         * Filter versions created after this timestamp (ISO 8601)
+         */
+        created_after?: string;
+        /**
+         * Filter versions created before this timestamp (ISO 8601)
+         */
+        created_before?: string;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        current_user_has_role?: Array<string>;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        customer?: Array<string>;
+        /**
+         * Customer abbreviation
+         */
+        customer_abbreviation?: string;
+        /**
+         * Customer name
+         */
+        customer_name?: string;
+        /**
+         * Customer native name
+         */
+        customer_native_name?: string;
+        /**
+         * Description
+         */
+        description?: string;
+        /**
+         * Filter projects that have an affiliation.
+         */
+        has_affiliation?: boolean;
+        /**
+         * Is removed
+         */
+        is_removed?: boolean;
+        /**
+         * Modified after
+         */
+        modified?: string;
+        /**
+         * Modified before
+         */
+        modified_before?: string;
+        /**
+         * Name
+         */
+        name?: string;
+        /**
+         * Name (exact)
+         */
+        name_exact?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<MarketplaceProviderCustomerProjectOEnum>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Filter by name, slug, UUID, backend ID or resource effective ID
+         */
+        query?: string;
+        /**
+         * Science domain UUID
+         */
+        science_domain_uuid?: string;
+        /**
+         * Science sub-domain UUID
+         */
+        science_sub_domain_uuid?: string;
+        /**
+         * Slug
+         */
+        slug?: string;
+        /**
+         * Filter by user UUID.
+         */
+        user_uuid?: string;
+        /**
+         * Filter projects where the given user has a role.
+         */
+        user_uuid_with_active_role?: string;
+    };
+    url: '/api/openportal-unmanaged-projects/{uuid}/history/';
+};
+
+export type OpenportalUnmanagedProjectsHistoryListResponses = {
+    200: Array<VersionHistory>;
+};
+
+export type OpenportalUnmanagedProjectsHistoryListResponse = OpenportalUnmanagedProjectsHistoryListResponses[keyof OpenportalUnmanagedProjectsHistoryListResponses];
+
+export type OpenportalUnmanagedProjectsHistoryAtRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query: {
+        /**
+         * ISO 8601 timestamp to query the object state at
+         */
+        timestamp: string;
+    };
+    url: '/api/openportal-unmanaged-projects/{uuid}/history/at/';
+};
+
+export type OpenportalUnmanagedProjectsHistoryAtRetrieveErrors = {
+    400: {
+        [key: string]: unknown;
+    };
+    404: {
+        [key: string]: unknown;
+    };
+};
+
+export type OpenportalUnmanagedProjectsHistoryAtRetrieveError = OpenportalUnmanagedProjectsHistoryAtRetrieveErrors[keyof OpenportalUnmanagedProjectsHistoryAtRetrieveErrors];
+
+export type OpenportalUnmanagedProjectsHistoryAtRetrieveResponses = {
+    200: VersionHistory;
+};
+
+export type OpenportalUnmanagedProjectsHistoryAtRetrieveResponse = OpenportalUnmanagedProjectsHistoryAtRetrieveResponses[keyof OpenportalUnmanagedProjectsHistoryAtRetrieveResponses];
+
 export type OpenportalUnmanagedProjectsListUsersListData = {
     body?: never;
     path: {
@@ -96885,6 +97055,176 @@ export type ProjectsDeleteUserResponses = {
      */
     200: unknown;
 };
+
+export type ProjectsHistoryListData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * Filter by whether accounting is running.
+         */
+        accounting_is_running?: boolean;
+        /**
+         * Affiliation name
+         */
+        affiliation_name?: string;
+        /**
+         * Affiliation UUID
+         */
+        affiliation_uuid?: Array<string>;
+        backend_id?: string;
+        /**
+         * Return a list of projects where current user is admin.
+         */
+        can_admin?: boolean;
+        /**
+         * Return a list of projects where current user is manager or a customer owner.
+         */
+        can_manage?: boolean;
+        /**
+         * Conceal finished projects
+         */
+        conceal_finished_projects?: boolean;
+        /**
+         * Created after
+         */
+        created?: string;
+        /**
+         * Filter versions created after this timestamp (ISO 8601)
+         */
+        created_after?: string;
+        /**
+         * Filter versions created before this timestamp (ISO 8601)
+         */
+        created_before?: string;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        current_user_has_role?: Array<string>;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        customer?: Array<string>;
+        /**
+         * Customer abbreviation
+         */
+        customer_abbreviation?: string;
+        /**
+         * Customer name
+         */
+        customer_name?: string;
+        /**
+         * Customer native name
+         */
+        customer_native_name?: string;
+        /**
+         * Description
+         */
+        description?: string;
+        /**
+         * Filter projects that have an affiliation.
+         */
+        has_affiliation?: boolean;
+        /**
+         * Is removed
+         */
+        is_removed?: boolean;
+        /**
+         * Modified after
+         */
+        modified?: string;
+        /**
+         * Modified before
+         */
+        modified_before?: string;
+        /**
+         * Name
+         */
+        name?: string;
+        /**
+         * Name (exact)
+         */
+        name_exact?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<MarketplaceProviderCustomerProjectOEnum>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Filter by name, slug, UUID, backend ID or resource effective ID
+         */
+        query?: string;
+        /**
+         * Science domain UUID
+         */
+        science_domain_uuid?: string;
+        /**
+         * Science sub-domain UUID
+         */
+        science_sub_domain_uuid?: string;
+        /**
+         * Slug
+         */
+        slug?: string;
+        /**
+         * Filter by user UUID.
+         */
+        user_uuid?: string;
+        /**
+         * Filter projects where the given user has a role.
+         */
+        user_uuid_with_active_role?: string;
+    };
+    url: '/api/projects/{uuid}/history/';
+};
+
+export type ProjectsHistoryListResponses = {
+    200: Array<VersionHistory>;
+};
+
+export type ProjectsHistoryListResponse = ProjectsHistoryListResponses[keyof ProjectsHistoryListResponses];
+
+export type ProjectsHistoryAtRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query: {
+        /**
+         * ISO 8601 timestamp to query the object state at
+         */
+        timestamp: string;
+    };
+    url: '/api/projects/{uuid}/history/at/';
+};
+
+export type ProjectsHistoryAtRetrieveErrors = {
+    400: {
+        [key: string]: unknown;
+    };
+    404: {
+        [key: string]: unknown;
+    };
+};
+
+export type ProjectsHistoryAtRetrieveError = ProjectsHistoryAtRetrieveErrors[keyof ProjectsHistoryAtRetrieveErrors];
+
+export type ProjectsHistoryAtRetrieveResponses = {
+    200: VersionHistory;
+};
+
+export type ProjectsHistoryAtRetrieveResponse = ProjectsHistoryAtRetrieveResponses[keyof ProjectsHistoryAtRetrieveResponses];
 
 export type ProjectsListUsersListData = {
     body?: never;
