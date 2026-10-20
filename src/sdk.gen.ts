@@ -21715,7 +21715,7 @@ export const metadataPermissionsRetrieve = <ThrowOnError extends boolean = true>
 /**
  * Get overridable settings metadata
  *
- * Retrieves metadata for all settings that can be configured via the Constance backend. This includes setting keys, human-readable descriptions, default values, and types. This endpoint is publicly accessible.
+ * Retrieves metadata for all settings that can be changed at runtime. This includes setting keys, human-readable descriptions, default values, and types. This endpoint is publicly accessible.
  */
 export const metadataSettingsRetrieve = <ThrowOnError extends boolean = true>(options?: Options<MetadataSettingsRetrieveData, ThrowOnError>) => (options?.client ?? client).get<MetadataSettingsRetrieveResponses, unknown, ThrowOnError>({ url: '/api/metadata/settings/', ...options });
 
@@ -28485,7 +28485,7 @@ export const otlpV1Metrics = <ThrowOnError extends boolean = true>(options?: Opt
 /**
  * Get all overridable settings
  *
- * Returns all settings that can be overridden in the database via the Constance backend. Staff receive every value. Support users receive the same keys, with secret_field values blanked.
+ * Returns all settings that can be overridden in the database. Staff receive every value. Support users receive the same keys, with secret_field values blanked.
  */
 export const overrideSettingsRetrieve = <ThrowOnError extends boolean = true>(options?: Options<OverrideSettingsRetrieveData, ThrowOnError>) => (options?.client ?? client).get<OverrideSettingsRetrieveResponses, unknown, ThrowOnError>({
     security: [
@@ -28499,7 +28499,7 @@ export const overrideSettingsRetrieve = <ThrowOnError extends boolean = true>(op
 /**
  * Update overridable settings
  *
- * Updates one or more settings in the database via the Constance backend. Requires staff permissions. Support users cannot update settings.
+ * Updates one or more settings in the database. Requires staff permissions. Support users cannot update settings.
  */
 export const overrideSettings = <ThrowOnError extends boolean = true>(options?: Options<OverrideSettingsData, ThrowOnError>) => (options?.client ?? client).post<OverrideSettingsResponses, unknown, ThrowOnError>({
     security: [
