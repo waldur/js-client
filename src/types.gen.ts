@@ -56985,6 +56985,73 @@ export type MarketplaceCustomerEstimatedCostPoliciesUpdateResponses = {
 
 export type MarketplaceCustomerEstimatedCostPoliciesUpdateResponse = MarketplaceCustomerEstimatedCostPoliciesUpdateResponses[keyof MarketplaceCustomerEstimatedCostPoliciesUpdateResponses];
 
+export type MarketplaceCustomerEstimatedCostPoliciesHistoryListData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * Filter versions created after this timestamp (ISO 8601)
+         */
+        created_after?: string;
+        /**
+         * Filter versions created before this timestamp (ISO 8601)
+         */
+        created_before?: string;
+        customer?: string;
+        customer_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        scope?: string;
+        scope_uuid?: string;
+    };
+    url: '/api/marketplace-customer-estimated-cost-policies/{uuid}/history/';
+};
+
+export type MarketplaceCustomerEstimatedCostPoliciesHistoryListResponses = {
+    200: Array<VersionHistory>;
+};
+
+export type MarketplaceCustomerEstimatedCostPoliciesHistoryListResponse = MarketplaceCustomerEstimatedCostPoliciesHistoryListResponses[keyof MarketplaceCustomerEstimatedCostPoliciesHistoryListResponses];
+
+export type MarketplaceCustomerEstimatedCostPoliciesHistoryAtRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query: {
+        /**
+         * ISO 8601 timestamp to query the object state at
+         */
+        timestamp: string;
+    };
+    url: '/api/marketplace-customer-estimated-cost-policies/{uuid}/history/at/';
+};
+
+export type MarketplaceCustomerEstimatedCostPoliciesHistoryAtRetrieveErrors = {
+    400: {
+        [key: string]: unknown;
+    };
+    404: {
+        [key: string]: unknown;
+    };
+};
+
+export type MarketplaceCustomerEstimatedCostPoliciesHistoryAtRetrieveError = MarketplaceCustomerEstimatedCostPoliciesHistoryAtRetrieveErrors[keyof MarketplaceCustomerEstimatedCostPoliciesHistoryAtRetrieveErrors];
+
+export type MarketplaceCustomerEstimatedCostPoliciesHistoryAtRetrieveResponses = {
+    200: VersionHistory;
+};
+
+export type MarketplaceCustomerEstimatedCostPoliciesHistoryAtRetrieveResponse = MarketplaceCustomerEstimatedCostPoliciesHistoryAtRetrieveResponses[keyof MarketplaceCustomerEstimatedCostPoliciesHistoryAtRetrieveResponses];
+
 export type MarketplaceCustomerEstimatedCostPoliciesActionsRetrieveData = {
     body?: never;
     path?: never;
@@ -58253,6 +58320,71 @@ export type MarketplaceOfferingEstimatedCostPoliciesUpdateResponses = {
 };
 
 export type MarketplaceOfferingEstimatedCostPoliciesUpdateResponse = MarketplaceOfferingEstimatedCostPoliciesUpdateResponses[keyof MarketplaceOfferingEstimatedCostPoliciesUpdateResponses];
+
+export type MarketplaceOfferingEstimatedCostPoliciesHistoryListData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * Filter versions created after this timestamp (ISO 8601)
+         */
+        created_after?: string;
+        /**
+         * Filter versions created before this timestamp (ISO 8601)
+         */
+        created_before?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        scope?: string;
+        scope_uuid?: string;
+    };
+    url: '/api/marketplace-offering-estimated-cost-policies/{uuid}/history/';
+};
+
+export type MarketplaceOfferingEstimatedCostPoliciesHistoryListResponses = {
+    200: Array<VersionHistory>;
+};
+
+export type MarketplaceOfferingEstimatedCostPoliciesHistoryListResponse = MarketplaceOfferingEstimatedCostPoliciesHistoryListResponses[keyof MarketplaceOfferingEstimatedCostPoliciesHistoryListResponses];
+
+export type MarketplaceOfferingEstimatedCostPoliciesHistoryAtRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query: {
+        /**
+         * ISO 8601 timestamp to query the object state at
+         */
+        timestamp: string;
+    };
+    url: '/api/marketplace-offering-estimated-cost-policies/{uuid}/history/at/';
+};
+
+export type MarketplaceOfferingEstimatedCostPoliciesHistoryAtRetrieveErrors = {
+    400: {
+        [key: string]: unknown;
+    };
+    404: {
+        [key: string]: unknown;
+    };
+};
+
+export type MarketplaceOfferingEstimatedCostPoliciesHistoryAtRetrieveError = MarketplaceOfferingEstimatedCostPoliciesHistoryAtRetrieveErrors[keyof MarketplaceOfferingEstimatedCostPoliciesHistoryAtRetrieveErrors];
+
+export type MarketplaceOfferingEstimatedCostPoliciesHistoryAtRetrieveResponses = {
+    200: VersionHistory;
+};
+
+export type MarketplaceOfferingEstimatedCostPoliciesHistoryAtRetrieveResponse = MarketplaceOfferingEstimatedCostPoliciesHistoryAtRetrieveResponses[keyof MarketplaceOfferingEstimatedCostPoliciesHistoryAtRetrieveResponses];
 
 export type MarketplaceOfferingEstimatedCostPoliciesActionsRetrieveData = {
     body?: never;
@@ -63293,6 +63425,79 @@ export type MarketplaceProjectEstimatedCostPoliciesUpdateResponses = {
 };
 
 export type MarketplaceProjectEstimatedCostPoliciesUpdateResponse = MarketplaceProjectEstimatedCostPoliciesUpdateResponses[keyof MarketplaceProjectEstimatedCostPoliciesUpdateResponses];
+
+export type MarketplaceProjectEstimatedCostPoliciesHistoryListData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * Filter versions created after this timestamp (ISO 8601)
+         */
+        created_after?: string;
+        /**
+         * Filter versions created before this timestamp (ISO 8601)
+         */
+        created_before?: string;
+        customer?: string;
+        customer_uuid?: string;
+        has_resource?: boolean;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        project?: string;
+        project_uuid?: string;
+        query?: string;
+        resource?: string;
+        resource_uuid?: string;
+        scope?: string;
+        scope_uuid?: string;
+    };
+    url: '/api/marketplace-project-estimated-cost-policies/{uuid}/history/';
+};
+
+export type MarketplaceProjectEstimatedCostPoliciesHistoryListResponses = {
+    200: Array<VersionHistory>;
+};
+
+export type MarketplaceProjectEstimatedCostPoliciesHistoryListResponse = MarketplaceProjectEstimatedCostPoliciesHistoryListResponses[keyof MarketplaceProjectEstimatedCostPoliciesHistoryListResponses];
+
+export type MarketplaceProjectEstimatedCostPoliciesHistoryAtRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query: {
+        /**
+         * ISO 8601 timestamp to query the object state at
+         */
+        timestamp: string;
+    };
+    url: '/api/marketplace-project-estimated-cost-policies/{uuid}/history/at/';
+};
+
+export type MarketplaceProjectEstimatedCostPoliciesHistoryAtRetrieveErrors = {
+    400: {
+        [key: string]: unknown;
+    };
+    404: {
+        [key: string]: unknown;
+    };
+};
+
+export type MarketplaceProjectEstimatedCostPoliciesHistoryAtRetrieveError = MarketplaceProjectEstimatedCostPoliciesHistoryAtRetrieveErrors[keyof MarketplaceProjectEstimatedCostPoliciesHistoryAtRetrieveErrors];
+
+export type MarketplaceProjectEstimatedCostPoliciesHistoryAtRetrieveResponses = {
+    200: VersionHistory;
+};
+
+export type MarketplaceProjectEstimatedCostPoliciesHistoryAtRetrieveResponse = MarketplaceProjectEstimatedCostPoliciesHistoryAtRetrieveResponses[keyof MarketplaceProjectEstimatedCostPoliciesHistoryAtRetrieveResponses];
 
 export type MarketplaceProjectEstimatedCostPoliciesActionsRetrieveData = {
     body?: never;
