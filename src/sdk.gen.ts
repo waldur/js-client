@@ -16113,7 +16113,7 @@ export const marketplaceResourceApiKeysRetrieve = <ThrowOnError extends boolean 
 /**
  * Edit an API key
  *
- * Changes the key's assignee, limits or model allowlist. A change to limits or models is sent to the site agent as an update command, unless the key is paused: resuming it applies them. Only on offerings with enable_api_key_provisioning, except for unassigning the key ({"user": null}).
+ * Changes the key's assignee, limits or model allowlist. A change to limits or models is sent to the site agent as an update command, unless the key is paused: resuming it applies them. A change of assignee (setting, changing or clearing it) on a key that holds a secret rotates the key instead, carrying any limits and models set with it: the old secret stops working and the new assignee reveals the new one. A paused key, or one with another command pending or failed, refuses it. Only on offerings with enable_api_key_provisioning, except for unassigning the key ({"user": null}).
  */
 export const marketplaceResourceApiKeysPartialUpdate = <ThrowOnError extends boolean = true>(options: Options<MarketplaceResourceApiKeysPartialUpdateData, ThrowOnError>) => (options.client ?? client).patch<MarketplaceResourceApiKeysPartialUpdateResponses, unknown, ThrowOnError>({
     security: [
@@ -16177,7 +16177,7 @@ export const marketplaceResourceApiKeysResume = <ThrowOnError extends boolean = 
 /**
  * Retry a failed API key command
  *
- * Sends the command that left the key Erred to the site agent again, with the key's current limits and models. An Erred key accepts only this, the same command, or a delete.
+ * Sends the command that left the key Erred to the site agent again, with the key's current limits and models. An Erred key accepts only this, the same command, or a delete. The key's assignee can retry a failed rotation, and no other command.
  */
 export const marketplaceResourceApiKeysRetry = <ThrowOnError extends boolean = true>(options: Options<MarketplaceResourceApiKeysRetryData, ThrowOnError>) => (options.client ?? client).post<MarketplaceResourceApiKeysRetryResponses, unknown, ThrowOnError>({
     security: [
@@ -16205,7 +16205,7 @@ export const marketplaceResourceApiKeysRevealRetrieve = <ThrowOnError extends bo
 /**
  * Rotate an API key
  *
- * Asks the site agent to replace this key's value at the backend. The other keys are untouched (zero downtime).
+ * Asks the site agent to replace this key's value at the backend. The other keys are untouched (zero downtime). Available to whoever manages the resource's users and to the key's assignee.
  */
 export const marketplaceResourceApiKeysRotate = <ThrowOnError extends boolean = true>(options: Options<MarketplaceResourceApiKeysRotateData, ThrowOnError>) => (options.client ?? client).post<MarketplaceResourceApiKeysRotateResponses, unknown, ThrowOnError>({
     security: [

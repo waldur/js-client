@@ -6422,6 +6422,7 @@ export type ConstanceSettings = {
     PAT_MAX_TOKENS_PER_USER?: number;
     PAT_MAX_ACL_ENTRIES?: number;
     PAT_MAX_AUDIT_EVENTS_PER_HOUR?: number;
+    MCP_ENABLED?: boolean;
 };
 
 export type ConstanceSettingsRequest = {
@@ -6779,6 +6780,7 @@ export type ConstanceSettingsRequest = {
     PAT_MAX_TOKENS_PER_USER?: number;
     PAT_MAX_ACL_ENTRIES?: number;
     PAT_MAX_AUDIT_EVENTS_PER_HOUR?: number;
+    MCP_ENABLED?: boolean;
 };
 
 export type ConsumptionStatisticsResponse = {
@@ -18807,7 +18809,7 @@ export type OpenStackInstance = {
      */
     readonly volumes: Array<OpenStackNestedVolume>;
     security_groups?: Array<OpenStackNestedSecurityGroup>;
-    server_group: OpenStackNestedServerGroup;
+    server_group: OpenStackNestedServerGroup | null;
     readonly floating_ips: Array<OpenStackNestedFloatingIp>;
     ports: Array<OpenStackNestedPort>;
     /**
@@ -23346,9 +23348,9 @@ export type PatchedResourceApiKeyUpdateRequest = {
         [key: string]: number;
     } | null;
     /**
-     * Models the key may call; empty or absent allows every model.
+     * Models the key may call: ["*"] for every model, an empty list for none. Absent, a new key gets none and an edited one keeps its list.
      */
-    allowed_models?: Array<string> | null;
+    allowed_models?: Array<string>;
 };
 
 export type PatchedResourceProjectRequest = {
@@ -29718,7 +29720,14 @@ export type ResourceApiKey = {
     readonly limits: {
         [key: string]: number;
     } | null;
+    /**
+     * The key's own model list, as chosen.
+     */
     readonly allowed_models: Array<string> | null;
+    /**
+     * The models the key can call: the resource's selection, then the key's list. The site agent applies this one.
+     */
+    readonly effective_models: Array<string> | null;
     readonly current_usages: {
         [key: string]: number;
     } | null;
@@ -29741,9 +29750,9 @@ export type ResourceApiKeyCreateRequest = {
         [key: string]: number;
     } | null;
     /**
-     * Models the key may call; empty or absent allows every model.
+     * Models the key may call: ["*"] for every model, an empty list for none. Absent, a new key gets none and an edited one keeps its list.
      */
-    allowed_models?: Array<string> | null;
+    allowed_models?: Array<string>;
     resource: string;
 };
 
@@ -29782,7 +29791,14 @@ export type ResourceApiKeyStatus = {
     readonly limits: {
         [key: string]: number;
     } | null;
+    /**
+     * The key's own model list, as chosen.
+     */
     readonly allowed_models: Array<string> | null;
+    /**
+     * The models the key can call: the resource's selection, then the key's list. The site agent applies this one.
+     */
+    readonly effective_models: Array<string> | null;
     readonly current_usages: {
         [key: string]: number;
     } | null;
@@ -37757,6 +37773,7 @@ export type ConstanceSettingsRequestForm = {
     PAT_MAX_TOKENS_PER_USER?: number;
     PAT_MAX_ACL_ENTRIES?: number;
     PAT_MAX_AUDIT_EVENTS_PER_HOUR?: number;
+    MCP_ENABLED?: boolean;
 };
 
 export type ConstanceSettingsRequestMultipart = {
@@ -38114,6 +38131,7 @@ export type ConstanceSettingsRequestMultipart = {
     PAT_MAX_TOKENS_PER_USER?: number;
     PAT_MAX_ACL_ENTRIES?: number;
     PAT_MAX_AUDIT_EVENTS_PER_HOUR?: number;
+    MCP_ENABLED?: boolean;
 };
 
 export type PaymentRequestForm = {
