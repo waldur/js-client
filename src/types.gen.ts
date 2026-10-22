@@ -7695,6 +7695,7 @@ export type CustomerEstimatedCostPolicy = {
      * eta_days as a calendar date, so clients do not each re-derive it. Null whenever eta_days is null; today when eta_days is 0.
      */
     readonly eta_date: string | null;
+    trigger_status: PolicyTriggerStatus;
     readonly customer_credit: string | null;
     billing_price_estimate: NestedPriceEstimate;
 };
@@ -16272,6 +16273,7 @@ export type OfferingEstimatedCostPolicy = {
      * eta_days as a calendar date, so clients do not each re-derive it. Null whenever eta_days is null; today when eta_days is 0.
      */
     readonly eta_date: string | null;
+    trigger_status: PolicyTriggerStatus;
     organization_groups?: Array<string>;
     /**
      * If True, policy applies to all customers. Mutually exclusive with organization_groups.
@@ -24385,7 +24387,24 @@ export type PluginOfferingType = {
 
 export type PolicyEnum = 'affinity' | 'anti-affinity' | 'soft-affinity' | 'soft-anti-affinity';
 
+export type PolicyGateEnum = 'cost_below_limit' | 'held_by_project_credit' | 'held_by_customer_credit' | 'credit_exhausted' | 'no_credit' | 'credit_ignored';
+
 export type PolicyPeriodEnum = 1 | 2 | 3 | 4;
+
+export type PolicyTriggerStatus = {
+    /**
+     * Which check decided. Not firing: cost_below_limit (current_cost is at or below limit_cost); held_by_project_credit / held_by_customer_credit (current_cost is over the limit, but that credit's live balance, credit_value_compared, is above it; for a project with its own allocation the lower of the two binds). Firing: credit_exhausted (current_cost is over the limit and credit_value_compared is at or below it); no_credit (current_cost is over the limit and no credit applies); credit_ignored (current_cost is over the limit and the policy does not take credit into account). Clients word the explanation themselves from this value and those figures.
+     */
+    gate: PolicyGateEnum;
+    /**
+     * Whether the policy fires on the current figures. This is the evaluation now; has_fired is the stored state of the last evaluation that ran its actions, and the two can differ until the next one.
+     */
+    triggered: boolean;
+    /**
+     * The live credit balance compared against limit_cost; null when the credit was not checked (cost_below_limit, no_credit, credit_ignored), and on a project policy when it is the organization's balance and the user may not view the organization's accounting.
+     */
+    credit_value_compared: string | null;
+};
 
 export type PolicyTypeEnum = 'access_as_shared' | 'access_as_external';
 
@@ -25060,6 +25079,7 @@ export type ProjectEstimatedCostPolicy = {
      * eta_days as a calendar date, so clients do not each re-derive it. Null whenever eta_days is null; today when eta_days is 0.
      */
     readonly eta_date: string | null;
+    trigger_status: PolicyTriggerStatus;
     readonly project_credit: string | null;
     readonly customer_credit: string | null;
     resource?: string | null;
@@ -38776,7 +38796,7 @@ export type ComponentUserUsageOEnum = '-component_usage__billing_period' | '-usa
 
 export type CourseAccountOEnum = '-created' | '-email' | '-modified' | '-project_end_date' | '-project_name' | '-project_start_date' | '-state' | '-username' | 'created' | 'email' | 'modified' | 'project_end_date' | 'project_name' | 'project_start_date' | 'state' | 'username';
 
-export type CustomerEstimatedCostPolicyFieldEnum = 'actions' | 'affected_resources_count' | 'billing_price_estimate' | 'created' | 'created_by_full_name' | 'created_by_username' | 'current_cost' | 'customer_credit' | 'eta_date' | 'eta_days' | 'fired_datetime' | 'has_fired' | 'limit_cost' | 'options' | 'period' | 'period_name' | 'scope' | 'scope_name' | 'scope_uuid' | 'url' | 'uuid';
+export type CustomerEstimatedCostPolicyFieldEnum = 'actions' | 'affected_resources_count' | 'billing_price_estimate' | 'created' | 'created_by_full_name' | 'created_by_username' | 'current_cost' | 'customer_credit' | 'eta_date' | 'eta_days' | 'fired_datetime' | 'has_fired' | 'limit_cost' | 'options' | 'period' | 'period_name' | 'scope' | 'scope_name' | 'scope_uuid' | 'trigger_status' | 'url' | 'uuid';
 
 export type IntegrationStatusDetailsOEnum = '-last_request_timestamp' | 'last_request_timestamp';
 
@@ -38786,7 +38806,7 @@ export type MetricSeriesResponseAggregateEnum = 'last' | 'max' | 'mean' | 'min';
 
 export type MetricSeriesResponseGranularityEnum = 'auto' | 'day' | 'hour' | 'raw';
 
-export type OfferingEstimatedCostPolicyFieldEnum = 'actions' | 'affected_resources_count' | 'apply_to_all' | 'created' | 'created_by_full_name' | 'created_by_username' | 'current_cost' | 'eta_date' | 'eta_days' | 'fired_datetime' | 'has_fired' | 'limit_cost' | 'options' | 'organization_groups' | 'period' | 'period_name' | 'scope' | 'scope_name' | 'scope_uuid' | 'url' | 'uuid';
+export type OfferingEstimatedCostPolicyFieldEnum = 'actions' | 'affected_resources_count' | 'apply_to_all' | 'created' | 'created_by_full_name' | 'created_by_username' | 'current_cost' | 'eta_date' | 'eta_days' | 'fired_datetime' | 'has_fired' | 'limit_cost' | 'options' | 'organization_groups' | 'period' | 'period_name' | 'scope' | 'scope_name' | 'scope_uuid' | 'trigger_status' | 'url' | 'uuid';
 
 export type OfferingFileFieldEnum = 'created' | 'file' | 'name' | 'offering' | 'url' | 'uuid';
 
@@ -38816,7 +38836,7 @@ export type PosixIdentityConsumerTypeEnum = 'offeringrolegroup' | 'offeringuserg
 
 export type PosixIdentityOEnum = '-created' | '-gid' | '-released_at' | '-uid' | 'created' | 'gid' | 'released_at' | 'uid';
 
-export type ProjectEstimatedCostPolicyFieldEnum = 'actions' | 'affected_resources_count' | 'billing_price_estimate' | 'created' | 'created_by_full_name' | 'created_by_username' | 'current_cost' | 'customer_credit' | 'eta_date' | 'eta_days' | 'fired_datetime' | 'has_fired' | 'limit_cost' | 'options' | 'period' | 'period_name' | 'project_credit' | 'resource' | 'resource_name' | 'scope' | 'scope_name' | 'scope_uuid' | 'url' | 'use_credit' | 'uuid';
+export type ProjectEstimatedCostPolicyFieldEnum = 'actions' | 'affected_resources_count' | 'billing_price_estimate' | 'created' | 'created_by_full_name' | 'created_by_username' | 'current_cost' | 'customer_credit' | 'eta_date' | 'eta_days' | 'fired_datetime' | 'has_fired' | 'limit_cost' | 'options' | 'period' | 'period_name' | 'project_credit' | 'resource' | 'resource_name' | 'scope' | 'scope_name' | 'scope_uuid' | 'trigger_status' | 'url' | 'use_credit' | 'uuid';
 
 export type RemoteProjectUpdateRequestStateEnum = 'approved' | 'canceled' | 'draft' | 'pending' | 'rejected';
 
