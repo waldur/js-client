@@ -3281,6 +3281,10 @@ export type BookingResource = {
     readonly limit_usage: {
         [key: string]: number;
     };
+    /**
+     * Component types whose limit_usage covers the whole subscription, so the UI shows their limit as the monthly limit times the months ordered. Empty unless the offering shows prepaid limits as a total (display_prepaid_limits_as_total).
+     */
+    readonly prepaid_total_component_types: Array<string>;
     downscaled?: boolean;
     readonly restrict_member_access: boolean;
     paused?: boolean;
@@ -13587,6 +13591,10 @@ export type MergedPluginOptions = {
      * Hide the API keys tab on resources of this offering.
      */
     hide_api_keys_tab?: boolean;
+    /**
+     * If set to True, the UI shows each prepaid component as the total for the whole subscription (the monthly amount times the months ordered) instead of a monthly amount, and the resource's limit_usage sums its usage over the whole subscription. Ordering and billing do not change.
+     */
+    display_prepaid_limits_as_total?: boolean;
 };
 
 export type MergedPluginOptionsRequest = {
@@ -14026,6 +14034,10 @@ export type MergedPluginOptionsRequest = {
      * Hide the API keys tab on resources of this offering.
      */
     hide_api_keys_tab?: boolean;
+    /**
+     * If set to True, the UI shows each prepaid component as the total for the whole subscription (the monthly amount times the months ordered) instead of a monthly amount, and the resource's limit_usage sums its usage over the whole subscription. Ordering and billing do not change.
+     */
+    display_prepaid_limits_as_total?: boolean;
 };
 
 export type MergedSecretOptions = {
@@ -29738,6 +29750,10 @@ export type Resource = {
     readonly limit_usage: {
         [key: string]: number;
     };
+    /**
+     * Component types whose limit_usage covers the whole subscription, so the UI shows their limit as the monthly limit times the months ordered. Empty unless the offering shows prepaid limits as a total (display_prepaid_limits_as_total).
+     */
+    readonly prepaid_total_component_types: Array<string>;
     downscaled?: boolean;
     readonly restrict_member_access: boolean;
     paused?: boolean;
@@ -38895,7 +38911,7 @@ export type BackendResourceReqOEnum = '-created' | 'created';
 
 export type OfferingFieldEnum = 'access_url' | 'account_settings' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'billing_mode_components' | 'billing_period_applies' | 'billing_type_classification' | 'can_update_integration' | 'can_update_options' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'compliance_checklist_details' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'default_access_subnets' | 'description' | 'documentation_url' | 'effective_available_limits' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'googlecalendar' | 'has_compliance_requirements' | 'helpdesk_url' | 'image' | 'integration_guide' | 'is_accessible' | 'latitude' | 'longitude' | 'name' | 'offering_group' | 'offering_group_title' | 'offering_group_uuid' | 'open_for_proposals' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'profile_name' | 'profile_uuid' | 'project' | 'project_name' | 'project_uuid' | 'qos_profiles' | 'quotas' | 'resource_options' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_resource' | 'scope_resource_name' | 'scope_resource_uuid' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'tags' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'user_has_consent' | 'user_has_offering_user' | 'uuid' | 'vendor_details';
 
-export type BookingResourceFieldEnum = 'attributes' | 'available_actions' | 'backend_id' | 'backend_metadata' | 'can_terminate' | 'category_icon' | 'category_title' | 'category_uuid' | 'consumer_reviewed_by' | 'consumer_reviewed_by_full_name' | 'consumer_reviewed_by_username' | 'created' | 'created_by' | 'created_by_full_name' | 'created_by_username' | 'creation_order' | 'current_usages' | 'customer_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'display_limits' | 'downscaled' | 'effective_id' | 'end_date' | 'end_date_requested_by' | 'end_date_updated_at' | 'endpoints' | 'error_message' | 'error_traceback' | 'has_api_keys' | 'is_limit_based' | 'is_usage_based' | 'last_sync' | 'limit_usage' | 'limits' | 'modified' | 'name' | 'offering' | 'offering_account_settings' | 'offering_backend_id' | 'offering_billable' | 'offering_components' | 'offering_description' | 'offering_image' | 'offering_name' | 'offering_plugin_options' | 'offering_shared' | 'offering_slug' | 'offering_state' | 'offering_thumbnail' | 'offering_type' | 'offering_uuid' | 'options' | 'order_in_progress' | 'parent_name' | 'parent_offering_name' | 'parent_offering_slug' | 'parent_offering_uuid' | 'parent_uuid' | 'paused' | 'plan' | 'plan_description' | 'plan_name' | 'plan_unit' | 'plan_uuid' | 'project' | 'project_description' | 'project_effective_end_date' | 'project_end_date' | 'project_end_date_requested_by' | 'project_is_in_grace_period' | 'project_name' | 'project_slug' | 'project_start_date' | 'project_uuid' | 'provider_description' | 'provider_name' | 'provider_slug' | 'provider_uuid' | 'renewal_date' | 'report' | 'resource_effective_end_date' | 'resource_type' | 'resource_uuid' | 'restrict_member_access' | 'scope' | 'service_settings_uuid' | 'slots' | 'slug' | 'spending_limit_status' | 'spending_limits' | 'state' | 'url' | 'usage_limit_restriction' | 'usage_limit_resumes_at' | 'user_requires_reconsent' | 'username' | 'uuid';
+export type BookingResourceFieldEnum = 'attributes' | 'available_actions' | 'backend_id' | 'backend_metadata' | 'can_terminate' | 'category_icon' | 'category_title' | 'category_uuid' | 'consumer_reviewed_by' | 'consumer_reviewed_by_full_name' | 'consumer_reviewed_by_username' | 'created' | 'created_by' | 'created_by_full_name' | 'created_by_username' | 'creation_order' | 'current_usages' | 'customer_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'display_limits' | 'downscaled' | 'effective_id' | 'end_date' | 'end_date_requested_by' | 'end_date_updated_at' | 'endpoints' | 'error_message' | 'error_traceback' | 'has_api_keys' | 'is_limit_based' | 'is_usage_based' | 'last_sync' | 'limit_usage' | 'limits' | 'modified' | 'name' | 'offering' | 'offering_account_settings' | 'offering_backend_id' | 'offering_billable' | 'offering_components' | 'offering_description' | 'offering_image' | 'offering_name' | 'offering_plugin_options' | 'offering_shared' | 'offering_slug' | 'offering_state' | 'offering_thumbnail' | 'offering_type' | 'offering_uuid' | 'options' | 'order_in_progress' | 'parent_name' | 'parent_offering_name' | 'parent_offering_slug' | 'parent_offering_uuid' | 'parent_uuid' | 'paused' | 'plan' | 'plan_description' | 'plan_name' | 'plan_unit' | 'plan_uuid' | 'prepaid_total_component_types' | 'project' | 'project_description' | 'project_effective_end_date' | 'project_end_date' | 'project_end_date_requested_by' | 'project_is_in_grace_period' | 'project_name' | 'project_slug' | 'project_start_date' | 'project_uuid' | 'provider_description' | 'provider_name' | 'provider_slug' | 'provider_uuid' | 'renewal_date' | 'report' | 'resource_effective_end_date' | 'resource_type' | 'resource_uuid' | 'restrict_member_access' | 'scope' | 'service_settings_uuid' | 'slots' | 'slug' | 'spending_limit_status' | 'spending_limits' | 'state' | 'url' | 'usage_limit_restriction' | 'usage_limit_resumes_at' | 'user_requires_reconsent' | 'username' | 'uuid';
 
 export type BookingResourceOEnum = '-created' | '-name' | '-schedules' | '-type' | 'created' | 'name' | 'schedules' | 'type';
 
@@ -38983,7 +38999,7 @@ export type MaintenanceAnnouncementOEnum = '-created' | '-name' | '-overrun_minu
 
 export type MaintenanceAnnouncementTemplateOEnum = '-created' | '-name' | 'created' | 'name';
 
-export type ResourceFieldEnum = 'attributes' | 'available_actions' | 'backend_id' | 'backend_metadata' | 'can_terminate' | 'category_icon' | 'category_title' | 'category_uuid' | 'created' | 'creation_order' | 'current_usages' | 'customer_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'display_limits' | 'downscaled' | 'effective_id' | 'end_date' | 'end_date_requested_by' | 'end_date_updated_at' | 'endpoints' | 'error_message' | 'error_traceback' | 'has_api_keys' | 'is_limit_based' | 'is_usage_based' | 'last_sync' | 'limit_usage' | 'limits' | 'modified' | 'name' | 'offering' | 'offering_account_settings' | 'offering_backend_id' | 'offering_billable' | 'offering_components' | 'offering_description' | 'offering_image' | 'offering_name' | 'offering_plugin_options' | 'offering_shared' | 'offering_slug' | 'offering_state' | 'offering_thumbnail' | 'offering_type' | 'offering_uuid' | 'options' | 'order_in_progress' | 'parent_name' | 'parent_offering_name' | 'parent_offering_slug' | 'parent_offering_uuid' | 'parent_uuid' | 'paused' | 'plan' | 'plan_description' | 'plan_name' | 'plan_unit' | 'plan_uuid' | 'project' | 'project_description' | 'project_effective_end_date' | 'project_end_date' | 'project_end_date_requested_by' | 'project_is_in_grace_period' | 'project_name' | 'project_slug' | 'project_start_date' | 'project_uuid' | 'provider_description' | 'provider_name' | 'provider_slug' | 'provider_uuid' | 'renewal_date' | 'report' | 'resource_effective_end_date' | 'resource_type' | 'resource_uuid' | 'restrict_member_access' | 'scope' | 'service_settings_uuid' | 'slug' | 'spending_limit_status' | 'spending_limits' | 'state' | 'url' | 'usage_limit_restriction' | 'usage_limit_resumes_at' | 'user_requires_reconsent' | 'username' | 'uuid';
+export type ResourceFieldEnum = 'attributes' | 'available_actions' | 'backend_id' | 'backend_metadata' | 'can_terminate' | 'category_icon' | 'category_title' | 'category_uuid' | 'created' | 'creation_order' | 'current_usages' | 'customer_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'display_limits' | 'downscaled' | 'effective_id' | 'end_date' | 'end_date_requested_by' | 'end_date_updated_at' | 'endpoints' | 'error_message' | 'error_traceback' | 'has_api_keys' | 'is_limit_based' | 'is_usage_based' | 'last_sync' | 'limit_usage' | 'limits' | 'modified' | 'name' | 'offering' | 'offering_account_settings' | 'offering_backend_id' | 'offering_billable' | 'offering_components' | 'offering_description' | 'offering_image' | 'offering_name' | 'offering_plugin_options' | 'offering_shared' | 'offering_slug' | 'offering_state' | 'offering_thumbnail' | 'offering_type' | 'offering_uuid' | 'options' | 'order_in_progress' | 'parent_name' | 'parent_offering_name' | 'parent_offering_slug' | 'parent_offering_uuid' | 'parent_uuid' | 'paused' | 'plan' | 'plan_description' | 'plan_name' | 'plan_unit' | 'plan_uuid' | 'prepaid_total_component_types' | 'project' | 'project_description' | 'project_effective_end_date' | 'project_end_date' | 'project_end_date_requested_by' | 'project_is_in_grace_period' | 'project_name' | 'project_slug' | 'project_start_date' | 'project_uuid' | 'provider_description' | 'provider_name' | 'provider_slug' | 'provider_uuid' | 'renewal_date' | 'report' | 'resource_effective_end_date' | 'resource_type' | 'resource_uuid' | 'restrict_member_access' | 'scope' | 'service_settings_uuid' | 'slug' | 'spending_limit_status' | 'spending_limits' | 'state' | 'url' | 'usage_limit_restriction' | 'usage_limit_resumes_at' | 'user_requires_reconsent' | 'username' | 'uuid';
 
 export type MarketplaceCategoryFieldEnum = 'articles' | 'available_offerings_count' | 'columns' | 'components' | 'default_vm_category' | 'default_volume_category' | 'description' | 'group' | 'icon' | 'offering_count' | 'sections' | 'title' | 'url' | 'uuid';
 
@@ -44907,6 +44923,10 @@ export type CallManagingOrganisationsListUsersListData = {
          */
         role?: Array<string>;
         /**
+         * Role name. Matches that role and organization copies of it. Repeat to match several. Omit to leave the role filter unchanged.
+         */
+        role_template?: Array<string>;
+        /**
          * Search string for user
          */
         search_string?: string;
@@ -44970,6 +44990,10 @@ export type CallManagingOrganisationsListUsersCountData = {
          * Role UUID or name. Repeat to filter by several roles.
          */
         role?: Array<string>;
+        /**
+         * Role name. Matches that role and organization copies of it. Repeat to match several. Omit to leave the role filter unchanged.
+         */
+        role_template?: Array<string>;
         /**
          * Search string for user
          */
@@ -49155,6 +49179,10 @@ export type CustomersListUsersListData = {
          */
         role?: Array<string>;
         /**
+         * Role name. Matches that role and organization copies of it. Repeat to match several. Omit to leave the role filter unchanged.
+         */
+        role_template?: Array<string>;
+        /**
          * Search string for user
          */
         search_string?: string;
@@ -49218,6 +49246,10 @@ export type CustomersListUsersCountData = {
          * Role UUID or name. Repeat to filter by several roles.
          */
         role?: Array<string>;
+        /**
+         * Role name. Matches that role and organization copies of it. Repeat to match several. Omit to leave the role filter unchanged.
+         */
+        role_template?: Array<string>;
         /**
          * Search string for user
          */
@@ -66654,6 +66686,10 @@ export type MarketplaceProviderOfferingsListUsersListData = {
          */
         role?: Array<string>;
         /**
+         * Role name. Matches that role and organization copies of it. Repeat to match several. Omit to leave the role filter unchanged.
+         */
+        role_template?: Array<string>;
+        /**
          * Search string for user
          */
         search_string?: string;
@@ -66717,6 +66753,10 @@ export type MarketplaceProviderOfferingsListUsersCountData = {
          * Role UUID or name. Repeat to filter by several roles.
          */
         role?: Array<string>;
+        /**
+         * Role name. Matches that role and organization copies of it. Repeat to match several. Omit to leave the role filter unchanged.
+         */
+        role_template?: Array<string>;
         /**
          * Search string for user
          */
@@ -68151,6 +68191,10 @@ export type MarketplaceProviderResourceProjectsListUsersListData = {
          */
         role?: Array<string>;
         /**
+         * Role name. Matches that role and organization copies of it. Repeat to match several. Omit to leave the role filter unchanged.
+         */
+        role_template?: Array<string>;
+        /**
          * Search string for user
          */
         search_string?: string;
@@ -68214,6 +68258,10 @@ export type MarketplaceProviderResourceProjectsListUsersCountData = {
          * Role UUID or name. Repeat to filter by several roles.
          */
         role?: Array<string>;
+        /**
+         * Role name. Matches that role and organization copies of it. Repeat to match several. Omit to leave the role filter unchanged.
+         */
+        role_template?: Array<string>;
         /**
          * Search string for user
          */
@@ -69149,6 +69197,10 @@ export type MarketplaceProviderResourcesListUsersListData = {
          */
         role?: Array<string>;
         /**
+         * Role name. Matches that role and organization copies of it. Repeat to match several. Omit to leave the role filter unchanged.
+         */
+        role_template?: Array<string>;
+        /**
          * Search string for user
          */
         search_string?: string;
@@ -69212,6 +69264,10 @@ export type MarketplaceProviderResourcesListUsersCountData = {
          * Role UUID or name. Repeat to filter by several roles.
          */
         role?: Array<string>;
+        /**
+         * Role name. Matches that role and organization copies of it. Repeat to match several. Omit to leave the role filter unchanged.
+         */
+        role_template?: Array<string>;
         /**
          * Search string for user
          */
@@ -71393,6 +71449,10 @@ export type MarketplaceResourceProjectsListUsersListData = {
          */
         role?: Array<string>;
         /**
+         * Role name. Matches that role and organization copies of it. Repeat to match several. Omit to leave the role filter unchanged.
+         */
+        role_template?: Array<string>;
+        /**
          * Search string for user
          */
         search_string?: string;
@@ -71456,6 +71516,10 @@ export type MarketplaceResourceProjectsListUsersCountData = {
          * Role UUID or name. Repeat to filter by several roles.
          */
         role?: Array<string>;
+        /**
+         * Role name. Matches that role and organization copies of it. Repeat to match several. Omit to leave the role filter unchanged.
+         */
+        role_template?: Array<string>;
         /**
          * Search string for user
          */
@@ -72376,6 +72440,10 @@ export type MarketplaceResourcesListUsersListData = {
          */
         role?: Array<string>;
         /**
+         * Role name. Matches that role and organization copies of it. Repeat to match several. Omit to leave the role filter unchanged.
+         */
+        role_template?: Array<string>;
+        /**
          * Search string for user
          */
         search_string?: string;
@@ -72439,6 +72507,10 @@ export type MarketplaceResourcesListUsersCountData = {
          * Role UUID or name. Repeat to filter by several roles.
          */
         role?: Array<string>;
+        /**
+         * Role name. Matches that role and organization copies of it. Repeat to match several. Omit to leave the role filter unchanged.
+         */
+        role_template?: Array<string>;
         /**
          * Search string for user
          */
@@ -77234,6 +77306,10 @@ export type MarketplaceServiceProvidersListUsersListData = {
          */
         role?: Array<string>;
         /**
+         * Role name. Matches that role and organization copies of it. Repeat to match several. Omit to leave the role filter unchanged.
+         */
+        role_template?: Array<string>;
+        /**
          * Search string for user
          */
         search_string?: string;
@@ -77297,6 +77373,10 @@ export type MarketplaceServiceProvidersListUsersCountData = {
          * Role UUID or name. Repeat to filter by several roles.
          */
         role?: Array<string>;
+        /**
+         * Role name. Matches that role and organization copies of it. Repeat to match several. Omit to leave the role filter unchanged.
+         */
+        role_template?: Array<string>;
         /**
          * Search string for user
          */
@@ -86866,6 +86946,10 @@ export type OpenportalUnmanagedProjectsListUsersListData = {
          */
         role?: Array<string>;
         /**
+         * Role name. Matches that role and organization copies of it. Repeat to match several. Omit to leave the role filter unchanged.
+         */
+        role_template?: Array<string>;
+        /**
          * Search string for user
          */
         search_string?: string;
@@ -86929,6 +87013,10 @@ export type OpenportalUnmanagedProjectsListUsersCountData = {
          * Role UUID or name. Repeat to filter by several roles.
          */
         role?: Array<string>;
+        /**
+         * Role name. Matches that role and organization copies of it. Repeat to match several. Omit to leave the role filter unchanged.
+         */
+        role_template?: Array<string>;
         /**
          * Search string for user
          */
@@ -97741,6 +97829,10 @@ export type ProjectsListUsersListData = {
          */
         role?: Array<string>;
         /**
+         * Role name. Matches that role and organization copies of it. Repeat to match several. Omit to leave the role filter unchanged.
+         */
+        role_template?: Array<string>;
+        /**
          * Search string for user
          */
         search_string?: string;
@@ -97804,6 +97896,10 @@ export type ProjectsListUsersCountData = {
          * Role UUID or name. Repeat to filter by several roles.
          */
         role?: Array<string>;
+        /**
+         * Role name. Matches that role and organization copies of it. Repeat to match several. Omit to leave the role filter unchanged.
+         */
+        role_template?: Array<string>;
         /**
          * Search string for user
          */
@@ -98897,6 +98993,10 @@ export type ProposalProposalsListUsersListData = {
          */
         role?: Array<string>;
         /**
+         * Role name. Matches that role and organization copies of it. Repeat to match several. Omit to leave the role filter unchanged.
+         */
+        role_template?: Array<string>;
+        /**
          * Search string for user
          */
         search_string?: string;
@@ -98960,6 +99060,10 @@ export type ProposalProposalsListUsersCountData = {
          * Role UUID or name. Repeat to filter by several roles.
          */
         role?: Array<string>;
+        /**
+         * Role name. Matches that role and organization copies of it. Repeat to match several. Omit to leave the role filter unchanged.
+         */
+        role_template?: Array<string>;
         /**
          * Search string for user
          */
@@ -100087,6 +100191,10 @@ export type ProposalProtectedCallsListUsersListData = {
          */
         role?: Array<string>;
         /**
+         * Role name. Matches that role and organization copies of it. Repeat to match several. Omit to leave the role filter unchanged.
+         */
+        role_template?: Array<string>;
+        /**
          * Search string for user
          */
         search_string?: string;
@@ -100150,6 +100258,10 @@ export type ProposalProtectedCallsListUsersCountData = {
          * Role UUID or name. Repeat to filter by several roles.
          */
         role?: Array<string>;
+        /**
+         * Role name. Matches that role and organization copies of it. Repeat to match several. Omit to leave the role filter unchanged.
+         */
+        role_template?: Array<string>;
         /**
          * Search string for user
          */
