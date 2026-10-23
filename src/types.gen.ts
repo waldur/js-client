@@ -3289,7 +3289,7 @@ export type BookingResource = {
      */
     usage_limit_restriction: UsageLimitRestrictionEnum | BlankEnum;
     /**
-     * When the spending limits that restrict the resource reset and the restriction lifts. Empty when no spending limit restricts the resource, or when a limit-based component's limit does too.
+     * When the spending limits that restrict the resource reset and the restriction lifts. Empty when no spending limit restricts the resource, when a limit-based component's limit does too, or while a reached total limit holds it: a total never resets, so the restriction lifts only when that limit is raised or cleared.
      */
     readonly usage_limit_resumes_at: string | null;
     /**
@@ -13552,7 +13552,7 @@ export type MergedPluginOptions = {
      */
     api_key_limits?: boolean;
     /**
-     * Declares that the site agent reports each API key's usage per day. Only then are keys offered limits other than month: the day and week periods, and the quarter and year, that a component offers to resources. Off unless set; needs enable_api_key_provisioning. Nothing checks the claim: turn it on only if the agent reports per-key daily usage, or those limits are never reached.
+     * Declares that the site agent reports each API key's usage per day. Only then are keys offered the day and week periods, and the quarter and year, that a component offers to resources; month, and total where the component offers it, are offered without it, as they need no usage per day. Off unless set; needs enable_api_key_provisioning. Nothing checks the claim: turn it on only if the agent reports per-key daily usage, or those limits are never reached.
      */
     api_key_daily_usage?: boolean;
     /**
@@ -13991,7 +13991,7 @@ export type MergedPluginOptionsRequest = {
      */
     api_key_limits?: boolean;
     /**
-     * Declares that the site agent reports each API key's usage per day. Only then are keys offered limits other than month: the day and week periods, and the quarter and year, that a component offers to resources. Off unless set; needs enable_api_key_provisioning. Nothing checks the claim: turn it on only if the agent reports per-key daily usage, or those limits are never reached.
+     * Declares that the site agent reports each API key's usage per day. Only then are keys offered the day and week periods, and the quarter and year, that a component offers to resources; month, and total where the component offers it, are offered without it, as they need no usage per day. Off unless set; needs enable_api_key_provisioning. Nothing checks the claim: turn it on only if the agent reports per-key daily usage, or those limits are never reached.
      */
     api_key_daily_usage?: boolean;
     /**
@@ -16068,7 +16068,7 @@ export type OfferingComponent = {
     is_boolean?: boolean;
     default_limit?: number | null;
     /**
-     * Periods (day, week, month, quarter, year) for which customers can set a spending limit on this usage-based component. Day and week need the integration to report usage per day. Empty when customers cannot set spending limits.
+     * Periods (day, week, month, quarter, year, total) for which customers can set a spending limit on this usage-based component; total counts all the usage since the resource started and never resets. Day and week need the integration to report usage per day. Empty when customers cannot set spending limits.
      */
     spending_limit_periods?: {
         [key: string]: SpendingLimitBounds;
@@ -16153,7 +16153,7 @@ export type OfferingComponentRequest = {
     is_boolean?: boolean;
     default_limit?: number | null;
     /**
-     * Periods (day, week, month, quarter, year) for which customers can set a spending limit on this usage-based component. Day and week need the integration to report usage per day. Empty when customers cannot set spending limits.
+     * Periods (day, week, month, quarter, year, total) for which customers can set a spending limit on this usage-based component; total counts all the usage since the resource started and never resets. Day and week need the integration to report usage per day. Empty when customers cannot set spending limits.
      */
     spending_limit_periods?: {
         [key: string]: SpendingLimitBoundsRequest;
@@ -29746,7 +29746,7 @@ export type Resource = {
      */
     usage_limit_restriction: UsageLimitRestrictionEnum | BlankEnum;
     /**
-     * When the spending limits that restrict the resource reset and the restriction lifts. Empty when no spending limit restricts the resource, or when a limit-based component's limit does too.
+     * When the spending limits that restrict the resource reset and the restriction lifts. Empty when no spending limit restricts the resource, when a limit-based component's limit does too, or while a reached total limit holds it: a total never resets, so the restriction lifts only when that limit is raised or cleared.
      */
     readonly usage_limit_resumes_at: string | null;
     /**
@@ -29835,7 +29835,13 @@ export type ResourceApiKey = {
         [key: string]: number;
     } | null;
     readonly usage_period: string | null;
+    /**
+     * Waldur paused the key because its usage reached a limit. Such a key is resumed automatically once its usage is under its limits again: when the period of the limit resets, or when a limit is raised. A total limit never resets, so only raising or clearing it does.
+     */
     readonly paused_by_limit: boolean | null;
+    /**
+     * When every limit that paused the key has reset, so that it resumes without a new usage report. Empty while a reached total limit holds the key: a total never resets, so the key resumes only when that limit is raised or cleared.
+     */
     readonly limit_resumes_at: string | null;
     readonly api_key: string;
 };
@@ -29927,23 +29933,29 @@ export type ResourceApiKeyStatus = {
         [key: string]: number;
     } | null;
     readonly usage_period: string | null;
+    /**
+     * Waldur paused the key because its usage reached a limit. Such a key is resumed automatically once its usage is under its limits again: when the period of the limit resets, or when a limit is raised. A total limit never resets, so only raising or clearing it does.
+     */
     readonly paused_by_limit: boolean | null;
+    /**
+     * When every limit that paused the key has reset, so that it resumes without a new usage report. Empty while a reached total limit holds the key: a total never resets, so the key resumes only when that limit is raised or cleared.
+     */
     readonly limit_resumes_at: string | null;
 };
 
 export type ResourceApiKeyUsageRequest = {
     /**
-     * The key's usage so far in billing_period, per component type. Rejected for a component that has daily amounts in that month.
+     * The key's usage so far in billing_period, per component type. A figure never drops: one lower than the key holds for the month leaves the higher one. Rejected for a component that has daily amounts in that month.
      */
     usages?: {
         [key: string]: number;
     };
     /**
-     * The key's usage per UTC date and component type; a date reported again replaces its amount. The month's usage of a component with daily amounts is their sum. Needed for limits other than month. At most 1000 items, dated from the start of the current year, or of the previous month when that is earlier.
+     * The key's usage per UTC date and component type; a date reported again replaces its amount. The month's usage of a component with daily amounts is their sum. Needed for limits other than month and total. Days of a month before the one the key holds raise that month's figure for a total. At most 1000 items, dated from the start of the current year, or of the previous month when that is earlier.
      */
     daily_usages?: Array<ComponentDailyUsageItemRequest>;
     /**
-     * Any day of the month usages belongs to; the current month when omitted. Only the latest month is kept, so a later month starts afresh.
+     * Any day of the month usages belongs to; the current month when omitted. A later month than the key holds starts afresh. An earlier one, from the start of the current year or of the previous month when that is earlier, raises that month's figure for a total limit; older ones are refused.
      */
     billing_period?: string;
 };
@@ -33668,7 +33680,7 @@ export type SpendingLimitBoundsRequest = {
     maximum?: number | null;
 };
 
-export type SpendingLimitPeriodEnum = 'day' | 'week' | 'month' | 'quarter' | 'year';
+export type SpendingLimitPeriodEnum = 'day' | 'week' | 'month' | 'quarter' | 'year' | 'total';
 
 export type SpendingLimitStatus = {
     component_type: string;
@@ -33679,9 +33691,9 @@ export type SpendingLimitStatus = {
      */
     used: number;
     /**
-     * When the current period ends and its usage starts from zero.
+     * When the current period ends and its usage starts from zero. Null for total, which never resets.
      */
-    resets_at: string;
+    resets_at: string | null;
     reached: boolean;
     /**
      * When usage of the component was last reported.
@@ -33698,9 +33710,9 @@ export type SpendingLimitUsage = {
      */
     used: number;
     /**
-     * When the current period ends and its usage starts from zero.
+     * When the current period ends and its usage starts from zero. Null for total, which never resets.
      */
-    resets_at: string;
+    resets_at: string | null;
     reached: boolean;
 };
 
@@ -34796,7 +34808,7 @@ export type UpdateOfferingComponentRequest = {
     is_boolean?: boolean;
     default_limit?: number | null;
     /**
-     * Periods (day, week, month, quarter, year) for which customers can set a spending limit on this usage-based component. Day and week need the integration to report usage per day. Empty when customers cannot set spending limits.
+     * Periods (day, week, month, quarter, year, total) for which customers can set a spending limit on this usage-based component; total counts all the usage since the resource started and never resets. Day and week need the integration to report usage per day. Empty when customers cannot set spending limits.
      */
     spending_limit_periods?: {
         [key: string]: SpendingLimitBoundsRequest;
