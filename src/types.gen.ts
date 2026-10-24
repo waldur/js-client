@@ -9667,6 +9667,22 @@ export type ExportOrganizationGroupDataRequest = {
     parent_name: string | null;
 };
 
+export type ExportPdfRequest = {
+    title: string;
+    /**
+     * Header row of a table export.
+     */
+    columns?: Array<string>;
+    /**
+     * Rows of a table export, each with one cell per column.
+     */
+    rows?: Array<Array<string>>;
+    /**
+     * Base64-encoded PNG of a chart export.
+     */
+    image?: string;
+};
+
 export type ExportPlanComponentData = {
     component_type: string | null;
     amount: number;
@@ -10275,46 +10291,6 @@ export type GlobalUserDataAccessLog = {
 };
 
 export type GoodDirectionEnum = 'up' | 'down' | 'neutral';
-
-export type GoogleAuthUrl = {
-    request_url: string;
-};
-
-export type GoogleCalendar = {
-    backend_id?: string | null;
-    public?: boolean;
-    readonly http_link: string;
-};
-
-export type GoogleCredentials = {
-    readonly url: string;
-    readonly uuid: string;
-    readonly created: string;
-    description?: string;
-    enable_notifications?: boolean;
-    customer: string;
-    readonly customer_name: string;
-    readonly customer_uuid: string;
-    readonly customer_image: string;
-    readonly customer_abbreviation: string;
-    readonly customer_slug: string;
-    readonly customer_native_name: string;
-    readonly customer_country: string;
-    image?: string | null;
-    readonly organization_groups: Array<OrganizationGroup>;
-    readonly offering_count: number;
-    /**
-     * List of allowed domains for offering endpoints. Only staff can modify this field.
-     */
-    allowed_domains?: Array<string>;
-    /**
-     * Account settings for this provider's offerings, under the same keys as an offering's plugin options. Each applies to every offering that does not set its own; project_groups_enabled is the provider's own. Updated key by key: an omitted key is kept, and a blank value removes it.
-     */
-    account_options?: ProviderAccountOptions;
-    readonly calendar_token: string;
-    readonly calendar_refresh_token: string;
-    readonly google_auth_url: string;
-};
 
 export type GroupInvitation = {
     /**
@@ -15962,7 +15938,6 @@ export type Offering = {
     readonly user_has_offering_user: boolean;
     readonly is_accessible: boolean;
     readonly open_for_proposals: boolean;
-    googlecalendar?: GoogleCalendar;
 };
 
 export type OfferingAccessSubnet = {
@@ -26676,11 +26651,6 @@ export type ProviderOfferingDetails = {
     readonly offering_group_uuid: string | null;
     readonly offering_group_title: string | null;
     readonly integration_status: Array<IntegrationStatus> | null;
-    readonly google_calendar_is_public: boolean | null;
-    /**
-     * Get the Google Calendar link for an offering.
-     */
-    readonly google_calendar_link: string | null;
 };
 
 export type ProviderOfferingPlanStats = {
@@ -27371,11 +27341,6 @@ export type PublicOfferingDetails = {
     readonly is_accessible: boolean;
     readonly open_for_proposals: boolean;
     readonly config_drive_default: boolean;
-    readonly google_calendar_is_public: boolean | null;
-    /**
-     * Get the Google Calendar link for an offering.
-     */
-    readonly google_calendar_link: string | null;
     readonly promotion_campaigns: Array<NestedCampaign>;
 };
 
@@ -38909,7 +38874,7 @@ export type AwsVolumeFieldEnum = 'access_url' | 'backend_id' | 'created' | 'cust
 
 export type BackendResourceReqOEnum = '-created' | 'created';
 
-export type OfferingFieldEnum = 'access_url' | 'account_settings' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'billing_mode_components' | 'billing_period_applies' | 'billing_type_classification' | 'can_update_integration' | 'can_update_options' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'compliance_checklist_details' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'default_access_subnets' | 'description' | 'documentation_url' | 'effective_available_limits' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'googlecalendar' | 'has_compliance_requirements' | 'helpdesk_url' | 'image' | 'integration_guide' | 'is_accessible' | 'latitude' | 'longitude' | 'name' | 'offering_group' | 'offering_group_title' | 'offering_group_uuid' | 'open_for_proposals' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'profile_name' | 'profile_uuid' | 'project' | 'project_name' | 'project_uuid' | 'qos_profiles' | 'quotas' | 'resource_options' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_resource' | 'scope_resource_name' | 'scope_resource_uuid' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'tags' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'user_has_consent' | 'user_has_offering_user' | 'uuid' | 'vendor_details';
+export type OfferingFieldEnum = 'access_url' | 'account_settings' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'billing_mode_components' | 'billing_period_applies' | 'billing_type_classification' | 'can_update_integration' | 'can_update_options' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'compliance_checklist_details' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'default_access_subnets' | 'description' | 'documentation_url' | 'effective_available_limits' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'has_compliance_requirements' | 'helpdesk_url' | 'image' | 'integration_guide' | 'is_accessible' | 'latitude' | 'longitude' | 'name' | 'offering_group' | 'offering_group_title' | 'offering_group_uuid' | 'open_for_proposals' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'profile_name' | 'profile_uuid' | 'project' | 'project_name' | 'project_uuid' | 'qos_profiles' | 'quotas' | 'resource_options' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_resource' | 'scope_resource_name' | 'scope_resource_uuid' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'tags' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'user_has_consent' | 'user_has_offering_user' | 'uuid' | 'vendor_details';
 
 export type BookingResourceFieldEnum = 'attributes' | 'available_actions' | 'backend_id' | 'backend_metadata' | 'can_terminate' | 'category_icon' | 'category_title' | 'category_uuid' | 'consumer_reviewed_by' | 'consumer_reviewed_by_full_name' | 'consumer_reviewed_by_username' | 'created' | 'created_by' | 'created_by_full_name' | 'created_by_username' | 'creation_order' | 'current_usages' | 'customer_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'display_limits' | 'downscaled' | 'effective_id' | 'end_date' | 'end_date_requested_by' | 'end_date_updated_at' | 'endpoints' | 'error_message' | 'error_traceback' | 'has_api_keys' | 'is_limit_based' | 'is_usage_based' | 'last_sync' | 'limit_usage' | 'limits' | 'modified' | 'name' | 'offering' | 'offering_account_settings' | 'offering_backend_id' | 'offering_billable' | 'offering_components' | 'offering_description' | 'offering_image' | 'offering_name' | 'offering_plugin_options' | 'offering_shared' | 'offering_slug' | 'offering_state' | 'offering_thumbnail' | 'offering_type' | 'offering_uuid' | 'options' | 'order_in_progress' | 'parent_name' | 'parent_offering_name' | 'parent_offering_slug' | 'parent_offering_uuid' | 'parent_uuid' | 'paused' | 'plan' | 'plan_description' | 'plan_name' | 'plan_unit' | 'plan_uuid' | 'prepaid_total_component_types' | 'project' | 'project_description' | 'project_effective_end_date' | 'project_end_date' | 'project_end_date_requested_by' | 'project_is_in_grace_period' | 'project_name' | 'project_slug' | 'project_start_date' | 'project_uuid' | 'provider_description' | 'provider_name' | 'provider_slug' | 'provider_uuid' | 'renewal_date' | 'report' | 'resource_effective_end_date' | 'resource_type' | 'resource_uuid' | 'restrict_member_access' | 'scope' | 'service_settings_uuid' | 'slots' | 'slug' | 'spending_limit_status' | 'spending_limits' | 'state' | 'url' | 'usage_limit_restriction' | 'usage_limit_resumes_at' | 'user_requires_reconsent' | 'username' | 'uuid';
 
@@ -38981,8 +38946,6 @@ export type EventFieldEnum = 'context' | 'created' | 'event_type' | 'message' | 
 
 export type ExpertiseCategoryOEnum = '-code' | '-level' | '-name' | 'code' | 'level' | 'name';
 
-export type GoogleCredentialsFieldEnum = 'account_options' | 'allowed_domains' | 'calendar_refresh_token' | 'calendar_token' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_country' | 'customer_image' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'enable_notifications' | 'google_auth_url' | 'image' | 'offering_count' | 'organization_groups' | 'url' | 'uuid';
-
 export type WebHookContentTypeEnum1 = 1 | 2;
 
 export type InvoiceFieldEnum = 'backend_id' | 'compensations' | 'customer' | 'customer_details' | 'due_date' | 'incurred_costs' | 'invoice_date' | 'issuer_details' | 'items' | 'month' | 'number' | 'payment_url' | 'price' | 'reference_number' | 'state' | 'tax' | 'total' | 'url' | 'uuid' | 'year';
@@ -39051,7 +39014,7 @@ export type OrderDetailsFieldEnum = 'accepting_terms_of_service' | 'activation_p
 
 export type OrderDetailsOEnum = '-consumer_reviewed_at' | '-cost' | '-created' | '-state' | 'consumer_reviewed_at' | 'cost' | 'created' | 'state';
 
-export type PublicOfferingDetailsFieldEnum = 'access_url' | 'account_settings' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'billing_mode_components' | 'billing_period_applies' | 'billing_type_classification' | 'can_update_integration' | 'can_update_options' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'compliance_checklist_details' | 'components' | 'config_drive_default' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'default_access_subnets' | 'description' | 'documentation_url' | 'effective_available_limits' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'has_compliance_requirements' | 'helpdesk_url' | 'image' | 'integration_guide' | 'is_accessible' | 'latitude' | 'longitude' | 'name' | 'offering_group' | 'offering_group_title' | 'offering_group_uuid' | 'open_for_proposals' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'profile_name' | 'profile_uuid' | 'project' | 'project_name' | 'project_uuid' | 'promotion_campaigns' | 'qos_profiles' | 'quotas' | 'resource_options' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_resource' | 'scope_resource_name' | 'scope_resource_uuid' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'tags' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'user_has_consent' | 'user_has_offering_user' | 'uuid' | 'vendor_details';
+export type PublicOfferingDetailsFieldEnum = 'access_url' | 'account_settings' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'billing_mode_components' | 'billing_period_applies' | 'billing_type_classification' | 'can_update_integration' | 'can_update_options' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'compliance_checklist_details' | 'components' | 'config_drive_default' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'default_access_subnets' | 'description' | 'documentation_url' | 'effective_available_limits' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'has_compliance_requirements' | 'helpdesk_url' | 'image' | 'integration_guide' | 'is_accessible' | 'latitude' | 'longitude' | 'name' | 'offering_group' | 'offering_group_title' | 'offering_group_uuid' | 'open_for_proposals' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'profile_name' | 'profile_uuid' | 'project' | 'project_name' | 'project_uuid' | 'promotion_campaigns' | 'qos_profiles' | 'quotas' | 'resource_options' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_resource' | 'scope_resource_name' | 'scope_resource_uuid' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'tags' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'user_has_consent' | 'user_has_offering_user' | 'uuid' | 'vendor_details';
 
 export type PosixIdPoolFieldEnum = 'created' | 'customer_name' | 'customer_uuid' | 'description' | 'gid_used' | 'gid_utilization' | 'group_gid_used' | 'group_gid_utilization' | 'max_gid' | 'max_group_gid' | 'max_uid' | 'min_gid' | 'min_group_gid' | 'min_uid' | 'next_gid' | 'next_group_gid' | 'next_uid' | 'offering' | 'scope' | 'service_provider' | 'uid_used' | 'uid_utilization' | 'url' | 'uuid';
 
@@ -39063,7 +39026,7 @@ export type ProjectEstimatedCostPolicyFieldEnum = 'actions' | 'affected_resource
 
 export type RemoteProjectUpdateRequestStateEnum = 'approved' | 'canceled' | 'draft' | 'pending' | 'rejected';
 
-export type ProviderOfferingDetailsFieldEnum = 'access_url' | 'account_settings' | 'attributes' | 'backend_id' | 'backend_id_rules' | 'backend_metadata' | 'billable' | 'billing_mode_components' | 'billing_period_applies' | 'billing_type_classification' | 'can_update_integration' | 'can_update_options' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'compliance_checklist_details' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'default_access_subnets' | 'description' | 'documentation_url' | 'effective_available_limits' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'google_calendar_is_public' | 'google_calendar_link' | 'has_compliance_requirements' | 'helpdesk_url' | 'image' | 'integration_guide' | 'integration_status' | 'latitude' | 'limit_precision_advisory' | 'longitude' | 'name' | 'offering_group' | 'offering_group_title' | 'offering_group_uuid' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'profile_name' | 'profile_uuid' | 'project' | 'project_name' | 'project_uuid' | 'qos_profiles' | 'quotas' | 'resource_options' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_resource' | 'scope_resource_name' | 'scope_resource_uuid' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'tags' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'uuid' | 'vendor_details';
+export type ProviderOfferingDetailsFieldEnum = 'access_url' | 'account_settings' | 'attributes' | 'backend_id' | 'backend_id_rules' | 'backend_metadata' | 'billable' | 'billing_mode_components' | 'billing_period_applies' | 'billing_type_classification' | 'can_update_integration' | 'can_update_options' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'compliance_checklist_details' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'default_access_subnets' | 'description' | 'documentation_url' | 'effective_available_limits' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'has_compliance_requirements' | 'helpdesk_url' | 'image' | 'integration_guide' | 'integration_status' | 'latitude' | 'limit_precision_advisory' | 'longitude' | 'name' | 'offering_group' | 'offering_group_title' | 'offering_group_uuid' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'profile_name' | 'profile_uuid' | 'project' | 'project_name' | 'project_uuid' | 'qos_profiles' | 'quotas' | 'resource_options' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_resource' | 'scope_resource_name' | 'scope_resource_uuid' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'tags' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'uuid' | 'vendor_details';
 
 export type ProviderOfferingDetailsOEnum = '-created' | '-name' | '-state' | '-total_cost' | '-total_cost_estimated' | '-total_customers' | '-type' | 'created' | 'name' | 'state' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type';
 
@@ -43777,54 +43740,6 @@ export type BookingOfferingsRetrieveResponses = {
 };
 
 export type BookingOfferingsRetrieveResponse = BookingOfferingsRetrieveResponses[keyof BookingOfferingsRetrieveResponses];
-
-export type BookingOfferingsGoogleCalendarSyncData = {
-    body?: never;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/booking-offerings/{uuid}/google_calendar_sync/';
-};
-
-export type BookingOfferingsGoogleCalendarSyncResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
-};
-
-export type BookingOfferingsShareGoogleCalendarData = {
-    body?: never;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/booking-offerings/{uuid}/share_google_calendar/';
-};
-
-export type BookingOfferingsShareGoogleCalendarResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
-};
-
-export type BookingOfferingsUnshareGoogleCalendarData = {
-    body?: never;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/booking-offerings/{uuid}/unshare_google_calendar/';
-};
-
-export type BookingOfferingsUnshareGoogleCalendarResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
-};
 
 export type BookingResourcesListData = {
     body?: never;
@@ -51541,6 +51456,19 @@ export type ExpertiseCategoriesRetrieveResponses = {
 
 export type ExpertiseCategoriesRetrieveResponse = ExpertiseCategoriesRetrieveResponses[keyof ExpertiseCategoriesRetrieveResponses];
 
+export type ExportPdfData = {
+    body: ExportPdfRequest;
+    path?: never;
+    query?: never;
+    url: '/api/export-pdf/';
+};
+
+export type ExportPdfResponses = {
+    200: Blob | File;
+};
+
+export type ExportPdfResponse = ExportPdfResponses[keyof ExportPdfResponses];
+
 export type ExternalLinksListData = {
     body?: never;
     path?: never;
@@ -52020,137 +51948,6 @@ export type FreeipaProfilesUpdateSshKeysData = {
 };
 
 export type FreeipaProfilesUpdateSshKeysResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
-};
-
-export type GoogleAuthListData = {
-    body?: never;
-    path?: never;
-    query?: {
-        field?: Array<GoogleCredentialsFieldEnum>;
-        /**
-         * has_credentials
-         */
-        has_credentials?: boolean;
-        /**
-         * A page number within the paginated result set.
-         */
-        page?: number;
-        /**
-         * Number of results to return per page.
-         */
-        page_size?: number;
-    };
-    url: '/api/google-auth/';
-};
-
-export type GoogleAuthListResponses = {
-    200: Array<GoogleCredentials>;
-};
-
-export type GoogleAuthListResponse = GoogleAuthListResponses[keyof GoogleAuthListResponses];
-
-export type GoogleAuthCountData = {
-    body?: never;
-    path?: never;
-    query?: {
-        /**
-         * has_credentials
-         */
-        has_credentials?: boolean;
-        /**
-         * A page number within the paginated result set.
-         */
-        page?: number;
-        /**
-         * Number of results to return per page.
-         */
-        page_size?: number;
-    };
-    url: '/api/google-auth/';
-};
-
-export type GoogleAuthCountResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
-};
-
-export type GoogleAuthRetrieveData = {
-    body?: never;
-    path: {
-        uuid: string;
-    };
-    query?: {
-        field?: Array<GoogleCredentialsFieldEnum>;
-    };
-    url: '/api/google-auth/{uuid}/';
-};
-
-export type GoogleAuthRetrieveResponses = {
-    200: GoogleCredentials;
-};
-
-export type GoogleAuthRetrieveResponse = GoogleAuthRetrieveResponses[keyof GoogleAuthRetrieveResponses];
-
-export type GoogleAuthAuthorizeRetrieveData = {
-    body?: never;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/google-auth/{uuid}/authorize/';
-};
-
-export type GoogleAuthAuthorizeRetrieveResponses = {
-    200: GoogleAuthUrl;
-};
-
-export type GoogleAuthAuthorizeRetrieveResponse = GoogleAuthAuthorizeRetrieveResponses[keyof GoogleAuthAuthorizeRetrieveResponses];
-
-export type GoogleAuthCallbackRetrieveData = {
-    body?: never;
-    path?: never;
-    query: {
-        /**
-         * Authorization code
-         */
-        code: string;
-        /**
-         * Service provider UUID
-         */
-        state: string;
-    };
-    url: '/api/google-auth/callback/';
-};
-
-export type GoogleAuthCallbackRetrieveResponses = {
-    200: string;
-};
-
-export type GoogleAuthCallbackRetrieveResponse = GoogleAuthCallbackRetrieveResponses[keyof GoogleAuthCallbackRetrieveResponses];
-
-export type GoogleAuthCallbackCountData = {
-    body?: never;
-    path?: never;
-    query: {
-        /**
-         * Authorization code
-         */
-        code: string;
-        /**
-         * Service provider UUID
-         */
-        state: string;
-    };
-    url: '/api/google-auth/callback/';
-};
-
-export type GoogleAuthCallbackCountResponses = {
     /**
      * No response body
      */
