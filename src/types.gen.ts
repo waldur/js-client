@@ -11061,6 +11061,43 @@ export type InstanceFlavorChangeRequest = {
     flavor: string;
 };
 
+export type InstanceMetricsEnum = 'vm.cpu.utilization' | 'vm.cpu.time' | 'vm.memory.utilization' | 'vm.network.io' | 'vm.disk.io' | 'vm.disk.operations' | 'volume.io' | 'volume.operations';
+
+export type InstanceMetricsFasterUpdatesRequest = {
+    interval_minutes: IntervalMinutesEnum;
+    hours: number;
+};
+
+export type InstanceMetricsPolling = {
+    /**
+     * Whether the instance's provider collects instance metrics.
+     */
+    enabled: boolean;
+    /**
+     * Minutes between reads now, the faster ones included.
+     */
+    interval_minutes: number;
+    /**
+     * Minutes between reads when nobody asked for faster ones.
+     */
+    offering_interval_minutes: number;
+    faster_until: string | null;
+    last_polled_at: string | null;
+    /**
+     * Empty while the instance is not running.
+     */
+    next_poll_at: string | null;
+    /**
+     * Whether the user may ask for faster reads or a read now.
+     */
+    can_manage: boolean;
+    /**
+     * The instance whose reads cover the resource; for a volume, the one it is attached to. Empty for a detached volume.
+     */
+    instance_name: string | null;
+    instance_resource_uuid: string | null;
+};
+
 export type InstancePlacementAllocation = {
     resource_provider_uuid: string;
     resource_provider_name: string;
@@ -11105,6 +11142,8 @@ export type IntegrationStatusDetails = {
     offering: string;
     readonly url: string;
 };
+
+export type IntervalMinutesEnum = 5 | 15 | 60;
 
 export type Invitation = {
     /**
@@ -13368,6 +13407,18 @@ export type MergedPluginOptions = {
      */
     usage_poll_interval_minutes?: number;
     /**
+     * Collect custom metrics of the instances in tenants of this offering and show them to their projects.
+     */
+    instance_metrics_enabled?: boolean;
+    /**
+     * Instance and volume metrics shown to projects; empty shows all of them.
+     */
+    instance_metrics?: Array<InstanceMetricsEnum>;
+    /**
+     * Minutes between custom metrics polls of each instance in tenants of this offering (default: 360).
+     */
+    instance_metrics_poll_interval_minutes?: number;
+    /**
      * Source for OpenStack instance compute ComponentUsage: 'quota' (flavor-derived Nova quota, default) or 'placement' (Placement allocations; also bills VGPU/PCI/custom resource classes).
      */
     billing_source?: BillingSourceEnum;
@@ -13810,6 +13861,18 @@ export type MergedPluginOptionsRequest = {
      * Interval in minutes between usage polling for this offering (default: 60)
      */
     usage_poll_interval_minutes?: number;
+    /**
+     * Collect custom metrics of the instances in tenants of this offering and show them to their projects.
+     */
+    instance_metrics_enabled?: boolean;
+    /**
+     * Instance and volume metrics shown to projects; empty shows all of them.
+     */
+    instance_metrics?: Array<InstanceMetricsEnum>;
+    /**
+     * Minutes between custom metrics polls of each instance in tenants of this offering (default: 360).
+     */
+    instance_metrics_poll_interval_minutes?: number;
     /**
      * Source for OpenStack instance compute ComponentUsage: 'quota' (flavor-derived Nova quota, default) or 'placement' (Placement allocations; also bills VGPU/PCI/custom resource classes).
      */
@@ -61680,6 +61743,78 @@ export type MarketplaceOpenstackDuplicateOfferingsCountResponses = {
      */
     200: unknown;
 };
+
+export type MarketplaceOpenstackInstanceMetricsRetrieveData = {
+    body?: never;
+    path: {
+        /**
+         * UUID of the instance or volume resource.
+         */
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-openstack-instance-metrics/{uuid}/';
+};
+
+export type MarketplaceOpenstackInstanceMetricsRetrieveResponses = {
+    200: InstanceMetricsPolling;
+};
+
+export type MarketplaceOpenstackInstanceMetricsRetrieveResponse = MarketplaceOpenstackInstanceMetricsRetrieveResponses[keyof MarketplaceOpenstackInstanceMetricsRetrieveResponses];
+
+export type MarketplaceOpenstackInstanceMetricsFasterUpdatesData = {
+    body: InstanceMetricsFasterUpdatesRequest;
+    path: {
+        /**
+         * UUID of the instance or volume resource.
+         */
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-openstack-instance-metrics/{uuid}/faster_updates/';
+};
+
+export type MarketplaceOpenstackInstanceMetricsFasterUpdatesResponses = {
+    200: InstanceMetricsPolling;
+};
+
+export type MarketplaceOpenstackInstanceMetricsFasterUpdatesResponse = MarketplaceOpenstackInstanceMetricsFasterUpdatesResponses[keyof MarketplaceOpenstackInstanceMetricsFasterUpdatesResponses];
+
+export type MarketplaceOpenstackInstanceMetricsNormalUpdatesData = {
+    body?: never;
+    path: {
+        /**
+         * UUID of the instance or volume resource.
+         */
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-openstack-instance-metrics/{uuid}/normal_updates/';
+};
+
+export type MarketplaceOpenstackInstanceMetricsNormalUpdatesResponses = {
+    200: InstanceMetricsPolling;
+};
+
+export type MarketplaceOpenstackInstanceMetricsNormalUpdatesResponse = MarketplaceOpenstackInstanceMetricsNormalUpdatesResponses[keyof MarketplaceOpenstackInstanceMetricsNormalUpdatesResponses];
+
+export type MarketplaceOpenstackInstanceMetricsUpdateNowData = {
+    body?: never;
+    path: {
+        /**
+         * UUID of the instance or volume resource.
+         */
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-openstack-instance-metrics/{uuid}/update_now/';
+};
+
+export type MarketplaceOpenstackInstanceMetricsUpdateNowResponses = {
+    200: InstanceMetricsPolling;
+};
+
+export type MarketplaceOpenstackInstanceMetricsUpdateNowResponse = MarketplaceOpenstackInstanceMetricsUpdateNowResponses[keyof MarketplaceOpenstackInstanceMetricsUpdateNowResponses];
 
 export type MarketplaceOrdersListData = {
     body?: never;
