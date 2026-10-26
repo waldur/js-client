@@ -22105,22 +22105,6 @@ export type PatchedIssueTagRequest = {
     color?: string;
 };
 
-export type PatchedKeycloakUserGroupMembershipRequest = {
-    /**
-     * Keycloak user username
-     */
-    username?: string;
-    /**
-     * User's email for notifications
-     */
-    email?: string;
-    /**
-     * UUID of a cluster or a project in Rancher
-     */
-    scope_uuid?: string;
-    role?: string;
-};
-
 export type PatchedLexisLinkRequest = {
     heappe_project_id?: number | null;
 };
@@ -23020,6 +23004,10 @@ export type PatchedProtectedCallRequest = {
      * When applicants learn the allocation decision: immediately, or for every proposal of a round together when a call manager publishes the round's results. Cannot be changed while decisions are held.
      */
     publish_results?: PublishResultsEnum;
+    /**
+     * Whether a proposal may request several of the call's resource templates or at most one of them. Cannot be set to single while a draft proposal holds several resource requests.
+     */
+    resource_template_selection_mode?: ResourceTemplateSelectionModeEnum;
     created_by?: string | null;
     reference_code?: string;
     /**
@@ -26051,6 +26039,10 @@ export type ProtectedCall = {
      * When applicants learn the allocation decision: immediately, or for every proposal of a round together when a call manager publishes the round's results. Cannot be changed while decisions are held.
      */
     publish_results?: PublishResultsEnum;
+    /**
+     * Whether a proposal may request several of the call's resource templates or at most one of them. Cannot be set to single while a draft proposal holds several resource requests.
+     */
+    resource_template_selection_mode?: ResourceTemplateSelectionModeEnum;
     created_by?: string | null;
     reference_code?: string;
     /**
@@ -26146,6 +26138,10 @@ export type ProtectedCallRequest = {
      * When applicants learn the allocation decision: immediately, or for every proposal of a round together when a call manager publishes the round's results. Cannot be changed while decisions are held.
      */
     publish_results?: PublishResultsEnum;
+    /**
+     * Whether a proposal may request several of the call's resource templates or at most one of them. Cannot be set to single while a draft proposal holds several resource requests.
+     */
+    resource_template_selection_mode?: ResourceTemplateSelectionModeEnum;
     created_by?: string | null;
     reference_code?: string;
     /**
@@ -27149,6 +27145,10 @@ export type PublicCall = {
      * When applicants learn the allocation decision: as soon as it is made, or for every proposal of a round together when a call manager publishes the round's results. Cannot be changed while decisions are held.
      */
     publish_results?: PublishResultsEnum;
+    /**
+     * Whether a proposal may request several of the call's resource templates or at most one of them. Cannot be set to single while a draft proposal holds several resource requests.
+     */
+    resource_template_selection_mode?: ResourceTemplateSelectionModeEnum;
 };
 
 export type PublicInvitation = {
@@ -30527,6 +30527,8 @@ export type ResourceTeamMember = {
     readonly expiration_time: string | null;
     readonly resource_projects: Array<NestedResourceProjectPermission>;
 };
+
+export type ResourceTemplateSelectionModeEnum = 'single' | 'multiple';
 
 export type ResourceTerminateRequest = {
     /**
@@ -39156,13 +39158,13 @@ export type UserRequestedResourceOEnum = '-call__name' | '-created' | '-offering
 
 export type ProposalOEnum = '-created' | '-round__call__name' | '-round__cutoff_time' | '-round__start_time' | '-slug' | '-state' | 'created' | 'round__call__name' | 'round__cutoff_time' | 'round__start_time' | 'slug' | 'state';
 
-export type ProtectedCallFieldEnum = 'applicant_visibility_config' | 'backend_id' | 'carry_over_drafts' | 'compliance_checklist' | 'compliance_checklist_name' | 'created' | 'created_by' | 'customer_name' | 'customer_uuid' | 'description' | 'documents' | 'end_date' | 'evaluation_start' | 'external_url' | 'fixed_duration_in_days' | 'has_eligibility_restrictions' | 'has_proposals' | 'manager' | 'manager_uuid' | 'max_prepaid_duration_months' | 'name' | 'offerings' | 'order_author' | 'order_author_user' | 'order_author_user_name' | 'order_author_user_uuid' | 'panel_chair' | 'panel_chair_name' | 'panel_chair_uuid' | 'proposal_field_config' | 'proposal_field_metadata' | 'proposal_slug_template' | 'publish_results' | 'reference_code' | 'resource_templates' | 'reviewer_identity_visible_to_submitters' | 'reviews_visible_to_submitters' | 'rounds' | 'slug' | 'start_date' | 'state' | 'undecided_at_round_completion' | 'url' | 'user_affiliations' | 'user_assurance_levels' | 'user_email_patterns' | 'user_identity_sources' | 'user_nationalities' | 'user_organization_types' | 'uuid';
+export type ProtectedCallFieldEnum = 'applicant_visibility_config' | 'backend_id' | 'carry_over_drafts' | 'compliance_checklist' | 'compliance_checklist_name' | 'created' | 'created_by' | 'customer_name' | 'customer_uuid' | 'description' | 'documents' | 'end_date' | 'evaluation_start' | 'external_url' | 'fixed_duration_in_days' | 'has_eligibility_restrictions' | 'has_proposals' | 'manager' | 'manager_uuid' | 'max_prepaid_duration_months' | 'name' | 'offerings' | 'order_author' | 'order_author_user' | 'order_author_user_name' | 'order_author_user_uuid' | 'panel_chair' | 'panel_chair_name' | 'panel_chair_uuid' | 'proposal_field_config' | 'proposal_field_metadata' | 'proposal_slug_template' | 'publish_results' | 'reference_code' | 'resource_template_selection_mode' | 'resource_templates' | 'reviewer_identity_visible_to_submitters' | 'reviews_visible_to_submitters' | 'rounds' | 'slug' | 'start_date' | 'state' | 'undecided_at_round_completion' | 'url' | 'user_affiliations' | 'user_assurance_levels' | 'user_email_patterns' | 'user_identity_sources' | 'user_nationalities' | 'user_organization_types' | 'uuid';
 
 export type ProtectedCallOEnum = '-created' | '-manager__customer__name' | '-name' | 'created' | 'manager__customer__name' | 'name';
 
 export type AffinityMatrixResponseScopeEnum = 'all' | 'pool' | 'suggestions';
 
-export type PublicCallFieldEnum = 'backend_id' | 'created' | 'customer_name' | 'customer_uuid' | 'description' | 'documents' | 'end_date' | 'evaluation_start' | 'external_url' | 'fixed_duration_in_days' | 'has_eligibility_restrictions' | 'manager' | 'manager_uuid' | 'max_prepaid_duration_months' | 'name' | 'offerings' | 'proposal_field_config' | 'publish_results' | 'resource_templates' | 'reviewer_identity_visible_to_submitters' | 'reviews_visible_to_submitters' | 'rounds' | 'slug' | 'start_date' | 'state' | 'url' | 'uuid';
+export type PublicCallFieldEnum = 'backend_id' | 'created' | 'customer_name' | 'customer_uuid' | 'description' | 'documents' | 'end_date' | 'evaluation_start' | 'external_url' | 'fixed_duration_in_days' | 'has_eligibility_restrictions' | 'manager' | 'manager_uuid' | 'max_prepaid_duration_months' | 'name' | 'offerings' | 'proposal_field_config' | 'publish_results' | 'resource_template_selection_mode' | 'resource_templates' | 'reviewer_identity_visible_to_submitters' | 'reviews_visible_to_submitters' | 'rounds' | 'slug' | 'start_date' | 'state' | 'url' | 'uuid';
 
 export type ProviderRequestedOfferingOEnum = '-call__name' | '-created' | '-offering__name' | '-state' | 'call__name' | 'created' | 'offering__name' | 'state';
 
@@ -53642,36 +53644,6 @@ export type KeycloakUserGroupMembershipsRetrieveResponses = {
 
 export type KeycloakUserGroupMembershipsRetrieveResponse = KeycloakUserGroupMembershipsRetrieveResponses[keyof KeycloakUserGroupMembershipsRetrieveResponses];
 
-export type KeycloakUserGroupMembershipsPartialUpdateData = {
-    body?: PatchedKeycloakUserGroupMembershipRequest;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/keycloak-user-group-memberships/{uuid}/';
-};
-
-export type KeycloakUserGroupMembershipsPartialUpdateResponses = {
-    200: KeycloakUserGroupMembership;
-};
-
-export type KeycloakUserGroupMembershipsPartialUpdateResponse = KeycloakUserGroupMembershipsPartialUpdateResponses[keyof KeycloakUserGroupMembershipsPartialUpdateResponses];
-
-export type KeycloakUserGroupMembershipsUpdateData = {
-    body: KeycloakUserGroupMembershipRequest;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/keycloak-user-group-memberships/{uuid}/';
-};
-
-export type KeycloakUserGroupMembershipsUpdateResponses = {
-    200: KeycloakUserGroupMembership;
-};
-
-export type KeycloakUserGroupMembershipsUpdateResponse = KeycloakUserGroupMembershipsUpdateResponses[keyof KeycloakUserGroupMembershipsUpdateResponses];
-
 export type KeysListData = {
     body?: never;
     path?: never;
@@ -59369,7 +59341,7 @@ export type MarketplaceOfferingPermissionsListData = {
          */
         scope_name?: string;
         /**
-         * Scope type
+         * Scope type, as returned in scope_type: customer, project, offering, service_provider, call_organizer, call, proposal, resource, resource_project or global. A content type model name also matches.
          */
         scope_type?: string;
         /**
@@ -59452,7 +59424,7 @@ export type MarketplaceOfferingPermissionsCountData = {
          */
         scope_name?: string;
         /**
-         * Scope type
+         * Scope type, as returned in scope_type: customer, project, offering, service_provider, call_organizer, call, proposal, resource, resource_project or global. A content type model name also matches.
          */
         scope_type?: string;
         /**
@@ -59536,7 +59508,7 @@ export type MarketplaceOfferingPermissionsLogListData = {
          */
         scope_name?: string;
         /**
-         * Scope type
+         * Scope type, as returned in scope_type: customer, project, offering, service_provider, call_organizer, call, proposal, resource, resource_project or global. A content type model name also matches.
          */
         scope_type?: string;
         /**
@@ -59619,7 +59591,7 @@ export type MarketplaceOfferingPermissionsLogCountData = {
          */
         scope_name?: string;
         /**
-         * Scope type
+         * Scope type, as returned in scope_type: customer, project, offering, service_provider, call_organizer, call, proposal, resource, resource_project or global. A content type model name also matches.
          */
         scope_type?: string;
         /**
@@ -76115,7 +76087,7 @@ export type MarketplaceServiceProvidersProjectPermissionsListData = {
          */
         scope_name?: string;
         /**
-         * Scope type
+         * Scope type, as returned in scope_type: customer, project, offering, service_provider, call_organizer, call, proposal, resource, resource_project or global. A content type model name also matches.
          */
         scope_type?: string;
         /**
@@ -76199,7 +76171,7 @@ export type MarketplaceServiceProvidersProjectPermissionsCountData = {
          */
         scope_name?: string;
         /**
-         * Scope type
+         * Scope type, as returned in scope_type: customer, project, offering, service_provider, call_organizer, call, proposal, resource, resource_project or global. A content type model name also matches.
          */
         scope_type?: string;
         /**
@@ -107446,7 +107418,7 @@ export type RoleAvailabilitiesListData = {
          */
         role_uuid?: string;
         /**
-         * Scope content type (e.g. 'offering', 'customer')
+         * Scope type, as returned in scope_type: customer, project, offering, service_provider, call_organizer, call, proposal, resource, resource_project or global. A content type model name also matches.
          */
         scope_type?: string;
     };
@@ -107484,7 +107456,7 @@ export type RoleAvailabilitiesCountData = {
          */
         role_uuid?: string;
         /**
-         * Scope content type (e.g. 'offering', 'customer')
+         * Scope type, as returned in scope_type: customer, project, offering, service_provider, call_organizer, call, proposal, resource, resource_project or global. A content type model name also matches.
          */
         scope_type?: string;
     };
@@ -112652,7 +112624,7 @@ export type UserPermissionsListData = {
          */
         scope_name?: string;
         /**
-         * Scope type
+         * Scope type, as returned in scope_type: customer, project, offering, service_provider, call_organizer, call, proposal, resource, resource_project or global. A content type model name also matches.
          */
         scope_type?: string;
         /**
@@ -112738,7 +112710,7 @@ export type UserPermissionsCountData = {
          */
         scope_name?: string;
         /**
-         * Scope type
+         * Scope type, as returned in scope_type: customer, project, offering, service_provider, call_organizer, call, proposal, resource, resource_project or global. A content type model name also matches.
          */
         scope_type?: string;
         /**
