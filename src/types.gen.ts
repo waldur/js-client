@@ -5521,6 +5521,8 @@ export type CommentRequest = {
 
 export type ComparatorEnum = 'ge' | 'le';
 
+export type CompensateInEnum = 'current_month' | 'incurred_month';
+
 export type CompleteRoundRefusal = {
     readonly detail: string;
     /**
@@ -7743,8 +7745,9 @@ export type CustomerEstimatedCostPolicy = {
      * The cost this policy compares against limit_cost right now: the period's invoice total, less the credit already applied and the credit still to be drawn. Do not re-derive it — only the server can simulate the pending draw, and a figure computed from the invoice alone will not match what the policy evaluates.
      */
     readonly current_cost: string;
+    cost_breakdown: PolicyCostBreakdown;
     /**
-     * Days until the policy fires, or null when no projection exists. 0 means the threshold is already crossed and the policy is triggered — measured, not projected. Null must be rendered as no date, never as 'now': it is the common case, and it is also what an unprojectable or more-than-a-year-away policy reports. Nothing is projected beyond 365 days, because the rate comes from the current month's spend. Note that a cost policy does not fire on cost alone — it also waits for the credit balance to fall to limit_cost — so a policy far over its cap can still report a future date or null.
+     * Days until the policy fires, or null when no projection exists. 0 means the threshold is already crossed and the policy is triggered — measured, not projected. Null must be rendered as no date, never as 'now': it is the common case, and it is also what an unprojectable or more-than-a-year-away policy reports. Nothing is projected beyond 365 days, because the rate comes from the current month's spend.
      */
     readonly eta_days: number | null;
     /**
@@ -9047,6 +9050,51 @@ export type DuplicateOfferingGroup = {
 };
 
 export type EnabledreportingscreensEnum = 'resource-usage' | 'user-usage' | 'quotas' | 'usage-monitoring' | 'usage-trends' | 'organization-summary' | 'project-detail' | 'resources-geography' | 'project-classification' | 'usage-by-customer' | 'usage-by-org-type' | 'usage-by-creator' | 'projects-by-affiliated-organization' | 'call-performance' | 'review-progress' | 'resource-demand' | 'capacity' | 'provider-overview' | 'provider-revenue' | 'provider-orders' | 'provider-resources' | 'provider-customers' | 'provider-offerings' | 'openstack-instances' | 'offering-usage' | 'user-analytics' | 'user-demographics' | 'user-organizations' | 'user-affiliations' | 'user-roles' | 'growth' | 'revenue' | 'pricelist' | 'orders' | 'offering-costs' | 'maintenance-overview' | 'provisioning-stats';
+
+export type EarlierInvoiceMonth = {
+    /**
+     * The month, as its first day.
+     */
+    period: string;
+    /**
+     * Cost the credit could pay: the project's items on offerings the credit covers, net of volume discounts, before tax.
+     */
+    cost: string;
+    /**
+     * What paid for it: the credit compensation on the month's invoice, later payments of the month, and staff refunds of its items.
+     */
+    covered: string;
+    /**
+     * Cost that nothing paid for yet.
+     */
+    uncovered: string;
+    /**
+     * Whether the month is within the months the credit pays.
+     */
+    in_period: boolean;
+};
+
+export type EarlierInvoicePayment = {
+    /**
+     * The month the compensation pays.
+     */
+    period: string;
+    /**
+     * The month of the invoice the compensation is written on.
+     */
+    invoice_period: string;
+    /**
+     * That invoice; null in a dry run while the current month has no invoice yet.
+     */
+    invoice_uuid: string | null;
+    resource_name: string | null;
+    resource_uuid: string | null;
+    /**
+     * The cost item the compensation pays.
+     */
+    item_name: string;
+    amount: string;
+};
 
 export type EffectiveRoute = {
     destination: string;
@@ -16506,8 +16554,9 @@ export type OfferingEstimatedCostPolicy = {
      * The cost this policy compares against limit_cost right now: the period's invoice total, less the credit already applied and the credit still to be drawn. Do not re-derive it — only the server can simulate the pending draw, and a figure computed from the invoice alone will not match what the policy evaluates.
      */
     readonly current_cost: string;
+    cost_breakdown: PolicyCostBreakdown;
     /**
-     * Days until the policy fires, or null when no projection exists. 0 means the threshold is already crossed and the policy is triggered — measured, not projected. Null must be rendered as no date, never as 'now': it is the common case, and it is also what an unprojectable or more-than-a-year-away policy reports. Nothing is projected beyond 365 days, because the rate comes from the current month's spend. Note that a cost policy does not fire on cost alone — it also waits for the credit balance to fall to limit_cost — so a policy far over its cap can still report a future date or null.
+     * Days until the policy fires, or null when no projection exists. 0 means the threshold is already crossed and the policy is triggered — measured, not projected. Null must be rendered as no date, never as 'now': it is the common case, and it is also what an unprojectable or more-than-a-year-away policy reports. Nothing is projected beyond 365 days, because the rate comes from the current month's spend.
      */
     readonly eta_days: number | null;
     /**
@@ -23013,6 +23062,22 @@ export type PatchedProjectCreditRequest = {
     grace_coefficient?: string;
     apply_as_minimal_consumption?: boolean;
     mark_unused_credit_as_spent_on_project_termination?: boolean;
+    /**
+     * Also pay the cost of earlier, closed invoices of the project that no credit covered. Staff only.
+     */
+    pay_earlier_invoices?: boolean;
+    /**
+     * First month of earlier invoices to pay, as its first day. Empty: from the first invoice.
+     */
+    earlier_invoices_from?: string | null;
+    /**
+     * Last month of earlier invoices to pay, as its first day. Empty: up to the last closed invoice.
+     */
+    earlier_invoices_until?: string | null;
+    /**
+     * Which invoice a payment of an earlier invoice is written on: the current month's, or the paid month's own, which changes an invoice already issued.
+     */
+    earlier_invoices_compensate_in?: CompensateInEnum;
 };
 
 export type PatchedProjectDigestConfigRequest = {
@@ -24301,6 +24366,36 @@ export type PatchedWebHookRequest = {
     content_type?: WebHookContentTypeEnum;
 };
 
+export type PayEarlierInvoices = {
+    dry_run: boolean;
+    compensate_in: CompensateInEnum;
+    payments: Array<EarlierInvoicePayment>;
+    total: string;
+    project_credit_before: string;
+    project_credit_after: string;
+    customer_credit_before: string;
+    customer_credit_after: string;
+};
+
+export type PayEarlierInvoicesRequestRequest = {
+    /**
+     * Return what would be written without writing anything.
+     */
+    dry_run?: boolean;
+    /**
+     * Which invoice the compensations go on. Defaults to the credit's earlier_invoices_compensate_in; a payment that is not a dry run also stores it there.
+     */
+    compensate_in?: CompensateInEnum;
+    /**
+     * First month to pay, as its first day. Defaults to the credit's own; a payment that is not a dry run also stores it.
+     */
+    earlier_invoices_from?: string | null;
+    /**
+     * Last month to pay, as its first day. Defaults to the credit's own; a payment that is not a dry run also stores it.
+     */
+    earlier_invoices_until?: string | null;
+};
+
 export type Payment = {
     readonly uuid: string;
     readonly url: string;
@@ -24640,15 +24735,34 @@ export type PluginOfferingType = {
     available_limits: Array<string>;
 };
 
+export type PolicyCostBreakdown = {
+    /**
+     * The invoiced cost within the policy's period before any credit, tax included.
+     */
+    cost_before_credit: string;
+    /**
+     * Credit compensation already written on the period's invoices.
+     */
+    credit_drawn: string;
+    /**
+     * Credit the current month will still draw that is not written yet. 0 for a policy that does not take credit into account; such a policy still counts the compensation already written, which shows in credit_drawn.
+     */
+    credit_pending: string;
+    /**
+     * The part of current_cost from months before the current one. Credit added now pays only the current month, so this part stays until those months are paid; see ProjectCredit.pay_earlier_invoices. 0 for a one-month period.
+     */
+    earlier_months: string;
+};
+
 export type PolicyEnum = 'affinity' | 'anti-affinity' | 'soft-affinity' | 'soft-anti-affinity';
 
-export type PolicyGateEnum = 'cost_below_limit' | 'held_by_project_credit' | 'held_by_customer_credit' | 'credit_exhausted' | 'no_credit' | 'credit_ignored';
+export type PolicyGateEnum = 'cost_below_limit' | 'cost_over_limit' | 'no_credit' | 'credit_ignored' | 'held_by_project_credit' | 'held_by_customer_credit' | 'credit_exhausted';
 
 export type PolicyPeriodEnum = 1 | 2 | 3 | 4;
 
 export type PolicyTriggerStatus = {
     /**
-     * Which check decided. Not firing: cost_below_limit (current_cost is at or below limit_cost); held_by_project_credit / held_by_customer_credit (current_cost is over the limit, but that credit's live balance, credit_value_compared, is above it; for a project with its own allocation the lower of the two binds). Firing: credit_exhausted (current_cost is over the limit and credit_value_compared is at or below it); no_credit (current_cost is over the limit and no credit applies); credit_ignored (current_cost is over the limit and the policy does not take credit into account). Clients word the explanation themselves from this value and those figures.
+     * Which check decided. Not firing: cost_below_limit (current_cost is at or below limit_cost). Firing: cost_over_limit (current_cost, the cost after credit, is over the limit); no_credit (current_cost is over the limit and no credit applies); credit_ignored (current_cost is over the limit and the policy does not take credit into account). The credit left is not compared with the limit. held_by_project_credit, held_by_customer_credit and credit_exhausted are no longer returned; they remain in the enum for clients that still handle them. Clients word the explanation themselves from this value and those figures.
      */
     gate: PolicyGateEnum;
     /**
@@ -24656,7 +24770,7 @@ export type PolicyTriggerStatus = {
      */
     triggered: boolean;
     /**
-     * The live credit balance compared against limit_cost; null when the credit was not checked (cost_below_limit, no_credit, credit_ignored), and on a project policy when it is the organization's balance and the user may not view the organization's accounting.
+     * Deprecated: always null. The policy no longer compares the credit balance with limit_cost.
      */
     credit_value_compared: string | null;
 };
@@ -25164,6 +25278,38 @@ export type ProjectCredit = {
     grace_coefficient?: string;
     apply_as_minimal_consumption?: boolean;
     mark_unused_credit_as_spent_on_project_termination?: boolean;
+    /**
+     * Also pay the cost of earlier, closed invoices of the project that no credit covered. Staff only.
+     */
+    pay_earlier_invoices?: boolean;
+    /**
+     * First month of earlier invoices to pay, as its first day. Empty: from the first invoice.
+     */
+    earlier_invoices_from?: string | null;
+    /**
+     * Last month of earlier invoices to pay, as its first day. Empty: up to the last closed invoice.
+     */
+    earlier_invoices_until?: string | null;
+    /**
+     * Which invoice a payment of an earlier invoice is written on: the current month's, or the paid month's own, which changes an invoice already issued.
+     */
+    earlier_invoices_compensate_in?: CompensateInEnum;
+};
+
+export type ProjectCreditEarlierInvoices = {
+    months: Array<EarlierInvoiceMonth>;
+    /**
+     * Uncovered cost of every month listed: what a period-Total cost policy counts of them.
+     */
+    uncovered: string;
+    /**
+     * Uncovered cost of the months the credit pays.
+     */
+    uncovered_in_period: string;
+    /**
+     * What the allocation would pay now: the uncovered cost of the months it pays, capped by what is left of the allocation and of the organization credit after this month's usage so far.
+     */
+    payable_now: string;
 };
 
 export type ProjectCreditRequest = {
@@ -25175,6 +25321,22 @@ export type ProjectCreditRequest = {
     grace_coefficient?: string;
     apply_as_minimal_consumption?: boolean;
     mark_unused_credit_as_spent_on_project_termination?: boolean;
+    /**
+     * Also pay the cost of earlier, closed invoices of the project that no credit covered. Staff only.
+     */
+    pay_earlier_invoices?: boolean;
+    /**
+     * First month of earlier invoices to pay, as its first day. Empty: from the first invoice.
+     */
+    earlier_invoices_from?: string | null;
+    /**
+     * Last month of earlier invoices to pay, as its first day. Empty: up to the last closed invoice.
+     */
+    earlier_invoices_until?: string | null;
+    /**
+     * Which invoice a payment of an earlier invoice is written on: the current month's, or the paid month's own, which changes an invoice already issued.
+     */
+    earlier_invoices_compensate_in?: CompensateInEnum;
 };
 
 export type ProjectDetail = {
@@ -25326,8 +25488,9 @@ export type ProjectEstimatedCostPolicy = {
      * The cost this policy compares against limit_cost right now: the period's invoice total, less the credit already applied and the credit still to be drawn. Do not re-derive it — only the server can simulate the pending draw, and a figure computed from the invoice alone will not match what the policy evaluates.
      */
     readonly current_cost: string;
+    cost_breakdown: PolicyCostBreakdown;
     /**
-     * Days until the policy fires, or null when no projection exists. 0 means the threshold is already crossed and the policy is triggered — measured, not projected. Null must be rendered as no date, never as 'now': it is the common case, and it is also what an unprojectable or more-than-a-year-away policy reports. Nothing is projected beyond 365 days, because the rate comes from the current month's spend. Note that a cost policy does not fire on cost alone — it also waits for the credit balance to fall to limit_cost — so a policy far over its cap can still report a future date or null.
+     * Days until the policy fires, or null when no projection exists. 0 means the threshold is already crossed and the policy is triggered — measured, not projected. Null must be rendered as no date, never as 'now': it is the common case, and it is also what an unprojectable or more-than-a-year-away policy reports. Nothing is projected beyond 365 days, because the rate comes from the current month's spend.
      */
     readonly eta_days: number | null;
     /**
@@ -34862,7 +35025,7 @@ export type TransactionStats = {
     readonly deadlocks: number;
 };
 
-export type TransactionTypeEnum = 'staff_grant' | 'compensation' | 'minimal_draw' | 'affiliate_fee' | 'transfer_in' | 'transfer_out' | 'payout' | 'expiry' | 'rollback' | 'adjustment' | 'withdrawable_adjustment';
+export type TransactionTypeEnum = 'staff_grant' | 'compensation' | 'historical_compensation' | 'minimal_draw' | 'affiliate_fee' | 'transfer_in' | 'transfer_out' | 'payout' | 'expiry' | 'rollback' | 'adjustment' | 'withdrawable_adjustment';
 
 export type TransitionModeEnum = 'automatic_on_completion' | 'manual';
 
@@ -39203,7 +39366,7 @@ export type ComponentUserUsageOEnum = '-component_usage__billing_period' | '-usa
 
 export type CourseAccountOEnum = '-created' | '-email' | '-modified' | '-project_end_date' | '-project_name' | '-project_start_date' | '-state' | '-username' | 'created' | 'email' | 'modified' | 'project_end_date' | 'project_name' | 'project_start_date' | 'state' | 'username';
 
-export type CustomerEstimatedCostPolicyFieldEnum = 'actions' | 'affected_resources_count' | 'billing_price_estimate' | 'created' | 'created_by_full_name' | 'created_by_username' | 'current_cost' | 'customer_credit' | 'eta_date' | 'eta_days' | 'fired_datetime' | 'has_fired' | 'limit_cost' | 'options' | 'period' | 'period_name' | 'scope' | 'scope_name' | 'scope_uuid' | 'trigger_status' | 'url' | 'uuid';
+export type CustomerEstimatedCostPolicyFieldEnum = 'actions' | 'affected_resources_count' | 'billing_price_estimate' | 'cost_breakdown' | 'created' | 'created_by_full_name' | 'created_by_username' | 'current_cost' | 'customer_credit' | 'eta_date' | 'eta_days' | 'fired_datetime' | 'has_fired' | 'limit_cost' | 'options' | 'period' | 'period_name' | 'scope' | 'scope_name' | 'scope_uuid' | 'trigger_status' | 'url' | 'uuid';
 
 export type IntegrationStatusDetailsOEnum = '-last_request_timestamp' | 'last_request_timestamp';
 
@@ -39213,7 +39376,7 @@ export type MetricSeriesResponseAggregateEnum = 'last' | 'max' | 'mean' | 'min';
 
 export type MetricSeriesResponseGranularityEnum = 'auto' | 'day' | 'hour' | 'raw';
 
-export type OfferingEstimatedCostPolicyFieldEnum = 'actions' | 'affected_resources_count' | 'apply_to_all' | 'created' | 'created_by_full_name' | 'created_by_username' | 'current_cost' | 'eta_date' | 'eta_days' | 'fired_datetime' | 'has_fired' | 'limit_cost' | 'options' | 'organization_groups' | 'period' | 'period_name' | 'scope' | 'scope_name' | 'scope_uuid' | 'trigger_status' | 'url' | 'uuid';
+export type OfferingEstimatedCostPolicyFieldEnum = 'actions' | 'affected_resources_count' | 'apply_to_all' | 'cost_breakdown' | 'created' | 'created_by_full_name' | 'created_by_username' | 'current_cost' | 'eta_date' | 'eta_days' | 'fired_datetime' | 'has_fired' | 'limit_cost' | 'options' | 'organization_groups' | 'period' | 'period_name' | 'scope' | 'scope_name' | 'scope_uuid' | 'trigger_status' | 'url' | 'uuid';
 
 export type OfferingFileFieldEnum = 'created' | 'file' | 'name' | 'offering' | 'url' | 'uuid';
 
@@ -39243,7 +39406,7 @@ export type PosixIdentityConsumerTypeEnum = 'offeringrolegroup' | 'offeringuserg
 
 export type PosixIdentityOEnum = '-created' | '-gid' | '-released_at' | '-uid' | 'created' | 'gid' | 'released_at' | 'uid';
 
-export type ProjectEstimatedCostPolicyFieldEnum = 'actions' | 'affected_resources_count' | 'billing_price_estimate' | 'created' | 'created_by_full_name' | 'created_by_username' | 'current_cost' | 'customer_credit' | 'eta_date' | 'eta_days' | 'fired_datetime' | 'has_fired' | 'limit_cost' | 'options' | 'period' | 'period_name' | 'project_credit' | 'resource' | 'resource_name' | 'scope' | 'scope_name' | 'scope_uuid' | 'trigger_status' | 'url' | 'use_credit' | 'uuid';
+export type ProjectEstimatedCostPolicyFieldEnum = 'actions' | 'affected_resources_count' | 'billing_price_estimate' | 'cost_breakdown' | 'created' | 'created_by_full_name' | 'created_by_username' | 'current_cost' | 'customer_credit' | 'eta_date' | 'eta_days' | 'fired_datetime' | 'has_fired' | 'limit_cost' | 'options' | 'period' | 'period_name' | 'project_credit' | 'resource' | 'resource_name' | 'scope' | 'scope_name' | 'scope_uuid' | 'trigger_status' | 'url' | 'use_credit' | 'uuid';
 
 export type RemoteProjectUpdateRequestStateEnum = 'approved' | 'canceled' | 'draft' | 'pending' | 'rejected';
 
@@ -97121,6 +97284,45 @@ export type ProjectCreditsUpdateResponses = {
 };
 
 export type ProjectCreditsUpdateResponse = ProjectCreditsUpdateResponses[keyof ProjectCreditsUpdateResponses];
+
+export type ProjectCreditsEarlierInvoicesRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * First month the credit pays, as its first day, to preview other bounds. Defaults to the credit's own.
+         */
+        earlier_invoices_from?: string;
+        /**
+         * Last month the credit pays, as its first day, to preview other bounds. Defaults to the credit's own.
+         */
+        earlier_invoices_until?: string;
+    };
+    url: '/api/project-credits/{uuid}/earlier_invoices/';
+};
+
+export type ProjectCreditsEarlierInvoicesRetrieveResponses = {
+    200: ProjectCreditEarlierInvoices;
+};
+
+export type ProjectCreditsEarlierInvoicesRetrieveResponse = ProjectCreditsEarlierInvoicesRetrieveResponses[keyof ProjectCreditsEarlierInvoicesRetrieveResponses];
+
+export type ProjectCreditsPayEarlierInvoicesData = {
+    body?: PayEarlierInvoicesRequestRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/project-credits/{uuid}/pay_earlier_invoices/';
+};
+
+export type ProjectCreditsPayEarlierInvoicesResponses = {
+    200: PayEarlierInvoices;
+};
+
+export type ProjectCreditsPayEarlierInvoicesResponse = ProjectCreditsPayEarlierInvoicesResponses[keyof ProjectCreditsPayEarlierInvoicesResponses];
 
 export type ProjectEndDateChangeRequestsListData = {
     body?: never;
