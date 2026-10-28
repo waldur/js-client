@@ -75611,6 +75611,10 @@ export type MarketplaceServiceProvidersCustomerProjectsListData = {
          */
         slug?: string;
         /**
+         * Role name or UUID; narrows user_uuid_with_active_role to that role.
+         */
+        user_role?: string;
+        /**
          * Filter projects where the given user has a role.
          */
         user_uuid_with_active_role?: string;
@@ -75741,6 +75745,10 @@ export type MarketplaceServiceProvidersCustomerProjectsCountData = {
          * Slug
          */
         slug?: string;
+        /**
+         * Role name or UUID; narrows user_uuid_with_active_role to that role.
+         */
+        user_role?: string;
         /**
          * Filter projects where the given user has a role.
          */
@@ -77205,6 +77213,10 @@ export type MarketplaceServiceProvidersProjectsListData = {
          */
         slug?: string;
         /**
+         * Role name or UUID; narrows user_uuid_with_active_role to that role.
+         */
+        user_role?: string;
+        /**
          * Filter projects where the given user has a role.
          */
         user_uuid_with_active_role?: string;
@@ -77331,6 +77343,10 @@ export type MarketplaceServiceProvidersProjectsCountData = {
          * Slug
          */
         slug?: string;
+        /**
+         * Role name or UUID; narrows user_uuid_with_active_role to that role.
+         */
+        user_role?: string;
         /**
          * Filter projects where the given user has a role.
          */
@@ -87080,6 +87096,10 @@ export type OpenportalUnmanagedProjectsListData = {
          */
         slug?: string;
         /**
+         * Role name or UUID; narrows user_uuid_with_active_role to that role.
+         */
+        user_role?: string;
+        /**
          * Filter by user UUID.
          */
         user_uuid?: string;
@@ -87216,6 +87236,10 @@ export type OpenportalUnmanagedProjectsCountData = {
          * Slug
          */
         slug?: string;
+        /**
+         * Role name or UUID; narrows user_uuid_with_active_role to that role.
+         */
+        user_role?: string;
         /**
          * Filter by user UUID.
          */
@@ -87529,6 +87553,10 @@ export type OpenportalUnmanagedProjectsHistoryListData = {
          * Slug
          */
         slug?: string;
+        /**
+         * Role name or UUID; narrows user_uuid_with_active_role to that role.
+         */
+        user_role?: string;
         /**
          * Filter by user UUID.
          */
@@ -97843,6 +97871,10 @@ export type ProjectsListData = {
          */
         slug?: string;
         /**
+         * Role name or UUID; narrows user_uuid_with_active_role to that role.
+         */
+        user_role?: string;
+        /**
          * Filter by user UUID.
          */
         user_uuid?: string;
@@ -97979,6 +98011,10 @@ export type ProjectsCountData = {
          * Slug
          */
         slug?: string;
+        /**
+         * Role name or UUID; narrows user_uuid_with_active_role to that role.
+         */
+        user_role?: string;
         /**
          * Filter by user UUID.
          */
@@ -98451,6 +98487,10 @@ export type ProjectsHistoryListData = {
          * Slug
          */
         slug?: string;
+        /**
+         * Role name or UUID; narrows user_uuid_with_active_role to that role.
+         */
+        user_role?: string;
         /**
          * Filter by user UUID.
          */
