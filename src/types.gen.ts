@@ -6480,6 +6480,7 @@ export type ConstanceSettings = {
     PAT_MAX_ACL_ENTRIES?: number;
     PAT_MAX_AUDIT_EVENTS_PER_HOUR?: number;
     MCP_ENABLED?: boolean;
+    MCP_RESOURCE_URLS?: string;
 };
 
 export type ConstanceSettingsRequest = {
@@ -6839,6 +6840,7 @@ export type ConstanceSettingsRequest = {
     PAT_MAX_ACL_ENTRIES?: number;
     PAT_MAX_AUDIT_EVENTS_PER_HOUR?: number;
     MCP_ENABLED?: boolean;
+    MCP_RESOURCE_URLS?: string;
 };
 
 export type ConsumptionStatisticsResponse = {
@@ -19923,7 +19925,7 @@ export type OpenStackPort = {
      * MAC address of the port
      */
     mac_address?: string;
-    allowed_address_pairs?: Array<OpenStackAllowedAddressPair>;
+    readonly allowed_address_pairs: Array<OpenStackAllowedAddressPair>;
     /**
      * OpenStack tenant this port belongs to
      */
@@ -20002,7 +20004,6 @@ export type OpenStackPortRequest = {
      * MAC address of the port
      */
     mac_address?: string;
-    allowed_address_pairs?: Array<OpenStackAllowedAddressPairRequest>;
     /**
      * Target tenant for shared network port creation. If not specified, defaults to network's tenant.
      */
@@ -22520,15 +22521,6 @@ export type PatchedMigrationDetailsRequest = {
     mappings?: MappingRequest;
     error_message?: string;
     error_traceback?: string;
-};
-
-export type PatchedNetworkRbacPolicyRequest = {
-    network?: string;
-    target_tenant?: string;
-    /**
-     * Type of access granted - either shared access or external network access
-     */
-    policy_type?: PolicyTypeEnum;
 };
 
 export type PatchedNotificationRequest = {
@@ -38381,6 +38373,7 @@ export type ConstanceSettingsRequestForm = {
     PAT_MAX_ACL_ENTRIES?: number;
     PAT_MAX_AUDIT_EVENTS_PER_HOUR?: number;
     MCP_ENABLED?: boolean;
+    MCP_RESOURCE_URLS?: string;
 };
 
 export type ConstanceSettingsRequestMultipart = {
@@ -38740,6 +38733,7 @@ export type ConstanceSettingsRequestMultipart = {
     PAT_MAX_ACL_ENTRIES?: number;
     PAT_MAX_AUDIT_EVENTS_PER_HOUR?: number;
     MCP_ENABLED?: boolean;
+    MCP_RESOURCE_URLS?: string;
 };
 
 export type PaymentRequestForm = {
@@ -91587,36 +91581,6 @@ export type OpenstackNetworkRbacPoliciesRetrieveResponses = {
 };
 
 export type OpenstackNetworkRbacPoliciesRetrieveResponse = OpenstackNetworkRbacPoliciesRetrieveResponses[keyof OpenstackNetworkRbacPoliciesRetrieveResponses];
-
-export type OpenstackNetworkRbacPoliciesPartialUpdateData = {
-    body?: PatchedNetworkRbacPolicyRequest;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/openstack-network-rbac-policies/{uuid}/';
-};
-
-export type OpenstackNetworkRbacPoliciesPartialUpdateResponses = {
-    200: NetworkRbacPolicy;
-};
-
-export type OpenstackNetworkRbacPoliciesPartialUpdateResponse = OpenstackNetworkRbacPoliciesPartialUpdateResponses[keyof OpenstackNetworkRbacPoliciesPartialUpdateResponses];
-
-export type OpenstackNetworkRbacPoliciesUpdateData = {
-    body: NetworkRbacPolicyRequest;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/openstack-network-rbac-policies/{uuid}/';
-};
-
-export type OpenstackNetworkRbacPoliciesUpdateResponses = {
-    200: NetworkRbacPolicy;
-};
-
-export type OpenstackNetworkRbacPoliciesUpdateResponse = OpenstackNetworkRbacPoliciesUpdateResponses[keyof OpenstackNetworkRbacPoliciesUpdateResponses];
 
 export type OpenstackNetworksListData = {
     body?: never;
