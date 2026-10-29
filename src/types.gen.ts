@@ -15544,6 +15544,10 @@ export type NestedQoS = {
      */
     min_tres_per_job?: string;
     /**
+     * Max TRES-minutes per job (MaxTRESMinsPerJob)
+     */
+    max_tres_mins_per_job?: string;
+    /**
      * Comma-separated QOS flags (e.g. DenyOnLimit, OverPartQOS)
      */
     flags?: string;
@@ -15599,6 +15603,10 @@ export type NestedQoSRequest = {
      * Min TRES per job (MinTRESPerJob)
      */
     min_tres_per_job?: string;
+    /**
+     * Max TRES-minutes per job (MaxTRESMinsPerJob)
+     */
+    max_tres_mins_per_job?: string;
     /**
      * Comma-separated QOS flags (e.g. DenyOnLimit, OverPartQOS)
      */
@@ -17611,6 +17619,10 @@ export type OfferingQoS = {
      */
     min_tres_per_job?: string;
     /**
+     * Max TRES-minutes per job (MaxTRESMinsPerJob)
+     */
+    max_tres_mins_per_job?: string;
+    /**
      * Comma-separated QOS flags (e.g. DenyOnLimit, OverPartQOS)
      */
     flags?: string;
@@ -17667,6 +17679,10 @@ export type OfferingQoSRequest = {
      * Min TRES per job (MinTRESPerJob)
      */
     min_tres_per_job?: string;
+    /**
+     * Max TRES-minutes per job (MaxTRESMinsPerJob)
+     */
+    max_tres_mins_per_job?: string;
     /**
      * Comma-separated QOS flags (e.g. DenyOnLimit, OverPartQOS)
      */
@@ -22747,6 +22763,10 @@ export type PatchedOfferingQoSUpdateRequest = {
      * Min TRES per job (MinTRESPerJob)
      */
     min_tres_per_job?: string;
+    /**
+     * Max TRES-minutes per job (MaxTRESMinsPerJob)
+     */
+    max_tres_mins_per_job?: string;
     /**
      * Comma-separated QOS flags (e.g. DenyOnLimit, OverPartQOS)
      */
