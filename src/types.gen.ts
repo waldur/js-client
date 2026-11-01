@@ -7760,7 +7760,7 @@ export type CustomerEstimatedCostPolicy = {
     period?: PolicyPeriodEnum;
     readonly period_name: string;
     /**
-     * The cost this policy compares against limit_cost right now: the period's invoice total, less the credit already applied and the credit still to be drawn. Do not re-derive it — only the server can simulate the pending draw, and a figure computed from the invoice alone will not match what the policy evaluates.
+     * The cost this policy compares against limit_cost right now: the period's invoice total, less the credit already applied and the credit still to be drawn, or the full cost for a policy that does not take credit into account. Do not re-derive it — only the server can simulate the pending draw, and a figure computed from the invoice alone will not match what the policy evaluates.
      */
     readonly current_cost: string;
     cost_breakdown: PolicyCostBreakdown;
@@ -16589,7 +16589,7 @@ export type OfferingEstimatedCostPolicy = {
     period?: PolicyPeriodEnum;
     readonly period_name: string;
     /**
-     * The cost this policy compares against limit_cost right now: the period's invoice total, less the credit already applied and the credit still to be drawn. Do not re-derive it — only the server can simulate the pending draw, and a figure computed from the invoice alone will not match what the policy evaluates.
+     * The cost this policy compares against limit_cost right now: the period's invoice total, less the credit already applied and the credit still to be drawn, or the full cost for a policy that does not take credit into account. Do not re-derive it — only the server can simulate the pending draw, and a figure computed from the invoice alone will not match what the policy evaluates.
      */
     readonly current_cost: string;
     cost_breakdown: PolicyCostBreakdown;
@@ -24801,15 +24801,15 @@ export type PolicyCostBreakdown = {
      */
     cost_before_credit: string;
     /**
-     * Credit compensation already written on the period's invoices.
+     * Credit compensation already written on the period's invoices. 0 for a policy that does not take credit into account, which counts the cost credit paid as well.
      */
     credit_drawn: string;
     /**
-     * Credit the current month will still draw that is not written yet. 0 for a policy that does not take credit into account; such a policy still counts the compensation already written, which shows in credit_drawn.
+     * Credit the current month will still draw that is not written yet. 0 for a policy that does not take credit into account.
      */
     credit_pending: string;
     /**
-     * The part of current_cost from months before the current one. Credit added now pays only the current month, so this part stays until those months are paid; see ProjectCredit.pay_earlier_invoices. 0 for a one-month period.
+     * The part of current_cost from months before the current one. 0 for a one-month period. For a policy that takes credit into account, credit added now pays only the current month, so this part stays until those months are paid; see ProjectCredit.pay_earlier_invoices. A policy that does not take credit into account counts this part in full, whatever credit paid.
      */
     earlier_months: string;
 };
@@ -25371,7 +25371,7 @@ export type ProjectCredit = {
 export type ProjectCreditEarlierInvoices = {
     months: Array<EarlierInvoiceMonth>;
     /**
-     * Uncovered cost of every month listed: what a period-Total cost policy counts of them.
+     * Uncovered cost of every month listed: what a period-Total cost policy that takes credit into account counts of them.
      */
     uncovered: string;
     /**
@@ -25557,7 +25557,7 @@ export type ProjectEstimatedCostPolicy = {
     period?: PolicyPeriodEnum;
     readonly period_name: string;
     /**
-     * The cost this policy compares against limit_cost right now: the period's invoice total, less the credit already applied and the credit still to be drawn. Do not re-derive it — only the server can simulate the pending draw, and a figure computed from the invoice alone will not match what the policy evaluates.
+     * The cost this policy compares against limit_cost right now: the period's invoice total, less the credit already applied and the credit still to be drawn, or the full cost for a policy that does not take credit into account. Do not re-derive it — only the server can simulate the pending draw, and a figure computed from the invoice alone will not match what the policy evaluates.
      */
     readonly current_cost: string;
     cost_breakdown: PolicyCostBreakdown;
