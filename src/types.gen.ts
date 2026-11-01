@@ -3274,6 +3274,10 @@ export type BookingResource = {
      * Timestamp of the last end_date change.
      */
     readonly end_date_updated_at: string | null;
+    /**
+     * When the resource was terminated. Unlike end_date, which is the planned date, this is the moment it happened. It stays set during a restore and is cleared once the resource is OK again, so check the state before reading it as the end of a live resource. Empty if the date is not known.
+     */
+    readonly terminated_at: string | null;
     readonly username: string | null;
     /**
      * Dictionary mapping limit-based component types to their consumed usage. Sums the ComponentUsage rows of the component's current period (the monthly billing period unless the component defines a longer limit_period), i.e. the period's high-watermark rather than the instantaneous current_usages value.
@@ -7450,6 +7454,18 @@ export type Customer = {
     user_affiliations?: Array<string>;
     user_identity_sources?: Array<string>;
     /**
+     * Allowed nationality codes (ISO 3166-1 alpha-2). User must have one.
+     */
+    user_nationalities?: Array<string>;
+    /**
+     * Allowed organization type URNs (SCHAC). User must match one.
+     */
+    user_organization_types?: Array<string>;
+    /**
+     * Required assurance URIs (REFEDS). User must have all of these.
+     */
+    user_assurance_levels?: Array<string>;
+    /**
      * Affiliations offered to project creators of this organization.
      */
     readonly default_affiliations: Array<AffiliatedOrganization>;
@@ -7926,6 +7942,18 @@ export type CustomerRequest = {
     user_email_patterns?: Array<string>;
     user_affiliations?: Array<string>;
     user_identity_sources?: Array<string>;
+    /**
+     * Allowed nationality codes (ISO 3166-1 alpha-2). User must have one.
+     */
+    user_nationalities?: Array<string>;
+    /**
+     * Allowed organization type URNs (SCHAC). User must match one.
+     */
+    user_organization_types?: Array<string>;
+    /**
+     * Required assurance URIs (REFEDS). User must have all of these.
+     */
+    user_assurance_levels?: Array<string>;
     name: string;
     /**
      * URL-friendly identifier. Only editable by staff users.
@@ -22103,6 +22131,18 @@ export type PatchedCustomerRequest = {
     user_email_patterns?: Array<string>;
     user_affiliations?: Array<string>;
     user_identity_sources?: Array<string>;
+    /**
+     * Allowed nationality codes (ISO 3166-1 alpha-2). User must have one.
+     */
+    user_nationalities?: Array<string>;
+    /**
+     * Allowed organization type URNs (SCHAC). User must match one.
+     */
+    user_organization_types?: Array<string>;
+    /**
+     * Required assurance URIs (REFEDS). User must have all of these.
+     */
+    user_assurance_levels?: Array<string>;
     name?: string;
     /**
      * URL-friendly identifier. Only editable by staff users.
@@ -23146,10 +23186,6 @@ export type PatchedProjectRequest = {
      */
     slug?: string;
     /**
-     * Organization
-     */
-    customer?: string;
-    /**
      * Project description (HTML content will be sanitized)
      */
     description?: string;
@@ -23184,6 +23220,18 @@ export type PatchedProjectRequest = {
     user_email_patterns?: Array<string>;
     user_affiliations?: Array<string>;
     user_identity_sources?: Array<string>;
+    /**
+     * Allowed nationality codes (ISO 3166-1 alpha-2). User must have one.
+     */
+    user_nationalities?: Array<string>;
+    /**
+     * Allowed organization type URNs (SCHAC). User must match one.
+     */
+    user_organization_types?: Array<string>;
+    /**
+     * Required assurance URIs (REFEDS). User must have all of these.
+     */
+    user_assurance_levels?: Array<string>;
     affiliation_uuid?: string | null;
     science_sub_domain?: string | null;
 };
@@ -25131,6 +25179,18 @@ export type Project = {
     user_email_patterns?: Array<string>;
     user_affiliations?: Array<string>;
     user_identity_sources?: Array<string>;
+    /**
+     * Allowed nationality codes (ISO 3166-1 alpha-2). User must have one.
+     */
+    user_nationalities?: Array<string>;
+    /**
+     * Allowed organization type URNs (SCHAC). User must match one.
+     */
+    user_organization_types?: Array<string>;
+    /**
+     * Required assurance URIs (REFEDS). User must have all of these.
+     */
+    user_assurance_levels?: Array<string>;
     affiliation: AffiliatedOrganization | null;
     affiliation_uuid?: string | null;
     readonly affiliation_name: string;
@@ -25791,6 +25851,18 @@ export type ProjectRequest = {
     user_email_patterns?: Array<string>;
     user_affiliations?: Array<string>;
     user_identity_sources?: Array<string>;
+    /**
+     * Allowed nationality codes (ISO 3166-1 alpha-2). User must have one.
+     */
+    user_nationalities?: Array<string>;
+    /**
+     * Allowed organization type URNs (SCHAC). User must match one.
+     */
+    user_organization_types?: Array<string>;
+    /**
+     * Required assurance URIs (REFEDS). User must have all of these.
+     */
+    user_assurance_levels?: Array<string>;
     affiliation_uuid?: string | null;
     science_sub_domain?: string | null;
 };
@@ -30096,6 +30168,10 @@ export type Resource = {
      * Timestamp of the last end_date change.
      */
     readonly end_date_updated_at: string | null;
+    /**
+     * When the resource was terminated. Unlike end_date, which is the planned date, this is the moment it happened. It stays set during a restore and is cleared once the resource is OK again, so check the state before reading it as the end of a live resource. Empty if the date is not known.
+     */
+    readonly terminated_at: string | null;
     readonly username: string | null;
     /**
      * Dictionary mapping limit-based component types to their consumed usage. Sums the ComponentUsage rows of the component's current period (the monthly billing period unless the component defines a longer limit_period), i.e. the period's high-watermark rather than the instantaneous current_usages value.
@@ -36991,6 +37067,18 @@ export type CustomerRequestForm = {
     user_email_patterns?: Array<string>;
     user_affiliations?: Array<string>;
     user_identity_sources?: Array<string>;
+    /**
+     * Allowed nationality codes (ISO 3166-1 alpha-2). User must have one.
+     */
+    user_nationalities?: Array<string>;
+    /**
+     * Allowed organization type URNs (SCHAC). User must match one.
+     */
+    user_organization_types?: Array<string>;
+    /**
+     * Required assurance URIs (REFEDS). User must have all of these.
+     */
+    user_assurance_levels?: Array<string>;
     name: string;
     /**
      * URL-friendly identifier. Only editable by staff users.
@@ -37085,6 +37173,18 @@ export type CustomerRequestMultipart = {
     user_email_patterns?: Array<string>;
     user_affiliations?: Array<string>;
     user_identity_sources?: Array<string>;
+    /**
+     * Allowed nationality codes (ISO 3166-1 alpha-2). User must have one.
+     */
+    user_nationalities?: Array<string>;
+    /**
+     * Allowed organization type URNs (SCHAC). User must match one.
+     */
+    user_organization_types?: Array<string>;
+    /**
+     * Required assurance URIs (REFEDS). User must have all of these.
+     */
+    user_assurance_levels?: Array<string>;
     name: string;
     /**
      * URL-friendly identifier. Only editable by staff users.
@@ -37179,6 +37279,18 @@ export type PatchedCustomerRequestForm = {
     user_email_patterns?: Array<string>;
     user_affiliations?: Array<string>;
     user_identity_sources?: Array<string>;
+    /**
+     * Allowed nationality codes (ISO 3166-1 alpha-2). User must have one.
+     */
+    user_nationalities?: Array<string>;
+    /**
+     * Allowed organization type URNs (SCHAC). User must match one.
+     */
+    user_organization_types?: Array<string>;
+    /**
+     * Required assurance URIs (REFEDS). User must have all of these.
+     */
+    user_assurance_levels?: Array<string>;
     name?: string;
     /**
      * URL-friendly identifier. Only editable by staff users.
@@ -37273,6 +37385,18 @@ export type PatchedCustomerRequestMultipart = {
     user_email_patterns?: Array<string>;
     user_affiliations?: Array<string>;
     user_identity_sources?: Array<string>;
+    /**
+     * Allowed nationality codes (ISO 3166-1 alpha-2). User must have one.
+     */
+    user_nationalities?: Array<string>;
+    /**
+     * Allowed organization type URNs (SCHAC). User must match one.
+     */
+    user_organization_types?: Array<string>;
+    /**
+     * Required assurance URIs (REFEDS). User must have all of these.
+     */
+    user_assurance_levels?: Array<string>;
     name?: string;
     /**
      * URL-friendly identifier. Only editable by staff users.
@@ -37865,6 +37989,18 @@ export type ProjectRequestForm = {
     user_email_patterns?: Array<string>;
     user_affiliations?: Array<string>;
     user_identity_sources?: Array<string>;
+    /**
+     * Allowed nationality codes (ISO 3166-1 alpha-2). User must have one.
+     */
+    user_nationalities?: Array<string>;
+    /**
+     * Allowed organization type URNs (SCHAC). User must match one.
+     */
+    user_organization_types?: Array<string>;
+    /**
+     * Required assurance URIs (REFEDS). User must have all of these.
+     */
+    user_assurance_levels?: Array<string>;
     affiliation_uuid?: string | null;
     science_sub_domain?: string | null;
 };
@@ -37914,6 +38050,18 @@ export type ProjectRequestMultipart = {
     user_email_patterns?: Array<string>;
     user_affiliations?: Array<string>;
     user_identity_sources?: Array<string>;
+    /**
+     * Allowed nationality codes (ISO 3166-1 alpha-2). User must have one.
+     */
+    user_nationalities?: Array<string>;
+    /**
+     * Allowed organization type URNs (SCHAC). User must match one.
+     */
+    user_organization_types?: Array<string>;
+    /**
+     * Required assurance URIs (REFEDS). User must have all of these.
+     */
+    user_assurance_levels?: Array<string>;
     affiliation_uuid?: string | null;
     science_sub_domain?: string | null;
 };
@@ -37925,10 +38073,6 @@ export type PatchedProjectRequestForm = {
      */
     slug?: string;
     /**
-     * Organization
-     */
-    customer?: string;
-    /**
      * Project description (HTML content will be sanitized)
      */
     description?: string;
@@ -37963,6 +38107,18 @@ export type PatchedProjectRequestForm = {
     user_email_patterns?: Array<string>;
     user_affiliations?: Array<string>;
     user_identity_sources?: Array<string>;
+    /**
+     * Allowed nationality codes (ISO 3166-1 alpha-2). User must have one.
+     */
+    user_nationalities?: Array<string>;
+    /**
+     * Allowed organization type URNs (SCHAC). User must match one.
+     */
+    user_organization_types?: Array<string>;
+    /**
+     * Required assurance URIs (REFEDS). User must have all of these.
+     */
+    user_assurance_levels?: Array<string>;
     affiliation_uuid?: string | null;
     science_sub_domain?: string | null;
 };
@@ -37974,10 +38130,6 @@ export type PatchedProjectRequestMultipart = {
      */
     slug?: string;
     /**
-     * Organization
-     */
-    customer?: string;
-    /**
      * Project description (HTML content will be sanitized)
      */
     description?: string;
@@ -38012,6 +38164,18 @@ export type PatchedProjectRequestMultipart = {
     user_email_patterns?: Array<string>;
     user_affiliations?: Array<string>;
     user_identity_sources?: Array<string>;
+    /**
+     * Allowed nationality codes (ISO 3166-1 alpha-2). User must have one.
+     */
+    user_nationalities?: Array<string>;
+    /**
+     * Allowed organization type URNs (SCHAC). User must match one.
+     */
+    user_organization_types?: Array<string>;
+    /**
+     * Required assurance URIs (REFEDS). User must have all of these.
+     */
+    user_assurance_levels?: Array<string>;
     affiliation_uuid?: string | null;
     science_sub_domain?: string | null;
 };
@@ -39270,7 +39434,7 @@ export type BackendResourceReqOEnum = '-created' | 'created';
 
 export type OfferingFieldEnum = 'access_url' | 'account_settings' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'billing_mode_components' | 'billing_period_applies' | 'billing_type_classification' | 'can_update_integration' | 'can_update_options' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'compliance_checklist_details' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'default_access_subnets' | 'description' | 'documentation_url' | 'effective_available_limits' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'has_compliance_requirements' | 'helpdesk_url' | 'image' | 'integration_guide' | 'is_accessible' | 'latitude' | 'longitude' | 'name' | 'offering_group' | 'offering_group_title' | 'offering_group_uuid' | 'open_for_proposals' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'profile_name' | 'profile_uuid' | 'project' | 'project_name' | 'project_uuid' | 'qos_profiles' | 'quotas' | 'resource_options' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_resource' | 'scope_resource_name' | 'scope_resource_uuid' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'tags' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'user_has_consent' | 'user_has_offering_user' | 'uuid' | 'vendor_details';
 
-export type BookingResourceFieldEnum = 'attributes' | 'available_actions' | 'backend_id' | 'backend_metadata' | 'can_terminate' | 'category_icon' | 'category_title' | 'category_uuid' | 'consumer_reviewed_by' | 'consumer_reviewed_by_full_name' | 'consumer_reviewed_by_username' | 'created' | 'created_by' | 'created_by_full_name' | 'created_by_username' | 'creation_order' | 'current_usages' | 'customer_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'display_limits' | 'downscaled' | 'effective_id' | 'end_date' | 'end_date_requested_by' | 'end_date_updated_at' | 'endpoints' | 'error_message' | 'error_traceback' | 'has_api_keys' | 'is_limit_based' | 'is_usage_based' | 'last_sync' | 'limit_usage' | 'limits' | 'modified' | 'name' | 'offering' | 'offering_account_settings' | 'offering_backend_id' | 'offering_billable' | 'offering_components' | 'offering_description' | 'offering_image' | 'offering_name' | 'offering_plugin_options' | 'offering_shared' | 'offering_slug' | 'offering_state' | 'offering_thumbnail' | 'offering_type' | 'offering_uuid' | 'options' | 'order_in_progress' | 'parent_name' | 'parent_offering_name' | 'parent_offering_slug' | 'parent_offering_uuid' | 'parent_uuid' | 'paused' | 'plan' | 'plan_description' | 'plan_name' | 'plan_unit' | 'plan_uuid' | 'prepaid_total_component_types' | 'project' | 'project_description' | 'project_effective_end_date' | 'project_end_date' | 'project_end_date_requested_by' | 'project_is_in_grace_period' | 'project_name' | 'project_slug' | 'project_start_date' | 'project_uuid' | 'provider_description' | 'provider_name' | 'provider_slug' | 'provider_uuid' | 'renewal_date' | 'report' | 'resource_effective_end_date' | 'resource_type' | 'resource_uuid' | 'restrict_member_access' | 'scope' | 'service_settings_uuid' | 'slots' | 'slug' | 'spending_limit_status' | 'spending_limits' | 'state' | 'url' | 'usage_limit_restriction' | 'usage_limit_resumes_at' | 'user_requires_reconsent' | 'username' | 'uuid';
+export type BookingResourceFieldEnum = 'attributes' | 'available_actions' | 'backend_id' | 'backend_metadata' | 'can_terminate' | 'category_icon' | 'category_title' | 'category_uuid' | 'consumer_reviewed_by' | 'consumer_reviewed_by_full_name' | 'consumer_reviewed_by_username' | 'created' | 'created_by' | 'created_by_full_name' | 'created_by_username' | 'creation_order' | 'current_usages' | 'customer_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'display_limits' | 'downscaled' | 'effective_id' | 'end_date' | 'end_date_requested_by' | 'end_date_updated_at' | 'endpoints' | 'error_message' | 'error_traceback' | 'has_api_keys' | 'is_limit_based' | 'is_usage_based' | 'last_sync' | 'limit_usage' | 'limits' | 'modified' | 'name' | 'offering' | 'offering_account_settings' | 'offering_backend_id' | 'offering_billable' | 'offering_components' | 'offering_description' | 'offering_image' | 'offering_name' | 'offering_plugin_options' | 'offering_shared' | 'offering_slug' | 'offering_state' | 'offering_thumbnail' | 'offering_type' | 'offering_uuid' | 'options' | 'order_in_progress' | 'parent_name' | 'parent_offering_name' | 'parent_offering_slug' | 'parent_offering_uuid' | 'parent_uuid' | 'paused' | 'plan' | 'plan_description' | 'plan_name' | 'plan_unit' | 'plan_uuid' | 'prepaid_total_component_types' | 'project' | 'project_description' | 'project_effective_end_date' | 'project_end_date' | 'project_end_date_requested_by' | 'project_is_in_grace_period' | 'project_name' | 'project_slug' | 'project_start_date' | 'project_uuid' | 'provider_description' | 'provider_name' | 'provider_slug' | 'provider_uuid' | 'renewal_date' | 'report' | 'resource_effective_end_date' | 'resource_type' | 'resource_uuid' | 'restrict_member_access' | 'scope' | 'service_settings_uuid' | 'slots' | 'slug' | 'spending_limit_status' | 'spending_limits' | 'state' | 'terminated_at' | 'url' | 'usage_limit_restriction' | 'usage_limit_resumes_at' | 'user_requires_reconsent' | 'username' | 'uuid';
 
 export type BookingResourceOEnum = '-created' | '-name' | '-schedules' | '-type' | 'created' | 'name' | 'schedules' | 'type';
 
@@ -39320,7 +39484,7 @@ export type CustomerPermissionReviewOEnum = '-closed' | '-created' | 'closed' | 
 
 export type CustomerQuotasQuotaNameEnum = 'estimated_price' | 'nc_resource_count' | 'os_cpu_count' | 'os_ram_size' | 'os_storage_size' | 'vpc_cpu_count' | 'vpc_floating_ip_count' | 'vpc_instance_count' | 'vpc_ram_size' | 'vpc_storage_size';
 
-export type CustomerFieldEnum = 'abbreviation' | 'access_subnets' | 'accounting_start_date' | 'address' | 'agreement_number' | 'apartment_nr' | 'archived' | 'backend_id' | 'bank_account' | 'bank_name' | 'billing_price_estimate' | 'blocked' | 'call_managing_organization_uuid' | 'city' | 'contact_details' | 'country' | 'country_name' | 'created' | 'customer_credit' | 'customer_unallocated_credit' | 'default_affiliations' | 'default_tax_percent' | 'description' | 'display_billing_info_in_projects' | 'display_name' | 'domain' | 'email' | 'grace_period_days' | 'has_active_helpdesk' | 'has_affiliate_links' | 'homepage' | 'house_nr' | 'household' | 'image' | 'invoice_emails' | 'is_private_person' | 'is_service_provider' | 'is_service_provider_manager_only' | 'latitude' | 'longitude' | 'max_service_accounts' | 'name' | 'native_name' | 'notification_emails' | 'organization_groups' | 'parish' | 'payment_profiles' | 'phone_number' | 'postal' | 'project_metadata_checklist' | 'project_slug_template' | 'projects_count' | 'registration_code' | 'service_provider' | 'service_provider_uuid' | 'slug' | 'sponsor_number' | 'state' | 'street' | 'url' | 'user_affiliations' | 'user_email_patterns' | 'user_identity_sources' | 'users_count' | 'uuid' | 'vat_code' | 'vat_code_verified' | 'vat_percent' | 'vat_rule';
+export type CustomerFieldEnum = 'abbreviation' | 'access_subnets' | 'accounting_start_date' | 'address' | 'agreement_number' | 'apartment_nr' | 'archived' | 'backend_id' | 'bank_account' | 'bank_name' | 'billing_price_estimate' | 'blocked' | 'call_managing_organization_uuid' | 'city' | 'contact_details' | 'country' | 'country_name' | 'created' | 'customer_credit' | 'customer_unallocated_credit' | 'default_affiliations' | 'default_tax_percent' | 'description' | 'display_billing_info_in_projects' | 'display_name' | 'domain' | 'email' | 'grace_period_days' | 'has_active_helpdesk' | 'has_affiliate_links' | 'homepage' | 'house_nr' | 'household' | 'image' | 'invoice_emails' | 'is_private_person' | 'is_service_provider' | 'is_service_provider_manager_only' | 'latitude' | 'longitude' | 'max_service_accounts' | 'name' | 'native_name' | 'notification_emails' | 'organization_groups' | 'parish' | 'payment_profiles' | 'phone_number' | 'postal' | 'project_metadata_checklist' | 'project_slug_template' | 'projects_count' | 'registration_code' | 'service_provider' | 'service_provider_uuid' | 'slug' | 'sponsor_number' | 'state' | 'street' | 'url' | 'user_affiliations' | 'user_assurance_levels' | 'user_email_patterns' | 'user_identity_sources' | 'user_nationalities' | 'user_organization_types' | 'users_count' | 'uuid' | 'vat_code' | 'vat_code_verified' | 'vat_percent' | 'vat_rule';
 
 export type CustomerUserFieldEnum = 'email' | 'expiration_time' | 'full_name' | 'image' | 'projects' | 'role_name' | 'url' | 'username' | 'uuid';
 
@@ -39360,7 +39524,7 @@ export type MaintenanceAnnouncementOEnum = '-created' | '-name' | '-overrun_minu
 
 export type MaintenanceAnnouncementTemplateOEnum = '-created' | '-name' | 'created' | 'name';
 
-export type ResourceFieldEnum = 'attributes' | 'available_actions' | 'backend_id' | 'backend_metadata' | 'can_terminate' | 'category_icon' | 'category_title' | 'category_uuid' | 'created' | 'creation_order' | 'current_usages' | 'customer_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'display_limits' | 'downscaled' | 'effective_id' | 'end_date' | 'end_date_requested_by' | 'end_date_updated_at' | 'endpoints' | 'error_message' | 'error_traceback' | 'has_api_keys' | 'is_limit_based' | 'is_usage_based' | 'last_sync' | 'limit_usage' | 'limits' | 'modified' | 'name' | 'offering' | 'offering_account_settings' | 'offering_backend_id' | 'offering_billable' | 'offering_components' | 'offering_description' | 'offering_image' | 'offering_name' | 'offering_plugin_options' | 'offering_shared' | 'offering_slug' | 'offering_state' | 'offering_thumbnail' | 'offering_type' | 'offering_uuid' | 'options' | 'order_in_progress' | 'parent_name' | 'parent_offering_name' | 'parent_offering_slug' | 'parent_offering_uuid' | 'parent_uuid' | 'paused' | 'plan' | 'plan_description' | 'plan_name' | 'plan_unit' | 'plan_uuid' | 'prepaid_total_component_types' | 'project' | 'project_description' | 'project_effective_end_date' | 'project_end_date' | 'project_end_date_requested_by' | 'project_is_in_grace_period' | 'project_name' | 'project_slug' | 'project_start_date' | 'project_uuid' | 'provider_description' | 'provider_name' | 'provider_slug' | 'provider_uuid' | 'renewal_date' | 'report' | 'resource_effective_end_date' | 'resource_type' | 'resource_uuid' | 'restrict_member_access' | 'scope' | 'service_settings_uuid' | 'slug' | 'spending_limit_status' | 'spending_limits' | 'state' | 'url' | 'usage_limit_restriction' | 'usage_limit_resumes_at' | 'user_requires_reconsent' | 'username' | 'uuid';
+export type ResourceFieldEnum = 'attributes' | 'available_actions' | 'backend_id' | 'backend_metadata' | 'can_terminate' | 'category_icon' | 'category_title' | 'category_uuid' | 'created' | 'creation_order' | 'current_usages' | 'customer_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'display_limits' | 'downscaled' | 'effective_id' | 'end_date' | 'end_date_requested_by' | 'end_date_updated_at' | 'endpoints' | 'error_message' | 'error_traceback' | 'has_api_keys' | 'is_limit_based' | 'is_usage_based' | 'last_sync' | 'limit_usage' | 'limits' | 'modified' | 'name' | 'offering' | 'offering_account_settings' | 'offering_backend_id' | 'offering_billable' | 'offering_components' | 'offering_description' | 'offering_image' | 'offering_name' | 'offering_plugin_options' | 'offering_shared' | 'offering_slug' | 'offering_state' | 'offering_thumbnail' | 'offering_type' | 'offering_uuid' | 'options' | 'order_in_progress' | 'parent_name' | 'parent_offering_name' | 'parent_offering_slug' | 'parent_offering_uuid' | 'parent_uuid' | 'paused' | 'plan' | 'plan_description' | 'plan_name' | 'plan_unit' | 'plan_uuid' | 'prepaid_total_component_types' | 'project' | 'project_description' | 'project_effective_end_date' | 'project_end_date' | 'project_end_date_requested_by' | 'project_is_in_grace_period' | 'project_name' | 'project_slug' | 'project_start_date' | 'project_uuid' | 'provider_description' | 'provider_name' | 'provider_slug' | 'provider_uuid' | 'renewal_date' | 'report' | 'resource_effective_end_date' | 'resource_type' | 'resource_uuid' | 'restrict_member_access' | 'scope' | 'service_settings_uuid' | 'slug' | 'spending_limit_status' | 'spending_limits' | 'state' | 'terminated_at' | 'url' | 'usage_limit_restriction' | 'usage_limit_resumes_at' | 'user_requires_reconsent' | 'username' | 'uuid';
 
 export type MarketplaceCategoryFieldEnum = 'articles' | 'available_offerings_count' | 'columns' | 'components' | 'default_vm_category' | 'default_volume_category' | 'description' | 'group' | 'icon' | 'offering_count' | 'sections' | 'title' | 'url' | 'uuid';
 
@@ -39430,7 +39594,7 @@ export type ProviderOfferingDetailsOEnum = '-created' | '-name' | '-state' | '-t
 
 export type ProviderOfferingCustomerFieldEnum = 'abbreviation' | 'email' | 'name' | 'phone_number' | 'slug' | 'uuid';
 
-export type ProjectFieldEnum = 'affiliation' | 'affiliation_code' | 'affiliation_name' | 'affiliation_uuid' | 'backend_id' | 'billing_price_estimate' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_display_billing_info_in_projects' | 'customer_grace_period_days' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'effective_end_date' | 'end_date' | 'end_date_requested_by' | 'end_date_updated_at' | 'grace_period_days' | 'has_metrics' | 'image' | 'is_in_grace_period' | 'is_industry' | 'is_removed' | 'kind' | 'marketplace_resource_count' | 'max_service_accounts' | 'name' | 'oecd_fos_2007_code' | 'oecd_fos_2007_label' | 'project_credit' | 'project_metadata' | 'resources_count' | 'science_domain_code' | 'science_domain_name' | 'science_domain_uuid' | 'science_sub_domain' | 'science_sub_domain_code' | 'science_sub_domain_name' | 'slug' | 'staff_notes' | 'start_date' | 'termination_metadata' | 'type' | 'type_name' | 'type_uuid' | 'url' | 'user_affiliations' | 'user_email_patterns' | 'user_identity_sources' | 'uuid';
+export type ProjectFieldEnum = 'affiliation' | 'affiliation_code' | 'affiliation_name' | 'affiliation_uuid' | 'backend_id' | 'billing_price_estimate' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_display_billing_info_in_projects' | 'customer_grace_period_days' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'effective_end_date' | 'end_date' | 'end_date_requested_by' | 'end_date_updated_at' | 'grace_period_days' | 'has_metrics' | 'image' | 'is_in_grace_period' | 'is_industry' | 'is_removed' | 'kind' | 'marketplace_resource_count' | 'max_service_accounts' | 'name' | 'oecd_fos_2007_code' | 'oecd_fos_2007_label' | 'project_credit' | 'project_metadata' | 'resources_count' | 'science_domain_code' | 'science_domain_name' | 'science_domain_uuid' | 'science_sub_domain' | 'science_sub_domain_code' | 'science_sub_domain_name' | 'slug' | 'staff_notes' | 'start_date' | 'termination_metadata' | 'type' | 'type_name' | 'type_uuid' | 'url' | 'user_affiliations' | 'user_assurance_levels' | 'user_email_patterns' | 'user_identity_sources' | 'user_nationalities' | 'user_organization_types' | 'uuid';
 
 export type UserFieldEnum = 'active_isds' | 'address' | 'affiliations' | 'agree_with_policy' | 'agreement_date' | 'attribute_sources' | 'birth_date' | 'can_use_personal_access_tokens' | 'civil_number' | 'country_of_residence' | 'date_joined' | 'deactivation_reason' | 'description' | 'details' | 'eduperson_assurance' | 'email' | 'first_name' | 'full_name' | 'gender' | 'has_active_session' | 'has_passkey' | 'has_usable_password' | 'identity_provider_fields' | 'identity_provider_label' | 'identity_provider_management_url' | 'identity_provider_name' | 'identity_source' | 'image' | 'ip_address' | 'is_active' | 'is_admin_deactivated' | 'is_identity_manager' | 'is_staff' | 'is_support' | 'job_title' | 'last_name' | 'managed_isds' | 'nationalities' | 'nationality' | 'native_name' | 'notifications_enabled' | 'organization' | 'organization_address' | 'organization_country' | 'organization_registry_code' | 'organization_type' | 'organization_vat_code' | 'passkey_count' | 'permissions' | 'personal_title' | 'phone_number' | 'place_of_birth' | 'preferred_language' | 'primary_gid' | 'registration_method' | 'requested_email' | 'should_protect_user_details' | 'slug' | 'token' | 'token_expires_at' | 'token_lifetime' | 'uid_number' | 'url' | 'username' | 'uuid';
 
