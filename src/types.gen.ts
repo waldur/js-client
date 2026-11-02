@@ -72937,36 +72937,6 @@ export type MarketplaceResourcesEstimateRenewalResponses = {
 
 export type MarketplaceResourcesEstimateRenewalResponse = MarketplaceResourcesEstimateRenewalResponses[keyof MarketplaceResourcesEstimateRenewalResponses];
 
-export type MarketplaceResourcesGlauthTreeRetrieveData = {
-    body?: never;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/marketplace-resources/{uuid}/glauth_tree/';
-};
-
-export type MarketplaceResourcesGlauthTreeRetrieveResponses = {
-    200: GlauthTree;
-};
-
-export type MarketplaceResourcesGlauthTreeRetrieveResponse = MarketplaceResourcesGlauthTreeRetrieveResponses[keyof MarketplaceResourcesGlauthTreeRetrieveResponses];
-
-export type MarketplaceResourcesGlauthUsersConfigRetrieveData = {
-    body?: never;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/marketplace-resources/{uuid}/glauth_users_config/';
-};
-
-export type MarketplaceResourcesGlauthUsersConfigRetrieveResponses = {
-    200: string;
-};
-
-export type MarketplaceResourcesGlauthUsersConfigRetrieveResponse = MarketplaceResourcesGlauthUsersConfigRetrieveResponses[keyof MarketplaceResourcesGlauthUsersConfigRetrieveResponses];
-
 export type MarketplaceResourcesHistoryListData = {
     body?: never;
     path: {
