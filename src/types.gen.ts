@@ -12292,15 +12292,11 @@ export type LexisLink = {
     readonly project_name: string;
     readonly customer_uuid: string;
     readonly customer_name: string;
-    heappe_project_id?: number | null;
+    readonly heappe_project_id: number | null;
 };
 
 export type LexisLinkCreateRequest = {
     resource: string;
-};
-
-export type LexisLinkRequest = {
-    heappe_project_id?: number | null;
 };
 
 export type LicenseSuggestion = {
@@ -17930,13 +17926,13 @@ export type OfferingThumbnailRequest = {
     thumbnail: Blob | File;
 };
 
-export type OfferingTypeEnum = 'Support.OfferingTemplate' | 'Marketplace.Booking' | 'Marketplace.Basic' | 'OpenStack.Tenant' | 'OpenStack.Instance' | 'OpenStack.Volume' | 'Marketplace.Rancher' | 'VMware.VirtualMachine' | 'Waldur.RemoteOffering' | 'Marketplace.Script' | 'Marketplace.Slurm';
+export type OfferingTypeEnum = 'Support.OfferingTemplate' | 'Marketplace.Booking' | 'Marketplace.Basic' | 'OpenStack.Tenant' | 'OpenStack.Instance' | 'OpenStack.Volume' | 'Marketplace.Rancher' | 'VMware.VirtualMachine' | 'Waldur.RemoteOffering' | 'Marketplace.Script' | 'Marketplace.SiteAgent' | 'Marketplace.Slurm';
 
 export type OfferingTypeUpdateRequest = {
     type: OfferingTypeUpdateTypeEnum;
 };
 
-export type OfferingTypeUpdateTypeEnum = 'Marketplace.Basic' | 'Marketplace.Slurm';
+export type OfferingTypeUpdateTypeEnum = 'Marketplace.Basic' | 'Marketplace.SiteAgent' | 'Marketplace.Slurm';
 
 export type OfferingUsageByProject = {
     readonly offering_uuid: string;
@@ -22411,10 +22407,6 @@ export type PatchedIssueTagRequest = {
      * Hex color code, e.g. #FF0000.
      */
     color?: string;
-};
-
-export type PatchedLexisLinkRequest = {
-    heappe_project_id?: number | null;
 };
 
 export type PatchedMaintenanceAnnouncementOfferingRequest = {
@@ -54926,36 +54918,6 @@ export type LexisLinksRetrieveResponses = {
 
 export type LexisLinksRetrieveResponse = LexisLinksRetrieveResponses[keyof LexisLinksRetrieveResponses];
 
-export type LexisLinksPartialUpdateData = {
-    body?: PatchedLexisLinkRequest;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/lexis-links/{uuid}/';
-};
-
-export type LexisLinksPartialUpdateResponses = {
-    200: LexisLink;
-};
-
-export type LexisLinksPartialUpdateResponse = LexisLinksPartialUpdateResponses[keyof LexisLinksPartialUpdateResponses];
-
-export type LexisLinksUpdateData = {
-    body?: LexisLinkRequest;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/lexis-links/{uuid}/';
-};
-
-export type LexisLinksUpdateResponses = {
-    200: LexisLink;
-};
-
-export type LexisLinksUpdateResponse = LexisLinksUpdateResponses[keyof LexisLinksUpdateResponses];
-
 export type MaintenanceAnnouncementOfferingsListData = {
     body?: never;
     path?: never;
@@ -70630,10 +70592,8 @@ export type MarketplaceProviderResourcesUnlinkResponses = {
     /**
      * No response body
      */
-    204: void;
+    202: unknown;
 };
-
-export type MarketplaceProviderResourcesUnlinkResponse = MarketplaceProviderResourcesUnlinkResponses[keyof MarketplaceProviderResourcesUnlinkResponses];
 
 export type MarketplaceProviderResourcesUpdateOptionsData = {
     body?: ResourceOptionsRequest;
@@ -73897,10 +73857,8 @@ export type MarketplaceResourcesUnlinkResponses = {
     /**
      * No response body
      */
-    204: void;
+    202: unknown;
 };
-
-export type MarketplaceResourcesUnlinkResponse = MarketplaceResourcesUnlinkResponses[keyof MarketplaceResourcesUnlinkResponses];
 
 export type MarketplaceResourcesUpdateLimitsData = {
     body: ResourceUpdateLimitsRequest;
@@ -75789,7 +75747,7 @@ export type MarketplaceServiceProvidersCustomerProjectsListData = {
          */
         slug?: string;
         /**
-         * Role name or UUID; narrows user_uuid_with_active_role to that role.
+         * Role name or UUID; narrows user_uuid_with_active_role to that role and its organization copies.
          */
         user_role?: string;
         /**
@@ -75924,7 +75882,7 @@ export type MarketplaceServiceProvidersCustomerProjectsCountData = {
          */
         slug?: string;
         /**
-         * Role name or UUID; narrows user_uuid_with_active_role to that role.
+         * Role name or UUID; narrows user_uuid_with_active_role to that role and its organization copies.
          */
         user_role?: string;
         /**
@@ -77391,7 +77349,7 @@ export type MarketplaceServiceProvidersProjectsListData = {
          */
         slug?: string;
         /**
-         * Role name or UUID; narrows user_uuid_with_active_role to that role.
+         * Role name or UUID; narrows user_uuid_with_active_role to that role and its organization copies.
          */
         user_role?: string;
         /**
@@ -77522,7 +77480,7 @@ export type MarketplaceServiceProvidersProjectsCountData = {
          */
         slug?: string;
         /**
-         * Role name or UUID; narrows user_uuid_with_active_role to that role.
+         * Role name or UUID; narrows user_uuid_with_active_role to that role and its organization copies.
          */
         user_role?: string;
         /**
@@ -87274,7 +87232,7 @@ export type OpenportalUnmanagedProjectsListData = {
          */
         slug?: string;
         /**
-         * Role name or UUID; narrows user_uuid_with_active_role to that role.
+         * Role name or UUID; narrows user_uuid_with_active_role to that role and its organization copies.
          */
         user_role?: string;
         /**
@@ -87415,7 +87373,7 @@ export type OpenportalUnmanagedProjectsCountData = {
          */
         slug?: string;
         /**
-         * Role name or UUID; narrows user_uuid_with_active_role to that role.
+         * Role name or UUID; narrows user_uuid_with_active_role to that role and its organization copies.
          */
         user_role?: string;
         /**
@@ -87732,7 +87690,7 @@ export type OpenportalUnmanagedProjectsHistoryListData = {
          */
         slug?: string;
         /**
-         * Role name or UUID; narrows user_uuid_with_active_role to that role.
+         * Role name or UUID; narrows user_uuid_with_active_role to that role and its organization copies.
          */
         user_role?: string;
         /**
@@ -93833,19 +93791,6 @@ export type OpenstackServerGroupsCountResponses = {
     200: unknown;
 };
 
-export type OpenstackServerGroupsCreateData = {
-    body: OpenStackServerGroupRequest;
-    path?: never;
-    query?: never;
-    url: '/api/openstack-server-groups/';
-};
-
-export type OpenstackServerGroupsCreateResponses = {
-    201: OpenStackServerGroup;
-};
-
-export type OpenstackServerGroupsCreateResponse = OpenstackServerGroupsCreateResponses[keyof OpenstackServerGroupsCreateResponses];
-
 export type OpenstackServerGroupsDestroyData = {
     body?: never;
     path: {
@@ -98019,7 +97964,7 @@ export type ProjectsListData = {
          */
         slug?: string;
         /**
-         * Role name or UUID; narrows user_uuid_with_active_role to that role.
+         * Role name or UUID; narrows user_uuid_with_active_role to that role and its organization copies.
          */
         user_role?: string;
         /**
@@ -98160,7 +98105,7 @@ export type ProjectsCountData = {
          */
         slug?: string;
         /**
-         * Role name or UUID; narrows user_uuid_with_active_role to that role.
+         * Role name or UUID; narrows user_uuid_with_active_role to that role and its organization copies.
          */
         user_role?: string;
         /**
@@ -98636,7 +98581,7 @@ export type ProjectsHistoryListData = {
          */
         slug?: string;
         /**
-         * Role name or UUID; narrows user_uuid_with_active_role to that role.
+         * Role name or UUID; narrows user_uuid_with_active_role to that role and its organization copies.
          */
         user_role?: string;
         /**
