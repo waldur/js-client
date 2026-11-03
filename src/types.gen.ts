@@ -2341,6 +2341,14 @@ export type Attachment = {
     readonly file_name: string;
     readonly backend_id: string;
     readonly destroy_is_available: boolean;
+    /**
+     * Whether the caller may delete this attachment, by the check the delete route runs. Whether the support backend allows deleting it is destroy_is_available.
+     */
+    readonly can_delete: boolean;
+    /**
+     * True when the attachment's ticket was routed to a provider helpdesk that has since been removed from Waldur: deleting removes the file from Waldur only, and any copy on the provider's helpdesk stays.
+     */
+    readonly delete_is_local_only: boolean;
 };
 
 export type AttachmentEnum = 'platform' | 'cross-platform';
@@ -23394,6 +23402,9 @@ export type PatchedProtectedRoundRequest = {
 
 export type PatchedProviderCannedResponseRequest = {
     name?: string;
+    /**
+     * Helpdesk the response belongs to. Only staff can change it.
+     */
     provider_helpdesk?: string;
     /**
      * Template text. Supports Django template syntax.
@@ -23403,10 +23414,16 @@ export type PatchedProviderCannedResponseRequest = {
 };
 
 export type PatchedProviderHelpdeskRequest = {
+    /**
+     * Service provider the helpdesk serves. Only staff can change it.
+     */
     service_provider?: string;
+    /**
+     * Helpdesk system the helpdesk connects to. Only staff can change it.
+     */
     backend_type?: BackendTypeEnum;
     /**
-     * Backend-specific configuration.
+     * Backend-specific configuration. Only staff can change it, and only staff see the credentials in it.
      */
     settings?: {
         [key: string]: unknown;
@@ -23445,7 +23462,13 @@ export type PatchedProviderPlanDetailsRequest = {
 };
 
 export type PatchedProviderSupportUserRequest = {
+    /**
+     * User who is the agent. Only staff can change it.
+     */
     user?: string;
+    /**
+     * Helpdesk the agent answers for. Only staff can change it.
+     */
     provider_helpdesk?: string;
     role?: ProviderSupportUserRoleEnum;
     is_active?: boolean;
@@ -23457,18 +23480,6 @@ export type PatchedProviderSupportUserRequest = {
      * Maximum number of open tickets this user can handle.
      */
     max_open_tickets?: number;
-};
-
-export type PatchedProviderTicketRequest = {
-    /**
-     * When the issue was escalated.
-     */
-    escalated_at?: string | null;
-    /**
-     * Organization
-     */
-    customer?: string | null;
-    project?: string | null;
 };
 
 export type PatchedQuestionAdminRequest = {
@@ -26775,6 +26786,9 @@ export type ProviderCannedResponse = {
     readonly url: string;
     readonly uuid: string;
     name: string;
+    /**
+     * Helpdesk the response belongs to. Only staff can change it.
+     */
     provider_helpdesk: string;
     /**
      * Template text. Supports Django template syntax.
@@ -26788,6 +26802,9 @@ export type ProviderCannedResponse = {
 
 export type ProviderCannedResponseRequest = {
     name: string;
+    /**
+     * Helpdesk the response belongs to. Only staff can change it.
+     */
     provider_helpdesk: string;
     /**
      * Template text. Supports Django template syntax.
@@ -26855,11 +26872,17 @@ export type ProviderGlauthTree = {
 export type ProviderHelpdesk = {
     readonly url: string;
     readonly uuid: string;
+    /**
+     * Service provider the helpdesk serves. Only staff can change it.
+     */
     service_provider: string;
     readonly service_provider_name: string;
+    /**
+     * Helpdesk system the helpdesk connects to. Only staff can change it.
+     */
     backend_type?: BackendTypeEnum;
     /**
-     * Backend-specific configuration.
+     * Backend-specific configuration. Only staff can change it, and only staff see the credentials in it.
      */
     settings?: {
         [key: string]: unknown;
@@ -26882,10 +26905,16 @@ export type ProviderHelpdesk = {
 };
 
 export type ProviderHelpdeskRequest = {
+    /**
+     * Service provider the helpdesk serves. Only staff can change it.
+     */
     service_provider: string;
+    /**
+     * Helpdesk system the helpdesk connects to. Only staff can change it.
+     */
     backend_type?: BackendTypeEnum;
     /**
-     * Backend-specific configuration.
+     * Backend-specific configuration. Only staff can change it, and only staff see the credentials in it.
      */
     settings?: {
         [key: string]: unknown;
@@ -27315,12 +27344,18 @@ export type ProviderSummary = {
 export type ProviderSupportUser = {
     readonly url: string;
     readonly uuid: string;
+    /**
+     * User who is the agent. Only staff can change it.
+     */
     user: string;
     readonly user_full_name: string;
     /**
      * Email address
      */
     readonly user_email: string;
+    /**
+     * Helpdesk the agent answers for. Only staff can change it.
+     */
     provider_helpdesk: string;
     role?: ProviderSupportUserRoleEnum;
     is_active?: boolean;
@@ -27339,7 +27374,13 @@ export type ProviderSupportUser = {
 };
 
 export type ProviderSupportUserRequest = {
+    /**
+     * User who is the agent. Only staff can change it.
+     */
     user: string;
+    /**
+     * Helpdesk the agent answers for. Only staff can change it.
+     */
     provider_helpdesk: string;
     role?: ProviderSupportUserRoleEnum;
     is_active?: boolean;
@@ -27383,7 +27424,7 @@ export type ProviderTicket = {
     /**
      * When the issue was escalated.
      */
-    escalated_at?: string | null;
+    readonly escalated_at: string | null;
     readonly provider_assignee: string | null;
     readonly provider_assignee_name: string;
     /**
@@ -27405,24 +27446,12 @@ export type ProviderTicket = {
     /**
      * Organization
      */
-    customer?: string | null;
+    readonly customer: string | null;
     readonly customer_uuid: string | null;
     readonly customer_name: string | null;
-    project?: string | null;
+    readonly project: string | null;
     readonly project_uuid: string | null;
     readonly project_name: string | null;
-};
-
-export type ProviderTicketRequest = {
-    /**
-     * When the issue was escalated.
-     */
-    escalated_at?: string | null;
-    /**
-     * Organization
-     */
-    customer?: string | null;
-    project?: string | null;
 };
 
 export type ProviderUser = {
@@ -39754,7 +39783,7 @@ export type ServiceSettingsFieldEnum = 'customer' | 'customer_name' | 'customer_
 
 export type FirecrestJobFieldEnum = 'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'file' | 'modified' | 'name' | 'project' | 'project_name' | 'project_uuid' | 'report' | 'resource_type' | 'runtime_state' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'url' | 'user' | 'user_username' | 'user_uuid' | 'uuid';
 
-export type AttachmentFieldEnum = 'backend_id' | 'created' | 'destroy_is_available' | 'file' | 'file_name' | 'file_size' | 'issue' | 'issue_key' | 'mime_type' | 'url' | 'uuid';
+export type AttachmentFieldEnum = 'backend_id' | 'can_delete' | 'created' | 'delete_is_local_only' | 'destroy_is_available' | 'file' | 'file_name' | 'file_size' | 'issue' | 'issue_key' | 'mime_type' | 'url' | 'uuid';
 
 export type CommentOEnum = '-created' | '-modified' | 'created' | 'modified';
 
@@ -103466,7 +103495,7 @@ export type ProviderTicketsRetrieveResponses = {
 export type ProviderTicketsRetrieveResponse = ProviderTicketsRetrieveResponses[keyof ProviderTicketsRetrieveResponses];
 
 export type ProviderTicketsPartialUpdateData = {
-    body?: PatchedProviderTicketRequest;
+    body?: never;
     path: {
         uuid: string;
     };
@@ -103481,7 +103510,7 @@ export type ProviderTicketsPartialUpdateResponses = {
 export type ProviderTicketsPartialUpdateResponse = ProviderTicketsPartialUpdateResponses[keyof ProviderTicketsPartialUpdateResponses];
 
 export type ProviderTicketsUpdateData = {
-    body?: ProviderTicketRequest;
+    body?: never;
     path: {
         uuid: string;
     };
@@ -103511,7 +103540,7 @@ export type ProviderTicketsAssignResponses = {
 export type ProviderTicketsAssignResponse = ProviderTicketsAssignResponses[keyof ProviderTicketsAssignResponses];
 
 export type ProviderTicketsClaimData = {
-    body?: ProviderTicketRequest;
+    body?: never;
     path: {
         uuid: string;
     };
@@ -111880,121 +111909,6 @@ export type SupportZammadWebhookData = {
 };
 
 export type SupportZammadWebhookResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
-};
-
-export type SupportSettingsAtlassianListData = {
-    body?: never;
-    path?: never;
-    query?: {
-        /**
-         * A page number within the paginated result set.
-         */
-        page?: number;
-        /**
-         * Number of results to return per page.
-         */
-        page_size?: number;
-    };
-    url: '/api/support/settings/atlassian/';
-};
-
-export type SupportSettingsAtlassianListResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
-};
-
-export type SupportSettingsAtlassianCreateData = {
-    body?: never;
-    path?: never;
-    query?: never;
-    url: '/api/support/settings/atlassian/';
-};
-
-export type SupportSettingsAtlassianCreateResponses = {
-    /**
-     * No response body
-     */
-    201: unknown;
-};
-
-export type SupportSettingsAtlassianDestroyData = {
-    body?: never;
-    path: {
-        /**
-         * A unique integer value identifying this issue.
-         */
-        id: number;
-    };
-    query?: never;
-    url: '/api/support/settings/atlassian/{id}/';
-};
-
-export type SupportSettingsAtlassianDestroyResponses = {
-    /**
-     * No response body
-     */
-    204: void;
-};
-
-export type SupportSettingsAtlassianDestroyResponse = SupportSettingsAtlassianDestroyResponses[keyof SupportSettingsAtlassianDestroyResponses];
-
-export type SupportSettingsAtlassianRetrieveData = {
-    body?: never;
-    path: {
-        /**
-         * A unique integer value identifying this issue.
-         */
-        id: number;
-    };
-    query?: never;
-    url: '/api/support/settings/atlassian/{id}/';
-};
-
-export type SupportSettingsAtlassianRetrieveResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
-};
-
-export type SupportSettingsAtlassianPartialUpdateData = {
-    body?: never;
-    path: {
-        /**
-         * A unique integer value identifying this issue.
-         */
-        id: number;
-    };
-    query?: never;
-    url: '/api/support/settings/atlassian/{id}/';
-};
-
-export type SupportSettingsAtlassianPartialUpdateResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
-};
-
-export type SupportSettingsAtlassianUpdateData = {
-    body?: never;
-    path: {
-        /**
-         * A unique integer value identifying this issue.
-         */
-        id: number;
-    };
-    query?: never;
-    url: '/api/support/settings/atlassian/{id}/';
-};
-
-export type SupportSettingsAtlassianUpdateResponses = {
     /**
      * No response body
      */
