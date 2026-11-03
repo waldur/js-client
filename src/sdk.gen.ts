@@ -4664,7 +4664,7 @@ export const customerAffiliatesAccrualsList = <ThrowOnError extends boolean = tr
 });
 
 /**
- * Earnings summary of this affiliate link: lifetime total, per-month series and the affiliate organization's withdrawable credit balance.
+ * Earnings summary of this affiliate link: lifetime total, per-month series, the affiliate organization's withdrawable credit balance and the fee the current month is expected to earn.
  */
 export const customerAffiliatesEarningsRetrieve = <ThrowOnError extends boolean = true>(options: Options<CustomerAffiliatesEarningsRetrieveData, ThrowOnError>) => (options.client ?? client).get<CustomerAffiliatesEarningsRetrieveResponses, unknown, ThrowOnError>({
     security: [

@@ -344,6 +344,10 @@ export type AffiliateEarnings = {
     total_earned: string;
     withdrawable_balance: string;
     per_month: Array<AffiliateEarningsMonth>;
+    /**
+     * Fee the current month is expected to earn from the referred customer's open invoice, after its estimated volume discounts and credit compensation. Null when the month will earn nothing on this link. Not yet accrued: the amount changes until month close.
+     */
+    upcoming: AffiliateEarningsMonth | null;
 };
 
 export type AffiliateEarningsMonth = {
@@ -11633,6 +11637,12 @@ export type Invoice = {
     reference_number?: string;
     readonly compensations: number;
     readonly incurred_costs: number;
+    /**
+     * What the volume discount lines take off, as a negative amount like
+     * `compensations`. Already part of `price` and `incurred_costs`; on an
+     * open invoice the lines are estimates.
+     */
+    readonly volume_discounts: number;
 };
 
 export type InvoiceCost = {
@@ -39531,7 +39541,7 @@ export type FeedbackSurveyOEnum = '-ends_at' | '-name' | '-starts_at' | 'ends_at
 
 export type WebHookContentTypeEnum1 = 1 | 2;
 
-export type InvoiceFieldEnum = 'backend_id' | 'compensations' | 'customer' | 'customer_details' | 'due_date' | 'incurred_costs' | 'invoice_date' | 'issuer_details' | 'items' | 'month' | 'number' | 'payment_url' | 'price' | 'reference_number' | 'state' | 'tax' | 'total' | 'url' | 'uuid' | 'year';
+export type InvoiceFieldEnum = 'backend_id' | 'compensations' | 'customer' | 'customer_details' | 'due_date' | 'incurred_costs' | 'invoice_date' | 'issuer_details' | 'items' | 'month' | 'number' | 'payment_url' | 'price' | 'reference_number' | 'state' | 'tax' | 'total' | 'url' | 'uuid' | 'volume_discounts' | 'year';
 
 export type InvoiceOEnum = '-created' | '-month' | '-year' | 'created' | 'month' | 'year';
 
