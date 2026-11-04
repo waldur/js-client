@@ -11242,6 +11242,10 @@ export type HpcWorkspace = {
     readonly system_name: string;
     readonly state: string;
     /**
+     * Jobs can be submitted and canceled and files opened through FirecREST. Without it the workspace is read-only, from the cluster monitor.
+     */
+    readonly firecrest_enabled: boolean;
+    /**
      * Jobs have per-run performance samples from the cluster monitor.
      */
     readonly monitoring_enabled: boolean;
@@ -11258,6 +11262,10 @@ export type HpcWorkspaceOverview = {
     readonly customer_name: string;
     readonly system_name: string;
     readonly state: string;
+    /**
+     * Jobs can be submitted and canceled and files opened through FirecREST. Without it the workspace is read-only, from the cluster monitor.
+     */
+    readonly firecrest_enabled: boolean;
     /**
      * Jobs have per-run performance samples from the cluster monitor.
      */
@@ -14360,7 +14368,7 @@ export type MergedPluginOptions = {
      */
     api_key_daily_usage?: boolean;
     /**
-     * FirecREST v2 API URL users of this SLURM offering work through (jobs, files, cluster status). Must also be listed in the FIRECREST_ALLOWED_API_URLS setting. Leave empty to disable the HPC workspace.
+     * FirecREST v2 API URL users of this SLURM offering work through (jobs, files, cluster status). Must also be listed in the FIRECREST_ALLOWED_API_URLS setting. Leave empty to run no jobs through Waldur; with a slurm-monitor URL the workspace is then read-only.
      */
     firecrest_api_url?: string | null;
     /**
@@ -14368,7 +14376,7 @@ export type MergedPluginOptions = {
      */
     firecrest_system_name?: string | null;
     /**
-     * slurm-monitor API URL (ending in /api/v2) with the cluster's per-job samples (GPU, CPU, memory over time). Must also be listed in the SLURM_MONITOR_ALLOWED_API_URLS setting. Leave empty to hide job performance.
+     * slurm-monitor API URL (ending in /api/v2) with the cluster's per-job samples (GPU, CPU, memory over time). Must also be listed in the SLURM_MONITOR_ALLOWED_API_URLS setting. Leave empty to hide job performance. Without FirecREST, the allocations get a read-only workspace from it: jobs, their performance, job statistics and software.
      */
     slurm_monitor_api_url?: string | null;
     /**
@@ -14835,7 +14843,7 @@ export type MergedPluginOptionsRequest = {
      */
     api_key_daily_usage?: boolean;
     /**
-     * FirecREST v2 API URL users of this SLURM offering work through (jobs, files, cluster status). Must also be listed in the FIRECREST_ALLOWED_API_URLS setting. Leave empty to disable the HPC workspace.
+     * FirecREST v2 API URL users of this SLURM offering work through (jobs, files, cluster status). Must also be listed in the FIRECREST_ALLOWED_API_URLS setting. Leave empty to run no jobs through Waldur; with a slurm-monitor URL the workspace is then read-only.
      */
     firecrest_api_url?: string | null;
     /**
@@ -14843,7 +14851,7 @@ export type MergedPluginOptionsRequest = {
      */
     firecrest_system_name?: string | null;
     /**
-     * slurm-monitor API URL (ending in /api/v2) with the cluster's per-job samples (GPU, CPU, memory over time). Must also be listed in the SLURM_MONITOR_ALLOWED_API_URLS setting. Leave empty to hide job performance.
+     * slurm-monitor API URL (ending in /api/v2) with the cluster's per-job samples (GPU, CPU, memory over time). Must also be listed in the SLURM_MONITOR_ALLOWED_API_URLS setting. Leave empty to hide job performance. Without FirecREST, the allocations get a read-only workspace from it: jobs, their performance, job statistics and software.
      */
     slurm_monitor_api_url?: string | null;
     /**
@@ -19052,7 +19060,6 @@ export type OnboardingJustificationDocumentationRequest = {
 };
 
 export type OnboardingJustificationRequest = {
-    verification: string;
     /**
      * User's explanation for why they should be authorized
      */
@@ -23509,7 +23516,6 @@ export type PatchedOfferingUserServiceProviderCommentRequest = {
 };
 
 export type PatchedOnboardingJustificationRequest = {
-    verification?: string;
     /**
      * User's explanation for why they should be authorized
      */
@@ -54057,6 +54063,10 @@ export type HpcWorkspacesListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Only the workspace of this resource, e.g. to tell whether a resource page has one.
+         */
+        resource_uuid?: string;
     };
     url: '/api/hpc-workspaces/';
 };
@@ -54079,6 +54089,10 @@ export type HpcWorkspacesCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Only the workspace of this resource, e.g. to tell whether a resource page has one.
+         */
+        resource_uuid?: string;
     };
     url: '/api/hpc-workspaces/';
 };
@@ -85287,7 +85301,7 @@ export type OnboardingJustificationsPartialUpdateResponses = {
 export type OnboardingJustificationsPartialUpdateResponse = OnboardingJustificationsPartialUpdateResponses[keyof OnboardingJustificationsPartialUpdateResponses];
 
 export type OnboardingJustificationsUpdateData = {
-    body: OnboardingJustificationRequest;
+    body?: OnboardingJustificationRequest;
     path: {
         uuid: string;
     };

@@ -7287,7 +7287,7 @@ export const hooksWebUpdate = <ThrowOnError extends boolean = true>(options: Opt
 /**
  * List HPC workspaces
  *
- * SLURM allocations visible to the user whose offering is connected to FirecREST.
+ * SLURM allocations visible to the user whose offering is connected to FirecREST or a cluster monitor.
  */
 export const hpcWorkspacesList = <ThrowOnError extends boolean = true>(options?: Options<HpcWorkspacesListData, ThrowOnError>) => (options?.client ?? client).get<HpcWorkspacesListResponses, unknown, ThrowOnError>({
     security: [
@@ -7315,7 +7315,7 @@ export const hpcWorkspacesCount = <ThrowOnError extends boolean = true>(options?
 /**
  * HPC workspace overview
  *
- * Allocation, the user's cluster identity and FirecREST system health. Problems reaching FirecREST are reported in 'error' rather than failing the request; 'sign_in_provider' names the identity provider to sign in through again when that is the remedy.
+ * Allocation, the user's cluster identity and FirecREST system health. Problems reaching FirecREST are reported in 'error' rather than failing the request; 'sign_in_provider' names the identity provider to sign in through again when that is the remedy. Without FirecREST ('firecrest_enabled' false) the health is left out.
  */
 export const hpcWorkspacesRetrieve = <ThrowOnError extends boolean = true>(options: Options<HpcWorkspacesRetrieveData, ThrowOnError>) => (options.client ?? client).get<HpcWorkspacesRetrieveResponses, unknown, ThrowOnError>({
     security: [
@@ -37604,7 +37604,7 @@ export const userActionsSummaryCount = <ThrowOnError extends boolean = true>(opt
 });
 
 /**
- * Trigger update of user actions
+ * Staff-only action to trigger recalculation of the actions of every user.
  */
 export const userActionsUpdateActions = <ThrowOnError extends boolean = true>(options?: Options<UserActionsUpdateActionsData, ThrowOnError>) => (options?.client ?? client).post<UserActionsUpdateActionsResponses, unknown, ThrowOnError>({
     security: [
