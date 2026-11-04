@@ -6572,6 +6572,7 @@ export type ConstanceSettings = {
     PAT_MAX_AUDIT_EVENTS_PER_HOUR?: number;
     MCP_ENABLED?: boolean;
     MCP_RESOURCE_URLS?: string;
+    EVENT_CONSUMER_EPHEMERAL_IDLE_HOURS?: number;
 };
 
 export type ConstanceSettingsRequest = {
@@ -6935,6 +6936,7 @@ export type ConstanceSettingsRequest = {
     PAT_MAX_AUDIT_EVENTS_PER_HOUR?: number;
     MCP_ENABLED?: boolean;
     MCP_RESOURCE_URLS?: string;
+    EVENT_CONSUMER_EPHEMERAL_IDLE_HOURS?: number;
 };
 
 export type ConsumptionStatisticsResponse = {
@@ -9499,6 +9501,14 @@ export type EventConsumer = {
     readonly last_delivered_at: string | null;
     readonly last_error: string;
     readonly last_error_at: string | null;
+    /**
+     * Registered by a short-lived client (a browser tab). Deleted automatically once its queue has had no reader for EVENT_CONSUMER_EPHEMERAL_IDLE_HOURS.
+     */
+    readonly ephemeral: boolean;
+    /**
+     * When the sweep first saw this ephemeral consumer's queue without a reader. Cleared when a reader returns or the client re-registers.
+     */
+    readonly unread_since: string | null;
     readonly created: string;
     readonly modified: string;
 };
@@ -9512,6 +9522,10 @@ export type EventConsumerRegistrationRequest = {
      * Entity bindings this consumer receives events for — e.g. several projects, a customer, an offering, or your own user (type 'user', your own UUID) for identity events. You may only bind to an entity you hold a role on, or to yourself. AN EMPTY LIST MEANS GLOBAL (every event, including all-user PII) and is staff/support only.
      */
     scopes?: Array<EventConsumerScopeInputRequest>;
+    /**
+     * Set by short-lived clients such as a browser tab. An ephemeral consumer and its queue are deleted once the queue has had no reader for EVENT_CONSUMER_EPHEMERAL_IDLE_HOURS, or once its owner has no active token. Re-registering an existing consumer without the flag makes it permanent. Re-registering a permanent consumer with it makes it ephemeral only for a browser-style registration (DRF token or session, previously too, bound to your own user); otherwise it stays permanent. Integrations should leave it unset.
+     */
+    ephemeral?: boolean;
 };
 
 export type EventConsumerRegistrationResponse = {
@@ -39132,6 +39146,7 @@ export type ConstanceSettingsRequestForm = {
     PAT_MAX_AUDIT_EVENTS_PER_HOUR?: number;
     MCP_ENABLED?: boolean;
     MCP_RESOURCE_URLS?: string;
+    EVENT_CONSUMER_EPHEMERAL_IDLE_HOURS?: number;
 };
 
 export type ConstanceSettingsRequestMultipart = {
@@ -39495,6 +39510,7 @@ export type ConstanceSettingsRequestMultipart = {
     PAT_MAX_AUDIT_EVENTS_PER_HOUR?: number;
     MCP_ENABLED?: boolean;
     MCP_RESOURCE_URLS?: string;
+    EVENT_CONSUMER_EPHEMERAL_IDLE_HOURS?: number;
 };
 
 export type PaymentRequestForm = {
@@ -85222,19 +85238,6 @@ export type OnboardingJustificationsCountResponses = {
     200: unknown;
 };
 
-export type OnboardingJustificationsCreateData = {
-    body: OnboardingJustificationRequest;
-    path?: never;
-    query?: never;
-    url: '/api/onboarding-justifications/';
-};
-
-export type OnboardingJustificationsCreateResponses = {
-    201: OnboardingJustification;
-};
-
-export type OnboardingJustificationsCreateResponse = OnboardingJustificationsCreateResponses[keyof OnboardingJustificationsCreateResponses];
-
 export type OnboardingJustificationsDestroyData = {
     body?: never;
     path: {
@@ -85596,19 +85599,6 @@ export type OnboardingVerificationsCountResponses = {
     200: unknown;
 };
 
-export type OnboardingVerificationsCreateData = {
-    body?: OnboardingVerificationRequest;
-    path?: never;
-    query?: never;
-    url: '/api/onboarding-verifications/';
-};
-
-export type OnboardingVerificationsCreateResponses = {
-    201: OnboardingVerification;
-};
-
-export type OnboardingVerificationsCreateResponse = OnboardingVerificationsCreateResponses[keyof OnboardingVerificationsCreateResponses];
-
 export type OnboardingVerificationsDestroyData = {
     body?: never;
     path: {
@@ -85792,54 +85782,6 @@ export type OnboardingVerificationsAvailableChecklistsCountData = {
 };
 
 export type OnboardingVerificationsAvailableChecklistsCountResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
-};
-
-export type OnboardingVerificationsChecklistTemplateRetrieveData = {
-    body?: never;
-    path?: never;
-    query: {
-        /**
-         * UUID of the parent object (e.g., customer UUID for new projects)
-         */
-        parent_uuid: string;
-    };
-    url: '/api/onboarding-verifications/checklist-template/';
-};
-
-export type OnboardingVerificationsChecklistTemplateRetrieveErrors = {
-    /**
-     * No checklist configured
-     */
-    400: unknown;
-    /**
-     * Parent object not found
-     */
-    404: unknown;
-};
-
-export type OnboardingVerificationsChecklistTemplateRetrieveResponses = {
-    200: ChecklistTemplate;
-};
-
-export type OnboardingVerificationsChecklistTemplateRetrieveResponse = OnboardingVerificationsChecklistTemplateRetrieveResponses[keyof OnboardingVerificationsChecklistTemplateRetrieveResponses];
-
-export type OnboardingVerificationsChecklistTemplateCountData = {
-    body?: never;
-    path?: never;
-    query: {
-        /**
-         * UUID of the parent object (e.g., customer UUID for new projects)
-         */
-        parent_uuid: string;
-    };
-    url: '/api/onboarding-verifications/checklist-template/';
-};
-
-export type OnboardingVerificationsChecklistTemplateCountResponses = {
     /**
      * No response body
      */
