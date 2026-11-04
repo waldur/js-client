@@ -24888,10 +24888,6 @@ export type PatchedUserInfoRequest = {
     user?: string;
 };
 
-export type PatchedUserOfferingConsentRequest = {
-    version?: string;
-};
-
 export type PatchedUserRequest = {
     /**
      * Required. 128 characters or fewer. Lowercase letters, numbers and @/./+/-/_ characters
@@ -31148,22 +31144,6 @@ export type ResourceEndDateChangeRequestCreateRequest = {
     comment?: string | null;
 };
 
-export type ResourceEndDateChangeRequestRequest = {
-    resource: string;
-    /**
-     * The requested new end date for the resource
-     */
-    requested_end_date: string;
-    /**
-     * Optional comment from the requester
-     */
-    comment?: string | null;
-    /**
-     * Optional comment provided during review
-     */
-    review_comment?: string | null;
-};
-
 export type ResourceEndDateRequest = {
     /**
      * The date is inclusive. Once reached, a resource will be scheduled for termination.
@@ -31237,17 +31217,6 @@ export type ResourceLimitChangeRequestCreateRequest = {
     requested_limits: {
         [key: string]: number;
     };
-};
-
-export type ResourceLimitChangeRequestRequest = {
-    resource: string;
-    requested_limits: {
-        [key: string]: unknown;
-    };
-    /**
-     * Optional comment provided during review
-     */
-    review_comment?: string | null;
 };
 
 export type ResourceLimitPeriod = {
@@ -36615,10 +36584,6 @@ export type UserOfferingConsentCreate = {
 
 export type UserOfferingConsentCreateRequest = {
     offering: string;
-};
-
-export type UserOfferingConsentRequest = {
-    version?: string;
 };
 
 export type UserOrganizationCount = {
@@ -63284,54 +63249,6 @@ export type MarketplaceOfferingUsersUpdateRuntimeStateResponses = {
     200: unknown;
 };
 
-export type MarketplaceOfferingUsersChecklistTemplateRetrieveData = {
-    body?: never;
-    path?: never;
-    query: {
-        /**
-         * UUID of the parent object (e.g., customer UUID for new projects)
-         */
-        parent_uuid: string;
-    };
-    url: '/api/marketplace-offering-users/checklist-template/';
-};
-
-export type MarketplaceOfferingUsersChecklistTemplateRetrieveErrors = {
-    /**
-     * No checklist configured
-     */
-    400: unknown;
-    /**
-     * Parent object not found
-     */
-    404: unknown;
-};
-
-export type MarketplaceOfferingUsersChecklistTemplateRetrieveResponses = {
-    200: ChecklistTemplate;
-};
-
-export type MarketplaceOfferingUsersChecklistTemplateRetrieveResponse = MarketplaceOfferingUsersChecklistTemplateRetrieveResponses[keyof MarketplaceOfferingUsersChecklistTemplateRetrieveResponses];
-
-export type MarketplaceOfferingUsersChecklistTemplateCountData = {
-    body?: never;
-    path?: never;
-    query: {
-        /**
-         * UUID of the parent object (e.g., customer UUID for new projects)
-         */
-        parent_uuid: string;
-    };
-    url: '/api/marketplace-offering-users/checklist-template/';
-};
-
-export type MarketplaceOfferingUsersChecklistTemplateCountResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
-};
-
 export type MarketplaceOfferingUsersPosixIdentitiesListData = {
     body?: never;
     path?: never;
@@ -72896,7 +72813,7 @@ export type MarketplaceResourceEndDateChangeRequestsApproveResponses = {
 };
 
 export type MarketplaceResourceEndDateChangeRequestsCancelData = {
-    body: ResourceEndDateChangeRequestRequest;
+    body?: never;
     path: {
         uuid: string;
     };
@@ -73064,7 +72981,7 @@ export type MarketplaceResourceLimitChangeRequestsApproveResponses = {
 export type MarketplaceResourceLimitChangeRequestsApproveResponse = MarketplaceResourceLimitChangeRequestsApproveResponses[keyof MarketplaceResourceLimitChangeRequestsApproveResponses];
 
 export type MarketplaceResourceLimitChangeRequestsCancelData = {
-    body: ResourceLimitChangeRequestRequest;
+    body?: never;
     path: {
         uuid: string;
     };
@@ -84021,24 +83938,6 @@ export type MarketplaceUserOfferingConsentsCreateResponses = {
 
 export type MarketplaceUserOfferingConsentsCreateResponse = MarketplaceUserOfferingConsentsCreateResponses[keyof MarketplaceUserOfferingConsentsCreateResponses];
 
-export type MarketplaceUserOfferingConsentsDestroyData = {
-    body?: never;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/marketplace-user-offering-consents/{uuid}/';
-};
-
-export type MarketplaceUserOfferingConsentsDestroyResponses = {
-    /**
-     * No response body
-     */
-    204: void;
-};
-
-export type MarketplaceUserOfferingConsentsDestroyResponse = MarketplaceUserOfferingConsentsDestroyResponses[keyof MarketplaceUserOfferingConsentsDestroyResponses];
-
 export type MarketplaceUserOfferingConsentsRetrieveData = {
     body?: never;
     path: {
@@ -84053,36 +83952,6 @@ export type MarketplaceUserOfferingConsentsRetrieveResponses = {
 };
 
 export type MarketplaceUserOfferingConsentsRetrieveResponse = MarketplaceUserOfferingConsentsRetrieveResponses[keyof MarketplaceUserOfferingConsentsRetrieveResponses];
-
-export type MarketplaceUserOfferingConsentsPartialUpdateData = {
-    body?: PatchedUserOfferingConsentRequest;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/marketplace-user-offering-consents/{uuid}/';
-};
-
-export type MarketplaceUserOfferingConsentsPartialUpdateResponses = {
-    200: UserOfferingConsent;
-};
-
-export type MarketplaceUserOfferingConsentsPartialUpdateResponse = MarketplaceUserOfferingConsentsPartialUpdateResponses[keyof MarketplaceUserOfferingConsentsPartialUpdateResponses];
-
-export type MarketplaceUserOfferingConsentsUpdateData = {
-    body?: UserOfferingConsentRequest;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/marketplace-user-offering-consents/{uuid}/';
-};
-
-export type MarketplaceUserOfferingConsentsUpdateResponses = {
-    200: UserOfferingConsent;
-};
-
-export type MarketplaceUserOfferingConsentsUpdateResponse = MarketplaceUserOfferingConsentsUpdateResponses[keyof MarketplaceUserOfferingConsentsUpdateResponses];
 
 export type MarketplaceUserOfferingConsentsRevokeData = {
     body?: never;
