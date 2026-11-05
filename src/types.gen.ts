@@ -1070,6 +1070,18 @@ export type AnonymousChatConversation = {
      * input_tokens + output_tokens. Excludes LLM judge spend, which runs on its own budget.
      */
     total_tokens: number;
+    /**
+     * Part of input_tokens served from the provider's prompt cache; null when no turn in the conversation reported it.
+     */
+    cache_read_tokens: number | null;
+    /**
+     * Part of input_tokens written to the provider's prompt cache; null when no turn in the conversation reported it.
+     */
+    cache_write_tokens: number | null;
+    /**
+     * cache_read_tokens over the input of turns whose provider reported a cache figure; null when none did.
+     */
+    cache_ratio: number | null;
     started: string | null;
     last_active: string | null;
 };
@@ -1132,6 +1144,8 @@ export type AnonymousChatInteraction = {
     readonly click_count: number;
     readonly input_tokens: number | null;
     readonly output_tokens: number | null;
+    readonly cache_read_tokens: number | null;
+    readonly cache_write_tokens: number | null;
     readonly offering_uuids: {
         [key: string]: unknown;
     };
@@ -1203,6 +1217,18 @@ export type AnonymousChatKpiResponse = {
      * Completion tokens summed over the filtered turns.
      */
     output_tokens_total: number;
+    /**
+     * Part of input_tokens_total served from the provider's prompt cache; null when no turn reported it.
+     */
+    cache_read_tokens_total: number | null;
+    /**
+     * Part of input_tokens_total written to the provider's prompt cache; null when no turn reported it.
+     */
+    cache_write_tokens_total: number | null;
+    /**
+     * cache_read_tokens_total over the input of turns whose provider reported a cache figure; null when none did.
+     */
+    cache_ratio: number | null;
     /**
      * Threads carrying a judge verdict. Always present, unlike the review rates below — zero here is the signal that the nightly pass is off or stalled, so consumers can keep showing the row.
      */
@@ -5297,6 +5323,18 @@ export type ChatThreadStatsResponse = {
     input_tokens_total: number;
     output_tokens_total: number;
     total_tokens: number;
+    /**
+     * Part of input_tokens_total served from the provider's prompt cache; null when no turn reported it.
+     */
+    cache_read_tokens_total: number | null;
+    /**
+     * Part of input_tokens_total written to the provider's prompt cache; null when no turn reported it.
+     */
+    cache_write_tokens_total: number | null;
+    /**
+     * cache_read_tokens_total over the input of turns whose provider reported a cache figure; null when none did.
+     */
+    cache_ratio: number | null;
     /**
      * Threads carrying at least one flagged message.
      */
@@ -15311,6 +15349,8 @@ export type Message = {
     readonly created: string;
     readonly input_tokens: number | null;
     readonly output_tokens: number | null;
+    readonly cache_read_tokens: number | null;
+    readonly cache_write_tokens: number | null;
     readonly is_flagged?: boolean;
     severity?: InjectionSeverityEnum;
     readonly injection_categories?: {
@@ -35496,6 +35536,20 @@ export type ThreadSession = {
     readonly title_gen_input_tokens: number | null;
     readonly title_gen_output_tokens: number | null;
     /**
+     * Part of input_tokens served from the provider's prompt cache, title generation included. Null when the provider never reported it.
+     */
+    readonly cache_read_tokens: number | null;
+    /**
+     * Part of input_tokens written to the provider's prompt cache, title generation included. Null when the provider never reported it.
+     */
+    readonly cache_write_tokens: number | null;
+    readonly title_gen_cache_read_tokens: number | null;
+    readonly title_gen_cache_write_tokens: number | null;
+    /**
+     * cache_read_tokens / input_tokens, counting only turns whose provider reported a cache figure. Null when none did.
+     */
+    readonly cache_ratio: number | null;
+    /**
      * Comma-separated distinct LLM models across the thread's messages. More than one when an admin switched AI_ASSISTANT_MODEL mid-thread; blank for threads written before model tracking existed.
      */
     readonly models_used: string;
@@ -40054,9 +40108,9 @@ export type ChangelogEntryListTypeEnum = 'breaking' | 'deprecation' | 'feature' 
 
 export type ChatSessionFieldEnum = 'created' | 'modified' | 'user' | 'user_full_name' | 'user_username' | 'uuid';
 
-export type ThreadSessionFieldEnum = 'chat_session' | 'created' | 'flags' | 'has_feedback' | 'input_tokens' | 'is_archived' | 'is_flagged' | 'max_severity' | 'message_count' | 'models_used' | 'modified' | 'name' | 'output_tokens' | 'title_gen_input_tokens' | 'title_gen_output_tokens' | 'total_tokens' | 'user_full_name' | 'user_username' | 'uuid';
+export type ThreadSessionFieldEnum = 'cache_ratio' | 'cache_read_tokens' | 'cache_write_tokens' | 'chat_session' | 'created' | 'flags' | 'has_feedback' | 'input_tokens' | 'is_archived' | 'is_flagged' | 'max_severity' | 'message_count' | 'models_used' | 'modified' | 'name' | 'output_tokens' | 'title_gen_cache_read_tokens' | 'title_gen_cache_write_tokens' | 'title_gen_input_tokens' | 'title_gen_output_tokens' | 'total_tokens' | 'user_full_name' | 'user_username' | 'uuid';
 
-export type ThreadSessionOEnum = '-created' | '-input_tokens' | '-models_used' | '-modified' | '-output_tokens' | '-total_tokens' | 'created' | 'input_tokens' | 'models_used' | 'modified' | 'output_tokens' | 'total_tokens';
+export type ThreadSessionOEnum = '-cache_ratio' | '-cache_read_tokens' | '-cache_write_tokens' | '-created' | '-input_tokens' | '-models_used' | '-modified' | '-output_tokens' | '-total_tokens' | 'cache_ratio' | 'cache_read_tokens' | 'cache_write_tokens' | 'created' | 'input_tokens' | 'models_used' | 'modified' | 'output_tokens' | 'total_tokens';
 
 export type ThreadSessionScopeEnum = 'own';
 
