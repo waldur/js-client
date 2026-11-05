@@ -21839,6 +21839,9 @@ export type OrderCreateRequest = {
         [key: string]: number;
     };
     accepting_terms_of_service?: boolean;
+    /**
+     * Sent by a Waldur that orders from this one through a remote offering: its public order pull endpoint (.../api/remote-waldur-api/pull_order/<its order uuid>). No other URL is accepted. Not stored: order callbacks are off.
+     */
     callback_url?: string | null;
     request_comment?: string | null;
     /**
@@ -21915,7 +21918,6 @@ export type OrderDetails = {
     readonly error_message: string;
     readonly error_traceback: string;
     readonly error_updated_at: string | null;
-    callback_url?: string | null;
     /**
      * Completion time
      */
