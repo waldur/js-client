@@ -16744,7 +16744,7 @@ export const marketplaceResourceApiKeysCount = <ThrowOnError extends boolean = t
 /**
  * Request an API key
  *
- * Asks the site agent to create a key for the resource. Waldur generates nothing: the key appears as Creating and turns OK once the agent reports it. Only on offerings with enable_api_key_provisioning.
+ * Asks the site agent to create a key for the resource. Waldur generates nothing: the key appears as Creating and turns OK once the agent reports it. Only on offerings with enable_api_key_provisioning, and refused with 409 until the agent has created the resource (it has no backend_id yet).
  */
 export const marketplaceResourceApiKeysCreate = <ThrowOnError extends boolean = true>(options: Options<MarketplaceResourceApiKeysCreateData, ThrowOnError>) => (options.client ?? client).post<MarketplaceResourceApiKeysCreateResponses, unknown, ThrowOnError>({
     security: [
@@ -16785,7 +16785,7 @@ export const marketplaceResourceApiKeysRetrieve = <ThrowOnError extends boolean 
 /**
  * Edit an API key
  *
- * Changes the key's limits or model allowlist. A change is sent to the site agent as an update command, unless the key is paused: resuming it applies them. The key's assignee is set when the key is requested and cannot be changed: an edit that names user, null included, is refused with 400. To hand a key to someone else, request a key for them and delete this one. Only on offerings with enable_api_key_provisioning.
+ * Changes the key's limits, model allowlist or description. A change of limits or models is sent to the site agent as an update command, unless the key is paused: resuming it applies them. The key's assignee is set when the key is requested and cannot be changed: an edit that names user, null included, is refused with 400. To hand a key to someone else, request a key for them and delete this one. Only on offerings with enable_api_key_provisioning, except an edit of the description alone: that is saved at once on any offering and in any state but Deleted, sends no command and leaves the key's state as it is.
  */
 export const marketplaceResourceApiKeysPartialUpdate = <ThrowOnError extends boolean = true>(options: Options<MarketplaceResourceApiKeysPartialUpdateData, ThrowOnError>) => (options.client ?? client).patch<MarketplaceResourceApiKeysPartialUpdateResponses, unknown, ThrowOnError>({
     security: [

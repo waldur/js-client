@@ -24384,6 +24384,10 @@ export type PatchedRequestedResourceRequest = {
 
 export type PatchedResourceApiKeyUpdateRequest = {
     /**
+     * A note telling the key apart from the resource's other keys, such as the environment that uses it. No command to the site agent carries it, so changing it alone issues none and needs no enable_api_key_provisioning. Everyone who can list the key reads it, the provider included.
+     */
+    description?: string;
+    /**
      * Month limits per component type; zero or absent means no month limit. Replaces the month limits of spending_limits and keeps the other periods. Not together with spending_limits.
      */
     limits?: {
@@ -30904,6 +30908,7 @@ export type ResourceApiKey = {
     readonly resource_uuid: string;
     readonly resource_backend_id: string;
     client_id?: string;
+    description?: string;
     state?: ResourceApiKeyState;
     pending_action: ResourceApiKeyAction | BlankEnum;
     readonly modified: string;
@@ -30956,6 +30961,10 @@ export type ResourceApiKeyAction = 'create' | 'rotate' | 'pause' | 'resume' | 'd
 
 export type ResourceApiKeyCreateRequest = {
     /**
+     * A note telling the key apart from the resource's other keys, such as the environment that uses it. No command to the site agent carries it, so changing it alone issues none and needs no enable_api_key_provisioning. Everyone who can list the key reads it, the provider included.
+     */
+    description?: string;
+    /**
      * Month limits per component type; zero or absent means no month limit. Replaces the month limits of spending_limits and keeps the other periods. Not together with spending_limits.
      */
     limits?: {
@@ -31002,6 +31011,7 @@ export type ResourceApiKeyStatus = {
     readonly resource_uuid: string;
     readonly resource_backend_id: string;
     client_id?: string;
+    description?: string;
     state?: ResourceApiKeyState;
     pending_action: ResourceApiKeyAction | BlankEnum;
     readonly modified: string;
