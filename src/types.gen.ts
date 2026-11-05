@@ -616,6 +616,9 @@ export type AgentIdentity = {
      * Example: '/etc/waldur/agent.yaml'
      */
     config_file_path?: string | null;
+    /**
+     * Returned only to staff, to who holds OFFERING.UPDATE on the identity's offering, its organization or its service provider, and to the identity manager who created the identity, while the offering is in an ISD-allowed state.
+     */
     config_file_content?: string | null;
     /**
      * Last restarted at
@@ -639,6 +642,9 @@ export type AgentIdentityRequest = {
      * Example: '/etc/waldur/agent.yaml'
      */
     config_file_path?: string | null;
+    /**
+     * Returned only to staff, to who holds OFFERING.UPDATE on the identity's offering, its organization or its service provider, and to the identity manager who created the identity, while the offering is in an ISD-allowed state.
+     */
     config_file_content?: string | null;
     /**
      * Last restarted at
@@ -10953,6 +10959,17 @@ export type HpcJobFailure = {
     latest_job_id: string | null;
 };
 
+export type HpcJobFileRequest = {
+    /**
+     * File name in the job's working directory, e.g. 'matmul.py'.
+     */
+    name: string;
+    /**
+     * File content.
+     */
+    content: string;
+};
+
 export type HpcJobOutput = {
     job: HpcJob;
     script: string | null;
@@ -11064,6 +11081,10 @@ export type HpcJobSpecRequest = {
     environment?: {
         [key: string]: string;
     };
+    /**
+     * Files written into the working directory before the commands run, such as the program the job runs.
+     */
+    files?: Array<HpcJobFileRequest>;
 };
 
 export type HpcJobStats = {
@@ -15555,12 +15576,6 @@ export type MigrationDetails = {
     readonly dst_resource_name: string;
     readonly dst_resource_state: string;
     readonly state: string;
-    error_message?: string;
-    error_traceback?: string;
-};
-
-export type MigrationDetailsRequest = {
-    mappings: MappingRequest;
     error_message?: string;
     error_traceback?: string;
 };
@@ -23201,12 +23216,6 @@ export type PatchedMetricGoalRequest = {
     period?: MetricGoalPeriodEnum;
 };
 
-export type PatchedMigrationDetailsRequest = {
-    mappings?: MappingRequest;
-    error_message?: string;
-    error_traceback?: string;
-};
-
 export type PatchedNotificationRequest = {
     key?: string;
     description?: string;
@@ -24221,34 +24230,22 @@ export type PatchedQuestionOptionsAdminRequest = {
 export type PatchedRancherApplicationRequest = {
     name?: string;
     description?: string;
-    service_settings?: string;
-    project?: string;
-    error_message?: string;
-    error_traceback?: string;
-    backend_id?: string;
-    runtime_state?: string;
-    template?: string;
-    rancher_project?: string;
-    namespace?: string;
-    namespace_name?: string;
     version?: string;
     answers?: {
         [key: string]: unknown;
     };
 };
 
-export type PatchedRancherCatalogRequest = {
+export type PatchedRancherCatalogUpdateRequest = {
     name?: string;
     description?: string;
     catalog_url?: string;
     branch?: string;
-    scope?: string;
 };
 
 export type PatchedRancherClusterRequest = {
     name?: string;
     description?: string;
-    vm_project?: string | null;
     ssh_public_key?: string;
     /**
      * Longhorn is a distributed block storage deployed on top of Kubernetes cluster
@@ -24268,14 +24265,6 @@ export type PatchedRancherHpaRequest = {
 export type PatchedRancherIngressRequest = {
     name?: string;
     description?: string;
-    service_settings?: string;
-    project?: string;
-    error_message?: string;
-    error_traceback?: string;
-    backend_id?: string;
-    runtime_state?: string;
-    rancher_project?: string;
-    namespace?: string;
     rules?: {
         [key: string]: unknown;
     };
@@ -24284,13 +24273,6 @@ export type PatchedRancherIngressRequest = {
 export type PatchedRancherServiceRequest = {
     name?: string;
     description?: string;
-    service_settings?: string;
-    project?: string;
-    error_message?: string;
-    error_traceback?: string;
-    backend_id?: string;
-    runtime_state?: string;
-    namespace?: string;
     cluster_ip?: string | null;
     selector?: {
         [key: string]: unknown;
@@ -29194,15 +29176,15 @@ export type RancherApplication = {
     readonly customer_name: string;
     readonly customer_native_name: string;
     readonly customer_abbreviation: string;
-    error_message?: string;
-    error_traceback?: string;
+    readonly error_message: string;
+    readonly error_traceback: string;
     readonly resource_type: string;
     state: CoreStates;
     readonly created: string;
     readonly modified: string;
-    backend_id?: string;
+    readonly backend_id: string;
     access_url: Array<string> | string | null;
-    runtime_state?: string;
+    readonly runtime_state: string;
     template: string;
     rancher_project: string;
     namespace?: string;
@@ -29234,10 +29216,6 @@ export type RancherApplicationRequest = {
     description?: string;
     service_settings: string;
     project: string;
-    error_message?: string;
-    error_traceback?: string;
-    backend_id?: string;
-    runtime_state?: string;
     template: string;
     rancher_project: string;
     namespace?: string;
@@ -29303,7 +29281,7 @@ export type RancherCatalogUpdate = {
     branch: string;
     readonly commit: string;
     readonly runtime_state: string;
-    scope: string;
+    readonly scope: string;
     scope_type: RancherCatalogScopeType;
 };
 
@@ -29312,7 +29290,6 @@ export type RancherCatalogUpdateRequest = {
     description?: string;
     catalog_url: string;
     branch: string;
-    scope: string;
 };
 
 export type RancherCluster = {
@@ -29387,7 +29364,6 @@ export type RancherClusterReference = {
 export type RancherClusterRequest = {
     name: string;
     description?: string;
-    vm_project?: string | null;
     ssh_public_key?: string;
     /**
      * Longhorn is a distributed block storage deployed on top of Kubernetes cluster
@@ -29586,15 +29562,15 @@ export type RancherIngress = {
     readonly customer_name: string;
     readonly customer_native_name: string;
     readonly customer_abbreviation: string;
-    error_message?: string;
-    error_traceback?: string;
+    readonly error_message: string;
+    readonly error_traceback: string;
     readonly resource_type: string;
     state: CoreStates;
     readonly created: string;
     readonly modified: string;
-    backend_id?: string;
+    readonly backend_id: string;
     access_url: Array<string> | string | null;
-    runtime_state?: string;
+    readonly runtime_state: string;
     rancher_project: string;
     readonly rancher_project_name: string;
     namespace?: string;
@@ -29622,10 +29598,6 @@ export type RancherIngressRequest = {
     description?: string;
     service_settings: string;
     project: string;
-    error_message?: string;
-    error_traceback?: string;
-    backend_id?: string;
-    runtime_state?: string;
     rancher_project: string;
     namespace?: string;
     rules?: {
@@ -29802,15 +29774,15 @@ export type RancherService = {
     readonly customer_name: string;
     readonly customer_native_name: string;
     readonly customer_abbreviation: string;
-    error_message?: string;
-    error_traceback?: string;
+    readonly error_message: string;
+    readonly error_traceback: string;
     readonly resource_type: string;
     state: CoreStates;
     readonly created: string;
     readonly modified: string;
-    backend_id?: string;
+    readonly backend_id: string;
     access_url: Array<string> | string | null;
-    runtime_state?: string;
+    readonly runtime_state: string;
     namespace?: string;
     readonly namespace_name: string;
     cluster_ip?: string | null;
@@ -29851,15 +29823,15 @@ export type RancherServiceCreate = {
     readonly customer_name: string;
     readonly customer_native_name: string;
     readonly customer_abbreviation: string;
-    error_message?: string;
-    error_traceback?: string;
+    readonly error_message: string;
+    readonly error_traceback: string;
     readonly resource_type: string;
     state: CoreStates;
     readonly created: string;
     readonly modified: string;
-    backend_id?: string;
+    readonly backend_id: string;
     access_url: Array<string> | string | null;
-    runtime_state?: string;
+    readonly runtime_state: string;
     namespace?: string;
     readonly namespace_name: string;
     cluster_ip?: string | null;
@@ -29887,10 +29859,6 @@ export type RancherServiceCreateRequest = {
     description?: string;
     service_settings: string;
     project: string;
-    error_message?: string;
-    error_traceback?: string;
-    backend_id?: string;
-    runtime_state?: string;
     namespace?: string;
     cluster_ip?: string | null;
     selector?: {
@@ -29902,13 +29870,6 @@ export type RancherServiceCreateRequest = {
 export type RancherServiceRequest = {
     name: string;
     description?: string;
-    service_settings: string;
-    project: string;
-    error_message?: string;
-    error_traceback?: string;
-    backend_id?: string;
-    runtime_state?: string;
-    namespace?: string;
     cluster_ip?: string | null;
     selector?: {
         [key: string]: unknown;
@@ -92476,36 +92437,6 @@ export type OpenstackMigrationsRetrieveResponses = {
 
 export type OpenstackMigrationsRetrieveResponse = OpenstackMigrationsRetrieveResponses[keyof OpenstackMigrationsRetrieveResponses];
 
-export type OpenstackMigrationsPartialUpdateData = {
-    body?: PatchedMigrationDetailsRequest;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/openstack-migrations/{uuid}/';
-};
-
-export type OpenstackMigrationsPartialUpdateResponses = {
-    200: MigrationDetails;
-};
-
-export type OpenstackMigrationsPartialUpdateResponse = OpenstackMigrationsPartialUpdateResponses[keyof OpenstackMigrationsPartialUpdateResponses];
-
-export type OpenstackMigrationsUpdateData = {
-    body: MigrationDetailsRequest;
-    path: {
-        uuid: string;
-    };
-    query?: never;
-    url: '/api/openstack-migrations/{uuid}/';
-};
-
-export type OpenstackMigrationsUpdateResponses = {
-    200: MigrationDetails;
-};
-
-export type OpenstackMigrationsUpdateResponse = OpenstackMigrationsUpdateResponses[keyof OpenstackMigrationsUpdateResponses];
-
 export type OpenstackNetworkRbacPoliciesListData = {
     body?: never;
     path?: never;
@@ -97067,121 +96998,6 @@ export type OpenstackVolumesUnlinkResponses = {
 };
 
 export type OpenstackVolumesUnlinkResponse = OpenstackVolumesUnlinkResponses[keyof OpenstackVolumesUnlinkResponses];
-
-export type OpenstackDiscoveryListData = {
-    body?: never;
-    path?: never;
-    query?: {
-        /**
-         * A page number within the paginated result set.
-         */
-        page?: number;
-        /**
-         * Number of results to return per page.
-         */
-        page_size?: number;
-    };
-    url: '/api/openstack/discovery/';
-};
-
-export type OpenstackDiscoveryListResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
-};
-
-export type OpenstackDiscoveryCreateData = {
-    body?: never;
-    path?: never;
-    query?: never;
-    url: '/api/openstack/discovery/';
-};
-
-export type OpenstackDiscoveryCreateResponses = {
-    /**
-     * No response body
-     */
-    201: unknown;
-};
-
-export type OpenstackDiscoveryDestroyData = {
-    body?: never;
-    path: {
-        /**
-         * A unique integer value identifying this Service provider.
-         */
-        id: number;
-    };
-    query?: never;
-    url: '/api/openstack/discovery/{id}/';
-};
-
-export type OpenstackDiscoveryDestroyResponses = {
-    /**
-     * No response body
-     */
-    204: void;
-};
-
-export type OpenstackDiscoveryDestroyResponse = OpenstackDiscoveryDestroyResponses[keyof OpenstackDiscoveryDestroyResponses];
-
-export type OpenstackDiscoveryRetrieveData = {
-    body?: never;
-    path: {
-        /**
-         * A unique integer value identifying this Service provider.
-         */
-        id: number;
-    };
-    query?: never;
-    url: '/api/openstack/discovery/{id}/';
-};
-
-export type OpenstackDiscoveryRetrieveResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
-};
-
-export type OpenstackDiscoveryPartialUpdateData = {
-    body?: never;
-    path: {
-        /**
-         * A unique integer value identifying this Service provider.
-         */
-        id: number;
-    };
-    query?: never;
-    url: '/api/openstack/discovery/{id}/';
-};
-
-export type OpenstackDiscoveryPartialUpdateResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
-};
-
-export type OpenstackDiscoveryUpdateData = {
-    body?: never;
-    path: {
-        /**
-         * A unique integer value identifying this Service provider.
-         */
-        id: number;
-    };
-    query?: never;
-    url: '/api/openstack/discovery/{id}/';
-};
-
-export type OpenstackDiscoveryUpdateResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
-};
 
 export type OpenstackDiscoveryDiscoverExternalNetworksData = {
     body: DiscoverExternalNetworksRequestRequest;
@@ -105290,7 +105106,7 @@ export type RancherCatalogsRetrieveResponses = {
 export type RancherCatalogsRetrieveResponse = RancherCatalogsRetrieveResponses[keyof RancherCatalogsRetrieveResponses];
 
 export type RancherCatalogsPartialUpdateData = {
-    body?: PatchedRancherCatalogRequest;
+    body?: PatchedRancherCatalogUpdateRequest;
     path: {
         uuid: string;
     };
@@ -105299,7 +105115,7 @@ export type RancherCatalogsPartialUpdateData = {
 };
 
 export type RancherCatalogsPartialUpdateResponses = {
-    200: RancherCatalog;
+    200: RancherCatalogUpdate;
 };
 
 export type RancherCatalogsPartialUpdateResponse = RancherCatalogsPartialUpdateResponses[keyof RancherCatalogsPartialUpdateResponses];
