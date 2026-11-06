@@ -6,6 +6,14 @@ export type ClientOptions = {
 
 export type AiassistantenabledrolesEnum = 'disabled' | 'staff' | 'staff_and_support' | 'all' | 'anonymous';
 
+export type AcceptStepContributionRequest = {
+    contribution_uuid: string;
+    /**
+     * Confirms having no conflict of interest with the proposal; required on a step that asks its evaluators to.
+     */
+    confirm_no_conflict?: boolean;
+};
+
 export type AccessProject = {
     name: string;
     resources: Array<AccessResource>;
@@ -338,6 +346,25 @@ export type AdoptableProject = {
      * The project's group at the provider, if it has one.
      */
     group_name: string | null;
+};
+
+export type AdvanceRoundWorkflowStepRequest = {
+    /**
+     * UUID of the completed step to move on from. Either this or step.
+     */
+    step_uuid?: string;
+    /**
+     * Key of the completed step to move on from. Either this or step_uuid.
+     */
+    step?: string;
+};
+
+export type AdvanceRoundWorkflowStepResponse = {
+    step_uuid: string;
+    step_name: string;
+    advanced: Array<RoundStepProposalResult>;
+    skipped: Array<RoundStepProposalResult>;
+    failed: Array<RoundStepProposalResult>;
 };
 
 export type AffiliateEarnings = {
@@ -910,6 +937,35 @@ export type AggregatedUsageTrend = {
 
 export type AgreementTypeEnum = 'TOS' | 'PP';
 
+export type AllocateInSubmissionOrderRequest = {
+    /**
+     * Only plan the decisions and return the plan; decide nothing.
+     */
+    preview?: boolean;
+    /**
+     * What to do with a proposal whose award no longer fits what remains: decline it, or leave it for a decision by hand. Either way later, smaller proposals still get their chance.
+     */
+    on_depleted?: OnDepletedEnum;
+    /**
+     * Allocate although some proposals of the round have not reached the allocation decision yet. Needs a reason.
+     */
+    force?: boolean;
+    reason?: string;
+};
+
+export type AllocateInSubmissionOrderResponse = {
+    preview: boolean;
+    /**
+     * False when no resource pool of the call covers this round.
+     */
+    has_budget: boolean;
+    plan: Array<AllocationPlanRow>;
+    budgets: Array<AllocationPlanBudget>;
+    completed: Array<RoundStepProposalResult>;
+    skipped: Array<RoundStepProposalResult>;
+    failed: Array<RoundStepProposalResult>;
+};
+
 export type Allocation = {
     readonly url: string;
     readonly uuid: string;
@@ -966,6 +1022,41 @@ export type AllocationCandidatesResponse = {
     provider_summaries: {
         [key: string]: ProviderSummary;
     };
+};
+
+export type AllocationPlanAward = {
+    offering_name: string;
+    component_type: string;
+    /**
+     * What the award draws from the pools: a periodic amount counted once per period the item runs.
+     */
+    amount: number;
+};
+
+export type AllocationPlanBudget = {
+    pool_uuid: string;
+    offering_name: string;
+    component_type: string;
+    /**
+     * The round the pool covers; empty for the whole call.
+     */
+    round_name: string | null;
+    offered_total: number;
+    remaining_before: number;
+    remaining_after: number;
+};
+
+export type AllocationPlanRow = {
+    order: number;
+    proposal_uuid: string;
+    proposal_name: string;
+    proposal_slug: string;
+    submitted_at: string | null;
+    score: number | null;
+    threshold: number | null;
+    award: Array<AllocationPlanAward>;
+    planned_outcome: PlannedOutcomeEnum;
+    reason: string;
 };
 
 export type AllocationRequest = {
@@ -1320,6 +1411,13 @@ export type AnswerSubmitRequest = {
 export type AnswerSubmitResponse = {
     detail: string;
     completion: ChecklistCompletion;
+};
+
+export type ArchiveCallRequest = {
+    /**
+     * Archive even though proposals are still in evaluation.
+     */
+    confirm?: boolean;
 };
 
 export type ArrowBillingLine = {
@@ -2148,6 +2246,14 @@ export type AssignmentItem = {
     status: AssignmentItemStatus;
     readonly status_display: string;
     /**
+     * Deadline for responding to this item (its batch's deadline).
+     */
+    readonly expires_at: string | null;
+    /**
+     * Whether the item can no longer be answered because its deadline has passed.
+     */
+    readonly is_expired: boolean;
+    /**
      * Affinity score used for assignment (0-1).
      */
     readonly affinity_score: number | null;
@@ -2666,6 +2772,19 @@ export type AwardDetails = {
     allowed_domains: Array<string> | null;
 };
 
+export type AwardedProposal = {
+    proposal_uuid: string;
+    proposal_name: string;
+    call_uuid: string;
+    call_name: string;
+    round_uuid: string;
+    round_name: string;
+    /**
+     * Whether the viewer may open the proposal: its team and the call's overseers do; a collaborator added to the project later sees only where it came from.
+     */
+    can_read: boolean;
+};
+
 export type AwardedResource = {
     readonly uuid: string;
     readonly url: string;
@@ -2685,8 +2804,24 @@ export type AwardedResource = {
     description?: string;
     readonly resource: string | null;
     readonly resource_name: string | null;
+    /**
+     * State of the order that provisions the item's resource; null while nothing has been provisioned for it.
+     */
+    order_state: OrderState | NullEnum | null;
+    /**
+     * Why the order was refused, for a viewer who may read the order; null otherwise.
+     */
+    readonly order_rejection_comment: string | null;
+    /**
+     * Why allocation could not order the item -- the offering stopped taking orders, its plan was archived, its limits no longer fit. Empty once it is provisioned.
+     */
+    readonly provision_error: string;
     readonly created_by: string | null;
     readonly created_by_name: string | null;
+    /**
+     * Who last changed the item; null if nobody did since it was made.
+     */
+    readonly modified_by_name: string | null;
     readonly created: string;
     readonly modified: string;
 };
@@ -3442,6 +3577,71 @@ export type BroadcastMessageQueryRequest = {
 
 export type BroadcastMessageStateEnum = 'DRAFT' | 'SCHEDULED' | 'SENT';
 
+export type BudgetEnforcementEnum = 'soft' | 'hard';
+
+export type BudgetReport = {
+    totals: BudgetReportTotals;
+    pools: Array<BudgetReportPool>;
+};
+
+export type BudgetReportPool = {
+    call_uuid: string;
+    call_name: string;
+    call_slug: string;
+    /**
+     * The call's call managing organization.
+     */
+    organisation_uuid: string;
+    /**
+     * The name of the call managing organization's customer.
+     */
+    organisation_name: string;
+    /**
+     * Empty: the whole call.
+     */
+    round_uuid: string | null;
+    round_name: string | null;
+    /**
+     * Empty: no pool, only what was awarded or asked for.
+     */
+    pool_uuid: string | null;
+    /**
+     * A round's pool whose awards also count against the call-wide pool listed in another row: leave it out of sums. A call-wide pool is listed with its whole call's figures also when the report is filtered to a round.
+     */
+    within_call_pool: boolean;
+    offering_name: string;
+    component_type: string;
+    component_name: string;
+    measured_unit: string;
+    limit_period: string;
+    offered_total: number | null;
+    /**
+     * Asked for by submitted proposals, whatever came of them.
+     */
+    requested: number;
+    /**
+     * What the allocation decisions granted, over the whole length of each award.
+     */
+    awarded: number;
+    remaining: number | null;
+    /**
+     * Asked for by proposals still waiting for their decision.
+     */
+    undecided: number;
+    /**
+     * Awarded out of offered, 0-1.
+     */
+    awarded_share: number | null;
+};
+
+export type BudgetReportTotals = {
+    pools: number;
+    /**
+     * Pools with nothing left to award.
+     */
+    pools_exhausted: number;
+};
+
 export type BulkRoundCreateRequestRequest = {
     start_time: string;
     review_duration_in_days?: number | null;
@@ -3620,6 +3820,14 @@ export type CachedProjectUsageReport = {
 };
 
 export type CadenceEnum = 'monthly' | 'quarterly' | 'biannual' | 'yearly' | 'custom';
+
+export type CallActivationRefused = {
+    /**
+     * Every error, in one message.
+     */
+    detail: string;
+    workflow_check: Array<WorkflowCheckFinding>;
+};
 
 export type CallApplicantVisibilityConfig = {
     readonly uuid: string;
@@ -3854,7 +4062,7 @@ export type CallDocument = {
      */
     file?: string | null;
     readonly file_name: string;
-    readonly file_size: number;
+    readonly file_size: number | null;
     description?: string;
     readonly created: string;
 };
@@ -3914,11 +4122,15 @@ export type CallImportParametersRequest = {
      */
     name?: string;
     /**
-     * Exported call document, as a mapping or a YAML string.
+     * Exported call document, as a mapping or a YAML string. Give this or template.
      */
-    call_data: {
+    call_data?: {
         [key: string]: unknown;
     };
+    /**
+     * Published call template to create the call from. Give this or call_data.
+     */
+    template?: string;
     import_documents?: boolean;
     import_rounds?: boolean;
     import_offerings?: boolean;
@@ -3968,24 +4180,196 @@ export type CallManagingOrganisationStat = {
     readonly offering_requests_pending: number;
 };
 
-export type CallPerformanceStat = {
+export type CallNotificationMailType = {
+    key: string;
+    mail_type: string;
+    variant: string;
+    label: string;
+    audience: string;
+    variables: Array<NotificationVariable>;
+    /**
+     * The portal's wording: where the call's own wording starts from.
+     */
+    portal_wording: NotificationWording;
+    /**
+     * Whether staff reworded this mail for the whole portal.
+     */
+    portal_overridden: boolean;
+    override: CallNotificationOverride | null;
+};
+
+export type CallNotificationOverride = {
+    readonly uuid: string;
+    readonly key: string;
+    mail_type: string;
+    variant?: string;
+    subject: string;
+    body_text: string;
+    body_html?: string;
+    enabled?: boolean;
+    readonly updated_by_name: string | null;
+    readonly modified: string;
+};
+
+export type CallNotificationOverrideRequest = {
+    mail_type: string;
+    variant?: string;
+    subject: string;
+    body_text: string;
+    body_html?: string;
+    enabled?: boolean;
+};
+
+export type CallOfferingComponent = {
+    readonly uuid: string;
+    readonly url: string;
+    /**
+     * An offering of the call.
+     */
+    requested_offering_uuid: string;
+    readonly offering_name: string;
+    /**
+     * Type of the offering component: one billed by its limit that the call offering's plan prices.
+     */
+    component_type: string;
+    readonly component_name: string;
+    readonly measured_unit: string;
+    readonly limit_period: string;
+    min_per_proposal?: number | null;
+    max_per_proposal?: number | null;
+    default_amount?: number | null;
+    /**
+     * Every proposal requests exactly default_amount; the applicant cannot change it.
+     */
+    is_fixed?: boolean;
+    /**
+     * Whether a submitted proposal requests the offering: the rule can no longer change.
+     */
+    readonly is_locked: boolean;
+    readonly created: string;
+};
+
+export type CallOfferingComponentBounds = {
+    readonly uuid: string;
+    readonly requested_offering_uuid: string;
+    /**
+     * Type of the offering component: one billed by its limit that the call offering's plan prices.
+     */
+    readonly component_type: string;
+    readonly measured_unit: string;
+    readonly limit_period: string;
+    readonly min_per_proposal: number | null;
+    readonly max_per_proposal: number | null;
+    readonly default_amount: number | null;
+    /**
+     * Every proposal requests exactly default_amount; the applicant cannot change it.
+     */
+    readonly is_fixed: boolean;
+};
+
+export type CallOfferingComponentRequest = {
+    /**
+     * An offering of the call.
+     */
+    requested_offering_uuid: string;
+    /**
+     * Type of the offering component: one billed by its limit that the call offering's plan prices.
+     */
+    component_type: string;
+    min_per_proposal?: number | null;
+    max_per_proposal?: number | null;
+    default_amount?: number | null;
+    /**
+     * Every proposal requests exactly default_amount; the applicant cannot change it.
+     */
+    is_fixed?: boolean;
+};
+
+export type CallPanel = {
+    readonly uuid: string;
+    readonly created: string;
+    readonly modified: string;
     readonly call_uuid: string;
-    readonly call_name: string;
-    readonly managing_organization_name: string;
-    readonly state: string;
-    readonly total_proposals: number;
-    readonly proposals_draft: number;
-    readonly proposals_submitted: number;
-    readonly proposals_in_review: number;
-    readonly proposals_accepted: number;
-    readonly proposals_rejected: number;
-    readonly proposals_canceled: number;
-    readonly acceptance_rate: number;
-    readonly total_reviews: number;
-    readonly reviews_completed: number;
-    readonly average_score: number | null;
-    readonly active_rounds: number;
-    readonly last_submission_date: string | null;
+    /**
+     * Identifier of the panel within its call. Derived from the name when left out. Cannot change once the panel exists.
+     */
+    key?: string;
+    name: string;
+    description?: string;
+    /**
+     * Position of the panel in the call's list.
+     */
+    order?: number;
+    /**
+     * The panel's chair, one of its members.
+     */
+    chair?: string | null;
+    readonly chair_name: string | null;
+    /**
+     * Panel members of the call who sit on the panel.
+     */
+    members?: Array<string>;
+    readonly member_details: Array<CallPanelPerson>;
+    /**
+     * Proposals of these science domains go to the panel.
+     */
+    science_domains?: Array<string>;
+    /**
+     * Proposals of these science sub-domains go to the panel, whichever panel their domain maps to.
+     */
+    science_sub_domains?: Array<string>;
+    readonly science_domain_details: Array<CallPanelDomain>;
+    readonly science_sub_domain_details: Array<CallPanelDomain>;
+    /**
+     * How many proposals of the call are routed to the panel.
+     */
+    readonly proposals_count: number;
+};
+
+export type CallPanelDomain = {
+    uuid: string;
+    code: string;
+    name: string;
+};
+
+export type CallPanelPerson = {
+    uuid: string;
+    full_name: string;
+};
+
+export type CallPanelRequest = {
+    /**
+     * Identifier of the panel within its call. Derived from the name when left out. Cannot change once the panel exists.
+     */
+    key?: string;
+    name: string;
+    description?: string;
+    /**
+     * Position of the panel in the call's list.
+     */
+    order?: number;
+    /**
+     * The panel's chair, one of its members.
+     */
+    chair?: string | null;
+    /**
+     * Panel members of the call who sit on the panel.
+     */
+    members?: Array<string>;
+    /**
+     * Proposals of these science domains go to the panel.
+     */
+    science_domains?: Array<string>;
+    /**
+     * Proposals of these science sub-domains go to the panel, whichever panel their domain maps to.
+     */
+    science_sub_domains?: Array<string>;
+};
+
+export type CallPoolSummary = {
+    component_type: string;
+    round_name?: string | null;
+    readonly offered_total: number;
 };
 
 export type CallProposalFieldConfig = {
@@ -4000,6 +4384,110 @@ export type CallProposalFieldConfigRequest = {
     field_description?: ProposalFieldStateEnum;
     field_science_sub_domain?: ProposalFieldStateEnum;
     field_supporting_documentation?: ProposalFieldStateEnum;
+};
+
+export type CallProposalRole = {
+    readonly uuid: string;
+    readonly created: string;
+    readonly modified: string;
+    readonly call_uuid: string;
+    /**
+     * Identifier of the role within its call. Derived from the name when left out. Cannot change once the role exists.
+     */
+    key?: string;
+    name: string;
+    description?: string;
+    /**
+     * Who may hold the role.
+     */
+    eligible_from?: EligibleFromEnum;
+    /**
+     * How many holders an assignment step for this role needs before it can complete.
+     */
+    min_holders?: number;
+    /**
+     * How many people may hold the role on one proposal. Empty: no limit.
+     */
+    max_holders?: number | null;
+    /**
+     * Whether one holder is marked as the lead.
+     */
+    allows_lead?: boolean;
+    /**
+     * How many people may hold the role on the call now; null when any user may.
+     */
+    readonly eligible_count: number | null;
+    /**
+     * Why the call cannot staff the role on a proposal: fewer people may hold it than its minimum of holders. Null when it can.
+     */
+    readonly holders_warning: string | null;
+};
+
+export type CallProposalRoleRequest = {
+    /**
+     * Identifier of the role within its call. Derived from the name when left out. Cannot change once the role exists.
+     */
+    key?: string;
+    name: string;
+    description?: string;
+    /**
+     * Who may hold the role.
+     */
+    eligible_from?: EligibleFromEnum;
+    /**
+     * How many holders an assignment step for this role needs before it can complete.
+     */
+    min_holders?: number;
+    /**
+     * How many people may hold the role on one proposal. Empty: no limit.
+     */
+    max_holders?: number | null;
+    /**
+     * Whether one holder is marked as the lead.
+     */
+    allows_lead?: boolean;
+};
+
+export type CallResourcePool = {
+    readonly uuid: string;
+    readonly url: string;
+    /**
+     * The component rule of a call offering the pool is of. Or name the offering and component instead: a component without a rule gets one bounding nothing.
+     */
+    offering_component_uuid?: string;
+    readonly requested_offering_uuid: string;
+    readonly offering_name: string;
+    /**
+     * Type of the offering component: one billed by its limit that the call offering's plan prices.
+     */
+    readonly component_type: string;
+    /**
+     * The round the pool covers. Empty: the whole call.
+     */
+    round_uuid?: string | null;
+    readonly round_name: string | null;
+    offered_total: number;
+    readonly created: string;
+};
+
+export type CallResourcePoolRequest = {
+    /**
+     * The component rule of a call offering the pool is of. Or name the offering and component instead: a component without a rule gets one bounding nothing.
+     */
+    offering_component_uuid?: string;
+    /**
+     * With component: the call offering the pool is of.
+     */
+    requested_offering?: string;
+    /**
+     * With requested_offering: the type of the component.
+     */
+    component?: string;
+    /**
+     * The round the pool covers. Empty: the whole call.
+     */
+    round_uuid?: string | null;
+    offered_total: number;
 };
 
 export type CallResourceTemplate = {
@@ -4044,6 +4532,24 @@ export type CallResourceTemplateRequest = {
     requested_offering: string;
 };
 
+export type CallReviewerEligibility = {
+    user_email_patterns?: Array<string>;
+    user_affiliations?: Array<string>;
+    user_identity_sources?: Array<string>;
+    user_nationalities?: Array<string>;
+    user_organization_types?: Array<string>;
+    user_assurance_levels?: Array<string>;
+};
+
+export type CallReviewerEligibilityRequest = {
+    user_email_patterns?: Array<string>;
+    user_affiliations?: Array<string>;
+    user_identity_sources?: Array<string>;
+    user_nationalities?: Array<string>;
+    user_organization_types?: Array<string>;
+    user_assurance_levels?: Array<string>;
+};
+
 export type CallReviewerPool = {
     readonly url: string;
     readonly uuid: string;
@@ -4056,6 +4562,10 @@ export type CallReviewerPool = {
      */
     readonly reviewer_uuid: string | null;
     /**
+     * The reviewer's user: the profile's, else the invited user's. Reviews name the reviewer by it.
+     */
+    readonly reviewer_user_uuid: string | null;
+    /**
      * Get reviewer name from profile or invited_user.
      */
     readonly reviewer_name: string | null;
@@ -4067,6 +4577,10 @@ export type CallReviewerPool = {
      * Check if reviewer has a profile.
      */
     readonly has_profile: boolean;
+    /**
+     * The reviewer's standing with the platform operator; only an active reviewer takes on new review work. Empty without a profile.
+     */
+    reviewer_standing: ReviewerStandingEnum | NullEnum | null;
     /**
      * Email address for direct invitations
      */
@@ -4093,6 +4607,10 @@ export type CallReviewerPool = {
     readonly invited_by_name: string;
     readonly invitation_link: string | null;
     readonly invitation_expires_at: string | null;
+    /**
+     * Whether the invitation can no longer be answered because its deadline has passed.
+     */
+    readonly is_expired: boolean;
     readonly created: string;
     /**
      * Count total COIs for this reviewer in this call.
@@ -4140,10 +4658,27 @@ export type CallRound = {
     readonly uuid: string;
     slug?: string;
     start_time: string;
-    cutoff_time: string;
+    /**
+     * When submission closes. Empty: the round stays open until a call manager closes it.
+     */
+    cutoff_time?: string | null;
     readonly call_uuid: string;
     readonly call_name: string;
     status: RoundStatus;
+};
+
+export type CallSaveAsTemplateRequest = {
+    /**
+     * Name of the template. Defaults to the call's name.
+     */
+    name?: string;
+    description?: string;
+};
+
+export type CallScenarioSummary = {
+    key: string;
+    name: string;
+    description: string;
 };
 
 export type CallStates = 'draft' | 'active' | 'archived';
@@ -4233,11 +4768,204 @@ export type CallStatsStep = {
     count: number;
 };
 
+export type CallStepKindEnum = 'applicant_action' | 'assignment' | 'assessment' | 'decision';
+
+export type CallTemplate = {
+    readonly uuid: string;
+    name: string;
+    description?: string;
+    /**
+     * Call document in the export format, as a mapping or a YAML string: call settings and workflow, without rounds, requested offerings or documents.
+     */
+    document: {
+        [key: string]: unknown;
+    };
+    readonly schema_version: number;
+    is_published?: boolean;
+    /**
+     * The preset block of the template's own document: where the process it models comes from; null when it does not say.
+     */
+    preset: CallTemplatePresetInfo | null;
+    /**
+     * Organization, process and reference page of the process this template models; null when it does not say.
+     */
+    origin: CallTemplateOrigin | null;
+    readonly steps: Array<CallTemplateStep>;
+    readonly created_by: string | null;
+    readonly created: string;
+    readonly modified: string;
+    /**
+     * What a call created from the saved document would leave out, such as forms or roles this portal does not have.
+     */
+    readonly warnings: Array<string>;
+    /**
+     * Named paths through the workflow: {key, name, description, request: {offerings, actions}, assertions}. Definitions only: they run as dry runs on each call created from the template.
+     */
+    scenarios?: Array<{
+        [key: string]: unknown;
+    }>;
+};
+
+export type CallTemplateOrigin = {
+    organization: string;
+    process: string;
+    reference_url: string | null;
+    /**
+     * Name of the programme the process belongs to, if any.
+     */
+    programme: string | null;
+};
+
+export type CallTemplatePreset = {
+    key: string;
+    name: string;
+    description: string;
+    steps: Array<CallTemplateStep>;
+    /**
+     * Organization and process the preset models; null when it does not say.
+     */
+    preset: CallTemplatePresetInfo | null;
+    /**
+     * A call template already holds the name this preset would be loaded under: rename or delete it to load the preset.
+     */
+    name_taken: boolean;
+};
+
+export type CallTemplatePresetInfo = {
+    /**
+     * Who runs the process; the programme's organization for a process of a programme, null for a generic pattern naming none.
+     */
+    organization: string | null;
+    organization_url?: string | null;
+    /**
+     * Name of the process modeled.
+     */
+    process: string;
+    /**
+     * Public page describing the process.
+     */
+    reference_url?: string | null;
+    reference_title?: string | null;
+    /**
+     * generic: a pattern any organization can adopt; programme: the process of one named programme.
+     */
+    category: CallTemplatePresetInfoCategoryEnum;
+    tags?: Array<string>;
+    summary: string;
+    /**
+     * The programme the process belongs to; null for a process of no programme, such as a generic one.
+     */
+    programme: CallTemplateProgramme | null;
+};
+
+export type CallTemplatePresetInfoCategoryEnum = 'generic' | 'programme';
+
+export type CallTemplateProgramme = {
+    key: string;
+    name: string;
+    /**
+     * Who runs the programme.
+     */
+    organization: string;
+    organization_url?: string | null;
+    /**
+     * Public page describing the programme.
+     */
+    reference_url?: string | null;
+    summary?: string | null;
+};
+
+export type CallTemplateReference = {
+    uuid: string;
+    name: string;
+    /**
+     * The template's version the call started from.
+     */
+    version: number | null;
+};
+
+export type CallTemplateRequest = {
+    name: string;
+    description?: string;
+    /**
+     * Call document in the export format, as a mapping or a YAML string: call settings and workflow, without rounds, requested offerings or documents.
+     */
+    document: {
+        [key: string]: unknown;
+    };
+    is_published?: boolean;
+    /**
+     * Named paths through the workflow: {key, name, description, request: {offerings, actions}, assertions}. Definitions only: they run as dry runs on each call created from the template.
+     */
+    scenarios?: Array<{
+        [key: string]: unknown;
+    }>;
+};
+
+export type CallTemplateStep = {
+    name: string;
+    kind: string | null;
+    order: number | null;
+    is_enabled: boolean;
+    phase: WorkflowPhaseEnum;
+};
+
+export type CallWorkflowScenarios = {
+    /**
+     * 'running' while a run asked for with run-workflow-scenarios has not finished.
+     */
+    status: CheckRunStatusEnum;
+    /**
+     * When the latest run was asked for.
+     */
+    requested_at: string | null;
+    /**
+     * Why the latest run's results were not kept: the earlier results stay in place.
+     */
+    error: string | null;
+    template: CallTemplateReference | null;
+    scenarios: Array<CallScenarioSummary>;
+    version: number | null;
+    checked_at: string | null;
+    results: Array<ScenarioResult>;
+    totals: ScenarioTotals | null;
+    coverage: ScenarioCoverage | null;
+};
+
 export type CallWorkflowStep = {
     readonly uuid: string;
     readonly created: string;
     readonly modified: string;
-    step: StepEnum;
+    /**
+     * Identifier of the step within its call. Derived from the name when left out. Cannot change once the step exists.
+     */
+    key: string;
+    /**
+     * Deprecated alias of key.
+     */
+    step: string;
+    /**
+     * Behavior of the step; see the workflow_step_kinds endpoint. Required unless the key is one of the default steps. Cannot change once the step exists.
+     */
+    kind: CallStepKindEnum;
+    name: string;
+    description?: string;
+    /**
+     * Position in the call's workflow. A step already there, and every step after it, moves one down. Appended when left out.
+     */
+    order: number;
+    /**
+     * Outcomes the step can be completed with; one of its kind's outcome sets. The kind's default when left out.
+     */
+    outcome_set: OutcomeSetEnum;
+    /**
+     * Outcomes the step can be completed with.
+     */
+    readonly allowed_outcomes: Array<string>;
+    /**
+     * What a negative outcome does to the proposal.
+     */
+    on_negative?: OnNegativeEnum;
     readonly call_uuid: string;
     readonly call_name: string;
     /**
@@ -4245,6 +4973,10 @@ export type CallWorkflowStep = {
      */
     is_enabled?: boolean;
     readonly is_mandatory: boolean;
+    /**
+     * The decision step that settles the award. A call is activated with exactly one enabled.
+     */
+    is_allocation_decision?: boolean;
     /**
      * Duration in days. Used to calculate deadlines.
      */
@@ -4264,11 +4996,47 @@ export type CallWorkflowStep = {
      */
     requires_coi_confirmation?: boolean;
     /**
-     * Minimum reviews required before step can complete.
+     * The conflict-of-interest declaration this step's evaluators confirm; empty for the call's, or the platform's standard one.
+     */
+    coi_declaration_text?: string;
+    /**
+     * Who contributes to the step, each with a contribution of their own: none, requested_offering_team, assigned_reviewers, proposal_role:<id> or call_role:<call_manager|reviewer|panel_member>.
+     */
+    contributor_source?: string;
+    /**
+     * The evaluator role the contributor source names, when it names one.
+     */
+    readonly contributor_proposal_role_uuid: string | null;
+    /**
+     * The evaluator role delegable_to names, when it names one: its holders on the proposal can be handed a slot.
+     */
+    readonly delegable_proposal_role_uuid: string | null;
+    /**
+     * One contribution per offering the proposal requests, which any member of that offering's team may fill.
+     */
+    per_requested_offering?: boolean;
+    /**
+     * Only the lead of the evaluator role the contributor source names contributes: one slot, the lead's, which moves when the lead changes. The step waits while the role has no lead.
+     */
+    contributors_lead_only?: boolean;
+    /**
+     * Who a contribution slot of the step can be handed to by its holder or the call's managers: empty for nobody, offering_team for anyone with a role on the slot's own offering (per-offering steps), or proposal_role:<id> for the holders of an evaluator role on the proposal (per-person steps). The person it is handed to accepts or declines it.
+     */
+    delegable_to?: string;
+    /**
+     * Minimum contributions submitted before the step can complete. On a step without contributors, the minimum of the proposal's submitted reviews.
+     */
+    min_contributions?: number | null;
+    /**
+     * Most contributions the step accepts; no limit when empty.
+     */
+    max_contributions?: number | null;
+    /**
+     * Deprecated alias of min_contributions.
      */
     min_reviewers?: number | null;
     /**
-     * Minimum average score required before this step can complete (a completion gate; it does not auto-reject lower scores).
+     * Minimum average score required before this step can complete with any outcome but declined (a completion gate; it does not auto-reject lower scores). A step with contributors scores its own submitted reviews. A step without contributors that reads input steps takes the score of the latest completed input step that has one: the average of its reviews, else of the rating answers in its checklists. Otherwise all the proposal's submitted reviews count.
      */
     min_score_threshold?: string | null;
     /**
@@ -4276,28 +5044,107 @@ export type CallWorkflowStep = {
      */
     applicant_visible?: boolean;
     /**
-     * Role expected to act on this step.
+     * Role expected to complete this step.
      */
-    responsible_role?: ResponsibleRoleEnum | BlankEnum | NullEnum | null;
+    completer?: ResponsibleRoleEnum | BlankEnum | NullEnum | null;
+    /**
+     * Deprecated alias of completer.
+     */
+    responsible_role?: ResponsibleRoleEnum | NullEnum | null;
+    /**
+     * The call's evaluator role whose holders complete the step; required when the completer is proposal_role.
+     */
+    completer_proposal_role?: string | null;
+    readonly completer_proposal_role_name: string | null;
+    /**
+     * Assignment step: the call's evaluator roles whose holders the completer picks, such as a lead and a second rapporteur.
+     */
+    assigns_roles?: Array<string>;
+    readonly assigns_roles_names: Array<string>;
+    /**
+     * Earlier steps of the call whose outputs this step's contributors and completer read; on an applicant step, whose public parts the applicant reads.
+     */
+    input_steps?: Array<string>;
+    readonly input_steps_names: Array<string>;
+    /**
+     * Why the call cannot give the step the contributions it needs: the evaluator role, call role or reviewer pool it takes them from has fewer people than its minimum. Null when it can.
+     */
+    readonly contributors_warning: string | null;
+    /**
+     * Assessment step: once completed, its report can be released to the applicant, such as a consolidated report or final feedback.
+     */
+    release_to_applicant?: boolean;
+    /**
+     * Assessment step of evaluator-role holders: each holder may suggest reviewers for the proposal while the step is active. The call's managers turn suggestions into pool invitations.
+     */
+    collects_reviewer_suggestions?: boolean;
+    /**
+     * Whoever acts on the step may send the proposal back to the applicant to change the parts they unlock, as often as needed. The proposal stays in review on the step meanwhile. Not for the allocation decision nor an applicant step.
+     */
+    allows_change_requests?: boolean;
+    /**
+     * Per-offering assessment: a contribution may accept a requested offering under conditions. Off, it accepts or rejects it.
+     */
+    allows_conditional_acceptance?: boolean;
     /**
      * How this step advances once a human completes it. 'Automatic' advances to the next step immediately; 'Manual' waits for a separate advance action. Neither auto-decides from review scores.
      */
     transition_mode?: TransitionModeEnum;
     /**
+     * When the step runs: empty to run on every proposal; the key of an earlier step and the outcomes of it, or of its contributions, on which it runs; or the key of an earlier step and "score_spread_above": the points by which the highest and lowest scores its contributions gave must differ for the step to run. A proposal on which it does not hold skips the step. Fixed for a proposal when it is submitted.
+     */
+    run_condition?: StepRunCondition | null;
+    /**
+     * Name of the step the run condition names, for display; null without a condition.
+     */
+    readonly run_condition_step_name: string | null;
+    /**
+     * Start together with the step before it, as one stage: every step of a stage starts at once, and the next stage starts when all of them have ended.
+     */
+    parallel_with_previous?: boolean;
+    /**
+     * Run the step once per round rather than per proposal, such as a panel meeting after the cut-off: the call's managers open it for the round's proposals together, its contributors write one round report each covering their proposals, and it is completed for the round, never on one proposal.
+     */
+    round_scoped?: boolean;
+    /**
+     * When the step runs: in the evaluation, from submission to the award; in an extension, which the applicant of an accepted proposal asks for as often as needed; or in the closing, the final report at the end of the allocation. A phase's steps run in their order, each extension and closing in a run of its own.
+     */
+    phase?: WorkflowPhaseEnum;
+    /**
+     * First step of an extension or closing phase: days before the project's end date. An extension can be asked for until then; the closing opens then (0: on the end date).
+     */
+    project_end_offset_days?: number | null;
+    /**
+     * What each audience's dashboard calls the step, as entered: per audience, while active, once completed, per outcome and while changes are requested. Left out, the computed label stays.
+     */
+    status_labels?: StepStatusLabels | null;
+    /**
      * Allocation decision: require applicant award response after decision.
      */
     include_award_response?: boolean;
+    /**
+     * Allocation decision: approve on reaching this step, as the system, with the award as requested; fall back to the completer when the approval is refused.
+     */
+    decides_automatically?: boolean;
     /**
      * Allocation decision: when a granted proposal takes effect — immediately (on_decision) or on the round's allocation date (fixed_date).
      */
     allocation_time?: AllocationTimeEnum;
     /**
-     * Optional override of catalog ordering.
+     * Deprecated: steps are ordered by order.
      */
     display_order?: number | null;
     criteria?: Array<WorkflowCriterion>;
+    /**
+     * Whether reviewers have scored the step's criteria or submitted a review in it. Its criteria can then be reordered, not changed.
+     */
+    readonly criteria_locked: boolean;
     readonly notification_rules: Array<CallWorkflowStepNotificationRuleNested>;
     readonly responsible_users: Array<WorkflowStepResponsibleUser>;
+    /**
+     * Who the contributor source names on the call: the holders of the call role it names, the reviewers who accepted to join the reviewer pool, or the managers of the offerings accepted into the call. Empty for an evaluator role, which is held per proposal.
+     */
+    readonly contributing_users: Array<WorkflowStepResponsibleUser>;
 };
 
 export type CallWorkflowStepNotificationRule = {
@@ -4307,7 +5154,10 @@ export type CallWorkflowStepNotificationRule = {
     readonly modified: string;
     workflow_step: string;
     readonly workflow_step_uuid: string;
-    step: StepEnum;
+    /**
+     * Identifier of the step within its call. Steps the call was seeded with keep the keys of the former step catalog.
+     */
+    readonly step: string;
     readonly call_uuid: string;
     trigger: TriggerEnum;
     recipient: RecipientEnum;
@@ -4320,6 +5170,11 @@ export type CallWorkflowStepNotificationRule = {
      * Only for an applicant audience: names of the proposal roles whose holders are notified. Empty notifies the proposal creator and every member of the proposal team.
      */
     notified_proposal_roles?: Array<string>;
+    /**
+     * Only for the proposal_role audience: the call's evaluator role whose holders are notified.
+     */
+    proposal_role?: string | null;
+    readonly proposal_role_name: string | null;
 };
 
 export type CallWorkflowStepNotificationRuleNested = {
@@ -4332,6 +5187,8 @@ export type CallWorkflowStepNotificationRuleNested = {
     readonly days_before: number | null;
     readonly is_enabled: boolean;
     readonly notified_proposal_roles: Array<string>;
+    readonly proposal_role: string | null;
+    readonly proposal_role_name: string | null;
 };
 
 export type CallWorkflowStepNotificationRuleRequest = {
@@ -4347,14 +5204,47 @@ export type CallWorkflowStepNotificationRuleRequest = {
      * Only for an applicant audience: names of the proposal roles whose holders are notified. Empty notifies the proposal creator and every member of the proposal team.
      */
     notified_proposal_roles?: Array<string>;
+    /**
+     * Only for the proposal_role audience: the call's evaluator role whose holders are notified.
+     */
+    proposal_role?: string | null;
 };
 
 export type CallWorkflowStepRequest = {
-    step: StepEnum;
+    /**
+     * Identifier of the step within its call. Derived from the name when left out. Cannot change once the step exists.
+     */
+    key?: string;
+    /**
+     * Deprecated alias of key.
+     */
+    step?: string;
+    /**
+     * Behavior of the step; see the workflow_step_kinds endpoint. Required unless the key is one of the default steps. Cannot change once the step exists.
+     */
+    kind?: CallStepKindEnum;
+    name?: string;
+    description?: string;
+    /**
+     * Position in the call's workflow. A step already there, and every step after it, moves one down. Appended when left out.
+     */
+    order?: number;
+    /**
+     * Outcomes the step can be completed with; one of its kind's outcome sets. The kind's default when left out.
+     */
+    outcome_set?: OutcomeSetEnum;
+    /**
+     * What a negative outcome does to the proposal.
+     */
+    on_negative?: OnNegativeEnum;
     /**
      * Whether this step is enabled. Disabled steps are skipped.
      */
     is_enabled?: boolean;
+    /**
+     * The decision step that settles the award. A call is activated with exactly one enabled.
+     */
+    is_allocation_decision?: boolean;
     /**
      * Duration in days. Used to calculate deadlines.
      */
@@ -4373,11 +5263,39 @@ export type CallWorkflowStepRequest = {
      */
     requires_coi_confirmation?: boolean;
     /**
-     * Minimum reviews required before step can complete.
+     * The conflict-of-interest declaration this step's evaluators confirm; empty for the call's, or the platform's standard one.
+     */
+    coi_declaration_text?: string;
+    /**
+     * Who contributes to the step, each with a contribution of their own: none, requested_offering_team, assigned_reviewers, proposal_role:<id> or call_role:<call_manager|reviewer|panel_member>.
+     */
+    contributor_source?: string;
+    /**
+     * One contribution per offering the proposal requests, which any member of that offering's team may fill.
+     */
+    per_requested_offering?: boolean;
+    /**
+     * Only the lead of the evaluator role the contributor source names contributes: one slot, the lead's, which moves when the lead changes. The step waits while the role has no lead.
+     */
+    contributors_lead_only?: boolean;
+    /**
+     * Who a contribution slot of the step can be handed to by its holder or the call's managers: empty for nobody, offering_team for anyone with a role on the slot's own offering (per-offering steps), or proposal_role:<id> for the holders of an evaluator role on the proposal (per-person steps). The person it is handed to accepts or declines it.
+     */
+    delegable_to?: string;
+    /**
+     * Minimum contributions submitted before the step can complete. On a step without contributors, the minimum of the proposal's submitted reviews.
+     */
+    min_contributions?: number | null;
+    /**
+     * Most contributions the step accepts; no limit when empty.
+     */
+    max_contributions?: number | null;
+    /**
+     * Deprecated alias of min_contributions.
      */
     min_reviewers?: number | null;
     /**
-     * Minimum average score required before this step can complete (a completion gate; it does not auto-reject lower scores).
+     * Minimum average score required before this step can complete with any outcome but declined (a completion gate; it does not auto-reject lower scores). A step with contributors scores its own submitted reviews. A step without contributors that reads input steps takes the score of the latest completed input step that has one: the average of its reviews, else of the rating answers in its checklists. Otherwise all the proposal's submitted reviews count.
      */
     min_score_threshold?: string | null;
     /**
@@ -4385,23 +5303,83 @@ export type CallWorkflowStepRequest = {
      */
     applicant_visible?: boolean;
     /**
-     * Role expected to act on this step.
+     * Role expected to complete this step.
      */
-    responsible_role?: ResponsibleRoleEnum | BlankEnum | NullEnum | null;
+    completer?: ResponsibleRoleEnum | BlankEnum | NullEnum | null;
+    /**
+     * Deprecated alias of completer.
+     */
+    responsible_role?: ResponsibleRoleEnum | NullEnum | null;
+    /**
+     * The call's evaluator role whose holders complete the step; required when the completer is proposal_role.
+     */
+    completer_proposal_role?: string | null;
+    /**
+     * Assignment step: the call's evaluator roles whose holders the completer picks, such as a lead and a second rapporteur.
+     */
+    assigns_roles?: Array<string>;
+    /**
+     * Earlier steps of the call whose outputs this step's contributors and completer read; on an applicant step, whose public parts the applicant reads.
+     */
+    input_steps?: Array<string>;
+    /**
+     * Assessment step: once completed, its report can be released to the applicant, such as a consolidated report or final feedback.
+     */
+    release_to_applicant?: boolean;
+    /**
+     * Assessment step of evaluator-role holders: each holder may suggest reviewers for the proposal while the step is active. The call's managers turn suggestions into pool invitations.
+     */
+    collects_reviewer_suggestions?: boolean;
+    /**
+     * Whoever acts on the step may send the proposal back to the applicant to change the parts they unlock, as often as needed. The proposal stays in review on the step meanwhile. Not for the allocation decision nor an applicant step.
+     */
+    allows_change_requests?: boolean;
+    /**
+     * Per-offering assessment: a contribution may accept a requested offering under conditions. Off, it accepts or rejects it.
+     */
+    allows_conditional_acceptance?: boolean;
     /**
      * How this step advances once a human completes it. 'Automatic' advances to the next step immediately; 'Manual' waits for a separate advance action. Neither auto-decides from review scores.
      */
     transition_mode?: TransitionModeEnum;
     /**
+     * When the step runs: empty to run on every proposal; the key of an earlier step and the outcomes of it, or of its contributions, on which it runs; or the key of an earlier step and "score_spread_above": the points by which the highest and lowest scores its contributions gave must differ for the step to run. A proposal on which it does not hold skips the step. Fixed for a proposal when it is submitted.
+     */
+    run_condition?: StepRunConditionRequest | null;
+    /**
+     * Start together with the step before it, as one stage: every step of a stage starts at once, and the next stage starts when all of them have ended.
+     */
+    parallel_with_previous?: boolean;
+    /**
+     * Run the step once per round rather than per proposal, such as a panel meeting after the cut-off: the call's managers open it for the round's proposals together, its contributors write one round report each covering their proposals, and it is completed for the round, never on one proposal.
+     */
+    round_scoped?: boolean;
+    /**
+     * When the step runs: in the evaluation, from submission to the award; in an extension, which the applicant of an accepted proposal asks for as often as needed; or in the closing, the final report at the end of the allocation. A phase's steps run in their order, each extension and closing in a run of its own.
+     */
+    phase?: WorkflowPhaseEnum;
+    /**
+     * First step of an extension or closing phase: days before the project's end date. An extension can be asked for until then; the closing opens then (0: on the end date).
+     */
+    project_end_offset_days?: number | null;
+    /**
+     * What each audience's dashboard calls the step, as entered: per audience, while active, once completed, per outcome and while changes are requested. Left out, the computed label stays.
+     */
+    status_labels?: StepStatusLabelsRequest | null;
+    /**
      * Allocation decision: require applicant award response after decision.
      */
     include_award_response?: boolean;
+    /**
+     * Allocation decision: approve on reaching this step, as the system, with the award as requested; fall back to the completer when the approval is refused.
+     */
+    decides_automatically?: boolean;
     /**
      * Allocation decision: when a granted proposal takes effect — immediately (on_decision) or on the round's allocation date (fixed_date).
      */
     allocation_time?: AllocationTimeEnum;
     /**
-     * Optional override of catalog ordering.
+     * Deprecated: steps are ordered by order.
      */
     display_order?: number | null;
     criteria?: Array<WorkflowCriterionRequest>;
@@ -4475,6 +5453,10 @@ export type CampaignRequest = {
     service_provider: string;
     offerings: Array<string>;
     required_offerings?: Array<string>;
+};
+
+export type CancelChangeRequestRequest = {
+    change_request_uuid: string;
 };
 
 export type CancelRequestResponse = {
@@ -5347,6 +6329,8 @@ export type ChatThreadStatsResponse = {
     satisfaction_rate: number | null;
 };
 
+export type CheckRunStatusEnum = 'idle' | 'running';
+
 export type CheckUniqueBackendIdRequest = {
     /**
      * Backend identifier to check
@@ -5387,6 +6371,11 @@ export type Checklist = {
      */
     checklist_type?: ChecklistTypeEnum;
     readonly questions_count: number;
+    /**
+     * Organization the checklist belongs to; only its calls use it. Empty for a checklist the whole portal shares.
+     */
+    customer?: string | null;
+    readonly customer_name: string | null;
 };
 
 export type ChecklistCompletion = {
@@ -5447,6 +6436,10 @@ export type ChecklistRequest = {
      * Type of compliance this checklist addresses
      */
     checklist_type?: ChecklistTypeEnum;
+    /**
+     * Organization the checklist belongs to; only its calls use it. Empty for a checklist the whole portal shares.
+     */
+    customer?: string | null;
 };
 
 export type ChecklistResponse = {
@@ -5672,10 +6665,16 @@ export type CompleteRoundResponse = {
     readonly slug: string;
     readonly name: string;
     start_time: string;
-    cutoff_time: string;
+    /**
+     * When submission closes. Empty: the round stays open until a call manager closes it.
+     */
+    cutoff_time?: string | null;
     status: RoundStatus;
     allocation_date?: string | null;
-    review_duration_in_days?: number;
+    /**
+     * Deprecated: a review is due when the step it contributes to is (see the round's step due dates). Only a review whose step has no deadline is still due this many days after it was created.
+     */
+    review_duration_in_days?: number | null;
     /**
      * Where the round stands after its cut-off: evaluating, deciding, results_published or closed. Empty before the cut-off.
      */
@@ -5684,6 +6683,10 @@ export type CompleteRoundResponse = {
     readonly deciding_started_at: string | null;
     readonly results_published_at: string | null;
     readonly closed_at: string | null;
+    /**
+     * When the round's results were adopted.
+     */
+    readonly adopted_at: string | null;
     readonly url: string;
     readonly proposals: Array<ProtectedProposalList>;
     readonly results_published_by_name: string | null;
@@ -5696,13 +6699,13 @@ export type CompleteRoundResponse = {
      */
     readonly has_proposals: boolean;
     /**
+     * The call's enabled steps in this round: the due date of each there, how many proposals stand before, at and parked on it, and for a step run once per round its opening and round reports.
+     */
+    readonly round_steps: Array<RoundStep>;
+    /**
      * Why results were published while some proposals of the round still had no decision.
      */
     readonly results_forced_reason: string | null;
-    /**
-     * When the round's results were adopted.
-     */
-    readonly adopted_at: string | null;
     readonly adoption_note: string | null;
     readonly adoption_document: string | null;
     /**
@@ -5719,13 +6722,41 @@ export type CompleteRoundResponse = {
     readonly failed_proposals: Array<PublishRoundResultsFailure>;
 };
 
+export type CompleteRoundWorkflowStepRequest = {
+    /**
+     * UUID of the call step to complete. Either this or step.
+     */
+    step_uuid?: string;
+    /**
+     * Key of the call step to complete. Either this or step_uuid.
+     */
+    step?: string;
+    /**
+     * The outcome every proposal at the step is completed with.
+     */
+    outcome: OutcomeEnum;
+    /**
+     * Feedback per proposal, stored as that proposal's outcome reason for the step. The applicant reads it only once the step's report is released.
+     */
+    feedback?: Array<ProposalFeedbackRequest>;
+};
+
+export type CompleteRoundWorkflowStepResponse = {
+    step_uuid: string;
+    step_name: string;
+    outcome: string;
+    completed: Array<RoundStepProposalResult>;
+    skipped: Array<RoundStepProposalResult>;
+    failed: Array<RoundStepProposalResult>;
+};
+
 export type CompleteWorkflowStepRequest = {
     /**
      * UUID of the workflow step instance the client believes is active. Used to detect concurrent step transitions.
      */
     step_uuid: string;
     /**
-     * Step outcome. Must be in the active step's allow-list. 'rejected' and 'expired' are reserved for system transitions.
+     * Step outcome. Must be in the active step's outcome set. 'rejected' and 'expired' are reserved for system transitions.
      */
     outcome: OutcomeEnum;
     /**
@@ -5736,6 +6767,14 @@ export type CompleteWorkflowStepRequest = {
      * Internal notes captured by the call-management team. Stored on the step instance and never returned to applicants.
      */
     internal_notes?: string;
+    /**
+     * Approve the award although it exceeds what remains of the call's budget. Needs budget_override_reason. On a call enforcing its budget strictly, only staff may override.
+     */
+    override_budget?: boolean;
+    /**
+     * Why the budget is overridden; recorded on the proposal's log.
+     */
+    budget_override_reason?: string;
 };
 
 export type CompleteWorkflowStepResponse = {
@@ -5745,9 +6784,13 @@ export type CompleteWorkflowStepResponse = {
      */
     proposal_state?: string;
     /**
-     * Identifier of the step that just became active.
+     * Key of the step that just became active.
      */
     next_step?: string;
+    /**
+     * UUID of the call step that just became active.
+     */
+    next_step_uuid?: string;
 };
 
 export type ComplianceOverview = {
@@ -6163,6 +7206,7 @@ export type ConflictOfInterest = {
     readonly proposal: string | null;
     readonly proposal_uuid: string;
     readonly proposal_name: string;
+    readonly proposal_slug: string;
     readonly round_uuid: string;
     readonly round_name: string;
     readonly call: string;
@@ -6420,6 +7464,7 @@ export type ConstanceSettings = {
     SEMANTIC_SCHOLAR_API_KEY?: string;
     CROSSREF_MAILTO?: string;
     REVIEWER_PROFILES_ENABLED?: boolean;
+    REVIEWER_PUBLICATION_REQUIRES_APPROVAL?: boolean;
     COI_DETECTION_ENABLED?: boolean;
     COI_DISCLOSURE_REQUIRED?: boolean;
     AUTOMATED_MATCHING_ENABLED?: boolean;
@@ -6785,6 +7830,7 @@ export type ConstanceSettingsRequest = {
     SEMANTIC_SCHOLAR_API_KEY?: string;
     CROSSREF_MAILTO?: string;
     REVIEWER_PROFILES_ENABLED?: boolean;
+    REVIEWER_PUBLICATION_REQUIRES_APPROVAL?: boolean;
     COI_DETECTION_ENABLED?: boolean;
     COI_DISCLOSURE_REQUIRED?: boolean;
     AUTOMATED_MATCHING_ENABLED?: boolean;
@@ -7005,6 +8051,13 @@ export type ConsumptionStatusResponse = {
 export type ContainerFormatEnum = 'bare' | 'ovf' | 'aki' | 'ami' | 'ari';
 
 export type ContentTypeInputEnum = 'resource' | 'resource_project';
+
+export type ContributionDelegationCandidate = {
+    uuid: string;
+    full_name: string;
+};
+
+export type ContributionOutcomeEnum = 'accepted' | 'conditionally_accepted' | 'rejected';
 
 export type CoreAuthToken = {
     /**
@@ -7546,6 +8599,8 @@ export type CreditTransaction = {
 };
 
 export type CurrentQosStatusEnum = 'normal' | 'notification' | 'slowdown' | 'blocked';
+
+export type CurrentStageEnum = 'scheduled' | 'open' | 'awaiting_evaluation' | 'evaluating' | 'deciding' | 'results_published' | 'call_archived' | 'call_draft';
 
 export type Customer = {
     readonly url: string;
@@ -8554,7 +9609,38 @@ export type DeadLetterQueue = {
     readonly note: string;
 };
 
+export type DeclineStepContributionRequest = {
+    contribution_uuid: string;
+    comment?: string;
+};
+
 export type DefaultPermissionEnum = '2770' | '2775' | '2777' | '770' | '775' | '777';
+
+export type DelegateStepContributionRequest = {
+    contribution_uuid: string;
+    /**
+     * Who to hand the slot to, as the step's delegable_to allows; null takes it back.
+     */
+    user_uuid: string | null;
+};
+
+export type DelegateTeamSlotsRequest = {
+    contribution_uuids: Array<string>;
+    /**
+     * Who takes the slots over; null takes them back.
+     */
+    user_uuid: string | null;
+};
+
+export type DelegateTeamSlotsResult = {
+    handed_on: Array<string>;
+    /**
+     * Slots left as they were, with why, by uuid.
+     */
+    skipped: {
+        [key: string]: string;
+    };
+};
 
 export type DeleteAttachmentsRequest = {
     attachment_ids: Array<string>;
@@ -9178,6 +10264,156 @@ export type DryRun = {
     readonly created: string;
 };
 
+export type DryRunActionRequest = {
+    step?: string;
+    outcome?: string;
+    reason?: string;
+    message?: string;
+    contributions?: Array<DryRunContributionRequest>;
+    parts?: Array<string>;
+    reject?: boolean;
+    expire?: boolean;
+    request_changes?: boolean;
+    submit_changes?: boolean;
+    cancel_changes?: boolean;
+    advance?: boolean;
+    publish?: boolean;
+    release?: boolean;
+    /**
+     * Open the step run once per round for the round, have its round reports written and complete it: with ``outcome`` for a decision.
+     */
+    round_step?: boolean;
+    /**
+     * The applicant team asks to extend the accepted proposal.
+     */
+    extend?: boolean;
+    /**
+     * Open the accepted proposal's final report.
+     */
+    final_report?: boolean;
+    /**
+     * Take the budgets the proposal draws on as spent, so its award no longer fits.
+     */
+    exhaust_budget?: boolean;
+    /**
+     * With an outcome: approve past the budget, for this reason.
+     */
+    override_budget?: string;
+    /**
+     * With an outcome on a step its assigned reviewers review: the score of each review, in order, one review per score; each passes the step's threshold by default.
+     */
+    scores?: Array<number>;
+    delegate?: DryRunSlotRequest;
+    reopen?: DryRunSlotRequest;
+};
+
+export type DryRunAudience = {
+    recipient: string;
+    actor: string | null;
+    label: string;
+    count: number;
+    /**
+     * How many were copied (Cc) on the message: on the applicant's mail, the holders of the proposal roles the call copies.
+     */
+    cc_count?: number;
+};
+
+export type DryRunContributionRequest = {
+    offering?: number | null;
+    slot?: number | null;
+    outcome?: string;
+    conditions?: string;
+};
+
+export type DryRunContributionState = {
+    slot: number;
+    offering: number | null;
+    label: string;
+    status: string;
+    outcome: string | null;
+    delegated: boolean;
+};
+
+export type DryRunCoverage = {
+    steps: Array<string>;
+    exercised: Array<string>;
+    outcomes: {
+        [key: string]: DryRunOutcomeCoverage;
+    };
+    contribution_outcomes: {
+        [key: string]: DryRunOutcomeCoverage;
+    };
+};
+
+export type DryRunLogEntry = {
+    index: number;
+    action: number | null;
+    day: number;
+    kind: string;
+    step: string | null;
+    step_name: string | null;
+    text: string;
+    outcome?: string | null;
+    message?: number | null;
+};
+
+export type DryRunMessage = {
+    index: number;
+    action: number | null;
+    day: number;
+    trigger: string;
+    notification: string;
+    enabled: boolean;
+    step: string | null;
+    step_name: string | null;
+    audience: DryRunAudience;
+    single_message: boolean;
+    subject: string;
+    text: string;
+    html: string;
+};
+
+export type DryRunNext = {
+    steps: Array<DryRunNextStep>;
+    can_submit_changes: boolean;
+    can_advance: boolean;
+    can_publish: boolean;
+    can_extend: boolean;
+    can_open_final_report: boolean;
+    can_exhaust_budget: boolean;
+};
+
+export type DryRunNextStep = {
+    step: string;
+    name: string;
+    outcomes: Array<string>;
+    contribution_outcomes: Array<string>;
+    open_slots: Array<number>;
+    can_reject: boolean;
+    can_expire: boolean;
+    can_request_changes: boolean;
+    can_cancel_changes: boolean;
+    can_delegate: boolean;
+    can_reopen: Array<number>;
+    can_release: boolean;
+    /**
+     * Run once per round: taken with a round_step action.
+     */
+    round_step: boolean;
+};
+
+export type DryRunOutcomeCoverage = {
+    available: Array<string>;
+    tried: Array<string>;
+};
+
+export type DryRunRead = {
+    status: number;
+    data: {
+        [key: string]: unknown;
+    } | null;
+};
+
 export type DryRunRequest = {
     plan?: string | null;
     type?: DryRunTypeEnum;
@@ -9187,9 +10423,91 @@ export type DryRunRequest = {
     order_offering?: string | null;
 };
 
+export type DryRunRequestedOffering = {
+    index: number;
+    uuid: string;
+    name: string;
+};
+
+export type DryRunSlotRequest = {
+    offering?: number | null;
+    slot?: number | null;
+};
+
 export type DryRunStateEnum = 1 | 2 | 3 | 4;
 
+export type DryRunStepState = {
+    key: string;
+    name: string;
+    order: number;
+    stage: number;
+    phase: WorkflowPhaseEnum;
+    /**
+     * Which extension request or final report, counted from 1.
+     */
+    run: number | null;
+    round_scoped: boolean;
+    status: string;
+    outcome: string | null;
+    skipped_reason: string | null;
+    condition: {
+        [key: string]: unknown;
+    } | null;
+    started_day: number | null;
+    deadline_day: number | null;
+    ended_day: number | null;
+    is_allocation_decision: boolean;
+    decides_automatically: boolean;
+    automatic: boolean;
+    released: boolean;
+    changes_requested: boolean;
+    outcomes: Array<string>;
+    contribution_outcomes: Array<string>;
+    contributions: Array<DryRunContributionState>;
+    extra: {
+        [key: string]: unknown;
+    };
+};
+
 export type DryRunTypeEnum = 'Create' | 'Update' | 'Terminate' | 'Restore' | 'Pull';
+
+export type DryRunViewAsRequest = {
+    /**
+     * An actor key of the call's workflow description, never a user: applicant, reviewer, offering_team, proposal_role:<key>, ...
+     */
+    role: string;
+    /**
+     * For an offering team: the index of the requested offering.
+     */
+    offering?: number | null;
+    /**
+     * Preview after this many actions; all of them by default.
+     */
+    at?: number | null;
+};
+
+export type DryRunViewAsResult = {
+    role: string;
+    offering: number | null;
+    at: number | null;
+    viewer: DryRunViewer;
+    described_as: string;
+    proposal_uuid: string;
+    responses: {
+        [key: string]: DryRunRead;
+    };
+};
+
+export type DryRunViewer = {
+    uuid: string;
+    username: string;
+    full_name: string;
+    is_staff: boolean;
+    is_support: boolean;
+    permissions: Array<{
+        [key: string]: unknown;
+    }>;
+};
 
 export type DuplicateCallRequestRequest = {
     name: string;
@@ -9198,6 +10516,10 @@ export type DuplicateCallRequestRequest = {
     copy_rounds?: boolean;
     copy_workflow_steps?: boolean;
     copy_resource_templates?: boolean;
+    /**
+     * Copy the resource pools. Needs copy_offerings, which copies the component rules they are set on; a round's pool is copied only with copy_rounds, onto the copied round.
+     */
+    copy_budgets?: boolean;
     copy_role_mappings?: boolean;
     copy_applicant_visibility_config?: boolean;
     copy_proposal_field_config?: boolean;
@@ -9248,7 +10570,7 @@ export type DuplicateOfferingGroup = {
     candidates: Array<DuplicateOfferingCandidate>;
 };
 
-export type EnabledreportingscreensEnum = 'resource-usage' | 'user-usage' | 'quotas' | 'usage-monitoring' | 'usage-trends' | 'organization-summary' | 'project-detail' | 'resources-geography' | 'project-classification' | 'usage-by-customer' | 'usage-by-org-type' | 'usage-by-creator' | 'projects-by-affiliated-organization' | 'call-performance' | 'review-progress' | 'resource-demand' | 'capacity' | 'provider-overview' | 'provider-revenue' | 'provider-orders' | 'provider-resources' | 'provider-customers' | 'provider-offerings' | 'openstack-instances' | 'offering-usage' | 'user-analytics' | 'user-demographics' | 'user-organizations' | 'user-affiliations' | 'user-roles' | 'growth' | 'revenue' | 'pricelist' | 'orders' | 'offering-costs' | 'maintenance-overview' | 'provisioning-stats';
+export type EnabledreportingscreensEnum = 'resource-usage' | 'user-usage' | 'quotas' | 'usage-monitoring' | 'usage-trends' | 'organization-summary' | 'project-detail' | 'resources-geography' | 'project-classification' | 'usage-by-customer' | 'usage-by-org-type' | 'usage-by-creator' | 'projects-by-affiliated-organization' | 'call-reports' | 'capacity' | 'provider-overview' | 'provider-revenue' | 'provider-orders' | 'provider-resources' | 'provider-customers' | 'provider-offerings' | 'openstack-instances' | 'offering-usage' | 'user-analytics' | 'user-demographics' | 'user-organizations' | 'user-affiliations' | 'user-roles' | 'growth' | 'revenue' | 'pricelist' | 'orders' | 'offering-costs' | 'maintenance-overview' | 'provisioning-stats';
 
 export type EarlierInvoiceMonth = {
     /**
@@ -9331,6 +10653,8 @@ export type EligibilityCheck = {
     is_eligible: boolean;
     restrictions: Array<string>;
 };
+
+export type EligibleFromEnum = 'call_role:manager' | 'call_role:reviewer' | 'call_role:panel_member' | 'proposal_reviewers' | 'any_user' | 'panel:chair' | 'panel:member';
 
 export type EligibleProject = {
     uuid: string;
@@ -9690,7 +11014,7 @@ export type EventMetadataResponse = {
      * Map of event group keys to lists of event type enums from EventType
      */
     event_groups: {
-        [key: string]: Array<'access_subnet_creation_succeeded' | 'access_subnet_deletion_succeeded' | 'access_subnet_update_succeeded' | 'offering_access_subnet_creation_succeeded' | 'offering_access_subnet_deletion_succeeded' | 'offering_access_subnet_update_succeeded' | 'allowed_offerings_have_been_updated' | 'admin_object_created' | 'admin_object_deleted' | 'admin_object_updated' | 'attachment_created' | 'attachment_deleted' | 'attachment_updated' | 'auth_logged_in_with_saml2' | 'auth_logged_in_with_username' | 'auth_logged_in_with_oauth' | 'auth_logged_in_with_valimo' | 'auth_logged_in_to_admin_site' | 'auth_logged_out' | 'auth_logged_out_with_saml2' | 'auth_login_failed_with_username' | 'auth_login_failed_with_oauth' | 'auth_login_failed_with_saml2' | 'auth_login_failed_with_valimo' | 'auth_login_failed_to_admin_site' | 'block_creation_of_new_resources' | 'block_modification_of_existing_resources' | 'call_document_added' | 'call_document_removed' | 'create_of_affiliate_by_staff' | 'create_of_credit_by_staff' | 'create_of_project_credit_by_staff' | 'credit_reclassified_as_paid' | 'credit_topped_up' | 'custom_notification' | 'customer_creation_succeeded' | 'customer_deletion_succeeded' | 'customer_update_succeeded' | 'customer_permission_review_created' | 'customer_permission_review_closed' | 'droplet_resize_scheduled' | 'droplet_resize_succeeded' | 'freeipa_profile_created' | 'freeipa_profile_deleted' | 'freeipa_profile_disabled' | 'freeipa_profile_enabled' | 'granted_credit_expired' | 'invoice_canceled' | 'invoice_created' | 'invoice_item_created' | 'invoice_item_deleted' | 'invoice_item_updated' | 'invoice_paid' | 'issue_creation_succeeded' | 'issue_deletion_succeeded' | 'issue_update_succeeded' | 'marketplace_offering_component_created' | 'marketplace_offering_component_deleted' | 'marketplace_offering_component_updated' | 'marketplace_offering_created' | 'marketplace_offering_deleted' | 'marketplace_offering_merge_created' | 'marketplace_offering_merge_executed' | 'marketplace_offering_merge_failed' | 'marketplace_offering_merge_undone' | 'marketplace_offering_merge_verification_failed' | 'marketplace_offering_updated' | 'marketplace_offering_options_updated' | 'marketplace_offering_resource_options_updated' | 'marketplace_offering_user_created' | 'marketplace_offering_user_updated' | 'marketplace_offering_user_deleted' | 'marketplace_offering_user_restriction_updated' | 'marketplace_provider_project_group_gid_updated' | 'marketplace_order_approved' | 'marketplace_order_completed' | 'marketplace_order_created' | 'marketplace_order_failed' | 'marketplace_order_rejected' | 'marketplace_order_terminated' | 'marketplace_order_unlinked' | 'marketplace_plan_archived' | 'marketplace_plan_component_current_price_updated' | 'marketplace_plan_component_future_price_updated' | 'marketplace_plan_component_quota_updated' | 'marketplace_plan_created' | 'marketplace_plan_updated' | 'marketplace_plan_deleted' | 'marketplace_resource_create_canceled' | 'marketplace_resource_create_failed' | 'marketplace_resource_create_requested' | 'marketplace_resource_create_succeeded' | 'marketplace_resource_downscaled' | 'marketplace_resource_erred_on_backend' | 'marketplace_resource_paused' | 'marketplace_resource_terminate_canceled' | 'marketplace_resource_terminate_failed' | 'marketplace_resource_terminate_requested' | 'marketplace_resource_terminate_succeeded' | 'marketplace_resource_unlinked' | 'marketplace_resource_update_canceled' | 'marketplace_resource_update_end_date_succeeded' | 'marketplace_resource_api_key_requested' | 'marketplace_resource_api_key_rotated' | 'marketplace_resource_api_key_paused' | 'marketplace_resource_api_key_resumed' | 'marketplace_resource_api_key_updated' | 'marketplace_resource_api_key_deleted' | 'marketplace_resource_api_key_failed' | 'marketplace_resource_api_key_revealed' | 'marketplace_resource_update_failed' | 'marketplace_resource_update_limits_failed' | 'marketplace_resource_update_limits_succeeded' | 'marketplace_resource_spending_limits_updated' | 'marketplace_resource_plan_switched' | 'marketplace_resource_project_created' | 'marketplace_resource_project_recovered' | 'marketplace_resource_project_removed' | 'marketplace_resource_update_requested' | 'marketplace_resource_update_succeeded' | 'marketplace_resource_limit_change_request_created' | 'marketplace_resource_limit_change_request_approved' | 'marketplace_resource_limit_change_request_rejected' | 'marketplace_resource_end_date_change_request_created' | 'marketplace_resource_end_date_change_request_approved' | 'marketplace_resource_end_date_change_request_rejected' | 'marketplace_resource_end_date_change_request_canceled' | 'maintenance_announcement_cancelled' | 'maintenance_announcement_completed' | 'maintenance_announcement_created' | 'maintenance_announcement_deleted' | 'maintenance_announcement_scheduled' | 'maintenance_announcement_started' | 'maintenance_announcement_unscheduled' | 'maintenance_announcement_updated' | 'notify_external_user' | 'notify_organization_owners' | 'notify_project_team' | 'openstack_floating_ip_attached' | 'openstack_floating_ip_connected' | 'openstack_floating_ip_description_updated' | 'openstack_floating_ip_detached' | 'openstack_floating_ip_disconnected' | 'openstack_instance_security_groups_changed' | 'openstack_network_cleaned' | 'openstack_network_created' | 'openstack_network_deleted' | 'openstack_network_imported' | 'openstack_network_pulled' | 'openstack_network_updated' | 'openstack_load_balancer_created' | 'openstack_load_balancer_updated' | 'openstack_load_balancer_deleted' | 'openstack_load_balancer_security_groups_changed' | 'openstack_listener_created' | 'openstack_listener_updated' | 'openstack_listener_deleted' | 'openstack_pool_created' | 'openstack_pool_updated' | 'openstack_pool_deleted' | 'openstack_pool_member_created' | 'openstack_pool_member_updated' | 'openstack_pool_member_deleted' | 'openstack_port_cleaned' | 'openstack_port_created' | 'openstack_port_deleted' | 'openstack_port_imported' | 'openstack_port_pulled' | 'openstack_port_updated' | 'openstack_port_security_enabled' | 'openstack_port_security_disabled' | 'openstack_port_allowed_address_pairs_changed' | 'openstack_port_security_groups_changed' | 'openstack_rbac_policy_created' | 'openstack_rbac_policy_deleted' | 'openstack_router_interface_added' | 'openstack_router_interface_removed' | 'openstack_router_updated' | 'openstack_subnet_host_routes_changed' | 'openstack_security_group_cleaned' | 'openstack_security_group_created' | 'openstack_security_group_deleted' | 'openstack_security_group_imported' | 'openstack_security_group_pulled' | 'openstack_security_group_rule_cleaned' | 'openstack_security_group_rule_created' | 'openstack_security_group_rule_deleted' | 'openstack_security_group_rule_imported' | 'openstack_security_group_rule_updated' | 'openstack_security_group_rules_changed' | 'openstack_security_group_updated' | 'openstack_security_group_added_remotely' | 'openstack_security_group_removed_remotely' | 'openstack_security_group_added_locally' | 'openstack_security_group_removed_locally' | 'openstack_server_group_cleaned' | 'openstack_server_group_created' | 'openstack_server_group_deleted' | 'openstack_server_group_imported' | 'openstack_server_group_pulled' | 'openstack_subnet_cleaned' | 'openstack_subnet_created' | 'openstack_subnet_deleted' | 'openstack_subnet_imported' | 'openstack_subnet_pulled' | 'openstack_subnet_updated' | 'openstack_tenant_quota_limit_updated' | 'payment_added' | 'payment_created' | 'payment_removed' | 'policy_created' | 'policy_deleted' | 'policy_notification' | 'policy_updated' | 'project_creation_succeeded' | 'project_deletion_succeeded' | 'project_deletion_triggered' | 'project_update_request_approved' | 'project_update_request_created' | 'project_update_request_rejected' | 'project_end_date_change_request_approved' | 'project_end_date_change_request_created' | 'project_end_date_change_request_rejected' | 'project_update_succeeded' | 'project_permission_review_created' | 'project_permission_review_closed' | 'proposal_canceled' | 'proposal_document_added' | 'proposal_draft_carried_over' | 'proposal_document_removed' | 'proposal_decision_reopened' | 'proposal_rejected_at_round_completion' | 'proposal_workflow_advanced' | 'round_closed' | 'round_decision_started' | 'round_evaluation_started' | 'round_results_published' | 'round_undecided_proposals_rejected' | 'query_executed' | 'increase_of_customer_credit_due_to_affiliate_fee' | 'reduction_of_customer_credit' | 'reduction_of_customer_credit_due_to_minimal_consumption' | 'reduction_of_customer_expected_consumption' | 'reduction_of_project_credit' | 'reduction_of_project_credit_due_to_minimal_consumption' | 'reduction_of_project_expected_consumption' | 'request_downscaling' | 'request_pausing' | 'request_slurm_resource_downscaling' | 'request_slurm_resource_pausing' | 'reset_downscaling' | 'reset_member_restriction' | 'reset_pausing' | 'resource_assign_floating_ip_failed' | 'resource_assign_floating_ip_scheduled' | 'resource_assign_floating_ip_succeeded' | 'resource_attach_failed' | 'resource_attach_scheduled' | 'resource_attach_succeeded' | 'resource_backup_creation_failed' | 'resource_backup_creation_scheduled' | 'resource_backup_creation_succeeded' | 'resource_backup_deletion_failed' | 'resource_backup_deletion_scheduled' | 'resource_backup_deletion_succeeded' | 'resource_backup_restoration_failed' | 'resource_backup_restoration_scheduled' | 'resource_backup_restoration_succeeded' | 'resource_change_flavor_failed' | 'resource_change_flavor_scheduled' | 'resource_change_flavor_succeeded' | 'resource_creation_failed' | 'resource_creation_scheduled' | 'resource_creation_succeeded' | 'resource_deletion_failed' | 'resource_deletion_scheduled' | 'resource_deletion_succeeded' | 'resource_detach_failed' | 'resource_detach_scheduled' | 'resource_detach_succeeded' | 'resource_extend_failed' | 'resource_extend_scheduled' | 'resource_extend_succeeded' | 'resource_extend_volume_failed' | 'resource_extend_volume_scheduled' | 'resource_extend_volume_succeeded' | 'resource_hard_reboot_failed' | 'resource_hard_reboot_scheduled' | 'resource_hard_reboot_succeeded' | 'resource_import_succeeded' | 'resource_pull_failed' | 'resource_pull_scheduled' | 'resource_pull_succeeded' | 'resource_rescue_failed' | 'resource_rescue_scheduled' | 'resource_rescue_succeeded' | 'resource_restart_failed' | 'resource_restart_scheduled' | 'resource_restart_succeeded' | 'resource_retype_failed' | 'resource_retype_scheduled' | 'resource_retype_succeeded' | 'resource_robot_account_created' | 'resource_robot_account_deleted' | 'resource_robot_account_state_changed' | 'resource_robot_account_updated' | 'resource_start_failed' | 'resource_start_scheduled' | 'resource_start_succeeded' | 'resource_stop_failed' | 'resource_stop_scheduled' | 'resource_stop_succeeded' | 'resource_unassign_floating_ip_failed' | 'resource_unassign_floating_ip_scheduled' | 'resource_unassign_floating_ip_succeeded' | 'resource_unrescue_failed' | 'resource_unrescue_scheduled' | 'resource_unrescue_succeeded' | 'resource_update_allowed_address_pairs_failed' | 'resource_update_allowed_address_pairs_scheduled' | 'resource_update_allowed_address_pairs_succeeded' | 'resource_update_floating_ips_failed' | 'resource_update_floating_ips_scheduled' | 'resource_update_floating_ips_succeeded' | 'resource_update_metadata_failed' | 'resource_update_metadata_scheduled' | 'resource_update_metadata_succeeded' | 'resource_update_ports_failed' | 'resource_update_ports_scheduled' | 'resource_update_ports_succeeded' | 'resource_update_security_groups_failed' | 'resource_update_security_groups_scheduled' | 'resource_update_security_groups_succeeded' | 'resource_update_succeeded' | 'restrict_members' | 'review_canceled' | 'reviewer_workload_limit_overridden' | 'role_cloned' | 'role_concealed' | 'role_definition_created' | 'role_definition_deleted' | 'role_definition_updated' | 'role_disabled' | 'role_enabled' | 'role_granted' | 'role_revealed' | 'role_revoked' | 'role_updated' | 'roll_back_customer_credit' | 'roll_back_project_credit' | 'service_account_created' | 'service_account_deleted' | 'service_account_updated' | 'set_to_zero_overdue_credit' | 'slurm_policy_evaluation' | 'ssh_key_creation_succeeded' | 'ssh_key_deletion_succeeded' | 'terminate_resources' | 'token_created' | 'token_lifetime_updated' | 'token_viewed' | 'update_of_affiliate_by_staff' | 'update_of_credit_by_staff' | 'update_of_project_credit_by_staff' | 'automatic_credit_adjustment' | 'user_activated' | 'user_blocked' | 'user_creation_succeeded' | 'user_data_accessed' | 'user_deactivated' | 'user_deactivated_no_roles' | 'user_deletion_succeeded' | 'user_details_update_succeeded' | 'user_has_been_created_by_staff' | 'user_password_updated' | 'user_password_updated_by_staff' | 'user_password_removed_by_staff' | 'matrix_password_generated' | 'matrix_recovery_key_escrowed' | 'matrix_recovery_key_viewed' | 'matrix_encryption_reset_started' | 'user_update_succeeded' | 'user_group_invitation_updated' | 'user_invitation_updated' | 'user_invitation_deleted' | 'terms_of_service_consent_granted' | 'terms_of_service_consent_revoked' | 'user_terms_of_service_accepted' | 'chat_session_accessed' | 'chat_thread_accessed' | 'chat_injection_detected' | 'chat_pii_detected' | 'chat_feedback_submitted' | 'feedback_survey_answered' | 'onboarding_verification_deleted' | 'onboarding_verification_deleted_by_task' | 'pat_created' | 'pat_revoked' | 'pat_rotated' | 'pat_expired' | 'pat_used_from_new_ip' | 'pat_access_denied_from_ip' | 'pat_network_acl_updated' | 'pat_authentication_rejected' | 'oidc_token_revoked' | 'oidc_token_refresh_failed' | 'passkey_registered' | 'passkey_renamed' | 'passkey_revoked' | 'passkey_revoked_by_staff' | 'passkey_authentication_succeeded' | 'passkey_authentication_failed' | 'event_consumer_registered_with_broad_credential' | 'event_consumer_webhook_updated' | 'event_consumer_resync_requested'>;
+        [key: string]: Array<'access_subnet_creation_succeeded' | 'access_subnet_deletion_succeeded' | 'access_subnet_update_succeeded' | 'offering_access_subnet_creation_succeeded' | 'offering_access_subnet_deletion_succeeded' | 'offering_access_subnet_update_succeeded' | 'allowed_offerings_have_been_updated' | 'admin_object_created' | 'admin_object_deleted' | 'admin_object_updated' | 'attachment_created' | 'attachment_deleted' | 'attachment_updated' | 'auth_logged_in_with_saml2' | 'auth_logged_in_with_username' | 'auth_logged_in_with_oauth' | 'auth_logged_in_with_valimo' | 'auth_logged_in_to_admin_site' | 'auth_logged_out' | 'auth_logged_out_with_saml2' | 'auth_login_failed_with_username' | 'auth_login_failed_with_oauth' | 'auth_login_failed_with_saml2' | 'auth_login_failed_with_valimo' | 'auth_login_failed_to_admin_site' | 'block_creation_of_new_resources' | 'block_modification_of_existing_resources' | 'call_document_added' | 'call_document_removed' | 'create_of_affiliate_by_staff' | 'create_of_credit_by_staff' | 'create_of_project_credit_by_staff' | 'credit_reclassified_as_paid' | 'credit_topped_up' | 'custom_notification' | 'customer_creation_succeeded' | 'customer_deletion_succeeded' | 'customer_update_succeeded' | 'customer_permission_review_created' | 'customer_permission_review_closed' | 'droplet_resize_scheduled' | 'droplet_resize_succeeded' | 'freeipa_profile_created' | 'freeipa_profile_deleted' | 'freeipa_profile_disabled' | 'freeipa_profile_enabled' | 'granted_credit_expired' | 'invoice_canceled' | 'invoice_created' | 'invoice_item_created' | 'invoice_item_deleted' | 'invoice_item_updated' | 'invoice_paid' | 'issue_creation_succeeded' | 'issue_deletion_succeeded' | 'issue_update_succeeded' | 'marketplace_offering_component_created' | 'marketplace_offering_component_deleted' | 'marketplace_offering_component_updated' | 'marketplace_offering_created' | 'marketplace_offering_deleted' | 'marketplace_offering_merge_created' | 'marketplace_offering_merge_executed' | 'marketplace_offering_merge_failed' | 'marketplace_offering_merge_undone' | 'marketplace_offering_merge_verification_failed' | 'marketplace_offering_updated' | 'marketplace_offering_options_updated' | 'marketplace_offering_resource_options_updated' | 'marketplace_offering_user_created' | 'marketplace_offering_user_updated' | 'marketplace_offering_user_deleted' | 'marketplace_offering_user_restriction_updated' | 'marketplace_provider_project_group_gid_updated' | 'marketplace_order_approved' | 'marketplace_order_completed' | 'marketplace_order_created' | 'marketplace_order_failed' | 'marketplace_order_rejected' | 'marketplace_order_terminated' | 'marketplace_order_unlinked' | 'marketplace_plan_archived' | 'marketplace_plan_component_current_price_updated' | 'marketplace_plan_component_future_price_updated' | 'marketplace_plan_component_quota_updated' | 'marketplace_plan_created' | 'marketplace_plan_updated' | 'marketplace_plan_deleted' | 'marketplace_resource_create_canceled' | 'marketplace_resource_create_failed' | 'marketplace_resource_create_requested' | 'marketplace_resource_create_succeeded' | 'marketplace_resource_downscaled' | 'marketplace_resource_erred_on_backend' | 'marketplace_resource_paused' | 'marketplace_resource_terminate_canceled' | 'marketplace_resource_terminate_failed' | 'marketplace_resource_terminate_requested' | 'marketplace_resource_terminate_succeeded' | 'marketplace_resource_unlinked' | 'marketplace_resource_update_canceled' | 'marketplace_resource_update_end_date_succeeded' | 'marketplace_resource_api_key_requested' | 'marketplace_resource_api_key_rotated' | 'marketplace_resource_api_key_paused' | 'marketplace_resource_api_key_resumed' | 'marketplace_resource_api_key_updated' | 'marketplace_resource_api_key_deleted' | 'marketplace_resource_api_key_failed' | 'marketplace_resource_api_key_revealed' | 'marketplace_resource_update_failed' | 'marketplace_resource_update_limits_failed' | 'marketplace_resource_update_limits_succeeded' | 'marketplace_resource_spending_limits_updated' | 'marketplace_resource_plan_switched' | 'marketplace_resource_project_created' | 'marketplace_resource_project_recovered' | 'marketplace_resource_project_removed' | 'marketplace_resource_update_requested' | 'marketplace_resource_update_succeeded' | 'marketplace_resource_limit_change_request_created' | 'marketplace_resource_limit_change_request_approved' | 'marketplace_resource_limit_change_request_rejected' | 'marketplace_resource_end_date_change_request_created' | 'marketplace_resource_end_date_change_request_approved' | 'marketplace_resource_end_date_change_request_rejected' | 'marketplace_resource_end_date_change_request_canceled' | 'maintenance_announcement_cancelled' | 'maintenance_announcement_completed' | 'maintenance_announcement_created' | 'maintenance_announcement_deleted' | 'maintenance_announcement_scheduled' | 'maintenance_announcement_started' | 'maintenance_announcement_unscheduled' | 'maintenance_announcement_updated' | 'notify_external_user' | 'notify_organization_owners' | 'notify_project_team' | 'openstack_floating_ip_attached' | 'openstack_floating_ip_connected' | 'openstack_floating_ip_description_updated' | 'openstack_floating_ip_detached' | 'openstack_floating_ip_disconnected' | 'openstack_instance_security_groups_changed' | 'openstack_network_cleaned' | 'openstack_network_created' | 'openstack_network_deleted' | 'openstack_network_imported' | 'openstack_network_pulled' | 'openstack_network_updated' | 'openstack_load_balancer_created' | 'openstack_load_balancer_updated' | 'openstack_load_balancer_deleted' | 'openstack_load_balancer_security_groups_changed' | 'openstack_listener_created' | 'openstack_listener_updated' | 'openstack_listener_deleted' | 'openstack_pool_created' | 'openstack_pool_updated' | 'openstack_pool_deleted' | 'openstack_pool_member_created' | 'openstack_pool_member_updated' | 'openstack_pool_member_deleted' | 'openstack_port_cleaned' | 'openstack_port_created' | 'openstack_port_deleted' | 'openstack_port_imported' | 'openstack_port_pulled' | 'openstack_port_updated' | 'openstack_port_security_enabled' | 'openstack_port_security_disabled' | 'openstack_port_allowed_address_pairs_changed' | 'openstack_port_security_groups_changed' | 'openstack_rbac_policy_created' | 'openstack_rbac_policy_deleted' | 'openstack_router_interface_added' | 'openstack_router_interface_removed' | 'openstack_router_updated' | 'openstack_subnet_host_routes_changed' | 'openstack_security_group_cleaned' | 'openstack_security_group_created' | 'openstack_security_group_deleted' | 'openstack_security_group_imported' | 'openstack_security_group_pulled' | 'openstack_security_group_rule_cleaned' | 'openstack_security_group_rule_created' | 'openstack_security_group_rule_deleted' | 'openstack_security_group_rule_imported' | 'openstack_security_group_rule_updated' | 'openstack_security_group_rules_changed' | 'openstack_security_group_updated' | 'openstack_security_group_added_remotely' | 'openstack_security_group_removed_remotely' | 'openstack_security_group_added_locally' | 'openstack_security_group_removed_locally' | 'openstack_server_group_cleaned' | 'openstack_server_group_created' | 'openstack_server_group_deleted' | 'openstack_server_group_imported' | 'openstack_server_group_pulled' | 'openstack_subnet_cleaned' | 'openstack_subnet_created' | 'openstack_subnet_deleted' | 'openstack_subnet_imported' | 'openstack_subnet_pulled' | 'openstack_subnet_updated' | 'openstack_tenant_quota_limit_updated' | 'payment_added' | 'payment_created' | 'payment_removed' | 'policy_created' | 'policy_deleted' | 'policy_notification' | 'policy_updated' | 'project_creation_succeeded' | 'project_deletion_succeeded' | 'project_deletion_triggered' | 'project_update_request_approved' | 'project_update_request_created' | 'project_update_request_rejected' | 'project_end_date_change_request_approved' | 'project_end_date_change_request_created' | 'project_end_date_change_request_rejected' | 'project_update_succeeded' | 'project_permission_review_created' | 'project_permission_review_closed' | 'proposal_applicant_responded' | 'proposal_award_changed' | 'proposal_edited_for_applicant' | 'proposal_automatic_decision_deferred' | 'proposal_budget_overridden' | 'proposal_canceled' | 'proposal_change_request_closed' | 'proposal_changes_requested' | 'proposal_changes_submitted' | 'proposal_contribution_reopened' | 'proposal_contribution_submitted' | 'proposal_document_added' | 'proposal_created' | 'proposal_draft_carried_over' | 'proposal_document_removed' | 'proposal_decision_held' | 'proposal_decision_published' | 'proposal_decision_reopened' | 'proposal_evaluator_assigned' | 'proposal_evaluator_revoked' | 'proposal_panel_changed' | 'proposal_rejected_at_round_completion' | 'proposal_report_released' | 'proposal_run_closed' | 'proposal_run_opened' | 'proposal_step_completed' | 'proposal_step_skipped' | 'proposal_step_started' | 'proposal_step_withdrawn' | 'proposal_submitted' | 'proposal_workflow_advanced' | 'proposal_workflow_notification_sent' | 'proposal_notification_sent' | 'round_closed' | 'round_decision_started' | 'round_evaluation_started' | 'round_results_adopted' | 'round_report_reopened' | 'round_report_submitted' | 'round_results_published' | 'round_step_opened' | 'round_allocated_in_submission_order' | 'round_undecided_proposals_rejected' | 'query_executed' | 'increase_of_customer_credit_due_to_affiliate_fee' | 'reduction_of_customer_credit' | 'reduction_of_customer_credit_due_to_minimal_consumption' | 'reduction_of_customer_expected_consumption' | 'reduction_of_project_credit' | 'reduction_of_project_credit_due_to_minimal_consumption' | 'reduction_of_project_expected_consumption' | 'request_downscaling' | 'request_pausing' | 'request_slurm_resource_downscaling' | 'request_slurm_resource_pausing' | 'reset_downscaling' | 'reset_member_restriction' | 'reset_pausing' | 'resource_assign_floating_ip_failed' | 'resource_assign_floating_ip_scheduled' | 'resource_assign_floating_ip_succeeded' | 'resource_attach_failed' | 'resource_attach_scheduled' | 'resource_attach_succeeded' | 'resource_backup_creation_failed' | 'resource_backup_creation_scheduled' | 'resource_backup_creation_succeeded' | 'resource_backup_deletion_failed' | 'resource_backup_deletion_scheduled' | 'resource_backup_deletion_succeeded' | 'resource_backup_restoration_failed' | 'resource_backup_restoration_scheduled' | 'resource_backup_restoration_succeeded' | 'resource_change_flavor_failed' | 'resource_change_flavor_scheduled' | 'resource_change_flavor_succeeded' | 'resource_creation_failed' | 'resource_creation_scheduled' | 'resource_creation_succeeded' | 'resource_deletion_failed' | 'resource_deletion_scheduled' | 'resource_deletion_succeeded' | 'resource_detach_failed' | 'resource_detach_scheduled' | 'resource_detach_succeeded' | 'resource_extend_failed' | 'resource_extend_scheduled' | 'resource_extend_succeeded' | 'resource_extend_volume_failed' | 'resource_extend_volume_scheduled' | 'resource_extend_volume_succeeded' | 'resource_hard_reboot_failed' | 'resource_hard_reboot_scheduled' | 'resource_hard_reboot_succeeded' | 'resource_import_succeeded' | 'resource_pull_failed' | 'resource_pull_scheduled' | 'resource_pull_succeeded' | 'resource_rescue_failed' | 'resource_rescue_scheduled' | 'resource_rescue_succeeded' | 'resource_restart_failed' | 'resource_restart_scheduled' | 'resource_restart_succeeded' | 'resource_retype_failed' | 'resource_retype_scheduled' | 'resource_retype_succeeded' | 'resource_robot_account_created' | 'resource_robot_account_deleted' | 'resource_robot_account_state_changed' | 'resource_robot_account_updated' | 'resource_start_failed' | 'resource_start_scheduled' | 'resource_start_succeeded' | 'resource_stop_failed' | 'resource_stop_scheduled' | 'resource_stop_succeeded' | 'resource_unassign_floating_ip_failed' | 'resource_unassign_floating_ip_scheduled' | 'resource_unassign_floating_ip_succeeded' | 'resource_unrescue_failed' | 'resource_unrescue_scheduled' | 'resource_unrescue_succeeded' | 'resource_update_allowed_address_pairs_failed' | 'resource_update_allowed_address_pairs_scheduled' | 'resource_update_allowed_address_pairs_succeeded' | 'resource_update_floating_ips_failed' | 'resource_update_floating_ips_scheduled' | 'resource_update_floating_ips_succeeded' | 'resource_update_metadata_failed' | 'resource_update_metadata_scheduled' | 'resource_update_metadata_succeeded' | 'resource_update_ports_failed' | 'resource_update_ports_scheduled' | 'resource_update_ports_succeeded' | 'resource_update_security_groups_failed' | 'resource_update_security_groups_scheduled' | 'resource_update_security_groups_succeeded' | 'resource_update_succeeded' | 'restrict_members' | 'review_accepted' | 'review_assigned' | 'review_canceled' | 'review_declined' | 'review_rejected' | 'review_submitted' | 'reviewer_workload_limit_overridden' | 'reviewer_invitation_force_accepted' | 'review_assignment_force_unblocked' | 'reviewer_standing_changed' | 'reviewer_publication_requested' | 'reviewer_publication_approved' | 'reviewer_publication_rejected' | 'role_cloned' | 'role_concealed' | 'role_definition_created' | 'role_definition_deleted' | 'role_definition_updated' | 'role_disabled' | 'role_enabled' | 'role_granted' | 'role_revealed' | 'role_revoked' | 'role_updated' | 'roll_back_customer_credit' | 'roll_back_project_credit' | 'service_account_created' | 'service_account_deleted' | 'service_account_updated' | 'set_to_zero_overdue_credit' | 'slurm_policy_evaluation' | 'ssh_key_creation_succeeded' | 'ssh_key_deletion_succeeded' | 'terminate_resources' | 'token_created' | 'token_lifetime_updated' | 'token_viewed' | 'update_of_affiliate_by_staff' | 'update_of_credit_by_staff' | 'update_of_project_credit_by_staff' | 'automatic_credit_adjustment' | 'user_activated' | 'user_blocked' | 'user_creation_succeeded' | 'user_data_accessed' | 'user_deactivated' | 'user_deactivated_no_roles' | 'user_deletion_succeeded' | 'user_details_update_succeeded' | 'user_has_been_created_by_staff' | 'user_password_updated' | 'user_password_updated_by_staff' | 'user_password_removed_by_staff' | 'matrix_password_generated' | 'matrix_recovery_key_escrowed' | 'matrix_recovery_key_viewed' | 'matrix_encryption_reset_started' | 'user_update_succeeded' | 'user_group_invitation_updated' | 'user_invitation_updated' | 'user_invitation_deleted' | 'terms_of_service_consent_granted' | 'terms_of_service_consent_revoked' | 'user_terms_of_service_accepted' | 'chat_session_accessed' | 'chat_thread_accessed' | 'chat_injection_detected' | 'chat_pii_detected' | 'chat_feedback_submitted' | 'feedback_survey_answered' | 'onboarding_verification_deleted' | 'onboarding_verification_deleted_by_task' | 'pat_created' | 'pat_revoked' | 'pat_rotated' | 'pat_expired' | 'pat_used_from_new_ip' | 'pat_access_denied_from_ip' | 'pat_network_acl_updated' | 'pat_authentication_rejected' | 'oidc_token_revoked' | 'oidc_token_refresh_failed' | 'passkey_registered' | 'passkey_renamed' | 'passkey_revoked' | 'passkey_revoked_by_staff' | 'passkey_authentication_succeeded' | 'passkey_authentication_failed' | 'event_consumer_registered_with_broad_credential' | 'event_consumer_webhook_updated' | 'event_consumer_resync_requested'>;
     };
 };
 
@@ -9785,7 +11109,7 @@ export type EventSubscriptionRequest = {
     observable_objects?: Array<EventSubscriptionObservableObjectRequest>;
 };
 
-export type EventTypesEnum = 'access_subnet_creation_succeeded' | 'access_subnet_deletion_succeeded' | 'access_subnet_update_succeeded' | 'offering_access_subnet_creation_succeeded' | 'offering_access_subnet_deletion_succeeded' | 'offering_access_subnet_update_succeeded' | 'allowed_offerings_have_been_updated' | 'admin_object_created' | 'admin_object_deleted' | 'admin_object_updated' | 'attachment_created' | 'attachment_deleted' | 'attachment_updated' | 'auth_logged_in_with_saml2' | 'auth_logged_in_with_username' | 'auth_logged_in_with_oauth' | 'auth_logged_in_with_valimo' | 'auth_logged_in_to_admin_site' | 'auth_logged_out' | 'auth_logged_out_with_saml2' | 'auth_login_failed_with_username' | 'auth_login_failed_with_oauth' | 'auth_login_failed_with_saml2' | 'auth_login_failed_with_valimo' | 'auth_login_failed_to_admin_site' | 'block_creation_of_new_resources' | 'block_modification_of_existing_resources' | 'call_document_added' | 'call_document_removed' | 'create_of_affiliate_by_staff' | 'create_of_credit_by_staff' | 'create_of_project_credit_by_staff' | 'credit_reclassified_as_paid' | 'credit_topped_up' | 'custom_notification' | 'customer_creation_succeeded' | 'customer_deletion_succeeded' | 'customer_update_succeeded' | 'customer_permission_review_created' | 'customer_permission_review_closed' | 'droplet_resize_scheduled' | 'droplet_resize_succeeded' | 'freeipa_profile_created' | 'freeipa_profile_deleted' | 'freeipa_profile_disabled' | 'freeipa_profile_enabled' | 'granted_credit_expired' | 'invoice_canceled' | 'invoice_created' | 'invoice_item_created' | 'invoice_item_deleted' | 'invoice_item_updated' | 'invoice_paid' | 'issue_creation_succeeded' | 'issue_deletion_succeeded' | 'issue_update_succeeded' | 'marketplace_offering_component_created' | 'marketplace_offering_component_deleted' | 'marketplace_offering_component_updated' | 'marketplace_offering_created' | 'marketplace_offering_deleted' | 'marketplace_offering_merge_created' | 'marketplace_offering_merge_executed' | 'marketplace_offering_merge_failed' | 'marketplace_offering_merge_undone' | 'marketplace_offering_merge_verification_failed' | 'marketplace_offering_updated' | 'marketplace_offering_options_updated' | 'marketplace_offering_resource_options_updated' | 'marketplace_offering_user_created' | 'marketplace_offering_user_updated' | 'marketplace_offering_user_deleted' | 'marketplace_offering_user_restriction_updated' | 'marketplace_provider_project_group_gid_updated' | 'marketplace_order_approved' | 'marketplace_order_completed' | 'marketplace_order_created' | 'marketplace_order_failed' | 'marketplace_order_rejected' | 'marketplace_order_terminated' | 'marketplace_order_unlinked' | 'marketplace_plan_archived' | 'marketplace_plan_component_current_price_updated' | 'marketplace_plan_component_future_price_updated' | 'marketplace_plan_component_quota_updated' | 'marketplace_plan_created' | 'marketplace_plan_updated' | 'marketplace_plan_deleted' | 'marketplace_resource_create_canceled' | 'marketplace_resource_create_failed' | 'marketplace_resource_create_requested' | 'marketplace_resource_create_succeeded' | 'marketplace_resource_downscaled' | 'marketplace_resource_erred_on_backend' | 'marketplace_resource_paused' | 'marketplace_resource_terminate_canceled' | 'marketplace_resource_terminate_failed' | 'marketplace_resource_terminate_requested' | 'marketplace_resource_terminate_succeeded' | 'marketplace_resource_unlinked' | 'marketplace_resource_update_canceled' | 'marketplace_resource_update_end_date_succeeded' | 'marketplace_resource_api_key_requested' | 'marketplace_resource_api_key_rotated' | 'marketplace_resource_api_key_paused' | 'marketplace_resource_api_key_resumed' | 'marketplace_resource_api_key_updated' | 'marketplace_resource_api_key_deleted' | 'marketplace_resource_api_key_failed' | 'marketplace_resource_api_key_revealed' | 'marketplace_resource_update_failed' | 'marketplace_resource_update_limits_failed' | 'marketplace_resource_update_limits_succeeded' | 'marketplace_resource_spending_limits_updated' | 'marketplace_resource_plan_switched' | 'marketplace_resource_project_created' | 'marketplace_resource_project_recovered' | 'marketplace_resource_project_removed' | 'marketplace_resource_update_requested' | 'marketplace_resource_update_succeeded' | 'marketplace_resource_limit_change_request_created' | 'marketplace_resource_limit_change_request_approved' | 'marketplace_resource_limit_change_request_rejected' | 'marketplace_resource_end_date_change_request_created' | 'marketplace_resource_end_date_change_request_approved' | 'marketplace_resource_end_date_change_request_rejected' | 'marketplace_resource_end_date_change_request_canceled' | 'maintenance_announcement_cancelled' | 'maintenance_announcement_completed' | 'maintenance_announcement_created' | 'maintenance_announcement_deleted' | 'maintenance_announcement_scheduled' | 'maintenance_announcement_started' | 'maintenance_announcement_unscheduled' | 'maintenance_announcement_updated' | 'notify_external_user' | 'notify_organization_owners' | 'notify_project_team' | 'openstack_floating_ip_attached' | 'openstack_floating_ip_connected' | 'openstack_floating_ip_description_updated' | 'openstack_floating_ip_detached' | 'openstack_floating_ip_disconnected' | 'openstack_instance_security_groups_changed' | 'openstack_network_cleaned' | 'openstack_network_created' | 'openstack_network_deleted' | 'openstack_network_imported' | 'openstack_network_pulled' | 'openstack_network_updated' | 'openstack_load_balancer_created' | 'openstack_load_balancer_updated' | 'openstack_load_balancer_deleted' | 'openstack_load_balancer_security_groups_changed' | 'openstack_listener_created' | 'openstack_listener_updated' | 'openstack_listener_deleted' | 'openstack_pool_created' | 'openstack_pool_updated' | 'openstack_pool_deleted' | 'openstack_pool_member_created' | 'openstack_pool_member_updated' | 'openstack_pool_member_deleted' | 'openstack_port_cleaned' | 'openstack_port_created' | 'openstack_port_deleted' | 'openstack_port_imported' | 'openstack_port_pulled' | 'openstack_port_updated' | 'openstack_port_security_enabled' | 'openstack_port_security_disabled' | 'openstack_port_allowed_address_pairs_changed' | 'openstack_port_security_groups_changed' | 'openstack_rbac_policy_created' | 'openstack_rbac_policy_deleted' | 'openstack_router_interface_added' | 'openstack_router_interface_removed' | 'openstack_router_updated' | 'openstack_subnet_host_routes_changed' | 'openstack_security_group_cleaned' | 'openstack_security_group_created' | 'openstack_security_group_deleted' | 'openstack_security_group_imported' | 'openstack_security_group_pulled' | 'openstack_security_group_rule_cleaned' | 'openstack_security_group_rule_created' | 'openstack_security_group_rule_deleted' | 'openstack_security_group_rule_imported' | 'openstack_security_group_rule_updated' | 'openstack_security_group_rules_changed' | 'openstack_security_group_updated' | 'openstack_security_group_added_remotely' | 'openstack_security_group_removed_remotely' | 'openstack_security_group_added_locally' | 'openstack_security_group_removed_locally' | 'openstack_server_group_cleaned' | 'openstack_server_group_created' | 'openstack_server_group_deleted' | 'openstack_server_group_imported' | 'openstack_server_group_pulled' | 'openstack_subnet_cleaned' | 'openstack_subnet_created' | 'openstack_subnet_deleted' | 'openstack_subnet_imported' | 'openstack_subnet_pulled' | 'openstack_subnet_updated' | 'openstack_tenant_quota_limit_updated' | 'payment_added' | 'payment_created' | 'payment_removed' | 'policy_created' | 'policy_deleted' | 'policy_notification' | 'policy_updated' | 'project_creation_succeeded' | 'project_deletion_succeeded' | 'project_deletion_triggered' | 'project_update_request_approved' | 'project_update_request_created' | 'project_update_request_rejected' | 'project_end_date_change_request_approved' | 'project_end_date_change_request_created' | 'project_end_date_change_request_rejected' | 'project_update_succeeded' | 'project_permission_review_created' | 'project_permission_review_closed' | 'proposal_canceled' | 'proposal_document_added' | 'proposal_draft_carried_over' | 'proposal_document_removed' | 'proposal_decision_reopened' | 'proposal_rejected_at_round_completion' | 'proposal_workflow_advanced' | 'round_closed' | 'round_decision_started' | 'round_evaluation_started' | 'round_results_published' | 'round_undecided_proposals_rejected' | 'query_executed' | 'increase_of_customer_credit_due_to_affiliate_fee' | 'reduction_of_customer_credit' | 'reduction_of_customer_credit_due_to_minimal_consumption' | 'reduction_of_customer_expected_consumption' | 'reduction_of_project_credit' | 'reduction_of_project_credit_due_to_minimal_consumption' | 'reduction_of_project_expected_consumption' | 'request_downscaling' | 'request_pausing' | 'request_slurm_resource_downscaling' | 'request_slurm_resource_pausing' | 'reset_downscaling' | 'reset_member_restriction' | 'reset_pausing' | 'resource_assign_floating_ip_failed' | 'resource_assign_floating_ip_scheduled' | 'resource_assign_floating_ip_succeeded' | 'resource_attach_failed' | 'resource_attach_scheduled' | 'resource_attach_succeeded' | 'resource_backup_creation_failed' | 'resource_backup_creation_scheduled' | 'resource_backup_creation_succeeded' | 'resource_backup_deletion_failed' | 'resource_backup_deletion_scheduled' | 'resource_backup_deletion_succeeded' | 'resource_backup_restoration_failed' | 'resource_backup_restoration_scheduled' | 'resource_backup_restoration_succeeded' | 'resource_change_flavor_failed' | 'resource_change_flavor_scheduled' | 'resource_change_flavor_succeeded' | 'resource_creation_failed' | 'resource_creation_scheduled' | 'resource_creation_succeeded' | 'resource_deletion_failed' | 'resource_deletion_scheduled' | 'resource_deletion_succeeded' | 'resource_detach_failed' | 'resource_detach_scheduled' | 'resource_detach_succeeded' | 'resource_extend_failed' | 'resource_extend_scheduled' | 'resource_extend_succeeded' | 'resource_extend_volume_failed' | 'resource_extend_volume_scheduled' | 'resource_extend_volume_succeeded' | 'resource_hard_reboot_failed' | 'resource_hard_reboot_scheduled' | 'resource_hard_reboot_succeeded' | 'resource_import_succeeded' | 'resource_pull_failed' | 'resource_pull_scheduled' | 'resource_pull_succeeded' | 'resource_rescue_failed' | 'resource_rescue_scheduled' | 'resource_rescue_succeeded' | 'resource_restart_failed' | 'resource_restart_scheduled' | 'resource_restart_succeeded' | 'resource_retype_failed' | 'resource_retype_scheduled' | 'resource_retype_succeeded' | 'resource_robot_account_created' | 'resource_robot_account_deleted' | 'resource_robot_account_state_changed' | 'resource_robot_account_updated' | 'resource_start_failed' | 'resource_start_scheduled' | 'resource_start_succeeded' | 'resource_stop_failed' | 'resource_stop_scheduled' | 'resource_stop_succeeded' | 'resource_unassign_floating_ip_failed' | 'resource_unassign_floating_ip_scheduled' | 'resource_unassign_floating_ip_succeeded' | 'resource_unrescue_failed' | 'resource_unrescue_scheduled' | 'resource_unrescue_succeeded' | 'resource_update_allowed_address_pairs_failed' | 'resource_update_allowed_address_pairs_scheduled' | 'resource_update_allowed_address_pairs_succeeded' | 'resource_update_floating_ips_failed' | 'resource_update_floating_ips_scheduled' | 'resource_update_floating_ips_succeeded' | 'resource_update_metadata_failed' | 'resource_update_metadata_scheduled' | 'resource_update_metadata_succeeded' | 'resource_update_ports_failed' | 'resource_update_ports_scheduled' | 'resource_update_ports_succeeded' | 'resource_update_security_groups_failed' | 'resource_update_security_groups_scheduled' | 'resource_update_security_groups_succeeded' | 'resource_update_succeeded' | 'restrict_members' | 'review_canceled' | 'reviewer_workload_limit_overridden' | 'role_cloned' | 'role_concealed' | 'role_definition_created' | 'role_definition_deleted' | 'role_definition_updated' | 'role_disabled' | 'role_enabled' | 'role_granted' | 'role_revealed' | 'role_revoked' | 'role_updated' | 'roll_back_customer_credit' | 'roll_back_project_credit' | 'service_account_created' | 'service_account_deleted' | 'service_account_updated' | 'set_to_zero_overdue_credit' | 'slurm_policy_evaluation' | 'ssh_key_creation_succeeded' | 'ssh_key_deletion_succeeded' | 'terminate_resources' | 'token_created' | 'token_lifetime_updated' | 'token_viewed' | 'update_of_affiliate_by_staff' | 'update_of_credit_by_staff' | 'update_of_project_credit_by_staff' | 'automatic_credit_adjustment' | 'user_activated' | 'user_blocked' | 'user_creation_succeeded' | 'user_data_accessed' | 'user_deactivated' | 'user_deactivated_no_roles' | 'user_deletion_succeeded' | 'user_details_update_succeeded' | 'user_has_been_created_by_staff' | 'user_password_updated' | 'user_password_updated_by_staff' | 'user_password_removed_by_staff' | 'matrix_password_generated' | 'matrix_recovery_key_escrowed' | 'matrix_recovery_key_viewed' | 'matrix_encryption_reset_started' | 'user_update_succeeded' | 'user_group_invitation_updated' | 'user_invitation_updated' | 'user_invitation_deleted' | 'terms_of_service_consent_granted' | 'terms_of_service_consent_revoked' | 'user_terms_of_service_accepted' | 'chat_session_accessed' | 'chat_thread_accessed' | 'chat_injection_detected' | 'chat_pii_detected' | 'chat_feedback_submitted' | 'feedback_survey_answered' | 'onboarding_verification_deleted' | 'onboarding_verification_deleted_by_task' | 'pat_created' | 'pat_revoked' | 'pat_rotated' | 'pat_expired' | 'pat_used_from_new_ip' | 'pat_access_denied_from_ip' | 'pat_network_acl_updated' | 'pat_authentication_rejected' | 'oidc_token_revoked' | 'oidc_token_refresh_failed' | 'passkey_registered' | 'passkey_renamed' | 'passkey_revoked' | 'passkey_revoked_by_staff' | 'passkey_authentication_succeeded' | 'passkey_authentication_failed' | 'event_consumer_registered_with_broad_credential' | 'event_consumer_webhook_updated' | 'event_consumer_resync_requested';
+export type EventTypesEnum = 'access_subnet_creation_succeeded' | 'access_subnet_deletion_succeeded' | 'access_subnet_update_succeeded' | 'offering_access_subnet_creation_succeeded' | 'offering_access_subnet_deletion_succeeded' | 'offering_access_subnet_update_succeeded' | 'allowed_offerings_have_been_updated' | 'admin_object_created' | 'admin_object_deleted' | 'admin_object_updated' | 'attachment_created' | 'attachment_deleted' | 'attachment_updated' | 'auth_logged_in_with_saml2' | 'auth_logged_in_with_username' | 'auth_logged_in_with_oauth' | 'auth_logged_in_with_valimo' | 'auth_logged_in_to_admin_site' | 'auth_logged_out' | 'auth_logged_out_with_saml2' | 'auth_login_failed_with_username' | 'auth_login_failed_with_oauth' | 'auth_login_failed_with_saml2' | 'auth_login_failed_with_valimo' | 'auth_login_failed_to_admin_site' | 'block_creation_of_new_resources' | 'block_modification_of_existing_resources' | 'call_document_added' | 'call_document_removed' | 'create_of_affiliate_by_staff' | 'create_of_credit_by_staff' | 'create_of_project_credit_by_staff' | 'credit_reclassified_as_paid' | 'credit_topped_up' | 'custom_notification' | 'customer_creation_succeeded' | 'customer_deletion_succeeded' | 'customer_update_succeeded' | 'customer_permission_review_created' | 'customer_permission_review_closed' | 'droplet_resize_scheduled' | 'droplet_resize_succeeded' | 'freeipa_profile_created' | 'freeipa_profile_deleted' | 'freeipa_profile_disabled' | 'freeipa_profile_enabled' | 'granted_credit_expired' | 'invoice_canceled' | 'invoice_created' | 'invoice_item_created' | 'invoice_item_deleted' | 'invoice_item_updated' | 'invoice_paid' | 'issue_creation_succeeded' | 'issue_deletion_succeeded' | 'issue_update_succeeded' | 'marketplace_offering_component_created' | 'marketplace_offering_component_deleted' | 'marketplace_offering_component_updated' | 'marketplace_offering_created' | 'marketplace_offering_deleted' | 'marketplace_offering_merge_created' | 'marketplace_offering_merge_executed' | 'marketplace_offering_merge_failed' | 'marketplace_offering_merge_undone' | 'marketplace_offering_merge_verification_failed' | 'marketplace_offering_updated' | 'marketplace_offering_options_updated' | 'marketplace_offering_resource_options_updated' | 'marketplace_offering_user_created' | 'marketplace_offering_user_updated' | 'marketplace_offering_user_deleted' | 'marketplace_offering_user_restriction_updated' | 'marketplace_provider_project_group_gid_updated' | 'marketplace_order_approved' | 'marketplace_order_completed' | 'marketplace_order_created' | 'marketplace_order_failed' | 'marketplace_order_rejected' | 'marketplace_order_terminated' | 'marketplace_order_unlinked' | 'marketplace_plan_archived' | 'marketplace_plan_component_current_price_updated' | 'marketplace_plan_component_future_price_updated' | 'marketplace_plan_component_quota_updated' | 'marketplace_plan_created' | 'marketplace_plan_updated' | 'marketplace_plan_deleted' | 'marketplace_resource_create_canceled' | 'marketplace_resource_create_failed' | 'marketplace_resource_create_requested' | 'marketplace_resource_create_succeeded' | 'marketplace_resource_downscaled' | 'marketplace_resource_erred_on_backend' | 'marketplace_resource_paused' | 'marketplace_resource_terminate_canceled' | 'marketplace_resource_terminate_failed' | 'marketplace_resource_terminate_requested' | 'marketplace_resource_terminate_succeeded' | 'marketplace_resource_unlinked' | 'marketplace_resource_update_canceled' | 'marketplace_resource_update_end_date_succeeded' | 'marketplace_resource_api_key_requested' | 'marketplace_resource_api_key_rotated' | 'marketplace_resource_api_key_paused' | 'marketplace_resource_api_key_resumed' | 'marketplace_resource_api_key_updated' | 'marketplace_resource_api_key_deleted' | 'marketplace_resource_api_key_failed' | 'marketplace_resource_api_key_revealed' | 'marketplace_resource_update_failed' | 'marketplace_resource_update_limits_failed' | 'marketplace_resource_update_limits_succeeded' | 'marketplace_resource_spending_limits_updated' | 'marketplace_resource_plan_switched' | 'marketplace_resource_project_created' | 'marketplace_resource_project_recovered' | 'marketplace_resource_project_removed' | 'marketplace_resource_update_requested' | 'marketplace_resource_update_succeeded' | 'marketplace_resource_limit_change_request_created' | 'marketplace_resource_limit_change_request_approved' | 'marketplace_resource_limit_change_request_rejected' | 'marketplace_resource_end_date_change_request_created' | 'marketplace_resource_end_date_change_request_approved' | 'marketplace_resource_end_date_change_request_rejected' | 'marketplace_resource_end_date_change_request_canceled' | 'maintenance_announcement_cancelled' | 'maintenance_announcement_completed' | 'maintenance_announcement_created' | 'maintenance_announcement_deleted' | 'maintenance_announcement_scheduled' | 'maintenance_announcement_started' | 'maintenance_announcement_unscheduled' | 'maintenance_announcement_updated' | 'notify_external_user' | 'notify_organization_owners' | 'notify_project_team' | 'openstack_floating_ip_attached' | 'openstack_floating_ip_connected' | 'openstack_floating_ip_description_updated' | 'openstack_floating_ip_detached' | 'openstack_floating_ip_disconnected' | 'openstack_instance_security_groups_changed' | 'openstack_network_cleaned' | 'openstack_network_created' | 'openstack_network_deleted' | 'openstack_network_imported' | 'openstack_network_pulled' | 'openstack_network_updated' | 'openstack_load_balancer_created' | 'openstack_load_balancer_updated' | 'openstack_load_balancer_deleted' | 'openstack_load_balancer_security_groups_changed' | 'openstack_listener_created' | 'openstack_listener_updated' | 'openstack_listener_deleted' | 'openstack_pool_created' | 'openstack_pool_updated' | 'openstack_pool_deleted' | 'openstack_pool_member_created' | 'openstack_pool_member_updated' | 'openstack_pool_member_deleted' | 'openstack_port_cleaned' | 'openstack_port_created' | 'openstack_port_deleted' | 'openstack_port_imported' | 'openstack_port_pulled' | 'openstack_port_updated' | 'openstack_port_security_enabled' | 'openstack_port_security_disabled' | 'openstack_port_allowed_address_pairs_changed' | 'openstack_port_security_groups_changed' | 'openstack_rbac_policy_created' | 'openstack_rbac_policy_deleted' | 'openstack_router_interface_added' | 'openstack_router_interface_removed' | 'openstack_router_updated' | 'openstack_subnet_host_routes_changed' | 'openstack_security_group_cleaned' | 'openstack_security_group_created' | 'openstack_security_group_deleted' | 'openstack_security_group_imported' | 'openstack_security_group_pulled' | 'openstack_security_group_rule_cleaned' | 'openstack_security_group_rule_created' | 'openstack_security_group_rule_deleted' | 'openstack_security_group_rule_imported' | 'openstack_security_group_rule_updated' | 'openstack_security_group_rules_changed' | 'openstack_security_group_updated' | 'openstack_security_group_added_remotely' | 'openstack_security_group_removed_remotely' | 'openstack_security_group_added_locally' | 'openstack_security_group_removed_locally' | 'openstack_server_group_cleaned' | 'openstack_server_group_created' | 'openstack_server_group_deleted' | 'openstack_server_group_imported' | 'openstack_server_group_pulled' | 'openstack_subnet_cleaned' | 'openstack_subnet_created' | 'openstack_subnet_deleted' | 'openstack_subnet_imported' | 'openstack_subnet_pulled' | 'openstack_subnet_updated' | 'openstack_tenant_quota_limit_updated' | 'payment_added' | 'payment_created' | 'payment_removed' | 'policy_created' | 'policy_deleted' | 'policy_notification' | 'policy_updated' | 'project_creation_succeeded' | 'project_deletion_succeeded' | 'project_deletion_triggered' | 'project_update_request_approved' | 'project_update_request_created' | 'project_update_request_rejected' | 'project_end_date_change_request_approved' | 'project_end_date_change_request_created' | 'project_end_date_change_request_rejected' | 'project_update_succeeded' | 'project_permission_review_created' | 'project_permission_review_closed' | 'proposal_applicant_responded' | 'proposal_award_changed' | 'proposal_edited_for_applicant' | 'proposal_automatic_decision_deferred' | 'proposal_budget_overridden' | 'proposal_canceled' | 'proposal_change_request_closed' | 'proposal_changes_requested' | 'proposal_changes_submitted' | 'proposal_contribution_reopened' | 'proposal_contribution_submitted' | 'proposal_document_added' | 'proposal_created' | 'proposal_draft_carried_over' | 'proposal_document_removed' | 'proposal_decision_held' | 'proposal_decision_published' | 'proposal_decision_reopened' | 'proposal_evaluator_assigned' | 'proposal_evaluator_revoked' | 'proposal_panel_changed' | 'proposal_rejected_at_round_completion' | 'proposal_report_released' | 'proposal_run_closed' | 'proposal_run_opened' | 'proposal_step_completed' | 'proposal_step_skipped' | 'proposal_step_started' | 'proposal_step_withdrawn' | 'proposal_submitted' | 'proposal_workflow_advanced' | 'proposal_workflow_notification_sent' | 'proposal_notification_sent' | 'round_closed' | 'round_decision_started' | 'round_evaluation_started' | 'round_results_adopted' | 'round_report_reopened' | 'round_report_submitted' | 'round_results_published' | 'round_step_opened' | 'round_allocated_in_submission_order' | 'round_undecided_proposals_rejected' | 'query_executed' | 'increase_of_customer_credit_due_to_affiliate_fee' | 'reduction_of_customer_credit' | 'reduction_of_customer_credit_due_to_minimal_consumption' | 'reduction_of_customer_expected_consumption' | 'reduction_of_project_credit' | 'reduction_of_project_credit_due_to_minimal_consumption' | 'reduction_of_project_expected_consumption' | 'request_downscaling' | 'request_pausing' | 'request_slurm_resource_downscaling' | 'request_slurm_resource_pausing' | 'reset_downscaling' | 'reset_member_restriction' | 'reset_pausing' | 'resource_assign_floating_ip_failed' | 'resource_assign_floating_ip_scheduled' | 'resource_assign_floating_ip_succeeded' | 'resource_attach_failed' | 'resource_attach_scheduled' | 'resource_attach_succeeded' | 'resource_backup_creation_failed' | 'resource_backup_creation_scheduled' | 'resource_backup_creation_succeeded' | 'resource_backup_deletion_failed' | 'resource_backup_deletion_scheduled' | 'resource_backup_deletion_succeeded' | 'resource_backup_restoration_failed' | 'resource_backup_restoration_scheduled' | 'resource_backup_restoration_succeeded' | 'resource_change_flavor_failed' | 'resource_change_flavor_scheduled' | 'resource_change_flavor_succeeded' | 'resource_creation_failed' | 'resource_creation_scheduled' | 'resource_creation_succeeded' | 'resource_deletion_failed' | 'resource_deletion_scheduled' | 'resource_deletion_succeeded' | 'resource_detach_failed' | 'resource_detach_scheduled' | 'resource_detach_succeeded' | 'resource_extend_failed' | 'resource_extend_scheduled' | 'resource_extend_succeeded' | 'resource_extend_volume_failed' | 'resource_extend_volume_scheduled' | 'resource_extend_volume_succeeded' | 'resource_hard_reboot_failed' | 'resource_hard_reboot_scheduled' | 'resource_hard_reboot_succeeded' | 'resource_import_succeeded' | 'resource_pull_failed' | 'resource_pull_scheduled' | 'resource_pull_succeeded' | 'resource_rescue_failed' | 'resource_rescue_scheduled' | 'resource_rescue_succeeded' | 'resource_restart_failed' | 'resource_restart_scheduled' | 'resource_restart_succeeded' | 'resource_retype_failed' | 'resource_retype_scheduled' | 'resource_retype_succeeded' | 'resource_robot_account_created' | 'resource_robot_account_deleted' | 'resource_robot_account_state_changed' | 'resource_robot_account_updated' | 'resource_start_failed' | 'resource_start_scheduled' | 'resource_start_succeeded' | 'resource_stop_failed' | 'resource_stop_scheduled' | 'resource_stop_succeeded' | 'resource_unassign_floating_ip_failed' | 'resource_unassign_floating_ip_scheduled' | 'resource_unassign_floating_ip_succeeded' | 'resource_unrescue_failed' | 'resource_unrescue_scheduled' | 'resource_unrescue_succeeded' | 'resource_update_allowed_address_pairs_failed' | 'resource_update_allowed_address_pairs_scheduled' | 'resource_update_allowed_address_pairs_succeeded' | 'resource_update_floating_ips_failed' | 'resource_update_floating_ips_scheduled' | 'resource_update_floating_ips_succeeded' | 'resource_update_metadata_failed' | 'resource_update_metadata_scheduled' | 'resource_update_metadata_succeeded' | 'resource_update_ports_failed' | 'resource_update_ports_scheduled' | 'resource_update_ports_succeeded' | 'resource_update_security_groups_failed' | 'resource_update_security_groups_scheduled' | 'resource_update_security_groups_succeeded' | 'resource_update_succeeded' | 'restrict_members' | 'review_accepted' | 'review_assigned' | 'review_canceled' | 'review_declined' | 'review_rejected' | 'review_submitted' | 'reviewer_workload_limit_overridden' | 'reviewer_invitation_force_accepted' | 'review_assignment_force_unblocked' | 'reviewer_standing_changed' | 'reviewer_publication_requested' | 'reviewer_publication_approved' | 'reviewer_publication_rejected' | 'role_cloned' | 'role_concealed' | 'role_definition_created' | 'role_definition_deleted' | 'role_definition_updated' | 'role_disabled' | 'role_enabled' | 'role_granted' | 'role_revealed' | 'role_revoked' | 'role_updated' | 'roll_back_customer_credit' | 'roll_back_project_credit' | 'service_account_created' | 'service_account_deleted' | 'service_account_updated' | 'set_to_zero_overdue_credit' | 'slurm_policy_evaluation' | 'ssh_key_creation_succeeded' | 'ssh_key_deletion_succeeded' | 'terminate_resources' | 'token_created' | 'token_lifetime_updated' | 'token_viewed' | 'update_of_affiliate_by_staff' | 'update_of_credit_by_staff' | 'update_of_project_credit_by_staff' | 'automatic_credit_adjustment' | 'user_activated' | 'user_blocked' | 'user_creation_succeeded' | 'user_data_accessed' | 'user_deactivated' | 'user_deactivated_no_roles' | 'user_deletion_succeeded' | 'user_details_update_succeeded' | 'user_has_been_created_by_staff' | 'user_password_updated' | 'user_password_updated_by_staff' | 'user_password_removed_by_staff' | 'matrix_password_generated' | 'matrix_recovery_key_escrowed' | 'matrix_recovery_key_viewed' | 'matrix_encryption_reset_started' | 'user_update_succeeded' | 'user_group_invitation_updated' | 'user_invitation_updated' | 'user_invitation_deleted' | 'terms_of_service_consent_granted' | 'terms_of_service_consent_revoked' | 'user_terms_of_service_accepted' | 'chat_session_accessed' | 'chat_thread_accessed' | 'chat_injection_detected' | 'chat_pii_detected' | 'chat_feedback_submitted' | 'feedback_survey_answered' | 'onboarding_verification_deleted' | 'onboarding_verification_deleted_by_task' | 'pat_created' | 'pat_revoked' | 'pat_rotated' | 'pat_expired' | 'pat_used_from_new_ip' | 'pat_access_denied_from_ip' | 'pat_network_acl_updated' | 'pat_authentication_rejected' | 'oidc_token_revoked' | 'oidc_token_refresh_failed' | 'passkey_registered' | 'passkey_renamed' | 'passkey_revoked' | 'passkey_revoked_by_staff' | 'passkey_authentication_succeeded' | 'passkey_authentication_failed' | 'event_consumer_registered_with_broad_credential' | 'event_consumer_webhook_updated' | 'event_consumer_resync_requested';
 
 export type ExecuteActionErrorResponse = {
     error: string;
@@ -10480,7 +11804,7 @@ export type GenerateAssignmentsRequest = {
      */
     proposal_uuids?: Array<string>;
     /**
-     * Number of reviewers to assign per proposal. If not specified, uses call's minimum_number_of_reviewers setting.
+     * Number of reviewers to assign per proposal. If not specified, uses the call's matching configuration min_reviewers_per_proposal (3 when the call has none). May not exceed its max_reviewers_per_proposal.
      */
     reviewers_per_proposal?: number;
 };
@@ -12208,6 +13532,26 @@ export type InvitationUpdateRequest = {
     role?: string;
 };
 
+export type InviteSuggestedReviewersResponse = {
+    /**
+     * New pool invitations sent.
+     */
+    invited: number;
+    /**
+     * Expired invitations sent again.
+     */
+    resent: number;
+    /**
+     * People linked to the pool entry they already had.
+     */
+    linked: number;
+    /**
+     * People not invited.
+     */
+    refused: number;
+    results: Array<SuggestedReviewerInvitation>;
+};
+
 export type Invoice = {
     readonly url: string;
     readonly uuid: string;
@@ -12892,6 +14236,13 @@ export type KeywordSearchModeEnum = 'expertise_only' | 'full_text';
 
 export type LoginpagelayoutEnum = 'split-screen' | 'centered-card' | 'minimal' | 'full-hero' | 'gradient' | 'stacked' | 'right-split' | 'glassmorphism' | 'neumorphism' | 'animated-gradient' | 'video-background' | 'bottom-sheet' | 'tabbed' | 'wizard' | 'stats' | 'news' | 'carousel' | 'logo-watermark' | 'brand-pattern' | 'duotone' | 'diagonal' | 'time-based' | 'seasonal' | 'weather';
 
+export type LabelKindEnum = 'configured' | 'step_name' | 'awaiting_response' | 'decision' | 'internal_check';
+
+export type LaggingProposalsRefusal = {
+    detail: string;
+    lagging_count: number;
+};
+
 export type LbAlgorithmEnum = 'ROUND_ROBIN' | 'LEAST_CONNECTIONS' | 'SOURCE_IP' | 'SOURCE_IP_PORT';
 
 export type LevelEnum = 'DEBUG' | 'INFO' | 'WARNING' | 'ERROR' | 'CRITICAL';
@@ -13037,6 +14388,22 @@ export type LoadBalancerProtocolEnum = 'TCP' | 'UDP';
 
 export type LoadBalancerSetSecurityGroupsRequest = {
     security_groups: Array<string>;
+};
+
+export type LoadCallTemplatePresetRequest = {
+    /**
+     * Keys of the presets to load, as the presets action lists them.
+     */
+    presets: Array<string>;
+    /**
+     * Publish the templates created, so call managers see them.
+     */
+    publish?: boolean;
+};
+
+export type LoadCallTemplatePresetResponse = {
+    created: number;
+    created_names: Array<string>;
 };
 
 export type LoadScienceDomainPresetRequest = {
@@ -15679,10 +17046,106 @@ export type MyAssignmentItem = {
     proposal_name: string;
     proposal_slug: string;
     proposal_summary: string;
+    /**
+     * Effective status: a pending item past its deadline reads as expired.
+     */
     status: string;
     status_display: string;
+    /**
+     * Deadline for responding to this item.
+     */
+    expires_at: string | null;
+    /**
+     * Whether the item can no longer be answered because its deadline has passed.
+     */
+    is_expired: boolean;
     affinity_score: number | null;
     has_coi: boolean;
+};
+
+export type MyTask = {
+    /**
+     * Identifies the task among the user's tasks; stable while it is open.
+     */
+    key: string;
+    /**
+     * What the task asks of the user.
+     */
+    needed: NeededEnum;
+    needed_label: string;
+    /**
+     * What the task is about within the step: the offering a per-offering slot assesses, or the evaluator role to confirm.
+     */
+    detail: string;
+    proposal_uuid?: string | null;
+    proposal_name?: string | null;
+    proposal_slug?: string | null;
+    call_uuid?: string | null;
+    call_name?: string | null;
+    round_uuid?: string | null;
+    /**
+     * The offering the task is about: the one a per-offering slot assesses, or the one an offering request asks to include.
+     */
+    offering_uuid?: string | null;
+    offering_name?: string | null;
+    /**
+     * The organization providing the task's offering.
+     */
+    provider_uuid?: string | null;
+    provider_name?: string | null;
+    round_name?: string | null;
+    /**
+     * The proposal's step instance.
+     */
+    step_uuid?: string | null;
+    call_step_uuid?: string | null;
+    step_name?: string | null;
+    step_kind?: CallStepKindEnum | NullEnum | null;
+    due_at: string | null;
+    is_overdue: boolean;
+    /**
+     * The page the UI opens the task on.
+     */
+    target: TargetEnum;
+    /**
+     * Id of the section of the proposal page to scroll to.
+     */
+    target_section: string | null;
+    /**
+     * The object the target page opens: the review, the assignment batch, the pool invitation, the evaluator role, the round report, the round, or the provider organization whose requests for offerings list the request.
+     */
+    target_uuid: string | null;
+    /**
+     * The conflict-of-interest declaration the task has the user confirm -- taking a contribution over, or holding an evaluator role. Empty for the platform's standard one, or for a task asking for none.
+     */
+    coi_declaration_text: string;
+    /**
+     * Whose view of the proposal page opens a task on a proposal, by the role that gave the user the task; null for other targets.
+     */
+    view: ViewEnum | NullEnum | null;
+    /**
+     * The organization the view is under: the one managing the call for the call team's view, the provider for the offering team's.
+     */
+    view_customer_uuid?: string | null;
+};
+
+export type MyTaskSummary = {
+    /**
+     * Every open task.
+     */
+    total: number;
+    /**
+     * Tasks past their deadline.
+     */
+    overdue: number;
+    /**
+     * Tasks due within due_soon_days, not yet past their deadline.
+     */
+    due_soon: number;
+    /**
+     * How many days ahead a deadline counts as due soon.
+     */
+    due_soon_days: number;
 };
 
 export type NameEnum = 'EESSI' | 'Spack';
@@ -15697,6 +17160,8 @@ export type NameUuid = {
      */
     readonly uuid: string;
 };
+
+export type NeededEnum = 'contribute' | 'review' | 'complete' | 'assign' | 'decide' | 'respond' | 'accept_award' | 'advance' | 'release_report' | 'confirm_no_coi' | 'answer_assignment' | 'answer_invitation' | 'accept_delegation' | 'submit_changes' | 'write_round_report' | 'open_round_step' | 'complete_round_step' | 'answer_offering_request';
 
 export type NestedAgentProcessor = {
     readonly uuid: string;
@@ -16423,7 +17888,10 @@ export type NestedRound = {
     slug?: string;
     readonly name: string;
     start_time: string;
-    cutoff_time: string;
+    /**
+     * When submission closes. Empty: the round stays open until a call manager closes it.
+     */
+    cutoff_time?: string | null;
     status: RoundStatus;
     allocation_date?: string | null;
     review_duration_in_days?: number | null;
@@ -16435,12 +17903,19 @@ export type NestedRound = {
     readonly deciding_started_at: string | null;
     readonly results_published_at: string | null;
     readonly closed_at: string | null;
+    /**
+     * When the round's results were adopted.
+     */
+    readonly adopted_at: string | null;
 };
 
 export type NestedRoundRequest = {
     slug?: string;
     start_time: string;
-    cutoff_time: string;
+    /**
+     * When submission closes. Empty: the round stays open until a call manager closes it.
+     */
+    cutoff_time?: string | null;
     allocation_date?: string | null;
     review_duration_in_days?: number | null;
 };
@@ -16722,6 +18197,43 @@ export type Notification = {
     };
 };
 
+export type NotificationPreview = {
+    key: string;
+    mail_type: string;
+    variant: string;
+    label: string;
+    audience: string;
+    notification: string;
+    /**
+     * Whether the portal sends this notification at all.
+     */
+    enabled: boolean;
+    /**
+     * Whose wording: the call's own, the portal's, or Waldur's.
+     */
+    source: NotificationPreviewSourceEnum;
+    step: string | null;
+    trigger: string | null;
+    recipient: string | null;
+    subject: string;
+    text: string;
+    html: string;
+};
+
+export type NotificationPreviewDraftRequest = {
+    step?: string;
+    trigger?: TriggerEnum;
+    recipient?: RecipientEnum;
+    days_before?: number;
+    mail_type?: string;
+    variant?: string;
+    subject: string;
+    body_text: string;
+    body_html?: string;
+};
+
+export type NotificationPreviewSourceEnum = 'call' | 'portal' | 'default';
+
 export type NotificationRecipient = {
     full_name?: string | null;
     email: string;
@@ -16767,6 +18279,38 @@ export type NotificationTemplateDetailSerializersRequest = {
 
 export type NotificationTemplateUpdateSerializersRequest = {
     content: string;
+};
+
+export type NotificationVariable = {
+    name: string;
+    description: string;
+};
+
+export type NotificationWording = {
+    subject: string;
+    body_text: string;
+    body_html: string;
+};
+
+export type NotifyProposalsRequest = {
+    /**
+     * Proposals of this call whose applicants receive the message
+     */
+    proposal_uuids: Array<string>;
+    /**
+     * Who receives the message on each proposal
+     */
+    recipients?: RecipientsEnum;
+    subject: string;
+    body: string;
+};
+
+export type NotifyProposalsResponse = {
+    proposals_notified: number;
+    /**
+     * Requested proposals that are not part of this call
+     */
+    skipped_proposals: Array<SkippedProposal>;
 };
 
 export type NotifySystemEnum = 'AdminAnnouncement' | 'BroadcastMessage';
@@ -16969,6 +18513,20 @@ export type OfferingAccountSettings = {
     username_anonymized_prefix: AccountSetting;
     homedir_prefix: AccountSetting;
     login_shell: AccountSetting;
+};
+
+export type OfferingAssessment = {
+    contribution_uuid: string;
+    call_step_uuid: string;
+    step_name: string;
+    requested_offering_uuid: string;
+    offering_uuid: string;
+    offering_name: string;
+    status: StepContributionStatus;
+    outcome: ContributionOutcomeEnum | BlankEnum;
+    conditions: string;
+    comment: string;
+    submitted_at: string | null;
 };
 
 export type OfferingBackendIdRulesUpdateRequest = {
@@ -17263,6 +18821,75 @@ export type OfferingDefaultAccessSubnetRow = {
     description: string;
     offering_uuid: string;
     offering_name: string;
+};
+
+export type OfferingDemand = {
+    offering_uuid: string;
+    offering_name: string;
+    provider_uuid: string;
+    provider_name: string;
+    requested_offering_uuid: string;
+    call_uuid: string;
+    call_name: string;
+    call_state: CallStates;
+    round_uuid: string;
+    round_name: string;
+    round_start_time: string;
+    round_cutoff_time: string | null;
+    round_status: RoundStatusEnum;
+    /**
+     * pending: submitted or in review; accepted; closed: rejected or canceled. Drafts are not counted.
+     */
+    state_group: StateGroupEnum;
+    proposals_count: number;
+    /**
+     * Empty for closed rows, which only count proposals.
+     */
+    components: Array<OfferingDemandComponent>;
+};
+
+export type OfferingDemandComponent = {
+    type: string;
+    name: string;
+    measured_unit: string;
+    /**
+     * The period the component is limited per: requested and awarded sum the amounts per this period, as stored. 'total' is one amount for the whole allocation.
+     */
+    limit_period: string;
+    /**
+     * Summed over the requested resources of the row's proposals.
+     */
+    requested: number;
+    /**
+     * Summed over the awarded resources of the row's proposals; accepted rows only.
+     */
+    awarded: number | null;
+    /**
+     * The call-wide pool, if the call sets one.
+     */
+    call_pool: OfferingDemandPool | null;
+    /**
+     * The round's pool, if the call sets one.
+     */
+    round_pool: OfferingDemandPool | null;
+};
+
+export type OfferingDemandPool = {
+    offered: number;
+    awarded: number;
+    remaining: number;
+};
+
+export type OfferingDependent = {
+    readonly summary: string;
+    /**
+     * The change is refused, except for staff.
+     */
+    readonly blocks: boolean;
+    /**
+     * The change is refused for staff too.
+     */
+    readonly blocks_staff: boolean;
 };
 
 export type OfferingDescriptionUpdateRequest = {
@@ -18565,6 +20192,82 @@ export type OfferingStatsCounter = {
     count: number;
 };
 
+export type OfferingTeam = {
+    /**
+     * The offering's managers: they do the team's part of each step.
+     */
+    managers: Array<OfferingTeamPerson>;
+    /**
+     * Everyone else with a role on the offering: a slot of a step that may be handed within the team can be handed to them.
+     */
+    delegates: Array<OfferingTeamPerson>;
+};
+
+export type OfferingTeamPerson = {
+    uuid: string;
+    full_name: string;
+    email: string;
+    role_name: string;
+    role_description: string;
+};
+
+export type OfferingTeamProvider = {
+    uuid: string;
+    name: string;
+};
+
+export type OfferingTeamSlot = {
+    uuid: string;
+    proposal_uuid: string;
+    proposal_name: string;
+    proposal_slug: string;
+    call_name: string;
+    offering_name: string;
+    requested_offering_uuid: string;
+    step_name: string;
+    step_key: string;
+    status: StepContributionStatus;
+    delegate_uuid: string | null;
+    delegate_name: string | null;
+    /**
+     * The person it was handed to has taken it over.
+     */
+    delegate_accepted: boolean;
+    /**
+     * Nobody is on the offering's team, so the call's managers stand in for it.
+     */
+    stand_in: boolean;
+    due_at: string | null;
+    overdue: boolean;
+};
+
+export type OfferingTeamStep = {
+    uuid: string;
+    key: string;
+    name: string;
+    description: string;
+    kind: CallStepKindEnum;
+    phase: WorkflowPhaseEnum;
+    order: number;
+    duration_in_days: number | null;
+    /**
+     * Whether the offering managers complete the step or contribute to it.
+     */
+    team_part: TeamPartEnum;
+    /**
+     * One contribution per requested offering.
+     */
+    per_requested_offering: boolean;
+    /**
+     * A slot of the step can be handed on to anyone on the offering's team.
+     */
+    delegable_within_team: boolean;
+    /**
+     * Events of the step the call mails the offering's team about, as notification rule triggers (step_started, deadline_approaching, ...).
+     */
+    notification_triggers: Array<string>;
+};
+
 export type OfferingTermsOfService = {
     readonly uuid: string;
     readonly offering_uuid: string;
@@ -19060,6 +20763,10 @@ export type OidcEndpoints = {
     jwks_uri?: string | null;
 };
 
+export type OnDepletedEnum = 'decline' | 'leave';
+
+export type OnNegativeEnum = 'reject' | 'cancel' | 'continue';
+
 export type OnboardingCompanyValidationRequestRequest = {
     /**
      * Automatic validation method (e.g., 'ariregister', 'wirtschaftscompass', 'bolagsverket'). Leave empty for manual validation.
@@ -19324,6 +21031,40 @@ export type OpenPortalQuota = {
      * Size usage e.g. "24.00 KB". Absent when the server has no usage data.
      */
     usage?: string;
+};
+
+export type OpenRoundWorkflowStepRequest = {
+    /**
+     * UUID of the round step. Either this or step.
+     */
+    step_uuid?: string;
+    /**
+     * Key of the round step. Either this or step_uuid.
+     */
+    step?: string;
+    /**
+     * When the step is due in this round; left as it is when omitted.
+     */
+    due_at?: string | null;
+    /**
+     * Open the step although some proposals of the round have not reached it yet; they join it as they arrive.
+     */
+    force?: boolean;
+    /**
+     * Why the step is opened early. Required with force.
+     */
+    reason?: string;
+};
+
+export type OpenRoundWorkflowStepResponse = {
+    step_uuid: string;
+    step_name: string;
+    opened_at: string;
+    due_at: string | null;
+    reports_created: number;
+    advanced: Array<RoundStepProposalResult>;
+    skipped: Array<RoundStepProposalResult>;
+    failed: Array<RoundStepProposalResult>;
 };
 
 export type OpenStackAllowedAddressPair = {
@@ -21820,6 +23561,30 @@ export type OrderAttachmentRequest = {
 
 export type OrderAuthorEnum = 'applicant' | 'project_manager' | 'call_manager' | 'specific_user';
 
+export type OrderAward = {
+    proposal_uuid: string;
+    proposal_name: string;
+    call_uuid: string;
+    call_name: string;
+    round_name: string;
+    /**
+     * What the award grants on the order's offering.
+     */
+    awarded_limits: {
+        [key: string]: unknown;
+    };
+    /**
+     * What the applicant asked for; null for an item the call manager added.
+     */
+    requested_limits: {
+        [key: string]: unknown;
+    } | null;
+    /**
+     * Whether the viewer may open the proposal.
+     */
+    can_read: boolean;
+};
+
 export type OrderBackendIdRequest = {
     backend_id: string;
 };
@@ -22019,6 +23784,7 @@ export type OrderDetails = {
     readonly auto_approved_by_rule_uuid: string | null;
     readonly auto_approved_cost_limit_snapshot: string | null;
     issue: IssueReference | null;
+    award: OrderAward | null;
 };
 
 export type OrderErrorDetailsRequest = {
@@ -22187,7 +23953,9 @@ export type OrganizationalUser = {
     role: string | null;
 };
 
-export type OutcomeEnum = 'eligible' | 'ineligible' | 'feasible' | 'infeasible' | 'reviewed' | 'approved' | 'declined' | 'accepted' | 'rejected' | 'expired';
+export type OutcomeEnum = 'eligible' | 'ineligible' | 'feasible' | 'infeasible' | 'reviewed' | 'approved' | 'declined' | 'accepted' | 'submitted' | 'done' | 'rejected' | 'expired' | 'no_response';
+
+export type OutcomeSetEnum = 'eligibility' | 'feasibility' | 'reviewed' | 'approval' | 'acceptance' | 'submitted' | 'done' | 'per_offering';
 
 export type PaidRequest = {
     date: string;
@@ -22567,6 +24335,99 @@ export type PatchedCallManagingOrganisationRequest = {
     image?: Blob | File | null;
 };
 
+export type PatchedCallNotificationOverrideRequest = {
+    mail_type?: string;
+    variant?: string;
+    subject?: string;
+    body_text?: string;
+    body_html?: string;
+    enabled?: boolean;
+};
+
+export type PatchedCallOfferingComponentRequest = {
+    /**
+     * An offering of the call.
+     */
+    requested_offering_uuid?: string;
+    /**
+     * Type of the offering component: one billed by its limit that the call offering's plan prices.
+     */
+    component_type?: string;
+    min_per_proposal?: number | null;
+    max_per_proposal?: number | null;
+    default_amount?: number | null;
+    /**
+     * Every proposal requests exactly default_amount; the applicant cannot change it.
+     */
+    is_fixed?: boolean;
+};
+
+export type PatchedCallPanelRequest = {
+    name?: string;
+    description?: string;
+    /**
+     * Position of the panel in the call's list.
+     */
+    order?: number;
+    /**
+     * The panel's chair, one of its members.
+     */
+    chair?: string | null;
+    /**
+     * Panel members of the call who sit on the panel.
+     */
+    members?: Array<string>;
+    /**
+     * Proposals of these science domains go to the panel.
+     */
+    science_domains?: Array<string>;
+    /**
+     * Proposals of these science sub-domains go to the panel, whichever panel their domain maps to.
+     */
+    science_sub_domains?: Array<string>;
+};
+
+export type PatchedCallProposalRoleRequest = {
+    name?: string;
+    description?: string;
+    /**
+     * Who may hold the role.
+     */
+    eligible_from?: EligibleFromEnum;
+    /**
+     * How many holders an assignment step for this role needs before it can complete.
+     */
+    min_holders?: number;
+    /**
+     * How many people may hold the role on one proposal. Empty: no limit.
+     */
+    max_holders?: number | null;
+    /**
+     * Whether one holder is marked as the lead.
+     */
+    allows_lead?: boolean;
+};
+
+export type PatchedCallResourcePoolRequest = {
+    /**
+     * The component rule of a call offering the pool is of. Or name the offering and component instead: a component without a rule gets one bounding nothing.
+     */
+    offering_component_uuid?: string;
+    /**
+     * With component: the call offering the pool is of.
+     */
+    requested_offering?: string;
+    /**
+     * With requested_offering: the type of the component.
+     */
+    component?: string;
+    /**
+     * The round the pool covers. Empty: the whole call.
+     */
+    round_uuid?: string | null;
+    offered_total?: number;
+};
+
 export type PatchedCallResourceTemplateRequest = {
     name?: string;
     description?: string;
@@ -22590,6 +24451,24 @@ export type PatchedCallReviewerPoolUpdateRequest = {
     max_assignments?: number;
 };
 
+export type PatchedCallTemplateRequest = {
+    name?: string;
+    description?: string;
+    /**
+     * Call document in the export format, as a mapping or a YAML string: call settings and workflow, without rounds, requested offerings or documents.
+     */
+    document?: {
+        [key: string]: unknown;
+    };
+    is_published?: boolean;
+    /**
+     * Named paths through the workflow: {key, name, description, request: {offerings, actions}, assertions}. Definitions only: they run as dry runs on each call created from the template.
+     */
+    scenarios?: Array<{
+        [key: string]: unknown;
+    }>;
+};
+
 export type PatchedCallWorkflowStepNotificationRuleRequest = {
     workflow_step?: string;
     trigger?: TriggerEnum;
@@ -22603,13 +24482,35 @@ export type PatchedCallWorkflowStepNotificationRuleRequest = {
      * Only for an applicant audience: names of the proposal roles whose holders are notified. Empty notifies the proposal creator and every member of the proposal team.
      */
     notified_proposal_roles?: Array<string>;
+    /**
+     * Only for the proposal_role audience: the call's evaluator role whose holders are notified.
+     */
+    proposal_role?: string | null;
 };
 
 export type PatchedCallWorkflowStepRequest = {
+    name?: string;
+    description?: string;
+    /**
+     * Position in the call's workflow. A step already there, and every step after it, moves one down. Appended when left out.
+     */
+    order?: number;
+    /**
+     * Outcomes the step can be completed with; one of its kind's outcome sets. The kind's default when left out.
+     */
+    outcome_set?: OutcomeSetEnum;
+    /**
+     * What a negative outcome does to the proposal.
+     */
+    on_negative?: OnNegativeEnum;
     /**
      * Whether this step is enabled. Disabled steps are skipped.
      */
     is_enabled?: boolean;
+    /**
+     * The decision step that settles the award. A call is activated with exactly one enabled.
+     */
+    is_allocation_decision?: boolean;
     /**
      * Duration in days. Used to calculate deadlines.
      */
@@ -22628,11 +24529,39 @@ export type PatchedCallWorkflowStepRequest = {
      */
     requires_coi_confirmation?: boolean;
     /**
-     * Minimum reviews required before step can complete.
+     * The conflict-of-interest declaration this step's evaluators confirm; empty for the call's, or the platform's standard one.
+     */
+    coi_declaration_text?: string;
+    /**
+     * Who contributes to the step, each with a contribution of their own: none, requested_offering_team, assigned_reviewers, proposal_role:<id> or call_role:<call_manager|reviewer|panel_member>.
+     */
+    contributor_source?: string;
+    /**
+     * One contribution per offering the proposal requests, which any member of that offering's team may fill.
+     */
+    per_requested_offering?: boolean;
+    /**
+     * Only the lead of the evaluator role the contributor source names contributes: one slot, the lead's, which moves when the lead changes. The step waits while the role has no lead.
+     */
+    contributors_lead_only?: boolean;
+    /**
+     * Who a contribution slot of the step can be handed to by its holder or the call's managers: empty for nobody, offering_team for anyone with a role on the slot's own offering (per-offering steps), or proposal_role:<id> for the holders of an evaluator role on the proposal (per-person steps). The person it is handed to accepts or declines it.
+     */
+    delegable_to?: string;
+    /**
+     * Minimum contributions submitted before the step can complete. On a step without contributors, the minimum of the proposal's submitted reviews.
+     */
+    min_contributions?: number | null;
+    /**
+     * Most contributions the step accepts; no limit when empty.
+     */
+    max_contributions?: number | null;
+    /**
+     * Deprecated alias of min_contributions.
      */
     min_reviewers?: number | null;
     /**
-     * Minimum average score required before this step can complete (a completion gate; it does not auto-reject lower scores).
+     * Minimum average score required before this step can complete with any outcome but declined (a completion gate; it does not auto-reject lower scores). A step with contributors scores its own submitted reviews. A step without contributors that reads input steps takes the score of the latest completed input step that has one: the average of its reviews, else of the rating answers in its checklists. Otherwise all the proposal's submitted reviews count.
      */
     min_score_threshold?: string | null;
     /**
@@ -22640,23 +24569,83 @@ export type PatchedCallWorkflowStepRequest = {
      */
     applicant_visible?: boolean;
     /**
-     * Role expected to act on this step.
+     * Role expected to complete this step.
      */
-    responsible_role?: ResponsibleRoleEnum | BlankEnum | NullEnum | null;
+    completer?: ResponsibleRoleEnum | BlankEnum | NullEnum | null;
+    /**
+     * Deprecated alias of completer.
+     */
+    responsible_role?: ResponsibleRoleEnum | NullEnum | null;
+    /**
+     * The call's evaluator role whose holders complete the step; required when the completer is proposal_role.
+     */
+    completer_proposal_role?: string | null;
+    /**
+     * Assignment step: the call's evaluator roles whose holders the completer picks, such as a lead and a second rapporteur.
+     */
+    assigns_roles?: Array<string>;
+    /**
+     * Earlier steps of the call whose outputs this step's contributors and completer read; on an applicant step, whose public parts the applicant reads.
+     */
+    input_steps?: Array<string>;
+    /**
+     * Assessment step: once completed, its report can be released to the applicant, such as a consolidated report or final feedback.
+     */
+    release_to_applicant?: boolean;
+    /**
+     * Assessment step of evaluator-role holders: each holder may suggest reviewers for the proposal while the step is active. The call's managers turn suggestions into pool invitations.
+     */
+    collects_reviewer_suggestions?: boolean;
+    /**
+     * Whoever acts on the step may send the proposal back to the applicant to change the parts they unlock, as often as needed. The proposal stays in review on the step meanwhile. Not for the allocation decision nor an applicant step.
+     */
+    allows_change_requests?: boolean;
+    /**
+     * Per-offering assessment: a contribution may accept a requested offering under conditions. Off, it accepts or rejects it.
+     */
+    allows_conditional_acceptance?: boolean;
     /**
      * How this step advances once a human completes it. 'Automatic' advances to the next step immediately; 'Manual' waits for a separate advance action. Neither auto-decides from review scores.
      */
     transition_mode?: TransitionModeEnum;
     /**
+     * When the step runs: empty to run on every proposal; the key of an earlier step and the outcomes of it, or of its contributions, on which it runs; or the key of an earlier step and "score_spread_above": the points by which the highest and lowest scores its contributions gave must differ for the step to run. A proposal on which it does not hold skips the step. Fixed for a proposal when it is submitted.
+     */
+    run_condition?: StepRunConditionRequest | null;
+    /**
+     * Start together with the step before it, as one stage: every step of a stage starts at once, and the next stage starts when all of them have ended.
+     */
+    parallel_with_previous?: boolean;
+    /**
+     * Run the step once per round rather than per proposal, such as a panel meeting after the cut-off: the call's managers open it for the round's proposals together, its contributors write one round report each covering their proposals, and it is completed for the round, never on one proposal.
+     */
+    round_scoped?: boolean;
+    /**
+     * When the step runs: in the evaluation, from submission to the award; in an extension, which the applicant of an accepted proposal asks for as often as needed; or in the closing, the final report at the end of the allocation. A phase's steps run in their order, each extension and closing in a run of its own.
+     */
+    phase?: WorkflowPhaseEnum;
+    /**
+     * First step of an extension or closing phase: days before the project's end date. An extension can be asked for until then; the closing opens then (0: on the end date).
+     */
+    project_end_offset_days?: number | null;
+    /**
+     * What each audience's dashboard calls the step, as entered: per audience, while active, once completed, per outcome and while changes are requested. Left out, the computed label stays.
+     */
+    status_labels?: StepStatusLabelsRequest | null;
+    /**
      * Allocation decision: require applicant award response after decision.
      */
     include_award_response?: boolean;
+    /**
+     * Allocation decision: approve on reaching this step, as the system, with the award as requested; fall back to the completer when the approval is refused.
+     */
+    decides_automatically?: boolean;
     /**
      * Allocation decision: when a granted proposal takes effect — immediately (on_decision) or on the round's allocation date (fixed_date).
      */
     allocation_time?: AllocationTimeEnum;
     /**
-     * Optional override of catalog ordering.
+     * Deprecated: steps are ordered by order.
      */
     display_order?: number | null;
     criteria?: Array<WorkflowCriterionRequest>;
@@ -22728,6 +24717,10 @@ export type PatchedChecklistRequest = {
      * Type of compliance this checklist addresses
      */
     checklist_type?: ChecklistTypeEnum;
+    /**
+     * Organization the checklist belongs to; only its calls use it. Empty for a checklist the whole portal shares.
+     */
+    customer?: string | null;
 };
 
 export type PatchedClusterSecurityGroupRequest = {
@@ -23983,8 +25976,35 @@ export type PatchedProposalProjectRoleMappingRequest = {
     project_role?: string | null;
 };
 
+export type PatchedProposalRankingRequest = {
+    round?: string;
+    proposal?: string;
+    /**
+     * The round report the ranking belongs to; empty for the round's overall ranking.
+     */
+    meeting_note?: string | null;
+    rank?: number;
+    final_score?: number | null;
+    /**
+     * Recommended amounts per requested offering and component: {"<requested offering uuid>": {"<component type>": amount}}.
+     */
+    recommended_resources?: {
+        [key: string]: unknown;
+    };
+    notes?: string;
+};
+
 export type PatchedProposalReviewRequest = {
+    /**
+     * The review's overall score, 1-5 (0 until rated). When the step has criteria, it is their weighted average.
+     */
     summary_score?: number;
+    /**
+     * Score per criterion, 1-5, keyed by criterion UUID. Writing it replaces the scores, and summary_score becomes their weighted average, rounded half up.
+     */
+    criteria_scores?: {
+        [key: string]: number | null;
+    };
     summary_public_comment?: string;
     summary_private_comment?: string;
     comment_project_title?: string | null;
@@ -23999,6 +26019,17 @@ export type PatchedProposalReviewRequest = {
     override_workload_limit?: boolean;
 };
 
+export type PatchedProposalRunUpdateRequest = {
+    requested_end_date?: string | null;
+    requested_limits?: {
+        [key: string]: unknown;
+    };
+    granted_end_date?: string | null;
+    granted_limits?: {
+        [key: string]: unknown;
+    };
+};
+
 export type PatchedProtectedCallRequest = {
     /**
      * URL-friendly identifier. Only editable by staff users.
@@ -24007,6 +26038,10 @@ export type PatchedProtectedCallRequest = {
     name?: string;
     description?: string;
     fixed_duration_in_days?: number | null;
+    /**
+     * Durations, in months, the applicant chooses the project's length from. Empty offers no choice. Cannot be combined with fixed_duration_in_days. Proposals already submitted keep the length they asked for.
+     */
+    allowed_duration_months?: Array<number>;
     backend_id?: string;
     external_url?: string | null;
     /**
@@ -24014,7 +26049,7 @@ export type PatchedProtectedCallRequest = {
      */
     reviewer_identity_visible_to_submitters?: boolean;
     /**
-     * Whether proposal applicants can see review comments and scores
+     * Whether proposal applicants can see review comments and scores. Applicants still see what an applicant step lists as its input steps, such as the reviews they respond to.
      */
     reviews_visible_to_submitters?: boolean;
     proposal_field_config?: CallProposalFieldConfigRequest;
@@ -24037,6 +26072,7 @@ export type PatchedProtectedCallRequest = {
      */
     compliance_checklist?: string | null;
     panel_chair?: string | null;
+    panel_vice_chair?: string | null;
     /**
      * Template for proposal slugs. Supports: {call_slug}, {round_slug}, {org_slug}, {year}, {month}, {counter}, {counter_padded}. Default: {round_slug}-{counter_padded}
      */
@@ -24067,6 +26103,10 @@ export type PatchedProtectedCallRequest = {
     user_assurance_levels?: Array<string>;
     applicant_visibility_config?: CallApplicantVisibilityConfigRequest | null;
     /**
+     * Who may review for the call: checked when a reviewer is invited, accepts, is suggested or is given the call's reviewer role. Kept apart from the restrictions on applicants.
+     */
+    reviewer_eligibility?: CallReviewerEligibilityRequest | null;
+    /**
      * Whose name the orders for resources granted by this call carry.
      */
     order_author?: OrderAuthorEnum;
@@ -24079,16 +26119,42 @@ export type PatchedProtectedCallRequest = {
      */
     carry_over_drafts?: boolean;
     /**
+     * The conflict-of-interest declaration evaluators confirm, for every step asking them to that has no text of its own. Empty for the platform's standard declaration.
+     */
+    coi_declaration_text?: string;
+    /**
      * What completing a round does with its proposals that still have no decision: refuse to complete the round, or reject them. A round may override it.
      */
     undecided_at_round_completion?: UndecidedAtRoundCompletionEnum;
+    /**
+     * Whether a round's results must be adopted (by a board, say) before they are published. The adoption is then recorded while the round is deciding, and publication waits for it.
+     */
+    adoption_required?: boolean;
+    /**
+     * How the allocation decision is held to the call's resource budgets. soft: approving an award past what remains needs an explicit override with a reason. hard: such an award is refused, and only staff may override it with a reason. Changing it affects only later decisions.
+     */
+    budget_enforcement?: BudgetEnforcementEnum;
+    /**
+     * Names of the proposal roles whose holders are copied (Cc) on every mail to the applicant about a proposal: PROPOSAL.MANAGER for the principal investigator, PROPOSAL.ADMIN for the proposal administrators. Only the proposal's current team is copied. Empty copies nobody.
+     */
+    applicant_cc_roles?: Array<string>;
+    /**
+     * Days from a round's cut-off to its decision the workflow is planned for, when the round has no allocation date. The workflow check compares the steps' durations with it.
+     */
+    target_decision_days?: number | null;
 };
 
 export type PatchedProtectedRoundRequest = {
     start_time?: string;
-    cutoff_time?: string;
+    /**
+     * When submission closes. Empty: the round stays open until a call manager closes it.
+     */
+    cutoff_time?: string | null;
     allocation_date?: string | null;
-    review_duration_in_days?: number;
+    /**
+     * Deprecated: a review is due when the step it contributes to is (see the round's step due dates). Only a review whose step has no deadline is still due this many days after it was created.
+     */
+    review_duration_in_days?: number | null;
     /**
      * Overrides the call's rule for proposals still without a decision when the round is completed. Empty: the call's rule applies.
      */
@@ -24663,6 +26729,20 @@ export type PatchedRoleDetailsRequest = {
      */
     description_sq?: string | null;
     is_active?: boolean;
+};
+
+export type PatchedRoundMeetingNoteRequest = {
+    round?: string;
+    title?: string;
+    body?: string;
+    /**
+     * Files to attach to the note.
+     */
+    new_documents?: Array<Blob | File>;
+    /**
+     * UUIDs of attached documents to remove.
+     */
+    removed_documents?: Array<string>;
 };
 
 export type PatchedRuleRequest = {
@@ -25262,19 +27342,19 @@ export type PermissionMetadataResponse = {
      * Map of role keys to role enum values from RoleEnum
      */
     roles: {
-        [key: string]: 'CUSTOMER.OWNER' | 'CUSTOMER.SUPPORT' | 'CUSTOMER.MANAGER' | 'CUSTOMER.READER' | 'PROJECT.ADMIN' | 'PROJECT.MANAGER' | 'PROJECT.MEMBER' | 'OFFERING.MANAGER' | 'CALL.REVIEWER' | 'CALL.MANAGER' | 'CALL.PANEL_MEMBER' | 'PROPOSAL.MEMBER' | 'PROPOSAL.MANAGER' | 'PROPOSAL.ADMIN';
+        [key: string]: 'CUSTOMER.OWNER' | 'CUSTOMER.SUPPORT' | 'CUSTOMER.MANAGER' | 'CUSTOMER.READER' | 'PROJECT.ADMIN' | 'PROJECT.MANAGER' | 'PROJECT.MEMBER' | 'PROJECT.PRINCIPAL_INVESTIGATOR' | 'PROJECT.CO_INVESTIGATOR' | 'PROJECT.COLLABORATOR' | 'OFFERING.MANAGER' | 'CALL.REVIEWER' | 'CALL.MANAGER' | 'CALL.PANEL_MEMBER' | 'PROPOSAL.MEMBER' | 'PROPOSAL.MANAGER' | 'PROPOSAL.ADMIN';
     };
     /**
      * Map of permission keys to permission enum values from PermissionEnum
      */
     permissions: {
-        [key: string]: 'SERVICE_PROVIDER.REGISTER' | 'OFFERING.LIST' | 'OFFERING.CREATE' | 'OFFERING.DELETE' | 'OFFERING.UPDATE_THUMBNAIL' | 'OFFERING.UPDATE' | 'OFFERING.UPDATE_ATTRIBUTES' | 'OFFERING.UPDATE_LOCATION' | 'OFFERING.UPDATE_DESCRIPTION' | 'OFFERING.UPDATE_OPTIONS' | 'OFFERING.UPDATE_INTEGRATION' | 'OFFERING.ADD_ENDPOINT' | 'OFFERING.UPDATE_ENDPOINT' | 'OFFERING.DELETE_ENDPOINT' | 'OFFERING.UPDATE_COMPONENTS' | 'OFFERING.PAUSE' | 'OFFERING.UNPAUSE' | 'OFFERING.ARCHIVE' | 'OFFERING.DRY_RUN_SCRIPT' | 'OFFERING.MANAGE_CAMPAIGN' | 'OFFERING.MANAGE_USER_GROUP' | 'OFFERING.CREATE_PLAN' | 'OFFERING.UPDATE_PLAN' | 'OFFERING.ARCHIVE_PLAN' | 'OFFERING.CREATE_SCREENSHOT' | 'OFFERING.UPDATE_SCREENSHOT' | 'OFFERING.DELETE_SCREENSHOT' | 'OFFERING.CREATE_USER' | 'OFFERING.UPDATE_USER' | 'OFFERING.DELETE_USER' | 'OFFERING.MANAGE_USER_ROLE' | 'POSIX_ID_POOL.MANAGE' | 'RESOURCE.CREATE_ROBOT_ACCOUNT' | 'RESOURCE.UPDATE_ROBOT_ACCOUNT' | 'RESOURCE.DELETE_ROBOT_ACCOUNT' | 'ORDER.LIST' | 'ORDER.CREATE' | 'ORDER.APPROVE_PRIVATE' | 'ORDER.APPROVE' | 'ORDER.REJECT' | 'ORDER.DESTROY' | 'ORDER.CANCEL' | 'ORDER.SET_CONSUMER_INFO' | 'RESOURCE.LIST' | 'RESOURCE.UPDATE' | 'RESOURCE.TERMINATE' | 'RESOURCE.LIST_IMPORTABLE' | 'RESOURCE.SET_END_DATE' | 'RESOURCE.SET_USAGE' | 'RESOURCE.SET_PLAN' | 'RESOURCE.SET_LIMITS' | 'RESOURCE.SET_BACKEND_ID' | 'RESOURCE.SET_SLUG' | 'RESOURCE.SUBMIT_REPORT' | 'RESOURCE.SET_BACKEND_METADATA' | 'RESOURCE.MANAGE_API_KEY' | 'RESOURCE.MANAGE_CONSUMER_API_KEY' | 'RESOURCE.SET_STATE' | 'RESOURCE.UPDATE_OPTIONS' | 'RESOURCE.ACCEPT_BOOKING_REQUEST' | 'RESOURCE.REJECT_BOOKING_REQUEST' | 'RESOURCE.MANAGE_USERS' | 'RESOURCE.CREATE_PERMISSION' | 'RESOURCE.UPDATE_PERMISSION' | 'RESOURCE.DELETE_PERMISSION' | 'RESOURCE_PROJECT.CREATE_PERMISSION' | 'RESOURCE_PROJECT.UPDATE_PERMISSION' | 'RESOURCE_PROJECT.DELETE_PERMISSION' | 'RESOURCE.CONSUMPTION_LIMITATION' | 'OFFERING.MANAGE_BACKEND_RESOURCES' | 'SERVICE_PROVIDER.GET_API_SECRET_CODE' | 'SERVICE_PROVIDER.GENERATE_API_SECRET_CODE' | 'SERVICE_PROVIDER.LIST_CUSTOMERS' | 'SERVICE_PROVIDER.LIST_CUSTOMER_PROJECTS' | 'SERVICE_PROVIDER.LIST_PROJECTS' | 'SERVICE_PROVIDER.LIST_PROJECT_PERMISSIONS' | 'SERVICE_PROVIDER.LIST_KEYS' | 'SERVICE_PROVIDER.LIST_USERS' | 'SERVICE_PROVIDER.LIST_USER_CUSTOMERS' | 'SERVICE_PROVIDER.LIST_SERVICE_ACCOUNTS' | 'SERVICE_PROVIDER.LIST_COURSE_ACCOUNTS' | 'SERVICE_PROVIDER.SET_OFFERINGS_USERNAME' | 'SERVICE_PROVIDER.GET_STATISTICS' | 'SERVICE_PROVIDER.GET_REVENUE' | 'SERVICE_PROVIDER.GET_ROBOT_ACCOUNT_CUSTOMERS' | 'SERVICE_PROVIDER.GET_ROBOT_ACCOUNT_PROJECTS' | 'SERVICE_PROVIDER.MANAGE_MAINTENANCE_ANNOUNCEMENT' | 'MATRIX_ROOM.CREATE' | 'PROJECT.CREATE_PERMISSION' | 'CUSTOMER.CREATE_PERMISSION' | 'OFFERING.CREATE_PERMISSION' | 'CALL.CREATE_PERMISSION' | 'PROPOSAL.MANAGE' | 'PROPOSAL.UPDATE' | 'PROPOSAL.MANAGE_REVIEW' | 'PROJECT.UPDATE_PERMISSION' | 'CUSTOMER.UPDATE_PERMISSION' | 'OFFERING.UPDATE_PERMISSION' | 'CALL.UPDATE_PERMISSION' | 'PROPOSAL.UPDATE_PERMISSION' | 'PROJECT.DELETE_PERMISSION' | 'CUSTOMER.DELETE_PERMISSION' | 'OFFERING.DELETE_PERMISSION' | 'CALL.DELETE_PERMISSION' | 'PROPOSAL.DELETE_PERMISSION' | 'LEXIS_LINK.CREATE' | 'LEXIS_LINK.DELETE' | 'PROJECT.LIST' | 'PROJECT.CREATE' | 'PROJECT.DELETE' | 'PROJECT.UPDATE' | 'PROJECT.UPDATE_METADATA' | 'PROJECT.SET_SLUG' | 'PROJECT.REVIEW_MEMBERSHIP' | 'CUSTOMER.UPDATE' | 'CUSTOMER.CONTACT_UPDATE' | 'CUSTOMER.LIST_USERS' | 'INVOICE.LIST' | 'CUSTOMER.VIEW_TEAM' | 'PROJECT.VIEW_TEAM' | 'CUSTOMER.VIEW_ACCOUNTING' | 'CUSTOMER.VIEW_REPORTING' | 'OFFERING.ACCEPT_CALL_REQUEST' | 'CALL.APPROVE_AND_REJECT_PROPOSALS' | 'CALL.CLOSE_ROUNDS' | 'ACCESS_SUBNET.CREATE' | 'ACCESS_SUBNET.UPDATE' | 'ACCESS_SUBNET.DELETE' | 'OFFERING_ACCESS_SUBNET.CREATE' | 'OFFERING_ACCESS_SUBNET.UPDATE' | 'OFFERING_ACCESS_SUBNET.DELETE' | 'OFFERINGUSER.UPDATE_RESTRICTION' | 'INVITATION.LIST' | 'CUSTOMER.LIST_PERMISSION_REVIEWS' | 'CALL.LIST' | 'CALL.CREATE' | 'CALL.UPDATE' | 'ROUND.LIST' | 'PROPOSAL.LIST' | 'SERVICE_ACCOUNT.MANAGE' | 'PROJECT.COURSE_ACCOUNT_MANAGE' | 'SERVICE_PROVIDER.OPENSTACK_IMAGE_MANAGEMENT' | 'OPENSTACK_INSTANCE.CONSOLE_ACCESS' | 'OPENSTACK_INSTANCE.MANAGE_POWER' | 'OPENSTACK_INSTANCE.MANAGE' | 'OPENSTACK_ROUTER.MANAGE_GATEWAY' | 'STAFF.ACCESS' | 'SUPPORT.ACCESS';
+        [key: string]: 'SERVICE_PROVIDER.REGISTER' | 'OFFERING.LIST' | 'OFFERING.CREATE' | 'OFFERING.DELETE' | 'OFFERING.UPDATE_THUMBNAIL' | 'OFFERING.UPDATE' | 'OFFERING.UPDATE_ATTRIBUTES' | 'OFFERING.UPDATE_LOCATION' | 'OFFERING.UPDATE_DESCRIPTION' | 'OFFERING.UPDATE_OPTIONS' | 'OFFERING.UPDATE_INTEGRATION' | 'OFFERING.ADD_ENDPOINT' | 'OFFERING.UPDATE_ENDPOINT' | 'OFFERING.DELETE_ENDPOINT' | 'OFFERING.UPDATE_COMPONENTS' | 'OFFERING.PAUSE' | 'OFFERING.UNPAUSE' | 'OFFERING.ARCHIVE' | 'OFFERING.DRY_RUN_SCRIPT' | 'OFFERING.MANAGE_CAMPAIGN' | 'OFFERING.MANAGE_USER_GROUP' | 'OFFERING.CREATE_PLAN' | 'OFFERING.UPDATE_PLAN' | 'OFFERING.ARCHIVE_PLAN' | 'OFFERING.CREATE_SCREENSHOT' | 'OFFERING.UPDATE_SCREENSHOT' | 'OFFERING.DELETE_SCREENSHOT' | 'OFFERING.CREATE_USER' | 'OFFERING.UPDATE_USER' | 'OFFERING.DELETE_USER' | 'OFFERING.MANAGE_USER_ROLE' | 'POSIX_ID_POOL.MANAGE' | 'RESOURCE.CREATE_ROBOT_ACCOUNT' | 'RESOURCE.UPDATE_ROBOT_ACCOUNT' | 'RESOURCE.DELETE_ROBOT_ACCOUNT' | 'ORDER.LIST' | 'ORDER.CREATE' | 'ORDER.APPROVE_PRIVATE' | 'ORDER.APPROVE' | 'ORDER.REJECT' | 'ORDER.DESTROY' | 'ORDER.CANCEL' | 'ORDER.SET_CONSUMER_INFO' | 'RESOURCE.LIST' | 'RESOURCE.UPDATE' | 'RESOURCE.TERMINATE' | 'RESOURCE.LIST_IMPORTABLE' | 'RESOURCE.SET_END_DATE' | 'RESOURCE.REQUEST_END_DATE_CHANGE' | 'RESOURCE.REQUEST_LIMITS_CHANGE' | 'RESOURCE.PULL' | 'RESOURCE.SET_USAGE' | 'RESOURCE.SET_PLAN' | 'RESOURCE.SET_LIMITS' | 'RESOURCE.SET_BACKEND_ID' | 'RESOURCE.SET_SLUG' | 'RESOURCE.SUBMIT_REPORT' | 'RESOURCE.SET_BACKEND_METADATA' | 'RESOURCE.MANAGE_API_KEY' | 'RESOURCE.MANAGE_CONSUMER_API_KEY' | 'RESOURCE.SET_STATE' | 'RESOURCE.UPDATE_OPTIONS' | 'RESOURCE.ACCEPT_BOOKING_REQUEST' | 'RESOURCE.REJECT_BOOKING_REQUEST' | 'RESOURCE.MANAGE_USERS' | 'RESOURCE.CREATE_PERMISSION' | 'RESOURCE.UPDATE_PERMISSION' | 'RESOURCE.DELETE_PERMISSION' | 'RESOURCE_PROJECT.CREATE_PERMISSION' | 'RESOURCE_PROJECT.UPDATE_PERMISSION' | 'RESOURCE_PROJECT.DELETE_PERMISSION' | 'RESOURCE.CONSUMPTION_LIMITATION' | 'OFFERING.MANAGE_BACKEND_RESOURCES' | 'SERVICE_PROVIDER.GET_API_SECRET_CODE' | 'SERVICE_PROVIDER.GENERATE_API_SECRET_CODE' | 'SERVICE_PROVIDER.LIST_CUSTOMERS' | 'SERVICE_PROVIDER.LIST_CUSTOMER_PROJECTS' | 'SERVICE_PROVIDER.LIST_PROJECTS' | 'SERVICE_PROVIDER.LIST_PROJECT_PERMISSIONS' | 'SERVICE_PROVIDER.LIST_KEYS' | 'SERVICE_PROVIDER.LIST_USERS' | 'SERVICE_PROVIDER.LIST_USER_CUSTOMERS' | 'SERVICE_PROVIDER.LIST_SERVICE_ACCOUNTS' | 'SERVICE_PROVIDER.LIST_COURSE_ACCOUNTS' | 'SERVICE_PROVIDER.SET_OFFERINGS_USERNAME' | 'SERVICE_PROVIDER.GET_STATISTICS' | 'SERVICE_PROVIDER.GET_REVENUE' | 'SERVICE_PROVIDER.GET_ROBOT_ACCOUNT_CUSTOMERS' | 'SERVICE_PROVIDER.GET_ROBOT_ACCOUNT_PROJECTS' | 'SERVICE_PROVIDER.MANAGE_MAINTENANCE_ANNOUNCEMENT' | 'MATRIX_ROOM.CREATE' | 'PROJECT.CREATE_PERMISSION' | 'CUSTOMER.CREATE_PERMISSION' | 'OFFERING.CREATE_PERMISSION' | 'CALL.CREATE_PERMISSION' | 'PROPOSAL.MANAGE' | 'PROPOSAL.UPDATE' | 'PROPOSAL.MANAGE_REVIEW' | 'PROJECT.UPDATE_PERMISSION' | 'CUSTOMER.UPDATE_PERMISSION' | 'OFFERING.UPDATE_PERMISSION' | 'CALL.UPDATE_PERMISSION' | 'PROPOSAL.UPDATE_PERMISSION' | 'PROJECT.DELETE_PERMISSION' | 'CUSTOMER.DELETE_PERMISSION' | 'OFFERING.DELETE_PERMISSION' | 'CALL.DELETE_PERMISSION' | 'PROPOSAL.DELETE_PERMISSION' | 'LEXIS_LINK.CREATE' | 'LEXIS_LINK.DELETE' | 'PROJECT.LIST' | 'PROJECT.CREATE' | 'PROJECT.DELETE' | 'PROJECT.UPDATE' | 'PROJECT.SET_END_DATE' | 'PROJECT.REQUEST_END_DATE_CHANGE' | 'PROJECT.UPDATE_METADATA' | 'PROJECT.SET_SLUG' | 'PROJECT.REVIEW_MEMBERSHIP' | 'CUSTOMER.UPDATE' | 'CUSTOMER.CONTACT_UPDATE' | 'CUSTOMER.LIST_USERS' | 'INVOICE.LIST' | 'CUSTOMER.VIEW_TEAM' | 'PROJECT.VIEW_TEAM' | 'CUSTOMER.VIEW_ACCOUNTING' | 'CUSTOMER.VIEW_REPORTING' | 'OFFERING.ACCEPT_CALL_REQUEST' | 'CALL.APPROVE_AND_REJECT_PROPOSALS' | 'CALL.CLOSE_ROUNDS' | 'ACCESS_SUBNET.CREATE' | 'ACCESS_SUBNET.UPDATE' | 'ACCESS_SUBNET.DELETE' | 'OFFERING_ACCESS_SUBNET.CREATE' | 'OFFERING_ACCESS_SUBNET.UPDATE' | 'OFFERING_ACCESS_SUBNET.DELETE' | 'OFFERINGUSER.UPDATE_RESTRICTION' | 'INVITATION.LIST' | 'CUSTOMER.LIST_PERMISSION_REVIEWS' | 'CALL.LIST' | 'CALL.VIEW_RESULTS' | 'CALL.CREATE' | 'CALL.UPDATE' | 'ROUND.LIST' | 'PROPOSAL.LIST' | 'SERVICE_ACCOUNT.MANAGE' | 'PROJECT.COURSE_ACCOUNT_MANAGE' | 'SERVICE_PROVIDER.OPENSTACK_IMAGE_MANAGEMENT' | 'OPENSTACK_INSTANCE.CONSOLE_ACCESS' | 'OPENSTACK_INSTANCE.MANAGE_POWER' | 'OPENSTACK_INSTANCE.MANAGE' | 'OPENSTACK_ROUTER.MANAGE_GATEWAY' | 'STAFF.ACCESS' | 'SUPPORT.ACCESS';
     };
     /**
      * Map of resource types to create permission enums
      */
     permission_map: {
-        [key: string]: 'SERVICE_PROVIDER.REGISTER' | 'OFFERING.LIST' | 'OFFERING.CREATE' | 'OFFERING.DELETE' | 'OFFERING.UPDATE_THUMBNAIL' | 'OFFERING.UPDATE' | 'OFFERING.UPDATE_ATTRIBUTES' | 'OFFERING.UPDATE_LOCATION' | 'OFFERING.UPDATE_DESCRIPTION' | 'OFFERING.UPDATE_OPTIONS' | 'OFFERING.UPDATE_INTEGRATION' | 'OFFERING.ADD_ENDPOINT' | 'OFFERING.UPDATE_ENDPOINT' | 'OFFERING.DELETE_ENDPOINT' | 'OFFERING.UPDATE_COMPONENTS' | 'OFFERING.PAUSE' | 'OFFERING.UNPAUSE' | 'OFFERING.ARCHIVE' | 'OFFERING.DRY_RUN_SCRIPT' | 'OFFERING.MANAGE_CAMPAIGN' | 'OFFERING.MANAGE_USER_GROUP' | 'OFFERING.CREATE_PLAN' | 'OFFERING.UPDATE_PLAN' | 'OFFERING.ARCHIVE_PLAN' | 'OFFERING.CREATE_SCREENSHOT' | 'OFFERING.UPDATE_SCREENSHOT' | 'OFFERING.DELETE_SCREENSHOT' | 'OFFERING.CREATE_USER' | 'OFFERING.UPDATE_USER' | 'OFFERING.DELETE_USER' | 'OFFERING.MANAGE_USER_ROLE' | 'POSIX_ID_POOL.MANAGE' | 'RESOURCE.CREATE_ROBOT_ACCOUNT' | 'RESOURCE.UPDATE_ROBOT_ACCOUNT' | 'RESOURCE.DELETE_ROBOT_ACCOUNT' | 'ORDER.LIST' | 'ORDER.CREATE' | 'ORDER.APPROVE_PRIVATE' | 'ORDER.APPROVE' | 'ORDER.REJECT' | 'ORDER.DESTROY' | 'ORDER.CANCEL' | 'ORDER.SET_CONSUMER_INFO' | 'RESOURCE.LIST' | 'RESOURCE.UPDATE' | 'RESOURCE.TERMINATE' | 'RESOURCE.LIST_IMPORTABLE' | 'RESOURCE.SET_END_DATE' | 'RESOURCE.SET_USAGE' | 'RESOURCE.SET_PLAN' | 'RESOURCE.SET_LIMITS' | 'RESOURCE.SET_BACKEND_ID' | 'RESOURCE.SET_SLUG' | 'RESOURCE.SUBMIT_REPORT' | 'RESOURCE.SET_BACKEND_METADATA' | 'RESOURCE.MANAGE_API_KEY' | 'RESOURCE.MANAGE_CONSUMER_API_KEY' | 'RESOURCE.SET_STATE' | 'RESOURCE.UPDATE_OPTIONS' | 'RESOURCE.ACCEPT_BOOKING_REQUEST' | 'RESOURCE.REJECT_BOOKING_REQUEST' | 'RESOURCE.MANAGE_USERS' | 'RESOURCE.CREATE_PERMISSION' | 'RESOURCE.UPDATE_PERMISSION' | 'RESOURCE.DELETE_PERMISSION' | 'RESOURCE_PROJECT.CREATE_PERMISSION' | 'RESOURCE_PROJECT.UPDATE_PERMISSION' | 'RESOURCE_PROJECT.DELETE_PERMISSION' | 'RESOURCE.CONSUMPTION_LIMITATION' | 'OFFERING.MANAGE_BACKEND_RESOURCES' | 'SERVICE_PROVIDER.GET_API_SECRET_CODE' | 'SERVICE_PROVIDER.GENERATE_API_SECRET_CODE' | 'SERVICE_PROVIDER.LIST_CUSTOMERS' | 'SERVICE_PROVIDER.LIST_CUSTOMER_PROJECTS' | 'SERVICE_PROVIDER.LIST_PROJECTS' | 'SERVICE_PROVIDER.LIST_PROJECT_PERMISSIONS' | 'SERVICE_PROVIDER.LIST_KEYS' | 'SERVICE_PROVIDER.LIST_USERS' | 'SERVICE_PROVIDER.LIST_USER_CUSTOMERS' | 'SERVICE_PROVIDER.LIST_SERVICE_ACCOUNTS' | 'SERVICE_PROVIDER.LIST_COURSE_ACCOUNTS' | 'SERVICE_PROVIDER.SET_OFFERINGS_USERNAME' | 'SERVICE_PROVIDER.GET_STATISTICS' | 'SERVICE_PROVIDER.GET_REVENUE' | 'SERVICE_PROVIDER.GET_ROBOT_ACCOUNT_CUSTOMERS' | 'SERVICE_PROVIDER.GET_ROBOT_ACCOUNT_PROJECTS' | 'SERVICE_PROVIDER.MANAGE_MAINTENANCE_ANNOUNCEMENT' | 'MATRIX_ROOM.CREATE' | 'PROJECT.CREATE_PERMISSION' | 'CUSTOMER.CREATE_PERMISSION' | 'OFFERING.CREATE_PERMISSION' | 'CALL.CREATE_PERMISSION' | 'PROPOSAL.MANAGE' | 'PROPOSAL.UPDATE' | 'PROPOSAL.MANAGE_REVIEW' | 'PROJECT.UPDATE_PERMISSION' | 'CUSTOMER.UPDATE_PERMISSION' | 'OFFERING.UPDATE_PERMISSION' | 'CALL.UPDATE_PERMISSION' | 'PROPOSAL.UPDATE_PERMISSION' | 'PROJECT.DELETE_PERMISSION' | 'CUSTOMER.DELETE_PERMISSION' | 'OFFERING.DELETE_PERMISSION' | 'CALL.DELETE_PERMISSION' | 'PROPOSAL.DELETE_PERMISSION' | 'LEXIS_LINK.CREATE' | 'LEXIS_LINK.DELETE' | 'PROJECT.LIST' | 'PROJECT.CREATE' | 'PROJECT.DELETE' | 'PROJECT.UPDATE' | 'PROJECT.UPDATE_METADATA' | 'PROJECT.SET_SLUG' | 'PROJECT.REVIEW_MEMBERSHIP' | 'CUSTOMER.UPDATE' | 'CUSTOMER.CONTACT_UPDATE' | 'CUSTOMER.LIST_USERS' | 'INVOICE.LIST' | 'CUSTOMER.VIEW_TEAM' | 'PROJECT.VIEW_TEAM' | 'CUSTOMER.VIEW_ACCOUNTING' | 'CUSTOMER.VIEW_REPORTING' | 'OFFERING.ACCEPT_CALL_REQUEST' | 'CALL.APPROVE_AND_REJECT_PROPOSALS' | 'CALL.CLOSE_ROUNDS' | 'ACCESS_SUBNET.CREATE' | 'ACCESS_SUBNET.UPDATE' | 'ACCESS_SUBNET.DELETE' | 'OFFERING_ACCESS_SUBNET.CREATE' | 'OFFERING_ACCESS_SUBNET.UPDATE' | 'OFFERING_ACCESS_SUBNET.DELETE' | 'OFFERINGUSER.UPDATE_RESTRICTION' | 'INVITATION.LIST' | 'CUSTOMER.LIST_PERMISSION_REVIEWS' | 'CALL.LIST' | 'CALL.CREATE' | 'CALL.UPDATE' | 'ROUND.LIST' | 'PROPOSAL.LIST' | 'SERVICE_ACCOUNT.MANAGE' | 'PROJECT.COURSE_ACCOUNT_MANAGE' | 'SERVICE_PROVIDER.OPENSTACK_IMAGE_MANAGEMENT' | 'OPENSTACK_INSTANCE.CONSOLE_ACCESS' | 'OPENSTACK_INSTANCE.MANAGE_POWER' | 'OPENSTACK_INSTANCE.MANAGE' | 'OPENSTACK_ROUTER.MANAGE_GATEWAY' | 'STAFF.ACCESS' | 'SUPPORT.ACCESS';
+        [key: string]: 'SERVICE_PROVIDER.REGISTER' | 'OFFERING.LIST' | 'OFFERING.CREATE' | 'OFFERING.DELETE' | 'OFFERING.UPDATE_THUMBNAIL' | 'OFFERING.UPDATE' | 'OFFERING.UPDATE_ATTRIBUTES' | 'OFFERING.UPDATE_LOCATION' | 'OFFERING.UPDATE_DESCRIPTION' | 'OFFERING.UPDATE_OPTIONS' | 'OFFERING.UPDATE_INTEGRATION' | 'OFFERING.ADD_ENDPOINT' | 'OFFERING.UPDATE_ENDPOINT' | 'OFFERING.DELETE_ENDPOINT' | 'OFFERING.UPDATE_COMPONENTS' | 'OFFERING.PAUSE' | 'OFFERING.UNPAUSE' | 'OFFERING.ARCHIVE' | 'OFFERING.DRY_RUN_SCRIPT' | 'OFFERING.MANAGE_CAMPAIGN' | 'OFFERING.MANAGE_USER_GROUP' | 'OFFERING.CREATE_PLAN' | 'OFFERING.UPDATE_PLAN' | 'OFFERING.ARCHIVE_PLAN' | 'OFFERING.CREATE_SCREENSHOT' | 'OFFERING.UPDATE_SCREENSHOT' | 'OFFERING.DELETE_SCREENSHOT' | 'OFFERING.CREATE_USER' | 'OFFERING.UPDATE_USER' | 'OFFERING.DELETE_USER' | 'OFFERING.MANAGE_USER_ROLE' | 'POSIX_ID_POOL.MANAGE' | 'RESOURCE.CREATE_ROBOT_ACCOUNT' | 'RESOURCE.UPDATE_ROBOT_ACCOUNT' | 'RESOURCE.DELETE_ROBOT_ACCOUNT' | 'ORDER.LIST' | 'ORDER.CREATE' | 'ORDER.APPROVE_PRIVATE' | 'ORDER.APPROVE' | 'ORDER.REJECT' | 'ORDER.DESTROY' | 'ORDER.CANCEL' | 'ORDER.SET_CONSUMER_INFO' | 'RESOURCE.LIST' | 'RESOURCE.UPDATE' | 'RESOURCE.TERMINATE' | 'RESOURCE.LIST_IMPORTABLE' | 'RESOURCE.SET_END_DATE' | 'RESOURCE.REQUEST_END_DATE_CHANGE' | 'RESOURCE.REQUEST_LIMITS_CHANGE' | 'RESOURCE.PULL' | 'RESOURCE.SET_USAGE' | 'RESOURCE.SET_PLAN' | 'RESOURCE.SET_LIMITS' | 'RESOURCE.SET_BACKEND_ID' | 'RESOURCE.SET_SLUG' | 'RESOURCE.SUBMIT_REPORT' | 'RESOURCE.SET_BACKEND_METADATA' | 'RESOURCE.MANAGE_API_KEY' | 'RESOURCE.MANAGE_CONSUMER_API_KEY' | 'RESOURCE.SET_STATE' | 'RESOURCE.UPDATE_OPTIONS' | 'RESOURCE.ACCEPT_BOOKING_REQUEST' | 'RESOURCE.REJECT_BOOKING_REQUEST' | 'RESOURCE.MANAGE_USERS' | 'RESOURCE.CREATE_PERMISSION' | 'RESOURCE.UPDATE_PERMISSION' | 'RESOURCE.DELETE_PERMISSION' | 'RESOURCE_PROJECT.CREATE_PERMISSION' | 'RESOURCE_PROJECT.UPDATE_PERMISSION' | 'RESOURCE_PROJECT.DELETE_PERMISSION' | 'RESOURCE.CONSUMPTION_LIMITATION' | 'OFFERING.MANAGE_BACKEND_RESOURCES' | 'SERVICE_PROVIDER.GET_API_SECRET_CODE' | 'SERVICE_PROVIDER.GENERATE_API_SECRET_CODE' | 'SERVICE_PROVIDER.LIST_CUSTOMERS' | 'SERVICE_PROVIDER.LIST_CUSTOMER_PROJECTS' | 'SERVICE_PROVIDER.LIST_PROJECTS' | 'SERVICE_PROVIDER.LIST_PROJECT_PERMISSIONS' | 'SERVICE_PROVIDER.LIST_KEYS' | 'SERVICE_PROVIDER.LIST_USERS' | 'SERVICE_PROVIDER.LIST_USER_CUSTOMERS' | 'SERVICE_PROVIDER.LIST_SERVICE_ACCOUNTS' | 'SERVICE_PROVIDER.LIST_COURSE_ACCOUNTS' | 'SERVICE_PROVIDER.SET_OFFERINGS_USERNAME' | 'SERVICE_PROVIDER.GET_STATISTICS' | 'SERVICE_PROVIDER.GET_REVENUE' | 'SERVICE_PROVIDER.GET_ROBOT_ACCOUNT_CUSTOMERS' | 'SERVICE_PROVIDER.GET_ROBOT_ACCOUNT_PROJECTS' | 'SERVICE_PROVIDER.MANAGE_MAINTENANCE_ANNOUNCEMENT' | 'MATRIX_ROOM.CREATE' | 'PROJECT.CREATE_PERMISSION' | 'CUSTOMER.CREATE_PERMISSION' | 'OFFERING.CREATE_PERMISSION' | 'CALL.CREATE_PERMISSION' | 'PROPOSAL.MANAGE' | 'PROPOSAL.UPDATE' | 'PROPOSAL.MANAGE_REVIEW' | 'PROJECT.UPDATE_PERMISSION' | 'CUSTOMER.UPDATE_PERMISSION' | 'OFFERING.UPDATE_PERMISSION' | 'CALL.UPDATE_PERMISSION' | 'PROPOSAL.UPDATE_PERMISSION' | 'PROJECT.DELETE_PERMISSION' | 'CUSTOMER.DELETE_PERMISSION' | 'OFFERING.DELETE_PERMISSION' | 'CALL.DELETE_PERMISSION' | 'PROPOSAL.DELETE_PERMISSION' | 'LEXIS_LINK.CREATE' | 'LEXIS_LINK.DELETE' | 'PROJECT.LIST' | 'PROJECT.CREATE' | 'PROJECT.DELETE' | 'PROJECT.UPDATE' | 'PROJECT.SET_END_DATE' | 'PROJECT.REQUEST_END_DATE_CHANGE' | 'PROJECT.UPDATE_METADATA' | 'PROJECT.SET_SLUG' | 'PROJECT.REVIEW_MEMBERSHIP' | 'CUSTOMER.UPDATE' | 'CUSTOMER.CONTACT_UPDATE' | 'CUSTOMER.LIST_USERS' | 'INVOICE.LIST' | 'CUSTOMER.VIEW_TEAM' | 'PROJECT.VIEW_TEAM' | 'CUSTOMER.VIEW_ACCOUNTING' | 'CUSTOMER.VIEW_REPORTING' | 'OFFERING.ACCEPT_CALL_REQUEST' | 'CALL.APPROVE_AND_REJECT_PROPOSALS' | 'CALL.CLOSE_ROUNDS' | 'ACCESS_SUBNET.CREATE' | 'ACCESS_SUBNET.UPDATE' | 'ACCESS_SUBNET.DELETE' | 'OFFERING_ACCESS_SUBNET.CREATE' | 'OFFERING_ACCESS_SUBNET.UPDATE' | 'OFFERING_ACCESS_SUBNET.DELETE' | 'OFFERINGUSER.UPDATE_RESTRICTION' | 'INVITATION.LIST' | 'CUSTOMER.LIST_PERMISSION_REVIEWS' | 'CALL.LIST' | 'CALL.VIEW_RESULTS' | 'CALL.CREATE' | 'CALL.UPDATE' | 'ROUND.LIST' | 'PROPOSAL.LIST' | 'SERVICE_ACCOUNT.MANAGE' | 'PROJECT.COURSE_ACCOUNT_MANAGE' | 'SERVICE_PROVIDER.OPENSTACK_IMAGE_MANAGEMENT' | 'OPENSTACK_INSTANCE.CONSOLE_ACCESS' | 'OPENSTACK_INSTANCE.MANAGE_POWER' | 'OPENSTACK_INSTANCE.MANAGE' | 'OPENSTACK_ROUTER.MANAGE_GATEWAY' | 'STAFF.ACCESS' | 'SUPPORT.ACCESS';
     };
     /**
      * Grouped permission descriptions for UI
@@ -25441,6 +27521,8 @@ export type PlanUsageResponse = {
     readonly customer_provider_name: string;
 };
 
+export type PlannedOutcomeEnum = 'approved' | 'declined' | 'left' | 'skipped';
+
 export type PluginComponent = {
     /**
      * Type identifier of the component
@@ -25465,6 +27547,8 @@ export type PluginOfferingType = {
     components: Array<PluginComponent>;
     available_limits: Array<string>;
 };
+
+export type PolarityEnum = 'positive' | 'negative';
 
 export type PolicyCostBreakdown = {
     /**
@@ -25507,6 +27591,173 @@ export type PolicyTriggerStatus = {
 };
 
 export type PolicyTypeEnum = 'access_as_shared' | 'access_as_external';
+
+export type PoolStatusEnum = 'invited' | 'accepted' | 'declined' | 'expired';
+
+export type PortfolioReport = {
+    totals: PortfolioReportBlock;
+    calls: Array<PortfolioReportCall>;
+    months: Array<PortfolioReportMonth>;
+};
+
+export type PortfolioReportBlock = {
+    /**
+     * Proposals counted: those submitted within the dates when dates are given, else every proposal, drafts included.
+     */
+    proposals: number;
+    /**
+     * Proposals that left draft: they have a submission time.
+     */
+    submitted: number;
+    draft: number;
+    /**
+     * Submitted, not yet taken into evaluation.
+     */
+    awaiting_review: number;
+    in_review: number;
+    accepted: number;
+    rejected: number;
+    /**
+     * Withdrawn or canceled.
+     */
+    canceled: number;
+    /**
+     * Accepted plus rejected.
+     */
+    decided: number;
+    /**
+     * Accepted out of decided, 0-1; empty while none is decided.
+     */
+    success_rate: number | null;
+    /**
+     * Submitted reviews with an overall score.
+     */
+    scored_reviews: number;
+    /**
+     * Mean overall score of the submitted reviews, 1-5.
+     */
+    mean_score: number | null;
+    /**
+     * Rounds open for submissions now: within their submission window, of an active call.
+     */
+    active_rounds: number;
+};
+
+export type PortfolioReportCall = {
+    /**
+     * Proposals counted: those submitted within the dates when dates are given, else every proposal, drafts included.
+     */
+    proposals: number;
+    /**
+     * Proposals that left draft: they have a submission time.
+     */
+    submitted: number;
+    draft: number;
+    /**
+     * Submitted, not yet taken into evaluation.
+     */
+    awaiting_review: number;
+    in_review: number;
+    accepted: number;
+    rejected: number;
+    /**
+     * Withdrawn or canceled.
+     */
+    canceled: number;
+    /**
+     * Accepted plus rejected.
+     */
+    decided: number;
+    /**
+     * Accepted out of decided, 0-1; empty while none is decided.
+     */
+    success_rate: number | null;
+    /**
+     * Submitted reviews with an overall score.
+     */
+    scored_reviews: number;
+    /**
+     * Mean overall score of the submitted reviews, 1-5.
+     */
+    mean_score: number | null;
+    /**
+     * Rounds open for submissions now: within their submission window, of an active call.
+     */
+    active_rounds: number;
+    call_uuid: string;
+    call_name: string;
+    call_slug: string;
+    /**
+     * The call's call managing organization.
+     */
+    organisation_uuid: string;
+    /**
+     * The name of the call managing organization's customer.
+     */
+    organisation_name: string;
+    call_state: string;
+    rounds: Array<PortfolioReportRound>;
+};
+
+export type PortfolioReportMonth = {
+    /**
+     * The first day of the month.
+     */
+    month: string;
+    submitted: number;
+    /**
+     * Of the proposals submitted that month, those accepted.
+     */
+    accepted: number;
+};
+
+export type PortfolioReportRound = {
+    /**
+     * Proposals counted: those submitted within the dates when dates are given, else every proposal, drafts included.
+     */
+    proposals: number;
+    /**
+     * Proposals that left draft: they have a submission time.
+     */
+    submitted: number;
+    draft: number;
+    /**
+     * Submitted, not yet taken into evaluation.
+     */
+    awaiting_review: number;
+    in_review: number;
+    accepted: number;
+    rejected: number;
+    /**
+     * Withdrawn or canceled.
+     */
+    canceled: number;
+    /**
+     * Accepted plus rejected.
+     */
+    decided: number;
+    /**
+     * Accepted out of decided, 0-1; empty while none is decided.
+     */
+    success_rate: number | null;
+    /**
+     * Submitted reviews with an overall score.
+     */
+    scored_reviews: number;
+    /**
+     * Mean overall score of the submitted reviews, 1-5.
+     */
+    mean_score: number | null;
+    /**
+     * Rounds open for submissions now: within their submission window, of an active call.
+     */
+    active_rounds: number;
+    round_uuid: string;
+    round_name: string;
+    round_slug: string;
+    start_time: string;
+    cutoff_time: string | null;
+};
 
 export type PosixIdPool = {
     readonly url: string;
@@ -25645,6 +27896,8 @@ export type PosixSharingOffering = {
     uuid: string;
     name: string;
 };
+
+export type PostAwardStatusEnum = 'extension_requested' | 'extension_in_assessment' | 'extension_pending_results' | 'project_extended' | 'pending_final_report' | 'final_report_submitted' | 'project_completed';
 
 export type PresetEnum = 'cscs' | 'oecd_fos_2007';
 
@@ -25887,6 +28140,7 @@ export type Project = {
     };
     billing_price_estimate: NestedPriceEstimate;
     readonly has_metrics: boolean;
+    awarded_proposal: AwardedProposal | null;
 };
 
 export type ProjectAccountingSummary = {
@@ -26876,27 +29130,163 @@ export type Proposal = {
     readonly call_uuid: string;
     readonly call_name: string;
     readonly call_managing_organisation_uuid: string;
+    /**
+     * Whether the call's round results are adopted, after which a held decision can no longer be reopened.
+     */
+    readonly call_adoption_required: boolean;
     oecd_fos_2007_code?: OecdFos2007CodeEnum | BlankEnum | NullEnum | null;
     readonly oecd_fos_2007_label: string;
     science_sub_domain?: string | null;
     readonly science_sub_domain_name: string;
     readonly science_domain_uuid: string;
     readonly science_domain_name: string;
+    /**
+     * The call panel evaluating the proposal. Null for whoever may not see who evaluates it, the applicant team always.
+     */
+    readonly panel_uuid: string | null;
+    /**
+     * The name of the call panel, as panel_uuid is shown.
+     */
+    readonly panel_name: string | null;
     readonly allocation_comment: string | null;
     readonly created: string;
+    /**
+     * When the proposal left draft. Null for proposals submitted before this field existed: their submission was never recorded and the only proxy, the first workflow step instance, was backfilled by migration for the oldest of them — so it is left empty rather than filled with a date that reads as fact.
+     */
+    readonly submitted_at: string | null;
     compliance_status: ProposalComplianceStatus | null;
     can_submit: ProposalCanSubmitResponse;
     readonly awaiting_manual_advance: boolean;
     readonly decision_held: boolean | null;
     /**
-     * Current active workflow step for this proposal.
+     * The changes asked of the applicant and not yet submitted, earliest first: several steps of a stage may each ask at once. Each says what to change and which parts it unlocks meanwhile; the applicant may edit every part any of them unlocks, and submits them all at once. For the applicant team and those overseeing the call; empty otherwise.
      */
-    workflow_step: StepEnum | NullEnum | null;
+    readonly open_change_requests: Array<ProposalChangeRequest>;
+    /**
+     * Whether the caller reads the proposal only as the provider of some of the offerings it requests: its requested resources, award, assessments and extensions then show only their own offerings' part.
+     */
+    readonly reads_own_offerings_only: boolean;
+    /**
+     * The providers whose offering requested by the proposal the caller holds a role on -- its managers, or someone its part of a step can be handed to: each opens the proposal as that offering's team. Empty for everyone else.
+     */
+    readonly offering_team_providers: Array<OfferingTeamProvider>;
+    /**
+     * Key of the call step the proposal stands in.
+     */
+    readonly workflow_step: string | null;
+    /**
+     * What the call configured the caller's dashboard to call the proposal's current stage: one label per step of the stage that has one for the caller (several when the stage runs steps side by side). Empty when nothing is configured, so the state stands.
+     */
+    readonly status_labels: Array<ProposalStatusLabel>;
+    /**
+     * The project length the applicant chose from the call's allowed_duration_months. Written through update_project_details.
+     */
+    readonly requested_duration_months: number | null;
+    /**
+     * The project length the award grants, in months. Null for whoever may not read the award yet, as the awarded resources.
+     */
+    readonly awarded_duration_months: number | null;
+    /**
+     * When the project was completed: its final report accepted.
+     */
+    readonly completed_at: string | null;
+    /**
+     * Where an accepted proposal's extension request or final report stands. Null before acceptance, without post-award work, and for whoever may not read the award.
+     */
+    post_award_status: PostAwardStatusEnum | NullEnum | null;
+    /**
+     * The open extension request or final report, if any.
+     */
+    readonly open_run_uuid: string | null;
+    open_run_phase: WorkflowPhaseEnum | NullEnum | null;
+    /**
+     * The last day an extension can be requested; null when the call takes no extension requests or the project has no end date.
+     */
+    readonly extension_requestable_until: string | null;
+    /**
+     * Whether the final report can be opened now: the proposal is accepted with a project, not completed, has no open extension request or final report, and its call has final report steps. Who may open it is decided by the action itself.
+     */
+    readonly final_report_openable: boolean;
+};
+
+export type ProposalAwardedDuration = {
+    /**
+     * The project length the award grants, in months: one of the call's allowed_duration_months.
+     */
+    awarded_duration_months: number;
+};
+
+export type ProposalAwardedDurationRequest = {
+    /**
+     * The project length the award grants, in months: one of the call's allowed_duration_months.
+     */
+    awarded_duration_months: number;
+};
+
+export type ProposalBudget = {
+    budget_enforcement: BudgetEnforcementEnum;
+    entries: Array<ProposalBudgetEntry>;
+};
+
+export type ProposalBudgetEntry = {
+    pool_uuid: string;
+    offering_name: string;
+    component_type: string;
+    /**
+     * The round the pool covers; empty for the whole call.
+     */
+    round_name: string | null;
+    offered_total: number;
+    /**
+     * Awarded to the other proposals the pool covers.
+     */
+    awarded_so_far: number;
+    remaining: number;
+    /**
+     * What this proposal's award draws from it.
+     */
+    award: number | null;
+    fits: boolean;
 };
 
 export type ProposalCanSubmitResponse = {
     can_submit: boolean;
     error: string | null;
+};
+
+export type ProposalChangeRequest = {
+    readonly uuid: string;
+    readonly created: string;
+    /**
+     * UUID of the workflow step instance the changes were asked at.
+     */
+    readonly step_uuid: string;
+    readonly step_key: string;
+    readonly step_name: string;
+    readonly contribution_uuid: string | null;
+    /**
+     * What is to change, for the applicant, or for the contributor of a reopened contribution.
+     */
+    readonly message: string;
+    /**
+     * The parts the applicant may edit while the request is open: field:<name>, documents, resources, team, compliance.
+     */
+    readonly unlocked_parts: Array<string>;
+    /**
+     * When the changes are due. Past it, the request lapses and the step returns to its actor.
+     */
+    readonly due_at: string | null;
+    readonly is_open: boolean;
+    readonly closed_at: string | null;
+    /**
+     * How the request was closed; empty while it is open.
+     */
+    resolution: ResolutionEnum;
+    /**
+     * Who asked; not told to the applicant team, as the step's actor may
+     * be one of its evaluators.
+     */
+    readonly requested_by_name: string | null;
 };
 
 export type ProposalChecklistAnswerSubmitResponse = {
@@ -26927,9 +29317,9 @@ export type ProposalDocumentation = {
     /**
      * Upload supporting documentation in PDF format.
      */
-    file?: string | null;
+    file: string;
     readonly file_name: string;
-    readonly file_size: number;
+    readonly file_size: number | null;
     readonly created: string;
 };
 
@@ -26937,7 +29327,12 @@ export type ProposalDocumentationRequest = {
     /**
      * Upload supporting documentation in PDF format.
      */
-    file?: Blob | File | null;
+    file: Blob | File;
+};
+
+export type ProposalFeedbackRequest = {
+    proposal_uuid: string;
+    feedback: string;
 };
 
 export type ProposalFieldMetadata = {
@@ -26949,6 +29344,29 @@ export type ProposalFieldMetadata = {
 };
 
 export type ProposalFieldStateEnum = 'hidden' | 'optional' | 'required';
+
+export type ProposalPreviewAsRequest = {
+    /**
+     * One of the proposal's preview-roles: an actor key, never a user.
+     */
+    role: string;
+    /**
+     * For an offering's team: the index of its requested offering.
+     */
+    offering?: number | null;
+};
+
+export type ProposalPreviewRole = {
+    /**
+     * An actor key of the call's workflow.
+     */
+    role: string;
+    /**
+     * For an offering's team: the index of its requested offering.
+     */
+    offering: number | null;
+    label: string;
+};
 
 export type ProposalProjectRoleMapping = {
     readonly url: string;
@@ -26964,6 +29382,62 @@ export type ProposalProjectRoleMappingRequest = {
     call: string;
     proposal_role: string;
     project_role?: string | null;
+};
+
+export type ProposalRanking = {
+    readonly uuid: string;
+    round: string;
+    readonly round_uuid: string;
+    readonly round_name: string;
+    readonly call_uuid: string;
+    readonly call_name: string;
+    proposal: string;
+    readonly proposal_uuid: string;
+    readonly proposal_name: string;
+    readonly proposal_slug: string;
+    proposal_state: ProposalStates;
+    readonly proposal_panel_uuid: string | null;
+    readonly proposal_panel_name: string | null;
+    /**
+     * The round report the ranking belongs to; empty for the round's overall ranking.
+     */
+    meeting_note?: string | null;
+    readonly meeting_note_title: string | null;
+    rank: number;
+    final_score?: number | null;
+    /**
+     * Recommended amounts per requested offering and component: {"<requested offering uuid>": {"<component type>": amount}}.
+     */
+    recommended_resources?: {
+        [key: string]: unknown;
+    };
+    /**
+     * The recommendation named for reading: per requested offering, its name and each recommended component's name, unit and amount.
+     */
+    readonly recommended_resources_detail: Array<RecommendedOffering>;
+    notes?: string;
+    readonly created_by_name: string | null;
+    readonly is_locked: boolean;
+    readonly created: string;
+    readonly modified: string;
+};
+
+export type ProposalRankingRequest = {
+    round: string;
+    proposal: string;
+    /**
+     * The round report the ranking belongs to; empty for the round's overall ranking.
+     */
+    meeting_note?: string | null;
+    rank: number;
+    final_score?: number | null;
+    /**
+     * Recommended amounts per requested offering and component: {"<requested offering uuid>": {"<component type>": amount}}.
+     */
+    recommended_resources?: {
+        [key: string]: unknown;
+    };
+    notes?: string;
 };
 
 export type ProposalRequest = {
@@ -26984,6 +29458,11 @@ export type ProposalReview = {
     readonly proposal_slug: string;
     reviewer?: string;
     readonly reviewer_full_name: string;
+    /**
+     * Email address
+     */
+    readonly reviewer_email: string;
+    readonly reviewer_organization: string;
     readonly reviewer_uuid: string;
     readonly reviewer_image: string;
     /**
@@ -26993,20 +29472,39 @@ export type ProposalReview = {
     readonly anonymous_reviewer_name: string | null;
     state: ProposalReviewStateEnum;
     /**
-     * When the review is due, or None if the round sets no review duration.
+     * When the review is due, or None when nothing sets a deadline.
      *
-     * A review created by accepting an assignment is also due no earlier than
-     * its assignment batch's deadline, so extending the batch deadline moves
-     * the deadline of the reviews accepted from it.
+     * The deadline of the step the review contributes to. A review whose
+     * step has none -- not started yet, or with no duration -- falls back
+     * to the round's review duration from its creation, as before steps had
+     * deadlines. A review created by accepting an assignment is also due no
+     * earlier than its assignment batch's deadline, so extending the batch
+     * deadline moves the deadline of the reviews accepted from it.
      */
     readonly review_end_date: string | null;
+    /**
+     * The review's overall score, 1-5 (0 until rated). When the step has criteria, it is their weighted average.
+     */
     summary_score?: number;
+    /**
+     * The criteria of the step the review is given in, each rated 1-5 in criteria_scores and weighted in the summary_score. Empty when the step has none, and the review is then rated by its summary_score alone.
+     */
+    readonly criteria: Array<ReviewCriterion>;
+    /**
+     * Score per criterion, 1-5, keyed by criterion UUID. Writing it replaces the scores, and summary_score becomes their weighted average, rounded half up.
+     */
+    criteria_scores?: {
+        [key: string]: number | null;
+    };
     summary_public_comment?: string;
     summary_private_comment?: string;
     readonly round_uuid: string;
     readonly round_name: string;
     readonly round_slug: string;
-    readonly round_cutoff_time: string;
+    /**
+     * When submission closes. Empty: the round stays open until a call manager closes it.
+     */
+    readonly round_cutoff_time: string | null;
     readonly round_start_time: string;
     readonly call_name: string;
     readonly call_uuid: string;
@@ -27024,6 +29522,14 @@ export type ProposalReview = {
     readonly coi_confirmed: boolean;
     readonly coi_confirmed_at: string | null;
     readonly coi_confirmation_required: boolean;
+    /**
+     * The conflict-of-interest declaration the reviewer confirms: as confirmed once they did, else as worded now. Empty for the platform's standard declaration.
+     */
+    readonly coi_declaration_text: string;
+    /**
+     * When the reviewer submitted the review. Empty while it is not submitted, and for reviews submitted before this was recorded.
+     */
+    readonly submitted_at: string | null;
     readonly created: string;
     readonly modified: string;
 };
@@ -27031,7 +29537,16 @@ export type ProposalReview = {
 export type ProposalReviewRequest = {
     proposal: string;
     reviewer?: string;
+    /**
+     * The review's overall score, 1-5 (0 until rated). When the step has criteria, it is their weighted average.
+     */
     summary_score?: number;
+    /**
+     * Score per criterion, 1-5, keyed by criterion UUID. Writing it replaces the scores, and summary_score becomes their weighted average, rounded half up.
+     */
+    criteria_scores?: {
+        [key: string]: number | null;
+    };
     summary_public_comment?: string;
     summary_private_comment?: string;
     comment_project_title?: string | null;
@@ -27048,21 +29563,318 @@ export type ProposalReviewRequest = {
 
 export type ProposalReviewStateEnum = 'in_review' | 'submitted' | 'rejected';
 
+export type ProposalReviewerSuggestion = {
+    readonly uuid: string;
+    readonly created: string;
+    readonly proposal: string;
+    readonly proposal_name: string;
+    readonly suggested_user: string | null;
+    readonly suggested_user_name: string | null;
+    /**
+     * E-mail address of a suggested reviewer without a user account.
+     */
+    readonly suggested_email: string;
+    /**
+     * Why this reviewer: expertise.
+     */
+    readonly note: string;
+    readonly suggester_uuid: string | null;
+    readonly suggester_name: string | null;
+    readonly step_name: string;
+    /**
+     * Where the suggestion stands; follows its pool invitation.
+     */
+    status: ProposalReviewerSuggestionStatus;
+};
+
+export type ProposalReviewerSuggestionCreateRequest = {
+    /**
+     * An existing user suggested as a reviewer.
+     */
+    suggested_user?: string | null;
+    /**
+     * The e-mail address of a reviewer without a user account.
+     */
+    suggested_email?: string;
+    /**
+     * Why this reviewer: expertise.
+     */
+    note?: string;
+};
+
+export type ProposalReviewerSuggestionStatus = 'pending' | 'invited' | 'accepted' | 'declined' | 'expired' | 'discarded';
+
+export type ProposalReviewerSuggestionWithdrawRequest = {
+    suggestion_uuid: string;
+};
+
+export type ProposalRoleAssignRequest = {
+    /**
+     * The call's evaluator role.
+     */
+    role_uuid: string;
+    /**
+     * The user to hold it.
+     */
+    user_uuid: string;
+    /**
+     * Mark the holder as the role's lead, in place of any other.
+     */
+    is_lead?: boolean;
+};
+
+export type ProposalRoleAssignment = {
+    readonly uuid: string;
+    readonly created: string;
+    readonly proposal_uuid: string;
+    readonly proposal_name: string;
+    readonly proposal_slug: string;
+    proposal_state: ProposalStates;
+    readonly call_uuid: string;
+    readonly call_name: string;
+    readonly role_uuid: string;
+    /**
+     * Identifier of the role within its call.
+     */
+    readonly role_key: string;
+    readonly role_name: string;
+    readonly user_uuid: string;
+    readonly user_full_name: string;
+    /**
+     * Email address
+     *
+     * Shown to staff, those overseeing the call and the holder.
+     */
+    readonly user_email: string | null;
+    readonly is_lead: boolean;
+    readonly assigned_by_full_name: string | null;
+    readonly assigned_in_step_name: string | null;
+    readonly revoked_at: string | null;
+    readonly revoked_by_full_name: string | null;
+    /**
+     * Why the role was taken away, when not by hand.
+     */
+    readonly revoked_reason: string;
+    readonly coi_confirmation_required: boolean | null;
+    readonly coi_confirmed_at: string | null;
+    readonly coi_declaration_only: boolean | null;
+    /**
+     * The conflict-of-interest declaration the holder confirms: as confirmed once they did, else as worded now. Empty for the platform's standard declaration, or when none is asked for.
+     */
+    readonly coi_declaration_text: string | null;
+    readonly is_active: boolean;
+    readonly awaits_coi_confirmation: boolean | null;
+    /**
+     * A conflict of interest is recorded between the holder and the proposal and not dismissed or waived: the role gives no access meanwhile.
+     */
+    readonly has_standing_conflict: boolean | null;
+};
+
+export type ProposalRoleAssignmentActionRequest = {
+    assignment_uuid: string;
+};
+
+export type ProposalRoleCandidate = {
+    uuid: string;
+    full_name: string;
+    /**
+     * Shown to staff and those overseeing the call only.
+     */
+    email: string | null;
+    username: string;
+    /**
+     * Whether the user already holds the role on the proposal.
+     */
+    holds_role: boolean;
+    /**
+     * The user holds another evaluator role on the proposal; one person holds one, so they cannot be assigned.
+     */
+    holds_other_role: boolean;
+    /**
+     * The evaluator role the user holds on the proposal, if any.
+     */
+    held_role_name: string | null;
+    /**
+     * A conflict of interest is recorded for the user and the proposal; they cannot be assigned. Shown to staff and those overseeing the call only, null for anyone else.
+     */
+    has_recorded_conflict: boolean | null;
+    /**
+     * Without a reviewer profile no conflict can be on record: the user is checked by their own declaration only.
+     */
+    has_reviewer_profile: boolean;
+};
+
+export type ProposalRun = {
+    readonly uuid: string;
+    /**
+     * The post-award phase the run walks: extension or closing.
+     */
+    phase: WorkflowPhaseEnum;
+    state: ProposalRunStateEnum;
+    readonly opened_at: string;
+    readonly opened_by_name: string | null;
+    readonly closed_at: string | null;
+    /**
+     * Extension: the end date the applicant asks for.
+     */
+    readonly requested_end_date: string | null;
+    /**
+     * Extension: the limits the applicant asks for, per resource.
+     */
+    readonly requested_limits: {
+        [key: string]: unknown;
+    };
+    /**
+     * Extension: the end date the decision grants.
+     */
+    readonly granted_end_date: string | null;
+    /**
+     * Extension: the limits the decision grants, per resource.
+     */
+    readonly granted_limits: {
+        [key: string]: unknown;
+    };
+    /**
+     * Extension: who set what the decision grants.
+     */
+    readonly granted_by_name: string | null;
+    /**
+     * Extension: what the approval changed -- the end date requests recorded and the orders created -- and what it left alone, and why.
+     */
+    readonly applied_changes: {
+        [key: string]: unknown;
+    };
+    /**
+     * The run's step that is running now, if any.
+     */
+    readonly active_step_uuid: string | null;
+    readonly active_step_kind: string | null;
+};
+
+export type ProposalRunStateEnum = 'open' | 'approved' | 'rejected' | 'withdrawn' | 'expired';
+
+export type ProposalSetPanelRequest = {
+    /**
+     * The panel of the proposal's call that evaluates it from now on; null takes it off any panel.
+     */
+    panel: string | null;
+};
+
 export type ProposalStates = 'draft' | 'submitted' | 'in_review' | 'accepted' | 'rejected' | 'canceled';
+
+export type ProposalStatusLabel = {
+    /**
+     * Key of the step the label is for.
+     */
+    step: string;
+    label: string;
+};
 
 export type ProposalUpdateProjectDetailsRequest = {
     name: string;
     description?: string;
     project_summary?: string;
     science_sub_domain?: string | null;
+    /**
+     * The project length, in months: one of the call's allowed_duration_months.
+     */
+    requested_duration_months?: number | null;
+};
+
+export type ProposalWithdrawRequest = {
+    reason?: string;
 };
 
 export type ProposalWorkflowStepInstance = {
     readonly uuid: string;
-    step: StepEnum;
+    /**
+     * Key of the call step, copied from it.
+     */
+    readonly step: string;
+    readonly call_step_uuid: string;
+    kind: CallStepKindEnum;
+    /**
+     * Position of the step in this proposal's path.
+     */
+    readonly order: number;
+    /**
+     * The stage the step runs in on this proposal: steps of one stage run at the same time, and the next stage starts once all of them have ended.
+     */
+    readonly stage: number;
+    /**
+     * The extension request or final report the step belongs to; null for a step of the evaluation.
+     */
+    readonly run_uuid: string | null;
+    phase: WorkflowPhaseEnum;
+    /**
+     * A final report past its due date, still to be submitted. Other steps lapse at their deadline instead.
+     */
+    readonly is_overdue: boolean;
+    /**
+     * When the step runs on this proposal, fixed when it was submitted; empty when it runs on every proposal.
+     */
+    run_condition: StepRunCondition;
+    /**
+     * Why a skipped step did not run: 'condition_not_met' when its run condition did not hold. Null otherwise.
+     */
+    skipped_reason: SkippedReasonEnum | NullEnum | null;
+    /**
+     * What the call configured the caller's dashboard to call the step in its state: the applicant team's labels on a step visible to them and on the allocation decision, else the evaluators'. Null to fall back to the computed label.
+     */
+    readonly status_label: string | null;
+    /**
+     * Outcomes the step can be completed with.
+     */
+    outcome_set: OutcomeSetEnum;
+    readonly allowed_outcomes: Array<string>;
+    readonly contributor_source: string;
+    /**
+     * The evaluator role whose holders contribute to the step, when its contributors hold one.
+     */
+    readonly contributor_proposal_role_uuid: string | null;
+    readonly per_requested_offering: boolean;
+    /**
+     * Whether the step runs once per round: it is completed for the round, never on the proposal alone.
+     */
+    readonly round_scoped: boolean;
+    /**
+     * Whether only the lead of the evaluator role contributes.
+     */
+    readonly contributors_lead_only: boolean;
+    /**
+     * Who a contribution slot of the step can be handed to.
+     */
+    readonly delegable_to: string;
+    /**
+     * Why the active step waits for the lead of its evaluator role, when only the lead contributes and none can; null otherwise, and for readers outside the call team.
+     */
+    readonly awaiting_lead: string | null;
+    /**
+     * Why the active step cannot move on without someone being added or a call manager acting in another's place, with the way forward; null when its own people can move it, and for readers outside the call team.
+     */
+    readonly waiting_for: string | null;
+    /**
+     * What completing the active step now leaves short, for the completer to confirm: a later review step needing more reviews than reviewers are assigned. Null otherwise, and for readers outside the call team.
+     */
+    readonly completion_warning: string | null;
+    on_negative: OnNegativeEnum;
+    /**
+     * Outcomes a contribution to the step may conclude with; empty when contributions carry no outcome of their own.
+     */
+    readonly contribution_outcomes: Array<string>;
+    /**
+     * Whether this step settles the proposal's award.
+     */
+    readonly is_allocation_decision: boolean;
     readonly step_name: string;
     readonly step_description: string;
+    readonly completer: string | null;
     readonly responsible_role: string | null;
+    /**
+     * The evaluator role whose holders complete the step, if any.
+     */
+    readonly completer_proposal_role_uuid: string | null;
+    readonly completer_proposal_role_name: string | null;
     status: ProposalWorkflowStepInstanceStatusEnum;
     /**
      * Step-specific outcome (e.g., eligible, feasible, approved).
@@ -27088,9 +29900,46 @@ export type ProposalWorkflowStepInstance = {
     readonly duration_in_days: number | null;
     readonly is_required: boolean;
     checklist_status: StepChecklistStatus | null;
+    readonly input_step_uuids: Array<string>;
+    /**
+     * Whether the step's report is released to the applicant.
+     */
+    readonly release_to_applicant: boolean;
+    /**
+     * When the step's report was released to the applicant.
+     */
+    readonly released_at: string | null;
+    /**
+     * Whether the caller may release the step's report to the applicant now: its completer or those overseeing the call, once the step is completed and not yet released.
+     */
+    readonly can_release: boolean;
+    /**
+     * Whether the step's contributors suggest reviewers for the proposal.
+     */
+    readonly collects_reviewer_suggestions: boolean;
+    /**
+     * Whether whoever acts on the step may send the proposal back to its applicant for changes.
+     */
+    readonly allows_change_requests: boolean;
+    /**
+     * Whether the caller may suggest a reviewer through the step now: it is the active step collecting suggestions and the caller's own contribution to it is still open.
+     */
+    readonly can_suggest_reviewers: boolean;
+    /**
+     * For whoever may complete the active step: every contribution is in and its completion gates are met, so it waits only for them. False for everyone else.
+     */
+    readonly ready_to_complete: boolean;
+    /**
+     * The active step's score against its minimum score threshold, before anyone decides: below it, only declining is possible. Null without a threshold, once the step is no longer active, and for readers outside the call team.
+     */
+    score_gate: StepScoreGate | null;
+    /**
+     * Whether the system took this allocation decision itself, on a call whose decision decides automatically.
+     */
+    readonly decided_automatically: boolean;
 };
 
-export type ProposalWorkflowStepInstanceStatusEnum = 'pending' | 'active' | 'completed' | 'expired' | 'skipped';
+export type ProposalWorkflowStepInstanceStatusEnum = 'pending' | 'active' | 'completed' | 'expired' | 'skipped' | 'withdrawn';
 
 export type ProposedAssignment = {
     readonly url: string;
@@ -27120,7 +29969,7 @@ export type ProtectedCall = {
     readonly uuid: string;
     readonly created: string;
     readonly start_date: string;
-    readonly end_date: string;
+    readonly end_date: string | null;
     /**
      * URL-friendly identifier. Only editable by staff users.
      */
@@ -27136,7 +29985,15 @@ export type ProtectedCall = {
     readonly rounds: Array<NestedRound>;
     readonly documents: Array<CallDocument>;
     readonly resource_templates: Array<CallResourceTemplate>;
+    /**
+     * What a proposal may request of each component of the call's accepted offerings, in the component's unit and per its limit period.
+     */
+    readonly component_rules: Array<CallOfferingComponentBounds>;
     fixed_duration_in_days?: number | null;
+    /**
+     * Durations, in months, the applicant chooses the project's length from. Empty offers no choice. Cannot be combined with fixed_duration_in_days. Proposals already submitted keep the length they asked for.
+     */
+    allowed_duration_months?: Array<number>;
     /**
      * The longest prepaid subscription, in whole months, that fits inside fixed_duration_in_days measured from today; null when the call fixes no duration.
      */
@@ -27148,7 +30005,7 @@ export type ProtectedCall = {
      */
     reviewer_identity_visible_to_submitters?: boolean;
     /**
-     * Whether proposal applicants can see review comments and scores
+     * Whether proposal applicants can see review comments and scores. Applicants still see what an applicant step lists as its input steps, such as the reviews they respond to.
      */
     reviews_visible_to_submitters?: boolean;
     /**
@@ -27178,6 +30035,9 @@ export type ProtectedCall = {
     panel_chair?: string | null;
     readonly panel_chair_uuid: string;
     readonly panel_chair_name: string;
+    panel_vice_chair?: string | null;
+    readonly panel_vice_chair_uuid: string;
+    readonly panel_vice_chair_name: string;
     /**
      * Template for proposal slugs. Supports: {call_slug}, {round_slug}, {org_slug}, {year}, {month}, {counter}, {counter_padded}. Default: {round_slug}-{counter_padded}
      */
@@ -27208,6 +30068,10 @@ export type ProtectedCall = {
     user_assurance_levels?: Array<string>;
     applicant_visibility_config?: CallApplicantVisibilityConfig | null;
     /**
+     * Who may review for the call: checked when a reviewer is invited, accepts, is suggested or is given the call's reviewer role. Kept apart from the restrictions on applicants.
+     */
+    reviewer_eligibility?: CallReviewerEligibility | null;
+    /**
      * Per-field state, permitted transitions and downstream consumers for the Project details step.
      */
     readonly proposal_field_metadata: Array<ProposalFieldMetadata>;
@@ -27230,9 +30094,39 @@ export type ProtectedCall = {
      */
     carry_over_drafts?: boolean;
     /**
+     * The conflict-of-interest declaration evaluators confirm, for every step asking them to that has no text of its own. Empty for the platform's standard declaration.
+     */
+    coi_declaration_text?: string;
+    /**
      * What completing a round does with its proposals that still have no decision: refuse to complete the round, or reject them. A round may override it.
      */
     undecided_at_round_completion?: UndecidedAtRoundCompletionEnum;
+    /**
+     * Whether a round's results must be adopted (by a board, say) before they are published. The adoption is then recorded while the round is deciding, and publication waits for it.
+     */
+    adoption_required?: boolean;
+    /**
+     * How the allocation decision is held to the call's resource budgets. soft: approving an award past what remains needs an explicit override with a reason. hard: such an award is refused, and only staff may override it with a reason. Changing it affects only later decisions.
+     */
+    budget_enforcement?: BudgetEnforcementEnum;
+    /**
+     * Names of the proposal roles whose holders are copied (Cc) on every mail to the applicant about a proposal: PROPOSAL.MANAGER for the principal investigator, PROPOSAL.ADMIN for the proposal administrators. Only the proposal's current team is copied. Empty copies nobody.
+     */
+    applicant_cc_roles?: Array<string>;
+    /**
+     * Days from a round's cut-off to its decision the workflow is planned for, when the round has no allocation date. The workflow check compares the steps' durations with it.
+     */
+    target_decision_days?: number | null;
+    readonly template_uuid: string | null;
+    readonly template_name: string | null;
+    /**
+     * Version of the template the call was created from.
+     */
+    readonly template_version: number | null;
+    /**
+     * The template's current version.
+     */
+    readonly template_latest_version: number | null;
 };
 
 export type ProtectedCallRequest = {
@@ -27244,6 +30138,10 @@ export type ProtectedCallRequest = {
     description?: string;
     manager: string;
     fixed_duration_in_days?: number | null;
+    /**
+     * Durations, in months, the applicant chooses the project's length from. Empty offers no choice. Cannot be combined with fixed_duration_in_days. Proposals already submitted keep the length they asked for.
+     */
+    allowed_duration_months?: Array<number>;
     backend_id?: string;
     external_url?: string | null;
     /**
@@ -27251,7 +30149,7 @@ export type ProtectedCallRequest = {
      */
     reviewer_identity_visible_to_submitters?: boolean;
     /**
-     * Whether proposal applicants can see review comments and scores
+     * Whether proposal applicants can see review comments and scores. Applicants still see what an applicant step lists as its input steps, such as the reviews they respond to.
      */
     reviews_visible_to_submitters?: boolean;
     proposal_field_config?: CallProposalFieldConfigRequest;
@@ -27274,6 +30172,7 @@ export type ProtectedCallRequest = {
      */
     compliance_checklist?: string | null;
     panel_chair?: string | null;
+    panel_vice_chair?: string | null;
     /**
      * Template for proposal slugs. Supports: {call_slug}, {round_slug}, {org_slug}, {year}, {month}, {counter}, {counter_padded}. Default: {round_slug}-{counter_padded}
      */
@@ -27304,6 +30203,10 @@ export type ProtectedCallRequest = {
     user_assurance_levels?: Array<string>;
     applicant_visibility_config?: CallApplicantVisibilityConfigRequest | null;
     /**
+     * Who may review for the call: checked when a reviewer is invited, accepts, is suggested or is given the call's reviewer role. Kept apart from the restrictions on applicants.
+     */
+    reviewer_eligibility?: CallReviewerEligibilityRequest | null;
+    /**
      * Whose name the orders for resources granted by this call carry.
      */
     order_author?: OrderAuthorEnum;
@@ -27316,9 +30219,29 @@ export type ProtectedCallRequest = {
      */
     carry_over_drafts?: boolean;
     /**
+     * The conflict-of-interest declaration evaluators confirm, for every step asking them to that has no text of its own. Empty for the platform's standard declaration.
+     */
+    coi_declaration_text?: string;
+    /**
      * What completing a round does with its proposals that still have no decision: refuse to complete the round, or reject them. A round may override it.
      */
     undecided_at_round_completion?: UndecidedAtRoundCompletionEnum;
+    /**
+     * Whether a round's results must be adopted (by a board, say) before they are published. The adoption is then recorded while the round is deciding, and publication waits for it.
+     */
+    adoption_required?: boolean;
+    /**
+     * How the allocation decision is held to the call's resource budgets. soft: approving an award past what remains needs an explicit override with a reason. hard: such an award is refused, and only staff may override it with a reason. Changing it affects only later decisions.
+     */
+    budget_enforcement?: BudgetEnforcementEnum;
+    /**
+     * Names of the proposal roles whose holders are copied (Cc) on every mail to the applicant about a proposal: PROPOSAL.MANAGER for the principal investigator, PROPOSAL.ADMIN for the proposal administrators. Only the proposal's current team is copied. Empty copies nobody.
+     */
+    applicant_cc_roles?: Array<string>;
+    /**
+     * Days from a round's cut-off to its decision the workflow is planned for, when the round has no allocation date. The workflow check compares the steps' durations with it.
+     */
+    target_decision_days?: number | null;
 };
 
 export type ProtectedProposalList = {
@@ -27342,10 +30265,16 @@ export type ProtectedRound = {
     readonly slug: string;
     readonly name: string;
     start_time: string;
-    cutoff_time: string;
+    /**
+     * When submission closes. Empty: the round stays open until a call manager closes it.
+     */
+    cutoff_time?: string | null;
     status: RoundStatus;
     allocation_date?: string | null;
-    review_duration_in_days?: number;
+    /**
+     * Deprecated: a review is due when the step it contributes to is (see the round's step due dates). Only a review whose step has no deadline is still due this many days after it was created.
+     */
+    review_duration_in_days?: number | null;
     /**
      * Where the round stands after its cut-off: evaluating, deciding, results_published or closed. Empty before the cut-off.
      */
@@ -27354,6 +30283,10 @@ export type ProtectedRound = {
     readonly deciding_started_at: string | null;
     readonly results_published_at: string | null;
     readonly closed_at: string | null;
+    /**
+     * When the round's results were adopted.
+     */
+    readonly adopted_at: string | null;
     readonly url: string;
     readonly proposals: Array<ProtectedProposalList>;
     readonly results_published_by_name: string | null;
@@ -27366,13 +30299,13 @@ export type ProtectedRound = {
      */
     readonly has_proposals: boolean;
     /**
+     * The call's enabled steps in this round: the due date of each there, how many proposals stand before, at and parked on it, and for a step run once per round its opening and round reports.
+     */
+    readonly round_steps: Array<RoundStep>;
+    /**
      * Why results were published while some proposals of the round still had no decision.
      */
     readonly results_forced_reason: string | null;
-    /**
-     * When the round's results were adopted.
-     */
-    readonly adopted_at: string | null;
     readonly adoption_note: string | null;
     readonly adoption_document: string | null;
     /**
@@ -27383,9 +30316,15 @@ export type ProtectedRound = {
 
 export type ProtectedRoundRequest = {
     start_time: string;
-    cutoff_time: string;
+    /**
+     * When submission closes. Empty: the round stays open until a call manager closes it.
+     */
+    cutoff_time?: string | null;
     allocation_date?: string | null;
-    review_duration_in_days?: number;
+    /**
+     * Deprecated: a review is due when the step it contributes to is (see the round's step due dates). Only a review whose step has no deadline is still due this many days after it was created.
+     */
+    review_duration_in_days?: number | null;
     /**
      * Overrides the call's rule for proposals still without a decision when the round is completed. Empty: the call's rule applies.
      */
@@ -27918,13 +30857,45 @@ export type ProviderRequestedOffering = {
     readonly created: string;
     readonly url: string;
     readonly call_name: string;
+    readonly call_uuid: string;
+    call_state: CallStates;
     call: string;
+    /**
+     * The call's round that matters now: the open one, else the next to open, else the one that ended last.
+     */
+    current_round: NestedRound | null;
+    /**
+     * Proposals, past their draft, requesting the offering in this call.
+     */
+    readonly proposals_count: number;
+    /**
+     * People holding the offering manager role on the offering: the team the call's offering-team steps hand work to.
+     */
+    readonly offering_managers_count: number;
+    /**
+     * Enabled steps of the call's workflow the offering's team completes or contributes to.
+     */
+    readonly team_steps_count: number;
     readonly description: string;
     readonly created_by_name: string;
     /**
      * Email address
      */
     readonly created_by_email: string;
+    /**
+     * What a proposal may request of each component: what the provider commits to by accepting.
+     */
+    readonly component_rules: Array<CallOfferingComponentBounds>;
+    /**
+     * How much of each component the call awards, overall or per round.
+     */
+    readonly pools: Array<CallPoolSummary>;
+    /**
+     * Why the provider declined to take part in the call.
+     */
+    rejection_reason?: string;
+    readonly default_delegate_uuid: string | null;
+    readonly default_delegate_name: string | null;
 };
 
 export type ProviderRequestedResource = {
@@ -27957,6 +30928,16 @@ export type ProviderRequestedResource = {
     readonly created_by_name: string;
     readonly proposal_name: string;
     proposal: string;
+    readonly proposal_uuid: string;
+    readonly proposal_slug: string;
+    proposal_state: ProposalStates;
+    readonly call_name: string;
+    readonly call_uuid: string;
+    readonly round_name: string;
+    readonly offering_name: string;
+    readonly offering_uuid: string;
+    readonly resource_uuid: string | null;
+    readonly resource_state: string | null;
 };
 
 export type ProviderResourceMonthly = {
@@ -28236,12 +31217,19 @@ export type ProviderUsernameConflict = {
     candidates: Array<ProviderUsernameCandidate>;
 };
 
+export type ProvisionAwardedItemRequest = {
+    /**
+     * The awarded item to order again.
+     */
+    awarded_resource_uuid: string;
+};
+
 export type PublicCall = {
     readonly url: string;
     readonly uuid: string;
     readonly created: string;
     readonly start_date: string;
-    readonly end_date: string;
+    readonly end_date: string | null;
     /**
      * URL-friendly identifier. Only editable by staff users.
      */
@@ -28258,9 +31246,17 @@ export type PublicCall = {
     readonly documents: Array<CallDocument>;
     readonly resource_templates: Array<CallResourceTemplate>;
     /**
+     * What a proposal may request of each component of the call's accepted offerings, in the component's unit and per its limit period.
+     */
+    readonly component_rules: Array<CallOfferingComponentBounds>;
+    /**
      * Fixed duration in days that applies to all proposals in this call
      */
     readonly fixed_duration_in_days: number | null;
+    /**
+     * Durations, in months, the applicant chooses the project's length from; empty when the call offers no choice.
+     */
+    readonly allowed_duration_months: Array<number>;
     /**
      * The longest prepaid subscription, in whole months, that fits inside fixed_duration_in_days measured from today; null when the call fixes no duration.
      */
@@ -28272,7 +31268,7 @@ export type PublicCall = {
      */
     reviewer_identity_visible_to_submitters?: boolean;
     /**
-     * Whether proposal applicants can see review comments and scores. If False, applicants only see final approval/rejection status.
+     * Whether proposal applicants can see review comments and scores. Applicants still see what an applicant step lists as its input steps, such as the reviews they respond to.
      */
     reviews_visible_to_submitters?: boolean;
     /**
@@ -28524,10 +31520,16 @@ export type PublishRoundResultsResponse = {
     readonly slug: string;
     readonly name: string;
     start_time: string;
-    cutoff_time: string;
+    /**
+     * When submission closes. Empty: the round stays open until a call manager closes it.
+     */
+    cutoff_time?: string | null;
     status: RoundStatus;
     allocation_date?: string | null;
-    review_duration_in_days?: number;
+    /**
+     * Deprecated: a review is due when the step it contributes to is (see the round's step due dates). Only a review whose step has no deadline is still due this many days after it was created.
+     */
+    review_duration_in_days?: number | null;
     /**
      * Where the round stands after its cut-off: evaluating, deciding, results_published or closed. Empty before the cut-off.
      */
@@ -28536,6 +31538,10 @@ export type PublishRoundResultsResponse = {
     readonly deciding_started_at: string | null;
     readonly results_published_at: string | null;
     readonly closed_at: string | null;
+    /**
+     * When the round's results were adopted.
+     */
+    readonly adopted_at: string | null;
     readonly url: string;
     readonly proposals: Array<ProtectedProposalList>;
     readonly results_published_by_name: string | null;
@@ -28548,13 +31554,13 @@ export type PublishRoundResultsResponse = {
      */
     readonly has_proposals: boolean;
     /**
+     * The call's enabled steps in this round: the due date of each there, how many proposals stand before, at and parked on it, and for a step run once per round its opening and round reports.
+     */
+    readonly round_steps: Array<RoundStep>;
+    /**
      * Why results were published while some proposals of the round still had no decision.
      */
     readonly results_forced_reason: string | null;
-    /**
-     * When the round's results were adopted.
-     */
-    readonly adopted_at: string | null;
     readonly adoption_note: string | null;
     readonly adoption_document: string | null;
     /**
@@ -30045,6 +33051,23 @@ export type RancherWorkloadRequest = {
     scale: number;
 };
 
+export type RankingImportRequest = {
+    round: string;
+    /**
+     * The round report to import the ranking of; empty for the round's overall ranking.
+     */
+    meeting_note?: string | null;
+    /**
+     * CSV with a header row: proposal_uuid or proposal_slug, rank, final_score, notes, and recommended:<requested offering uuid>:<component type> per recommended amount -- the columns the export writes.
+     */
+    file: Blob | File;
+};
+
+export type RankingImportResponse = {
+    created: number;
+    updated: number;
+};
+
 export type RbacPolicyDirectionEnum = 'outbound' | 'inbound';
 
 export type ReassignItemRequest = {
@@ -30072,7 +33095,22 @@ export type RecentTicket = {
     created: string;
 };
 
-export type RecipientEnum = 'applicant' | 'responsible_role' | 'assigned_reviewers' | 'call_managers' | 'all_pool_reviewers' | 'panel_chair';
+export type RecipientEnum = 'applicant' | 'responsible_role' | 'assigned_reviewers' | 'call_managers' | 'all_pool_reviewers' | 'panel_chair' | 'proposal_role' | 'proposal_role_lead' | 'offering_teams';
+
+export type RecipientsEnum = 'applicant' | 'team';
+
+export type RecommendedComponent = {
+    type: string;
+    name: string;
+    measured_unit: string;
+    amount: number;
+};
+
+export type RecommendedOffering = {
+    requested_offering_uuid: string;
+    offering_name: string;
+    components: Array<RecommendedComponent>;
+};
 
 export type ReconcileRequestRequest = {
     year: number;
@@ -30089,6 +33127,13 @@ export type ReferenceNumberRequest = {
      * Reference number associated with the invoice.
      */
     reference_number?: string;
+};
+
+export type RejectRequestedOfferingRequest = {
+    /**
+     * Why the offering does not take part, for the call's managers.
+     */
+    reason: string;
 };
 
 export type RejectWorkflowStepRequest = {
@@ -30117,6 +33162,35 @@ export type RejectedPoint = {
 };
 
 export type RelationshipTypeEnum = 'employment' | 'consulting' | 'equity' | 'board' | 'royalties' | 'gifts' | 'other';
+
+export type ReleaseStepReportRequest = {
+    /**
+     * UUID of the call step whose report is released.
+     */
+    step_uuid: string;
+    /**
+     * The text the applicant reads in place of the step's report, such as the report edited by the call manager. The report itself when left out.
+     */
+    text?: string;
+};
+
+export type ReleasedReport = {
+    call_step_uuid: string;
+    step_name: string;
+    released_at: string;
+    /**
+     * Who released it; for the call team only.
+     */
+    released_by_name: string | null;
+    /**
+     * The text released in place of the report; empty when the report itself was released.
+     */
+    text: string;
+    /**
+     * The report: the step's submitted contributions with their answers. For the applicant, empty when a text was released in its place.
+     */
+    contributions: Array<StepContributionWithAnswers>;
+};
 
 export type RelevantWhen = {
     plugins?: Array<string>;
@@ -30516,6 +33590,14 @@ export type RenewalEstimateResponse = {
     new_end_date: string;
 };
 
+export type ReopenContributionRequest = {
+    contribution_uuid: string;
+    /**
+     * What is to change, for the contributor. Never shown to the applicant.
+     */
+    message: string;
+};
+
 export type ReopenDecisionRequest = {
     /**
      * Why the held decision is taken back, e.g. the board changed the outcome when adopting the list. Never sent to the applicant and kept out of the proposal's event feed, which the applicant team reads; recorded in the server log.
@@ -30562,6 +33644,32 @@ export type ReportSectionRequest = {
      * Section body content
      */
     body: string;
+};
+
+export type RequestChangesRequest = {
+    /**
+     * UUID of the active workflow step instance the changes are asked at.
+     */
+    step_uuid: string;
+    /**
+     * What the applicant is to change. The applicant reads it.
+     */
+    message: string;
+    /**
+     * The parts the applicant may edit until the changes are submitted: field:<name> for a Project details field, documents, resources, team or compliance; at a step of an extension request or final report, run_form (its applicant step's answers) and, for an extension, run_request (the end date and limits asked for). unlockable_parts on the proposal lists them.
+     */
+    parts: Array<string>;
+    /**
+     * When the changes are due. Past it, the request lapses and the step returns to its actor; nothing is decided for them.
+     */
+    due_at?: string | null;
+};
+
+export type RequestExtensionRequest = {
+    requested_end_date?: string | null;
+    requested_limits?: {
+        [key: string]: unknown;
+    };
 };
 
 export type RequestType = {
@@ -30623,6 +33731,17 @@ export type RequestTypeReorderRequest = {
 
 export type RequestTypes = 'Create' | 'Update' | 'Terminate' | 'Restore';
 
+export type RequestableComponent = {
+    type: string;
+    name: string;
+    measured_unit: string;
+    limit_period: string;
+    unit_factor: number;
+    min_value: number | null;
+    max_value: number | null;
+    limit_decimal_places: number;
+};
+
 export type RequestedOffering = {
     readonly uuid: string;
     state: RequestedOfferingStates;
@@ -30652,6 +33771,18 @@ export type RequestedOffering = {
     readonly created_by_name: string;
     readonly approved_by_name: string;
     description?: string;
+    /**
+     * What a proposal may request of each component of the offering.
+     */
+    readonly component_rules: Array<CallOfferingComponent>;
+    /**
+     * The components a rule can be set for: billed by their limit and priced by the call's plan.
+     */
+    readonly requestable_components: Array<RequestableComponent>;
+    /**
+     * Whether a submitted proposal requests the offering: its component rules can no longer change.
+     */
+    readonly rules_locked: boolean;
 };
 
 export type RequestedOfferingRequest = {
@@ -30693,6 +33824,14 @@ export type RequestedResource = {
     description?: string;
     readonly created_by: string | null;
     readonly created_by_name: string;
+    /**
+     * State of the order that provisions the item's resource; null while nothing has been provisioned for it.
+     */
+    order_state: OrderState | NullEnum | null;
+    /**
+     * Why the order was refused, for a viewer who may read the order; null otherwise.
+     */
+    readonly order_rejection_comment: string | null;
 };
 
 export type RequestedResourcePurchaseOrder = {
@@ -30722,6 +33861,8 @@ export type ReservedAgentTask = {
     id: string;
     name: string;
 };
+
+export type ResolutionEnum = 'submitted' | 'lapsed' | 'withdrawn' | 'cancelled';
 
 export type Resource = {
     offering: string;
@@ -31108,23 +34249,6 @@ export type ResourceContext = {
     type: string;
 };
 
-export type ResourceDemandStat = {
-    readonly offering_uuid: string;
-    readonly offering_name: string;
-    readonly offering_type: string;
-    readonly provider_name: string;
-    readonly proposal_count: number;
-    readonly request_count: number;
-    readonly approved_count: number;
-    readonly pending_count: number;
-    readonly total_requested_limits: {
-        [key: string]: number;
-    };
-    readonly total_approved_limits: {
-        [key: string]: number;
-    };
-};
-
 export type ResourceDownscaledRequest = {
     downscaled?: boolean;
 };
@@ -31369,6 +34493,36 @@ export type ResourcePlanPeriod = {
     start?: string | null;
     end?: string | null;
     components: Array<BaseComponentUsage>;
+};
+
+export type ResourcePoolCell = {
+    /**
+     * Empty: the whole call.
+     */
+    round_uuid: string | null;
+    round_name: string | null;
+    pool_uuid: string | null;
+    /**
+     * Empty: the cell has no pool.
+     */
+    offered_total: number | null;
+    requested: number;
+    awarded: number;
+    remaining: number | null;
+};
+
+export type ResourcePoolUsage = {
+    /**
+     * The component rule, empty while none is set: a proposal may then request any amount of it.
+     */
+    offering_component_uuid: string | null;
+    requested_offering_uuid: string;
+    offering_name: string;
+    component_type: string;
+    component_name: string;
+    measured_unit: string;
+    limit_period: string;
+    cells: Array<ResourcePoolCell>;
 };
 
 export type ResourceProject = {
@@ -31806,7 +34960,7 @@ export type ResourcesLimits = {
     readonly organization_group_uuid: string;
 };
 
-export type ResponsibleRoleEnum = 'call_manager' | 'offering_manager' | 'reviewer' | 'panel_member' | 'applicant';
+export type ResponsibleRoleEnum = 'call_manager' | 'offering_manager' | 'reviewer' | 'panel_member' | 'panel_chair' | 'applicant' | 'proposal_role';
 
 export type RetentionPolicy = {
     readonly uuid: string;
@@ -31836,22 +34990,30 @@ export type ReviewCommentRequest = {
     comment?: string;
 };
 
-export type ReviewProgressStat = {
-    readonly reviewer_uuid: string;
-    readonly reviewer_name: string;
-    readonly reviewer_email: string;
-    readonly total_assigned: number;
-    readonly pending: number;
-    readonly in_progress: number;
-    readonly completed: number;
-    readonly declined: number;
-    readonly average_score: number | null;
-    readonly average_review_time_days: number | null;
-    readonly completion_rate: number;
+export type ReviewCriterion = {
+    /**
+     * Key of the criterion in criteria_scores.
+     */
+    uuid: string;
+    name: string;
+    order: number;
+    /**
+     * Weight in the overall score, relative to the step's other criteria.
+     */
+    weight: number;
 };
 
 export type ReviewSubmitRequest = {
+    /**
+     * The review's overall score, 1-5 (0 until rated). When the step has criteria, it is their weighted average.
+     */
     summary_score?: number;
+    /**
+     * Score per criterion, keyed by criterion UUID; the review's saved scores when left out. Every criterion of the step must be scored.
+     */
+    criteria_scores?: {
+        [key: string]: number | null;
+    };
     summary_public_comment?: string;
     summary_private_comment?: string;
     /**
@@ -32042,9 +35204,17 @@ export type ReviewerProfile = {
      */
     readonly published_at: string | null;
     /**
+     * The latest request to publish the profile, while the operator approves publication: pending, or how it was decided and why.
+     */
+    publication_request: ReviewerPublicationApproval | null;
+    /**
      * Whether reviewer is currently accepting review requests
      */
     available_for_reviews?: boolean;
+    /**
+     * Only an active reviewer is selected for, invited to or offered new review work.
+     */
+    standing: ReviewerStandingEnum;
     readonly created: string;
     readonly modified: string;
 };
@@ -32118,6 +35288,20 @@ export type ReviewerPublication = {
     readonly created: string;
 };
 
+export type ReviewerPublicationApproval = {
+    readonly uuid: string;
+    readonly state: string;
+    readonly created: string;
+    /**
+     * Timestamp when the review was completed
+     */
+    readonly reviewed_at: string | null;
+    /**
+     * Optional comment provided during review
+     */
+    review_comment?: string | null;
+};
+
 export type ReviewerPublicationRequest = {
     title: string;
     /**
@@ -32147,16 +35331,232 @@ export type ReviewerPublicationRequest = {
     is_excluded_from_matching?: boolean;
 };
 
-export type ReviewerStats = {
+export type ReviewerRegistry = {
     readonly uuid: string;
+    readonly user_uuid: string;
+    readonly user_full_name: string;
+    /**
+     * Email address
+     */
+    readonly user_email: string;
+    /**
+     * Required. 128 characters or fewer. Lowercase letters, numbers and @/./+/-/_ characters
+     */
+    readonly user_username: string;
+    /**
+     * Active
+     *
+     * Designates whether this user should be treated as active. Unselect this instead of deleting accounts.
+     */
+    readonly user_is_active: boolean;
+    /**
+     * Only an active reviewer is selected for, invited to or offered new review work.
+     */
+    standing: ReviewerStandingEnum;
+    readonly standing_reason: string;
+    readonly standing_changed_by_name: string;
+    readonly standing_changed_at: string | null;
+    /**
+     * Whether profile is discoverable by call managers
+     */
+    readonly is_published: boolean;
+    /**
+     * When the profile was published
+     */
+    readonly published_at: string | null;
+    publication_request: ReviewerPublicationApproval | null;
+    /**
+     * Whether reviewer is currently accepting review requests
+     */
+    readonly available_for_reviews: boolean;
+    /**
+     * The calls whose reviewer pool the reviewer accepted.
+     */
+    readonly pools: Array<ReviewerRegistryPool>;
+    /**
+     * Assignments still occupying the reviewer: pending offers and accepted ones whose review is not finished.
+     */
+    readonly open_assignments: number;
+    /**
+     * Reviews in progress given without an assignment.
+     */
+    readonly reviews_in_progress: number;
+    readonly created: string;
+};
+
+export type ReviewerRegistryPool = {
+    call_uuid: string;
+    call_name: string;
+};
+
+export type ReviewerReport = {
+    totals: ReviewerReportTotals;
+    /**
+     * Busiest first: by reviews assigned.
+     */
+    reviewers: Array<ReviewerReportRow>;
+};
+
+export type ReviewerReportRow = {
+    /**
+     * Proposals sent to the reviewer in assignment batches; a draft batch's are not counted until it is sent. The sum of the invitations_* counts.
+     */
+    invitations: number;
+    invitations_accepted: number;
+    invitations_declined: number;
+    /**
+     * Left unanswered until the batch's deadline.
+     */
+    invitations_expired: number;
+    /**
+     * Awaiting an answer, before the batch's deadline.
+     */
+    invitations_pending: number;
+    /**
+     * Unanswered when the call team canceled the batch.
+     */
+    invitations_withdrawn: number;
+    /**
+     * Blocked by a conflict of interest.
+     */
+    invitations_coi_blocked: number;
+    /**
+     * Given to another reviewer instead.
+     */
+    invitations_reassigned: number;
+    reviews_assigned: number;
+    reviews_submitted: number;
+    /**
+     * In review, with a score or a comment entered.
+     */
+    reviews_in_progress: number;
+    /**
+     * In review, with nothing entered yet.
+     */
+    reviews_not_started: number;
+    reviews_declined: number;
+    /**
+     * Closed at their deadline without being submitted.
+     */
+    reviews_expired: number;
+    /**
+     * Withdrawn when the reviewer joined the proposal's team.
+     */
+    reviews_withdrawn: number;
+    /**
+     * In review past their deadline.
+     */
+    reviews_overdue: number;
+    /**
+     * Empty for a reviewer invited by email who has no account yet: the row is their address's invitations.
+     */
+    reviewer_uuid: string | null;
+    reviewer_name: string;
+    reviewer_email: string;
+    /**
+     * Empty without an account.
+     */
+    is_active: boolean | null;
+    /**
+     * Median days from an assignment batch being sent to the reviewer accepting or declining a proposal of it.
+     */
+    median_response_days: number | null;
+    /**
+     * Median days from a review's creation to its submission, over the reviews whose submission time is recorded.
+     */
+    median_turnaround_days: number | null;
+    /**
+     * Mean overall score of the submitted reviews, 1-5.
+     */
+    mean_score: number | null;
+    last_submitted_at: string | null;
+};
+
+export type ReviewerReportTotals = {
+    /**
+     * Proposals sent to the reviewer in assignment batches; a draft batch's are not counted until it is sent. The sum of the invitations_* counts.
+     */
+    invitations: number;
+    invitations_accepted: number;
+    invitations_declined: number;
+    /**
+     * Left unanswered until the batch's deadline.
+     */
+    invitations_expired: number;
+    /**
+     * Awaiting an answer, before the batch's deadline.
+     */
+    invitations_pending: number;
+    /**
+     * Unanswered when the call team canceled the batch.
+     */
+    invitations_withdrawn: number;
+    /**
+     * Blocked by a conflict of interest.
+     */
+    invitations_coi_blocked: number;
+    /**
+     * Given to another reviewer instead.
+     */
+    invitations_reassigned: number;
+    reviews_assigned: number;
+    reviews_submitted: number;
+    /**
+     * In review, with a score or a comment entered.
+     */
+    reviews_in_progress: number;
+    /**
+     * In review, with nothing entered yet.
+     */
+    reviews_not_started: number;
+    reviews_declined: number;
+    /**
+     * Closed at their deadline without being submitted.
+     */
+    reviews_expired: number;
+    /**
+     * Withdrawn when the reviewer joined the proposal's team.
+     */
+    reviews_withdrawn: number;
+    /**
+     * In review past their deadline.
+     */
+    reviews_overdue: number;
+    reviewers: number;
+};
+
+export type ReviewerStandingEnum = 'active' | 'suspended' | 'blocked';
+
+export type ReviewerStandingRequest = {
+    standing: ReviewerStandingEnum;
+    reason?: string;
+};
+
+export type ReviewerStats = {
+    /**
+     * Reviews the reviewer submitted.
+     */
     readonly total_reviews_completed: number;
+    /**
+     * Assignments and reviews the reviewer declined.
+     */
     readonly total_reviews_declined: number;
+    /**
+     * Assignments left unanswered until they expired, and reviews rejected at their deadline.
+     */
     readonly total_reviews_timeout: number;
+    /**
+     * Mean days from a review's creation to its submission.
+     */
     readonly average_review_time_days: number | null;
+    /**
+     * Mean overall score of the submitted reviews, 1-5.
+     */
     readonly average_score_given: number | null;
+    /**
+     * When the reviewer last submitted a review.
+     */
     readonly last_review_date: string | null;
-    readonly quality_rating: number | null;
-    readonly quality_rating_count: number;
 };
 
 export type ReviewerSuggestion = {
@@ -32194,6 +35594,10 @@ export type ReviewerSuggestion = {
     readonly reviewed_by_name: string;
     readonly reviewed_at: string | null;
     rejection_reason?: string;
+    /**
+     * Where the reviewer stands in the call's reviewer pool -- invited from this suggestion or directly: pending, accepted, declined or expired. Empty when not invited.
+     */
+    pool_invitation_status: InvitationStatusEnum | NullEnum | null;
     readonly matched_keywords: Array<string>;
     readonly top_matching_proposals: Array<ReviewerSuggestionTopMatchingProposal>;
     /**
@@ -32202,6 +35606,36 @@ export type ReviewerSuggestion = {
     source_type: SourceTypeEnum;
     readonly source_type_display: string;
     readonly created: string;
+};
+
+export type ReviewerSuggestionCandidate = {
+    uuid: string;
+    full_name: string;
+    /**
+     * The current affiliation on the person's reviewer profile.
+     */
+    affiliation: string | null;
+    /**
+     * The person published their reviewer profile.
+     */
+    has_published_profile: boolean;
+    /**
+     * Where the person stands in the call's reviewer pool; null when they are not in it.
+     */
+    pool_status: PoolStatusEnum | NullEnum | null;
+    /**
+     * A conflict of interest stands between the person and the proposal.
+     */
+    has_conflict: boolean;
+};
+
+export type ReviewerSuggestionEntry = {
+    uuid: string;
+    suggester_uuid: string | null;
+    suggester_name: string | null;
+    step_name: string;
+    note: string;
+    created: string;
 };
 
 export type ReviewerSuggestionItem = {
@@ -33169,6 +36603,147 @@ export type RoundAdoptionRequest = {
     adoption_document?: Blob | File | null;
 };
 
+export type RoundMeetingNote = {
+    readonly uuid: string;
+    round: string;
+    readonly round_uuid: string;
+    readonly round_name: string;
+    readonly call_uuid: string;
+    readonly call_name: string;
+    title: string;
+    body?: string;
+    readonly author_name: string | null;
+    readonly author_uuid: string | null;
+    /**
+     * The round step a round report is for; null for a free note.
+     */
+    readonly call_step_uuid: string | null;
+    readonly call_step_name: string | null;
+    readonly is_report: boolean;
+    /**
+     * The proposals a round report covers.
+     */
+    readonly report_proposals: Array<RoundReportProposal>;
+    readonly submitted_at: string | null;
+    /**
+     * Whether the round report answers its step's form.
+     */
+    readonly has_checklist: boolean;
+    readonly can_edit: boolean;
+    readonly documents: Array<RoundMeetingNoteDocument>;
+    readonly created: string;
+    readonly modified: string;
+};
+
+export type RoundMeetingNoteDocument = {
+    readonly uuid: string;
+    readonly file: string;
+    readonly name: string;
+    readonly created: string;
+};
+
+export type RoundMeetingNoteRequest = {
+    round: string;
+    title: string;
+    body?: string;
+    /**
+     * Files to attach to the note.
+     */
+    new_documents?: Array<Blob | File>;
+    /**
+     * UUIDs of attached documents to remove.
+     */
+    removed_documents?: Array<string>;
+};
+
+export type RoundReport = {
+    totals: RoundReportTotals;
+    rounds: Array<RoundReportRow>;
+};
+
+export type RoundReportProposal = {
+    uuid: string;
+    name: string;
+    slug: string;
+};
+
+export type RoundReportRow = {
+    call_uuid: string;
+    call_name: string;
+    call_slug: string;
+    /**
+     * The call's call managing organization.
+     */
+    organisation_uuid: string;
+    /**
+     * The name of the call managing organization's customer.
+     */
+    organisation_name: string;
+    round_uuid: string;
+    round_name: string;
+    round_slug: string;
+    call_state: string;
+    /**
+     * Where the round stands by its submission window; call_archived or call_draft for every round of an archived or a draft call, which takes no submissions.
+     */
+    status: RoundReportRowStatusEnum;
+    /**
+     * Where the round stands after its cut-off.
+     */
+    lifecycle_state: string | null;
+    proposals_submitted: number;
+    start_time: string;
+    cutoff_time: string | null;
+    evaluation_started_at: string | null;
+    deciding_started_at: string | null;
+    results_published_at: string | null;
+    adopted_at: string | null;
+    closed_at: string | null;
+    allocation_date: string | null;
+    days_cutoff_to_evaluation: number | null;
+    /**
+     * From the evaluation start to deciding.
+     */
+    days_evaluating: number | null;
+    /**
+     * From deciding to the results' publication.
+     */
+    days_deciding: number | null;
+    /**
+     * Whole days from the day the results were published to the day of their adoption. Negative when they were adopted first, as a call that requires adoption has them: it publishes only adopted results.
+     */
+    days_published_to_adopted: number | null;
+    days_cutoff_to_published: number | null;
+    /**
+     * Whole days from the allocation date to the day the results were published (negative: early); to today while unpublished past the date. Empty without an allocation date, or before it.
+     */
+    days_after_allocation_date: number | null;
+    /**
+     * Results published on a day after the allocation date, or still unpublished past it.
+     */
+    late: boolean;
+    /**
+     * Where a round not closed yet stands: not open yet, open for submissions, past its cut-off with its evaluation not started, evaluating, deciding, or with its results published; call_archived or call_draft for a round of an archived or a draft call. Empty once closed.
+     */
+    current_stage: CurrentStageEnum | NullEnum | null;
+    /**
+     * Days since the round entered its current stage, to now. Empty for a closed round, one not open yet, and one of a call not active.
+     */
+    days_in_current_stage: number | null;
+};
+
+export type RoundReportRowStatusEnum = 'scheduled' | 'open' | 'ended' | 'call_archived' | 'call_draft';
+
+export type RoundReportTotals = {
+    rounds: number;
+    /**
+     * Rounds whose results are published, after a cut-off.
+     */
+    published: number;
+    late: number;
+    median_days_cutoff_to_published: number | null;
+};
+
 export type RoundReviewer = {
     readonly full_name: string;
     email: string;
@@ -33178,6 +36753,57 @@ export type RoundReviewer = {
 };
 
 export type RoundStatus = 'scheduled' | 'open' | 'ended';
+
+export type RoundStatusEnum = 'scheduled' | 'open' | 'ended';
+
+export type RoundStep = {
+    step_uuid: string;
+    step_key: string;
+    step_name: string;
+    step_kind: string;
+    order: number;
+    round_scoped: boolean;
+    has_reports: boolean;
+    due_at: string | null;
+    opened_at: string | null;
+    /**
+     * Proposals of the round standing at the step now.
+     */
+    proposals_at_step: number;
+    /**
+     * Proposals of the round still to reach the step.
+     */
+    proposals_before_step: number;
+    /**
+     * Proposals parked on the step once completed, waiting to be moved on.
+     */
+    proposals_awaiting_advance: number;
+    reports_total: number;
+    reports_submitted: number;
+};
+
+export type RoundStepProposalResult = {
+    proposal_uuid: string;
+    proposal_name: string;
+    detail: string;
+    proposal_state?: string;
+    current_step_name?: string | null;
+};
+
+export type RoundWorkflowStepDueDateRequest = {
+    /**
+     * UUID of the step. Either this or step.
+     */
+    step_uuid?: string;
+    /**
+     * Key of the step. Either this or step_uuid.
+     */
+    step?: string;
+    /**
+     * When the step is due for every proposal of the round; null to count the step's duration again.
+     */
+    due_at: string | null;
+};
 
 export type RouteToProviderRequest = {
     /**
@@ -33430,6 +37056,53 @@ export type SavedFilterRequest = {
     is_shared?: boolean;
 };
 
+export type ScenarioAssertionResult = {
+    assertion: {
+        [key: string]: unknown;
+    };
+    passed: boolean;
+    actual: {
+        [key: string]: unknown;
+    } | null;
+    step: string | null;
+    message: string;
+};
+
+export type ScenarioCoverage = {
+    steps: number;
+    exercised: Array<string>;
+    unexercised: Array<string>;
+    untried_outcomes: {
+        [key: string]: Array<string>;
+    };
+};
+
+export type ScenarioResult = {
+    key: string | null;
+    name: string;
+    status: WorkflowScenarioStatus;
+    error: string | null;
+    /**
+     * Index of the action the run stopped at.
+     */
+    action: number | null;
+    failure: ScenarioAssertionResult | null;
+    assertions: Array<ScenarioAssertionResult>;
+    /**
+     * The (step, outcome or status) pairs the proposal took.
+     */
+    path: Array<Array<string>>;
+    proposal_state: string | null;
+    exercised: Array<string>;
+};
+
+export type ScenarioTotals = {
+    total: number;
+    passed: number;
+    failed: number;
+    error: number;
+};
+
 export type ScheduledAgentTask = {
     id: string;
     name: string;
@@ -33599,6 +37272,9 @@ export type SecurityGroupRuleDirectionEnum = 'ingress' | 'egress';
 export type SelfDeclaredConflictRequest = {
     proposal_uuid: string;
     coi_type: CoiTypeEnum;
+    /**
+     * If omitted, the call's COI type handling decides it (recusal: real, management plan: apparent, disclosure only: potential), else the type's default severity.
+     */
     severity?: CoiSeverityLevel;
     description?: string;
 };
@@ -33629,6 +37305,10 @@ export type SendAssignmentBatchResponse = {
 
 export type SendInvitationsResponse = {
     invitations_sent: number;
+    /**
+     * Confirmed suggestions left uninvited, and why: their reviewer is no longer in good standing, or outside the call's reviewer eligibility.
+     */
+    skipped?: Array<string>;
 };
 
 export type SendNotificationResponse = {
@@ -33964,6 +37644,20 @@ export type SetAllowedDomainsRequest = {
     allowed_domains: Array<string> | null;
 };
 
+export type SetDefaultDelegate = {
+    /**
+     * Who new slots are handed to as they open; null for nobody.
+     */
+    user_uuid: string | null;
+};
+
+export type SetDefaultDelegateRequest = {
+    /**
+     * Who new slots are handed to as they open; null for nobody.
+     */
+    user_uuid: string | null;
+};
+
 export type SetEarliestApproveRequest = {
     earliest_approve: string | null;
 };
@@ -34189,6 +37883,8 @@ export type SkippedProposal = {
     proposal_name: string;
     reason: string;
 };
+
+export type SkippedReasonEnum = 'condition_not_met';
 
 export type SlurmCommand = {
     /**
@@ -34952,6 +38648,8 @@ export type SshKeyRequest = {
 
 export type StageEnum = 'execute' | 'undo';
 
+export type StateGroupEnum = 'pending' | 'accepted' | 'closed';
+
 export type StateTransitionError = {
     /**
      * Error message to be displayed to the user
@@ -34963,12 +38661,46 @@ export type Status = {
     status: string;
 };
 
-export type StepChecklistResponseGroup = {
-    readonly user_uuid: string | null;
-    readonly user_full_name: string | null;
-    readonly user_image: string | null;
-    submitted_at: string | null;
-    answers: Array<TechnicalAssessmentAnswer>;
+export type StepAudienceStatusLabels = {
+    /**
+     * While the step runs on the proposal.
+     */
+    active?: string;
+    /**
+     * Once the step has ended on the proposal.
+     */
+    completed?: string;
+    /**
+     * While the step has sent the proposal back for changes.
+     */
+    changes_requested?: string;
+    /**
+     * Once the step has ended with an outcome the reader is shown, by outcome; in place of 'completed'.
+     */
+    outcomes?: {
+        [key: string]: string;
+    };
+};
+
+export type StepAudienceStatusLabelsRequest = {
+    /**
+     * While the step runs on the proposal.
+     */
+    active?: string;
+    /**
+     * Once the step has ended on the proposal.
+     */
+    completed?: string;
+    /**
+     * While the step has sent the proposal back for changes.
+     */
+    changes_requested?: string;
+    /**
+     * Once the step has ended with an outcome the reader is shown, by outcome; in place of 'completed'.
+     */
+    outcomes?: {
+        [key: string]: string;
+    };
 };
 
 export type StepChecklistStatus = {
@@ -34977,9 +38709,235 @@ export type StepChecklistStatus = {
     checklist_name: string | null;
     checklist_completed: boolean;
     unanswered_required_count: number;
+    /**
+     * Whether the caller may read the step's form as a whole (step-checklist without a contribution): its responsible role, the call team, staff, or someone who may contribute to it. A contributor's own card is read through its contribution.
+     */
+    can_read: boolean;
 };
 
-export type StepEnum = 'administrative_check' | 'technical_assessment' | 'expert_review' | 'panel_review' | 'allocation_decision' | 'award_response';
+export type StepContribution = {
+    uuid: string;
+    proposal_step_uuid: string;
+    call_step_uuid: string;
+    step_name: string;
+    is_per_offering: boolean;
+    readonly requested_offering_uuid: string | null;
+    readonly offering_uuid: string | null;
+    readonly offering_name: string | null;
+    readonly contributor_uuid: string | null;
+    readonly contributor_full_name: string | null;
+    is_lead: boolean;
+    status: StepContributionStatus;
+    outcome: string;
+    conditions: string;
+    comment: string;
+    readonly review_uuid: string | null;
+    due_at: string | null;
+    submitted_at: string | null;
+    readonly can_fill: boolean;
+    readonly checklist_completed: boolean;
+    readonly unanswered_required_count: number;
+    /**
+     * Who the slot is handed to, while they may take it over; hidden from whoever may not know who contributed.
+     */
+    readonly delegate_uuid: string | null;
+    readonly delegate_full_name: string | null;
+    readonly delegated_at: string | null;
+    /**
+     * Whether the caller may hand the slot to someone, or take it back.
+     */
+    readonly can_delegate: boolean;
+    /**
+     * Whether the slot is handed to the caller, who has yet to accept it.
+     */
+    readonly can_accept: boolean;
+    /**
+     * The conflict-of-interest declaration taking the slot over asks of the caller, while it is handed to them; otherwise the one its delegate confirmed. Empty for the platform's standard declaration, or when none is asked for.
+     */
+    readonly coi_declaration_text: string;
+    /**
+     * Who the caller may hand the slot to, when they may hand it on; empty otherwise.
+     */
+    readonly delegation_candidates: Array<ContributionDelegationCandidate>;
+};
+
+export type StepContributionStatus = 'pending' | 'accepted' | 'submitted' | 'declined' | 'withdrawn' | 'expired';
+
+export type StepContributionWithAnswers = {
+    uuid: string;
+    proposal_step_uuid: string;
+    call_step_uuid: string;
+    step_name: string;
+    is_per_offering: boolean;
+    readonly requested_offering_uuid: string | null;
+    readonly offering_uuid: string | null;
+    readonly offering_name: string | null;
+    readonly contributor_uuid: string | null;
+    readonly contributor_full_name: string | null;
+    is_lead: boolean;
+    status: StepContributionStatus;
+    outcome: string;
+    conditions: string;
+    comment: string;
+    readonly review_uuid: string | null;
+    due_at: string | null;
+    submitted_at: string | null;
+    readonly can_fill: boolean;
+    readonly checklist_completed: boolean;
+    readonly unanswered_required_count: number;
+    /**
+     * Who the slot is handed to, while they may take it over; hidden from whoever may not know who contributed.
+     */
+    readonly delegate_uuid: string | null;
+    readonly delegate_full_name: string | null;
+    readonly delegated_at: string | null;
+    /**
+     * Whether the caller may hand the slot to someone, or take it back.
+     */
+    readonly can_delegate: boolean;
+    /**
+     * Whether the slot is handed to the caller, who has yet to accept it.
+     */
+    readonly can_accept: boolean;
+    /**
+     * The conflict-of-interest declaration taking the slot over asks of the caller, while it is handed to them; otherwise the one its delegate confirmed. Empty for the platform's standard declaration, or when none is asked for.
+     */
+    readonly coi_declaration_text: string;
+    /**
+     * Who the caller may hand the slot to, when they may hand it on; empty otherwise.
+     */
+    readonly delegation_candidates: Array<ContributionDelegationCandidate>;
+    readonly user_uuid: string | null;
+    readonly user_full_name: string | null;
+    readonly user_image: string | null;
+    readonly answers: Array<TechnicalAssessmentAnswer>;
+};
+
+export type StepInput = {
+    /**
+     * The input step on the proposal, its outcome masked as on the proposal's step list.
+     */
+    step: ProposalWorkflowStepInstance;
+    /**
+     * The step's contributions with their answers.
+     */
+    contributions: Array<StepContributionWithAnswers>;
+    /**
+     * The submitted reviews of a step collecting reviews; for the applicant without private comments, and without the reviewer unless the call reveals reviewers to applicants.
+     */
+    reviews: Array<ProposalReview>;
+};
+
+export type StepKind = {
+    id: CallStepKindEnum;
+    name: string;
+    description: string;
+    readonly outcome_sets: Array<StepOutcomeSet>;
+    default_outcome_set: string;
+    default_completer: string;
+    readonly config_fields: Array<string>;
+    readonly default_notification_rules: Array<StepKindNotificationRule>;
+    applicant_facing: boolean;
+};
+
+export type StepKindNotificationRule = {
+    trigger: string;
+    recipient: string;
+    days_before: number | null;
+};
+
+export type StepOutcomeSet = {
+    id: string;
+    name: string;
+    outcomes: Array<string>;
+};
+
+export type StepRunCondition = {
+    /**
+     * Key of the earlier step whose outcome or scores decide.
+     */
+    step?: string;
+    /**
+     * Outcomes of that step, or of its contributions, on which this step runs; 'expired' when it lapsed or was skipped.
+     */
+    outcomes?: Array<string>;
+    /**
+     * In place of outcomes: the step runs only when the highest and the lowest score that step's contributions gave the proposal differ by more than this many points.
+     */
+    score_spread_above?: number;
+};
+
+export type StepRunConditionRequest = {
+    /**
+     * Key of the earlier step whose outcome or scores decide.
+     */
+    step?: string;
+    /**
+     * Outcomes of that step, or of its contributions, on which this step runs; 'expired' when it lapsed or was skipped.
+     */
+    outcomes?: Array<string>;
+    /**
+     * In place of outcomes: the step runs only when the highest and the lowest score that step's contributions gave the proposal differ by more than this many points.
+     */
+    score_spread_above?: number;
+};
+
+export type StepScoreGate = {
+    /**
+     * The score the threshold is checked against; null while there is none.
+     */
+    score: number | null;
+    /**
+     * The step's minimum score.
+     */
+    threshold: number;
+    /**
+     * The input step the score comes from; null when it is the average of the proposal's (or this step's) reviews.
+     */
+    source_step_name: string | null;
+    /**
+     * Whether the step may be completed with an outcome other than declined.
+     */
+    passes: boolean;
+};
+
+export type StepStatusLabels = {
+    /**
+     * What the applicant team's dashboard and tracker call the step; only while the step is visible to the applicant.
+     */
+    applicant?: StepAudienceStatusLabels;
+    /**
+     * What the evaluators' dashboards call the step; also the call team's and the offering teams', state by state, where theirs are not set.
+     */
+    evaluators?: StepAudienceStatusLabels;
+    /**
+     * What the call team's dashboard (call managers, staff, support) calls the step.
+     */
+    call_team?: StepAudienceStatusLabels;
+    /**
+     * What an offering team's dashboard calls the step, on the steps it works on.
+     */
+    offering_team?: StepAudienceStatusLabels;
+};
+
+export type StepStatusLabelsRequest = {
+    /**
+     * What the applicant team's dashboard and tracker call the step; only while the step is visible to the applicant.
+     */
+    applicant?: StepAudienceStatusLabelsRequest;
+    /**
+     * What the evaluators' dashboards call the step; also the call team's and the offering teams', state by state, where theirs are not set.
+     */
+    evaluators?: StepAudienceStatusLabelsRequest;
+    /**
+     * What the call team's dashboard (call managers, staff, support) calls the step.
+     */
+    call_team?: StepAudienceStatusLabelsRequest;
+    /**
+     * What an offering team's dashboard calls the step, on the steps it works on.
+     */
+    offering_team?: StepAudienceStatusLabelsRequest;
+};
 
 export type StorageDataType = {
     key: string;
@@ -35071,6 +39029,39 @@ export type SubmitRequestResponse = {
     project_created?: boolean | null;
 };
 
+export type SubmitRoundReportResponse = {
+    report: RoundMeetingNote;
+    completed: Array<RoundStepProposalResult>;
+    failed: Array<RoundStepProposalResult>;
+};
+
+export type SubmitStepContributionRequest = {
+    /**
+     * The contribution to submit. The caller's own contribution to the step when left out.
+     */
+    contribution_uuid?: string | null;
+    /**
+     * UUID of the call step, naming the step whose contribution is meant. The proposal's current step when left out.
+     */
+    step_uuid?: string | null;
+    /**
+     * What the contribution concludes. On a per-offering step one of accepted, conditionally_accepted or rejected; elsewhere, if given, one of the step's outcomes.
+     */
+    outcome?: string;
+    /**
+     * Conditions of a conditional acceptance.
+     */
+    conditions?: string;
+    comment?: string;
+};
+
+export type SubmitStepContributionResponse = {
+    detail: string;
+    contribution: StepContribution;
+    step_completed: boolean;
+    proposal_state: string;
+};
+
 export type SubresourceOffering = {
     /**
      * UUID of the offering
@@ -35087,6 +39078,69 @@ export type SuggestAlternativeReviewers = {
      * List of alternative reviewers with affinity scores
      */
     suggestions: Array<ReviewerSuggestionItem>;
+};
+
+export type SuggestedReviewer = {
+    /**
+     * Identifies the suggested person within the proposal.
+     */
+    key: string;
+    suggested_user_uuid?: string | null;
+    suggested_user_name?: string | null;
+    /**
+     * The person's address, for staff, support and those overseeing the call; for anyone else only an address an evaluator typed, blank for a user they picked.
+     */
+    email: string;
+    status: ProposalReviewerSuggestionStatus;
+    pool_entry_uuid?: string | null;
+    invitation_expires_at?: string | null;
+    suggestions: Array<ReviewerSuggestionEntry>;
+    readonly suggestion_uuids: Array<string>;
+    conflicts: Array<SuggestedReviewerConflict>;
+    /**
+     * A conflict of interest stands between the person and the proposal.
+     */
+    has_conflict: boolean;
+    /**
+     * The applicant asked for the person not to review the proposal.
+     */
+    is_applicant_excluded: boolean;
+    holds_evaluator_role: boolean;
+    is_on_applicant_team: boolean;
+    already_in_pool: boolean;
+    /**
+     * Where the latest assignment of the person to the proposal stands; draft until the call manager sends its batch.
+     */
+    assignment_batch_status?: AssignmentBatchStatus | NullEnum | null;
+};
+
+export type SuggestedReviewerConflict = {
+    uuid: string;
+    status: string;
+    coi_type: string;
+    severity: string;
+};
+
+export type SuggestedReviewerInvitation = {
+    candidate: SuggestedReviewer;
+    /**
+     * invited: a new pool invitation was sent; resent: their expired invitation was sent again; linked: linked to the pool entry they already had; refused: not invited, the detail says why.
+     */
+    outcome: SuggestedReviewerInvitationOutcomeEnum;
+    /**
+     * Whether an invitation e-mail is sent: invited or resent.
+     */
+    invited: boolean;
+    detail: string;
+};
+
+export type SuggestedReviewerInvitationOutcomeEnum = 'invited' | 'resent' | 'linked' | 'refused';
+
+export type SuggestedReviewersActionRequest = {
+    /**
+     * Suggestions naming the people to act on; every suggestion of each person for the proposal is acted on.
+     */
+    suggestion_uuids: Array<string>;
 };
 
 export type SuggestionRejectRequest = {
@@ -35484,11 +39538,15 @@ export type TagsRequest = {
     tags?: Array<string>;
 };
 
+export type TargetEnum = 'proposal' | 'review' | 'assignments' | 'invitations' | 'evaluator_roles' | 'round_report' | 'round' | 'offering_requests';
+
 export type TargetUser = {
     uuid: string;
     username: string;
     full_name: string;
 };
+
+export type TeamPartEnum = 'completes' | 'contributes';
 
 export type TeamWorkload = {
     uuid: string;
@@ -35837,7 +39895,7 @@ export type TriggerConsumptionSyncRequestRequest = {
     resource_uuid?: string;
 };
 
-export type TriggerEnum = 'step_started' | 'step_completed' | 'step_rejected' | 'step_expired' | 'deadline_approaching';
+export type TriggerEnum = 'step_started' | 'step_completed' | 'step_rejected' | 'step_expired' | 'deadline_approaching' | 'changes_requested' | 'changes_submitted' | 'contribution_reopened' | 'contribution_submitted';
 
 export type TriggerSyncRequestRequest = {
     year: number;
@@ -35850,6 +39908,10 @@ export type TriggerSyncRequestRequest = {
 };
 
 export type UndecidedAtRoundCompletionEnum = 'refuse' | 'reject';
+
+export type UnlockableParts = {
+    parts: Array<string>;
+};
 
 export type UpdateActionsRequest = {
     /**
@@ -36930,7 +40992,7 @@ export type ValidationDecisionEnum = 'approved' | 'rejected' | 'pending';
 
 export type ValidationMethodEnum = 'ariregister' | 'wirtschaftscompass' | 'bolagsverket' | 'breg' | 'dnb_se' | 'dnb_no' | 'dnb_dk' | 'dnb_fi';
 
-export type ValueEnum = 'SERVICE_PROVIDER.REGISTER' | 'OFFERING.LIST' | 'OFFERING.CREATE' | 'OFFERING.DELETE' | 'OFFERING.UPDATE_THUMBNAIL' | 'OFFERING.UPDATE' | 'OFFERING.UPDATE_ATTRIBUTES' | 'OFFERING.UPDATE_LOCATION' | 'OFFERING.UPDATE_DESCRIPTION' | 'OFFERING.UPDATE_OPTIONS' | 'OFFERING.UPDATE_INTEGRATION' | 'OFFERING.ADD_ENDPOINT' | 'OFFERING.UPDATE_ENDPOINT' | 'OFFERING.DELETE_ENDPOINT' | 'OFFERING.UPDATE_COMPONENTS' | 'OFFERING.PAUSE' | 'OFFERING.UNPAUSE' | 'OFFERING.ARCHIVE' | 'OFFERING.DRY_RUN_SCRIPT' | 'OFFERING.MANAGE_CAMPAIGN' | 'OFFERING.MANAGE_USER_GROUP' | 'OFFERING.CREATE_PLAN' | 'OFFERING.UPDATE_PLAN' | 'OFFERING.ARCHIVE_PLAN' | 'OFFERING.CREATE_SCREENSHOT' | 'OFFERING.UPDATE_SCREENSHOT' | 'OFFERING.DELETE_SCREENSHOT' | 'OFFERING.CREATE_USER' | 'OFFERING.UPDATE_USER' | 'OFFERING.DELETE_USER' | 'OFFERING.MANAGE_USER_ROLE' | 'POSIX_ID_POOL.MANAGE' | 'RESOURCE.CREATE_ROBOT_ACCOUNT' | 'RESOURCE.UPDATE_ROBOT_ACCOUNT' | 'RESOURCE.DELETE_ROBOT_ACCOUNT' | 'ORDER.LIST' | 'ORDER.CREATE' | 'ORDER.APPROVE_PRIVATE' | 'ORDER.APPROVE' | 'ORDER.REJECT' | 'ORDER.DESTROY' | 'ORDER.CANCEL' | 'ORDER.SET_CONSUMER_INFO' | 'RESOURCE.LIST' | 'RESOURCE.UPDATE' | 'RESOURCE.TERMINATE' | 'RESOURCE.LIST_IMPORTABLE' | 'RESOURCE.SET_END_DATE' | 'RESOURCE.SET_USAGE' | 'RESOURCE.SET_PLAN' | 'RESOURCE.SET_LIMITS' | 'RESOURCE.SET_BACKEND_ID' | 'RESOURCE.SET_SLUG' | 'RESOURCE.SUBMIT_REPORT' | 'RESOURCE.SET_BACKEND_METADATA' | 'RESOURCE.MANAGE_API_KEY' | 'RESOURCE.MANAGE_CONSUMER_API_KEY' | 'RESOURCE.SET_STATE' | 'RESOURCE.UPDATE_OPTIONS' | 'RESOURCE.ACCEPT_BOOKING_REQUEST' | 'RESOURCE.REJECT_BOOKING_REQUEST' | 'RESOURCE.MANAGE_USERS' | 'RESOURCE.CREATE_PERMISSION' | 'RESOURCE.UPDATE_PERMISSION' | 'RESOURCE.DELETE_PERMISSION' | 'RESOURCE_PROJECT.CREATE_PERMISSION' | 'RESOURCE_PROJECT.UPDATE_PERMISSION' | 'RESOURCE_PROJECT.DELETE_PERMISSION' | 'RESOURCE.CONSUMPTION_LIMITATION' | 'OFFERING.MANAGE_BACKEND_RESOURCES' | 'SERVICE_PROVIDER.GET_API_SECRET_CODE' | 'SERVICE_PROVIDER.GENERATE_API_SECRET_CODE' | 'SERVICE_PROVIDER.LIST_CUSTOMERS' | 'SERVICE_PROVIDER.LIST_CUSTOMER_PROJECTS' | 'SERVICE_PROVIDER.LIST_PROJECTS' | 'SERVICE_PROVIDER.LIST_PROJECT_PERMISSIONS' | 'SERVICE_PROVIDER.LIST_KEYS' | 'SERVICE_PROVIDER.LIST_USERS' | 'SERVICE_PROVIDER.LIST_USER_CUSTOMERS' | 'SERVICE_PROVIDER.LIST_SERVICE_ACCOUNTS' | 'SERVICE_PROVIDER.LIST_COURSE_ACCOUNTS' | 'SERVICE_PROVIDER.SET_OFFERINGS_USERNAME' | 'SERVICE_PROVIDER.GET_STATISTICS' | 'SERVICE_PROVIDER.GET_REVENUE' | 'SERVICE_PROVIDER.GET_ROBOT_ACCOUNT_CUSTOMERS' | 'SERVICE_PROVIDER.GET_ROBOT_ACCOUNT_PROJECTS' | 'SERVICE_PROVIDER.MANAGE_MAINTENANCE_ANNOUNCEMENT' | 'MATRIX_ROOM.CREATE' | 'PROJECT.CREATE_PERMISSION' | 'CUSTOMER.CREATE_PERMISSION' | 'OFFERING.CREATE_PERMISSION' | 'CALL.CREATE_PERMISSION' | 'PROPOSAL.MANAGE' | 'PROPOSAL.UPDATE' | 'PROPOSAL.MANAGE_REVIEW' | 'PROJECT.UPDATE_PERMISSION' | 'CUSTOMER.UPDATE_PERMISSION' | 'OFFERING.UPDATE_PERMISSION' | 'CALL.UPDATE_PERMISSION' | 'PROPOSAL.UPDATE_PERMISSION' | 'PROJECT.DELETE_PERMISSION' | 'CUSTOMER.DELETE_PERMISSION' | 'OFFERING.DELETE_PERMISSION' | 'CALL.DELETE_PERMISSION' | 'PROPOSAL.DELETE_PERMISSION' | 'LEXIS_LINK.CREATE' | 'LEXIS_LINK.DELETE' | 'PROJECT.LIST' | 'PROJECT.CREATE' | 'PROJECT.DELETE' | 'PROJECT.UPDATE' | 'PROJECT.UPDATE_METADATA' | 'PROJECT.SET_SLUG' | 'PROJECT.REVIEW_MEMBERSHIP' | 'CUSTOMER.UPDATE' | 'CUSTOMER.CONTACT_UPDATE' | 'CUSTOMER.LIST_USERS' | 'INVOICE.LIST' | 'CUSTOMER.VIEW_TEAM' | 'PROJECT.VIEW_TEAM' | 'CUSTOMER.VIEW_ACCOUNTING' | 'CUSTOMER.VIEW_REPORTING' | 'OFFERING.ACCEPT_CALL_REQUEST' | 'CALL.APPROVE_AND_REJECT_PROPOSALS' | 'CALL.CLOSE_ROUNDS' | 'ACCESS_SUBNET.CREATE' | 'ACCESS_SUBNET.UPDATE' | 'ACCESS_SUBNET.DELETE' | 'OFFERING_ACCESS_SUBNET.CREATE' | 'OFFERING_ACCESS_SUBNET.UPDATE' | 'OFFERING_ACCESS_SUBNET.DELETE' | 'OFFERINGUSER.UPDATE_RESTRICTION' | 'INVITATION.LIST' | 'CUSTOMER.LIST_PERMISSION_REVIEWS' | 'CALL.LIST' | 'CALL.CREATE' | 'CALL.UPDATE' | 'ROUND.LIST' | 'PROPOSAL.LIST' | 'SERVICE_ACCOUNT.MANAGE' | 'PROJECT.COURSE_ACCOUNT_MANAGE' | 'SERVICE_PROVIDER.OPENSTACK_IMAGE_MANAGEMENT' | 'OPENSTACK_INSTANCE.CONSOLE_ACCESS' | 'OPENSTACK_INSTANCE.MANAGE_POWER' | 'OPENSTACK_INSTANCE.MANAGE' | 'OPENSTACK_ROUTER.MANAGE_GATEWAY' | 'STAFF.ACCESS' | 'SUPPORT.ACCESS';
+export type ValueEnum = 'SERVICE_PROVIDER.REGISTER' | 'OFFERING.LIST' | 'OFFERING.CREATE' | 'OFFERING.DELETE' | 'OFFERING.UPDATE_THUMBNAIL' | 'OFFERING.UPDATE' | 'OFFERING.UPDATE_ATTRIBUTES' | 'OFFERING.UPDATE_LOCATION' | 'OFFERING.UPDATE_DESCRIPTION' | 'OFFERING.UPDATE_OPTIONS' | 'OFFERING.UPDATE_INTEGRATION' | 'OFFERING.ADD_ENDPOINT' | 'OFFERING.UPDATE_ENDPOINT' | 'OFFERING.DELETE_ENDPOINT' | 'OFFERING.UPDATE_COMPONENTS' | 'OFFERING.PAUSE' | 'OFFERING.UNPAUSE' | 'OFFERING.ARCHIVE' | 'OFFERING.DRY_RUN_SCRIPT' | 'OFFERING.MANAGE_CAMPAIGN' | 'OFFERING.MANAGE_USER_GROUP' | 'OFFERING.CREATE_PLAN' | 'OFFERING.UPDATE_PLAN' | 'OFFERING.ARCHIVE_PLAN' | 'OFFERING.CREATE_SCREENSHOT' | 'OFFERING.UPDATE_SCREENSHOT' | 'OFFERING.DELETE_SCREENSHOT' | 'OFFERING.CREATE_USER' | 'OFFERING.UPDATE_USER' | 'OFFERING.DELETE_USER' | 'OFFERING.MANAGE_USER_ROLE' | 'POSIX_ID_POOL.MANAGE' | 'RESOURCE.CREATE_ROBOT_ACCOUNT' | 'RESOURCE.UPDATE_ROBOT_ACCOUNT' | 'RESOURCE.DELETE_ROBOT_ACCOUNT' | 'ORDER.LIST' | 'ORDER.CREATE' | 'ORDER.APPROVE_PRIVATE' | 'ORDER.APPROVE' | 'ORDER.REJECT' | 'ORDER.DESTROY' | 'ORDER.CANCEL' | 'ORDER.SET_CONSUMER_INFO' | 'RESOURCE.LIST' | 'RESOURCE.UPDATE' | 'RESOURCE.TERMINATE' | 'RESOURCE.LIST_IMPORTABLE' | 'RESOURCE.SET_END_DATE' | 'RESOURCE.REQUEST_END_DATE_CHANGE' | 'RESOURCE.REQUEST_LIMITS_CHANGE' | 'RESOURCE.PULL' | 'RESOURCE.SET_USAGE' | 'RESOURCE.SET_PLAN' | 'RESOURCE.SET_LIMITS' | 'RESOURCE.SET_BACKEND_ID' | 'RESOURCE.SET_SLUG' | 'RESOURCE.SUBMIT_REPORT' | 'RESOURCE.SET_BACKEND_METADATA' | 'RESOURCE.MANAGE_API_KEY' | 'RESOURCE.MANAGE_CONSUMER_API_KEY' | 'RESOURCE.SET_STATE' | 'RESOURCE.UPDATE_OPTIONS' | 'RESOURCE.ACCEPT_BOOKING_REQUEST' | 'RESOURCE.REJECT_BOOKING_REQUEST' | 'RESOURCE.MANAGE_USERS' | 'RESOURCE.CREATE_PERMISSION' | 'RESOURCE.UPDATE_PERMISSION' | 'RESOURCE.DELETE_PERMISSION' | 'RESOURCE_PROJECT.CREATE_PERMISSION' | 'RESOURCE_PROJECT.UPDATE_PERMISSION' | 'RESOURCE_PROJECT.DELETE_PERMISSION' | 'RESOURCE.CONSUMPTION_LIMITATION' | 'OFFERING.MANAGE_BACKEND_RESOURCES' | 'SERVICE_PROVIDER.GET_API_SECRET_CODE' | 'SERVICE_PROVIDER.GENERATE_API_SECRET_CODE' | 'SERVICE_PROVIDER.LIST_CUSTOMERS' | 'SERVICE_PROVIDER.LIST_CUSTOMER_PROJECTS' | 'SERVICE_PROVIDER.LIST_PROJECTS' | 'SERVICE_PROVIDER.LIST_PROJECT_PERMISSIONS' | 'SERVICE_PROVIDER.LIST_KEYS' | 'SERVICE_PROVIDER.LIST_USERS' | 'SERVICE_PROVIDER.LIST_USER_CUSTOMERS' | 'SERVICE_PROVIDER.LIST_SERVICE_ACCOUNTS' | 'SERVICE_PROVIDER.LIST_COURSE_ACCOUNTS' | 'SERVICE_PROVIDER.SET_OFFERINGS_USERNAME' | 'SERVICE_PROVIDER.GET_STATISTICS' | 'SERVICE_PROVIDER.GET_REVENUE' | 'SERVICE_PROVIDER.GET_ROBOT_ACCOUNT_CUSTOMERS' | 'SERVICE_PROVIDER.GET_ROBOT_ACCOUNT_PROJECTS' | 'SERVICE_PROVIDER.MANAGE_MAINTENANCE_ANNOUNCEMENT' | 'MATRIX_ROOM.CREATE' | 'PROJECT.CREATE_PERMISSION' | 'CUSTOMER.CREATE_PERMISSION' | 'OFFERING.CREATE_PERMISSION' | 'CALL.CREATE_PERMISSION' | 'PROPOSAL.MANAGE' | 'PROPOSAL.UPDATE' | 'PROPOSAL.MANAGE_REVIEW' | 'PROJECT.UPDATE_PERMISSION' | 'CUSTOMER.UPDATE_PERMISSION' | 'OFFERING.UPDATE_PERMISSION' | 'CALL.UPDATE_PERMISSION' | 'PROPOSAL.UPDATE_PERMISSION' | 'PROJECT.DELETE_PERMISSION' | 'CUSTOMER.DELETE_PERMISSION' | 'OFFERING.DELETE_PERMISSION' | 'CALL.DELETE_PERMISSION' | 'PROPOSAL.DELETE_PERMISSION' | 'LEXIS_LINK.CREATE' | 'LEXIS_LINK.DELETE' | 'PROJECT.LIST' | 'PROJECT.CREATE' | 'PROJECT.DELETE' | 'PROJECT.UPDATE' | 'PROJECT.SET_END_DATE' | 'PROJECT.REQUEST_END_DATE_CHANGE' | 'PROJECT.UPDATE_METADATA' | 'PROJECT.SET_SLUG' | 'PROJECT.REVIEW_MEMBERSHIP' | 'CUSTOMER.UPDATE' | 'CUSTOMER.CONTACT_UPDATE' | 'CUSTOMER.LIST_USERS' | 'INVOICE.LIST' | 'CUSTOMER.VIEW_TEAM' | 'PROJECT.VIEW_TEAM' | 'CUSTOMER.VIEW_ACCOUNTING' | 'CUSTOMER.VIEW_REPORTING' | 'OFFERING.ACCEPT_CALL_REQUEST' | 'CALL.APPROVE_AND_REJECT_PROPOSALS' | 'CALL.CLOSE_ROUNDS' | 'ACCESS_SUBNET.CREATE' | 'ACCESS_SUBNET.UPDATE' | 'ACCESS_SUBNET.DELETE' | 'OFFERING_ACCESS_SUBNET.CREATE' | 'OFFERING_ACCESS_SUBNET.UPDATE' | 'OFFERING_ACCESS_SUBNET.DELETE' | 'OFFERINGUSER.UPDATE_RESTRICTION' | 'INVITATION.LIST' | 'CUSTOMER.LIST_PERMISSION_REVIEWS' | 'CALL.LIST' | 'CALL.VIEW_RESULTS' | 'CALL.CREATE' | 'CALL.UPDATE' | 'ROUND.LIST' | 'PROPOSAL.LIST' | 'SERVICE_ACCOUNT.MANAGE' | 'PROJECT.COURSE_ACCOUNT_MANAGE' | 'SERVICE_PROVIDER.OPENSTACK_IMAGE_MANAGEMENT' | 'OPENSTACK_INSTANCE.CONSOLE_ACCESS' | 'OPENSTACK_INSTANCE.MANAGE_POWER' | 'OPENSTACK_INSTANCE.MANAGE' | 'OPENSTACK_ROUTER.MANAGE_GATEWAY' | 'STAFF.ACCESS' | 'SUPPORT.ACCESS';
 
 export type VariantEnum = 'info' | 'warning' | 'error';
 
@@ -36995,6 +41057,8 @@ export type VersionHistory = {
         [key: string]: unknown;
     };
 };
+
+export type ViewEnum = 'call_team' | 'offering_team' | 'applicant' | 'participant';
 
 export type VisibilityEnum = 'private' | 'public';
 
@@ -37509,21 +41573,753 @@ export type WebhookPayloadRequest = {
 
 export type WidgetEnum = 'csv' | 'filesize' | 'attached_instance';
 
+export type WithdrawRunRequest = {
+    /**
+     * The run to call off; the proposal's open one when left out.
+     */
+    run_uuid?: string;
+};
+
 export type WithdrawableAdjustmentRequest = {
     amount: string;
     comment: string;
+};
+
+export type WorkflowChangeKind = 'behaviour' | 'cosmetic';
+
+export type WorkflowChangeType = 'added' | 'removed' | 'changed' | 'moved';
+
+export type WorkflowChanges = {
+    steps: Array<WorkflowEntityChange>;
+    call: Array<WorkflowFieldChange>;
+    proposal_roles: Array<WorkflowEntityChange>;
+    panels: Array<WorkflowEntityChange>;
+    forms: Array<WorkflowEntityChange>;
+    summary: WorkflowVersionSummary;
+};
+
+export type WorkflowCheck = {
+    findings: Array<WorkflowCheckFinding>;
+    summary: WorkflowCheckSummary;
+    /**
+     * Whether no finding is an error; warnings never block.
+     */
+    can_activate: boolean;
+};
+
+export type WorkflowCheckFinding = {
+    /**
+     * Stable identifier of the rule.
+     */
+    code: string;
+    /**
+     * The rule's name in a few words, for a list of findings.
+     */
+    title: string;
+    severity: WorkflowCheckSeverity;
+    /**
+     * Key of the step; null for the call.
+     */
+    step: string | null;
+    step_name: string | null;
+    /**
+     * The setting that fixes it: a step field, or a call-level section such as rounds, offerings or panels.
+     */
+    field: string | null;
+    message: string;
+    because: Array<WorkflowDescriptionRef>;
+};
+
+export type WorkflowCheckSeverity = 'error' | 'info' | 'warning';
+
+export type WorkflowCheckSummary = {
+    error: number;
+    warning: number;
+    info: number;
 };
 
 export type WorkflowCriterion = {
     readonly uuid: string;
     name: string;
     order?: number;
+    /**
+     * The criterion's weight in a review's overall score, relative to the other criteria of the step.
+     */
+    weight?: number;
 };
 
 export type WorkflowCriterionRequest = {
     name: string;
     order?: number;
+    /**
+     * The criterion's weight in a review's overall score, relative to the other criteria of the step.
+     */
+    weight?: number;
 };
+
+export type WorkflowDescription = {
+    schema: number;
+    call: WorkflowDescriptionCall;
+    actors: Array<WorkflowDescriptionActor>;
+    steps: Array<WorkflowDescriptionStep>;
+    notifications: WorkflowDescriptionNotifications;
+    schedule: WorkflowDescriptionSchedule;
+    issues_structural: Array<{
+        [key: string]: unknown;
+    }>;
+};
+
+export type WorkflowDescriptionActor = {
+    key: string;
+    kind: WorkflowDescriptionActorKindEnum;
+    role_key: string | null;
+    label: string;
+    notes: Array<string>;
+    /**
+     * How many hold the role on the call; counts only.
+     */
+    holders: number | null;
+};
+
+export type WorkflowDescriptionActorKindEnum = 'applicant' | 'call_manager' | 'panel_chair' | 'panel_member' | 'reviewer' | 'offering_team' | 'proposal_role' | 'proposal_role_lead' | 'system';
+
+export type WorkflowDescriptionAlwaysSent = {
+    task: string;
+    event: string;
+    audience: Array<string>;
+    /**
+     * Keys of the mail types a call may word for this mail.
+     */
+    mail_types: Array<string>;
+    /**
+     * Whether the call words one of them itself.
+     */
+    customised: boolean;
+};
+
+export type WorkflowDescriptionApplicant = {
+    visible: boolean;
+    label_kind: LabelKindEnum;
+    /**
+     * What the applicant's tracker shows while the step is current.
+     */
+    label: string;
+    /**
+     * The labels the call configured that the applicant reads, by state; empty when they keep the computed labels.
+     */
+    labels: StepAudienceStatusLabels;
+    internal: boolean;
+};
+
+export type WorkflowDescriptionCall = {
+    name: string;
+    state: string | null;
+    template: string | null;
+    settings: {
+        [key: string]: unknown;
+    };
+    target_decision_days: number | null;
+    rounds: Array<WorkflowDescriptionRound>;
+    extra: {
+        [key: string]: unknown;
+    };
+};
+
+export type WorkflowDescriptionChecklist = {
+    name: string | null;
+    required: boolean;
+};
+
+export type WorkflowDescriptionCoiDeclaration = {
+    /**
+     * The declaration; empty for the platform's standard one.
+     */
+    text: string;
+    /**
+     * Where its wording comes from.
+     */
+    source: WorkflowDescriptionCoiDeclarationSourceEnum;
+    /**
+     * The call team can edit the wording at any time.
+     */
+    editable: boolean;
+};
+
+export type WorkflowDescriptionCoiDeclarationSourceEnum = 'step' | 'call' | 'platform';
+
+export type WorkflowDescriptionContributors = {
+    source: string;
+    parameter: string | null;
+    per_requested_offering: boolean;
+    lead_only: boolean;
+    min: number | null;
+    max: number | null;
+};
+
+export type WorkflowDescriptionDelegation = {
+    target: string;
+    proposal_role: string | null;
+};
+
+export type WorkflowDescriptionFlag = {
+    code: string;
+    kind: WorkflowDescriptionFlagKindEnum;
+    severity: WorkflowDescriptionFlagSeverityEnum;
+    step: string | null;
+    trigger: string | null;
+    /**
+     * The flagged rule's lead time, for a deadline reminder.
+     */
+    days_before: number | null;
+    recipient: string | null;
+    message: string;
+    because: Array<WorkflowDescriptionRef>;
+};
+
+export type WorkflowDescriptionFlagCell = {
+    value: boolean;
+    because: Array<WorkflowDescriptionRef>;
+};
+
+export type WorkflowDescriptionFlagKindEnum = 'missing' | 'duplicate' | 'unreachable' | 'leak_risk';
+
+export type WorkflowDescriptionFlagSeverityEnum = 'warning' | 'info';
+
+export type WorkflowDescriptionNotifications = {
+    flags: Array<WorkflowDescriptionFlag>;
+    always_sent: Array<WorkflowDescriptionAlwaysSent>;
+    /**
+     * Keys of the mail types the call words itself.
+     */
+    customised: Array<string>;
+};
+
+export type WorkflowDescriptionNotifiedCell = {
+    value: boolean;
+    triggers: Array<WorkflowDescriptionTrigger>;
+    because: Array<WorkflowDescriptionRef>;
+};
+
+export type WorkflowDescriptionOutcome = {
+    value: string;
+    polarity: PolarityEnum;
+};
+
+export type WorkflowDescriptionPlannedStep = {
+    key: string;
+    stage: number;
+    /**
+     * Planned start, in days from the start of evaluation.
+     */
+    start_day: number;
+    /**
+     * Planned end: the start plus the step's own duration.
+     */
+    end_day: number;
+    /**
+     * The step has a run condition and is planned as if taken.
+     */
+    conditional: boolean;
+    /**
+     * The longest step of its stage, on the critical path.
+     */
+    critical: boolean;
+};
+
+export type WorkflowDescriptionPostAwardSchedule = {
+    phase: WorkflowPhaseEnum;
+    project_end_offset_days: number | null;
+    stages: Array<WorkflowDescriptionStage>;
+    /**
+     * Planned in days from the start of the phase's run.
+     */
+    steps: Array<WorkflowDescriptionPlannedStep>;
+    total_days: number;
+    steps_without_duration: Array<string>;
+};
+
+export type WorkflowDescriptionRef = {
+    /**
+     * Where the reason lives: a field of a step, of the call or of a notification rule, or something the engine always does.
+     */
+    source: WorkflowDescriptionRefSourceEnum;
+    /**
+     * Key of the step.
+     */
+    step: string | null;
+    field: string;
+    detail: string | null;
+};
+
+export type WorkflowDescriptionRefSourceEnum = 'step' | 'call' | 'rule' | 'engine';
+
+export type WorkflowDescriptionRoleCell = {
+    /**
+     * Key of the actor.
+     */
+    actor: string;
+    sees: WorkflowDescriptionFlagCell;
+    reads_outputs: WorkflowDescriptionFlagCell;
+    contributes: WorkflowDescriptionFlagCell;
+    completes: WorkflowDescriptionFlagCell;
+    notified: WorkflowDescriptionNotifiedCell;
+};
+
+export type WorkflowDescriptionRound = {
+    /**
+     * The call's round; calls only.
+     */
+    uuid?: string | null;
+    name?: string | null;
+    start_time: string | null;
+    cutoff_time: string | null;
+    allocation_date: string | null;
+    open_ended: boolean;
+    review_duration_in_days: number | null;
+    time_to_decision_days: number | null;
+    time_to_decision_source: string | null;
+};
+
+export type WorkflowDescriptionRule = {
+    trigger: string;
+    recipient: string;
+    proposal_role: string | null;
+    notified_proposal_roles: Array<string>;
+    days_before: number | null;
+    enabled: boolean;
+    actors: Array<string>;
+    /**
+     * The mail type the rule sends.
+     */
+    mail_type: string;
+    /**
+     * The audience the mail is worded for: applicant or call_team.
+     */
+    variant: string;
+    /**
+     * Whether the call words this mail itself.
+     */
+    customised: boolean;
+};
+
+export type WorkflowDescriptionRunCondition = {
+    step: string;
+    /**
+     * The outcomes of the step it runs on; empty on a score spread.
+     */
+    outcomes: Array<string>;
+    /**
+     * Runs only when the scores the step's contributions gave lie more than this many points apart; null on an outcome condition.
+     */
+    score_spread_above: number | null;
+};
+
+export type WorkflowDescriptionSchedule = {
+    stages: Array<WorkflowDescriptionStage>;
+    steps: Array<WorkflowDescriptionPlannedStep>;
+    total_days: number;
+    critical_path: Array<string>;
+    steps_without_duration: Array<string>;
+    /**
+     * The extension and the closing, each planned on its own after the award; the evaluation's schedule leaves them out.
+     */
+    post_award: Array<WorkflowDescriptionPostAwardSchedule>;
+};
+
+export type WorkflowDescriptionStage = {
+    stage: number;
+    steps: Array<string>;
+    start_day: number;
+    end_day: number;
+};
+
+export type WorkflowDescriptionStep = {
+    key: string;
+    name: string;
+    description: string;
+    kind: string;
+    order: number | null;
+    stage: number;
+    parallel_with_previous: boolean;
+    enabled: boolean;
+    /**
+     * When the step runs: in the evaluation, or after the award in an extension or the closing.
+     */
+    phase: WorkflowPhaseEnum;
+    /**
+     * On the first step after the award: days before the project's end date that time it.
+     */
+    project_end_offset_days: number | null;
+    outcome_set: string | null;
+    outcomes: Array<WorkflowDescriptionOutcome>;
+    on_negative: string | null;
+    transition_mode: string | null;
+    duration_in_days: number | null;
+    run_condition: WorkflowDescriptionRunCondition | null;
+    input_steps: Array<string>;
+    is_allocation_decision: boolean;
+    decides_automatically: boolean;
+    allocation_time: string | null;
+    include_award_response: boolean;
+    allows_change_requests: boolean;
+    allows_conditional_acceptance: boolean;
+    completer: string | null;
+    completer_proposal_role: string | null;
+    completion_lead_only: boolean;
+    assigns_roles: Array<string>;
+    contributors: WorkflowDescriptionContributors;
+    delegable_to: WorkflowDescriptionDelegation | null;
+    blind_review: boolean;
+    requires_coi_confirmation: boolean;
+    /**
+     * The conflict-of-interest declaration the step's evaluators confirm; null on a step asking for none.
+     */
+    coi_declaration: WorkflowDescriptionCoiDeclaration | null;
+    release_to_applicant: boolean;
+    collects_reviewer_suggestions: boolean;
+    min_score_threshold: string | null;
+    checklist: WorkflowDescriptionChecklist | null;
+    /**
+     * How many criteria the step scores.
+     */
+    criteria: number;
+    /**
+     * The step's status labels as configured, for both audiences.
+     */
+    status_labels: StepStatusLabels;
+    applicant: WorkflowDescriptionApplicant;
+    roles: Array<WorkflowDescriptionRoleCell>;
+    notifications: Array<WorkflowDescriptionRule>;
+    /**
+     * Fields of features described by extensions.
+     */
+    extra: {
+        [key: string]: unknown;
+    };
+};
+
+export type WorkflowDescriptionTrigger = {
+    trigger: string;
+    days_before: number | null;
+};
+
+export type WorkflowDiff = {
+    from_version: string;
+    to_version: string;
+    template: WorkflowDiffTemplate | null;
+    changes: WorkflowChanges;
+};
+
+export type WorkflowDiffTemplate = {
+    uuid: string;
+    name: string;
+    /**
+     * The version the call was created from.
+     */
+    version: number | null;
+    latest_version: number;
+};
+
+export type WorkflowDryRun = {
+    proposal_state: string;
+    decision_held: boolean;
+    day: number;
+    requested_offerings: Array<DryRunRequestedOffering>;
+    steps: Array<DryRunStepState>;
+    next: DryRunNext;
+    log: Array<DryRunLogEntry>;
+    messages: Array<DryRunMessage>;
+    coverage: DryRunCoverage;
+    view_as: DryRunViewAsResult | null;
+    /**
+     * The path as a scenario: its request and assertions on where it ended, to name and save on the call's template.
+     */
+    scenario_draft?: {
+        [key: string]: unknown;
+    };
+};
+
+export type WorkflowDryRunParametersRequest = {
+    /**
+     * Requested offerings of the call, accepted ones, in the order actions name them; the call's first accepted ones by default.
+     */
+    requested_offerings?: Array<string>;
+    actions?: Array<DryRunActionRequest>;
+    view_as?: DryRunViewAsRequest | null;
+};
+
+export type WorkflowEntityChange = {
+    key: string;
+    name: string;
+    old_name: string | null;
+    change: WorkflowChangeType;
+    kind: WorkflowChangeKind;
+    /**
+     * Whether the step's place relative to the others changed.
+     */
+    moved: boolean;
+    fields: Array<WorkflowFieldChange>;
+};
+
+export type WorkflowFieldChange = {
+    field: string;
+    kind: WorkflowChangeKind;
+    old: {
+        [key: string]: unknown;
+    } | null;
+    new: {
+        [key: string]: unknown;
+    } | null;
+    added: Array<{
+        [key: string]: unknown;
+    }>;
+    removed: Array<{
+        [key: string]: unknown;
+    }>;
+};
+
+export type WorkflowMail = {
+    uuid: string;
+    sent_at: string;
+    subject: string;
+    body: string;
+    emails: Array<string>;
+};
+
+export type WorkflowPath = {
+    steps: Array<WorkflowPathStep>;
+    proposals: number;
+    /**
+     * No proposal on the path is still at a step.
+     */
+    finished: boolean;
+    /**
+     * Whether a saved scenario walks the path; null when unknown.
+     */
+    covered_by_scenario: boolean | null;
+};
+
+export type WorkflowPathStep = {
+    key: string;
+    /**
+     * The outcome of a completed step, otherwise its status: active, skipped, expired or withdrawn.
+     */
+    result: string;
+};
+
+export type WorkflowPaths = {
+    round: string | null;
+    /**
+     * Whether the call has saved scenarios to compare against.
+     */
+    scenarios_known: boolean;
+    paths: Array<WorkflowPath>;
+};
+
+export type WorkflowPhaseEnum = 'evaluation' | 'extension' | 'closing';
+
+export type WorkflowProgress = {
+    /**
+     * The round counted; null for every round.
+     */
+    round: string | null;
+    rounds: Array<WorkflowProgressRound>;
+    generated_at: string;
+    /**
+     * Proposals that have entered the workflow.
+     */
+    proposals: number;
+    steps: Array<WorkflowProgressStep>;
+};
+
+export type WorkflowProgressOutcome = {
+    outcome: string;
+    count: number;
+    /**
+     * Of the step's completed instances, the fraction with this outcome.
+     */
+    share: number;
+};
+
+export type WorkflowProgressRound = {
+    uuid: string;
+    name: string;
+    start_time: string | null;
+    cutoff_time: string | null;
+    allocation_date: string | null;
+};
+
+export type WorkflowProgressRoundStep = {
+    round: string;
+    name: string;
+    /**
+     * Whether the call's managers opened the step for the round.
+     */
+    opened: boolean;
+    due_at: string | null;
+    /**
+     * Past its due date in the round with proposals still at it.
+     */
+    overdue: boolean;
+    /**
+     * The round's proposals at the step.
+     */
+    waiting: number;
+    completed: number;
+    /**
+     * Round reports of the step.
+     */
+    reports: number;
+    reports_submitted: number;
+};
+
+export type WorkflowProgressStep = {
+    key: string;
+    name: string;
+    enabled: boolean;
+    phase: WorkflowPhaseEnum;
+    round_scoped: boolean;
+    /**
+     * Per round, for a step run once per round.
+     */
+    rounds: Array<WorkflowProgressRoundStep>;
+    planned_days: number | null;
+    total: number;
+    pending: number;
+    /**
+     * Proposals at the step now.
+     */
+    waiting: number;
+    /**
+     * Proposals at the step now and past its deadline.
+     */
+    overdue: number;
+    completed: number;
+    /**
+     * Completed after the step's deadline.
+     */
+    completed_late: number;
+    skipped: number;
+    expired: number;
+    withdrawn: number;
+    /**
+     * Median days from start to completion.
+     */
+    median_days: number | null;
+    /**
+     * 90th percentile of days from start to completion.
+     */
+    p90_days: number | null;
+    outcomes: Array<WorkflowProgressOutcome>;
+};
+
+export type WorkflowReport = {
+    generated_at: string;
+    /**
+     * Proposals with a step instance in the scope.
+     */
+    proposals: number;
+    /**
+     * Per step key, summed over the calls, in workflow order.
+     */
+    steps: Array<WorkflowReportStep>;
+};
+
+export type WorkflowReportCallStep = {
+    /**
+     * Step instances counted.
+     */
+    total: number;
+    /**
+     * Not started yet.
+     */
+    pending: number;
+    /**
+     * Proposals at the step now.
+     */
+    waiting: number;
+    /**
+     * Of those waiting, the ones past the step's deadline.
+     */
+    overdue: number;
+    completed: number;
+    /**
+     * Completed after the step's deadline.
+     */
+    completed_late: number;
+    skipped: number;
+    expired: number;
+    withdrawn: number;
+    /**
+     * Median days from start to completion.
+     */
+    median_days: number | null;
+    /**
+     * 90th percentile of the days from start to completion.
+     */
+    p90_days: number | null;
+    call_uuid: string;
+    call_name: string;
+    call_slug: string;
+    /**
+     * The call's call managing organization.
+     */
+    organisation_uuid: string;
+    /**
+     * The name of the call managing organization's customer.
+     */
+    organisation_name: string;
+    /**
+     * The step's name in this call.
+     */
+    name: string;
+    enabled: boolean;
+    planned_days: number | null;
+};
+
+export type WorkflowReportStep = {
+    /**
+     * Step instances counted.
+     */
+    total: number;
+    /**
+     * Not started yet.
+     */
+    pending: number;
+    /**
+     * Proposals at the step now.
+     */
+    waiting: number;
+    /**
+     * Of those waiting, the ones past the step's deadline.
+     */
+    overdue: number;
+    completed: number;
+    /**
+     * Completed after the step's deadline.
+     */
+    completed_late: number;
+    skipped: number;
+    expired: number;
+    withdrawn: number;
+    /**
+     * Median days from start to completion.
+     */
+    median_days: number | null;
+    /**
+     * 90th percentile of the days from start to completion.
+     */
+    p90_days: number | null;
+    key: string;
+    name: string;
+    phase: string;
+    /**
+     * The step in each call that has it.
+     */
+    calls: Array<WorkflowReportCallStep>;
+};
+
+export type WorkflowScenarioStatus = 'passed' | 'failed' | 'error';
 
 export type WorkflowStepResponsibleUser = {
     uuid: string;
@@ -37531,6 +42327,107 @@ export type WorkflowStepResponsibleUser = {
     full_name: string;
     email: string;
     is_panel_chair: boolean;
+    is_panel_vice_chair: boolean;
+    /**
+     * The offerings accepted into the call that the user manages; empty unless the user takes part as an offering manager.
+     */
+    offerings: Array<WorkflowStepUserOffering>;
+};
+
+export type WorkflowStepUserOffering = {
+    uuid: string;
+    name: string;
+    customer_uuid: string;
+};
+
+export type WorkflowTimeline = {
+    proposal_uuid: string;
+    proposal_name: string;
+    state: string;
+    generated_at: string;
+    steps: Array<WorkflowTimelineStep>;
+    notifications: Array<WorkflowTimelineNotification>;
+};
+
+export type WorkflowTimelineNotification = {
+    created: string;
+    step_key: string | null;
+    step_name: string | null;
+    template: string;
+    trigger: string;
+    /**
+     * The role addressed; never an address.
+     */
+    audience: string;
+    recipient_count: number;
+    /**
+     * The mails as sent, readable through the proposal's workflow-mails; empty for mail sent before they were kept.
+     */
+    email_log_uuids: Array<string>;
+};
+
+export type WorkflowTimelineStep = {
+    key: string;
+    name: string;
+    stage: number;
+    status: string;
+    outcome: string | null;
+    planned_days: number | null;
+    started_at: string | null;
+    completed_at: string | null;
+    deadline: string | null;
+    /**
+     * Past its deadline now, or completed after it.
+     */
+    overdue: boolean;
+    completed_by_name: string | null;
+    /**
+     * Keys of the mail the step's rules sent, without time: what went out before sends were logged as events.
+     */
+    sent_notifications: Array<string>;
+};
+
+export type WorkflowVersion = {
+    number: number;
+    readonly created: string;
+    readonly modified: string;
+    readonly created_by_name: string | null;
+    reason: WorkflowVersionReason;
+    /**
+     * Counts of the changes from the previous version.
+     */
+    summary: WorkflowVersionSummary;
+    document_hash: string;
+};
+
+export type WorkflowVersionDetail = {
+    number: number;
+    readonly created: string;
+    readonly modified: string;
+    readonly created_by_name: string | null;
+    reason: WorkflowVersionReason;
+    /**
+     * Counts of the changes from the previous version.
+     */
+    summary: WorkflowVersionSummary;
+    document_hash: string;
+    /**
+     * The settings and workflow, in the call-transfer format.
+     */
+    document: {
+        [key: string]: unknown;
+    };
+};
+
+export type WorkflowVersionReason = 'created' | 'created_from_template' | 'imported' | 'duplicated' | 'edited' | 'activated';
+
+export type WorkflowVersionSummary = {
+    behaviour?: number;
+    cosmetic?: number;
+    steps_added?: number;
+    steps_removed?: number;
+    steps_changed?: number;
+    steps_moved?: number;
 };
 
 export type YAxisEnum = 'primary' | 'secondary';
@@ -39047,6 +43944,7 @@ export type ConstanceSettingsRequestForm = {
     SEMANTIC_SCHOLAR_API_KEY?: string;
     CROSSREF_MAILTO?: string;
     REVIEWER_PROFILES_ENABLED?: boolean;
+    REVIEWER_PUBLICATION_REQUIRES_APPROVAL?: boolean;
     COI_DETECTION_ENABLED?: boolean;
     COI_DISCLOSURE_REQUIRED?: boolean;
     AUTOMATED_MATCHING_ENABLED?: boolean;
@@ -39412,6 +44310,7 @@ export type ConstanceSettingsRequestMultipart = {
     SEMANTIC_SCHOLAR_API_KEY?: string;
     CROSSREF_MAILTO?: string;
     REVIEWER_PROFILES_ENABLED?: boolean;
+    REVIEWER_PUBLICATION_REQUIRES_APPROVAL?: boolean;
     COI_DETECTION_ENABLED?: boolean;
     COI_DISCLOSURE_REQUIRED?: boolean;
     AUTOMATED_MATCHING_ENABLED?: boolean;
@@ -39644,14 +44543,14 @@ export type ProposalDocumentationRequestForm = {
     /**
      * Upload supporting documentation in PDF format.
      */
-    file?: Blob | File | null;
+    file: Blob | File;
 };
 
 export type ProposalDocumentationRequestMultipart = {
     /**
      * Upload supporting documentation in PDF format.
      */
-    file?: Blob | File | null;
+    file: Blob | File;
 };
 
 export type RequestedResourcePurchaseOrderRequestForm = {
@@ -40138,6 +45037,8 @@ export type UserRoleDetailsOEnum = 'created' | 'email' | 'expiration_time' | 'fu
 
 export type CallReviewerPoolOEnum = '-created' | '-current_assignments' | '-expertise_match_score' | '-invited_at' | 'created' | 'current_assignments' | 'expertise_match_score' | 'invited_at';
 
+export type CallTemplateOEnum = '-created' | '-modified' | '-name' | 'created' | 'modified' | 'name';
+
 export type ChangelogEntryListCategoryEnum = 'ai_assistant' | 'auth' | 'identity' | 'infrastructure' | 'invoices' | 'marketplace' | 'notifications' | 'openstack' | 'policy' | 'proposal' | 'reporting' | 'slurm' | 'support' | 'ui';
 
 export type ChangelogEntryListOEnum = '-category' | '-risk' | '-title' | '-type' | '-version' | 'category' | 'risk' | 'title' | 'type' | 'version';
@@ -40262,7 +45163,7 @@ export type OfferingUserFieldEnum = 'consent_data' | 'created' | 'customer_name'
 
 export type OfferingUserOEnum = '-created' | '-modified' | '-user_first_name' | '-user_last_name' | '-username' | 'created' | 'modified' | 'user_first_name' | 'user_last_name' | 'username';
 
-export type OrderDetailsFieldEnum = 'accepting_terms_of_service' | 'activation_price' | 'attachment' | 'attributes' | 'auto_approved' | 'auto_approved_by_rule_uuid' | 'auto_approved_cost_limit_snapshot' | 'backend_id' | 'callback_url' | 'can_terminate' | 'category_icon' | 'category_title' | 'category_uuid' | 'completed_at' | 'consumer_message' | 'consumer_message_attachment' | 'consumer_message_updated_at' | 'consumer_rejection_comment' | 'consumer_reviewed_at' | 'consumer_reviewed_by' | 'consumer_reviewed_by_full_name' | 'consumer_reviewed_by_username' | 'cost' | 'created' | 'created_by_civil_number' | 'created_by_email' | 'created_by_full_name' | 'created_by_organization' | 'created_by_organization_address' | 'created_by_organization_country' | 'created_by_organization_registry_code' | 'created_by_organization_vat_code' | 'created_by_username' | 'customer_name' | 'customer_slug' | 'customer_uuid' | 'error_message' | 'error_traceback' | 'error_updated_at' | 'fixed_price' | 'issue' | 'limits' | 'marketplace_resource_uuid' | 'modified' | 'new_cost_estimate' | 'new_plan_billing_mode' | 'new_plan_name' | 'new_plan_uuid' | 'offering' | 'offering_billable' | 'offering_description' | 'offering_image' | 'offering_name' | 'offering_plugin_options' | 'offering_shared' | 'offering_thumbnail' | 'offering_type' | 'offering_uuid' | 'old_cost_estimate' | 'old_plan_billing_mode' | 'old_plan_name' | 'old_plan_uuid' | 'order_subtype' | 'output' | 'output_updated_at' | 'plan' | 'plan_description' | 'plan_name' | 'plan_unit' | 'plan_uuid' | 'project_description' | 'project_name' | 'project_slug' | 'project_uuid' | 'provider_description' | 'provider_message' | 'provider_message_attachment' | 'provider_message_updated_at' | 'provider_message_url' | 'provider_name' | 'provider_rejection_comment' | 'provider_reviewed_at' | 'provider_reviewed_by' | 'provider_reviewed_by_full_name' | 'provider_reviewed_by_username' | 'provider_slug' | 'provider_uuid' | 'request_comment' | 'resource_end_date' | 'resource_name' | 'resource_type' | 'resource_uuid' | 'slug' | 'start_date' | 'state' | 'termination_comment' | 'type' | 'url' | 'uuid';
+export type OrderDetailsFieldEnum = 'accepting_terms_of_service' | 'activation_price' | 'attachment' | 'attributes' | 'auto_approved' | 'auto_approved_by_rule_uuid' | 'auto_approved_cost_limit_snapshot' | 'award' | 'backend_id' | 'callback_url' | 'can_terminate' | 'category_icon' | 'category_title' | 'category_uuid' | 'completed_at' | 'consumer_message' | 'consumer_message_attachment' | 'consumer_message_updated_at' | 'consumer_rejection_comment' | 'consumer_reviewed_at' | 'consumer_reviewed_by' | 'consumer_reviewed_by_full_name' | 'consumer_reviewed_by_username' | 'cost' | 'created' | 'created_by_civil_number' | 'created_by_email' | 'created_by_full_name' | 'created_by_organization' | 'created_by_organization_address' | 'created_by_organization_country' | 'created_by_organization_registry_code' | 'created_by_organization_vat_code' | 'created_by_username' | 'customer_name' | 'customer_slug' | 'customer_uuid' | 'error_message' | 'error_traceback' | 'error_updated_at' | 'fixed_price' | 'issue' | 'limits' | 'marketplace_resource_uuid' | 'modified' | 'new_cost_estimate' | 'new_plan_billing_mode' | 'new_plan_name' | 'new_plan_uuid' | 'offering' | 'offering_billable' | 'offering_description' | 'offering_image' | 'offering_name' | 'offering_plugin_options' | 'offering_shared' | 'offering_thumbnail' | 'offering_type' | 'offering_uuid' | 'old_cost_estimate' | 'old_plan_billing_mode' | 'old_plan_name' | 'old_plan_uuid' | 'order_subtype' | 'output' | 'output_updated_at' | 'plan' | 'plan_description' | 'plan_name' | 'plan_unit' | 'plan_uuid' | 'project_description' | 'project_name' | 'project_slug' | 'project_uuid' | 'provider_description' | 'provider_message' | 'provider_message_attachment' | 'provider_message_updated_at' | 'provider_message_url' | 'provider_name' | 'provider_rejection_comment' | 'provider_reviewed_at' | 'provider_reviewed_by' | 'provider_reviewed_by_full_name' | 'provider_reviewed_by_username' | 'provider_slug' | 'provider_uuid' | 'request_comment' | 'resource_end_date' | 'resource_name' | 'resource_type' | 'resource_uuid' | 'slug' | 'start_date' | 'state' | 'termination_comment' | 'type' | 'url' | 'uuid';
 
 export type OrderDetailsOEnum = '-consumer_reviewed_at' | '-cost' | '-created' | '-state' | 'consumer_reviewed_at' | 'cost' | 'created' | 'state';
 
@@ -40284,7 +45185,9 @@ export type ProviderOfferingDetailsOEnum = '-created' | '-name' | '-state' | '-t
 
 export type ProviderOfferingCustomerFieldEnum = 'abbreviation' | 'email' | 'name' | 'phone_number' | 'slug' | 'uuid';
 
-export type ProjectFieldEnum = 'affiliation' | 'affiliation_code' | 'affiliation_name' | 'affiliation_uuid' | 'backend_id' | 'billing_price_estimate' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_display_billing_info_in_projects' | 'customer_grace_period_days' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'effective_end_date' | 'end_date' | 'end_date_requested_by' | 'end_date_updated_at' | 'grace_period_days' | 'has_metrics' | 'image' | 'is_in_grace_period' | 'is_industry' | 'is_removed' | 'kind' | 'marketplace_resource_count' | 'max_service_accounts' | 'name' | 'oecd_fos_2007_code' | 'oecd_fos_2007_label' | 'project_credit' | 'project_metadata' | 'resources_count' | 'science_domain_code' | 'science_domain_name' | 'science_domain_uuid' | 'science_sub_domain' | 'science_sub_domain_code' | 'science_sub_domain_name' | 'slug' | 'staff_notes' | 'start_date' | 'termination_metadata' | 'type' | 'type_name' | 'type_uuid' | 'url' | 'user_affiliations' | 'user_assurance_levels' | 'user_email_patterns' | 'user_identity_sources' | 'user_nationalities' | 'user_organization_types' | 'uuid';
+export type OfferingDependentChangeEnum = 'offering_withdrawn' | 'offering_deleted' | 'offering_team_dropped' | 'plan_archived' | 'plan_deleted' | 'component_removed' | 'component_changed';
+
+export type ProjectFieldEnum = 'affiliation' | 'affiliation_code' | 'affiliation_name' | 'affiliation_uuid' | 'awarded_proposal' | 'backend_id' | 'billing_price_estimate' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_display_billing_info_in_projects' | 'customer_grace_period_days' | 'customer_name' | 'customer_native_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'effective_end_date' | 'end_date' | 'end_date_requested_by' | 'end_date_updated_at' | 'grace_period_days' | 'has_metrics' | 'image' | 'is_in_grace_period' | 'is_industry' | 'is_removed' | 'kind' | 'marketplace_resource_count' | 'max_service_accounts' | 'name' | 'oecd_fos_2007_code' | 'oecd_fos_2007_label' | 'project_credit' | 'project_metadata' | 'resources_count' | 'science_domain_code' | 'science_domain_name' | 'science_domain_uuid' | 'science_sub_domain' | 'science_sub_domain_code' | 'science_sub_domain_name' | 'slug' | 'staff_notes' | 'start_date' | 'termination_metadata' | 'type' | 'type_name' | 'type_uuid' | 'url' | 'user_affiliations' | 'user_assurance_levels' | 'user_email_patterns' | 'user_identity_sources' | 'user_nationalities' | 'user_organization_types' | 'uuid';
 
 export type UserFieldEnum = 'active_isds' | 'address' | 'affiliations' | 'agree_with_policy' | 'agreement_date' | 'attribute_sources' | 'birth_date' | 'can_use_personal_access_tokens' | 'civil_number' | 'country_of_residence' | 'date_joined' | 'deactivation_reason' | 'description' | 'details' | 'eduperson_assurance' | 'email' | 'first_name' | 'full_name' | 'gender' | 'has_active_session' | 'has_passkey' | 'has_usable_password' | 'identity_provider_fields' | 'identity_provider_label' | 'identity_provider_management_url' | 'identity_provider_name' | 'identity_source' | 'image' | 'ip_address' | 'is_active' | 'is_admin_deactivated' | 'is_identity_manager' | 'is_staff' | 'is_support' | 'job_title' | 'last_name' | 'managed_isds' | 'nationalities' | 'nationality' | 'native_name' | 'notifications_enabled' | 'organization' | 'organization_address' | 'organization_country' | 'organization_registry_code' | 'organization_type' | 'organization_vat_code' | 'passkey_count' | 'permissions' | 'personal_title' | 'phone_number' | 'place_of_birth' | 'preferred_language' | 'primary_gid' | 'registration_method' | 'requested_email' | 'should_protect_user_details' | 'slug' | 'token' | 'token_expires_at' | 'token_lifetime' | 'uid_number' | 'url' | 'username' | 'uuid';
 
@@ -40325,6 +45228,8 @@ export type SoftwareVersionOEnum = '-created' | '-package_name' | '-release_date
 export type OpenStackInstanceAggregateGroupByEnum = 'availability_zone' | 'customer' | 'flavor_name' | 'hypervisor_hostname' | 'image_name' | 'runtime_state' | 'service_settings';
 
 export type UserOfferingConsentOEnum = '-agreement_date' | '-created' | '-modified' | '-revocation_date' | 'agreement_date' | 'created' | 'modified' | 'revocation_date';
+
+export type MyAssignmentBatchStatusEnum = 'sent' | 'responded' | 'expired';
 
 export type OnboardingJustificationOEnum = '-created' | '-modified' | '-validated_at' | 'created' | 'modified' | 'validated_at';
 
@@ -40400,15 +45305,23 @@ export type CampaignStateEnum = 'Active' | 'Draft' | 'Terminated';
 
 export type UserRequestedResourceOEnum = '-call__name' | '-created' | '-offering__name' | '-proposal__name' | '-proposal__state' | '-resource__name' | '-resource__state' | 'call__name' | 'created' | 'offering__name' | 'proposal__name' | 'proposal__state' | 'resource__name' | 'resource__state';
 
+export type MyTaskDueEnum = 'due_soon' | 'overdue';
+
 export type ProposalOEnum = '-created' | '-round__call__name' | '-round__cutoff_time' | '-round__start_time' | '-slug' | '-state' | 'created' | 'round__call__name' | 'round__cutoff_time' | 'round__start_time' | 'slug' | 'state';
 
-export type ProtectedCallFieldEnum = 'applicant_visibility_config' | 'backend_id' | 'carry_over_drafts' | 'compliance_checklist' | 'compliance_checklist_name' | 'created' | 'created_by' | 'customer_name' | 'customer_uuid' | 'description' | 'documents' | 'end_date' | 'evaluation_start' | 'external_url' | 'fixed_duration_in_days' | 'has_eligibility_restrictions' | 'has_proposals' | 'manager' | 'manager_uuid' | 'max_prepaid_duration_months' | 'name' | 'offerings' | 'order_author' | 'order_author_user' | 'order_author_user_name' | 'order_author_user_uuid' | 'panel_chair' | 'panel_chair_name' | 'panel_chair_uuid' | 'proposal_field_config' | 'proposal_field_metadata' | 'proposal_slug_template' | 'publish_results' | 'reference_code' | 'resource_template_selection_mode' | 'resource_templates' | 'reviewer_identity_visible_to_submitters' | 'reviews_visible_to_submitters' | 'rounds' | 'slug' | 'start_date' | 'state' | 'undecided_at_round_completion' | 'url' | 'user_affiliations' | 'user_assurance_levels' | 'user_email_patterns' | 'user_identity_sources' | 'user_nationalities' | 'user_organization_types' | 'uuid';
+export type ProposalRunPhaseEnum = 'closing' | 'extension';
+
+export type ProtectedCallFieldEnum = 'adoption_required' | 'allowed_duration_months' | 'applicant_cc_roles' | 'applicant_visibility_config' | 'backend_id' | 'budget_enforcement' | 'carry_over_drafts' | 'coi_declaration_text' | 'compliance_checklist' | 'compliance_checklist_name' | 'component_rules' | 'created' | 'created_by' | 'customer_name' | 'customer_uuid' | 'description' | 'documents' | 'end_date' | 'evaluation_start' | 'external_url' | 'fixed_duration_in_days' | 'has_eligibility_restrictions' | 'has_proposals' | 'manager' | 'manager_uuid' | 'max_prepaid_duration_months' | 'name' | 'offerings' | 'order_author' | 'order_author_user' | 'order_author_user_name' | 'order_author_user_uuid' | 'panel_chair' | 'panel_chair_name' | 'panel_chair_uuid' | 'panel_vice_chair' | 'panel_vice_chair_name' | 'panel_vice_chair_uuid' | 'proposal_field_config' | 'proposal_field_metadata' | 'proposal_slug_template' | 'publish_results' | 'reference_code' | 'resource_template_selection_mode' | 'resource_templates' | 'reviewer_eligibility' | 'reviewer_identity_visible_to_submitters' | 'reviews_visible_to_submitters' | 'rounds' | 'slug' | 'start_date' | 'state' | 'target_decision_days' | 'template_latest_version' | 'template_name' | 'template_uuid' | 'template_version' | 'undecided_at_round_completion' | 'url' | 'user_affiliations' | 'user_assurance_levels' | 'user_email_patterns' | 'user_identity_sources' | 'user_nationalities' | 'user_organization_types' | 'uuid';
 
 export type ProtectedCallOEnum = '-created' | '-manager__customer__name' | '-name' | 'created' | 'manager__customer__name' | 'name';
 
 export type AffinityMatrixResponseScopeEnum = 'all' | 'pool' | 'suggestions';
 
-export type PublicCallFieldEnum = 'backend_id' | 'created' | 'customer_name' | 'customer_uuid' | 'description' | 'documents' | 'end_date' | 'evaluation_start' | 'external_url' | 'fixed_duration_in_days' | 'has_eligibility_restrictions' | 'manager' | 'manager_uuid' | 'max_prepaid_duration_months' | 'name' | 'offerings' | 'proposal_field_config' | 'publish_results' | 'resource_template_selection_mode' | 'resource_templates' | 'reviewer_identity_visible_to_submitters' | 'reviews_visible_to_submitters' | 'rounds' | 'slug' | 'start_date' | 'state' | 'url' | 'uuid';
+export type PublicCallFieldEnum = 'allowed_duration_months' | 'backend_id' | 'component_rules' | 'created' | 'customer_name' | 'customer_uuid' | 'description' | 'documents' | 'end_date' | 'evaluation_start' | 'external_url' | 'fixed_duration_in_days' | 'has_eligibility_restrictions' | 'manager' | 'manager_uuid' | 'max_prepaid_duration_months' | 'name' | 'offerings' | 'proposal_field_config' | 'publish_results' | 'resource_template_selection_mode' | 'resource_templates' | 'reviewer_identity_visible_to_submitters' | 'reviews_visible_to_submitters' | 'rounds' | 'slug' | 'start_date' | 'state' | 'url' | 'uuid';
+
+export type PublicCallStateEnum = 'active' | 'archived';
+
+export type ProposalRankingOEnum = '-final_score' | '-modified' | '-proposal_name' | '-rank' | 'final_score' | 'modified' | 'proposal_name' | 'rank';
 
 export type ProviderRequestedOfferingOEnum = '-call__name' | '-created' | '-offering__name' | '-state' | 'call__name' | 'created' | 'offering__name' | 'state';
 
@@ -40437,6 +45350,8 @@ export type RancherWorkloadOEnum = '-cluster_name' | '-name' | '-namespace_name'
 export type ReviewerBidOEnum = '-bid' | '-modified_at' | '-submitted_at' | 'bid' | 'modified_at' | 'submitted_at';
 
 export type ReviewerProfileOEnum = '-created' | '-user_email' | '-user_name' | 'created' | 'user_email' | 'user_name';
+
+export type ReviewerRegistryOEnum = '-created' | '-standing_changed_at' | '-user_email' | '-user_name' | 'created' | 'standing_changed_at' | 'user_email' | 'user_name';
 
 export type ReviewerSuggestionOEnum = '-affinity_score' | '-created' | '-reviewed_at' | '-status' | 'affinity_score' | 'created' | 'reviewed_at' | 'status';
 
@@ -46190,6 +51105,166 @@ export type CallManagingOrganisationsListUsersCountResponses = {
     200: unknown;
 };
 
+export type CallManagingOrganisationsReportsBudgetsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * Report on these calls of the organization only. Not found when one is not a call the user may report on.
+         */
+        call_uuid?: Array<string>;
+        /**
+         * Report on one round of the calls. Not found when it is not a round of a call reported on.
+         */
+        round_uuid?: string;
+        /**
+         * Count only proposals submitted on or after this day.
+         */
+        submitted_from?: string;
+        /**
+         * Count only proposals submitted on or before this day.
+         */
+        submitted_to?: string;
+    };
+    url: '/api/call-managing-organisations/{uuid}/reports/budgets/';
+};
+
+export type CallManagingOrganisationsReportsBudgetsRetrieveResponses = {
+    200: BudgetReport;
+};
+
+export type CallManagingOrganisationsReportsBudgetsRetrieveResponse = CallManagingOrganisationsReportsBudgetsRetrieveResponses[keyof CallManagingOrganisationsReportsBudgetsRetrieveResponses];
+
+export type CallManagingOrganisationsReportsPortfolioRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * Report on these calls of the organization only. Not found when one is not a call the user may report on.
+         */
+        call_uuid?: Array<string>;
+        /**
+         * Report on one round of the calls. Not found when it is not a round of a call reported on.
+         */
+        round_uuid?: string;
+        /**
+         * Count only proposals submitted on or after this day.
+         */
+        submitted_from?: string;
+        /**
+         * Count only proposals submitted on or before this day.
+         */
+        submitted_to?: string;
+    };
+    url: '/api/call-managing-organisations/{uuid}/reports/portfolio/';
+};
+
+export type CallManagingOrganisationsReportsPortfolioRetrieveResponses = {
+    200: PortfolioReport;
+};
+
+export type CallManagingOrganisationsReportsPortfolioRetrieveResponse = CallManagingOrganisationsReportsPortfolioRetrieveResponses[keyof CallManagingOrganisationsReportsPortfolioRetrieveResponses];
+
+export type CallManagingOrganisationsReportsReviewersRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * Report on these calls of the organization only. Not found when one is not a call the user may report on.
+         */
+        call_uuid?: Array<string>;
+        /**
+         * Report on one round of the calls. Not found when it is not a round of a call reported on.
+         */
+        round_uuid?: string;
+        /**
+         * Count only proposals submitted on or after this day.
+         */
+        submitted_from?: string;
+        /**
+         * Count only proposals submitted on or before this day.
+         */
+        submitted_to?: string;
+    };
+    url: '/api/call-managing-organisations/{uuid}/reports/reviewers/';
+};
+
+export type CallManagingOrganisationsReportsReviewersRetrieveResponses = {
+    200: ReviewerReport;
+};
+
+export type CallManagingOrganisationsReportsReviewersRetrieveResponse = CallManagingOrganisationsReportsReviewersRetrieveResponses[keyof CallManagingOrganisationsReportsReviewersRetrieveResponses];
+
+export type CallManagingOrganisationsReportsRoundsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * Report on these calls of the organization only. Not found when one is not a call the user may report on.
+         */
+        call_uuid?: Array<string>;
+        /**
+         * Report on one round of the calls. Not found when it is not a round of a call reported on.
+         */
+        round_uuid?: string;
+        /**
+         * Count only proposals submitted on or after this day.
+         */
+        submitted_from?: string;
+        /**
+         * Count only proposals submitted on or before this day.
+         */
+        submitted_to?: string;
+    };
+    url: '/api/call-managing-organisations/{uuid}/reports/rounds/';
+};
+
+export type CallManagingOrganisationsReportsRoundsRetrieveResponses = {
+    200: RoundReport;
+};
+
+export type CallManagingOrganisationsReportsRoundsRetrieveResponse = CallManagingOrganisationsReportsRoundsRetrieveResponses[keyof CallManagingOrganisationsReportsRoundsRetrieveResponses];
+
+export type CallManagingOrganisationsReportsWorkflowRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * Report on these calls of the organization only. Not found when one is not a call the user may report on.
+         */
+        call_uuid?: Array<string>;
+        /**
+         * Report on one round of the calls. Not found when it is not a round of a call reported on.
+         */
+        round_uuid?: string;
+        /**
+         * Count only proposals submitted on or after this day.
+         */
+        submitted_from?: string;
+        /**
+         * Count only proposals submitted on or before this day.
+         */
+        submitted_to?: string;
+    };
+    url: '/api/call-managing-organisations/{uuid}/reports/workflow/';
+};
+
+export type CallManagingOrganisationsReportsWorkflowRetrieveResponses = {
+    200: WorkflowReport;
+};
+
+export type CallManagingOrganisationsReportsWorkflowRetrieveResponse = CallManagingOrganisationsReportsWorkflowRetrieveResponses[keyof CallManagingOrganisationsReportsWorkflowRetrieveResponses];
+
 export type CallManagingOrganisationsStatsRetrieveData = {
     body?: never;
     path: {
@@ -46220,194 +51295,175 @@ export type CallManagingOrganisationsUpdateUserResponses = {
 
 export type CallManagingOrganisationsUpdateUserResponse = CallManagingOrganisationsUpdateUserResponses[keyof CallManagingOrganisationsUpdateUserResponses];
 
-export type CallManagingOrganisationsGlobalStatsPerformanceListData = {
+export type CallManagingOrganisationsReportsBudgetsGlobalRetrieveData = {
     body?: never;
     path?: never;
     query?: {
-        customer?: string;
-        customer_keyword?: string;
-        customer_uuid?: string;
         /**
-         * Ordering
-         *
-         *
+         * Report on these calls only. Not found when one is not a call of the organizations reported on.
          */
-        o?: Array<CallManagingOrganisationOEnum>;
+        call_uuid?: Array<string>;
         /**
-         * A page number within the paginated result set.
+         * Report on the calls of these call managing organizations only. Not found when one is not a call managing organization.
          */
-        page?: number;
+        organisation_uuid?: Array<string>;
         /**
-         * Number of results to return per page.
+         * Report on one round of the calls. Not found when it is not a round of a call reported on.
          */
-        page_size?: number;
+        round_uuid?: string;
+        /**
+         * Count only proposals submitted on or after this day.
+         */
+        submitted_from?: string;
+        /**
+         * Count only proposals submitted on or before this day.
+         */
+        submitted_to?: string;
     };
-    url: '/api/call-managing-organisations/global_stats_performance/';
+    url: '/api/call-managing-organisations/reports/budgets/';
 };
 
-export type CallManagingOrganisationsGlobalStatsPerformanceListResponses = {
-    200: Array<CallPerformanceStat>;
+export type CallManagingOrganisationsReportsBudgetsGlobalRetrieveResponses = {
+    200: BudgetReport;
 };
 
-export type CallManagingOrganisationsGlobalStatsPerformanceListResponse = CallManagingOrganisationsGlobalStatsPerformanceListResponses[keyof CallManagingOrganisationsGlobalStatsPerformanceListResponses];
+export type CallManagingOrganisationsReportsBudgetsGlobalRetrieveResponse = CallManagingOrganisationsReportsBudgetsGlobalRetrieveResponses[keyof CallManagingOrganisationsReportsBudgetsGlobalRetrieveResponses];
 
-export type CallManagingOrganisationsGlobalStatsPerformanceCountData = {
+export type CallManagingOrganisationsReportsPortfolioGlobalRetrieveData = {
     body?: never;
     path?: never;
     query?: {
-        customer?: string;
-        customer_keyword?: string;
-        customer_uuid?: string;
         /**
-         * Ordering
-         *
-         *
+         * Report on these calls only. Not found when one is not a call of the organizations reported on.
          */
-        o?: Array<CallManagingOrganisationOEnum>;
+        call_uuid?: Array<string>;
         /**
-         * A page number within the paginated result set.
+         * Report on the calls of these call managing organizations only. Not found when one is not a call managing organization.
          */
-        page?: number;
+        organisation_uuid?: Array<string>;
         /**
-         * Number of results to return per page.
+         * Report on one round of the calls. Not found when it is not a round of a call reported on.
          */
-        page_size?: number;
+        round_uuid?: string;
+        /**
+         * Count only proposals submitted on or after this day.
+         */
+        submitted_from?: string;
+        /**
+         * Count only proposals submitted on or before this day.
+         */
+        submitted_to?: string;
     };
-    url: '/api/call-managing-organisations/global_stats_performance/';
+    url: '/api/call-managing-organisations/reports/portfolio/';
 };
 
-export type CallManagingOrganisationsGlobalStatsPerformanceCountResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+export type CallManagingOrganisationsReportsPortfolioGlobalRetrieveResponses = {
+    200: PortfolioReport;
 };
 
-export type CallManagingOrganisationsGlobalStatsResourceDemandListData = {
+export type CallManagingOrganisationsReportsPortfolioGlobalRetrieveResponse = CallManagingOrganisationsReportsPortfolioGlobalRetrieveResponses[keyof CallManagingOrganisationsReportsPortfolioGlobalRetrieveResponses];
+
+export type CallManagingOrganisationsReportsReviewersGlobalRetrieveData = {
     body?: never;
     path?: never;
     query?: {
-        customer?: string;
-        customer_keyword?: string;
-        customer_uuid?: string;
         /**
-         * Ordering
-         *
-         *
+         * Report on these calls only. Not found when one is not a call of the organizations reported on.
          */
-        o?: Array<CallManagingOrganisationOEnum>;
+        call_uuid?: Array<string>;
         /**
-         * A page number within the paginated result set.
+         * Report on the calls of these call managing organizations only. Not found when one is not a call managing organization.
          */
-        page?: number;
+        organisation_uuid?: Array<string>;
         /**
-         * Number of results to return per page.
+         * Report on one round of the calls. Not found when it is not a round of a call reported on.
          */
-        page_size?: number;
+        round_uuid?: string;
+        /**
+         * Count only proposals submitted on or after this day.
+         */
+        submitted_from?: string;
+        /**
+         * Count only proposals submitted on or before this day.
+         */
+        submitted_to?: string;
     };
-    url: '/api/call-managing-organisations/global_stats_resource_demand/';
+    url: '/api/call-managing-organisations/reports/reviewers/';
 };
 
-export type CallManagingOrganisationsGlobalStatsResourceDemandListResponses = {
-    200: Array<ResourceDemandStat>;
+export type CallManagingOrganisationsReportsReviewersGlobalRetrieveResponses = {
+    200: ReviewerReport;
 };
 
-export type CallManagingOrganisationsGlobalStatsResourceDemandListResponse = CallManagingOrganisationsGlobalStatsResourceDemandListResponses[keyof CallManagingOrganisationsGlobalStatsResourceDemandListResponses];
+export type CallManagingOrganisationsReportsReviewersGlobalRetrieveResponse = CallManagingOrganisationsReportsReviewersGlobalRetrieveResponses[keyof CallManagingOrganisationsReportsReviewersGlobalRetrieveResponses];
 
-export type CallManagingOrganisationsGlobalStatsResourceDemandCountData = {
+export type CallManagingOrganisationsReportsRoundsGlobalRetrieveData = {
     body?: never;
     path?: never;
     query?: {
-        customer?: string;
-        customer_keyword?: string;
-        customer_uuid?: string;
         /**
-         * Ordering
-         *
-         *
+         * Report on these calls only. Not found when one is not a call of the organizations reported on.
          */
-        o?: Array<CallManagingOrganisationOEnum>;
+        call_uuid?: Array<string>;
         /**
-         * A page number within the paginated result set.
+         * Report on the calls of these call managing organizations only. Not found when one is not a call managing organization.
          */
-        page?: number;
+        organisation_uuid?: Array<string>;
         /**
-         * Number of results to return per page.
+         * Report on one round of the calls. Not found when it is not a round of a call reported on.
          */
-        page_size?: number;
+        round_uuid?: string;
+        /**
+         * Count only proposals submitted on or after this day.
+         */
+        submitted_from?: string;
+        /**
+         * Count only proposals submitted on or before this day.
+         */
+        submitted_to?: string;
     };
-    url: '/api/call-managing-organisations/global_stats_resource_demand/';
+    url: '/api/call-managing-organisations/reports/rounds/';
 };
 
-export type CallManagingOrganisationsGlobalStatsResourceDemandCountResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
+export type CallManagingOrganisationsReportsRoundsGlobalRetrieveResponses = {
+    200: RoundReport;
 };
 
-export type CallManagingOrganisationsGlobalStatsReviewProgressListData = {
+export type CallManagingOrganisationsReportsRoundsGlobalRetrieveResponse = CallManagingOrganisationsReportsRoundsGlobalRetrieveResponses[keyof CallManagingOrganisationsReportsRoundsGlobalRetrieveResponses];
+
+export type CallManagingOrganisationsReportsWorkflowGlobalRetrieveData = {
     body?: never;
     path?: never;
     query?: {
-        customer?: string;
-        customer_keyword?: string;
-        customer_uuid?: string;
         /**
-         * Ordering
-         *
-         *
+         * Report on these calls only. Not found when one is not a call of the organizations reported on.
          */
-        o?: Array<CallManagingOrganisationOEnum>;
+        call_uuid?: Array<string>;
         /**
-         * A page number within the paginated result set.
+         * Report on the calls of these call managing organizations only. Not found when one is not a call managing organization.
          */
-        page?: number;
+        organisation_uuid?: Array<string>;
         /**
-         * Number of results to return per page.
+         * Report on one round of the calls. Not found when it is not a round of a call reported on.
          */
-        page_size?: number;
+        round_uuid?: string;
+        /**
+         * Count only proposals submitted on or after this day.
+         */
+        submitted_from?: string;
+        /**
+         * Count only proposals submitted on or before this day.
+         */
+        submitted_to?: string;
     };
-    url: '/api/call-managing-organisations/global_stats_review_progress/';
+    url: '/api/call-managing-organisations/reports/workflow/';
 };
 
-export type CallManagingOrganisationsGlobalStatsReviewProgressListResponses = {
-    200: Array<ReviewProgressStat>;
+export type CallManagingOrganisationsReportsWorkflowGlobalRetrieveResponses = {
+    200: WorkflowReport;
 };
 
-export type CallManagingOrganisationsGlobalStatsReviewProgressListResponse = CallManagingOrganisationsGlobalStatsReviewProgressListResponses[keyof CallManagingOrganisationsGlobalStatsReviewProgressListResponses];
-
-export type CallManagingOrganisationsGlobalStatsReviewProgressCountData = {
-    body?: never;
-    path?: never;
-    query?: {
-        customer?: string;
-        customer_keyword?: string;
-        customer_uuid?: string;
-        /**
-         * Ordering
-         *
-         *
-         */
-        o?: Array<CallManagingOrganisationOEnum>;
-        /**
-         * A page number within the paginated result set.
-         */
-        page?: number;
-        /**
-         * Number of results to return per page.
-         */
-        page_size?: number;
-    };
-    url: '/api/call-managing-organisations/global_stats_review_progress/';
-};
-
-export type CallManagingOrganisationsGlobalStatsReviewProgressCountResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
-};
+export type CallManagingOrganisationsReportsWorkflowGlobalRetrieveResponse = CallManagingOrganisationsReportsWorkflowGlobalRetrieveResponses[keyof CallManagingOrganisationsReportsWorkflowGlobalRetrieveResponses];
 
 export type CallProposalProjectRoleMappingsListData = {
     body?: never;
@@ -46816,6 +51872,288 @@ export type CallRoundsDashboardDeadlinesCountData = {
 };
 
 export type CallRoundsDashboardDeadlinesCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type CallTemplatesListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        is_published?: boolean;
+        name?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<CallTemplateOEnum>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/call-templates/';
+};
+
+export type CallTemplatesListResponses = {
+    200: Array<CallTemplate>;
+};
+
+export type CallTemplatesListResponse = CallTemplatesListResponses[keyof CallTemplatesListResponses];
+
+export type CallTemplatesCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        is_published?: boolean;
+        name?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<CallTemplateOEnum>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/call-templates/';
+};
+
+export type CallTemplatesCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type CallTemplatesCreateData = {
+    body: CallTemplateRequest;
+    path?: never;
+    query?: never;
+    url: '/api/call-templates/';
+};
+
+export type CallTemplatesCreateResponses = {
+    201: CallTemplate;
+};
+
+export type CallTemplatesCreateResponse = CallTemplatesCreateResponses[keyof CallTemplatesCreateResponses];
+
+export type CallTemplatesDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/call-templates/{uuid}/';
+};
+
+export type CallTemplatesDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type CallTemplatesDestroyResponse = CallTemplatesDestroyResponses[keyof CallTemplatesDestroyResponses];
+
+export type CallTemplatesRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/call-templates/{uuid}/';
+};
+
+export type CallTemplatesRetrieveResponses = {
+    200: CallTemplate;
+};
+
+export type CallTemplatesRetrieveResponse = CallTemplatesRetrieveResponses[keyof CallTemplatesRetrieveResponses];
+
+export type CallTemplatesPartialUpdateData = {
+    body?: PatchedCallTemplateRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/call-templates/{uuid}/';
+};
+
+export type CallTemplatesPartialUpdateResponses = {
+    200: CallTemplate;
+};
+
+export type CallTemplatesPartialUpdateResponse = CallTemplatesPartialUpdateResponses[keyof CallTemplatesPartialUpdateResponses];
+
+export type CallTemplatesUpdateData = {
+    body: CallTemplateRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/call-templates/{uuid}/';
+};
+
+export type CallTemplatesUpdateResponses = {
+    200: CallTemplate;
+};
+
+export type CallTemplatesUpdateResponse = CallTemplatesUpdateResponses[keyof CallTemplatesUpdateResponses];
+
+export type CallTemplatesWorkflowCheckRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/call-templates/{uuid}/workflow-check/';
+};
+
+export type CallTemplatesWorkflowCheckRetrieveResponses = {
+    200: WorkflowCheck;
+};
+
+export type CallTemplatesWorkflowCheckRetrieveResponse = CallTemplatesWorkflowCheckRetrieveResponses[keyof CallTemplatesWorkflowCheckRetrieveResponses];
+
+export type CallTemplatesWorkflowDescriptionRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/call-templates/{uuid}/workflow-description/';
+};
+
+export type CallTemplatesWorkflowDescriptionRetrieveResponses = {
+    200: WorkflowDescription;
+};
+
+export type CallTemplatesWorkflowDescriptionRetrieveResponse = CallTemplatesWorkflowDescriptionRetrieveResponses[keyof CallTemplatesWorkflowDescriptionRetrieveResponses];
+
+export type CallTemplatesWorkflowDiffRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * Version to compare from: a version number, 'current', and on a call 'template' (the template version it was created from, the default) or 'template_latest' (its template as it is now).
+         */
+        from?: string;
+        /**
+         * Version to compare to; 'current' by default.
+         */
+        to?: string;
+    };
+    url: '/api/call-templates/{uuid}/workflow-diff/';
+};
+
+export type CallTemplatesWorkflowDiffRetrieveResponses = {
+    200: WorkflowDiff;
+};
+
+export type CallTemplatesWorkflowDiffRetrieveResponse = CallTemplatesWorkflowDiffRetrieveResponses[keyof CallTemplatesWorkflowDiffRetrieveResponses];
+
+export type CallTemplatesWorkflowVersionsListData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        is_published?: boolean;
+        name?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<CallTemplateOEnum>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/call-templates/{uuid}/workflow-versions/';
+};
+
+export type CallTemplatesWorkflowVersionsListResponses = {
+    200: Array<WorkflowVersion>;
+};
+
+export type CallTemplatesWorkflowVersionsListResponse = CallTemplatesWorkflowVersionsListResponses[keyof CallTemplatesWorkflowVersionsListResponses];
+
+export type CallTemplatesWorkflowVersionsRetrieveData = {
+    body?: never;
+    path: {
+        /**
+         * Number of the version.
+         */
+        number: number;
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/call-templates/{uuid}/workflow-versions/{number}/';
+};
+
+export type CallTemplatesWorkflowVersionsRetrieveResponses = {
+    200: WorkflowVersionDetail;
+};
+
+export type CallTemplatesWorkflowVersionsRetrieveResponse = CallTemplatesWorkflowVersionsRetrieveResponses[keyof CallTemplatesWorkflowVersionsRetrieveResponses];
+
+export type CallTemplatesLoadPresetData = {
+    body: LoadCallTemplatePresetRequest;
+    path?: never;
+    query?: never;
+    url: '/api/call-templates/load_preset/';
+};
+
+export type CallTemplatesLoadPresetResponses = {
+    200: LoadCallTemplatePresetResponse;
+};
+
+export type CallTemplatesLoadPresetResponse = CallTemplatesLoadPresetResponses[keyof CallTemplatesLoadPresetResponses];
+
+export type CallTemplatesPresetsListData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/call-templates/presets/';
+};
+
+export type CallTemplatesPresetsListResponses = {
+    200: Array<CallTemplatePreset>;
+};
+
+export type CallTemplatesPresetsListResponse = CallTemplatesPresetsListResponses[keyof CallTemplatesPresetsListResponses];
+
+export type CallTemplatesPresetsCountData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/call-templates/presets/';
+};
+
+export type CallTemplatesPresetsCountResponses = {
     /**
      * No response body
      */
@@ -47581,6 +52919,14 @@ export type ChecklistsAdminListData = {
          */
         checklist_type__in?: Array<ChecklistTypeEnum>;
         /**
+         * Checklists of this organization
+         */
+        customer_uuid?: string;
+        /**
+         * Checklists the whole portal shares (no organization)
+         */
+        is_shared?: boolean;
+        /**
          * A page number within the paginated result set.
          */
         page?: number;
@@ -47614,6 +52960,14 @@ export type ChecklistsAdminCountData = {
          *
          */
         checklist_type__in?: Array<ChecklistTypeEnum>;
+        /**
+         * Checklists of this organization
+         */
+        customer_uuid?: string;
+        /**
+         * Checklists the whole portal shares (no organization)
+         */
+        is_shared?: boolean;
         /**
          * A page number within the paginated result set.
          */
@@ -48118,6 +53472,14 @@ export type ChecklistsAdminChecklistQuestionsData = {
          *
          */
         checklist_type__in?: Array<ChecklistTypeEnum>;
+        /**
+         * Checklists of this organization
+         */
+        customer_uuid?: string;
+        /**
+         * Checklists the whole portal shares (no organization)
+         */
+        is_shared?: boolean;
         /**
          * A page number within the paginated result set.
          */
@@ -67558,6 +72920,31 @@ export type MarketplaceProviderOfferingsDeleteUserResponses = {
     200: unknown;
 };
 
+export type MarketplaceProviderOfferingsDependentsListData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query: {
+        change: OfferingDependentChangeEnum;
+        /**
+         * For a component change: the component's type.
+         */
+        component_type?: string;
+        /**
+         * For a plan change: the plan.
+         */
+        plan_uuid?: string;
+    };
+    url: '/api/marketplace-provider-offerings/{uuid}/dependents/';
+};
+
+export type MarketplaceProviderOfferingsDependentsListResponses = {
+    200: Array<OfferingDependent>;
+};
+
+export type MarketplaceProviderOfferingsDependentsListResponse = MarketplaceProviderOfferingsDependentsListResponses[keyof MarketplaceProviderOfferingsDependentsListResponses];
+
 export type MarketplaceProviderOfferingsDraftData = {
     body?: never;
     path: {
@@ -84835,7 +90222,12 @@ export type MetadataSettingsRetrieveResponse = MetadataSettingsRetrieveResponses
 export type MyAssignmentBatchesListData = {
     body?: never;
     path?: never;
-    query?: never;
+    query?: {
+        /**
+         * Effective batch status. Defaults to sent.
+         */
+        status?: Array<MyAssignmentBatchStatusEnum>;
+    };
     url: '/api/my-assignment-batches/';
 };
 
@@ -84848,7 +90240,12 @@ export type MyAssignmentBatchesListResponse = MyAssignmentBatchesListResponses[k
 export type MyAssignmentBatchesCountData = {
     body?: never;
     path?: never;
-    query?: never;
+    query?: {
+        /**
+         * Effective batch status. Defaults to sent.
+         */
+        status?: Array<MyAssignmentBatchStatusEnum>;
+    };
     url: '/api/my-assignment-batches/';
 };
 
@@ -100057,11 +105454,16 @@ export type ProposalMyRequestedResourcesListData = {
     body?: never;
     path?: never;
     query?: {
+        call_uuid?: string;
         created?: string;
         /**
          * Include requests belonging to rejected or canceled proposals. They are omitted by default.
          */
         include_closed?: boolean;
+        /**
+         * Only requests of proposals the current user takes part in, leaving out those read only through staff or support access
+         */
+        involved?: boolean;
         /**
          * Ordering
          *
@@ -100092,6 +105494,10 @@ export type ProposalMyRequestedResourcesListData = {
          */
         proposal_state?: Array<ProposalStates>;
         proposal_uuid?: string;
+        /**
+         * Provider
+         */
+        provider_uuid?: string;
         /**
          * Search by offering, proposal, call or resource name
          */
@@ -100115,11 +105521,16 @@ export type ProposalMyRequestedResourcesCountData = {
     body?: never;
     path?: never;
     query?: {
+        call_uuid?: string;
         created?: string;
         /**
          * Include requests belonging to rejected or canceled proposals. They are omitted by default.
          */
         include_closed?: boolean;
+        /**
+         * Only requests of proposals the current user takes part in, leaving out those read only through staff or support access
+         */
+        involved?: boolean;
         /**
          * Ordering
          *
@@ -100150,6 +105561,10 @@ export type ProposalMyRequestedResourcesCountData = {
          */
         proposal_state?: Array<ProposalStates>;
         proposal_uuid?: string;
+        /**
+         * Provider
+         */
+        provider_uuid?: string;
         /**
          * Search by offering, proposal, call or resource name
          */
@@ -100185,6 +105600,157 @@ export type ProposalMyRequestedResourcesRetrieveResponses = {
 
 export type ProposalMyRequestedResourcesRetrieveResponse = ProposalMyRequestedResourcesRetrieveResponses[keyof ProposalMyRequestedResourcesRetrieveResponses];
 
+export type ProposalMyTasksListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Only the tasks past their deadline (overdue), or due within PROPOSAL_DASHBOARD_REVIEWS_DUE_WITHIN_DAYS days and not yet past it (due_soon).
+         */
+        due?: MyTaskDueEnum;
+        /**
+         * Only the tasks about this offering.
+         */
+        offering_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Only the tasks about an offering of this provider organization.
+         */
+        provider_uuid?: string;
+    };
+    url: '/api/proposal-my-tasks/';
+};
+
+export type ProposalMyTasksListResponses = {
+    200: Array<MyTask>;
+};
+
+export type ProposalMyTasksListResponse = ProposalMyTasksListResponses[keyof ProposalMyTasksListResponses];
+
+export type ProposalMyTasksCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Only the tasks past their deadline (overdue), or due within PROPOSAL_DASHBOARD_REVIEWS_DUE_WITHIN_DAYS days and not yet past it (due_soon).
+         */
+        due?: MyTaskDueEnum;
+        /**
+         * Only the tasks about this offering.
+         */
+        offering_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Only the tasks about an offering of this provider organization.
+         */
+        provider_uuid?: string;
+    };
+    url: '/api/proposal-my-tasks/';
+};
+
+export type ProposalMyTasksCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type ProposalMyTasksSummaryRetrieveData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/proposal-my-tasks/summary/';
+};
+
+export type ProposalMyTasksSummaryRetrieveResponses = {
+    200: MyTaskSummary;
+};
+
+export type ProposalMyTasksSummaryRetrieveResponse = ProposalMyTasksSummaryRetrieveResponses[keyof ProposalMyTasksSummaryRetrieveResponses];
+
+export type ProposalOfferingDemandListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Only this call.
+         */
+        call_uuid?: string;
+        /**
+         * Only this offering.
+         */
+        offering_uuid?: string;
+        /**
+         * Only the offerings of this provider organization.
+         */
+        provider_uuid?: string;
+        /**
+         * Only this round of a call.
+         */
+        round_uuid?: string;
+        /**
+         * Only these groups of proposal states.
+         */
+        state_group?: Array<StateGroupEnum>;
+    };
+    url: '/api/proposal-offering-demand/';
+};
+
+export type ProposalOfferingDemandListResponses = {
+    200: Array<OfferingDemand>;
+};
+
+export type ProposalOfferingDemandListResponse = ProposalOfferingDemandListResponses[keyof ProposalOfferingDemandListResponses];
+
+export type ProposalOfferingDemandCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Only this call.
+         */
+        call_uuid?: string;
+        /**
+         * Only this offering.
+         */
+        offering_uuid?: string;
+        /**
+         * Only the offerings of this provider organization.
+         */
+        provider_uuid?: string;
+        /**
+         * Only this round of a call.
+         */
+        round_uuid?: string;
+        /**
+         * Only these groups of proposal states.
+         */
+        state_group?: Array<StateGroupEnum>;
+    };
+    url: '/api/proposal-offering-demand/';
+};
+
+export type ProposalOfferingDemandCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type ProposalProposalsListData = {
     body?: never;
     path?: never;
@@ -100196,7 +105762,19 @@ export type ProposalProposalsListData = {
          */
         as_role?: ResponsibleRoleEnum;
         call_uuid?: string;
+        /**
+         * Only proposals waiting on changes asked of their applicant
+         */
+        changes_requested?: boolean;
         created_by_uuid?: string;
+        /**
+         * Only proposals whose final report is past its due date
+         */
+        final_report_overdue?: boolean;
+        /**
+         * Only proposals the current user takes part in, leaving out those read only through staff or support access
+         */
+        involved?: boolean;
         my_proposals?: boolean;
         name?: string;
         /**
@@ -100214,19 +105792,39 @@ export type ProposalProposalsListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Panel UUID
+         */
+        panel_uuid?: string;
+        /**
+         * Where an accepted proposal's extension or final report stands
+         *
+         *
+         */
+        post_award_status?: Array<PostAwardStatusEnum>;
         round?: string;
         round_uuid?: string;
+        /**
+         * Only proposals with a run of this phase
+         *
+         *
+         */
+        run_phase?: ProposalRunPhaseEnum;
+        /**
+         * Only proposals with a run in this state
+         *
+         *
+         */
+        run_state?: ProposalRunStateEnum;
         /**
          * Slug
          */
         slug?: string;
         state?: Array<ProposalStates>;
         /**
-         * Current workflow step
-         *
-         *
+         * Multiple values may be separated by commas.
          */
-        workflow_step?: Array<StepEnum>;
+        workflow_step?: Array<string>;
     };
     url: '/api/proposal-proposals/';
 };
@@ -100248,7 +105846,19 @@ export type ProposalProposalsCountData = {
          */
         as_role?: ResponsibleRoleEnum;
         call_uuid?: string;
+        /**
+         * Only proposals waiting on changes asked of their applicant
+         */
+        changes_requested?: boolean;
         created_by_uuid?: string;
+        /**
+         * Only proposals whose final report is past its due date
+         */
+        final_report_overdue?: boolean;
+        /**
+         * Only proposals the current user takes part in, leaving out those read only through staff or support access
+         */
+        involved?: boolean;
         my_proposals?: boolean;
         name?: string;
         /**
@@ -100266,19 +105876,39 @@ export type ProposalProposalsCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Panel UUID
+         */
+        panel_uuid?: string;
+        /**
+         * Where an accepted proposal's extension or final report stands
+         *
+         *
+         */
+        post_award_status?: Array<PostAwardStatusEnum>;
         round?: string;
         round_uuid?: string;
+        /**
+         * Only proposals with a run of this phase
+         *
+         *
+         */
+        run_phase?: ProposalRunPhaseEnum;
+        /**
+         * Only proposals with a run in this state
+         *
+         *
+         */
+        run_state?: ProposalRunStateEnum;
         /**
          * Slug
          */
         slug?: string;
         state?: Array<ProposalStates>;
         /**
-         * Current workflow step
-         *
-         *
+         * Multiple values may be separated by commas.
          */
-        workflow_step?: Array<StepEnum>;
+        workflow_step?: Array<string>;
     };
     url: '/api/proposal-proposals/';
 };
@@ -100336,6 +105966,21 @@ export type ProposalProposalsRetrieveResponses = {
 
 export type ProposalProposalsRetrieveResponse = ProposalProposalsRetrieveResponses[keyof ProposalProposalsRetrieveResponses];
 
+export type ProposalProposalsAcceptContributionData = {
+    body: AcceptStepContributionRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-proposals/{uuid}/accept_contribution/';
+};
+
+export type ProposalProposalsAcceptContributionResponses = {
+    200: StepContribution;
+};
+
+export type ProposalProposalsAcceptContributionResponse = ProposalProposalsAcceptContributionResponses[keyof ProposalProposalsAcceptContributionResponses];
+
 export type ProposalProposalsAddUserData = {
     body: UserRoleCreateRequest;
     path: {
@@ -100374,7 +106019,7 @@ export type ProposalProposalsAdvanceWorkflowStepResponses = {
 export type ProposalProposalsAdvanceWorkflowStepResponse = ProposalProposalsAdvanceWorkflowStepResponses[keyof ProposalProposalsAdvanceWorkflowStepResponses];
 
 export type ProposalProposalsAttachDocumentData = {
-    body?: ProposalDocumentationRequest;
+    body: ProposalDocumentationRequest;
     path: {
         uuid: string;
     };
@@ -100491,6 +106136,122 @@ export type ProposalProposalsAwardedResourcesUpdateResponses = {
 };
 
 export type ProposalProposalsAwardedResourcesUpdateResponse = ProposalProposalsAwardedResourcesUpdateResponses[keyof ProposalProposalsAwardedResourcesUpdateResponses];
+
+export type ProposalProposalsBudgetRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-proposals/{uuid}/budget/';
+};
+
+export type ProposalProposalsBudgetRetrieveResponses = {
+    200: ProposalBudget;
+};
+
+export type ProposalProposalsBudgetRetrieveResponse = ProposalProposalsBudgetRetrieveResponses[keyof ProposalProposalsBudgetRetrieveResponses];
+
+export type ProposalProposalsCancelChangeRequestData = {
+    body: CancelChangeRequestRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-proposals/{uuid}/cancel_change_request/';
+};
+
+export type ProposalProposalsCancelChangeRequestResponses = {
+    200: ProposalChangeRequest;
+};
+
+export type ProposalProposalsCancelChangeRequestResponse = ProposalProposalsCancelChangeRequestResponses[keyof ProposalProposalsCancelChangeRequestResponses];
+
+export type ProposalProposalsChangeRequestsListData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * Only proposals the current user holds this role on
+         *
+         *
+         */
+        as_role?: ResponsibleRoleEnum;
+        call_uuid?: string;
+        /**
+         * Only proposals waiting on changes asked of their applicant
+         */
+        changes_requested?: boolean;
+        created_by_uuid?: string;
+        /**
+         * Only proposals whose final report is past its due date
+         */
+        final_report_overdue?: boolean;
+        /**
+         * Only proposals the current user takes part in, leaving out those read only through staff or support access
+         */
+        involved?: boolean;
+        my_proposals?: boolean;
+        name?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<ProposalOEnum>;
+        organization_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Panel UUID
+         */
+        panel_uuid?: string;
+        /**
+         * Where an accepted proposal's extension or final report stands
+         *
+         *
+         */
+        post_award_status?: Array<PostAwardStatusEnum>;
+        round?: string;
+        round_uuid?: string;
+        /**
+         * Only proposals with a run of this phase
+         *
+         *
+         */
+        run_phase?: ProposalRunPhaseEnum;
+        /**
+         * Only proposals with a run in this state
+         *
+         *
+         */
+        run_state?: ProposalRunStateEnum;
+        /**
+         * Slug
+         */
+        slug?: string;
+        state?: Array<ProposalStates>;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        workflow_step?: Array<string>;
+    };
+    url: '/api/proposal-proposals/{uuid}/change_requests/';
+};
+
+export type ProposalProposalsChangeRequestsListResponses = {
+    200: Array<ProposalChangeRequest>;
+};
+
+export type ProposalProposalsChangeRequestsListResponse = ProposalProposalsChangeRequestsListResponses[keyof ProposalProposalsChangeRequestsListResponses];
 
 export type ProposalProposalsChecklistRetrieveData = {
     body?: never;
@@ -100616,6 +106377,126 @@ export type ProposalProposalsCompletionStatusRetrieveResponses = {
 
 export type ProposalProposalsCompletionStatusRetrieveResponse = ProposalProposalsCompletionStatusRetrieveResponses[keyof ProposalProposalsCompletionStatusRetrieveResponses];
 
+export type ProposalProposalsContributionsListData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * Only proposals the current user holds this role on
+         *
+         *
+         */
+        as_role?: ResponsibleRoleEnum;
+        call_uuid?: string;
+        /**
+         * Only proposals waiting on changes asked of their applicant
+         */
+        changes_requested?: boolean;
+        created_by_uuid?: string;
+        /**
+         * Only proposals whose final report is past its due date
+         */
+        final_report_overdue?: boolean;
+        /**
+         * Only proposals the current user takes part in, leaving out those read only through staff or support access
+         */
+        involved?: boolean;
+        my_proposals?: boolean;
+        name?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<ProposalOEnum>;
+        organization_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Panel UUID
+         */
+        panel_uuid?: string;
+        /**
+         * Where an accepted proposal's extension or final report stands
+         *
+         *
+         */
+        post_award_status?: Array<PostAwardStatusEnum>;
+        round?: string;
+        round_uuid?: string;
+        /**
+         * Only proposals with a run of this phase
+         *
+         *
+         */
+        run_phase?: ProposalRunPhaseEnum;
+        /**
+         * Only proposals with a run in this state
+         *
+         *
+         */
+        run_state?: ProposalRunStateEnum;
+        /**
+         * Slug
+         */
+        slug?: string;
+        state?: Array<ProposalStates>;
+        /**
+         * UUID of the call step; every step when left out.
+         */
+        step_uuid?: string;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        workflow_step?: Array<string>;
+    };
+    url: '/api/proposal-proposals/{uuid}/contributions/';
+};
+
+export type ProposalProposalsContributionsListResponses = {
+    200: Array<StepContribution>;
+};
+
+export type ProposalProposalsContributionsListResponse = ProposalProposalsContributionsListResponses[keyof ProposalProposalsContributionsListResponses];
+
+export type ProposalProposalsDeclineContributionData = {
+    body: DeclineStepContributionRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-proposals/{uuid}/decline_contribution/';
+};
+
+export type ProposalProposalsDeclineContributionResponses = {
+    200: StepContribution;
+};
+
+export type ProposalProposalsDeclineContributionResponse = ProposalProposalsDeclineContributionResponses[keyof ProposalProposalsDeclineContributionResponses];
+
+export type ProposalProposalsDelegateContributionData = {
+    body: DelegateStepContributionRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-proposals/{uuid}/delegate_contribution/';
+};
+
+export type ProposalProposalsDelegateContributionResponses = {
+    200: StepContribution;
+};
+
+export type ProposalProposalsDelegateContributionResponse = ProposalProposalsDelegateContributionResponses[keyof ProposalProposalsDelegateContributionResponses];
+
 export type ProposalProposalsDeleteUserData = {
     body: UserRoleDeleteRequest;
     path: {
@@ -100647,6 +106528,107 @@ export type ProposalProposalsDetachDocumentsResponses = {
      */
     200: unknown;
 };
+
+export type ProposalProposalsDiscardSuggestedReviewersData = {
+    body: SuggestedReviewersActionRequest;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * Only proposals the current user holds this role on
+         *
+         *
+         */
+        as_role?: ResponsibleRoleEnum;
+        call_uuid?: string;
+        /**
+         * Only proposals waiting on changes asked of their applicant
+         */
+        changes_requested?: boolean;
+        created_by_uuid?: string;
+        /**
+         * Only proposals whose final report is past its due date
+         */
+        final_report_overdue?: boolean;
+        /**
+         * Only proposals the current user takes part in, leaving out those read only through staff or support access
+         */
+        involved?: boolean;
+        my_proposals?: boolean;
+        name?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<ProposalOEnum>;
+        organization_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Panel UUID
+         */
+        panel_uuid?: string;
+        /**
+         * Where an accepted proposal's extension or final report stands
+         *
+         *
+         */
+        post_award_status?: Array<PostAwardStatusEnum>;
+        round?: string;
+        round_uuid?: string;
+        /**
+         * Only proposals with a run of this phase
+         *
+         *
+         */
+        run_phase?: ProposalRunPhaseEnum;
+        /**
+         * Only proposals with a run in this state
+         *
+         *
+         */
+        run_state?: ProposalRunStateEnum;
+        /**
+         * Slug
+         */
+        slug?: string;
+        state?: Array<ProposalStates>;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        workflow_step?: Array<string>;
+    };
+    url: '/api/proposal-proposals/{uuid}/discard_suggested_reviewers/';
+};
+
+export type ProposalProposalsDiscardSuggestedReviewersResponses = {
+    200: Array<SuggestedReviewer>;
+};
+
+export type ProposalProposalsDiscardSuggestedReviewersResponse = ProposalProposalsDiscardSuggestedReviewersResponses[keyof ProposalProposalsDiscardSuggestedReviewersResponses];
+
+export type ProposalProposalsInviteSuggestedReviewersData = {
+    body: SuggestedReviewersActionRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-proposals/{uuid}/invite_suggested_reviewers/';
+};
+
+export type ProposalProposalsInviteSuggestedReviewersResponses = {
+    200: InviteSuggestedReviewersResponse;
+};
+
+export type ProposalProposalsInviteSuggestedReviewersResponse = ProposalProposalsInviteSuggestedReviewersResponses[keyof ProposalProposalsInviteSuggestedReviewersResponses];
 
 export type ProposalProposalsListUsersListData = {
     body?: never;
@@ -100785,6 +106767,200 @@ export type ProposalProposalsListUsersCountResponses = {
     200: unknown;
 };
 
+export type ProposalProposalsMyReviewerSuggestionsListData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/proposal-proposals/{uuid}/my_reviewer_suggestions/';
+};
+
+export type ProposalProposalsMyReviewerSuggestionsListResponses = {
+    200: Array<ProposalReviewerSuggestion>;
+};
+
+export type ProposalProposalsMyReviewerSuggestionsListResponse = ProposalProposalsMyReviewerSuggestionsListResponses[keyof ProposalProposalsMyReviewerSuggestionsListResponses];
+
+export type ProposalProposalsMyReviewerSuggestionsCreateData = {
+    body?: ProposalReviewerSuggestionCreateRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-proposals/{uuid}/my_reviewer_suggestions/';
+};
+
+export type ProposalProposalsMyReviewerSuggestionsCreateResponses = {
+    200: ProposalReviewerSuggestion;
+};
+
+export type ProposalProposalsMyReviewerSuggestionsCreateResponse = ProposalProposalsMyReviewerSuggestionsCreateResponses[keyof ProposalProposalsMyReviewerSuggestionsCreateResponses];
+
+export type ProposalProposalsOfferingAssessmentsListData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * Only proposals the current user holds this role on
+         *
+         *
+         */
+        as_role?: ResponsibleRoleEnum;
+        call_uuid?: string;
+        /**
+         * Only proposals waiting on changes asked of their applicant
+         */
+        changes_requested?: boolean;
+        created_by_uuid?: string;
+        /**
+         * Only proposals whose final report is past its due date
+         */
+        final_report_overdue?: boolean;
+        /**
+         * Only proposals the current user takes part in, leaving out those read only through staff or support access
+         */
+        involved?: boolean;
+        my_proposals?: boolean;
+        name?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<ProposalOEnum>;
+        organization_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Panel UUID
+         */
+        panel_uuid?: string;
+        /**
+         * Where an accepted proposal's extension or final report stands
+         *
+         *
+         */
+        post_award_status?: Array<PostAwardStatusEnum>;
+        round?: string;
+        round_uuid?: string;
+        /**
+         * Only proposals with a run of this phase
+         *
+         *
+         */
+        run_phase?: ProposalRunPhaseEnum;
+        /**
+         * Only proposals with a run in this state
+         *
+         *
+         */
+        run_state?: ProposalRunStateEnum;
+        /**
+         * Slug
+         */
+        slug?: string;
+        state?: Array<ProposalStates>;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        workflow_step?: Array<string>;
+    };
+    url: '/api/proposal-proposals/{uuid}/offering_assessments/';
+};
+
+export type ProposalProposalsOfferingAssessmentsListResponses = {
+    200: Array<OfferingAssessment>;
+};
+
+export type ProposalProposalsOfferingAssessmentsListResponse = ProposalProposalsOfferingAssessmentsListResponses[keyof ProposalProposalsOfferingAssessmentsListResponses];
+
+export type ProposalProposalsOpenFinalReportData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-proposals/{uuid}/open_final_report/';
+};
+
+export type ProposalProposalsOpenFinalReportResponses = {
+    201: ProposalRun;
+};
+
+export type ProposalProposalsOpenFinalReportResponse = ProposalProposalsOpenFinalReportResponses[keyof ProposalProposalsOpenFinalReportResponses];
+
+export type ProposalProposalsPreviewAsData = {
+    body: ProposalPreviewAsRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-proposals/{uuid}/preview-as/';
+};
+
+export type ProposalProposalsPreviewAsResponses = {
+    200: DryRunViewAsResult;
+};
+
+export type ProposalProposalsPreviewAsResponse = ProposalProposalsPreviewAsResponses[keyof ProposalProposalsPreviewAsResponses];
+
+export type ProposalProposalsPreviewRolesListData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/proposal-proposals/{uuid}/preview-roles/';
+};
+
+export type ProposalProposalsPreviewRolesListResponses = {
+    200: Array<ProposalPreviewRole>;
+};
+
+export type ProposalProposalsPreviewRolesListResponse = ProposalProposalsPreviewRolesListResponses[keyof ProposalProposalsPreviewRolesListResponses];
+
+export type ProposalProposalsProvisionAwardedItemData = {
+    body: ProvisionAwardedItemRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-proposals/{uuid}/provision_awarded_item/';
+};
+
+export type ProposalProposalsProvisionAwardedItemResponses = {
+    200: AwardedResource;
+};
+
+export type ProposalProposalsProvisionAwardedItemResponse = ProposalProposalsProvisionAwardedItemResponses[keyof ProposalProposalsProvisionAwardedItemResponses];
+
 export type ProposalProposalsRejectWorkflowStepData = {
     body: RejectWorkflowStepRequest;
     path: {
@@ -100800,6 +106976,122 @@ export type ProposalProposalsRejectWorkflowStepResponses = {
 
 export type ProposalProposalsRejectWorkflowStepResponse = ProposalProposalsRejectWorkflowStepResponses[keyof ProposalProposalsRejectWorkflowStepResponses];
 
+export type ProposalProposalsReleaseStepReportData = {
+    body: ReleaseStepReportRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-proposals/{uuid}/release_step_report/';
+};
+
+export type ProposalProposalsReleaseStepReportResponses = {
+    200: ProposalWorkflowStepInstance;
+};
+
+export type ProposalProposalsReleaseStepReportResponse = ProposalProposalsReleaseStepReportResponses[keyof ProposalProposalsReleaseStepReportResponses];
+
+export type ProposalProposalsReleasedReportsListData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * Only proposals the current user holds this role on
+         *
+         *
+         */
+        as_role?: ResponsibleRoleEnum;
+        call_uuid?: string;
+        /**
+         * Only proposals waiting on changes asked of their applicant
+         */
+        changes_requested?: boolean;
+        created_by_uuid?: string;
+        /**
+         * Only proposals whose final report is past its due date
+         */
+        final_report_overdue?: boolean;
+        /**
+         * Only proposals the current user takes part in, leaving out those read only through staff or support access
+         */
+        involved?: boolean;
+        my_proposals?: boolean;
+        name?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<ProposalOEnum>;
+        organization_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Panel UUID
+         */
+        panel_uuid?: string;
+        /**
+         * Where an accepted proposal's extension or final report stands
+         *
+         *
+         */
+        post_award_status?: Array<PostAwardStatusEnum>;
+        round?: string;
+        round_uuid?: string;
+        /**
+         * Only proposals with a run of this phase
+         *
+         *
+         */
+        run_phase?: ProposalRunPhaseEnum;
+        /**
+         * Only proposals with a run in this state
+         *
+         *
+         */
+        run_state?: ProposalRunStateEnum;
+        /**
+         * Slug
+         */
+        slug?: string;
+        state?: Array<ProposalStates>;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        workflow_step?: Array<string>;
+    };
+    url: '/api/proposal-proposals/{uuid}/released_reports/';
+};
+
+export type ProposalProposalsReleasedReportsListResponses = {
+    200: Array<ReleasedReport>;
+};
+
+export type ProposalProposalsReleasedReportsListResponse = ProposalProposalsReleasedReportsListResponses[keyof ProposalProposalsReleasedReportsListResponses];
+
+export type ProposalProposalsReopenContributionData = {
+    body: ReopenContributionRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-proposals/{uuid}/reopen_contribution/';
+};
+
+export type ProposalProposalsReopenContributionResponses = {
+    200: ProposalChangeRequest;
+};
+
+export type ProposalProposalsReopenContributionResponse = ProposalProposalsReopenContributionResponses[keyof ProposalProposalsReopenContributionResponses];
+
 export type ProposalProposalsReopenDecisionData = {
     body: ReopenDecisionRequest;
     path: {
@@ -100814,6 +107106,36 @@ export type ProposalProposalsReopenDecisionResponses = {
 };
 
 export type ProposalProposalsReopenDecisionResponse = ProposalProposalsReopenDecisionResponses[keyof ProposalProposalsReopenDecisionResponses];
+
+export type ProposalProposalsRequestChangesData = {
+    body: RequestChangesRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-proposals/{uuid}/request_changes/';
+};
+
+export type ProposalProposalsRequestChangesResponses = {
+    200: ProposalChangeRequest;
+};
+
+export type ProposalProposalsRequestChangesResponse = ProposalProposalsRequestChangesResponses[keyof ProposalProposalsRequestChangesResponses];
+
+export type ProposalProposalsRequestExtensionData = {
+    body?: RequestExtensionRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-proposals/{uuid}/request_extension/';
+};
+
+export type ProposalProposalsRequestExtensionResponses = {
+    201: ProposalRun;
+};
+
+export type ProposalProposalsRequestExtensionResponse = ProposalProposalsRequestExtensionResponses[keyof ProposalProposalsRequestExtensionResponses];
 
 export type ProposalProposalsResourcesListData = {
     body?: never;
@@ -100953,20 +107275,247 @@ export type ProposalProposalsResourcePurchaseOrderSetResponses = {
 
 export type ProposalProposalsResourcePurchaseOrderSetResponse = ProposalProposalsResourcePurchaseOrderSetResponses[keyof ProposalProposalsResourcePurchaseOrderSetResponses];
 
-export type ProposalProposalsStepChecklistRetrieveData = {
+export type ProposalProposalsReviewerSuggestionCandidatesListData = {
     body?: never;
     path: {
         uuid: string;
     };
     query: {
         /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Name, username or e-mail to search for, case-insensitive, at least 3 characters; every word must match.
+         */
+        query: string;
+    };
+    url: '/api/proposal-proposals/{uuid}/reviewer_suggestion_candidates/';
+};
+
+export type ProposalProposalsReviewerSuggestionCandidatesListResponses = {
+    200: Array<ReviewerSuggestionCandidate>;
+};
+
+export type ProposalProposalsReviewerSuggestionCandidatesListResponse = ProposalProposalsReviewerSuggestionCandidatesListResponses[keyof ProposalProposalsReviewerSuggestionCandidatesListResponses];
+
+export type ProposalProposalsRevokeRoleAssignmentData = {
+    body: ProposalRoleAssignmentActionRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-proposals/{uuid}/revoke_role_assignment/';
+};
+
+export type ProposalProposalsRevokeRoleAssignmentResponses = {
+    200: ProposalRoleAssignment;
+};
+
+export type ProposalProposalsRevokeRoleAssignmentResponse = ProposalProposalsRevokeRoleAssignmentResponses[keyof ProposalProposalsRevokeRoleAssignmentResponses];
+
+export type ProposalProposalsRoleAssignmentCandidatesListData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Name, email or username to search for, case-insensitive. Email matches in part for staff and those overseeing the call, as a whole address for anyone else. Required for a role any user may hold, at least 3 characters: without it no one is listed.
+         */
+        query?: string;
+        /**
+         * The evaluator role to pick holders for.
+         */
+        role_uuid: string;
+    };
+    url: '/api/proposal-proposals/{uuid}/role_assignment_candidates/';
+};
+
+export type ProposalProposalsRoleAssignmentCandidatesListResponses = {
+    200: Array<ProposalRoleCandidate>;
+};
+
+export type ProposalProposalsRoleAssignmentCandidatesListResponse = ProposalProposalsRoleAssignmentCandidatesListResponses[keyof ProposalProposalsRoleAssignmentCandidatesListResponses];
+
+export type ProposalProposalsRoleAssignmentsListData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * Include revoked assignments, the role's history.
+         */
+        include_revoked?: boolean;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/proposal-proposals/{uuid}/role_assignments/';
+};
+
+export type ProposalProposalsRoleAssignmentsListResponses = {
+    200: Array<ProposalRoleAssignment>;
+};
+
+export type ProposalProposalsRoleAssignmentsListResponse = ProposalProposalsRoleAssignmentsListResponses[keyof ProposalProposalsRoleAssignmentsListResponses];
+
+export type ProposalProposalsRoleAssignmentsSetData = {
+    body: ProposalRoleAssignRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-proposals/{uuid}/role_assignments/';
+};
+
+export type ProposalProposalsRoleAssignmentsSetResponses = {
+    200: ProposalRoleAssignment;
+};
+
+export type ProposalProposalsRoleAssignmentsSetResponse = ProposalProposalsRoleAssignmentsSetResponses[keyof ProposalProposalsRoleAssignmentsSetResponses];
+
+export type ProposalProposalsRunsListData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/proposal-proposals/{uuid}/runs/';
+};
+
+export type ProposalProposalsRunsListResponses = {
+    200: Array<ProposalRun>;
+};
+
+export type ProposalProposalsRunsListResponse = ProposalProposalsRunsListResponses[keyof ProposalProposalsRunsListResponses];
+
+export type ProposalProposalsRunsRetrieveData = {
+    body?: never;
+    path: {
+        obj_uuid: string;
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-proposals/{uuid}/runs/{obj_uuid}/';
+};
+
+export type ProposalProposalsRunsRetrieveResponses = {
+    200: ProposalRun;
+};
+
+export type ProposalProposalsRunsRetrieveResponse = ProposalProposalsRunsRetrieveResponses[keyof ProposalProposalsRunsRetrieveResponses];
+
+export type ProposalProposalsRunsPartialUpdateData = {
+    body?: PatchedProposalRunUpdateRequest;
+    path: {
+        obj_uuid: string;
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-proposals/{uuid}/runs/{obj_uuid}/';
+};
+
+export type ProposalProposalsRunsPartialUpdateResponses = {
+    200: ProposalRun;
+};
+
+export type ProposalProposalsRunsPartialUpdateResponse = ProposalProposalsRunsPartialUpdateResponses[keyof ProposalProposalsRunsPartialUpdateResponses];
+
+export type ProposalProposalsSetAwardedDurationData = {
+    body: ProposalAwardedDurationRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-proposals/{uuid}/set_awarded_duration/';
+};
+
+export type ProposalProposalsSetAwardedDurationResponses = {
+    200: ProposalAwardedDuration;
+};
+
+export type ProposalProposalsSetAwardedDurationResponse = ProposalProposalsSetAwardedDurationResponses[keyof ProposalProposalsSetAwardedDurationResponses];
+
+export type ProposalProposalsSetPanelData = {
+    body: ProposalSetPanelRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-proposals/{uuid}/set_panel/';
+};
+
+export type ProposalProposalsSetPanelResponses = {
+    200: Proposal;
+};
+
+export type ProposalProposalsSetPanelResponse = ProposalProposalsSetPanelResponses[keyof ProposalProposalsSetPanelResponses];
+
+export type ProposalProposalsSetRoleLeadData = {
+    body: ProposalRoleAssignmentActionRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-proposals/{uuid}/set_role_lead/';
+};
+
+export type ProposalProposalsSetRoleLeadResponses = {
+    200: ProposalRoleAssignment;
+};
+
+export type ProposalProposalsSetRoleLeadResponse = ProposalProposalsSetRoleLeadResponses[keyof ProposalProposalsSetRoleLeadResponses];
+
+export type ProposalProposalsStepChecklistRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * UUID of the contribution whose answers are meant. The caller's own contribution to the step when left out.
+         */
+        contribution_uuid?: string;
+        /**
          * Return all questions ignoring dynamic visibility.
          */
         include_all?: string;
         /**
-         * Workflow step key (e.g. technical_assessment).
+         * Key of the call step (e.g. technical_assessment). Either this or step_uuid is required.
          */
-        step: string;
+        step?: string;
+        /**
+         * UUID of the call step.
+         */
+        step_uuid?: string;
     };
     url: '/api/proposal-proposals/{uuid}/step-checklist/';
 };
@@ -100989,7 +107538,7 @@ export type ProposalProposalsStepChecklistResponsesListData = {
     path: {
         uuid: string;
     };
-    query: {
+    query?: {
         /**
          * Only proposals the current user holds this role on
          *
@@ -100997,7 +107546,19 @@ export type ProposalProposalsStepChecklistResponsesListData = {
          */
         as_role?: ResponsibleRoleEnum;
         call_uuid?: string;
+        /**
+         * Only proposals waiting on changes asked of their applicant
+         */
+        changes_requested?: boolean;
         created_by_uuid?: string;
+        /**
+         * Only proposals whose final report is past its due date
+         */
+        final_report_overdue?: boolean;
+        /**
+         * Only proposals the current user takes part in, leaving out those read only through staff or support access
+         */
+        involved?: boolean;
         my_proposals?: boolean;
         name?: string;
         /**
@@ -101015,23 +107576,47 @@ export type ProposalProposalsStepChecklistResponsesListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Panel UUID
+         */
+        panel_uuid?: string;
+        /**
+         * Where an accepted proposal's extension or final report stands
+         *
+         *
+         */
+        post_award_status?: Array<PostAwardStatusEnum>;
         round?: string;
         round_uuid?: string;
+        /**
+         * Only proposals with a run of this phase
+         *
+         *
+         */
+        run_phase?: ProposalRunPhaseEnum;
+        /**
+         * Only proposals with a run in this state
+         *
+         *
+         */
+        run_state?: ProposalRunStateEnum;
         /**
          * Slug
          */
         slug?: string;
         state?: Array<ProposalStates>;
         /**
-         * Workflow step key (e.g. technical_assessment).
+         * Key of the call step (e.g. technical_assessment). Either this or step_uuid is required.
          */
-        step: string;
+        step?: string;
         /**
-         * Current workflow step
-         *
-         *
+         * UUID of the call step.
          */
-        workflow_step?: Array<StepEnum>;
+        step_uuid?: string;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        workflow_step?: Array<string>;
     };
     url: '/api/proposal-proposals/{uuid}/step-checklist-responses/';
 };
@@ -101044,10 +107629,100 @@ export type ProposalProposalsStepChecklistResponsesListErrors = {
 };
 
 export type ProposalProposalsStepChecklistResponsesListResponses = {
-    200: Array<StepChecklistResponseGroup>;
+    200: Array<StepContributionWithAnswers>;
 };
 
 export type ProposalProposalsStepChecklistResponsesListResponse = ProposalProposalsStepChecklistResponsesListResponses[keyof ProposalProposalsStepChecklistResponsesListResponses];
+
+export type ProposalProposalsStepInputsListData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query: {
+        /**
+         * Only proposals the current user holds this role on
+         *
+         *
+         */
+        as_role?: ResponsibleRoleEnum;
+        call_uuid?: string;
+        /**
+         * Only proposals waiting on changes asked of their applicant
+         */
+        changes_requested?: boolean;
+        created_by_uuid?: string;
+        /**
+         * Only proposals whose final report is past its due date
+         */
+        final_report_overdue?: boolean;
+        /**
+         * Only proposals the current user takes part in, leaving out those read only through staff or support access
+         */
+        involved?: boolean;
+        my_proposals?: boolean;
+        name?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<ProposalOEnum>;
+        organization_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Panel UUID
+         */
+        panel_uuid?: string;
+        /**
+         * Where an accepted proposal's extension or final report stands
+         *
+         *
+         */
+        post_award_status?: Array<PostAwardStatusEnum>;
+        round?: string;
+        round_uuid?: string;
+        /**
+         * Only proposals with a run of this phase
+         *
+         *
+         */
+        run_phase?: ProposalRunPhaseEnum;
+        /**
+         * Only proposals with a run in this state
+         *
+         *
+         */
+        run_state?: ProposalRunStateEnum;
+        /**
+         * Slug
+         */
+        slug?: string;
+        state?: Array<ProposalStates>;
+        /**
+         * UUID of the call step whose inputs are read.
+         */
+        step_uuid: string;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        workflow_step?: Array<string>;
+    };
+    url: '/api/proposal-proposals/{uuid}/step_inputs/';
+};
+
+export type ProposalProposalsStepInputsListResponses = {
+    200: Array<StepInput>;
+};
+
+export type ProposalProposalsStepInputsListResponse = ProposalProposalsStepInputsListResponses[keyof ProposalProposalsStepInputsListResponses];
 
 export type ProposalProposalsSubmitData = {
     body?: never;
@@ -101070,11 +107745,19 @@ export type ProposalProposalsSubmitStepChecklistAnswersData = {
     path: {
         uuid: string;
     };
-    query: {
+    query?: {
         /**
-         * Workflow step key (e.g. technical_assessment).
+         * UUID of the contribution whose answers are meant. The caller's own contribution to the step when left out.
          */
-        step: string;
+        contribution_uuid?: string;
+        /**
+         * Key of the call step (e.g. technical_assessment). Either this or step_uuid is required.
+         */
+        step?: string;
+        /**
+         * UUID of the call step.
+         */
+        step_uuid?: string;
     };
     url: '/api/proposal-proposals/{uuid}/submit-step-checklist-answers/';
 };
@@ -101118,6 +107801,151 @@ export type ProposalProposalsSubmitAnswersResponses = {
 
 export type ProposalProposalsSubmitAnswersResponse = ProposalProposalsSubmitAnswersResponses[keyof ProposalProposalsSubmitAnswersResponses];
 
+export type ProposalProposalsSubmitChangesData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * Only proposals the current user holds this role on
+         *
+         *
+         */
+        as_role?: ResponsibleRoleEnum;
+        call_uuid?: string;
+        /**
+         * Only proposals waiting on changes asked of their applicant
+         */
+        changes_requested?: boolean;
+        created_by_uuid?: string;
+        /**
+         * Only proposals whose final report is past its due date
+         */
+        final_report_overdue?: boolean;
+        /**
+         * Only proposals the current user takes part in, leaving out those read only through staff or support access
+         */
+        involved?: boolean;
+        my_proposals?: boolean;
+        name?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<ProposalOEnum>;
+        organization_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Panel UUID
+         */
+        panel_uuid?: string;
+        /**
+         * Where an accepted proposal's extension or final report stands
+         *
+         *
+         */
+        post_award_status?: Array<PostAwardStatusEnum>;
+        round?: string;
+        round_uuid?: string;
+        /**
+         * Only proposals with a run of this phase
+         *
+         *
+         */
+        run_phase?: ProposalRunPhaseEnum;
+        /**
+         * Only proposals with a run in this state
+         *
+         *
+         */
+        run_state?: ProposalRunStateEnum;
+        /**
+         * Slug
+         */
+        slug?: string;
+        state?: Array<ProposalStates>;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        workflow_step?: Array<string>;
+    };
+    url: '/api/proposal-proposals/{uuid}/submit_changes/';
+};
+
+export type ProposalProposalsSubmitChangesResponses = {
+    200: Array<ProposalChangeRequest>;
+};
+
+export type ProposalProposalsSubmitChangesResponse = ProposalProposalsSubmitChangesResponses[keyof ProposalProposalsSubmitChangesResponses];
+
+export type ProposalProposalsSubmitContributionData = {
+    body?: SubmitStepContributionRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-proposals/{uuid}/submit_contribution/';
+};
+
+export type ProposalProposalsSubmitContributionResponses = {
+    200: SubmitStepContributionResponse;
+};
+
+export type ProposalProposalsSubmitContributionResponse = ProposalProposalsSubmitContributionResponses[keyof ProposalProposalsSubmitContributionResponses];
+
+export type ProposalProposalsSuggestedReviewersListData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/proposal-proposals/{uuid}/suggested_reviewers/';
+};
+
+export type ProposalProposalsSuggestedReviewersListResponses = {
+    200: Array<SuggestedReviewer>;
+};
+
+export type ProposalProposalsSuggestedReviewersListResponse = ProposalProposalsSuggestedReviewersListResponses[keyof ProposalProposalsSuggestedReviewersListResponses];
+
+export type ProposalProposalsUnlockablePartsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * The step instance the changes would be asked at.
+         */
+        step_uuid?: string;
+    };
+    url: '/api/proposal-proposals/{uuid}/unlockable_parts/';
+};
+
+export type ProposalProposalsUnlockablePartsRetrieveResponses = {
+    200: UnlockableParts;
+};
+
+export type ProposalProposalsUnlockablePartsRetrieveResponse = ProposalProposalsUnlockablePartsRetrieveResponses[keyof ProposalProposalsUnlockablePartsRetrieveResponses];
+
 export type ProposalProposalsUpdateProjectDetailsData = {
     body: ProposalUpdateProjectDetailsRequest;
     path: {
@@ -101149,6 +107977,95 @@ export type ProposalProposalsUpdateUserResponses = {
 
 export type ProposalProposalsUpdateUserResponse = ProposalProposalsUpdateUserResponses[keyof ProposalProposalsUpdateUserResponses];
 
+export type ProposalProposalsWithdrawData = {
+    body?: ProposalWithdrawRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-proposals/{uuid}/withdraw/';
+};
+
+export type ProposalProposalsWithdrawResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type ProposalProposalsWithdrawReviewerSuggestionData = {
+    body: ProposalReviewerSuggestionWithdrawRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-proposals/{uuid}/withdraw_reviewer_suggestion/';
+};
+
+export type ProposalProposalsWithdrawReviewerSuggestionResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type ProposalProposalsWithdrawReviewerSuggestionResponse = ProposalProposalsWithdrawReviewerSuggestionResponses[keyof ProposalProposalsWithdrawReviewerSuggestionResponses];
+
+export type ProposalProposalsWithdrawRunData = {
+    body?: WithdrawRunRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-proposals/{uuid}/withdraw_run/';
+};
+
+export type ProposalProposalsWithdrawRunResponses = {
+    200: ProposalRun;
+};
+
+export type ProposalProposalsWithdrawRunResponse = ProposalProposalsWithdrawRunResponses[keyof ProposalProposalsWithdrawRunResponses];
+
+export type ProposalProposalsWorkflowMailsListData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        uuid: Array<string>;
+    };
+    url: '/api/proposal-proposals/{uuid}/workflow-mails/';
+};
+
+export type ProposalProposalsWorkflowMailsListResponses = {
+    200: Array<WorkflowMail>;
+};
+
+export type ProposalProposalsWorkflowMailsListResponse = ProposalProposalsWorkflowMailsListResponses[keyof ProposalProposalsWorkflowMailsListResponses];
+
+export type ProposalProposalsWorkflowTimelineRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-proposals/{uuid}/workflow-timeline/';
+};
+
+export type ProposalProposalsWorkflowTimelineRetrieveResponses = {
+    200: WorkflowTimeline;
+};
+
+export type ProposalProposalsWorkflowTimelineRetrieveResponse = ProposalProposalsWorkflowTimelineRetrieveResponses[keyof ProposalProposalsWorkflowTimelineRetrieveResponses];
+
 export type ProposalProposalsWorkflowStatesListData = {
     body?: never;
     path: {
@@ -101162,7 +108079,19 @@ export type ProposalProposalsWorkflowStatesListData = {
          */
         as_role?: ResponsibleRoleEnum;
         call_uuid?: string;
+        /**
+         * Only proposals waiting on changes asked of their applicant
+         */
+        changes_requested?: boolean;
         created_by_uuid?: string;
+        /**
+         * Only proposals whose final report is past its due date
+         */
+        final_report_overdue?: boolean;
+        /**
+         * Only proposals the current user takes part in, leaving out those read only through staff or support access
+         */
+        involved?: boolean;
         my_proposals?: boolean;
         name?: string;
         /**
@@ -101180,19 +108109,39 @@ export type ProposalProposalsWorkflowStatesListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Panel UUID
+         */
+        panel_uuid?: string;
+        /**
+         * Where an accepted proposal's extension or final report stands
+         *
+         *
+         */
+        post_award_status?: Array<PostAwardStatusEnum>;
         round?: string;
         round_uuid?: string;
+        /**
+         * Only proposals with a run of this phase
+         *
+         *
+         */
+        run_phase?: ProposalRunPhaseEnum;
+        /**
+         * Only proposals with a run in this state
+         *
+         *
+         */
+        run_state?: ProposalRunStateEnum;
         /**
          * Slug
          */
         slug?: string;
         state?: Array<ProposalStates>;
         /**
-         * Current workflow step
-         *
-         *
+         * Multiple values may be separated by commas.
          */
-        workflow_step?: Array<StepEnum>;
+        workflow_step?: Array<string>;
     };
     url: '/api/proposal-proposals/{uuid}/workflow_states/';
 };
@@ -101441,6 +108390,12 @@ export type ProposalProtectedCallsActivateData = {
     url: '/api/proposal-protected-calls/{uuid}/activate/';
 };
 
+export type ProposalProtectedCallsActivateErrors = {
+    400: CallActivationRefused;
+};
+
+export type ProposalProtectedCallsActivateError = ProposalProtectedCallsActivateErrors[keyof ProposalProtectedCallsActivateErrors];
+
 export type ProposalProtectedCallsActivateResponses = {
     200: MessageResponse;
 };
@@ -101490,7 +108445,7 @@ export type ProposalProtectedCallsAffinityMatrixRetrieveResponses = {
 export type ProposalProtectedCallsAffinityMatrixRetrieveResponse = ProposalProtectedCallsAffinityMatrixRetrieveResponses[keyof ProposalProtectedCallsAffinityMatrixRetrieveResponses];
 
 export type ProposalProtectedCallsArchiveData = {
-    body?: never;
+    body?: ArchiveCallRequest;
     path: {
         uuid: string;
     };
@@ -101503,6 +108458,36 @@ export type ProposalProtectedCallsArchiveResponses = {
 };
 
 export type ProposalProtectedCallsArchiveResponse = ProposalProtectedCallsArchiveResponses[keyof ProposalProtectedCallsArchiveResponses];
+
+export type ProposalProtectedCallsAssignmentConfigurationRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-protected-calls/{uuid}/assignment-configuration/';
+};
+
+export type ProposalProtectedCallsAssignmentConfigurationRetrieveResponses = {
+    200: CallAssignmentConfiguration;
+};
+
+export type ProposalProtectedCallsAssignmentConfigurationRetrieveResponse = ProposalProtectedCallsAssignmentConfigurationRetrieveResponses[keyof ProposalProtectedCallsAssignmentConfigurationRetrieveResponses];
+
+export type ProposalProtectedCallsAssignmentConfigurationPartialUpdateData = {
+    body?: PatchedCallAssignmentConfigurationRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-protected-calls/{uuid}/assignment-configuration/';
+};
+
+export type ProposalProtectedCallsAssignmentConfigurationPartialUpdateResponses = {
+    200: CallAssignmentConfiguration;
+};
+
+export type ProposalProtectedCallsAssignmentConfigurationPartialUpdateResponse = ProposalProtectedCallsAssignmentConfigurationPartialUpdateResponses[keyof ProposalProtectedCallsAssignmentConfigurationPartialUpdateResponses];
 
 export type ProposalProtectedCallsAttachDocumentsData = {
     body: CallAttachDocumentsRequest;
@@ -101737,6 +108722,10 @@ export type ProposalProtectedCallsExportProposalsData = {
          */
         proposal_state?: Array<ProposalStates>;
         /**
+         * Limit the export to these proposals, such as those selected in the list; repeat the parameter for each.
+         */
+        proposal_uuid?: Array<string>;
+        /**
          * Limit the export to one round.
          */
         round_uuid?: string;
@@ -101761,9 +108750,9 @@ export type ProposalProtectedCallsExportReviewsData = {
          */
         proposal_name?: string;
         /**
-         * Limit the export to one proposal.
+         * Limit the export to these proposals, such as those selected in the list; repeat the parameter for each.
          */
-        proposal_uuid?: string;
+        proposal_uuid?: Array<string>;
         /**
          * Limit the export to reviews in these states.
          */
@@ -102013,6 +109002,288 @@ export type ProposalProtectedCallsMatchingConfigurationPartialUpdateResponses = 
 
 export type ProposalProtectedCallsMatchingConfigurationPartialUpdateResponse = ProposalProtectedCallsMatchingConfigurationPartialUpdateResponses[keyof ProposalProtectedCallsMatchingConfigurationPartialUpdateResponses];
 
+export type ProposalProtectedCallsNotificationMailTypesListData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/proposal-protected-calls/{uuid}/notification_mail_types/';
+};
+
+export type ProposalProtectedCallsNotificationMailTypesListResponses = {
+    200: Array<CallNotificationMailType>;
+};
+
+export type ProposalProtectedCallsNotificationMailTypesListResponse = ProposalProtectedCallsNotificationMailTypesListResponses[keyof ProposalProtectedCallsNotificationMailTypesListResponses];
+
+export type ProposalProtectedCallsNotificationOverridesListData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/proposal-protected-calls/{uuid}/notification_overrides/';
+};
+
+export type ProposalProtectedCallsNotificationOverridesListResponses = {
+    200: Array<CallNotificationOverride>;
+};
+
+export type ProposalProtectedCallsNotificationOverridesListResponse = ProposalProtectedCallsNotificationOverridesListResponses[keyof ProposalProtectedCallsNotificationOverridesListResponses];
+
+export type ProposalProtectedCallsNotificationOverridesSetData = {
+    body: CallNotificationOverrideRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-protected-calls/{uuid}/notification_overrides/';
+};
+
+export type ProposalProtectedCallsNotificationOverridesSetResponses = {
+    200: CallNotificationOverride;
+};
+
+export type ProposalProtectedCallsNotificationOverridesSetResponse = ProposalProtectedCallsNotificationOverridesSetResponses[keyof ProposalProtectedCallsNotificationOverridesSetResponses];
+
+export type ProposalProtectedCallsNotificationOverridesDestroyData = {
+    body?: never;
+    path: {
+        obj_uuid: string;
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-protected-calls/{uuid}/notification_overrides/{obj_uuid}/';
+};
+
+export type ProposalProtectedCallsNotificationOverridesDestroyResponses = {
+    200: CallNotificationOverride;
+};
+
+export type ProposalProtectedCallsNotificationOverridesDestroyResponse = ProposalProtectedCallsNotificationOverridesDestroyResponses[keyof ProposalProtectedCallsNotificationOverridesDestroyResponses];
+
+export type ProposalProtectedCallsNotificationOverridesRetrieveData = {
+    body?: never;
+    path: {
+        obj_uuid: string;
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-protected-calls/{uuid}/notification_overrides/{obj_uuid}/';
+};
+
+export type ProposalProtectedCallsNotificationOverridesRetrieveResponses = {
+    200: CallNotificationOverride;
+};
+
+export type ProposalProtectedCallsNotificationOverridesRetrieveResponse = ProposalProtectedCallsNotificationOverridesRetrieveResponses[keyof ProposalProtectedCallsNotificationOverridesRetrieveResponses];
+
+export type ProposalProtectedCallsNotificationOverridesPartialUpdateData = {
+    body?: PatchedCallNotificationOverrideRequest;
+    path: {
+        obj_uuid: string;
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-protected-calls/{uuid}/notification_overrides/{obj_uuid}/';
+};
+
+export type ProposalProtectedCallsNotificationOverridesPartialUpdateResponses = {
+    200: CallNotificationOverride;
+};
+
+export type ProposalProtectedCallsNotificationOverridesPartialUpdateResponse = ProposalProtectedCallsNotificationOverridesPartialUpdateResponses[keyof ProposalProtectedCallsNotificationOverridesPartialUpdateResponses];
+
+export type ProposalProtectedCallsNotificationOverridesUpdateData = {
+    body: CallNotificationOverrideRequest;
+    path: {
+        obj_uuid: string;
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-protected-calls/{uuid}/notification_overrides/{obj_uuid}/';
+};
+
+export type ProposalProtectedCallsNotificationOverridesUpdateResponses = {
+    200: CallNotificationOverride;
+};
+
+export type ProposalProtectedCallsNotificationOverridesUpdateResponse = ProposalProtectedCallsNotificationOverridesUpdateResponses[keyof ProposalProtectedCallsNotificationOverridesUpdateResponses];
+
+export type ProposalProtectedCallsNotificationPreviewRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        days_before?: number;
+        mail_type?: string;
+        recipient?: RecipientEnum;
+        step?: string;
+        trigger?: TriggerEnum;
+        variant?: string;
+    };
+    url: '/api/proposal-protected-calls/{uuid}/notification_preview/';
+};
+
+export type ProposalProtectedCallsNotificationPreviewRetrieveResponses = {
+    200: NotificationPreview;
+};
+
+export type ProposalProtectedCallsNotificationPreviewRetrieveResponse = ProposalProtectedCallsNotificationPreviewRetrieveResponses[keyof ProposalProtectedCallsNotificationPreviewRetrieveResponses];
+
+export type ProposalProtectedCallsNotificationPreviewDraftData = {
+    body: NotificationPreviewDraftRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-protected-calls/{uuid}/notification_preview_draft/';
+};
+
+export type ProposalProtectedCallsNotificationPreviewDraftResponses = {
+    200: NotificationPreview;
+};
+
+export type ProposalProtectedCallsNotificationPreviewDraftResponse = ProposalProtectedCallsNotificationPreviewDraftResponses[keyof ProposalProtectedCallsNotificationPreviewDraftResponses];
+
+export type ProposalProtectedCallsNotifyProposalsData = {
+    body: NotifyProposalsRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-protected-calls/{uuid}/notify-proposals/';
+};
+
+export type ProposalProtectedCallsNotifyProposalsResponses = {
+    200: NotifyProposalsResponse;
+};
+
+export type ProposalProtectedCallsNotifyProposalsResponse = ProposalProtectedCallsNotifyProposalsResponses[keyof ProposalProtectedCallsNotifyProposalsResponses];
+
+export type ProposalProtectedCallsOfferingComponentsListData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/proposal-protected-calls/{uuid}/offering_components/';
+};
+
+export type ProposalProtectedCallsOfferingComponentsListResponses = {
+    200: Array<CallOfferingComponent>;
+};
+
+export type ProposalProtectedCallsOfferingComponentsListResponse = ProposalProtectedCallsOfferingComponentsListResponses[keyof ProposalProtectedCallsOfferingComponentsListResponses];
+
+export type ProposalProtectedCallsOfferingComponentsSetData = {
+    body: CallOfferingComponentRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-protected-calls/{uuid}/offering_components/';
+};
+
+export type ProposalProtectedCallsOfferingComponentsSetResponses = {
+    200: CallOfferingComponent;
+};
+
+export type ProposalProtectedCallsOfferingComponentsSetResponse = ProposalProtectedCallsOfferingComponentsSetResponses[keyof ProposalProtectedCallsOfferingComponentsSetResponses];
+
+export type ProposalProtectedCallsOfferingComponentsDestroyData = {
+    body?: never;
+    path: {
+        obj_uuid: string;
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-protected-calls/{uuid}/offering_components/{obj_uuid}/';
+};
+
+export type ProposalProtectedCallsOfferingComponentsDestroyResponses = {
+    200: CallOfferingComponent;
+};
+
+export type ProposalProtectedCallsOfferingComponentsDestroyResponse = ProposalProtectedCallsOfferingComponentsDestroyResponses[keyof ProposalProtectedCallsOfferingComponentsDestroyResponses];
+
+export type ProposalProtectedCallsOfferingComponentsRetrieveData = {
+    body?: never;
+    path: {
+        obj_uuid: string;
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-protected-calls/{uuid}/offering_components/{obj_uuid}/';
+};
+
+export type ProposalProtectedCallsOfferingComponentsRetrieveResponses = {
+    200: CallOfferingComponent;
+};
+
+export type ProposalProtectedCallsOfferingComponentsRetrieveResponse = ProposalProtectedCallsOfferingComponentsRetrieveResponses[keyof ProposalProtectedCallsOfferingComponentsRetrieveResponses];
+
+export type ProposalProtectedCallsOfferingComponentsPartialUpdateData = {
+    body?: PatchedCallOfferingComponentRequest;
+    path: {
+        obj_uuid: string;
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-protected-calls/{uuid}/offering_components/{obj_uuid}/';
+};
+
+export type ProposalProtectedCallsOfferingComponentsPartialUpdateResponses = {
+    200: CallOfferingComponent;
+};
+
+export type ProposalProtectedCallsOfferingComponentsPartialUpdateResponse = ProposalProtectedCallsOfferingComponentsPartialUpdateResponses[keyof ProposalProtectedCallsOfferingComponentsPartialUpdateResponses];
+
+export type ProposalProtectedCallsOfferingComponentsUpdateData = {
+    body: CallOfferingComponentRequest;
+    path: {
+        obj_uuid: string;
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-protected-calls/{uuid}/offering_components/{obj_uuid}/';
+};
+
+export type ProposalProtectedCallsOfferingComponentsUpdateResponses = {
+    200: CallOfferingComponent;
+};
+
+export type ProposalProtectedCallsOfferingComponentsUpdateResponse = ProposalProtectedCallsOfferingComponentsUpdateResponses[keyof ProposalProtectedCallsOfferingComponentsUpdateResponses];
+
 export type ProposalProtectedCallsOfferingsListData = {
     body?: never;
     path: {
@@ -102120,6 +109391,212 @@ export type ProposalProtectedCallsOfferingsUpdateResponses = {
 
 export type ProposalProtectedCallsOfferingsUpdateResponse = ProposalProtectedCallsOfferingsUpdateResponses[keyof ProposalProtectedCallsOfferingsUpdateResponses];
 
+export type ProposalProtectedCallsPanelsListData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/proposal-protected-calls/{uuid}/panels/';
+};
+
+export type ProposalProtectedCallsPanelsListResponses = {
+    200: Array<CallPanel>;
+};
+
+export type ProposalProtectedCallsPanelsListResponse = ProposalProtectedCallsPanelsListResponses[keyof ProposalProtectedCallsPanelsListResponses];
+
+export type ProposalProtectedCallsPanelsSetData = {
+    body: CallPanelRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-protected-calls/{uuid}/panels/';
+};
+
+export type ProposalProtectedCallsPanelsSetResponses = {
+    200: CallPanel;
+};
+
+export type ProposalProtectedCallsPanelsSetResponse = ProposalProtectedCallsPanelsSetResponses[keyof ProposalProtectedCallsPanelsSetResponses];
+
+export type ProposalProtectedCallsPanelsDestroyData = {
+    body?: never;
+    path: {
+        obj_uuid: string;
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-protected-calls/{uuid}/panels/{obj_uuid}/';
+};
+
+export type ProposalProtectedCallsPanelsDestroyResponses = {
+    200: CallPanel;
+};
+
+export type ProposalProtectedCallsPanelsDestroyResponse = ProposalProtectedCallsPanelsDestroyResponses[keyof ProposalProtectedCallsPanelsDestroyResponses];
+
+export type ProposalProtectedCallsPanelsRetrieveData = {
+    body?: never;
+    path: {
+        obj_uuid: string;
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-protected-calls/{uuid}/panels/{obj_uuid}/';
+};
+
+export type ProposalProtectedCallsPanelsRetrieveResponses = {
+    200: CallPanel;
+};
+
+export type ProposalProtectedCallsPanelsRetrieveResponse = ProposalProtectedCallsPanelsRetrieveResponses[keyof ProposalProtectedCallsPanelsRetrieveResponses];
+
+export type ProposalProtectedCallsPanelsPartialUpdateData = {
+    body?: PatchedCallPanelRequest;
+    path: {
+        obj_uuid: string;
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-protected-calls/{uuid}/panels/{obj_uuid}/';
+};
+
+export type ProposalProtectedCallsPanelsPartialUpdateResponses = {
+    200: CallPanel;
+};
+
+export type ProposalProtectedCallsPanelsPartialUpdateResponse = ProposalProtectedCallsPanelsPartialUpdateResponses[keyof ProposalProtectedCallsPanelsPartialUpdateResponses];
+
+export type ProposalProtectedCallsPanelsUpdateData = {
+    body: CallPanelRequest;
+    path: {
+        obj_uuid: string;
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-protected-calls/{uuid}/panels/{obj_uuid}/';
+};
+
+export type ProposalProtectedCallsPanelsUpdateResponses = {
+    200: CallPanel;
+};
+
+export type ProposalProtectedCallsPanelsUpdateResponse = ProposalProtectedCallsPanelsUpdateResponses[keyof ProposalProtectedCallsPanelsUpdateResponses];
+
+export type ProposalProtectedCallsProposalRolesListData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/proposal-protected-calls/{uuid}/proposal_roles/';
+};
+
+export type ProposalProtectedCallsProposalRolesListResponses = {
+    200: Array<CallProposalRole>;
+};
+
+export type ProposalProtectedCallsProposalRolesListResponse = ProposalProtectedCallsProposalRolesListResponses[keyof ProposalProtectedCallsProposalRolesListResponses];
+
+export type ProposalProtectedCallsProposalRolesSetData = {
+    body: CallProposalRoleRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-protected-calls/{uuid}/proposal_roles/';
+};
+
+export type ProposalProtectedCallsProposalRolesSetResponses = {
+    200: CallProposalRole;
+};
+
+export type ProposalProtectedCallsProposalRolesSetResponse = ProposalProtectedCallsProposalRolesSetResponses[keyof ProposalProtectedCallsProposalRolesSetResponses];
+
+export type ProposalProtectedCallsProposalRolesDestroyData = {
+    body?: never;
+    path: {
+        obj_uuid: string;
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-protected-calls/{uuid}/proposal_roles/{obj_uuid}/';
+};
+
+export type ProposalProtectedCallsProposalRolesDestroyResponses = {
+    200: CallProposalRole;
+};
+
+export type ProposalProtectedCallsProposalRolesDestroyResponse = ProposalProtectedCallsProposalRolesDestroyResponses[keyof ProposalProtectedCallsProposalRolesDestroyResponses];
+
+export type ProposalProtectedCallsProposalRolesRetrieveData = {
+    body?: never;
+    path: {
+        obj_uuid: string;
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-protected-calls/{uuid}/proposal_roles/{obj_uuid}/';
+};
+
+export type ProposalProtectedCallsProposalRolesRetrieveResponses = {
+    200: CallProposalRole;
+};
+
+export type ProposalProtectedCallsProposalRolesRetrieveResponse = ProposalProtectedCallsProposalRolesRetrieveResponses[keyof ProposalProtectedCallsProposalRolesRetrieveResponses];
+
+export type ProposalProtectedCallsProposalRolesPartialUpdateData = {
+    body?: PatchedCallProposalRoleRequest;
+    path: {
+        obj_uuid: string;
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-protected-calls/{uuid}/proposal_roles/{obj_uuid}/';
+};
+
+export type ProposalProtectedCallsProposalRolesPartialUpdateResponses = {
+    200: CallProposalRole;
+};
+
+export type ProposalProtectedCallsProposalRolesPartialUpdateResponse = ProposalProtectedCallsProposalRolesPartialUpdateResponses[keyof ProposalProtectedCallsProposalRolesPartialUpdateResponses];
+
+export type ProposalProtectedCallsProposalRolesUpdateData = {
+    body: CallProposalRoleRequest;
+    path: {
+        obj_uuid: string;
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-protected-calls/{uuid}/proposal_roles/{obj_uuid}/';
+};
+
+export type ProposalProtectedCallsProposalRolesUpdateResponses = {
+    200: CallProposalRole;
+};
+
+export type ProposalProtectedCallsProposalRolesUpdateResponse = ProposalProtectedCallsProposalRolesUpdateResponses[keyof ProposalProtectedCallsProposalRolesUpdateResponses];
+
 export type ProposalProtectedCallsProposalsComplianceAnswersListData = {
     body?: never;
     path: {
@@ -102215,6 +109692,273 @@ export type ProposalProtectedCallsProposedAssignmentsListResponses = {
 };
 
 export type ProposalProtectedCallsProposedAssignmentsListResponse = ProposalProtectedCallsProposedAssignmentsListResponses[keyof ProposalProtectedCallsProposedAssignmentsListResponses];
+
+export type ProposalProtectedCallsReportsBudgetsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * Report on one round of the calls. Not found when it is not a round of a call reported on.
+         */
+        round_uuid?: string;
+        /**
+         * Count only proposals submitted on or after this day.
+         */
+        submitted_from?: string;
+        /**
+         * Count only proposals submitted on or before this day.
+         */
+        submitted_to?: string;
+    };
+    url: '/api/proposal-protected-calls/{uuid}/reports/budgets/';
+};
+
+export type ProposalProtectedCallsReportsBudgetsRetrieveResponses = {
+    200: BudgetReport;
+};
+
+export type ProposalProtectedCallsReportsBudgetsRetrieveResponse = ProposalProtectedCallsReportsBudgetsRetrieveResponses[keyof ProposalProtectedCallsReportsBudgetsRetrieveResponses];
+
+export type ProposalProtectedCallsReportsPortfolioRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * Report on one round of the calls. Not found when it is not a round of a call reported on.
+         */
+        round_uuid?: string;
+        /**
+         * Count only proposals submitted on or after this day.
+         */
+        submitted_from?: string;
+        /**
+         * Count only proposals submitted on or before this day.
+         */
+        submitted_to?: string;
+    };
+    url: '/api/proposal-protected-calls/{uuid}/reports/portfolio/';
+};
+
+export type ProposalProtectedCallsReportsPortfolioRetrieveResponses = {
+    200: PortfolioReport;
+};
+
+export type ProposalProtectedCallsReportsPortfolioRetrieveResponse = ProposalProtectedCallsReportsPortfolioRetrieveResponses[keyof ProposalProtectedCallsReportsPortfolioRetrieveResponses];
+
+export type ProposalProtectedCallsReportsReviewersRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * Report on one round of the calls. Not found when it is not a round of a call reported on.
+         */
+        round_uuid?: string;
+        /**
+         * Count only proposals submitted on or after this day.
+         */
+        submitted_from?: string;
+        /**
+         * Count only proposals submitted on or before this day.
+         */
+        submitted_to?: string;
+    };
+    url: '/api/proposal-protected-calls/{uuid}/reports/reviewers/';
+};
+
+export type ProposalProtectedCallsReportsReviewersRetrieveResponses = {
+    200: ReviewerReport;
+};
+
+export type ProposalProtectedCallsReportsReviewersRetrieveResponse = ProposalProtectedCallsReportsReviewersRetrieveResponses[keyof ProposalProtectedCallsReportsReviewersRetrieveResponses];
+
+export type ProposalProtectedCallsReportsRoundsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * Report on one round of the calls. Not found when it is not a round of a call reported on.
+         */
+        round_uuid?: string;
+        /**
+         * Count only proposals submitted on or after this day.
+         */
+        submitted_from?: string;
+        /**
+         * Count only proposals submitted on or before this day.
+         */
+        submitted_to?: string;
+    };
+    url: '/api/proposal-protected-calls/{uuid}/reports/rounds/';
+};
+
+export type ProposalProtectedCallsReportsRoundsRetrieveResponses = {
+    200: RoundReport;
+};
+
+export type ProposalProtectedCallsReportsRoundsRetrieveResponse = ProposalProtectedCallsReportsRoundsRetrieveResponses[keyof ProposalProtectedCallsReportsRoundsRetrieveResponses];
+
+export type ProposalProtectedCallsReportsWorkflowRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * Report on one round of the calls. Not found when it is not a round of a call reported on.
+         */
+        round_uuid?: string;
+        /**
+         * Count only proposals submitted on or after this day.
+         */
+        submitted_from?: string;
+        /**
+         * Count only proposals submitted on or before this day.
+         */
+        submitted_to?: string;
+    };
+    url: '/api/proposal-protected-calls/{uuid}/reports/workflow/';
+};
+
+export type ProposalProtectedCallsReportsWorkflowRetrieveResponses = {
+    200: WorkflowReport;
+};
+
+export type ProposalProtectedCallsReportsWorkflowRetrieveResponse = ProposalProtectedCallsReportsWorkflowRetrieveResponses[keyof ProposalProtectedCallsReportsWorkflowRetrieveResponses];
+
+export type ProposalProtectedCallsResourcePoolUsageListData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/proposal-protected-calls/{uuid}/resource_pool_usage/';
+};
+
+export type ProposalProtectedCallsResourcePoolUsageListResponses = {
+    200: Array<ResourcePoolUsage>;
+};
+
+export type ProposalProtectedCallsResourcePoolUsageListResponse = ProposalProtectedCallsResourcePoolUsageListResponses[keyof ProposalProtectedCallsResourcePoolUsageListResponses];
+
+export type ProposalProtectedCallsResourcePoolsListData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/proposal-protected-calls/{uuid}/resource_pools/';
+};
+
+export type ProposalProtectedCallsResourcePoolsListResponses = {
+    200: Array<CallResourcePool>;
+};
+
+export type ProposalProtectedCallsResourcePoolsListResponse = ProposalProtectedCallsResourcePoolsListResponses[keyof ProposalProtectedCallsResourcePoolsListResponses];
+
+export type ProposalProtectedCallsResourcePoolsSetData = {
+    body: CallResourcePoolRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-protected-calls/{uuid}/resource_pools/';
+};
+
+export type ProposalProtectedCallsResourcePoolsSetResponses = {
+    200: CallResourcePool;
+};
+
+export type ProposalProtectedCallsResourcePoolsSetResponse = ProposalProtectedCallsResourcePoolsSetResponses[keyof ProposalProtectedCallsResourcePoolsSetResponses];
+
+export type ProposalProtectedCallsResourcePoolsDestroyData = {
+    body?: never;
+    path: {
+        obj_uuid: string;
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-protected-calls/{uuid}/resource_pools/{obj_uuid}/';
+};
+
+export type ProposalProtectedCallsResourcePoolsDestroyResponses = {
+    200: CallResourcePool;
+};
+
+export type ProposalProtectedCallsResourcePoolsDestroyResponse = ProposalProtectedCallsResourcePoolsDestroyResponses[keyof ProposalProtectedCallsResourcePoolsDestroyResponses];
+
+export type ProposalProtectedCallsResourcePoolsRetrieveData = {
+    body?: never;
+    path: {
+        obj_uuid: string;
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-protected-calls/{uuid}/resource_pools/{obj_uuid}/';
+};
+
+export type ProposalProtectedCallsResourcePoolsRetrieveResponses = {
+    200: CallResourcePool;
+};
+
+export type ProposalProtectedCallsResourcePoolsRetrieveResponse = ProposalProtectedCallsResourcePoolsRetrieveResponses[keyof ProposalProtectedCallsResourcePoolsRetrieveResponses];
+
+export type ProposalProtectedCallsResourcePoolsPartialUpdateData = {
+    body?: PatchedCallResourcePoolRequest;
+    path: {
+        obj_uuid: string;
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-protected-calls/{uuid}/resource_pools/{obj_uuid}/';
+};
+
+export type ProposalProtectedCallsResourcePoolsPartialUpdateResponses = {
+    200: CallResourcePool;
+};
+
+export type ProposalProtectedCallsResourcePoolsPartialUpdateResponse = ProposalProtectedCallsResourcePoolsPartialUpdateResponses[keyof ProposalProtectedCallsResourcePoolsPartialUpdateResponses];
+
+export type ProposalProtectedCallsResourcePoolsUpdateData = {
+    body: CallResourcePoolRequest;
+    path: {
+        obj_uuid: string;
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-protected-calls/{uuid}/resource_pools/{obj_uuid}/';
+};
+
+export type ProposalProtectedCallsResourcePoolsUpdateResponses = {
+    200: CallResourcePool;
+};
+
+export type ProposalProtectedCallsResourcePoolsUpdateResponse = ProposalProtectedCallsResourcePoolsUpdateResponses[keyof ProposalProtectedCallsResourcePoolsUpdateResponses];
 
 export type ProposalProtectedCallsResourceTemplatesListData = {
     body?: never;
@@ -102555,6 +110299,38 @@ export type ProposalProtectedCallsRoundsUpdateResponses = {
 
 export type ProposalProtectedCallsRoundsUpdateResponse = ProposalProtectedCallsRoundsUpdateResponses[keyof ProposalProtectedCallsRoundsUpdateResponses];
 
+export type ProposalProtectedCallsRoundsAdvanceWorkflowStepData = {
+    body?: AdvanceRoundWorkflowStepRequest;
+    path: {
+        obj_uuid: string;
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-protected-calls/{uuid}/rounds/{obj_uuid}/advance_workflow_step/';
+};
+
+export type ProposalProtectedCallsRoundsAdvanceWorkflowStepResponses = {
+    200: AdvanceRoundWorkflowStepResponse;
+};
+
+export type ProposalProtectedCallsRoundsAdvanceWorkflowStepResponse = ProposalProtectedCallsRoundsAdvanceWorkflowStepResponses[keyof ProposalProtectedCallsRoundsAdvanceWorkflowStepResponses];
+
+export type ProposalProtectedCallsRoundsAllocateInSubmissionOrderData = {
+    body?: AllocateInSubmissionOrderRequest;
+    path: {
+        obj_uuid: string;
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-protected-calls/{uuid}/rounds/{obj_uuid}/allocate_in_submission_order/';
+};
+
+export type ProposalProtectedCallsRoundsAllocateInSubmissionOrderResponses = {
+    200: AllocateInSubmissionOrderResponse;
+};
+
+export type ProposalProtectedCallsRoundsAllocateInSubmissionOrderResponse = ProposalProtectedCallsRoundsAllocateInSubmissionOrderResponses[keyof ProposalProtectedCallsRoundsAllocateInSubmissionOrderResponses];
+
 export type ProposalProtectedCallsRoundsCloseData = {
     body: ProtectedCallRequest;
     path: {
@@ -102592,6 +110368,44 @@ export type ProposalProtectedCallsRoundsCompleteResponses = {
 };
 
 export type ProposalProtectedCallsRoundsCompleteResponse = ProposalProtectedCallsRoundsCompleteResponses[keyof ProposalProtectedCallsRoundsCompleteResponses];
+
+export type ProposalProtectedCallsRoundsCompleteWorkflowStepData = {
+    body: CompleteRoundWorkflowStepRequest;
+    path: {
+        obj_uuid: string;
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-protected-calls/{uuid}/rounds/{obj_uuid}/complete_workflow_step/';
+};
+
+export type ProposalProtectedCallsRoundsCompleteWorkflowStepResponses = {
+    200: CompleteRoundWorkflowStepResponse;
+};
+
+export type ProposalProtectedCallsRoundsCompleteWorkflowStepResponse = ProposalProtectedCallsRoundsCompleteWorkflowStepResponses[keyof ProposalProtectedCallsRoundsCompleteWorkflowStepResponses];
+
+export type ProposalProtectedCallsRoundsOpenWorkflowStepData = {
+    body?: OpenRoundWorkflowStepRequest;
+    path: {
+        obj_uuid: string;
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-protected-calls/{uuid}/rounds/{obj_uuid}/open_workflow_step/';
+};
+
+export type ProposalProtectedCallsRoundsOpenWorkflowStepErrors = {
+    400: LaggingProposalsRefusal;
+};
+
+export type ProposalProtectedCallsRoundsOpenWorkflowStepError = ProposalProtectedCallsRoundsOpenWorkflowStepErrors[keyof ProposalProtectedCallsRoundsOpenWorkflowStepErrors];
+
+export type ProposalProtectedCallsRoundsOpenWorkflowStepResponses = {
+    200: OpenRoundWorkflowStepResponse;
+};
+
+export type ProposalProtectedCallsRoundsOpenWorkflowStepResponse = ProposalProtectedCallsRoundsOpenWorkflowStepResponses[keyof ProposalProtectedCallsRoundsOpenWorkflowStepResponses];
 
 export type ProposalProtectedCallsRoundsPublishResultsData = {
     body?: PublishRoundResultsRequest;
@@ -102631,6 +110445,53 @@ export type ProposalProtectedCallsRoundsRecordAdoptionResponses = {
 
 export type ProposalProtectedCallsRoundsRecordAdoptionResponse = ProposalProtectedCallsRoundsRecordAdoptionResponses[keyof ProposalProtectedCallsRoundsRecordAdoptionResponses];
 
+export type ProposalProtectedCallsRoundsSetWorkflowStepDueDateData = {
+    body: RoundWorkflowStepDueDateRequest;
+    path: {
+        obj_uuid: string;
+        uuid: string;
+    };
+    query?: {
+        customer?: string;
+        customer_keyword?: string;
+        customer_uuid?: string;
+        has_active_round?: boolean;
+        name?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<ProtectedCallOEnum>;
+        offering_uuid?: string;
+        offerings_provider_uuid?: string;
+        /**
+         * Calls the offering can be requested through right now
+         */
+        open_for_offering_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Slug
+         */
+        slug?: string;
+        state?: Array<CallStates>;
+    };
+    url: '/api/proposal-protected-calls/{uuid}/rounds/{obj_uuid}/set_workflow_step_due_date/';
+};
+
+export type ProposalProtectedCallsRoundsSetWorkflowStepDueDateResponses = {
+    200: Array<RoundStep>;
+};
+
+export type ProposalProtectedCallsRoundsSetWorkflowStepDueDateResponse = ProposalProtectedCallsRoundsSetWorkflowStepDueDateResponses[keyof ProposalProtectedCallsRoundsSetWorkflowStepDueDateResponses];
+
 export type ProposalProtectedCallsRoundsStartDecidingData = {
     body?: never;
     path: {
@@ -102646,6 +110507,36 @@ export type ProposalProtectedCallsRoundsStartDecidingResponses = {
 };
 
 export type ProposalProtectedCallsRoundsStartDecidingResponse = ProposalProtectedCallsRoundsStartDecidingResponses[keyof ProposalProtectedCallsRoundsStartDecidingResponses];
+
+export type ProposalProtectedCallsRunWorkflowScenariosData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-protected-calls/{uuid}/run-workflow-scenarios/';
+};
+
+export type ProposalProtectedCallsRunWorkflowScenariosResponses = {
+    202: CallWorkflowScenarios;
+};
+
+export type ProposalProtectedCallsRunWorkflowScenariosResponse = ProposalProtectedCallsRunWorkflowScenariosResponses[keyof ProposalProtectedCallsRunWorkflowScenariosResponses];
+
+export type ProposalProtectedCallsSaveAsTemplateData = {
+    body?: CallSaveAsTemplateRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-protected-calls/{uuid}/save_as_template/';
+};
+
+export type ProposalProtectedCallsSaveAsTemplateResponses = {
+    201: CallTemplate;
+};
+
+export type ProposalProtectedCallsSaveAsTemplateResponse = ProposalProtectedCallsSaveAsTemplateResponses[keyof ProposalProtectedCallsSaveAsTemplateResponses];
 
 export type ProposalProtectedCallsSendAllAssignmentsData = {
     body?: SendAllAssignmentBatchesRequest;
@@ -102753,6 +110644,210 @@ export type ProposalProtectedCallsUpdateUserResponses = {
 
 export type ProposalProtectedCallsUpdateUserResponse = ProposalProtectedCallsUpdateUserResponses[keyof ProposalProtectedCallsUpdateUserResponses];
 
+export type ProposalProtectedCallsWorkflowCheckRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-protected-calls/{uuid}/workflow-check/';
+};
+
+export type ProposalProtectedCallsWorkflowCheckRetrieveResponses = {
+    200: WorkflowCheck;
+};
+
+export type ProposalProtectedCallsWorkflowCheckRetrieveResponse = ProposalProtectedCallsWorkflowCheckRetrieveResponses[keyof ProposalProtectedCallsWorkflowCheckRetrieveResponses];
+
+export type ProposalProtectedCallsWorkflowDescriptionRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-protected-calls/{uuid}/workflow-description/';
+};
+
+export type ProposalProtectedCallsWorkflowDescriptionRetrieveResponses = {
+    200: WorkflowDescription;
+};
+
+export type ProposalProtectedCallsWorkflowDescriptionRetrieveResponse = ProposalProtectedCallsWorkflowDescriptionRetrieveResponses[keyof ProposalProtectedCallsWorkflowDescriptionRetrieveResponses];
+
+export type ProposalProtectedCallsWorkflowDiffRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * Version to compare from: a version number, 'current', and on a call 'template' (the template version it was created from, the default) or 'template_latest' (its template as it is now).
+         */
+        from?: string;
+        /**
+         * Version to compare to; 'current' by default.
+         */
+        to?: string;
+    };
+    url: '/api/proposal-protected-calls/{uuid}/workflow-diff/';
+};
+
+export type ProposalProtectedCallsWorkflowDiffRetrieveResponses = {
+    200: WorkflowDiff;
+};
+
+export type ProposalProtectedCallsWorkflowDiffRetrieveResponse = ProposalProtectedCallsWorkflowDiffRetrieveResponses[keyof ProposalProtectedCallsWorkflowDiffRetrieveResponses];
+
+export type ProposalProtectedCallsWorkflowDryRunData = {
+    body?: WorkflowDryRunParametersRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-protected-calls/{uuid}/workflow-dry-run/';
+};
+
+export type ProposalProtectedCallsWorkflowDryRunResponses = {
+    200: WorkflowDryRun;
+};
+
+export type ProposalProtectedCallsWorkflowDryRunResponse = ProposalProtectedCallsWorkflowDryRunResponses[keyof ProposalProtectedCallsWorkflowDryRunResponses];
+
+export type ProposalProtectedCallsWorkflowPathsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * Only this round's proposals.
+         */
+        round?: string;
+    };
+    url: '/api/proposal-protected-calls/{uuid}/workflow-paths/';
+};
+
+export type ProposalProtectedCallsWorkflowPathsRetrieveResponses = {
+    200: WorkflowPaths;
+};
+
+export type ProposalProtectedCallsWorkflowPathsRetrieveResponse = ProposalProtectedCallsWorkflowPathsRetrieveResponses[keyof ProposalProtectedCallsWorkflowPathsRetrieveResponses];
+
+export type ProposalProtectedCallsWorkflowProgressRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * Count only this round's proposals.
+         */
+        round?: string;
+    };
+    url: '/api/proposal-protected-calls/{uuid}/workflow-progress/';
+};
+
+export type ProposalProtectedCallsWorkflowProgressRetrieveResponses = {
+    200: WorkflowProgress;
+};
+
+export type ProposalProtectedCallsWorkflowProgressRetrieveResponse = ProposalProtectedCallsWorkflowProgressRetrieveResponses[keyof ProposalProtectedCallsWorkflowProgressRetrieveResponses];
+
+export type ProposalProtectedCallsWorkflowReportRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-protected-calls/{uuid}/workflow-report/';
+};
+
+export type ProposalProtectedCallsWorkflowReportRetrieveResponses = {
+    200: Blob | File;
+};
+
+export type ProposalProtectedCallsWorkflowReportRetrieveResponse = ProposalProtectedCallsWorkflowReportRetrieveResponses[keyof ProposalProtectedCallsWorkflowReportRetrieveResponses];
+
+export type ProposalProtectedCallsWorkflowScenariosRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-protected-calls/{uuid}/workflow-scenarios/';
+};
+
+export type ProposalProtectedCallsWorkflowScenariosRetrieveResponses = {
+    200: CallWorkflowScenarios;
+};
+
+export type ProposalProtectedCallsWorkflowScenariosRetrieveResponse = ProposalProtectedCallsWorkflowScenariosRetrieveResponses[keyof ProposalProtectedCallsWorkflowScenariosRetrieveResponses];
+
+export type ProposalProtectedCallsWorkflowVersionsListData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        customer?: string;
+        customer_keyword?: string;
+        customer_uuid?: string;
+        has_active_round?: boolean;
+        name?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<ProtectedCallOEnum>;
+        offering_uuid?: string;
+        offerings_provider_uuid?: string;
+        /**
+         * Calls the offering can be requested through right now
+         */
+        open_for_offering_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Slug
+         */
+        slug?: string;
+        state?: Array<CallStates>;
+    };
+    url: '/api/proposal-protected-calls/{uuid}/workflow-versions/';
+};
+
+export type ProposalProtectedCallsWorkflowVersionsListResponses = {
+    200: Array<WorkflowVersion>;
+};
+
+export type ProposalProtectedCallsWorkflowVersionsListResponse = ProposalProtectedCallsWorkflowVersionsListResponses[keyof ProposalProtectedCallsWorkflowVersionsListResponses];
+
+export type ProposalProtectedCallsWorkflowVersionsRetrieveData = {
+    body?: never;
+    path: {
+        /**
+         * Number of the version.
+         */
+        number: number;
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-protected-calls/{uuid}/workflow-versions/{number}/';
+};
+
+export type ProposalProtectedCallsWorkflowVersionsRetrieveResponses = {
+    200: WorkflowVersionDetail;
+};
+
+export type ProposalProtectedCallsWorkflowVersionsRetrieveResponse = ProposalProtectedCallsWorkflowVersionsRetrieveResponses[keyof ProposalProtectedCallsWorkflowVersionsRetrieveResponses];
+
 export type ProposalProtectedCallsWorkflowStepsListData = {
     body?: never;
     path: {
@@ -102778,7 +110873,7 @@ export type ProposalProtectedCallsWorkflowStepsListResponses = {
 export type ProposalProtectedCallsWorkflowStepsListResponse = ProposalProtectedCallsWorkflowStepsListResponses[keyof ProposalProtectedCallsWorkflowStepsListResponses];
 
 export type ProposalProtectedCallsWorkflowStepsSetData = {
-    body: CallWorkflowStepRequest;
+    body?: CallWorkflowStepRequest;
     path: {
         uuid: string;
     };
@@ -102841,7 +110936,7 @@ export type ProposalProtectedCallsWorkflowStepsPartialUpdateResponses = {
 export type ProposalProtectedCallsWorkflowStepsPartialUpdateResponse = ProposalProtectedCallsWorkflowStepsPartialUpdateResponses[keyof ProposalProtectedCallsWorkflowStepsPartialUpdateResponses];
 
 export type ProposalProtectedCallsWorkflowStepsUpdateData = {
-    body: CallWorkflowStepRequest;
+    body?: CallWorkflowStepRequest;
     path: {
         obj_uuid: string;
         uuid: string;
@@ -102867,7 +110962,7 @@ export type ProposalProtectedCallsAvailableComplianceChecklistsListData = {
         customer?: string;
         customer_keyword?: string;
         /**
-         * Customer UUID to check permissions for. Required to verify user has CREATE_CALL permission on that customer's call managing organization.
+         * UUID of the customer running the call managing organization whose checklists to list. The caller must configure a call of that organization or be allowed to create one there.
          */
         customer_uuid: string;
         has_active_round?: boolean;
@@ -102918,7 +111013,7 @@ export type ProposalProtectedCallsAvailableComplianceChecklistsCountData = {
         customer?: string;
         customer_keyword?: string;
         /**
-         * Customer UUID to check permissions for. Required to verify user has CREATE_CALL permission on that customer's call managing organization.
+         * UUID of the customer running the call managing organization whose checklists to list. The caller must configure a call of that organization or be allowed to create one there.
          */
         customer_uuid: string;
         has_active_round?: boolean;
@@ -102991,6 +111086,9 @@ export type ProposalProtectedCallsStepChecklistsListData = {
     query?: {
         customer?: string;
         customer_keyword?: string;
+        /**
+         * Only the forms a call of this organization can use: the shared ones and the organization's own.
+         */
         customer_uuid?: string;
         has_active_round?: boolean;
         name?: string;
@@ -103035,6 +111133,9 @@ export type ProposalProtectedCallsStepChecklistsCountData = {
     query?: {
         customer?: string;
         customer_keyword?: string;
+        /**
+         * Only the forms a call of this organization can use: the shared ones and the organization's own.
+         */
         customer_uuid?: string;
         has_active_round?: boolean;
         name?: string;
@@ -103068,6 +111169,95 @@ export type ProposalProtectedCallsStepChecklistsCountData = {
 };
 
 export type ProposalProtectedCallsStepChecklistsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type ProposalProtectedCallsWorkflowStepKindsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        customer?: string;
+        customer_keyword?: string;
+        customer_uuid?: string;
+        has_active_round?: boolean;
+        name?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<ProtectedCallOEnum>;
+        offering_uuid?: string;
+        offerings_provider_uuid?: string;
+        /**
+         * Calls the offering can be requested through right now
+         */
+        open_for_offering_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Slug
+         */
+        slug?: string;
+        state?: Array<CallStates>;
+    };
+    url: '/api/proposal-protected-calls/workflow_step_kinds/';
+};
+
+export type ProposalProtectedCallsWorkflowStepKindsListResponses = {
+    200: Array<StepKind>;
+};
+
+export type ProposalProtectedCallsWorkflowStepKindsListResponse = ProposalProtectedCallsWorkflowStepKindsListResponses[keyof ProposalProtectedCallsWorkflowStepKindsListResponses];
+
+export type ProposalProtectedCallsWorkflowStepKindsCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        customer?: string;
+        customer_keyword?: string;
+        customer_uuid?: string;
+        has_active_round?: boolean;
+        name?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<ProtectedCallOEnum>;
+        offering_uuid?: string;
+        offerings_provider_uuid?: string;
+        /**
+         * Calls the offering can be requested through right now
+         */
+        open_for_offering_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Slug
+         */
+        slug?: string;
+        state?: Array<CallStates>;
+    };
+    url: '/api/proposal-protected-calls/workflow_step_kinds/';
+};
+
+export type ProposalProtectedCallsWorkflowStepKindsCountResponses = {
     /**
      * No response body
      */
@@ -103108,7 +111298,7 @@ export type ProposalPublicCallsListData = {
          * Slug
          */
         slug?: string;
-        state?: Array<CallStates>;
+        state?: Array<PublicCallStateEnum>;
     };
     url: '/api/proposal-public-calls/';
 };
@@ -103152,7 +111342,7 @@ export type ProposalPublicCallsCountData = {
          * Slug
          */
         slug?: string;
-        state?: Array<CallStates>;
+        state?: Array<PublicCallStateEnum>;
     };
     url: '/api/proposal-public-calls/';
 };
@@ -103196,6 +111386,175 @@ export type ProposalPublicCallsCheckEligibilityRetrieveResponses = {
 
 export type ProposalPublicCallsCheckEligibilityRetrieveResponse = ProposalPublicCallsCheckEligibilityRetrieveResponses[keyof ProposalPublicCallsCheckEligibilityRetrieveResponses];
 
+export type ProposalRankingsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        call_uuid?: string;
+        /**
+         * A round report's ranking; without it the list is the round's overall ranking.
+         */
+        meeting_note_uuid?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<ProposalRankingOEnum>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        panel_uuid?: string;
+        proposal_uuid?: string;
+        round_uuid?: string;
+    };
+    url: '/api/proposal-rankings/';
+};
+
+export type ProposalRankingsListResponses = {
+    200: Array<ProposalRanking>;
+};
+
+export type ProposalRankingsListResponse = ProposalRankingsListResponses[keyof ProposalRankingsListResponses];
+
+export type ProposalRankingsCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        call_uuid?: string;
+        /**
+         * A round report's ranking; without it the list is the round's overall ranking.
+         */
+        meeting_note_uuid?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<ProposalRankingOEnum>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        panel_uuid?: string;
+        proposal_uuid?: string;
+        round_uuid?: string;
+    };
+    url: '/api/proposal-rankings/';
+};
+
+export type ProposalRankingsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type ProposalRankingsCreateData = {
+    body: ProposalRankingRequest;
+    path?: never;
+    query?: never;
+    url: '/api/proposal-rankings/';
+};
+
+export type ProposalRankingsCreateResponses = {
+    201: ProposalRanking;
+};
+
+export type ProposalRankingsCreateResponse = ProposalRankingsCreateResponses[keyof ProposalRankingsCreateResponses];
+
+export type ProposalRankingsDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-rankings/{uuid}/';
+};
+
+export type ProposalRankingsDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type ProposalRankingsDestroyResponse = ProposalRankingsDestroyResponses[keyof ProposalRankingsDestroyResponses];
+
+export type ProposalRankingsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-rankings/{uuid}/';
+};
+
+export type ProposalRankingsRetrieveResponses = {
+    200: ProposalRanking;
+};
+
+export type ProposalRankingsRetrieveResponse = ProposalRankingsRetrieveResponses[keyof ProposalRankingsRetrieveResponses];
+
+export type ProposalRankingsPartialUpdateData = {
+    body?: PatchedProposalRankingRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-rankings/{uuid}/';
+};
+
+export type ProposalRankingsPartialUpdateResponses = {
+    200: ProposalRanking;
+};
+
+export type ProposalRankingsPartialUpdateResponse = ProposalRankingsPartialUpdateResponses[keyof ProposalRankingsPartialUpdateResponses];
+
+export type ProposalRankingsExportCsvRetrieveData = {
+    body?: never;
+    path?: never;
+    query: {
+        /**
+         * UUID of a round report: its ranking instead of the round's overall one.
+         */
+        meeting_note_uuid?: string;
+        /**
+         * UUID of the round.
+         */
+        round_uuid: string;
+    };
+    url: '/api/proposal-rankings/export_csv/';
+};
+
+export type ProposalRankingsExportCsvRetrieveResponses = {
+    200: string;
+};
+
+export type ProposalRankingsExportCsvRetrieveResponse = ProposalRankingsExportCsvRetrieveResponses[keyof ProposalRankingsExportCsvRetrieveResponses];
+
+export type ProposalRankingsImportCsvData = {
+    body: RankingImportRequest;
+    path?: never;
+    query?: never;
+    url: '/api/proposal-rankings/import_csv/';
+};
+
+export type ProposalRankingsImportCsvResponses = {
+    200: RankingImportResponse;
+};
+
+export type ProposalRankingsImportCsvResponse = ProposalRankingsImportCsvResponses[keyof ProposalRankingsImportCsvResponses];
+
 export type ProposalRequestedOfferingsListData = {
     body?: never;
     path?: never;
@@ -103204,6 +111563,12 @@ export type ProposalRequestedOfferingsListData = {
          * Call
          */
         call?: string;
+        /**
+         * Call state
+         *
+         *
+         */
+        call_state?: Array<CallStates>;
         call_uuid?: string;
         /**
          * Ordering
@@ -103248,6 +111613,12 @@ export type ProposalRequestedOfferingsCountData = {
          * Call
          */
         call?: string;
+        /**
+         * Call state
+         *
+         *
+         */
+        call_state?: Array<CallStates>;
         call_uuid?: string;
         /**
          * Ordering
@@ -103317,7 +111688,7 @@ export type ProposalRequestedOfferingsAcceptResponses = {
 };
 
 export type ProposalRequestedOfferingsCancelData = {
-    body?: never;
+    body: RejectRequestedOfferingRequest;
     path: {
         uuid: string;
     };
@@ -103332,11 +111703,210 @@ export type ProposalRequestedOfferingsCancelResponses = {
     200: unknown;
 };
 
+export type ProposalRequestedOfferingsDelegateSlotsData = {
+    body: DelegateTeamSlotsRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-requested-offerings/{uuid}/delegate_slots/';
+};
+
+export type ProposalRequestedOfferingsDelegateSlotsResponses = {
+    200: DelegateTeamSlotsResult;
+};
+
+export type ProposalRequestedOfferingsDelegateSlotsResponse = ProposalRequestedOfferingsDelegateSlotsResponses[keyof ProposalRequestedOfferingsDelegateSlotsResponses];
+
+export type ProposalRequestedOfferingsSetDefaultDelegateData = {
+    body: SetDefaultDelegateRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-requested-offerings/{uuid}/set_default_delegate/';
+};
+
+export type ProposalRequestedOfferingsSetDefaultDelegateResponses = {
+    200: SetDefaultDelegate;
+};
+
+export type ProposalRequestedOfferingsSetDefaultDelegateResponse = ProposalRequestedOfferingsSetDefaultDelegateResponses[keyof ProposalRequestedOfferingsSetDefaultDelegateResponses];
+
+export type ProposalRequestedOfferingsTeamRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-requested-offerings/{uuid}/team/';
+};
+
+export type ProposalRequestedOfferingsTeamRetrieveResponses = {
+    200: OfferingTeam;
+};
+
+export type ProposalRequestedOfferingsTeamRetrieveResponse = ProposalRequestedOfferingsTeamRetrieveResponses[keyof ProposalRequestedOfferingsTeamRetrieveResponses];
+
+export type ProposalRequestedOfferingsTeamStepSlotsListData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/proposal-requested-offerings/{uuid}/team_step_slots/';
+};
+
+export type ProposalRequestedOfferingsTeamStepSlotsListResponses = {
+    200: Array<OfferingTeamSlot>;
+};
+
+export type ProposalRequestedOfferingsTeamStepSlotsListResponse = ProposalRequestedOfferingsTeamStepSlotsListResponses[keyof ProposalRequestedOfferingsTeamStepSlotsListResponses];
+
+export type ProposalRequestedOfferingsTeamStepsListData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/proposal-requested-offerings/{uuid}/team_steps/';
+};
+
+export type ProposalRequestedOfferingsTeamStepsListResponses = {
+    200: Array<OfferingTeamStep>;
+};
+
+export type ProposalRequestedOfferingsTeamStepsListResponse = ProposalRequestedOfferingsTeamStepsListResponses[keyof ProposalRequestedOfferingsTeamStepsListResponses];
+
+export type ProposalRequestedOfferingsTeamSlotsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Call
+         */
+        call?: string;
+        /**
+         * Call state
+         *
+         *
+         */
+        call_state?: Array<CallStates>;
+        call_uuid?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<ProviderRequestedOfferingOEnum>;
+        /**
+         * Offering
+         */
+        offering?: string;
+        offering_uuid?: string;
+        organization_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Provider
+         */
+        provider_uuid?: string;
+        state?: Array<RequestedOfferingStates>;
+    };
+    url: '/api/proposal-requested-offerings/team_slots/';
+};
+
+export type ProposalRequestedOfferingsTeamSlotsListResponses = {
+    200: Array<OfferingTeamSlot>;
+};
+
+export type ProposalRequestedOfferingsTeamSlotsListResponse = ProposalRequestedOfferingsTeamSlotsListResponses[keyof ProposalRequestedOfferingsTeamSlotsListResponses];
+
+export type ProposalRequestedOfferingsTeamSlotsCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Call
+         */
+        call?: string;
+        /**
+         * Call state
+         *
+         *
+         */
+        call_state?: Array<CallStates>;
+        call_uuid?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<ProviderRequestedOfferingOEnum>;
+        /**
+         * Offering
+         */
+        offering?: string;
+        offering_uuid?: string;
+        organization_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Provider
+         */
+        provider_uuid?: string;
+        state?: Array<RequestedOfferingStates>;
+    };
+    url: '/api/proposal-requested-offerings/team_slots/';
+};
+
+export type ProposalRequestedOfferingsTeamSlotsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type ProposalRequestedResourcesListData = {
     body?: never;
     path?: never;
     query?: {
+        call_uuid?: string;
         created?: string;
+        /**
+         * Only requests of proposals the current user takes part in, leaving out those read only through staff or support access
+         */
+        involved?: boolean;
         /**
          * Ordering
          *
@@ -103367,6 +111937,10 @@ export type ProposalRequestedResourcesListData = {
          */
         proposal_state?: Array<ProposalStates>;
         proposal_uuid?: string;
+        /**
+         * Provider
+         */
+        provider_uuid?: string;
         /**
          * Search by offering, proposal, call or resource name
          */
@@ -103390,7 +111964,12 @@ export type ProposalRequestedResourcesCountData = {
     body?: never;
     path?: never;
     query?: {
+        call_uuid?: string;
         created?: string;
+        /**
+         * Only requests of proposals the current user takes part in, leaving out those read only through staff or support access
+         */
+        involved?: boolean;
         /**
          * Ordering
          *
@@ -103421,6 +112000,10 @@ export type ProposalRequestedResourcesCountData = {
          */
         proposal_state?: Array<ProposalStates>;
         proposal_uuid?: string;
+        /**
+         * Provider
+         */
+        provider_uuid?: string;
         /**
          * Search by offering, proposal, call or resource name
          */
@@ -103665,6 +112248,89 @@ export type ProposalReviewsDashboardStatsRetrieveResponses = {
 };
 
 export type ProposalReviewsDashboardStatsRetrieveResponse = ProposalReviewsDashboardStatsRetrieveResponses[keyof ProposalReviewsDashboardStatsRetrieveResponses];
+
+export type ProposalRoleAssignmentsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        call_uuid?: string;
+        is_active?: boolean;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        proposal_uuid?: string;
+        user_uuid?: string;
+    };
+    url: '/api/proposal-role-assignments/';
+};
+
+export type ProposalRoleAssignmentsListResponses = {
+    200: Array<ProposalRoleAssignment>;
+};
+
+export type ProposalRoleAssignmentsListResponse = ProposalRoleAssignmentsListResponses[keyof ProposalRoleAssignmentsListResponses];
+
+export type ProposalRoleAssignmentsCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        call_uuid?: string;
+        is_active?: boolean;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        proposal_uuid?: string;
+        user_uuid?: string;
+    };
+    url: '/api/proposal-role-assignments/';
+};
+
+export type ProposalRoleAssignmentsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type ProposalRoleAssignmentsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-role-assignments/{uuid}/';
+};
+
+export type ProposalRoleAssignmentsRetrieveResponses = {
+    200: ProposalRoleAssignment;
+};
+
+export type ProposalRoleAssignmentsRetrieveResponse = ProposalRoleAssignmentsRetrieveResponses[keyof ProposalRoleAssignmentsRetrieveResponses];
+
+export type ProposalRoleAssignmentsConfirmNoConflictData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-role-assignments/{uuid}/confirm_no_conflict/';
+};
+
+export type ProposalRoleAssignmentsConfirmNoConflictResponses = {
+    200: ProposalRoleAssignment;
+};
+
+export type ProposalRoleAssignmentsConfirmNoConflictResponse = ProposalRoleAssignmentsConfirmNoConflictResponses[keyof ProposalRoleAssignmentsConfirmNoConflictResponses];
 
 export type ProviderCannedResponsesListData = {
     body?: never;
@@ -108323,6 +116989,12 @@ export type ReviewerInvitationsDeclineData = {
     url: '/api/reviewer-invitations/{token}/decline/';
 };
 
+export type ReviewerInvitationsDeclineErrors = {
+    401: InvitationAuthError;
+};
+
+export type ReviewerInvitationsDeclineError = ReviewerInvitationsDeclineErrors[keyof ReviewerInvitationsDeclineErrors];
+
 export type ReviewerInvitationsDeclineResponses = {
     200: InvitationDeclineResponse;
 };
@@ -109074,7 +117746,9 @@ export type ReviewerProfilesPublishData = {
 export type ReviewerProfilesPublishResponses = {
     200: {
         is_published?: boolean;
-        published_at?: string;
+        published_at?: string | null;
+        publication_pending?: boolean;
+        detail?: string;
         warning?: string;
     };
 };
@@ -109096,6 +117770,139 @@ export type ReviewerProfilesUnpublishResponses = {
 };
 
 export type ReviewerProfilesUnpublishResponse = ReviewerProfilesUnpublishResponses[keyof ReviewerProfilesUnpublishResponses];
+
+export type ReviewerRegistryListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<ReviewerRegistryOEnum>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        publication_pending?: boolean;
+        query?: string;
+        /**
+         * Only an active reviewer is selected for, invited to or offered new review work.
+         *
+         *
+         */
+        standing?: Array<ReviewerStandingEnum>;
+    };
+    url: '/api/reviewer-registry/';
+};
+
+export type ReviewerRegistryListResponses = {
+    200: Array<ReviewerRegistry>;
+};
+
+export type ReviewerRegistryListResponse = ReviewerRegistryListResponses[keyof ReviewerRegistryListResponses];
+
+export type ReviewerRegistryCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<ReviewerRegistryOEnum>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        publication_pending?: boolean;
+        query?: string;
+        /**
+         * Only an active reviewer is selected for, invited to or offered new review work.
+         *
+         *
+         */
+        standing?: Array<ReviewerStandingEnum>;
+    };
+    url: '/api/reviewer-registry/';
+};
+
+export type ReviewerRegistryCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type ReviewerRegistryRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/reviewer-registry/{uuid}/';
+};
+
+export type ReviewerRegistryRetrieveResponses = {
+    200: ReviewerRegistry;
+};
+
+export type ReviewerRegistryRetrieveResponse = ReviewerRegistryRetrieveResponses[keyof ReviewerRegistryRetrieveResponses];
+
+export type ReviewerRegistryApprovePublicationData = {
+    body?: ReviewCommentRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/reviewer-registry/{uuid}/approve-publication/';
+};
+
+export type ReviewerRegistryApprovePublicationResponses = {
+    200: ReviewerRegistry;
+};
+
+export type ReviewerRegistryApprovePublicationResponse = ReviewerRegistryApprovePublicationResponses[keyof ReviewerRegistryApprovePublicationResponses];
+
+export type ReviewerRegistryRejectPublicationData = {
+    body?: ReviewCommentRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/reviewer-registry/{uuid}/reject-publication/';
+};
+
+export type ReviewerRegistryRejectPublicationResponses = {
+    200: ReviewerRegistry;
+};
+
+export type ReviewerRegistryRejectPublicationResponse = ReviewerRegistryRejectPublicationResponses[keyof ReviewerRegistryRejectPublicationResponses];
+
+export type ReviewerRegistrySetStandingData = {
+    body: ReviewerStandingRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/reviewer-registry/{uuid}/set-standing/';
+};
+
+export type ReviewerRegistrySetStandingResponses = {
+    200: ReviewerRegistry;
+};
+
+export type ReviewerRegistrySetStandingResponse = ReviewerRegistrySetStandingResponses[keyof ReviewerRegistrySetStandingResponses];
 
 export type ReviewerSuggestionsListData = {
     body?: never;
@@ -109599,6 +118406,222 @@ export type RolesHygieneReportCountResponses = {
      */
     200: unknown;
 };
+
+export type RoundMeetingNotesListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        call_step_uuid?: string;
+        call_uuid?: string;
+        is_report?: boolean;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        round_uuid?: string;
+    };
+    url: '/api/round-meeting-notes/';
+};
+
+export type RoundMeetingNotesListResponses = {
+    200: Array<RoundMeetingNote>;
+};
+
+export type RoundMeetingNotesListResponse = RoundMeetingNotesListResponses[keyof RoundMeetingNotesListResponses];
+
+export type RoundMeetingNotesCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        call_step_uuid?: string;
+        call_uuid?: string;
+        is_report?: boolean;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        round_uuid?: string;
+    };
+    url: '/api/round-meeting-notes/';
+};
+
+export type RoundMeetingNotesCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type RoundMeetingNotesCreateData = {
+    body: RoundMeetingNoteRequest;
+    path?: never;
+    query?: never;
+    url: '/api/round-meeting-notes/';
+};
+
+export type RoundMeetingNotesCreateResponses = {
+    201: RoundMeetingNote;
+};
+
+export type RoundMeetingNotesCreateResponse = RoundMeetingNotesCreateResponses[keyof RoundMeetingNotesCreateResponses];
+
+export type RoundMeetingNotesDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/round-meeting-notes/{uuid}/';
+};
+
+export type RoundMeetingNotesDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type RoundMeetingNotesDestroyResponse = RoundMeetingNotesDestroyResponses[keyof RoundMeetingNotesDestroyResponses];
+
+export type RoundMeetingNotesRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/round-meeting-notes/{uuid}/';
+};
+
+export type RoundMeetingNotesRetrieveResponses = {
+    200: RoundMeetingNote;
+};
+
+export type RoundMeetingNotesRetrieveResponse = RoundMeetingNotesRetrieveResponses[keyof RoundMeetingNotesRetrieveResponses];
+
+export type RoundMeetingNotesPartialUpdateData = {
+    body?: PatchedRoundMeetingNoteRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/round-meeting-notes/{uuid}/';
+};
+
+export type RoundMeetingNotesPartialUpdateResponses = {
+    200: RoundMeetingNote;
+};
+
+export type RoundMeetingNotesPartialUpdateResponse = RoundMeetingNotesPartialUpdateResponses[keyof RoundMeetingNotesPartialUpdateResponses];
+
+export type RoundMeetingNotesChecklistRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * If true, returns all questions including hidden ones (for dynamic form visibility). Default: false.
+         */
+        include_all?: boolean;
+    };
+    url: '/api/round-meeting-notes/{uuid}/checklist/';
+};
+
+export type RoundMeetingNotesChecklistRetrieveErrors = {
+    /**
+     * No checklist configured
+     */
+    400: unknown;
+    /**
+     * Object not found
+     */
+    404: unknown;
+};
+
+export type RoundMeetingNotesChecklistRetrieveResponses = {
+    200: ChecklistResponse;
+};
+
+export type RoundMeetingNotesChecklistRetrieveResponse = RoundMeetingNotesChecklistRetrieveResponses[keyof RoundMeetingNotesChecklistRetrieveResponses];
+
+export type RoundMeetingNotesCompletionStatusRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/round-meeting-notes/{uuid}/completion_status/';
+};
+
+export type RoundMeetingNotesCompletionStatusRetrieveErrors = {
+    /**
+     * No checklist configured
+     */
+    400: unknown;
+    /**
+     * Object not found
+     */
+    404: unknown;
+};
+
+export type RoundMeetingNotesCompletionStatusRetrieveResponses = {
+    200: ChecklistCompletion;
+};
+
+export type RoundMeetingNotesCompletionStatusRetrieveResponse = RoundMeetingNotesCompletionStatusRetrieveResponses[keyof RoundMeetingNotesCompletionStatusRetrieveResponses];
+
+export type RoundMeetingNotesReopenData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/round-meeting-notes/{uuid}/reopen/';
+};
+
+export type RoundMeetingNotesReopenResponses = {
+    200: RoundMeetingNote;
+};
+
+export type RoundMeetingNotesReopenResponse = RoundMeetingNotesReopenResponses[keyof RoundMeetingNotesReopenResponses];
+
+export type RoundMeetingNotesSubmitData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/round-meeting-notes/{uuid}/submit/';
+};
+
+export type RoundMeetingNotesSubmitResponses = {
+    200: SubmitRoundReportResponse;
+};
+
+export type RoundMeetingNotesSubmitResponse = RoundMeetingNotesSubmitResponses[keyof RoundMeetingNotesSubmitResponses];
+
+export type RoundMeetingNotesSubmitAnswersData = {
+    body: Array<AnswerSubmitRequest>;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/round-meeting-notes/{uuid}/submit_answers/';
+};
+
+export type RoundMeetingNotesSubmitAnswersResponses = {
+    200: AnswerSubmitResponse;
+};
+
+export type RoundMeetingNotesSubmitAnswersResponse = RoundMeetingNotesSubmitAnswersResponses[keyof RoundMeetingNotesSubmitAnswersResponses];
 
 export type ScienceDomainsListData = {
     body?: never;
