@@ -34053,6 +34053,27 @@ export type SetTokenQuotaRequest = {
     monthly_limit?: number | null;
 };
 
+export type SettingSource = {
+    readonly key: string;
+    source: SettingSourceSourceEnum;
+    /**
+     * File, command or other origin within the source.
+     */
+    readonly source_detail: string;
+    /**
+     * Managed by the deployment: cannot be changed through the API or the Django admin.
+     */
+    readonly locked: boolean;
+    /**
+     * File or command that re-applies the setting on every deploy, so a change made elsewhere does not last. Empty when no deploy does, such as for a value the deployment only seeded.
+     */
+    readonly managed_by: string;
+    readonly updated_at: string;
+    updated_by_username?: string | null;
+};
+
+export type SettingSourceSourceEnum = 'api' | 'admin' | 'deployment' | 'cli' | 'application' | 'migration';
+
 export type SettingsItem = {
     key: string;
     description: string;
@@ -97398,6 +97419,19 @@ export type OverrideSettingsResponses = {
     200: unknown;
 };
 
+export type OverrideSettingsSourcesListData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/override-settings/sources/';
+};
+
+export type OverrideSettingsSourcesListResponses = {
+    200: Array<SettingSource>;
+};
+
+export type OverrideSettingsSourcesListResponse = OverrideSettingsSourcesListResponses[keyof OverrideSettingsSourcesListResponses];
+
 export type PasskeysListData = {
     body?: never;
     path?: never;
@@ -108016,7 +108050,7 @@ export type RemoteWaldurApiSyncResourceProjectPermissionsResponses = {
     /**
      * No response body
      */
-    200: unknown;
+    202: unknown;
 };
 
 export type ReviewerBidsListData = {
