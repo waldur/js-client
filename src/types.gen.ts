@@ -6289,6 +6289,7 @@ export type ConstanceSettings = {
     TELEMETRY_VERSION?: number;
     TELEMETRY_DEPLOYMENT_ID?: string;
     CHECK_FOR_UPDATES?: boolean;
+    VERSION_UPDATE_NOTIFICATION_EMAILS?: string;
     SCRIPT_RUN_MODE?: ScriptrunmodeEnum;
     DOCKER_CLIENT?: string;
     DOCKER_RUN_OPTIONS?: string;
@@ -6653,6 +6654,7 @@ export type ConstanceSettingsRequest = {
     TELEMETRY_VERSION?: number;
     TELEMETRY_DEPLOYMENT_ID?: string;
     CHECK_FOR_UPDATES?: boolean;
+    VERSION_UPDATE_NOTIFICATION_EMAILS?: string;
     SCRIPT_RUN_MODE?: ScriptrunmodeEnum;
     DOCKER_CLIENT?: string;
     DOCKER_RUN_OPTIONS?: string;
@@ -7878,11 +7880,6 @@ export type CustomerCredit = {
 
 export type CustomerCreditConsumption = {
     readonly date: string;
-    readonly price: string;
-};
-
-export type CustomerCreditConsumptionByMonth = {
-    readonly month: string;
     readonly price: string;
 };
 
@@ -21627,6 +21624,10 @@ export type OpenStackVolumeType = {
     name: string;
     description?: string;
     settings: string;
+    /**
+     * Whether every project of the cloud may use the volume type. Cinder gives a private type only to the projects it is assigned to.
+     */
+    is_public?: boolean;
 };
 
 export type OptionField = {
@@ -33358,11 +33359,17 @@ export type Saml2LoginRequest = {
 export type Saml2LogoutComplete = {
     SAMLResponse?: string;
     SAMLRequest?: string;
+    RelayState?: string;
+    SigAlg?: string;
+    Signature?: string;
 };
 
 export type Saml2LogoutCompleteRequest = {
     SAMLResponse?: string;
     SAMLRequest?: string;
+    RelayState?: string;
+    SigAlg?: string;
+    Signature?: string;
 };
 
 export type Saml2Provider = {
@@ -38909,6 +38916,7 @@ export type ConstanceSettingsRequestForm = {
     TELEMETRY_VERSION?: number;
     TELEMETRY_DEPLOYMENT_ID?: string;
     CHECK_FOR_UPDATES?: boolean;
+    VERSION_UPDATE_NOTIFICATION_EMAILS?: string;
     SCRIPT_RUN_MODE?: ScriptrunmodeEnum;
     DOCKER_CLIENT?: string;
     DOCKER_RUN_OPTIONS?: string;
@@ -39273,6 +39281,7 @@ export type ConstanceSettingsRequestMultipart = {
     TELEMETRY_VERSION?: number;
     TELEMETRY_DEPLOYMENT_ID?: string;
     CHECK_FOR_UPDATES?: boolean;
+    VERSION_UPDATE_NOTIFICATION_EMAILS?: string;
     SCRIPT_RUN_MODE?: ScriptrunmodeEnum;
     DOCKER_CLIENT?: string;
     DOCKER_RUN_OPTIONS?: string;
@@ -54872,45 +54881,6 @@ export type InvoiceItemsUpdateResponses = {
 };
 
 export type InvoiceItemsUpdateResponse = InvoiceItemsUpdateResponses[keyof InvoiceItemsUpdateResponses];
-
-export type InvoiceItemsConsumptionsListData = {
-    body?: never;
-    path: {
-        uuid: string;
-    };
-    query?: {
-        credit_uuid?: string;
-        customer_uuid?: string;
-        month?: number;
-        offering_uuid?: string;
-        /**
-         * A page number within the paginated result set.
-         */
-        page?: number;
-        /**
-         * Number of results to return per page.
-         */
-        page_size?: number;
-        project_uuid?: string;
-        resource_uuid?: string;
-        /**
-         * Start month
-         */
-        start_month?: number;
-        /**
-         * Start year
-         */
-        start_year?: number;
-        year?: number;
-    };
-    url: '/api/invoice-items/{uuid}/consumptions/';
-};
-
-export type InvoiceItemsConsumptionsListResponses = {
-    200: Array<CustomerCreditConsumptionByMonth>;
-};
-
-export type InvoiceItemsConsumptionsListResponse = InvoiceItemsConsumptionsListResponses[keyof InvoiceItemsConsumptionsListResponses];
 
 export type InvoiceItemsCreateCompensationData = {
     body: InvoiceItemCompensationRequest;
