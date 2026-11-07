@@ -4161,12 +4161,20 @@ export type CallManagingOrganisation = {
     readonly customer_native_name: string;
     readonly customer_country: string;
     image?: string | null;
+    /**
+     * How many proposals an applicant may have under evaluation or running as a project, across all of this organization's calls, before they may submit another. Empty sets no limit.
+     */
+    max_active_proposals_per_applicant?: number | null;
 };
 
 export type CallManagingOrganisationRequest = {
     description?: string;
     customer: string;
     image?: Blob | File | null;
+    /**
+     * How many proposals an applicant may have under evaluation or running as a project, across all of this organization's calls, before they may submit another. Empty sets no limit.
+     */
+    max_active_proposals_per_applicant?: number | null;
 };
 
 export type CallManagingOrganisationStat = {
@@ -24333,6 +24341,10 @@ export type PatchedCallCoiConfigurationRequest = {
 export type PatchedCallManagingOrganisationRequest = {
     description?: string;
     image?: Blob | File | null;
+    /**
+     * How many proposals an applicant may have under evaluation or running as a project, across all of this organization's calls, before they may submit another. Empty sets no limit.
+     */
+    max_active_proposals_per_applicant?: number | null;
 };
 
 export type PatchedCallNotificationOverrideRequest = {
@@ -26037,6 +26049,10 @@ export type PatchedProtectedCallRequest = {
     slug?: string;
     name?: string;
     description?: string;
+    /**
+     * Logo shown on the call's card in place of its initials. A PNG, JPEG or GIF of at most 2 MB; null or an empty value removes it.
+     */
+    image?: Blob | File | null;
     fixed_duration_in_days?: number | null;
     /**
      * Durations, in months, the applicant chooses the project's length from. Empty offers no choice. Cannot be combined with fixed_duration_in_days. Proposals already submitted keep the length they asked for.
@@ -26529,7 +26545,6 @@ export type PatchedReviewerAffiliationRequest = {
 };
 
 export type PatchedReviewerBidRequest = {
-    proposal?: string;
     /**
      * Reviewer's preference for reviewing this proposal
      */
@@ -29976,6 +29991,10 @@ export type ProtectedCall = {
     slug?: string;
     name: string;
     description?: string;
+    /**
+     * Logo shown on the call's card in place of its initials. A PNG, JPEG or GIF of at most 2 MB; null or an empty value removes it.
+     */
+    image?: string | null;
     state: CallStates;
     manager: string;
     readonly manager_uuid: string;
@@ -30136,6 +30155,10 @@ export type ProtectedCallRequest = {
     slug?: string;
     name: string;
     description?: string;
+    /**
+     * Logo shown on the call's card in place of its initials. A PNG, JPEG or GIF of at most 2 MB; null or an empty value removes it.
+     */
+    image?: Blob | File | null;
     manager: string;
     fixed_duration_in_days?: number | null;
     /**
@@ -31236,6 +31259,7 @@ export type PublicCall = {
     slug?: string;
     name: string;
     description?: string;
+    readonly image: string | null;
     state: CallStates;
     manager: string;
     readonly manager_uuid: string;
@@ -35077,7 +35101,7 @@ export type ReviewerBid = {
     readonly reviewer: string;
     readonly reviewer_uuid: string;
     readonly reviewer_name: string;
-    proposal: string;
+    readonly proposal: string;
     readonly proposal_uuid: string;
     readonly proposal_name: string;
     /**
@@ -35094,7 +35118,6 @@ export type ReviewerBid = {
 };
 
 export type ReviewerBidRequest = {
-    proposal: string;
     /**
      * Reviewer's preference for reviewing this proposal
      */
@@ -42611,22 +42634,38 @@ export type CallManagingOrganisationRequestForm = {
     description?: string;
     customer: string;
     image?: Blob | File | null;
+    /**
+     * How many proposals an applicant may have under evaluation or running as a project, across all of this organization's calls, before they may submit another. Empty sets no limit.
+     */
+    max_active_proposals_per_applicant?: number | null;
 };
 
 export type CallManagingOrganisationRequestMultipart = {
     description?: string;
     customer: string;
     image?: Blob | File | null;
+    /**
+     * How many proposals an applicant may have under evaluation or running as a project, across all of this organization's calls, before they may submit another. Empty sets no limit.
+     */
+    max_active_proposals_per_applicant?: number | null;
 };
 
 export type PatchedCallManagingOrganisationRequestForm = {
     description?: string;
     image?: Blob | File | null;
+    /**
+     * How many proposals an applicant may have under evaluation or running as a project, across all of this organization's calls, before they may submit another. Empty sets no limit.
+     */
+    max_active_proposals_per_applicant?: number | null;
 };
 
 export type PatchedCallManagingOrganisationRequestMultipart = {
     description?: string;
     image?: Blob | File | null;
+    /**
+     * How many proposals an applicant may have under evaluation or running as a project, across all of this organization's calls, before they may submit another. Empty sets no limit.
+     */
+    max_active_proposals_per_applicant?: number | null;
 };
 
 export type CustomerRequestForm = {
@@ -44563,6 +44602,480 @@ export type RequestedResourcePurchaseOrderRequestMultipart = {
     purchase_order_reference?: string;
 };
 
+export type ProtectedCallRequestForm = {
+    /**
+     * URL-friendly identifier. Only editable by staff users.
+     */
+    slug?: string;
+    name: string;
+    description?: string;
+    /**
+     * Logo shown on the call's card in place of its initials. A PNG, JPEG or GIF of at most 2 MB; null or an empty value removes it.
+     */
+    image?: Blob | File | null;
+    manager: string;
+    fixed_duration_in_days?: number | null;
+    /**
+     * Durations, in months, the applicant chooses the project's length from. Empty offers no choice. Cannot be combined with fixed_duration_in_days. Proposals already submitted keep the length they asked for.
+     */
+    allowed_duration_months?: Array<number>;
+    backend_id?: string;
+    external_url?: string | null;
+    /**
+     * Whether proposal applicants can see reviewer identities
+     */
+    reviewer_identity_visible_to_submitters?: boolean;
+    /**
+     * Whether proposal applicants can see review comments and scores. Applicants still see what an applicant step lists as its input steps, such as the reviews they respond to.
+     */
+    reviews_visible_to_submitters?: boolean;
+    proposal_field_config?: CallProposalFieldConfigRequest;
+    /**
+     * When a submitted proposal's evaluation starts: on submission, or for all proposals of a round together at its cut-off. Cannot be changed while the call has proposals submitted or in review.
+     */
+    evaluation_start?: EvaluationStartEnum;
+    /**
+     * When applicants learn the allocation decision: immediately, or for every proposal of a round together when a call manager publishes the round's results. Cannot be changed while decisions are held.
+     */
+    publish_results?: PublishResultsEnum;
+    /**
+     * Whether a proposal may request several of the call's resource templates or at most one of them. Cannot be set to single while a draft proposal holds several resource requests.
+     */
+    resource_template_selection_mode?: ResourceTemplateSelectionModeEnum;
+    created_by?: string | null;
+    reference_code?: string;
+    /**
+     * Compliance checklist that proposals must complete before submission
+     */
+    compliance_checklist?: string | null;
+    panel_chair?: string | null;
+    panel_vice_chair?: string | null;
+    /**
+     * Template for proposal slugs. Supports: {call_slug}, {round_slug}, {org_slug}, {year}, {month}, {counter}, {counter_padded}. Default: {round_slug}-{counter_padded}
+     */
+    proposal_slug_template?: string | null;
+    /**
+     * List of email regex patterns. User must match one.
+     */
+    user_email_patterns?: Array<string>;
+    /**
+     * List of allowed affiliations. User must have one.
+     */
+    user_affiliations?: Array<string>;
+    /**
+     * List of allowed identity sources (identity providers).
+     */
+    user_identity_sources?: Array<string>;
+    /**
+     * List of allowed nationality codes (ISO 3166-1 alpha-2). User must have one.
+     */
+    user_nationalities?: Array<string>;
+    /**
+     * List of allowed organization type URNs (SCHAC). User must match one.
+     */
+    user_organization_types?: Array<string>;
+    /**
+     * List of required assurance URIs (REFEDS). User must have ALL of these.
+     */
+    user_assurance_levels?: Array<string>;
+    applicant_visibility_config?: CallApplicantVisibilityConfigRequest | null;
+    /**
+     * Who may review for the call: checked when a reviewer is invited, accepts, is suggested or is given the call's reviewer role. Kept apart from the restrictions on applicants.
+     */
+    reviewer_eligibility?: CallReviewerEligibilityRequest | null;
+    /**
+     * Whose name the orders for resources granted by this call carry.
+     */
+    order_author?: OrderAuthorEnum;
+    /**
+     * The person orders are attributed to when the author is a named contact. Must hold a role on this call or on the organization managing it.
+     */
+    order_author_user?: string | null;
+    /**
+     * Whether a draft still open when its round's cut-off passes moves on to the call's next round instead of being canceled. Without a later round the draft is canceled either way.
+     */
+    carry_over_drafts?: boolean;
+    /**
+     * The conflict-of-interest declaration evaluators confirm, for every step asking them to that has no text of its own. Empty for the platform's standard declaration.
+     */
+    coi_declaration_text?: string;
+    /**
+     * What completing a round does with its proposals that still have no decision: refuse to complete the round, or reject them. A round may override it.
+     */
+    undecided_at_round_completion?: UndecidedAtRoundCompletionEnum;
+    /**
+     * Whether a round's results must be adopted (by a board, say) before they are published. The adoption is then recorded while the round is deciding, and publication waits for it.
+     */
+    adoption_required?: boolean;
+    /**
+     * How the allocation decision is held to the call's resource budgets. soft: approving an award past what remains needs an explicit override with a reason. hard: such an award is refused, and only staff may override it with a reason. Changing it affects only later decisions.
+     */
+    budget_enforcement?: BudgetEnforcementEnum;
+    /**
+     * Names of the proposal roles whose holders are copied (Cc) on every mail to the applicant about a proposal: PROPOSAL.MANAGER for the principal investigator, PROPOSAL.ADMIN for the proposal administrators. Only the proposal's current team is copied. Empty copies nobody.
+     */
+    applicant_cc_roles?: Array<string>;
+    /**
+     * Days from a round's cut-off to its decision the workflow is planned for, when the round has no allocation date. The workflow check compares the steps' durations with it.
+     */
+    target_decision_days?: number | null;
+};
+
+export type ProtectedCallRequestMultipart = {
+    /**
+     * URL-friendly identifier. Only editable by staff users.
+     */
+    slug?: string;
+    name: string;
+    description?: string;
+    /**
+     * Logo shown on the call's card in place of its initials. A PNG, JPEG or GIF of at most 2 MB; null or an empty value removes it.
+     */
+    image?: Blob | File | null;
+    manager: string;
+    fixed_duration_in_days?: number | null;
+    /**
+     * Durations, in months, the applicant chooses the project's length from. Empty offers no choice. Cannot be combined with fixed_duration_in_days. Proposals already submitted keep the length they asked for.
+     */
+    allowed_duration_months?: Array<number>;
+    backend_id?: string;
+    external_url?: string | null;
+    /**
+     * Whether proposal applicants can see reviewer identities
+     */
+    reviewer_identity_visible_to_submitters?: boolean;
+    /**
+     * Whether proposal applicants can see review comments and scores. Applicants still see what an applicant step lists as its input steps, such as the reviews they respond to.
+     */
+    reviews_visible_to_submitters?: boolean;
+    proposal_field_config?: CallProposalFieldConfigRequest;
+    /**
+     * When a submitted proposal's evaluation starts: on submission, or for all proposals of a round together at its cut-off. Cannot be changed while the call has proposals submitted or in review.
+     */
+    evaluation_start?: EvaluationStartEnum;
+    /**
+     * When applicants learn the allocation decision: immediately, or for every proposal of a round together when a call manager publishes the round's results. Cannot be changed while decisions are held.
+     */
+    publish_results?: PublishResultsEnum;
+    /**
+     * Whether a proposal may request several of the call's resource templates or at most one of them. Cannot be set to single while a draft proposal holds several resource requests.
+     */
+    resource_template_selection_mode?: ResourceTemplateSelectionModeEnum;
+    created_by?: string | null;
+    reference_code?: string;
+    /**
+     * Compliance checklist that proposals must complete before submission
+     */
+    compliance_checklist?: string | null;
+    panel_chair?: string | null;
+    panel_vice_chair?: string | null;
+    /**
+     * Template for proposal slugs. Supports: {call_slug}, {round_slug}, {org_slug}, {year}, {month}, {counter}, {counter_padded}. Default: {round_slug}-{counter_padded}
+     */
+    proposal_slug_template?: string | null;
+    /**
+     * List of email regex patterns. User must match one.
+     */
+    user_email_patterns?: Array<string>;
+    /**
+     * List of allowed affiliations. User must have one.
+     */
+    user_affiliations?: Array<string>;
+    /**
+     * List of allowed identity sources (identity providers).
+     */
+    user_identity_sources?: Array<string>;
+    /**
+     * List of allowed nationality codes (ISO 3166-1 alpha-2). User must have one.
+     */
+    user_nationalities?: Array<string>;
+    /**
+     * List of allowed organization type URNs (SCHAC). User must match one.
+     */
+    user_organization_types?: Array<string>;
+    /**
+     * List of required assurance URIs (REFEDS). User must have ALL of these.
+     */
+    user_assurance_levels?: Array<string>;
+    applicant_visibility_config?: CallApplicantVisibilityConfigRequest | null;
+    /**
+     * Who may review for the call: checked when a reviewer is invited, accepts, is suggested or is given the call's reviewer role. Kept apart from the restrictions on applicants.
+     */
+    reviewer_eligibility?: CallReviewerEligibilityRequest | null;
+    /**
+     * Whose name the orders for resources granted by this call carry.
+     */
+    order_author?: OrderAuthorEnum;
+    /**
+     * The person orders are attributed to when the author is a named contact. Must hold a role on this call or on the organization managing it.
+     */
+    order_author_user?: string | null;
+    /**
+     * Whether a draft still open when its round's cut-off passes moves on to the call's next round instead of being canceled. Without a later round the draft is canceled either way.
+     */
+    carry_over_drafts?: boolean;
+    /**
+     * The conflict-of-interest declaration evaluators confirm, for every step asking them to that has no text of its own. Empty for the platform's standard declaration.
+     */
+    coi_declaration_text?: string;
+    /**
+     * What completing a round does with its proposals that still have no decision: refuse to complete the round, or reject them. A round may override it.
+     */
+    undecided_at_round_completion?: UndecidedAtRoundCompletionEnum;
+    /**
+     * Whether a round's results must be adopted (by a board, say) before they are published. The adoption is then recorded while the round is deciding, and publication waits for it.
+     */
+    adoption_required?: boolean;
+    /**
+     * How the allocation decision is held to the call's resource budgets. soft: approving an award past what remains needs an explicit override with a reason. hard: such an award is refused, and only staff may override it with a reason. Changing it affects only later decisions.
+     */
+    budget_enforcement?: BudgetEnforcementEnum;
+    /**
+     * Names of the proposal roles whose holders are copied (Cc) on every mail to the applicant about a proposal: PROPOSAL.MANAGER for the principal investigator, PROPOSAL.ADMIN for the proposal administrators. Only the proposal's current team is copied. Empty copies nobody.
+     */
+    applicant_cc_roles?: Array<string>;
+    /**
+     * Days from a round's cut-off to its decision the workflow is planned for, when the round has no allocation date. The workflow check compares the steps' durations with it.
+     */
+    target_decision_days?: number | null;
+};
+
+export type PatchedProtectedCallRequestForm = {
+    /**
+     * URL-friendly identifier. Only editable by staff users.
+     */
+    slug?: string;
+    name?: string;
+    description?: string;
+    /**
+     * Logo shown on the call's card in place of its initials. A PNG, JPEG or GIF of at most 2 MB; null or an empty value removes it.
+     */
+    image?: Blob | File | null;
+    fixed_duration_in_days?: number | null;
+    /**
+     * Durations, in months, the applicant chooses the project's length from. Empty offers no choice. Cannot be combined with fixed_duration_in_days. Proposals already submitted keep the length they asked for.
+     */
+    allowed_duration_months?: Array<number>;
+    backend_id?: string;
+    external_url?: string | null;
+    /**
+     * Whether proposal applicants can see reviewer identities
+     */
+    reviewer_identity_visible_to_submitters?: boolean;
+    /**
+     * Whether proposal applicants can see review comments and scores. Applicants still see what an applicant step lists as its input steps, such as the reviews they respond to.
+     */
+    reviews_visible_to_submitters?: boolean;
+    proposal_field_config?: CallProposalFieldConfigRequest;
+    /**
+     * When a submitted proposal's evaluation starts: on submission, or for all proposals of a round together at its cut-off. Cannot be changed while the call has proposals submitted or in review.
+     */
+    evaluation_start?: EvaluationStartEnum;
+    /**
+     * When applicants learn the allocation decision: immediately, or for every proposal of a round together when a call manager publishes the round's results. Cannot be changed while decisions are held.
+     */
+    publish_results?: PublishResultsEnum;
+    /**
+     * Whether a proposal may request several of the call's resource templates or at most one of them. Cannot be set to single while a draft proposal holds several resource requests.
+     */
+    resource_template_selection_mode?: ResourceTemplateSelectionModeEnum;
+    created_by?: string | null;
+    reference_code?: string;
+    /**
+     * Compliance checklist that proposals must complete before submission
+     */
+    compliance_checklist?: string | null;
+    panel_chair?: string | null;
+    panel_vice_chair?: string | null;
+    /**
+     * Template for proposal slugs. Supports: {call_slug}, {round_slug}, {org_slug}, {year}, {month}, {counter}, {counter_padded}. Default: {round_slug}-{counter_padded}
+     */
+    proposal_slug_template?: string | null;
+    /**
+     * List of email regex patterns. User must match one.
+     */
+    user_email_patterns?: Array<string>;
+    /**
+     * List of allowed affiliations. User must have one.
+     */
+    user_affiliations?: Array<string>;
+    /**
+     * List of allowed identity sources (identity providers).
+     */
+    user_identity_sources?: Array<string>;
+    /**
+     * List of allowed nationality codes (ISO 3166-1 alpha-2). User must have one.
+     */
+    user_nationalities?: Array<string>;
+    /**
+     * List of allowed organization type URNs (SCHAC). User must match one.
+     */
+    user_organization_types?: Array<string>;
+    /**
+     * List of required assurance URIs (REFEDS). User must have ALL of these.
+     */
+    user_assurance_levels?: Array<string>;
+    applicant_visibility_config?: CallApplicantVisibilityConfigRequest | null;
+    /**
+     * Who may review for the call: checked when a reviewer is invited, accepts, is suggested or is given the call's reviewer role. Kept apart from the restrictions on applicants.
+     */
+    reviewer_eligibility?: CallReviewerEligibilityRequest | null;
+    /**
+     * Whose name the orders for resources granted by this call carry.
+     */
+    order_author?: OrderAuthorEnum;
+    /**
+     * The person orders are attributed to when the author is a named contact. Must hold a role on this call or on the organization managing it.
+     */
+    order_author_user?: string | null;
+    /**
+     * Whether a draft still open when its round's cut-off passes moves on to the call's next round instead of being canceled. Without a later round the draft is canceled either way.
+     */
+    carry_over_drafts?: boolean;
+    /**
+     * The conflict-of-interest declaration evaluators confirm, for every step asking them to that has no text of its own. Empty for the platform's standard declaration.
+     */
+    coi_declaration_text?: string;
+    /**
+     * What completing a round does with its proposals that still have no decision: refuse to complete the round, or reject them. A round may override it.
+     */
+    undecided_at_round_completion?: UndecidedAtRoundCompletionEnum;
+    /**
+     * Whether a round's results must be adopted (by a board, say) before they are published. The adoption is then recorded while the round is deciding, and publication waits for it.
+     */
+    adoption_required?: boolean;
+    /**
+     * How the allocation decision is held to the call's resource budgets. soft: approving an award past what remains needs an explicit override with a reason. hard: such an award is refused, and only staff may override it with a reason. Changing it affects only later decisions.
+     */
+    budget_enforcement?: BudgetEnforcementEnum;
+    /**
+     * Names of the proposal roles whose holders are copied (Cc) on every mail to the applicant about a proposal: PROPOSAL.MANAGER for the principal investigator, PROPOSAL.ADMIN for the proposal administrators. Only the proposal's current team is copied. Empty copies nobody.
+     */
+    applicant_cc_roles?: Array<string>;
+    /**
+     * Days from a round's cut-off to its decision the workflow is planned for, when the round has no allocation date. The workflow check compares the steps' durations with it.
+     */
+    target_decision_days?: number | null;
+};
+
+export type PatchedProtectedCallRequestMultipart = {
+    /**
+     * URL-friendly identifier. Only editable by staff users.
+     */
+    slug?: string;
+    name?: string;
+    description?: string;
+    /**
+     * Logo shown on the call's card in place of its initials. A PNG, JPEG or GIF of at most 2 MB; null or an empty value removes it.
+     */
+    image?: Blob | File | null;
+    fixed_duration_in_days?: number | null;
+    /**
+     * Durations, in months, the applicant chooses the project's length from. Empty offers no choice. Cannot be combined with fixed_duration_in_days. Proposals already submitted keep the length they asked for.
+     */
+    allowed_duration_months?: Array<number>;
+    backend_id?: string;
+    external_url?: string | null;
+    /**
+     * Whether proposal applicants can see reviewer identities
+     */
+    reviewer_identity_visible_to_submitters?: boolean;
+    /**
+     * Whether proposal applicants can see review comments and scores. Applicants still see what an applicant step lists as its input steps, such as the reviews they respond to.
+     */
+    reviews_visible_to_submitters?: boolean;
+    proposal_field_config?: CallProposalFieldConfigRequest;
+    /**
+     * When a submitted proposal's evaluation starts: on submission, or for all proposals of a round together at its cut-off. Cannot be changed while the call has proposals submitted or in review.
+     */
+    evaluation_start?: EvaluationStartEnum;
+    /**
+     * When applicants learn the allocation decision: immediately, or for every proposal of a round together when a call manager publishes the round's results. Cannot be changed while decisions are held.
+     */
+    publish_results?: PublishResultsEnum;
+    /**
+     * Whether a proposal may request several of the call's resource templates or at most one of them. Cannot be set to single while a draft proposal holds several resource requests.
+     */
+    resource_template_selection_mode?: ResourceTemplateSelectionModeEnum;
+    created_by?: string | null;
+    reference_code?: string;
+    /**
+     * Compliance checklist that proposals must complete before submission
+     */
+    compliance_checklist?: string | null;
+    panel_chair?: string | null;
+    panel_vice_chair?: string | null;
+    /**
+     * Template for proposal slugs. Supports: {call_slug}, {round_slug}, {org_slug}, {year}, {month}, {counter}, {counter_padded}. Default: {round_slug}-{counter_padded}
+     */
+    proposal_slug_template?: string | null;
+    /**
+     * List of email regex patterns. User must match one.
+     */
+    user_email_patterns?: Array<string>;
+    /**
+     * List of allowed affiliations. User must have one.
+     */
+    user_affiliations?: Array<string>;
+    /**
+     * List of allowed identity sources (identity providers).
+     */
+    user_identity_sources?: Array<string>;
+    /**
+     * List of allowed nationality codes (ISO 3166-1 alpha-2). User must have one.
+     */
+    user_nationalities?: Array<string>;
+    /**
+     * List of allowed organization type URNs (SCHAC). User must match one.
+     */
+    user_organization_types?: Array<string>;
+    /**
+     * List of required assurance URIs (REFEDS). User must have ALL of these.
+     */
+    user_assurance_levels?: Array<string>;
+    applicant_visibility_config?: CallApplicantVisibilityConfigRequest | null;
+    /**
+     * Who may review for the call: checked when a reviewer is invited, accepts, is suggested or is given the call's reviewer role. Kept apart from the restrictions on applicants.
+     */
+    reviewer_eligibility?: CallReviewerEligibilityRequest | null;
+    /**
+     * Whose name the orders for resources granted by this call carry.
+     */
+    order_author?: OrderAuthorEnum;
+    /**
+     * The person orders are attributed to when the author is a named contact. Must hold a role on this call or on the organization managing it.
+     */
+    order_author_user?: string | null;
+    /**
+     * Whether a draft still open when its round's cut-off passes moves on to the call's next round instead of being canceled. Without a later round the draft is canceled either way.
+     */
+    carry_over_drafts?: boolean;
+    /**
+     * The conflict-of-interest declaration evaluators confirm, for every step asking them to that has no text of its own. Empty for the platform's standard declaration.
+     */
+    coi_declaration_text?: string;
+    /**
+     * What completing a round does with its proposals that still have no decision: refuse to complete the round, or reject them. A round may override it.
+     */
+    undecided_at_round_completion?: UndecidedAtRoundCompletionEnum;
+    /**
+     * Whether a round's results must be adopted (by a board, say) before they are published. The adoption is then recorded while the round is deciding, and publication waits for it.
+     */
+    adoption_required?: boolean;
+    /**
+     * How the allocation decision is held to the call's resource budgets. soft: approving an award past what remains needs an explicit override with a reason. hard: such an award is refused, and only staff may override it with a reason. Changing it affects only later decisions.
+     */
+    budget_enforcement?: BudgetEnforcementEnum;
+    /**
+     * Names of the proposal roles whose holders are copied (Cc) on every mail to the applicant about a proposal: PROPOSAL.MANAGER for the principal investigator, PROPOSAL.ADMIN for the proposal administrators. Only the proposal's current team is copied. Empty copies nobody.
+     */
+    applicant_cc_roles?: Array<string>;
+    /**
+     * Days from a round's cut-off to its decision the workflow is planned for, when the round has no allocation date. The workflow check compares the steps' durations with it.
+     */
+    target_decision_days?: number | null;
+};
+
 export type CallAttachDocumentsRequestForm = {
     documents: Array<Blob | File>;
     description?: string;
@@ -45311,13 +45824,13 @@ export type ProposalOEnum = '-created' | '-round__call__name' | '-round__cutoff_
 
 export type ProposalRunPhaseEnum = 'closing' | 'extension';
 
-export type ProtectedCallFieldEnum = 'adoption_required' | 'allowed_duration_months' | 'applicant_cc_roles' | 'applicant_visibility_config' | 'backend_id' | 'budget_enforcement' | 'carry_over_drafts' | 'coi_declaration_text' | 'compliance_checklist' | 'compliance_checklist_name' | 'component_rules' | 'created' | 'created_by' | 'customer_name' | 'customer_uuid' | 'description' | 'documents' | 'end_date' | 'evaluation_start' | 'external_url' | 'fixed_duration_in_days' | 'has_eligibility_restrictions' | 'has_proposals' | 'manager' | 'manager_uuid' | 'max_prepaid_duration_months' | 'name' | 'offerings' | 'order_author' | 'order_author_user' | 'order_author_user_name' | 'order_author_user_uuid' | 'panel_chair' | 'panel_chair_name' | 'panel_chair_uuid' | 'panel_vice_chair' | 'panel_vice_chair_name' | 'panel_vice_chair_uuid' | 'proposal_field_config' | 'proposal_field_metadata' | 'proposal_slug_template' | 'publish_results' | 'reference_code' | 'resource_template_selection_mode' | 'resource_templates' | 'reviewer_eligibility' | 'reviewer_identity_visible_to_submitters' | 'reviews_visible_to_submitters' | 'rounds' | 'slug' | 'start_date' | 'state' | 'target_decision_days' | 'template_latest_version' | 'template_name' | 'template_uuid' | 'template_version' | 'undecided_at_round_completion' | 'url' | 'user_affiliations' | 'user_assurance_levels' | 'user_email_patterns' | 'user_identity_sources' | 'user_nationalities' | 'user_organization_types' | 'uuid';
+export type ProtectedCallFieldEnum = 'adoption_required' | 'allowed_duration_months' | 'applicant_cc_roles' | 'applicant_visibility_config' | 'backend_id' | 'budget_enforcement' | 'carry_over_drafts' | 'coi_declaration_text' | 'compliance_checklist' | 'compliance_checklist_name' | 'component_rules' | 'created' | 'created_by' | 'customer_name' | 'customer_uuid' | 'description' | 'documents' | 'end_date' | 'evaluation_start' | 'external_url' | 'fixed_duration_in_days' | 'has_eligibility_restrictions' | 'has_proposals' | 'image' | 'manager' | 'manager_uuid' | 'max_prepaid_duration_months' | 'name' | 'offerings' | 'order_author' | 'order_author_user' | 'order_author_user_name' | 'order_author_user_uuid' | 'panel_chair' | 'panel_chair_name' | 'panel_chair_uuid' | 'panel_vice_chair' | 'panel_vice_chair_name' | 'panel_vice_chair_uuid' | 'proposal_field_config' | 'proposal_field_metadata' | 'proposal_slug_template' | 'publish_results' | 'reference_code' | 'resource_template_selection_mode' | 'resource_templates' | 'reviewer_eligibility' | 'reviewer_identity_visible_to_submitters' | 'reviews_visible_to_submitters' | 'rounds' | 'slug' | 'start_date' | 'state' | 'target_decision_days' | 'template_latest_version' | 'template_name' | 'template_uuid' | 'template_version' | 'undecided_at_round_completion' | 'url' | 'user_affiliations' | 'user_assurance_levels' | 'user_email_patterns' | 'user_identity_sources' | 'user_nationalities' | 'user_organization_types' | 'uuid';
 
 export type ProtectedCallOEnum = '-created' | '-manager__customer__name' | '-name' | 'created' | 'manager__customer__name' | 'name';
 
 export type AffinityMatrixResponseScopeEnum = 'all' | 'pool' | 'suggestions';
 
-export type PublicCallFieldEnum = 'allowed_duration_months' | 'backend_id' | 'component_rules' | 'created' | 'customer_name' | 'customer_uuid' | 'description' | 'documents' | 'end_date' | 'evaluation_start' | 'external_url' | 'fixed_duration_in_days' | 'has_eligibility_restrictions' | 'manager' | 'manager_uuid' | 'max_prepaid_duration_months' | 'name' | 'offerings' | 'proposal_field_config' | 'publish_results' | 'resource_template_selection_mode' | 'resource_templates' | 'reviewer_identity_visible_to_submitters' | 'reviews_visible_to_submitters' | 'rounds' | 'slug' | 'start_date' | 'state' | 'url' | 'uuid';
+export type PublicCallFieldEnum = 'allowed_duration_months' | 'backend_id' | 'component_rules' | 'created' | 'customer_name' | 'customer_uuid' | 'description' | 'documents' | 'end_date' | 'evaluation_start' | 'external_url' | 'fixed_duration_in_days' | 'has_eligibility_restrictions' | 'image' | 'manager' | 'manager_uuid' | 'max_prepaid_duration_months' | 'name' | 'offerings' | 'proposal_field_config' | 'publish_results' | 'resource_template_selection_mode' | 'resource_templates' | 'reviewer_identity_visible_to_submitters' | 'reviews_visible_to_submitters' | 'rounds' | 'slug' | 'start_date' | 'state' | 'url' | 'uuid';
 
 export type PublicCallStateEnum = 'active' | 'archived';
 
@@ -108152,54 +108665,6 @@ export type ProposalProposalsWorkflowStatesListResponses = {
 
 export type ProposalProposalsWorkflowStatesListResponse = ProposalProposalsWorkflowStatesListResponses[keyof ProposalProposalsWorkflowStatesListResponses];
 
-export type ProposalProposalsChecklistTemplateRetrieveData = {
-    body?: never;
-    path?: never;
-    query: {
-        /**
-         * UUID of the parent object (e.g., customer UUID for new projects)
-         */
-        parent_uuid: string;
-    };
-    url: '/api/proposal-proposals/checklist-template/';
-};
-
-export type ProposalProposalsChecklistTemplateRetrieveErrors = {
-    /**
-     * No checklist configured
-     */
-    400: unknown;
-    /**
-     * Parent object not found
-     */
-    404: unknown;
-};
-
-export type ProposalProposalsChecklistTemplateRetrieveResponses = {
-    200: ChecklistTemplate;
-};
-
-export type ProposalProposalsChecklistTemplateRetrieveResponse = ProposalProposalsChecklistTemplateRetrieveResponses[keyof ProposalProposalsChecklistTemplateRetrieveResponses];
-
-export type ProposalProposalsChecklistTemplateCountData = {
-    body?: never;
-    path?: never;
-    query: {
-        /**
-         * UUID of the parent object (e.g., customer UUID for new projects)
-         */
-        parent_uuid: string;
-    };
-    url: '/api/proposal-proposals/checklist-template/';
-};
-
-export type ProposalProposalsChecklistTemplateCountResponses = {
-    /**
-     * No response body
-     */
-    200: unknown;
-};
-
 export type ProposalProposalsDashboardStatsRetrieveData = {
     body?: never;
     path?: never;
@@ -116763,19 +117228,6 @@ export type ReviewerBidsCountResponses = {
      */
     200: unknown;
 };
-
-export type ReviewerBidsCreateData = {
-    body: ReviewerBidRequest;
-    path?: never;
-    query?: never;
-    url: '/api/reviewer-bids/';
-};
-
-export type ReviewerBidsCreateResponses = {
-    201: ReviewerBid;
-};
-
-export type ReviewerBidsCreateResponse = ReviewerBidsCreateResponses[keyof ReviewerBidsCreateResponses];
 
 export type ReviewerBidsDestroyData = {
     body?: never;
