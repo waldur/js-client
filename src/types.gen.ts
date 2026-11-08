@@ -11463,6 +11463,27 @@ export type FederatedidentitydeactivationpolicyEnum = 'all_isds_removed' | 'any_
 
 export type FontfamilyEnum = 'Inter' | 'Maven Pro';
 
+export type Facet = {
+    name: string;
+    values: Array<FacetValue>;
+    /**
+     * More values exist than facet_limit; search with facet_q.
+     */
+    truncated: boolean;
+};
+
+export type FacetValue = {
+    /**
+     * Value to send back as the facet's query parameter.
+     */
+    value: string;
+    label: string;
+    /**
+     * Rows matching this value under all other filters.
+     */
+    count: number;
+};
+
 export type FeatureItem = {
     key: string;
     description: string;
@@ -69238,6 +69259,120 @@ export type MarketplaceOfferingUsersUpdateRuntimeStateResponses = {
     200: unknown;
 };
 
+export type MarketplaceOfferingUsersFacetsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Created after
+         */
+        created?: string;
+        /**
+         * Created before
+         */
+        created_before?: string;
+        /**
+         * Comma-separated facet names to compute; all by default.
+         */
+        facet?: string;
+        /**
+         * Most values returned per facet, by count (default 100, at most 1000).
+         */
+        facet_limit?: number;
+        /**
+         * Keep only values whose label contains this text (at most 100 characters).
+         */
+        facet_q?: string;
+        /**
+         * User has complete profile for the offering
+         */
+        has_complete_profile?: boolean;
+        /**
+         * User Has Consent
+         */
+        has_consent?: boolean;
+        /**
+         * Backed by a service provider account
+         */
+        is_provider_backed?: boolean;
+        /**
+         * Is restricted
+         */
+        is_restricted?: boolean;
+        /**
+         * Modified after
+         */
+        modified?: string;
+        /**
+         * Modified before
+         */
+        modified_before?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<OfferingUserOEnum>;
+        offering?: string;
+        /**
+         * Offering has active Terms of Service
+         */
+        offering_has_active_tos?: boolean;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        offering_slug?: Array<string>;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        offering_uuid?: Array<string>;
+        parent_offering_uuid?: string;
+        /**
+         * Provider UUID
+         */
+        provider_uuid?: string;
+        /**
+         * Search by offering name, username, user name, UID or primary GID
+         */
+        query?: string;
+        /**
+         * Offering user runtime state
+         *
+         *
+         */
+        runtime_state?: Array<RuntimeStateEnum>;
+        /**
+         * Service provider account UUID
+         */
+        service_provider_account_uuid?: string;
+        /**
+         * Offering user state
+         *
+         *
+         */
+        state?: Array<OfferingUserState>;
+        /**
+         * User username
+         */
+        user_username?: string;
+        /**
+         * User UUID
+         */
+        user_uuid?: string;
+        /**
+         * Username
+         */
+        username?: string;
+    };
+    url: '/api/marketplace-offering-users/facets/';
+};
+
+export type MarketplaceOfferingUsersFacetsListResponses = {
+    200: Array<Facet>;
+};
+
+export type MarketplaceOfferingUsersFacetsListResponse = MarketplaceOfferingUsersFacetsListResponses[keyof MarketplaceOfferingUsersFacetsListResponses];
+
 export type MarketplaceOfferingUsersPosixIdentitiesListData = {
     body?: never;
     path?: never;
@@ -70459,6 +70594,132 @@ export type MarketplaceOrdersDashboardMyOrdersCountResponses = {
      */
     200: unknown;
 };
+
+export type MarketplaceOrdersFacetsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Can approve as consumer
+         */
+        can_approve_as_consumer?: boolean;
+        /**
+         * Can approve as provider
+         */
+        can_approve_as_provider?: boolean;
+        /**
+         * Category UUID
+         */
+        category_uuid?: string;
+        /**
+         * Created after
+         */
+        created?: string;
+        /**
+         * Created before
+         */
+        created_before?: string;
+        /**
+         * Customer UUID
+         */
+        customer_uuid?: string;
+        /**
+         * Comma-separated facet names to compute; all by default.
+         */
+        facet?: string;
+        /**
+         * Most values returned per facet, by count (default 100, at most 1000).
+         */
+        facet_limit?: number;
+        /**
+         * Keep only values whose label contains this text (at most 100 characters).
+         */
+        facet_q?: string;
+        /**
+         * Modified after
+         */
+        modified?: string;
+        /**
+         * Modified before
+         */
+        modified_before?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<OrderDetailsOEnum>;
+        offering?: string;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        offering_slug?: Array<string>;
+        /**
+         * Offering type
+         */
+        offering_type?: Array<string>;
+        /**
+         * Offering UUID
+         */
+        offering_uuid?: string;
+        parent_offering_uuid?: string;
+        /**
+         * Project UUID
+         */
+        project_uuid?: string;
+        /**
+         * Provider UUID
+         */
+        provider_uuid?: string;
+        /**
+         * Search by order UUID, slug, project name or resource name
+         */
+        query?: string;
+        /**
+         * Resource URL
+         */
+        resource?: string;
+        /**
+         * Resource name
+         */
+        resource_name?: string;
+        /**
+         * Resource UUID
+         */
+        resource_uuid?: string;
+        /**
+         * Service manager UUID
+         */
+        service_manager_uuid?: string;
+        /**
+         * Slug
+         */
+        slug?: string;
+        /**
+         * Order state
+         *
+         *
+         */
+        state?: Array<OrderState>;
+        /**
+         * Order type
+         *
+         *
+         */
+        type?: Array<RequestTypes>;
+        /**
+         * Auto-approved
+         */
+        was_auto_approved?: boolean;
+    };
+    url: '/api/marketplace-orders/facets/';
+};
+
+export type MarketplaceOrdersFacetsListResponses = {
+    200: Array<Facet>;
+};
+
+export type MarketplaceOrdersFacetsListResponse = MarketplaceOrdersFacetsListResponses[keyof MarketplaceOrdersFacetsListResponses];
 
 export type MarketplacePlanComponentsListData = {
     body?: never;
@@ -75448,6 +75709,209 @@ export type MarketplaceProviderOfferingsAggregatedAccessSubnetsCountResponses = 
     200: unknown;
 };
 
+export type MarketplaceProviderOfferingsFacetsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Only offerings the current user can order
+         */
+        accessible?: boolean;
+        /**
+         * Deprecated: offerings accepted on an active call, regardless of whether a proposal can actually be submitted for them. Use open_for_proposals instead.
+         */
+        accessible_via_calls?: boolean;
+        /**
+         * Allowed customer UUID
+         */
+        allowed_customer_uuid?: string;
+        /**
+         * Offering attributes (JSON)
+         */
+        attributes?: string;
+        /**
+         * Billable
+         */
+        billable?: boolean;
+        can_create_offering_user?: boolean;
+        /**
+         * Category group UUID
+         */
+        category_group_uuid?: string;
+        /**
+         * Category UUID
+         */
+        category_uuid?: string;
+        /**
+         * Consumer customer UUID
+         */
+        consumer_customer_uuid?: string;
+        /**
+         * Created after
+         */
+        created?: string;
+        /**
+         * Created before
+         */
+        created_before?: string;
+        /**
+         * Customer URL
+         */
+        customer?: string;
+        /**
+         * Customer UUID
+         */
+        customer_uuid?: string;
+        /**
+         * Description contains
+         */
+        description?: string;
+        /**
+         * Comma-separated facet names to compute; all by default.
+         */
+        facet?: string;
+        /**
+         * Most values returned per facet, by count (default 100, at most 1000).
+         */
+        facet_limit?: number;
+        /**
+         * Keep only values whose label contains this text (at most 100 characters).
+         */
+        facet_q?: string;
+        /**
+         * Has Active Terms of Service
+         */
+        has_active_terms_of_service?: boolean;
+        /**
+         * Has Terms of Service
+         */
+        has_terms_of_service?: boolean;
+        /**
+         * Filter by importable offerings.
+         */
+        importable?: string;
+        /**
+         * Keyword
+         */
+        keyword?: string;
+        /**
+         * Modified after
+         */
+        modified?: string;
+        /**
+         * Modified before
+         */
+        modified_before?: string;
+        /**
+         * Name
+         */
+        name?: string;
+        /**
+         * Name (exact)
+         */
+        name_exact?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<ProviderOfferingDetailsOEnum>;
+        /**
+         * Offering group UUID
+         */
+        offering_group_uuid?: string;
+        /**
+         * Offerings that can be requested through a call right now: accepted on an active call with a round that is open, and covered by a resource template when the call defines any.
+         */
+        open_for_proposals?: boolean;
+        /**
+         * Organization group UUID
+         */
+        organization_group_uuid?: string;
+        /**
+         * Parent offering UUID
+         */
+        parent_uuid?: string;
+        /**
+         * Project UUID
+         */
+        project_uuid?: string;
+        /**
+         * Search by offering name, slug or description
+         */
+        query?: string;
+        /**
+         * Resource customer UUID
+         */
+        resource_customer_uuid?: string;
+        /**
+         * Resource project UUID
+         */
+        resource_project_uuid?: string;
+        /**
+         * Scope UUID
+         */
+        scope_uuid?: string;
+        /**
+         * Service manager UUID
+         */
+        service_manager_uuid?: string;
+        /**
+         * Shared
+         */
+        shared?: boolean;
+        /**
+         * Slug
+         */
+        slug?: string;
+        /**
+         * Offering state
+         *
+         *
+         */
+        state?: Array<OfferingState>;
+        /**
+         * Tag UUID (OR logic)
+         */
+        tag?: Array<string>;
+        /**
+         * Tag name (OR logic)
+         */
+        tag_name?: Array<string>;
+        /**
+         * Tag names with AND logic (comma-separated)
+         */
+        tag_names_and?: string;
+        /**
+         * Tag UUIDs with AND logic (comma-separated)
+         */
+        tags_and?: string;
+        /**
+         * Offering type
+         */
+        type?: Array<string>;
+        /**
+         * User Has Consent
+         */
+        user_has_consent?: boolean;
+        /**
+         * User Has Offering User
+         */
+        user_has_offering_user?: boolean;
+        /**
+         * Comma-separated offering UUIDs
+         */
+        uuid_list?: string;
+    };
+    url: '/api/marketplace-provider-offerings/facets/';
+};
+
+export type MarketplaceProviderOfferingsFacetsListResponses = {
+    200: Array<Facet>;
+};
+
+export type MarketplaceProviderOfferingsFacetsListResponse = MarketplaceProviderOfferingsFacetsListResponses[keyof MarketplaceProviderOfferingsFacetsListResponses];
+
 export type MarketplaceProviderOfferingsGroupsListData = {
     body?: never;
     path?: never;
@@ -77683,6 +78147,216 @@ export type MarketplaceProviderResourcesUpdateUserResponses = {
 
 export type MarketplaceProviderResourcesUpdateUserResponse = MarketplaceProviderResourcesUpdateUserResponses[keyof MarketplaceProviderResourcesUpdateUserResponses];
 
+export type MarketplaceProviderResourcesFacetsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Backend ID
+         */
+        backend_id?: string;
+        /**
+         * Category UUID
+         */
+        category_uuid?: string;
+        /**
+         * Filter by exact number of components
+         */
+        component_count?: number;
+        /**
+         * Created after
+         */
+        created?: string;
+        /**
+         * Created before
+         */
+        created_before?: string;
+        /**
+         * Customer URL
+         */
+        customer?: string;
+        /**
+         * Customer UUID
+         */
+        customer_uuid?: string;
+        /**
+         * Downscaled
+         */
+        downscaled?: boolean;
+        /**
+         * Comma-separated facet names to compute; all by default.
+         */
+        facet?: string;
+        /**
+         * Most values returned per facet, by count (default 100, at most 1000).
+         */
+        facet_limit?: number;
+        /**
+         * Keep only values whose label contains this text (at most 100 characters).
+         */
+        facet_q?: string;
+        /**
+         * Flavor name
+         */
+        flavor_name?: string;
+        /**
+         * Has termination date
+         */
+        has_terminate_date?: boolean;
+        /**
+         * Image name
+         */
+        image_name?: string;
+        /**
+         * Filter by attached state
+         */
+        is_attached?: boolean;
+        /**
+         * LEXIS links supported
+         */
+        lexis_links_supported?: boolean;
+        /**
+         * Filter by limit-based offerings
+         */
+        limit_based?: boolean;
+        /**
+         * Filter by exact number of limit-based components
+         */
+        limit_component_count?: number;
+        /**
+         * Modified after
+         */
+        modified?: string;
+        /**
+         * Modified before
+         */
+        modified_before?: string;
+        /**
+         * Name
+         */
+        name?: string;
+        /**
+         * Name (exact)
+         */
+        name_exact?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<ResourceOEnum>;
+        offering?: string;
+        /**
+         * Offering billable
+         */
+        offering_billable?: boolean;
+        /**
+         * Offering shared
+         */
+        offering_shared?: boolean;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        offering_slug?: Array<string>;
+        /**
+         * Offering type
+         */
+        offering_type?: string;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        offering_uuid?: Array<string>;
+        /**
+         * Filter resources with only limit-based components
+         */
+        only_limit_based?: boolean;
+        /**
+         * Filter resources with only usage-based components
+         */
+        only_usage_based?: boolean;
+        /**
+         * Order state
+         *
+         *
+         */
+        order_state?: Array<OrderState>;
+        parent_offering_uuid?: string;
+        /**
+         * Paused
+         */
+        paused?: boolean;
+        /**
+         * Plan UUID
+         */
+        plan_uuid?: string;
+        /**
+         * Project name
+         */
+        project_name?: string;
+        /**
+         * Project UUID
+         */
+        project_uuid?: string;
+        /**
+         * Provider UUID
+         */
+        provider_uuid?: string;
+        /**
+         * Search by resource UUID, name, slug, backend ID, effective ID, IPs or hypervisor
+         */
+        query?: string;
+        /**
+         * Resource attributes (JSON)
+         */
+        resource_attributes?: string;
+        /**
+         * Restrict member access
+         */
+        restrict_member_access?: boolean;
+        /**
+         * Runtime state
+         */
+        runtime_state?: string;
+        /**
+         * Filter by scope URL.
+         */
+        scope?: string;
+        /**
+         * Service manager UUID
+         */
+        service_manager_uuid?: string;
+        /**
+         * Slug
+         */
+        slug?: string;
+        /**
+         * Resource state
+         *
+         *
+         */
+        state?: Array<ResourceState>;
+        /**
+         * Filter by usage-based offerings
+         */
+        usage_based?: boolean;
+        /**
+         * Include only resources visible to service providers
+         */
+        visible_to_providers?: boolean;
+        /**
+         * Visible to username
+         */
+        visible_to_username?: string;
+    };
+    url: '/api/marketplace-provider-resources/facets/';
+};
+
+export type MarketplaceProviderResourcesFacetsListResponses = {
+    200: Array<Facet>;
+};
+
+export type MarketplaceProviderResourcesFacetsListResponse = MarketplaceProviderResourcesFacetsListResponses[keyof MarketplaceProviderResourcesFacetsListResponses];
+
 export type MarketplacePublicApiCheckSignatureData = {
     body: ServiceProviderSignatureRequest;
     path?: never;
@@ -78150,6 +78824,205 @@ export type MarketplacePublicOfferingsPlansRetrieveResponses = {
 };
 
 export type MarketplacePublicOfferingsPlansRetrieveResponse = MarketplacePublicOfferingsPlansRetrieveResponses[keyof MarketplacePublicOfferingsPlansRetrieveResponses];
+
+export type MarketplacePublicOfferingsFacetsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Only offerings the current user can order
+         */
+        accessible?: boolean;
+        /**
+         * Deprecated: offerings accepted on an active call, regardless of whether a proposal can actually be submitted for them. Use open_for_proposals instead.
+         */
+        accessible_via_calls?: boolean;
+        /**
+         * Allowed customer UUID
+         */
+        allowed_customer_uuid?: string;
+        /**
+         * Offering attributes (JSON)
+         */
+        attributes?: string;
+        /**
+         * Billable
+         */
+        billable?: boolean;
+        can_create_offering_user?: boolean;
+        /**
+         * Category group UUID
+         */
+        category_group_uuid?: string;
+        /**
+         * Category UUID
+         */
+        category_uuid?: string;
+        /**
+         * Consumer customer UUID
+         */
+        consumer_customer_uuid?: string;
+        /**
+         * Created after
+         */
+        created?: string;
+        /**
+         * Created before
+         */
+        created_before?: string;
+        /**
+         * Customer URL
+         */
+        customer?: string;
+        /**
+         * Customer UUID
+         */
+        customer_uuid?: string;
+        /**
+         * Description contains
+         */
+        description?: string;
+        /**
+         * Comma-separated facet names to compute; all by default.
+         */
+        facet?: string;
+        /**
+         * Most values returned per facet, by count (default 100, at most 1000).
+         */
+        facet_limit?: number;
+        /**
+         * Keep only values whose label contains this text (at most 100 characters).
+         */
+        facet_q?: string;
+        /**
+         * Has Active Terms of Service
+         */
+        has_active_terms_of_service?: boolean;
+        /**
+         * Has Terms of Service
+         */
+        has_terms_of_service?: boolean;
+        /**
+         * Keyword
+         */
+        keyword?: string;
+        /**
+         * Modified after
+         */
+        modified?: string;
+        /**
+         * Modified before
+         */
+        modified_before?: string;
+        /**
+         * Name
+         */
+        name?: string;
+        /**
+         * Name (exact)
+         */
+        name_exact?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<ProviderOfferingDetailsOEnum>;
+        /**
+         * Offering group UUID
+         */
+        offering_group_uuid?: string;
+        /**
+         * Offerings that can be requested through a call right now: accepted on an active call with a round that is open, and covered by a resource template when the call defines any.
+         */
+        open_for_proposals?: boolean;
+        /**
+         * Organization group UUID
+         */
+        organization_group_uuid?: string;
+        /**
+         * Parent offering UUID
+         */
+        parent_uuid?: string;
+        /**
+         * Project UUID
+         */
+        project_uuid?: string;
+        /**
+         * Search by offering name, slug or description
+         */
+        query?: string;
+        /**
+         * Resource customer UUID
+         */
+        resource_customer_uuid?: string;
+        /**
+         * Resource project UUID
+         */
+        resource_project_uuid?: string;
+        /**
+         * Scope UUID
+         */
+        scope_uuid?: string;
+        /**
+         * Service manager UUID
+         */
+        service_manager_uuid?: string;
+        /**
+         * Shared
+         */
+        shared?: boolean;
+        /**
+         * Slug
+         */
+        slug?: string;
+        /**
+         * Offering state
+         *
+         *
+         */
+        state?: Array<OfferingState>;
+        /**
+         * Tag UUID (OR logic)
+         */
+        tag?: Array<string>;
+        /**
+         * Tag name (OR logic)
+         */
+        tag_name?: Array<string>;
+        /**
+         * Tag names with AND logic (comma-separated)
+         */
+        tag_names_and?: string;
+        /**
+         * Tag UUIDs with AND logic (comma-separated)
+         */
+        tags_and?: string;
+        /**
+         * Offering type
+         */
+        type?: Array<string>;
+        /**
+         * User Has Consent
+         */
+        user_has_consent?: boolean;
+        /**
+         * User Has Offering User
+         */
+        user_has_offering_user?: boolean;
+        /**
+         * Comma-separated offering UUIDs
+         */
+        uuid_list?: string;
+    };
+    url: '/api/marketplace-public-offerings/facets/';
+};
+
+export type MarketplacePublicOfferingsFacetsListResponses = {
+    200: Array<Facet>;
+};
+
+export type MarketplacePublicOfferingsFacetsListResponse = MarketplacePublicOfferingsFacetsListResponses[keyof MarketplacePublicOfferingsFacetsListResponses];
 
 export type MarketplaceRelatedCustomersListData = {
     body?: never;
@@ -80918,6 +81791,216 @@ export type MarketplaceResourcesUpdateUserResponses = {
 
 export type MarketplaceResourcesUpdateUserResponse = MarketplaceResourcesUpdateUserResponses[keyof MarketplaceResourcesUpdateUserResponses];
 
+export type MarketplaceResourcesFacetsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Backend ID
+         */
+        backend_id?: string;
+        /**
+         * Category UUID
+         */
+        category_uuid?: string;
+        /**
+         * Filter by exact number of components
+         */
+        component_count?: number;
+        /**
+         * Created after
+         */
+        created?: string;
+        /**
+         * Created before
+         */
+        created_before?: string;
+        /**
+         * Customer URL
+         */
+        customer?: string;
+        /**
+         * Customer UUID
+         */
+        customer_uuid?: string;
+        /**
+         * Downscaled
+         */
+        downscaled?: boolean;
+        /**
+         * Comma-separated facet names to compute; all by default.
+         */
+        facet?: string;
+        /**
+         * Most values returned per facet, by count (default 100, at most 1000).
+         */
+        facet_limit?: number;
+        /**
+         * Keep only values whose label contains this text (at most 100 characters).
+         */
+        facet_q?: string;
+        /**
+         * Flavor name
+         */
+        flavor_name?: string;
+        /**
+         * Has termination date
+         */
+        has_terminate_date?: boolean;
+        /**
+         * Image name
+         */
+        image_name?: string;
+        /**
+         * Filter by attached state
+         */
+        is_attached?: boolean;
+        /**
+         * LEXIS links supported
+         */
+        lexis_links_supported?: boolean;
+        /**
+         * Filter by limit-based offerings
+         */
+        limit_based?: boolean;
+        /**
+         * Filter by exact number of limit-based components
+         */
+        limit_component_count?: number;
+        /**
+         * Modified after
+         */
+        modified?: string;
+        /**
+         * Modified before
+         */
+        modified_before?: string;
+        /**
+         * Name
+         */
+        name?: string;
+        /**
+         * Name (exact)
+         */
+        name_exact?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<ResourceOEnum>;
+        offering?: string;
+        /**
+         * Offering billable
+         */
+        offering_billable?: boolean;
+        /**
+         * Offering shared
+         */
+        offering_shared?: boolean;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        offering_slug?: Array<string>;
+        /**
+         * Offering type
+         */
+        offering_type?: string;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        offering_uuid?: Array<string>;
+        /**
+         * Filter resources with only limit-based components
+         */
+        only_limit_based?: boolean;
+        /**
+         * Filter resources with only usage-based components
+         */
+        only_usage_based?: boolean;
+        /**
+         * Order state
+         *
+         *
+         */
+        order_state?: Array<OrderState>;
+        parent_offering_uuid?: string;
+        /**
+         * Paused
+         */
+        paused?: boolean;
+        /**
+         * Plan UUID
+         */
+        plan_uuid?: string;
+        /**
+         * Project name
+         */
+        project_name?: string;
+        /**
+         * Project UUID
+         */
+        project_uuid?: string;
+        /**
+         * Provider UUID
+         */
+        provider_uuid?: string;
+        /**
+         * Search by resource UUID, name, slug, backend ID, effective ID, IPs or hypervisor
+         */
+        query?: string;
+        /**
+         * Resource attributes (JSON)
+         */
+        resource_attributes?: string;
+        /**
+         * Restrict member access
+         */
+        restrict_member_access?: boolean;
+        /**
+         * Runtime state
+         */
+        runtime_state?: string;
+        /**
+         * Filter by scope URL.
+         */
+        scope?: string;
+        /**
+         * Service manager UUID
+         */
+        service_manager_uuid?: string;
+        /**
+         * Slug
+         */
+        slug?: string;
+        /**
+         * Resource state
+         *
+         *
+         */
+        state?: Array<ResourceState>;
+        /**
+         * Filter by usage-based offerings
+         */
+        usage_based?: boolean;
+        /**
+         * Include only resources visible to service providers
+         */
+        visible_to_providers?: boolean;
+        /**
+         * Visible to username
+         */
+        visible_to_username?: string;
+    };
+    url: '/api/marketplace-resources/facets/';
+};
+
+export type MarketplaceResourcesFacetsListResponses = {
+    200: Array<Facet>;
+};
+
+export type MarketplaceResourcesFacetsListResponse = MarketplaceResourcesFacetsListResponses[keyof MarketplaceResourcesFacetsListResponses];
+
 export type MarketplaceResourcesSuggestNameData = {
     body: ResourceSuggestNameRequest;
     path?: never;
@@ -83580,6 +84663,207 @@ export type MarketplaceServiceProvidersOfferingsCountResponses = {
      */
     200: unknown;
 };
+
+export type MarketplaceServiceProvidersOfferingsFacetsListData = {
+    body?: never;
+    path: {
+        service_provider_uuid: string;
+    };
+    query?: {
+        /**
+         * Only offerings the current user can order
+         */
+        accessible?: boolean;
+        /**
+         * Deprecated: offerings accepted on an active call, regardless of whether a proposal can actually be submitted for them. Use open_for_proposals instead.
+         */
+        accessible_via_calls?: boolean;
+        /**
+         * Allowed customer UUID
+         */
+        allowed_customer_uuid?: string;
+        /**
+         * Offering attributes (JSON)
+         */
+        attributes?: string;
+        /**
+         * Billable
+         */
+        billable?: boolean;
+        can_create_offering_user?: boolean;
+        /**
+         * Category group UUID
+         */
+        category_group_uuid?: string;
+        /**
+         * Category UUID
+         */
+        category_uuid?: string;
+        /**
+         * Consumer customer UUID
+         */
+        consumer_customer_uuid?: string;
+        /**
+         * Created after
+         */
+        created?: string;
+        /**
+         * Created before
+         */
+        created_before?: string;
+        /**
+         * Customer URL
+         */
+        customer?: string;
+        /**
+         * Customer UUID
+         */
+        customer_uuid?: string;
+        /**
+         * Description contains
+         */
+        description?: string;
+        /**
+         * Comma-separated facet names to compute; all by default.
+         */
+        facet?: string;
+        /**
+         * Most values returned per facet, by count (default 100, at most 1000).
+         */
+        facet_limit?: number;
+        /**
+         * Keep only values whose label contains this text (at most 100 characters).
+         */
+        facet_q?: string;
+        /**
+         * Has Active Terms of Service
+         */
+        has_active_terms_of_service?: boolean;
+        /**
+         * Has Terms of Service
+         */
+        has_terms_of_service?: boolean;
+        /**
+         * Keyword
+         */
+        keyword?: string;
+        /**
+         * Modified after
+         */
+        modified?: string;
+        /**
+         * Modified before
+         */
+        modified_before?: string;
+        /**
+         * Name
+         */
+        name?: string;
+        /**
+         * Name (exact)
+         */
+        name_exact?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<ProviderOfferingDetailsOEnum>;
+        /**
+         * Offering group UUID
+         */
+        offering_group_uuid?: string;
+        /**
+         * Offerings that can be requested through a call right now: accepted on an active call with a round that is open, and covered by a resource template when the call defines any.
+         */
+        open_for_proposals?: boolean;
+        /**
+         * Organization group UUID
+         */
+        organization_group_uuid?: string;
+        /**
+         * Parent offering UUID
+         */
+        parent_uuid?: string;
+        /**
+         * Project UUID
+         */
+        project_uuid?: string;
+        /**
+         * Search by offering name, slug or description
+         */
+        query?: string;
+        /**
+         * Resource customer UUID
+         */
+        resource_customer_uuid?: string;
+        /**
+         * Resource project UUID
+         */
+        resource_project_uuid?: string;
+        /**
+         * Scope UUID
+         */
+        scope_uuid?: string;
+        /**
+         * Service manager UUID
+         */
+        service_manager_uuid?: string;
+        /**
+         * Shared
+         */
+        shared?: boolean;
+        /**
+         * Slug
+         */
+        slug?: string;
+        /**
+         * Offering state
+         *
+         *
+         */
+        state?: Array<OfferingState>;
+        /**
+         * Tag UUID (OR logic)
+         */
+        tag?: Array<string>;
+        /**
+         * Tag name (OR logic)
+         */
+        tag_name?: Array<string>;
+        /**
+         * Tag names with AND logic (comma-separated)
+         */
+        tag_names_and?: string;
+        /**
+         * Tag UUIDs with AND logic (comma-separated)
+         */
+        tags_and?: string;
+        /**
+         * Offering type
+         */
+        type?: Array<string>;
+        /**
+         * User Has Consent
+         */
+        user_has_consent?: boolean;
+        /**
+         * User Has Offering User
+         */
+        user_has_offering_user?: boolean;
+        /**
+         * Comma-separated offering UUIDs
+         */
+        uuid_list?: string;
+    };
+    url: '/api/marketplace-service-providers/{service_provider_uuid}/offerings/facets/';
+};
+
+export type MarketplaceServiceProvidersOfferingsFacetsListResponses = {
+    200: Array<Facet>;
+};
+
+export type MarketplaceServiceProvidersOfferingsFacetsListResponse = MarketplaceServiceProvidersOfferingsFacetsListResponses[keyof MarketplaceServiceProvidersOfferingsFacetsListResponses];
 
 export type MarketplaceServiceProvidersOfferingsTypesListData = {
     body?: never;
@@ -86579,6 +87863,10 @@ export type MarketplaceSoftwarePackagesListData = {
          */
         catalog_name?: string;
         /**
+         * Filter packages by exact catalog name
+         */
+        catalog_name_exact?: string;
+        /**
          * Filter packages by catalog type (binary_runtime, source_package, package_manager)
          *
          *
@@ -86592,6 +87880,10 @@ export type MarketplaceSoftwarePackagesListData = {
          * Filter packages by catalog version (case-insensitive partial match)
          */
         catalog_version?: string;
+        /**
+         * Filter packages by exact catalog version
+         */
+        catalog_version_exact?: string;
         /**
          * Filter packages by category (e.g., bio, hpc, chemistry)
          */
@@ -86697,6 +87989,10 @@ export type MarketplaceSoftwarePackagesCountData = {
          */
         catalog_name?: string;
         /**
+         * Filter packages by exact catalog name
+         */
+        catalog_name_exact?: string;
+        /**
          * Filter packages by catalog type (binary_runtime, source_package, package_manager)
          *
          *
@@ -86710,6 +88006,10 @@ export type MarketplaceSoftwarePackagesCountData = {
          * Filter packages by catalog version (case-insensitive partial match)
          */
         catalog_version?: string;
+        /**
+         * Filter packages by exact catalog version
+         */
+        catalog_version_exact?: string;
         /**
          * Filter packages by category (e.g., bio, hpc, chemistry)
          */
@@ -86882,6 +88182,136 @@ export type MarketplaceSoftwarePackagesUpdateResponses = {
 };
 
 export type MarketplaceSoftwarePackagesUpdateResponse = MarketplaceSoftwarePackagesUpdateResponses[keyof MarketplaceSoftwarePackagesUpdateResponses];
+
+export type MarketplaceSoftwarePackagesFacetsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Filter packages by catalog name (case-insensitive partial match)
+         */
+        catalog_name?: string;
+        /**
+         * Filter packages by exact catalog name
+         */
+        catalog_name_exact?: string;
+        /**
+         * Filter packages by catalog type (binary_runtime, source_package, package_manager)
+         *
+         *
+         */
+        catalog_type?: CatalogTypeEnum;
+        /**
+         * Filter packages from a specific software catalog
+         */
+        catalog_uuid?: string;
+        /**
+         * Filter packages by catalog version (case-insensitive partial match)
+         */
+        catalog_version?: string;
+        /**
+         * Filter packages by exact catalog version
+         */
+        catalog_version_exact?: string;
+        /**
+         * Filter packages by category (e.g., bio, hpc, chemistry)
+         */
+        category?: string;
+        /**
+         * Filter packages available for any of the given CPU families (e.g., x86_64, aarch64)
+         */
+        cpu_family?: Array<string>;
+        /**
+         * Filter packages available for any of the given CPU microarchitectures (e.g., generic, amd/zen3, intel/sapphirerapids)
+         */
+        cpu_microarchitecture?: Array<string>;
+        /**
+         * Filter packages by description (case-insensitive partial match)
+         */
+        description?: string;
+        /**
+         * Filter packages having extensions with a specific name
+         */
+        extension_name?: string;
+        /**
+         * Filter packages having extensions of a specific type (e.g., 'python')
+         */
+        extension_type?: string;
+        /**
+         * Comma-separated facet names to compute; all by default.
+         */
+        facet?: string;
+        /**
+         * Most values returned per facet, by count (default 100, at most 1000).
+         */
+        facet_limit?: number;
+        /**
+         * Keep only values whose label contains this text (at most 100 characters).
+         */
+        facet_q?: string;
+        /**
+         * Filter packages by GPU architecture (e.g., nvidia/cc90)
+         */
+        gpu_arch?: string;
+        /**
+         * Filter packages that have GPU-enabled builds
+         */
+        has_gpu?: boolean;
+        /**
+         * Filter packages that have a specific version
+         */
+        has_version?: string;
+        /**
+         * Filter packages that are extensions of other packages
+         */
+        is_extension?: boolean;
+        /**
+         * Filter packages by license (e.g., GPL-3.0, MIT)
+         */
+        license?: string;
+        /**
+         * Filter packages by name (case-insensitive partial match)
+         */
+        name?: string;
+        /**
+         * Filter packages by exact name (case-insensitive)
+         */
+        name_exact?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<SoftwarePackageOEnum>;
+        /**
+         * Filter packages available for a specific offering
+         */
+        offering_uuid?: string;
+        /**
+         * Filter extension packages belonging to a specific parent package
+         */
+        parent_software_uuid?: string;
+        /**
+         * Query packages by name, description, or version (case-insensitive partial match)
+         */
+        query?: string;
+        /**
+         * Filter packages compatible with a specific toolchain family (e.g., foss_2022b)
+         */
+        toolchain_families_compatibility?: string;
+        /**
+         * Filter packages by toolchain name (e.g., foss, gfbf)
+         */
+        toolchain_name?: string;
+    };
+    url: '/api/marketplace-software-packages/facets/';
+};
+
+export type MarketplaceSoftwarePackagesFacetsListResponses = {
+    200: Array<Facet>;
+};
+
+export type MarketplaceSoftwarePackagesFacetsListResponse = MarketplaceSoftwarePackagesFacetsListResponses[keyof MarketplaceSoftwarePackagesFacetsListResponses];
 
 export type MarketplaceSoftwareTargetsListData = {
     body?: never;
@@ -107420,6 +108850,21 @@ export type ProposalProposalsOpenFinalReportResponses = {
 
 export type ProposalProposalsOpenFinalReportResponse = ProposalProposalsOpenFinalReportResponses[keyof ProposalProposalsOpenFinalReportResponses];
 
+export type ProposalProposalsPdfRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-proposals/{uuid}/pdf/';
+};
+
+export type ProposalProposalsPdfRetrieveResponses = {
+    200: Blob | File;
+};
+
+export type ProposalProposalsPdfRetrieveResponse = ProposalProposalsPdfRetrieveResponses[keyof ProposalProposalsPdfRetrieveResponses];
+
 export type ProposalProposalsPreviewAsData = {
     body: ProposalPreviewAsRequest;
     path: {
@@ -108677,6 +110122,94 @@ export type ProposalProposalsDashboardStatsRetrieveResponses = {
 };
 
 export type ProposalProposalsDashboardStatsRetrieveResponse = ProposalProposalsDashboardStatsRetrieveResponses[keyof ProposalProposalsDashboardStatsRetrieveResponses];
+
+export type ProposalProposalsFacetsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Only proposals the current user holds this role on
+         *
+         *
+         */
+        as_role?: ResponsibleRoleEnum;
+        call_uuid?: string;
+        /**
+         * Only proposals waiting on changes asked of their applicant
+         */
+        changes_requested?: boolean;
+        created_by_uuid?: string;
+        /**
+         * Comma-separated facet names to compute; all by default.
+         */
+        facet?: string;
+        /**
+         * Most values returned per facet, by count (default 100, at most 1000).
+         */
+        facet_limit?: number;
+        /**
+         * Keep only values whose label contains this text (at most 100 characters).
+         */
+        facet_q?: string;
+        /**
+         * Only proposals whose final report is past its due date
+         */
+        final_report_overdue?: boolean;
+        /**
+         * Only proposals the current user takes part in, leaving out those read only through staff or support access
+         */
+        involved?: boolean;
+        my_proposals?: boolean;
+        name?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<ProposalOEnum>;
+        organization_uuid?: string;
+        /**
+         * Panel UUID
+         */
+        panel_uuid?: string;
+        /**
+         * Where an accepted proposal's extension or final report stands
+         *
+         *
+         */
+        post_award_status?: Array<PostAwardStatusEnum>;
+        round?: string;
+        round_uuid?: string;
+        /**
+         * Only proposals with a run of this phase
+         *
+         *
+         */
+        run_phase?: ProposalRunPhaseEnum;
+        /**
+         * Only proposals with a run in this state
+         *
+         *
+         */
+        run_state?: ProposalRunStateEnum;
+        /**
+         * Slug
+         */
+        slug?: string;
+        state?: Array<ProposalStates>;
+        /**
+         * Multiple values may be separated by commas.
+         */
+        workflow_step?: Array<string>;
+    };
+    url: '/api/proposal-proposals/facets/';
+};
+
+export type ProposalProposalsFacetsListResponses = {
+    200: Array<Facet>;
+};
+
+export type ProposalProposalsFacetsListResponse = ProposalProposalsFacetsListResponses[keyof ProposalProposalsFacetsListResponses];
 
 export type ProposalProtectedCallsListData = {
     body?: never;
@@ -112261,6 +113794,60 @@ export type ProposalRequestedOfferingsTeamStepsListResponses = {
 
 export type ProposalRequestedOfferingsTeamStepsListResponse = ProposalRequestedOfferingsTeamStepsListResponses[keyof ProposalRequestedOfferingsTeamStepsListResponses];
 
+export type ProposalRequestedOfferingsFacetsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Call
+         */
+        call?: string;
+        /**
+         * Call state
+         *
+         *
+         */
+        call_state?: Array<CallStates>;
+        call_uuid?: string;
+        /**
+         * Comma-separated facet names to compute; all by default.
+         */
+        facet?: string;
+        /**
+         * Most values returned per facet, by count (default 100, at most 1000).
+         */
+        facet_limit?: number;
+        /**
+         * Keep only values whose label contains this text (at most 100 characters).
+         */
+        facet_q?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<ProviderRequestedOfferingOEnum>;
+        /**
+         * Offering
+         */
+        offering?: string;
+        offering_uuid?: string;
+        organization_uuid?: string;
+        /**
+         * Provider
+         */
+        provider_uuid?: string;
+        state?: Array<RequestedOfferingStates>;
+    };
+    url: '/api/proposal-requested-offerings/facets/';
+};
+
+export type ProposalRequestedOfferingsFacetsListResponses = {
+    200: Array<Facet>;
+};
+
+export type ProposalRequestedOfferingsFacetsListResponse = ProposalRequestedOfferingsFacetsListResponses[keyof ProposalRequestedOfferingsFacetsListResponses];
+
 export type ProposalRequestedOfferingsTeamSlotsListData = {
     body?: never;
     path?: never;
@@ -112713,6 +114300,54 @@ export type ProposalReviewsDashboardStatsRetrieveResponses = {
 };
 
 export type ProposalReviewsDashboardStatsRetrieveResponse = ProposalReviewsDashboardStatsRetrieveResponses[keyof ProposalReviewsDashboardStatsRetrieveResponses];
+
+export type ProposalReviewsFacetsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        call_uuid?: string;
+        /**
+         * Only reviews in progress whose deadline is at most this many days away, including ones already past it. Implies state=in_review.
+         */
+        due_within_days?: number;
+        /**
+         * Comma-separated facet names to compute; all by default.
+         */
+        facet?: string;
+        /**
+         * Most values returned per facet, by count (default 100, at most 1000).
+         */
+        facet_limit?: number;
+        /**
+         * Keep only values whose label contains this text (at most 100 characters).
+         */
+        facet_q?: string;
+        /**
+         * Only reviews on calls where the current user is call manager, the same scope as the call manager dashboard.
+         */
+        managed_calls_only?: boolean;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<ProposalReviewOEnum>;
+        organization_uuid?: string;
+        proposal?: string;
+        proposal_name?: string;
+        proposal_uuid?: string;
+        reviewer_uuid?: string;
+        round_uuid?: string;
+        state?: Array<ProposalReviewStateEnum>;
+    };
+    url: '/api/proposal-reviews/facets/';
+};
+
+export type ProposalReviewsFacetsListResponses = {
+    200: Array<Facet>;
+};
+
+export type ProposalReviewsFacetsListResponse = ProposalReviewsFacetsListResponses[keyof ProposalReviewsFacetsListResponses];
 
 export type ProposalRoleAssignmentsListData = {
     body?: never;
@@ -113582,6 +115217,45 @@ export type ProviderTicketsResolveResponses = {
 };
 
 export type ProviderTicketsResolveResponse = ProviderTicketsResolveResponses[keyof ProviderTicketsResolveResponses];
+
+export type ProviderTicketsFacetsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Comma-separated facet names to compute; all by default.
+         */
+        facet?: string;
+        /**
+         * Most values returned per facet, by count (default 100, at most 1000).
+         */
+        facet_limit?: number;
+        /**
+         * Keep only values whose label contains this text (at most 100 characters).
+         */
+        facet_q?: string;
+        is_escalated?: boolean;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<ProviderTicketOEnum>;
+        priority?: string;
+        provider_assignee?: string;
+        provider_helpdesk_uuid?: string;
+        sla_breached?: boolean;
+        status?: string;
+        summary?: string;
+    };
+    url: '/api/provider-tickets/facets/';
+};
+
+export type ProviderTicketsFacetsListResponses = {
+    200: Array<Facet>;
+};
+
+export type ProviderTicketsFacetsListResponse = ProviderTicketsFacetsListResponses[keyof ProviderTicketsFacetsListResponses];
 
 export type ProviderTicketsStatsRetrieveData = {
     body?: never;
@@ -121207,6 +122881,92 @@ export type SupportIssuesBulkUpdateResponses = {
      */
     200: unknown;
 };
+
+export type SupportIssuesFacetsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        assignee?: string;
+        assignee_name?: string;
+        caller?: string;
+        /**
+         * Caller full name contains
+         */
+        caller_full_name?: string;
+        customer?: string;
+        customer_uuid?: string;
+        /**
+         * Comma-separated facet names to compute; all by default.
+         */
+        facet?: string;
+        /**
+         * Most values returned per facet, by count (default 100, at most 1000).
+         */
+        facet_limit?: number;
+        /**
+         * Keep only values whose label contains this text (at most 100 characters).
+         */
+        facet_q?: string;
+        is_escalated?: boolean;
+        /**
+         * Has not reached a terminal status
+         */
+        is_open?: boolean;
+        /**
+         * Is a parent issue
+         */
+        is_parent?: boolean;
+        /**
+         * Has been routed to provider
+         */
+        is_routed?: boolean;
+        key?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<IssueOEnum>;
+        project?: string;
+        project_uuid?: string;
+        provider_uuid?: string;
+        /**
+         * Summary or key contains
+         */
+        query?: string;
+        remote_id?: string;
+        reporter?: string;
+        reporter_name?: string;
+        resolution_year_month?: string;
+        /**
+         * Filter by resource URL.
+         */
+        resource?: string;
+        /**
+         * Resource external IP
+         */
+        resource_external_ip?: string;
+        /**
+         * Resource internal IP
+         */
+        resource_internal_ip?: string;
+        /**
+         * Resource UUID
+         */
+        resource_uuid?: string;
+        sla_breached?: boolean;
+        status?: string;
+        summary?: string;
+        type?: string;
+    };
+    url: '/api/support-issues/facets/';
+};
+
+export type SupportIssuesFacetsListResponses = {
+    200: Array<Facet>;
+};
+
+export type SupportIssuesFacetsListResponse = SupportIssuesFacetsListResponses[keyof SupportIssuesFacetsListResponses];
 
 export type SupportJiraWebhookData = {
     body: WebHookReceiverRequest;
