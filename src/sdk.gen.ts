@@ -10812,7 +10812,7 @@ export const marketplaceDemoPresetsInfoCount = <ThrowOnError extends boolean = t
 /**
  * List demo presets
  *
- * Returns a list of available demo data presets. Staff access only.
+ * Returns the demo data presets this deployment offers. Staff access only; answers 404 unless the deployment enables demo presets.
  */
 export const marketplaceDemoPresetsListList = <ThrowOnError extends boolean = true>(options?: Options<MarketplaceDemoPresetsListListData, ThrowOnError>) => (options?.client ?? client).get<MarketplaceDemoPresetsListListResponses, unknown, ThrowOnError>({
     security: [
