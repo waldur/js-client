@@ -7591,6 +7591,7 @@ export type ConstanceSettings = {
     DISABLED_OFFERING_TYPES?: Array<OfferingTypeEnum | BlankEnum>;
     ONBOARDING_VALIDATION_METHODS?: Array<OnboardingValidationEnum | BlankEnum>;
     ONBOARDING_VERIFICATION_EXPIRY_HOURS?: number;
+    ONBOARDING_NOTIFICATION_EMAILS?: string;
     ONBOARDING_ARIREGISTER_BASE_URL?: string;
     ONBOARDING_ARIREGISTER_USERNAME?: string;
     ONBOARDING_ARIREGISTER_PASSWORD?: string;
@@ -7957,6 +7958,7 @@ export type ConstanceSettingsRequest = {
     DISABLED_OFFERING_TYPES?: Array<OfferingTypeEnum | BlankEnum>;
     ONBOARDING_VALIDATION_METHODS?: Array<OnboardingValidationEnum | BlankEnum>;
     ONBOARDING_VERIFICATION_EXPIRY_HOURS?: number;
+    ONBOARDING_NOTIFICATION_EMAILS?: string;
     ONBOARDING_ARIREGISTER_BASE_URL?: string;
     ONBOARDING_ARIREGISTER_USERNAME?: string;
     ONBOARDING_ARIREGISTER_PASSWORD?: string;
@@ -44408,6 +44410,7 @@ export type ConstanceSettingsRequestForm = {
     DISABLED_OFFERING_TYPES?: Array<OfferingTypeEnum | BlankEnum>;
     ONBOARDING_VALIDATION_METHODS?: Array<OnboardingValidationEnum | BlankEnum>;
     ONBOARDING_VERIFICATION_EXPIRY_HOURS?: number;
+    ONBOARDING_NOTIFICATION_EMAILS?: string;
     ONBOARDING_ARIREGISTER_BASE_URL?: string;
     ONBOARDING_ARIREGISTER_USERNAME?: string;
     ONBOARDING_ARIREGISTER_PASSWORD?: string;
@@ -44774,6 +44777,7 @@ export type ConstanceSettingsRequestMultipart = {
     DISABLED_OFFERING_TYPES?: Array<OfferingTypeEnum | BlankEnum>;
     ONBOARDING_VALIDATION_METHODS?: Array<OnboardingValidationEnum | BlankEnum>;
     ONBOARDING_VERIFICATION_EXPIRY_HOURS?: number;
+    ONBOARDING_NOTIFICATION_EMAILS?: string;
     ONBOARDING_ARIREGISTER_BASE_URL?: string;
     ONBOARDING_ARIREGISTER_USERNAME?: string;
     ONBOARDING_ARIREGISTER_PASSWORD?: string;
