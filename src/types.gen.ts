@@ -2635,6 +2635,8 @@ export type AuthTypeEnum = 'password' | 'v3applicationcredential';
 
 export type AuthorizedViaEnum = 'staff' | 'support' | 'customer_owner' | 'offering_manager' | 'identity_manager' | 'scope_role' | 'self';
 
+export type AutomaticDecisionGuardEnum = 'earlier_step' | 'provider_fulfilment';
+
 export type AvailabilityZoneResponse = {
     name: string;
     state: string;
@@ -3514,6 +3516,12 @@ export type BookingResource = {
      * Whether the resource owns any API keys, so the portal can offer key management without knowing which backend serves the resource.
      */
     readonly has_api_keys: boolean;
+    /**
+     * How many keys the resource has in each state, deleted ones left out, as {state: count}. States with no keys are absent.
+     */
+    readonly api_key_counts: {
+        [key: string]: number;
+    };
     offering_account_settings: OfferingAccountSettings;
     /**
      * Resource option values shown as the limits of usage-based components. Display only: not stored in limits, billed or enforced.
@@ -5135,6 +5143,10 @@ export type CallWorkflowStep = {
      */
     decides_automatically?: boolean;
     /**
+     * Automatic decision: what stops an unsuitable proposal -- an enabled earlier step that can reject it (earlier_step), or a person at the provider acting on every order the award places, on every accepted offering of the call (provider_fulfilment).
+     */
+    automatic_decision_guard?: AutomaticDecisionGuardEnum;
+    /**
      * Allocation decision: when a granted proposal takes effect — immediately (on_decision) or on the round's allocation date (fixed_date).
      */
     allocation_time?: AllocationTimeEnum;
@@ -5382,6 +5394,10 @@ export type CallWorkflowStepRequest = {
      * Allocation decision: approve on reaching this step, as the system, with the award as requested; fall back to the completer when the approval is refused.
      */
     decides_automatically?: boolean;
+    /**
+     * Automatic decision: what stops an unsuitable proposal -- an enabled earlier step that can reject it (earlier_step), or a person at the provider acting on every order the award places, on every accepted offering of the call (provider_fulfilment).
+     */
+    automatic_decision_guard?: AutomaticDecisionGuardEnum;
     /**
      * Allocation decision: when a granted proposal takes effect — immediately (on_decision) or on the round's allocation date (fixed_date).
      */
@@ -9738,6 +9754,147 @@ export type DemoPresetLoadResponse = {
     message: string;
     output?: string;
     users?: Array<DemoPresetUser>;
+};
+
+export type DemoPresetPreview = {
+    readonly name: string;
+    readonly title: string;
+    readonly description: string;
+    readonly version: string;
+    readonly entity_counts: {
+        [key: string]: number;
+    };
+    readonly scenarios: Array<string>;
+    /**
+     * The deployment's overlay preset imported after this one, if any.
+     */
+    readonly overlay: string | null;
+    readonly users: Array<DemoPresetPreviewUser>;
+    readonly organizations: Array<DemoPresetPreviewOrganization>;
+    /**
+     * The preset's offerings, grouped by type and category.
+     */
+    readonly offerings: Array<DemoPresetPreviewOfferingGroup>;
+    /**
+     * What the deployment's overlay preset adds after this one.
+     */
+    overlay_contents: DemoPresetPreviewOverlayContents | null;
+    /**
+     * Settings the load changes, and every setting the preset sets.
+     */
+    readonly settings_changes: Array<DemoPresetPreviewSettingChange>;
+    /**
+     * Features the load changes, and every feature the preset sets.
+     */
+    readonly feature_changes: Array<DemoPresetPreviewFeatureChange>;
+    /**
+     * What would not work after the load, such as a feature whose deployment configuration is missing.
+     */
+    readonly warnings: Array<string>;
+};
+
+export type DemoPresetPreviewFeatureChange = {
+    key: string;
+    current_value: boolean;
+    new_value: boolean;
+    /**
+     * Where the value after the load comes from.
+     */
+    source: DemoPresetPreviewFeatureChangeSourceEnum;
+    changed: boolean;
+};
+
+export type DemoPresetPreviewFeatureChangeSourceEnum = 'preset' | 'overlay' | 'default';
+
+export type DemoPresetPreviewOfferingGroup = {
+    type: string;
+    category: string;
+    names: Array<string>;
+};
+
+export type DemoPresetPreviewOrganization = {
+    name: string;
+    projects: Array<DemoPresetPreviewProject>;
+};
+
+export type DemoPresetPreviewOverlayContents = {
+    users: Array<DemoPresetPreviewUser>;
+    organizations: Array<DemoPresetPreviewOrganization>;
+    offerings: Array<DemoPresetPreviewOfferingGroup>;
+};
+
+export type DemoPresetPreviewProject = {
+    name: string;
+    /**
+     * Names of the project's resources.
+     */
+    resources: Array<string>;
+};
+
+export type DemoPresetPreviewRole = {
+    /**
+     * Role name, such as CUSTOMER.OWNER.
+     */
+    role: string;
+    /**
+     * Type of the role's scope, such as structure.customer.
+     */
+    scope_type: string;
+    /**
+     * Name of the role's scope in the preset.
+     */
+    scope_name: string;
+};
+
+export type DemoPresetPreviewSettingChange = {
+    key: string;
+    /**
+     * Null for a secret.
+     */
+    current_value: {
+        [key: string]: unknown;
+    } | null;
+    /**
+     * Value after the load. Null for a secret.
+     */
+    new_value: {
+        [key: string]: unknown;
+    } | null;
+    /**
+     * Where the value after the load comes from: the preset, the deployment's overlay preset, the setting's default, or the deployment, which owns the setting.
+     */
+    source: DemoPresetPreviewSettingChangeSourceEnum;
+    /**
+     * Whether the load changes the value.
+     */
+    changed: boolean;
+    /**
+     * The preset sets a setting the deployment owns; it keeps its value.
+     */
+    skipped: boolean;
+    /**
+     * Values of secrets are never shown.
+     */
+    secret: boolean;
+};
+
+export type DemoPresetPreviewSettingChangeSourceEnum = 'preset' | 'overlay' | 'default' | 'deployment';
+
+export type DemoPresetPreviewUser = {
+    username: string;
+    email: string;
+    full_name: string;
+    is_staff: boolean;
+    is_support: boolean;
+    /**
+     * An inactive user is imported but cannot log in.
+     */
+    is_active: boolean;
+    /**
+     * The preset's password for this user. Never given for staff, support or inactive users, or for the overlay's users.
+     */
+    password: string | null;
+    roles: Array<DemoPresetPreviewRole>;
 };
 
 export type DemoPresetStatus = {
@@ -24765,6 +24922,10 @@ export type PatchedCallWorkflowStepRequest = {
      */
     decides_automatically?: boolean;
     /**
+     * Automatic decision: what stops an unsuitable proposal -- an enabled earlier step that can reject it (earlier_step), or a person at the provider acting on every order the award places, on every accepted offering of the call (provider_fulfilment).
+     */
+    automatic_decision_guard?: AutomaticDecisionGuardEnum;
+    /**
      * Allocation decision: when a granted proposal takes effect — immediately (on_decision) or on the round's allocation date (fixed_date).
      */
     allocation_time?: AllocationTimeEnum;
@@ -26193,6 +26354,10 @@ export type PatchedProtectedCallRequest = {
      * Whether a proposal may request several of the call's resource templates or at most one of them. Cannot be set to single while a draft proposal holds several resource requests.
      */
     resource_template_selection_mode?: ResourceTemplateSelectionModeEnum;
+    /**
+     * Name given to the project an accepted proposal creates. Placeholders: {proposal_name}, {proposal_slug}, {call_prefix}, {call_slug}, {call_name}, {round_start}, {round_slug}, {org_slug}, {year}. Empty means {call_prefix} - {round_start} - {proposal_name}.
+     */
+    project_name_template?: string | null;
     created_by?: string | null;
     reference_code?: string;
     /**
@@ -30156,6 +30321,10 @@ export type ProtectedCall = {
      * Whether a proposal may request several of the call's resource templates or at most one of them. Cannot be set to single while a draft proposal holds several resource requests.
      */
     resource_template_selection_mode?: ResourceTemplateSelectionModeEnum;
+    /**
+     * Name given to the project an accepted proposal creates. Placeholders: {proposal_name}, {proposal_slug}, {call_prefix}, {call_slug}, {call_name}, {round_start}, {round_slug}, {org_slug}, {year}. Empty means {call_prefix} - {round_start} - {proposal_name}.
+     */
+    project_name_template?: string | null;
     created_by?: string | null;
     reference_code?: string;
     /**
@@ -30300,6 +30469,10 @@ export type ProtectedCallRequest = {
      * Whether a proposal may request several of the call's resource templates or at most one of them. Cannot be set to single while a draft proposal holds several resource requests.
      */
     resource_template_selection_mode?: ResourceTemplateSelectionModeEnum;
+    /**
+     * Name given to the project an accepted proposal creates. Placeholders: {proposal_name}, {proposal_slug}, {call_prefix}, {call_slug}, {call_name}, {round_start}, {round_slug}, {org_slug}, {year}. Empty means {call_prefix} - {round_start} - {proposal_name}.
+     */
+    project_name_template?: string | null;
     created_by?: string | null;
     reference_code?: string;
     /**
@@ -31424,6 +31597,10 @@ export type PublicCall = {
      * Whether a proposal may request several of the call's resource templates or at most one of them. Cannot be set to single while a draft proposal holds several resource requests.
      */
     resource_template_selection_mode?: ResourceTemplateSelectionModeEnum;
+    /**
+     * Name given to the project an accepted proposal creates. Placeholders: {proposal_name}, {proposal_slug}, {call_prefix}, {call_slug}, {call_name}, {round_start}, {round_slug}, {org_slug}, {year}. Empty means {call_prefix} - {round_start} - {proposal_name}.
+     */
+    readonly project_name_template: string | null;
 };
 
 export type PublicInvitation = {
@@ -34176,6 +34353,12 @@ export type Resource = {
      * Whether the resource owns any API keys, so the portal can offer key management without knowing which backend serves the resource.
      */
     readonly has_api_keys: boolean;
+    /**
+     * How many keys the resource has in each state, deleted ones left out, as {state: count}. States with no keys are absent.
+     */
+    readonly api_key_counts: {
+        [key: string]: number;
+    };
     offering_account_settings: OfferingAccountSettings;
     /**
      * Resource option values shown as the limits of usage-based components. Display only: not stored in limits, billed or enforced.
@@ -34188,7 +34371,29 @@ export type Resource = {
 export type ResourceApiKey = {
     readonly uuid: string;
     readonly resource_uuid: string;
+    readonly resource_name: string;
     readonly resource_backend_id: string;
+    readonly offering_uuid: string;
+    readonly offering_name: string;
+    /**
+     * The consuming organization.
+     */
+    readonly customer_uuid: string;
+    /**
+     * The consuming organization.
+     */
+    readonly customer_name: string;
+    readonly project_uuid: string;
+    readonly project_name: string;
+    readonly resource_plan_uuid: string | null;
+    /**
+     * The resource's spending limits, per component and period, which cap every key of the resource.
+     */
+    readonly resource_spending_limits: {
+        [key: string]: {
+            [key: string]: number | null;
+        } | null;
+    };
     client_id?: string;
     description?: string;
     state?: ResourceApiKeyState;
@@ -34228,6 +34433,10 @@ export type ResourceApiKey = {
         [key: string]: number;
     } | null;
     readonly usage_period: string | null;
+    /**
+     * What the key's usage this month costs at the unit prices of the resource's plan, without discounts or credits. Zero until the first usage report of the month; recomputed on every report.
+     */
+    readonly estimated_cost: string | null;
     /**
      * Waldur paused the key because its usage reached a limit. Such a key is resumed automatically once its usage is under its limits again: when the period of the limit resets, or when a limit is raised. A total limit never resets, so only raising or clearing it does.
      */
@@ -34291,7 +34500,29 @@ export type ResourceApiKeyState = 'Creating' | 'OK' | 'Updating' | 'Paused' | 'D
 export type ResourceApiKeyStatus = {
     readonly uuid: string;
     readonly resource_uuid: string;
+    readonly resource_name: string;
     readonly resource_backend_id: string;
+    readonly offering_uuid: string;
+    readonly offering_name: string;
+    /**
+     * The consuming organization.
+     */
+    readonly customer_uuid: string;
+    /**
+     * The consuming organization.
+     */
+    readonly customer_name: string;
+    readonly project_uuid: string;
+    readonly project_name: string;
+    readonly resource_plan_uuid: string | null;
+    /**
+     * The resource's spending limits, per component and period, which cap every key of the resource.
+     */
+    readonly resource_spending_limits: {
+        [key: string]: {
+            [key: string]: number | null;
+        } | null;
+    };
     client_id?: string;
     description?: string;
     state?: ResourceApiKeyState;
@@ -34332,6 +34563,10 @@ export type ResourceApiKeyStatus = {
     } | null;
     readonly usage_period: string | null;
     /**
+     * What the key's usage this month costs at the unit prices of the resource's plan, without discounts or credits. Zero until the first usage report of the month; recomputed on every report.
+     */
+    readonly estimated_cost: string | null;
+    /**
      * Waldur paused the key because its usage reached a limit. Such a key is resumed automatically once its usage is under its limits again: when the period of the limit resets, or when a limit is raised. A total limit never resets, so only raising or clearing it does.
      */
     readonly paused_by_limit: boolean | null;
@@ -34360,11 +34595,15 @@ export type ResourceApiKeyUsageRequest = {
 
 export type ResourceApiKeyUsageTotals = {
     /**
-     * Usage per component type in the current month, summed over the resource's keys, deleted ones included.
+     * Usage per component type in the current month, summed over the keys, deleted ones included. Only comparable within one offering.
      */
     usages: {
         [key: string]: number;
     };
+    /**
+     * The keys' estimated cost this month, summed. Unlike the usages it adds up across offerings.
+     */
+    estimated_cost: string;
 };
 
 export type ResourceBackendIdRequest = {
@@ -42096,6 +42335,10 @@ export type WorkflowDescriptionStep = {
     input_steps: Array<string>;
     is_allocation_decision: boolean;
     decides_automatically: boolean;
+    /**
+     * What stops an unsuitable proposal before the automatic decision awards it; null unless the step decides automatically.
+     */
+    automatic_decision_guard: AutomaticDecisionGuardEnum | NullEnum | null;
     allocation_time: string | null;
     include_award_response: boolean;
     allows_change_requests: boolean;
@@ -44756,6 +44999,10 @@ export type ProtectedCallRequestForm = {
      * Whether a proposal may request several of the call's resource templates or at most one of them. Cannot be set to single while a draft proposal holds several resource requests.
      */
     resource_template_selection_mode?: ResourceTemplateSelectionModeEnum;
+    /**
+     * Name given to the project an accepted proposal creates. Placeholders: {proposal_name}, {proposal_slug}, {call_prefix}, {call_slug}, {call_name}, {round_start}, {round_slug}, {org_slug}, {year}. Empty means {call_prefix} - {round_start} - {proposal_name}.
+     */
+    project_name_template?: string | null;
     created_by?: string | null;
     reference_code?: string;
     /**
@@ -44875,6 +45122,10 @@ export type ProtectedCallRequestMultipart = {
      * Whether a proposal may request several of the call's resource templates or at most one of them. Cannot be set to single while a draft proposal holds several resource requests.
      */
     resource_template_selection_mode?: ResourceTemplateSelectionModeEnum;
+    /**
+     * Name given to the project an accepted proposal creates. Placeholders: {proposal_name}, {proposal_slug}, {call_prefix}, {call_slug}, {call_name}, {round_start}, {round_slug}, {org_slug}, {year}. Empty means {call_prefix} - {round_start} - {proposal_name}.
+     */
+    project_name_template?: string | null;
     created_by?: string | null;
     reference_code?: string;
     /**
@@ -44993,6 +45244,10 @@ export type PatchedProtectedCallRequestForm = {
      * Whether a proposal may request several of the call's resource templates or at most one of them. Cannot be set to single while a draft proposal holds several resource requests.
      */
     resource_template_selection_mode?: ResourceTemplateSelectionModeEnum;
+    /**
+     * Name given to the project an accepted proposal creates. Placeholders: {proposal_name}, {proposal_slug}, {call_prefix}, {call_slug}, {call_name}, {round_start}, {round_slug}, {org_slug}, {year}. Empty means {call_prefix} - {round_start} - {proposal_name}.
+     */
+    project_name_template?: string | null;
     created_by?: string | null;
     reference_code?: string;
     /**
@@ -45111,6 +45366,10 @@ export type PatchedProtectedCallRequestMultipart = {
      * Whether a proposal may request several of the call's resource templates or at most one of them. Cannot be set to single while a draft proposal holds several resource requests.
      */
     resource_template_selection_mode?: ResourceTemplateSelectionModeEnum;
+    /**
+     * Name given to the project an accepted proposal creates. Placeholders: {proposal_name}, {proposal_slug}, {call_prefix}, {call_slug}, {call_name}, {round_start}, {round_slug}, {org_slug}, {year}. Empty means {call_prefix} - {round_start} - {proposal_name}.
+     */
+    project_name_template?: string | null;
     created_by?: string | null;
     reference_code?: string;
     /**
@@ -45648,7 +45907,7 @@ export type BackendResourceReqOEnum = '-created' | 'created';
 
 export type OfferingFieldEnum = 'access_url' | 'account_settings' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'billing_mode_components' | 'billing_period_applies' | 'billing_type_classification' | 'can_update_integration' | 'can_update_options' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'compliance_checklist_details' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'default_access_subnets' | 'description' | 'documentation_url' | 'effective_available_limits' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'has_compliance_requirements' | 'helpdesk_url' | 'image' | 'integration_guide' | 'is_accessible' | 'latitude' | 'longitude' | 'name' | 'offering_group' | 'offering_group_title' | 'offering_group_uuid' | 'open_for_proposals' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'profile_name' | 'profile_uuid' | 'project' | 'project_name' | 'project_uuid' | 'qos_profiles' | 'quotas' | 'resource_options' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_resource' | 'scope_resource_name' | 'scope_resource_uuid' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'tags' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'user_has_consent' | 'user_has_offering_user' | 'uuid' | 'vendor_details';
 
-export type BookingResourceFieldEnum = 'attributes' | 'available_actions' | 'backend_id' | 'backend_metadata' | 'can_terminate' | 'category_icon' | 'category_title' | 'category_uuid' | 'consumer_reviewed_by' | 'consumer_reviewed_by_full_name' | 'consumer_reviewed_by_username' | 'created' | 'created_by' | 'created_by_full_name' | 'created_by_username' | 'creation_order' | 'current_usages' | 'customer_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'display_limits' | 'downscaled' | 'effective_id' | 'end_date' | 'end_date_requested_by' | 'end_date_updated_at' | 'endpoints' | 'error_message' | 'error_traceback' | 'has_api_keys' | 'is_limit_based' | 'is_usage_based' | 'last_sync' | 'limit_usage' | 'limits' | 'modified' | 'name' | 'offering' | 'offering_account_settings' | 'offering_backend_id' | 'offering_billable' | 'offering_components' | 'offering_description' | 'offering_image' | 'offering_name' | 'offering_plugin_options' | 'offering_shared' | 'offering_slug' | 'offering_state' | 'offering_thumbnail' | 'offering_type' | 'offering_uuid' | 'options' | 'order_in_progress' | 'parent_name' | 'parent_offering_name' | 'parent_offering_slug' | 'parent_offering_uuid' | 'parent_uuid' | 'paused' | 'plan' | 'plan_description' | 'plan_name' | 'plan_unit' | 'plan_uuid' | 'prepaid_total_component_types' | 'project' | 'project_description' | 'project_effective_end_date' | 'project_end_date' | 'project_end_date_requested_by' | 'project_is_in_grace_period' | 'project_name' | 'project_slug' | 'project_start_date' | 'project_uuid' | 'provider_description' | 'provider_name' | 'provider_slug' | 'provider_uuid' | 'renewal_date' | 'report' | 'resource_effective_end_date' | 'resource_type' | 'resource_uuid' | 'restrict_member_access' | 'scope' | 'service_settings_uuid' | 'slots' | 'slug' | 'spending_limit_status' | 'spending_limits' | 'state' | 'terminated_at' | 'url' | 'usage_limit_restriction' | 'usage_limit_resumes_at' | 'user_requires_reconsent' | 'username' | 'uuid';
+export type BookingResourceFieldEnum = 'api_key_counts' | 'attributes' | 'available_actions' | 'backend_id' | 'backend_metadata' | 'can_terminate' | 'category_icon' | 'category_title' | 'category_uuid' | 'consumer_reviewed_by' | 'consumer_reviewed_by_full_name' | 'consumer_reviewed_by_username' | 'created' | 'created_by' | 'created_by_full_name' | 'created_by_username' | 'creation_order' | 'current_usages' | 'customer_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'display_limits' | 'downscaled' | 'effective_id' | 'end_date' | 'end_date_requested_by' | 'end_date_updated_at' | 'endpoints' | 'error_message' | 'error_traceback' | 'has_api_keys' | 'is_limit_based' | 'is_usage_based' | 'last_sync' | 'limit_usage' | 'limits' | 'modified' | 'name' | 'offering' | 'offering_account_settings' | 'offering_backend_id' | 'offering_billable' | 'offering_components' | 'offering_description' | 'offering_image' | 'offering_name' | 'offering_plugin_options' | 'offering_shared' | 'offering_slug' | 'offering_state' | 'offering_thumbnail' | 'offering_type' | 'offering_uuid' | 'options' | 'order_in_progress' | 'parent_name' | 'parent_offering_name' | 'parent_offering_slug' | 'parent_offering_uuid' | 'parent_uuid' | 'paused' | 'plan' | 'plan_description' | 'plan_name' | 'plan_unit' | 'plan_uuid' | 'prepaid_total_component_types' | 'project' | 'project_description' | 'project_effective_end_date' | 'project_end_date' | 'project_end_date_requested_by' | 'project_is_in_grace_period' | 'project_name' | 'project_slug' | 'project_start_date' | 'project_uuid' | 'provider_description' | 'provider_name' | 'provider_slug' | 'provider_uuid' | 'renewal_date' | 'report' | 'resource_effective_end_date' | 'resource_type' | 'resource_uuid' | 'restrict_member_access' | 'scope' | 'service_settings_uuid' | 'slots' | 'slug' | 'spending_limit_status' | 'spending_limits' | 'state' | 'terminated_at' | 'url' | 'usage_limit_restriction' | 'usage_limit_resumes_at' | 'user_requires_reconsent' | 'username' | 'uuid';
 
 export type BookingResourceOEnum = '-created' | '-name' | '-schedules' | '-type' | 'created' | 'name' | 'schedules' | 'type';
 
@@ -45742,7 +46001,7 @@ export type MaintenanceAnnouncementOEnum = '-created' | '-name' | '-overrun_minu
 
 export type MaintenanceAnnouncementTemplateOEnum = '-created' | '-name' | 'created' | 'name';
 
-export type ResourceFieldEnum = 'attributes' | 'available_actions' | 'backend_id' | 'backend_metadata' | 'can_terminate' | 'category_icon' | 'category_title' | 'category_uuid' | 'created' | 'creation_order' | 'current_usages' | 'customer_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'display_limits' | 'downscaled' | 'effective_id' | 'end_date' | 'end_date_requested_by' | 'end_date_updated_at' | 'endpoints' | 'error_message' | 'error_traceback' | 'has_api_keys' | 'is_limit_based' | 'is_usage_based' | 'last_sync' | 'limit_usage' | 'limits' | 'modified' | 'name' | 'offering' | 'offering_account_settings' | 'offering_backend_id' | 'offering_billable' | 'offering_components' | 'offering_description' | 'offering_image' | 'offering_name' | 'offering_plugin_options' | 'offering_shared' | 'offering_slug' | 'offering_state' | 'offering_thumbnail' | 'offering_type' | 'offering_uuid' | 'options' | 'order_in_progress' | 'parent_name' | 'parent_offering_name' | 'parent_offering_slug' | 'parent_offering_uuid' | 'parent_uuid' | 'paused' | 'plan' | 'plan_description' | 'plan_name' | 'plan_unit' | 'plan_uuid' | 'prepaid_total_component_types' | 'project' | 'project_description' | 'project_effective_end_date' | 'project_end_date' | 'project_end_date_requested_by' | 'project_is_in_grace_period' | 'project_name' | 'project_slug' | 'project_start_date' | 'project_uuid' | 'provider_description' | 'provider_name' | 'provider_slug' | 'provider_uuid' | 'renewal_date' | 'report' | 'resource_effective_end_date' | 'resource_type' | 'resource_uuid' | 'restrict_member_access' | 'scope' | 'service_settings_uuid' | 'slug' | 'spending_limit_status' | 'spending_limits' | 'state' | 'terminated_at' | 'url' | 'usage_limit_restriction' | 'usage_limit_resumes_at' | 'user_requires_reconsent' | 'username' | 'uuid';
+export type ResourceFieldEnum = 'api_key_counts' | 'attributes' | 'available_actions' | 'backend_id' | 'backend_metadata' | 'can_terminate' | 'category_icon' | 'category_title' | 'category_uuid' | 'created' | 'creation_order' | 'current_usages' | 'customer_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'display_limits' | 'downscaled' | 'effective_id' | 'end_date' | 'end_date_requested_by' | 'end_date_updated_at' | 'endpoints' | 'error_message' | 'error_traceback' | 'has_api_keys' | 'is_limit_based' | 'is_usage_based' | 'last_sync' | 'limit_usage' | 'limits' | 'modified' | 'name' | 'offering' | 'offering_account_settings' | 'offering_backend_id' | 'offering_billable' | 'offering_components' | 'offering_description' | 'offering_image' | 'offering_name' | 'offering_plugin_options' | 'offering_shared' | 'offering_slug' | 'offering_state' | 'offering_thumbnail' | 'offering_type' | 'offering_uuid' | 'options' | 'order_in_progress' | 'parent_name' | 'parent_offering_name' | 'parent_offering_slug' | 'parent_offering_uuid' | 'parent_uuid' | 'paused' | 'plan' | 'plan_description' | 'plan_name' | 'plan_unit' | 'plan_uuid' | 'prepaid_total_component_types' | 'project' | 'project_description' | 'project_effective_end_date' | 'project_end_date' | 'project_end_date_requested_by' | 'project_is_in_grace_period' | 'project_name' | 'project_slug' | 'project_start_date' | 'project_uuid' | 'provider_description' | 'provider_name' | 'provider_slug' | 'provider_uuid' | 'renewal_date' | 'report' | 'resource_effective_end_date' | 'resource_type' | 'resource_uuid' | 'restrict_member_access' | 'scope' | 'service_settings_uuid' | 'slug' | 'spending_limit_status' | 'spending_limits' | 'state' | 'terminated_at' | 'url' | 'usage_limit_restriction' | 'usage_limit_resumes_at' | 'user_requires_reconsent' | 'username' | 'uuid';
 
 export type MarketplaceCategoryFieldEnum = 'articles' | 'available_offerings_count' | 'columns' | 'components' | 'default_vm_category' | 'default_volume_category' | 'description' | 'group' | 'icon' | 'offering_count' | 'sections' | 'title' | 'url' | 'uuid';
 
@@ -45819,6 +46078,8 @@ export type ProjectFieldEnum = 'affiliation' | 'affiliation_code' | 'affiliation
 export type UserFieldEnum = 'active_isds' | 'address' | 'affiliations' | 'agree_with_policy' | 'agreement_date' | 'attribute_sources' | 'birth_date' | 'can_use_personal_access_tokens' | 'civil_number' | 'country_of_residence' | 'date_joined' | 'deactivation_reason' | 'description' | 'details' | 'eduperson_assurance' | 'email' | 'first_name' | 'full_name' | 'gender' | 'has_active_session' | 'has_passkey' | 'has_usable_password' | 'identity_provider_fields' | 'identity_provider_label' | 'identity_provider_management_url' | 'identity_provider_name' | 'identity_source' | 'image' | 'ip_address' | 'is_active' | 'is_admin_deactivated' | 'is_identity_manager' | 'is_staff' | 'is_support' | 'job_title' | 'last_name' | 'managed_isds' | 'nationalities' | 'nationality' | 'native_name' | 'notifications_enabled' | 'organization' | 'organization_address' | 'organization_country' | 'organization_registry_code' | 'organization_type' | 'organization_vat_code' | 'passkey_count' | 'permissions' | 'personal_title' | 'phone_number' | 'place_of_birth' | 'preferred_language' | 'primary_gid' | 'registration_method' | 'requested_email' | 'should_protect_user_details' | 'slug' | 'token' | 'token_expires_at' | 'token_lifetime' | 'uid_number' | 'url' | 'username' | 'uuid';
 
 export type ResourceOEnum = '-backend_id' | '-created' | '-customer_name' | '-end_date' | '-name' | '-offering_name' | '-plan_name' | '-project_name' | '-state' | 'backend_id' | 'created' | 'customer_name' | 'end_date' | 'name' | 'offering_name' | 'plan_name' | 'project_name' | 'state';
+
+export type ResourceApiKeyStatusOEnum = '-created' | '-estimated_cost' | '-issued_at' | '-state' | 'created' | 'estimated_cost' | 'issued_at' | 'state';
 
 export type ResourceTeamMemberFieldEnum = 'email' | 'expiration_time' | 'full_name' | 'image' | 'resource_projects' | 'role_name' | 'role_uuid' | 'roles' | 'url' | 'username' | 'uuid';
 
@@ -45938,13 +46199,13 @@ export type ProposalOEnum = '-created' | '-round__call__name' | '-round__cutoff_
 
 export type ProposalRunPhaseEnum = 'closing' | 'extension';
 
-export type ProtectedCallFieldEnum = 'adoption_required' | 'allowed_duration_months' | 'applicant_cc_roles' | 'applicant_visibility_config' | 'backend_id' | 'budget_enforcement' | 'carry_over_drafts' | 'coi_declaration_text' | 'compliance_checklist' | 'compliance_checklist_name' | 'component_rules' | 'created' | 'created_by' | 'customer_name' | 'customer_uuid' | 'description' | 'documents' | 'end_date' | 'evaluation_start' | 'external_url' | 'fixed_duration_in_days' | 'has_eligibility_restrictions' | 'has_proposals' | 'image' | 'manager' | 'manager_uuid' | 'max_prepaid_duration_months' | 'name' | 'offerings' | 'order_author' | 'order_author_user' | 'order_author_user_name' | 'order_author_user_uuid' | 'panel_chair' | 'panel_chair_name' | 'panel_chair_uuid' | 'panel_vice_chair' | 'panel_vice_chair_name' | 'panel_vice_chair_uuid' | 'proposal_field_config' | 'proposal_field_metadata' | 'proposal_slug_template' | 'publish_results' | 'reference_code' | 'resource_template_selection_mode' | 'resource_templates' | 'reviewer_eligibility' | 'reviewer_identity_visible_to_submitters' | 'reviews_visible_to_submitters' | 'rounds' | 'slug' | 'start_date' | 'state' | 'target_decision_days' | 'template_latest_version' | 'template_name' | 'template_uuid' | 'template_version' | 'undecided_at_round_completion' | 'url' | 'user_affiliations' | 'user_assurance_levels' | 'user_email_patterns' | 'user_identity_sources' | 'user_nationalities' | 'user_organization_types' | 'uuid';
+export type ProtectedCallFieldEnum = 'adoption_required' | 'allowed_duration_months' | 'applicant_cc_roles' | 'applicant_visibility_config' | 'backend_id' | 'budget_enforcement' | 'carry_over_drafts' | 'coi_declaration_text' | 'compliance_checklist' | 'compliance_checklist_name' | 'component_rules' | 'created' | 'created_by' | 'customer_name' | 'customer_uuid' | 'description' | 'documents' | 'end_date' | 'evaluation_start' | 'external_url' | 'fixed_duration_in_days' | 'has_eligibility_restrictions' | 'has_proposals' | 'image' | 'manager' | 'manager_uuid' | 'max_prepaid_duration_months' | 'name' | 'offerings' | 'order_author' | 'order_author_user' | 'order_author_user_name' | 'order_author_user_uuid' | 'panel_chair' | 'panel_chair_name' | 'panel_chair_uuid' | 'panel_vice_chair' | 'panel_vice_chair_name' | 'panel_vice_chair_uuid' | 'project_name_template' | 'proposal_field_config' | 'proposal_field_metadata' | 'proposal_slug_template' | 'publish_results' | 'reference_code' | 'resource_template_selection_mode' | 'resource_templates' | 'reviewer_eligibility' | 'reviewer_identity_visible_to_submitters' | 'reviews_visible_to_submitters' | 'rounds' | 'slug' | 'start_date' | 'state' | 'target_decision_days' | 'template_latest_version' | 'template_name' | 'template_uuid' | 'template_version' | 'undecided_at_round_completion' | 'url' | 'user_affiliations' | 'user_assurance_levels' | 'user_email_patterns' | 'user_identity_sources' | 'user_nationalities' | 'user_organization_types' | 'uuid';
 
 export type ProtectedCallOEnum = '-created' | '-manager__customer__name' | '-name' | 'created' | 'manager__customer__name' | 'name';
 
 export type AffinityMatrixResponseScopeEnum = 'all' | 'pool' | 'suggestions';
 
-export type PublicCallFieldEnum = 'allowed_duration_months' | 'backend_id' | 'component_rules' | 'created' | 'customer_name' | 'customer_uuid' | 'description' | 'documents' | 'end_date' | 'evaluation_start' | 'external_url' | 'fixed_duration_in_days' | 'has_eligibility_restrictions' | 'image' | 'manager' | 'manager_uuid' | 'max_prepaid_duration_months' | 'name' | 'offerings' | 'proposal_field_config' | 'publish_results' | 'resource_template_selection_mode' | 'resource_templates' | 'reviewer_identity_visible_to_submitters' | 'reviews_visible_to_submitters' | 'rounds' | 'slug' | 'start_date' | 'state' | 'url' | 'uuid';
+export type PublicCallFieldEnum = 'allowed_duration_months' | 'backend_id' | 'component_rules' | 'created' | 'customer_name' | 'customer_uuid' | 'description' | 'documents' | 'end_date' | 'evaluation_start' | 'external_url' | 'fixed_duration_in_days' | 'has_eligibility_restrictions' | 'image' | 'manager' | 'manager_uuid' | 'max_prepaid_duration_months' | 'name' | 'offerings' | 'project_name_template' | 'proposal_field_config' | 'publish_results' | 'resource_template_selection_mode' | 'resource_templates' | 'reviewer_identity_visible_to_submitters' | 'reviews_visible_to_submitters' | 'rounds' | 'slug' | 'start_date' | 'state' | 'url' | 'uuid';
 
 export type PublicCallStateEnum = 'active' | 'archived';
 
@@ -65501,7 +65762,7 @@ export type MarketplaceDemoPresetsInfoRetrieveErrors = {
 };
 
 export type MarketplaceDemoPresetsInfoRetrieveResponses = {
-    200: DemoPreset;
+    200: DemoPresetPreview;
 };
 
 export type MarketplaceDemoPresetsInfoRetrieveResponse = MarketplaceDemoPresetsInfoRetrieveResponses[keyof MarketplaceDemoPresetsInfoRetrieveResponses];
@@ -79361,6 +79622,10 @@ export type MarketplaceResourceApiKeysListData = {
     path?: never;
     query?: {
         /**
+         * Consumer organization UUID
+         */
+        customer_uuid?: string;
+        /**
          * Has a pending command
          */
         has_pending_action?: boolean;
@@ -79368,6 +79633,12 @@ export type MarketplaceResourceApiKeysListData = {
          * Modified before
          */
         modified_before?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<ResourceApiKeyStatusOEnum>;
         /**
          * Offering UUID
          */
@@ -79381,11 +79652,23 @@ export type MarketplaceResourceApiKeysListData = {
          */
         page_size?: number;
         /**
+         * Paused by a spending limit
+         */
+        paused_by_limit?: boolean;
+        /**
          * Pending command
          *
          *
          */
         pending_action?: Array<ResourceApiKeyAction>;
+        /**
+         * Project UUID
+         */
+        project_uuid?: string;
+        /**
+         * Keys of resources of the offerings of this service provider organization, to callers the provider resource list shows those resources to.
+         */
+        provider_uuid?: string;
         /**
          * Resource UUID
          */
@@ -79415,6 +79698,10 @@ export type MarketplaceResourceApiKeysCountData = {
     path?: never;
     query?: {
         /**
+         * Consumer organization UUID
+         */
+        customer_uuid?: string;
+        /**
          * Has a pending command
          */
         has_pending_action?: boolean;
@@ -79422,6 +79709,12 @@ export type MarketplaceResourceApiKeysCountData = {
          * Modified before
          */
         modified_before?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<ResourceApiKeyStatusOEnum>;
         /**
          * Offering UUID
          */
@@ -79435,11 +79728,23 @@ export type MarketplaceResourceApiKeysCountData = {
          */
         page_size?: number;
         /**
+         * Paused by a spending limit
+         */
+        paused_by_limit?: boolean;
+        /**
          * Pending command
          *
          *
          */
         pending_action?: Array<ResourceApiKeyAction>;
+        /**
+         * Project UUID
+         */
+        project_uuid?: string;
+        /**
+         * Keys of resources of the offerings of this service provider organization, to callers the provider resource list shows those resources to.
+         */
+        provider_uuid?: string;
         /**
          * Resource UUID
          */
@@ -79704,8 +80009,61 @@ export type MarketplaceResourceApiKeysReportCreatedResponse = MarketplaceResourc
 export type MarketplaceResourceApiKeysUsageTotalsRetrieveData = {
     body?: never;
     path?: never;
-    query: {
-        resource_uuid: string;
+    query?: {
+        /**
+         * Consumer organization UUID
+         */
+        customer_uuid?: string;
+        /**
+         * Has a pending command
+         */
+        has_pending_action?: boolean;
+        /**
+         * Modified before
+         */
+        modified_before?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<ResourceApiKeyStatusOEnum>;
+        /**
+         * One of resource_uuid, offering_uuid and provider_uuid is required.
+         */
+        offering_uuid?: string;
+        /**
+         * Paused by a spending limit
+         */
+        paused_by_limit?: boolean;
+        /**
+         * Pending command
+         *
+         *
+         */
+        pending_action?: Array<ResourceApiKeyAction>;
+        /**
+         * Project UUID
+         */
+        project_uuid?: string;
+        /**
+         * One of resource_uuid, offering_uuid and provider_uuid is required.
+         */
+        provider_uuid?: string;
+        /**
+         * One of resource_uuid, offering_uuid and provider_uuid is required.
+         */
+        resource_uuid?: string;
+        /**
+         * API key state
+         *
+         *
+         */
+        state?: Array<ResourceApiKeyState>;
+        /**
+         * Assignee UUID
+         */
+        user_uuid?: string;
     };
     url: '/api/marketplace-resource-api-keys/usage_totals/';
 };
@@ -79719,8 +80077,61 @@ export type MarketplaceResourceApiKeysUsageTotalsRetrieveResponse = MarketplaceR
 export type MarketplaceResourceApiKeysUsageTotalsCountData = {
     body?: never;
     path?: never;
-    query: {
-        resource_uuid: string;
+    query?: {
+        /**
+         * Consumer organization UUID
+         */
+        customer_uuid?: string;
+        /**
+         * Has a pending command
+         */
+        has_pending_action?: boolean;
+        /**
+         * Modified before
+         */
+        modified_before?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<ResourceApiKeyStatusOEnum>;
+        /**
+         * One of resource_uuid, offering_uuid and provider_uuid is required.
+         */
+        offering_uuid?: string;
+        /**
+         * Paused by a spending limit
+         */
+        paused_by_limit?: boolean;
+        /**
+         * Pending command
+         *
+         *
+         */
+        pending_action?: Array<ResourceApiKeyAction>;
+        /**
+         * Project UUID
+         */
+        project_uuid?: string;
+        /**
+         * One of resource_uuid, offering_uuid and provider_uuid is required.
+         */
+        provider_uuid?: string;
+        /**
+         * One of resource_uuid, offering_uuid and provider_uuid is required.
+         */
+        resource_uuid?: string;
+        /**
+         * API key state
+         *
+         *
+         */
+        state?: Array<ResourceApiKeyState>;
+        /**
+         * Assignee UUID
+         */
+        user_uuid?: string;
     };
     url: '/api/marketplace-resource-api-keys/usage_totals/';
 };

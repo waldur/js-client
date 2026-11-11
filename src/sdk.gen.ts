@@ -10789,9 +10789,9 @@ export const marketplaceCustomerUsageComponentsUsageTimeseriesRetrieve = <ThrowO
 });
 
 /**
- * Get demo preset details
+ * Preview a demo preset
  *
- * Returns detailed information about a specific demo preset. Staff access only.
+ * Returns what loading the preset would do: its users, organizations, projects, resources and offerings, the settings and features a load with cleanup first would change, and warnings about what would not work afterwards. Secret values and the passwords of staff and support users are never returned. Staff access only.
  */
 export const marketplaceDemoPresetsInfoRetrieve = <ThrowOnError extends boolean = true>(options: Options<MarketplaceDemoPresetsInfoRetrieveData, ThrowOnError>) => (options.client ?? client).get<MarketplaceDemoPresetsInfoRetrieveResponses, MarketplaceDemoPresetsInfoRetrieveErrors, ThrowOnError>({
     security: [
@@ -10803,7 +10803,7 @@ export const marketplaceDemoPresetsInfoRetrieve = <ThrowOnError extends boolean 
 });
 
 /**
- * Get demo preset details
+ * Preview a demo preset
  *
  * Get number of items in the collection matching the request parameters.
  */
@@ -17319,11 +17319,11 @@ export const marketplaceResourceApiKeysReportCreated = <ThrowOnError extends boo
 });
 
 /**
- * Total API key usage of a resource
+ * Total API key usage of a resource, offering or provider
  *
- * Sums the usage the site agent reported for the resource's keys in the current month, per component type. Deleted keys are included, so deleting a key leaves the total unchanged.
+ * Sums the usage the site agent reported in the current month for the keys of a resource, an offering or a service provider, per component type, and their estimated cost. Deleted keys are included, so deleting a key leaves the totals unchanged. One of resource_uuid, offering_uuid and provider_uuid is required; the other list filters narrow the keys summed. Per-component sums are only comparable within one offering; estimated_cost adds up across offerings.
  */
-export const marketplaceResourceApiKeysUsageTotalsRetrieve = <ThrowOnError extends boolean = true>(options: Options<MarketplaceResourceApiKeysUsageTotalsRetrieveData, ThrowOnError>) => (options.client ?? client).get<MarketplaceResourceApiKeysUsageTotalsRetrieveResponses, unknown, ThrowOnError>({
+export const marketplaceResourceApiKeysUsageTotalsRetrieve = <ThrowOnError extends boolean = true>(options?: Options<MarketplaceResourceApiKeysUsageTotalsRetrieveData, ThrowOnError>) => (options?.client ?? client).get<MarketplaceResourceApiKeysUsageTotalsRetrieveResponses, unknown, ThrowOnError>({
     security: [
         { name: 'Authorization', type: 'apiKey' },
         { scheme: 'bearer', type: 'http' }
@@ -17333,11 +17333,11 @@ export const marketplaceResourceApiKeysUsageTotalsRetrieve = <ThrowOnError exten
 });
 
 /**
- * Total API key usage of a resource
+ * Total API key usage of a resource, offering or provider
  *
  * Get number of items in the collection matching the request parameters.
  */
-export const marketplaceResourceApiKeysUsageTotalsCount = <ThrowOnError extends boolean = true>(options: Options<MarketplaceResourceApiKeysUsageTotalsCountData, ThrowOnError>) => (options.client ?? client).head<MarketplaceResourceApiKeysUsageTotalsCountResponses, unknown, ThrowOnError>({
+export const marketplaceResourceApiKeysUsageTotalsCount = <ThrowOnError extends boolean = true>(options?: Options<MarketplaceResourceApiKeysUsageTotalsCountData, ThrowOnError>) => (options?.client ?? client).head<MarketplaceResourceApiKeysUsageTotalsCountResponses, unknown, ThrowOnError>({
     security: [
         { name: 'Authorization', type: 'apiKey' },
         { scheme: 'bearer', type: 'http' }
