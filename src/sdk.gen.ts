@@ -4027,7 +4027,7 @@ export const chatSystemPromptsActivate = <ThrowOnError extends boolean = true>(o
 /**
  * Deactivate the active system prompt
  *
- * Deactivate this prompt. The system will fall back to Constance overrides or built-in defaults.
+ * Deactivate this prompt. The system will fall back to the system prompt setting or built-in defaults.
  */
 export const chatSystemPromptsDeactivate = <ThrowOnError extends boolean = true>(options: Options<ChatSystemPromptsDeactivateData, ThrowOnError>) => (options.client ?? client).post<ChatSystemPromptsDeactivateResponses, unknown, ThrowOnError>({
     security: [
@@ -15732,7 +15732,7 @@ export const marketplaceProviderOfferingsUpdateUser = <ThrowOnError extends bool
 /**
  * Upload markdown image
  *
- * Uploads an image for embedding in offering markdown descriptions. Requires ENABLE_MARKDOWN_IMAGE_UPLOAD Constance setting.
+ * Uploads an image for embedding in offering markdown descriptions. Requires the ENABLE_MARKDOWN_IMAGE_UPLOAD setting.
  */
 export const marketplaceProviderOfferingsUploadMarkdownImage = <ThrowOnError extends boolean = true>(options: Options<MarketplaceProviderOfferingsUploadMarkdownImageData, ThrowOnError>) => (options.client ?? client).post<MarketplaceProviderOfferingsUploadMarkdownImageResponses, unknown, ThrowOnError>({
     security: [
@@ -39679,7 +39679,7 @@ export const supportSettingsAtlassianPreviewSettings = <ThrowOnError extends boo
 });
 
 /**
- * Save selected settings to constance.
+ * Save selected settings.
  */
 export const supportSettingsAtlassianSaveSettings = <ThrowOnError extends boolean = true>(options: Options<SupportSettingsAtlassianSaveSettingsData, ThrowOnError>) => (options.client ?? client).post<SupportSettingsAtlassianSaveSettingsResponses, unknown, ThrowOnError>({
     security: [

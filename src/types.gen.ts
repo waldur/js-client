@@ -40199,7 +40199,7 @@ export type TokenQuotaUsageResponse = {
      */
     readonly daily_reset_at: string;
     /**
-     * Get system default daily token limit from constance config.
+     * Get system default daily token limit setting.
      */
     readonly daily_system_default: number;
     /**
@@ -40216,7 +40216,7 @@ export type TokenQuotaUsageResponse = {
      */
     readonly weekly_reset_at: string;
     /**
-     * Get system default weekly token limit from constance config.
+     * Get system default weekly token limit setting.
      */
     readonly weekly_system_default: number;
     /**
@@ -40233,7 +40233,7 @@ export type TokenQuotaUsageResponse = {
      */
     readonly monthly_reset_at: string;
     /**
-     * Get system default monthly token limit from constance config.
+     * Get system default monthly token limit setting.
      */
     readonly monthly_system_default: number;
 };
