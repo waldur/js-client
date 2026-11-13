@@ -8645,9 +8645,13 @@ export type CreditTopUpRequest = {
     amount: string;
     comment: string;
     /**
-     * Bank transfer or payment identifier, kept in the ledger comment.
+     * Bank transfer or payment identifier, kept in the ledger comment. Not checked for repeats; send external_reference for that.
      */
     payment_reference?: string;
+    /**
+     * The sender's unique identifier for this top-up, e.g. an ERP payment ID. A repeat with the same amount returns the credit unchanged; with another amount it is refused. A reversal needs a reference of its own.
+     */
+    external_reference?: string;
 };
 
 export type CreditTransaction = {
@@ -8660,12 +8664,17 @@ export type CreditTransaction = {
     transaction_type: TransactionTypeEnum;
     readonly transaction_type_display: string;
     comment?: string;
+    channel?: CreditTransactionChannelEnum;
+    readonly channel_display: string;
+    external_reference?: string;
     readonly customer_uuid: string | null;
     readonly customer_name: string | null;
     project_uuid?: string;
     project_name?: string;
     billing_period?: string | null;
 };
+
+export type CreditTransactionChannelEnum = 'manual' | 'api' | 'gateway';
 
 export type CurrentQosStatusEnum = 'normal' | 'notification' | 'slowdown' | 'blocked';
 
@@ -15695,6 +15704,10 @@ export type MergedPluginOptions = {
      */
     resource_expiration_threshold?: number;
     /**
+     * Days before a resource's end date on which its users are reminded, by email and on the dashboard. When empty or unset, the email goes out 7 days and 1 day before the end, and the dashboard follows USER_ACTIONS_DEFAULT_EXPIRATION_REMINDERS. Only staff can change it.
+     */
+    resource_expiration_reminders?: Array<number>;
+    /**
      * Service provider can create offering user
      */
     service_provider_can_create_offering_user?: boolean;
@@ -16173,6 +16186,10 @@ export type MergedPluginOptionsRequest = {
      * Resource expiration threshold in days.
      */
     resource_expiration_threshold?: number;
+    /**
+     * Days before a resource's end date on which its users are reminded, by email and on the dashboard. When empty or unset, the email goes out 7 days and 1 day before the end, and the dashboard follows USER_ACTIONS_DEFAULT_EXPIRATION_REMINDERS. Only staff can change it.
+     */
+    resource_expiration_reminders?: Array<number>;
     /**
      * Service provider can create offering user
      */
@@ -33433,7 +33450,7 @@ export type ReassignItemResponse = {
     new_batch_uuid: string;
 };
 
-export type ReauthenticationActionEnum = 'token_lifetime' | 'change_email' | 'register_passkey' | 'revoke_passkey' | 'create_personal_access_token' | 'change_password';
+export type ReauthenticationActionEnum = 'token_lifetime' | 'change_email' | 'register_passkey' | 'revoke_passkey' | 'create_personal_access_token' | 'change_password' | 'widen_personal_access_token_networks';
 
 export type ReauthenticationChallenge = {
     detail: string;
@@ -55011,8 +55028,10 @@ export type CreditTransactionsListData = {
         billing_period?: string;
         billing_period_after?: string;
         billing_period_before?: string;
+        channel?: Array<CreditTransactionChannelEnum>;
         credit_uuid?: string;
         customer_uuid?: string;
+        external_reference?: string;
         /**
          * Ordering
          *
@@ -55047,8 +55066,10 @@ export type CreditTransactionsCountData = {
         billing_period?: string;
         billing_period_after?: string;
         billing_period_before?: string;
+        channel?: Array<CreditTransactionChannelEnum>;
         credit_uuid?: string;
         customer_uuid?: string;
+        external_reference?: string;
         /**
          * Ordering
          *
@@ -106146,12 +106167,24 @@ export type PersonalAccessTokensRotateResponse = PersonalAccessTokensRotateRespo
 
 export type PersonalAccessTokensSetNetworkAclData = {
     body: PersonalAccessTokenNetworkAclRequest;
+    headers?: {
+        /**
+         * A re-authentication grant for this change, from /api/reauthentication/password/ or /api/reauthentication/passkey/. Without a valid one, a change that needs it is refused with a 401 challenge.
+         */
+        'X-Reauthentication-Grant'?: string;
+    };
     path: {
         uuid: string;
     };
     query?: never;
     url: '/api/personal-access-tokens/{uuid}/set_network_acl/';
 };
+
+export type PersonalAccessTokensSetNetworkAclErrors = {
+    401: ReauthenticationChallenge;
+};
+
+export type PersonalAccessTokensSetNetworkAclError = PersonalAccessTokensSetNetworkAclErrors[keyof PersonalAccessTokensSetNetworkAclErrors];
 
 export type PersonalAccessTokensSetNetworkAclResponses = {
     200: PersonalAccessToken;
