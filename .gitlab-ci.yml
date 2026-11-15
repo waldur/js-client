@@ -48,6 +48,35 @@ Build TypeScript SDK:
       - package-lock.json
     expire_in: 1 day
 
+# 8.1.x could not be loaded in Node.js (github.com/waldur/js-client#4), and no
+# job noticed: they built the package but never ran it. This installs the
+# packed SDK into an empty project and loads it with import and require().
+Test Node.js usage:
+  stage: codegen
+  image: registry.hpc.ut.ee/mirror/library/node:${NODE_VERSION}-alpine
+  parallel:
+    matrix:
+      - NODE_VERSION: ["22", "24", "26"]
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: '$CI_PIPELINE_SOURCE == "pipeline"'
+    - if: '$CI_PIPELINE_SOURCE == "trigger"'
+    - if: '$CI_PIPELINE_SOURCE == "web"'
+  needs:
+    # A generation pipeline tests the client it just generated; an MR
+    # pipeline tests the committed src/.
+    - job: Build TypeScript SDK
+      artifacts: true
+      optional: true
+  script:
+    - npm ci --no-audit --no-fund
+    - npm run build
+    - npm pack --pack-destination /tmp
+    - mkdir /tmp/app && cd /tmp/app && npm init -y >/dev/null
+    - npm install --no-audit --no-fund /tmp/waldur-js-client-*.tgz
+    - node --input-type=module -e "for (const p of ['', '/client.gen', '/sdk.gen', '/types.gen']) await import('waldur-js-client' + p)"
+    - node -e "require('waldur-js-client'); require('waldur-js-client/client.gen')"
+
 # The 8.1.0 client was generated from the 8.0.9 schema — the fetch had silently
 # fallen back — so it contained none of that release's 234 new operations and
 # every job still went green. This compares what was generated against what was
@@ -79,6 +108,9 @@ Release TypeScript/JavaScript SDK:
       artifacts: true
     # Gate the release on the check, so a stale client cannot be published.
     - job: Verify generated client
+      artifacts: false
+    # Nor one that Node.js cannot load.
+    - job: Test Node.js usage
       artifacts: false
   # One job at a time may update main, across all pipelines. Pipelines started
   # a minute apart otherwise race for it. The script copes with a race, so this
@@ -142,6 +174,8 @@ Publish Release to NPM:
     # earlier stage is failing — which is exactly how the SDK jobs published
     # during 8.1.0 while the schema job was red.
     - job: Verify generated client
+      artifacts: false
+    - job: Test Node.js usage
       artifacts: false
   before_script:
     - apk add --no-cache bash git
