@@ -4,6 +4,7 @@
   "description": "JavaScript client for Waldur MasterMind generated from OpenAPI schema",
   "author": "Waldur Platform",
   "license": "MIT",
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/waldur/js-client.git"
@@ -27,8 +28,9 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc",
-    "prepublishOnly": "npm run build"
+    "build": "tsc && npm run check:node",
+    "prepublishOnly": "npm run build",
+    "check:node": "node --input-type=module -e \"await import('waldur-js-client'); await import('waldur-js-client/client.gen'); await import('waldur-js-client/sdk.gen'); await import('waldur-js-client/types.gen')\" && node -e \"require('waldur-js-client')\""
   },
   "exports": {
     ".": "./dist/index.js",

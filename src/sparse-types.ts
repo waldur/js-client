@@ -1,5 +1,5 @@
-import type { Options } from './client';
-import type { RequestResult } from './client';
+import type { Options } from './client/index.js';
+import type { RequestResult } from './client/index.js';
 
 export type ExtractData<T> = T extends Record<string, unknown> ? T[keyof T] : T;
 export type ExtractModel<T> = T extends Array<infer U> ? U : T;
