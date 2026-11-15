@@ -50,8 +50,8 @@ if (fs.existsSync(typesGenPath)) {
 }
 
 // 3. Create sparse-types.ts
-const sparseTypesCode = `import type { Options } from './client/index.js';
-import type { RequestResult } from './client/index.js';
+const sparseTypesCode = `import type { Options } from './client/index.ts';
+import type { RequestResult } from './client/index.ts';
 
 export type ExtractData<T> = T extends Record<string, unknown> ? T[keyof T] : T;
 export type ExtractModel<T> = T extends Array<infer U> ? U : T;
@@ -98,16 +98,16 @@ if (fs.existsSync(sdkGenPath)) {
   const regex = /export const (\w+)\s*=\s*<[^>]+>\(options\??:\s*Options<([^,]+),\s*[^>]+>\)\s*=>\s*\(options\??\.client \?\? client\)\.\w+<([^,]+),\s*([^,]+),\s*[^>]+>\(\{/g;
 
   let out = `// AUTO-GENERATED: DO NOT EDIT\n`;
-  out += `export { formDataBodySerializer, type RequestResult } from './client/index.js';\n`;
-  out += `export * from './types.gen.js';\n`;
-  out += `import type { DynamicHeyApiFunc } from './sparse-types.js';\n`;
+  out += `export { formDataBodySerializer, type RequestResult } from './client/index.ts';\n`;
+  out += `export * from './types.gen.ts';\n`;
+  out += `import type { DynamicHeyApiFunc } from './sparse-types.ts';\n`;
 
   const matches = [...code.matchAll(regex)];
 
   // Import all original functions from sdk.gen
   const fnNames = matches.map(m => m[1]);
   if(fnNames.length > 0) {
-    out += `import { ${fnNames.join(', ')} } from './sdk.gen.js';\n\n`;
+    out += `import { ${fnNames.join(', ')} } from './sdk.gen.ts';\n\n`;
   }
 
   // Collect and import all required types from types.gen
@@ -122,7 +122,7 @@ if (fs.existsSync(sdkGenPath)) {
     });
   }
   if (typeNames.size > 0) {
-    out += `import type { ${Array.from(typeNames).join(', ')} } from './types.gen.js';\n\n`;
+    out += `import type { ${Array.from(typeNames).join(', ')} } from './types.gen.ts';\n\n`;
   }
 
   // Generate the strictly typed re-exports
