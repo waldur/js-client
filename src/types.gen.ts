@@ -5150,6 +5150,18 @@ export type CallWorkflowStep = {
      */
     round_scoped?: boolean;
     /**
+     * The step's contributors and completer may open a tracked discussion: an encrypted Matrix room, one per proposal, or for a step run once per round one per round and panel. Its history is exported to the step's record when the step ends. Only while Matrix chat is enabled; never on a blind or an applicant step.
+     */
+    has_discussion?: boolean;
+    /**
+     * The call's managers join the step's discussion as observers.
+     */
+    discussion_call_managers?: boolean;
+    /**
+     * The members of the proposal's panel join the step's discussion; for a step run once per round, the members of the discussion's panel. On a call without panels, its panel members.
+     */
+    discussion_panel_members?: boolean;
+    /**
      * When the step runs: in the evaluation, from submission to the award; in an extension, which the applicant of an accepted proposal asks for as often as needed; or in the closing, the final report at the end of the allocation. A phase's steps run in their order, each extension and closing in a run of its own.
      */
     phase?: WorkflowPhaseEnum;
@@ -5401,6 +5413,18 @@ export type CallWorkflowStepRequest = {
      * Run the step once per round rather than per proposal, such as a panel meeting after the cut-off: the call's managers open it for the round's proposals together, its contributors write one round report each covering their proposals, and it is completed for the round, never on one proposal.
      */
     round_scoped?: boolean;
+    /**
+     * The step's contributors and completer may open a tracked discussion: an encrypted Matrix room, one per proposal, or for a step run once per round one per round and panel. Its history is exported to the step's record when the step ends. Only while Matrix chat is enabled; never on a blind or an applicant step.
+     */
+    has_discussion?: boolean;
+    /**
+     * The call's managers join the step's discussion as observers.
+     */
+    discussion_call_managers?: boolean;
+    /**
+     * The members of the proposal's panel join the step's discussion; for a step run once per round, the members of the discussion's panel. On a call without panels, its panel members.
+     */
+    discussion_panel_members?: boolean;
     /**
      * When the step runs: in the evaluation, from submission to the award; in an extension, which the applicant of an accepted proposal asks for as often as needed; or in the closing, the final report at the end of the allocation. A phase's steps run in their order, each extension and closing in a run of its own.
      */
@@ -15632,6 +15656,14 @@ export type MatrixRoom = {
     readonly scope: string;
     readonly scope_uuid: string | null;
     readonly scope_name: string | null;
+    /**
+     * The kind of room: 'project' for a project's team room, 'step_discussion' for a proposal workflow step's discussion. Null for a room of a kind of object no app registered.
+     */
+    readonly scope_type: string | null;
+    /**
+     * A short line saying what the room is for: the organization of a project room, the step and proposal or round of a discussion.
+     */
+    readonly scope_subtitle: string | null;
     readonly customer_uuid: string | null;
     readonly customer_name: string | null;
     readonly members_count: number;
@@ -15661,6 +15693,10 @@ export type MatrixRoomMember = {
     readonly matrix_user_id: string;
     readonly power_level: number;
     membership_state: MembershipStateEnum;
+    /**
+     * What the member takes part as, by the room's kind: in a step discussion, say, Panel chair, Call manager or Reviewer. Null where the kind of room names none.
+     */
+    readonly role_label: string | null;
     readonly created: string;
     readonly modified: string;
 };
@@ -23768,6 +23804,21 @@ export type OpenStackVolumeType = {
     is_public?: boolean;
 };
 
+export type OpenStepDiscussionRequest = {
+    /**
+     * The proposal's step, as workflow_states lists it. On a step run once per round, the round's discussion of the proposal's panel.
+     */
+    proposal_step_uuid?: string | null;
+    /**
+     * The round step (round_steps of a round).
+     */
+    round_step_uuid?: string | null;
+    /**
+     * With round_step_uuid on a call with panels: whose discussion.
+     */
+    panel_uuid?: string | null;
+};
+
 export type OptionField = {
     type: OptionFieldTypeEnum;
     label: string;
@@ -25050,6 +25101,18 @@ export type PatchedCallWorkflowStepRequest = {
      * Run the step once per round rather than per proposal, such as a panel meeting after the cut-off: the call's managers open it for the round's proposals together, its contributors write one round report each covering their proposals, and it is completed for the round, never on one proposal.
      */
     round_scoped?: boolean;
+    /**
+     * The step's contributors and completer may open a tracked discussion: an encrypted Matrix room, one per proposal, or for a step run once per round one per round and panel. Its history is exported to the step's record when the step ends. Only while Matrix chat is enabled; never on a blind or an applicant step.
+     */
+    has_discussion?: boolean;
+    /**
+     * The call's managers join the step's discussion as observers.
+     */
+    discussion_call_managers?: boolean;
+    /**
+     * The members of the proposal's panel join the step's discussion; for a step run once per round, the members of the discussion's panel. On a call without panels, its panel members.
+     */
+    discussion_panel_members?: boolean;
     /**
      * When the step runs: in the evaluation, from submission to the award; in an extension, which the applicant of an accepted proposal asks for as often as needed; or in the closing, the final report at the end of the allocation. A phase's steps run in their order, each extension and closing in a run of its own.
      */
@@ -30393,6 +30456,10 @@ export type ProposalWorkflowStepInstance = {
      * Whether the system took this allocation decision itself, on a call whose decision decides automatically.
      */
     readonly decided_automatically: boolean;
+    /**
+     * The step's discussion, for a step that has one, as the viewer sees it: on a step run once per round the round's discussion of the proposal's panel. Null when the step has none, or the viewer neither takes part in it nor oversees the call.
+     */
+    discussion: StepDiscussionViewer | null;
 };
 
 export type ProposalWorkflowStepInstanceStatusEnum = 'pending' | 'active' | 'completed' | 'expired' | 'skipped' | 'withdrawn';
@@ -37327,6 +37394,15 @@ export type RoundStatus = 'scheduled' | 'open' | 'ended';
 export type RoundStatusEnum = 'scheduled' | 'open' | 'ended';
 
 export type RoundStep = {
+    /**
+     * The step's record in the round, once it has a due date or was opened there; null before.
+     */
+    round_step_uuid: string | null;
+    has_discussion: boolean;
+    /**
+     * For a round step with a discussion, its discussion per panel (one on a call without panels) that the viewer takes part in or oversees; empty otherwise.
+     */
+    readonly discussions: Array<RoundStepDiscussion>;
     step_uuid: string;
     step_key: string;
     step_name: string;
@@ -37350,6 +37426,26 @@ export type RoundStep = {
     proposals_awaiting_advance: number;
     reports_total: number;
     reports_submitted: number;
+};
+
+export type RoundStepDiscussion = {
+    /**
+     * The step's latest discussion, once opened (proposal-step-discussions): the open one, else the last closed.
+     */
+    uuid: string | null;
+    /**
+     * not_opened, open, or closed with its step.
+     */
+    state: StepDiscussionStateEnum;
+    /**
+     * Whether the viewer may open it now -- or join it, once open: they take part in it, the step is active and Matrix chat is enabled. With state closed, the step runs again: opening starts a new discussion, and the closed one stays on record.
+     */
+    can_open: boolean;
+    /**
+     * The panel whose discussion it is; null on a call without panels.
+     */
+    panel_uuid: string | null;
+    panel_name: string | null;
 };
 
 export type RoundStepProposalResult = {
@@ -39247,6 +39343,27 @@ export type SshKeyRequest = {
 
 export type StageEnum = 'execute' | 'undo';
 
+export type StartableStepDiscussion = {
+    proposal_step_uuid: string | null;
+    round_step_uuid: string | null;
+    panel_uuid: string | null;
+    panel_name: string | null;
+    call_uuid: string;
+    call_name: string;
+    call_step_uuid: string;
+    step_name: string;
+    round_scoped: boolean;
+    proposal_uuid: string | null;
+    proposal_name: string | null;
+    proposal_slug: string | null;
+    round_uuid: string;
+    round_name: string;
+    /**
+     * When the step is due: the proposal's step deadline, or the round step's due date.
+     */
+    due_at: string | null;
+};
+
 export type StateGroupEnum = 'pending' | 'accepted' | 'closed';
 
 export type StateTransitionError = {
@@ -39410,6 +39527,91 @@ export type StepContributionWithAnswers = {
     readonly user_full_name: string | null;
     readonly user_image: string | null;
     readonly answers: Array<TechnicalAssessmentAnswer>;
+};
+
+export type StepDiscussion = {
+    readonly uuid: string;
+    /**
+     * open, or closed with its step.
+     */
+    readonly state: string;
+    readonly opened_at: string;
+    readonly closed_at: string | null;
+    readonly opened_by_uuid: string | null;
+    readonly opened_by_name: string | null;
+    readonly call_uuid: string;
+    readonly call_name: string;
+    readonly call_step_uuid: string;
+    readonly step_key: string;
+    readonly step_name: string;
+    /**
+     * Whether it is a round step's discussion.
+     */
+    readonly round_scoped: boolean;
+    /**
+     * The proposal's step discussed; null for a round step.
+     */
+    readonly proposal_step_uuid: string | null;
+    readonly proposal_uuid: string | null;
+    readonly proposal_name: string | null;
+    readonly proposal_slug: string | null;
+    /**
+     * The round step discussed; null for a proposal's step.
+     */
+    readonly round_step_uuid: string | null;
+    /**
+     * The round of the round step, or of the proposal.
+     */
+    readonly round_uuid: string;
+    readonly round_name: string;
+    /**
+     * The panel of a round step's discussion on a call with panels.
+     */
+    readonly panel_uuid: string | null;
+    readonly panel_name: string | null;
+    /**
+     * The discussion's Matrix room (matrix/rooms), once created.
+     */
+    readonly room_uuid: string | null;
+    /**
+     * The Matrix room ID, e.g. !abc:domain, once created.
+     */
+    readonly room_id: string | null;
+    /**
+     * The room's state in Waldur: creating, active, archived...
+     */
+    readonly room_state: string | null;
+    /**
+     * The export of the room's history made when the discussion closed (matrix/exports), for those who may download it: the call's managers, staff and support. Null otherwise, and until it is made.
+     */
+    readonly export_uuid: string | null;
+    /**
+     * Once closed, who took part; while open, who is in the room now.
+     */
+    readonly participants: Array<StepDiscussionParticipant>;
+};
+
+export type StepDiscussionParticipant = {
+    uuid: string;
+    full_name: string;
+    username: string;
+};
+
+export type StepDiscussionStateEnum = 'not_opened' | 'open' | 'closed';
+
+export type StepDiscussionViewer = {
+    /**
+     * The step's latest discussion, once opened (proposal-step-discussions): the open one, else the last closed.
+     */
+    uuid: string | null;
+    /**
+     * not_opened, open, or closed with its step.
+     */
+    state: StepDiscussionStateEnum;
+    /**
+     * Whether the viewer may open it now -- or join it, once open: they take part in it, the step is active and Matrix chat is enabled. With state closed, the step runs again: opening starts a new discussion, and the closed one stays on record.
+     */
+    can_open: boolean;
 };
 
 export type StepInput = {
@@ -46459,6 +46661,8 @@ export type ProposalRankingOEnum = '-final_score' | '-modified' | '-proposal_nam
 export type ProviderRequestedOfferingOEnum = '-call__name' | '-created' | '-offering__name' | '-state' | 'call__name' | 'created' | 'offering__name' | 'state';
 
 export type ProposalReviewOEnum = '-created' | '-state' | 'created' | 'state';
+
+export type StepDiscussionStateEnum1 = 'closed' | 'open';
 
 export type InvoiceItemOEnum1 = '-invoice_customer_name' | '-project_name' | '-resource_offering_name' | '-unit_price' | 'invoice_customer_name' | 'project_name' | 'resource_offering_name' | 'unit_price';
 
@@ -92557,6 +92761,10 @@ export type MatrixRoomsListData = {
          * Project UUID
          */
         project_uuid?: string;
+        /**
+         * Kind of room, such as project or step_discussion
+         */
+        scope_type?: string;
         state?: MatrixRoomStateEnum;
     };
     url: '/api/matrix/rooms/';
@@ -92588,6 +92796,10 @@ export type MatrixRoomsCountData = {
          * Project UUID
          */
         project_uuid?: string;
+        /**
+         * Kind of room, such as project or step_discussion
+         */
+        scope_type?: string;
         state?: MatrixRoomStateEnum;
     };
     url: '/api/matrix/rooms/';
@@ -92660,6 +92872,10 @@ export type MatrixRoomsCommandsListData = {
          * Project UUID
          */
         project_uuid?: string;
+        /**
+         * Kind of room, such as project or step_discussion
+         */
+        scope_type?: string;
         state?: MatrixRoomStateEnum;
     };
     url: '/api/matrix/rooms/{uuid}/commands/';
@@ -92754,6 +92970,10 @@ export type MatrixRoomsMembersListData = {
          * Project UUID
          */
         project_uuid?: string;
+        /**
+         * Kind of room, such as project or step_discussion
+         */
+        scope_type?: string;
         state?: MatrixRoomStateEnum;
     };
     url: '/api/matrix/rooms/{uuid}/members/';
@@ -92861,6 +93081,10 @@ export type MatrixRoomsEligibleProjectsListData = {
          * Project UUID
          */
         project_uuid?: string;
+        /**
+         * Kind of room, such as project or step_discussion
+         */
+        scope_type?: string;
         state?: MatrixRoomStateEnum;
     };
     url: '/api/matrix/rooms/eligible_projects/';
@@ -92896,6 +93120,10 @@ export type MatrixRoomsEligibleProjectsCountData = {
          * Project UUID
          */
         project_uuid?: string;
+        /**
+         * Kind of room, such as project or step_discussion
+         */
+        scope_type?: string;
         state?: MatrixRoomStateEnum;
     };
     url: '/api/matrix/rooms/eligible_projects/';
@@ -115543,6 +115771,125 @@ export type ProposalRoleAssignmentsConfirmNoConflictResponses = {
 };
 
 export type ProposalRoleAssignmentsConfirmNoConflictResponse = ProposalRoleAssignmentsConfirmNoConflictResponses[keyof ProposalRoleAssignmentsConfirmNoConflictResponses];
+
+export type ProposalStepDiscussionsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        call_step_uuid?: string;
+        call_uuid?: string;
+        /**
+         * Only the discussions the caller takes part in
+         */
+        mine?: boolean;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        proposal_uuid?: string;
+        round_uuid?: string;
+        state?: StepDiscussionStateEnum1;
+    };
+    url: '/api/proposal-step-discussions/';
+};
+
+export type ProposalStepDiscussionsListResponses = {
+    200: Array<StepDiscussion>;
+};
+
+export type ProposalStepDiscussionsListResponse = ProposalStepDiscussionsListResponses[keyof ProposalStepDiscussionsListResponses];
+
+export type ProposalStepDiscussionsCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        call_step_uuid?: string;
+        call_uuid?: string;
+        /**
+         * Only the discussions the caller takes part in
+         */
+        mine?: boolean;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        proposal_uuid?: string;
+        round_uuid?: string;
+        state?: StepDiscussionStateEnum1;
+    };
+    url: '/api/proposal-step-discussions/';
+};
+
+export type ProposalStepDiscussionsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type ProposalStepDiscussionsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-step-discussions/{uuid}/';
+};
+
+export type ProposalStepDiscussionsRetrieveResponses = {
+    200: StepDiscussion;
+};
+
+export type ProposalStepDiscussionsRetrieveResponse = ProposalStepDiscussionsRetrieveResponses[keyof ProposalStepDiscussionsRetrieveResponses];
+
+export type ProposalStepDiscussionsOpenData = {
+    body?: OpenStepDiscussionRequest;
+    path?: never;
+    query?: never;
+    url: '/api/proposal-step-discussions/open/';
+};
+
+export type ProposalStepDiscussionsOpenResponses = {
+    200: StepDiscussion;
+    201: StepDiscussion;
+};
+
+export type ProposalStepDiscussionsOpenResponse = ProposalStepDiscussionsOpenResponses[keyof ProposalStepDiscussionsOpenResponses];
+
+export type ProposalStepDiscussionsStartableListData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/proposal-step-discussions/startable/';
+};
+
+export type ProposalStepDiscussionsStartableListResponses = {
+    200: Array<StartableStepDiscussion>;
+};
+
+export type ProposalStepDiscussionsStartableListResponse = ProposalStepDiscussionsStartableListResponses[keyof ProposalStepDiscussionsStartableListResponses];
+
+export type ProposalStepDiscussionsStartableCountData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/proposal-step-discussions/startable/';
+};
+
+export type ProposalStepDiscussionsStartableCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type ProviderCannedResponsesListData = {
     body?: never;
