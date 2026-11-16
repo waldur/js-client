@@ -6349,6 +6349,19 @@ export type ChatSession = {
     readonly modified: string;
 };
 
+export type ChatSuggestion = {
+    /**
+     * A quick prompt the caller may be offered. The client holds the wording for each id and skips ids it does not know.
+     */
+    id: ChatSuggestionIdEnum;
+};
+
+export type ChatSuggestionIdEnum = 'resource_paused' | 'review_workload' | 'proposal_help' | 'pending_orders' | 'check_credit' | 'my_resources' | 'analyze_usage' | 'create_vm' | 'hpc_jobs' | 'find_service' | 'find_call' | 'search_docs' | 'visualize_costs' | 'list_invoices' | 'hpc_software' | 'call_insights' | 'overdrawn_projects' | 'look_up_user';
+
+export type ChatSuggestionsResponse = {
+    suggestions: Array<ChatSuggestion>;
+};
+
 export type ChatThreadStatsResponse = {
     threads_total: number;
     sessions_total: number;
@@ -7450,6 +7463,7 @@ export type ConstanceSettings = {
     ONLY_ONE_PROJECT_MANAGER?: boolean;
     DEFAULT_IDP?: DefaultidpEnum | BlankEnum;
     DOCS_URL?: string;
+    DOCS_SEARCH_ENABLED?: boolean;
     SHORT_PAGE_TITLE?: string;
     FULL_PAGE_TITLE?: string;
     PROJECT_END_DATE_MANDATORY?: boolean;
@@ -7822,6 +7836,7 @@ export type ConstanceSettingsRequest = {
     ONLY_ONE_PROJECT_MANAGER?: boolean;
     DEFAULT_IDP?: DefaultidpEnum | BlankEnum;
     DOCS_URL?: string;
+    DOCS_SEARCH_ENABLED?: boolean;
     SHORT_PAGE_TITLE?: string;
     FULL_PAGE_TITLE?: string;
     PROJECT_END_DATE_MANDATORY?: boolean;
@@ -10538,6 +10553,45 @@ export type DisplayLimitConfigRequest = {
      * Usage-based component whose limit the option's value is shown as.
      */
     component_type: string;
+};
+
+export type DocsSearchDisabled = {
+    detail: string;
+};
+
+export type DocsSearchHit = {
+    title: string;
+    breadcrumb: string;
+    excerpt: string;
+    url: string;
+    /**
+     * False when the section describes a feature that is switched off on this portal, or that it cannot confirm is switched on. Only staff and support get such sections.
+     */
+    enabled_here: boolean;
+};
+
+export type DocsSearchResponse = {
+    query: string;
+    sections: Array<DocsSearchHit>;
+    /**
+     * Features the query is about that are switched off on this portal. Their sections are not returned to users without staff or support rights; only the feature is named.
+     */
+    switched_off_here: Array<DocsSearchSwitchedOff>;
+};
+
+export type DocsSearchSwitchedOff = {
+    /**
+     * What a user would call the feature.
+     */
+    name: string;
+    /**
+     * The setting, feature flag or offering type that switches it, e.g. setting:PAT_ENABLED.
+     */
+    term: string;
+};
+
+export type DocsSearchUnavailable = {
+    detail: string;
 };
 
 export type DryRun = {
@@ -28574,7 +28628,7 @@ export type ProjectAnswer = {
      */
     readonly answers_count: number;
     /**
-     * Get count of unanswered required questions.
+     * Get count of unanswered required questions shown to the user.
      */
     readonly unanswered_required_count: number;
 };
@@ -44402,6 +44456,7 @@ export type ConstanceSettingsRequestForm = {
     ONLY_ONE_PROJECT_MANAGER?: boolean;
     DEFAULT_IDP?: DefaultidpEnum | BlankEnum;
     DOCS_URL?: string;
+    DOCS_SEARCH_ENABLED?: boolean;
     SHORT_PAGE_TITLE?: string;
     FULL_PAGE_TITLE?: string;
     PROJECT_END_DATE_MANDATORY?: boolean;
@@ -44774,6 +44829,7 @@ export type ConstanceSettingsRequestMultipart = {
     ONLY_ONE_PROJECT_MANAGER?: boolean;
     DEFAULT_IDP?: DefaultidpEnum | BlankEnum;
     DOCS_URL?: string;
+    DOCS_SEARCH_ENABLED?: boolean;
     SHORT_PAGE_TITLE?: string;
     FULL_PAGE_TITLE?: string;
     PROJECT_END_DATE_MANDATORY?: boolean;
@@ -53980,6 +54036,19 @@ export type ChatStreamResponses = {
 
 export type ChatStreamResponse = ChatStreamResponses[keyof ChatStreamResponses];
 
+export type ChatSuggestionsRetrieveData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/chat/suggestions/';
+};
+
+export type ChatSuggestionsRetrieveResponses = {
+    200: ChatSuggestionsResponse;
+};
+
+export type ChatSuggestionsRetrieveResponse = ChatSuggestionsRetrieveResponses[keyof ChatSuggestionsRetrieveResponses];
+
 export type ChecklistsAdminListData = {
     body?: never;
     path?: never;
@@ -58449,6 +58518,29 @@ export type DigitaloceanSizesRetrieveResponses = {
 };
 
 export type DigitaloceanSizesRetrieveResponse = DigitaloceanSizesRetrieveResponses[keyof DigitaloceanSizesRetrieveResponses];
+
+export type DocsSearchRetrieveData = {
+    body?: never;
+    path?: never;
+    query: {
+        limit?: number;
+        query: string;
+    };
+    url: '/api/docs-search/';
+};
+
+export type DocsSearchRetrieveErrors = {
+    424: DocsSearchDisabled;
+    503: DocsSearchUnavailable;
+};
+
+export type DocsSearchRetrieveError = DocsSearchRetrieveErrors[keyof DocsSearchRetrieveErrors];
+
+export type DocsSearchRetrieveResponses = {
+    200: DocsSearchResponse;
+};
+
+export type DocsSearchRetrieveResponse = DocsSearchRetrieveResponses[keyof DocsSearchRetrieveResponses];
 
 export type EmailLogsListData = {
     body?: never;
