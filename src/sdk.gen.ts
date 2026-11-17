@@ -23806,7 +23806,7 @@ export const openportalManagedProjectsAddNote = <ThrowOnError extends boolean = 
 });
 
 /**
- * Approve managed project request
+ * Approve managed project request. Applies no more than the allocation waiting at the time of approval; send expected_allocation to refuse the approval (409) if that figure is no longer the one the reviewer saw.
  */
 export const openportalManagedProjectsApprove = <ThrowOnError extends boolean = true>(options: Options<OpenportalManagedProjectsApproveData, ThrowOnError>) => (options.client ?? client).post<OpenportalManagedProjectsApproveResponses, unknown, ThrowOnError>({
     security: [
@@ -23862,7 +23862,7 @@ export const openportalManagedProjectsDetach = <ThrowOnError extends boolean = t
 });
 
 /**
- * Reject managed project request
+ * Reject managed project request. For a live award pending only for an allocation increase, only the increase is declined: the award goes back to approved with the credits it has.
  */
 export const openportalManagedProjectsReject = <ThrowOnError extends boolean = true>(options: Options<OpenportalManagedProjectsRejectData, ThrowOnError>) => (options.client ?? client).post<OpenportalManagedProjectsRejectResponses, unknown, ThrowOnError>({
     security: [

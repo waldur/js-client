@@ -15216,6 +15216,25 @@ export type ManagedProject = {
      * The local project identifier in this portal.
      */
     local_identifier?: string | null;
+    /**
+     * Credits last approved, by a local reviewer or within the project template's approval limit. Allocation increases are measured against this.
+     */
+    readonly approved_credits: string | null;
+    /**
+     * Credits of an allocation increase waiting for review. Every other change to the award has been applied.
+     */
+    readonly pending_allocation: string | null;
+};
+
+export type ManagedProjectApproveRequest = {
+    /**
+     * Optional comment for review
+     */
+    comment?: string;
+    /**
+     * The allocation, in credits, the reviewer is approving: the managed project's pending_allocation when an allocation increase is waiting, otherwise the credits of the requested allocation. The approval is refused with 409 if the figure has changed since. Whether or not it is sent, no more than the figure waiting at the time of approval is applied: a later increase waits for review again. Omitting it approves whatever figure is waiting when the request arrives, which may be higher than the one the reviewer saw.
+     */
+    expected_allocation?: string | null;
 };
 
 export type ManagedProjectAuditEntry = {
@@ -95292,7 +95311,7 @@ export type OpenportalManagedProjectsAddNoteResponses = {
 export type OpenportalManagedProjectsAddNoteResponse = OpenportalManagedProjectsAddNoteResponses[keyof OpenportalManagedProjectsAddNoteResponses];
 
 export type OpenportalManagedProjectsApproveData = {
-    body?: ReviewCommentRequest;
+    body?: ManagedProjectApproveRequest;
     path: {
         /**
          * The destination of the managed project
