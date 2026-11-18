@@ -12174,7 +12174,7 @@ export const marketplaceOfferingTermsOfServiceCount = <ThrowOnError extends bool
 /**
  * Create a Terms of Service configuration
  *
- * Creates a new Terms of Service configuration for an offering. Only one active ToS configuration is allowed per offering.
+ * Creates a new Terms of Service configuration for an offering. Only one active ToS configuration is allowed per offering: creating an active one deactivates the currently active one.
  */
 export const marketplaceOfferingTermsOfServiceCreate = <ThrowOnError extends boolean = true>(options: Options<MarketplaceOfferingTermsOfServiceCreateData, ThrowOnError>) => (options.client ?? client).post<MarketplaceOfferingTermsOfServiceCreateResponses, unknown, ThrowOnError>({
     security: [
@@ -12220,7 +12220,7 @@ export const marketplaceOfferingTermsOfServiceRetrieve = <ThrowOnError extends b
 /**
  * Partially update a Terms of Service configuration
  *
- * Partially updates an existing Terms of Service configuration.
+ * Partially updates an existing Terms of Service configuration. Activating a configuration deactivates the offering's currently active one.
  */
 export const marketplaceOfferingTermsOfServicePartialUpdate = <ThrowOnError extends boolean = true>(options: Options<MarketplaceOfferingTermsOfServicePartialUpdateData, ThrowOnError>) => (options.client ?? client).patch<MarketplaceOfferingTermsOfServicePartialUpdateResponses, unknown, ThrowOnError>({
     security: [
@@ -12238,7 +12238,7 @@ export const marketplaceOfferingTermsOfServicePartialUpdate = <ThrowOnError exte
 /**
  * Update a Terms of Service configuration
  *
- * Updates an existing Terms of Service configuration. Note that some fields like `version` and `requires_reconsent` are protected and cannot be changed after creation.
+ * Updates an existing Terms of Service configuration. Note that some fields like `version` and `requires_reconsent` are protected and cannot be changed after creation. Activating a configuration deactivates the offering's currently active one.
  */
 export const marketplaceOfferingTermsOfServiceUpdate = <ThrowOnError extends boolean = true>(options: Options<MarketplaceOfferingTermsOfServiceUpdateData, ThrowOnError>) => (options.client ?? client).put<MarketplaceOfferingTermsOfServiceUpdateResponses, unknown, ThrowOnError>({
     security: [
