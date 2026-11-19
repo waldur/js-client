@@ -2235,6 +2235,65 @@ export type AssignmentBatchRequest = {
 
 export type AssignmentBatchStatus = 'draft' | 'sent' | 'responded' | 'expired' | 'cancelled';
 
+export type AssignmentImportRequest = {
+    /**
+     * Round of this call whose proposals the file assigns
+     */
+    round: string;
+    /**
+     * CSV with a header row: reviewer_email, and proposal_slug or proposal_uuid. UTF-8, at most 1 MB.
+     */
+    file: Blob | File;
+    /**
+     * Report what each row would do and change nothing
+     */
+    dry_run?: boolean;
+    /**
+     * Assign even if this takes reviewers above their maximum number of open assignments. The override is logged.
+     */
+    override_workload_limit?: boolean;
+    /**
+     * Optional notes stored on the draft batches
+     */
+    manager_notes?: string;
+};
+
+export type AssignmentImportResponse = {
+    dry_run: boolean;
+    rows: Array<AssignmentImportRow>;
+    totals: AssignmentImportTotals;
+    /**
+     * Draft batches created or extended; empty for a dry run
+     */
+    batch_uuids: Array<string>;
+};
+
+export type AssignmentImportRow = {
+    /**
+     * Line of the file, the header is 1
+     */
+    row: number;
+    /**
+     * The proposal the row names, when found
+     */
+    proposal_uuid: string | null;
+    proposal_slug: string;
+    proposal_name: string;
+    reviewer_email: string;
+    status: AssignmentImportRowStatusEnum;
+    reason: string;
+};
+
+export type AssignmentImportRowStatusEnum = 'ready' | 'created' | 'coi_blocked' | 'skipped' | 'error';
+
+export type AssignmentImportTotals = {
+    ready: number;
+    created: number;
+    coi_blocked: number;
+    skipped: number;
+    error: number;
+};
+
 export type AssignmentItem = {
     readonly url: string;
     readonly uuid: string;
@@ -4420,6 +4479,10 @@ export type CallProposalFieldConfig = {
     field_description?: ProposalFieldStateEnum;
     field_science_sub_domain?: ProposalFieldStateEnum;
     field_supporting_documentation?: ProposalFieldStateEnum;
+    /**
+     * How many supporting documents a proposal needs before it can be submitted, while supporting documentation is required. Ignored when it is optional or hidden.
+     */
+    minimum_supporting_documents?: number;
 };
 
 export type CallProposalFieldConfigRequest = {
@@ -4427,6 +4490,10 @@ export type CallProposalFieldConfigRequest = {
     field_description?: ProposalFieldStateEnum;
     field_science_sub_domain?: ProposalFieldStateEnum;
     field_supporting_documentation?: ProposalFieldStateEnum;
+    /**
+     * How many supporting documents a proposal needs before it can be submitted, while supporting documentation is required. Ignored when it is optional or hidden.
+     */
+    minimum_supporting_documents?: number;
 };
 
 export type CallProposalRole = {
@@ -26628,6 +26695,10 @@ export type PatchedProtectedCallRequest = {
      */
     proposal_slug_template?: string | null;
     /**
+     * Description given to the project an accepted proposal creates. Placeholders: {proposal_name}, {proposal_slug}, {call_prefix}, {call_slug}, {call_name}, {round_start}, {round_slug}, {org_slug}, {year}, {proposal_summary}, {proposal_description}. Empty means no description. The project description is not as private as the proposal: project members, organization owners and the service providers of the project's resources see it, and it is shared with external portals the project is connected to. {proposal_description} copies the full proposal text there; use {proposal_summary} unless that is intended.
+     */
+    project_description_template?: string | null;
+    /**
      * List of email regex patterns. User must match one.
      */
     user_email_patterns?: Array<string>;
@@ -30036,6 +30107,10 @@ export type ProposalReview = {
     readonly anonymous_reviewer_name: string | null;
     state: ProposalReviewStateEnum;
     /**
+     * Why a rejected review was closed: declined by the reviewer, expired at its deadline, withdrawn when the reviewer joined the proposal team, or closed when the proposal was decided. Empty on reviews not rejected, and on those rejected before this was recorded.
+     */
+    rejection_cause: RejectionCauseEnum | BlankEnum;
+    /**
      * When the review is due, or None when nothing sets a deadline.
      *
      * The deadline of the step the review contributes to. A review whose
@@ -30619,6 +30694,10 @@ export type ProtectedCall = {
      */
     proposal_slug_template?: string | null;
     /**
+     * Description given to the project an accepted proposal creates. Placeholders: {proposal_name}, {proposal_slug}, {call_prefix}, {call_slug}, {call_name}, {round_start}, {round_slug}, {org_slug}, {year}, {proposal_summary}, {proposal_description}. Empty means no description. The project description is not as private as the proposal: project members, organization owners and the service providers of the project's resources see it, and it is shared with external portals the project is connected to. {proposal_description} copies the full proposal text there; use {proposal_summary} unless that is intended.
+     */
+    project_description_template?: string | null;
+    /**
      * List of email regex patterns. User must match one.
      */
     user_email_patterns?: Array<string>;
@@ -30761,6 +30840,10 @@ export type ProtectedCallRequest = {
      * Template for proposal slugs. Supports: {call_slug}, {round_slug}, {org_slug}, {year}, {month}, {counter}, {counter_padded}. Default: {round_slug}-{counter_padded}
      */
     proposal_slug_template?: string | null;
+    /**
+     * Description given to the project an accepted proposal creates. Placeholders: {proposal_name}, {proposal_slug}, {call_prefix}, {call_slug}, {call_name}, {round_start}, {round_slug}, {org_slug}, {year}, {proposal_summary}, {proposal_description}. Empty means no description. The project description is not as private as the proposal: project members, organization owners and the service providers of the project's resources see it, and it is shared with external portals the project is connected to. {proposal_description} copies the full proposal text there; use {proposal_summary} unless that is intended.
+     */
+    project_description_template?: string | null;
     /**
      * List of email regex patterns. User must match one.
      */
@@ -33808,6 +33891,8 @@ export type RejectedPoint = {
     reason: string;
 };
 
+export type RejectionCauseEnum = 'declined' | 'expired' | 'withdrawn' | 'proposal_decided';
+
 export type RelationshipTypeEnum = 'employment' | 'consulting' | 'equity' | 'board' | 'royalties' | 'gifts' | 'other';
 
 export type ReleaseStepReportRequest = {
@@ -34061,7 +34146,40 @@ export type RemoteProjectAuditEntry = {
 
 export type RemoteProjectAuditEntryEventTypeEnum = 'award_attempted' | 'award_rejected' | 'award_created' | 'award_updated' | 'award_update_confirmed' | 'award_update_rejected' | 'state_changed' | 'resource_deleted';
 
+export type RemoteProjectReportWindow = {
+    /**
+     * Null if the project was deleted or the caller cannot see it.
+     */
+    project_uuid: string | null;
+    /**
+     * Null if the project was deleted or the caller cannot see it.
+     */
+    project_name: string | null;
+    /**
+     * Null if when the award arrived was not recorded.
+     */
+    start: string | null;
+    /**
+     * Inclusive. Null while still attached.
+     */
+    end: string | null;
+};
+
 export type RemoteProjectStateEnum = 'pending' | 'active' | 'stale' | 'error' | 'deleted';
+
+export type RemoteProjectStorageReport = {
+    start: string | null;
+    end: string;
+    /**
+     * When the latest snapshot in range was taken. Null if none was.
+     */
+    latest: string | null;
+    /**
+     * The combined OpenPortal ProjectStorageReport. Its top level is the latest snapshot in range; daily_reports holds the others. Null if the award has no identifier and no attachment to report under.
+     */
+    report: ProjectStorageReport | null;
+    windows: Array<RemoteProjectReportWindow>;
+};
 
 export type RemoteProjectUpdateRequest = {
     readonly uuid: string;
@@ -34094,6 +34212,17 @@ export type RemoteProjectUpdateRequest = {
     old_is_industry?: boolean | null;
     new_is_industry?: boolean | null;
     created_by?: number | null;
+};
+
+export type RemoteProjectUsageReport = {
+    start: string | null;
+    end: string;
+    total_hours: number;
+    /**
+     * The combined OpenPortal ProjectUsageReport. Null if the award has no identifier and no attachment to report under.
+     */
+    report: ProjectUsageReport | null;
+    windows: Array<RemoteProjectReportWindow>;
 };
 
 export type RemoteResourceOrder = {
@@ -36126,6 +36255,10 @@ export type ReviewerReportRow = {
      */
     reviews_withdrawn: number;
     /**
+     * Closed unsubmitted when the proposal was accepted, rejected or canceled.
+     */
+    reviews_closed_on_decision: number;
+    /**
      * In review past their deadline.
      */
     reviews_overdue: number;
@@ -36200,6 +36333,10 @@ export type ReviewerReportTotals = {
      * Withdrawn when the reviewer joined the proposal's team.
      */
     reviews_withdrawn: number;
+    /**
+     * Closed unsubmitted when the proposal was accepted, rejected or canceled.
+     */
+    reviews_closed_on_decision: number;
     /**
      * In review past their deadline.
      */
@@ -45797,6 +45934,10 @@ export type ProtectedCallRequestForm = {
      */
     proposal_slug_template?: string | null;
     /**
+     * Description given to the project an accepted proposal creates. Placeholders: {proposal_name}, {proposal_slug}, {call_prefix}, {call_slug}, {call_name}, {round_start}, {round_slug}, {org_slug}, {year}, {proposal_summary}, {proposal_description}. Empty means no description. The project description is not as private as the proposal: project members, organization owners and the service providers of the project's resources see it, and it is shared with external portals the project is connected to. {proposal_description} copies the full proposal text there; use {proposal_summary} unless that is intended.
+     */
+    project_description_template?: string | null;
+    /**
      * List of email regex patterns. User must match one.
      */
     user_email_patterns?: Array<string>;
@@ -45920,6 +46061,10 @@ export type ProtectedCallRequestMultipart = {
      */
     proposal_slug_template?: string | null;
     /**
+     * Description given to the project an accepted proposal creates. Placeholders: {proposal_name}, {proposal_slug}, {call_prefix}, {call_slug}, {call_name}, {round_start}, {round_slug}, {org_slug}, {year}, {proposal_summary}, {proposal_description}. Empty means no description. The project description is not as private as the proposal: project members, organization owners and the service providers of the project's resources see it, and it is shared with external portals the project is connected to. {proposal_description} copies the full proposal text there; use {proposal_summary} unless that is intended.
+     */
+    project_description_template?: string | null;
+    /**
      * List of email regex patterns. User must match one.
      */
     user_email_patterns?: Array<string>;
@@ -46042,6 +46187,10 @@ export type PatchedProtectedCallRequestForm = {
      */
     proposal_slug_template?: string | null;
     /**
+     * Description given to the project an accepted proposal creates. Placeholders: {proposal_name}, {proposal_slug}, {call_prefix}, {call_slug}, {call_name}, {round_start}, {round_slug}, {org_slug}, {year}, {proposal_summary}, {proposal_description}. Empty means no description. The project description is not as private as the proposal: project members, organization owners and the service providers of the project's resources see it, and it is shared with external portals the project is connected to. {proposal_description} copies the full proposal text there; use {proposal_summary} unless that is intended.
+     */
+    project_description_template?: string | null;
+    /**
      * List of email regex patterns. User must match one.
      */
     user_email_patterns?: Array<string>;
@@ -46163,6 +46312,10 @@ export type PatchedProtectedCallRequestMultipart = {
      * Template for proposal slugs. Supports: {call_slug}, {round_slug}, {org_slug}, {year}, {month}, {counter}, {counter_padded}. Default: {round_slug}-{counter_padded}
      */
     proposal_slug_template?: string | null;
+    /**
+     * Description given to the project an accepted proposal creates. Placeholders: {proposal_name}, {proposal_slug}, {call_prefix}, {call_slug}, {call_name}, {round_start}, {round_slug}, {org_slug}, {year}, {proposal_summary}, {proposal_description}. Empty means no description. The project description is not as private as the proposal: project members, organization owners and the service providers of the project's resources see it, and it is shared with external portals the project is connected to. {proposal_description} copies the full proposal text there; use {proposal_summary} unless that is intended.
+     */
+    project_description_template?: string | null;
     /**
      * List of email regex patterns. User must match one.
      */
@@ -46980,7 +47133,7 @@ export type ProposalOEnum = '-created' | '-round__call__name' | '-round__cutoff_
 
 export type ProposalRunPhaseEnum = 'closing' | 'extension';
 
-export type ProtectedCallFieldEnum = 'adoption_required' | 'allowed_duration_months' | 'applicant_cc_roles' | 'applicant_visibility_config' | 'backend_id' | 'budget_enforcement' | 'carry_over_drafts' | 'coi_declaration_text' | 'compliance_checklist' | 'compliance_checklist_name' | 'component_rules' | 'created' | 'created_by' | 'customer_name' | 'customer_uuid' | 'description' | 'documents' | 'end_date' | 'evaluation_start' | 'external_url' | 'fixed_duration_in_days' | 'has_eligibility_restrictions' | 'has_proposals' | 'image' | 'manager' | 'manager_uuid' | 'max_prepaid_duration_months' | 'name' | 'offerings' | 'order_author' | 'order_author_user' | 'order_author_user_name' | 'order_author_user_uuid' | 'panel_chair' | 'panel_chair_name' | 'panel_chair_uuid' | 'panel_vice_chair' | 'panel_vice_chair_name' | 'panel_vice_chair_uuid' | 'project_name_template' | 'proposal_field_config' | 'proposal_field_metadata' | 'proposal_slug_template' | 'publish_results' | 'reference_code' | 'resource_template_selection_mode' | 'resource_templates' | 'reviewer_eligibility' | 'reviewer_identity_visible_to_submitters' | 'reviews_visible_to_submitters' | 'rounds' | 'slug' | 'start_date' | 'state' | 'target_decision_days' | 'template_latest_version' | 'template_name' | 'template_uuid' | 'template_version' | 'undecided_at_round_completion' | 'url' | 'user_affiliations' | 'user_assurance_levels' | 'user_email_patterns' | 'user_identity_sources' | 'user_nationalities' | 'user_organization_types' | 'uuid';
+export type ProtectedCallFieldEnum = 'adoption_required' | 'allowed_duration_months' | 'applicant_cc_roles' | 'applicant_visibility_config' | 'backend_id' | 'budget_enforcement' | 'carry_over_drafts' | 'coi_declaration_text' | 'compliance_checklist' | 'compliance_checklist_name' | 'component_rules' | 'created' | 'created_by' | 'customer_name' | 'customer_uuid' | 'description' | 'documents' | 'end_date' | 'evaluation_start' | 'external_url' | 'fixed_duration_in_days' | 'has_eligibility_restrictions' | 'has_proposals' | 'image' | 'manager' | 'manager_uuid' | 'max_prepaid_duration_months' | 'name' | 'offerings' | 'order_author' | 'order_author_user' | 'order_author_user_name' | 'order_author_user_uuid' | 'panel_chair' | 'panel_chair_name' | 'panel_chair_uuid' | 'panel_vice_chair' | 'panel_vice_chair_name' | 'panel_vice_chair_uuid' | 'project_description_template' | 'project_name_template' | 'proposal_field_config' | 'proposal_field_metadata' | 'proposal_slug_template' | 'publish_results' | 'reference_code' | 'resource_template_selection_mode' | 'resource_templates' | 'reviewer_eligibility' | 'reviewer_identity_visible_to_submitters' | 'reviews_visible_to_submitters' | 'rounds' | 'slug' | 'start_date' | 'state' | 'target_decision_days' | 'template_latest_version' | 'template_name' | 'template_uuid' | 'template_version' | 'undecided_at_round_completion' | 'url' | 'user_affiliations' | 'user_assurance_levels' | 'user_email_patterns' | 'user_identity_sources' | 'user_nationalities' | 'user_organization_types' | 'uuid';
 
 export type ProtectedCallOEnum = '-created' | '-manager__customer__name' | '-name' | 'created' | 'manager__customer__name' | 'name';
 
@@ -85377,6 +85530,10 @@ export type MarketplaceServiceProvidersCustomerProjectsListData = {
     };
     query: {
         /**
+         * Return projects active during a year (YYYY) or a month (YYYY-MM): started on or before the period's last day (start date, or creation date when there is none) and with no end date or one after the period's first day.
+         */
+        active_during?: string;
+        /**
          * Affiliation name
          */
         affiliation_name?: string;
@@ -85429,11 +85586,27 @@ export type MarketplaceServiceProvidersCustomerProjectsListData = {
          * Description
          */
         description?: string;
+        /**
+         * Return projects whose end date is on or after the given date.
+         */
+        end_date_after?: string;
+        /**
+         * Return projects whose end date is on or before the given date.
+         */
+        end_date_before?: string;
+        /**
+         * true: projects whose end date is today or earlier. false: projects with no end date or one after today.
+         */
+        ended?: boolean;
         field?: Array<MarketplaceProviderCustomerProjectFieldEnum>;
         /**
          * Filter projects that have an affiliation.
          */
         has_affiliation?: boolean;
+        /**
+         * true: projects that have ended but whose end date plus grace period (the project's, else the organization's, else none) is after today. false: all other projects.
+         */
+        in_grace?: boolean;
         /**
          * Is removed
          */
@@ -85488,6 +85661,18 @@ export type MarketplaceServiceProvidersCustomerProjectsListData = {
          * Slug
          */
         slug?: string;
+        /**
+         * Return projects whose start date is on or after the given date.
+         */
+        start_date_after?: string;
+        /**
+         * Return projects whose start date is on or before the given date.
+         */
+        start_date_before?: string;
+        /**
+         * true: projects with no start date or one not after today. false: projects whose start date is after today.
+         */
+        started?: boolean;
         /**
          * Role name or UUID; narrows user_uuid_with_active_role to that role and its organization copies.
          */
@@ -85513,6 +85698,10 @@ export type MarketplaceServiceProvidersCustomerProjectsCountData = {
     };
     query: {
         /**
+         * Return projects active during a year (YYYY) or a month (YYYY-MM): started on or before the period's last day (start date, or creation date when there is none) and with no end date or one after the period's first day.
+         */
+        active_during?: string;
+        /**
          * Affiliation name
          */
         affiliation_name?: string;
@@ -85566,9 +85755,25 @@ export type MarketplaceServiceProvidersCustomerProjectsCountData = {
          */
         description?: string;
         /**
+         * Return projects whose end date is on or after the given date.
+         */
+        end_date_after?: string;
+        /**
+         * Return projects whose end date is on or before the given date.
+         */
+        end_date_before?: string;
+        /**
+         * true: projects whose end date is today or earlier. false: projects with no end date or one after today.
+         */
+        ended?: boolean;
+        /**
          * Filter projects that have an affiliation.
          */
         has_affiliation?: boolean;
+        /**
+         * true: projects that have ended but whose end date plus grace period (the project's, else the organization's, else none) is after today. false: all other projects.
+         */
+        in_grace?: boolean;
         /**
          * Is removed
          */
@@ -85623,6 +85828,18 @@ export type MarketplaceServiceProvidersCustomerProjectsCountData = {
          * Slug
          */
         slug?: string;
+        /**
+         * Return projects whose start date is on or after the given date.
+         */
+        start_date_after?: string;
+        /**
+         * Return projects whose start date is on or before the given date.
+         */
+        start_date_before?: string;
+        /**
+         * true: projects with no start date or one not after today. false: projects whose start date is after today.
+         */
+        started?: boolean;
         /**
          * Role name or UUID; narrows user_uuid_with_active_role to that role and its organization copies.
          */
@@ -87184,6 +87401,10 @@ export type MarketplaceServiceProvidersProjectsListData = {
     };
     query?: {
         /**
+         * Return projects active during a year (YYYY) or a month (YYYY-MM): started on or before the period's last day (start date, or creation date when there is none) and with no end date or one after the period's first day.
+         */
+        active_during?: string;
+        /**
          * Affiliation name
          */
         affiliation_name?: string;
@@ -87236,11 +87457,27 @@ export type MarketplaceServiceProvidersProjectsListData = {
          * Description
          */
         description?: string;
+        /**
+         * Return projects whose end date is on or after the given date.
+         */
+        end_date_after?: string;
+        /**
+         * Return projects whose end date is on or before the given date.
+         */
+        end_date_before?: string;
+        /**
+         * true: projects whose end date is today or earlier. false: projects with no end date or one after today.
+         */
+        ended?: boolean;
         field?: Array<ProjectFieldEnum>;
         /**
          * Filter projects that have an affiliation.
          */
         has_affiliation?: boolean;
+        /**
+         * true: projects that have ended but whose end date plus grace period (the project's, else the organization's, else none) is after today. false: all other projects.
+         */
+        in_grace?: boolean;
         /**
          * Is removed
          */
@@ -87291,6 +87528,18 @@ export type MarketplaceServiceProvidersProjectsListData = {
          * Slug
          */
         slug?: string;
+        /**
+         * Return projects whose start date is on or after the given date.
+         */
+        start_date_after?: string;
+        /**
+         * Return projects whose start date is on or before the given date.
+         */
+        start_date_before?: string;
+        /**
+         * true: projects with no start date or one not after today. false: projects whose start date is after today.
+         */
+        started?: boolean;
         /**
          * Role name or UUID; narrows user_uuid_with_active_role to that role and its organization copies.
          */
@@ -87316,6 +87565,10 @@ export type MarketplaceServiceProvidersProjectsCountData = {
     };
     query?: {
         /**
+         * Return projects active during a year (YYYY) or a month (YYYY-MM): started on or before the period's last day (start date, or creation date when there is none) and with no end date or one after the period's first day.
+         */
+        active_during?: string;
+        /**
          * Affiliation name
          */
         affiliation_name?: string;
@@ -87369,9 +87622,25 @@ export type MarketplaceServiceProvidersProjectsCountData = {
          */
         description?: string;
         /**
+         * Return projects whose end date is on or after the given date.
+         */
+        end_date_after?: string;
+        /**
+         * Return projects whose end date is on or before the given date.
+         */
+        end_date_before?: string;
+        /**
+         * true: projects whose end date is today or earlier. false: projects with no end date or one after today.
+         */
+        ended?: boolean;
+        /**
          * Filter projects that have an affiliation.
          */
         has_affiliation?: boolean;
+        /**
+         * true: projects that have ended but whose end date plus grace period (the project's, else the organization's, else none) is after today. false: all other projects.
+         */
+        in_grace?: boolean;
         /**
          * Is removed
          */
@@ -87422,6 +87691,18 @@ export type MarketplaceServiceProvidersProjectsCountData = {
          * Slug
          */
         slug?: string;
+        /**
+         * Return projects whose start date is on or after the given date.
+         */
+        start_date_after?: string;
+        /**
+         * Return projects whose start date is on or before the given date.
+         */
+        start_date_before?: string;
+        /**
+         * true: projects with no start date or one not after today. false: projects whose start date is after today.
+         */
+        started?: boolean;
         /**
          * Role name or UUID; narrows user_uuid_with_active_role to that role and its organization copies.
          */
@@ -97238,6 +97519,30 @@ export type OpenportalRemoteProjectsSetMembershipControlResponses = {
     202: unknown;
 };
 
+export type OpenportalRemoteProjectsStorageReportRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * Last day to include. Defaults to today. A start after the end gives an empty report.
+         */
+        end?: string;
+        /**
+         * First day to include. Defaults to when the award was first attached.
+         */
+        start?: string;
+    };
+    url: '/api/openportal-remote-projects/{uuid}/storage-report/';
+};
+
+export type OpenportalRemoteProjectsStorageReportRetrieveResponses = {
+    200: RemoteProjectStorageReport;
+};
+
+export type OpenportalRemoteProjectsStorageReportRetrieveResponse = OpenportalRemoteProjectsStorageReportRetrieveResponses[keyof OpenportalRemoteProjectsStorageReportRetrieveResponses];
+
 export type OpenportalRemoteProjectsTotalUsageRetrieveData = {
     body?: never;
     path: {
@@ -97255,6 +97560,30 @@ export type OpenportalRemoteProjectsTotalUsageRetrieveResponses = {
 
 export type OpenportalRemoteProjectsTotalUsageRetrieveResponse = OpenportalRemoteProjectsTotalUsageRetrieveResponses[keyof OpenportalRemoteProjectsTotalUsageRetrieveResponses];
 
+export type OpenportalRemoteProjectsUsageReportRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * Last day to include. Defaults to today. A start after the end gives an empty report.
+         */
+        end?: string;
+        /**
+         * First day to include. Defaults to when the award was first attached.
+         */
+        start?: string;
+    };
+    url: '/api/openportal-remote-projects/{uuid}/usage-report/';
+};
+
+export type OpenportalRemoteProjectsUsageReportRetrieveResponses = {
+    200: RemoteProjectUsageReport;
+};
+
+export type OpenportalRemoteProjectsUsageReportRetrieveResponse = OpenportalRemoteProjectsUsageReportRetrieveResponses[keyof OpenportalRemoteProjectsUsageReportRetrieveResponses];
+
 export type OpenportalUnmanagedProjectsListData = {
     body?: never;
     path?: never;
@@ -97263,6 +97592,10 @@ export type OpenportalUnmanagedProjectsListData = {
          * Filter by whether accounting is running.
          */
         accounting_is_running?: boolean;
+        /**
+         * Return projects active during a year (YYYY) or a month (YYYY-MM): started on or before the period's last day (start date, or creation date when there is none) and with no end date or one after the period's first day.
+         */
+        active_during?: string;
         /**
          * Affiliation name
          */
@@ -97316,11 +97649,27 @@ export type OpenportalUnmanagedProjectsListData = {
          * Description
          */
         description?: string;
+        /**
+         * Return projects whose end date is on or after the given date.
+         */
+        end_date_after?: string;
+        /**
+         * Return projects whose end date is on or before the given date.
+         */
+        end_date_before?: string;
+        /**
+         * true: projects whose end date is today or earlier. false: projects with no end date or one after today.
+         */
+        ended?: boolean;
         field?: Array<ProjectFieldEnum>;
         /**
          * Filter projects that have an affiliation.
          */
         has_affiliation?: boolean;
+        /**
+         * true: projects that have ended but whose end date plus grace period (the project's, else the organization's, else none) is after today. false: all other projects.
+         */
+        in_grace?: boolean;
         /**
          * Include soft-deleted (terminated) projects. Only available to staff and support users, or users with organizational roles who can see their terminated projects.
          */
@@ -97375,6 +97724,18 @@ export type OpenportalUnmanagedProjectsListData = {
          * Slug
          */
         slug?: string;
+        /**
+         * Return projects whose start date is on or after the given date.
+         */
+        start_date_after?: string;
+        /**
+         * Return projects whose start date is on or before the given date.
+         */
+        start_date_before?: string;
+        /**
+         * true: projects with no start date or one not after today. false: projects whose start date is after today.
+         */
+        started?: boolean;
         /**
          * Role name or UUID; narrows user_uuid_with_active_role to that role and its organization copies.
          */
@@ -97406,6 +97767,10 @@ export type OpenportalUnmanagedProjectsCountData = {
          */
         accounting_is_running?: boolean;
         /**
+         * Return projects active during a year (YYYY) or a month (YYYY-MM): started on or before the period's last day (start date, or creation date when there is none) and with no end date or one after the period's first day.
+         */
+        active_during?: string;
+        /**
          * Affiliation name
          */
         affiliation_name?: string;
@@ -97459,9 +97824,25 @@ export type OpenportalUnmanagedProjectsCountData = {
          */
         description?: string;
         /**
+         * Return projects whose end date is on or after the given date.
+         */
+        end_date_after?: string;
+        /**
+         * Return projects whose end date is on or before the given date.
+         */
+        end_date_before?: string;
+        /**
+         * true: projects whose end date is today or earlier. false: projects with no end date or one after today.
+         */
+        ended?: boolean;
+        /**
          * Filter projects that have an affiliation.
          */
         has_affiliation?: boolean;
+        /**
+         * true: projects that have ended but whose end date plus grace period (the project's, else the organization's, else none) is after today. false: all other projects.
+         */
+        in_grace?: boolean;
         /**
          * Include soft-deleted (terminated) projects. Only available to staff and support users, or users with organizational roles who can see their terminated projects.
          */
@@ -97516,6 +97897,18 @@ export type OpenportalUnmanagedProjectsCountData = {
          * Slug
          */
         slug?: string;
+        /**
+         * Return projects whose start date is on or after the given date.
+         */
+        start_date_after?: string;
+        /**
+         * Return projects whose start date is on or before the given date.
+         */
+        start_date_before?: string;
+        /**
+         * true: projects with no start date or one not after today. false: projects whose start date is after today.
+         */
+        started?: boolean;
         /**
          * Role name or UUID; narrows user_uuid_with_active_role to that role and its organization copies.
          */
@@ -97723,6 +98116,10 @@ export type OpenportalUnmanagedProjectsHistoryListData = {
          */
         accounting_is_running?: boolean;
         /**
+         * Return projects active during a year (YYYY) or a month (YYYY-MM): started on or before the period's last day (start date, or creation date when there is none) and with no end date or one after the period's first day.
+         */
+        active_during?: string;
+        /**
          * Affiliation name
          */
         affiliation_name?: string;
@@ -97780,9 +98177,25 @@ export type OpenportalUnmanagedProjectsHistoryListData = {
          */
         description?: string;
         /**
+         * Return projects whose end date is on or after the given date.
+         */
+        end_date_after?: string;
+        /**
+         * Return projects whose end date is on or before the given date.
+         */
+        end_date_before?: string;
+        /**
+         * true: projects whose end date is today or earlier. false: projects with no end date or one after today.
+         */
+        ended?: boolean;
+        /**
          * Filter projects that have an affiliation.
          */
         has_affiliation?: boolean;
+        /**
+         * true: projects that have ended but whose end date plus grace period (the project's, else the organization's, else none) is after today. false: all other projects.
+         */
+        in_grace?: boolean;
         /**
          * Is removed
          */
@@ -97833,6 +98246,18 @@ export type OpenportalUnmanagedProjectsHistoryListData = {
          * Slug
          */
         slug?: string;
+        /**
+         * Return projects whose start date is on or after the given date.
+         */
+        start_date_after?: string;
+        /**
+         * Return projects whose start date is on or before the given date.
+         */
+        start_date_before?: string;
+        /**
+         * true: projects with no start date or one not after today. false: projects whose start date is after today.
+         */
+        started?: boolean;
         /**
          * Role name or UUID; narrows user_uuid_with_active_role to that role and its organization copies.
          */
@@ -107939,6 +108364,10 @@ export type ProjectsListData = {
          */
         accounting_is_running?: boolean;
         /**
+         * Return projects active during a year (YYYY) or a month (YYYY-MM): started on or before the period's last day (start date, or creation date when there is none) and with no end date or one after the period's first day.
+         */
+        active_during?: string;
+        /**
          * Affiliation name
          */
         affiliation_name?: string;
@@ -107991,11 +108420,27 @@ export type ProjectsListData = {
          * Description
          */
         description?: string;
+        /**
+         * Return projects whose end date is on or after the given date.
+         */
+        end_date_after?: string;
+        /**
+         * Return projects whose end date is on or before the given date.
+         */
+        end_date_before?: string;
+        /**
+         * true: projects whose end date is today or earlier. false: projects with no end date or one after today.
+         */
+        ended?: boolean;
         field?: Array<ProjectFieldEnum>;
         /**
          * Filter projects that have an affiliation.
          */
         has_affiliation?: boolean;
+        /**
+         * true: projects that have ended but whose end date plus grace period (the project's, else the organization's, else none) is after today. false: all other projects.
+         */
+        in_grace?: boolean;
         /**
          * Include soft-deleted (terminated) projects. Only available to staff and support users, or users with organizational roles who can see their terminated projects.
          */
@@ -108050,6 +108495,18 @@ export type ProjectsListData = {
          * Slug
          */
         slug?: string;
+        /**
+         * Return projects whose start date is on or after the given date.
+         */
+        start_date_after?: string;
+        /**
+         * Return projects whose start date is on or before the given date.
+         */
+        start_date_before?: string;
+        /**
+         * true: projects with no start date or one not after today. false: projects whose start date is after today.
+         */
+        started?: boolean;
         /**
          * Role name or UUID; narrows user_uuid_with_active_role to that role and its organization copies.
          */
@@ -108081,6 +108538,10 @@ export type ProjectsCountData = {
          */
         accounting_is_running?: boolean;
         /**
+         * Return projects active during a year (YYYY) or a month (YYYY-MM): started on or before the period's last day (start date, or creation date when there is none) and with no end date or one after the period's first day.
+         */
+        active_during?: string;
+        /**
          * Affiliation name
          */
         affiliation_name?: string;
@@ -108134,9 +108595,25 @@ export type ProjectsCountData = {
          */
         description?: string;
         /**
+         * Return projects whose end date is on or after the given date.
+         */
+        end_date_after?: string;
+        /**
+         * Return projects whose end date is on or before the given date.
+         */
+        end_date_before?: string;
+        /**
+         * true: projects whose end date is today or earlier. false: projects with no end date or one after today.
+         */
+        ended?: boolean;
+        /**
          * Filter projects that have an affiliation.
          */
         has_affiliation?: boolean;
+        /**
+         * true: projects that have ended but whose end date plus grace period (the project's, else the organization's, else none) is after today. false: all other projects.
+         */
+        in_grace?: boolean;
         /**
          * Include soft-deleted (terminated) projects. Only available to staff and support users, or users with organizational roles who can see their terminated projects.
          */
@@ -108191,6 +108668,18 @@ export type ProjectsCountData = {
          * Slug
          */
         slug?: string;
+        /**
+         * Return projects whose start date is on or after the given date.
+         */
+        start_date_after?: string;
+        /**
+         * Return projects whose start date is on or before the given date.
+         */
+        start_date_before?: string;
+        /**
+         * true: projects with no start date or one not after today. false: projects whose start date is after today.
+         */
+        started?: boolean;
         /**
          * Role name or UUID; narrows user_uuid_with_active_role to that role and its organization copies.
          */
@@ -108557,6 +109046,10 @@ export type ProjectsHistoryListData = {
          */
         accounting_is_running?: boolean;
         /**
+         * Return projects active during a year (YYYY) or a month (YYYY-MM): started on or before the period's last day (start date, or creation date when there is none) and with no end date or one after the period's first day.
+         */
+        active_during?: string;
+        /**
          * Affiliation name
          */
         affiliation_name?: string;
@@ -108614,9 +109107,25 @@ export type ProjectsHistoryListData = {
          */
         description?: string;
         /**
+         * Return projects whose end date is on or after the given date.
+         */
+        end_date_after?: string;
+        /**
+         * Return projects whose end date is on or before the given date.
+         */
+        end_date_before?: string;
+        /**
+         * true: projects whose end date is today or earlier. false: projects with no end date or one after today.
+         */
+        ended?: boolean;
+        /**
          * Filter projects that have an affiliation.
          */
         has_affiliation?: boolean;
+        /**
+         * true: projects that have ended but whose end date plus grace period (the project's, else the organization's, else none) is after today. false: all other projects.
+         */
+        in_grace?: boolean;
         /**
          * Is removed
          */
@@ -108667,6 +109176,18 @@ export type ProjectsHistoryListData = {
          * Slug
          */
         slug?: string;
+        /**
+         * Return projects whose start date is on or after the given date.
+         */
+        start_date_after?: string;
+        /**
+         * Return projects whose start date is on or before the given date.
+         */
+        start_date_before?: string;
+        /**
+         * true: projects with no start date or one not after today. false: projects whose start date is after today.
+         */
+        started?: boolean;
         /**
          * Role name or UUID; narrows user_uuid_with_active_role to that role and its organization copies.
          */
@@ -112722,6 +113243,21 @@ export type ProposalProtectedCallsGenerateSuggestionsResponses = {
 };
 
 export type ProposalProtectedCallsGenerateSuggestionsResponse = ProposalProtectedCallsGenerateSuggestionsResponses[keyof ProposalProtectedCallsGenerateSuggestionsResponses];
+
+export type ProposalProtectedCallsImportAssignmentsData = {
+    body: AssignmentImportRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-protected-calls/{uuid}/import-assignments/';
+};
+
+export type ProposalProtectedCallsImportAssignmentsResponses = {
+    200: AssignmentImportResponse;
+};
+
+export type ProposalProtectedCallsImportAssignmentsResponse = ProposalProtectedCallsImportAssignmentsResponses[keyof ProposalProtectedCallsImportAssignmentsResponses];
 
 export type ProposalProtectedCallsInviteByEmailData = {
     body: EmailInvitationRequest;
