@@ -477,6 +477,44 @@ export type AgentCompatibility = {
 
 export type AgentCompatibilityStatusEnum = 'unknown' | 'incompatible' | 'compatible';
 
+export type AgentConfiguration = {
+    order_processing_backend?: string;
+    membership_sync_backend?: string;
+    reporting_backend?: string;
+    username_management_backend?: string;
+    /**
+     * Backends that are not in the plugin catalog, such as a site's own plugin. Their settings and components are not validated.
+     */
+    custom_backends?: Array<string>;
+    backend_settings?: {
+        [key: string]: unknown;
+    };
+    backend_components?: {
+        [key: string]: {
+            [key: string]: unknown;
+        };
+    };
+};
+
+export type AgentConfigurationRequest = {
+    order_processing_backend?: string;
+    membership_sync_backend?: string;
+    reporting_backend?: string;
+    username_management_backend?: string;
+    /**
+     * Backends that are not in the plugin catalog, such as a site's own plugin. Their settings and components are not validated.
+     */
+    custom_backends?: Array<string>;
+    backend_settings?: {
+        [key: string]: unknown;
+    };
+    backend_components?: {
+        [key: string]: {
+            [key: string]: unknown;
+        };
+    };
+};
+
 export type AgentConnectionInfo = {
     /**
      * Agent identity UUID
@@ -677,6 +715,35 @@ export type AgentIdentityRequest = {
      * Last restarted at
      */
     last_restarted?: string;
+};
+
+export type AgentPlugin = {
+    /**
+     * Entry point name, as used in the agent configuration
+     */
+    name: string;
+    package: string;
+    /**
+     * Version of the package the catalog was built from
+     */
+    version: string;
+    roles: Array<RolesEnum>;
+    /**
+     * JSON Schema of the backend settings
+     */
+    settings_schema: {
+        [key: string]: unknown;
+    } | null;
+    /**
+     * JSON Schema of the plugin's component fields
+     */
+    component_schema: {
+        [key: string]: unknown;
+    } | null;
+    /**
+     * Dotted paths of settings that stay in the agent configuration file
+     */
+    secret_settings: Array<string>;
 };
 
 export type AgentProcessor = {
@@ -16112,6 +16179,10 @@ export type MergedPluginOptions = {
      */
     resource_slug_max_length?: number | null;
     /**
+     * Check the tenant's quotas before an instance is ordered
+     */
+    pre_flight_check_enabled?: boolean;
+    /**
      * If set, it will be used as a default MTU for the first network in a tenant
      */
     default_internal_network_mtu?: number;
@@ -16603,6 +16674,10 @@ export type MergedPluginOptionsRequest = {
      */
     resource_slug_max_length?: number | null;
     /**
+     * Check the tenant's quotas before an instance is ordered
+     */
+    pre_flight_check_enabled?: boolean;
+    /**
      * If set, it will be used as a default MTU for the first network in a tenant
      */
     default_internal_network_mtu?: number;
@@ -16954,6 +17029,10 @@ export type MergedSecretOptions = {
      */
     pull?: string;
     /**
+     * Script run when a resource's options change
+     */
+    resource_options_handler?: string;
+    /**
      * API URL
      */
     api_url?: string;
@@ -17124,6 +17203,10 @@ export type MergedSecretOptionsRequest = {
      * Script for regular resource pull
      */
     pull?: string;
+    /**
+     * Script run when a resource's options change
+     */
+    resource_options_handler?: string;
     /**
      * API URL
      */
@@ -19318,6 +19401,7 @@ export type OfferingCreateRequest = {
     resource_options?: OfferingOptionsRequest;
     components?: Array<OfferingComponentRequest>;
     plugin_options?: MergedPluginOptionsRequest;
+    agent_configuration?: AgentConfigurationRequest;
     vendor_details?: string;
     getting_started?: string;
     integration_guide?: string;
@@ -19516,6 +19600,10 @@ export type OfferingExportData = {
     resource_options?: {
         [key: string]: unknown;
     };
+    /**
+     * Site agent configuration, for site agent offerings
+     */
+    agent_configuration?: AgentConfiguration;
 };
 
 export type OfferingExportDataRequest = {
@@ -19536,6 +19624,10 @@ export type OfferingExportDataRequest = {
     resource_options?: {
         [key: string]: unknown;
     };
+    /**
+     * Site agent configuration, for site agent offerings
+     */
+    agent_configuration?: AgentConfigurationRequest;
 };
 
 export type OfferingExportParametersRequest = {
@@ -19748,6 +19840,10 @@ export type OfferingImportResponse = {
 export type OfferingIntegrationUpdateRequest = {
     secret_options?: MergedSecretOptionsRequest;
     plugin_options?: MergedPluginOptionsRequest;
+    /**
+     * Replaces the whole agent configuration of a site agent offering.
+     */
+    agent_configuration?: AgentConfigurationRequest;
     service_attributes?: {
         [key: string]: unknown;
     };
@@ -31326,6 +31422,7 @@ export type ProviderOfferingDetails = {
     plugin_options: MergedPluginOptions;
     account_settings: OfferingAccountSettings;
     secret_options?: MergedSecretOptions;
+    agent_configuration?: AgentConfiguration;
     readonly service_attributes?: {
         [key: string]: unknown;
     };
@@ -37412,6 +37509,8 @@ export type RoleTemplate = {
 };
 
 export type RoleType = 'customer' | 'service_provider' | 'call_organizer' | 'project' | 'offering' | 'resource' | 'resource_project' | 'call' | 'proposal' | 'global';
+
+export type RolesEnum = 'order_processing' | 'membership_sync' | 'reporting' | 'username_management';
 
 export type RoundAdoptionRequest = {
     /**
@@ -44559,6 +44658,7 @@ export type OfferingCreateRequestForm = {
     resource_options?: OfferingOptionsRequest;
     components?: Array<OfferingComponentRequest>;
     plugin_options?: MergedPluginOptionsRequest;
+    agent_configuration?: AgentConfigurationRequest;
     vendor_details?: string;
     getting_started?: string;
     integration_guide?: string;
@@ -44622,6 +44722,7 @@ export type OfferingCreateRequestMultipart = {
     resource_options?: OfferingOptionsRequest;
     components?: Array<OfferingComponentRequest>;
     plugin_options?: MergedPluginOptionsRequest;
+    agent_configuration?: AgentConfigurationRequest;
     vendor_details?: string;
     getting_started?: string;
     integration_guide?: string;
@@ -46839,7 +46940,7 @@ export type AwsVolumeFieldEnum = 'access_url' | 'backend_id' | 'created' | 'cust
 
 export type BackendResourceReqOEnum = '-created' | 'created';
 
-export type OfferingFieldEnum = 'access_url' | 'account_settings' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'billing_mode_components' | 'billing_period_applies' | 'billing_type_classification' | 'can_update_integration' | 'can_update_options' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'compliance_checklist_details' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'default_access_subnets' | 'description' | 'documentation_url' | 'effective_available_limits' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'has_compliance_requirements' | 'helpdesk_url' | 'image' | 'integration_guide' | 'is_accessible' | 'latitude' | 'longitude' | 'name' | 'offering_group' | 'offering_group_title' | 'offering_group_uuid' | 'open_for_proposals' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'profile_name' | 'profile_uuid' | 'project' | 'project_name' | 'project_uuid' | 'qos_profiles' | 'quotas' | 'resource_options' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_resource' | 'scope_resource_name' | 'scope_resource_uuid' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'tags' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'user_has_consent' | 'user_has_offering_user' | 'uuid' | 'vendor_details';
+export type OfferingFieldEnum = 'access_url' | 'account_settings' | 'agent_configuration' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'billing_mode_components' | 'billing_period_applies' | 'billing_type_classification' | 'can_update_integration' | 'can_update_options' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'compliance_checklist_details' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'default_access_subnets' | 'description' | 'documentation_url' | 'effective_available_limits' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'has_compliance_requirements' | 'helpdesk_url' | 'image' | 'integration_guide' | 'is_accessible' | 'latitude' | 'longitude' | 'name' | 'offering_group' | 'offering_group_title' | 'offering_group_uuid' | 'open_for_proposals' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'profile_name' | 'profile_uuid' | 'project' | 'project_name' | 'project_uuid' | 'qos_profiles' | 'quotas' | 'resource_options' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_resource' | 'scope_resource_name' | 'scope_resource_uuid' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'tags' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'user_has_consent' | 'user_has_offering_user' | 'uuid' | 'vendor_details';
 
 export type BookingResourceFieldEnum = 'api_key_counts' | 'attributes' | 'available_actions' | 'backend_id' | 'backend_metadata' | 'can_terminate' | 'category_icon' | 'category_title' | 'category_uuid' | 'consumer_reviewed_by' | 'consumer_reviewed_by_full_name' | 'consumer_reviewed_by_username' | 'created' | 'created_by' | 'created_by_full_name' | 'created_by_username' | 'creation_order' | 'current_usages' | 'customer_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'display_limits' | 'downscaled' | 'effective_id' | 'end_date' | 'end_date_requested_by' | 'end_date_updated_at' | 'endpoints' | 'error_message' | 'error_traceback' | 'has_api_keys' | 'is_limit_based' | 'is_usage_based' | 'last_sync' | 'limit_usage' | 'limits' | 'modified' | 'name' | 'offering' | 'offering_account_settings' | 'offering_backend_id' | 'offering_billable' | 'offering_components' | 'offering_description' | 'offering_image' | 'offering_name' | 'offering_plugin_options' | 'offering_shared' | 'offering_slug' | 'offering_state' | 'offering_thumbnail' | 'offering_type' | 'offering_uuid' | 'options' | 'order_in_progress' | 'parent_name' | 'parent_offering_name' | 'parent_offering_slug' | 'parent_offering_uuid' | 'parent_uuid' | 'paused' | 'plan' | 'plan_description' | 'plan_name' | 'plan_unit' | 'plan_uuid' | 'prepaid_total_component_types' | 'project' | 'project_description' | 'project_effective_end_date' | 'project_end_date' | 'project_end_date_requested_by' | 'project_is_in_grace_period' | 'project_name' | 'project_slug' | 'project_start_date' | 'project_uuid' | 'provider_description' | 'provider_name' | 'provider_slug' | 'provider_uuid' | 'renewal_date' | 'report' | 'resource_effective_end_date' | 'resource_type' | 'resource_uuid' | 'restrict_member_access' | 'scope' | 'service_settings_uuid' | 'slots' | 'slug' | 'spending_limit_status' | 'spending_limits' | 'state' | 'terminated_at' | 'url' | 'usage_limit_restriction' | 'usage_limit_resumes_at' | 'user_requires_reconsent' | 'username' | 'uuid';
 
@@ -46987,7 +47088,7 @@ export type OrderDetailsFieldEnum = 'accepting_terms_of_service' | 'activation_p
 
 export type OrderDetailsOEnum = '-consumer_reviewed_at' | '-cost' | '-created' | '-state' | 'consumer_reviewed_at' | 'cost' | 'created' | 'state';
 
-export type PublicOfferingDetailsFieldEnum = 'access_url' | 'account_settings' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'billing_mode_components' | 'billing_period_applies' | 'billing_type_classification' | 'can_update_integration' | 'can_update_options' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'compliance_checklist_details' | 'components' | 'config_drive_default' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'default_access_subnets' | 'description' | 'documentation_url' | 'effective_available_limits' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'has_compliance_requirements' | 'helpdesk_url' | 'image' | 'integration_guide' | 'is_accessible' | 'latitude' | 'longitude' | 'name' | 'offering_group' | 'offering_group_title' | 'offering_group_uuid' | 'open_for_proposals' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'profile_name' | 'profile_uuid' | 'project' | 'project_name' | 'project_uuid' | 'promotion_campaigns' | 'qos_profiles' | 'quotas' | 'resource_options' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_resource' | 'scope_resource_name' | 'scope_resource_uuid' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'tags' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'user_has_consent' | 'user_has_offering_user' | 'uuid' | 'vendor_details';
+export type PublicOfferingDetailsFieldEnum = 'access_url' | 'account_settings' | 'agent_configuration' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'billing_mode_components' | 'billing_period_applies' | 'billing_type_classification' | 'can_update_integration' | 'can_update_options' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'compliance_checklist_details' | 'components' | 'config_drive_default' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'default_access_subnets' | 'description' | 'documentation_url' | 'effective_available_limits' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'has_compliance_requirements' | 'helpdesk_url' | 'image' | 'integration_guide' | 'is_accessible' | 'latitude' | 'longitude' | 'name' | 'offering_group' | 'offering_group_title' | 'offering_group_uuid' | 'open_for_proposals' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'profile_name' | 'profile_uuid' | 'project' | 'project_name' | 'project_uuid' | 'promotion_campaigns' | 'qos_profiles' | 'quotas' | 'resource_options' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_resource' | 'scope_resource_name' | 'scope_resource_uuid' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'tags' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'user_has_consent' | 'user_has_offering_user' | 'uuid' | 'vendor_details';
 
 export type PosixIdPoolFieldEnum = 'created' | 'customer_name' | 'customer_uuid' | 'description' | 'gid_used' | 'gid_utilization' | 'group_gid_used' | 'group_gid_utilization' | 'max_gid' | 'max_group_gid' | 'max_uid' | 'min_gid' | 'min_group_gid' | 'min_uid' | 'next_gid' | 'next_group_gid' | 'next_uid' | 'offering' | 'scope' | 'service_provider' | 'uid_used' | 'uid_utilization' | 'url' | 'uuid';
 
@@ -46999,7 +47100,7 @@ export type ProjectEstimatedCostPolicyFieldEnum = 'actions' | 'affected_resource
 
 export type RemoteProjectUpdateRequestStateEnum = 'approved' | 'canceled' | 'draft' | 'pending' | 'rejected';
 
-export type ProviderOfferingDetailsFieldEnum = 'access_url' | 'account_settings' | 'attributes' | 'backend_id' | 'backend_id_rules' | 'backend_metadata' | 'billable' | 'billing_mode_components' | 'billing_period_applies' | 'billing_type_classification' | 'can_update_integration' | 'can_update_options' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'compliance_checklist_details' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'default_access_subnets' | 'description' | 'documentation_url' | 'effective_available_limits' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'has_compliance_requirements' | 'helpdesk_url' | 'image' | 'integration_guide' | 'integration_status' | 'latitude' | 'limit_precision_advisory' | 'longitude' | 'name' | 'offering_group' | 'offering_group_title' | 'offering_group_uuid' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'profile_name' | 'profile_uuid' | 'project' | 'project_name' | 'project_uuid' | 'qos_profiles' | 'quotas' | 'resource_options' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_resource' | 'scope_resource_name' | 'scope_resource_uuid' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'tags' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'uuid' | 'vendor_details';
+export type ProviderOfferingDetailsFieldEnum = 'access_url' | 'account_settings' | 'agent_configuration' | 'attributes' | 'backend_id' | 'backend_id_rules' | 'backend_metadata' | 'billable' | 'billing_mode_components' | 'billing_period_applies' | 'billing_type_classification' | 'can_update_integration' | 'can_update_options' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'compliance_checklist_details' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'default_access_subnets' | 'description' | 'documentation_url' | 'effective_available_limits' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'has_compliance_requirements' | 'helpdesk_url' | 'image' | 'integration_guide' | 'integration_status' | 'latitude' | 'limit_precision_advisory' | 'longitude' | 'name' | 'offering_group' | 'offering_group_title' | 'offering_group_uuid' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'profile_name' | 'profile_uuid' | 'project' | 'project_name' | 'project_uuid' | 'qos_profiles' | 'quotas' | 'resource_options' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_resource' | 'scope_resource_name' | 'scope_resource_uuid' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'tags' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'uuid' | 'vendor_details';
 
 export type ProviderOfferingDetailsOEnum = '-created' | '-name' | '-state' | '-total_cost' | '-total_cost_estimated' | '-total_customers' | '-type' | 'created' | 'name' | 'state' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type';
 
@@ -88940,6 +89041,24 @@ export type MarketplaceSiteAgentLogsCreateResponses = {
 };
 
 export type MarketplaceSiteAgentLogsCreateResponse = MarketplaceSiteAgentLogsCreateResponses[keyof MarketplaceSiteAgentLogsCreateResponses];
+
+export type MarketplaceSiteAgentPluginsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Only backends that can fill this role
+         */
+        role?: RolesEnum;
+    };
+    url: '/api/marketplace-site-agent-plugins/';
+};
+
+export type MarketplaceSiteAgentPluginsListResponses = {
+    200: Array<AgentPlugin>;
+};
+
+export type MarketplaceSiteAgentPluginsListResponse = MarketplaceSiteAgentPluginsListResponses[keyof MarketplaceSiteAgentPluginsListResponses];
 
 export type MarketplaceSiteAgentProcessorsListData = {
     body?: never;
