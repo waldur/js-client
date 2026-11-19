@@ -17342,7 +17342,7 @@ export type MessageTemplateRequest = {
 
 export type MetricBreakdownItem = {
     /**
-     * The attribute's value, or the resource's name when broken down by resource.
+     * The attribute's value; a map of each attribute to its value when broken down by several; or the resource's name when broken down by resource.
      */
     value: {
         [key: string]: unknown;
@@ -66994,7 +66994,7 @@ export type MarketplaceMetricBreakdownListData = {
     query: {
         end?: string;
         /**
-         * An attribute the metric declares, or 'resource' to break a project's figure down by its resources.
+         * An attribute the metric declares, several of them comma-separated to break the figure down by their combinations, or 'resource' to break a project's figure down by its resources.
          */
         group_by: string;
         offering_metric_uuid: string;
@@ -80881,6 +80881,21 @@ export type MarketplaceResourceApiKeysRevealRetrieveResponses = {
 };
 
 export type MarketplaceResourceApiKeysRevealRetrieveResponse = MarketplaceResourceApiKeysRevealRetrieveResponses[keyof MarketplaceResourceApiKeysRevealRetrieveResponses];
+
+export type MarketplaceResourceApiKeysRevealData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-resource-api-keys/{uuid}/reveal/';
+};
+
+export type MarketplaceResourceApiKeysRevealResponses = {
+    200: ResourceApiKey;
+};
+
+export type MarketplaceResourceApiKeysRevealResponse = MarketplaceResourceApiKeysRevealResponses[keyof MarketplaceResourceApiKeysRevealResponses];
 
 export type MarketplaceResourceApiKeysRotateData = {
     body?: never;
