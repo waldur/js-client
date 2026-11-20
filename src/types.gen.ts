@@ -16127,6 +16127,10 @@ export type MergedPluginOptions = {
      */
     scim_login_nodes?: Array<string>;
     /**
+     * SSH port clients should use for every host in scim_login_nodes. When unset, clients use port 22. Outbound SCIM entitlements carry the hostname only and ignore this value.
+     */
+    scim_login_port?: number | null;
+    /**
      * If set to True, an Access subnets tab is shown on resource detail pages, letting consumers curate the IPs allowed to reach the backend entity. The list is advisory data for external firewalls.
      */
     enable_resource_access_subnets?: boolean;
@@ -16621,6 +16625,10 @@ export type MergedPluginOptionsRequest = {
      * Bare hostnames of login nodes included in outbound SCIM entitlements when enable_scim_entitlements is set. Each entry is a DNS hostname only (for example login.example.org): stored lowercased, with no ssh:// URL, user@host, or host:port. These are not access links and do not appear in the resource access dropdown.
      */
     scim_login_nodes?: Array<string>;
+    /**
+     * SSH port clients should use for every host in scim_login_nodes. When unset, clients use port 22. Outbound SCIM entitlements carry the hostname only and ignore this value.
+     */
+    scim_login_port?: number | null;
     /**
      * If set to True, an Access subnets tab is shown on resource detail pages, letting consumers curate the IPs allowed to reach the backend entity. The list is advisory data for external firewalls.
      */
@@ -41895,9 +41903,13 @@ export type UserInfoRequest = {
 
 export type UserInvitationAcceptRequest = {
     /**
-     * Staff only. Accept the invitation for this user instead of the caller. The user's email must match the invitation. Empty, null or the caller's own uuid accepts for the caller.
+     * Staff only. Accept the invitation for this user instead of the caller. The user's email must match the invitation unless allow_email_mismatch is set. Empty, null or the caller's own uuid accepts for the caller.
      */
     user?: string | null;
+    /**
+     * Only with user. Accept even though the user's email differs from the invitation's, for a caller that has verified the person's identity itself. Has no effect while ENABLE_STRICT_CHECK_ACCEPTING_INVITATION is on. The role-granted event records the bypass in email_check_bypassed, invitation_uuid and invitation_email.
+     */
+    allow_email_mismatch?: boolean | null;
 };
 
 export type UserJobTitleCount = {
