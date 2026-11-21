@@ -11669,6 +11669,7 @@ export type ExportComponentData = {
     unit_factor: number | null;
     limit_period: string | null;
     limit_amount: number | null;
+    limit_increase_only: boolean;
     article_code: string;
     backend_id: string;
 };
@@ -11682,6 +11683,7 @@ export type ExportComponentDataRequest = {
     unit_factor: number | null;
     limit_period: string | null;
     limit_amount: number | null;
+    limit_increase_only: boolean;
     article_code: string;
     backend_id: string;
 };
@@ -19218,6 +19220,10 @@ export type OfferingComponent = {
     max_value?: number | null;
     min_value?: number | null;
     max_available_limit?: number | null;
+    /**
+     * If set, a consumer cannot lower this component's limit below the resource's current limit.
+     */
+    limit_increase_only?: boolean;
     is_boolean?: boolean;
     default_limit?: number | null;
     /**
@@ -19303,6 +19309,10 @@ export type OfferingComponentRequest = {
     max_value?: number | null;
     min_value?: number | null;
     max_available_limit?: number | null;
+    /**
+     * If set, a consumer cannot lower this component's limit below the resource's current limit.
+     */
+    limit_increase_only?: boolean;
     is_boolean?: boolean;
     default_limit?: number | null;
     /**
@@ -41397,6 +41407,10 @@ export type UpdateOfferingComponentRequest = {
     max_value?: number | null;
     min_value?: number | null;
     max_available_limit?: number | null;
+    /**
+     * If set, a consumer cannot lower this component's limit below the resource's current limit.
+     */
+    limit_increase_only?: boolean;
     is_boolean?: boolean;
     default_limit?: number | null;
     /**
