@@ -1896,10 +1896,6 @@ export type ArrowSettings = {
      */
     api_url: string;
     /**
-     * Arrow API Key (leave empty on update to keep current)
-     */
-    api_key?: string;
-    /**
      * Billing export template reference
      */
     export_type_reference?: string;
@@ -2711,6 +2707,22 @@ export type Attribute = {
     default?: {
         [key: string]: unknown;
     } | null;
+    options?: Array<AttributeOptionItem>;
+};
+
+export type AttributeCreateRequest = {
+    key?: string;
+    title: string;
+    section: string;
+    type: AttributeTypeEnum;
+    /**
+     * A value must be provided for the attribute.
+     */
+    required?: boolean;
+    default?: {
+        [key: string]: unknown;
+    } | null;
+    options?: Array<AttributeOptionItemRequest>;
 };
 
 export type AttributeOption = {
@@ -2725,6 +2737,18 @@ export type AttributeOption = {
      * Return True if this option is the default for its attribute.
      */
     readonly is_default: boolean;
+};
+
+export type AttributeOptionItem = {
+    readonly uuid: string;
+    key?: string;
+    title: string;
+    readonly is_default: boolean;
+};
+
+export type AttributeOptionItemRequest = {
+    key?: string;
+    title: string;
 };
 
 export type AttributeOptionRequest = {
@@ -2745,6 +2769,7 @@ export type AttributeRequest = {
     default?: {
         [key: string]: unknown;
     } | null;
+    options?: Array<AttributeOptionItemRequest>;
 };
 
 export type AttributeSourceDetail = {
@@ -6844,6 +6869,14 @@ export type CleanupConsumptionResponse = {
     records_deleted: number;
     compensation_items_affected: number;
     invoice_items_affected: number;
+    /**
+     * Records left in place because their charge is on an issued invoice
+     */
+    records_kept_issued: number;
+    /**
+     * Records left in place because an import settled their month
+     */
+    records_kept_imported: number;
 };
 
 export type CleanupRequestRequest = {
@@ -12193,8 +12226,6 @@ export type FeedbackSurvey = {
      * Markdown text shown above the questions.
      */
     intro?: string;
-    checklist: string;
-    readonly checklist_name: string;
     starts_at: string;
     ends_at: string;
     is_active?: boolean;
@@ -12210,23 +12241,36 @@ export type FeedbackSurvey = {
     snooze_days?: number;
 };
 
-export type FeedbackSurveyPublic = {
+export type FeedbackSurveyDetail = {
     readonly uuid: string;
+    readonly created: string;
     name: string;
     /**
      * Markdown text shown above the questions.
      */
     intro?: string;
+    starts_at: string;
     ends_at: string;
+    is_active?: boolean;
+    readonly is_open: boolean;
+    audience: QueryOutput;
+    /**
+     * How many times a user is prompted at most.
+     */
+    max_prompts?: number;
+    /**
+     * Days the prompt stays hidden after it is shown or postponed.
+     */
+    snooze_days?: number;
+    questions?: Array<SurveyQuestion>;
 };
 
-export type FeedbackSurveyRequest = {
+export type FeedbackSurveyDetailRequest = {
     name: string;
     /**
      * Markdown text shown above the questions.
      */
     intro?: string;
-    checklist: string;
     starts_at: string;
     ends_at: string;
     is_active?: boolean;
@@ -12239,6 +12283,17 @@ export type FeedbackSurveyRequest = {
      * Days the prompt stays hidden after it is shown or postponed.
      */
     snooze_days?: number;
+    questions?: Array<SurveyQuestionRequest>;
+};
+
+export type FeedbackSurveyPublic = {
+    readonly uuid: string;
+    name: string;
+    /**
+     * Markdown text shown above the questions.
+     */
+    intro?: string;
+    ends_at: string;
 };
 
 export type FeedbackSurveySummary = {
@@ -12259,6 +12314,9 @@ export type FetchBillingExportRequestRequest = {
      * YYYY-MM format
      */
     period_to: string;
+    /**
+     * Classification to keep (e.g. IAAS); empty keeps every line. Defaults to the settings' classification filter.
+     */
     classification?: string;
 };
 
@@ -25247,6 +25305,7 @@ export type PatchedAttributeRequest = {
     default?: {
         [key: string]: unknown;
     } | null;
+    options?: Array<AttributeOptionItemRequest>;
 };
 
 export type PatchedAwardedResourceRequest = {
@@ -25965,13 +26024,12 @@ export type PatchedExternalLinkRequest = {
     image?: Blob | File | null;
 };
 
-export type PatchedFeedbackSurveyRequest = {
+export type PatchedFeedbackSurveyDetailRequest = {
     name?: string;
     /**
      * Markdown text shown above the questions.
      */
     intro?: string;
-    checklist?: string;
     starts_at?: string;
     ends_at?: string;
     is_active?: boolean;
@@ -25984,6 +26042,7 @@ export type PatchedFeedbackSurveyRequest = {
      * Days the prompt stays hidden after it is shown or postponed.
      */
     snooze_days?: number;
+    questions?: Array<SurveyQuestionRequest>;
 };
 
 export type PatchedGroupInvitationUpdateRequest = {
@@ -38825,6 +38884,16 @@ export type Section = {
     is_standalone?: boolean;
 };
 
+export type SectionCreateRequest = {
+    key?: string;
+    title: string;
+    category: string;
+    /**
+     * Whether section is rendered as a separate tab.
+     */
+    is_standalone?: boolean;
+};
+
 export type SectionRequest = {
     key: string;
     title: string;
@@ -41060,6 +41129,80 @@ export type SupportUserRequest = {
 export type SupportedCountriesResponse = {
     supported_countries: Array<string>;
 };
+
+export type SurveyQuestion = {
+    key: string;
+    description: string;
+    question_type: SurveyQuestionTypeEnum;
+    required?: boolean;
+    user_guidance?: string;
+    min_value?: string | null;
+    max_value?: string | null;
+    likert_scale_length?: LikertScaleLengthEnum | NullEnum | null;
+    likert_low_label?: string;
+    likert_high_label?: string;
+    likert_allow_na?: boolean;
+    rich_text_char_limit?: number | null;
+    rich_text_toolbar_level?: RichTextToolbarLevelEnum;
+    dependency_logic_operator?: DependencyLogicOperatorEnum;
+    options?: Array<SurveyQuestionOption>;
+    conditions?: Array<SurveyQuestionCondition>;
+};
+
+export type SurveyQuestionCondition = {
+    /**
+     * Key of the question it depends on.
+     */
+    depends_on: string;
+    operator: ChecklistOperators;
+    /**
+     * For a select question, option keys instead of option UUIDs.
+     */
+    required_answer_value: unknown;
+};
+
+export type SurveyQuestionConditionRequest = {
+    /**
+     * Key of the question it depends on.
+     */
+    depends_on: string;
+    operator: ChecklistOperators;
+    /**
+     * For a select question, option keys instead of option UUIDs.
+     */
+    required_answer_value: unknown;
+};
+
+export type SurveyQuestionOption = {
+    key: string;
+    label: string;
+};
+
+export type SurveyQuestionOptionRequest = {
+    key: string;
+    label: string;
+};
+
+export type SurveyQuestionRequest = {
+    key: string;
+    description: string;
+    question_type: SurveyQuestionTypeEnum;
+    required?: boolean;
+    user_guidance?: string;
+    min_value?: string | null;
+    max_value?: string | null;
+    likert_scale_length?: LikertScaleLengthEnum | NullEnum | null;
+    likert_low_label?: string;
+    likert_high_label?: string;
+    likert_allow_na?: boolean;
+    rich_text_char_limit?: number | null;
+    rich_text_toolbar_level?: RichTextToolbarLevelEnum;
+    dependency_logic_operator?: DependencyLogicOperatorEnum;
+    options?: Array<SurveyQuestionOptionRequest>;
+    conditions?: Array<SurveyQuestionConditionRequest>;
+};
+
+export type SurveyQuestionTypeEnum = 'boolean' | 'single_select' | 'multi_select' | 'text_input' | 'text_area' | 'number' | 'date' | 'phone_number' | 'year' | 'email' | 'url' | 'country' | 'rating' | 'datetime' | 'likert' | 'rich_text';
 
 export type SwitchBillingModeRequest = {
     /**
@@ -48583,6 +48726,10 @@ export type AdminArrowBillingSyncsListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Search by Arrow company, Waldur organization, Arrow reference or statement
+         */
+        query?: string;
         report_period?: string;
         report_period_from?: string;
         report_period_to?: string;
@@ -48614,6 +48761,10 @@ export type AdminArrowBillingSyncsCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Search by Arrow company, Waldur organization, Arrow reference or statement
+         */
+        query?: string;
         report_period?: string;
         report_period_from?: string;
         report_period_to?: string;
@@ -48780,6 +48931,10 @@ export type AdminArrowBillingSyncsPendingRecordsListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Search by Arrow company, Waldur organization, Arrow reference or statement
+         */
+        query?: string;
         report_period?: string;
         report_period_from?: string;
         report_period_to?: string;
@@ -48811,6 +48966,10 @@ export type AdminArrowBillingSyncsPendingRecordsCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Search by Arrow company, Waldur organization, Arrow reference or statement
+         */
+        query?: string;
         report_period?: string;
         report_period_from?: string;
         report_period_to?: string;
@@ -49018,6 +49177,10 @@ export type AdminArrowCustomerMappingsListData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Search by Waldur organization, Arrow company or Arrow reference
+         */
+        query?: string;
         settings?: string;
         settings_uuid?: string;
         waldur_customer?: string;
@@ -49047,6 +49210,10 @@ export type AdminArrowCustomerMappingsCountData = {
          * Number of results to return per page.
          */
         page_size?: number;
+        /**
+         * Search by Waldur organization, Arrow company or Arrow reference
+         */
+        query?: string;
         settings?: string;
         settings_uuid?: string;
         waldur_customer?: string;
@@ -61084,14 +61251,14 @@ export type FeedbackSurveysCountResponses = {
 };
 
 export type FeedbackSurveysCreateData = {
-    body: FeedbackSurveyRequest;
+    body: FeedbackSurveyDetailRequest;
     path?: never;
     query?: never;
     url: '/api/feedback-surveys/';
 };
 
 export type FeedbackSurveysCreateResponses = {
-    201: FeedbackSurvey;
+    201: FeedbackSurveyDetail;
 };
 
 export type FeedbackSurveysCreateResponse = FeedbackSurveysCreateResponses[keyof FeedbackSurveysCreateResponses];
@@ -61124,13 +61291,13 @@ export type FeedbackSurveysRetrieveData = {
 };
 
 export type FeedbackSurveysRetrieveResponses = {
-    200: FeedbackSurvey;
+    200: FeedbackSurveyDetail;
 };
 
 export type FeedbackSurveysRetrieveResponse = FeedbackSurveysRetrieveResponses[keyof FeedbackSurveysRetrieveResponses];
 
 export type FeedbackSurveysPartialUpdateData = {
-    body?: PatchedFeedbackSurveyRequest;
+    body?: PatchedFeedbackSurveyDetailRequest;
     path: {
         uuid: string;
     };
@@ -61139,13 +61306,13 @@ export type FeedbackSurveysPartialUpdateData = {
 };
 
 export type FeedbackSurveysPartialUpdateResponses = {
-    200: FeedbackSurvey;
+    200: FeedbackSurveyDetail;
 };
 
 export type FeedbackSurveysPartialUpdateResponse = FeedbackSurveysPartialUpdateResponses[keyof FeedbackSurveysPartialUpdateResponses];
 
 export type FeedbackSurveysUpdateData = {
-    body: FeedbackSurveyRequest;
+    body: FeedbackSurveyDetailRequest;
     path: {
         uuid: string;
     };
@@ -61154,7 +61321,7 @@ export type FeedbackSurveysUpdateData = {
 };
 
 export type FeedbackSurveysUpdateResponses = {
-    200: FeedbackSurvey;
+    200: FeedbackSurveyDetail;
 };
 
 export type FeedbackSurveysUpdateResponse = FeedbackSurveysUpdateResponses[keyof FeedbackSurveysUpdateResponses];
@@ -64969,7 +65136,7 @@ export type MarketplaceAttributesCountResponses = {
 };
 
 export type MarketplaceAttributesCreateData = {
-    body: AttributeRequest;
+    body: AttributeCreateRequest;
     path?: never;
     query?: never;
     url: '/api/marketplace-attributes/';
@@ -85123,6 +85290,14 @@ export type MarketplaceSectionsListData = {
     path?: never;
     query?: {
         /**
+         * Category URL
+         */
+        category?: string;
+        /**
+         * Category UUID
+         */
+        category_uuid?: string;
+        /**
          * A page number within the paginated result set.
          */
         page?: number;
@@ -85145,6 +85320,14 @@ export type MarketplaceSectionsCountData = {
     path?: never;
     query?: {
         /**
+         * Category URL
+         */
+        category?: string;
+        /**
+         * Category UUID
+         */
+        category_uuid?: string;
+        /**
          * A page number within the paginated result set.
          */
         page?: number;
@@ -85164,7 +85347,7 @@ export type MarketplaceSectionsCountResponses = {
 };
 
 export type MarketplaceSectionsCreateData = {
-    body: SectionRequest;
+    body: SectionCreateRequest;
     path?: never;
     query?: never;
     url: '/api/marketplace-sections/';

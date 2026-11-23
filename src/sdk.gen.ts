@@ -9302,7 +9302,7 @@ export const marketplaceAttributeOptionsCount = <ThrowOnError extends boolean = 
 /**
  * Create an attribute option
  *
- * Creates a new option for a choice-type attribute. Requires staff permissions.
+ * Creates a new option for a choice or list attribute. Requires staff permissions.
  */
 export const marketplaceAttributeOptionsCreate = <ThrowOnError extends boolean = true>(options: Options<MarketplaceAttributeOptionsCreateData, ThrowOnError>) => (options.client ?? client).post<MarketplaceAttributeOptionsCreateResponses, unknown, ThrowOnError>({
     security: [
@@ -9412,7 +9412,7 @@ export const marketplaceAttributesCount = <ThrowOnError extends boolean = true>(
 /**
  * Create an attribute
  *
- * Creates a new attribute within a section. Requires staff permissions.
+ * Creates a new attribute within a section, optionally with its options. The key is generated from the section key and title when omitted, and cannot be changed afterwards. Requires staff permissions.
  */
 export const marketplaceAttributesCreate = <ThrowOnError extends boolean = true>(options: Options<MarketplaceAttributesCreateData, ThrowOnError>) => (options.client ?? client).post<MarketplaceAttributesCreateResponses, unknown, ThrowOnError>({
     security: [
@@ -9458,7 +9458,7 @@ export const marketplaceAttributesRetrieve = <ThrowOnError extends boolean = tru
 /**
  * Partially update an attribute
  *
- * Partially updates an existing attribute. Requires staff permissions.
+ * Partially updates an existing attribute. When options are given, they replace the current ones: options are matched by key, new ones are created and missing ones deleted. Switching to a type without options deletes them. Requires staff permissions.
  */
 export const marketplaceAttributesPartialUpdate = <ThrowOnError extends boolean = true>(options: Options<MarketplaceAttributesPartialUpdateData, ThrowOnError>) => (options.client ?? client).patch<MarketplaceAttributesPartialUpdateResponses, unknown, ThrowOnError>({
     security: [
@@ -9476,7 +9476,7 @@ export const marketplaceAttributesPartialUpdate = <ThrowOnError extends boolean 
 /**
  * Update an attribute
  *
- * Updates an existing attribute. Requires staff permissions.
+ * Updates an existing attribute. When options are given, they replace the current ones: options are matched by key, new ones are created and missing ones deleted. Switching to a type without options deletes them. Requires staff permissions.
  */
 export const marketplaceAttributesUpdate = <ThrowOnError extends boolean = true>(options: Options<MarketplaceAttributesUpdateData, ThrowOnError>) => (options.client ?? client).put<MarketplaceAttributesUpdateResponses, unknown, ThrowOnError>({
     security: [
@@ -18983,7 +18983,7 @@ export const marketplaceScriptSyncResource = <ThrowOnError extends boolean = tru
 /**
  * List sections
  *
- * Returns a paginated list of all sections. Sections are used to group attributes within a category.
+ * Returns a paginated list of all sections. Sections are used to group attributes within a category. Filter by category (URL or UUID).
  */
 export const marketplaceSectionsList = <ThrowOnError extends boolean = true>(options?: Options<MarketplaceSectionsListData, ThrowOnError>) => (options?.client ?? client).get<MarketplaceSectionsListResponses, unknown, ThrowOnError>({
     security: [
@@ -19011,7 +19011,7 @@ export const marketplaceSectionsCount = <ThrowOnError extends boolean = true>(op
 /**
  * Create a section
  *
- * Creates a new section within a category. Requires staff permissions.
+ * Creates a new section within a category. The key is generated from the category and section titles when omitted, and cannot be changed afterwards. Requires staff permissions.
  */
 export const marketplaceSectionsCreate = <ThrowOnError extends boolean = true>(options: Options<MarketplaceSectionsCreateData, ThrowOnError>) => (options.client ?? client).post<MarketplaceSectionsCreateResponses, unknown, ThrowOnError>({
     security: [
