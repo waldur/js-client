@@ -7862,7 +7862,7 @@ export const hpcWorkspacesUsageRetrieve = <ThrowOnError extends boolean = true>(
 /**
  * Push user attributes from an ISD
  *
- * Allows Identity Service Domains (ISDs) to push user attributes to Waldur. Creates or updates a user based on username (CUID). Requires FEDERATED_IDENTITY_SYNC_ENABLED to be True. Caller must be staff or an identity manager with the declared source in managed_isds. Only staff may push staff, support or identity manager accounts.
+ * Allows Identity Service Domains (ISDs) to push user attributes to Waldur. Creates or updates a user based on username (CUID). Requires FEDERATED_IDENTITY_SYNC_ENABLED to be True. Caller must be staff or an identity manager with the declared source in managed_isds. Only staff may change staff, support or identity manager accounts: anyone else pushing an existing one gets it back unchanged (`created` false, no `updated_fields`).
  */
 export const identityBridge = <ThrowOnError extends boolean = true>(options: Options<IdentityBridgeData, ThrowOnError>) => (options.client ?? client).post<IdentityBridgeResponses, unknown, ThrowOnError>({
     security: [
