@@ -3534,6 +3534,74 @@ export type BasicUser = {
 
 export type BidEnum = 'eager' | 'willing' | 'not_willing' | 'conflict';
 
+export type BillingChangesJob = {
+    job_id: string;
+    state: BillingChangesJobStateEnum;
+    report: BillingChangesResponse | null;
+    error: string | null;
+};
+
+export type BillingChangesJobStateEnum = 'running' | 'done' | 'failed';
+
+export type BillingChangesRequestActionEnum = 'sync_billing' | 'sync_consumption' | 'settle_month';
+
+export type BillingChangesRequestRequest = {
+    action: BillingChangesRequestActionEnum;
+    year: number;
+    month: number;
+    /**
+     * Limit billing or consumption sync to one resource.
+     */
+    resource_uuid?: string | null;
+    /**
+     * Preview the changes and keep nothing; false applies them.
+     */
+    dry_run?: boolean;
+};
+
+export type BillingChangesResponse = {
+    action: string;
+    year: number;
+    month: number;
+    resource_uuid: string | null;
+    dry_run: boolean;
+    taken_at: string;
+    /**
+     * What the underlying task reported.
+     */
+    result: {
+        [key: string]: unknown;
+    } | null;
+    invoices: Array<BillingInvoiceChange>;
+    /**
+     * Warnings and errors the run logged, such as a failed Arrow call.
+     */
+    problems: Array<string>;
+};
+
+export type BillingInvoiceChange = {
+    invoice_uuid: string;
+    customer_uuid: string;
+    customer_name: string;
+    year: number;
+    month: number;
+    state: string;
+    total_before: string;
+    total_after: string;
+    items: Array<BillingItemChange>;
+};
+
+export type BillingItemChange = {
+    uuid: string;
+    name: string;
+    resource_name: string;
+    change: BillingItemChangeChangeEnum;
+    amount_before: string;
+    amount_after: string;
+};
+
+export type BillingItemChangeChangeEnum = 'created' | 'updated' | 'deleted';
+
 export type BillingModeComponent = {
     type: string;
     billing_type: BillingTypeEnum;
@@ -12371,7 +12439,7 @@ export type FetchCustomerArrowDataResponse = {
      */
     total_customer_resources: number;
     /**
-     * Number of resources with backend_id set (Arrow license reference).
+     * Number of resources linked to an Arrow license.
      */
     resources_with_backend_id: number;
     /**
@@ -48796,6 +48864,57 @@ export type AdminArrowBillingSyncsRetrieveResponses = {
 };
 
 export type AdminArrowBillingSyncsRetrieveResponse = AdminArrowBillingSyncsRetrieveResponses[keyof AdminArrowBillingSyncsRetrieveResponses];
+
+export type AdminArrowBillingSyncsBillingChangesData = {
+    body: BillingChangesRequestRequest;
+    path?: never;
+    query?: never;
+    url: '/api/admin/arrow/billing-syncs/billing_changes/';
+};
+
+export type AdminArrowBillingSyncsBillingChangesErrors = {
+    /**
+     * No response body
+     */
+    409: unknown;
+};
+
+export type AdminArrowBillingSyncsBillingChangesResponses = {
+    202: BillingChangesJob;
+};
+
+export type AdminArrowBillingSyncsBillingChangesResponse = AdminArrowBillingSyncsBillingChangesResponses[keyof AdminArrowBillingSyncsBillingChangesResponses];
+
+export type AdminArrowBillingSyncsBillingChangesJobRetrieveData = {
+    body?: never;
+    path?: never;
+    query: {
+        job_id: string;
+    };
+    url: '/api/admin/arrow/billing-syncs/billing_changes_job/';
+};
+
+export type AdminArrowBillingSyncsBillingChangesJobRetrieveResponses = {
+    200: BillingChangesJob;
+};
+
+export type AdminArrowBillingSyncsBillingChangesJobRetrieveResponse = AdminArrowBillingSyncsBillingChangesJobRetrieveResponses[keyof AdminArrowBillingSyncsBillingChangesJobRetrieveResponses];
+
+export type AdminArrowBillingSyncsBillingChangesJobCountData = {
+    body?: never;
+    path?: never;
+    query: {
+        job_id: string;
+    };
+    url: '/api/admin/arrow/billing-syncs/billing_changes_job/';
+};
+
+export type AdminArrowBillingSyncsBillingChangesJobCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
 
 export type AdminArrowBillingSyncsCleanupConsumptionData = {
     body?: CleanupConsumptionRequestRequest;
