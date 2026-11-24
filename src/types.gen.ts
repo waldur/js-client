@@ -3705,7 +3705,7 @@ export type BookingResource = {
     readonly project_description: string;
     readonly project_start_date: string | null;
     /**
-     * The date is inclusive. Once reached, all project resource will be scheduled for termination.
+     * The project's resources are scheduled for termination on this date plus the grace period, if one is configured. Offerings that disable the grace period terminate them on this date.
      */
     readonly project_end_date: string | null;
     /**
@@ -3753,7 +3753,7 @@ export type BookingResource = {
     readonly can_terminate: boolean;
     readonly report: Array<ReportSection>;
     /**
-     * The date is inclusive. Once reached, a resource will be scheduled for termination.
+     * The resource is scheduled for termination on this date, so the day before is the last full day of use.
      */
     end_date?: string | null;
     readonly end_date_requested_by: string | null;
@@ -15811,7 +15811,7 @@ export type MarketplaceProviderCustomerProject = {
     name: string;
     description?: string;
     /**
-     * The date is inclusive. Once reached, all project resource will be scheduled for termination.
+     * The project's resources are scheduled for termination on this date plus the grace period, if one is configured. Offerings that disable the grace period terminate them on this date.
      */
     end_date?: string | null;
     readonly resources_count: number;
@@ -23447,6 +23447,10 @@ export type OpenStackPort = {
     readonly network_uuid: string;
     readonly floating_ips: Array<string>;
     /**
+     * Floating IPs associated with the port, with the public IP each one is mapped to, if any
+     */
+    readonly floating_ip_addresses: Array<OpenStackPortFloatingIp>;
+    /**
      * ID of device (instance, router etc) to which this port is connected
      */
     readonly device_id: string | null;
@@ -23480,6 +23484,18 @@ export type OpenStackPort = {
     readonly marketplace_resource_state: string | null;
     readonly is_usage_based: boolean | null;
     readonly is_limit_based: boolean | null;
+};
+
+export type OpenStackPortFloatingIp = {
+    readonly uuid: string;
+    /**
+     * The public IPv4 address of the floating IP
+     */
+    readonly address: string | null;
+    /**
+     * Optional address that maps to floating IP's address in external networks
+     */
+    external_address: string | string | null;
 };
 
 export type OpenStackPortIpUpdateRequest = {
@@ -27828,7 +27844,7 @@ export type PatchedResourceUpdateRequest = {
     name?: string;
     description?: string;
     /**
-     * The date is inclusive. Once reached, a resource will be scheduled for termination.
+     * The resource is scheduled for termination on this date, so the day before is the last full day of use.
      */
     end_date?: string | null;
 };
@@ -35421,7 +35437,7 @@ export type Resource = {
     readonly project_description: string;
     readonly project_start_date: string | null;
     /**
-     * The date is inclusive. Once reached, all project resource will be scheduled for termination.
+     * The project's resources are scheduled for termination on this date plus the grace period, if one is configured. Offerings that disable the grace period terminate them on this date.
      */
     readonly project_end_date: string | null;
     /**
@@ -35469,7 +35485,7 @@ export type Resource = {
     readonly can_terminate: boolean;
     readonly report: Array<ReportSection>;
     /**
-     * The date is inclusive. Once reached, a resource will be scheduled for termination.
+     * The resource is scheduled for termination on this date, so the day before is the last full day of use.
      */
     end_date?: string | null;
     readonly end_date_requested_by: string | null;
@@ -35821,7 +35837,7 @@ export type ResourceEffectiveIdRequest = {
 
 export type ResourceEndDateByProviderRequest = {
     /**
-     * The date is inclusive. Once reached, a resource will be scheduled for termination.
+     * The resource is scheduled for termination on this date, so the day before is the last full day of use.
      */
     end_date?: string | null;
 };
@@ -35902,7 +35918,7 @@ export type ResourceEndDateChangeRequestCreateRequest = {
 
 export type ResourceEndDateRequest = {
     /**
-     * The date is inclusive. Once reached, a resource will be scheduled for termination.
+     * The resource is scheduled for termination on this date, so the day before is the last full day of use.
      */
     end_date?: string | null;
 };
@@ -36259,7 +36275,7 @@ export type ResourceRequest = {
      */
     slug?: string;
     /**
-     * The date is inclusive. Once reached, a resource will be scheduled for termination.
+     * The resource is scheduled for termination on this date, so the day before is the last full day of use.
      */
     end_date?: string | null;
     downscaled?: boolean;
@@ -36340,7 +36356,7 @@ export type ResourceUpdate = {
     name: string;
     description?: string;
     /**
-     * The date is inclusive. Once reached, a resource will be scheduled for termination.
+     * The resource is scheduled for termination on this date, so the day before is the last full day of use.
      */
     end_date?: string | null;
 };
@@ -36360,7 +36376,7 @@ export type ResourceUpdateRequest = {
     name: string;
     description?: string;
     /**
-     * The date is inclusive. Once reached, a resource will be scheduled for termination.
+     * The resource is scheduled for termination on this date, so the day before is the last full day of use.
      */
     end_date?: string | null;
 };
@@ -48062,7 +48078,7 @@ export type OpenStackPoolMemberFieldEnum = 'access_url' | 'address' | 'backend_i
 
 export type OpenStackPoolFieldEnum = 'access_url' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'error_message' | 'error_traceback' | 'is_limit_based' | 'is_usage_based' | 'lb_algorithm' | 'load_balancer' | 'load_balancer_name' | 'load_balancer_uuid' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'operating_status' | 'project' | 'project_name' | 'project_uuid' | 'protocol' | 'provisioning_status' | 'resource_type' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'url' | 'uuid';
 
-export type OpenStackPortFieldEnum = 'access_url' | 'admin_state_up' | 'allowed_address_pairs' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'device_id' | 'device_owner' | 'error_message' | 'error_traceback' | 'fixed_ips' | 'floating_ips' | 'is_limit_based' | 'is_usage_based' | 'mac_address' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'network' | 'network_name' | 'network_uuid' | 'port_security_enabled' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'security_groups' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'status' | 'target_tenant' | 'tenant' | 'tenant_name' | 'tenant_uuid' | 'url' | 'uuid';
+export type OpenStackPortFieldEnum = 'access_url' | 'admin_state_up' | 'allowed_address_pairs' | 'backend_id' | 'created' | 'customer' | 'customer_abbreviation' | 'customer_name' | 'customer_native_name' | 'customer_uuid' | 'description' | 'device_id' | 'device_owner' | 'error_message' | 'error_traceback' | 'fixed_ips' | 'floating_ip_addresses' | 'floating_ips' | 'is_limit_based' | 'is_usage_based' | 'mac_address' | 'marketplace_category_name' | 'marketplace_category_uuid' | 'marketplace_offering_name' | 'marketplace_offering_plugin_options' | 'marketplace_offering_type' | 'marketplace_offering_uuid' | 'marketplace_plan_uuid' | 'marketplace_resource_state' | 'marketplace_resource_uuid' | 'modified' | 'name' | 'network' | 'network_name' | 'network_uuid' | 'port_security_enabled' | 'project' | 'project_name' | 'project_uuid' | 'resource_type' | 'security_groups' | 'service_name' | 'service_settings' | 'service_settings_error_message' | 'service_settings_state' | 'service_settings_uuid' | 'state' | 'status' | 'target_tenant' | 'tenant' | 'tenant_name' | 'tenant_uuid' | 'url' | 'uuid';
 
 export type OpenStackPortOEnum = '-admin_state_up' | '-created' | '-device_owner' | '-instance_name' | '-mac_address' | '-name' | '-network_name' | '-status' | '-subnet_name' | 'admin_state_up' | 'created' | 'device_owner' | 'instance_name' | 'mac_address' | 'name' | 'network_name' | 'status' | 'subnet_name';
 
@@ -101032,6 +101048,10 @@ export type OpenstackFloatingIpsListData = {
          * Project UUID
          */
         project_uuid?: string;
+        /**
+         * Search by name, address or mapped public IP
+         */
+        query?: string;
         runtime_state?: string;
         /**
          * Service settings name
@@ -101138,6 +101158,10 @@ export type OpenstackFloatingIpsCountData = {
          * Project UUID
          */
         project_uuid?: string;
+        /**
+         * Search by name, address or mapped public IP
+         */
+        query?: string;
         runtime_state?: string;
         /**
          * Service settings name
@@ -104545,7 +104569,7 @@ export type OpenstackPortsListData = {
          */
         page_size?: number;
         /**
-         * Search by name, MAC address or backend ID
+         * Search by name, MAC address, backend ID, fixed IP, floating IP or its mapped public IP
          */
         query?: string;
         status?: string;
@@ -104619,7 +104643,7 @@ export type OpenstackPortsCountData = {
          */
         page_size?: number;
         /**
-         * Search by name, MAC address or backend ID
+         * Search by name, MAC address, backend ID, fixed IP, floating IP or its mapped public IP
          */
         query?: string;
         status?: string;
