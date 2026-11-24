@@ -276,6 +276,10 @@ export type AdminAnnouncement = {
     readonly is_active: boolean;
     type?: AdminAnnouncementTypeEnum;
     readonly created: string;
+    /**
+     * Show the announcement to signed-out visitors, e.g. on the login page, while it is active.
+     */
+    visible_to_anonymous_users?: boolean;
     readonly maintenance_uuid: string;
     readonly maintenance_name: string;
     readonly maintenance_type: string;
@@ -298,6 +302,10 @@ export type AdminAnnouncementRequest = {
     active_from: string;
     active_to: string;
     type?: AdminAnnouncementTypeEnum;
+    /**
+     * Show the announcement to signed-out visitors, e.g. on the login page, while it is active.
+     */
+    visible_to_anonymous_users?: boolean;
 };
 
 export type AdminAnnouncementTypeEnum = 'information' | 'warning' | 'danger';
@@ -7572,6 +7580,8 @@ export type ComputeAffinitiesResponse = {
     message: string;
 };
 
+export type ConfigurationSourceEnum = 'local' | 'waldur';
+
 export type ConfirmEmailRequestRequest = {
     code: string;
 };
@@ -11885,6 +11895,16 @@ export type ExportComponentData = {
     limit_increase_only: boolean;
     article_code: string;
     backend_id: string;
+    min_value?: number | null;
+    max_value?: number | null;
+    max_available_limit?: number | null;
+    default_limit?: number | null;
+    /**
+     * Periods customers can set spending limits for, each with an optional default and maximum.
+     */
+    spending_limit_periods?: {
+        [key: string]: unknown;
+    };
 };
 
 export type ExportComponentDataRequest = {
@@ -11899,6 +11919,16 @@ export type ExportComponentDataRequest = {
     limit_increase_only: boolean;
     article_code: string;
     backend_id: string;
+    min_value?: number | null;
+    max_value?: number | null;
+    max_available_limit?: number | null;
+    default_limit?: number | null;
+    /**
+     * Periods customers can set spending limits for, each with an optional default and maximum.
+     */
+    spending_limit_periods?: {
+        [key: string]: unknown;
+    };
 };
 
 export type ExportEndpointData = {
@@ -15183,6 +15213,22 @@ export type LoadCallTemplatePresetRequest = {
 };
 
 export type LoadCallTemplatePresetResponse = {
+    created: number;
+    created_names: Array<string>;
+};
+
+export type LoadOfferingTemplatePresetRequest = {
+    /**
+     * Keys of the presets to load, as the presets action lists them.
+     */
+    presets: Array<string>;
+    /**
+     * Publish the templates created, so offering creators see them.
+     */
+    publish?: boolean;
+};
+
+export type LoadOfferingTemplatePresetResponse = {
     created: number;
     created_names: Array<string>;
 };
@@ -20996,6 +21042,17 @@ export type OfferingRoleRequest = {
     offering?: string;
 };
 
+export type OfferingSaveAsTemplateRequest = {
+    /**
+     * Name of the template. Defaults to the offering's name.
+     */
+    name?: string;
+    /**
+     * Description of the template. Defaults to the offering's.
+     */
+    description?: string;
+};
+
 export type OfferingSoftwareCatalog = {
     readonly uuid: string;
     readonly created: string;
@@ -21163,6 +21220,88 @@ export type OfferingTeamStep = {
      * Events of the step the call mails the offering's team about, as notification rule triggers (step_started, deadline_approaching, ...).
      */
     notification_triggers: Array<string>;
+};
+
+export type OfferingTemplate = {
+    readonly uuid: string;
+    readonly url: string;
+    name: string;
+    description?: string;
+    /**
+     * Offering type the template creates; only Marketplace.SiteAgent for now.
+     */
+    offering_type: string;
+    /**
+     * Offering document in the export_offering format, as a mapping or a YAML string, with agent_configuration and parameters. It may not hold secret_options, organization groups, screenshots, files, a customer, resources or people. Non-staff see only the offering's name, description and type, its components, plans and parameters.
+     */
+    document: {
+        [key: string]: unknown;
+    };
+    readonly parameters: Array<OfferingTemplateParameter>;
+    readonly schema_version: number;
+    /**
+     * Incremented whenever the document changes; name, description and publication leave it as it is.
+     */
+    readonly version: number;
+    is_published?: boolean;
+    readonly created_by: string | null;
+    readonly created: string;
+    readonly modified: string;
+};
+
+export type OfferingTemplateParameter = {
+    key: string;
+    label: string;
+    description: string;
+    type: OfferingTemplateParameterTypeEnum;
+    required: boolean;
+    default: {
+        [key: string]: unknown;
+    } | null;
+    /**
+     * Dotted paths into the document that the value fills, such as offering.backend_id; digits address list items.
+     */
+    paths: Array<string>;
+};
+
+export type OfferingTemplateParameterTypeEnum = 'string' | 'integer' | 'number' | 'boolean';
+
+export type OfferingTemplatePreset = {
+    key: string;
+    name: string;
+    description: string;
+    offering_type: string;
+    parameters: Array<OfferingTemplateParameter>;
+    /**
+     * An offering template already holds the name this preset would be loaded under: rename or delete it to load the preset.
+     */
+    name_taken: boolean;
+};
+
+export type OfferingTemplateRequest = {
+    name: string;
+    description?: string;
+    /**
+     * Offering type the template creates; only Marketplace.SiteAgent for now.
+     */
+    offering_type: string;
+    /**
+     * Offering document in the export_offering format, as a mapping or a YAML string, with agent_configuration and parameters. It may not hold secret_options, organization groups, screenshots, files, a customer, resources or people. Non-staff see only the offering's name, description and type, its components, plans and parameters.
+     */
+    document: {
+        [key: string]: unknown;
+    };
+    is_published?: boolean;
+};
+
+export type OfferingTemplateVersion = {
+    readonly number: number;
+    readonly document: {
+        [key: string]: unknown;
+    };
+    readonly document_hash: string;
+    readonly created_by: string | null;
+    readonly created: string;
 };
 
 export type OfferingTermsOfService = {
@@ -25252,6 +25391,10 @@ export type PatchedAdminAnnouncementRequest = {
     active_from?: string;
     active_to?: string;
     type?: AdminAnnouncementTypeEnum;
+    /**
+     * Show the announcement to signed-out visitors, e.g. on the login page, while it is active.
+     */
+    visible_to_anonymous_users?: boolean;
 };
 
 export type PatchedAffiliatedOrganizationRequest = {
@@ -26684,6 +26827,22 @@ export type PatchedOfferingSoftwareCatalogUpdateRequest = {
      */
     enabled_cpu_microarchitectures?: Array<string>;
     partition?: string | null;
+};
+
+export type PatchedOfferingTemplateRequest = {
+    name?: string;
+    description?: string;
+    /**
+     * Offering type the template creates; only Marketplace.SiteAgent for now.
+     */
+    offering_type?: string;
+    /**
+     * Offering document in the export_offering format, as a mapping or a YAML string, with agent_configuration and parameters. It may not hold secret_options, organization groups, screenshots, files, a customer, resources or people. Non-staff see only the offering's name, description and type, its components, plans and parameters.
+     */
+    document?: {
+        [key: string]: unknown;
+    };
+    is_published?: boolean;
 };
 
 export type PatchedOfferingTermsOfServiceRequest = {
@@ -39589,6 +39748,10 @@ export type SiteAgentConfigGenerationRequest = {
      * How a secret is left for the operator. 'comment': an empty value with a '# SECRET:' comment. 'env': a ${VARIABLE} reference, for filling the file in with envsubst or a similar tool; the agent does not expand variables itself. Offerings with no agent roles set keep the earlier placeholders in 'comment' format.
      */
     secret_format?: SecretFormatEnum;
+    /**
+     * Where the agent takes each offering's configuration from. 'local': the file holds all of it. 'waldur': the file holds only how to reach Waldur and the secrets, and the agent reads the rest from the offering's site_agent_config when it starts; include_policy_settings does not apply, as Waldur always serves them.
+     */
+    configuration_source?: ConfigurationSourceEnum;
 };
 
 export type SiteAgentConfigSecret = {
@@ -47615,7 +47778,7 @@ export type PatchedUserRequestMultipart = {
     deactivation_reason?: string;
 };
 
-export type AdminAnnouncementFieldEnum = 'active_from' | 'active_to' | 'created' | 'description' | 'is_active' | 'maintenance_affected_offerings' | 'maintenance_external_reference_url' | 'maintenance_name' | 'maintenance_scheduled_end' | 'maintenance_scheduled_start' | 'maintenance_service_provider' | 'maintenance_state' | 'maintenance_type' | 'maintenance_uuid' | 'type' | 'uuid';
+export type AdminAnnouncementFieldEnum = 'active_from' | 'active_to' | 'created' | 'description' | 'is_active' | 'maintenance_affected_offerings' | 'maintenance_external_reference_url' | 'maintenance_name' | 'maintenance_scheduled_end' | 'maintenance_scheduled_start' | 'maintenance_service_provider' | 'maintenance_state' | 'maintenance_type' | 'maintenance_uuid' | 'type' | 'uuid' | 'visible_to_anonymous_users';
 
 export type AdminAnnouncementOEnum = '-active_from' | '-active_to' | '-created' | '-name' | '-type' | 'active_from' | 'active_to' | 'created' | 'name' | 'type';
 
@@ -70165,6 +70328,200 @@ export type MarketplaceOfferingRolesUpdateResponses = {
 
 export type MarketplaceOfferingRolesUpdateResponse = MarketplaceOfferingRolesUpdateResponses[keyof MarketplaceOfferingRolesUpdateResponses];
 
+export type MarketplaceOfferingTemplatesListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        is_published?: boolean;
+        name?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<CallTemplateOEnum>;
+        offering_type?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-offering-templates/';
+};
+
+export type MarketplaceOfferingTemplatesListResponses = {
+    200: Array<OfferingTemplate>;
+};
+
+export type MarketplaceOfferingTemplatesListResponse = MarketplaceOfferingTemplatesListResponses[keyof MarketplaceOfferingTemplatesListResponses];
+
+export type MarketplaceOfferingTemplatesCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        is_published?: boolean;
+        name?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<CallTemplateOEnum>;
+        offering_type?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+    };
+    url: '/api/marketplace-offering-templates/';
+};
+
+export type MarketplaceOfferingTemplatesCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type MarketplaceOfferingTemplatesCreateData = {
+    body: OfferingTemplateRequest;
+    path?: never;
+    query?: never;
+    url: '/api/marketplace-offering-templates/';
+};
+
+export type MarketplaceOfferingTemplatesCreateResponses = {
+    201: OfferingTemplate;
+};
+
+export type MarketplaceOfferingTemplatesCreateResponse = MarketplaceOfferingTemplatesCreateResponses[keyof MarketplaceOfferingTemplatesCreateResponses];
+
+export type MarketplaceOfferingTemplatesDestroyData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-offering-templates/{uuid}/';
+};
+
+export type MarketplaceOfferingTemplatesDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type MarketplaceOfferingTemplatesDestroyResponse = MarketplaceOfferingTemplatesDestroyResponses[keyof MarketplaceOfferingTemplatesDestroyResponses];
+
+export type MarketplaceOfferingTemplatesRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-offering-templates/{uuid}/';
+};
+
+export type MarketplaceOfferingTemplatesRetrieveResponses = {
+    200: OfferingTemplate;
+};
+
+export type MarketplaceOfferingTemplatesRetrieveResponse = MarketplaceOfferingTemplatesRetrieveResponses[keyof MarketplaceOfferingTemplatesRetrieveResponses];
+
+export type MarketplaceOfferingTemplatesPartialUpdateData = {
+    body?: PatchedOfferingTemplateRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-offering-templates/{uuid}/';
+};
+
+export type MarketplaceOfferingTemplatesPartialUpdateResponses = {
+    200: OfferingTemplate;
+};
+
+export type MarketplaceOfferingTemplatesPartialUpdateResponse = MarketplaceOfferingTemplatesPartialUpdateResponses[keyof MarketplaceOfferingTemplatesPartialUpdateResponses];
+
+export type MarketplaceOfferingTemplatesUpdateData = {
+    body: OfferingTemplateRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-offering-templates/{uuid}/';
+};
+
+export type MarketplaceOfferingTemplatesUpdateResponses = {
+    200: OfferingTemplate;
+};
+
+export type MarketplaceOfferingTemplatesUpdateResponse = MarketplaceOfferingTemplatesUpdateResponses[keyof MarketplaceOfferingTemplatesUpdateResponses];
+
+export type MarketplaceOfferingTemplatesVersionsListData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-offering-templates/{uuid}/versions/';
+};
+
+export type MarketplaceOfferingTemplatesVersionsListResponses = {
+    200: Array<OfferingTemplateVersion>;
+};
+
+export type MarketplaceOfferingTemplatesVersionsListResponse = MarketplaceOfferingTemplatesVersionsListResponses[keyof MarketplaceOfferingTemplatesVersionsListResponses];
+
+export type MarketplaceOfferingTemplatesLoadPresetData = {
+    body: LoadOfferingTemplatePresetRequest;
+    path?: never;
+    query?: never;
+    url: '/api/marketplace-offering-templates/load_preset/';
+};
+
+export type MarketplaceOfferingTemplatesLoadPresetResponses = {
+    200: LoadOfferingTemplatePresetResponse;
+};
+
+export type MarketplaceOfferingTemplatesLoadPresetResponse = MarketplaceOfferingTemplatesLoadPresetResponses[keyof MarketplaceOfferingTemplatesLoadPresetResponses];
+
+export type MarketplaceOfferingTemplatesPresetsListData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/marketplace-offering-templates/presets/';
+};
+
+export type MarketplaceOfferingTemplatesPresetsListResponses = {
+    200: Array<OfferingTemplatePreset>;
+};
+
+export type MarketplaceOfferingTemplatesPresetsListResponse = MarketplaceOfferingTemplatesPresetsListResponses[keyof MarketplaceOfferingTemplatesPresetsListResponses];
+
+export type MarketplaceOfferingTemplatesPresetsCountData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/marketplace-offering-templates/presets/';
+};
+
+export type MarketplaceOfferingTemplatesPresetsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
 export type MarketplaceOfferingTermsOfServiceListData = {
     body?: never;
     path?: never;
@@ -72534,6 +72891,13 @@ export type MarketplaceOrdersSetStateErredData = {
     };
     query?: never;
     url: '/api/marketplace-orders/{uuid}/set_state_erred/';
+};
+
+export type MarketplaceOrdersSetStateErredErrors = {
+    /**
+     * Order is already finished (done, erred, canceled or rejected).
+     */
+    409: unknown;
 };
 
 export type MarketplaceOrdersSetStateErredResponses = {
@@ -77371,6 +77735,21 @@ export type MarketplaceProviderOfferingsRemoveSoftwareCatalogResponses = {
 };
 
 export type MarketplaceProviderOfferingsRemoveSoftwareCatalogResponse = MarketplaceProviderOfferingsRemoveSoftwareCatalogResponses[keyof MarketplaceProviderOfferingsRemoveSoftwareCatalogResponses];
+
+export type MarketplaceProviderOfferingsSaveAsTemplateData = {
+    body?: OfferingSaveAsTemplateRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-provider-offerings/{uuid}/save_as_template/';
+};
+
+export type MarketplaceProviderOfferingsSaveAsTemplateResponses = {
+    201: OfferingTemplate;
+};
+
+export type MarketplaceProviderOfferingsSaveAsTemplateResponse = MarketplaceProviderOfferingsSaveAsTemplateResponses[keyof MarketplaceProviderOfferingsSaveAsTemplateResponses];
 
 export type MarketplaceProviderOfferingsSetBackendMetadataData = {
     body?: OfferingBackendMetadataRequest;
