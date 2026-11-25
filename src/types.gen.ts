@@ -21944,6 +21944,10 @@ export type OfferingUser = {
     readonly customer_uuid: string;
     readonly customer_name: string;
     /**
+     * Whether the Waldur account is active. Deactivating the account does not change this offering user's state.
+     */
+    readonly user_is_active: boolean;
+    /**
      * Signal to service if the user account is restricted or not
      */
     readonly is_restricted: boolean;
@@ -33045,6 +33049,8 @@ export type ProviderUserRoleDetails = {
      * List of ISDs that have asserted this user exists. User is deactivated when this becomes empty.
      */
     readonly user_active_isds: Array<string>;
+    readonly user_first_name: string;
+    readonly user_last_name: string;
 };
 
 export type ProviderUsernameCandidate = {
@@ -48451,7 +48457,7 @@ export type OfferingTermsOfServiceOEnum = '-created' | '-modified' | '-version' 
 
 export type UserChecklistCompletionOEnum = '-is_completed' | '-modified' | 'is_completed' | 'modified';
 
-export type OfferingUserFieldEnum = 'consent_data' | 'created' | 'customer_name' | 'customer_uuid' | 'has_compliance_checklist' | 'has_consent' | 'home_directory' | 'is_profile_complete' | 'is_restricted' | 'login_shell' | 'missing_profile_attributes' | 'modified' | 'offering' | 'offering_has_active_tos' | 'offering_name' | 'offering_uuid' | 'primarygroup' | 'requires_reconsent' | 'runtime_state' | 'service_provider_account_username' | 'service_provider_account_uuid' | 'service_provider_comment' | 'service_provider_comment_url' | 'state' | 'uidnumber' | 'url' | 'user' | 'user_active_isds' | 'user_address' | 'user_affiliations' | 'user_birth_date' | 'user_civil_number' | 'user_country_of_residence' | 'user_eduperson_assurance' | 'user_email' | 'user_first_name' | 'user_full_name' | 'user_gender' | 'user_identity_source' | 'user_job_title' | 'user_last_name' | 'user_nationalities' | 'user_nationality' | 'user_organization' | 'user_organization_address' | 'user_organization_country' | 'user_organization_registry_code' | 'user_organization_type' | 'user_organization_vat_code' | 'user_personal_title' | 'user_phone_number' | 'user_place_of_birth' | 'user_primary_gid' | 'user_uid_number' | 'user_username' | 'user_uuid' | 'username' | 'uuid';
+export type OfferingUserFieldEnum = 'consent_data' | 'created' | 'customer_name' | 'customer_uuid' | 'has_compliance_checklist' | 'has_consent' | 'home_directory' | 'is_profile_complete' | 'is_restricted' | 'login_shell' | 'missing_profile_attributes' | 'modified' | 'offering' | 'offering_has_active_tos' | 'offering_name' | 'offering_uuid' | 'primarygroup' | 'requires_reconsent' | 'runtime_state' | 'service_provider_account_username' | 'service_provider_account_uuid' | 'service_provider_comment' | 'service_provider_comment_url' | 'state' | 'uidnumber' | 'url' | 'user' | 'user_active_isds' | 'user_address' | 'user_affiliations' | 'user_birth_date' | 'user_civil_number' | 'user_country_of_residence' | 'user_eduperson_assurance' | 'user_email' | 'user_first_name' | 'user_full_name' | 'user_gender' | 'user_identity_source' | 'user_is_active' | 'user_job_title' | 'user_last_name' | 'user_nationalities' | 'user_nationality' | 'user_organization' | 'user_organization_address' | 'user_organization_country' | 'user_organization_registry_code' | 'user_organization_type' | 'user_organization_vat_code' | 'user_personal_title' | 'user_phone_number' | 'user_place_of_birth' | 'user_primary_gid' | 'user_uid_number' | 'user_username' | 'user_uuid' | 'username' | 'uuid';
 
 export type OfferingUserOEnum = '-created' | '-modified' | '-user_first_name' | '-user_last_name' | '-username' | 'created' | 'modified' | 'user_first_name' | 'user_last_name' | 'username';
 
