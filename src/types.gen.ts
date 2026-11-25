@@ -10395,6 +10395,8 @@ export type DeprecatedNetworkRbacPolicyRequest = {
     policy_type?: PolicyTypeEnum;
 };
 
+export type DestinationTypeEnum = 'cidr' | 'domain';
+
 export type Detail = {
     detail: string;
 };
@@ -14945,6 +14947,18 @@ export type K8sDefaultConfiguration = {
      * Comma-separated list of Kubernetes versions (e.g., 1.32.0,1.33.0,1.34.0)
      */
     available_kubernetes_versions?: string;
+    /**
+     * Whether customers may restrict the cluster's outbound traffic to a list of destinations (egress_rules). Off when omitted.
+     */
+    egress_rules_enabled?: boolean;
+    /**
+     * Whether customers' egress rules may name domains; otherwise only networks (CIDR). Off when omitted.
+     */
+    egress_domain_rules_allowed?: boolean;
+    /**
+     * Destinations every cluster of the offering may reach, such as DNS, NTP and image registries. Shown to customers read-only; once a cluster has any egress rule, outbound traffic is allowed to these and to the customer's destinations only.
+     */
+    egress_baseline_rules?: Array<K8sEgressRule>;
 };
 
 export type K8sDefaultConfigurationRequest = {
@@ -14973,6 +14987,72 @@ export type K8sDefaultConfigurationRequest = {
      * Comma-separated list of Kubernetes versions (e.g., 1.32.0,1.33.0,1.34.0)
      */
     available_kubernetes_versions?: string;
+    /**
+     * Whether customers may restrict the cluster's outbound traffic to a list of destinations (egress_rules). Off when omitted.
+     */
+    egress_rules_enabled?: boolean;
+    /**
+     * Whether customers' egress rules may name domains; otherwise only networks (CIDR). Off when omitted.
+     */
+    egress_domain_rules_allowed?: boolean;
+    /**
+     * Destinations every cluster of the offering may reach, such as DNS, NTP and image registries. Shown to customers read-only; once a cluster has any egress rule, outbound traffic is allowed to these and to the customer's destinations only.
+     */
+    egress_baseline_rules?: Array<K8sEgressRuleRequest>;
+};
+
+export type K8sEgressRule = {
+    /**
+     * A client-side row id, kept as given. Ignored by the server.
+     */
+    uuid?: string;
+    name: string;
+    destination_type: DestinationTypeEnum;
+    /**
+     * An IPv4 or IPv6 network for a cidr rule; a domain name, optionally led by a *. wildcard, for a domain rule.
+     */
+    destination: string;
+    /**
+     * Empty for any protocol.
+     */
+    protocol?: K8sEgressRuleProtocolEnum | BlankEnum | NullEnum | null;
+    /**
+     * Empty for any port.
+     */
+    port_range_min?: number | null;
+    /**
+     * Empty for a single port, port_range_min.
+     */
+    port_range_max?: number | null;
+    description?: string | null;
+};
+
+export type K8sEgressRuleProtocolEnum = 'TCP' | 'UDP' | 'ICMP';
+
+export type K8sEgressRuleRequest = {
+    /**
+     * A client-side row id, kept as given. Ignored by the server.
+     */
+    uuid?: string;
+    name: string;
+    destination_type: DestinationTypeEnum;
+    /**
+     * An IPv4 or IPv6 network for a cidr rule; a domain name, optionally led by a *. wildcard, for a domain rule.
+     */
+    destination: string;
+    /**
+     * Empty for any protocol.
+     */
+    protocol?: K8sEgressRuleProtocolEnum | BlankEnum | NullEnum | null;
+    /**
+     * Empty for any port.
+     */
+    port_range_min?: number | null;
+    /**
+     * Empty for a single port, port_range_min.
+     */
+    port_range_max?: number | null;
+    description?: string | null;
 };
 
 export type KeycloakGroup = {
@@ -24462,6 +24542,10 @@ export type OptionField = {
     display_limit_config?: DisplayLimitConfig;
     storage_folder_config?: StorageFolderConfig;
     default_configs?: K8sDefaultConfiguration;
+    /**
+     * For a k8s_egress_rules resource option: the Kubernetes cluster order option it pairs with. Set by the server.
+     */
+    readonly k8s_config_option: string;
     validators?: Array<OptionValidator>;
     /**
      * Show this option only when another option has a given value.
@@ -24527,7 +24611,7 @@ export type OptionFieldRequest = {
     transform?: OptionTransformRequest | null;
 };
 
-export type OptionFieldTypeEnum = 'boolean' | 'integer' | 'money' | 'string' | 'text' | 'html_text' | 'select_string' | 'select_string_multi' | 'select_openstack_tenant' | 'select_multiple_openstack_tenants' | 'select_openstack_instance' | 'select_multiple_openstack_instances' | 'date' | 'time' | 'conditional_cascade' | 'component_multiplier' | 'component_formula' | 'component_sum' | 'single_datacenter_k8s_config' | 'multi_datacenter_k8s_config' | 'storage_folder_manager';
+export type OptionFieldTypeEnum = 'boolean' | 'integer' | 'money' | 'string' | 'text' | 'html_text' | 'select_string' | 'select_string_multi' | 'select_openstack_tenant' | 'select_multiple_openstack_tenants' | 'select_openstack_instance' | 'select_multiple_openstack_instances' | 'date' | 'time' | 'conditional_cascade' | 'component_multiplier' | 'component_formula' | 'component_sum' | 'single_datacenter_k8s_config' | 'multi_datacenter_k8s_config' | 'k8s_egress_rules' | 'storage_folder_manager';
 
 export type OptionTransform = {
     /**
@@ -28498,7 +28582,7 @@ export type PatchedUserRequest = {
      */
     is_identity_manager?: boolean;
     /**
-     * Designates whether the user is allowed to create and use personal access tokens.
+     * Designates whether the user is allowed to create and use personal access tokens while they are not enabled for every user (PAT_ENABLED).
      */
     can_use_personal_access_tokens?: boolean;
     managed_isds?: Array<string>;
@@ -42459,7 +42543,7 @@ export type User = {
      */
     is_identity_manager?: boolean;
     /**
-     * Designates whether the user is allowed to create and use personal access tokens.
+     * Designates whether the user is allowed to create and use personal access tokens while they are not enabled for every user (PAT_ENABLED).
      */
     can_use_personal_access_tokens?: boolean;
     /**
@@ -42933,7 +43017,7 @@ export type UserMe = {
      */
     is_identity_manager?: boolean;
     /**
-     * Designates whether the user is allowed to create and use personal access tokens.
+     * Designates whether the user is allowed to create and use personal access tokens while they are not enabled for every user (PAT_ENABLED).
      */
     can_use_personal_access_tokens?: boolean;
     /**
@@ -43143,7 +43227,7 @@ export type UserRequest = {
      */
     is_identity_manager?: boolean;
     /**
-     * Designates whether the user is allowed to create and use personal access tokens.
+     * Designates whether the user is allowed to create and use personal access tokens while they are not enabled for every user (PAT_ENABLED).
      */
     can_use_personal_access_tokens?: boolean;
     managed_isds?: Array<string>;
@@ -47488,7 +47572,7 @@ export type UserRequestForm = {
      */
     is_identity_manager?: boolean;
     /**
-     * Designates whether the user is allowed to create and use personal access tokens.
+     * Designates whether the user is allowed to create and use personal access tokens while they are not enabled for every user (PAT_ENABLED).
      */
     can_use_personal_access_tokens?: boolean;
     managed_isds?: Array<string>;
@@ -47589,7 +47673,7 @@ export type UserRequestMultipart = {
      */
     is_identity_manager?: boolean;
     /**
-     * Designates whether the user is allowed to create and use personal access tokens.
+     * Designates whether the user is allowed to create and use personal access tokens while they are not enabled for every user (PAT_ENABLED).
      */
     can_use_personal_access_tokens?: boolean;
     managed_isds?: Array<string>;
@@ -47689,7 +47773,7 @@ export type PatchedUserRequestForm = {
      */
     is_identity_manager?: boolean;
     /**
-     * Designates whether the user is allowed to create and use personal access tokens.
+     * Designates whether the user is allowed to create and use personal access tokens while they are not enabled for every user (PAT_ENABLED).
      */
     can_use_personal_access_tokens?: boolean;
     managed_isds?: Array<string>;
@@ -47789,7 +47873,7 @@ export type PatchedUserRequestMultipart = {
      */
     is_identity_manager?: boolean;
     /**
-     * Designates whether the user is allowed to create and use personal access tokens.
+     * Designates whether the user is allowed to create and use personal access tokens while they are not enabled for every user (PAT_ENABLED).
      */
     can_use_personal_access_tokens?: boolean;
     managed_isds?: Array<string>;
