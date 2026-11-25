@@ -11975,6 +11975,7 @@ export type ExportOfferingData = {
     longitude: number | null;
     access_url: string;
     paused_reason: string;
+    backend_id?: string;
     attributes?: {
         [key: string]: unknown;
     };
@@ -12000,6 +12001,7 @@ export type ExportOfferingDataRequest = {
     longitude: number | null;
     access_url: string;
     paused_reason: string;
+    backend_id?: string;
     attributes?: {
         [key: string]: unknown;
     };
@@ -19634,6 +19636,9 @@ export type Offering = {
     readonly offering_group: string | null;
     readonly offering_group_uuid: string | null;
     readonly offering_group_title: string | null;
+    readonly template_uuid: string | null;
+    readonly template_name: string | null;
+    readonly template_version: number | null;
     readonly user_has_consent: boolean;
     readonly user_has_offering_user: boolean;
     readonly is_accessible: boolean;
@@ -21537,6 +21542,95 @@ export type OfferingTemplate = {
     readonly modified: string;
 };
 
+export type OfferingTemplateCreateOfferingRequest = {
+    /**
+     * The organization the offering is created for.
+     */
+    customer: string;
+    /**
+     * The category the offering is listed in.
+     */
+    category: string;
+    /**
+     * Name of the new offering.
+     */
+    name: string;
+    /**
+     * A value for each of the template's parameters, by key. A parameter left out takes its default.
+     */
+    parameters?: {
+        [key: string]: unknown;
+    };
+    /**
+     * Check everything and report what would be created, creating nothing.
+     */
+    dry_run?: boolean;
+};
+
+export type OfferingTemplateCreateOfferingResponse = {
+    dry_run: boolean;
+    /**
+     * The new offering; null on a dry run.
+     */
+    offering_uuid: string | null;
+    offering_name: string;
+    template_version: number;
+    /**
+     * The value of every parameter, defaults included.
+     */
+    parameters: {
+        [key: string]: unknown;
+    };
+    /**
+     * The template's document with the parameters filled in: what the offering is created from, in the import_offering format.
+     */
+    document: {
+        [key: string]: unknown;
+    };
+    /**
+     * What the import of the document reported.
+     */
+    warnings: Array<string>;
+    /**
+     * What the site-agent consistency rules find in the filled-in document, errors first. A create with an error is refused.
+     */
+    findings: Array<OfferingConfigurationFinding>;
+};
+
+export type OfferingTemplateDiff = {
+    template_uuid: string;
+    template_name: string;
+    /**
+     * The version the offering was created from.
+     */
+    template_version: number;
+    latest_version: number;
+    /**
+     * Differences from the version the offering was created from.
+     */
+    created_version_differences: Array<OfferingTemplateDifference>;
+    latest_version_differences: Array<OfferingTemplateDifference>;
+};
+
+export type OfferingTemplateDifference = {
+    /**
+     * Where the offering differs, such as components[cpu].unit_factor: list items are named by their type, name or version.
+     */
+    path: string;
+    /**
+     * What the template sets; null when it has none.
+     */
+    template: {
+        [key: string]: unknown;
+    } | null;
+    /**
+     * What the offering has; null when it has none.
+     */
+    offering: {
+        [key: string]: unknown;
+    } | null;
+};
+
 export type OfferingTemplateParameter = {
     key: string;
     label: string;
@@ -21550,6 +21644,16 @@ export type OfferingTemplateParameter = {
      * Dotted paths into the document that the value fills, such as offering.backend_id; digits address list items.
      */
     paths: Array<string>;
+    /**
+     * The values allowed, when the parameter is limited to some.
+     */
+    choices?: Array<{
+        [key: string]: unknown;
+    }>;
+    /**
+     * A regular expression a string value must match in full.
+     */
+    pattern?: string;
 };
 
 export type OfferingTemplateParameterTypeEnum = 'string' | 'integer' | 'number' | 'boolean';
@@ -32471,6 +32575,9 @@ export type ProviderOfferingDetails = {
     readonly offering_group: string | null;
     readonly offering_group_uuid: string | null;
     readonly offering_group_title: string | null;
+    readonly template_uuid: string | null;
+    readonly template_name: string | null;
+    readonly template_version: number | null;
     readonly integration_status: Array<IntegrationStatus> | null;
 };
 
@@ -33224,6 +33331,9 @@ export type PublicOfferingDetails = {
     readonly offering_group: string | null;
     readonly offering_group_uuid: string | null;
     readonly offering_group_title: string | null;
+    readonly template_uuid: string | null;
+    readonly template_name: string | null;
+    readonly template_version: number | null;
     readonly user_has_consent: boolean;
     readonly user_has_offering_user: boolean;
     readonly is_accessible: boolean;
@@ -48201,7 +48311,7 @@ export type AwsVolumeFieldEnum = 'access_url' | 'backend_id' | 'created' | 'cust
 
 export type BackendResourceReqOEnum = '-created' | 'created';
 
-export type OfferingFieldEnum = 'access_url' | 'account_settings' | 'agent_configuration' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'billing_mode_components' | 'billing_period_applies' | 'billing_type_classification' | 'can_update_integration' | 'can_update_options' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'compliance_checklist_details' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'default_access_subnets' | 'description' | 'documentation_url' | 'effective_available_limits' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'has_compliance_requirements' | 'helpdesk_url' | 'image' | 'integration_guide' | 'is_accessible' | 'latitude' | 'longitude' | 'name' | 'offering_group' | 'offering_group_title' | 'offering_group_uuid' | 'open_for_proposals' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'profile_name' | 'profile_uuid' | 'project' | 'project_name' | 'project_uuid' | 'qos_profiles' | 'quotas' | 'resource_options' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_resource' | 'scope_resource_name' | 'scope_resource_uuid' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'tags' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'user_has_consent' | 'user_has_offering_user' | 'uuid' | 'vendor_details';
+export type OfferingFieldEnum = 'access_url' | 'account_settings' | 'agent_configuration' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'billing_mode_components' | 'billing_period_applies' | 'billing_type_classification' | 'can_update_integration' | 'can_update_options' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'compliance_checklist_details' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'default_access_subnets' | 'description' | 'documentation_url' | 'effective_available_limits' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'has_compliance_requirements' | 'helpdesk_url' | 'image' | 'integration_guide' | 'is_accessible' | 'latitude' | 'longitude' | 'name' | 'offering_group' | 'offering_group_title' | 'offering_group_uuid' | 'open_for_proposals' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'profile_name' | 'profile_uuid' | 'project' | 'project_name' | 'project_uuid' | 'qos_profiles' | 'quotas' | 'resource_options' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_resource' | 'scope_resource_name' | 'scope_resource_uuid' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'tags' | 'template_name' | 'template_uuid' | 'template_version' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'user_has_consent' | 'user_has_offering_user' | 'uuid' | 'vendor_details';
 
 export type BookingResourceFieldEnum = 'api_key_counts' | 'attributes' | 'available_actions' | 'backend_id' | 'backend_metadata' | 'can_terminate' | 'category_icon' | 'category_title' | 'category_uuid' | 'consumer_reviewed_by' | 'consumer_reviewed_by_full_name' | 'consumer_reviewed_by_username' | 'created' | 'created_by' | 'created_by_full_name' | 'created_by_username' | 'creation_order' | 'current_usages' | 'customer_abbreviation' | 'customer_name' | 'customer_slug' | 'customer_uuid' | 'description' | 'display_limits' | 'downscaled' | 'effective_id' | 'end_date' | 'end_date_requested_by' | 'end_date_updated_at' | 'endpoints' | 'error_message' | 'error_traceback' | 'has_api_keys' | 'is_limit_based' | 'is_usage_based' | 'last_sync' | 'limit_usage' | 'limits' | 'modified' | 'name' | 'offering' | 'offering_account_settings' | 'offering_backend_id' | 'offering_billable' | 'offering_components' | 'offering_description' | 'offering_image' | 'offering_name' | 'offering_plugin_options' | 'offering_shared' | 'offering_slug' | 'offering_state' | 'offering_thumbnail' | 'offering_type' | 'offering_uuid' | 'options' | 'order_in_progress' | 'parent_name' | 'parent_offering_name' | 'parent_offering_slug' | 'parent_offering_uuid' | 'parent_uuid' | 'paused' | 'plan' | 'plan_description' | 'plan_name' | 'plan_unit' | 'plan_uuid' | 'prepaid_total_component_types' | 'project' | 'project_description' | 'project_effective_end_date' | 'project_end_date' | 'project_end_date_requested_by' | 'project_is_in_grace_period' | 'project_name' | 'project_slug' | 'project_start_date' | 'project_uuid' | 'provider_description' | 'provider_name' | 'provider_slug' | 'provider_uuid' | 'renewal_date' | 'report' | 'resource_effective_end_date' | 'resource_type' | 'resource_uuid' | 'restrict_member_access' | 'scope' | 'service_settings_uuid' | 'slots' | 'slug' | 'spending_limit_status' | 'spending_limits' | 'state' | 'terminated_at' | 'url' | 'usage_limit_restriction' | 'usage_limit_resumes_at' | 'user_requires_reconsent' | 'username' | 'uuid';
 
@@ -48349,7 +48459,7 @@ export type OrderDetailsFieldEnum = 'accepting_terms_of_service' | 'activation_p
 
 export type OrderDetailsOEnum = '-consumer_reviewed_at' | '-cost' | '-created' | '-state' | 'consumer_reviewed_at' | 'cost' | 'created' | 'state';
 
-export type PublicOfferingDetailsFieldEnum = 'access_url' | 'account_settings' | 'agent_configuration' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'billing_mode_components' | 'billing_period_applies' | 'billing_type_classification' | 'can_update_integration' | 'can_update_options' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'compliance_checklist_details' | 'components' | 'config_drive_default' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'default_access_subnets' | 'description' | 'documentation_url' | 'effective_available_limits' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'has_compliance_requirements' | 'helpdesk_url' | 'image' | 'integration_guide' | 'is_accessible' | 'latitude' | 'longitude' | 'name' | 'offering_group' | 'offering_group_title' | 'offering_group_uuid' | 'open_for_proposals' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'profile_name' | 'profile_uuid' | 'project' | 'project_name' | 'project_uuid' | 'promotion_campaigns' | 'qos_profiles' | 'quotas' | 'resource_options' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_resource' | 'scope_resource_name' | 'scope_resource_uuid' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'tags' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'user_has_consent' | 'user_has_offering_user' | 'uuid' | 'vendor_details';
+export type PublicOfferingDetailsFieldEnum = 'access_url' | 'account_settings' | 'agent_configuration' | 'attributes' | 'backend_id' | 'backend_metadata' | 'billable' | 'billing_mode_components' | 'billing_period_applies' | 'billing_type_classification' | 'can_update_integration' | 'can_update_options' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'compliance_checklist_details' | 'components' | 'config_drive_default' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'default_access_subnets' | 'description' | 'documentation_url' | 'effective_available_limits' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'has_compliance_requirements' | 'helpdesk_url' | 'image' | 'integration_guide' | 'is_accessible' | 'latitude' | 'longitude' | 'name' | 'offering_group' | 'offering_group_title' | 'offering_group_uuid' | 'open_for_proposals' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'profile_name' | 'profile_uuid' | 'project' | 'project_name' | 'project_uuid' | 'promotion_campaigns' | 'qos_profiles' | 'quotas' | 'resource_options' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_resource' | 'scope_resource_name' | 'scope_resource_uuid' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'tags' | 'template_name' | 'template_uuid' | 'template_version' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'user_has_consent' | 'user_has_offering_user' | 'uuid' | 'vendor_details';
 
 export type PosixIdPoolFieldEnum = 'created' | 'customer_name' | 'customer_uuid' | 'description' | 'gid_used' | 'gid_utilization' | 'group_gid_used' | 'group_gid_utilization' | 'max_gid' | 'max_group_gid' | 'max_uid' | 'min_gid' | 'min_group_gid' | 'min_uid' | 'next_gid' | 'next_group_gid' | 'next_uid' | 'offering' | 'scope' | 'service_provider' | 'uid_used' | 'uid_utilization' | 'url' | 'uuid';
 
@@ -48361,7 +48471,7 @@ export type ProjectEstimatedCostPolicyFieldEnum = 'actions' | 'affected_resource
 
 export type RemoteProjectUpdateRequestStateEnum = 'approved' | 'canceled' | 'draft' | 'pending' | 'rejected';
 
-export type ProviderOfferingDetailsFieldEnum = 'access_url' | 'account_settings' | 'agent_configuration' | 'attributes' | 'backend_id' | 'backend_id_rules' | 'backend_metadata' | 'billable' | 'billing_mode_components' | 'billing_period_applies' | 'billing_type_classification' | 'can_update_integration' | 'can_update_options' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'compliance_checklist_details' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'default_access_subnets' | 'description' | 'documentation_url' | 'effective_available_limits' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'has_compliance_requirements' | 'helpdesk_url' | 'image' | 'integration_guide' | 'integration_status' | 'latitude' | 'limit_precision_advisory' | 'longitude' | 'name' | 'offering_group' | 'offering_group_title' | 'offering_group_uuid' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'profile_name' | 'profile_uuid' | 'project' | 'project_name' | 'project_uuid' | 'qos_profiles' | 'quotas' | 'resource_options' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_resource' | 'scope_resource_name' | 'scope_resource_uuid' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'tags' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'uuid' | 'vendor_details';
+export type ProviderOfferingDetailsFieldEnum = 'access_url' | 'account_settings' | 'agent_configuration' | 'attributes' | 'backend_id' | 'backend_id_rules' | 'backend_metadata' | 'billable' | 'billing_mode_components' | 'billing_period_applies' | 'billing_type_classification' | 'can_update_integration' | 'can_update_options' | 'category' | 'category_title' | 'category_uuid' | 'citation_count' | 'compliance_checklist' | 'compliance_checklist_details' | 'components' | 'country' | 'created' | 'customer' | 'customer_name' | 'customer_uuid' | 'datacite_doi' | 'default_access_subnets' | 'description' | 'documentation_url' | 'effective_available_limits' | 'endpoints' | 'files' | 'full_description' | 'getting_started' | 'has_compliance_requirements' | 'helpdesk_url' | 'image' | 'integration_guide' | 'integration_status' | 'latitude' | 'limit_precision_advisory' | 'longitude' | 'name' | 'offering_group' | 'offering_group_title' | 'offering_group_uuid' | 'options' | 'order_count' | 'organization_groups' | 'parent_description' | 'parent_name' | 'parent_uuid' | 'partitions' | 'paused_reason' | 'plans' | 'plugin_options' | 'privacy_policy_link' | 'profile_name' | 'profile_uuid' | 'project' | 'project_name' | 'project_uuid' | 'qos_profiles' | 'quotas' | 'resource_options' | 'scope' | 'scope_error_message' | 'scope_name' | 'scope_resource' | 'scope_resource_name' | 'scope_resource_uuid' | 'scope_state' | 'scope_uuid' | 'screenshots' | 'secret_options' | 'service_attributes' | 'shared' | 'slug' | 'software_catalogs' | 'state' | 'tags' | 'template_name' | 'template_uuid' | 'template_version' | 'thumbnail' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type' | 'url' | 'uuid' | 'vendor_details';
 
 export type ProviderOfferingDetailsOEnum = '-created' | '-name' | '-state' | '-total_cost' | '-total_cost_estimated' | '-total_customers' | '-type' | 'created' | 'name' | 'state' | 'total_cost' | 'total_cost_estimated' | 'total_customers' | 'type';
 
@@ -71033,6 +71143,22 @@ export type MarketplaceOfferingTemplatesUpdateResponses = {
 
 export type MarketplaceOfferingTemplatesUpdateResponse = MarketplaceOfferingTemplatesUpdateResponses[keyof MarketplaceOfferingTemplatesUpdateResponses];
 
+export type MarketplaceOfferingTemplatesCreateOfferingData = {
+    body: OfferingTemplateCreateOfferingRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-offering-templates/{uuid}/create_offering/';
+};
+
+export type MarketplaceOfferingTemplatesCreateOfferingResponses = {
+    200: OfferingTemplateCreateOfferingResponse;
+    201: OfferingTemplateCreateOfferingResponse;
+};
+
+export type MarketplaceOfferingTemplatesCreateOfferingResponse = MarketplaceOfferingTemplatesCreateOfferingResponses[keyof MarketplaceOfferingTemplatesCreateOfferingResponses];
+
 export type MarketplaceOfferingTemplatesVersionsListData = {
     body?: never;
     path: {
@@ -78503,6 +78629,21 @@ export type MarketplaceProviderOfferingsSyncResourcesResponses = {
 };
 
 export type MarketplaceProviderOfferingsSyncResourcesResponse = MarketplaceProviderOfferingsSyncResourcesResponses[keyof MarketplaceProviderOfferingsSyncResourcesResponses];
+
+export type MarketplaceProviderOfferingsTemplateDiffRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-provider-offerings/{uuid}/template_diff/';
+};
+
+export type MarketplaceProviderOfferingsTemplateDiffRetrieveResponses = {
+    200: OfferingTemplateDiff;
+};
+
+export type MarketplaceProviderOfferingsTemplateDiffRetrieveResponse = MarketplaceProviderOfferingsTemplateDiffRetrieveResponses[keyof MarketplaceProviderOfferingsTemplateDiffRetrieveResponses];
 
 export type MarketplaceProviderOfferingsTosStatsRetrieveData = {
     body?: never;
