@@ -16772,6 +16772,10 @@ export type MergedPluginOptions = {
      */
     resource_projects_limit_policy?: ResourceProjectsLimitPolicyEnum | BlankEnum | NullEnum | null;
     /**
+     * What a renewal that only lowers prepaid limits does with the value already paid for the rest of the current term: 'no_credit' (the lower limits apply at once and the extension starts at the current end date, default) or 'stretch_paid_term' (the value is spread over the lower limits, so the paid-up period lasts longer, and the extension starts when it runs out). Neither refunds or credits anything.
+     */
+    renewal_limit_decrease_policy?: RenewalLimitDecreasePolicyEnum | NullEnum | null;
+    /**
      * If set to True, newly-created resource projects are immediately transitioned from CREATING to OK on save, bypassing the provider/site-agent reconciliation callback. Use for offerings that have no external backend to reconcile against.
      */
     auto_ok_resource_projects?: boolean;
@@ -17270,6 +17274,10 @@ export type MergedPluginOptionsRequest = {
      * How parent resource limits are enforced on child resource projects: 'none' (accepted as-is, default), 'per_project' (each resource project limit must be within the parent resource limit), or 'aggregate' (the sum of all resource project limits must be within the parent limit).
      */
     resource_projects_limit_policy?: ResourceProjectsLimitPolicyEnum | BlankEnum | NullEnum | null;
+    /**
+     * What a renewal that only lowers prepaid limits does with the value already paid for the rest of the current term: 'no_credit' (the lower limits apply at once and the extension starts at the current end date, default) or 'stretch_paid_term' (the value is spread over the lower limits, so the paid-up period lasts longer, and the extension starts when it runs out). Neither refunds or credits anything.
+     */
+    renewal_limit_decrease_policy?: RenewalLimitDecreasePolicyEnum | NullEnum | null;
     /**
      * If set to True, newly-created resource projects are immediately transitioned from CREATING to OK on save, bypassing the provider/site-agent reconciliation callback. Use for offerings that have no external backend to reconcile against.
      */
@@ -35881,11 +35889,21 @@ export type RenewalEstimateComponent = {
     component_name: string;
     billing_type: string;
     billing_period: string | null;
+    /**
+     * For a prepaid line, the term it covers: the rest of the current term, charged for a raised limit, or the extension.
+     */
+    term: RenewalTermEnum | NullEnum | null;
     current_limit: number;
     new_limit: number;
     unit_price: string;
     measured_unit: string;
     period_description: string;
+    period_start: string | null;
+    period_end: string | null;
+    /**
+     * For a prepaid line, the units charged: limit x months.
+     */
+    quantity: string | null;
     total: string;
 };
 
@@ -35902,8 +35920,16 @@ export type RenewalEstimateResponse = {
     limit_change_total: string;
     total: string;
     remaining_days: number;
+    /**
+     * Where the extension starts: the current end date, or later when the renewal only lowers limits and the offering's renewal_limit_decrease_policy spreads the value already paid for the rest of the current term over the lower limits.
+     */
+    paid_up_end_date: string;
     new_end_date: string;
 };
+
+export type RenewalLimitDecreasePolicyEnum = 'no_credit' | 'stretch_paid_term';
+
+export type RenewalTermEnum = 'current_term' | 'extension';
 
 export type ReopenContributionRequest = {
     contribution_uuid: string;
@@ -37117,7 +37143,7 @@ export type ResourceRenewRequest = {
      */
     extension_months: number;
     /**
-     * Optional new limits for the resource. Supports upgrades only.
+     * Optional new limits for the resource; components left out keep their current limits. A raised prepaid limit is also charged for the rest of the current term. A renewal that only lowers limits gets no credit; if the offering's renewal_limit_decrease_policy is stretch_paid_term, the value already paid for the rest of the term is spread over the lower limits and the extension starts when it runs out.
      */
     limits?: {
         [key: string]: number;
@@ -46591,7 +46617,7 @@ export type ResourceRenewRequestForm = {
      */
     extension_months: number;
     /**
-     * Optional new limits for the resource. Supports upgrades only.
+     * Optional new limits for the resource; components left out keep their current limits. A raised prepaid limit is also charged for the rest of the current term. A renewal that only lowers limits gets no credit; if the offering's renewal_limit_decrease_policy is stretch_paid_term, the value already paid for the rest of the term is spread over the lower limits and the extension starts when it runs out.
      */
     limits?: {
         [key: string]: number;
@@ -46612,7 +46638,7 @@ export type ResourceRenewRequestMultipart = {
      */
     extension_months: number;
     /**
-     * Optional new limits for the resource. Supports upgrades only.
+     * Optional new limits for the resource; components left out keep their current limits. A raised prepaid limit is also charged for the rest of the current term. A renewal that only lowers limits gets no credit; if the offering's renewal_limit_decrease_policy is stretch_paid_term, the value already paid for the rest of the term is spread over the lower limits and the extension starts when it runs out.
      */
     limits?: {
         [key: string]: number;
