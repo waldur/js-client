@@ -485,6 +485,8 @@ export type AgentCompatibility = {
 
 export type AgentCompatibilityStatusEnum = 'unknown' | 'incompatible' | 'compatible';
 
+export type AgentComponentFieldEnum = 'measured_unit' | 'unit_factor' | 'accounting_type' | 'label' | 'limit';
+
 export type AgentConfiguration = {
     order_processing_backend?: string;
     membership_sync_backend?: string;
@@ -504,6 +506,68 @@ export type AgentConfiguration = {
     };
     event_settings?: EventSettings;
     agent_settings?: AgentSettings;
+};
+
+export type AgentConfigurationChange = {
+    path: string;
+    current: unknown;
+    imported: unknown;
+};
+
+export type AgentConfigurationImportRequest = {
+    /**
+     * The site agent configuration file, as YAML text.
+     */
+    configuration: string;
+    /**
+     * Which entry of the file's offerings list to import. By default the one whose waldur_offering_uuid is this offering, else the only one.
+     */
+    offering_index?: number | null;
+    /**
+     * Only show what would change; save nothing.
+     */
+    dry_run?: boolean;
+    /**
+     * Values for settings the file leaves to the agent host's environment (see unresolved) or does not set, by dotted path such as backend_settings.cscs_dwdi_api_url. Never a secret.
+     */
+    values?: {
+        [key: string]: unknown;
+    };
+    /**
+     * Component differences to apply to the offering's components; each must be applicable.
+     */
+    apply_components?: Array<ApplyComponentRequest>;
+    /**
+     * What the SLURM periodic usage policy does when it fires, as action names from policy.action_choices. Required when apply_policy creates the policy; when it exists, given replaces its actions and left out keeps them.
+     */
+    policy_actions?: Array<string>;
+    /**
+     * Create or update the offering's SLURM periodic usage policy from the block's policy_settings.
+     */
+    apply_policy?: boolean;
+};
+
+export type AgentConfigurationImportResult = {
+    offerings: Array<ImportedOfferingBlock>;
+    selected_index: number;
+    agent_configuration: AgentConfiguration;
+    current: AgentConfiguration;
+    changes: Array<AgentConfigurationChange>;
+    dropped_secrets: Array<string>;
+    unresolved: Array<UnresolvedSetting>;
+    ignored: Array<IgnoredKey>;
+    component_differences: Array<ComponentDifference>;
+    /**
+     * The block's policy_settings against the offering's SLURM periodic usage policy; null when the block has none.
+     */
+    policy: ImportedPolicy | null;
+    /**
+     * Why the proposed configuration cannot be saved, in the shape of update_integration's agent_configuration errors, with apply_components and policy for the changes opted into; empty when it can.
+     */
+    errors: {
+        [key: string]: unknown;
+    };
+    applied: boolean;
 };
 
 export type AgentConfigurationRequest = {
@@ -1528,6 +1592,11 @@ export type AnswerSubmitRequest = {
 export type AnswerSubmitResponse = {
     detail: string;
     completion: ChecklistCompletion;
+};
+
+export type ApplyComponentRequest = {
+    component: string;
+    field: AgentComponentFieldEnum;
 };
 
 export type ArchiveCallRequest = {
@@ -3984,6 +4053,96 @@ export type BulkSilenceResponse = {
     status: string;
     count: number;
     duration_days?: number | null;
+};
+
+export type BulkStepDecision = {
+    /**
+     * Null for a preview decided within the request: nothing is recorded.
+     */
+    uuid: string | null;
+    /**
+     * A preview: nothing is decided, each result tells what would be.
+     */
+    dry_run: boolean;
+    state: BulkStepDecisionStateEnum;
+    call_uuid: string;
+    call_name: string;
+    call_step_uuid: string | null;
+    step_name: string;
+    outcome: string;
+    outcome_reason: string;
+    created_by_uuid: string | null;
+    created_by_name: string | null;
+    total: number;
+    processed: number;
+    decided_count: number;
+    refused_count: number;
+    created: string | null;
+    /**
+     * When the run last recorded a proposal.
+     */
+    modified: string | null;
+    started_at: string | null;
+    completed_at: string | null;
+    error_message: string;
+    readonly results: Array<BulkStepDecisionResult>;
+};
+
+export type BulkStepDecisionResult = {
+    /**
+     * The proposal named, as hex.
+     */
+    proposal_uuid: string;
+    /**
+     * Empty for a proposal not found in the call, or one the run's user may not act on: of those only the id and the reason are told.
+     */
+    proposal_name: string;
+    status: BulkStepDecisionResultStatusEnum;
+    /**
+     * What deciding it did, or why it was refused.
+     */
+    detail: string;
+    proposal_state: string;
+    /**
+     * Where the proposal stands now.
+     */
+    current_step_name: string;
+};
+
+export type BulkStepDecisionResultStatusEnum = 'decided' | 'refused';
+
+export type BulkStepDecisionStateEnum = 'pending' | 'running' | 'done' | 'failed';
+
+export type BulkStepDecisionSummary = {
+    /**
+     * Null for a preview decided within the request: nothing is recorded.
+     */
+    uuid: string | null;
+    /**
+     * A preview: nothing is decided, each result tells what would be.
+     */
+    dry_run: boolean;
+    state: BulkStepDecisionStateEnum;
+    call_uuid: string;
+    call_name: string;
+    call_step_uuid: string | null;
+    step_name: string;
+    outcome: string;
+    outcome_reason: string;
+    created_by_uuid: string | null;
+    created_by_name: string | null;
+    total: number;
+    processed: number;
+    decided_count: number;
+    refused_count: number;
+    created: string | null;
+    /**
+     * When the run last recorded a proposal.
+     */
+    modified: string | null;
+    started_at: string | null;
+    completed_at: string | null;
+    error_message: string;
 };
 
 export type BulkUpdateIssueRequest = {
@@ -7281,6 +7440,24 @@ export type ComponentDailyUsageItemRequest = {
     amount: string;
 };
 
+export type ComponentDifference = {
+    component: string;
+    field: string;
+    /**
+     * The offering component's value; null when it has none.
+     */
+    offering: unknown;
+    imported: unknown;
+    /**
+     * Whether apply_components may name this difference.
+     */
+    applicable: boolean;
+    /**
+     * Why it cannot be applied, when it cannot.
+     */
+    reason: string | null;
+};
+
 export type ComponentFormulaConfig = {
     /**
      * Limit components set from the value the customer enters.
@@ -10146,6 +10323,46 @@ export type DeadLetterQueue = {
     readonly note: string;
 };
 
+export type DecidableWorkflowStep = {
+    call_step_uuid: string;
+    step_name: string;
+    allowed_outcomes: Array<string>;
+    /**
+     * The selected proposals standing on the step.
+     */
+    proposal_uuids: Array<string>;
+};
+
+export type DecidableWorkflowStepsRequestRequest = {
+    /**
+     * The selected proposals of the call.
+     */
+    proposal_uuids: Array<string>;
+};
+
+export type DecideWorkflowStepsRequest = {
+    /**
+     * UUID of the call step to decide: a decision step that is neither the allocation decision nor completed once per round.
+     */
+    call_step_uuid: string;
+    /**
+     * The outcome every proposal is decided with.
+     */
+    outcome: OutcomeEnum;
+    /**
+     * Explanation for the outcome, recorded on each proposal.
+     */
+    outcome_reason?: string;
+    /**
+     * The proposals of the call to decide the step for.
+     */
+    proposal_uuids: Array<string>;
+    /**
+     * Check every proposal as the run would, and write nothing: the result tells which would be decided and why the others would be refused.
+     */
+    dry_run?: boolean;
+};
+
 export type DeclineStepContributionRequest = {
     contribution_uuid: string;
     comment?: string;
@@ -11798,7 +12015,7 @@ export type EventMetadataResponse = {
      * Map of event group keys to lists of event type enums from EventType
      */
     event_groups: {
-        [key: string]: Array<'access_subnet_creation_succeeded' | 'access_subnet_deletion_succeeded' | 'access_subnet_update_succeeded' | 'offering_access_subnet_creation_succeeded' | 'offering_access_subnet_deletion_succeeded' | 'offering_access_subnet_update_succeeded' | 'allowed_offerings_have_been_updated' | 'admin_object_created' | 'admin_object_deleted' | 'admin_object_updated' | 'attachment_created' | 'attachment_deleted' | 'attachment_updated' | 'auth_logged_in_with_saml2' | 'auth_logged_in_with_username' | 'auth_logged_in_with_oauth' | 'auth_logged_in_with_valimo' | 'auth_logged_in_to_admin_site' | 'auth_logged_out' | 'auth_logged_out_with_saml2' | 'auth_login_failed_with_username' | 'auth_login_failed_with_oauth' | 'auth_login_failed_with_saml2' | 'auth_login_failed_with_valimo' | 'auth_login_failed_to_admin_site' | 'block_creation_of_new_resources' | 'block_modification_of_existing_resources' | 'call_document_added' | 'call_document_removed' | 'create_of_affiliate_by_staff' | 'create_of_credit_by_staff' | 'create_of_project_credit_by_staff' | 'credit_reclassified_as_paid' | 'credit_topped_up' | 'custom_notification' | 'customer_creation_succeeded' | 'customer_deletion_succeeded' | 'customer_update_succeeded' | 'customer_permission_review_created' | 'customer_permission_review_closed' | 'droplet_resize_scheduled' | 'droplet_resize_succeeded' | 'freeipa_profile_created' | 'freeipa_profile_deleted' | 'freeipa_profile_disabled' | 'freeipa_profile_enabled' | 'granted_credit_expired' | 'invoice_canceled' | 'invoice_created' | 'invoice_item_created' | 'invoice_item_deleted' | 'invoice_item_updated' | 'invoice_paid' | 'issue_creation_succeeded' | 'issue_deletion_succeeded' | 'issue_update_succeeded' | 'marketplace_offering_component_created' | 'marketplace_offering_component_deleted' | 'marketplace_offering_component_updated' | 'marketplace_offering_created' | 'marketplace_offering_deleted' | 'marketplace_offering_merge_created' | 'marketplace_offering_merge_executed' | 'marketplace_offering_merge_failed' | 'marketplace_offering_merge_undone' | 'marketplace_offering_merge_verification_failed' | 'marketplace_offering_updated' | 'marketplace_offering_options_updated' | 'marketplace_offering_resource_options_updated' | 'marketplace_offering_user_created' | 'marketplace_offering_user_updated' | 'marketplace_offering_user_deleted' | 'marketplace_offering_user_initial_password_set' | 'marketplace_offering_user_initial_password_revealed' | 'marketplace_offering_user_initial_password_cleared' | 'marketplace_offering_user_restriction_updated' | 'marketplace_provider_project_group_gid_updated' | 'marketplace_order_approved' | 'marketplace_order_completed' | 'marketplace_order_created' | 'marketplace_order_failed' | 'marketplace_order_rejected' | 'marketplace_order_terminated' | 'marketplace_order_unlinked' | 'marketplace_plan_archived' | 'marketplace_plan_component_current_price_updated' | 'marketplace_plan_component_future_price_updated' | 'marketplace_plan_component_quota_updated' | 'marketplace_plan_created' | 'marketplace_plan_updated' | 'marketplace_plan_deleted' | 'marketplace_resource_create_canceled' | 'marketplace_resource_create_failed' | 'marketplace_resource_create_requested' | 'marketplace_resource_create_succeeded' | 'marketplace_resource_downscaled' | 'marketplace_resource_erred_on_backend' | 'marketplace_resource_paused' | 'marketplace_resource_grace_period_started' | 'marketplace_resource_grace_period_ended' | 'marketplace_resource_grace_period_cancelled' | 'marketplace_resource_terminate_canceled' | 'marketplace_resource_terminate_failed' | 'marketplace_resource_terminate_requested' | 'marketplace_resource_terminate_succeeded' | 'marketplace_resource_unlinked' | 'marketplace_resource_update_canceled' | 'marketplace_resource_update_end_date_succeeded' | 'marketplace_resource_api_key_requested' | 'marketplace_resource_api_key_rotated' | 'marketplace_resource_api_key_paused' | 'marketplace_resource_api_key_resumed' | 'marketplace_resource_api_key_updated' | 'marketplace_resource_api_key_deleted' | 'marketplace_resource_api_key_failed' | 'marketplace_resource_api_key_revealed' | 'marketplace_resource_option_secret_set' | 'marketplace_resource_option_secret_revealed' | 'marketplace_resource_s3_object_downloaded' | 'marketplace_resource_s3_storage_changed' | 'marketplace_resource_update_failed' | 'marketplace_resource_update_limits_failed' | 'marketplace_resource_update_limits_succeeded' | 'marketplace_resource_spending_limits_updated' | 'marketplace_resource_plan_switched' | 'marketplace_resource_project_created' | 'marketplace_resource_project_recovered' | 'marketplace_resource_project_removed' | 'marketplace_resource_update_requested' | 'marketplace_resource_update_succeeded' | 'marketplace_resource_limit_change_request_created' | 'marketplace_resource_limit_change_request_approved' | 'marketplace_resource_limit_change_request_rejected' | 'marketplace_resource_end_date_change_request_created' | 'marketplace_resource_end_date_change_request_approved' | 'marketplace_resource_end_date_change_request_rejected' | 'marketplace_resource_end_date_change_request_canceled' | 'maintenance_announcement_cancelled' | 'maintenance_announcement_completed' | 'maintenance_announcement_created' | 'maintenance_announcement_deleted' | 'maintenance_announcement_scheduled' | 'maintenance_announcement_started' | 'maintenance_announcement_unscheduled' | 'maintenance_announcement_updated' | 'notify_external_user' | 'notify_organization_owners' | 'notify_project_team' | 'openstack_floating_ip_attached' | 'openstack_floating_ip_connected' | 'openstack_floating_ip_description_updated' | 'openstack_floating_ip_detached' | 'openstack_floating_ip_disconnected' | 'openstack_instance_security_groups_changed' | 'openstack_network_cleaned' | 'openstack_network_created' | 'openstack_network_deleted' | 'openstack_network_imported' | 'openstack_network_pulled' | 'openstack_network_updated' | 'openstack_load_balancer_created' | 'openstack_load_balancer_updated' | 'openstack_load_balancer_deleted' | 'openstack_load_balancer_security_groups_changed' | 'openstack_listener_created' | 'openstack_listener_updated' | 'openstack_listener_deleted' | 'openstack_pool_created' | 'openstack_pool_updated' | 'openstack_pool_deleted' | 'openstack_pool_member_created' | 'openstack_pool_member_updated' | 'openstack_pool_member_deleted' | 'openstack_port_cleaned' | 'openstack_port_created' | 'openstack_port_deleted' | 'openstack_port_imported' | 'openstack_port_pulled' | 'openstack_port_updated' | 'openstack_port_security_enabled' | 'openstack_port_security_disabled' | 'openstack_port_allowed_address_pairs_changed' | 'openstack_port_security_groups_changed' | 'openstack_rbac_policy_created' | 'openstack_rbac_policy_deleted' | 'openstack_router_interface_added' | 'openstack_router_interface_removed' | 'openstack_router_updated' | 'openstack_subnet_host_routes_changed' | 'openstack_security_group_cleaned' | 'openstack_security_group_created' | 'openstack_security_group_deleted' | 'openstack_security_group_imported' | 'openstack_security_group_pulled' | 'openstack_security_group_rule_cleaned' | 'openstack_security_group_rule_created' | 'openstack_security_group_rule_deleted' | 'openstack_security_group_rule_imported' | 'openstack_security_group_rule_updated' | 'openstack_security_group_rules_changed' | 'openstack_security_group_updated' | 'openstack_security_group_added_remotely' | 'openstack_security_group_removed_remotely' | 'openstack_security_group_added_locally' | 'openstack_security_group_removed_locally' | 'openstack_server_group_cleaned' | 'openstack_server_group_created' | 'openstack_server_group_deleted' | 'openstack_server_group_imported' | 'openstack_server_group_pulled' | 'openstack_subnet_cleaned' | 'openstack_subnet_created' | 'openstack_subnet_deleted' | 'openstack_subnet_imported' | 'openstack_subnet_pulled' | 'openstack_subnet_updated' | 'openstack_tenant_quota_limit_updated' | 'payment_added' | 'payment_created' | 'payment_removed' | 'policy_created' | 'policy_deleted' | 'policy_notification' | 'policy_updated' | 'project_creation_succeeded' | 'project_deletion_succeeded' | 'project_deletion_triggered' | 'project_update_request_approved' | 'project_update_request_created' | 'project_update_request_rejected' | 'project_end_date_change_request_approved' | 'project_end_date_change_request_created' | 'project_end_date_change_request_rejected' | 'project_update_succeeded' | 'project_permission_review_created' | 'project_permission_review_closed' | 'proposal_applicant_responded' | 'proposal_award_changed' | 'proposal_edited_for_applicant' | 'proposal_automatic_decision_deferred' | 'proposal_budget_overridden' | 'proposal_canceled' | 'proposal_change_request_closed' | 'proposal_changes_requested' | 'proposal_changes_submitted' | 'proposal_contribution_reopened' | 'proposal_contribution_submitted' | 'proposal_document_added' | 'proposal_created' | 'proposal_draft_carried_over' | 'proposal_document_removed' | 'proposal_decision_held' | 'proposal_decision_published' | 'proposal_decision_reopened' | 'proposal_evaluator_assigned' | 'proposal_evaluator_revoked' | 'proposal_panel_changed' | 'proposal_rejected_at_round_completion' | 'proposal_report_released' | 'proposal_run_closed' | 'proposal_run_opened' | 'proposal_step_completed' | 'proposal_step_skipped' | 'proposal_step_started' | 'proposal_step_withdrawn' | 'proposal_submitted' | 'proposal_workflow_advanced' | 'proposal_workflow_notification_sent' | 'proposal_notification_sent' | 'proposal_reviewers_notified' | 'round_closed' | 'round_decision_started' | 'round_evaluation_started' | 'round_results_adopted' | 'round_report_reopened' | 'round_report_submitted' | 'round_results_published' | 'round_step_opened' | 'round_allocated_in_submission_order' | 'round_undecided_proposals_rejected' | 'query_executed' | 'increase_of_customer_credit_due_to_affiliate_fee' | 'reduction_of_customer_credit' | 'reduction_of_customer_credit_due_to_minimal_consumption' | 'reduction_of_customer_expected_consumption' | 'reduction_of_project_credit' | 'reduction_of_project_credit_due_to_minimal_consumption' | 'reduction_of_project_expected_consumption' | 'request_downscaling' | 'request_pausing' | 'request_slurm_resource_downscaling' | 'request_slurm_resource_pausing' | 'reset_downscaling' | 'reset_member_restriction' | 'reset_pausing' | 'resource_assign_floating_ip_failed' | 'resource_assign_floating_ip_scheduled' | 'resource_assign_floating_ip_succeeded' | 'resource_attach_failed' | 'resource_attach_scheduled' | 'resource_attach_succeeded' | 'resource_backup_creation_failed' | 'resource_backup_creation_scheduled' | 'resource_backup_creation_succeeded' | 'resource_backup_deletion_failed' | 'resource_backup_deletion_scheduled' | 'resource_backup_deletion_succeeded' | 'resource_backup_restoration_failed' | 'resource_backup_restoration_scheduled' | 'resource_backup_restoration_succeeded' | 'resource_change_flavor_failed' | 'resource_change_flavor_scheduled' | 'resource_change_flavor_succeeded' | 'resource_creation_failed' | 'resource_creation_scheduled' | 'resource_creation_succeeded' | 'resource_deletion_failed' | 'resource_deletion_scheduled' | 'resource_deletion_succeeded' | 'resource_detach_failed' | 'resource_detach_scheduled' | 'resource_detach_succeeded' | 'resource_extend_failed' | 'resource_extend_scheduled' | 'resource_extend_succeeded' | 'resource_extend_volume_failed' | 'resource_extend_volume_scheduled' | 'resource_extend_volume_succeeded' | 'resource_hard_reboot_failed' | 'resource_hard_reboot_scheduled' | 'resource_hard_reboot_succeeded' | 'resource_import_succeeded' | 'resource_pull_failed' | 'resource_pull_scheduled' | 'resource_pull_succeeded' | 'resource_rescue_failed' | 'resource_rescue_scheduled' | 'resource_rescue_succeeded' | 'resource_restart_failed' | 'resource_restart_scheduled' | 'resource_restart_succeeded' | 'resource_retype_failed' | 'resource_retype_scheduled' | 'resource_retype_succeeded' | 'resource_robot_account_created' | 'resource_robot_account_deleted' | 'resource_robot_account_state_changed' | 'resource_robot_account_updated' | 'resource_start_failed' | 'resource_start_scheduled' | 'resource_start_succeeded' | 'resource_stop_failed' | 'resource_stop_scheduled' | 'resource_stop_succeeded' | 'resource_unassign_floating_ip_failed' | 'resource_unassign_floating_ip_scheduled' | 'resource_unassign_floating_ip_succeeded' | 'resource_unrescue_failed' | 'resource_unrescue_scheduled' | 'resource_unrescue_succeeded' | 'resource_update_allowed_address_pairs_failed' | 'resource_update_allowed_address_pairs_scheduled' | 'resource_update_allowed_address_pairs_succeeded' | 'resource_update_floating_ips_failed' | 'resource_update_floating_ips_scheduled' | 'resource_update_floating_ips_succeeded' | 'resource_update_metadata_failed' | 'resource_update_metadata_scheduled' | 'resource_update_metadata_succeeded' | 'resource_update_ports_failed' | 'resource_update_ports_scheduled' | 'resource_update_ports_succeeded' | 'resource_update_security_groups_failed' | 'resource_update_security_groups_scheduled' | 'resource_update_security_groups_succeeded' | 'resource_update_succeeded' | 'restrict_members' | 'review_accepted' | 'review_assigned' | 'review_canceled' | 'review_declined' | 'review_rejected' | 'review_submitted' | 'reviewer_workload_limit_overridden' | 'reviewer_invitation_force_accepted' | 'review_assignment_force_unblocked' | 'review_assignments_closed_on_leaving_pool' | 'reviewer_standing_changed' | 'reviewer_publication_requested' | 'reviewer_publication_approved' | 'reviewer_publication_rejected' | 'role_cloned' | 'role_concealed' | 'role_definition_created' | 'role_definition_deleted' | 'role_definition_updated' | 'role_disabled' | 'role_enabled' | 'role_granted' | 'role_revealed' | 'role_revoked' | 'role_updated' | 'roll_back_customer_credit' | 'roll_back_project_credit' | 'service_account_created' | 'service_account_deleted' | 'service_account_updated' | 'set_to_zero_overdue_credit' | 'slurm_policy_evaluation' | 'ssh_key_creation_succeeded' | 'ssh_key_deletion_succeeded' | 'terminate_resources' | 'token_created' | 'token_lifetime_updated' | 'token_viewed' | 'update_of_affiliate_by_staff' | 'update_of_credit_by_staff' | 'update_of_project_credit_by_staff' | 'automatic_credit_adjustment' | 'user_activated' | 'user_blocked' | 'user_creation_succeeded' | 'user_data_accessed' | 'user_deactivated' | 'user_deactivated_no_roles' | 'user_deletion_succeeded' | 'user_details_update_succeeded' | 'user_has_been_created_by_staff' | 'user_password_updated' | 'user_password_updated_by_staff' | 'user_password_removed_by_staff' | 'matrix_password_generated' | 'matrix_recovery_key_escrowed' | 'matrix_recovery_key_viewed' | 'matrix_encryption_reset_started' | 'user_update_succeeded' | 'user_group_invitation_updated' | 'user_invitation_updated' | 'user_invitation_deleted' | 'terms_of_service_consent_granted' | 'terms_of_service_consent_revoked' | 'terms_of_service_replaced' | 'user_terms_of_service_accepted' | 'chat_session_accessed' | 'chat_thread_accessed' | 'chat_injection_detected' | 'chat_pii_detected' | 'chat_feedback_submitted' | 'mcp_tool_called' | 'feedback_survey_answered' | 'onboarding_verification_deleted' | 'onboarding_verification_deleted_by_task' | 'pat_created' | 'feature_rule_created' | 'feature_rule_updated' | 'feature_rule_deleted' | 'micro_app_setting_updated' | 'pat_revoked' | 'pat_rotated' | 'pat_expired' | 'pat_used_from_new_ip' | 'pat_access_denied_from_ip' | 'pat_network_acl_updated' | 'dedicated_user_created' | 'service_account_signed_in' | 'pat_authentication_rejected' | 'oauth_consent_granted' | 'oauth_consent_denied' | 'oauth_connected_app_revoked' | 'oidc_token_revoked' | 'oidc_token_refresh_failed' | 'passkey_registered' | 'passkey_renamed' | 'passkey_revoked' | 'passkey_revoked_by_staff' | 'passkey_authentication_succeeded' | 'passkey_authentication_failed' | 'reauthentication_granted' | 'reauthentication_failed' | 'reauthentication_refused' | 'reauthentication_grant_used' | 'reauthentication_waived' | 'event_consumer_registered_with_broad_credential' | 'event_consumer_webhook_updated' | 'event_consumer_resync_requested'>;
+        [key: string]: Array<'access_subnet_creation_succeeded' | 'access_subnet_deletion_succeeded' | 'access_subnet_update_succeeded' | 'offering_access_subnet_creation_succeeded' | 'offering_access_subnet_deletion_succeeded' | 'offering_access_subnet_update_succeeded' | 'allowed_offerings_have_been_updated' | 'admin_object_created' | 'admin_object_deleted' | 'admin_object_updated' | 'attachment_created' | 'attachment_deleted' | 'attachment_updated' | 'auth_logged_in_with_saml2' | 'auth_logged_in_with_username' | 'auth_logged_in_with_oauth' | 'auth_logged_in_with_valimo' | 'auth_logged_in_to_admin_site' | 'auth_logged_out' | 'auth_logged_out_with_saml2' | 'auth_login_failed_with_username' | 'auth_login_failed_with_oauth' | 'auth_login_failed_with_saml2' | 'auth_login_failed_with_valimo' | 'auth_login_failed_to_admin_site' | 'block_creation_of_new_resources' | 'block_modification_of_existing_resources' | 'call_document_added' | 'call_document_removed' | 'create_of_affiliate_by_staff' | 'create_of_credit_by_staff' | 'create_of_project_credit_by_staff' | 'credit_reclassified_as_paid' | 'credit_topped_up' | 'custom_notification' | 'customer_creation_succeeded' | 'customer_deletion_succeeded' | 'customer_update_succeeded' | 'customer_permission_review_created' | 'customer_permission_review_closed' | 'droplet_resize_scheduled' | 'droplet_resize_succeeded' | 'freeipa_profile_created' | 'freeipa_profile_deleted' | 'freeipa_profile_disabled' | 'freeipa_profile_enabled' | 'granted_credit_expired' | 'invoice_canceled' | 'invoice_created' | 'invoice_item_created' | 'invoice_item_deleted' | 'invoice_item_updated' | 'invoice_paid' | 'issue_creation_succeeded' | 'issue_deletion_succeeded' | 'issue_update_succeeded' | 'marketplace_offering_component_created' | 'marketplace_offering_component_deleted' | 'marketplace_offering_component_updated' | 'marketplace_offering_created' | 'marketplace_offering_deleted' | 'marketplace_offering_merge_created' | 'marketplace_offering_merge_executed' | 'marketplace_offering_merge_failed' | 'marketplace_offering_merge_undone' | 'marketplace_offering_merge_verification_failed' | 'marketplace_offering_updated' | 'marketplace_offering_options_updated' | 'marketplace_offering_resource_options_updated' | 'marketplace_offering_user_created' | 'marketplace_offering_user_updated' | 'marketplace_offering_user_deleted' | 'marketplace_offering_user_initial_password_set' | 'marketplace_offering_user_initial_password_revealed' | 'marketplace_offering_user_initial_password_cleared' | 'marketplace_offering_user_restriction_updated' | 'marketplace_provider_project_group_gid_updated' | 'marketplace_order_approved' | 'marketplace_order_completed' | 'marketplace_order_created' | 'marketplace_order_failed' | 'marketplace_order_rejected' | 'marketplace_order_terminated' | 'marketplace_order_unlinked' | 'marketplace_plan_archived' | 'marketplace_plan_component_current_price_updated' | 'marketplace_plan_component_future_price_updated' | 'marketplace_plan_component_quota_updated' | 'marketplace_plan_created' | 'marketplace_plan_updated' | 'marketplace_plan_deleted' | 'marketplace_resource_create_canceled' | 'marketplace_resource_create_failed' | 'marketplace_resource_create_requested' | 'marketplace_resource_create_succeeded' | 'marketplace_resource_downscaled' | 'marketplace_resource_erred_on_backend' | 'marketplace_resource_paused' | 'marketplace_resource_grace_period_started' | 'marketplace_resource_grace_period_ended' | 'marketplace_resource_grace_period_cancelled' | 'marketplace_resource_terminate_canceled' | 'marketplace_resource_terminate_failed' | 'marketplace_resource_terminate_requested' | 'marketplace_resource_terminate_succeeded' | 'marketplace_resource_unlinked' | 'marketplace_resource_update_canceled' | 'marketplace_resource_update_end_date_succeeded' | 'marketplace_resource_api_key_requested' | 'marketplace_resource_api_key_rotated' | 'marketplace_resource_api_key_paused' | 'marketplace_resource_api_key_resumed' | 'marketplace_resource_api_key_updated' | 'marketplace_resource_api_key_deleted' | 'marketplace_resource_api_key_failed' | 'marketplace_resource_api_key_revealed' | 'marketplace_resource_option_secret_set' | 'marketplace_resource_option_secret_revealed' | 'marketplace_resource_s3_object_downloaded' | 'marketplace_resource_s3_storage_changed' | 'marketplace_resource_update_failed' | 'marketplace_resource_update_limits_failed' | 'marketplace_resource_update_limits_succeeded' | 'marketplace_resource_spending_limits_updated' | 'marketplace_resource_plan_switched' | 'marketplace_resource_project_created' | 'marketplace_resource_project_recovered' | 'marketplace_resource_project_removed' | 'marketplace_resource_update_requested' | 'marketplace_resource_update_succeeded' | 'marketplace_resource_limit_change_request_created' | 'marketplace_resource_limit_change_request_approved' | 'marketplace_resource_limit_change_request_rejected' | 'marketplace_resource_end_date_change_request_created' | 'marketplace_resource_end_date_change_request_approved' | 'marketplace_resource_end_date_change_request_rejected' | 'marketplace_resource_end_date_change_request_canceled' | 'maintenance_announcement_cancelled' | 'maintenance_announcement_completed' | 'maintenance_announcement_created' | 'maintenance_announcement_deleted' | 'maintenance_announcement_scheduled' | 'maintenance_announcement_started' | 'maintenance_announcement_unscheduled' | 'maintenance_announcement_updated' | 'notify_external_user' | 'notify_organization_owners' | 'notify_project_team' | 'openstack_floating_ip_attached' | 'openstack_floating_ip_connected' | 'openstack_floating_ip_description_updated' | 'openstack_floating_ip_detached' | 'openstack_floating_ip_disconnected' | 'openstack_instance_security_groups_changed' | 'openstack_network_cleaned' | 'openstack_network_created' | 'openstack_network_deleted' | 'openstack_network_imported' | 'openstack_network_pulled' | 'openstack_network_updated' | 'openstack_load_balancer_created' | 'openstack_load_balancer_updated' | 'openstack_load_balancer_deleted' | 'openstack_load_balancer_security_groups_changed' | 'openstack_listener_created' | 'openstack_listener_updated' | 'openstack_listener_deleted' | 'openstack_pool_created' | 'openstack_pool_updated' | 'openstack_pool_deleted' | 'openstack_pool_member_created' | 'openstack_pool_member_updated' | 'openstack_pool_member_deleted' | 'openstack_port_cleaned' | 'openstack_port_created' | 'openstack_port_deleted' | 'openstack_port_imported' | 'openstack_port_pulled' | 'openstack_port_updated' | 'openstack_port_security_enabled' | 'openstack_port_security_disabled' | 'openstack_port_allowed_address_pairs_changed' | 'openstack_port_security_groups_changed' | 'openstack_rbac_policy_created' | 'openstack_rbac_policy_deleted' | 'openstack_router_interface_added' | 'openstack_router_interface_removed' | 'openstack_router_updated' | 'openstack_subnet_host_routes_changed' | 'openstack_security_group_cleaned' | 'openstack_security_group_created' | 'openstack_security_group_deleted' | 'openstack_security_group_imported' | 'openstack_security_group_pulled' | 'openstack_security_group_rule_cleaned' | 'openstack_security_group_rule_created' | 'openstack_security_group_rule_deleted' | 'openstack_security_group_rule_imported' | 'openstack_security_group_rule_updated' | 'openstack_security_group_rules_changed' | 'openstack_security_group_updated' | 'openstack_security_group_added_remotely' | 'openstack_security_group_removed_remotely' | 'openstack_security_group_added_locally' | 'openstack_security_group_removed_locally' | 'openstack_server_group_cleaned' | 'openstack_server_group_created' | 'openstack_server_group_deleted' | 'openstack_server_group_imported' | 'openstack_server_group_pulled' | 'openstack_subnet_cleaned' | 'openstack_subnet_created' | 'openstack_subnet_deleted' | 'openstack_subnet_imported' | 'openstack_subnet_pulled' | 'openstack_subnet_updated' | 'openstack_tenant_quota_limit_updated' | 'payment_added' | 'payment_created' | 'payment_removed' | 'policy_created' | 'policy_deleted' | 'policy_notification' | 'policy_updated' | 'project_creation_succeeded' | 'project_deletion_succeeded' | 'project_deletion_triggered' | 'project_update_request_approved' | 'project_update_request_created' | 'project_update_request_rejected' | 'project_end_date_change_request_approved' | 'project_end_date_change_request_created' | 'project_end_date_change_request_rejected' | 'project_update_succeeded' | 'project_permission_review_created' | 'project_permission_review_closed' | 'proposal_applicant_responded' | 'proposal_award_changed' | 'proposal_edited_for_applicant' | 'proposal_automatic_decision_deferred' | 'proposal_budget_overridden' | 'proposal_canceled' | 'proposal_change_request_closed' | 'proposal_changes_requested' | 'proposal_changes_submitted' | 'proposal_contribution_reopened' | 'proposal_contribution_submitted' | 'proposal_document_added' | 'proposal_created' | 'proposal_draft_carried_over' | 'proposal_document_removed' | 'proposal_decision_held' | 'proposal_decision_published' | 'proposal_decision_reopened' | 'proposal_evaluator_assigned' | 'proposal_evaluator_revoked' | 'proposal_panel_changed' | 'proposal_rejected_at_round_completion' | 'proposal_report_released' | 'proposal_run_closed' | 'proposal_run_opened' | 'proposal_step_completed' | 'proposal_step_skipped' | 'proposal_step_started' | 'proposal_step_withdrawn' | 'proposal_steps_decided_in_bulk' | 'proposal_submitted' | 'proposal_workflow_advanced' | 'proposal_workflow_notification_sent' | 'proposal_notification_sent' | 'proposal_reviewers_notified' | 'round_closed' | 'round_decision_started' | 'round_evaluation_started' | 'round_results_adopted' | 'round_report_reopened' | 'round_report_submitted' | 'round_results_published' | 'round_step_opened' | 'round_allocated_in_submission_order' | 'round_undecided_proposals_rejected' | 'query_executed' | 'increase_of_customer_credit_due_to_affiliate_fee' | 'reduction_of_customer_credit' | 'reduction_of_customer_credit_due_to_minimal_consumption' | 'reduction_of_customer_expected_consumption' | 'reduction_of_project_credit' | 'reduction_of_project_credit_due_to_minimal_consumption' | 'reduction_of_project_expected_consumption' | 'request_downscaling' | 'request_pausing' | 'request_slurm_resource_downscaling' | 'request_slurm_resource_pausing' | 'reset_downscaling' | 'reset_member_restriction' | 'reset_pausing' | 'resource_assign_floating_ip_failed' | 'resource_assign_floating_ip_scheduled' | 'resource_assign_floating_ip_succeeded' | 'resource_attach_failed' | 'resource_attach_scheduled' | 'resource_attach_succeeded' | 'resource_backup_creation_failed' | 'resource_backup_creation_scheduled' | 'resource_backup_creation_succeeded' | 'resource_backup_deletion_failed' | 'resource_backup_deletion_scheduled' | 'resource_backup_deletion_succeeded' | 'resource_backup_restoration_failed' | 'resource_backup_restoration_scheduled' | 'resource_backup_restoration_succeeded' | 'resource_change_flavor_failed' | 'resource_change_flavor_scheduled' | 'resource_change_flavor_succeeded' | 'resource_creation_failed' | 'resource_creation_scheduled' | 'resource_creation_succeeded' | 'resource_deletion_failed' | 'resource_deletion_scheduled' | 'resource_deletion_succeeded' | 'resource_detach_failed' | 'resource_detach_scheduled' | 'resource_detach_succeeded' | 'resource_extend_failed' | 'resource_extend_scheduled' | 'resource_extend_succeeded' | 'resource_extend_volume_failed' | 'resource_extend_volume_scheduled' | 'resource_extend_volume_succeeded' | 'resource_hard_reboot_failed' | 'resource_hard_reboot_scheduled' | 'resource_hard_reboot_succeeded' | 'resource_import_succeeded' | 'resource_pull_failed' | 'resource_pull_scheduled' | 'resource_pull_succeeded' | 'resource_rescue_failed' | 'resource_rescue_scheduled' | 'resource_rescue_succeeded' | 'resource_restart_failed' | 'resource_restart_scheduled' | 'resource_restart_succeeded' | 'resource_retype_failed' | 'resource_retype_scheduled' | 'resource_retype_succeeded' | 'resource_robot_account_created' | 'resource_robot_account_deleted' | 'resource_robot_account_state_changed' | 'resource_robot_account_updated' | 'resource_start_failed' | 'resource_start_scheduled' | 'resource_start_succeeded' | 'resource_stop_failed' | 'resource_stop_scheduled' | 'resource_stop_succeeded' | 'resource_unassign_floating_ip_failed' | 'resource_unassign_floating_ip_scheduled' | 'resource_unassign_floating_ip_succeeded' | 'resource_unrescue_failed' | 'resource_unrescue_scheduled' | 'resource_unrescue_succeeded' | 'resource_update_allowed_address_pairs_failed' | 'resource_update_allowed_address_pairs_scheduled' | 'resource_update_allowed_address_pairs_succeeded' | 'resource_update_floating_ips_failed' | 'resource_update_floating_ips_scheduled' | 'resource_update_floating_ips_succeeded' | 'resource_update_metadata_failed' | 'resource_update_metadata_scheduled' | 'resource_update_metadata_succeeded' | 'resource_update_ports_failed' | 'resource_update_ports_scheduled' | 'resource_update_ports_succeeded' | 'resource_update_security_groups_failed' | 'resource_update_security_groups_scheduled' | 'resource_update_security_groups_succeeded' | 'resource_update_succeeded' | 'restrict_members' | 'review_accepted' | 'review_assigned' | 'review_canceled' | 'review_declined' | 'review_rejected' | 'review_submitted' | 'reviewer_workload_limit_overridden' | 'reviewer_invitation_force_accepted' | 'review_assignment_force_unblocked' | 'review_assignments_closed_on_leaving_pool' | 'reviewer_standing_changed' | 'reviewer_publication_requested' | 'reviewer_publication_approved' | 'reviewer_publication_rejected' | 'role_cloned' | 'role_concealed' | 'role_definition_created' | 'role_definition_deleted' | 'role_definition_updated' | 'role_disabled' | 'role_enabled' | 'role_granted' | 'role_revealed' | 'role_revoked' | 'role_updated' | 'roll_back_customer_credit' | 'roll_back_project_credit' | 'service_account_created' | 'service_account_deleted' | 'service_account_updated' | 'set_to_zero_overdue_credit' | 'slurm_policy_evaluation' | 'ssh_key_creation_succeeded' | 'ssh_key_deletion_succeeded' | 'terminate_resources' | 'token_created' | 'token_lifetime_updated' | 'token_viewed' | 'update_of_affiliate_by_staff' | 'update_of_credit_by_staff' | 'update_of_project_credit_by_staff' | 'automatic_credit_adjustment' | 'user_activated' | 'user_blocked' | 'user_creation_succeeded' | 'user_data_accessed' | 'user_deactivated' | 'user_deactivated_no_roles' | 'user_deletion_succeeded' | 'user_details_update_succeeded' | 'user_has_been_created_by_staff' | 'user_password_updated' | 'user_password_updated_by_staff' | 'user_password_removed_by_staff' | 'matrix_password_generated' | 'matrix_recovery_key_escrowed' | 'matrix_recovery_key_viewed' | 'matrix_encryption_reset_started' | 'user_update_succeeded' | 'user_group_invitation_updated' | 'user_invitation_updated' | 'user_invitation_deleted' | 'terms_of_service_consent_granted' | 'terms_of_service_consent_revoked' | 'terms_of_service_replaced' | 'user_terms_of_service_accepted' | 'chat_session_accessed' | 'chat_thread_accessed' | 'chat_injection_detected' | 'chat_pii_detected' | 'chat_feedback_submitted' | 'mcp_tool_called' | 'feedback_survey_answered' | 'onboarding_verification_deleted' | 'onboarding_verification_deleted_by_task' | 'pat_created' | 'feature_rule_created' | 'feature_rule_updated' | 'feature_rule_deleted' | 'micro_app_setting_updated' | 'pat_revoked' | 'pat_rotated' | 'pat_expired' | 'pat_used_from_new_ip' | 'pat_access_denied_from_ip' | 'pat_network_acl_updated' | 'dedicated_user_created' | 'service_account_signed_in' | 'pat_authentication_rejected' | 'oauth_consent_granted' | 'oauth_consent_denied' | 'oauth_connected_app_revoked' | 'oidc_token_revoked' | 'oidc_token_refresh_failed' | 'passkey_registered' | 'passkey_renamed' | 'passkey_revoked' | 'passkey_revoked_by_staff' | 'passkey_authentication_succeeded' | 'passkey_authentication_failed' | 'reauthentication_granted' | 'reauthentication_failed' | 'reauthentication_refused' | 'reauthentication_grant_used' | 'reauthentication_waived' | 'event_consumer_registered_with_broad_credential' | 'event_consumer_webhook_updated' | 'event_consumer_resync_requested'>;
     };
 };
 
@@ -11917,7 +12134,7 @@ export type EventSubscriptionRequest = {
     observable_objects?: Array<EventSubscriptionObservableObjectRequest>;
 };
 
-export type EventTypesEnum = 'access_subnet_creation_succeeded' | 'access_subnet_deletion_succeeded' | 'access_subnet_update_succeeded' | 'offering_access_subnet_creation_succeeded' | 'offering_access_subnet_deletion_succeeded' | 'offering_access_subnet_update_succeeded' | 'allowed_offerings_have_been_updated' | 'admin_object_created' | 'admin_object_deleted' | 'admin_object_updated' | 'attachment_created' | 'attachment_deleted' | 'attachment_updated' | 'auth_logged_in_with_saml2' | 'auth_logged_in_with_username' | 'auth_logged_in_with_oauth' | 'auth_logged_in_with_valimo' | 'auth_logged_in_to_admin_site' | 'auth_logged_out' | 'auth_logged_out_with_saml2' | 'auth_login_failed_with_username' | 'auth_login_failed_with_oauth' | 'auth_login_failed_with_saml2' | 'auth_login_failed_with_valimo' | 'auth_login_failed_to_admin_site' | 'block_creation_of_new_resources' | 'block_modification_of_existing_resources' | 'call_document_added' | 'call_document_removed' | 'create_of_affiliate_by_staff' | 'create_of_credit_by_staff' | 'create_of_project_credit_by_staff' | 'credit_reclassified_as_paid' | 'credit_topped_up' | 'custom_notification' | 'customer_creation_succeeded' | 'customer_deletion_succeeded' | 'customer_update_succeeded' | 'customer_permission_review_created' | 'customer_permission_review_closed' | 'droplet_resize_scheduled' | 'droplet_resize_succeeded' | 'freeipa_profile_created' | 'freeipa_profile_deleted' | 'freeipa_profile_disabled' | 'freeipa_profile_enabled' | 'granted_credit_expired' | 'invoice_canceled' | 'invoice_created' | 'invoice_item_created' | 'invoice_item_deleted' | 'invoice_item_updated' | 'invoice_paid' | 'issue_creation_succeeded' | 'issue_deletion_succeeded' | 'issue_update_succeeded' | 'marketplace_offering_component_created' | 'marketplace_offering_component_deleted' | 'marketplace_offering_component_updated' | 'marketplace_offering_created' | 'marketplace_offering_deleted' | 'marketplace_offering_merge_created' | 'marketplace_offering_merge_executed' | 'marketplace_offering_merge_failed' | 'marketplace_offering_merge_undone' | 'marketplace_offering_merge_verification_failed' | 'marketplace_offering_updated' | 'marketplace_offering_options_updated' | 'marketplace_offering_resource_options_updated' | 'marketplace_offering_user_created' | 'marketplace_offering_user_updated' | 'marketplace_offering_user_deleted' | 'marketplace_offering_user_initial_password_set' | 'marketplace_offering_user_initial_password_revealed' | 'marketplace_offering_user_initial_password_cleared' | 'marketplace_offering_user_restriction_updated' | 'marketplace_provider_project_group_gid_updated' | 'marketplace_order_approved' | 'marketplace_order_completed' | 'marketplace_order_created' | 'marketplace_order_failed' | 'marketplace_order_rejected' | 'marketplace_order_terminated' | 'marketplace_order_unlinked' | 'marketplace_plan_archived' | 'marketplace_plan_component_current_price_updated' | 'marketplace_plan_component_future_price_updated' | 'marketplace_plan_component_quota_updated' | 'marketplace_plan_created' | 'marketplace_plan_updated' | 'marketplace_plan_deleted' | 'marketplace_resource_create_canceled' | 'marketplace_resource_create_failed' | 'marketplace_resource_create_requested' | 'marketplace_resource_create_succeeded' | 'marketplace_resource_downscaled' | 'marketplace_resource_erred_on_backend' | 'marketplace_resource_paused' | 'marketplace_resource_grace_period_started' | 'marketplace_resource_grace_period_ended' | 'marketplace_resource_grace_period_cancelled' | 'marketplace_resource_terminate_canceled' | 'marketplace_resource_terminate_failed' | 'marketplace_resource_terminate_requested' | 'marketplace_resource_terminate_succeeded' | 'marketplace_resource_unlinked' | 'marketplace_resource_update_canceled' | 'marketplace_resource_update_end_date_succeeded' | 'marketplace_resource_api_key_requested' | 'marketplace_resource_api_key_rotated' | 'marketplace_resource_api_key_paused' | 'marketplace_resource_api_key_resumed' | 'marketplace_resource_api_key_updated' | 'marketplace_resource_api_key_deleted' | 'marketplace_resource_api_key_failed' | 'marketplace_resource_api_key_revealed' | 'marketplace_resource_option_secret_set' | 'marketplace_resource_option_secret_revealed' | 'marketplace_resource_s3_object_downloaded' | 'marketplace_resource_s3_storage_changed' | 'marketplace_resource_update_failed' | 'marketplace_resource_update_limits_failed' | 'marketplace_resource_update_limits_succeeded' | 'marketplace_resource_spending_limits_updated' | 'marketplace_resource_plan_switched' | 'marketplace_resource_project_created' | 'marketplace_resource_project_recovered' | 'marketplace_resource_project_removed' | 'marketplace_resource_update_requested' | 'marketplace_resource_update_succeeded' | 'marketplace_resource_limit_change_request_created' | 'marketplace_resource_limit_change_request_approved' | 'marketplace_resource_limit_change_request_rejected' | 'marketplace_resource_end_date_change_request_created' | 'marketplace_resource_end_date_change_request_approved' | 'marketplace_resource_end_date_change_request_rejected' | 'marketplace_resource_end_date_change_request_canceled' | 'maintenance_announcement_cancelled' | 'maintenance_announcement_completed' | 'maintenance_announcement_created' | 'maintenance_announcement_deleted' | 'maintenance_announcement_scheduled' | 'maintenance_announcement_started' | 'maintenance_announcement_unscheduled' | 'maintenance_announcement_updated' | 'notify_external_user' | 'notify_organization_owners' | 'notify_project_team' | 'openstack_floating_ip_attached' | 'openstack_floating_ip_connected' | 'openstack_floating_ip_description_updated' | 'openstack_floating_ip_detached' | 'openstack_floating_ip_disconnected' | 'openstack_instance_security_groups_changed' | 'openstack_network_cleaned' | 'openstack_network_created' | 'openstack_network_deleted' | 'openstack_network_imported' | 'openstack_network_pulled' | 'openstack_network_updated' | 'openstack_load_balancer_created' | 'openstack_load_balancer_updated' | 'openstack_load_balancer_deleted' | 'openstack_load_balancer_security_groups_changed' | 'openstack_listener_created' | 'openstack_listener_updated' | 'openstack_listener_deleted' | 'openstack_pool_created' | 'openstack_pool_updated' | 'openstack_pool_deleted' | 'openstack_pool_member_created' | 'openstack_pool_member_updated' | 'openstack_pool_member_deleted' | 'openstack_port_cleaned' | 'openstack_port_created' | 'openstack_port_deleted' | 'openstack_port_imported' | 'openstack_port_pulled' | 'openstack_port_updated' | 'openstack_port_security_enabled' | 'openstack_port_security_disabled' | 'openstack_port_allowed_address_pairs_changed' | 'openstack_port_security_groups_changed' | 'openstack_rbac_policy_created' | 'openstack_rbac_policy_deleted' | 'openstack_router_interface_added' | 'openstack_router_interface_removed' | 'openstack_router_updated' | 'openstack_subnet_host_routes_changed' | 'openstack_security_group_cleaned' | 'openstack_security_group_created' | 'openstack_security_group_deleted' | 'openstack_security_group_imported' | 'openstack_security_group_pulled' | 'openstack_security_group_rule_cleaned' | 'openstack_security_group_rule_created' | 'openstack_security_group_rule_deleted' | 'openstack_security_group_rule_imported' | 'openstack_security_group_rule_updated' | 'openstack_security_group_rules_changed' | 'openstack_security_group_updated' | 'openstack_security_group_added_remotely' | 'openstack_security_group_removed_remotely' | 'openstack_security_group_added_locally' | 'openstack_security_group_removed_locally' | 'openstack_server_group_cleaned' | 'openstack_server_group_created' | 'openstack_server_group_deleted' | 'openstack_server_group_imported' | 'openstack_server_group_pulled' | 'openstack_subnet_cleaned' | 'openstack_subnet_created' | 'openstack_subnet_deleted' | 'openstack_subnet_imported' | 'openstack_subnet_pulled' | 'openstack_subnet_updated' | 'openstack_tenant_quota_limit_updated' | 'payment_added' | 'payment_created' | 'payment_removed' | 'policy_created' | 'policy_deleted' | 'policy_notification' | 'policy_updated' | 'project_creation_succeeded' | 'project_deletion_succeeded' | 'project_deletion_triggered' | 'project_update_request_approved' | 'project_update_request_created' | 'project_update_request_rejected' | 'project_end_date_change_request_approved' | 'project_end_date_change_request_created' | 'project_end_date_change_request_rejected' | 'project_update_succeeded' | 'project_permission_review_created' | 'project_permission_review_closed' | 'proposal_applicant_responded' | 'proposal_award_changed' | 'proposal_edited_for_applicant' | 'proposal_automatic_decision_deferred' | 'proposal_budget_overridden' | 'proposal_canceled' | 'proposal_change_request_closed' | 'proposal_changes_requested' | 'proposal_changes_submitted' | 'proposal_contribution_reopened' | 'proposal_contribution_submitted' | 'proposal_document_added' | 'proposal_created' | 'proposal_draft_carried_over' | 'proposal_document_removed' | 'proposal_decision_held' | 'proposal_decision_published' | 'proposal_decision_reopened' | 'proposal_evaluator_assigned' | 'proposal_evaluator_revoked' | 'proposal_panel_changed' | 'proposal_rejected_at_round_completion' | 'proposal_report_released' | 'proposal_run_closed' | 'proposal_run_opened' | 'proposal_step_completed' | 'proposal_step_skipped' | 'proposal_step_started' | 'proposal_step_withdrawn' | 'proposal_submitted' | 'proposal_workflow_advanced' | 'proposal_workflow_notification_sent' | 'proposal_notification_sent' | 'proposal_reviewers_notified' | 'round_closed' | 'round_decision_started' | 'round_evaluation_started' | 'round_results_adopted' | 'round_report_reopened' | 'round_report_submitted' | 'round_results_published' | 'round_step_opened' | 'round_allocated_in_submission_order' | 'round_undecided_proposals_rejected' | 'query_executed' | 'increase_of_customer_credit_due_to_affiliate_fee' | 'reduction_of_customer_credit' | 'reduction_of_customer_credit_due_to_minimal_consumption' | 'reduction_of_customer_expected_consumption' | 'reduction_of_project_credit' | 'reduction_of_project_credit_due_to_minimal_consumption' | 'reduction_of_project_expected_consumption' | 'request_downscaling' | 'request_pausing' | 'request_slurm_resource_downscaling' | 'request_slurm_resource_pausing' | 'reset_downscaling' | 'reset_member_restriction' | 'reset_pausing' | 'resource_assign_floating_ip_failed' | 'resource_assign_floating_ip_scheduled' | 'resource_assign_floating_ip_succeeded' | 'resource_attach_failed' | 'resource_attach_scheduled' | 'resource_attach_succeeded' | 'resource_backup_creation_failed' | 'resource_backup_creation_scheduled' | 'resource_backup_creation_succeeded' | 'resource_backup_deletion_failed' | 'resource_backup_deletion_scheduled' | 'resource_backup_deletion_succeeded' | 'resource_backup_restoration_failed' | 'resource_backup_restoration_scheduled' | 'resource_backup_restoration_succeeded' | 'resource_change_flavor_failed' | 'resource_change_flavor_scheduled' | 'resource_change_flavor_succeeded' | 'resource_creation_failed' | 'resource_creation_scheduled' | 'resource_creation_succeeded' | 'resource_deletion_failed' | 'resource_deletion_scheduled' | 'resource_deletion_succeeded' | 'resource_detach_failed' | 'resource_detach_scheduled' | 'resource_detach_succeeded' | 'resource_extend_failed' | 'resource_extend_scheduled' | 'resource_extend_succeeded' | 'resource_extend_volume_failed' | 'resource_extend_volume_scheduled' | 'resource_extend_volume_succeeded' | 'resource_hard_reboot_failed' | 'resource_hard_reboot_scheduled' | 'resource_hard_reboot_succeeded' | 'resource_import_succeeded' | 'resource_pull_failed' | 'resource_pull_scheduled' | 'resource_pull_succeeded' | 'resource_rescue_failed' | 'resource_rescue_scheduled' | 'resource_rescue_succeeded' | 'resource_restart_failed' | 'resource_restart_scheduled' | 'resource_restart_succeeded' | 'resource_retype_failed' | 'resource_retype_scheduled' | 'resource_retype_succeeded' | 'resource_robot_account_created' | 'resource_robot_account_deleted' | 'resource_robot_account_state_changed' | 'resource_robot_account_updated' | 'resource_start_failed' | 'resource_start_scheduled' | 'resource_start_succeeded' | 'resource_stop_failed' | 'resource_stop_scheduled' | 'resource_stop_succeeded' | 'resource_unassign_floating_ip_failed' | 'resource_unassign_floating_ip_scheduled' | 'resource_unassign_floating_ip_succeeded' | 'resource_unrescue_failed' | 'resource_unrescue_scheduled' | 'resource_unrescue_succeeded' | 'resource_update_allowed_address_pairs_failed' | 'resource_update_allowed_address_pairs_scheduled' | 'resource_update_allowed_address_pairs_succeeded' | 'resource_update_floating_ips_failed' | 'resource_update_floating_ips_scheduled' | 'resource_update_floating_ips_succeeded' | 'resource_update_metadata_failed' | 'resource_update_metadata_scheduled' | 'resource_update_metadata_succeeded' | 'resource_update_ports_failed' | 'resource_update_ports_scheduled' | 'resource_update_ports_succeeded' | 'resource_update_security_groups_failed' | 'resource_update_security_groups_scheduled' | 'resource_update_security_groups_succeeded' | 'resource_update_succeeded' | 'restrict_members' | 'review_accepted' | 'review_assigned' | 'review_canceled' | 'review_declined' | 'review_rejected' | 'review_submitted' | 'reviewer_workload_limit_overridden' | 'reviewer_invitation_force_accepted' | 'review_assignment_force_unblocked' | 'review_assignments_closed_on_leaving_pool' | 'reviewer_standing_changed' | 'reviewer_publication_requested' | 'reviewer_publication_approved' | 'reviewer_publication_rejected' | 'role_cloned' | 'role_concealed' | 'role_definition_created' | 'role_definition_deleted' | 'role_definition_updated' | 'role_disabled' | 'role_enabled' | 'role_granted' | 'role_revealed' | 'role_revoked' | 'role_updated' | 'roll_back_customer_credit' | 'roll_back_project_credit' | 'service_account_created' | 'service_account_deleted' | 'service_account_updated' | 'set_to_zero_overdue_credit' | 'slurm_policy_evaluation' | 'ssh_key_creation_succeeded' | 'ssh_key_deletion_succeeded' | 'terminate_resources' | 'token_created' | 'token_lifetime_updated' | 'token_viewed' | 'update_of_affiliate_by_staff' | 'update_of_credit_by_staff' | 'update_of_project_credit_by_staff' | 'automatic_credit_adjustment' | 'user_activated' | 'user_blocked' | 'user_creation_succeeded' | 'user_data_accessed' | 'user_deactivated' | 'user_deactivated_no_roles' | 'user_deletion_succeeded' | 'user_details_update_succeeded' | 'user_has_been_created_by_staff' | 'user_password_updated' | 'user_password_updated_by_staff' | 'user_password_removed_by_staff' | 'matrix_password_generated' | 'matrix_recovery_key_escrowed' | 'matrix_recovery_key_viewed' | 'matrix_encryption_reset_started' | 'user_update_succeeded' | 'user_group_invitation_updated' | 'user_invitation_updated' | 'user_invitation_deleted' | 'terms_of_service_consent_granted' | 'terms_of_service_consent_revoked' | 'terms_of_service_replaced' | 'user_terms_of_service_accepted' | 'chat_session_accessed' | 'chat_thread_accessed' | 'chat_injection_detected' | 'chat_pii_detected' | 'chat_feedback_submitted' | 'mcp_tool_called' | 'feedback_survey_answered' | 'onboarding_verification_deleted' | 'onboarding_verification_deleted_by_task' | 'pat_created' | 'feature_rule_created' | 'feature_rule_updated' | 'feature_rule_deleted' | 'micro_app_setting_updated' | 'pat_revoked' | 'pat_rotated' | 'pat_expired' | 'pat_used_from_new_ip' | 'pat_access_denied_from_ip' | 'pat_network_acl_updated' | 'dedicated_user_created' | 'service_account_signed_in' | 'pat_authentication_rejected' | 'oauth_consent_granted' | 'oauth_consent_denied' | 'oauth_connected_app_revoked' | 'oidc_token_revoked' | 'oidc_token_refresh_failed' | 'passkey_registered' | 'passkey_renamed' | 'passkey_revoked' | 'passkey_revoked_by_staff' | 'passkey_authentication_succeeded' | 'passkey_authentication_failed' | 'reauthentication_granted' | 'reauthentication_failed' | 'reauthentication_refused' | 'reauthentication_grant_used' | 'reauthentication_waived' | 'event_consumer_registered_with_broad_credential' | 'event_consumer_webhook_updated' | 'event_consumer_resync_requested';
+export type EventTypesEnum = 'access_subnet_creation_succeeded' | 'access_subnet_deletion_succeeded' | 'access_subnet_update_succeeded' | 'offering_access_subnet_creation_succeeded' | 'offering_access_subnet_deletion_succeeded' | 'offering_access_subnet_update_succeeded' | 'allowed_offerings_have_been_updated' | 'admin_object_created' | 'admin_object_deleted' | 'admin_object_updated' | 'attachment_created' | 'attachment_deleted' | 'attachment_updated' | 'auth_logged_in_with_saml2' | 'auth_logged_in_with_username' | 'auth_logged_in_with_oauth' | 'auth_logged_in_with_valimo' | 'auth_logged_in_to_admin_site' | 'auth_logged_out' | 'auth_logged_out_with_saml2' | 'auth_login_failed_with_username' | 'auth_login_failed_with_oauth' | 'auth_login_failed_with_saml2' | 'auth_login_failed_with_valimo' | 'auth_login_failed_to_admin_site' | 'block_creation_of_new_resources' | 'block_modification_of_existing_resources' | 'call_document_added' | 'call_document_removed' | 'create_of_affiliate_by_staff' | 'create_of_credit_by_staff' | 'create_of_project_credit_by_staff' | 'credit_reclassified_as_paid' | 'credit_topped_up' | 'custom_notification' | 'customer_creation_succeeded' | 'customer_deletion_succeeded' | 'customer_update_succeeded' | 'customer_permission_review_created' | 'customer_permission_review_closed' | 'droplet_resize_scheduled' | 'droplet_resize_succeeded' | 'freeipa_profile_created' | 'freeipa_profile_deleted' | 'freeipa_profile_disabled' | 'freeipa_profile_enabled' | 'granted_credit_expired' | 'invoice_canceled' | 'invoice_created' | 'invoice_item_created' | 'invoice_item_deleted' | 'invoice_item_updated' | 'invoice_paid' | 'issue_creation_succeeded' | 'issue_deletion_succeeded' | 'issue_update_succeeded' | 'marketplace_offering_component_created' | 'marketplace_offering_component_deleted' | 'marketplace_offering_component_updated' | 'marketplace_offering_created' | 'marketplace_offering_deleted' | 'marketplace_offering_merge_created' | 'marketplace_offering_merge_executed' | 'marketplace_offering_merge_failed' | 'marketplace_offering_merge_undone' | 'marketplace_offering_merge_verification_failed' | 'marketplace_offering_updated' | 'marketplace_offering_options_updated' | 'marketplace_offering_resource_options_updated' | 'marketplace_offering_user_created' | 'marketplace_offering_user_updated' | 'marketplace_offering_user_deleted' | 'marketplace_offering_user_initial_password_set' | 'marketplace_offering_user_initial_password_revealed' | 'marketplace_offering_user_initial_password_cleared' | 'marketplace_offering_user_restriction_updated' | 'marketplace_provider_project_group_gid_updated' | 'marketplace_order_approved' | 'marketplace_order_completed' | 'marketplace_order_created' | 'marketplace_order_failed' | 'marketplace_order_rejected' | 'marketplace_order_terminated' | 'marketplace_order_unlinked' | 'marketplace_plan_archived' | 'marketplace_plan_component_current_price_updated' | 'marketplace_plan_component_future_price_updated' | 'marketplace_plan_component_quota_updated' | 'marketplace_plan_created' | 'marketplace_plan_updated' | 'marketplace_plan_deleted' | 'marketplace_resource_create_canceled' | 'marketplace_resource_create_failed' | 'marketplace_resource_create_requested' | 'marketplace_resource_create_succeeded' | 'marketplace_resource_downscaled' | 'marketplace_resource_erred_on_backend' | 'marketplace_resource_paused' | 'marketplace_resource_grace_period_started' | 'marketplace_resource_grace_period_ended' | 'marketplace_resource_grace_period_cancelled' | 'marketplace_resource_terminate_canceled' | 'marketplace_resource_terminate_failed' | 'marketplace_resource_terminate_requested' | 'marketplace_resource_terminate_succeeded' | 'marketplace_resource_unlinked' | 'marketplace_resource_update_canceled' | 'marketplace_resource_update_end_date_succeeded' | 'marketplace_resource_api_key_requested' | 'marketplace_resource_api_key_rotated' | 'marketplace_resource_api_key_paused' | 'marketplace_resource_api_key_resumed' | 'marketplace_resource_api_key_updated' | 'marketplace_resource_api_key_deleted' | 'marketplace_resource_api_key_failed' | 'marketplace_resource_api_key_revealed' | 'marketplace_resource_option_secret_set' | 'marketplace_resource_option_secret_revealed' | 'marketplace_resource_s3_object_downloaded' | 'marketplace_resource_s3_storage_changed' | 'marketplace_resource_update_failed' | 'marketplace_resource_update_limits_failed' | 'marketplace_resource_update_limits_succeeded' | 'marketplace_resource_spending_limits_updated' | 'marketplace_resource_plan_switched' | 'marketplace_resource_project_created' | 'marketplace_resource_project_recovered' | 'marketplace_resource_project_removed' | 'marketplace_resource_update_requested' | 'marketplace_resource_update_succeeded' | 'marketplace_resource_limit_change_request_created' | 'marketplace_resource_limit_change_request_approved' | 'marketplace_resource_limit_change_request_rejected' | 'marketplace_resource_end_date_change_request_created' | 'marketplace_resource_end_date_change_request_approved' | 'marketplace_resource_end_date_change_request_rejected' | 'marketplace_resource_end_date_change_request_canceled' | 'maintenance_announcement_cancelled' | 'maintenance_announcement_completed' | 'maintenance_announcement_created' | 'maintenance_announcement_deleted' | 'maintenance_announcement_scheduled' | 'maintenance_announcement_started' | 'maintenance_announcement_unscheduled' | 'maintenance_announcement_updated' | 'notify_external_user' | 'notify_organization_owners' | 'notify_project_team' | 'openstack_floating_ip_attached' | 'openstack_floating_ip_connected' | 'openstack_floating_ip_description_updated' | 'openstack_floating_ip_detached' | 'openstack_floating_ip_disconnected' | 'openstack_instance_security_groups_changed' | 'openstack_network_cleaned' | 'openstack_network_created' | 'openstack_network_deleted' | 'openstack_network_imported' | 'openstack_network_pulled' | 'openstack_network_updated' | 'openstack_load_balancer_created' | 'openstack_load_balancer_updated' | 'openstack_load_balancer_deleted' | 'openstack_load_balancer_security_groups_changed' | 'openstack_listener_created' | 'openstack_listener_updated' | 'openstack_listener_deleted' | 'openstack_pool_created' | 'openstack_pool_updated' | 'openstack_pool_deleted' | 'openstack_pool_member_created' | 'openstack_pool_member_updated' | 'openstack_pool_member_deleted' | 'openstack_port_cleaned' | 'openstack_port_created' | 'openstack_port_deleted' | 'openstack_port_imported' | 'openstack_port_pulled' | 'openstack_port_updated' | 'openstack_port_security_enabled' | 'openstack_port_security_disabled' | 'openstack_port_allowed_address_pairs_changed' | 'openstack_port_security_groups_changed' | 'openstack_rbac_policy_created' | 'openstack_rbac_policy_deleted' | 'openstack_router_interface_added' | 'openstack_router_interface_removed' | 'openstack_router_updated' | 'openstack_subnet_host_routes_changed' | 'openstack_security_group_cleaned' | 'openstack_security_group_created' | 'openstack_security_group_deleted' | 'openstack_security_group_imported' | 'openstack_security_group_pulled' | 'openstack_security_group_rule_cleaned' | 'openstack_security_group_rule_created' | 'openstack_security_group_rule_deleted' | 'openstack_security_group_rule_imported' | 'openstack_security_group_rule_updated' | 'openstack_security_group_rules_changed' | 'openstack_security_group_updated' | 'openstack_security_group_added_remotely' | 'openstack_security_group_removed_remotely' | 'openstack_security_group_added_locally' | 'openstack_security_group_removed_locally' | 'openstack_server_group_cleaned' | 'openstack_server_group_created' | 'openstack_server_group_deleted' | 'openstack_server_group_imported' | 'openstack_server_group_pulled' | 'openstack_subnet_cleaned' | 'openstack_subnet_created' | 'openstack_subnet_deleted' | 'openstack_subnet_imported' | 'openstack_subnet_pulled' | 'openstack_subnet_updated' | 'openstack_tenant_quota_limit_updated' | 'payment_added' | 'payment_created' | 'payment_removed' | 'policy_created' | 'policy_deleted' | 'policy_notification' | 'policy_updated' | 'project_creation_succeeded' | 'project_deletion_succeeded' | 'project_deletion_triggered' | 'project_update_request_approved' | 'project_update_request_created' | 'project_update_request_rejected' | 'project_end_date_change_request_approved' | 'project_end_date_change_request_created' | 'project_end_date_change_request_rejected' | 'project_update_succeeded' | 'project_permission_review_created' | 'project_permission_review_closed' | 'proposal_applicant_responded' | 'proposal_award_changed' | 'proposal_edited_for_applicant' | 'proposal_automatic_decision_deferred' | 'proposal_budget_overridden' | 'proposal_canceled' | 'proposal_change_request_closed' | 'proposal_changes_requested' | 'proposal_changes_submitted' | 'proposal_contribution_reopened' | 'proposal_contribution_submitted' | 'proposal_document_added' | 'proposal_created' | 'proposal_draft_carried_over' | 'proposal_document_removed' | 'proposal_decision_held' | 'proposal_decision_published' | 'proposal_decision_reopened' | 'proposal_evaluator_assigned' | 'proposal_evaluator_revoked' | 'proposal_panel_changed' | 'proposal_rejected_at_round_completion' | 'proposal_report_released' | 'proposal_run_closed' | 'proposal_run_opened' | 'proposal_step_completed' | 'proposal_step_skipped' | 'proposal_step_started' | 'proposal_step_withdrawn' | 'proposal_steps_decided_in_bulk' | 'proposal_submitted' | 'proposal_workflow_advanced' | 'proposal_workflow_notification_sent' | 'proposal_notification_sent' | 'proposal_reviewers_notified' | 'round_closed' | 'round_decision_started' | 'round_evaluation_started' | 'round_results_adopted' | 'round_report_reopened' | 'round_report_submitted' | 'round_results_published' | 'round_step_opened' | 'round_allocated_in_submission_order' | 'round_undecided_proposals_rejected' | 'query_executed' | 'increase_of_customer_credit_due_to_affiliate_fee' | 'reduction_of_customer_credit' | 'reduction_of_customer_credit_due_to_minimal_consumption' | 'reduction_of_customer_expected_consumption' | 'reduction_of_project_credit' | 'reduction_of_project_credit_due_to_minimal_consumption' | 'reduction_of_project_expected_consumption' | 'request_downscaling' | 'request_pausing' | 'request_slurm_resource_downscaling' | 'request_slurm_resource_pausing' | 'reset_downscaling' | 'reset_member_restriction' | 'reset_pausing' | 'resource_assign_floating_ip_failed' | 'resource_assign_floating_ip_scheduled' | 'resource_assign_floating_ip_succeeded' | 'resource_attach_failed' | 'resource_attach_scheduled' | 'resource_attach_succeeded' | 'resource_backup_creation_failed' | 'resource_backup_creation_scheduled' | 'resource_backup_creation_succeeded' | 'resource_backup_deletion_failed' | 'resource_backup_deletion_scheduled' | 'resource_backup_deletion_succeeded' | 'resource_backup_restoration_failed' | 'resource_backup_restoration_scheduled' | 'resource_backup_restoration_succeeded' | 'resource_change_flavor_failed' | 'resource_change_flavor_scheduled' | 'resource_change_flavor_succeeded' | 'resource_creation_failed' | 'resource_creation_scheduled' | 'resource_creation_succeeded' | 'resource_deletion_failed' | 'resource_deletion_scheduled' | 'resource_deletion_succeeded' | 'resource_detach_failed' | 'resource_detach_scheduled' | 'resource_detach_succeeded' | 'resource_extend_failed' | 'resource_extend_scheduled' | 'resource_extend_succeeded' | 'resource_extend_volume_failed' | 'resource_extend_volume_scheduled' | 'resource_extend_volume_succeeded' | 'resource_hard_reboot_failed' | 'resource_hard_reboot_scheduled' | 'resource_hard_reboot_succeeded' | 'resource_import_succeeded' | 'resource_pull_failed' | 'resource_pull_scheduled' | 'resource_pull_succeeded' | 'resource_rescue_failed' | 'resource_rescue_scheduled' | 'resource_rescue_succeeded' | 'resource_restart_failed' | 'resource_restart_scheduled' | 'resource_restart_succeeded' | 'resource_retype_failed' | 'resource_retype_scheduled' | 'resource_retype_succeeded' | 'resource_robot_account_created' | 'resource_robot_account_deleted' | 'resource_robot_account_state_changed' | 'resource_robot_account_updated' | 'resource_start_failed' | 'resource_start_scheduled' | 'resource_start_succeeded' | 'resource_stop_failed' | 'resource_stop_scheduled' | 'resource_stop_succeeded' | 'resource_unassign_floating_ip_failed' | 'resource_unassign_floating_ip_scheduled' | 'resource_unassign_floating_ip_succeeded' | 'resource_unrescue_failed' | 'resource_unrescue_scheduled' | 'resource_unrescue_succeeded' | 'resource_update_allowed_address_pairs_failed' | 'resource_update_allowed_address_pairs_scheduled' | 'resource_update_allowed_address_pairs_succeeded' | 'resource_update_floating_ips_failed' | 'resource_update_floating_ips_scheduled' | 'resource_update_floating_ips_succeeded' | 'resource_update_metadata_failed' | 'resource_update_metadata_scheduled' | 'resource_update_metadata_succeeded' | 'resource_update_ports_failed' | 'resource_update_ports_scheduled' | 'resource_update_ports_succeeded' | 'resource_update_security_groups_failed' | 'resource_update_security_groups_scheduled' | 'resource_update_security_groups_succeeded' | 'resource_update_succeeded' | 'restrict_members' | 'review_accepted' | 'review_assigned' | 'review_canceled' | 'review_declined' | 'review_rejected' | 'review_submitted' | 'reviewer_workload_limit_overridden' | 'reviewer_invitation_force_accepted' | 'review_assignment_force_unblocked' | 'review_assignments_closed_on_leaving_pool' | 'reviewer_standing_changed' | 'reviewer_publication_requested' | 'reviewer_publication_approved' | 'reviewer_publication_rejected' | 'role_cloned' | 'role_concealed' | 'role_definition_created' | 'role_definition_deleted' | 'role_definition_updated' | 'role_disabled' | 'role_enabled' | 'role_granted' | 'role_revealed' | 'role_revoked' | 'role_updated' | 'roll_back_customer_credit' | 'roll_back_project_credit' | 'service_account_created' | 'service_account_deleted' | 'service_account_updated' | 'set_to_zero_overdue_credit' | 'slurm_policy_evaluation' | 'ssh_key_creation_succeeded' | 'ssh_key_deletion_succeeded' | 'terminate_resources' | 'token_created' | 'token_lifetime_updated' | 'token_viewed' | 'update_of_affiliate_by_staff' | 'update_of_credit_by_staff' | 'update_of_project_credit_by_staff' | 'automatic_credit_adjustment' | 'user_activated' | 'user_blocked' | 'user_creation_succeeded' | 'user_data_accessed' | 'user_deactivated' | 'user_deactivated_no_roles' | 'user_deletion_succeeded' | 'user_details_update_succeeded' | 'user_has_been_created_by_staff' | 'user_password_updated' | 'user_password_updated_by_staff' | 'user_password_removed_by_staff' | 'matrix_password_generated' | 'matrix_recovery_key_escrowed' | 'matrix_recovery_key_viewed' | 'matrix_encryption_reset_started' | 'user_update_succeeded' | 'user_group_invitation_updated' | 'user_invitation_updated' | 'user_invitation_deleted' | 'terms_of_service_consent_granted' | 'terms_of_service_consent_revoked' | 'terms_of_service_replaced' | 'user_terms_of_service_accepted' | 'chat_session_accessed' | 'chat_thread_accessed' | 'chat_injection_detected' | 'chat_pii_detected' | 'chat_feedback_submitted' | 'mcp_tool_called' | 'feedback_survey_answered' | 'onboarding_verification_deleted' | 'onboarding_verification_deleted_by_task' | 'pat_created' | 'feature_rule_created' | 'feature_rule_updated' | 'feature_rule_deleted' | 'micro_app_setting_updated' | 'pat_revoked' | 'pat_rotated' | 'pat_expired' | 'pat_used_from_new_ip' | 'pat_access_denied_from_ip' | 'pat_network_acl_updated' | 'dedicated_user_created' | 'service_account_signed_in' | 'pat_authentication_rejected' | 'oauth_consent_granted' | 'oauth_consent_denied' | 'oauth_connected_app_revoked' | 'oidc_token_revoked' | 'oidc_token_refresh_failed' | 'passkey_registered' | 'passkey_renamed' | 'passkey_revoked' | 'passkey_revoked_by_staff' | 'passkey_authentication_succeeded' | 'passkey_authentication_failed' | 'reauthentication_granted' | 'reauthentication_failed' | 'reauthentication_refused' | 'reauthentication_grant_used' | 'reauthentication_waived' | 'event_consumer_registered_with_broad_credential' | 'event_consumer_webhook_updated' | 'event_consumer_resync_requested';
 
 export type ExecuteActionErrorResponse = {
     error: string;
@@ -14074,6 +14291,11 @@ export type IdentityProviderRequest = {
     extra_fields?: string | null;
 };
 
+export type IgnoredKey = {
+    path: string;
+    reason: string;
+};
+
 export type ImageCreateRequest = {
     name: string;
     min_ram?: number;
@@ -14211,6 +14433,37 @@ export type ImportableResource = {
      * Description of the resource
      */
     description: string;
+};
+
+export type ImportedOfferingBlock = {
+    index: number;
+    name: string | null;
+    waldur_offering_uuid: string | null;
+    matches_offering: boolean;
+};
+
+export type ImportedPolicy = {
+    /**
+     * Whether the offering has a SLURM periodic usage policy.
+     */
+    exists: boolean;
+    /**
+     * Whether applying would create the policy, so policy_actions must say what it does.
+     */
+    needs_actions: boolean;
+    /**
+     * The actions a SLURM periodic usage policy can take.
+     */
+    action_choices: Array<PolicyActionChoice>;
+    changes: Array<PolicyChange>;
+    /**
+     * Whether apply_policy may be set.
+     */
+    applicable: boolean;
+    /**
+     * Why it cannot be applied, when it cannot.
+     */
+    reason: string | null;
 };
 
 export type InheritedAccountSetting = {
@@ -29786,6 +30039,17 @@ export type PluginOfferingType = {
 
 export type PolarityEnum = 'positive' | 'negative';
 
+export type PolicyActionChoice = {
+    value: string;
+    label: string;
+};
+
+export type PolicyChange = {
+    field: string;
+    current: unknown;
+    imported: unknown;
+};
+
 export type PolicyCostBreakdown = {
     /**
      * The invoiced cost within the policy's period before any credit, tax included.
@@ -43175,6 +43439,14 @@ export type UnlockableParts = {
     parts: Array<string>;
 };
 
+export type UnresolvedSetting = {
+    path: string;
+    /**
+     * The name inside ${...} that the agent host fills in.
+     */
+    placeholder: string;
+};
+
 export type UpdateActionsRequest = {
     /**
      * Optional provider action type to update. If not provided, updates all providers.
@@ -49196,6 +49468,8 @@ export type ProjectCreditOEnum = '-end_date' | '-expected_consumption' | '-proje
 export type CampaignOEnum = '-end_date' | '-start_date' | 'end_date' | 'start_date';
 
 export type CampaignStateEnum = 'Active' | 'Draft' | 'Terminated';
+
+export type BulkStepDecisionSummaryOEnum = '-completed_at' | '-created' | '-state' | 'completed_at' | 'created' | 'state';
 
 export type UserRequestedResourceOEnum = '-call__name' | '-created' | '-offering__name' | '-proposal__name' | '-proposal__state' | '-resource__name' | '-resource__state' | 'call__name' | 'created' | 'offering__name' | 'proposal__name' | 'proposal__state' | 'resource__name' | 'resource__state';
 
@@ -78047,6 +78321,28 @@ export type MarketplaceProviderOfferingsHistoryAtRetrieveResponses = {
 };
 
 export type MarketplaceProviderOfferingsHistoryAtRetrieveResponse = MarketplaceProviderOfferingsHistoryAtRetrieveResponses[keyof MarketplaceProviderOfferingsHistoryAtRetrieveResponses];
+
+export type MarketplaceProviderOfferingsImportAgentConfigurationData = {
+    body: AgentConfigurationImportRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/marketplace-provider-offerings/{uuid}/import_agent_configuration/';
+};
+
+export type MarketplaceProviderOfferingsImportAgentConfigurationErrors = {
+    /**
+     * The file cannot be read, no single offering of it is chosen, a value cannot be given, or (when not a dry run) the configuration it gives is not valid.
+     */
+    400: unknown;
+};
+
+export type MarketplaceProviderOfferingsImportAgentConfigurationResponses = {
+    200: AgentConfigurationImportResult;
+};
+
+export type MarketplaceProviderOfferingsImportAgentConfigurationResponse = MarketplaceProviderOfferingsImportAgentConfigurationResponses[keyof MarketplaceProviderOfferingsImportAgentConfigurationResponses];
 
 export type MarketplaceProviderOfferingsImportMaintenanceReservationsData = {
     body: MaintenanceReservationImportRequest;
@@ -113213,6 +113509,86 @@ export type PromotionsCampaignsTerminateResponses = {
     200: unknown;
 };
 
+export type ProposalBulkStepDecisionsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        call_uuid?: string;
+        dry_run?: boolean;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<BulkStepDecisionSummaryOEnum>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        state?: Array<BulkStepDecisionStateEnum>;
+        uuid?: string;
+    };
+    url: '/api/proposal-bulk-step-decisions/';
+};
+
+export type ProposalBulkStepDecisionsListResponses = {
+    200: Array<BulkStepDecisionSummary>;
+};
+
+export type ProposalBulkStepDecisionsListResponse = ProposalBulkStepDecisionsListResponses[keyof ProposalBulkStepDecisionsListResponses];
+
+export type ProposalBulkStepDecisionsCountData = {
+    body?: never;
+    path?: never;
+    query?: {
+        call_uuid?: string;
+        dry_run?: boolean;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<BulkStepDecisionSummaryOEnum>;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        state?: Array<BulkStepDecisionStateEnum>;
+        uuid?: string;
+    };
+    url: '/api/proposal-bulk-step-decisions/';
+};
+
+export type ProposalBulkStepDecisionsCountResponses = {
+    /**
+     * No response body
+     */
+    200: unknown;
+};
+
+export type ProposalBulkStepDecisionsRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-bulk-step-decisions/{uuid}/';
+};
+
+export type ProposalBulkStepDecisionsRetrieveResponses = {
+    200: BulkStepDecision;
+};
+
+export type ProposalBulkStepDecisionsRetrieveResponse = ProposalBulkStepDecisionsRetrieveResponses[keyof ProposalBulkStepDecisionsRetrieveResponses];
+
 export type ProposalMyRequestedResourcesListData = {
     body?: never;
     path?: never;
@@ -116468,6 +116844,68 @@ export type ProposalProtectedCallsCreateManualAssignmentResponses = {
 
 export type ProposalProtectedCallsCreateManualAssignmentResponse = ProposalProtectedCallsCreateManualAssignmentResponses[keyof ProposalProtectedCallsCreateManualAssignmentResponses];
 
+export type ProposalProtectedCallsDecidableWorkflowStepsData = {
+    body: DecidableWorkflowStepsRequestRequest;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        customer?: string;
+        customer_keyword?: string;
+        customer_uuid?: string;
+        has_active_round?: boolean;
+        name?: string;
+        /**
+         * Ordering
+         *
+         *
+         */
+        o?: Array<ProtectedCallOEnum>;
+        offering_uuid?: string;
+        offerings_provider_uuid?: string;
+        /**
+         * Calls the offering can be requested through right now
+         */
+        open_for_offering_uuid?: string;
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number;
+        /**
+         * Number of results to return per page.
+         */
+        page_size?: number;
+        /**
+         * Slug
+         */
+        slug?: string;
+        state?: Array<CallStates>;
+    };
+    url: '/api/proposal-protected-calls/{uuid}/decidable_workflow_steps/';
+};
+
+export type ProposalProtectedCallsDecidableWorkflowStepsResponses = {
+    200: Array<DecidableWorkflowStep>;
+};
+
+export type ProposalProtectedCallsDecidableWorkflowStepsResponse = ProposalProtectedCallsDecidableWorkflowStepsResponses[keyof ProposalProtectedCallsDecidableWorkflowStepsResponses];
+
+export type ProposalProtectedCallsDecideWorkflowStepsData = {
+    body: DecideWorkflowStepsRequest;
+    path: {
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/proposal-protected-calls/{uuid}/decide_workflow_steps/';
+};
+
+export type ProposalProtectedCallsDecideWorkflowStepsResponses = {
+    200: BulkStepDecision;
+    202: BulkStepDecision;
+};
+
+export type ProposalProtectedCallsDecideWorkflowStepsResponse = ProposalProtectedCallsDecideWorkflowStepsResponses[keyof ProposalProtectedCallsDecideWorkflowStepsResponses];
+
 export type ProposalProtectedCallsDeleteUserData = {
     body: UserRoleDeleteRequest;
     path: {
@@ -116530,12 +116968,84 @@ export type ProposalProtectedCallsDuplicateResponses = {
 
 export type ProposalProtectedCallsDuplicateResponse = ProposalProtectedCallsDuplicateResponses[keyof ProposalProtectedCallsDuplicateResponses];
 
+export type ProposalProtectedCallsExportEvaluationsData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * Limit the export to one step of the call's workflow.
+         */
+        call_step_uuid?: string;
+        /**
+         * csv (the default) or xlsx, an Excel workbook of the same header and rows. Named file_format because a bare `format` is read by the API itself.
+         */
+        file_format?: QueryFileFormatEnum;
+        /**
+         * Limit the export to the proposals routed to one panel of the call.
+         */
+        panel_uuid?: string;
+        /**
+         * Limit the export to proposals whose name contains this text — the list's search box. Named proposal_name because a bare `name` is read by the call's own filterset.
+         */
+        proposal_name?: string;
+        /**
+         * Limit the export to these proposals, such as those selected in the list; repeat the parameter for each.
+         */
+        proposal_uuid?: Array<string>;
+        /**
+         * Limit the export to one round.
+         */
+        round_uuid?: string;
+    };
+    url: '/api/proposal-protected-calls/{uuid}/export-evaluations/';
+};
+
+export type ProposalProtectedCallsExportEvaluationsResponses = {
+    200: Blob | File;
+};
+
+export type ProposalProtectedCallsExportEvaluationsResponse = ProposalProtectedCallsExportEvaluationsResponses[keyof ProposalProtectedCallsExportEvaluationsResponses];
+
+export type ProposalProtectedCallsExportPanelSheetData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query?: {
+        /**
+         * csv (the default) or xlsx, an Excel workbook of the same header and rows. Named file_format because a bare `format` is read by the API itself.
+         */
+        file_format?: QueryFileFormatEnum;
+        /**
+         * Limit the export to the proposals routed to one panel of the call.
+         */
+        panel_uuid?: string;
+        /**
+         * Limit the export to one round.
+         */
+        round_uuid?: string;
+    };
+    url: '/api/proposal-protected-calls/{uuid}/export-panel-sheet/';
+};
+
+export type ProposalProtectedCallsExportPanelSheetResponses = {
+    200: Blob | File;
+};
+
+export type ProposalProtectedCallsExportPanelSheetResponse = ProposalProtectedCallsExportPanelSheetResponses[keyof ProposalProtectedCallsExportPanelSheetResponses];
+
 export type ProposalProtectedCallsExportProposalsData = {
     body?: never;
     path: {
         uuid: string;
     };
     query?: {
+        /**
+         * Limit the export to one step of the call's workflow.
+         */
+        call_step_uuid?: string;
         /**
          * Limit the export to one applicant.
          */
@@ -116544,6 +117054,10 @@ export type ProposalProtectedCallsExportProposalsData = {
          * csv (the default) or xlsx, an Excel workbook of the same header and rows. Named file_format because a bare `format` is read by the API itself.
          */
         file_format?: QueryFileFormatEnum;
+        /**
+         * Limit the export to the proposals routed to one panel of the call.
+         */
+        panel_uuid?: string;
         /**
          * Limit the export to proposals whose name contains this text — the list's search box. Named proposal_name because a bare `name` is read by the call's own filterset.
          */
@@ -116577,9 +117091,17 @@ export type ProposalProtectedCallsExportReviewsData = {
     };
     query?: {
         /**
+         * Limit the export to one step of the call's workflow.
+         */
+        call_step_uuid?: string;
+        /**
          * csv (the default) or xlsx, an Excel workbook of the same header and rows. Named file_format because a bare `format` is read by the API itself.
          */
         file_format?: QueryFileFormatEnum;
+        /**
+         * Limit the export to the proposals routed to one panel of the call.
+         */
+        panel_uuid?: string;
         /**
          * Limit the export to proposals whose name contains this text — the list's search box. Named proposal_name because a bare `name` is read by the call's own filterset.
          */
