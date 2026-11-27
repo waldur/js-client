@@ -14466,6 +14466,8 @@ export type ImportedPolicy = {
     reason: string | null;
 };
 
+export type InfrastructureModeEnum = 'customer_choice' | 'provider_fixed';
+
 export type InheritedAccountSetting = {
     /**
      * The value the setting resolves to.
@@ -15522,6 +15524,23 @@ export type JiraIssueRequest = {
     fields: JiraIssueFieldsRequest;
 };
 
+export type K8sCommonFlavor = {
+    name: string;
+    cores: number;
+    /**
+     * RAM in MiB.
+     */
+    ram: number;
+    /**
+     * Root disk in MiB; the smallest among the sites.
+     */
+    disk: number;
+    /**
+     * The flavor of every site, in site order.
+     */
+    sites: Array<K8sSiteFlavor>;
+};
+
 export type K8sEgressRule = {
     /**
      * A client-side row id, kept as given. Ignored by the server.
@@ -15574,6 +15593,36 @@ export type K8sEgressRuleRequest = {
      */
     port_range_max?: number | null;
     description?: string | null;
+};
+
+export type K8sSite = {
+    /**
+     * UUID of the OpenStack tenant offering.
+     */
+    uuid: string;
+    name: string;
+};
+
+export type K8sSiteFlavor = {
+    /**
+     * UUID of the site's OpenStack tenant offering.
+     */
+    offering_uuid: string;
+    /**
+     * UUID of the flavor on that site.
+     */
+    flavor_uuid: string;
+};
+
+export type K8sSites = {
+    /**
+     * The sites, in order.
+     */
+    sites: Array<K8sSite>;
+    /**
+     * Flavors every site has under one name with the same vCPUs and RAM, smallest first.
+     */
+    flavors: Array<K8sCommonFlavor>;
 };
 
 export type KeycloakGroup = {
@@ -25323,6 +25372,16 @@ export type OptionDefaultConfigs = {
      */
     egress_baseline_rules?: Array<K8sEgressRule>;
     /**
+     * Who picks the OpenStack infrastructure of each site: the customer, from the tenant offerings they can order (customer_choice), or the provider, in fixed_openstack_offerings (provider_fixed). Treated as customer_choice when omitted.
+     */
+    infrastructure_mode?: InfrastructureModeEnum;
+    /**
+     * With provider_fixed: the UUIDs of the OpenStack tenant offerings a cluster is deployed to, per topology, in site order. "1-datacenter" takes one, "3-datacenter" three; every topology the option allows needs its list.
+     */
+    fixed_openstack_offerings?: {
+        [key: string]: Array<string>;
+    };
+    /**
      * Which IP version the network may be. Any when omitted.
      */
     ip_version?: CidrIpVersionEnum;
@@ -25442,6 +25501,16 @@ export type OptionDefaultConfigsRequest = {
      * Destinations every cluster of the offering may reach, such as DNS, NTP and image registries. Shown to customers read-only; once a cluster has any egress rule, outbound traffic is allowed to these and to the customer's destinations only.
      */
     egress_baseline_rules?: Array<K8sEgressRuleRequest>;
+    /**
+     * Who picks the OpenStack infrastructure of each site: the customer, from the tenant offerings they can order (customer_choice), or the provider, in fixed_openstack_offerings (provider_fixed). Treated as customer_choice when omitted.
+     */
+    infrastructure_mode?: InfrastructureModeEnum;
+    /**
+     * With provider_fixed: the UUIDs of the OpenStack tenant offerings a cluster is deployed to, per topology, in site order. "1-datacenter" takes one, "3-datacenter" three; every topology the option allows needs its list.
+     */
+    fixed_openstack_offerings?: {
+        [key: string]: Array<string>;
+    };
     /**
      * Which IP version the network may be. Any when omitted.
      */
@@ -49354,6 +49423,8 @@ export type OrderFlowDescriptionOrderKindEnum = 'create' | 'update_limits' | 'sw
 export type OrderFlowDescriptionOrdererEnum = 'any' | 'staff' | 'role' | 'provider_owner' | 'proposal_allocation';
 
 export type ResourceOEnum = '-backend_id' | '-created' | '-customer_name' | '-end_date' | '-name' | '-offering_name' | '-plan_name' | '-project_name' | '-state' | 'backend_id' | 'created' | 'customer_name' | 'end_date' | 'name' | 'offering_name' | 'plan_name' | 'project_name' | 'state';
+
+export type K8sSitesTopologyEnum = '1-datacenter' | '3-datacenter';
 
 export type ResourceApiKeyStatusOEnum = '-created' | '-estimated_cost' | '-issued_at' | '-state' | 'created' | 'estimated_cost' | 'issued_at' | 'state';
 
@@ -83264,6 +83335,30 @@ export type MarketplacePublicOfferingsRetrieveResponses = {
 };
 
 export type MarketplacePublicOfferingsRetrieveResponse = MarketplacePublicOfferingsRetrieveResponses[keyof MarketplacePublicOfferingsRetrieveResponses];
+
+export type MarketplacePublicOfferingsK8sSitesRetrieveData = {
+    body?: never;
+    path: {
+        uuid: string;
+    };
+    query: {
+        /**
+         * Name of the offering's k8s_cluster_config order option.
+         */
+        option: string;
+        /**
+         * The cluster topology whose sites to list.
+         */
+        topology: K8sSitesTopologyEnum;
+    };
+    url: '/api/marketplace-public-offerings/{uuid}/k8s_sites/';
+};
+
+export type MarketplacePublicOfferingsK8sSitesRetrieveResponses = {
+    200: K8sSites;
+};
+
+export type MarketplacePublicOfferingsK8sSitesRetrieveResponse = MarketplacePublicOfferingsK8sSitesRetrieveResponses[keyof MarketplacePublicOfferingsK8sSitesRetrieveResponses];
 
 export type MarketplacePublicOfferingsPlansListData = {
     body?: never;
