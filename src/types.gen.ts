@@ -21661,6 +21661,10 @@ export type OfferingTemplate = {
     };
     readonly parameters: Array<OfferingTemplateParameter>;
     /**
+     * The site agent's role backends and custom backends the document names: what an offering created from the template starts with. Shown to everyone who sees the template, unlike the rest of its agent configuration.
+     */
+    agent_roles: OfferingTemplateAgentRoles;
+    /**
      * What the site-agent consistency rules find in the document. Paths a parameter fills are skipped. Staff only.
      */
     readonly configuration_findings: Array<OfferingConfigurationFinding>;
@@ -21673,6 +21677,28 @@ export type OfferingTemplate = {
     readonly created_by: string | null;
     readonly created: string;
     readonly modified: string;
+};
+
+export type OfferingTemplateAgentRoles = {
+    order_processing_backend?: string;
+    membership_sync_backend?: string;
+    reporting_backend?: string;
+    username_management_backend?: string;
+    /**
+     * Backends of the site's own, not in the plugin catalog, that the roles may name. Added to the template's.
+     */
+    custom_backends?: Array<string>;
+};
+
+export type OfferingTemplateAgentRolesRequest = {
+    order_processing_backend?: string;
+    membership_sync_backend?: string;
+    reporting_backend?: string;
+    username_management_backend?: string;
+    /**
+     * Backends of the site's own, not in the plugin catalog, that the roles may name. Added to the template's.
+     */
+    custom_backends?: Array<string>;
 };
 
 export type OfferingTemplateCreateOfferingRequest = {
@@ -21692,6 +21718,16 @@ export type OfferingTemplateCreateOfferingRequest = {
      * A value for each of the template's parameters, by key. A parameter left out takes its default.
      */
     parameters?: {
+        [key: string]: unknown;
+    };
+    /**
+     * Backends for the site agent's roles, replacing the template's. A role left out keeps the template's backend; a blank one names none.
+     */
+    agent_roles?: OfferingTemplateAgentRolesRequest;
+    /**
+     * Backend settings of the site agent, by name, over the template's: what the chosen role backends need that the template does not set. A nested mapping is merged key by key. Checked as the agent configuration's backend_settings; secrets are refused, they stay in the agent configuration file on the agent host. Site agent templates only.
+     */
+    backend_settings?: {
         [key: string]: unknown;
     };
     /**
