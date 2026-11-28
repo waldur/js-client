@@ -11652,8 +11652,30 @@ export type ElevatedAccessEnum = 'staff' | 'support';
 
 export type EligibilityCheck = {
     is_eligible: boolean;
+    /**
+     * The messages of every failed check; see reasons for which check each comes from.
+     */
     restrictions: Array<string>;
+    reasons: Array<EligibilityReason>;
 };
+
+export type EligibilityReason = {
+    /**
+     * Which check failed: the call's user restrictions, or the managing organization's limit on proposals held per applicant.
+     */
+    code: EligibilityReasonCodeEnum;
+    message: string;
+    /**
+     * applicant_capacity only: how many places an applicant may hold.
+     */
+    limit?: number;
+    /**
+     * applicant_capacity only: how many places the caller holds.
+     */
+    held?: number;
+};
+
+export type EligibilityReasonCodeEnum = 'user_restrictions' | 'applicant_capacity';
 
 export type EligibleFromEnum = 'call_role:manager' | 'call_role:reviewer' | 'call_role:panel_member' | 'proposal_reviewers' | 'any_user' | 'panel:chair' | 'panel:member';
 
@@ -18631,6 +18653,10 @@ export type MyAssignmentBatch = {
     uuid: string;
     call_uuid: string;
     call_name: string;
+    /**
+     * The state of the call: an archived call is read-only.
+     */
+    call_state: CallStates;
     status: string;
     status_display: string;
     sent_at: string;
@@ -18645,6 +18671,10 @@ export type MyAssignmentBatchDetail = {
     uuid: string;
     call_uuid: string;
     call_name: string;
+    /**
+     * The state of the call: an archived call is read-only.
+     */
+    call_state: CallStates;
     status: string;
     status_display: string;
     sent_at: string;
@@ -31713,6 +31743,10 @@ export type Proposal = {
     round: NestedRound;
     readonly call_uuid: string;
     readonly call_name: string;
+    /**
+     * The state of the proposal's call: an archived call's proposals are read-only.
+     */
+    call_state: CallStates;
     readonly call_managing_organisation_uuid: string;
     /**
      * Whether the call's round results are adopted, after which a held decision can no longer be reopened.
@@ -32103,6 +32137,10 @@ export type ProposalReview = {
     readonly round_cutoff_time: string | null;
     readonly round_start_time: string;
     readonly call_name: string;
+    /**
+     * The state of the call: an archived call is read-only.
+     */
+    call_state: CallStates;
     readonly call_uuid: string;
     readonly call_slug: string;
     readonly call_managing_organisation_uuid: string;
@@ -32228,6 +32266,10 @@ export type ProposalRoleAssignment = {
     proposal_state: ProposalStates;
     readonly call_uuid: string;
     readonly call_name: string;
+    /**
+     * The state of the call: an archived call is read-only.
+     */
+    call_state: CallStates;
     readonly role_uuid: string;
     /**
      * Identifier of the role within its call.
